@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,15 +29,15 @@ namespace XLite\Model\Repo;
 
 /**
  * Country repository
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class State extends \XLite\Model\Repo\ARepo
 {
     /**
-     * Repository type 
-     * 
+     * Repository type
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -47,7 +46,7 @@ class State extends \XLite\Model\Repo\ARepo
 
     /**
      * Default 'order by' field name
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -56,10 +55,10 @@ class State extends \XLite\Model\Repo\ARepo
 
 
     /**
-     * Get dump 'Other' state 
+     * Get dump 'Other' state
      *
      * @param string $customState Custom state name OPTIONAL
-     * 
+     *
      * @return \XLite\Model\State
      * @see    ____func_see____
      * @since  1.0.0
@@ -75,9 +74,9 @@ class State extends \XLite\Model\Repo\ARepo
 
     /**
      * Check - is state id of dump 'Other' state or not
-     * 
+     *
      * @param integer $stateId State id
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -88,10 +87,10 @@ class State extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Get state code by state id 
-     * 
+     * Get state code by state id
+     *
      * @param integer $stateId State id
-     *  
+     *
      * @return string|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -104,11 +103,11 @@ class State extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Find state by id (dump 'Other' state included) 
-     * 
+     * Find state by id (dump 'Other' state included)
+     *
      * @param integer $stateId     State id
      * @param string  $customState Custom state name if state is dump 'Other' state OPTIONAL
-     *  
+     *
      * @return \XLite\Model\State
      * @see    ____func_see____
      * @since  1.0.0
@@ -122,9 +121,9 @@ class State extends \XLite\Model\Repo\ARepo
 
     /**
      * Find state by id
-     * 
+     *
      * @param integer $stateId State id
-     *  
+     *
      * @return \XLite\Model\State
      * @see    ____func_see____
      * @since  1.0.0
@@ -142,7 +141,7 @@ class State extends \XLite\Model\Repo\ARepo
 
     /**
      * Find all states
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -160,9 +159,9 @@ class State extends \XLite\Model\Repo\ARepo
 
     /**
      * Find states by country code
-     * 
+     *
      * @param string $countryCode Country code
-     *  
+     *
      * @return \XLite\Model\State|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -178,10 +177,10 @@ class State extends \XLite\Model\Repo\ARepo
 
     /**
      * Find states by country code and state code
-     * 
+     *
      * @param string $countryCode Country code
      * @param string $code        State code
-     *  
+     *
      * @return \XLite\Model\State|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -210,8 +209,8 @@ class State extends \XLite\Model\Repo\ARepo
 
 
     /**
-     * Define cache cells 
-     * 
+     * Define cache cells
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -229,9 +228,9 @@ class State extends \XLite\Model\Repo\ARepo
 
     /**
      * Define query builder for getCodeById() method
-     * 
+     *
      * @param integer $stateId State id
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
@@ -248,7 +247,7 @@ class State extends \XLite\Model\Repo\ARepo
      * Define query builder for findOneByStateId()
      *
      * @param integer $stateId State id
-     * 
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
@@ -265,7 +264,7 @@ class State extends \XLite\Model\Repo\ARepo
 
     /**
      * Define query builder for findAllStates()
-     * 
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
@@ -279,9 +278,9 @@ class State extends \XLite\Model\Repo\ARepo
 
     /**
      * Define query for findByCountryCode() method
-     * 
+     *
      * @param \XLite\Model\Country $country Country
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
@@ -295,10 +294,10 @@ class State extends \XLite\Model\Repo\ARepo
 
     /**
      * Define query for findOneByCountryAndCode() method
-     * 
+     *
      * @param string $countryCode Country code
      * @param string $code        State code
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0

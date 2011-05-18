@@ -380,7 +380,7 @@ if (file_exists($csv) && filesize($csv) > 0) {
 		echo "+ PHPUnit time graph... ";
 		$chart = new TimeBarChart();
 		$chart->setInput($data);
-		$fileName = $dir . '/phpunit.time.svg'; 
+		$fileName = $dir . '/phpunit.time.svg';
 		echo $fileName . '... ';
 		try {
 			$chart->render(1024, 768, $fileName);

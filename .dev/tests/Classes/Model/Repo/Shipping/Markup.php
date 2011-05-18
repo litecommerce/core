@@ -10,7 +10,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -19,8 +18,8 @@
 class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_Model_OrderAbstract
 {
     /**
-     * testFindMarkupsByProcessor 
-     * 
+     * testFindMarkupsByProcessor
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -50,8 +49,8 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_Model_OrderAbst
     }
 
     /**
-     * testFindMarkupsByZoneAndMethod 
-     * 
+     * testFindMarkupsByZoneAndMethod
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -76,8 +75,8 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_Model_OrderAbst
     }
 
     /**
-     * findMarkupsByIds 
-     * 
+     * findMarkupsByIds
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -103,10 +102,10 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_Model_OrderAbst
     }
 
     /**
-     * getTestOrder 
-     * 
+     * getTestOrder
+     *
      * @param bool $profile Flag: if true, then get real profile from database
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -117,7 +116,7 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_Model_OrderAbst
         $order = parent::getTestOrder();
 
         $args = func_get_args();
-        
+
         if (isset($args[0]) && !$args[0]) {
             $order->setProfile(null);
             $order->setOrigProfile(null);

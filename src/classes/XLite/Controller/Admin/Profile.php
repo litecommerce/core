@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Controller\Admin;
 
 /**
  * Profile management controller
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -38,7 +37,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Return value for the "register" mode param
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -63,7 +62,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
     /**
      * The "mode" parameter used to determine if we create new or modify existing profile
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -113,7 +112,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Class name for the \XLite\View\Model\ form
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -136,8 +135,8 @@ class Profile extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * actionPostprocessModify 
-     * 
+     * actionPostprocessModify
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -156,7 +155,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
                 $params = array('mode' => self::getRegisterMode());
 
             } else {
-                
+
                 // Send notification to the user
                 \XLite\Core\Mailer::sendProfileCreatedUserNotification($this->getProfile());
 

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -49,12 +48,12 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     const SORT_BY_MODE_DEFAULT = 'cp.orderby';
 
     /**
-     * Widget target 
+     * Widget target
      */
     const WIDGET_TARGET = 'category';
 
 
-    /** 
+    /**
      * Return list of targets allowed for this widget
      *
      * @return array
@@ -65,21 +64,21 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         $result = parent::getAllowedTargets();
         $result[] = self::WIDGET_TARGET;
-    
+
         return $result;
     }
 
 
-    /** 
+    /**
      * Return target to retrive this widget from AJAX
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getWidgetTarget()
     {
-        return self::WIDGET_TARGET; 
+        return self::WIDGET_TARGET;
     }
 
 
@@ -101,7 +100,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
     /**
      * Returns CSS classes for the container element
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -114,7 +113,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
     /**
      * Return class name for the list pager
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -125,8 +124,8 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * getCategory 
-     * 
+     * getCategory
+     *
      * @return \XLite\Model\Category
      * @see    ____func_see____
      * @since  1.0.0
@@ -180,10 +179,10 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
     /**
      * Return products list
-     * 
+     *
      * @param \XLite\Core\CommonCell $cnd       Search condition
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
-     *  
+     *
      * @return array|void
      * @see    ____func_see____
      * @since  1.0.0

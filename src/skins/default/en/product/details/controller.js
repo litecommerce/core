@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -116,7 +115,7 @@ ProductDetailsView.prototype.gallery = null;
 // Zoom layer max. width
 ProductDetailsView.prototype.zoomMaxWidth = 460;
 
-// Zoom widget 
+// Zoom widget
 ProductDetailsView.prototype.zoomWidget = false;
 
 // Zoom layer max. width
@@ -306,7 +305,7 @@ ProductDetailsView.prototype.selectImage = function(pos)
   next.addClass('selected');
 
   if (this.zoomWidget) {
-    
+
     var cloud = jQuery('.cloud-zoom', this.base);
 
     if (cloud.data('zoom')) {

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model;
 
 /**
  * Zone model
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -45,8 +44,8 @@ namespace XLite\Model;
 class Zone extends \XLite\Model\AEntity
 {
     /**
-     * Zone unique id 
-     * 
+     * Zone unique id
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -59,7 +58,7 @@ class Zone extends \XLite\Model\AEntity
 
     /**
      * Zone name
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -70,7 +69,7 @@ class Zone extends \XLite\Model\AEntity
 
     /**
      * Zone default flag
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -81,7 +80,7 @@ class Zone extends \XLite\Model\AEntity
 
     /**
      * Zone elements (relation)
-     * 
+     *
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
      * @since 1.0.0
@@ -92,7 +91,7 @@ class Zone extends \XLite\Model\AEntity
 
     /**
      * Shipping rates (relation)
-     * 
+     *
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
      * @since 1.0.0
@@ -104,11 +103,11 @@ class Zone extends \XLite\Model\AEntity
 
     /**
      * Comparison states function for usort()
-     * 
+     *
      * @param \XLite\Model\State $a First state object
      * @param \XLite\Model\State $b Second state object
-     *  
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -179,13 +178,13 @@ class Zone extends \XLite\Model\AEntity
                 }
             }
         }
-    
+
         return $zoneCountries;
     }
 
     /**
      * Get zone's states list
-     * 
+     *
      * @param boolean $excluded Flag: true - get states except zone states OPTIONAL
      *
      * @return array
@@ -203,7 +202,7 @@ class Zone extends \XLite\Model\AEntity
             $allStates = \XLite\Core\Database::getRepo('XLite\Model\State')->findAllStates();
 
             usort($allStates, array('\XLite\Model\Zone', 'sortStates'));
-        
+
             foreach ($allStates as $key=>$state) {
 
                 $condition = in_array($state->getCountry()->getCode() . '_' . $state->getCode(), $stateCodes);
@@ -213,13 +212,13 @@ class Zone extends \XLite\Model\AEntity
                 }
             }
         }
-    
+
         return $zoneStates;
     }
 
     /**
      * Get zone's city masks list
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -231,7 +230,7 @@ class Zone extends \XLite\Model\AEntity
 
     /**
      * Get zone's zip code masks list
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -243,7 +242,7 @@ class Zone extends \XLite\Model\AEntity
 
     /**
      * Get zone's address masks list
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -254,9 +253,9 @@ class Zone extends \XLite\Model\AEntity
     }
 
     /**
-     * hasZoneElements 
-     * 
-     * @return boolean 
+     * hasZoneElements
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -267,9 +266,9 @@ class Zone extends \XLite\Model\AEntity
 
     /**
      * Returns the list of zone elements by specified element type
-     * 
+     *
      * @param string $elementType Element type
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -286,15 +285,15 @@ class Zone extends \XLite\Model\AEntity
                 }
             }
         }
-    
+
         return $result;
     }
 
     /**
-     * getZoneWeight 
-     * 
+     * getZoneWeight
+     *
      * @param mixed $address ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -338,11 +337,11 @@ class Zone extends \XLite\Model\AEntity
     }
 
     /**
-     * checkZoneCountries 
-     * 
+     * checkZoneCountries
+     *
      * @param mixed $address  ____param_comment____
      * @param mixed $elements ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -355,11 +354,11 @@ class Zone extends \XLite\Model\AEntity
     }
 
     /**
-     * checkZoneStates 
-     * 
+     * checkZoneStates
+     *
      * @param mixed $address  ____param_comment____
      * @param mixed $elements ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -375,11 +374,11 @@ class Zone extends \XLite\Model\AEntity
     }
 
     /**
-     * checkZoneZipCodes 
-     * 
+     * checkZoneZipCodes
+     *
      * @param mixed $address  ____param_comment____
      * @param mixed $elements ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -394,11 +393,11 @@ class Zone extends \XLite\Model\AEntity
     }
 
     /**
-     * checkZoneCities 
-     * 
+     * checkZoneCities
+     *
      * @param mixed $address  ____param_comment____
      * @param mixed $elements ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -413,11 +412,11 @@ class Zone extends \XLite\Model\AEntity
     }
 
     /**
-     * checkZoneAddresses 
-     * 
+     * checkZoneAddresses
+     *
      * @param mixed $address  ____param_comment____
      * @param mixed $elements ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -432,11 +431,11 @@ class Zone extends \XLite\Model\AEntity
     }
 
     /**
-     * checkMasks 
-     * 
+     * checkMasks
+     *
      * @param mixed $value     ____param_comment____
      * @param mixed $masksList ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

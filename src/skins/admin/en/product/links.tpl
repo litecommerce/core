@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -16,14 +15,14 @@ Use HTML code provided in this section to create product-specific 'Add to Cart' 
 <table width="100%">
 <tr>
     <td colspan="2" class="admin-head">Link to product thumbnail</td>
-</tr>    
+</tr>
 <tr><td colspan="2">&nbsp;</td></tr>
 {if:product.hasThumbnail()}
 <tr>
     <td valign="top">Example:</td>
     <td><img src="{getShopURL(#cart.php#)}?target=image&action=product_thumbnail&product_id={product.product_id}" width="70" alt="{product.name:h}" />
     </td>
-</tr>    
+</tr>
 <tr>
     <td valign="top">HTML code:</td>
     <td><textarea cols="80" rows="5"><img src="{getShopURL(#cart.php#)}?target=image&action=product_thumbnail&product_id={product.product_id}" width="70" alt="{product.name:h}" /></textarea>
@@ -46,18 +45,18 @@ Use HTML code provided in this section to create product-specific 'Add to Cart' 
     <td valign="top">HTML code:</td>
     <td><textarea cols="80" rows="5"><a href="{getShopURL(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}">Add to cart</a></textarea>
     </td>
-</tr>    
+</tr>
 <tr><td colspan="2">&nbsp;</td></tr>
 <tr>
     <td colspan="2" class="admin-head">HTML button to add product to cart</td>
-</tr>    
+</tr>
 <tr><td colspan="2">&nbsp;</td></tr>
 <tr>
     <td>Example:</td>
     <td>
       <widget class="\XLite\View\Button\Regular" label="Add to cart" jsCode="document.location='{getShopURL(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}'" />
     </td>
-</tr>    
+</tr>
 <tr>
     <td valign="top">HTML code:</td>
     <td>
@@ -65,5 +64,5 @@ Use HTML code provided in this section to create product-specific 'Add to Cart' 
         <widget class="\XLite\View\Button\Regular" label="Add to cart" jsCode="document.location='{getShopURL(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}'" />
       </textarea>
     </td>
-</tr>    
+</tr>
 </table>

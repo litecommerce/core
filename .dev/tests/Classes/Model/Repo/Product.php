@@ -7,10 +7,9 @@
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Classes
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -40,8 +39,8 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
     }
 
     /**
-     * getDefaultCnd 
-     * 
+     * getDefaultCnd
+     *
      * @return \XLite\Core\CommonCell
      * @access protected
      * @see    ____func_see____
@@ -67,7 +66,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
 
 	/**
 	 * testSearchAll
-	 * 
+	 *
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
@@ -87,7 +86,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
 
     /**
      * testSearchBySubstring
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -146,7 +145,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
 
     /**
      * testSearchInSingleCategory
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -170,8 +169,8 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
     }
 
     /**
-     * testSearchItemsCount 
-     * 
+     * testSearchItemsCount
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -189,9 +188,9 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
     }
 
     /**
-     * testSearchDisabledItems 
+     * testSearchDisabledItems
      * NOTE: this method is emulate the admin area
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -208,8 +207,8 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
     }
 
     /**
-     * testFindByCleanUrlExists 
-     * 
+     * testFindByCleanUrlExists
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -225,8 +224,8 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
     }
 
     /**
-     * testFindByCleanUrlNotExists 
-     * 
+     * testFindByCleanUrlNotExists
+     *
      * @return void
      * @access public
      * @see    ____func_see____

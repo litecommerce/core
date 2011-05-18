@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Upgrade\Entry;
 
 /**
- * AEntry 
- * 
+ * AEntry
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -38,7 +37,7 @@ abstract class AEntry
 {
     /**
      * Path to the unpacked entry archive
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -46,8 +45,8 @@ abstract class AEntry
     protected $repositoryPath;
 
     /**
-     * List of error messages 
-     * 
+     * List of error messages
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -55,8 +54,8 @@ abstract class AEntry
     protected $errorMessages = array();
 
     /**
-     * List of custom files 
-     * 
+     * List of custom files
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -66,7 +65,7 @@ abstract class AEntry
 
     /**
      * Return entry readable name
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -75,7 +74,7 @@ abstract class AEntry
 
     /**
      * Return entry icon URL
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -84,7 +83,7 @@ abstract class AEntry
 
     /**
      * Return entry old major version
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -156,7 +155,7 @@ abstract class AEntry
 
     /**
      * Return entry pack size
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -165,7 +164,7 @@ abstract class AEntry
 
     /**
      * Get hashes for current version
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -173,8 +172,8 @@ abstract class AEntry
     abstract protected function loadHashesForInstalledFiles();
 
     /**
-     * Constructor 
-     * 
+     * Constructor
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -188,7 +187,7 @@ abstract class AEntry
 
     /**
      * Compose version
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -212,7 +211,7 @@ abstract class AEntry
 
     /**
      * Perform cleanup
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -223,10 +222,10 @@ abstract class AEntry
     }
 
     /**
-     * Set repository path 
-     * 
+     * Set repository path
+     *
      * @param string $path Path to set
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -256,7 +255,7 @@ abstract class AEntry
 
     /**
      * Get repository path
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -268,7 +267,7 @@ abstract class AEntry
 
     /**
      * Name of the special file with hashes for installed files
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -286,7 +285,7 @@ abstract class AEntry
 
     /**
      * Download package
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -318,7 +317,7 @@ abstract class AEntry
 
     /**
      * Check if pack is already downloaded
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -327,8 +326,8 @@ abstract class AEntry
     {
         $path = $this->getRepositoryPath();
 
-        return !empty($path) 
-            && \Includes\Utils\FileManager::isFile($path) 
+        return !empty($path)
+            && \Includes\Utils\FileManager::isFile($path)
             && \Includes\Utils\FileManager::isFile($this->getCurrentVersionHashesFilePath());
     }
 
@@ -343,7 +342,7 @@ abstract class AEntry
     {
         $path = $this->getRepositoryPath();
 
-        return !empty($path) 
+        return !empty($path)
             && \Includes\Utils\FileManager::isDir($path)
             && \Includes\Utils\FileManager::isFile($this->getCurrentVersionHashesFilePath());
     }
@@ -376,7 +375,7 @@ abstract class AEntry
 
     /**
      * Return list of custom files
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -400,10 +399,10 @@ abstract class AEntry
 
     /**
      * Add new error message
-     * 
+     *
      * @param string $message Message to add
      * @param array  $args    Substitution arguments OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -466,7 +465,7 @@ abstract class AEntry
                 $this->addFile($path, $isTestMode, true);
             }
 
-            // Only the new files will remain 
+            // Only the new files will remain
             unset($hashes[$path]);
         }
 
@@ -478,11 +477,11 @@ abstract class AEntry
 
     /**
      * Perform some common operation for upgrade
-     * 
+     *
      * @param string  $path              File short path
      * @param boolean $isTestMode        If in test mode
      * @param boolean $manageCustomFiles Flag for custom files
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -652,11 +651,11 @@ abstract class AEntry
 
     /**
      * Short name for FileManager call
-     * 
+     *
      * @param string $path   File short path
      * @param string $method Method to call
      * @param array  $args   Call arguments OPTIONAL
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -671,9 +670,9 @@ abstract class AEntry
 
     /**
      * Compose file full path
-     * 
+     *
      * @param string $path File short path
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -685,10 +684,10 @@ abstract class AEntry
 
     /**
      * Add file to the custome files list
-     * 
+     *
      * @param string  $path File short path
      * @param boolean $flag Status OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -699,10 +698,10 @@ abstract class AEntry
     }
 
     /**
-     * Check status of custom file entry list 
-     * 
+     * Check status of custom file entry list
+     *
      * @param string $path File short path
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -714,10 +713,10 @@ abstract class AEntry
 
     /**
      * Short name for the "addFileErrorMessage" method
-     * 
+     *
      * @param string $message Message to set
      * @param string $path    File short path
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -803,9 +802,9 @@ abstract class AEntry
 
     /**
      * Read file from package
-     * 
+     *
      * @param string $relativePath File relative path in package
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -821,10 +820,10 @@ abstract class AEntry
 
     /**
      * Log message to the file
-     * 
+     *
      * @param string  $message Message text
      * @param boolean $isError Message type OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

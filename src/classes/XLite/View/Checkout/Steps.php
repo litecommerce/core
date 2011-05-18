@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View\Checkout;
 
 /**
  * Checkout steps block
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -40,7 +39,7 @@ class Steps extends \XLite\View\AView
 {
     /**
      * Shipping modifier (cache)
-     * 
+     *
      * @var   \XLite\Model\Order\Modifier
      * @see   ____var_see____
      * @since 1.0.0
@@ -49,7 +48,7 @@ class Steps extends \XLite\View\AView
 
     /**
      * Steps (cache)
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -57,8 +56,8 @@ class Steps extends \XLite\View\AView
     protected $steps;
 
     /**
-     * Current step 
-     * 
+     * Current step
+     *
      * @var   \XLite\View\Checkout\Step\AStep
      * @see   ____var_see____
      * @since 1.0.0
@@ -67,8 +66,8 @@ class Steps extends \XLite\View\AView
 
 
     /**
-     * Get steps 
-     * 
+     * Get steps
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -103,8 +102,8 @@ class Steps extends \XLite\View\AView
     }
 
     /**
-     * Get current step 
-     * 
+     * Get current step
+     *
      * @return \XLite\View\Checkout\Step\AStep
      * @see    ____func_see____
      * @since  1.0.0
@@ -125,9 +124,9 @@ class Steps extends \XLite\View\AView
 
     /**
      * Check - specified step is current or not
-     * 
+     *
      * @param \XLite\View\Checkout\Step\AStep $step Step
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -153,9 +152,9 @@ class Steps extends \XLite\View\AView
 
     /**
      * Check -= specified step is previous or not
-     * 
+     *
      * @param \XLite\View\Checkout\Step\AStep $step Step
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -195,8 +194,8 @@ class Steps extends \XLite\View\AView
     }
 
     /**
-     * Get current step number 
-     * 
+     * Get current step number
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -230,9 +229,9 @@ class Steps extends \XLite\View\AView
 
     /**
      * Check - has specified step left arrow or not
-     * 
+     *
      * @param \XLite\View\Checkout\Step\AStep $step Step
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -246,9 +245,9 @@ class Steps extends \XLite\View\AView
 
     /**
      * Check - has specified step right arrow or not
-     * 
+     *
      * @param \XLite\View\Checkout\Step\AStep $step Step
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -261,8 +260,8 @@ class Steps extends \XLite\View\AView
     }
 
     /**
-     * Define checkout widget steps 
-     * 
+     * Define checkout widget steps
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -274,13 +273,13 @@ class Steps extends \XLite\View\AView
         $steps[] = '\XLite\View\Checkout\Step\Shipping';
         $steps[] = '\XLite\View\Checkout\Step\Payment';
         $steps[] = '\XLite\View\Checkout\Step\Review';
-    
+
         return $steps;
     }
 
     /**
-     * Get modifier 
-     * 
+     * Get modifier
+     *
      * @return \XLite\Model\Order\Modifier
      * @see    ____func_see____
      * @since  1.0.0
@@ -288,7 +287,7 @@ class Steps extends \XLite\View\AView
     protected function getShippingModifier()
     {
         if (!isset($this->shippingModifier)) {
-            $this->shippingModifier 
+            $this->shippingModifier
                 = $this->getCart()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
         }
 

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Includes_Decorator_Utils
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,8 +28,8 @@
 namespace Includes\Decorator\Plugin\Doctrine\Utils;
 
 /**
- * EntityManager 
- * 
+ * EntityManager
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -39,7 +38,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
 {
     /**
      * Entity manager
-     * 
+     *
      * @var    Doctrine\ORM\EntityManager
      * @access protected
      * @see    ____var_see____
@@ -48,8 +47,8 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     protected static $handler;
 
     /**
-     * Model classes metadata 
-     * 
+     * Model classes metadata
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -111,7 +110,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
 
     /**
      * Retur DSN as params array
-     * 
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -125,9 +124,9 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     /**
      * Set metadata driver for Doctrine config
      * FIXME: to revise
-     * 
+     *
      * @param \Doctrine\ORM\Configuration $config config object
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -150,7 +149,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
 
             if (\Includes\Utils\FileManager::isDir($dir->getPathName())) {
                 $iterator2 = new \RecursiveDirectoryIterator($dir->getPathName(), \FilesystemIterator::SKIP_DOTS);
-           
+
                 foreach ($iterator2 as $dir2) {
                     if (
                         \Includes\Utils\FileManager::isDir($dir2->getPathName())
@@ -171,7 +170,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
 
     /**
      * Return the Doctrine config object
-     * 
+     *
      * @return Doctrine\ORM\Configuration
      * @access protected
      * @see    ____func_see____
@@ -195,8 +194,8 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     }
 
     /**
-     * Return instance of the entity manager 
-     * 
+     * Return instance of the entity manager
+     *
      * @return Doctrine\ORM\EntityManager
      * @access protected
      * @see    ____func_see____
@@ -213,7 +212,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     }
 
     /**
-     * Return instance of the proxy factory 
+     * Return instance of the proxy factory
      *
      * @return Doctrine\ORM\Proxy\ProxyFactory
      * @access protected
@@ -231,8 +230,8 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     }
 
     /**
-     * Return instance of the metadata factory 
-     * 
+     * Return instance of the metadata factory
+     *
      * @return Doctrine\ORM\Mapping\ClassMetadataFactory
      * @access protected
      * @see    ____func_see____
@@ -245,7 +244,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
 
     /**
      * Return the Doctrine tools
-     * 
+     *
      * @return \Doctrine\ORM\Tools\EntityGenerator
      * @access protected
      * @see    ____func_see____

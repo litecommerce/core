@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 {
     /**
      * Users data for testing
-     * 
+     *
      * @var    array
      * @see    ____var_see____
      * @since  1.0.0
@@ -63,8 +62,8 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
     );
 
     /**
-     * Role name for testing 
-     * 
+     * Role name for testing
+     *
      * @var    string
      * @see    ____var_see____
      * @since  1.0.0
@@ -73,7 +72,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
     /**
      * Test on simple update own profile by administrator
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -81,7 +80,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
     public function testUpdate1()
     {
         $user = $this->getUser(1);
-        
+
         $this->loginUser($user);
 
         $this->open('user/1/edit');
@@ -98,7 +97,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
     /**
      * Test on update own profile by administrator with modification of some data
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -106,7 +105,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
     public function testUpdate2()
     {
         $user = $this->getUser(1);
-        
+
         $this->loginUser($user);
 
         $this->open('user/1/edit');
@@ -130,7 +129,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
             $this->assertNull($message, 'Check for error messages #1');
         }
 
-        // Check that email is modified successfully 
+        // Check that email is modified successfully
         $this->assertEquals(
             $email,
             $this->getJSExpression('jQuery("#edit-mail").val()'),
@@ -153,7 +152,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
             $this->assertNull($message, 'Check for error messages #2');
         }
 
-        // Check that email is modified successfully 
+        // Check that email is modified successfully
         $this->assertEquals(
             $user['email'],
             $this->getJSExpression('jQuery("#edit-mail").val()'),
@@ -163,7 +162,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
     /**
      * Test on user creation, then test on update this user's profile by the administrator and created user
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -198,7 +197,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent('id=edit-roles-3', 'Check if Roles checkbox is presented');
         $this->assertElementPresent('id=edit-submit', 'Check if Submit button is presented');
 
-        $this->check('id=edit-status-1'); // User status is active 
+        $this->check('id=edit-status-1'); // User status is active
         $this->uncheck('id=edit-roles-3'); // Reset user role - administrator
 
         $this->clickAndWait('id=edit-submit');
@@ -253,7 +252,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
             $this->assertNull($message, 'Check for error messages');
         }
 
-        // Check that email is modified successfully 
+        // Check that email is modified successfully
         $this->assertEquals(
             $email,
             $this->getJSExpression('jQuery("#edit-mail").val()'),
@@ -263,7 +262,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
     /**
      * Test on password complexity checking
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -271,7 +270,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
     public function testPassword()
     {
         $user = $this->getUser(1);
-        
+
         $this->loginUser($user);
 
         $this->open('user/1/edit');
@@ -347,7 +346,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
     /**
      * Test on user creation, then test on update this user's profile by the administrator and created user
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -586,9 +585,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
     /**
      * Return specified user data from an array $users
-     * 
+     *
      * @param integer $id User index in the $users array
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -600,9 +599,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
     /**
      * Log in user with specified data
-     * 
+     *
      * @param array $user Cell of $users array
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -616,9 +615,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
     /**
      * Create user and return userId in Drupal
-     * 
+     *
      * @param array $user Cell of $users array
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -637,7 +636,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent('id=edit-roles-3', 'Check if Role checkbox is presented (Create user form)');
         $this->assertElementPresent('id=edit-submit', 'Check if Submit button is presented (Create user form)');
 
-        //Fill profile details form 
+        //Fill profile details form
         $this->type('id=edit-name', $user['login']);
         $this->type('id=edit-mail', $user['email']);
         $this->type('id=edit-pass-pass1', $user['password']);

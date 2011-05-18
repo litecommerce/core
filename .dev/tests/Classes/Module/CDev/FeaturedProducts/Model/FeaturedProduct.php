@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -46,7 +45,7 @@ class XLite_Tests_Module_CDev_FeaturedProducts_Model_FeaturedProduct extends XLi
         $this->assertTrue(0 < $fp->getId(), 'Check featured product link id');
         $this->assertEquals($this->getProduct()->getProductId(), $fp->getProduct()->getProductId(), 'Check product id');
         $this->assertEquals($this->getCategory()->getCategoryId(), $fp->getCategory()->getCategoryId(), 'Check category id');
-        
+
         $allFeatured = \XLite\Core\Database::getRepo('XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct')
             ->getFeaturedProducts($this->category->getCategoryId());
 
@@ -70,7 +69,7 @@ class XLite_Tests_Module_CDev_FeaturedProducts_Model_FeaturedProduct extends XLi
         foreach ($list as $c) {
             $c->detach();
         }
-        
+
         // Clean existing featured links
         $links = \XLite\Core\Database::getRepo('XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct')
            ->getFeaturedProducts($someOtherCategory->getCategoryId());
@@ -83,7 +82,7 @@ class XLite_Tests_Module_CDev_FeaturedProducts_Model_FeaturedProduct extends XLi
         \XLite\Core\Database::getEM()->flush();
 
         $fp->setCategory($someOtherCategory);
-        
+
         $fp->setOrderBy(10);
 
         \XLite\Core\Database::getEM()->persist($fp);
@@ -167,4 +166,3 @@ class XLite_Tests_Module_CDev_FeaturedProducts_Model_FeaturedProduct extends XLi
         return $fProduct;
     }
 }
-

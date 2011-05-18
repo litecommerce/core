@@ -2,11 +2,10 @@
 
 /**
  * Templates debugger
- *  
- * @author  Creative Development LLC <info@cdev.ru> 
+ *
+ * @author  Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link    http://www.litecommerce.com/
  * @since   1.0.0
  */
@@ -41,7 +40,7 @@ function displayTemplateInfo(event)
       c.css(
         {
           top:    beginPos.top + 'px',
-          left:   beginPos.left + 'px',  
+          left:   beginPos.left + 'px',
           width:  (endPos.left - beginPos.left + t.end.outerWidth()) + 'px',
           height: (endPos.top - beginPos.top + t.end.outerHeight()) + 'px'
         }
@@ -255,7 +254,7 @@ jQuery(document).ready(
                         var n = begin.parentNode.childNodes[i];
                         if (n.nodeType == 8 && n.data.search(endPattern) != -1) {
                           listEnd = n;
-                        } 
+                        }
                       }
 
                       if (listFirst && listEnd) {

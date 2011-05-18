@@ -2,11 +2,10 @@
 
 /**
  * Popup controller
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -30,7 +29,7 @@ popup.currentUnblockCallback = null;
 popup.elementId = false;
 
 /**
- * Methods 
+ * Methods
  */
 
 // Load data to popup
@@ -92,7 +91,7 @@ popup.loadByForm = function(form)
   return form ? form.submitBackground(this.postprocessRequestCallback) : false;
 }
 
-// Load by link element 
+// Load by link element
 popup.loadByLink = function(link)
 {
   link = jQuery(link).eq(0);
@@ -104,7 +103,7 @@ popup.loadByLink = function(link)
     : false;
 }
 
-// Load by button element 
+// Load by button element
 popup.loadByButton = function(button)
 {
   var result = false;
@@ -126,7 +125,7 @@ popup.loadByButton = function(button)
 
     // By button's form
     result = this.loadByForm(jQuery(button).parents('form').eq(0));
-  
+
   }
 
   return result;
@@ -221,7 +220,7 @@ popup.extractRequestData = function(data)
   return data;
 }
 
-// Popup post processing 
+// Popup post processing
 popup.postprocess = function()
 {
   jQuery('.blockMsg h1#page-title.title').remove();

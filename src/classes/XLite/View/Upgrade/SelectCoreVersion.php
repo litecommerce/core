@@ -20,7 +20,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\View\Upgrade;
 
 /**
- * SelectCoreVersion 
- * 
+ * SelectCoreVersion
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -38,9 +37,9 @@ namespace XLite\View\Upgrade;
  */
 class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
 {
-    /**  
+    /**
      * Return list of the modes allowed by default
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -51,7 +50,7 @@ class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
         $list[] = 'select_core_version';
 
         return $list;
-    }    
+    }
 
     /**
      * Get directory where template is located (body.tpl)
@@ -67,7 +66,7 @@ class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
 
     /**
      * Return internal list name
-     *                          
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -91,7 +90,7 @@ class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
 
     /**
      * Label for cores list selectbox
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -103,7 +102,7 @@ class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
 
     /**
      * Return list of all core versions available
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

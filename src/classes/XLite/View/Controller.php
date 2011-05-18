@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View;
 
 /**
  * Controller main widget
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -40,7 +39,7 @@ class Controller extends \XLite\View\AView
      * Content of the currnt page
      * NOTE: this is a text, so it's not passed by reference; do not wrap it into a getter (or pass by reference)
      * NOTE: until it's not accessing via the function, do not change its access modifier
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -49,11 +48,11 @@ class Controller extends \XLite\View\AView
 
 
     /**
-     * __construct 
-     * 
+     * __construct
+     *
      * @param array  $params          Widget params OPTIONAL
      * @param string $contentTemplate Central area template OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -66,8 +65,8 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * Show current page and, optionally, footer  
-     * 
+     * Show current page and, optionally, footer
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -87,8 +86,8 @@ class Controller extends \XLite\View\AView
 
 
     /**
-     * Send headers 
-     * 
+     * Send headers
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -118,7 +117,7 @@ class Controller extends \XLite\View\AView
 
     /**
      * Check - current request is AJAX background request for page center or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -129,8 +128,8 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * Get body classes 
-     * 
+     * Get body classes
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -142,7 +141,7 @@ class Controller extends \XLite\View\AView
 
     /**
      * Define body classes list
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -171,7 +170,7 @@ class Controller extends \XLite\View\AView
         } else {
             $classes[] = 'no-sidebars';
         }
-        
+
         if ($first) {
             $classes[] = 'sidebar-first';
         }
@@ -185,7 +184,7 @@ class Controller extends \XLite\View\AView
 
     /**
      * Chewck - first sidebar is visible or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -197,7 +196,7 @@ class Controller extends \XLite\View\AView
 
     /**
      * Check - second sidebar is visible or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -225,9 +224,9 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * isSilent 
-     * 
-     * @return boolean 
+     * isSilent
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -237,9 +236,9 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * isDumpStarted 
-     * 
-     * @return boolean 
+     * isDumpStarted
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -249,8 +248,8 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * getContentWidget 
-     * 
+     * getContentWidget
+     *
      * @return \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.0
@@ -261,8 +260,8 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * prepareContent 
-     * 
+     * prepareContent
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -273,9 +272,9 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * useDefaultDisplayMode 
-     * 
-     * @return boolean 
+     * useDefaultDisplayMode
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -285,8 +284,8 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * displayPage 
-     * 
+     * displayPage
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -305,8 +304,8 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * refreshEnd 
-     * 
+     * refreshEnd
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,10 +29,10 @@ namespace XLite\Model;
 
 /**
  * The "profile" model class
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
- * 
+ *
  * @Entity (repositoryClass="\XLite\Model\Repo\Profile")
  * @Table  (name="profiles",
  *      indexes={
@@ -51,8 +50,8 @@ namespace XLite\Model;
 class Profile extends \XLite\Model\AEntity
 {
     /**
-     * Profile unique ID 
-     * 
+     * Profile unique ID
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -219,8 +218,8 @@ class Profile extends \XLite\Model\AEntity
     protected $language = '';
 
     /**
-     * Last selected shipping id 
-     * 
+     * Last selected shipping id
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -230,8 +229,8 @@ class Profile extends \XLite\Model\AEntity
     protected $last_shipping_id;
 
     /**
-     * Last selected payment id 
-     * 
+     * Last selected payment id
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -242,7 +241,7 @@ class Profile extends \XLite\Model\AEntity
 
     /**
      * Membership: many-to-one relation with memberships table
-     * 
+     *
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
      * @since 1.0.0
@@ -254,7 +253,7 @@ class Profile extends \XLite\Model\AEntity
 
     /**
      * Pending membership: many-to-one relation with memberships table
-     * 
+     *
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
      * @since 1.0.0
@@ -266,7 +265,7 @@ class Profile extends \XLite\Model\AEntity
 
     /**
      * Address book: one-to-many relation with address book entity
-     * 
+     *
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
      * @since 1.0.0
@@ -276,8 +275,8 @@ class Profile extends \XLite\Model\AEntity
     protected $addresses;
 
     /**
-     * The count of orders placed by the user 
-     * 
+     * The count of orders placed by the user
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -286,10 +285,10 @@ class Profile extends \XLite\Model\AEntity
 
 
     /**
-     * Set membership 
-     * 
+     * Set membership
+     *
      * @param \XLite\Model\Membership $membership Membership OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -300,10 +299,10 @@ class Profile extends \XLite\Model\AEntity
     }
 
     /**
-     * Set pending membership 
-     * 
+     * Set pending membership
+     *
      * @param \XLite\Model\Membership $pendingMembership Pending membership OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -314,8 +313,8 @@ class Profile extends \XLite\Model\AEntity
     }
 
     /**
-     * Get membership Id 
-     * 
+     * Get membership Id
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -326,8 +325,8 @@ class Profile extends \XLite\Model\AEntity
     }
 
     /**
-     * Get pending membership Id 
-     * 
+     * Get pending membership Id
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -338,8 +337,8 @@ class Profile extends \XLite\Model\AEntity
     }
 
     /**
-     * Returns billing address 
-     * 
+     * Returns billing address
+     *
      * @return \XLite\Model\Address
      * @see    ____func_see____
      * @since  1.0.0
@@ -350,8 +349,8 @@ class Profile extends \XLite\Model\AEntity
     }
 
     /**
-     * Returns shipping address 
-     * 
+     * Returns shipping address
+     *
      * @return \XLite\Model\Address
      * @see    ____func_see____
      * @since  1.0.0
@@ -363,15 +362,15 @@ class Profile extends \XLite\Model\AEntity
 
     /**
      * Returns the number of orders places by the user
-     * 
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function getOrdersCount()
     {
         if (!isset($this->orders_count)) {
-    
+
             $cnd = new \XLite\Core\CommonCell();
             $cnd->profile = $this;
 
@@ -380,11 +379,11 @@ class Profile extends \XLite\Model\AEntity
 
         return $this->orders_count;
     }
- 
+
     /**
      * Check if profile is enabled
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -395,31 +394,31 @@ class Profile extends \XLite\Model\AEntity
 
     /**
      * Enable user profile
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function enable() 
+    public function enable()
     {
         $this->setStatus('E');
     }
 
     /**
      * Disable user profile
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function disable() 
+    public function disable()
     {
         $this->setStatus('D');
     }
 
     /**
-     * Returns true if profile has an administrator access level 
-     * 
+     * Returns true if profile has an administrator access level
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -431,8 +430,8 @@ class Profile extends \XLite\Model\AEntity
 
     /**
      * Create an entity profile in the database
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -444,9 +443,9 @@ class Profile extends \XLite\Model\AEntity
     }
 
     /**
-     * Update an entity in the database 
-     * 
-     * @return boolean 
+     * Update an entity in the database
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -473,8 +472,8 @@ class Profile extends \XLite\Model\AEntity
 
     /**
      * Delete an entity profile from the database
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -505,7 +504,7 @@ class Profile extends \XLite\Model\AEntity
     public function isSameAddress()
     {
         $result = false;
-        
+
         $billingAddress = $this->getBillingAddress();
         $shippingAddress = $this->getShippingAddress();
 
@@ -538,7 +537,7 @@ class Profile extends \XLite\Model\AEntity
 
     /**
      * Check - billing and shipping addresses are equal or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -575,7 +574,7 @@ class Profile extends \XLite\Model\AEntity
         $billingAddress = $this->getBillingAddress();
 
         if (isset($billingAddress)) {
-            
+
             $newBillingAddress = $billingAddress->cloneEntity();
             $newBillingAddress->setProfile($newProfile);
             $newProfile->addAddresses($newBillingAddress);
@@ -583,7 +582,7 @@ class Profile extends \XLite\Model\AEntity
         }
 
         if (!$this->isSameAddress() && $this->getShippingAddress()) {
-            
+
             $newShippingAddress = $this->getShippingAddress()->cloneEntity();
             $newShippingAddress->setProfile($newProfile);
             $newProfile->addAddresses($newShippingAddress);
@@ -612,10 +611,10 @@ class Profile extends \XLite\Model\AEntity
     }
 
     /**
-     * Set order 
-     * 
+     * Set order
+     *
      * @param \XLite\Model\Order $order Order OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -628,7 +627,7 @@ class Profile extends \XLite\Model\AEntity
 
     /**
      * Prepare object for its creation in the database
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -679,9 +678,9 @@ class Profile extends \XLite\Model\AEntity
 
     /**
      * Returns address by its type (shipping or billing)
-     * 
+     *
      * @param string $atype Address type: b - billing, s - shipping OPTIONAL
-     *  
+     *
      * @return \XLite\Model\Address
      * @see    ____func_see____
      * @since  1.0.0

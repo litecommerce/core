@@ -62,4 +62,3 @@ while (($dir = readdir($modules)) !== false) {
 closedir($modules);
 
 mysql_close($connection);
-

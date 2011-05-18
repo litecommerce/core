@@ -70,8 +70,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * Get words from name (delimiter - underline symbol)
-	 * 
-	 * @param   string	$name 
+	 *
+	 * @param   string	$name
 	 * @access  protected
 	 * @return  array
 	 * @since   1.0.0
@@ -94,8 +94,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * Get words from name (delimiter - capital letter)
-	 * 
-	 * @param   string	$name 
+	 *
+	 * @param   string	$name
 	 * @access  protected
 	 * @return  array
 	 * @since   1.0.0
@@ -136,8 +136,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * Check word in Camel case style
-	 * 
-	 * @param   string	$name 
+	 *
+	 * @param   string	$name
 	 * @access  protected
 	 * @return  integer
 	 * @since   1.0.0
@@ -163,8 +163,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * Check word in low case style
-	 * 
-	 * @param   string	$name 
+	 *
+	 * @param   string	$name
 	 * @access  protected
 	 * @return  integer
 	 * @since   1.0.0
@@ -174,9 +174,9 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	}
 
 	/**
-	 * Check class path by class name 
-	 * 
-	 * @param   array	$words 
+	 * Check class path by class name
+	 *
+	 * @param   array	$words
 	 * @access  protected
 	 * @return  array
 	 * @since   1.0.0
@@ -197,9 +197,9 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	}
 
 	/**
-	 * check verb or not 
-	 * 
-	 * @param   string	$word 
+	 * check verb or not
+	 *
+	 * @param   string	$word
 	 * @access  protected
 	 * @return  boolean
 	 * @since   1.0.0
@@ -209,8 +209,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	}
 
 	/**
-	 * check noun or not 
-	 * 
+	 * check noun or not
+	 *
      * @param   string  $word
 	 * @access  protected
 	 * @return  boolean
@@ -236,9 +236,9 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * Check - is reserver method name or not
-	 * 
+	 *
 	 * @param string $methodName Method name
-	 *  
+	 *
 	 * @return boolean
 	 * @access protected
 	 * @see    ____func_see____

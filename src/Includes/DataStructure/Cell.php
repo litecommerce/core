@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ namespace Includes\DataStructure;
 
 /**
  * Common cell
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -38,8 +37,8 @@ namespace Includes\DataStructure;
 class Cell
 {
     /**
-     * Array of properties 
-     * 
+     * Array of properties
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -48,10 +47,10 @@ class Cell
     protected $properties = array();
 
     /**
-     * Constructor 
-     * 
+     * Constructor
+     *
      * @param array $data data to set
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -64,9 +63,9 @@ class Cell
 
     /**
      * Get property by name
-     * 
+     *
      * @param string $name property name
-     *  
+     *
      * @return mixed
      * @access public
      * @see    ____func_see____
@@ -79,10 +78,10 @@ class Cell
 
     /**
      * Set property value
-     * 
+     *
      * @param string $name  property name
      * @param mixed  $value property value
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -95,9 +94,9 @@ class Cell
 
     /**
      * Check if property exists
-     * 
+     *
      * @param string $name property name
-     *  
+     *
      * @return bool
      * @access public
      * @see    ____func_see____
@@ -110,9 +109,9 @@ class Cell
 
     /**
      * Unset property
-     * 
+     *
      * @param string $name property name
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -125,7 +124,7 @@ class Cell
 
     /**
      * Return all properties
-     * 
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -137,10 +136,10 @@ class Cell
     }
 
     /**
-     * Append data 
-     * 
+     * Append data
+     *
      * @param array $data data to set
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____

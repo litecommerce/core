@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -40,7 +39,7 @@ Use this section to define rules for calculating shipping rates.
 <span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>How to define shipping rates &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <p align="justify">
-Shipping rates are comprised of several components (rate types) and are 
+Shipping rates are comprised of several components (rate types) and are
 calculated according to the following generic patterns:
 </p>
 <p align="justify">
@@ -48,13 +47,13 @@ SHIPPING = flat + ITEMS*per_item + WEIGHT*per_{config.General.weight_unit} + SUB
 </p>
 <p align="justify">
 For real-time shipping methods (USPS, UPS, Intershipper):
-</p>  
+</p>
 <p align="justify">
 SHIPPING = raw on-line_rate + flat + ITEMS*per_item + WEIGHT*per_{config.General.weight_unit} + SUBTOTAL*(% of subtotal)/100;
-</p>                      
+</p>
 <p align="justify">
-Based on these patterns, different shipping rate formulas can be defined for 
-different order weight and price ranges and quantities of items. Ranges 
+Based on these patterns, different shipping rate formulas can be defined for
+different order weight and price ranges and quantities of items. Ranges
 cannot overlap.
 </p>
 <p align="justify">
@@ -62,7 +61,7 @@ Descriptions for various rate types are provided below:
 </p>
 <p align="justify">
 <b>Flat shipping charge (flat)</b><br />
-This component is added to the shipping rate regardless of the weight, price 
+This component is added to the shipping rate regardless of the weight, price
 and number of items ordered.
 </p>
 <p align="justify">
@@ -80,7 +79,7 @@ Use this component to specify weight-based charges.
 <p align="justify">
 <b>Raw online rate (on-line rate)</b> <br />
 This component is automatically calculated by shipping add-on modules
-and cannot be edited. 
+and cannot be edited.
 </p>
 </span>
 
@@ -118,4 +117,3 @@ and cannot be edited.
 </form>
 
 <widget template="shipping/charges_form.tpl" />
-

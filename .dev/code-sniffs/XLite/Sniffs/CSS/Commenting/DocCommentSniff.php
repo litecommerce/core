@@ -101,7 +101,7 @@ class XLite_Sniffs_CSS_Commenting_DocCommentSniff extends XLite_ReqCodesSniff
                 $end
             );
 
-        } 
+        }
 
 		if (trim(str_replace("*", $tokens[$end-1]['content'], "")) != '') {
            $phpcsFile->addError(

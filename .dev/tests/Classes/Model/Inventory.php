@@ -10,15 +10,14 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
  */
 
 /**
- * XLite_Tests_Model_Inventory 
- * 
+ * XLite_Tests_Model_Inventory
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -26,7 +25,7 @@
 class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
 {
     /**
-     * Default values for testing 
+     * Default values for testing
      */
 
     const DEFAULT_INVENTORY_AMOUNT = 997;
@@ -41,8 +40,8 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
 
 
     /**
-     * getProduct2 
-     * 
+     * getProduct2
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -58,8 +57,8 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
     }
 
     /**
-     * getProductWithInventory 
-     * 
+     * getProductWithInventory
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -75,8 +74,8 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
     }
 
     /**
-     * getProductWithInventoryAndLowLimit 
-     * 
+     * getProductWithInventoryAndLowLimit
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -93,8 +92,8 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
     }
 
     /**
-     * getProductWithoutInventory 
-     * 
+     * getProductWithoutInventory
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -110,8 +109,8 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
     }
 
     /**
-     * getProductWithoutInventoryAndLowLimit 
-     * 
+     * getProductWithoutInventoryAndLowLimit
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -128,10 +127,10 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
     }
 
     /**
-     * getInventory 
-     * 
+     * getInventory
+     *
      * @param mixed $type ____param_comment____
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -143,8 +142,8 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
     }
 
     /**
-     * prepareCart 
-     * 
+     * prepareCart
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -168,8 +167,8 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
 
 
     /**
-     * testChangeAmount 
-     * 
+     * testChangeAmount
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -203,8 +202,8 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetAvailableAmount 
-     * 
+     * testGetAvailableAmount
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -230,8 +229,8 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
     }
 
     /**
-     * testIsOutOfStock 
-     * 
+     * testIsOutOfStock
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -261,8 +260,8 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
     }
 
     /**
-     * testIsLowLimitReached 
-     * 
+     * testIsLowLimitReached
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -287,8 +286,8 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
     }
 
     /**
-     * testProccessPreUpdate 
-     * 
+     * testProccessPreUpdate
+     *
      * @return void
      * @access public
      * @see    ____func_see____

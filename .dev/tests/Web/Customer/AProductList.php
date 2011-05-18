@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -34,7 +33,7 @@ require_once __DIR__ . '/ACustomer.php';
 abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACustomer
 {
     protected $widgetContainerClass = '.items-list';
-    
+
     protected $widgetClass = '';
 
     protected $currentTestURL = null;
@@ -155,7 +154,7 @@ return;
 
     /**
      * Opens the current test page
-     * 
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -164,7 +163,7 @@ return;
 
     /**
      * Returns the number of all test products to be listed in a pager on the current test page
-     * 
+     *
      * @return int
      * @since  1.0.0
      */
@@ -172,7 +171,7 @@ return;
 
     /**
      * Returns all test products to be listed in a pager on the current test page
-     * 
+     *
      * @return mixed
      * @since  1.0.0
      */
@@ -181,7 +180,7 @@ return;
 
     /**
      * Returns jQuery selector to the top widget container element
-     * 
+     *
      * @return string
      * @access protected
      * @since  1.0.0
@@ -193,9 +192,9 @@ return;
 
     /**
      * Test whether all the top UI elements are displayed and have a correct structure
-     * 
+     *
      * @param string $mode Display mode
-     *  
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -251,7 +250,7 @@ return;
 
                 $displayMode = $displayMode ? $this->setVisible('DisplayModeSelector') : $this->setHidden('DisplayModeSelector');
 
-                $this->resetBrowser(); 
+                $this->resetBrowser();
 
                 $this->openTestPage();
 
@@ -275,7 +274,7 @@ return;
 
     /**
      * Test whether the widget displays all products and with correct product data
-     * 
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -369,7 +368,7 @@ return;
 
     /**
      * Test whether the pager splits and browses products correctly
-     * 
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -491,7 +490,7 @@ return;
 
     /**
      * Test how the mode switching links work
-     * 
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -538,7 +537,7 @@ return;
 
     /**
      * Test the sorting options
-     * 
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -603,12 +602,12 @@ return;
 
     /**
      * Test whether sorted products are displayed in the correct order
-     * 
+     *
      * @param string  $field    Name of the field to compare
      * @param string  $label    Name of the selected sort option
      * @param string  $mode     Current display mode
      * @param boolean $ascOrder Whether it is an ascending order, or not
-     *  
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -652,11 +651,11 @@ return;
 
     /**
      * Test products displayed on a pager page
-     * 
+     *
      * @param array $allProducts List of all products that are split by the pager into pages
      * @param int   $perPage     Number of products per page
      * @param int   $page        The pager page to be tested
-     *  
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -690,15 +689,15 @@ return;
             $method = 'test'.ucwords($mode).'ProductStructure';
             $this->$method($product);
 
-        }       
-       
+        }
+
     }
 
     /**
      * Test a structure of a product shown in a product list
-     * 
+     *
      * @param array $product Product data as if it was returned by getListedProducts()
-     *  
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -743,9 +742,9 @@ return;
 
     /**
      * Test a structure of a product shown in a product grid
-     * 
+     *
      * @param array $product Product data as if it was returned by getListedProducts()
-     *  
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -785,9 +784,9 @@ return;
 
     /**
      * Test a structure of a product shown in a product table
-     * 
+     *
      * @param array $product Product data as if it was returned by getListedProducts()
-     *  
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -832,11 +831,11 @@ return;
 
     /**
      * Test whether all pager UI elements are displayed and have a correct structure
-     * 
+     *
      * @param int $total        The total number of products split by the pager
      * @param int $perPage      Number of products per page
      * @param int $selectedPage The page being tested
-     *  
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -948,9 +947,9 @@ return;
 
     /**
      * Returns IDs of the products listed inside a container DOM element
-     * 
+     *
      * @param string $listSelector jQuery selector for the root widget element (the top container element)
-     *  
+     *
      * @return array
      * @access protected
      * @since  1.0.0
@@ -984,7 +983,7 @@ return;
 
             $productSelector = "$selector.productid-$id";
 
-            $product = array('id' => $id);    
+            $product = array('id' => $id);
 
             $nameSelector               = ($mode=='table') ? "$productSelector a.product-link" : "$productSelector h3.product-name a";
 
@@ -997,7 +996,7 @@ return;
 //            $product['imgSrc']          = $this->getJSExpression("jQuery('$productSelector a.product-thumbnail img').attr('src')");
 //            $product['imgAlt']          = $this->getJSExpression("jQuery('$productSelector a.product-thumbnail img').attr('alt')");
 //            $product['description']     = $this->getJSExpression("jQuery('$productSelector .product-description').html()");
-            
+
             foreach ($product as $k => $v) {
                 $product[$k] = ($v === 'null') ? null : $v;
             }
@@ -1007,15 +1006,15 @@ return;
         }
 
         return $products;
-        
+
     }
 
     /**
      * Configure the pager
-     * 
+     *
      * @param int $itemsPerPage Number of products per page
      * @param int $showSelector Whether users can change the number of products per page, or not
-     *  
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -1046,10 +1045,10 @@ return;
 
     /**
      * Switches the first Drupal block displaying the widget to the specifed display mode
-     * 
+     *
      * @param string $mode    Display mode ('list', 'grid', 'table', 'rotator')
      * @param mixed  $columns The number of columns to be displayed in Grid mode ("css-defined" for a CSS layout)
-     *  
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -1069,7 +1068,7 @@ return;
 
     /**
      * Returns the currently selected display modege
-     * 
+     *
      * @return string
      * @access protected
      * @since  1.0.0
@@ -1081,7 +1080,7 @@ return;
 
     /**
      * Waits until the progress bar appears and is hidden then
-     * 
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -1099,14 +1098,14 @@ return;
             'jQuery("' . $listSelector . ' .blockUI.block-wait:visible").length <= 0',
             300000
         );
- 
+
     }
 
     /**
-     * Set as visible and return visibility 
-     * 
+     * Set as visible and return visibility
+     *
      * @param string $part part of widget
-     *  
+     *
      * @return boolean
      * @access protected
      * @see    ____func_see____
@@ -1120,11 +1119,11 @@ return;
     }
 
 
-    /**  
-     * Set as hidden and return visibility 
-     * 
+    /**
+     * Set as hidden and return visibility
+     *
      * @param string $part part of widget
-     *  
+     *
      * @return boolean
      * @access protected
      * @see    ____func_see____

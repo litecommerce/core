@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Module\CDev\ProductOptions\Model\Repo;
 
 /**
  * Option repository
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -48,11 +47,11 @@ class Option extends \XLite\Model\Repo\Base\I18n
     protected $defaultOrderBy = 'orderby';
 
     /**
-     * Find one by record 
-     * 
+     * Find one by record
+     *
      * @param array                $data   Record
      * @param \XLite\Model\AEntity $parent Parent model
-     *  
+     *
      * @return \XLite\Model\AEntity|void
      * @access public
      * @see    ____func_see____
@@ -78,11 +77,11 @@ class Option extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Define find query (by Product SKU and Option group name and option name)
-     * 
+     *
      * @param string $sku   Product SKU
      * @param string $group Option group name (any language)
      * @param string $name  Option name (any language)
-     *  
+     *
      * @return \XLite\Module\CDev\ProductOptions\Model\Option|void
      * @access protected
      * @see    ____func_see____

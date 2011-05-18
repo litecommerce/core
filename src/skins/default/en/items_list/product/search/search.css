@@ -2,11 +2,10 @@
 
 /**
  * Products list styles
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -38,7 +37,7 @@ tr.including-options-list td {
   padding: 9px 0 0 16px;
 }
 
-.search-form .search-form-main-part, 
+.search-form .search-form-main-part,
 .search-form .search-form-main-part td,
 .search-form .advanced-search-options,
 .search-form .advanced-search-options td
@@ -120,4 +119,3 @@ clear: both;
 h2.items-list-title {
   margin-top: 30px;
 }
-

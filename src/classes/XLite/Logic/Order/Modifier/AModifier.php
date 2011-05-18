@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Logic\Order\Modifier;
 
 /**
  * Abstract order modifier
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -38,7 +37,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
 {
     /**
      * Modifier type (see \XLite\Model\Base\Surcharge)
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -46,7 +45,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
     protected $type;
 
     /**
-     * Modifier unique code 
+     * Modifier unique code
      *
      * @var   string
      * @see   ____var_see____
@@ -55,8 +54,8 @@ abstract class AModifier extends \XLite\Logic\ALogic
     protected $code;
 
     /**
-     * Model 
-     * 
+     * Model
+     *
      * @var   \XLite\Model\Order\Modifier
      * @see   ____var_see____
      * @since 1.0.0
@@ -64,8 +63,8 @@ abstract class AModifier extends \XLite\Logic\ALogic
     protected $model;
 
     /**
-     * Order 
-     * 
+     * Order
+     *
      * @var   \XLite\Model\Order
      * @see   ____var_see____
      * @since 1.0.0
@@ -74,7 +73,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
 
     /**
      * Modifiers list
-     * 
+     *
      * @var   \XLite\DataSet\Collection\OrderModifier
      * @see   ____var_see____
      * @since 1.0.0
@@ -82,8 +81,8 @@ abstract class AModifier extends \XLite\Logic\ALogic
     protected $list;
 
     /**
-     * Surcharge identification pattern 
-     * 
+     * Surcharge identification pattern
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -102,9 +101,9 @@ abstract class AModifier extends \XLite\Logic\ALogic
 
     /**
      * Get surcharge information
-     * 
+     *
      * @param \XLite\Model\Base\Surcharge $surcharge Surcharge
-     *  
+     *
      * @return \XLite\DataSet\Transport\Order\Surcharge
      * @see    ____func_see____
      * @since  1.0.0
@@ -114,9 +113,9 @@ abstract class AModifier extends \XLite\Logic\ALogic
 
     /**
      * Constructor
-     * 
+     *
      * @param \XLite\Model\Order\Modifier $model Model
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -128,10 +127,10 @@ abstract class AModifier extends \XLite\Logic\ALogic
 
     /**
      * Initialize modifier
-     * 
+     *
      * @param \XLite\Model\Order                      $order Context
      * @param \XLite\DataSet\Collection\OrderModifier $list  Modifiers list
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -144,7 +143,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
 
     /**
      * Preprocess internal state
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -155,7 +154,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
 
     /**
      * Check - can apply this modifier or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -166,8 +165,8 @@ abstract class AModifier extends \XLite\Logic\ALogic
     }
 
     /**
-     * Get modifier type 
-     * 
+     * Get modifier type
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -178,8 +177,8 @@ abstract class AModifier extends \XLite\Logic\ALogic
     }
 
     /**
-     * Get modifier unique code 
-     * 
+     * Get modifier unique code
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -190,8 +189,8 @@ abstract class AModifier extends \XLite\Logic\ALogic
     }
 
     /**
-     * Get order 
-     * 
+     * Get order
+     *
      * @return \XLite\Model\Order
      * @see    ____func_see____
      * @since  1.0.0
@@ -207,7 +206,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      * Check - modifier is specified surcharge owner or not
      *
      * @param \XLite\Model\Base\Surcharge $surcharge Surcharge
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -219,13 +218,13 @@ abstract class AModifier extends \XLite\Logic\ALogic
     }
 
     /**
-     * Add order surcharge 
-     * 
+     * Add order surcharge
+     *
      * @param string  $code      Surcharge code
      * @param float   $value     Value
      * @param boolean $include   Include flag OPTIONAL
      * @param boolean $available Availability flag OPTIONAL
-     *  
+     *
      * @return \XLite\Model\Order\Surcharge
      * @see    ____func_see____
      * @since  1.0.0
@@ -251,14 +250,14 @@ abstract class AModifier extends \XLite\Logic\ALogic
     }
 
     /**
-     * Add order item surcharge 
-     * 
+     * Add order item surcharge
+     *
      * @param \XLite\Model\OrderItem $item      Order item
      * @param string                 $code      Surcharge code
      * @param float                  $value     Value
      * @param boolean                $include   Include flag OPTIONAL
      * @param boolean                $available Availability flag OPTIONAL
-     *  
+     *
      * @return \XLite\Model\OrderItem\Surcharge
      * @see    ____func_see____
      * @since  1.0.0

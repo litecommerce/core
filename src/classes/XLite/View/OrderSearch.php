@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View;
 
 /**
  * Orders search widget
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -40,15 +39,15 @@ class OrderSearch extends \XLite\View\Dialog
 {
     /**
      * Orders list (cache)
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
      */
     protected $orders = null;
     /**
-     * Orders total count 
-     * 
+     * Orders total count
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -57,7 +56,7 @@ class OrderSearch extends \XLite\View\Dialog
 
     /**
      * Conditions (cache)
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -76,16 +75,16 @@ class OrderSearch extends \XLite\View\Dialog
     {
         $result = parent::getAllowedTargets();
         $result[] = 'order_list';
-    
+
         return $result;
     }
 
 
     /**
-     * Get condition 
-     * 
+     * Get condition
+     *
      * @param string $name Condition name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -97,7 +96,7 @@ class OrderSearch extends \XLite\View\Dialog
 
     /**
      * Check - used conditions is default or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -108,8 +107,8 @@ class OrderSearch extends \XLite\View\Dialog
     }
 
     /**
-     * Get orders 
-     * 
+     * Get orders
+     *
      * @return array(\XLite\Model\Order)
      * @see    ____func_see____
      * @since  1.0.0
@@ -126,8 +125,8 @@ class OrderSearch extends \XLite\View\Dialog
     }
 
     /**
-     * Get orders list count 
-     * 
+     * Get orders list count
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -138,8 +137,8 @@ class OrderSearch extends \XLite\View\Dialog
     }
 
     /**
-     * Get total count 
-     * 
+     * Get total count
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -164,7 +163,7 @@ class OrderSearch extends \XLite\View\Dialog
     {
         $list = parent::getJSFiles();
 
-        // :TODO: JS search 
+        // :TODO: JS search
         // $list[] = 'order/search/search.js';
 
         return $list;
@@ -211,8 +210,8 @@ class OrderSearch extends \XLite\View\Dialog
     }
 
     /**
-     * Get conditions 
-     * 
+     * Get conditions
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -260,12 +259,12 @@ class OrderSearch extends \XLite\View\Dialog
         if (isset($this->conditions['order_id'])) {
 
             $this->cnd->orderId = $this->conditions['order_id'];
-        }   
+        }
 
         if (isset($this->conditions['status'])) {
 
             $this->cnd->status = $this->conditions['status'];
-        }   
+        }
 
         $start = isset($this->conditions['startDate']) ? $this->conditions['startDate'] : 0;
         $end   = isset($this->conditions['endDate']) ? $this->conditions['endDate'] : 0;

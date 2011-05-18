@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -31,7 +30,7 @@ namespace XLite\View;
 
 /**
  * Category selector
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -50,8 +49,8 @@ class CategorySelect extends \XLite\View\AView
 
 
     /**
-     * categories 
-     * 
+     * categories
+     *
      * @var   mixed
      * @see   ____var_see____
      * @since 1.0.0
@@ -59,8 +58,8 @@ class CategorySelect extends \XLite\View\AView
     protected $categories = null;
 
     /**
-     * field 
-     * 
+     * field
+     *
      * @var   mixed
      * @see   ____var_see____
      * @since 1.0.0
@@ -68,8 +67,8 @@ class CategorySelect extends \XLite\View\AView
     public $field;
 
     /**
-     * formName 
-     * 
+     * formName
+     *
      * @var   mixed
      * @see   ____var_see____
      * @since 1.0.0
@@ -77,8 +76,8 @@ class CategorySelect extends \XLite\View\AView
     public $formName;
 
     /**
-     * selectedCategory 
-     * 
+     * selectedCategory
+     *
      * @var   mixed
      * @see   ____var_see____
      * @since 1.0.0
@@ -88,7 +87,7 @@ class CategorySelect extends \XLite\View\AView
 
     /**
      * Get categories list
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -125,7 +124,7 @@ class CategorySelect extends \XLite\View\AView
 
     /**
      * Check - display 'No categories' option or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -171,8 +170,8 @@ class CategorySelect extends \XLite\View\AView
     }
 
     /**
-     * Get categories condition 
-     * 
+     * Get categories condition
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -184,9 +183,9 @@ class CategorySelect extends \XLite\View\AView
 
     /**
      * Check - specified category selected or not
-     * 
+     *
      * @param \XLite\Model\Category $category Category
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -205,7 +204,7 @@ class CategorySelect extends \XLite\View\AView
     /**
      * getSelectedCategory
      * TODO: check if we need this function
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -218,13 +217,13 @@ class CategorySelect extends \XLite\View\AView
 
         return $this->selectedCategory;
     }
-    
+
     /**
-     * setFieldName 
+     * setFieldName
      * TODO: check if we need this function
-     * 
+     *
      * @param string $name Field name
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -239,12 +238,12 @@ class CategorySelect extends \XLite\View\AView
     }
 
     /**
-     * getIndentation 
-     * 
+     * getIndentation
+     *
      * @param \XLite\Model\Category $category   Category model object
      * @param integer               $multiplier Level's multiplier
-     *  
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */

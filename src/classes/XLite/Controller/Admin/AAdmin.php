@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,15 +28,15 @@
 namespace XLite\Controller\Admin;
 
 /**
- * Abstarct admin-zone controller 
- * 
+ * Abstarct admin-zone controller
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\Controller\AController
 {
     /**
-     * Name of temporary variable to store time 
+     * Name of temporary variable to store time
      * of last request to marketplace
      */
     const MARKETPLACE_LAST_REQUEST_TIME = 'marketplaceLastRequestTime';
@@ -45,7 +44,7 @@ abstract class AAdmin extends \XLite\Controller\AController
 
     /**
      * List of recently logged in administrators
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -55,7 +54,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     /**
      * Check if current page is accessible
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -83,8 +82,8 @@ abstract class AAdmin extends \XLite\Controller\AController
 
     /**
      * Check form id
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -95,7 +94,7 @@ abstract class AAdmin extends \XLite\Controller\AController
 
     /**
      * Get current language code
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -109,7 +108,7 @@ abstract class AAdmin extends \XLite\Controller\AController
 
     /**
      * Returns 'maintenance_mode' string if frontend is closed or null otherwise
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -120,8 +119,8 @@ abstract class AAdmin extends \XLite\Controller\AController
     }
 
     /**
-     * Get access level 
-     * 
+     * Get access level
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -133,7 +132,7 @@ abstract class AAdmin extends \XLite\Controller\AController
 
     /**
      * Handles the request to admin interface
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -142,7 +141,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     {
         // Check if user is logged in and has a right access level
         if (
-            !\XLite\Core\Auth::getInstance()->isAuthorized($this) 
+            !\XLite\Core\Auth::getInstance()->isAuthorized($this)
             && !$this->isPublicZone()
         ) {
             \XLite\Core\Session::getInstance()->lastWorkingURL = $this->get('url');
@@ -161,8 +160,8 @@ abstract class AAdmin extends \XLite\Controller\AController
     }
 
     /**
-     * Get recently logged in admins 
-     * 
+     * Get recently logged in admins
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -170,7 +169,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     public function getRecentAdmins()
     {
         if (
-            \XLite\Core\Auth::getInstance()->isLogged() 
+            \XLite\Core\Auth::getInstance()->isLogged()
             && is_null($this->recentAdmins)
         ) {
             $this->recentAdmins = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findRecentAdmins();
@@ -178,10 +177,10 @@ abstract class AAdmin extends \XLite\Controller\AController
 
         return $this->recentAdmins;
     }
-    
+
     /**
-     * Check if upgrade or update is available on Marketplace. 
-     * 
+     * Check if upgrade or update is available on Marketplace.
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -197,11 +196,11 @@ abstract class AAdmin extends \XLite\Controller\AController
             )
         );
     }
- 
+
     /**
      * Check if form id is valid or not
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -237,7 +236,7 @@ abstract class AAdmin extends \XLite\Controller\AController
 
     /**
      * Check - is current place public or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -246,10 +245,10 @@ abstract class AAdmin extends \XLite\Controller\AController
     {
         return 'login' == \XLite\Core\Request::getInstance()->target;
     }
-   
+
     /**
      * Start simplified page to display progress of some process
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -257,7 +256,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     protected function startDump()
     {
         parent::startDump();
-        
+
         if (!isset(\XLite\Core\Request::getInstance()->mode) || 'cp' != \XLite\Core\Request::getInstance()->mode) {
             $this->displayPageHeader();
         }
@@ -265,7 +264,7 @@ abstract class AAdmin extends \XLite\Controller\AController
 
     /**
      * Display header of simplified page
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -298,8 +297,8 @@ OUT;
     }
 
     /**
-     * displayPageFooter 
-     * 
+     * displayPageFooter
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -325,8 +324,8 @@ OUT;
     }
 
     /**
-     * getPageReturnURL 
-     * 
+     * getPageReturnURL
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -338,7 +337,7 @@ OUT;
 
     /**
      * Check - current target and action is ignored (form id validation is disabled) or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -379,13 +378,13 @@ OUT;
                 }
             }
         }
-        
+
         return $result;
     }
 
     /**
-     * Define common ignored targets 
-     * 
+     * Define common ignored targets
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -399,8 +398,8 @@ OUT;
     }
 
     /**
-     * Define special ignored targets 
-     * 
+     * Define special ignored targets
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -414,9 +413,9 @@ OUT;
 
     /**
      * Check - rule is exists with current target and action or not
-     * 
+     *
      * @param array $rules Rules
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -434,10 +433,10 @@ OUT;
     }
 
     /**
-     * Sanitize Clean URL 
-     * 
+     * Sanitize Clean URL
+     *
      * @param string $cleanURL Clean URL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -451,11 +450,11 @@ OUT;
     // {{{ Methods to work with the received data
 
     /**
-     * getRequestDataByPrefix 
-     * 
+     * getRequestDataByPrefix
+     *
      * @param string $prefix Index in the request array
      * @param string $field  Name of the field to retrieve OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -466,10 +465,10 @@ OUT;
     }
 
     /**
-     * getPostedData 
-     * 
+     * getPostedData
+     *
      * @param string $field Name of the field to retrieve OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -480,8 +479,8 @@ OUT;
     }
 
     /**
-     * getToDelete 
-     * 
+     * getToDelete
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

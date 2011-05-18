@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Controller;
 
 /**
  * Abstract controller
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -60,7 +59,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Object to keep action status
-     * 
+     *
      * @var   \XLite\Model\ActionError\Abstract
      * @see   ____var_see____
      * @since 1.0.0
@@ -68,8 +67,8 @@ abstract class AController extends \XLite\Core\Handler
     protected $actionStatus;
 
     /**
-     * Breadcrumbs 
-     * 
+     * Breadcrumbs
+     *
      * @var   \XLite\View\Location
      * @see   ____var_see____
      * @since 1.0.0
@@ -77,8 +76,8 @@ abstract class AController extends \XLite\Core\Handler
     protected $locationPath;
 
     /**
-     * returnURL 
-     * 
+     * returnURL
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -86,8 +85,8 @@ abstract class AController extends \XLite\Core\Handler
     protected $returnURL;
 
     /**
-     * params 
-     * 
+     * params
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -98,7 +97,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Validity flag
      * TODO - check where it's really needed
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -108,7 +107,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Get target by controller class name
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -120,7 +119,7 @@ abstract class AController extends \XLite\Core\Handler
         return \Includes\Utils\Converter::convertFromCamelCase(lcfirst(array_pop($parts)));
     }
 
-    /** 
+    /**
      * Get current page
      *
      * @return string
@@ -135,8 +134,8 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * getPages 
-     * 
+     * getPages
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -161,7 +160,7 @@ abstract class AController extends \XLite\Core\Handler
     public function getAllParams($exeptions = null)
     {
         $result = array();
-        
+
         $exeptions = isset($exeptions) ? explode(',', $exeptions) : false;
 
         foreach ($this->get('params') as $name) {
@@ -177,7 +176,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * isRedirectNeeded
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -212,11 +211,11 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Get the full URL of the page
-     * Example: getShopURL('cart.php') = "http://domain/dir/cart.php 
-     * 
+     * Example: getShopURL('cart.php') = "http://domain/dir/cart.php
+     *
      * @param string  $url    Relative URL OPTIONAL
      * @param boolean $secure Flag to use HTTPS OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -274,9 +273,9 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Get current URL with additional params
-     * 
+     *
      * @param array $params Query params to use
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -288,9 +287,9 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Handles the request.
-     * Parses the request variables if necessary. Attempts to call the specified action function 
+     * Parses the request variables if necessary. Attempts to call the specified action function
      * FIXME - simplify
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -314,7 +313,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Alias: check for an AJAX request
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -326,7 +325,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Return Viewer object
-     * 
+     *
      * @return \XLite\View\Controller
      * @see    ____func_see____
      * @since  1.0.0
@@ -339,8 +338,8 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Process request 
-     * 
+     * Process request
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -352,7 +351,7 @@ abstract class AController extends \XLite\Core\Handler
 
         if ($this->isAJAX()) {
             $this->printAJAXOuput($viewer->getContent());
-            
+
         } else {
             $viewer->display();
         }
@@ -362,7 +361,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * This function called after template output
      * FIXME - may be there is a better way to handle this?
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -373,7 +372,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Return the current page title (for the content area)
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -384,8 +383,8 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Check whether the title is to be displayed in the content area 
-     * 
+     * Check whether the title is to be displayed in the content area
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -397,7 +396,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Return the page title (for the <title> tag)
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -410,7 +409,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Check if an error occured
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -420,12 +419,12 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * setActionStatus 
-     * 
+     * setActionStatus
+     *
      * @param integer $status  Error/success
      * @param string  $message Status info OPTIONAL
      * @param integer $code    Status code OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -436,11 +435,11 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * setActionError 
-     * 
+     * setActionError
+     *
      * @param string  $message Status info  OPTIONAL
      * @param integer $code    Status code OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -466,10 +465,10 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Check if handler is valid 
+     * Check if handler is valid
      * TODO - check where it's really needed
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -480,7 +479,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Initialize controller
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -489,10 +488,10 @@ abstract class AController extends \XLite\Core\Handler
     {
         parent::init();
     }
-        
+
     /**
      * Check - is secure connection or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -503,8 +502,8 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Get access level 
-     * 
+     * Get access level
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -515,8 +514,8 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * getProperties 
-     * 
+     * getProperties
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -524,19 +523,19 @@ abstract class AController extends \XLite\Core\Handler
     public function getProperties()
     {
         $result = array();
-        
+
         foreach ($_REQUEST as $name => $value) {
             $result[$name] = $this->get($name);
         }
-        
+
         return $result;
     }
 
     /**
-     * getURL 
-     * 
+     * getURL
+     *
      * @param array $params URL parameters OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -546,15 +545,15 @@ abstract class AController extends \XLite\Core\Handler
         $params = array_merge($this->getAllParams(), $params);
 
         $target = isset($params['target']) ? $params['target'] : '';
-        
+
         unset($params['target']);
 
         return $this->buildURL($target, '', $params);
     }
 
     /**
-     * getPageTemplate 
-     * 
+     * getPageTemplate
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -568,7 +567,7 @@ abstract class AController extends \XLite\Core\Handler
      * Return the array(pages) for tabber
      * FIXME - move to the Controller/Admin/Abstract.php:
      * tabber is not used in customer area
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -579,8 +578,8 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * getUploadedFile 
-     * 
+     * getUploadedFile
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -591,27 +590,27 @@ abstract class AController extends \XLite\Core\Handler
 
         if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
             $file = $_FILES['userfile']['tmp_name'];
-        
+
         } elseif (is_readable($_POST['localfile'])) {
             $file = $_POST['localfile'];
-        
+
         } else {
             $this->doDie('FAILED: data file unspecified');
         }
-        
+
         // security check
         $name = $_FILES['userfile']['name'];
-        
+
         if (strstr($name, '../') || strstr($name, '..\\')) {
             $this->doDie('ACCESS DENIED');
         }
-        
+
         return $file;
     }
 
     /**
-     * checkUploadedFile 
-     * 
+     * checkUploadedFile
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -622,10 +621,10 @@ abstract class AController extends \XLite\Core\Handler
 
         if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
             $file = $_FILES['userfile']['tmp_name'];
-        
+
         } elseif (is_readable($_POST['localfile'])) {
             $file = $_POST['localfile'];
-        
+
         } else {
             $check = false;
         }
@@ -634,7 +633,7 @@ abstract class AController extends \XLite\Core\Handler
 
             // security check
             $name = $_FILES['userfile']['name'];
-        
+
             if (strstr($name, '../') || strstr($name, '..\\')) {
                 $check = false;
             }
@@ -644,8 +643,8 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Get controller charset 
-     * 
+     * Get controller charset
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -656,8 +655,8 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * isSecure 
-     * 
+     * isSecure
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -666,7 +665,7 @@ abstract class AController extends \XLite\Core\Handler
     {
         return false;
     }
-    
+
     /**
      * Common prefix for editable elements in lists
      *
@@ -698,9 +697,9 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Get current currency 
+     * Get current currency
      * TODO - rework
-     * 
+     *
      * @return \XLite\Model\Currency
      * @see    ____func_see____
      * @since  1.0.0
@@ -713,7 +712,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Return the reserved ID of root category
      *
-     * @return integer 
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -725,7 +724,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Return current category Id
      *
-     * @return integer 
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -758,17 +757,17 @@ abstract class AController extends \XLite\Core\Handler
         return null;
     }
 
-    /**  
+    /**
      * Return model form object
-     * 
+     *
      * @param array $params Form constructor params OPTIONAL
-     *  
+     *
      * @return \XLite\View\Model\AModel|void
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function getModelForm(array $params = array())
-    {    
+    {
         $result = null;
         $class  = $this->getModelFormClass();
 
@@ -777,17 +776,17 @@ abstract class AController extends \XLite\Core\Handler
                 __METHOD__ . $class . (empty($params) ? '' : md5(serialize($params))),
                 $class,
                 $params
-            );   
-        }    
+            );
+        }
 
         return $result;
-    }    
+    }
 
 
     /**
      * Check if current page is accessible
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____var_see____
      * @since  1.0.0
      */
@@ -797,9 +796,9 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Return default redirect code 
-     * 
-     * @return integer 
+     * Return default redirect code
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -810,7 +809,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Default URL to redirect
-     * 
+     *
      * @return string
      * @see    ____var_see____
      * @since  1.0.0
@@ -821,10 +820,10 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Perform redirect 
-     * 
+     * Perform redirect
+     *
      * @param string $url Redirect URL OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____var_see____
      * @since  1.0.0
@@ -840,7 +839,7 @@ abstract class AController extends \XLite\Core\Handler
         // filter xlite_form_id from redirect url
         // FIXME - check if it's really needed
         $action = $this->get('action');
-        
+
         if (empty($action)) {
             $location = $this->filterXliteFormID($location);
         }
@@ -857,7 +856,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Get redirect mode - force redirect or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -868,8 +867,8 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Common method to determine current location 
-     * 
+     * Common method to determine current location
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -881,7 +880,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Add part to the location nodes list
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -892,7 +891,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Add node to the location line
-     * 
+     *
      * @param string $name     Node title
      * @param string $link     Node link OPTIONAL
      * @param array  $subnodes Node subnodes OPTIONAL
@@ -908,7 +907,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Method to create the location line
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -933,7 +932,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Select template to use
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -961,7 +960,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Class name for the \XLite\View\Model\ form (optional)
-     * 
+     *
      * @return string|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -991,7 +990,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Call controller action
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1015,7 +1014,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Run controller
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1031,8 +1030,8 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Do redirect 
-     * 
+     * Do redirect
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1049,7 +1048,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Translate top messages to HTTP headers (AJAX)
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1070,7 +1069,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Assign AJAX response status to HTTP header(s)
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1082,7 +1081,7 @@ abstract class AController extends \XLite\Core\Handler
             // AXAX-based - cancel redirect
             header('ajax-response-status: 0');
             header('not-valid: 1');
-        
+
         } elseif ($this->hardRedirect) {
 
             // Main page redirect
@@ -1105,7 +1104,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Preprocessor for no-action ren
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1116,7 +1115,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Check controller visibility
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -1128,7 +1127,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Display 404 page
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1146,10 +1145,10 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Set internal popup redirect 
-     * 
+     * Set internal popup redirect
+     *
      * @param boolean $flag Internal redirect status OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1163,9 +1162,9 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Set hard (main page redirect) redirect
-     * 
+     *
      * @param boolean $flag Internal redirect status OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1179,9 +1178,9 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Set silence close popup
-     * 
+     *
      * @param boolean $flag Silence close status OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1195,7 +1194,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Check if current viewer is for an AJAX request
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -1207,7 +1206,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Return class of current viewer
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1220,10 +1219,10 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Print AJAX request output 
-     * 
+     * Print AJAX request output
+     *
      * @param string $output Output
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1249,11 +1248,11 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * startDownload 
-     * 
+     * startDownload
+     *
      * @param string $filename    File name
      * @param string $contentType Content type OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1266,8 +1265,8 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * startImage 
-     * 
+     * startImage
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1279,8 +1278,8 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * startDump 
-     * 
+     * startDump
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1299,10 +1298,10 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * filterXliteFormID 
-     * 
+     * filterXliteFormID
+     *
      * @param mixed $url ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1313,10 +1312,10 @@ abstract class AController extends \XLite\Core\Handler
 
             if ($matches[1] == '&') {
                 $param = $matches[1] . $matches[2];
-            
+
             } elseif (empty($matches[3])) {
                 $param = $matches[1] . $matches[2];
-            
+
             } else {
                 $param = $matches[2] . '&';
             }
@@ -1330,7 +1329,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Get viewer parameyers
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

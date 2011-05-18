@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace Includes\Utils;
 
 /**
- * PHARManager 
- * 
+ * PHARManager
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -43,8 +42,8 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
 
     /**
-     * File extensions 
-     * 
+     * File extensions
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -52,13 +51,13 @@ abstract class PHARManager extends \Includes\Utils\AUtils
     protected static $extensions = array(\Phar::GZ => 'gz', \Phar::BZ2 => 'bz2');
 
 
-    // {{{ Public methods 
+    // {{{ Public methods
 
     /**
-     * Create pack for LC core 
-     * 
+     * Create pack for LC core
+     *
      * @param \XLite\Core\Pack\Distr $pack Files to pack
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -71,9 +70,9 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
     /**
      * Create pack for module
-     * 
+     *
      * @param \XLite\Core\Pack\Module $pack Files to pack
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -86,10 +85,10 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
     /**
      * Unpack PHAR archive
-     * 
+     *
      * @param string $file File path
      * @param string $dir  Dir to extract to
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -114,9 +113,9 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
     /**
      * Download pack
-     * 
+     *
      * @param \XLite\Core\Pack\APack $pack Files to pack
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -138,11 +137,11 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
     /**
      * Create PHAR archive
-     * 
+     *
      * @param string    &$name    Pack name
      * @param \Iterator $iterator Directory iterator
      * @param array     $metadata Archive description OPTIONAL
-     *  
+     *
      * @return \Phar
      * @access protected
      * @see    ____func_see____
@@ -170,10 +169,10 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
     /**
      * Create list of archive file hashes and add it to the pack
-     * 
+     *
      * @param \PharData $phar     PHAR archive
      * @param \Iterator $iterator Directory iterator
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -183,7 +182,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
         $data = array();
 
         foreach ($iterator as $filePath => $fileInfo) {
-            $data[\Includes\Utils\FileManager::getRelativePath($filePath, LC_DIR_ROOT)] 
+            $data[\Includes\Utils\FileManager::getRelativePath($filePath, LC_DIR_ROOT)]
                 = \Includes\Utils\FileManager::getHash($filePath);
         }
 
@@ -196,7 +195,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
     /**
      * Check if compression is available
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -220,10 +219,10 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
     /**
      * Check and (if available) compress TAR arctive
-     * 
+     *
      * @param \PharData $phar  Archive to compress
      * @param string    &$name Archive file name
-     *  
+     *
      * @return \PharData
      * @see    ____func_see____
      * @since  1.0.0

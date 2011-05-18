@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,9 +28,9 @@
 namespace Includes;
 
 /**
- * Autoloader 
+ * Autoloader
  * NOTE - this class is abstract due to prevent its instantiation
- * 
+ *
  * @package    XLite
  * @see        ____class_see____
  * @since      1.0.0
@@ -39,8 +38,8 @@ namespace Includes;
 abstract class Autoloader
 {
     /**
-     * List of registerd autoload functions 
-     * 
+     * List of registerd autoload functions
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -54,7 +53,7 @@ abstract class Autoloader
 
     /**
      * The directory where LC classes are located
-     * 
+     *
      * @var    string
      * @access protected
      * @see    ____var_see____
@@ -64,7 +63,7 @@ abstract class Autoloader
 
     /**
      * Register the autoload function for the Doctrine library
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -83,7 +82,7 @@ abstract class Autoloader
 
     /**
      * Autoloader for PEAR2
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -95,11 +94,11 @@ abstract class Autoloader
 
     /**
      * Common autoloader
-     * 
+     *
      * @param string $namespace namespace to check
      * @param string $class     class to load
      * @param string $dir       path to the PHP files
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -109,16 +108,16 @@ abstract class Autoloader
     {
         /**
          * NOTE: it's the PHP bug: in some cases it adds or removes the leading slash. Examples:
-         * 
-         * 1. For static call "\Includes\Decorator\Utils\CacheManager::rebuildCache()" it will remove 
+         *
+         * 1. For static call "\Includes\Decorator\Utils\CacheManager::rebuildCache()" it will remove
          * the leading slash, and class name passed in this function will be "Includes\Decorator\Utils\CacheManager".
-         * 
+         *
          * 2. Pass class name as a string into the functions, e.g.
-         * "is_subclass_of($object, '\Includes\Decorator\Utils\CacheManager')". Then the class 
+         * "is_subclass_of($object, '\Includes\Decorator\Utils\CacheManager')". Then the class
          * name will be passed into the autoloader with the leading slash - "\Includes\Decorator\Utils\CacheManager"
          *
          * Remove the "ltrim()" call when this issue will be resolved
-         * 
+         *
          * May be that issue is related: http://bugs.php.net/50731
          */
         if (0 === strpos($class = ltrim($class, '\\'), $namespace)) {
@@ -129,9 +128,9 @@ abstract class Autoloader
 
     /**
      * Main LC autoloader
-     * 
+     *
      * @param string $class name of the class to load
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -144,9 +143,9 @@ abstract class Autoloader
 
     /**
      * Autoloader for the "includes"
-     * 
+     *
      * @param string $class name of the class to load
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -159,9 +158,9 @@ abstract class Autoloader
 
     /**
      * Add an autoload function to the list
-     * 
+     *
      * @param string $method function name
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -180,7 +179,7 @@ abstract class Autoloader
 
     /**
      * Register autoload functions
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -201,7 +200,7 @@ abstract class Autoloader
 
     /**
      * Return path ot the autoloader current dir
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -213,9 +212,9 @@ abstract class Autoloader
 
     /**
      * Switch autoload directory from var/run/classes/ to classes/
-     * 
+     *
      * @param string $dir New autoload directory
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

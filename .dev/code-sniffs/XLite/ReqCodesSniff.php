@@ -84,7 +84,7 @@ abstract class XLite_ReqCodesSniff implements PHP_CodeSniffer_Sniff
 
 	/**
 	 * Check - is internal project or not
-	 * 
+	 *
 	 * @return boolean
 	 * @access protected
 	 * @see    ____func_see____

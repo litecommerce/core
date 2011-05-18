@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,7 +28,7 @@
 
 /**
  * LiteCommerce installation procedures
- * 
+ *
  * @package LiteCommerce
  * @see     ____class_see____
  * @since   1.0.0
@@ -50,7 +49,7 @@ class InstallTestDockblocks { }
 
 /**
  * Returns a processed text by specified label value
- * 
+ *
  * @param $label string Label value
  * @param $substitute array Array for substitution parameters in the text found by label
  *
@@ -73,7 +72,7 @@ function xtr($label, array $substitute = array())
 
 /**
  * Returns a text by label. If label not found in translation file then label itself will be returned
- * 
+ *
  * @param $label string Label value
  *
  * @return string
@@ -128,7 +127,7 @@ function getTextByLabel($label)
 
 /**
  * Write a record to log
- * 
+ *
  * @param $message string The log message
  *
  * @return void
@@ -190,7 +189,7 @@ OUT;
 
 /**
  * Mask some private data in the $params array to avoid this to be passeded to the log
- * 
+ *
  * @param $param array An array $_POST or $_GET
  *
  * @return void
@@ -229,14 +228,14 @@ function x_install_log_mask_params($params)
 
 /**
  * Perform the requirements checking
- * 
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
  * @since  1.0.0
  */
 function doCheckRequirements()
-{ 
+{
     $checkRequirements = array();
 
     $checkRequirements['lc_install_script'] = array(
@@ -400,10 +399,10 @@ function doCheckRequirements()
 
 /**
  * Check if DocBlock feature is supported
- * 
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -412,11 +411,11 @@ function doCheckRequirements()
 function checkDocblocksSupport(&$errorMsg, $value = null)
 {
     $rc = new ReflectionClass('InstallTestDockblocks');
-    
+
     $docblock = $rc->getDocComment();
-    
+
     $result = !empty($docblock) && preg_match('/@(param|return)/', $docblock);
-    
+
     if (!$result) {
         $errorMsg = xtr('DockBlock is not supported message');
 
@@ -430,10 +429,10 @@ function checkDocblocksSupport(&$errorMsg, $value = null)
 
 /**
  * Check if install.php file exists
- * 
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -442,7 +441,7 @@ function checkDocblocksSupport(&$errorMsg, $value = null)
 function checkInstallScript(&$errorMsg, $value = null)
 {
     $result = @file_exists(LC_DIR_ROOT . 'install.php');
-    
+
     if (!$result) {
         $errorMsg = xtr('LiteCommerce installation script not found. Restore it  and try again');
     }
@@ -452,10 +451,10 @@ function checkInstallScript(&$errorMsg, $value = null)
 
 /**
  * Check an ability to do HTTP requests to the server where LiteCommerce located
- * 
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -477,10 +476,10 @@ function checkLoopback(&$errorMsg, $value = null)
 
 /**
  * Check PHP version
- * 
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -503,15 +502,15 @@ function checkPhpVersion(&$errorMsg, &$value)
         $result = false;
         $errorMsg = xtr('PHP Version must be not greater than :maxver', array(':maxver' => constant('LC_PHP_VERSION_MAX')));
     }
-    
+
     if ($result && isset($lcSettings['forbidden_php_versions']) && is_array($lcSettings['forbidden_php_versions'])) {
 
         foreach ($lcSettings['forbidden_php_versions'] as $fpv) {
 
             if (version_compare($currentPhpVersion, $fpv['min']) >= 0) {
-        
+
                 $result = false;
-    
+
                 if (isset($fpv['max']) && version_compare($currentPhpVersion, $fpv['max']) > 0) {
                     $result = true;
 
@@ -528,10 +527,10 @@ function checkPhpVersion(&$errorMsg, &$value)
 
 /**
  * Check if php.ini file disabled some functions
- * 
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -555,8 +554,8 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
 }
 
 /**
- * Get allowed value 'disable_functions' PHP option 
- * 
+ * Get allowed value 'disable_functions' PHP option
+ *
  * @return string
  * @see    ____func_see____
  * @since  1.0.0
@@ -570,7 +569,7 @@ function getAllowedDisableFunctionsValue()
 
 /**
  * Get disabled functions lists
- * 
+ *
  * @return array (unallowed & allowed)
  * @see    ____func_see____
  * @since  1.0.0
@@ -578,50 +577,50 @@ function getAllowedDisableFunctionsValue()
 function getDisabledFunctions()
 {
     static $usedFunctions = array(
-        'call_user_func', 'is_null', 'doubleval', 'define', 'explode', 'join', 'time', 'addslashes', 'array_keys', 'ceil', 
-        'preg_match', 'preg_replace', 'serialize', 'unserialize', 'is_array', 'error_reporting', 'parse_url', 'strpos', 'setcookie', 'in_array', 
-        'is_object', 'is_string', 'dirname', 'fopen', 'fwrite', 'fclose', 'file_get_contents', 'opendir', 'readdir', 'is_file', 
-        'substr', 'closedir', 'str_replace', 'array_merge', 'count', 'strcasecmp', 'urldecode', 'memory_get_usage', 'printf', 'file_exists', 
-        'function_exists', 'gettype', 'htmlspecialchars', 'is_readable', 'pathinfo', 'basename', 'strlen', 'strtr', 'header', 'array_unique', 
-        'array_values', 'is_scalar', 'stristr', 'is_writable', 'ini_get', 'ini_set', 'strtolower', 'strcspn', 'parse_ini_file', 'realpath', 
-        'chmod', 'current', 'implode', 'array_map', 'intval', 'filesize', 'fread', 'md5', 'is_integer', 'urlencode', 
-        'curl_version', 'curl_init', 'curl_setopt', 'curl_exec', 'curl_errno', 'curl_error', 'curl_close', 'exec', 'unlink', 'proc_open', 
-        'is_resource', 'fputs', 'feof', 'proc_close', 'trim', 'sys_get_temp_dir', 'tempnam', 'xml_get_error_code', 'xml_error_string', 'xml_get_current_byte_index', 
-        'xml_parser_create', 'xml_parse_into_struct', 'xml_parser_free', 'substr_count', 'str_repeat', 'preg_grep', 'is_writeable', 'strtoupper', 'array_key_exists', 'array_search', 
-        'fgets', 'getimagesize', 'max', 'next', 'array_shift', 'min', 'mysql_insert_id', 'print_r', 'is_numeric', 'sprintf', 
-        'round', 'func_get_args', 'get_class', 'split', 'umask', 'uasort', 'strcmp', 'array_multisort', 'method_exists', 'var_dump', 
-        'call_user_func_array', 'file', 'log', 'microtime', 'get_included_files', 'usort', 'array_sum', 'number_format', 'debug_backtrace', 'array_slice', 
-        'readfile', 'file_put_contents', 'glob', 'is_uploaded_file', 'rawurlencode', 'move_uploaded_file', 'copy', 'rand', 'imagecreatetruecolor', 'imagealphablending', 
-        'imagesavealpha', 'imagecopyresampled', 'imagedestroy', 'uniqid', 'each', 'reset', 'ip2long', 'srand', 'system', 'stripslashes', 
-        'array_intersect', 'preg_split', 'mysql_real_escape_string', 'array_combine', 'is_int', 'key', 'get_object_vars', 'property_exists', 'mysql_select_db', 'mysql_fetch_row', 
-        'mysql_free_result', 'mysql_fetch_assoc', 'mysql_query', 'mysql_errno', 'mysql_error', 'flush', 'mysql_list_fields', 'mysql_num_fields', 'mysql_field_table', 'mysql_field_name', 
-        'mysql_field_type', 'mysql_field_len', 'mysql_field_flags', 'strncmp', 'array_flip', 'ob_start', 'ob_end_clean', 'extension_loaded', 'ord', 'array_splice', 
-        'mt_rand', 'imagecolorallocate', 'imagefilledrectangle', 'imagesx', 'imagesy', 'sin', 'imagecolorat', 'floor', 'imagesetpixel', 'imagedashedline', 
-        'imagecreatefrompng', 'imagecopymerge', 'chr', 'is_dir', 'array_reverse', 'base64_encode', 'strval', 'class_exists', 'ucfirst', 'strrpos', 
-        'mkdir', 'rename', 'rtrim', 'array_unshift', 'array_push', 'hash', 'imagepng', 'mktime', 'strtotime', 'date', 
-        'iconv', 'set_time_limit', 'getdate', 'strftime', 'ob_get_contents', 'strip_tags', 'sort', 'array_chunk', 'mysql_get_server_info', 'mysql_get_client_info', 
-        'getcwd', 'phpinfo', 'gd_info', 'fileperms', 'base_convert', 'asort', 'array_diff', 'array_pop', 'strstr', 'mt_srand', 
-        'hash_hmac', 'pack', 'str_pad', 'version_compare', 'get_class_methods', 'defined', 'getenv', 'parse_str', 'popen', 'pclose', 
-        'ksort', 'floatval', 'abs', 'var_export', 'base64_decode', 'strspn', 'bin2hex', 'ltrim', 'preg_match_all', 
-        'sizeof', 'range', 'array_filter', 'array_fill', 'imagecreate', 'imagerectangle', 'imagestring', 'imagejpeg', 'strrev', 'htmlentities', 
-        'chdir', 'openssl_pkey_get_public', 'str_split', 'openssl_public_encrypt', 'openssl_get_privatekey', 'openssl_private_decrypt', 'openssl_free_key', 'mysql_connect', 'nl2br', 'escapeshellarg', 
-        'get_parent_class', 'ob_flush', 'ob_get_length', 'ob_end_flush', 'get_magic_quotes_gpc', 'ob_clean', 'ftp_connect', 'ftp_login', 'ftp_fput', 'ftp_quit', 
-        'get_html_translation_table', 'ucwords', 'is_executable', 'arsort', 'krsort', 'is_callable', 'end', 'http_build_query', 'array_intersect_key', 'array_fill_keys', 
-        'array_intersect_assoc', 'filemtime', 'touch', 'date_format', 'array_pad', 'gmdate', 'preg_quote', 'set_error_handler', 'constant', 'is_bool', 
-        'is_float', 'curl_getinfo', 'curl_setopt_array', 'stream_get_transports', 'stream_context_create', 'stream_context_set_option', 'stream_socket_client', 'stream_socket_enable_crypto', 'stream_set_timeout', 'stream_get_meta_data', 
-        'hexdec', 'rewind', 'gzinflate', 'unpack', 'crc32', 'gzuncompress', 'fstat', 'phpversion', 'rawurldecode', 'extract', 
-        'gzopen', 'bzopen', 'gzclose', 'bzclose', 'gzputs', 'bzwrite', 'gzread', 'bzread', 'gzseek', 'gztell', 
-        'fseek', 'ftell', 'stat', 'clearstatcache', 'gzeof', 'error_log', 'mail', 'register_shutdown_function', 'headers_sent', 'sqlite_close', 
-        'sqlite_escape_string', 'sqlite_unbuffered_query', 'sqlite_query', 'sqlite_num_rows', 'is_a', 'fflush', 'fsockopen', 'flock', 'octdec', 'openlog', 
-        'syslog', 'closelog', 'filter_var', 'escapeshellcmd', 'openssl_pkcs7_sign', 'openssl_error_string', 'get_magic_quotes_runtime', 'set_magic_quotes_runtime', 'chunk_split', 'addcslashes', 
-        'stream_get_filters', 'stream_filter_append', 'stream_get_contents', 'stream_filter_remove', 'html_entity_decode', 'openssl_pkey_get_private', 'openssl_sign', 'sha1', 'restore_error_handler', 'socket_set_timeout', 
-        'socket_get_status', 'getservbyname', 'gethostbyname', 'socket_set_blocking', 'stream_set_write_buffer', 'stream_select', 'trigger_error', 'imagecopy', 'imageconvolution', 
-        'natcasesort', 'ctype_xdigit', 'ob_get_clean', 'ctype_digit', 'is_infinite', 'str_ireplace', 'array_reduce', 'create_function', 'preg_last_error', 'json_encode', 
-        'json_decode', 'simplexml_load_string', 'strtok', 'class_parents', 'posix_isatty', 'get_defined_vars', 'getmypid', 'stripos', 'array_change_key_case', 'spliti', 
-        'checkdate', 'checkdnsrr', 'soundex', 'acos', 'pi', 'cos', 'func_num_args', 'func_get_arg', 'is_subclass_of', 'localeconv', 
-        'get_declared_classes', 'array_udiff', 'get_declared_interfaces', 'php_strip_whitespace', 'class_implements', 'interface_exists', 'rsort', 'preg_replace_callback', 'scandir', 'rmdir', 
-        'dir', 'array_diff_key', 'gzcompress', 'link', 'mysql_fetch_array', 'substr_replace', 'mysql_list_tables', 'mysql_close', 'php_sapi_name', 'date_default_timezone_set', 
-        'date_default_timezone_get', 'set_include_path', 'get_include_path', 'spl_autoload_register', 'chop', 'sleep', 
+        'call_user_func', 'is_null', 'doubleval', 'define', 'explode', 'join', 'time', 'addslashes', 'array_keys', 'ceil',
+        'preg_match', 'preg_replace', 'serialize', 'unserialize', 'is_array', 'error_reporting', 'parse_url', 'strpos', 'setcookie', 'in_array',
+        'is_object', 'is_string', 'dirname', 'fopen', 'fwrite', 'fclose', 'file_get_contents', 'opendir', 'readdir', 'is_file',
+        'substr', 'closedir', 'str_replace', 'array_merge', 'count', 'strcasecmp', 'urldecode', 'memory_get_usage', 'printf', 'file_exists',
+        'function_exists', 'gettype', 'htmlspecialchars', 'is_readable', 'pathinfo', 'basename', 'strlen', 'strtr', 'header', 'array_unique',
+        'array_values', 'is_scalar', 'stristr', 'is_writable', 'ini_get', 'ini_set', 'strtolower', 'strcspn', 'parse_ini_file', 'realpath',
+        'chmod', 'current', 'implode', 'array_map', 'intval', 'filesize', 'fread', 'md5', 'is_integer', 'urlencode',
+        'curl_version', 'curl_init', 'curl_setopt', 'curl_exec', 'curl_errno', 'curl_error', 'curl_close', 'exec', 'unlink', 'proc_open',
+        'is_resource', 'fputs', 'feof', 'proc_close', 'trim', 'sys_get_temp_dir', 'tempnam', 'xml_get_error_code', 'xml_error_string', 'xml_get_current_byte_index',
+        'xml_parser_create', 'xml_parse_into_struct', 'xml_parser_free', 'substr_count', 'str_repeat', 'preg_grep', 'is_writeable', 'strtoupper', 'array_key_exists', 'array_search',
+        'fgets', 'getimagesize', 'max', 'next', 'array_shift', 'min', 'mysql_insert_id', 'print_r', 'is_numeric', 'sprintf',
+        'round', 'func_get_args', 'get_class', 'split', 'umask', 'uasort', 'strcmp', 'array_multisort', 'method_exists', 'var_dump',
+        'call_user_func_array', 'file', 'log', 'microtime', 'get_included_files', 'usort', 'array_sum', 'number_format', 'debug_backtrace', 'array_slice',
+        'readfile', 'file_put_contents', 'glob', 'is_uploaded_file', 'rawurlencode', 'move_uploaded_file', 'copy', 'rand', 'imagecreatetruecolor', 'imagealphablending',
+        'imagesavealpha', 'imagecopyresampled', 'imagedestroy', 'uniqid', 'each', 'reset', 'ip2long', 'srand', 'system', 'stripslashes',
+        'array_intersect', 'preg_split', 'mysql_real_escape_string', 'array_combine', 'is_int', 'key', 'get_object_vars', 'property_exists', 'mysql_select_db', 'mysql_fetch_row',
+        'mysql_free_result', 'mysql_fetch_assoc', 'mysql_query', 'mysql_errno', 'mysql_error', 'flush', 'mysql_list_fields', 'mysql_num_fields', 'mysql_field_table', 'mysql_field_name',
+        'mysql_field_type', 'mysql_field_len', 'mysql_field_flags', 'strncmp', 'array_flip', 'ob_start', 'ob_end_clean', 'extension_loaded', 'ord', 'array_splice',
+        'mt_rand', 'imagecolorallocate', 'imagefilledrectangle', 'imagesx', 'imagesy', 'sin', 'imagecolorat', 'floor', 'imagesetpixel', 'imagedashedline',
+        'imagecreatefrompng', 'imagecopymerge', 'chr', 'is_dir', 'array_reverse', 'base64_encode', 'strval', 'class_exists', 'ucfirst', 'strrpos',
+        'mkdir', 'rename', 'rtrim', 'array_unshift', 'array_push', 'hash', 'imagepng', 'mktime', 'strtotime', 'date',
+        'iconv', 'set_time_limit', 'getdate', 'strftime', 'ob_get_contents', 'strip_tags', 'sort', 'array_chunk', 'mysql_get_server_info', 'mysql_get_client_info',
+        'getcwd', 'phpinfo', 'gd_info', 'fileperms', 'base_convert', 'asort', 'array_diff', 'array_pop', 'strstr', 'mt_srand',
+        'hash_hmac', 'pack', 'str_pad', 'version_compare', 'get_class_methods', 'defined', 'getenv', 'parse_str', 'popen', 'pclose',
+        'ksort', 'floatval', 'abs', 'var_export', 'base64_decode', 'strspn', 'bin2hex', 'ltrim', 'preg_match_all',
+        'sizeof', 'range', 'array_filter', 'array_fill', 'imagecreate', 'imagerectangle', 'imagestring', 'imagejpeg', 'strrev', 'htmlentities',
+        'chdir', 'openssl_pkey_get_public', 'str_split', 'openssl_public_encrypt', 'openssl_get_privatekey', 'openssl_private_decrypt', 'openssl_free_key', 'mysql_connect', 'nl2br', 'escapeshellarg',
+        'get_parent_class', 'ob_flush', 'ob_get_length', 'ob_end_flush', 'get_magic_quotes_gpc', 'ob_clean', 'ftp_connect', 'ftp_login', 'ftp_fput', 'ftp_quit',
+        'get_html_translation_table', 'ucwords', 'is_executable', 'arsort', 'krsort', 'is_callable', 'end', 'http_build_query', 'array_intersect_key', 'array_fill_keys',
+        'array_intersect_assoc', 'filemtime', 'touch', 'date_format', 'array_pad', 'gmdate', 'preg_quote', 'set_error_handler', 'constant', 'is_bool',
+        'is_float', 'curl_getinfo', 'curl_setopt_array', 'stream_get_transports', 'stream_context_create', 'stream_context_set_option', 'stream_socket_client', 'stream_socket_enable_crypto', 'stream_set_timeout', 'stream_get_meta_data',
+        'hexdec', 'rewind', 'gzinflate', 'unpack', 'crc32', 'gzuncompress', 'fstat', 'phpversion', 'rawurldecode', 'extract',
+        'gzopen', 'bzopen', 'gzclose', 'bzclose', 'gzputs', 'bzwrite', 'gzread', 'bzread', 'gzseek', 'gztell',
+        'fseek', 'ftell', 'stat', 'clearstatcache', 'gzeof', 'error_log', 'mail', 'register_shutdown_function', 'headers_sent', 'sqlite_close',
+        'sqlite_escape_string', 'sqlite_unbuffered_query', 'sqlite_query', 'sqlite_num_rows', 'is_a', 'fflush', 'fsockopen', 'flock', 'octdec', 'openlog',
+        'syslog', 'closelog', 'filter_var', 'escapeshellcmd', 'openssl_pkcs7_sign', 'openssl_error_string', 'get_magic_quotes_runtime', 'set_magic_quotes_runtime', 'chunk_split', 'addcslashes',
+        'stream_get_filters', 'stream_filter_append', 'stream_get_contents', 'stream_filter_remove', 'html_entity_decode', 'openssl_pkey_get_private', 'openssl_sign', 'sha1', 'restore_error_handler', 'socket_set_timeout',
+        'socket_get_status', 'getservbyname', 'gethostbyname', 'socket_set_blocking', 'stream_set_write_buffer', 'stream_select', 'trigger_error', 'imagecopy', 'imageconvolution',
+        'natcasesort', 'ctype_xdigit', 'ob_get_clean', 'ctype_digit', 'is_infinite', 'str_ireplace', 'array_reduce', 'create_function', 'preg_last_error', 'json_encode',
+        'json_decode', 'simplexml_load_string', 'strtok', 'class_parents', 'posix_isatty', 'get_defined_vars', 'getmypid', 'stripos', 'array_change_key_case', 'spliti',
+        'checkdate', 'checkdnsrr', 'soundex', 'acos', 'pi', 'cos', 'func_num_args', 'func_get_arg', 'is_subclass_of', 'localeconv',
+        'get_declared_classes', 'array_udiff', 'get_declared_interfaces', 'php_strip_whitespace', 'class_implements', 'interface_exists', 'rsort', 'preg_replace_callback', 'scandir', 'rmdir',
+        'dir', 'array_diff_key', 'gzcompress', 'link', 'mysql_fetch_array', 'substr_replace', 'mysql_list_tables', 'mysql_close', 'php_sapi_name', 'date_default_timezone_set',
+        'date_default_timezone_get', 'set_include_path', 'get_include_path', 'spl_autoload_register', 'chop', 'sleep',
     );
 
     $value = @ini_get('disable_functions');
@@ -641,10 +640,10 @@ function getDisabledFunctions()
 
 /**
  * Check PHP option memory_limit
- * 
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -653,7 +652,7 @@ function getDisabledFunctions()
 function checkPhpMemoryLimit(&$errorMsg, &$value)
 {
     $result = true;
-    
+
     $value = @ini_get("memory_limit");
 
     if (is_disabled_memory_limit()) {
@@ -673,10 +672,10 @@ function checkPhpMemoryLimit(&$errorMsg, &$value)
 
 /**
  * Check if PHP option file_uploads is on/off
- * 
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -698,10 +697,10 @@ function checkPhpFileUploads(&$errorMsg, &$value)
 
 /**
  * Check if MySQL support is turned on in PHP settings
- * 
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -725,10 +724,10 @@ function checkPhpMysqlSupport(&$errorMsg, &$value)
 
 /**
  * Check if PDO extension and PDO MySQL driver installed
- * 
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -751,11 +750,11 @@ function checkPhpPdoMysql(&$errorMsg, &$value)
 }
 
 /**
- * Check if PHP option upload_max_filesize presented 
- * 
+ * Check if PHP option upload_max_filesize presented
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -777,10 +776,10 @@ function checkPhpUploadMaxFilesize(&$errorMsg, &$value)
 
 /**
  * Check the memory allocation
- * 
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -789,7 +788,7 @@ function checkPhpUploadMaxFilesize(&$errorMsg, &$value)
 function checkMemAllocation(&$errorMsg, &$value)
 {
     $result = true;
-    
+
     $sizes = array(32, 64, 128);
 
     $currentMemoryLimit = convert_ini_str_to_int(@ini_get('memory_limit'));
@@ -801,18 +800,18 @@ function checkMemAllocation(&$errorMsg, &$value)
             if ($size > $currentMemoryLimit) {
 
                 $response = inst_http_request_install("action=memory_test&size=$size");
-        
+
                 if (!(strpos($response, "MEMORY-TEST-SKIPPED") === false)) {
                     $value = 'MEMORY-TEST-SKIPPED';
                     break;
                 }
-        
+
                 if (strpos($response, "MEMORY-TEST-OK") === false) {
                     $status = false;
                     $errorMsg = xtr('Memory allocation test failed. Response:') . "\n" . substr($response, 0, 255);
                     break;
                 }
-        
+
                 $value = $size . 'M';
             }
         }
@@ -822,11 +821,11 @@ function checkMemAllocation(&$errorMsg, &$value)
 }
 
 /**
- * Check the recursion depth 
- * 
+ * Check the recursion depth
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -849,10 +848,10 @@ function checkRecursionTest(&$errorMsg, &$value)
 
 /**
  * Check file permissions
- * 
+ *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -864,7 +863,7 @@ function checkFilePermissions(&$errorMsg, &$value)
 
     $result = true;
 
-    $perms = array(); 
+    $perms = array();
 
     if (constant('LC_SUPHP_MODE') == "0") {
 
@@ -886,11 +885,11 @@ function checkFilePermissions(&$errorMsg, &$value)
                     $perms[] = $file;
 
                 } else {
-                    
+
                     if (is_dir($file)) {
                         $perms[] = 'find ' . $file . ' -type d -exec chmod 0777 {} \\;';
                         $perms[] = 'find ' . $file . ' -type f -exec chmod 0666 {} \\;';
-                    
+
                     } else {
                         $perms[] = 'chmod ' . $perm . ' ' . $file;
                     }
@@ -918,11 +917,11 @@ function checkFilePermissions(&$errorMsg, &$value)
 
 /**
  * Check MySQL version: returns false only if version is gathered and it isn't suit
- * 
+ *
  * @param string   $errorMsg   Error message if checking failed
  * @param string   $value      Actual value of the checked parameter
  * @param resource $connection MySQL connection link
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -982,10 +981,10 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
 
 /**
  * Check GDlib extension
- * 
+ *
  * @param string   $errorMsg   Error message if checking failed
  * @param string   $value      Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -1033,10 +1032,10 @@ function checkPhpPhar(&$errorMsg, &$value)
 
 /**
  * Check https bouncers presence (libcurl only checking)
- * 
+ *
  * @param string   $errorMsg   Error message if checking failed
  * @param string   $value      Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -1049,7 +1048,7 @@ function checkHttpsBouncer(&$errorMsg, &$value)
     if (!function_exists('curl_init') || !function_exists('curl_version')) {
         $result = false;
         $errorMsg = xtr('libcurl extension is not found');
-    
+
     } else {
 
         $version = curl_version();
@@ -1071,7 +1070,7 @@ function checkHttpsBouncer(&$errorMsg, &$value)
             || (!is_array($version) && !preg_match('/ssl|tls/Ssi', $version))
         ) {
             $errorMsg = xtr('libcurl extension found but it does not support secure protocols');
-            $result = false;             
+            $result = false;
         }
     }
 
@@ -1080,10 +1079,10 @@ function checkHttpsBouncer(&$errorMsg, &$value)
 
 /**
  * Check GDlib extension
- * 
+ *
  * @param string   $errorMsg   Error message if checking failed
  * @param string   $value      Actual value of the checked parameter
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -1123,10 +1122,10 @@ function checkXmlSupport(&$errorMsg, &$value)
 
 /**
  * Prepare the fixtures: the list of yaml files for uploading to the database
- * 
+ *
  * @param array  $params     Database access data and other parameters
  * @param bool   $silentMode Do not display any output during installing
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -1186,7 +1185,7 @@ function doPrepareFixtures(&$params, $silentMode = false)
         }
     }
 
-    // Remove fixtures file (if exists)    
+    // Remove fixtures file (if exists)
     \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::removeFixtures();
 
     // Add fixtures list
@@ -1235,7 +1234,7 @@ function doUpdateConfig(&$params, $silentMode = false)
 
 /**
  * Prepare to remove a cache of classes
- * 
+ *
  * @param array $params Database access data and other parameters
  *
  * @return bool
@@ -1298,7 +1297,7 @@ function doRemoveCache($params)
 
 /**
  * Generate a cache of classes
- * 
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -1326,10 +1325,10 @@ function doBuildCache()
 
 /**
  * Create required directories and files
- * 
+ *
  * @param array  $params     Database access data and other parameters
  * @param bool   $silentMode Do not display any output during installing
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -1359,7 +1358,7 @@ function doInstallDirs($silentMode = false)
         echo '<div class="section-title">' . xtr('Copying templates...') . '</div>';
         $failedList = array();
         $result = copy_files(constant('LC_TEMPLATES_REPOSITORY'), "", constant('LC_TEMPLATES_DIRECTORY'), $failedList);
-    
+
         if (!$result) {
             x_install_log(xtr('copy_files() failed'), $failedList);
         }
@@ -1397,7 +1396,7 @@ function doInstallDirs($silentMode = false)
  *
  * @param array  $params     Database access data and other parameters
  * @param bool   $silentMode Do not display any output during installing
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -1454,10 +1453,10 @@ function doCreateAdminAccount(&$params, $silentMode = false)
 
 /**
  * Do some final actions
- * 
+ *
  * @param array  $params     Database access data and other parameters
  * @param bool   $silentMode Do not display any output during installing
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -1512,16 +1511,16 @@ function doFinishInstallation(&$params, $silentMode = false)
     $perms_no_tags = strip_tags($perms);
 
     $message = xtr(
-        'congratulations_text', 
+        'congratulations_text',
         array(
-            ':host' => $params['xlite_http_host'], 
-            ':webdir' => $params['xlite_web_dir'], 
-            ':login' => $params['login'], 
+            ':host' => $params['xlite_http_host'],
+            ':webdir' => $params['xlite_web_dir'],
+            ':login' => $params['login'],
             ':password' => $params['password'],
             ':perms' => $perms_no_tags,
             ':renametext' => $install_rename_email,
             ':authcode' => $authcode,
-            
+
         )
     );
 
@@ -1581,10 +1580,10 @@ function doFinishInstallation(&$params, $silentMode = false)
 
 
 /**
- * Create directories 
- * 
+ * Create directories
+ *
  * @param array $dirs Array of directory names
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -1632,9 +1631,9 @@ function create_dirs($dirs)
 
 /**
  * Set permissions on directories
- * 
+ *
  * @param array $dirs Array of directory names
- *  
+ *
  * @return void
  * @access public
  * @see    ____func_see____
@@ -1651,17 +1650,17 @@ function chmod_others_directories($dirs)
             $result = @chmod(constant('LC_DIR_ROOT') . $dir, $dir_permission);
             echo status($result);
         }
-    
+
     } else {
         echo status(true);
     }
 }
 
 /**
- * Create .htaccess files 
- * 
+ * Create .htaccess files
+ *
  * @param array $files_to_create Array of file names
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -1705,9 +1704,9 @@ function create_htaccess_files($files_to_create)
 
 /**
  * Check writable permissions for specified object (file or directory) recusrively
- * 
+ *
  * @param string Object path
- *  
+ *
  * @return array
  * @access public
  * @see    ____func_see____
@@ -1744,7 +1743,7 @@ function checkPermissionsRecursive($object)
                     } elseif (is_dir($fileRealPath)) {
                         $result = array_merge($result, checkPermissionsRecursive($fileRealPath));
                     }
-            
+
                 }
 
                 closedir($handle);
@@ -1754,17 +1753,17 @@ function checkPermissionsRecursive($object)
     } elseif (!is_writable($object)) {
         $result[$object] = $filePermissions;
     }
-    
+
     return $result;
 }
 
 /**
- * Function to copy directory tree from skins_original to skins 
- * 
+ * Function to copy directory tree from skins_original to skins
+ *
  * @param string $source_dir      Source directory name
  * @param string $parent_dir      Parent directory name
  * @param string $destination_dir Destination directory name
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -1800,7 +1799,7 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
                             ':file' => $file,
                             ':destination_dir' => $destination_dir,
                         )
-                    ) 
+                    )
                     . status(false) . "<BR>\n";
                     $result = false;
                     $failedList[] = sprintf('copy(%s, %s)', $sourceFile, $destinationFile);
@@ -1855,9 +1854,9 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
 
 /**
  * Prepare content for writing to the config.php file
- * 
+ *
  * @param array $params
- *  
+ *
  * @return void
  * @access public
  * @see    ____func_see____
@@ -1894,7 +1893,7 @@ function change_config(&$params)
         $_params['mysqlsock'] = '';
     }
 
-    // check whether the authcode is set in params. 
+    // check whether the authcode is set in params.
 
     $new_config = '';
 
@@ -1940,9 +1939,9 @@ function change_config(&$params)
 
 /**
  * Save content to the config.php file
- * 
+ *
  * @param string $content
- *  
+ *
  * @return mixed
  * @access public
  * @see    ____func_see____
@@ -1958,7 +1957,7 @@ function save_config($content)
 
 /**
  * Returns some information from phpinfo()
- * 
+ *
  * @return array
  * @access public
  * @see    ____func_see____
@@ -2028,9 +2027,9 @@ function get_info()
 
 /**
  * Do an HTTP request to the install.php
- * 
- * @param string $action_str 
- *  
+ *
+ * @param string $action_str
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -2049,7 +2048,7 @@ function inst_http_request_install($action_str, $url = null)
 
 /**
  * Returns LiteCommerce URL
- * 
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -2070,9 +2069,9 @@ function getLiteCommerceURL()
 
 /**
  * Do an HTTP request
- * 
+ *
  * @param string $url_request
- *  
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -2099,12 +2098,12 @@ function inst_http_request($url_request)
     }
 
     x_install_log(
-        'inst_http_request() result', 
+        'inst_http_request() result',
         array(
             'url_request' => $url_request,
             'adapter'     => $adapter,
             'result'      => $result,
-            'response'    => $response, 
+            'response'    => $response,
             'error'       => $error,
         )
     );
@@ -2114,7 +2113,7 @@ function inst_http_request($url_request)
 
 /**
  * Check if memory_limit is disabled
- * 
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -2123,12 +2122,12 @@ function inst_http_request($url_request)
 function is_disabled_memory_limit()
 {
     $info = get_info();
-    
+
     $result = (($info['no_mem_limit'] &&
                 $info['commands_exists'] &&
                 !function_exists('memory_get_usage') &&
                 version_compare(phpversion(), '4.3.2') >= 0 &&
-                strlen(@ini_get('memory_limit')) == 0 ) || 
+                strlen(@ini_get('memory_limit')) == 0 ) ||
                 @ini_get('memory_limit') == '-1');
 
     return $result;
@@ -2136,10 +2135,10 @@ function is_disabled_memory_limit()
 
 /**
  * Check memory_limit option value
- * 
- * @param string $current_limit  
- * @param string $required_limit 
- *  
+ *
+ * @param string $current_limit
+ * @param string $required_limit
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -2168,7 +2167,7 @@ function check_memory_limit($current_limit, $required_limit)
 
 /**
  * Check if current PHP version is 5 or higher
- * 
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -2177,13 +2176,13 @@ function check_memory_limit($current_limit, $required_limit)
 function is_php5()
 {
     return version_compare(@phpversion(), '5.0.0') >= 0;
-} 
+}
 
 /**
  * Convert php_ini int string to int
- * 
- * @param string $string 
- *  
+ *
+ * @param string $string
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -2214,9 +2213,9 @@ function convert_ini_str_to_int($string)
 
 /**
  * Do recursion depth testing
- * 
- * @param int $index 
- *  
+ *
+ * @param int $index
+ *
  * @return void
  * @access public
  * @see    ____func_see____
@@ -2231,9 +2230,9 @@ function recursion_depth_test($index)
 
 /**
  * Preparing text of the configuration checking report
- * 
- * @param array $requirements 
- *  
+ *
+ * @param array $requirements
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -2278,7 +2277,7 @@ function make_check_report($requirements)
         $phpinfo = ob_get_contents();
         ob_end_clean();
 
-        // prepare phpinfo 
+        // prepare phpinfo
         $phpinfo = preg_replace("/<td[^>]+>/i", " | ", $phpinfo);
         $phpinfo = preg_replace("/<[^>]+>/i", "", $phpinfo);
         $phpinfo = preg_replace("/(?:&lt;)((?!&gt;).)*?&gt;/i", "", $phpinfo);
@@ -2302,11 +2301,11 @@ function make_check_report($requirements)
 }
 
 /**
- * Return status message 
- * 
+ * Return status message
+ *
  * @param bool   $status Status to display: true or false
  * @param string $code   Code of section with status details (<div id='$code'>)
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -2330,8 +2329,8 @@ function status($status, $code = null)
         }
 
     } else {
-        $return = $status 
-            ? '<span class="status-ok">OK</span>' 
+        $return = $status
+            ? '<span class="status-ok">OK</span>'
             : '<span class="status-failed">' . xtr('Failed') . '</span>';
     }
 
@@ -2340,22 +2339,22 @@ function status($status, $code = null)
 
 /**
  * Return status 'skipped' message
- * 
+ *
  * @return string
  * @access public
  * @see    ____func_see____
  * @since  1.0.0
  */
-function status_skipped() 
+function status_skipped()
 {
     return '<span class="status-skipped">' . xtr('Skipped') . '</span>';
 }
 
 /**
  * Display fatal_error message
- * 
- * @param string $txt 
- *  
+ *
+ * @param string $txt
+ *
  * @return void
  * @access public
  * @see    ____func_see____
@@ -2372,9 +2371,9 @@ function fatal_error($txt) {
 
 /**
  * Display warning_error message
- * 
- * @param string $txt 
- *  
+ *
+ * @param string $txt
+ *
  * @return void
  * @access public
  * @see    ____func_see____
@@ -2394,10 +2393,10 @@ function warning_error($txt) {
 }
 
 /**
- * Display message 
- * 
- * @param string $txt 
- *  
+ * Display message
+ *
+ * @param string $txt
+ *
  * @return void
  * @access public
  * @see    ____func_see____
@@ -2410,8 +2409,8 @@ function message($txt) {
 }
 
 /**
- * Replace install.php script to random filename 
- * 
+ * Replace install.php script to random filename
+ *
  * @return mixed
  * @access public
  * @see    ____func_see____
@@ -2424,10 +2423,10 @@ function rename_install_script()
     @clearstatcache();
 
     $result = (!@file_exists(LC_DIR_ROOT . 'install.php') && @file_exists(LC_DIR_ROOT . $install_name) ? $install_name : false);
-    
+
     if ($result) {
         x_install_log(xtr('Installation script renamed to :filename', array(':filename' => $install_name)));
-    
+
     } else {
         x_install_log(xtr('Warning! Installation script renaming failed'));
     }
@@ -2436,8 +2435,8 @@ function rename_install_script()
 }
 
 /**
- * Check if current protocol is HTTPS 
- * 
+ * Check if current protocol is HTTPS
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -2445,7 +2444,7 @@ function rename_install_script()
  */
 function isHTTPS()
 {
-    $result = ((isset($_SERVER['HTTPS']) && 
+    $result = ((isset($_SERVER['HTTPS']) &&
                 (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1')) ||
                 (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443'));
 
@@ -2454,7 +2453,7 @@ function isHTTPS()
 
 /**
  * Get number for StepBack button
- * 
+ *
  * @return void
  * @access public
  * @see    ____func_see____
@@ -2488,8 +2487,8 @@ function getStepBackNumber()
 }
 
 /**
- * Default navigation button handler: default_js_back 
- * 
+ * Default navigation button handler: default_js_back
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -2507,8 +2506,8 @@ function default_js_back()
 }
 
 /**
- * Default navigation button handler: default_js_next 
- * 
+ * Default navigation button handler: default_js_next
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -2524,8 +2523,8 @@ function default_js_next()
 }
 
 /**
- * Generate Auth code 
- * 
+ * Generate Auth code
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -2539,9 +2538,9 @@ function generate_authcode()
 
 /**
  * Check Auth code (exit if wrong)
- * 
- * @param array $params 
- *  
+ *
+ * @param array $params
+ *
  * @return void
  * @access public
  * @see    ____func_see____
@@ -2564,8 +2563,8 @@ function check_authcode(&$params)
 }
 
 /**
- * Read config file and get Auth code 
- * 
+ * Read config file and get Auth code
+ *
  * @return mixed
  * @access public
  * @see    ____func_see____
@@ -2581,10 +2580,10 @@ function get_authcode()
 }
 
 /**
- * Save Auth code 
- * 
- * @param array $params 
- *  
+ * Save Auth code
+ *
+ * @param array $params
+ *
  * @return void
  * @access public
  * @see    ____func_see____
@@ -2621,9 +2620,9 @@ function save_authcode(&$params) {
 
 /**
  * Get step by module name
- * 
+ *
  * @param string $name
- *  
+ *
  * @return int
  * @access public
  * @see    ____func_see____
@@ -2648,11 +2647,11 @@ function get_step($name)
 
 /**
  * Display form element
- * 
+ *
  * @param string $fieldName
  * @param array  $fieldData
  * @param int    $clrNumber
- *  
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -2728,7 +2727,7 @@ OUT;
 
 
 /*
- * End of Service functions section 
+ * End of Service functions section
  */
 
 
@@ -2740,9 +2739,9 @@ OUT;
 
 /**
  * Default module. Shows Terms & Conditions
- * 
- * @param array $params 
- *  
+ *
+ * @param array $params
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -2759,7 +2758,7 @@ function module_default(&$params)
 
 /**
  * 'Next' button handler. Checking if an 'Agree' checkbox was ticked
- * 
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -2781,8 +2780,8 @@ function module_default_js_next()
 
 
 /**
- * Configuration checking module 
- * 
+ * Configuration checking module
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -2853,9 +2852,9 @@ function module_check_cfg()
 
 /**
  * Do step of gathering of the database configuration
- * 
- * @param array $params 
- *  
+ *
+ * @param array $params
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -2863,7 +2862,7 @@ function module_check_cfg()
  */
 function module_cfg_install_db(&$params)
 {
-    global $error, $lcSettings; 
+    global $error, $lcSettings;
     global $report_uid, $reportFName;
     global $checkRequirements;
 
@@ -3010,7 +3009,7 @@ function module_cfg_install_db(&$params)
 
         if (strstr($params['xlite_http_host'], ':')) {
             list($_host, $_port) = explode(':', $params['xlite_http_host']);
-        
+
         } else {
             $_host = $params['xlite_http_host'];
         }
@@ -3044,7 +3043,7 @@ function module_cfg_install_db(&$params)
 
                     $mystring = '';
                     $first = true;
-         
+
                     $res = dbFetchAll('SHOW TABLES LIKE \'xlite_%\'');
 
                     if (is_array($res)) {
@@ -3063,7 +3062,7 @@ function module_cfg_install_db(&$params)
                 fatal_error(xtr('Can\'t connect to MySQL server specified:pdoerr<br /> Press \'BACK\' button and review MySQL server settings you provided.', array(':pdoerr' => (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : ''))));
                 $checkError = true;
             }
-        } 
+        }
 
         if (!$checkError && !$checkWarning) {
 
@@ -3095,8 +3094,8 @@ function module_cfg_install_db(&$params)
 
 
 /**
- * Output Javascript handler: module_cfg_install_db_js_back 
- * 
+ * Output Javascript handler: module_cfg_install_db_js_back
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -3120,8 +3119,8 @@ function module_cfg_install_db_js_back()
 }
 
 /**
- * Output Javascript handler: module_cfg_install_db_js_next 
- * 
+ * Output Javascript handler: module_cfg_install_db_js_next
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -3169,9 +3168,9 @@ function module_cfg_install_db_js_next()
 
 /**
  * Building cache and installing database
- * 
- * @param array $params 
- *  
+ *
+ * @param array $params
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -3219,13 +3218,13 @@ function module_install_cache(&$params)
     $error = true;
 
     return false;
-} 
+}
 
 /**
  * Install_dirs module
- * 
- * @param array $params 
- *  
+ *
+ * @param array $params
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -3238,14 +3237,14 @@ function module_install_dirs(&$params)
     $result = doUpdateConfig($params, true);
 
     if ($result) {
-    
+
 ?>
 
 <iframe id="process_iframe" src="install.php?target=install&action=dirs" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
 
 <?php
 
-    }    
+    }
 
 ?>
 
@@ -3287,9 +3286,9 @@ function module_install_dirs(&$params)
 
 /**
  * Output form for gathering admi account data
- * 
- * @param array $params 
- *  
+ *
+ * @param array $params
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -3378,8 +3377,8 @@ function module_cfg_create_admin(&$params)
 }
 
 /**
- * cfg_create_admin module "Next" button validator 
- * 
+ * cfg_create_admin module "Next" button validator
+ *
  * @return string
  * @access public
  * @see    ____func_see____
@@ -3401,11 +3400,11 @@ function module_cfg_create_admin_js_next()
         if (document.ifrm.elements['params[password]'].value == "") {
             alert('<?php echo xtr('Please, enter non-empty password'); ?>');
             return false;
-        }    
+        }
         if (document.ifrm.elements['params[confirm_password]'].value == "") {
             alert('<?php echo xtr('Please, enter non-empty password confirmation'); ?>');
             return false;
-        }    
+        }
         if (document.ifrm.elements['params[password]'].value != document.ifrm.elements['params[confirm_password]'].value) {
             alert("<?php echo xtr('Password doesn\'t match confirmation!'); ?>");
             return false;
@@ -3433,9 +3432,9 @@ function module_cfg_create_admin_js_next()
 
 /**
  * Install_done module
- * 
- * @param array $params 
- *  
+ *
+ * @param array $params
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -3485,4 +3484,3 @@ function module_install_done(&$params)
 $_params = ('POST' == $_SERVER['REQUEST_METHOD'] ? $_POST : $_GET);
 
 x_install_log(null, x_install_log_mask_params($_params));
-

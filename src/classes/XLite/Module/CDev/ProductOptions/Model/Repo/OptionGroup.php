@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Module\CDev\ProductOptions\Model\Repo;
 
 /**
  * Option group repository
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -48,10 +47,10 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
     protected $defaultOrderBy = 'orderby';
 
     /**
-     * Find all active option groups by product id 
-     * 
+     * Find all active option groups by product id
+     *
      * @param integer $productId Product id
-     *  
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -67,9 +66,9 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Define query for findActiveByProductId() method
-     * 
+     *
      * @param integer $productId Product id
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
@@ -88,10 +87,10 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Postprocessing for findActiveByProductId() method
-     * 
+     *
      * @param array   $data      Data
      * @param integer $productId Product id
-     *  
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -117,11 +116,11 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Find one group by group id and product id 
-     * 
+     * Find one group by group id and product id
+     *
      * @param integer $groupId   Option group id
      * @param integer $productId Product id
-     *  
+     *
      * @return \XLite\Module\CDev\ProductOptions\Model\OptionGroup|void
      * @access public
      * @see    ____func_see____
@@ -154,8 +153,8 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Get option group types 
-     * 
+     * Get option group types
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -190,11 +189,11 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Find one by record 
-     * 
+     * Find one by record
+     *
      * @param array                $data   Record
      * @param \XLite\Model\AEntity $parent Parent model
-     *  
+     *
      * @return \XLite\Model\AEntity|void
      * @access public
      * @see    ____func_see____
@@ -218,10 +217,10 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Define find query (by Product SKU and group name)
-     * 
+     *
      * @param string $sku  Product SKU
      * @param string $name Option group name (any language)
-     *  
+     *
      * @return \XLite\Module\CDev\ProductOptions\Model\OptionGroup|void
      * @access protected
      * @see    ____func_see____
@@ -237,4 +236,3 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
     }
 
 }
-

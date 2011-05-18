@@ -17,7 +17,7 @@
 /**
  * XLite_Sniffs_JS_ConstantSniff.
  *
- * Check several JS constants. 
+ * Check several JS constants.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer

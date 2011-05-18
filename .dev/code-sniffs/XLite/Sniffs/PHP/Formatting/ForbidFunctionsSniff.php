@@ -33,7 +33,7 @@ class XLite_Sniffs_PHP_Formatting_ForbidFunctionsSniff extends XLite_ReqCodesSni
 
 	/**
 	 * Forbid functions list
-	 * 
+	 *
 	 * @var    array
 	 * @access protected
 	 * @see    ____var_see____

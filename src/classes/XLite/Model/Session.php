@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model;
 
 /**
  * Session
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -54,8 +53,8 @@ class Session extends \XLite\Model\AEntity
 
 
     /**
-     * Session increment id 
-     * 
+     * Session increment id
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -68,7 +67,7 @@ class Session extends \XLite\Model\AEntity
 
     /**
      * Public session id
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -79,7 +78,7 @@ class Session extends \XLite\Model\AEntity
 
     /**
      * Session expiration time
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -89,8 +88,8 @@ class Session extends \XLite\Model\AEntity
     protected $expiry;
 
     /**
-     * Cells cache 
-     * 
+     * Cells cache
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -100,7 +99,7 @@ class Session extends \XLite\Model\AEntity
 
     /**
      * Return instance of the session cell repository
-     * 
+     *
      * @return \XLite\Model\Repo\SessionCell
      * @see    ____func_see____
      * @since  1.0.0
@@ -112,10 +111,10 @@ class Session extends \XLite\Model\AEntity
 
 
     /**
-     * Set session id 
-     * 
+     * Set session id
+     *
      * @param string $value Session id
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -127,7 +126,7 @@ class Session extends \XLite\Model\AEntity
 
     /**
      * Update expiration time
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -139,9 +138,9 @@ class Session extends \XLite\Model\AEntity
 
     /**
      * Session cell getter
-     * 
+     *
      * @param string $name Cell name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -155,10 +154,10 @@ class Session extends \XLite\Model\AEntity
 
     /**
      * Session cell setter
-     * 
+     *
      * @param string $name  Cell name
      * @param mixed  $value Value
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -170,9 +169,9 @@ class Session extends \XLite\Model\AEntity
 
     /**
      * Check - set session cell with specified name or not
-     * 
+     *
      * @param string $name Cell name
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -183,10 +182,10 @@ class Session extends \XLite\Model\AEntity
     }
 
     /**
-     * Remove session cell 
-     * 
+     * Remove session cell
+     *
      * @param string $name Cell name
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -219,10 +218,10 @@ class Session extends \XLite\Model\AEntity
     }
 
     /**
-     * Invalidate cached entity 
-     * 
+     * Invalidate cached entity
+     *
      * @param string $name Cell name
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -256,7 +255,7 @@ class Session extends \XLite\Model\AEntity
                 static::getSessionCellRepo()->insertCell($this->getId(), $name, $value);
             }
 
-        } elseif (isset($value)) {       
+        } elseif (isset($value)) {
 
             // Only perform SQL query if cell value is changed
             if ($cell->getValue() !== $value) {

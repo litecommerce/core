@@ -75,11 +75,11 @@ class XLite_Sniffs_PHP_Commenting_FileCommentSniff extends XLite_TagsSniff
                                         'allow_multiple' => false,
                                         'order_text'     => 'follows @copyright (if used) or @author',
                                        ),
-                       'version'    => array(
+                       /* 'version'    => array(
                                         'required'       => true,
                                         'allow_multiple' => false,
                                         'order_text'     => 'follows @license',
-                                       ),
+                                       ),*/
                        'link'       => array(
                                         'required'       => true,
                                         'allow_multiple' => false,
@@ -103,7 +103,7 @@ class XLite_Sniffs_PHP_Commenting_FileCommentSniff extends XLite_TagsSniff
                 );
 
 
-	protected $reqCodeRequire = 'REQ.PHP.4.3.4';
+	// protected $reqCodeRequire = 'REQ.PHP.4.3.4';
 	protected $reqCodePHPVersion = 'REQ.PHP.4.3.3';
 	protected $reqCodeForbidden = 'REQ.PHP.4.3.9';
 	protected $reqCodeOnlyOne = 'REQ.PHP.4.3.8';

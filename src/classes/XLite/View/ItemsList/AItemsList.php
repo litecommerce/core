@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\View\ItemsList;
 
 /**
- * Base class for all lists 
- * 
+ * Base class for all lists
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -79,8 +78,8 @@ abstract class AItemsList extends \XLite\View\Container
     protected $pager;
 
     /**
-     * itemsCount 
-     * 
+     * itemsCount
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -97,8 +96,8 @@ abstract class AItemsList extends \XLite\View\Container
     protected $sortByModes = array();
 
     /**
-     * sortOrderModes 
-     * 
+     * sortOrderModes
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -109,8 +108,8 @@ abstract class AItemsList extends \XLite\View\Container
     );
 
     /**
-     * Sorting widget IDs list 
-     * 
+     * Sorting widget IDs list
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -216,7 +215,7 @@ abstract class AItemsList extends \XLite\View\Container
         return $list;
     }
 
-    /**  
+    /**
      * Register files from common repository
      *
      * @return array
@@ -252,7 +251,7 @@ abstract class AItemsList extends \XLite\View\Container
 
     /**
      * Returns a list of CSS classes (separated with a space character) to be attached to the items list
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -306,9 +305,9 @@ abstract class AItemsList extends \XLite\View\Container
 
     /**
      * prepare CSS file list for use with pager
-     * 
+     *
      * @param array $list CSS file list
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -360,8 +359,8 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * getPageBodyFile 
-     * 
+     * getPageBodyFile
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -384,8 +383,8 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * getEmptyListFile 
-     * 
+     * getEmptyListFile
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -397,7 +396,7 @@ abstract class AItemsList extends \XLite\View\Container
 
     /**
      * isEmptyListTemplateVisible
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -424,7 +423,7 @@ abstract class AItemsList extends \XLite\View\Container
 
     /**
      * Get pager
-     * 
+     *
      * @return \XLite\View\PagerOrig
      * @see    ____func_see____
      * @since  1.0.0
@@ -463,8 +462,8 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * getSortOrderDefault 
-     * 
+     * getSortOrderDefault
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -475,8 +474,8 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * getSortByModeDefault 
-     * 
+     * getSortByModeDefault
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -535,8 +534,8 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * getJSHandlerClassName 
-     * 
+     * getJSHandlerClassName
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -649,10 +648,10 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * Get sorting widget unique ID 
-     * 
+     * Get sorting widget unique ID
+     *
      * @param boolean $getLast Get last ID or next OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -668,7 +667,7 @@ abstract class AItemsList extends \XLite\View\Container
         if (!$getLast) {
             static::$sortWidgetIds[$class]++;
         }
-        
+
         return str_replace('\\', '-', $class) . '-sortby-' . static::$sortWidgetIds[$class];
     }
 
@@ -677,7 +676,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @param string $sortByMode Value to check
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -689,7 +688,7 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * isSortOrderAsc
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -713,7 +712,7 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * Check if widget is visible
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -724,7 +723,7 @@ abstract class AItemsList extends \XLite\View\Container
 
     /**
      * Auxiliary method to check visibility
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -735,8 +734,8 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * Check if there are any results to display in list 
-     * 
+     * Check if there are any results to display in list
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -747,9 +746,9 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * isHeaderVisible 
-     * 
-     * @return boolean 
+     * isHeaderVisible
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -760,7 +759,7 @@ abstract class AItemsList extends \XLite\View\Container
 
     /**
      * Check if head title is visible
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -772,7 +771,7 @@ abstract class AItemsList extends \XLite\View\Container
 
     /**
      * Check if pager is visible
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -783,8 +782,8 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * isFooterVisible 
-     * 
+     * isFooterVisible
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

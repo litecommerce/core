@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 
 /**
  * Checkout controller
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -38,8 +37,8 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Base\IDecorator
 {
     /**
-     * isCreateProfile 
-     * 
+     * isCreateProfile
+     *
      * @return boolean
      * @access protected
      * @see    ____func_see____
@@ -52,9 +51,9 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
     }
 
     /**
-     * Update profile 
+     * Update profile
      * FIXME
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -119,14 +118,14 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
     public function getLoginURL()
     {
         return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
-            ? url('user') 
+            ? url('user')
             : parent::getLoginURL();
     }
 
     /**
-     * Save anonymous profile 
+     * Save anonymous profile
      * FIXME
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -183,7 +182,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
     /**
      * Clone profile and move profile to original profile
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -199,7 +198,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
     /**
      * Get redirect mode - force redirect or not
-     * 
+     *
      * @return boolean
      * @access protected
      * @see    ____func_see____

@@ -10,7 +10,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -20,7 +19,7 @@ class XLite_Tests_Model_Shipping_Markup extends XLite_Tests_TestCase
 {
     /**
      * testCreate
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -55,7 +54,7 @@ class XLite_Tests_Model_Shipping_Markup extends XLite_Tests_TestCase
         $markupId = $newMarkup->getMarkupId();
 
         $this->assertTrue(isset($markupId), 'Object could not be created');
-        
+
         if (isset($markupId)) {
             $markup = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->find($markupId);
 

@@ -10,7 +10,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -43,7 +42,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
 
     /**
      * testGetZoneWeight
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -129,7 +128,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
             $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findOneBy(array('zone_name' => $dt['zone']));
 
             $this->assertNotNull($zone, 'check zone ' . $dt['zone']);
- 
+
             if ('New York area' == $dt['zone']) {
                 $zoneElement = new \XLite\Model\ZoneElement();
                 $zoneElement->setElementValue('%Lexington%');
@@ -146,8 +145,8 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetZoneCountries 
-     * 
+     * testGetZoneCountries
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -191,8 +190,8 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetZoneStates 
-     * 
+     * testGetZoneStates
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -236,8 +235,8 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetZoneCities 
-     * 
+     * testGetZoneCities
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -255,8 +254,8 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetZoneZipCodes 
-     * 
+     * testGetZoneZipCodes
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -267,15 +266,15 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findOneBy(array('zone_name' => 'New York area'));
 
         $this->assertNotNull($zone, 'check zone');
- 
+
         $zipcodes = $zone->getZoneZipCodes();
 
         $this->assertTrue(in_array('101%', $zipcodes), '101% is not found in zone definition');
     }
 
     /**
-     * testGetZoneAddresses 
-     * 
+     * testGetZoneAddresses
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -300,8 +299,8 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testHasZoneElements 
-     * 
+     * testHasZoneElements
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -333,8 +332,8 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetElementsByType 
-     * 
+     * testGetElementsByType
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -355,8 +354,8 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetZoneId 
-     * 
+     * testGetZoneId
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -373,8 +372,8 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetZoneName 
-     * 
+     * testGetZoneName
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -395,8 +394,8 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testIsDefault 
-     * 
+     * testIsDefault
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -415,8 +414,8 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testSetIsDefault 
-     * 
+     * testSetIsDefault
+     *
      * @return void
      * @access public
      * @see    ____func_see____
