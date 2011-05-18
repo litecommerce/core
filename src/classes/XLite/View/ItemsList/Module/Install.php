@@ -125,6 +125,8 @@ class Install extends \XLite\View\ItemsList\Module\AModule
 
         // TODO must be taken from LICENSE module widget!!!
         $list[] = 'modules_manager/license/css/style.css';
+        
+        $list[] = 'modules_manager/installation_type/css/style.css';
 
         // TODO must be taken from SwitchButton widget
         $list[] = \XLite\View\Button\SwitchButton::SWITCH_CSS_FILE;
