@@ -23,4 +23,8 @@
 
   </table>
 
+  <div class="buttons modules-buttons">
+    <widget class="\XLite\View\Button\Submit" label="{t(#Save changes#)}" style="action" />
+  </div>
+
 <widget name="modules_manage_form" end />

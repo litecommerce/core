@@ -898,6 +898,32 @@ abstract class AView extends \XLite\Core\Handler
         return 0 < count($this->getViewList($list, $arguments));
     }
 
+    /**
+     * Build list item class 
+     * 
+     * @param string $listName List name
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function buildListItemClass($listName)
+    {
+        $indexName = $listName . 'ArrayPointer';
+        $countName = $listName . 'ArraySize';
+
+        $class = array();
+
+        if (1 == $this->$indexName) {
+            $class[] = 'first';
+        }
+
+        if ($this->$countName == $this->$indexName) {
+            $class[] = 'last';
+        }
+
+        return implode(' ', $class);
+    }
 
     /**
      * Prepare human-readable output for file size

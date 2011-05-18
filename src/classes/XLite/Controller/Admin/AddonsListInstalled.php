@@ -86,6 +86,34 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
         return \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleId());
     }
 
+    /**
+     * Search for modules
+     *
+     * @param string $cellName Request cell name
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModules($cellName)
+    {
+        $ids = \XLite\Core\Request::getInstance()->$cellName;
+
+        $modules = array();
+
+        if (is_array($ids)) {
+            foreach ($ids as $id => $tmp) {
+                $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find(intval($id));
+                if ($module) {
+                    $modules[] = $module;
+                }
+            }
+
+        }
+
+        return $modules;
+    }
+
     // }}}
 
     // Action handlers
@@ -195,6 +223,40 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
 
             if ($notes) {
                 \XLite\Core\TopMessage::addInfo($notes);
+            }
+        }
+    }
+
+    /**
+     * Switch module
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionSwitch()
+    {
+        $modules = $this->getModules('switch');
+
+        if ($modules) {
+            $request = \XLite\Core\Request::getInstance();
+            $changed = false;
+
+            foreach ($modules as $module) {
+
+                // Update data in DB
+                $old = 1 == $request->switch[$module->getModuleId()]['old'];
+                $new = !empty($request->switch[$module->getModuleId()]['new']);
+                if ($old != $new) {
+                    $module->setEnabled(!$module->getEnabled());
+                    $module->getRepository()->update($module);
+                    $changed = true;
+                }
+            }
+
+            // Flag to rebuild cache
+            if ($changed) {
+                \XLite::setCleanUpCacheFlag(true);
             }
         }
     }

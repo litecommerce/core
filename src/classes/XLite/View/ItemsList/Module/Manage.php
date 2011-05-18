@@ -257,20 +257,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
         return parent::getData($cnd, $countOnly);
     }
 
-    /**
-     * Check if the Pack It button should be available
-     * 
-     * @param \XLite\Model\Module $module Module model
-     *  
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isPackItVisible(\XLite\Model\Module $module)
-    {
-        return $module->getEnabled() && $this->isDeveloperMode();
-    }
-
     // {{{ Methods to search modules of certain types
 
     /**
