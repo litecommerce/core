@@ -487,7 +487,7 @@ abstract class ModulesManager extends AUtils
      */
     public static function removeFile()
     {
-        \Includes\Utils\FileManager::delete(static::getModulesFilePath());
+        \Includes\Utils\FileManager::deleteFile(static::getModulesFilePath());
     }
 
     /**
