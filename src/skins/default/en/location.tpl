@@ -12,7 +12,9 @@
  *}
 <ul class="breadcrumb">
   {foreach:getNodes(),index,node}
-    {if:!#0#=index}<li class="separator">&raquo;</li>{end:}
+    <li IF="!#0#=index" class="location-node">
+      <span class="separator">&raquo;</span>
+    </li>
     {node.display()}
   {end:}
 </ul>

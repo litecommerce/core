@@ -11,24 +11,14 @@
  * @since     1.0.0
  */
 
-div.location-node {
-  display: inline;
-  position: relative;
-}
-
-div.location-node:hover ul.location-subnodes {
-  display: none;
-}
-
-div.location-node.expandable {
+ul.breadcrumb li.location-node.expandable {
   padding-right: 0.8em;
-  background: url(images/down_arrow.png) no-repeat right 0.6em;
+  background: url(images/down_arrow.png) no-repeat right 0.8em;
 }
 
 ul.location-subnodes {
   position: absolute;
-  top: 15px;
-  right: 0px;
+  top: 20px;
   list-style-type: none;
   background-color: #fff;
   z-index: 10000;
