@@ -129,7 +129,8 @@ div.pack-warning a {
 
 .upload-addons-text {
   font-size: 14px;
-  margin: 10px 0px;
+  /* TODO: hack to remove */
+  margin: -15px 0px 10px 0px;
   width: 450px;
 }
 
