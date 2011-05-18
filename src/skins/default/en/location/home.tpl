@@ -11,6 +11,6 @@
  * @since     1.0.0
  *}
 
-<div class="location-node">
+<li class="location-node">
   <a href="{getLink()}" class="location-title home-link"><img src="images/home.png" alt="{getName()}" /></a>
-</div>
+</li>
