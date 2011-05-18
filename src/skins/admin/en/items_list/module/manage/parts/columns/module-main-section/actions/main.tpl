@@ -12,17 +12,20 @@
  *
  * @ListChild (list="itemsList.module.manage.columns.module-main-section.actions", weight="10")
  *}
-
 {if:module.getEnabled()}
 
-  <span IF="{!canDisable(module)}" class="disabled">{t(#Disable#)}</span>
-  <a IF="{canDisable(module)}" href="{buildURL(#addons_list_installed#,#disable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirm(confirmNote('disable', '{module.getModuleId()}'));">{t(#Disable#)}</a>
-
-  <a IF="{module.callModuleMethod(#showSettingsForm#)}" href="{module.getSettingsForm()}">{t(#Settings#)}</a>
+  <span class="disable">
+    <input type="hidden" name="switch[{module.getModuleId()}][old]" value="1" />
+    <input type="checkbox" name="switch[{module.getModuleId()}][new]" {if:!canDisable(module)} disabled="disabled"{end:} checked="checked" id="switch{module.getModuleId()}" />
+    <label for="switch{module.getModuleId()}">{t(#Enabled#)}</label>
+  </span>
 
 {else:}
 
-  <span IF="{!canEnable(module)}" class="disabled">{t(#Enable#)}</span>
-  <a IF="{canEnable(module)}" href="{buildURL(#addons_list_installed#,#enable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirm(confirmNote('enable', '{module.getModuleId()}'));">{t(#Enable#)}</a>
+  <span class="enable">
+    <input type="hidden" name="switch[{module.getModuleId()}][old]" value="0" />
+    <input type="checkbox" name="switch[{module.getModuleId()}][new]" {if:!canEnable(module)} disabled="disabled"{end:} id="switch{module.getModuleId()}" />
+    <label for="switch{module.getModuleId()}">{t(#Disabled#)}</label>
+  </span>
 
 {end:}

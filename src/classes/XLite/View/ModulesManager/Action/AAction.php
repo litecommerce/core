@@ -15,7 +15,7 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -26,38 +26,61 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Module;
+namespace XLite\View\ModulesManager\Action;
 
 /**
- * Manage 
+ * Abstract action link for Module list (Modules manage)
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Manage extends \XLite\View\Form\Module\AModule
+abstract class AAction extends \XLite\View\AView
 {
     /**
-     * getDefaultTarget
+     * Widget parameters' names
+     */
+    const PARAM_MODULE = 'module';
+
+
+    /**
+     * Define widget parameters
      *
-     * @return string
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultTarget()
+    protected function defineWidgetParams()
     {
-        return 'addons_list_installed';
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_MODULE => new \XLite\Model\WidgetParam\Object('Module', null, false, '\XLite\Model\Module'),
+        );
     }
 
     /**
-     * Return default value for the "action" parameter
-     *
-     * @return string
+     * Get module 
+     * 
+     * @return \XLite\Model\Module
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultAction()
+    protected function getModule()
     {
-        return 'switch';
+        return $this->getParam(self::PARAM_MODULE);
     }
 
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getModule();
+    }
 }
+

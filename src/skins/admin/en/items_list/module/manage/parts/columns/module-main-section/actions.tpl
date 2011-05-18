@@ -12,4 +12,6 @@
  * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="30")
  * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="30")
  *}
-<div class="actions">{displayNestedViewListContent(#actions#,_ARRAY_(#module#^module))}</div>
+<ul class="actions">
+  <li FOREACH="getNestedViewList(#actions#,_ARRAY_(#module#^module)),i,action" class="{buildListItemClass(#action#)}">{action.display()}</li>
+</ul>

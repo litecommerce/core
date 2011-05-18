@@ -15,7 +15,7 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -26,38 +26,41 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Module;
+namespace XLite\View\ModulesManager\Action;
 
 /**
- * Manage 
+ * 'Settings' action link for Module list (Modules manage)
  * 
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="itemsList.module.manage.columns.module-main-section.actions", weight="15", zone="admin")
  */
-class Manage extends \XLite\View\Form\Module\AModule
+class Settings extends \XLite\View\ModulesManager\Action\AAction
 {
     /**
-     * getDefaultTarget
+     * Return widget default template
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultTarget()
+    protected function getDefaultTemplate()
     {
-        return 'addons_list_installed';
+        return 'items_list/module/manage/parts/columns/module-main-section/actions/settings.tpl';
     }
 
     /**
-     * Return default value for the "action" parameter
+     * Check if widget is visible
      *
-     * @return string
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultAction()
+    protected function isVisible()
     {
-        return 'switch';
+        return parent::isVisible()
+            && $this->getModule()->callModuleMethod('showSettingsForm');
     }
-
 }
+
