@@ -127,7 +127,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     public static function cleanupRebuildIndicator()
     {
-        \Includes\Utils\FileManager::delete(static::getRebuildIndicatorFileName());
+        \Includes\Utils\FileManager::deleteFile(static::getRebuildIndicatorFileName());
     }
 
     /**
@@ -141,7 +141,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     {
         // "Step is completed" indicators
         foreach (static::getCacheStateFiles() as $file) {
-            \Includes\Utils\FileManager::delete($file);
+            \Includes\Utils\FileManager::deleteFile($file);
         }
 
         // "Step is running" indicator
@@ -161,7 +161,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         $content = \Includes\Utils\FileManager::read($name);
 
         // Only the process created the file can delete
-        static::getRebuildIndicatorFileContent() != $content ?: \Includes\Utils\FileManager::delete($name);
+        static::getRebuildIndicatorFileContent() != $content ?: \Includes\Utils\FileManager::deleteFile($name);
 
         return (bool) $content;
     }
@@ -180,7 +180,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         $file = static::getCacheStateIndicatorFileName($step);
 
         if ($file) {
-            \Includes\Utils\FileManager::delete($file);
+            \Includes\Utils\FileManager::deleteFile($file);
         }
     }
 
