@@ -28,6 +28,8 @@
 
 require_once (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'top.inc.php');
 
+set_time_limit(0);
+
 XLite::getInstance()->run();
 
 \XLite\Core\Probe::getInstance()->measure();

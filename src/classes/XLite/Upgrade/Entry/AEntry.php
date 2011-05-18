@@ -244,7 +244,7 @@ abstract class AEntry
         if ($path !== $this->repositoryPath) {
 
             if ($this->isDownloaded()) {
-                \Includes\Utils\FileManager::delete($this->repositoryPath);
+                \Includes\Utils\FileManager::deleteFile($this->repositoryPath);
 
             } elseif ($this->isUnpacked()) {
                 \Includes\Utils\FileManager::unlinkRecursive($this->repositoryPath);
