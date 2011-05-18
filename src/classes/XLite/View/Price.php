@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View;
 
 /**
  * Product price
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -45,8 +44,8 @@ class Price extends \XLite\View\AView
 
 
     /**
-     * Check - sale price is enabled or not 
-     * 
+     * Check - sale price is enabled or not
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -58,8 +57,8 @@ class Price extends \XLite\View\AView
     }
 
     /**
-     * Check - is save block is enabeld or not 
-     * 
+     * Check - is save block is enabeld or not
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -71,7 +70,7 @@ class Price extends \XLite\View\AView
 
     /**
      * Get save value (absolute)
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -85,7 +84,7 @@ class Price extends \XLite\View\AView
 
     /**
      * Get save value (absolute)
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -99,7 +98,7 @@ class Price extends \XLite\View\AView
 
     /**
      * Check - display only price or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -144,8 +143,8 @@ class Price extends \XLite\View\AView
     }
 
     /**
-     * getProduct 
-     * 
+     * getProduct
+     *
      * @return \XLite\Model\Product
      * @see    ____func_see____
      * @since  1.0.0
@@ -157,7 +156,7 @@ class Price extends \XLite\View\AView
 
     /**
      * Check widget visibility
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

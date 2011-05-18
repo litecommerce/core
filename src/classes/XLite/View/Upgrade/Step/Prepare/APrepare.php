@@ -20,7 +20,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\View\Upgrade\Step\Prepare;
 
 /**
- * APrepare 
- * 
+ * APrepare
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -38,7 +37,7 @@ abstract class APrepare extends \XLite\View\Upgrade\Step\AStep
 {
     /**
      * Register CSS files
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -85,7 +84,7 @@ abstract class APrepare extends \XLite\View\Upgrade\Step\AStep
      */
     protected function isVisible()
     {
-        return parent::isVisible() 
+        return parent::isVisible()
             && !\XLite\Upgrade\Cell::getInstance()->isUnpacked()
             && !\XLite\Upgrade\Cell::getInstance()->isUpgraded();
     }

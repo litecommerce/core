@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -19,14 +18,14 @@ function product_option(name_of_option)
         for (element = 0; element < document.add_to_cart.elements.length; element++) {
             if (document.add_to_cart.elements[element].name.search(name_of_option) != -1) {
                 return document.add_to_cart.elements[element];
-            }    
-        }    
-    }        
-    return -1;       
+            }
+        }
+    }
+    return -1;
 }
 
 function isValid()
-{   
+{
 // -->
 
 {validatorJSCode:h}

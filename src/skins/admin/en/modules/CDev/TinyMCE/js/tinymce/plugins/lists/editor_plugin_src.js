@@ -387,7 +387,7 @@
 						if (dom.isBlock(child)) {
 							child = dom.split(child.parentNode, child);
 							splitLast = true;
-							nextChild = child.nextSibling && child.nextSibling.firstChild; 
+							nextChild = child.nextSibling && child.nextSibling.firstChild;
 						} else {
 							nextChild = child.nextSibling;
 							if (splitLast && child.tagName === 'BR') {

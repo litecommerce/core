@@ -10,7 +10,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -19,8 +18,8 @@
 class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 {
     /**
-     * testProfileData 
-     * 
+     * testProfileData
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -51,8 +50,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     );
 
     /**
-     * addresses 
-     * 
+     * addresses
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -116,8 +115,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     );
 
     /**
-     * profileFields 
-     * 
+     * profileFields
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -155,8 +154,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetBillingAddress 
-     * 
+     * testGetBillingAddress
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -201,8 +200,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetShippingAddress 
-     * 
+     * testGetShippingAddress
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -247,7 +246,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetOrdersCount 
+     * testGetOrdersCount
      * TODO: add more tests
      *
      * @return void
@@ -264,8 +263,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testIsEnabled 
-     * 
+     * testIsEnabled
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -285,8 +284,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testCreate 
-     * 
+     * testCreate
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -315,8 +314,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testUpdate 
-     * 
+     * testUpdate
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -332,7 +331,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         $profile1->setPendingMembership(null);
 
         $result = $profile1->update();
-        
+
         // Update result must be true
         $this->assertTrue($result, 'update() must return true');
 
@@ -354,7 +353,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         $this->assertTrue(is_null($profile2->getMembership()), 'Membership is expected to be null');
 
         // Test #2: update user with login that is used by other user, check for duplicate login
-        
+
         $profile3 = $this->getTestProfile(0, 0);
 
         $profile4 = $this->getTestProfile(1, 0);
@@ -375,8 +374,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testIsSameAddress 
-     * 
+     * testIsSameAddress
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -414,8 +413,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testCloneObject 
-     * 
+     * testCloneObject
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -465,10 +464,10 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * getTestProfile 
-     * 
+     * getTestProfile
+     *
      * @param int $id ____param_comment____
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -501,10 +500,10 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * deleteTestProfile 
-     * 
+     * deleteTestProfile
+     *
      * @param mixed $profileId ____param_comment____
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____

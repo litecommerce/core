@@ -71,7 +71,7 @@ class XLite_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff extends XLite_ReqCo
             $found = (($tokens[$next]['line'] - $tokens[$stackPtr]['line']) - 1);
             if ($found !== 1) {
                 $error = "Обязательно наличие пустой строки после закрывающей фигурной скобки описания свойств класса.";
-				if ($found > 1) 
+				if ($found > 1)
 					$error .= " Найдено $found строк(и)";
                 $phpcsFile->addError($this->getReqPrefix('REQ.CSS.?') . $error, $stackPtr);
             }

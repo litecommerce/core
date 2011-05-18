@@ -20,7 +20,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View\Upgrade\Step\ReadyToInstall;
 
 /**
  * StatusMessages
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -63,8 +62,8 @@ class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToIns
     }
 
     /**
-     * Check widget visibility 
-     * 
+     * Check widget visibility
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -76,7 +75,7 @@ class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToIns
 
     /**
      * Return list of messages
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

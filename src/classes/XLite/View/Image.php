@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,14 +29,14 @@ namespace XLite\View;
 
 /**
  * Image
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Image extends \XLite\View\AView
 {
     /**
-     * Widget arguments names 
+     * Widget arguments names
      */
     const PARAM_IMAGE             = 'image';
     const PARAM_ALT               = 'alt';
@@ -50,7 +49,7 @@ class Image extends \XLite\View\AView
 
 
     /**
-     * Vertical align types 
+     * Vertical align types
      */
     const VERTICAL_ALIGN_TOP    = 'top';
     const VERTICAL_ALIGN_MIDDLE = 'middle';
@@ -59,7 +58,7 @@ class Image extends \XLite\View\AView
 
     /**
      * Allowed properties names
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -77,8 +76,8 @@ class Image extends \XLite\View\AView
     );
 
     /**
-     * Additioanl properties 
-     * 
+     * Additioanl properties
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -86,8 +85,8 @@ class Image extends \XLite\View\AView
     protected $properties = array();
 
     /**
-     * Resized thumbnail URL 
-     * 
+     * Resized thumbnail URL
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -117,8 +116,8 @@ class Image extends \XLite\View\AView
     }
 
     /**
-     * Get image URL 
-     * 
+     * Get image URL
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -155,7 +154,7 @@ class Image extends \XLite\View\AView
 
     /**
      * Get image alternative text
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -166,8 +165,8 @@ class Image extends \XLite\View\AView
     }
 
     /**
-     * Get properties 
-     * 
+     * Get properties
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -214,34 +213,34 @@ class Image extends \XLite\View\AView
     }
 
     /**
-     * checkImage 
-     * 
-     * @return boolean 
+     * checkImage
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function checkImage()
     {
-        return $this->getParam(self::PARAM_IMAGE) 
+        return $this->getParam(self::PARAM_IMAGE)
             && $this->getParam(self::PARAM_IMAGE)->isExists();
     }
 
     /**
-     * checkDefaultImage 
-     * 
-     * @return boolean 
+     * checkDefaultImage
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function checkDefaultImage()
     {
-        return $this->getParam(self::PARAM_USE_DEFAULT_IMAGE) 
+        return $this->getParam(self::PARAM_USE_DEFAULT_IMAGE)
             && \XLite::getInstance()->getOptions(array('images', 'default_image'));
     }
 
     /**
      * Check widget visibility
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -268,7 +267,7 @@ class Image extends \XLite\View\AView
 
     /**
      * Return a CSS style centering the image vertically and horizontally
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -308,9 +307,9 @@ class Image extends \XLite\View\AView
 
     /**
      * Add CSS styles to the value of "style" attribute of the image tag
-     * 
+     *
      * @param string $style CSS styles to be added to the end of "style" attribute
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -326,9 +325,9 @@ class Image extends \XLite\View\AView
     }
 
     /**
-     * Preprocess image 
+     * Preprocess image
      * TODO: replace getResizedThumbnailURL to getResizedURL
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -356,8 +355,8 @@ class Image extends \XLite\View\AView
     }
 
     /**
-     * Preprocess default image 
-     * 
+     * Preprocess default image
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

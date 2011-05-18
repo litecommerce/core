@@ -2,11 +2,10 @@
 
 /**
  * Common functions
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -67,7 +66,7 @@ var URLHandler = {
   {
     return this.implodeParams(params, this.getQueryParamValue);
   },
-  
+
   // Return some params
   getParams: function(params, toReturn)
   {
@@ -92,7 +91,7 @@ var URLHandler = {
         result[x] = params[x];
       }
     }
-    
+
     return result;
   },
 
@@ -217,8 +216,8 @@ function loadDialog(url, dialogOptions, callback)
 
         // Specific CSS class to manage this specific popup window
         div.addClass(selector);
-        
-        // Every popup window (even hidden one) has this one defined CSS class. 
+
+        // Every popup window (even hidden one) has this one defined CSS class.
         // You should use this selector to manage any popup window entry.
         div.addClass('popup-window-entry');
 
@@ -241,7 +240,7 @@ function loadDialogByLink(link, url, options, callback)
 {
   // Close every popup window opened before. Only one popup window is allowed to be displayed at once.
   jQuery('.popup-window-entry').dialog('close');
-  
+
   if (!link.linkedDialog) {
     link.linkedDialog = loadDialog(url, options, callback);
 
@@ -315,7 +314,7 @@ function normalizeSelect(name) {
   if (tmp)
     tmp.options[tmp.options.length-1] = null;
 }
-        
+
 
 function moveSelect(left, right, type) {
   if (type != 'R') {
@@ -356,8 +355,8 @@ function checkMarks(form, reg, lbl) {
 
   for (var x = 0; x < form.elements.length; x++) {
     if (
-      form.elements[x].type == 'checkbox' 
-      && form.elements[x].name.search(reg) == 0 
+      form.elements[x].type == 'checkbox'
+      && form.elements[x].name.search(reg) == 0
       && !form.elements[x].disabled
     ) {
       is_exist = true;
@@ -382,7 +381,7 @@ function checkMarks(form, reg, lbl) {
 }
 
 /*
-  Parameters: 
+  Parameters:
   checkboxes       - array of tag names
   checkboxes_form    - form name with these checkboxes
 */
@@ -468,7 +467,7 @@ function attachTooltip(elm, content) {
   jQuery(elm).each(
     function () {
       var block = this;
-    
+
       jQuery(this).hover(
         function() {
           jQuery(block).validationEngine('showPrompt', content, 'load', 'bottomLeft');

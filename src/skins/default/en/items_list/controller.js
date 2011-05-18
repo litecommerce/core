@@ -2,11 +2,10 @@
 
 /**
  * ____file_title____
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -50,7 +49,7 @@ ListsController.prototype.initialize = function()
 }
 
 /**
- * Main widget (listView) 
+ * Main widget (listView)
  */
 
 function ListView(base)
@@ -61,9 +60,9 @@ function ListView(base)
   this.widgetTarget = core.getCommentedData(base, 'widget_target');
   this.widgetParams = core.getCommentedData(base, 'widget_params');
 }
- 
+
 extend(ListView, ALoadable);
- 
+
 ListView.prototype.shadeWidget = true;
 
 ListView.prototype.sessionCell = null;
@@ -89,7 +88,7 @@ ListView.prototype.postprocess = function(isSuccess, initial)
         count = parseInt(jQuery(this).val());
 
         if (isNaN(count)) {
-          //TODO We must take it from the previous widget parameters ... 
+          //TODO We must take it from the previous widget parameters ...
           count = 10;
         } else {
           if (count < 1) {
@@ -118,4 +117,3 @@ ListView.prototype.postprocess = function(isSuccess, initial)
 
   }
 }
-

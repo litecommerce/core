@@ -20,7 +20,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\View\Upgrade;
 
 /**
- * AUpgrade 
- * 
+ * AUpgrade
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -83,7 +82,7 @@ abstract class AUpgrade extends \XLite\View\Dialog
 
     /**
      * Return list of modules and/or core to upgrade
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -95,9 +94,9 @@ abstract class AUpgrade extends \XLite\View\Dialog
 
     /**
      * Check if passed entry is a module
-     * 
+     *
      * @param \XLite\Upgrade\Entry\AEntry $entry Object to check
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

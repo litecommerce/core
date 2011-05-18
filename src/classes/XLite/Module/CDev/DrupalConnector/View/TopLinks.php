@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,15 +29,15 @@ namespace XLite\Module\CDev\DrupalConnector\View;
 
 /**
  * 'Powered by' widget
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
 {
     /**
-     * Gathering Drupal return URL from request and save it in session 
-     * 
+     * Gathering Drupal return URL from request and save it in session
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -59,18 +58,18 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
     /**
      * Disable storefront menu in top links
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function isStorefrontMenuVisible()
     {
-        return false;                                     
+        return false;
     }
 
     /**
-     * Return Drupal frontend URL 
-     * 
+     * Return Drupal frontend URL
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -82,7 +81,7 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
 
     /**
      * Check if Drupal URL is stored in config variables
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -94,8 +93,8 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
     }
 
     /**
-     * Returns a Drupal return URL 
-     * 
+     * Returns a Drupal return URL
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -108,7 +107,7 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
 
     /**
      * Check if Drupal return URL is saved in session
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -116,15 +115,15 @@ class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
     protected function hasDrupalReturnURL()
     {
         $paramReturnURL = \XLite\Module\CDev\DrupalConnector\Drupal\Module::PARAM_DRUPAL_RETURN_URL;
-        
+
         return isset(\XLite\Core\Session::getInstance()->$paramReturnURL)
             && !empty(\XLite\Core\Session::getInstance()->$paramReturnURL)
             && !($this->hasDrupalURL() && \XLite\Core\Session::getInstance()->$paramReturnURL == $this->getDrupalURL());
     }
 
     /**
-     * check if Drupal menu is visible in top links 
-     * 
+     * check if Drupal menu is visible in top links
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

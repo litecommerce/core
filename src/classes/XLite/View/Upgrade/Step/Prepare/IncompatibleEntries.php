@@ -20,7 +20,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View\Upgrade\Step\Prepare;
 
 /**
  * IncompatibleEntries
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -38,7 +37,7 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
 {
     /**
      * Register JS files
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -89,7 +88,7 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
 
     /**
      * Check widget visibility
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -101,7 +100,7 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
 
     /**
      * Return list of inclompatible modules
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -125,9 +124,9 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
      * Check if module will be disabled after upgrade
      *
      * :TRICKY: check if the "getMajorVersion" is not declared in the main module class
-     * 
+     *
      * @param \XLite\Model\Module $module Module to check
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

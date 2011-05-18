@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,16 +28,16 @@
 namespace XLite\Controller\Customer;
 
 /**
- * \XLite\Controller\Customer\Cart 
- * 
+ * \XLite\Controller\Customer\Cart
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Cart extends \XLite\Controller\Customer\ACustomer
 {
-    /** 
+    /**
      * Initialize controller
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -65,9 +64,9 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * isSecure 
+     * isSecure
      * TODO: check if this method is used
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -79,8 +78,8 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
 
     /**
-     * Common method to determine current location 
-     * 
+     * Common method to determine current location
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -171,22 +170,22 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Check product amount before add it to the cart
-     * 
+     *
      * @param \XLite\Model\Product $product Product to add
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function checkAmountToAdd(\XLite\Model\Product $product)
     {
-        return $this->checkAmount($product) 
+        return $this->checkAmount($product)
             || $this->getProductAvailableAmount($product) >= $this->getAmount();
     }
 
     /**
      * Check amount for all cart items
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -201,9 +200,9 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Correct product amount
-     * 
+     *
      * @param \XLite\Model\Product $product Product to add
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -221,10 +220,10 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Get (and create) current cart item 
-     * 
+     * Get (and create) current cart item
+     *
      * @param \XLite\Model\Product $product Product to add
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -241,7 +240,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Add product to the cart
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -252,11 +251,11 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Show message about wrong product amount 
-     * 
+     * Show message about wrong product amount
+     *
      * @param \XLite\Model\Product $product Product to process
      * @param integer              $amount  Available amount
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -296,7 +295,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
     /**
      * URL to return after product is added
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -304,9 +303,9 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     protected function getURLToReturn()
     {
         $url = \XLite\Core\Session::getInstance()->productListURL;
-        
+
         if (!$url) {
-            $url = empty($_SERVER['HTTP_REFERER']) 
+            $url = empty($_SERVER['HTTP_REFERER'])
                 ? $this->buildURL('product', '', array('product_id' => $this->getProductId()))
                 : $_SERVER['HTTP_REFERER'];
         }
@@ -327,7 +326,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
         if (\XLite\Core\Config::getInstance()->General->redirect_to_cart) {
 
-            // Hard redirect to cart 
+            // Hard redirect to cart
             $this->setReturnURL($this->buildURL('cart'));
 
             $this->setHardRedirect();
@@ -340,7 +339,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Add product to cart
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -362,7 +361,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
     /**
      * 'delete' action
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -388,7 +387,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Update cart
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -429,10 +428,10 @@ class Cart extends \XLite\Controller\Customer\ACustomer
             $this->updateCart();
         }
     }
-    
+
     /**
      * 'checkout' action
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -441,13 +440,13 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     {
         $this->doActionUpdate();
 
-        // switch to checkout dialog 
+        // switch to checkout dialog
         $this->setReturnURL($this->buildURL('checkout'));
     }
 
     /**
      * Clear cart
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

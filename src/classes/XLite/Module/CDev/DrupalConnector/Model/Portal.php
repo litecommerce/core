@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -33,7 +32,7 @@ namespace XLite\Module\CDev\DrupalConnector\Model;
  *
  * TODO: if there will be more properties,
  * derive this class from the \Includes\DataStructure\Cell one
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -42,7 +41,7 @@ class Portal extends \XLite\Base\SuperClass
 {
     /**
      * Drupal URL where the controller will be displayed
-     * 
+     *
      * @var    string
      * @access protected
      * @see    ____var_see____
@@ -52,7 +51,7 @@ class Portal extends \XLite\Base\SuperClass
 
     /**
      * Controller class name
-     * 
+     *
      * @var    string
      * @access protected
      * @see    ____var_see____
@@ -61,8 +60,8 @@ class Portal extends \XLite\Base\SuperClass
     protected $controller;
 
     /**
-     * Portal title 
-     * 
+     * Portal title
+     *
      * @var    string
      * @access protected
      * @see    ____var_see____
@@ -72,7 +71,7 @@ class Portal extends \XLite\Base\SuperClass
 
     /**
      * Portal type for Drupal
-     * 
+     *
      * @var    integer
      * @access protected
      * @see    ____var_see____
@@ -108,8 +107,8 @@ class Portal extends \XLite\Base\SuperClass
     }
 
     /**
-     * Get default portal type 
-     * 
+     * Get default portal type
+     *
      * @return integer
      * @access protected
      * @see    ____func_see____
@@ -122,12 +121,12 @@ class Portal extends \XLite\Base\SuperClass
 
     /**
      * Constructor
-     * 
+     *
      * @param string  $url        Drupal URL
      * @param string  $controller Controller class name
      * @param string  $title      Portal title
      * @param integer $type       Node type
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -148,7 +147,7 @@ class Portal extends \XLite\Base\SuperClass
 
     /**
      * Getter
-     * 
+     *
      * @return string
      * @access public
      * @see    ____func_see____
@@ -200,7 +199,7 @@ class Portal extends \XLite\Base\SuperClass
 
     /**
      * Return menu node description in Drupal-specific form
-     * 
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -219,10 +218,10 @@ class Portal extends \XLite\Base\SuperClass
     /**
      * Argument convertion: <DRUPAL> --> <LC>
      *
-     * @param string $path     Portal path 
+     * @param string $path     Portal path
      * @param array  $args     Druapl URL arguments
      * @param array  $pageArgs LC-specific URL arguments
-     *  
+     *
      * @return array
      * @access public
      * @see    ____func_see____

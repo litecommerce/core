@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -27,7 +26,7 @@ function submitForm(formName, action)
   document.forms[formName].submit();
 }
 
-</script> 
+</script>
 
 <br /><br />
 
@@ -65,7 +64,7 @@ function submitForm(formName, action)
 
             <script type="text/javascript">
               checkboxes{zn.zone.getZoneId()}_{method.method.getMethodId()} = new Array({foreach:method.markups,k,markup}{if:!k=0},{end:}'to_delete[{markup.getMarkupId()}]'{end:});
-            </script> 
+            </script>
 
             <tr>
               <th><input type="checkbox" id="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}" name="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}" onclick="javascript:change_all(this.checked, checkboxes_form, checkboxes{zn.zone.getZoneId()}_{method.method.getMethodId()});" /></th>
@@ -235,4 +234,3 @@ function submitForm(formName, action)
   <widget class="\XLite\View\Button\Submit" label="Add" />
 
 </form>
-

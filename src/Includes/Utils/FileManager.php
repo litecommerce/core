@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace Includes\Utils;
 
 /**
- * FileManager 
- * 
+ * FileManager
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -107,10 +106,10 @@ abstract class FileManager extends \Includes\Utils\AUtils
     }
 
     /**
-     * Check if file is readable 
-     * 
+     * Check if file is readable
+     *
      * @param string $file File to check
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -164,9 +163,9 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
     /**
      * Return directory where a file is located
-     * 
+     *
      * @param string $file File path
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -178,9 +177,9 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
     /**
      * Return real path
-     * 
+     *
      * @param string $path Path to prepare
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -240,25 +239,25 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
     /**
      * Create directories tree recursive
-     * 
+     *
      * @param string  $dir  Directory path
      * @param integer $mode Permissions OPTIONAL
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function mkdirRecursive($dir, $mode = 0755)
     {
-        return static::isDir($dir) ?: 
+        return static::isDir($dir) ?:
             (static::mkdirRecursive(static::getDir($dir), $mode) && static::mkdir($dir, $mode));
     }
 
     /**
      * Remove directories tree recursive
-     * 
+     *
      * @param string $dir Directory path
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -279,7 +278,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
                 }
             }
 
-            // Unset is required to release directory 
+            // Unset is required to release directory
             // and avoid 'Permission denied' warning on rmdir() on Windows servers
             unset($filter);
 
@@ -289,10 +288,10 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
     /**
      * Copy the whole directory tree
-     * 
+     *
      * @param string $dirFrom Catalog from which files will be copied
      * @param string $dirTo   Catalog to which files will be copied
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -336,10 +335,10 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
     /**
      * Get unique file name in the certain directory
-     * 
+     *
      * @param string $dir  Directory name
      * @param string $file File name
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -359,10 +358,10 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
     /**
      * Change file or directory permissions
-     * 
-     * @param string  $path File path 
+     *
+     * @param string  $path File path
      * @param integer $mode Permissions
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -389,19 +388,19 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
     /**
      * Write data to a file
-     * 
+     *
      * @param string  $path  File path
      * @param string  $data  Data to write
      * @param integer $flags Some optional flags OPTIONAL
      * @param integer $mode  Permisions to set OPTIONAL
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function write($path, $data, $flags = 0, $mode = 0644)
     {
-        return static::mkdirRecursive(static::getDir($path)) 
+        return static::mkdirRecursive(static::getDir($path))
             && false !== file_put_contents($path, $data, $flags)
             && static::chmod($path, $mode);
     }
@@ -426,10 +425,10 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
     /**
      * Delete file
-     * 
+     *
      * @param string  $path      File path
      * @param integer $skipCheck Flag OPTIONAL
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -467,17 +466,17 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function copy($pathFrom, $pathTo, $overwrite = true)
     {
-        return (!$overwrite && static::isFile($pathTo)) 
+        return (!$overwrite && static::isFile($pathTo))
             ?: static::mkdirRecursive(static::getDir($pathTo)) && copy($pathFrom, $pathTo);
     }
 
     /**
      * Move uploaded file to a new location
-     * 
+     *
      * @param string $key   Index in the $_FILES array
      * @param string $dirTo Destination OPTIONAL
      * @param string $name  Result file name OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -499,10 +498,10 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
     /**
      * Return file size
-     * 
+     *
      * @param string  $path      File path
      * @param integer $skipCheck Flag OPTIONAL
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -514,9 +513,9 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
     /**
      * Return available disk space
-     * 
+     *
      * @param string $dir A directory of the filesystem or disk partition OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -532,9 +531,9 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
     /**
      * Find executable file
-     * 
+     *
      * @param string $filename File name
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -573,9 +572,9 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
     /**
      * Normalize path
-     * 
+     *
      * @param string $path Path
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -586,11 +585,11 @@ abstract class FileManager extends \Includes\Utils\AUtils
     }
 
     /**
-     * Path nrmalization procedure callback 
-     * 
+     * Path nrmalization procedure callback
+     *
      * @param string $a Path part 1
      * @param string $b Path part 2
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -600,7 +599,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
         if (0 === $a) {
             $a = ('/' === LC_DS ? LC_DS : '');
         }
- 
+
         if ('' === $b || '.' === $b) {
             $result = $a;
 
@@ -608,7 +607,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
             $result = dirname($a);
 
         } else {
- 
+
             $result = preg_replace('/' . preg_quote(LC_DS, '/') . '+/S', LC_DS, $a . ('' === $a ? '' : LC_DS) . $b);
         }
 

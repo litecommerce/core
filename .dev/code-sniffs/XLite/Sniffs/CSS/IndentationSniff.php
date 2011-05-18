@@ -72,7 +72,7 @@ class XLite_Sniffs_CSS_IndentationSniff extends XLite_ReqCodesSniff
             }
 
             if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET) {
-                $indentLevel++; 
+                $indentLevel++;
             } else if ($tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET) {
                 $indentLevel--;
             }
@@ -88,10 +88,10 @@ class XLite_Sniffs_CSS_IndentationSniff extends XLite_ReqCodesSniff
             } else {
                 $foundIndent = 0;
             }
-            
-			if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET || $tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET) { 
+
+			if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET || $tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET) {
 				$i++;
-				continue; 
+				continue;
 			}
 
             $expectedIndent = ($indentLevel * 2);

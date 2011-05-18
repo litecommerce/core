@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,20 +29,20 @@ namespace XLite\Core;
 
 /**
  * Current session
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Session extends \XLite\Base\Singleton
 {
     /**
-     * Public session id argument name 
+     * Public session id argument name
      */
     const ARGUMENT_NAME = 'xid';
 
     /**
-     * Session 
-     * 
+     * Session
+     *
      * @var   \XLite\Model\Session
      * @see   ____var_see____
      * @since 1.0.0
@@ -69,8 +68,8 @@ class Session extends \XLite\Base\Singleton
     protected $language;
 
     /**
-     * Last form id 
-     * 
+     * Last form id
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -80,9 +79,9 @@ class Session extends \XLite\Base\Singleton
 
     /**
      * Getter
-     * 
+     *
      * @param string $name Session cell name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -94,10 +93,10 @@ class Session extends \XLite\Base\Singleton
 
     /**
      * Setter
-     * 
+     *
      * @param string $name  Session cell name
      * @param mixed  $value Value
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -109,9 +108,9 @@ class Session extends \XLite\Base\Singleton
 
     /**
      * Check session cell availability
-     * 
+     *
      * @param string $name Session cell name
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -123,9 +122,9 @@ class Session extends \XLite\Base\Singleton
 
     /**
      * Remove session cell
-     * 
+     *
      * @param string $name Session cell name
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -138,9 +137,9 @@ class Session extends \XLite\Base\Singleton
     /**
      * Getter
      * DEPRECATE
-     * 
+     *
      * @param string $name Session cell name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -153,10 +152,10 @@ class Session extends \XLite\Base\Singleton
     /**
      * Setter
      * DEPRECATE
-     * 
+     *
      * @param string $name  Session cell name
      * @param mixed  $value Value
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -168,7 +167,7 @@ class Session extends \XLite\Base\Singleton
 
     /**
      * Restart session
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -216,8 +215,8 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Get public session id argument name 
-     * 
+     * Get public session id argument name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -229,7 +228,7 @@ class Session extends \XLite\Base\Singleton
 
     /**
      * Get public session id
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -240,10 +239,10 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Load session by public session id 
-     * 
+     * Load session by public session id
+     *
      * @param string $sid Public session id
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -300,8 +299,8 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Get model 
-     * 
+     * Get model
+     *
      * @return \XLite\Model\Session
      * @see    ____func_see____
      * @since  1.0.0
@@ -313,7 +312,7 @@ class Session extends \XLite\Base\Singleton
 
     /**
      * Get language
-     * 
+     *
      * @return \XLite\Model\Language
      * @see    ____func_see____
      * @since  1.0.0
@@ -335,10 +334,10 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Set language 
-     * 
+     * Set language
+     *
      * @param string $language Language code
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -355,7 +354,7 @@ class Session extends \XLite\Base\Singleton
         }
 
         if (
-            !isset($code[$zone]) 
+            !isset($code[$zone])
             || $code[$zone] != $language
         ) {
             $code[$zone] = $language;
@@ -369,7 +368,7 @@ class Session extends \XLite\Base\Singleton
 
     /**
      * Constructor
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -388,7 +387,7 @@ class Session extends \XLite\Base\Singleton
 
     /**
      * Clear expired sessions and other obsolete data
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -399,8 +398,8 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Restore session 
-     * 
+     * Restore session
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -428,8 +427,8 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Detect public session id 
-     * 
+     * Detect public session id
+     *
      * @return array (public session id and source)
      * @see    ____func_see____
      * @since  1.0.0
@@ -442,7 +441,7 @@ class Session extends \XLite\Base\Singleton
         $arg = $this->getName();
 
         foreach (array('POST', 'GET', 'COOKIE') as $key) {
-            
+
             if (isset($GLOBALS['_' . $key][$arg])) {
 
                 $sid = $GLOBALS['_' . $key][$arg];
@@ -454,7 +453,7 @@ class Session extends \XLite\Base\Singleton
         }
 
         if (
-            $sid 
+            $sid
             && !\XLite\Core\Database::getRepo('XLite\Model\Session')->isPublicSessionIdValid($sid)
         ) {
             $sid = null;
@@ -464,8 +463,8 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Create session 
-     * 
+     * Create session
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -484,8 +483,8 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Set cookie 
-     * 
+     * Set cookie
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -493,7 +492,7 @@ class Session extends \XLite\Base\Singleton
     protected function setCookie()
     {
         if (
-            !headers_sent() 
+            !headers_sent()
             && 'cli' != PHP_SAPI
         ) {
             $arg = $this->getName();
@@ -527,9 +526,9 @@ class Session extends \XLite\Base\Singleton
 
     /**
      * Get parsed URL for Set-Cookie
-     * 
+     *
      * @param boolean $secure Secure protocol or not OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -578,8 +577,8 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Get current language 
-     * 
+     * Get current language
+     *
      * @return string Language code
      * @see    ____func_see____
      * @since  1.0.0
@@ -596,14 +595,14 @@ class Session extends \XLite\Base\Singleton
         }
 
         if (
-            isset($code[$zone]) 
+            isset($code[$zone])
             && $code[$zone]
         ) {
             $language = \XLite\Core\Database::getRepo('XLite\Model\Language')
                 ->findOneByCode($code[$zone]);
 
             if (
-                !$language 
+                !$language
                 || $language->getStatus() != $language::ENABLED
             ) {
                 unset($code[$zone]);
@@ -611,7 +610,7 @@ class Session extends \XLite\Base\Singleton
         }
 
         if (
-            !isset($code[$zone]) 
+            !isset($code[$zone])
             || !$code[$zone]
         ) {
             $this->setLanguage($this->defineCurrentLanguage());
@@ -623,8 +622,8 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Define current language 
-     * 
+     * Define current language
+     *
      * @return string Language code
      * @see    ____func_see____
      * @since  1.0.0
@@ -662,7 +661,7 @@ class Session extends \XLite\Base\Singleton
             $key = array_search($lng->getCode(), $languages);
 
             if (
-                false !== $key 
+                false !== $key
                 && $key < $idx
             ) {
                 $idx = $key;

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Controller\Customer;
 
 /**
  * Login page controller
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -43,8 +42,8 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
 
     /**
-     * Controlelr parameters 
-     * 
+     * Controlelr parameters
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -52,8 +51,8 @@ class Login extends \XLite\Controller\Customer\ACustomer
     protected $params = array('target', 'mode');
 
     /**
-     * Profile 
-     * 
+     * Profile
+     *
      * @var   \XLite\Model\Profile|integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -63,7 +62,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Perform some actions after the "login" action
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -73,18 +72,18 @@ class Login extends \XLite\Controller\Customer\ACustomer
         $url = $this->getRedirectFromLoginURL();
 
         if (isset($url)) {
-            \XLite\Core\CMSConnector::isCMSStarted() 
-                ? \XLite\Core\Operator::redirect($url, true) 
+            \XLite\Core\CMSConnector::isCMSStarted()
+                ? \XLite\Core\Operator::redirect($url, true)
                 : $this->setReturnURL($url);
         }
     }
 
     /**
      * Get the full URL of the page
-     * 
+     *
      * @param string  $url    Relative URL OPTIONAL
      * @param boolean $secure Flag to use HTTPS OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -98,8 +97,8 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
 
     /**
-     * Common method to determine current location 
-     * 
+     * Common method to determine current location
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -111,7 +110,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Return URL to redirect from login
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -123,7 +122,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Log in using the login and password from request
-     * 
+     *
      * @return \XLite\Model\Profile
      * @see    ____func_see____
      * @since  1.0.0
@@ -137,8 +136,8 @@ class Login extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Login 
-     * 
+     * Login
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -156,8 +155,8 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
             if (!$this->getReturnURL()) {
                 $this->setReturnURL(
-                    $this->getCart()->isEmpty() 
-                    ? \XLite\Core\Converter::buildURL() 
+                    $this->getCart()->isEmpty()
+                    ? \XLite\Core\Converter::buildURL()
                     : \XLite\Core\Converter::buildURL('cart')
                 );
             }
@@ -169,8 +168,8 @@ class Login extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Log out 
-     * 
+     * Log out
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

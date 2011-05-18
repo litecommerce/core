@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -47,8 +46,8 @@ namespace XLite\Model;
 class SessionCell extends \XLite\Model\AEntity
 {
     /**
-     * Cell unique id 
-     * 
+     * Cell unique id
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -60,8 +59,8 @@ class SessionCell extends \XLite\Model\AEntity
     protected $cell_id;
 
     /**
-     * Session id 
-     * 
+     * Session id
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -71,8 +70,8 @@ class SessionCell extends \XLite\Model\AEntity
     protected $id;
 
     /**
-     * Name 
-     * 
+     * Name
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -82,8 +81,8 @@ class SessionCell extends \XLite\Model\AEntity
     protected $name;
 
     /**
-     * Value 
-     * 
+     * Value
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -94,7 +93,7 @@ class SessionCell extends \XLite\Model\AEntity
 
     /**
      * Value type
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -125,10 +124,10 @@ class SessionCell extends \XLite\Model\AEntity
      *
      * NOTE: this function is designed as "static public" to use in repository
      * NOTE: customize this method instead of the "getValue()" one
-     * 
+     *
      * @param mixed  $value Value to prepare
      * @param string $type  Field type OPTIONAL
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -206,8 +205,8 @@ class SessionCell extends \XLite\Model\AEntity
 
 
     /**
-     * Get value 
-     * 
+     * Get value
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -218,10 +217,10 @@ class SessionCell extends \XLite\Model\AEntity
     }
 
     /**
-     * Set value 
-     * 
+     * Set value
+     *
      * @param mixed $value Value
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -234,9 +233,9 @@ class SessionCell extends \XLite\Model\AEntity
 
     /**
      * Disallowed method
-     * 
+     *
      * @param string $type Type to set
-     *  
+     *
      * @return void
      * @throws \Exception
      * @see    ____func_see____

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Controller\Customer\Base;
 
 /**
- * Order 
- * 
+ * Order
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -47,7 +46,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Return current order ID
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -59,7 +58,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Return current order
-     * 
+     *
      * @return \XLite\Model\Order
      * @see    ____func_see____
      * @since  1.0.0
@@ -75,7 +74,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Check if currently logged user is an admin
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -87,14 +86,14 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Check if order corresponds to current user
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function checkOrderProfile()
     {
-        return \XLite\Core\Auth::getInstance()->getProfile()->getProfileId() 
+        return \XLite\Core\Auth::getInstance()->getProfile()->getProfileId()
             == $this->getOrder()->getOrigProfile()->getProfileId();
     }
 

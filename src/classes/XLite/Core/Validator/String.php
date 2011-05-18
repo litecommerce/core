@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Core\Validator;
 
 /**
- * String 
- * 
+ * String
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -38,7 +37,7 @@ class String extends \XLite\Core\Validator\Scalar
 {
     /**
      * Non-empty validation flag
-     * 
+     *
      * @var   mixed
      * @see   ____var_see____
      * @since 1.0.0
@@ -47,9 +46,9 @@ class String extends \XLite\Core\Validator\Scalar
 
     /**
      * Constructor
-     * 
+     *
      * @param boolean $nonEmpty Non-empty flag OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -60,10 +59,10 @@ class String extends \XLite\Core\Validator\Scalar
     }
 
     /**
-     * Mark validator as requried non-empty 
-     * 
+     * Mark validator as requried non-empty
+     *
      * @param boolean $nonEmpty Flag OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -95,4 +94,3 @@ class String extends \XLite\Core\Validator\Scalar
 
     }
 }
-

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -32,7 +31,7 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
 {
     /**
      * Test order statistics
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -51,20 +50,20 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
             "//h1[@id='page-title' and text()='Statistics']",
             "Check header"
         );
-       
+
         // Check tabs
         $this->assertElementPresent(
             "//div[@class='page-tabs']" .
             "/ul" .
-            "/li[@class='tab-current']" . 
+            "/li[@class='tab-current']" .
             "/a[text()='Order statistics' and @href='admin.php?target=orders_stats']",
             "Check active tab"
         );
-        
+
         $this->assertElementPresent(
             "//div[@class='page-tabs']" .
             "/ul" .
-            "/li[@class='tab']" . 
+            "/li[@class='tab']" .
             "/a[text()='Top sellers' and @href='admin.php?target=top_sellers']",
             "Check inactive tab"
         );
@@ -79,12 +78,12 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
                 "//table[@class='data-table order-statistics']" .
                 "/tbody" .
                 "/tr[@class='TableHead']" .
-                "/th[text()='" . $title . "']", 
+                "/th[text()='" . $title . "']",
                 "Check '" . $title . "' header"
             );
-        
+
         }
-        
+
         $rows = \XLite\Controller\Admin\OrdersStats::getInstance()->getRowTitles();
 
         // Check row titles headers
@@ -94,7 +93,7 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
                 "//table[@class='data-table order-statistics']" .
                 "/tbody" .
                 "/tr[@class='dialog-box" . $totalsClass. "']" .
-                "/td[text()='" . addslashes($title) . "']", 
+                "/td[text()='" . addslashes($title) . "']",
                 "Check '" . $title . "' row"
             );
         }
@@ -105,7 +104,7 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
             $this->getJSExpression('jQuery("table.data-table tr:eq(1) td:eq(5)").text().trim()'),
             "Check All time, processed/completed orders: 2 orders"
         );
-        
+
         $this->assertEquals(
             '$ 141.87',
             $this->getJSExpression('jQuery("table.data-table tr:eq(5) td:eq(5)").text().trim()'),
@@ -122,7 +121,7 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
 
     /**
      * Test top sellers
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -141,20 +140,20 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
             "//h1[@id='page-title' and text()='Statistics']",
             "Check header"
         );
-       
+
         // Check tabs
         $this->assertElementPresent(
             "//div[@class='page-tabs']" .
             "/ul" .
-            "/li[@class='tab']" . 
+            "/li[@class='tab']" .
             "/a[text()='Order statistics' and @href='admin.php?target=orders_stats']",
             "Check inactive tab"
         );
-        
+
         $this->assertElementPresent(
             "//div[@class='page-tabs']" .
             "/ul" .
-            "/li[@class='tab-current']" . 
+            "/li[@class='tab-current']" .
             "/a[text()='Top sellers' and @href='admin.php?target=top_sellers']",
             "Check active tab"
         );
@@ -169,12 +168,12 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
                 "//table[@class='data-table top-sellers']" .
                 "/tbody" .
                 "/tr[@class='TableHead']" .
-                "/th[text()='" . $title . "']", 
+                "/th[text()='" . $title . "']",
                 "Check '" . $title . "' header"
             );
-        
+
         }
-        
+
         $rows = \XLite\Controller\Admin\TopSellers::getInstance()->getStatsRows();
 
         // Check row titles headers
@@ -184,7 +183,7 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
                 "//table[@class='data-table top-sellers']" .
                 "/tbody" .
                 "/tr[@class='dialog-box']" .
-                "/td[text()='" . addslashes($k+1 . '.') . "']", 
+                "/td[text()='" . addslashes($k+1 . '.') . "']",
                 "Check '" . $k . "' row"
             );
         }
@@ -195,7 +194,7 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
             $this->getJSExpression('jQuery("table.data-table tr:eq(1) td:eq(5) a").text().trim()'),
             "Check top product"
         );
-        
+
         // Check key values of the demo data
         $this->assertEquals(
             "Wi-Fi Detector Shirt",

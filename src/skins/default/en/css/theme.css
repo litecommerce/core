@@ -2,11 +2,10 @@
 
 /**
  * Theme common styles
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -1487,7 +1486,7 @@ div.tabs .secondary a.active
 }
 
 .powered-by {
-  border-top: 1px solid #dbdbdb; 
+  border-top: 1px solid #dbdbdb;
   padding-top: 13px;
   padding-bottom: 10px;
   font-size: 11px;
@@ -1623,7 +1622,7 @@ form .floatable-box.float-box {
   margin-top: 20px;
   padding-top: 10px;
   border-top: 1px solid #dfdfdf;
-} 
+}
 
 .item-list ul.pager li
 {
@@ -1806,4 +1805,3 @@ ul.pager li.next-page
   text-decoration: underline;
   vertical-align: middle;
 }
-

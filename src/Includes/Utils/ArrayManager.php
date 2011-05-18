@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -15,12 +15,11 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace Includes\Utils;
 
 /**
- * Array manager 
- * 
+ * Array manager
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -39,11 +38,11 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
     /**
      * Check if passed has no duplicate elements (except of the "skip" ones)
      * TODO:  to improve
-     * 
+     *
      * @param array  $array       Array to check
      * @param string &$firstValue First duplicated value
      * @param array  $skip        Values to skip OPTIONAL
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -265,11 +264,11 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      *
      * FIXME: parameters are passed incorrectly into "call_user_func"
      * FIXME: "userData" parameter is not used
-     * 
+     *
      * @param mixed    &$data    Data
      * @param callback $callback Callback
      * @param mixed    $userData Additional data OPTIONAL
-     *  
+     *
      * @return array|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -296,11 +295,11 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * FIXME: must use the "array_filter" function
      * FIXME: parameters are passed incorrectly into "call_user_func"
      * FIXME: "userData" parameter is not used
-     * 
+     *
      * @param mixed    &$data    Data
      * @param callback $callback Callback
      * @param mixed    $userData Additional data OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

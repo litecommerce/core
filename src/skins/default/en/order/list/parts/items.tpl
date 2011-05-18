@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  * @ListChild (list="orders.children", weight="20")
@@ -30,7 +29,7 @@
         <ul class="order-body-item-spec2">
           <li class="orderid">{t(#Order ID#)}: <span class="orderid">#{order.order_id}</span></li>
           <li class="total">{t(#Grand total#)}: <span class="sum">{price_format(order,#total#):h}</span></li>
-          {** 
+          {**
             *TODO divide main status into payment/shipping separated statuses
 
           <li class="order-payment-status"><widget template="common/order_payment_status.tpl" /></li>

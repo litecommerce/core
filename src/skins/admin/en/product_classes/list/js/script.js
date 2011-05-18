@@ -2,11 +2,10 @@
 
 /**
  * ____file_title____
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -53,9 +52,9 @@ window.core.addProductClass = function (widget, data)
       type: 'get',
       url: URLHandler.buildURL(
         {
-          'target': 'product_classes', 
-          'widget': '\\XLite\\View\\ProductClass\\MainInput', 
-          'className': data.name, 
+          'target': 'product_classes',
+          'widget': '\\XLite\\View\\ProductClass\\MainInput',
+          'className': data.name,
           'classId' : data.id
         }
       ),

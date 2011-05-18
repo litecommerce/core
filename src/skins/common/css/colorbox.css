@@ -13,7 +13,7 @@
 #cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%;}
 #cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
 
-/* 
+/*
     Example user style
     The following rules are ordered and tabbed in a way that represents the
     order/nesting of the generated HTML, so that the structure easier to understand.
@@ -43,12 +43,12 @@
         #cboxClose.hover{background-position:-25px -25px;}
 
 /*
-    The following fixes png-transparency for IE6.  
+    The following fixes png-transparency for IE6.
     It is also necessary for png-transparency in IE7 & IE8 to avoid 'black halos' with the fade transition
-    
+
     Since this method does not support CSS background-positioning, it is incompatible with CSS sprites.
     Colorbox preloads navigation hover classes to account for this.
-    
+
     !! Important Note: AlphaImageLoader src paths are relative to the HTML document,
     while regular CSS background images are relative to the CSS document.
 */

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,15 +29,15 @@ namespace XLite\Controller;
 
 /**
  * Get widget (AJAX)
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 abstract class GetWidget extends \XLite\Controller\AController
 {
     /**
-     * Handles the request. Parses the request variables if necessary. Attempts to call the specified action function 
-     * 
+     * Handles the request. Parses the request variables if necessary. Attempts to call the specified action function
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -59,8 +58,8 @@ abstract class GetWidget extends \XLite\Controller\AController
 
     /**
      * Check if current page is accessible
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -73,7 +72,7 @@ abstract class GetWidget extends \XLite\Controller\AController
 
     /**
      * Return Viewer object
-     * 
+     *
      * @return \XLite\View\Controller
      * @see    ____func_see____
      * @since  1.0.0
@@ -85,7 +84,7 @@ abstract class GetWidget extends \XLite\Controller\AController
 
     /**
      * Get class name
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -97,8 +96,8 @@ abstract class GetWidget extends \XLite\Controller\AController
 
 
     /**
-     * These params from AJAX request will be translated into the corresponding ones  
-     * 
+     * These params from AJAX request will be translated into the corresponding ones
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -112,9 +111,9 @@ abstract class GetWidget extends \XLite\Controller\AController
     }
 
     /**
-     * checkRequest 
-     * 
-     * @return boolean 
+     * checkRequest
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */

@@ -203,9 +203,9 @@ jQuery(document).ready(
 
 /**
  * Prepare submit params for the forms having "GET" method
- * 
+ *
  * @param HTMLFormElement $form current form
- *  
+ *
  * @return void
  * @since  1.0.0
  */
@@ -238,4 +238,3 @@ function drupalOnSubmitGetForm(form)
 	  q.value = 'store/' + URLHandler.buildMainPart(result) + URLHandler.buildQueryPart(result);
   }
 }
-

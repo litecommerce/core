@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -15,12 +15,11 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -31,7 +30,7 @@
  *
  * TODO: to revise
  * TODO[SINGLETON]: lowest priority
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -71,8 +70,8 @@ class XLite extends \XLite\Base
     protected static $adminZone = false;
 
     /**
-     * Called controller 
-     * 
+     * Called controller
+     *
      * @var   \XLite\Controller\AController
      * @see   ____var_see____
      * @since 1.0.0
@@ -89,8 +88,8 @@ class XLite extends \XLite\Base
     protected static $isNeedToCleanupCache = false;
 
     /**
-     * TODO - check if it's realy needed 
-     * 
+     * TODO - check if it's realy needed
+     *
      * @var   mixed
      * @see   ____var_see____
      * @since 1.0.0
@@ -98,8 +97,8 @@ class XLite extends \XLite\Base
     protected $_xlite_form_id = null;
 
     /**
-     * Current currency 
-     * 
+     * Current currency
+     *
      * @var   \XLite\Model\Currency
      * @see   ____var_see____
      * @since 1.0.0
@@ -120,9 +119,9 @@ class XLite extends \XLite\Base
 
     /**
      * Ability to provoke cache cleanup (or to prevent it)
-     * 
+     *
      * @param boolean $flag If it's needed to cleanup cache or not
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -157,11 +156,11 @@ class XLite extends \XLite\Base
     }
 
     /**
-     * Set controller 
+     * Set controller
      * FIXME - to delete
-     * 
+     *
      * @param mixed $controller Controller OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -204,10 +203,10 @@ class XLite extends \XLite\Base
     }
 
     /**
-     * Return specified (or the whole list) options 
-     * 
+     * Return specified (or the whole list) options
+     *
      * @param mixed $names List (or single value) of option names OPTIONAL
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -218,8 +217,8 @@ class XLite extends \XLite\Base
     }
 
     /**
-     * Clean up classes cache (if needed) 
-     * 
+     * Clean up classes cache (if needed)
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -233,7 +232,7 @@ class XLite extends \XLite\Base
 
     /**
      * Return current endpoint script
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -245,11 +244,11 @@ class XLite extends \XLite\Base
 
     /**
      * Return full URL for the resource
-     * 
+     *
      * @param string  $url      Url part to add OPTIONAL
      * @param boolean $isSecure Use HTTP or HTTPS OPTIONAL
      * @param array   $params   Optional URL params OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -260,8 +259,8 @@ class XLite extends \XLite\Base
     }
 
     /**
-     * Return instance of the abstract factory sigleton 
-     * 
+     * Return instance of the abstract factory sigleton
+     *
      * @return \XLite\Model\Factory
      * @see    ____func_see____
      * @since  1.0.0
@@ -272,10 +271,10 @@ class XLite extends \XLite\Base
     }
 
     /**
-     * Call application die (general routine) 
-     * 
+     * Call application die (general routine)
+     *
      * @param string $message Error message
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -286,8 +285,8 @@ class XLite extends \XLite\Base
     }
 
     /**
-     * Initialize all active modules 
-     * 
+     * Initialize all active modules
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -299,8 +298,8 @@ class XLite extends \XLite\Base
 
     /**
      * Perform an action and redirect
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -311,7 +310,7 @@ class XLite extends \XLite\Base
 
     /**
      * Return viewer object
-     * 
+     *
      * @return \XLite\View\Controller|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -327,8 +326,8 @@ class XLite extends \XLite\Base
     }
 
     /**
-     * Process request 
-     * 
+     * Process request
+     *
      * @return \XLite
      * @see    ____func_see____
      * @since  1.0.0
@@ -344,9 +343,9 @@ class XLite extends \XLite\Base
 
     /**
      * Run application
-     * 
+     *
      * @param boolean $adminZone Admin interface flag OPTIONAL
-     *  
+     *
      * @return \XLite
      * @see    ____func_see____
      * @since  1.0.0
@@ -380,9 +379,9 @@ class XLite extends \XLite\Base
     }
 
     /**
-     * Get curent currency 
+     * Get curent currency
      * TODO - rework this to config ... or not?
-     * 
+     *
      * @return \XLite\Model\Currency
      * @see    ____func_see____
      * @since  1.0.0
@@ -397,8 +396,8 @@ class XLite extends \XLite\Base
     }
 
     /**
-     * Return current action 
-     * 
+     * Return current action
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -410,7 +409,7 @@ class XLite extends \XLite\Base
 
     /**
      * Clear some data
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -426,7 +425,7 @@ class XLite extends \XLite\Base
 
     /**
      * Get application version
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -462,10 +461,10 @@ class XLite extends \XLite\Base
 
     /**
      * Compare a version with the kernel version
-     * 
+     *
      * @param string $version  Version to compare
      * @param string $operator Comparison operator
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

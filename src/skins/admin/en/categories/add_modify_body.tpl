@@ -2,11 +2,10 @@
 
 {**
  * Add/Modify category template
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -37,7 +36,7 @@
   <input type="hidden" name="action" value="{getRequestParamValue(#mode#)}" />
   <input type="hidden" name="mode" value="{getRequestParamValue(#mode#)}" />
   <input type="hidden" name="category_id" value="{category_id}" />
- 
+
   <table width="100%">
 
     <tr>
@@ -84,7 +83,7 @@
       <td class="star">*</td>
       <td>
         <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership_id" value="{category.membership}" />
-      </td>  
+      </td>
     </tr>
 
     <tr IF="!getRootCategoryId()=category.getCategoryId()">
@@ -96,7 +95,7 @@
           <option value="0" selected="{category.enabled=#0#}">Disabled</option>
         </select>
       </td>
-    </tr>  
+    </tr>
 
     <tr>
       <td>HTML title ('title' tag)</td>
@@ -181,4 +180,3 @@ Not available right now
 
 </form>*}
 {end:}
-

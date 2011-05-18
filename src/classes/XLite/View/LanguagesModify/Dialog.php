@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View\LanguagesModify;
 
 /**
  * Languages and language labels modification
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -40,7 +39,7 @@ class Dialog extends \XLite\View\Dialog
 {
     /**
      * Labels limit per page
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -49,7 +48,7 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Founded labels with pagination (cache)
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -58,7 +57,7 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Labels count
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -66,8 +65,8 @@ class Dialog extends \XLite\View\Dialog
     protected $labelsCount = null;
 
     /**
-     * Pages count 
-     * 
+     * Pages count
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -75,8 +74,8 @@ class Dialog extends \XLite\View\Dialog
     protected $pagesCount = null;
 
     /**
-     * Translate language 
-     * 
+     * Translate language
+     *
      * @var   \XLite\Model\Language or false
      * @see   ____var_see____
      * @since 1.0.0
@@ -100,8 +99,8 @@ class Dialog extends \XLite\View\Dialog
 
 
     /**
-     * Count labels 
-     * 
+     * Count labels
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -115,7 +114,7 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Get pages count
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -129,7 +128,7 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Get page index
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -145,7 +144,7 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Get URL for simple pager
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -162,8 +161,8 @@ class Dialog extends \XLite\View\Dialog
     }
 
     /**
-     * Get search substring 
-     * 
+     * Get search substring
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -177,7 +176,7 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Check - widget search all labels or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -191,7 +190,7 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Check - search is enabled or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -203,7 +202,7 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Check - application has added language withount default language or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -223,8 +222,8 @@ class Dialog extends \XLite\View\Dialog
     }
 
     /**
-     * Get application default language 
-     * 
+     * Get application default language
+     *
      * @return \XLite\Model\Language
      * @see    ____func_see____
      * @since  1.0.0
@@ -235,8 +234,8 @@ class Dialog extends \XLite\View\Dialog
     }
 
     /**
-     * Get iterface default language 
-     * 
+     * Get iterface default language
+     *
      * @return \XLite\Model\Language
      * @see    ____func_see____
      * @since  1.0.0
@@ -247,8 +246,8 @@ class Dialog extends \XLite\View\Dialog
     }
 
     /**
-     * Get translate language 
-     * 
+     * Get translate language
+     *
      * @return \XLite\Model\Language|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -273,7 +272,7 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Check - is translate language selected or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -285,9 +284,9 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Get label translation with application default language
-     * 
+     *
      * @param \XLite\Model\LanguageLabel $label Label
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -299,9 +298,9 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Get label translation with translate language
-     * 
+     *
      * @param \XLite\Model\LanguageLabel $label Label
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -346,7 +345,7 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Return default template
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -369,8 +368,8 @@ class Dialog extends \XLite\View\Dialog
     }
 
     /**
-     * Get labels 
-     * 
+     * Get labels
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -383,10 +382,10 @@ class Dialog extends \XLite\View\Dialog
     }
 
     /**
-     * Define (search) labels 
+     * Define (search) labels
      *
      * :FIXME: simplify
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

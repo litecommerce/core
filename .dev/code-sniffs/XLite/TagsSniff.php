@@ -79,11 +79,11 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 			'function'	=> 'getLicense',
 			'type'		=> 'single',
 		),
-		'version'		=> array(
+		/*'version'		=> array(
 			'code'		=> 'REQ.PHP.4.1.16',
 			'function'	=> 'getVersion',
 			'type'		=> 'single',
-		),
+		),*/
 		'param'			=> array(
 			'code'		=> 'REQ.PHP.4.1.26',
 			'function'	=> '',
@@ -421,10 +421,10 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 	}
 
 	/**
-	 * getTagValue 
-	 * 
+	 * getTagValue
+	 *
 	 * @param string $tagElement The doc comment element
-	 *  
+	 *
 	 * @return void
 	 * @access protected
 	 */
@@ -502,7 +502,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * check category tag
-	 * 
+	 *
 	 * @param   string	  $content Tag content
 	 * @access  protected
 	 * @return  array
@@ -547,7 +547,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * check package tag
-	 * 
+	 *
 	 * @param   string	  $content Tag content
 	 * @access  protected
 	 * @return  array
@@ -592,7 +592,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * check subpackage tag
-	 * 
+	 *
 	 * @param   string	  $content Tag content
 	 * @access  protected
 	 * @return  array
@@ -674,7 +674,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 
     }//end processLicense()
 
-    protected function processVersion($errorPos)
+    /* protected function processVersion($errorPos)
     {
         $version = $this->commentParser->getVersion();
         if ($version !== null) {
@@ -699,7 +699,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
             }
         }
 
-    }//end processVersion()
+    }//end processVersion()*/
 
     protected function processThrows($errorPos)
     {
@@ -1103,4 +1103,3 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 			: $tagInfo[$name];
 	}
 }
-

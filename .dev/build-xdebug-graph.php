@@ -2,7 +2,6 @@
 /**
  * XDebug profiler log visualizer
  *
- * @version GIT: $Id$
  */
 
 // Constants

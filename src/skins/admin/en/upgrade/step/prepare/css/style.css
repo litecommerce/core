@@ -2,18 +2,17 @@
 
 /**
  * ____file_title____
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
- 
+
 
 /**
- * Entries list styles 
+ * Entries list styles
  */
 
 table.entries-list {
@@ -65,7 +64,7 @@ table.entries-list tr.module-entry {
   border-bottom: #e5e5e5 1px solid;
 }
 
-table.entries-list tr.module-entry td, 
+table.entries-list tr.module-entry td,
   table.entries-list tr.core-entry td
 {
   padding: 10px 15px;
@@ -90,7 +89,7 @@ table.entries-list tr.module-entry td,
 }
 
 table.entries-list tr td.old-version {
-  color: #8f8f8f;  
+  color: #8f8f8f;
   padding-right: 20px;
   text-align: center;
 }
@@ -141,7 +140,7 @@ table.incompatible-modules-list {
 }
 
 .incompatible-modules-list tr td,
-  .incompatible-modules-list tr td span 
+  .incompatible-modules-list tr td span
 {
   font-size: 16px;
   color: #333333;

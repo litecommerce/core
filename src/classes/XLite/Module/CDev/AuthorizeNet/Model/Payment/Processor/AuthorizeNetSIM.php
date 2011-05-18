@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Module\CDev\AuthorizeNet\Model\Payment\Processor;
 
 /**
  * Authorize.Net SIM processor
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -39,7 +38,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
 {
     /**
      * AVS messages
-     * 
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -63,7 +62,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
 
     /**
      * CVV messages
-     * 
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -78,8 +77,8 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     );
 
     /**
-     * Error messages 
-     * 
+     * Error messages
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -206,8 +205,8 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     );
 
     /**
-     * Get operation types 
-     * 
+     * Get operation types
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -222,8 +221,8 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
-     * Get settings widget or template 
-     * 
+     * Get settings widget or template
+     *
      * @return string Widget class name or template path
      * @access public
      * @see    ____func_see____
@@ -235,8 +234,8 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
-     * Get redirect form URL 
-     * 
+     * Get redirect form URL
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -251,7 +250,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
 
     /**
      * Get redirect form fields list
-     * 
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -268,7 +267,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
             . $sequence . '^'
             . $tstamp . '^'
             . round($this->transaction->getValue(), 2) . '^';
-        
+
         $hash = $this->getHMAC(
             $this->getSetting('key'),
             $string
@@ -328,9 +327,9 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
 
     /**
      * Process return
-     * 
+     *
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -382,9 +381,9 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
 
     /**
      * Check - payment method is configured or not
-     * 
+     *
      * @param \XLite\Model\Payment\Method $method Payment method
-     *  
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____
@@ -398,8 +397,8 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
-     * Get return type 
-     * 
+     * Get return type
+     *
      * @return string
      * @access public
      * @see    ____func_see____
@@ -412,10 +411,10 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
 
     /**
      * Get RFC 2104 HMAC (MD5)
-     * 
+     *
      * @param string $key  Key
      * @param string $data Data
-     *  
+     *
      * @return string
      * @access protected
      * @see    ____func_see____

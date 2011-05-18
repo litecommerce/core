@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,22 +28,22 @@
 namespace XLite\Model\Payment\Base;
 
 /**
- * Abstract credit card, web-based processor 
- * 
+ * Abstract credit card, web-based processor
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 {
     /**
-     * Form method (only for web-based processor) 
+     * Form method (only for web-based processor)
      */
     const FORM_METHOD_POST = 'post';
     const FORM_METHOD_GET  = 'get';
 
 
     /**
-     * Return response type 
+     * Return response type
      */
     const RETURN_TYPE_HTTP_REDIRECT = 'http';
     const RETURN_TYPE_HTML_REDIRECT = 'html';
@@ -52,8 +51,8 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 
 
     /**
-     * Get redirect form URL 
-     * 
+     * Get redirect form URL
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -62,7 +61,7 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 
     /**
      * Get redirect form fields list
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -84,7 +83,7 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 
     /**
      * Get return request owner transaction or null
-     * 
+     *
      * @return \XLite\Model\Payment\Transaction|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -96,9 +95,9 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 
     /**
      * Process return
-     * 
+     *
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -111,8 +110,8 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
     }
 
     /**
-     * Get return type 
-     * 
+     * Get return type
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -124,7 +123,7 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 
     /**
      * Do custom redirect after customer's return
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -135,8 +134,8 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 
 
     /**
-     * Do initial payment 
-     * 
+     * Do initial payment
+     *
      * @return string Status code
      * @see    ____func_see____
      * @since  1.0.0
@@ -174,8 +173,8 @@ HTML;
     }
 
     /**
-     * Get form method 
-     * 
+     * Get form method
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -186,10 +185,10 @@ HTML;
     }
 
     /**
-     * Get transactionId-based return URL 
+     * Get transactionId-based return URL
      *
      * @param string $fieldName TransactionId field name
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -206,7 +205,7 @@ HTML;
      * Check total (transaction total and total from gateway response)
      *
      * @param float $total Total from gateway response
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -232,9 +231,9 @@ HTML;
 
     /**
      * Check currency (order currency and transaction response currency)
-     * 
+     *
      * @param string $currency Transaction response currency code
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -261,7 +260,7 @@ HTML;
 
     /**
      * Assemble form body (field set)
-     * 
+     *
      * @return string HTML
      * @see    ____func_see____
      * @since  1.0.0
@@ -285,7 +284,7 @@ HTML;
      * Log redirect form
      *
      * @param array $list Form fields list
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -305,7 +304,7 @@ HTML;
      * Log return request
      *
      * @param array $list Request data
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Includes_Utils
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,8 +28,8 @@
 namespace Includes\Utils;
 
 /**
- * ConfigParser 
- * 
+ * ConfigParser
+ *
  * @package    XLite
  * @see        ____class_see____
  * @since      1.0.0
@@ -39,7 +38,7 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
 {
     /**
      * Options cache
-     * 
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -49,7 +48,7 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
 
     /**
      * List of function to modify options
-     * 
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -61,7 +60,7 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
 
     /**
      * List of additional source files for options gathering
-     * 
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -73,7 +72,7 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
 
     /**
      * Return path to the main config file
-     * 
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -85,10 +84,10 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
     }
 
     /**
-     * Throw the exception if config file is not found 
-     * 
+     * Throw the exception if config file is not found
+     *
      * @param string $file file which caused an error
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -115,10 +114,10 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
     }
 
     /**
-     * Check if file exists and is readable 
-     * 
+     * Check if file exists and is readable
+     *
      * @param string $file file to check
-     *  
+     *
      * @return bool
      * @access protected
      * @see    ____func_see____
@@ -131,10 +130,10 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
 
     /**
      * Common function to parse config files
-     * 
+     *
      * @param string $file         file to parse
      * @param string $errorHandler name of error handler (method)
-     *  
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -156,8 +155,8 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
     }
 
     /**
-     * Parse main config file 
-     * 
+     * Parse main config file
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -201,8 +200,8 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
     }
 
     /**
-     * Exceute the mutators stack 
-     * 
+     * Exceute the mutators stack
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -217,23 +216,23 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
 
     /**
      * Create the "web_dir_wo_slash" option
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function setWebDirWOSlash()
     {
-        static::$options['host_details']['web_dir_wo_slash'] 
+        static::$options['host_details']['web_dir_wo_slash']
             = \Includes\Utils\URLManager::trimTrailingSlashes(static::$options['host_details']['web_dir']);
     }
 
 
     /**
      * Parse both config files
-     * 
+     *
      * @param array|string $names option names tree
-     *  
+     *
      * @return array|mixed
      * @access public
      * @see    ____func_see____
@@ -256,10 +255,10 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
     }
 
     /**
-     * Register additional config file 
-     * 
+     * Register additional config file
+     *
      * @param string $fileName Config file name
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____

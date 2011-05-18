@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View\Button;
 
 /**
  * Abstract button
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -47,8 +46,8 @@ abstract class AButton extends \XLite\View\AView
     const PARAM_ID       = 'id';
 
     /**
-     * Get a list of CSS files required to display the widget properly 
-     * 
+     * Get a list of CSS files required to display the widget properly
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -63,7 +62,7 @@ abstract class AButton extends \XLite\View\AView
 
     /**
      * Get a list of JavaScript files required to display the widget properly
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -89,8 +88,8 @@ abstract class AButton extends \XLite\View\AView
     }
 
     /**
-     * getDefaultDisableState 
-     * 
+     * getDefaultDisableState
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -101,8 +100,8 @@ abstract class AButton extends \XLite\View\AView
     }
 
     /**
-     * Return button text 
-     * 
+     * Return button text
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -112,7 +111,7 @@ abstract class AButton extends \XLite\View\AView
         return $this->getParam(self::PARAM_LABEL);
     }
 
-    /** 
+    /**
      * Define widget parameters
      *
      * @return void
@@ -134,8 +133,8 @@ abstract class AButton extends \XLite\View\AView
     }
 
     /**
-     * getClass 
-     * 
+     * getClass
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -146,8 +145,8 @@ abstract class AButton extends \XLite\View\AView
     }
 
     /**
-     * getId 
-     * 
+     * getId
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -158,8 +157,8 @@ abstract class AButton extends \XLite\View\AView
     }
 
     /**
-     * Return button name 
-     * 
+     * Return button name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -170,8 +169,8 @@ abstract class AButton extends \XLite\View\AView
     }
 
     /**
-     * Return button value 
-     * 
+     * Return button value
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -182,8 +181,8 @@ abstract class AButton extends \XLite\View\AView
     }
 
     /**
-     * hasName 
-     * 
+     * hasName
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -194,8 +193,8 @@ abstract class AButton extends \XLite\View\AView
     }
 
     /**
-     * hasValue 
-     * 
+     * hasValue
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -206,8 +205,8 @@ abstract class AButton extends \XLite\View\AView
     }
 
     /**
-     * hasClass 
-     * 
+     * hasClass
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -219,7 +218,7 @@ abstract class AButton extends \XLite\View\AView
 
     /**
      * isDisabled
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

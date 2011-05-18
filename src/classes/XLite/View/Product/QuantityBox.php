@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\View\Product;
 
 /**
- * QuantityBox 
- * 
+ * QuantityBox
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -74,14 +73,14 @@ class QuantityBox extends \XLite\View\Product\AProduct
     {
         $list = parent::getJSFiles();
         $list[] = $this->getDir() . '/controller.js';
-        
+
         return $list;
     }
 
 
     /**
      * Return directory contains the template
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -101,7 +100,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
-        
+
         $this->widgetParams += array(
             self::PARAM_FIELD_NAME   => new \XLite\Model\WidgetParam\String('Name', 'amount'),
             self::PARAM_FIELD_TITLE  => new \XLite\Model\WidgetParam\String('Title', 'Quantity'),
@@ -109,12 +108,12 @@ class QuantityBox extends \XLite\View\Product\AProduct
             self::PARAM_FIELD_VALUE  => new \XLite\Model\WidgetParam\Int('Value', null),
             self::PARAM_STYLE        => new \XLite\Model\WidgetParam\String('CSS class', ''),
             self::PARAM_IS_CART_PAGE => new \XLite\Model\WidgetParam\Bool('Is cart page', false),
-        );  
+        );
     }
 
     /**
      * Alias
-     * 
+     *
      * @return \XLite\Model\Product
      * @see    ____func_see____
      * @since  1.0.0
@@ -126,7 +125,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
 
     /**
      * Alias
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -138,7 +137,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
 
     /**
      * Alias
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -150,7 +149,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
 
     /**
      * Alias
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -162,7 +161,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
 
     /**
      * Alias
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -174,7 +173,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
 
     /**
      * Alias
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -186,7 +185,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
 
     /**
      * Default CSS classes
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -198,7 +197,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
 
     /**
      * CSS class
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -210,7 +209,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
 
     /**
      * Return name of the \XLite\Model\Inventory model to get max available quantity
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

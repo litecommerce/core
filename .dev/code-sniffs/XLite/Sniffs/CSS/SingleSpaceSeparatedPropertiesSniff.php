@@ -71,7 +71,7 @@ class XLite_Sniffs_CSS_SingleSpaceSeparatedPropertiesSniff extends XLite_NameSni
 			return;
 
 		# Look for the next definition, if exists		
-		$isMulti = $phpcsFile->findNext(T_STRING, $start+1, $end); 
+		$isMulti = $phpcsFile->findNext(T_STRING, $start+1, $end);
 		if (!$isMulti)
 			return;
 

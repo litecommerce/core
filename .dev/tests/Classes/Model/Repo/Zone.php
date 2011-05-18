@@ -10,7 +10,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -20,7 +19,7 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
 {
 	/**
 	 * testGetApplicableZones
-	 * 
+	 *
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
@@ -129,14 +128,14 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
                 $this->assertTrue($zone instanceof \XLite\Model\Zone, 'getApplicableZones() must return an array of \XLite\Model\Zone instances');
                 $result[$weight] = $zone->getZoneName();
             }
-            
+
             $this->assertEquals($dt['result'], $result, 'check ' . $i . ' iteration');
         }
     }
 
     /**
-     * testCleanCache 
-     * 
+     * testCleanCache
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -174,8 +173,8 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testFindAllZones 
-     * 
+     * testFindAllZones
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -193,8 +192,8 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testFindZone 
-     * 
+     * testFindZone
+     *
      * @return void
      * @access public
      * @see    ____func_see____

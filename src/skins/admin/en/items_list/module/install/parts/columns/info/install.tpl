@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
@@ -14,9 +13,9 @@
  *}
 
 {* TODO refactor into FORM widgets *}
- 
+
 <div class="install-section" IF="canInstall(module)">
-  
+
   <form IF="!isUpgradeEntryAvailable()" action="admin.php" method="post" >
     <input type="hidden" name="target" value="addon_install" />
     <input type="hidden" name="action" value="get_license" />
@@ -38,5 +37,5 @@
       <widget class="\XLite\View\Button\Addon\SelectInstallationType" moduleId="{module.getModuleId()}" />
     </div>
   </form>
-  
+
 </div>
