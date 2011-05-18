@@ -10,6 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
+ 
 .modules-list .status
 {
   white-space: nowrap;
@@ -28,8 +29,9 @@
   color: #0055bd;
 }
 
-table.modules-list {
+table.modules-list.items-list {
   border-top: solid 2px #e5e5e5;
+  width: 965px;
 }
 
 table.modules-list tr td {

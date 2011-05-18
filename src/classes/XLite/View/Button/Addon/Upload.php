@@ -50,7 +50,7 @@ class Upload extends \XLite\View\Button\PopupButton
 
         return $list;
     }
-
+    
     /**
      * Return content for popup button
      *
