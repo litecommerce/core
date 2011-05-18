@@ -60,7 +60,7 @@ div.top-controls div.addons-search-panel {
 
 div.top-controls div.action-buttons {
   float: left;
-  margin-left: 90px;
+  margin-left: 10px;
 }
 
 .modules-list .price,
@@ -105,11 +105,6 @@ div.top-controls div.action-buttons {
 .addons-filters {
   width: 925px; 
 }
-
-table.items-list.modules-list {
-  width: 965px;
-}
-
 
 .addons-filters .features {
   float: left;
