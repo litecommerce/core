@@ -10,6 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
+ 
 .modules-list .poor {
   color: #ae2803;
 }
@@ -22,6 +23,10 @@
   color: #8f8f8f;
 }
 
+button.upload-addons {
+  margin-left: 10px;
+}
+
 table.modules-list div.actions a {
   padding-bottom: 5px;
 }
@@ -29,7 +34,6 @@ table.modules-list div.actions a {
 table.modules-list div.actions a.uninstall {
   color: #ae2803;
 }
-
 
 div.tags {
   float: left;
@@ -73,8 +77,8 @@ div.tags div.tags-title {
 }
 
 div.modules-filters {
-  float: right;
-  width: 45%;
+  float: left;
+  width: 965px;
   padding: 5px;
 }
 
