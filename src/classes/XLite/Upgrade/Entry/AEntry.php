@@ -447,7 +447,9 @@ abstract class AEntry
 
                     if (isset($hashes[$path])) {
                         // File has been modified (by user, or by LC Team, see the third param)
-                        $this->updateFile($path, $isTestMode, $fileHash !== $hash);
+                        if ($fileHash !== $hash || $hashes[$path] !== $hash) {
+                            $this->updateFile($path, $isTestMode, $fileHash !== $hash);
+                        }
 
                     } else {
                         // File has been removed (by user, or by LC Team, see the third param)
@@ -456,7 +458,7 @@ abstract class AEntry
 
                 } else {
                     // Do not skip any files during upgrade: all of them must be writable
-                    $this->addErrorMessage('File "{{file}} is not readable', $path);
+                    $this->addErrorMessage('File "{{file}}" is not readable', $path);
                 }
 
             } else {
@@ -579,7 +581,7 @@ abstract class AEntry
         if ($isTestMode) {
 
             if (!$this->manageFile($path, 'isFileWriteable')) {
-                $this->addFileErrorMessage('File "{{file}} is not writeable', $path);
+                $this->addFileErrorMessage('File "{{file}}" is not writeable', $path);
             }
 
         } elseif (/*$this->manageFile($path, 'write', array($this->getFileSource($path)))*/true) {
