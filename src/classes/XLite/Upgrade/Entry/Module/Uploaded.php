@@ -192,6 +192,18 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Return module dependencies
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getDependencies()
+    {
+        return $this->getMetadata('Dependencies');
+    }
+
+    /**
      * Calculate hashes for current version
      *
      * :TODO: to improve. Check if module is installed and collect file hashes
@@ -274,5 +286,39 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     protected function callModuleMethod($method, array $args = array())
     {
         return \Includes\Decorator\Utils\ModulesManager::callModuleMethod($this->getActualName(), $method, $args);
+    }
+
+    /**
+     * Update database records
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function updateDBRecords($author, $name)
+    {
+        $module = new \XLite\Model\Module();
+        $module->setAuthor($author);
+        $module->setName($name);
+
+        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->getModuleInstalled($module) ?: $module;
+
+        $module->setEnabled(true);
+        $module->setDate(time());
+        $module->setInstalled(true);
+        $module->setMajorVersion($this->getMajorVersionNew());
+        $module->setMinorVersion($this->getMinorVersionNew());
+        $module->setRevisionDate($this->getRevisionDate());
+        $module->setPackSize($this->getPackSize());
+        $module->setModuleName($this->getName());
+        $module->setAuthorName($this->getAuthor());
+        $module->setIconURL($this->getIconURL());
+        $module->setDependencies($this->getDependencies());
+
+        \XLite\Core\Database::getEM()->persist($module);
+        \XLite\Core\Database::getEM()->flush();
     }
 }

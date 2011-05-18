@@ -329,14 +329,12 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function updateDBRecords($author, $name)
     {
-        parent::updateDBRecords($author, $name);
-
-        /* if (!$this->isInstalled()) {
+        if (!$this->isInstalled()) {
             $this->getModuleForUpgrade()->setEnabled(true);
         }
         $this->getModuleForUpgrade()->setInstalled(true);
 
         \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($this->getModuleForUpgrade());
-        \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($this->getModuleInstalled()); */
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($this->getModuleInstalled());
     }
 }
