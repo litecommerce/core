@@ -266,8 +266,11 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             }
 
         } else {
+            
             \XLite\Core\TopMessage::getInstance()->addError('Unable to upload module');
         }
+        
+        $this->setReturnURL($this->buildURL('addons_list_installed'));
     }
 
     /**
