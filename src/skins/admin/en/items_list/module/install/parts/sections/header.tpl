@@ -18,7 +18,9 @@
   <div class="features">
     <ul>
       {foreach:getSortOptions(),fltr,desc}
-        <li class="{if:fltr=getSortBy()}hl{end:}"><a href="{buildURL(#addons_list_marketplace#,##,_ARRAY_(%static::PARAM_SORT_BY%^fltr))}">{t(desc)}</a></li>
+        <li class="{if:fltr=getSortBy()}hl{end:}">
+          <a href="{buildURL(#addons_list_marketplace#,##,_ARRAY_(%static::PARAM_SORT_BY%^fltr))}">{t(desc)}</a>
+        </li>
       {end:}
     </ul>
   </div>
