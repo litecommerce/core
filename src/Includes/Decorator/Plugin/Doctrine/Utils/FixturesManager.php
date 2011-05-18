@@ -78,7 +78,7 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      */
     public static function removeFixtures()
     {
-        \Includes\Utils\FileManager::delete(static::getFixturesFilePath());
+        \Includes\Utils\FileManager::deleteFile(static::getFixturesFilePath());
     }
 
     /**
