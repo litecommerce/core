@@ -49,7 +49,7 @@
       <table class="install-addon">
         <tr>
           <td>
-            <widget class="\XLite\View\Button\Addon\AcceptLicense" style="submit-button main-button" disabled=true />
+            <widget class="\XLite\View\Button\Submit" label="Install add-on" style="submit-button main-button" disabled=true />
           </td>
         </tr>
       </table>

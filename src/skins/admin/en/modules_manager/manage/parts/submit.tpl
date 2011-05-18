@@ -13,3 +13,5 @@
  *}
 
 <widget class="\XLite\View\Button\Regular" label="{t(#Add new add-ons#)}" style="main-button" jsCode="self.location.replace('{buildURL(#addons_list_marketplace#)}')" />
+
+<widget class="\XLite\View\Button\Addon\Upload" style="main-button" />
