@@ -104,7 +104,7 @@ class Subcategories extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Catalog';
+        return null;
     }
 
     /**
