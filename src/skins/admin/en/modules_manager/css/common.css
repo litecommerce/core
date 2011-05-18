@@ -116,8 +116,11 @@ table.modules-list .actions label,
 table.modules-list .actions a
 {
   font-size: 14px;
-  color: #5080a2;
   text-decoration: none;
+}
+
+table.modules-list .actions label {
+  color: #5080a2;
 }
 
 table.modules-list .actions li.first {
