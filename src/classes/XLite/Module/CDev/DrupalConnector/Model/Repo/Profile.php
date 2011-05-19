@@ -39,18 +39,21 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
     /**
      * Link XLite and CMS profiles
      *
-     * @param integer $profileId    XLite profile id
-     * @param integer $cmsProfileId CMS profile id
+     * @param \XLite\Model\Profile $profile      XLite profile
+     * @param integer              $cmsProfileId CMS profile id
      *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function linkProfiles($profileId, $cmsProfileId)
+    public function linkProfiles(\XLite\Model\Profile $profile, $cmsProfileId)
     {
+        $profile->setCMSProfileId($cmsProfileId);
+        $profile->setCMSName(\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName());
+
         $this->defineUnlinkProfilesQuery($cmsProfileId)->execute();
-        $this->defineLinkProfilesQuery($profileId, $cmsProfileId)->execute();
+        $this->defineLinkProfilesQuery($profile->getProfileId(), $cmsProfileId)->execute();
     }
 
     /**

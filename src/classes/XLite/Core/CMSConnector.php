@@ -289,6 +289,21 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
+     * Return LC profile associated with the passed ID of CMS profile
+     *
+     * @param integer $cmsUserId CMS profile ID
+     *
+     * @return \XLite\Model\Profile
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getProfileByCMSId($cmsUserId)
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Profile')
+            ->findOneByCMSId($this->getProfileDBFields($cmsUserId));
+    }
+
+    /**
      * Return ID of LC profile associated with the passed ID of CMS profile
      *
      * @param integer $cmsUserId CMS profile ID
@@ -299,8 +314,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     public function getProfileIdByCMSId($cmsUserId)
     {
-        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
-            ->findOneByCMSId($this->getProfileDBFields($cmsUserId));
+        $profile = $this->getProfileByCMSId($cmsUserId);
 
         return $profile ? $profile->getProfileId() : null;
     }

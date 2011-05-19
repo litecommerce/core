@@ -273,6 +273,24 @@ class Request extends \XLite\Base\Singleton
     }
 
     /**
+     * Normalize request data 
+     * 
+     * @param array $request Request data
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function normalizeRequestData(array $request)
+    {
+        if (ini_get('magic_quotes_gpc')) {
+            $request = $this->doUnescape($request);
+        }
+
+        return $request;
+    }
+
+    /**
      * Wrapper for sanitize()
      *
      * @param mixed $data Data to sanitize
@@ -291,7 +309,7 @@ class Request extends \XLite\Base\Singleton
             $this->checkControlArgument($data['action'], 'Action');
         }
 
-        return $data;
+        return $this->normalizeRequestData($data);
     }
 
     /**

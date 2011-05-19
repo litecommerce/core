@@ -37,23 +37,19 @@ namespace XLite\Module\CDev\DrupalConnector\Core;
 class Request extends \XLite\Core\Request implements \XLite\Base\IDecorator
 {
     /**
-     * Wrapper for sanitize()
+     * Normalize request data
      *
-     * @param mixed $data Data to sanitize
+     * @param array $request Request data
      *
-     * @return mixed
-     * @access protected
+     * @return array
+     * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepare($data)
+    protected function normalizeRequestData(array $request)
     {
-        $data = parent::prepare($data);
-
         // Fix double-escaping problems caused by "magic quotes" for a stand-alone mode and admin side
-        if (!\XLite\Module\CDev\DrupalConnector\Handler::isCMSStarted() && 1 === get_magic_quotes_gpc()) {
-            $data = $this->doUnescape($data);
-        }
-
-        return $data;
+        return \XLite\Module\CDev\DrupalConnector\Handler::isCMSStarted()
+            ? $request
+            : parent::normalizeRequestData($request);
     }
 }
