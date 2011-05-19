@@ -33,6 +33,7 @@ namespace XLite\View;
  * @see   ____class_see____
  * @since 1.0.0
  *
+ * @ListChild (list="center.bottom", zone="customer", weight="100")
  */
 class Search extends \XLite\View\Dialog
 {
@@ -71,6 +72,6 @@ class Search extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'product' . LC_DS . 'search';
+        return 'product/search';
     }
 }

@@ -262,6 +262,18 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
+     * Return inner head for list widgets
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getListHead()
+    {
+        return parent::getHead();
+    }
+
+    /**
      * Return number of items in products list
      *
      * @return array

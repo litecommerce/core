@@ -32,6 +32,7 @@ namespace XLite\View\ItemsList\Product\Customer;
  *
  * @see   ____class_see____
  * @since 1.0.0
+ * 
  */
 class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
 {
@@ -147,7 +148,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return $list;
     }
 
-
     /**
      * Return title
      *
@@ -156,6 +156,18 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @since  1.0.0
      */
     protected function getHead()
+    {
+        return null;
+    }
+    
+    /**
+     * Return title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getListHead()
     {
         return $this->getItemsCount() . ' ' . $this->t('products found');
     }
