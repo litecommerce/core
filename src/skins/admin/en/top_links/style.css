@@ -34,6 +34,7 @@
 #top-links li a
 {
   background: url("../images/top_links_arrow_bg.gif") no-repeat 100% 7px;
+  cursor: default;
 }
 
 #top-links a,
@@ -88,6 +89,7 @@
   background: 0 none;
   padding: 0;
   margin: 10px;
+  cursor: pointer;
 }
 
 #top-links ul ul li a,
