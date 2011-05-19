@@ -275,13 +275,13 @@ class Request extends \XLite\Base\Singleton
     /**
      * Normalize request data 
      * 
-     * @param array $request Request data
+     * @param mixed $request Request data
      *  
-     * @return array
+     * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function normalizeRequestData(array $request)
+    protected function normalizeRequestData($request)
     {
         if (ini_get('magic_quotes_gpc')) {
             $request = $this->doUnescape($request);
@@ -301,12 +301,14 @@ class Request extends \XLite\Base\Singleton
      */
     protected function prepare($data)
     {
-        if (isset($data['target'])) {
-            $this->checkControlArgument($data['target'], 'Target');
-        }
+        if (is_array($data)) {
+            if (isset($data['target'])) {
+                $this->checkControlArgument($data['target'], 'Target');
+            }
 
-        if (isset($data['action'])) {
-            $this->checkControlArgument($data['action'], 'Action');
+            if (isset($data['action'])) {
+                $this->checkControlArgument($data['action'], 'Action');
+            }
         }
 
         return $this->normalizeRequestData($data);
