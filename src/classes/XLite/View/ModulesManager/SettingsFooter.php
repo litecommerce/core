@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,17 +28,17 @@
 namespace XLite\View\ModulesManager;
 
 /**
- * Module settings page footer 
- * 
+ * Module settings page footer
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class SettingsFooter extends \XLite\View\AView
 {
     /**
-     * Widget param names 
+     * Widget param names
      */
-    
+
     const PARAM_SECTION = 'section';
 
 
@@ -54,7 +53,7 @@ class SettingsFooter extends \XLite\View\AView
     {
         $result = parent::getAllowedTargets();
         $result[] = 'module';
-    
+
         return $result;
     }
 
@@ -72,8 +71,8 @@ class SettingsFooter extends \XLite\View\AView
     }
 
     /**
-     * getModuleTemplate 
-     * 
+     * getModuleTemplate
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -122,7 +121,7 @@ class SettingsFooter extends \XLite\View\AView
     /**
      * Check if widget is visible
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */

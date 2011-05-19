@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -14,13 +14,12 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * PHP version 5.3.0 
+ * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,15 +29,15 @@ namespace XLite\Controller\Admin\Base;
 
 /**
  * Base controller for Backup/Restore section
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * sqldumpFile 
-     * 
+     * sqldumpFile
+     *
      * @var   mixed
      * @see   ____var_see____
      * @since 1.0.0
@@ -59,8 +58,8 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * handleRequest 
-     * 
+     * handleRequest
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -77,8 +76,8 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * isFileExists 
-     * 
+     * isFileExists
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -89,8 +88,8 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * isFileWritable 
-     * 
+     * isFileWritable
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -98,17 +97,17 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
     public function isFileWritable()
     {
         return
-            $this->isDirExists() 
+            $this->isDirExists()
             && (
-                !$this->isFileExists() 
+                !$this->isFileExists()
                 || ($this->isFileExists() && is_writable($this->sqldumpFile))
             );
     }
 
 
     /**
-     * isDirExists 
-     * 
+     * isDirExists
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -116,7 +115,7 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
     protected function isDirExists()
     {
         $result = is_dir(LC_DIR_BACKUP);
-    
+
         if (!$result) {
             \Includes\Utils\FileManager::mkdirRecursive(LC_DIR_BACKUP);
         }

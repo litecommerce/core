@@ -2,11 +2,10 @@
 
 /**
  * Orders search widget styles
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -85,7 +84,7 @@ h2.order-search-title {
 }
 
 .search-orders .buttons .button-cell button {
-  height: 35px; 
+  height: 35px;
   margin-top: 0px;
   margin-left: 100px;
 }
@@ -122,7 +121,7 @@ table.order-list-items tbody
   margin: 0px;
 }
 
-ul.order-body-item-spec, 
+ul.order-body-item-spec,
   ul.order-body-item-spec2
 {
   margin: 0px;
@@ -198,7 +197,7 @@ ul.order-body-item-spec2 li.orderid {
 }
 
 .order-list-items td {
-  padding: 15px 0 10px 0; 
+  padding: 15px 0 10px 0;
 }
 
 .order-list-items td.image {
@@ -218,5 +217,3 @@ ul.date-buttons {
   margin: 0px;
   padding: 0px;
 }
-
-

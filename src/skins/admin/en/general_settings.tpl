@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -128,9 +127,9 @@ function setUnitSymbol(symbol) {
 
             {if:option.name=#clear_cc_info#}
               <select name="{option.name}">
-                <option value="N" selected="{option.value=#N#}">No</option>    
-                <option value="P" selected="{option.value=#P#}">to Processed</option>    
-                <option value="C" selected="{option.value=#C#}">to Complete</option>    
+                <option value="N" selected="{option.value=#N#}">No</option>
+                <option value="P" selected="{option.value=#P#}">to Processed</option>
+                <option value="C" selected="{option.value=#C#}">to Complete</option>
               </select>
             {end:}
 
@@ -143,7 +142,7 @@ function setUnitSymbol(symbol) {
 
             {if:option.name=#time_zone#}
               <select name="{option.name}">
-                {foreach:timezoneslist,tz}  
+                {foreach:timezoneslist,tz}
                   {if:option.value=##}
                     <option value="{tz}" selected="{tz=currenttimezone}">{tz}</option>
                   {else:}
@@ -152,7 +151,7 @@ function setUnitSymbol(symbol) {
                 {end:}
               </select>
             {end:}
-            
+
             <widget class="\XLite\View\ModulesManager\Settings" section="{page}" option="{option}" />
 
             {displayViewListContent(#general_settings.general.parts#,_ARRAY_(#page#^page,#option#^option))}
@@ -235,7 +234,7 @@ function enableHTTPS()
     httpsEnabled = true;
 
     document.options_form.customer_security.checked = customer_security_value;
-    if (customer_security_value) 
+    if (customer_security_value)
         document.options_form.full_customer_security.disabled = false;
     else
         document.options_form.full_customer_security.disabled = true;

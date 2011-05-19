@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View;
 
 /**
  * Abstract widget
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -62,7 +61,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Object instance cache
      * FIXME[SINGLETONS] - to remove
-     * 
+     *
      * @var   \XLite\Core\FlexyCompiler
      * @see   ____var_see____
      * @since 1.0.0
@@ -72,7 +71,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Object instance cache
      * FIXME[SINGLETONS] - to remove
-     * 
+     *
      * @var   \XLite\Core\Layout
      * @see   ____var_see____
      * @since 1.0.0
@@ -81,7 +80,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Deep count
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -90,7 +89,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Level count
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -98,8 +97,8 @@ abstract class AView extends \XLite\Core\Handler
     protected static $countLevel = 0;
 
     /**
-     * isCloned 
-     * 
+     * isCloned
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -108,7 +107,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Widgets resources collector
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -120,7 +119,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * "Named" widgets cache
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -129,7 +128,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * View lists (cache)
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -138,7 +137,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Previous skin name
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -147,7 +146,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Previous template short path
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -165,8 +164,8 @@ abstract class AView extends \XLite\Core\Handler
 
 
     /**
-     * Return list of all registered resources 
-     * 
+     * Return list of all registered resources
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -177,8 +176,8 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Cleanup resources 
-     * 
+     * Cleanup resources
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -190,7 +189,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Return list of allowed targets
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -203,10 +202,10 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Prepare resources list
-     * 
+     *
      * @param array   $data     Data to prepare
      * @param boolean $isCommon Flag to determine how to prepare URL OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -246,11 +245,11 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Common layout for the widget resources 
-     * 
+     * Common layout for the widget resources
+     *
      * @param array $jsResources  List of JS resources OPTIONAL
      * @param array $cssResources List of CSS resources OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -263,9 +262,9 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Use current controller context
-     * 
+     *
      * @param string $name Property name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -283,10 +282,10 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Use current controller context
-     * 
+     *
      * @param string $method Method name
      * @param array  $args   Call arguments OPTIONAL
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -297,8 +296,8 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Copy widget params 
-     * 
+     * Copy widget params
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -313,8 +312,8 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Return list of widget resources 
-     * 
+     * Return list of widget resources
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -372,8 +371,8 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Check if widget is visible
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -383,8 +382,8 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Attempts to display widget using its template 
-     * 
+     * Attempts to display widget using its template
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -452,7 +451,7 @@ abstract class AView extends \XLite\Core\Handler
         return array();
     }
 
-    /**  
+    /**
      * Register files from common repository
      *
      * @return array
@@ -488,14 +487,14 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         return $list;
-    }    
+    }
 
     /**
      * Check for current target
-     * 
+     *
      * @param array $targets List of allowed targets
-     *  
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -509,7 +508,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @param array $modes List of allowed modes
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -519,8 +518,8 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Get current language 
-     * 
+     * Get current language
+     *
      * @return \XLite\Model\Language
      * @see    ____func_see____
      * @since  1.0.0
@@ -547,11 +546,11 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * setPreviousTpl 
-     * 
+     * setPreviousTpl
+     *
      * @param string $skin     Skin name
      * @param string $template Template name
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -583,7 +582,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $template         Template file name OPTIONAL
      * @param string $previousSkin     Previous skin OPTIONAL
      * @param string $previousTemplate Previous template OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -598,10 +597,10 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Return instance of the child widget 
-     * 
+     * Return instance of the child widget
+     *
      * @param string $class Child widget class OPTIONAL
-     *  
+     *
      * @return \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.0
@@ -613,7 +612,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Return list of the modes allowed by default
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -641,11 +640,11 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Register resources of certain type 
-     * 
+     * Register resources of certain type
+     *
      * @param string $type      Resources type
      * @param array  $resources Resources to register
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -684,8 +683,8 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Check visibility according to the current target
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -697,9 +696,9 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Check if current mode is allowable 
-     * 
-     * @return boolean 
+     * Check if current mode is allowable
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -725,7 +724,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Called after the includeCompiledFile()
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -737,7 +736,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Check if widget is visible
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -801,9 +800,9 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * FIXME - must be removed
-     * 
+     *
      * @param string $name Param name
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -833,11 +832,11 @@ abstract class AView extends \XLite\Core\Handler
 
 
     /**
-     * Display view list content 
-     * 
+     * Display view list content
+     *
      * @param string $list      List name
      * @param array  $arguments List common arguments OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -849,9 +848,9 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Display plain array as JS array
-     * 
+     *
      * @param array $data Plain array
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -862,11 +861,11 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Format price 
-     * 
+     * Format price
+     *
      * @param float                 $value    Price
      * @param \XLite\Model\Currency $currency Currency OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -885,10 +884,10 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Check - view list is visible or not
-     * 
+     *
      * @param string $list      List name
      * @param array  $arguments List common arguments OPTIONAL
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -899,10 +898,10 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Build list item class 
-     * 
+     * Build list item class
+     *
      * @param string $listName List name
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -927,9 +926,9 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Prepare human-readable output for file size
-     * 
+     *
      * @param integer $size Size in bytes
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -940,8 +939,8 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * concat 
-     * 
+     * concat
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -952,13 +951,13 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Compares two values 
-     * 
+     * Compares two values
+     *
      * @param mixed $val1 Value 1
      * @param mixed $val2 Value 2
      * @param mixed $val3 Value 3 OPTIONAL
-     *  
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -985,11 +984,11 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Helper to get object field values
-     * 
+     *
      * @param object  $object   Object to get field value
      * @param string  $field    Field name
      * @param boolean $isGetter Flag OPTIONAL
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -1000,14 +999,14 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Truncates the baseObject property value to specified length 
-     * 
+     * Truncates the baseObject property value to specified length
+     *
      * @param mixed   $base       String or object instance to get field value from
      * @param mixed   $field      String length or field to get value
      * @param integer $length     Field length to truncate to OPTIONAL
      * @param string  $etc        String to add to truncated field value OPTIONAL
      * @param mixed   $breakWords Word wrap flag OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1045,11 +1044,11 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Format date
-     * 
+     *
      * @param mixed  $base   String or object instance to get field value from
      * @param string $field  Field to get value OPTIONAL
      * @param string $format Date format OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1088,14 +1087,14 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Format price 
+     * Format price
      * FIXME - to revise
-     * 
+     *
      * @param mixed  $base          String or object instance to get field value from
      * @param string $field         Field to get value OPTIONAL
      * @param mixed  $thousandDelim Thousands separator OPTIONAL
      * @param mixed  $decimalDelim  Separator for the decimal point OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1131,11 +1130,11 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Add slashes 
-     * 
+     * Add slashes
+     *
      * @param mixed  $base  String or object instance to get field value from
      * @param string $field Field to get value OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1146,11 +1145,11 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Check if data is empty 
-     * 
+     * Check if data is empty
+     *
      * @param mixed $data Data to check
-     *  
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -1161,10 +1160,10 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Split an array into chunks
-     * 
+     *
      * @param array   $array Array to split
      * @param integer $count Chunks count
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1187,10 +1186,10 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Increment
-     * 
+     *
      * @param integer $value Value to increment
      * @param integer $inc   Increment OPTIONAL
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -1202,9 +1201,9 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Get random number
-     * TODO - rarely used function; probably, should be removed 
-     * 
-     * @return integer 
+     * TODO - rarely used function; probably, should be removed
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -1215,11 +1214,11 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * For the "zebra" tables
-     * 
+     *
      * @param integer $row          Row index
      * @param string  $oddCSSClass  First CSS class
      * @param string  $evenCSSClass Second CSS class OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1230,11 +1229,11 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Get view list 
-     * 
+     * Get view list
+     *
      * @param string $list      List name
      * @param array  $arguments List common arguments OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1263,9 +1262,9 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * getViewListChildren
-     * 
+     *
      * @param string $list List name
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1279,8 +1278,8 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Detect current view zone 
-     * 
+     * Detect current view zone
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1295,7 +1294,7 @@ abstract class AView extends \XLite\Core\Handler
 
         } elseif (\XLite::isAdminZone()) {
             $zone = \XLite\Model\ViewList::INTERFACE_ADMIN;
-    
+
         } else {
             $zone = \XLite\Model\ViewList::INTERFACE_CUSTOMER;
         }
@@ -1304,17 +1303,17 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * addViewListChild 
-     * 
+     * addViewListChild
+     *
      * @param array   &$list      List to modify
      * @param array   $properties Node properties
      * @param integer $weight     Node position OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function addViewListChild(array &$list, array $properties, $weight = 0) 
+    protected function addViewListChild(array &$list, array $properties, $weight = 0)
     {
         // Search node to insert after
         foreach ($list as $key => $node) {
@@ -1336,10 +1335,10 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Define view list 
-     * 
+     * Define view list
+     *
      * @param string $list List name
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1392,7 +1391,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Get view list class name
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1404,9 +1403,9 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Content postprocessing
-     * 
+     *
      * @param string $content Content
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1417,10 +1416,10 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Get XPath by content 
-     * 
+     * Get XPath by content
+     *
      * @param string $content Content
-     *  
+     *
      * @return \DOMXPath
      * @see    ____func_see____
      * @since  1.0.0
@@ -1429,16 +1428,16 @@ abstract class AView extends \XLite\Core\Handler
     {
         $dom = new \DOMDocument();
         $dom->formatOutput = true;
-        
+
         return @$dom->loadHTML($content) ? new \DOMXPath($dom) : null;
     }
 
     /**
-     * Get view list content 
-     * 
+     * Get view list content
+     *
      * @param string $list      List name
      * @param array  $arguments List common arguments OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1457,9 +1456,9 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Get view list content as nodes list
-     * 
+     *
      * @param string $list List name
-     *  
+     *
      * @return \DOMNamedNodeMap|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1478,12 +1477,12 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Insert view list by XPath query
-     * 
+     *
      * @param string $content        Content
      * @param string $query          XPath query
      * @param string $list           List name
      * @param string $insertPosition Insert position code OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1504,12 +1503,12 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Apply XPath-based patches 
-     * 
+     * Apply XPath-based patches
+     *
      * @param \DOMNamedNodeMap $places         Patch placeholders
      * @param \DOMNamedNodeMap $patches        Patches
      * @param string           $baseInsertType Patch insert type
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1524,7 +1523,7 @@ abstract class AView extends \XLite\Core\Handler
 
                 if (self::INSERT_BEFORE == $insertType) {
 
-                    // Insert patch node before XPath result node 
+                    // Insert patch node before XPath result node
                     $place->parentNode->insertBefore($node, $place);
 
                 } elseif (self::INSERT_AFTER == $insertType) {
@@ -1558,13 +1557,13 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Insert view list by regular expression pattern 
-     * 
+     * Insert view list by regular expression pattern
+     *
      * @param string $content Content
      * @param string $pattern Pattern (PCRE)
      * @param string $list    List name
      * @param string $replace Replace pattern OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1580,9 +1579,9 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Combines the nested list name from the parent list name and a suffix
-     * 
+     *
      * @param string $part Suffix to be added to the parent list name
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1594,10 +1593,10 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Display a nested view list
-     * 
+     *
      * @param string $part   Suffix that should be appended to the name of a parent list (will be delimited with a dot)
      * @param array  $params Widget params OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1608,11 +1607,11 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Get a nested view list 
-     * 
+     * Get a nested view list
+     *
      * @param string $part      Suffix of the nested list name
      * @param array  $arguments List common arguments OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1624,7 +1623,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Return internal list name
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1636,9 +1635,9 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Combines the inherited list name from the parent list name and a suffix
-     * 
+     *
      * @param string $part Suffix to be added to the inherited list name
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1650,10 +1649,10 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Display a inherited view list
-     * 
+     *
      * @param string $part   Suffix that should be appended to the name of a inherited list (will be delimited with a dot)
      * @param array  $params Widget params OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1664,11 +1663,11 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Get a inherited view list 
-     * 
+     * Get a inherited view list
+     *
      * @param string $part      Suffix of the inherited list name
      * @param array  $arguments List common arguments OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1679,11 +1678,11 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * getNamePostedData 
-     * 
+     * getNamePostedData
+     *
      * @param string  $field Field name
      * @param integer $id    Model object ID OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1725,7 +1724,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Checks if specific developer mode is defined
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -1736,8 +1735,8 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Return currency symbol 
-     * 
+     * Return currency symbol
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

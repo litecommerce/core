@@ -40,7 +40,7 @@ class XLite_Sniffs_PHP_Functions_FunctionDeclarationSniff extends XLite_ReqCodes
 
 	/**
 	 * It's not needed to return value for these functions
-	 * 
+	 *
 	 * @var    array
 	 * @access private
 	 * @see    ____var_see____

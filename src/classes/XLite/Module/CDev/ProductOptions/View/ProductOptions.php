@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -70,7 +69,7 @@ class ProductOptions extends \XLite\View\AView
 
         $this->widgetParams += array(
             self::PARAM_PRODUCT          => new \XLite\Model\WidgetParam\Object(
-                'Product',  
+                'Product',
                 $this->getProduct(),
                 false,
                 '\XLite\Model\Product'
@@ -84,9 +83,9 @@ class ProductOptions extends \XLite\View\AView
     }
 
     /**
-     * Check widget visibility 
-     * 
-     * @return boolean 
+     * Check widget visibility
+     *
+     * @return boolean
      * @access protected
      * @since  1.0.0
      */
@@ -97,8 +96,8 @@ class ProductOptions extends \XLite\View\AView
     }
 
     /**
-     * Get product options 
-     * 
+     * Get product options
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -111,9 +110,9 @@ class ProductOptions extends \XLite\View\AView
 
     /**
      * Get template name by option group
-     * 
+     *
      * @param \XLite\Module\CDev\ProductOptions\Model\OptionGroup $option Option group
-     *  
+     *
      * @return string
      * @access public
      * @see    ____func_see____
@@ -164,9 +163,9 @@ class ProductOptions extends \XLite\View\AView
 
     /**
      * Check - option is selected or not
-     * 
+     *
      * @param \XLite\Module\CDev\ProductOptions\Model\Option $option Option class
-     *  
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____
@@ -189,10 +188,10 @@ class ProductOptions extends \XLite\View\AView
     }
 
     /**
-     * Get option text 
-     * 
+     * Get option text
+     *
      * @param \XLite\Module\CDev\ProductOptions\Model\OptionGroup $option Option class
-     *  
+     *
      * @return string
      * @access public
      * @see    ____func_see____
@@ -207,4 +206,3 @@ class ProductOptions extends \XLite\View\AView
             : '';
     }
 }
-

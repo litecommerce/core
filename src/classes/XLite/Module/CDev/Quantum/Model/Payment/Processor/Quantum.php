@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Module\CDev\Quantum\Model\Payment\Processor;
 
 /**
  * QuantumGateway QGWdatabase Engine payment processor
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -38,8 +37,8 @@ namespace XLite\Module\CDev\Quantum\Model\Payment\Processor;
 class Quantum extends \XLite\Model\Payment\Base\WebBased
 {
     /**
-     * Get settings widget or template 
-     * 
+     * Get settings widget or template
+     *
      * @return string Widget class name or template path
      * @access public
      * @see    ____func_see____
@@ -51,8 +50,8 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
-     * Get redirect form URL 
-     * 
+     * Get redirect form URL
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -65,7 +64,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
 
     /**
      * Get redirect form fields list
-     * 
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -114,9 +113,9 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
 
     /**
      * Process return
-     * 
+     *
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -164,9 +163,9 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
 
     /**
      * Check - payment method is configured or not
-     * 
+     *
      * @param \XLite\Model\Payment\Method $method Payment method
-     *  
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____
@@ -180,7 +179,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
 
     /**
      * Define saved into transaction data schema
-     * 
+     *
      * @return array
      * @access protected
      * @see    ____func_see____

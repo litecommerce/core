@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -32,7 +31,7 @@ namespace XLite\Model;
  * ____description____
  * TODO[SINGLETON] - must extends the Base\Singleton
  * NOTE - check the "factory.<name>" tags in templates
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -40,10 +39,10 @@ class Factory extends \XLite\Base
 {
     /**
      * Create object instance and pass arguments to it contructor (if needed)
-     * 
+     *
      * @param string $class Class name
      * @param array  $args  Constructor arguments OPTIONAL
-     *  
+     *
      * @return \XLite\Base
      * @see    ____func_see____
      * @since  1.0.0
@@ -54,14 +53,14 @@ class Factory extends \XLite\Base
 
         return self::isSingleton($handler) ? self::getSingleton($class) : self::createObject($handler, $args);
     }
-    
-    
+
+
     /**
-     * Check if class is a singleton 
+     * Check if class is a singleton
      * FIXME - must be revised or removed
-     * 
+     *
      * @param \ReflectionClass $handler Class descriptor
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -87,10 +86,10 @@ class Factory extends \XLite\Base
 
     /**
      * Create new object
-     * 
+     *
      * @param \ReflectionClass $handler Class descriptor
      * @param array            $args    Constructor params OPTIONAL
-     *  
+     *
      * @return \XLite\Base
      * @see    ____func_see____
      * @since  1.0.0
@@ -102,10 +101,10 @@ class Factory extends \XLite\Base
 
 
     /**
-     * Create object instance 
-     * 
+     * Create object instance
+     *
      * @param string $name Class name
-     *  
+     *
      * @return \XLite\Base
      * @see    ____func_see____
      * @since  1.0.0

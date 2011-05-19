@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -32,7 +31,7 @@ namespace XLite\Model;
  * HTTPS bouncer
  *
  * FIXME: must not exted the \XLite\Base
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -44,8 +43,8 @@ class HTTPS extends \XLite\Base
     const CRLF = "\r\n";
 
     /**
-     * Request method 
-     * 
+     * Request method
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -53,8 +52,8 @@ class HTTPS extends \XLite\Base
     protected $method = 'POST';
 
     /**
-     * Request URL 
-     * 
+     * Request URL
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -62,8 +61,8 @@ class HTTPS extends \XLite\Base
     protected $url = '';
 
     /**
-     * Request data 
-     * 
+     * Request data
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -72,7 +71,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Request content type
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -81,7 +80,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * PEM certificate file
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -90,7 +89,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * SSL private key file
-     * 
+     *
      * @var   mixed
      * @see   ____var_see____
      * @since 1.0.0
@@ -99,7 +98,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Force use SSL 3
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -108,7 +107,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Timeout (seconds)
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -117,7 +116,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Request user name
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -125,8 +124,8 @@ class HTTPS extends \XLite\Base
     protected $user = null;
 
     /**
-     * Request password 
-     * 
+     * Request password
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -134,8 +133,8 @@ class HTTPS extends \XLite\Base
     protected $password = null;
 
     /**
-     * Response HTTP code 
-     * 
+     * Response HTTP code
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -143,8 +142,8 @@ class HTTPS extends \XLite\Base
     protected $responseCode = null;
 
     /**
-     * Request response 
-     * 
+     * Request response
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -153,7 +152,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Response error message
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -161,8 +160,8 @@ class HTTPS extends \XLite\Base
     protected $error = '';
 
     /**
-     * Raw response headers 
-     * 
+     * Raw response headers
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -170,8 +169,8 @@ class HTTPS extends \XLite\Base
     protected $rawHeaders = null;
 
     /**
-     * Response headers 
-     * 
+     * Response headers
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -180,7 +179,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Path to curl executable file
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -188,8 +187,8 @@ class HTTPS extends \XLite\Base
     protected $curlBinary = null;
 
     /**
-     * CURL error code 
-     * 
+     * CURL error code
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -198,7 +197,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Urlencoded data or not
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -206,8 +205,8 @@ class HTTPS extends \XLite\Base
     protected $urlencoded = false;
 
     /**
-     * Request headers 
-     * 
+     * Request headers
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -216,7 +215,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * CURL error codes
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -286,7 +285,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Writable properties names
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -337,10 +336,10 @@ class HTTPS extends \XLite\Base
 
     /**
      * Setter
-     * 
+     *
      * @param string $name  Property name
      * @param mixed  $value Property value
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -368,9 +367,9 @@ class HTTPS extends \XLite\Base
 
     /**
      * Support for isset()
-     * 
+     *
      * @param string $name Property name
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -382,9 +381,9 @@ class HTTPS extends \XLite\Base
 
     /**
      * Check if property is readable from external scopes
-     * 
+     *
      * @param string $name Property name
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -410,10 +409,10 @@ class HTTPS extends \XLite\Base
 
     /**
      * Check if property name in an array
-     * 
+     *
      * @param string $name     Property name
      * @param string $listName List name
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -428,11 +427,11 @@ class HTTPS extends \XLite\Base
     // {{{
 
     /**
-     * Add header 
-     * 
+     * Add header
+     *
      * @param string $name  Header name
      * @param string $value Header value OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -448,10 +447,10 @@ class HTTPS extends \XLite\Base
     }
 
     /**
-     * Get headers 
-     * 
+     * Get headers
+     *
      * @param boolean $slashed Slashed flag OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -470,12 +469,12 @@ class HTTPS extends \XLite\Base
 
         return $headers;
     }
-    
+
     /**
-     * Do request 
+     * Do request
      *
      * @param string $software HTTPS engine name OPTIONAL
-     * 
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -521,7 +520,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Get post raw data
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -552,8 +551,8 @@ class HTTPS extends \XLite\Base
     }
 
     /**
-     * Detect software 
-     * 
+     * Detect software
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -574,10 +573,10 @@ class HTTPS extends \XLite\Base
 
         return $result;
     }
-    
+
     /**
-     * Detect libcurl 
-     * 
+     * Detect libcurl
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -605,7 +604,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Initialize libcurl resource
-     * 
+     *
      * @return resource
      * @see    ____func_see____
      * @since  1.0.0
@@ -625,10 +624,10 @@ class HTTPS extends \XLite\Base
         }
 
         $c = curl_init($url);
-        
+
         if ($post) {
             curl_setopt($c, CURLOPT_POST, $post);
-        
+
         } elseif ($get) {
             curl_setopt($c, CURLOPT_HTTPGET, $get);
 
@@ -711,9 +710,9 @@ class HTTPS extends \XLite\Base
 
     /**
      * Append raw response headers
-     * 
+     *
      * @param string $string Headers string
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -727,7 +726,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Rrequest with libcurl
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -760,8 +759,8 @@ class HTTPS extends \XLite\Base
     }
 
     /**
-     * Detect external curl 
-     * 
+     * Detect external curl
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -792,10 +791,10 @@ class HTTPS extends \XLite\Base
 
         return $result;
     }
-    
+
     /**
-     * Request with external CURL 
-     * 
+     * Request with external CURL
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -855,7 +854,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Get CURL command line and headers file
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -904,7 +903,7 @@ class HTTPS extends \XLite\Base
         if (!empty($this->referer)) {
             $execline .= ' -H "Referer: ' . $this->referer . '"';
         }
-        
+
         $headers = $this->getHeaders(true);
         if (count($headers) > 0) {
             foreach ($headers as $v) {
@@ -924,7 +923,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Detect OpenSSL bouncer availability
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -942,8 +941,8 @@ class HTTPS extends \XLite\Base
     }
 
     /**
-     * Request with OpenSSL 
-     * 
+     * Request with OpenSSL
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -985,8 +984,8 @@ class HTTPS extends \XLite\Base
     }
 
     /**
-     * Get OpenSSL command line 
-     * 
+     * Get OpenSSL command line
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1018,10 +1017,10 @@ class HTTPS extends \XLite\Base
     }
 
     /**
-     * Send OpenSSL request 
-     * 
+     * Send OpenSSL request
+     *
      * @param array $pipes Process pipes array
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -1039,7 +1038,7 @@ class HTTPS extends \XLite\Base
         fputs($pipes[0], 'User-Agent: Mozilla/4.5 [en]' . self::CRLF);
         fputs($pipes[0], 'Content-Type: ' . $this->conttype . self::CRLF);
         fputs($pipes[0], 'Content-Length: ' . strlen($data) . self::CRLF);
-        
+
         $headers = $this->getHeaders();
         if (count($headers) > 0) {
             foreach ($headers as $v) {
@@ -1088,7 +1087,7 @@ class HTTPS extends \XLite\Base
 
     /**
      * Check and preprocess data for redirect request
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -1114,10 +1113,10 @@ class HTTPS extends \XLite\Base
     }
 
     /**
-     * Parse response headers 
-     * 
+     * Parse response headers
+     *
      * @param string $rawHeaders Response headers
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1140,9 +1139,9 @@ class HTTPS extends \XLite\Base
 
     /**
      * Get temporary file path
-     * 
+     *
      * @param string $name File prefix OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1161,10 +1160,10 @@ class HTTPS extends \XLite\Base
 
     /**
      * cURL header callback
-     * 
+     *
      * @param mixed  $curl   CURL request resource or \XLite\Model\HTTPS object
      * @param string $header Headers string OPTIONAL
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -1174,7 +1173,7 @@ class HTTPS extends \XLite\Base
         static $object = null;
 
         $result = 0;
-    
+
         if ($header) {
             $result = $this->setHeadersCallback($header);
         }

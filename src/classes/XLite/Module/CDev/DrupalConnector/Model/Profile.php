@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Module\CDev\DrupalConnector\Model;
 
 /**
- * \XLite\Module\CDev\DrupalConnector\Model\Profile 
- * 
+ * \XLite\Module\CDev\DrupalConnector\Model\Profile
+ *
  * @package    XLite
  * @subpackage Model
  * @see        ____class_see____
@@ -50,8 +49,8 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
     protected $drupalRoles;
 
     /**
-     * prepareCreate 
-     * 
+     * prepareCreate
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -67,8 +66,8 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
     }
 
     /**
-     * Get CMS profile 
-     * 
+     * Get CMS profile
+     *
      * @return object|void
      * @access public
      * @see    ____func_see____
@@ -83,9 +82,9 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 
     /**
      * Update user's Drupal roles
-     * 
+     *
      * @param array $newDrupalRoles Array of Drupal role IDs
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -103,14 +102,14 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 
                 if (!in_array($drupalRole->getDrupalRoleId(), $newDrupalRoles)) {
                     \XLite\Core\Database::getEM()->remove($drupalRole);
-            
+
                 } else {
                     $processedRoles[] = $drupalRole->getDrupalRoleId();
                 }
             }
         }
 
-        // Get roles to add 
+        // Get roles to add
         $rolesToAdd = array_diff($newDrupalRoles, $processedRoles);
 
         // Create new roles

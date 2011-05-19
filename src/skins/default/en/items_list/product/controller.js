@@ -2,11 +2,10 @@
 
 /**
  * Products list controller
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -82,14 +81,14 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
           function() {
             this.defferHref = this.href;
             this.href = 'javascript:void(0);';
-          }   
-        )   
+          }
+        )
         .click(
           function() {
             if (!o.base.hasClass('ie-link-blocker')) {
               self.location = this.defferHref;
-            }   
-          }   
+            }
+          }
         );
     }
 
@@ -124,9 +123,9 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
             action:      '',
             product_id:  core.getValueFromClass(this, 'quicklook-link'),
             only_center: 1
-          }), 
-          'product-quicklook', 
-          false, 
+          }),
+          'product-quicklook',
+          false,
           50000
         );
       }
@@ -215,7 +214,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
     }
     ); // jQuery(draggablePattern, this.base).draggable
 
-    // Disable out-of-stock product to drag 
+    // Disable out-of-stock product to drag
     var draggableDisablePattern = '.products-grid .product.out-of-stock, .products-list .product.out-of-stock';
     jQuery(draggableDisablePattern, this.base).draggable('disable');
 
@@ -289,7 +288,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
                                   .removeClass('cart-tray-added')
                                   .addClass('cart-tray-moving')
                                   .show();
-  
+
                               } else {
                                 jQuery(this)
                                 .removeClass('cart-tray-active')
@@ -329,7 +328,6 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
 
 /**
- * Load product lists controller  
+ * Load product lists controller
  */
 core.autoload(ProductsListController);
-

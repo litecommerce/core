@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -64,7 +63,7 @@ function show_install_css() {
 /**
  * Clear styles
  */
- 
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, label, legend, caption, input, textarea
 {
   margin: 0;
@@ -86,7 +85,7 @@ blockquote, q
 blockquote:before,
 blockquote:after,
 q:before,
-q:after 
+q:after
 {
   content: '';
   content: none;
@@ -120,7 +119,7 @@ button
 {
   color: #333333;
   font-size: 12px;
-  font-family: Helvetica, Arial, Sans-serif; 
+  font-family: Helvetica, Arial, Sans-serif;
 }
 
 body
@@ -137,7 +136,7 @@ h1,
 h2,
 h3
 {
-  font-family: "Trebuchet MS", Helvetica, Sans-serif;  
+  font-family: "Trebuchet MS", Helvetica, Sans-serif;
   color: #69a4c9;
   font-weight: normal;
 }
@@ -163,7 +162,7 @@ h3
 }
 
 code {
-    font-family: Arial, Helvetica, Sans-serif;  
+    font-family: Arial, Helvetica, Sans-serif;
     font-size: 14px;
     color: #106cb1;
 }
@@ -813,5 +812,3 @@ td.table-right-column {
 <?php
 
 }
-
-

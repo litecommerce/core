@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model\Shipping\Processor;
 
 /**
  * Shipping processor model
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -39,11 +38,11 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
     /*
      * Default base rate
      */
-    const PROCESSOR_DEFAULT_BASE_RATE = 0;    
+    const PROCESSOR_DEFAULT_BASE_RATE = 0;
 
     /**
      * Unique processor Id
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -51,8 +50,8 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
     protected $processorId = 'offline';
 
     /**
-     * getProcessorName 
-     * 
+     * getProcessorName
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -63,11 +62,11 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
     }
 
     /**
-     * Returns offline shipping rates 
-     * 
+     * Returns offline shipping rates
+     *
      * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
      * @param boolean                              $ignoreCache Flag: if true then do not get rates from cache (not used in offline processor) OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -99,7 +98,7 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
 
     /**
      * Returns true if shipping methods named may be modified by admin
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

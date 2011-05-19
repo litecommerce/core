@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -28,7 +27,7 @@ jQuery(document).ready(function(){
   var menuObj = jQuery('#topMenu li.root');
   var activeItem = jQuery('li.active', menuObj);
   var selectedTab;
-    
+
 //  var homeTab = jQuery('li.menu-item:first').addClass('current');
 
   if (activeItem.length) {

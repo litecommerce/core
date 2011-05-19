@@ -2,11 +2,10 @@
 
 {**
  * Language labels
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -60,7 +59,7 @@
           <a href="javascript:void(0);" class="select" onclick="javascript: return openSelectLanguage(this, '{language}', {getPage()});">{t(#Select language#)}</a>
         </div>
 
-      {else:}  
+      {else:}
 
         <div class="language empty">{t(#No other languages defined#)}</div>
 

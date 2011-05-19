@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -15,12 +15,11 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Module\CDev\DrupalConnector;
 
 /**
  * CMS connector
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -38,7 +37,7 @@ class Handler extends \XLite\Core\CMSConnector
 {
     /**
      * Message types translation table (XLite to Drupal)
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -50,8 +49,8 @@ class Handler extends \XLite\Core\CMSConnector
     );
 
     /**
-     * Return name of current CMS 
-     * 
+     * Return name of current CMS
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -62,8 +61,8 @@ class Handler extends \XLite\Core\CMSConnector
     }
 
     /**
-     * Return the default controller name 
-     * 
+     * Return the default controller name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -87,7 +86,7 @@ class Handler extends \XLite\Core\CMSConnector
 
     /**
      * Check if current page is an LC portal
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -131,7 +130,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @param string                                          $path     Portal path
      * @param array                                           $args     Drupal URL arguments
      * @param array                                           $pageArgs Drupal page arguments OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -190,7 +189,7 @@ class Handler extends \XLite\Core\CMSConnector
         $args   = $this->getArgs();
 
         list($portal, $path, $pageArgs) = $this->getPortal();
-        
+
         if ($portal) {
 
             // Portal (LC controller with custom URL)
@@ -212,9 +211,9 @@ class Handler extends \XLite\Core\CMSConnector
 
     /**
      * Get portal object by path
-     * 
+     *
      * @param string $path Path to compare
-     *  
+     *
      * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
      * @see    ____func_see____
      * @since  1.0.0
@@ -226,9 +225,9 @@ class Handler extends \XLite\Core\CMSConnector
 
     /**
      * Get portal object by target
-     * 
+     *
      * @param string $target Target to search
-     *  
+     *
      * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
      * @see    ____func_see____
      * @since  1.0.0
@@ -263,11 +262,11 @@ class Handler extends \XLite\Core\CMSConnector
     }
 
     /**
-     * Get Drupal-based Clean URL 
-     * 
+     * Get Drupal-based Clean URL
+     *
      * @param mixed $path    ____param_comment____
      * @param array $options ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -285,7 +284,7 @@ class Handler extends \XLite\Core\CMSConnector
 
     /**
      * Set Drupal messages using LC top messages data
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

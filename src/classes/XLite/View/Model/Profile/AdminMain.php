@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,15 +28,15 @@
 namespace XLite\View\Model\Profile;
 
 /**
- * \XLite\View\Model\Profile\Main 
- * 
+ * \XLite\View\Model\Profile\Main
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class AdminMain extends \XLite\View\Model\AModel
 {
     /**
-     * Form sections 
+     * Form sections
      */
     const SECTION_SUMMARY  = 'summary';
     const SECTION_MAIN     = 'main';
@@ -46,7 +45,7 @@ class AdminMain extends \XLite\View\Model\AModel
 
     /**
      * Schema of the "Account summary" section
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -81,13 +80,13 @@ class AdminMain extends \XLite\View\Model\AModel
 
     /**
      * Schema of the "E-mail & Password" section
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
      */
     protected $mainSchema = array(
-        'login' => array( 
+        'login' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'E-mail',
             self::SCHEMA_REQUIRED => true,
@@ -106,7 +105,7 @@ class AdminMain extends \XLite\View\Model\AModel
 
     /**
      * Schema of the "User access" section
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -168,7 +167,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * The "mode" parameter used to determine if we create new or modify existing profile
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -182,7 +181,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @param boolean $checkMode Check mode or not OPTIONAL
      *
-     * @return integer 
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -193,8 +192,8 @@ class AdminMain extends \XLite\View\Model\AModel
     }
 
     /**
-     * getRequestProfileId 
-     * 
+     * getRequestProfileId
+     *
      * @return integer|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -205,9 +204,9 @@ class AdminMain extends \XLite\View\Model\AModel
     }
 
     /**
-     * Check for the form errors 
-     * 
-     * @return boolean 
+     * Check for the form errors
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -232,10 +231,10 @@ class AdminMain extends \XLite\View\Model\AModel
     }
 
     /**
-     * getDefaultFieldValue 
-     * 
+     * getDefaultFieldValue
+     *
      * @param string $name Field name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -245,7 +244,7 @@ class AdminMain extends \XLite\View\Model\AModel
         $value = parent::getDefaultFieldValue($name);
 
         switch ($name) {
-            
+
             case 'added':
             case 'last_login':
                 if (0 < $value) {
@@ -288,7 +287,7 @@ class AdminMain extends \XLite\View\Model\AModel
     {
         if ($this->isRegisterMode()) {
             $obj = new \XLite\Model\Profile();
-        
+
         } else {
             $obj = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($this->getProfileId());
         }
@@ -322,7 +321,7 @@ class AdminMain extends \XLite\View\Model\AModel
 
     /**
      * Return fields list by the corresponding schema
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -343,7 +342,7 @@ class AdminMain extends \XLite\View\Model\AModel
 
     /**
      * Return fields list by the corresponding schema
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -359,7 +358,7 @@ class AdminMain extends \XLite\View\Model\AModel
 
     /**
      * Return fields list by the corresponding schema
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -371,9 +370,9 @@ class AdminMain extends \XLite\View\Model\AModel
 
     /**
      * Populate model object properties by the passed data
-     * 
+     *
      * @param array $data Data to set
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -389,7 +388,7 @@ class AdminMain extends \XLite\View\Model\AModel
 
     /**
      * Prepare request data for mapping profile object
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -417,8 +416,8 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Check password and its confirmation
      * TODO: simplify
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -428,7 +427,7 @@ class AdminMain extends \XLite\View\Model\AModel
         $data = $this->getRequestData();
 
         if (
-            isset($this->sections[self::SECTION_MAIN]) 
+            isset($this->sections[self::SECTION_MAIN])
             && (!empty($data['password']) || !empty($data['password_conf']))
         ) {
 
@@ -446,8 +445,8 @@ class AdminMain extends \XLite\View\Model\AModel
     }
 
     /**
-     * Check profile data 
-     * 
+     * Check profile data
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -460,7 +459,7 @@ class AdminMain extends \XLite\View\Model\AModel
             // Check if profile with specified login is already exists
             $sameProfile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
                 ->findUserWithSameLogin($this->getModelObject());
-            
+
             if (isset($sameProfile)) {
                 $formFields = $this->getFormFields();
                 $this->addErrorMessage(
@@ -476,8 +475,8 @@ class AdminMain extends \XLite\View\Model\AModel
     }
 
     /**
-     * Return list of the class-specific sections 
-     * 
+     * Return list of the class-specific sections
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -493,9 +492,9 @@ class AdminMain extends \XLite\View\Model\AModel
 
     /**
      * Return error message for the "validateInput" action
-     * 
+     *
      * @param string $login Profile login
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -508,7 +507,7 @@ class AdminMain extends \XLite\View\Model\AModel
 
     /**
      * Process the errors occured during the "validateInput" action
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -569,9 +568,9 @@ class AdminMain extends \XLite\View\Model\AModel
     }
 
     /**
-     * Create profile 
-     * 
-     * @return boolean 
+     * Create profile
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -581,9 +580,9 @@ class AdminMain extends \XLite\View\Model\AModel
     }
 
     /**
-     * Update profile 
-     * 
-     * @return boolean 
+     * Update profile
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -595,7 +594,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Perform certain action for the model object
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -607,7 +606,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Perform certain action for the model object
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -620,7 +619,7 @@ class AdminMain extends \XLite\View\Model\AModel
 
     /**
      * Return text for the "Submit" button
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -632,7 +631,7 @@ class AdminMain extends \XLite\View\Model\AModel
 
     /**
      * Return text for the "Submit" button
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

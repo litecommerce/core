@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Model\Payment\Base;
 
 /**
- * Processor 
- * 
+ * Processor
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -47,7 +46,7 @@ abstract class Processor extends \XLite\Base
 
     /**
      * Transaction (cache)
-     * 
+     *
      * @var   \XLite\Model\Payment\Transaction
      * @see   ____var_see____
      * @since 1.0.0
@@ -56,7 +55,7 @@ abstract class Processor extends \XLite\Base
 
     /**
      * Request cell with transaction input data
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -65,8 +64,8 @@ abstract class Processor extends \XLite\Base
 
 
     /**
-     * Do initial payment 
-     * 
+     * Do initial payment
+     *
      * @return string Status code
      * @see    ____func_see____
      * @since  1.0.0
@@ -75,11 +74,11 @@ abstract class Processor extends \XLite\Base
 
 
     /**
-     * Pay 
-     * 
+     * Pay
+     *
      * @param \XLite\Model\Payment\Transaction $transaction Transaction
      * @param array                            $request     Input data request OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -95,8 +94,8 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
-     * Get input template 
-     * 
+     * Get input template
+     *
      * @return string|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -107,10 +106,10 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
-     * Get input errors 
-     * 
+     * Get input errors
+     *
      * @param array $data Input data
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -121,8 +120,8 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
-     * Get settings widget or template 
-     * 
+     * Get settings widget or template
+     *
      * @return string Widget class name or template path
      * @see    ____func_see____
      * @since  1.0.0
@@ -134,9 +133,9 @@ abstract class Processor extends \XLite\Base
 
     /**
      * Check - payment method is configured or not
-     * 
+     *
      * @param \XLite\Model\Payment\Method $method Payment method
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -148,8 +147,8 @@ abstract class Processor extends \XLite\Base
 
 
     /**
-     * Get current transaction order 
-     * 
+     * Get current transaction order
+     *
      * @return \XLite\Model\Order
      * @see    ____func_see____
      * @since  1.0.0
@@ -161,7 +160,7 @@ abstract class Processor extends \XLite\Base
 
     /**
      * Get current transaction order profile
-     * 
+     *
      * @return \XLite\Model\Profile
      * @see    ____func_see____
      * @since  1.0.0
@@ -173,9 +172,9 @@ abstract class Processor extends \XLite\Base
 
     /**
      * Get setting value by name
-     * 
+     *
      * @param string $name Name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -186,8 +185,8 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
-     * Save input data 
-     * 
+     * Save input data
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -210,11 +209,11 @@ abstract class Processor extends \XLite\Base
 
     /**
      * Set transaction detail record
-     * 
+     *
      * @param string $name  Code
      * @param string $value Value
      * @param string $label Label OPTIONAL
-     *  
+     *
      * @return \XLite\Model\Payment\TransactionData
      * @see    ____func_see____
      * @since  1.0.0
@@ -233,13 +232,13 @@ abstract class Processor extends \XLite\Base
         $record->setTransaction($this->transaction);
 
         \XLite\Core\Database::getEM()->persist($record);
-    
+
         return $record;
     }
 
     /**
      * Get input data labels list
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -251,7 +250,7 @@ abstract class Processor extends \XLite\Base
 
     /**
      * Get input data access levels list
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,18 +28,18 @@
 namespace XLite\Model\Payment\Base;
 
 /**
- * Abstract online (gateway-based) processor 
- * 
+ * Abstract online (gateway-based) processor
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 abstract class Online extends \XLite\Model\Payment\Base\Processor
 {
     /**
-     * Process callback 
-     * 
+     * Process callback
+     *
      * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -54,7 +53,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
 
     /**
      * Get callback reqeust owner transaction or null
-     * 
+     *
      * @return \XLite\Model\Payment\Transaction|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -65,8 +64,8 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     }
 
     /**
-     * Get client IP 
-     * 
+     * Get client IP
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -86,8 +85,8 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     }
 
     /**
-     * Get invoice description 
-     * 
+     * Get invoice description
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -97,10 +96,10 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
         return 'Order #' . $this->getSetting('prefix') . $this->getOrder()->getOrderId()
             . '; transaction: ' . $this->transaction->getTransactionId();
     }
- 
+
     /**
      * Define saved into transaction data schema
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -112,7 +111,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
 
     /**
      * Save request data into transaction
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -128,10 +127,10 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
 
     /**
      * Array cell mask
-     * 
+     *
      * @param array  $list Array
      * @param string $name CEll key
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

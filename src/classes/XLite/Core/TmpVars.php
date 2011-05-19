@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Core;
 
 /**
  * DB-based temporary variables
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -38,9 +37,9 @@ class TmpVars extends \XLite\Base\Singleton
 {
     /**
      * Getter
-     * 
+     *
      * @param string $name Name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -51,11 +50,11 @@ class TmpVars extends \XLite\Base\Singleton
     }
 
     /**
-     * Setter 
-     * 
+     * Setter
+     *
      * @param string $name  Name
      * @param mixed  $value Value
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -80,9 +79,9 @@ class TmpVars extends \XLite\Base\Singleton
 
     /**
      * Search var in DB table
-     * 
+     *
      * @param string $name Var name
-     *  
+     *
      * @return \XLite\Model\TmpVar
      * @see    ____func_see____
      * @since  1.0.0
@@ -94,7 +93,7 @@ class TmpVars extends \XLite\Base\Singleton
 
     /**
      * Return the Doctrine repository
-     * 
+     *
      * @return \XLite\Model\Repo\TmpVar
      * @see    ____func_see____
      * @since  1.0.0

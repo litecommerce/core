@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,19 +29,19 @@ namespace XLite\Model\Repo;
 
 /**
  * Order repository
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Order extends \XLite\Model\Repo\ARepo
 {
     /**
-     * Cart TTL (in seconds) 
+     * Cart TTL (in seconds)
      */
     const ORDER_TTL = 86400;
 
     /**
-     * Allowable search params 
+     * Allowable search params
      */
 
     const P_ORDER_ID   = 'orderId';
@@ -57,8 +56,8 @@ class Order extends \XLite\Model\Repo\ARepo
 
 
     /**
-     * currentSearchCnd 
-     * 
+     * currentSearchCnd
+     *
      * @var   \XLite\Core\CommonCell
      * @see   ____var_see____
      * @since 1.0.0
@@ -67,8 +66,8 @@ class Order extends \XLite\Model\Repo\ARepo
 
 
     /**
-     * Find all expired temporary orders 
-     * 
+     * Find all expired temporary orders
+     *
      * @return \Doctrine\Common\Collection\ArrayCollection
      * @see    ____func_see____
      * @since  1.0.0
@@ -101,8 +100,8 @@ class Order extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Orders collect garbage 
-     * 
+     * Orders collect garbage
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -121,10 +120,10 @@ class Order extends \XLite\Model\Repo\ARepo
 
     /**
      * Common search
-     * 
+     *
      * @param \XLite\Core\CommonCell $cnd       Search condition
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
-     *  
+     *
      * @return \Doctrine\ORM\PersistentCollection|integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -155,8 +154,8 @@ class Order extends \XLite\Model\Repo\ARepo
 
 
     /**
-     * Return list of handling search params 
-     * 
+     * Return list of handling search params
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -178,10 +177,10 @@ class Order extends \XLite\Model\Repo\ARepo
 
     /**
      * Check if param can be used for search
-     * 
+     *
      * @param string $param Name of param to check
-     *  
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -329,8 +328,8 @@ class Order extends \XLite\Model\Repo\ARepo
 
     /**
      * Return order TTL
-     * 
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -339,9 +338,9 @@ class Order extends \XLite\Model\Repo\ARepo
         return self::ORDER_TTL;
     }
 
-    /**     
+    /**
      * Define query for findAllExipredTemporaryOrders() method
-     * 
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
@@ -390,11 +389,11 @@ class Order extends \XLite\Model\Repo\ARepo
 
     /**
      * Call corresponded method to handle a serch condition
-     * 
+     *
      * @param mixed                      $value        Condition data
      * @param string                     $key          Condition name
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View;
 
 /**
  * 'Powered by' widget
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -45,8 +44,8 @@ class PoweredBy extends \XLite\View\AView
 
 
     /**
-     * Advertise phrases 
-     * 
+     * Advertise phrases
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -56,7 +55,7 @@ class PoweredBy extends \XLite\View\AView
 
     /**
      * Check - display widget as link or as box
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -84,7 +83,7 @@ class PoweredBy extends \XLite\View\AView
 
     /**
      * Return a Powered By message
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -113,7 +112,7 @@ class PoweredBy extends \XLite\View\AView
 
     /**
      * Get a Powered By phrase
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -123,8 +122,8 @@ class PoweredBy extends \XLite\View\AView
         $phrase = self::PHRASE;
 
         if (
-            isset($this->phrases) 
-            && is_array($this->phrases) 
+            isset($this->phrases)
+            && is_array($this->phrases)
             && 0 < count($this->phrases)
         ) {
             if (

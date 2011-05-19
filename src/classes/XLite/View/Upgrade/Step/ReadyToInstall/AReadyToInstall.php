@@ -20,7 +20,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,14 +28,14 @@
 namespace XLite\View\Upgrade\Step\ReadyToInstall;
 
 /**
- * AReadyToInstall 
- * 
+ * AReadyToInstall
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 abstract class AReadyToInstall extends \XLite\View\Upgrade\Step\AStep
 {
-    
+
     /**
      * Register CSS files
      *
@@ -48,10 +47,10 @@ abstract class AReadyToInstall extends \XLite\View\Upgrade\Step\AStep
     {
         $list = parent::getCSSFiles();
         $list[] = self::getDir() . '/css/style.css';
-        
+
         return $list;
     }
-    
+
     /**
      * Get directory where template is located (body.tpl)
      *

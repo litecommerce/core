@@ -2,11 +2,10 @@
 
 {**
  * Product search form template
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -29,7 +28,7 @@
           <widget class="\XLite\View\Button\Submit" label="Search products" style="search-form-submit" />
         </td>
 
-      </tr> 
+      </tr>
 
       <tr class="including-options-list">
 
@@ -48,7 +47,7 @@
             </li>
 
             <li>
-              <input type="radio" name="including" id="including-phrase" value="phrase" checked="{getChecked(#including#,#phrase#)}" /> 
+              <input type="radio" name="including" id="including-phrase" value="phrase" checked="{getChecked(#including#,#phrase#)}" />
               <label for="including-phrase">{t(#Exact phrase#)}</label>
             </li>
 
@@ -68,7 +67,7 @@
       <tr>
 
         <td class="option-name">
-          {t(#Search in#)}: 
+          {t(#Search in#)}:
         </td>
 
         <td>
@@ -81,12 +80,12 @@
             </label></li>
 
             <li><label for="by-descr">
-              <input type="checkbox" name="by_descr" id="by-descr" value="Y" checked="{getChecked(#by_descr#)}" /> 
+              <input type="checkbox" name="by_descr" id="by-descr" value="Y" checked="{getChecked(#by_descr#)}" />
               {t(#Description#)}
             </label></li>
 
             <li><label for="by-sku">
-              <input type="checkbox" name="by_sku" id="by-sku" value="Y" checked="{getChecked(#by_sku#)}" /> 
+              <input type="checkbox" name="by_sku" id="by-sku" value="Y" checked="{getChecked(#by_sku#)}" />
               {t(#SKU#)}
             </label></li>
 
@@ -113,4 +112,3 @@
 </div>
 
 <widget class="\XLite\View\ItemsList\Product\Customer\Search" />
-

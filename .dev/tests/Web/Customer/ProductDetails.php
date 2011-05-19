@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,8 +28,8 @@
 require_once __DIR__ . '/ACustomer.php';
 
 /**
- * XLite_Web_Customer_ProductDetails 
- * 
+ * XLite_Web_Customer_ProductDetails
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -38,8 +37,8 @@ require_once __DIR__ . '/ACustomer.php';
 class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 {
     /**
-     * testStructure 
-     * 
+     * testStructure
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -70,7 +69,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
             if ($cloudZoom) {
 
-                $listSelector = "css=div.product-details form.product-details .image .product-photo-box"; 
+                $listSelector = "css=div.product-details form.product-details .image .product-photo-box";
 
                 $this->assertElementPresent(
                     $listSelector,
@@ -427,15 +426,15 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $cartButtonSelector = $formSelector . " .product-details-info .product-buttons button.bright.add2cart";
         $buyButtonSelector = $formSelector . " .product-details-info .product-buttons-added button.action.buy-more";
         $continueButtonSelector = $formSelector . " .product-details-info .product-buttons-added button.bright.continue";
-        $quantitySelector = $formSelector . " .product-details-info .product-buttons input.quantity.wheel-ctrl[type=text]"; 
-    
+        $quantitySelector = $formSelector . " .product-details-info .product-buttons input.quantity.wheel-ctrl[type=text]";
+
         $this->assertElementPresent(
             $cartButtonSelector,
             "check add2cart button"
         );
 
         $this->click($cartButtonSelector);
-        
+
         $qty++;
 
         $this->waitForLocalCondition(
@@ -468,7 +467,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             10000,
             'check content reloading #2'
         );
- 
+
         // Check quantity and inventory
         $this->getJSExpression('jQuery(".product-details input.quantity").attr("value", 3)');
 
@@ -481,7 +480,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             30000,
             'check quantity'
         );
-       
+
         // Reload page (selenium does not process below steps properly w/o reload)
         // FIXME: try to avoid reloading page here
         $this->openAndWait('store/product//product_id-' . $product->getProductId());

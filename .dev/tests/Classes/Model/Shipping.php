@@ -10,7 +10,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -19,8 +18,8 @@
 class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
 {
     /**
-     * testRegisterProcessor 
-     * 
+     * testRegisterProcessor
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -63,8 +62,8 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
     }
 
     /**
-     * testGetShippingMethods 
-     * 
+     * testGetShippingMethods
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -92,8 +91,8 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
     }
 
     /**
-     * testGetRates 
-     * 
+     * testGetRates
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -114,7 +113,7 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
 
     /**
      * testGetDestinationAddress
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -155,10 +154,10 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
     }
 
     /**
-     * getTestOrder 
-     * 
+     * getTestOrder
+     *
      * @param bool $profile Flag: if true, then get real profile from database
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -32,7 +31,7 @@ namespace Includes;
  * Safe Mode
  *
  * :TODO: reduce numder of public methods
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -46,7 +45,7 @@ abstract class SafeMode
     const PARAM_SOFT_RESET = 'soft_reset';
 
     /**
-     * Soft reset label 
+     * Soft reset label
      */
     const LABEL_SOFT_RESET = 'Soft reset';
 
@@ -58,7 +57,7 @@ abstract class SafeMode
 
     /**
      * Check request parameters
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -70,7 +69,7 @@ abstract class SafeMode
 
     /**
      * Check if the safe mode requested in the "Soft reset" variant
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -82,7 +81,7 @@ abstract class SafeMode
 
     /**
      * Check request parameters
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -93,8 +92,8 @@ abstract class SafeMode
     }
 
     /**
-     * Get Access Key 
-     * 
+     * Get Access Key
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -110,7 +109,7 @@ abstract class SafeMode
 
     /**
      * Re-generate access key
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -126,7 +125,7 @@ abstract class SafeMode
 
     /**
      * Send email notification to administrator about access key
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -145,7 +144,7 @@ abstract class SafeMode
      * Get safe mode URL
      *
      * @param boolean $soft Soft reset flag OPTIONAL
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -180,7 +179,7 @@ abstract class SafeMode
 
     /**
      * Initialization
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -202,8 +201,8 @@ abstract class SafeMode
 
 
     /**
-     * Check Access Key 
-     * 
+     * Check Access Key
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -214,8 +213,8 @@ abstract class SafeMode
     }
 
     /**
-     * Get safe mode indicator file name 
-     * 
+     * Get safe mode indicator file name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -226,8 +225,8 @@ abstract class SafeMode
     }
 
     /**
-     * Get safe mode access key file name 
-     * 
+     * Get safe mode access key file name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -238,8 +237,8 @@ abstract class SafeMode
     }
 
     /**
-     * Generate Access Key 
-     * 
+     * Generate Access Key
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -251,7 +250,7 @@ abstract class SafeMode
 
     /**
      * Data to write into the indicator file
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -266,7 +265,7 @@ abstract class SafeMode
 
     /**
      * Remove file with active modules list
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -277,17 +276,17 @@ abstract class SafeMode
     }
 
     /**
-     * Save modules to file 
-     * 
+     * Save modules to file
+     *
      * @param array $modules Modules array
-     *  
+     *
      * @return integer|boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function saveUnsafeModulesToFile(array $modules)
     {
-        $path = static::getUnsafeModulesFilePath(); 
+        $path = static::getUnsafeModulesFilePath();
 
         $string = '; <' . '?php /*' . PHP_EOL;
 
@@ -306,8 +305,8 @@ abstract class SafeMode
     }
 
     /**
-     * Get Unsafe Modules List 
-     * 
+     * Get Unsafe Modules List
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -326,10 +325,10 @@ abstract class SafeMode
 
     /**
      * Mark module as unsafe
-     * 
-     * @param string $author Module author 
-     * @param string $name   Module name 
-     * 
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -341,9 +340,9 @@ abstract class SafeMode
 
     /**
      * Mark modules as unsafe
-     * 
-     * @param array $modules Modules 
-     * 
+     *
+     * @param array $modules Modules
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -365,8 +364,8 @@ abstract class SafeMode
     }
 
     /**
-     * Get modules list file path 
-     * 
+     * Get modules list file path
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

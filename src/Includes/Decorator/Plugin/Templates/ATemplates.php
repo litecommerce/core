@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,8 +28,8 @@
 namespace Includes\Decorator\Plugin\Templates;
 
 /**
- * ATemplates 
- * 
+ * ATemplates
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -54,8 +53,8 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
     protected static $annotatedTemplates;
 
     /**
-     * List of zones 
-     * 
+     * List of zones
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -84,7 +83,7 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
             foreach ($this->getTemplateFileIterator()->getIterator() as $path => $data) {
 
                 $data = \Includes\Decorator\Utils\Operator::getTags(
-                    \Includes\Utils\FileManager::read($path, true), 
+                    \Includes\Utils\FileManager::read($path, true),
                     array(self::TAG_LIST_CHILD)
                 );
 
@@ -115,10 +114,10 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
 
     /**
      * Parse template and add tags to the list
-     * 
+     *
      * @param array  $data Tags data
      * @param string $path Template file path
-     *  
+     *
      * @return array
      * @access protected
      * @see    ____func_see____

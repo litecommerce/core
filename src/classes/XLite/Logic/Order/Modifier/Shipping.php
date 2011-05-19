@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,15 +28,15 @@
 namespace XLite\Logic\Order\Modifier;
 
 /**
- * Shipping modifier 
- * 
+ * Shipping modifier
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Shipping extends \XLite\Logic\Order\Modifier\AShipping
 {
     /**
-     * Modifier unique code 
+     * Modifier unique code
      *
      * @var   string
      * @see   ____var_see____
@@ -47,7 +46,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
 
     /**
      * Selected rate (cache)
-     * 
+     *
      * @var   \XLite\Model\Shipping\Rate
      * @see   ____var_see____
      * @since 1.0.0
@@ -56,7 +55,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
 
     /**
      * Check - can apply this modifier or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -99,22 +98,22 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
         }
     }
 
-    /**     
+    /**
      * Check - shipping rates exists or not
-     *          
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
-     */ 
+     */
     public function isRatesExists()
-    {       
+    {
         return (bool)$this->getRates();
-    }       
+    }
 
     /**
-     * Get shipping rates 
+     * Get shipping rates
      * TODO: add checking if rates should be recalculated else get rates from cache
-     * 
+     *
      * @return array(\XLite\Model\Shipping\Rate)
      * @see    ____func_see____
      * @since  1.0.0
@@ -125,9 +124,9 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     }
 
     /**
-     * Returns true if any of order items are shipped 
-     * 
-     * @return boolean 
+     * Returns true if any of order items are shipped
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -148,20 +147,20 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     // {{{ Shipping rates
 
     /**
-     * Calculate shipping rates 
-     * 
+     * Calculate shipping rates
+     *
      * @return array(\XLite\Model\Shipping\Rate)
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function calculateRates() 
+    protected function calculateRates()
     {
         $rates = array();
 
         if ($this->isShippable()) {
 
             $rates = \XLite\Model\Shipping::getInstance()->getRates($this);
-            
+
             uasort($rates, array($this, 'compareRates'));
         }
 
@@ -169,11 +168,11 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     }
 
     /**
-     * Shipping rates sorting callback 
-     * 
+     * Shipping rates sorting callback
+     *
      * @param \XLite\Model\Shipping\Rate $a First shipping rate
      * @param \XLite\Model\Shipping\Rate $b Second shipping rate
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -203,8 +202,8 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     // {{{ Current shipping method and rate
 
     /**
-     * Get selected shipping rate 
-     * 
+     * Get selected shipping rate
+     *
      * @return \XLite\Model\Shipping\Rate
      * @see    ____func_see____
      * @since  1.0.0
@@ -217,7 +216,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
         ) {
             // Get shipping rates
             $rates = $this->getRates();
-            
+
             $selectedRate = null;
 
             if (!empty($rates)) {
@@ -252,10 +251,10 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     }
 
     /**
-     * Set shipping rate and shipping method id 
-     * 
+     * Set shipping rate and shipping method id
+     *
      * @param \XLite\Model\Shipping\Rate $rate Shipping rate object OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -278,7 +277,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
 
     /**
      * Get shipping method
-     * 
+     *
      * @return \XLite\Model\Shipping\Method
      * @see    ____func_see____
      * @since  1.0.0
@@ -297,8 +296,8 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     }
 
     /**
-     * Get shipping method name 
-     * 
+     * Get shipping method name
+     *
      * @return string|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -322,13 +321,13 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     // {{{ Shipping calculation data
 
     /**
-     * Get shipped items 
-     * 
+     * Get shipped items
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getItems() 
+    public function getItems()
     {
         $result = array();
 
@@ -342,13 +341,13 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     }
 
     /**
-     * Get order weight 
-     * 
+     * Get order weight
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getWeight() 
+    public function getWeight()
     {
         $weight = 0;
 
@@ -361,12 +360,12 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
 
     /**
      * Count shipped items quantity
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function countItems() 
+    public function countItems()
     {
         $result = 0;
 
@@ -379,12 +378,12 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
 
     /**
      * Get order subtotal only for shipped items
-     * 
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getSubtotal() 
+    public function getSubtotal()
     {
         $subtotal = 0;
 
@@ -400,10 +399,10 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     // {{{ Surcharge operations
 
     /**
-     * Get surcharge name 
-     * 
+     * Get surcharge name
+     *
      * @param \XLite\Model\Order\Surcharge $surcharge Surcharge
-     *  
+     *
      * @return \XLite\DataSet\Transport\Order\Surcharge
      * @see    ____func_see____
      * @since  1.0.0

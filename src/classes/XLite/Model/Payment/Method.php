@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model\Payment;
 
 /**
  * Payment method
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -47,7 +46,7 @@ class Method extends \XLite\Model\Base\I18n
 {
     /**
      * Payment method unique id
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -60,7 +59,7 @@ class Method extends \XLite\Model\Base\I18n
 
     /**
      * Method service name (gateway or API name)
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -71,7 +70,7 @@ class Method extends \XLite\Model\Base\I18n
 
     /**
      * Process class name
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -82,7 +81,7 @@ class Method extends \XLite\Model\Base\I18n
 
     /**
      * Position
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -93,7 +92,7 @@ class Method extends \XLite\Model\Base\I18n
 
     /**
      * Enabled status
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -125,8 +124,8 @@ class Method extends \XLite\Model\Base\I18n
     protected $transactions;
 
     /**
-     * Get processor 
-     * 
+     * Get processor
+     *
      * @return \XLite\Model\Payment\Base\Processor
      * @see    ____func_see____
      * @since  1.0.0
@@ -141,7 +140,7 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Check - enabeld method or not
      * FIXME - must be removed
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -158,8 +157,8 @@ class Method extends \XLite\Model\Base\I18n
     }
 
     /**
-     * Set class 
-     * 
+     * Set class
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -171,9 +170,9 @@ class Method extends \XLite\Model\Base\I18n
 
     /**
      * Get setting value by name
-     * 
+     *
      * @param string $name Name
-     *  
+     *
      * @return string|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -187,9 +186,9 @@ class Method extends \XLite\Model\Base\I18n
 
     /**
      * Get setting by name
-     * 
+     *
      * @param string $name Name
-     *  
+     *
      * @return \XLite\Model\Payment\MethodSetting
      * @see    ____func_see____
      * @since  1.0.0
@@ -210,10 +209,10 @@ class Method extends \XLite\Model\Base\I18n
 
     /**
      * Set setting value by name
-     * 
+     *
      * @param string $name  Name
      * @param string $value Value
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

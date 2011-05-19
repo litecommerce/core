@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Includes_Utils
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,8 +28,8 @@
 namespace Includes\Utils;
 
 /**
- * Operator 
- * 
+ * Operator
+ *
  * @package    XLite
  * @see        ____class_see____
  * @since      1.0.0
@@ -39,7 +38,7 @@ abstract class Operator extends \Includes\Utils\AUtils
 {
     /**
      * Return length of the "dummy" buffer for flush
-     * 
+     *
      * @return int
      * @access protected
      * @see    ____func_see____
@@ -52,7 +51,7 @@ abstract class Operator extends \Includes\Utils\AUtils
 
     /**
      * Perform the "flush" itself
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -66,10 +65,10 @@ abstract class Operator extends \Includes\Utils\AUtils
 
     /**
      * Wrap message into some HTML tags (to fast output)
-     * 
+     *
      * @param string $message  Message to prepare
      * @param string $jsOutput JS output
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -82,11 +81,11 @@ abstract class Operator extends \Includes\Utils\AUtils
 
 
     /**
-     * Redirect 
-     * 
+     * Redirect
+     *
      * @param string $location URL
      * @param int    $code     operation code
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -124,12 +123,12 @@ abstract class Operator extends \Includes\Utils\AUtils
     }
 
     /**
-     * Echo message and flush output 
-     * 
+     * Echo message and flush output
+     *
      * @param string  $message    Text to display
      * @param boolean $dummyFlush Output extra spaces or not OPTIONAL
      * @param string  $jsOutput   Flag to quick output OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -157,9 +156,9 @@ abstract class Operator extends \Includes\Utils\AUtils
 
     /**
      * Wrapper to message quick display
-     * 
+     *
      * @param string $message Message text
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -172,11 +171,11 @@ abstract class Operator extends \Includes\Utils\AUtils
 
     /**
      * Set custom value for the "max_execution_time" INI setting, and execute some function
-     * 
+     *
      * @param int   $time     time (in seconds) to set
      * @param mixed $callback function to execute
      * @param array $args     call arguments
-     *  
+     *
      * @return mixed
      * @access public
      * @see    ____func_see____
@@ -200,9 +199,9 @@ abstract class Operator extends \Includes\Utils\AUtils
      * Check if class is already declared.
      *
      * :NOTE: this function does not use autoloader
-     * 
+     *
      * @param string $name Class name
-     *  
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____

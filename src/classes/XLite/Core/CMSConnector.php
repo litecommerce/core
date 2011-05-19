@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Core;
 
 /**
- * CMS connector 
- * 
+ * CMS connector
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -44,7 +43,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
     /**
      * Current CMS name
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -54,7 +53,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
     /**
      * List of widgets which can be exported
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -72,8 +71,8 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     );
 
     /**
-     * Page types 
-     * 
+     * Page types
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -100,7 +99,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Determines if we export content into a CMS
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -110,10 +109,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * Save passed params in the requester 
-     * 
+     * Save passed params in the requester
+     *
      * @param array $request Params to map
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -138,7 +137,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Check if a widget requested from certain CMS
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -174,10 +173,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * Return application instance 
-     * 
+     * Return application instance
+     *
      * @param string $applicationId Cache key OPTIONAL
-     *  
+     *
      * @return \XLite
      * @see    ____func_see____
      * @since  1.0.0
@@ -206,10 +205,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * Get controller 
+     * Get controller
      *
      * @param string $applicationId Cache key OPTIONAL
-     * 
+     *
      * @return \XLite\Controller\AController
      * @see    ____func_see____
      * @since  1.0.0
@@ -222,10 +221,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * Run controller 
+     * Run controller
      *
      * @param string $applicationId Cache key OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -239,11 +238,11 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
     /**
      * Return widget
-     * 
+     *
      * @param string  $class  Widget class name
      * @param array   $params Widget params OPTIONAL
      * @param integer $delta  Drupal-specific param - so called "delta" OPTIONAL
-     *  
+     *
      * @return \XLite\Core\WidgetDataTransport
      * @see    ____func_see____
      * @since  1.0.0
@@ -275,11 +274,11 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * Add CMS-specific fields to profile data 
-     * 
+     * Add CMS-specific fields to profile data
+     *
      * @param integer $cmsUserId CMS user Id
      * @param array   $data      Data to prepare
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -325,9 +324,9 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
     /**
      * Check and return (if allowed) current user profile
-     * 
+     *
      * @param integer $cmsUserId Internal user ID in CMS
-     *  
+     *
      * @return \XLite\Model\Profile
      * @see    ____func_see____
      * @since  1.0.0
@@ -372,10 +371,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * Get Clean URL 
-     * 
+     * Get Clean URL
+     *
      * @param array $args Arguments
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -406,11 +405,11 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * Get canonical URL by clean URL 
+     * Get canonical URL by clean URL
      * TODO - to improve
-     * 
+     *
      * @param string $path Clean url
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -466,8 +465,8 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * Get session TTL (in seconds) 
-     * 
+     * Get session TTL (in seconds)
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -478,12 +477,12 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * Build CleanURL 
-     * 
+     * Build CleanURL
+     *
      * @param string $target    Page identifier
      * @param string $action    Action to perform OPTIONAL
      * @param array  $params    Additional params OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -495,9 +494,9 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
     /**
      * Get profiled DB condition fields list
-     * 
+     *
      * @param integer $cmsUserId CMS user Id
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -511,11 +510,11 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * getProfileWhereCondition 
+     * getProfileWhereCondition
      * TODO: remove this method
      *
      * @param integer $cmsUserId CMS user Id
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -528,8 +527,8 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * getCleanURLTargets 
-     * 
+     * getCleanURLTargets
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -544,10 +543,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
     /**
      * Get category clean URL by category id
-     * 
+     *
      * @param integer $id     Category ID
      * @param array   $params URL params OPTIONAL
-     *  
+     *
      * @return string|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -564,9 +563,9 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
     /**
      * Get product Clean URL by product id
-     * 
+     *
      * @param integer $productId Product ID
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

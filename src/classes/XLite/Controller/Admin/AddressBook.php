@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,15 +29,15 @@ namespace XLite\Controller\Admin;
 
 /**
  * Profile management controller
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class AddressBook extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * address 
-     * 
+     * address
+     *
      * @var   \XLite\Model\Address
      * @see   ____var_see____
      * @since 1.0.0
@@ -59,8 +58,8 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getAddress 
-     * 
+     * getAddress
+     *
      * @return \XLite\Model\Address
      * @see    ____func_see____
      * @since  1.0.0
@@ -84,7 +83,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
             $profileId = \XLite\Core\Request::getInstance()->profile_id;
 
             if (!isset($profileId)) {
-            
+
                 $profileId = $this->getAddress()->getProfile()->getProfileId();
 
                 if (\XLite\Core\Auth::getInstance()->getProfile()->getProfileId() === $profileId) {
@@ -105,7 +104,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Alias
-     * 
+     *
      * @return \XLite\Model\Profile
      * @see    ____func_see____
      * @since  1.0.0
@@ -142,8 +141,8 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getModelFormClass 
-     * 
+     * getModelFormClass
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -154,8 +153,8 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * doActionSave 
-     * 
+     * doActionSave
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -166,8 +165,8 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * doActionDelete 
-     * 
+     * doActionDelete
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -175,7 +174,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     protected function doActionDelete()
     {
         $address = $this->getAddress();
-    
+
         if (isset($address)) {
             \XLite\Core\Database::getEM()->remove($address);
             \XLite\Core\Database::getEM()->flush();
@@ -187,8 +186,8 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * doActionCancelDelete 
-     * 
+     * doActionCancelDelete
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

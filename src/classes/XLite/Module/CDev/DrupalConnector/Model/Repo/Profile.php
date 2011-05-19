@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Module\CDev\DrupalConnector\Model\Repo;
 
 /**
  * The Profile model repository
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -38,11 +37,11 @@ namespace XLite\Module\CDev\DrupalConnector\Model\Repo;
 class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorator
 {
     /**
-     * Link XLite and CMS profiles 
-     * 
+     * Link XLite and CMS profiles
+     *
      * @param integer $profileId    XLite profile id
      * @param integer $cmsProfileId CMS profile id
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -56,9 +55,9 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
 
     /**
      * Define query for linkProfiles() method
-     * 
+     *
      * @param integer $cmsProfileId CMS profile id
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
@@ -78,10 +77,10 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
 
     /**
      * Define query for linkProfiles() method
-     * 
+     *
      * @param integer $profileId    XLite profile id
      * @param integer $cmsProfileId CMS profile id
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
@@ -102,10 +101,10 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
 
     /**
      * Find admin profiles without specified roles
-     * 
+     *
      * @param integer $profileId    XLite profile id
      * @param integer $cmsProfileId CMS profile id
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -118,10 +117,10 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
 
     /**
      * Find non-admin profiles with specified roles
-     * 
+     *
      * @param integer $profileId    XLite profile id
      * @param integer $cmsProfileId CMS profile id
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -134,9 +133,9 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
 
     /**
      * Define query for findAdminsWithoutRoles() method
-     * 
+     *
      * @param array $roles Roles list
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
@@ -163,9 +162,9 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
 
     /**
      * Define query for findCustomersWithRoles() method
-     * 
+     *
      * @param array $roles Roles list
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0

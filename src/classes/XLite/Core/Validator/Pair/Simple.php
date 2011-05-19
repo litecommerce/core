@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,16 +28,16 @@
 namespace XLite\Core\Validator\Pair;
 
 /**
- * Hash array simple pair validator 
- * 
+ * Hash array simple pair validator
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Simple extends \XLite\Core\Validator\Pair\APair
 {
     /**
-     * Validation mode 
-     * 
+     * Validation mode
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -46,8 +45,8 @@ class Simple extends \XLite\Core\Validator\Pair\APair
     protected $mode = self::STRICT;
 
     /**
-     * Cell name 
-     * 
+     * Cell name
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -55,8 +54,8 @@ class Simple extends \XLite\Core\Validator\Pair\APair
     protected $name;
 
     /**
-     * Cell value validator 
-     * 
+     * Cell value validator
+     *
      * @var   \XLite\Core\Validator\AValidator
      * @see   ____var_see____
      * @since 1.0.0
@@ -64,8 +63,8 @@ class Simple extends \XLite\Core\Validator\Pair\APair
     protected $validator;
 
     /**
-     * Default value 
-     * 
+     * Default value
+     *
      * @var   mixed
      * @see   ____var_see____
      * @since 1.0.0
@@ -73,8 +72,8 @@ class Simple extends \XLite\Core\Validator\Pair\APair
     protected $defaultValue;
 
     /**
-     * Get name 
-     * 
+     * Get name
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -85,10 +84,10 @@ class Simple extends \XLite\Core\Validator\Pair\APair
     }
 
     /**
-     * Set cell name 
-     * 
+     * Set cell name
+     *
      * @param string $name Name
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -99,8 +98,8 @@ class Simple extends \XLite\Core\Validator\Pair\APair
     }
 
     /**
-     * Get validator 
-     * 
+     * Get validator
+     *
      * @return \XLite\Core\Validator\AValidator
      * @see    ____func_see____
      * @since  1.0.0
@@ -111,10 +110,10 @@ class Simple extends \XLite\Core\Validator\Pair\APair
     }
 
     /**
-     * Set cell validator 
-     * 
+     * Set cell validator
+     *
      * @param \XLite\Core\Validator\AValidator $validator Validator
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -125,10 +124,10 @@ class Simple extends \XLite\Core\Validator\Pair\APair
     }
 
     /**
-     * Set default value 
-     * 
+     * Set default value
+     *
      * @param mixed $value Default value
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -140,9 +139,9 @@ class Simple extends \XLite\Core\Validator\Pair\APair
 
     /**
      * Find cell
-     * 
+     *
      * @param array $data Data
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

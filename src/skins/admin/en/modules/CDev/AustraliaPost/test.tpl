@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -35,7 +34,7 @@
     </tr>
 
     <tr>
-      <td>&nbsp;&nbsp;&nbsp;&nbsp;Country:</td> 
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;Country:</td>
       <td>
         <input type="text" size="15" value="Australia" disabled />
         <span IF="!config.Company.location_country=#AU#"><span class="star">(!)</span> <a href="admin.php?target=settings&page=Company">Company country</a> has wrong value</span>
@@ -53,7 +52,7 @@
     </tr>
 
     <tr>
-      <td>&nbsp;&nbsp;&nbsp;&nbsp;Country: {config.Shipping.anonymous_country}</td> 
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;Country: {config.Shipping.anonymous_country}</td>
       <td IF="!destinationCountry=##"><widget class="\XLite\View\CountrySelect" field="destinationCountry" value="{destinationCountry}" /></td>
       <td IF="destinationCountry=##"><widget class="\XLite\View\CountrySelect" field="destinationCountry" country="{config.Shipping.anonymous_country}" fieldId="destinationCountry_select" /></td>
     </tr>
@@ -73,4 +72,3 @@
   <div>Note: a new window will open</div>
 
 </form>
-
