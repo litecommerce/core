@@ -90,8 +90,10 @@ class CoreVersionTopLink extends \XLite\View\AView
      */
     protected function isCoreUpgradeAvailable()
     {
+        $flags = $this->getUpdateFlags();
+
         return (bool) \Includes\Utils\ArrayManager::getIndex(
-            $this->getUpdateFlags(),
+            $flags,
             \XLite\Core\Marketplace::FIELD_IS_UPGRADE_AVAILABLE,
             true
         );
@@ -106,8 +108,10 @@ class CoreVersionTopLink extends \XLite\View\AView
      */
     protected function areUpdatesAvailable()
     {
+        $flags = $this->getUpdateFlags();
+
         return (bool) \Includes\Utils\ArrayManager::getIndex(
-            $this->getUpdateFlags(),
+            $flags,
             \XLite\Core\Marketplace::FIELD_ARE_UPDATES_AVAILABLE,
             true
         );
@@ -126,6 +130,6 @@ class CoreVersionTopLink extends \XLite\View\AView
             $this->updateFlags = \XLite\Core\Marketplace::getInstance()->checkForUpdates();
         }
 
-        return $this->updateFlags;
+        return is_array($this->updateFlags) ? $this->updateFlags : array();
     }
 }

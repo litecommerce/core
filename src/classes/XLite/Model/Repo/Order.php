@@ -312,13 +312,13 @@ class Order extends \XLite\Model\Repo\ARepo
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param array                      $value        Condition data OPTIONAL
+     * @param integer                    $value        Condition data OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareCndCurrency(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value = null)
+    protected function prepareCndCurrency(\Doctrine\ORM\QueryBuilder $queryBuilder, $value = null)
     {
         if ($value) {
             $queryBuilder->innerJoin('o.currency', 'currency', 'WITH', 'currency.currency_id = :currency_id')
