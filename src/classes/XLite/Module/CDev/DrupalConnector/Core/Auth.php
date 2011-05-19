@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -25,44 +25,41 @@
  * @since     1.0.0
  */
 
-namespace XLite\Controller\Customer;
+namespace XLite\Module\CDev\DrupalConnector\Core;
 
 /**
- * Order controller
+ * Authorization routine
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Order extends \XLite\Controller\Customer\Base\Order
+class Auth extends \XLite\Core\Auth implements \XLite\Base\IDecorator
 {
     /**
-     * Return the current page title (for the content area)
+     * Get stored profiel id
      *
-     * @return string
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTitle()
+    protected function getStoredProfileId()
     {
-        return $this->checkAccess()
-            ? (
-                'Order #'
-                . $this->getOrderId()
-                . ', '
-                . \XLite\Core\Converter::getInstance()->formatTime($this->getOrder()->getDate())
-            )
-            : 'Order not found';
+        $profileId = parent::getStoredProfileId();
+
+        if (
+            !$profileId
+            && \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+            && !empty($GLOBALS['user'])
+        ) {
+            $profileId = \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getProfileIdByCMSId($GLOBALS['user']->uid);
+            if ($profileId) {
+
+                // Save profile Id in session
+                \XLite\Core\Session::getInstance()->profile_id = $profileId;
+            }
+        }
+        
+        return $profileId;
     }
 
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Order details';
-    }
 }

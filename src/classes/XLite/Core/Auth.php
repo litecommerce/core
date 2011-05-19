@@ -236,7 +236,7 @@ class Auth extends \XLite\Base
         $isCurrent = false;
 
         if (!isset($profileId)) {
-            $profileId = \XLite\Core\Session::getInstance()->profile_id;
+            $profileId = $this->getStoredProfileId();
             $isCurrent = true;
         }
 
@@ -523,4 +523,15 @@ class Auth extends \XLite\Base
         }
     }
 
+    /**
+     * Get stored profiel id 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getStoredProfileId()
+    {
+        return \XLite\Core\Session::getInstance()->profile_id;
+    }
 }
