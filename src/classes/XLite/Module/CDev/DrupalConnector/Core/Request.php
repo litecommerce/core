@@ -39,13 +39,13 @@ class Request extends \XLite\Core\Request implements \XLite\Base\IDecorator
     /**
      * Normalize request data
      *
-     * @param array $request Request data
+     * @param mixed $request Request data
      *
-     * @return array
+     * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function normalizeRequestData(array $request)
+    protected function normalizeRequestData($request)
     {
         // Fix double-escaping problems caused by "magic quotes" for a stand-alone mode and admin side
         return \XLite\Module\CDev\DrupalConnector\Handler::isCMSStarted()
