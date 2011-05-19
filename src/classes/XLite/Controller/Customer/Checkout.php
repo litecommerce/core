@@ -383,6 +383,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
                 // Create profile based on anonymous order profile
                 $this->saveAnonymousProfile();
+                $this->loginAnonymousProfile();
             }
 
         } else {
@@ -422,6 +423,18 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
         // Set cloned profile as original profile
         $this->getCart()->setOrigProfile($profile);
+    }
+
+    /**
+     * Login anonymous profile 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function loginAnonymousProfile()
+    {
+        \XLite\Core\Auth::getInstance()->loginProfile($this->getCart()->getOrigProfile());
     }
 
     /**

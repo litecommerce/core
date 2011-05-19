@@ -1213,8 +1213,9 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $found = null;
 
         if ($this->getProfile() && $this->getProfile()->getLastPaymentId()) {
+            $paymentMethods = $this->getPaymentMethods();
             $found = \Includes\Utils\ArrayManager::findValue(
-                $this->getPaymentMethods(),
+                $paymentMethods,
                 array($this, 'checkLastPaymentMethod'),
                 $this->getProfile()->getLastPaymentId()
             );
