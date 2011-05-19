@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -32,7 +31,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
 {
     /**
      * Check main page
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -46,7 +45,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
             "//h2[text()='Bestsellers']",
             'check bestsellers title'
         );
-        
+
         $this->assertElementPresent(
             "//h2[text()='Bestsellers']"
             . "/following-sibling::div[@class='content']"
@@ -72,7 +71,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
                 . "/following-sibling::div[@class='content']"
                 . "/descendant::div[@class='product productid-$id ui-draggable']",
                 'Check ' . $id . ' element'
-            );  
+            );
 
         }
     }
@@ -80,20 +79,20 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
     public function testCatPage()
     {
         $cat = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'apparel'));
- 
+
         $this->open('store/category/0/category_id-' . $cat->getCategoryId());
 
         $this->assertElementPresent(
             "//h2[text()='Bestsellers']",
             'check bestsellers title'
-        );  
-    
+        );
+
         $this->assertElementPresent(
             "//h2[text()='Bestsellers']"
             . "/following-sibling::div[@class='content']"
             . "/div[@class='items-list']",
             'check bestsellers block'
-        );  
+        );
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'apparel'));
         foreach ($this->findBestsellers(0, $c->getCategoryId()) as $product) {
@@ -110,21 +109,21 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
         }
     }
 
-    /** 
+    /**
      *  Wrapper for the REPO findBestsellers method
-     * 
+     *
      * @param int $count ____param_comment____
      * @param int $cat   ____param_comment____
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function findBestsellers($count = 0, $cat = 0)
-    {   
+    {
         return \XLite\Core\Database::getRepo('XLite\Model\Product')
             ->findBestsellers($count, $cat);
-    }   
+    }
 
 }

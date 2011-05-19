@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
 
 /**
- * Admin 
- * 
+ * Admin
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -112,10 +111,10 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
     /**
      * Check if block exists in "block_custom" table
-     * 
+     *
      * @param integer $delta Block unique identifier
      * @param string  $info  Block description
-     *  
+     *
      * @return boolean
      * @access protected
      * @see    ____func_see____
@@ -136,9 +135,9 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
     /**
      * Return block description
-     * 
+     *
      * @param integer $delta Block ID
-     *  
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -151,9 +150,9 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
     /**
      * Get block by info retrieved from the form
-     * 
+     *
      * @param array $form Form description
-     *  
+     *
      * @return array|null
      * @access protected
      * @see    ____func_see____
@@ -284,9 +283,9 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
     /**
      * Return name of block in Drupal for class in LC
-     * 
+     *
      * @param string $class Class name
-     * 
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -340,8 +339,8 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             ),
         );
 
-        $delta = isset($form['delta']['#value']) 
-            ? $form['delta']['#value'] 
+        $delta = isset($form['delta']['#value'])
+            ? $form['delta']['#value']
             : null;
 
         $form['settings']['lc_widget_details']['lc_widget'] = array('#tree' => true);
@@ -448,7 +447,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         $delta = $data['delta'];
 
         if (
-            $this->isLCBlock($formState) 
+            $this->isLCBlock($formState)
             && $this->isCustomBlock($delta, $data['info'])
         ) {
 
@@ -460,7 +459,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
             // Remove old and save new settings for widget
             $this->updateWidgetSettings(
-                $delta, 
+                $delta,
                 $this->extractWidgetSettings($class, $data['lc_widget'])
             );
         }

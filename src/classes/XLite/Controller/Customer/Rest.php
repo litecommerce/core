@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Controller\Customer;
 
 /**
  * REST services end-point
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -46,8 +45,8 @@ class Rest extends \XLite\Controller\Customer\ACustomer
 
 
     /**
-     * REST actions 
-     * 
+     * REST actions
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -55,8 +54,8 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     protected $restActions = array('get', 'post', 'put', 'delete');
 
     /**
-     * REST repository classes 
-     * 
+     * REST repository classes
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -65,7 +64,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Current REST repository
-     * 
+     *
      * @var   object
      * @see   ____var_see____
      * @since 1.0.0
@@ -73,8 +72,8 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     protected $currentRepo;
 
     /**
-     * Response data 
-     * 
+     * Response data
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -86,8 +85,8 @@ class Rest extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Handles the request.
-     * Parses the request variables if necessary. Attempts to call the specified action function 
-     * 
+     * Parses the request variables if necessary. Attempts to call the specified action function
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -136,8 +135,8 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Get REST repository classes 
-     * 
+     * Get REST repository classes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -175,8 +174,8 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Define REST repository classes 
-     * 
+     * Define REST repository classes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -191,10 +190,10 @@ class Rest extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Get repository by name and type
-     * 
+     *
      * @param string $name Repository name
      * @param string $type Operation type name OPTIONAL
-     *  
+     *
      * @return object|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -213,8 +212,8 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Get 
-     * 
+     * Get
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -230,8 +229,8 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Post 
-     * 
+     * Post
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -251,8 +250,8 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Put 
-     * 
+     * Put
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -271,8 +270,8 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Delete 
-     * 
+     * Delete
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

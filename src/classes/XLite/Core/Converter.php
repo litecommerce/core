@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Core;
 
 /**
  * Miscelaneous convertion routines
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -54,7 +53,7 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Method name translation patterns
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -70,7 +69,7 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Flag to avoid multiple setlocale() calls
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -79,9 +78,9 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Convert a string like "test_foo_bar" into the camel case (like "TestFooBar")
-     * 
+     *
      * @param string $string String to convert
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -93,9 +92,9 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Convert a string like "testFooBar" into the underline style (like "test_foo_bar")
-     * 
+     *
      * @param string $string String to convert
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -106,10 +105,10 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
-     * Prepare method name 
-     * 
+     * Prepare method name
+     *
      * @param string $string Underline-style string
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -121,9 +120,9 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Compose controller class name using target
-     * 
+     *
      * @param string $target Current target
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -140,7 +139,7 @@ class Converter extends \XLite\Base\Singleton
             $zone = 'Customer';
         }
 
-        return '\XLite\Controller\\' 
+        return '\XLite\Controller\\'
                . $zone
                . (empty($target) ? '' : '\\' . self::convertToCamelCase($target));
     }
@@ -198,11 +197,11 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
-     * Return array schema 
-     * 
+     * Return array schema
+     *
      * @param array $keys   Keys list OPTIONAL
      * @param array $values Values list OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -213,11 +212,11 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
-     * Convert to one-dimensional array 
-     * 
+     * Convert to one-dimensional array
+     *
      * @param array  $data    Array to flat
      * @param string $currKey Parameter for recursive calls OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -236,7 +235,7 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Generate random token (32 chars)
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -248,7 +247,7 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Check - is GDlib enabled or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -264,9 +263,9 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Check if specified string is URL or not
-     * 
+     *
      * @param string $url URL
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -280,9 +279,9 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Return class name without backslashes
-     * 
+     *
      * @param \XLite_Base $obj Object to get class name from
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -294,9 +293,9 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Format currency value
-     * 
+     *
      * @param mixed $price Currency unformatted value
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -318,9 +317,9 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Format price value
-     * 
+     *
      * @param mixed $price Price
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -339,12 +338,12 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
-     * Convert value from one to other weight units 
-     * 
+     * Convert value from one to other weight units
+     *
      * @param float  $value   Weight value
      * @param string $srcUnit Source weight unit
      * @param string $dstUnit Destination weight unit
-     *  
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
@@ -364,11 +363,11 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
-     * Format time 
-     * 
+     * Format time
+     *
      * @param integer $base   UNIX time stamp OPTIONAL
      * @param string  $format Format string OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -384,11 +383,11 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
-     * Format date 
-     * 
+     * Format date
+     *
      * @param integer $base   UNIX time stamp OPTIONAL
      * @param string  $format Format string OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -403,11 +402,11 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
-     * Get strftime() with specified format and timestamp value 
-     * 
+     * Get strftime() with specified format and timestamp value
+     *
      * @param string  $format Format string
      * @param integer $base   UNIX time stamp OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -420,12 +419,12 @@ class Converter extends \XLite\Base\Singleton
             $format = str_replace('%e', '%#d', $format);
         }
 
-        return isset($base) ? strftime($format, $base) : strftime($format); 
+        return isset($base) ? strftime($format, $base) : strftime($format);
     }
 
     /**
      * Attempt to set locale to UTF-8
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -434,7 +433,7 @@ class Converter extends \XLite\Base\Singleton
     {
         if (
             !self::$isLocaleSet
-            && preg_match('/(([^_]+)_?([^.]*))\.?(.*)?/', setlocale(LC_TIME, 0), $match) 
+            && preg_match('/(([^_]+)_?([^.]*))\.?(.*)?/', setlocale(LC_TIME, 0), $match)
             && !preg_match('/utf\-?8/i', $match[4])
         ) {
             setlocale(
@@ -455,10 +454,10 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Sort URL parameters (callback)
-     * 
+     *
      * @param string $a First parameter
      * @param string $b Second parameter
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0

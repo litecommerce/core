@@ -2,11 +2,10 @@
 
 /**
  * ____file_title____
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -27,7 +26,7 @@ decorate(
   {
     // Autoloading of switch button and license agreement widgets.
     // They are shown in License agreement popup window.
-    // TODO. make it dynamically and move it to ONE widget initialization (Main widget) 
+    // TODO. make it dynamically and move it to ONE widget initialization (Main widget)
     core.autoload(SwitchButton);
     core.autoload(LicenseAgreement);
   }

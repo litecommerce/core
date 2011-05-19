@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model\Base;
 
 /**
  * Translation-owner abstract class
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -39,8 +38,8 @@ namespace XLite\Model\Base;
 abstract class I18n extends \XLite\Model\AEntity
 {
     /**
-     * Languages query 
-     * 
+     * Languages query
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -49,7 +48,7 @@ abstract class I18n extends \XLite\Model\AEntity
 
     /**
      * Edit language code
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -58,8 +57,8 @@ abstract class I18n extends \XLite\Model\AEntity
 
 
     /**
-     * Get languages query 
-     * 
+     * Get languages query
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -94,8 +93,8 @@ abstract class I18n extends \XLite\Model\AEntity
     }
 
     /**
-     * Return all translations 
-     * 
+     * Return all translations
+     *
      * @return \Doctrine\Common\Collections\ArrayCollection
      * @see    ____func_see____
      * @since  1.0.0
@@ -107,9 +106,9 @@ abstract class I18n extends \XLite\Model\AEntity
 
     /**
      * Add translation to the list
-     * 
+     *
      * @param \XLite\Model\Base\Translation $translation Translation to add
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -120,10 +119,10 @@ abstract class I18n extends \XLite\Model\AEntity
     }
 
     /**
-     * Get translation 
-     * 
+     * Get translation
+     *
      * @param string $code Language code OPTIONAL
-     *  
+     *
      * @return \XLite\Model\Base\Translation
      * @see    ____func_see____
      * @since  1.0.0
@@ -158,9 +157,9 @@ abstract class I18n extends \XLite\Model\AEntity
 
     /**
      * Get translation in safe mode
-     * 
+     *
      * @param string $code Language code OPTIONAL
-     *  
+     *
      * @return \XLite\Model\Base\Translation
      * @see    ____func_see____
      * @since  1.0.0
@@ -217,10 +216,10 @@ abstract class I18n extends \XLite\Model\AEntity
     }
 
     /**
-     * Set edit language code 
-     * 
+     * Set edit language code
+     *
      * @param string $code Language code OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -232,9 +231,9 @@ abstract class I18n extends \XLite\Model\AEntity
 
     /**
      * Check - has object translation or not
-     * 
+     *
      * @param string $code Language code OPTIONAL
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -258,8 +257,8 @@ abstract class I18n extends \XLite\Model\AEntity
     }
 
     /**
-     * Get translation codes 
-     * 
+     * Get translation codes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -276,8 +275,8 @@ abstract class I18n extends \XLite\Model\AEntity
     }
 
     /**
-     * Detach self 
-     * 
+     * Detach self
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -293,8 +292,8 @@ abstract class I18n extends \XLite\Model\AEntity
 
 
     /**
-     * Get default language code 
-     * 
+     * Get default language code
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

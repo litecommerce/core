@@ -20,7 +20,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -57,7 +56,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
      *
      * @param boolean $checkMode Check mode or not OPTIONAL
      *
-     * @return integer 
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -66,7 +65,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
         return \XLite\Model\Cart::getInstance()->getProfileId();
     }
 
-    
+
     /**
      * Return name of web form widget class
      *
@@ -115,10 +114,10 @@ class Checkout extends \XLite\View\Model\Profile\Main
     }
 
     /**
-     * setPasswords 
-     * 
+     * setPasswords
+     *
      * @param string $password Password to set
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -168,7 +167,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * @param string      $password   Account password
      * @param string|null $secureHash Secret hash string (if needed)
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -199,7 +198,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * Check if current user trying to register as anonymous
      * FIXME: adapt this for the standalone LC
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -227,7 +226,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
     /**
      * isPassedEmailDifferent
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -241,7 +240,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
     /**
      * Perform certain action for the model object
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */

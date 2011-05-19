@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,16 +28,16 @@
 namespace XLite;
 
 /**
- * Logger 
- * 
+ * Logger
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Logger extends \XLite\Base\Singleton
 {
     /**
-     * Security file header 
-     * 
+     * Security file header
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -46,8 +45,8 @@ class Logger extends \XLite\Base\Singleton
     protected $securityHeader = '<?php die(1); ?>';
 
     /**
-     * Hash errors 
-     * 
+     * Hash errors
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -56,7 +55,7 @@ class Logger extends \XLite\Base\Singleton
 
     /**
      * Errors translate table (PHP -> PEAR)
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -64,8 +63,8 @@ class Logger extends \XLite\Base\Singleton
     protected $errorsTranslate = null;
 
     /**
-     * PHP error names 
-     * 
+     * PHP error names
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -73,8 +72,8 @@ class Logger extends \XLite\Base\Singleton
     protected $errorTypes = null;
 
     /**
-     * Options 
-     * 
+     * Options
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -88,7 +87,7 @@ class Logger extends \XLite\Base\Singleton
 
     /**
      * Mark templates flag
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -98,7 +97,7 @@ class Logger extends \XLite\Base\Singleton
 
     /**
      * Check - display debug templates info or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -110,7 +109,7 @@ class Logger extends \XLite\Base\Singleton
 
     /**
      * Constructor
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -170,14 +169,14 @@ class Logger extends \XLite\Base\Singleton
             $logger->setMask($mask);
         }
     }
-    
+
     /**
      * Add log record
-     * 
+     *
      * @param string $message Message
      * @param string $level   Level code OPTIONAL
      * @param array  $trace   Back trace OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -222,13 +221,13 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Register PHP error 
-     * 
+     * Register PHP error
+     *
      * @param integer $errno   Error code
      * @param string  $errstr  Error message
      * @param string  $errfile File path
      * @param integer $errline Line number
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -275,10 +274,10 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Register non-catched exception 
-     * 
+     * Register non-catched exception
+     *
      * @param \Exception $exception Exception
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -317,8 +316,8 @@ class Logger extends \XLite\Base\Singleton
 
 
     /**
-     * Get log type 
-     * 
+     * Get log type
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -329,8 +328,8 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Get logger name 
-     * 
+     * Get logger name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -356,8 +355,8 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Get logger identtificator 
-     * 
+     * Get logger identtificator
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -369,7 +368,7 @@ class Logger extends \XLite\Base\Singleton
 
     /**
      * Get back trace list
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -380,10 +379,10 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Prepare back trace 
-     * 
+     * Prepare back trace
+     *
      * @param array $trace Back trace raw data
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -395,9 +394,9 @@ class Logger extends \XLite\Base\Singleton
 
     /**
      * Detect class name by object
-     * 
+     *
      * @param object $obj Object
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -409,9 +408,9 @@ class Logger extends \XLite\Base\Singleton
 
     /**
      * Convert PHP error code to PEAR error code
-     * 
+     *
      * @param integer $errno PHP error code
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -446,10 +445,10 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Get PHP error name 
-     * 
+     * Get PHP error name
+     *
      * @param integer $errno PHP error code
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -483,8 +482,8 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Get rrror log path 
-     * 
+     * Get rrror log path
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -496,9 +495,9 @@ class Logger extends \XLite\Base\Singleton
 
     /**
      * Check security header for specified file
-     * 
+     *
      * @param string $path File path
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

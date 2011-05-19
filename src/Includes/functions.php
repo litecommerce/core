@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -28,9 +27,9 @@
 
 /**
  * Quick access helper
- * 
+ *
  * @param boolean $restart Restart helper
- *  
+ *
  * @return \XLite\Core\QuickAccess
  * @see    ____func_see____
  * @since  1.0.0
@@ -138,7 +137,7 @@ function func_define($name, $value) {
 }
 
 function get_php_execution_mode() {
-    
+
     $options = \Includes\Utils\ConfigParser::getOptions(); //XLite::getInstance()->getOptions();
 
     return isset($options['filesystem_permissions']['permission_mode'])
@@ -150,7 +149,7 @@ function get_php_execution_mode() {
 // mode - one of 0777, 0755, 0666, 0644
 function get_filesystem_permissions($mode, $file = null) {
     static $mode0777, $mode0755, $mode0666, $mode0644, $mode0666_fnp, $mode0644_fnp;
- 
+
     // try to setup values from config
     if (
         (!isset($mode0777) || !isset($mode0755) || !isset($mode0666) || !isset($mode0644))
@@ -182,7 +181,7 @@ function get_filesystem_permissions($mode, $file = null) {
                 if (isset($options['privileged_permission_dir'])) {
                     $mode0755 = base_convert(
                         $options['privileged_permission_dir'],
-                        8,  
+                        8,
                         10
                     );
                 }
@@ -261,7 +260,7 @@ function get_filesystem_permissions($mode, $file = null) {
             $mode = $mode0644;
         }
     }
-    
+
     return $mode;
 }
 
@@ -269,16 +268,16 @@ function get_filesystem_permissions($mode, $file = null) {
 // copy single file and set permissions
 function copyFile($from, $to, $mode = 0666)
 {
-    
+
     if ($mode == 0666) {
         $mode = get_filesystem_permissions(0666, $from);
 
     } elseif ($mode == 0644) {
         $mode = get_filesystem_permissions(0644, $from);
     }
-    
+
     $result = false;
-    
+
     if (@is_file($from)) {
         $result = @copy($from, $to);
         if (!$result) {
@@ -288,7 +287,7 @@ function copyFile($from, $to, $mode = 0666)
         @umask(0000);
         $result = $result && @chmod($to, $mode);
     }
-    
+
     return $result;
 }
 
@@ -323,7 +322,7 @@ function copyRecursive($from, $to, $mode = 0666, $dir_mode = 0777)
             $attempts = 5;
             while (!@mkdir($to, $dir_mode)) {
                 \Includes\Utils\FileManager::unlinkRecursive($to);
-                $attempts --; 
+                $attempts --;
                 if ($attempts < 0) {
                     echo "Can't create directory $to: permission denied";
                     die;
@@ -361,7 +360,7 @@ function func_parse_host($host)
 
     $url_details = func_parse_url($host);
     $host = isset($url_details["host"]) ? $url_details["host"] : $host;
-    
+
     // strip WWW hostname
     if (substr(strtolower($host), 0, 4) == 'www.') {
         $host = substr_replace($host, '', 0, 3);
@@ -372,17 +371,17 @@ function func_parse_host($host)
 
 function func_parse_url($url)
 {
-   
+
     $options = \Includes\Utils\ConfigParser::getOptions();
- 
+
     $parts_default = array(
         'scheme'   => 'http',
         'host'     => $options['host_details']['http_host'],
-        'port'     => '', 
-        'user'     => '', 
-        'pass'     => '', 
+        'port'     => '',
+        'user'     => '',
+        'pass'     => '',
         'path'     => $options['host_details']['web_dir'],
-        'query'    => '', 
+        'query'    => '',
         'fragment' => ''
     );
 
@@ -445,7 +444,7 @@ function query_upload($filename, $connection = null, $ignoreErrors = false, $is_
 
             } else {
                 $counter ++;
-            }    
+            }
 
             // execute SQL
             if (is_resource($connection)) {
@@ -467,7 +466,7 @@ function query_upload($filename, $connection = null, $ignoreErrors = false, $is_
                 query_upload_error($myerr, $ignoreErrors);
                 if (!$ignoreErrors) {
                     break;
-                }    
+                }
 
             } elseif ($table_name != "") {
                 echo '<font color="green">[OK]</font><br />' . "\n";
@@ -525,7 +524,7 @@ function generate_code($length = 8)
 }
 
 /**
-* Strips slashes and trims the specified array values 
+* Strips slashes and trims the specified array values
 * (strips from strings only)
 *
 * @access private
@@ -561,7 +560,7 @@ function func_lock($lockname, $ttl = 15, $cycle_limit = 0)
 {
     global $_lock_hash;
 
-    $options = \Includes\Utils\ConfigParser::getOptions(); 
+    $options = \Includes\Utils\ConfigParser::getOptions();
 
     if (empty($lockname)) {
         return false;
@@ -626,9 +625,9 @@ function func_lock($lockname, $ttl = 15, $cycle_limit = 0)
 // This function releases file lock which is previously created by func_lock
 //
 function func_unlock($lockname) {
-    global $_lock_hash;       
+    global $_lock_hash;
 
-    $options = \Includes\Utils\ConfigParser::getOptions(); 
+    $options = \Includes\Utils\ConfigParser::getOptions();
 
     if (empty($lockname) || empty($_lock_hash[$lockname])) {
         return false;
@@ -671,7 +670,7 @@ function func_unlock($lockname) {
 // This function checks, whether the lock is active
 //
 function func_is_locked($lockname, $ttl = 15) {
-    global $_lock_hash;        
+    global $_lock_hash;
 
     $options = \Includes\Utils\ConfigParser::getOptions();
 
@@ -780,7 +779,7 @@ function func_construct_csv($fields, $delimiter, $q) {
     return implode($delimiter, $fs);
 }
 
-function func_convert_to_byte($file_size) { 
+function func_convert_to_byte($file_size) {
     $val = trim($file_size);
     $last = strtolower(substr($val, -1));
 
@@ -798,7 +797,7 @@ function func_convert_to_byte($file_size) {
     return $val;
 }
 
-function func_check_memory_limit($current_limit, $required_limit) { 
+function func_check_memory_limit($current_limit, $required_limit) {
     $limit = func_convert_to_byte($current_limit);
     $required = func_convert_to_byte($required_limit);
     if ($limit < $required) {
@@ -812,10 +811,10 @@ function func_check_memory_limit($current_limit, $required_limit) {
         return 0 === strcasecmp($limit, $required_limit);
     }
 
-    return true; 
+    return true;
 }
 
-function func_set_memory_limit($new_limit) { 
+function func_set_memory_limit($new_limit) {
     $current_limit = @ini_get('memory_limit');
 
     return func_check_memory_limit($current_limit, $new_limit);
@@ -837,9 +836,9 @@ function func_htmlspecialchars($str) {
 
 /**
  * Check if LiteCommerce installed
- * 
+ *
  * @param string $dbURL Database Url string (e.g. mysql://username:password@localhost/databasename)
- *  
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -908,7 +907,7 @@ function isLiteCommerceInstalled($dbURL = null, &$message)
                         if (empty($res)) {
                             $message = 'There are no profiles found in the database';
                             $checkResult = false;
-                        
+
                         } elseif (\Includes\Decorator\Utils\CacheManager::isRebuildNeeded(\Includes\Decorator\Utils\CacheManager::STEP_THIRD)) {
                             $message = 'Cache isn\'t built yet';
                             $checkResult = false;
@@ -918,16 +917,16 @@ function isLiteCommerceInstalled($dbURL = null, &$message)
                         $message = 'Cannot connect to the database';
                     }
                 }
-            
+
             } else {
                 $message = 'Host, username or database name are empty';
             }
-        
+
         } else {
             $message = 'Corrupted LiteCommerce config file';
             $checkResult = false;
         }
-    
+
     } else {
         $message = 'config.php or admin/en/welcome.tpl files are not found';
     }
@@ -937,7 +936,7 @@ function isLiteCommerceInstalled($dbURL = null, &$message)
 
 /**
  * Parse database access string
- * 
+ *
  * @param string $dbURL Database Url string
  * examples:
  *   mysql://username:password@localhost/databasename
@@ -945,14 +944,14 @@ function isLiteCommerceInstalled($dbURL = null, &$message)
  *   mysql://username:password@host%3A3306%2Ftmp%2Fmysql.sock/databasename
  *   mysql://username:password@host%3A%2Ftmp%2Fmysql.sock/databasename
  *   (host must be urlencoded if mysql works via non-standard socket)
- *  
+ *
  * @return array
  * @access public
  * @see    ____func_see____
  * @since  1.0.0
  */
 function parseDbURL($dbURL)
-{    
+{
     $data = array();
 
     $url = parse_url($dbURL);
@@ -990,7 +989,7 @@ function parseDbURL($dbURL)
 
 /**
  * Do connection to the database with params user specified
- * 
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
@@ -1028,7 +1027,7 @@ function dbConnect ($data = null, &$errorMsg = null)
         }
 
         $result = isset($connect);
-    
+
     } else {
         // Reset db options
         \Includes\Utils\Database::resetDbOptions();
@@ -1038,8 +1037,8 @@ function dbConnect ($data = null, &$errorMsg = null)
 }
 
 /**
- * Execute SQL query and return the first column of first row of the result 
- * 
+ * Execute SQL query and return the first column of first row of the result
+ *
  * @return mixed
  * @access public
  * @see    ____func_see____
@@ -1061,7 +1060,7 @@ function dbFetchColumn($sql, &$errorMsg = null)
 
 /**
  * Execute SQL query and return the result as an associated array
- * 
+ *
  * @return array
  * @access public
  * @see    ____func_see____
@@ -1083,7 +1082,7 @@ function dbFetchAll($sql, &$errorMsg = null)
 
 /**
  * Execute SQL query
- * 
+ *
  * @return void
  * @access public
  * @see    ____func_see____
@@ -1101,7 +1100,7 @@ function dbExecute($sql, &$errorMsg = null)
 
 /**
  * Execute a set of SQL queries from file
- * 
+ *
  * @param string $fileName     The name of file which contains SQL queries
  * @param bool   $ignoreErrors Ignore errors flag
  * @param bool   $is_restore   ?
@@ -1152,18 +1151,18 @@ function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
             if (preg_match('/^CREATE TABLE `?([_a-zA-Z0-9]*)`?/i', $command, $matches)) {
                 $table_name = $matches[1];
                 echo 'Creating table [' . $table_name . '] ... ';
-            
+
             } elseif (preg_match('/^ALTER TABLE `?([_a-zA-Z0-9]*)`?/i', $command, $matches)) {
                 $table_name = $matches[1];
                 echo 'Altering table [' . $table_name . '] ... ';
-            
+
             } elseif (preg_match('/^DROP TABLE IF EXISTS `?([_a-zA-Z0-9]*)`?/i', $command, $matches)) {
                 $table_name = $matches[1];
                 echo 'Deleting table [' . $table_name . '] ... ';
-            
+
             } else {
                 $counter ++;
-            }    
+            }
 
             // Execute SQL query
             dbExecute($command, $myerr);
@@ -1175,11 +1174,11 @@ function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
 
                 if (!$ignoreErrors) {
                     break;
-                }    
+                }
 
             } elseif ($table_name != "") {
                 echo '<font color="green">[OK]</font><br />' . "\n";
-            
+
             } elseif (!($counter % 5)) {
                 echo '.';
             }
@@ -1225,8 +1224,8 @@ function showQueryStatus($myerr, $ignoreErrors)
 }
 
 /**
- * Alternative debug backtrace assembler 
- * 
+ * Alternative debug backtrace assembler
+ *
  * @return array
  * @see    ____func_see____
  * @since  1.0.0
@@ -1266,7 +1265,7 @@ function func_debug_backtrace()
 
 /**
  * Alternative debug backtrace printer
- * 
+ *
  * @return void
  * @see    ____func_see____
  * @since  1.0.0
@@ -1278,7 +1277,7 @@ function func_debug_print_backtrace()
 
 /**
  * Returns LiteCommerce tables prefix
- * 
+ *
  * @return string
  * @see    ____func_see____
  * @since  1.0.0
@@ -1287,5 +1286,3 @@ function get_xlite_tables_prefix()
 {
     return \Includes\Utils\ConfigParser::getOptions(array('database_details', 'table_prefix'));
 }
-
-

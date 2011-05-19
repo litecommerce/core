@@ -10,7 +10,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -24,8 +23,8 @@ class XLite_Tests_Model_TmpVar extends XLite_Tests_TestCase
     );
 
     /**
-     * testCreate 
-     * 
+     * testCreate
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -87,7 +86,7 @@ class XLite_Tests_Model_TmpVar extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->flush();
 
         $c = new \XLite\Model\TmpVar();
-    
+
         $c->map($this->entityData);
 
         \XLite\Core\Database::getEM()->persist($c);

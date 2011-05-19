@@ -10,7 +10,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -262,7 +261,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
             ),
         ),
     );
-        
+
     /**
      * setUp
      *
@@ -299,8 +298,8 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testSearch 
-     * 
+     * testSearch
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -324,7 +323,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
 
             if (!empty($data['result']['isEmpty'])) {
                 $this->assertEquals(0, count($searchResults), 'Count of search results is expected to be zero' . $testIdStr);
-            
+
             } else {
 
                 if (!isset($data['result']['doNotCount'])) {
@@ -332,9 +331,9 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
                 }
 
                 foreach ($searchResults as $profile) {
-                    
+
                     $this->assertTrue($profile instanceof \XLite\Model\Profile, 'Checking that search items are profile instances' . $testIdStr);
-                    
+
                     if (!isset($data['result']['doNotCount'])) {
                         $this->assertTrue(
                             in_array($profile->getProfileId(), $data['result']['ids']),
@@ -356,8 +355,8 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testFindByLogin 
-     * 
+     * testFindByLogin
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -379,8 +378,8 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testFindByLoginPassword 
-     * 
+     * testFindByLoginPassword
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -416,8 +415,8 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testFindRecentAdmins 
-     * 
+     * testFindRecentAdmins
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -426,7 +425,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
     public function testFindRecentAdmins()
     {
         $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findRecentAdmins();
-    
+
         $this->assertTrue(is_array($profiles), 'Check that array is returned');
         $this->assertEquals(2, count($profiles), 'Check that count of array items');
 
@@ -436,8 +435,8 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testFindUserWithSameLogin 
-     * 
+     * testFindUserWithSameLogin
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -466,8 +465,8 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
     }
 
     /**
-     * testFindCountOfAdminAccounts 
-     * 
+     * testFindCountOfAdminAccounts
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -476,7 +475,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
     public function testFindCountOfAdminAccounts()
     {
         $adminsCount = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findCountOfAdminAccounts();
- 
+
         $this->assertEquals(2, $adminsCount, 'Checking the count of administrator accounts');
     }
 

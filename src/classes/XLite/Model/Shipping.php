@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model;
 
 /**
  * Common shipping method
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -38,7 +37,7 @@ class Shipping extends \XLite\Base\Singleton
 {
     /**
      * List of registered shipping processors
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -85,8 +84,8 @@ class Shipping extends \XLite\Base\Singleton
     }
 
     /**
-     * Returns the list of registered shipping processors 
-     * 
+     * Returns the list of registered shipping processors
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -98,8 +97,8 @@ class Shipping extends \XLite\Base\Singleton
 
 
     /**
-     * __constructor 
-     * 
+     * __constructor
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -111,7 +110,7 @@ class Shipping extends \XLite\Base\Singleton
 
     /**
      * Retrieves shipping methods: all or by specified processor
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -132,12 +131,12 @@ class Shipping extends \XLite\Base\Singleton
 
         return $methods;
     }
-    
+
     /**
      * Return shipping rates
-     * 
+     *
      * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -190,9 +189,9 @@ class Shipping extends \XLite\Base\Singleton
 
     /**
      * Get destination address
-     * 
+     *
      * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -232,12 +231,12 @@ class Shipping extends \XLite\Base\Singleton
 
 
     /**
-     * Sort function for sorting processors by class 
-     * 
+     * Sort function for sorting processors by class
+     *
      * @param \XLite\Model\Shipping\Processor\AProcessor $a First processor
      * @param \XLite\Model\Shipping\Processor\AProcessor $b Second processor
-     *  
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -255,7 +254,7 @@ class Shipping extends \XLite\Base\Singleton
 
         } elseif ($b1 == $bottomProcessorId) {
             $result = -1;
-        
+
         } else {
             $result = strcasecmp($a1, $b1);
         }

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -33,10 +32,10 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
 
     /**
      * Login procedure
-     * 
+     *
      * @param string $user     user name
      * @param string $password user password
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -60,9 +59,9 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
 
     /**
      * Log out procedure
-     * 
+     *
      * @param boolean $pageIsOpened Flag to open page
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -84,7 +83,7 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
 
     /**
      *  Checks if the user is logged in
-     * 
+     *
      * @return boolean
      * @access protected
      * @see    ____func_see____
@@ -125,7 +124,7 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
 
     /**
      * Admin pages initialisation
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____

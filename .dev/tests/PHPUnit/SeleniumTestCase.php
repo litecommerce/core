@@ -5,10 +5,9 @@
  * Base class for all LiteCommerce web tests
  *
  * @category  LiteCommerce_Tests
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -18,8 +17,8 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 require_once dirname(__FILE__) . '/SeleniumTestCase/Driver.php';
 
 /**
- * Selenium test case 
- * 
+ * Selenium test case
+ *
  * @see     ____class_see____
  * @since   1.0.0
  */
@@ -43,8 +42,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     public static $testsRange = array();
 
     /**
-     * Processed CSS files 
-     * 
+     * Processed CSS files
+     *
      * @var    array
      * @access public
      * @see    ____var_see____
@@ -54,7 +53,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Calidated pages URL list
-     * 
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -64,7 +63,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Validate every page or not
-     * 
+     *
      * @var    boolean
      * @access protected
      * @see    ____var_see____
@@ -84,7 +83,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Process W3C HTML validation warnings as errors
-     * 
+     *
      * @var    boolean
      * @access protected
      * @see    ____var_see____
@@ -94,7 +93,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Temporary skipped flag
-     * 
+     *
      * @var    boolean
      * @access protected
      * @see    ____var_see____
@@ -104,7 +103,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Base URL
-     * 
+     *
      * @var    string
      * @access protected
      * @see    ____var_see____
@@ -114,7 +113,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Unknown nut allowed CSS properties list
-     * 
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -144,7 +143,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Constructor
-     * 
+     *
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
@@ -351,7 +350,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
         if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {
             return $config;
-        
+
         } else {
             die('Config file not found: ' . $configFile);
         }
@@ -428,8 +427,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     }
 
     /**
-     * Run test 
-     * 
+     * Run test
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -474,7 +473,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                 } catch (\RuntimeException $e) {
                 }
             }
-            
+
             $backtrace = array();
             foreach ($exception->getTrace() as $t) {
                 $b = null;
@@ -508,11 +507,11 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Return message (common method)
-     * 
+     *
      * @param string $message custom part of message
      * @param string $class   called class name
      * @param string $method  called method name
-     *  
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -540,7 +539,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * PHPUnit default function.
      * Redefine this method only if you really need to do so.
      * In any other cases redefine the getRequest() one
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -567,7 +566,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     /**
      * PHPUnit default function.
      * It's not recommended to redefine this method
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -581,10 +580,10 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Improved version of 'typeKeys' Selenium command
-     * 
+     *
      * @param string $locator Locator
      * @param string $value   Type values
-     *  
+     *
      * @return mixed
      * @access public
      * @see    ____func_see____
@@ -598,11 +597,11 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     }
 
     /**
-     * Toggle checkbox by jQuery 
-     * 
+     * Toggle checkbox by jQuery
+     *
      * @param string  $jqueryExpression jQuery locator
      * @param boolean $checked          Status
-     *  
+     *
      * @return boolean Current status
      * @access public
      * @see    ____func_see____
@@ -622,10 +621,10 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     }
 
     /**
-     * Get JS expression 
-     * 
+     * Get JS expression
+     *
      * @param string $expression javascript expression
-     *  
+     *
      * @return mixed
      * @access public
      * @see    ____func_see____
@@ -643,11 +642,11 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     }
 
     /**
-     * Assert jQuery locator present 
-     * 
+     * Assert jQuery locator present
+     *
      * @param string $pattern jQuery locator
      * @param string $message Fail message
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -663,10 +662,10 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Assert jQuery locator NOT present
-     * 
+     *
      * @param string $pattern jQuery locator
      * @param string $message Fail message
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -683,10 +682,10 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Wait inline progress mark
-     * 
+     *
      * @param string $jqueryExpression jQuery input locator
      * @param string $message          Fail message
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -707,11 +706,11 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     }
 
     /**
-     * Assert input error note present 
-     * 
+     * Assert input error note present
+     *
      * @param string $jqueryExpression jQuery input locator
      * @param string $message          Fail message
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -748,7 +747,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Skip coverage for current Selenium session
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -762,12 +761,12 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Drag-n-drop with delay
-     * 
+     *
      * @param string $locatorFrom   Begin locator
-     * @param string $locatorMiddle Middle position locator 
+     * @param string $locatorMiddle Middle position locator
      * @param string $locatorTo     Finish locator
      * @param int    $delay         Delay (seconds)
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -786,12 +785,12 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     }
 
     /**
-     * Wait for local window-based condition 
-     * 
+     * Wait for local window-based condition
+     *
      * @param string  $condition Condition
      * @param integer $ttl       TTL (msec)
      * @param string  $message   Fail message
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -822,10 +821,10 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Common command interrupter
-     * 
+     *
      * @param string $command   Command name
      * @param array  $arguments Arguments array
-     *  
+     *
      * @return mixed
      * @access public
      * @see    ____func_see____
@@ -858,7 +857,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             if (isset($arguments) && !empty($arguments)) {
                 $_arguments = $arguments;
                 $param = (string)array_shift($_arguments);
-            
+
             } else {
                 $param = '';
             }
@@ -870,7 +869,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                 preg_match('/Could not connect to the Selenium RC server/', $message)
                 || preg_match('/^The response from the Selenium RC server is invalid: Timed out after \d+ms$/Ss', $message)
             ) {
-                
+
                 if ($command == 'waitForCondition') {
                     $this->fail(
                         'Timeout failed (' . $arguments[1] . 'ms): '
@@ -884,7 +883,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
                 } elseif (!defined('DEPLOYMENT_TEST')) {
                     $this->markTestSkipped($e->getMessage());
-                
+
                 } else {
                     $this->fail($e->getMessage());
                 }
@@ -894,7 +893,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 //                $this->markTestSkipped('Browser down: ' . $e->getMessage());
 
 //            } else {
-    
+
                 throw $e;
 
 //            }
@@ -905,7 +904,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Validate W3C HTML
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -930,10 +929,10 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     }
 
     /**
-     * Validate page CSS 
-     * 
+     * Validate page CSS
+     *
      * @param string $html Page HTML code
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -966,10 +965,10 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     }
 
     /**
-     * Validate HTML 
-     * 
+     * Validate HTML
+     *
      * @param string $html HTML
-     *  
+     *
      * @return void
      * @access private
      * @see    ____func_see____
@@ -1021,7 +1020,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             foreach ($xpath->query("//li[@class='msg_warn']") as $node) {
                 $em = $xpath->query('em', $node);
                 $em = $em->length ? $em->item(0)->nodeValue : false;
-    
+
                 $title = $xpath->query('span[@class=\'msg\']', $node);
                 if ($title->length == 0) {
                     $title = $xpath->query('p/span[@class=\'msg\']', $node);
@@ -1060,11 +1059,11 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     }
 
     /**
-     * Validate CSS 
-     * 
+     * Validate CSS
+     *
      * @param string $data CSS code
      * @param string $url  CSS script URL
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -1133,10 +1132,10 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     }
 
     /**
-     * Check W3C HTML validation error title - is error or not 
-     * 
+     * Check W3C HTML validation error title - is error or not
+     *
      * @param string $name Error title
-     *  
+     *
      * @return boolean
      * @access protected
      * @see    ____func_see____
@@ -1154,7 +1153,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
     /**
      * Get pure HTML code from current page
-     * 
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -1207,4 +1206,3 @@ JS;
     }
 
 }
-

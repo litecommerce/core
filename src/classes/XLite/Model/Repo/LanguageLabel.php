@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,15 +29,15 @@ namespace XLite\Model\Repo;
 
 /**
  * Langauge labels repository
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 {
     /**
-     * Repository type 
-     * 
+     * Repository type
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -47,20 +46,20 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Alternative record identifiers
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
      */
     protected $alternativeIdentifier = array(
         array('name'),
-    );  
+    );
 
     // {{{ defineCacheCells
 
     /**
-     * Define cache cells 
-     * 
+     * Define cache cells
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -83,7 +82,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      * Find labels by language code
      *
      * @param string $code Language code OPTIONAL
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -118,10 +117,10 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Postprocess for findLabelsByCode()
-     * 
+     *
      * @param array  $data Language labels
      * @param string $code Language code
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -143,10 +142,10 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
     // {{{ countByName
 
     /**
-     * Count labels by name 
-     * 
+     * Count labels by name
+     *
      * @param string $name Name
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -158,9 +157,9 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Define query for 'countByName()' method
-     * 
+     *
      * @param string $name Name
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
@@ -178,11 +177,11 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Find lables by name pattern with data frame
-     * 
+     *
      * @param string  $name  Name pattern
      * @param integer $start Start offset OPTIONAL
      * @param integer $limit Frame length OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -194,11 +193,11 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Define query for 'findLikeName()' method
-     * 
+     *
      * @param string  $name  Name
      * @param integer $start Start offset
      * @param integer $limit Frame length
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
@@ -216,9 +215,9 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Convert entity to parameters list for 'all_by_code' cache cell
-     * 
+     *
      * @param \XLite\Model\AEntity $entity Entity
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

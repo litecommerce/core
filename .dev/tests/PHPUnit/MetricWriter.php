@@ -3,14 +3,13 @@
 
 /**
  * Metric writer
- *  
+ *
  * @category   LiteCommerce_Tests
  * @package    LiteCommerce_Tests
  * @subpackage Main
- * @author     Ruslan R. Fazliev <rrf@x-cart.com> 
+ * @author     Ruslan R. Fazliev <rrf@x-cart.com>
  * @copyright  Copyright (c) 2009 Ruslan R. Fazliev <rrf@x-cart.com>
  * @license    http://www.x-cart.com/license.php LiteCommerce license
- * @version    GIT: $Id$
  * @link       http://www.x-cart.com/
  * @see        ____file_see____
  * @since      1.0.0

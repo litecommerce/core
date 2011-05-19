@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -33,7 +32,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
     /**
      * Test the basic structure
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -64,7 +63,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             $productsCount = $this->getJSExpression("jQuery('$list .product').size()");
             $buttonsCount = $this->getJSExpression("jQuery('$list .product a.quicklook-link').size()");
             $this->assertEquals($buttonsCount, $productsCount, "Wrong number of Quicklook buttons ($mode mode)");
- 
+
             // Test several products
             $products = array(
                 $this->getProductBySku('00045')->getProductId(), // Zoom, No gallery, no options
@@ -86,12 +85,12 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             }
         }
 
-              
+
     }
 
     /**
      * Test how the Quicklook popup displays product options
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -204,7 +203,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
     /**
      * Test how the Quicklook popup displays an image gallery and the image zoomer
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -297,7 +296,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
     /**
      * Test how the Quicklook popup displays and acts on cart buttons
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -432,10 +431,10 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
     /**
      * Open a category page and popup a Quicklook for a product.
      * Returns a list of a product object and a CSS selector to the Quicklook popup
-     * 
+     *
      * @param string  $categoryURL URL of a category page
      * @param integer $productId   Product ID
-     *  
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -462,9 +461,9 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
     /**
      * Test whether a Quicklook popup for a product has a correct structure. Returns link to a product page.
-     * 
+     *
      * @param integer $id Product ID
-     *  
+     *
      * @return integer
      * @access protected
      * @see    ____func_see____
@@ -482,7 +481,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         // Name
         $name = $this->getJSExpression("jQuery('$selector h1.fn.title').html()");
         $this->assertEquals($name, $product->getName(), "Wrong product name ($id)");
-        
+
         // Price
         $price = $this->getJSExpression("jQuery('$selector .product-price').html()");
         $parsedPrice = preg_replace("/^\D*(\d+\.\d+)\D*$/", "\\1", $price);
@@ -547,9 +546,9 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
     /**
      * Checks whether the zoomer function is to be enabled for an image width
-     * 
+     *
      * @param integer $width Image width
-     *  
+     *
      * @return boolean
      * @access protected
      * @see    ____func_see____
@@ -565,7 +564,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
     /**
      * Closes a Quicklook popup
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -588,9 +587,9 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
     /**
      * Finds a product in the list of category products and displays a Quicklook popup for the product
-     * 
+     *
      * @param integer $productId Product ID
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -604,7 +603,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         );
 
         $selector = $this->getListSelector() . " .productid-$productId a.quicklook-link-$productId";
-        
+
         $this->click("css=$selector");
         $this->waitForLocalCondition("jQuery('.BlockMsg-product-quicklook:visible').length > 0", 300000);
 
@@ -612,9 +611,9 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
     /**
      * Switched the list of category products to a display mode
-     * 
+     *
      * @param string $mode Mode (grid, list, table)
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -633,7 +632,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
     /**
      * Waits until the AJAx progress bar disappears
-     * 
+     *
      * @return void
      * @access protected
      * @since  1.0.0
@@ -642,12 +641,12 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
     {
         $this->waitForLocalCondition("jQuery('.blockUI.block-wait:visible').length <= 0", 300000);
     }
- 
+
     /**
      * Returns a selector for a mode-switching link
-     * 
+     *
      * @param string $mode Mode name (list, grid, table)
-     *  
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -661,12 +660,12 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
     protected function getListSelector()
     {
         return ".category-products";
-    }    
+    }
 
 
     /**
      * Open a test category page
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -690,9 +689,9 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
     /**
      * Returns URL to a category page
-     * 
+     *
      * @param integer $id Category ID
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -706,7 +705,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
     /**
      * Returns ID of a category having more products than other categories
-     * 
+     *
      * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____

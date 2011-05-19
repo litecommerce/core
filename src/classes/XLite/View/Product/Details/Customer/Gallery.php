@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View\Product\Details\Customer;
 
 /**
  * Gallery
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -72,8 +71,8 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
 
     /**
      * Return the max image width depending on whether it is a quicklook popup, or not
-     * 
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -83,11 +82,11 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
     }
 
     /**
-     * Get image alternative text 
-     * 
+     * Get image alternative text
+     *
      * @param \XLite\Model\Base\Image $image Image
      * @param integer                 $i     Image index
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -111,8 +110,8 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
     }
 
     /**
-     * Get LightBox library images directory 
-     * 
+     * Get LightBox library images directory
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -127,7 +126,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
 
     /**
      * Check visibility
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -139,9 +138,9 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
 
     /**
      * Get list item class attribute
-     * 
+     *
      * @param integer $i Detailed image index
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -155,9 +154,9 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
 
     /**
      * Get list item class name
-     * 
+     *
      * @param integer $i Detailed image index
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -169,11 +168,11 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
 
     /**
      * Get image URL (middle-size)
-     * 
+     *
      * @param \XLite\Model\Base\Image $image  Image
      * @param integer                 $width  Width limit OPTIONAL
      * @param integer                 $height Height limit OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

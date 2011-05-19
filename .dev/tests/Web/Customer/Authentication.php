@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -35,7 +34,7 @@ require_once __DIR__ . '/ACustomer.php';
  * - restore password page
  * - restore password popup
  * - logout link
- * 
+ *
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
@@ -46,7 +45,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
 
     /**
      * Check whether the popup forms (Login and Password Recovery) are correctly displayed and have all necessary fields
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -109,13 +108,13 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
             "Login form is visible after closing the popup window"
         );
 
-        // Reopen the popup box 
+        // Reopen the popup box
         $this->click("link=Log in");
         $this->assertJqueryPresent(
             ".blockUI form#user-login:visible",
             "Popup login form is not visible after clicking Login link the second time"
         );
-  
+
         // Switch to Password Recovery form
         $this->assertElementPresent(
             "link=Forgot password?",
@@ -153,12 +152,12 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
             ".blockUI form#user-pass:visible",
             "Password form is visible after closing the popup window"
         );
-        
+
     }
 
     /**
      * Check whether the popup login form functions correctly
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -177,7 +176,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
             ".blockUI form#user-login:visible",
             "Popup login form is not visible after clicking Login link"
         );
- 
+
         // Submit wrong credentials
         $this->type("css=.blockUI form#user-login input[name='name']", "wrong");
         $this->type("css=.blockUI form#user-login input[name='pass']", "master");
@@ -185,7 +184,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent(
             "css=form#user-login",
             "Login form is not shown after submitting a wrong username"
-            
+
         );
         $this->assertElementPresent(
             "css=#status-messages li.error",
@@ -203,7 +202,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
         $this->assertElementNotPresent(
             "css=.blockUI form#user-login",
             "Login form is shown for a signed-in user"
-            
+
         );
         $this->assertElementNotPresent(
             "link=Log in",
@@ -229,7 +228,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
 
     /**
      * Check whether the popup Password Recovery form functions correctly
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -264,7 +263,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent(
             "css=form#user-pass",
             "Recovery Password form is not shown after submitting a wrong username"
-            
+
         );
         $this->assertElementPresent(
             "css=#status-messages li.error",

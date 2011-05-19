@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -32,7 +31,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 {
     /**
      * Test the widget in "list" display mode
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -45,7 +44,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Test the widgte in "tree" display mode
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -58,7 +57,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Test the widget in "path" display mode (default mode)
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -71,9 +70,9 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Test the widget in the specified display mode
-     * 
+     *
      * @param string $mode Display mode ('list', 'path', 'tree')
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -164,17 +163,17 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
                 // Check whether all subcategories of the selected child category are shown on the page
                 $this->testSubcategories($childId);
-               
+
             }
-        } 
+        }
 
     }
 
     /**
      * Test whether the widget displays all root categories and has a correct structure
-     * 
+     *
      * @param string $mode Display mode
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -211,9 +210,9 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Check whether the widget displays all subcategories of a category with the specifeid ID
-     * 
+     *
      * @param int $categoryId ID of the category that should display all subcategories
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -240,10 +239,10 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Asserts whether the widget displays a link to a category
-     * 
+     *
      * @param int    $categoryId ID of the category
      * @param string $message    Message to be displayed on an error
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -260,10 +259,10 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Asserts whether the widget doesn't display a link to a category
-     * 
+     *
      * @param int    $categoryId ID of the category
      * @param string $message    Message to be displayed on an error
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -280,10 +279,10 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Asserts whether the widget displays a category link in the active trail
-     * 
+     *
      * @param int    $categoryId ID of the category
      * @param string $message    Message to be displayed on an error
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -300,10 +299,10 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Asserts whether the widget doesn't display a category link in the active trail
-     * 
+     *
      * @param int    $categoryId ID of the category
      * @param string $message    Message to be displayed on an error
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -320,7 +319,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Returns a jQuery selector to the widget element
-     * 
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -333,10 +332,10 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Returns a jQuery selector to a link
-     * 
+     *
      * @param string $name  Category name
      * @param int    $depth Category depth (1 for root categories)
-     *  
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -349,7 +348,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Returns a Doctrine repository for the categories model
-     * 
+     *
      * @return object
      * @access private
      * @see    ____func_see____
@@ -362,9 +361,9 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Returns a category model
-     * 
+     *
      * @param int $id Category ID
-     *  
+     *
      * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____
@@ -377,9 +376,9 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Returns subcategories model
-     * 
+     *
      * @param int $categoryId ID of the parent category
-     *  
+     *
      * @return object
      * @access protected
      * @see    ____func_see____
@@ -392,9 +391,9 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Returns a random category of the specified depth
-     * 
+     *
      * @param int $depth Category depth
-     *  
+     *
      * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____
@@ -421,9 +420,9 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Returns a parent category
-     * 
+     *
      * @param int $id ID of the child category
-     *  
+     *
      * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____
@@ -437,9 +436,9 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
     /**
      * Switches the widget to the specifed display mode
-     * 
+     *
      * @param string $mode Display mode ('list', 'path' or 'tree')
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -456,4 +455,3 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
 
 }
- 

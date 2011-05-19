@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -15,12 +15,11 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -32,7 +31,7 @@ namespace XLite;
  * Base class
  * FIXME - must be abstract
  * FIXME - must extends \XLite\the Base\SuperClass
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -40,7 +39,7 @@ class Base extends \XLite\Base\Singleton
 {
     /**
      * Singletons accessible directly from each object (see the "__get" method)
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -59,9 +58,9 @@ class Base extends \XLite\Base\Singleton
     /**
      * "Magic" getter. It's called when object property is not found
      * FIXME - backward compatibility
-     * 
+     *
      * @param string $name Property name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -75,10 +74,10 @@ class Base extends \XLite\Base\Singleton
 
     /**
      * "Magic" caller. It's called when object method is not found
-     * 
+     *
      * @param string $method Method to call
      * @param array  $args   Call arrguments OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -92,10 +91,10 @@ class Base extends \XLite\Base\Singleton
     }
 
     /**
-     * Returns property value named $name. If no property found, returns null 
-     * 
+     * Returns property value named $name. If no property found, returns null
+     *
      * @param string $name Property name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -129,11 +128,11 @@ class Base extends \XLite\Base\Singleton
     }
 
     /**
-     * Set object property 
-     * 
+     * Set object property
+     *
      * @param string $name  Property name
      * @param mixed  $value Property value
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -152,10 +151,10 @@ class Base extends \XLite\Base\Singleton
     }
 
     /**
-     * Returns boolean property value named $name. If no property found, returns null 
-     * 
+     * Returns boolean property value named $name. If no property found, returns null
+     *
      * @param mixed $name Property name
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -168,9 +167,9 @@ class Base extends \XLite\Base\Singleton
     /**
      * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in getters
      * FIXME - must be removed
-     * 
+     *
      * @param string $name List of params delimeted by the "." (dot)
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -180,9 +179,9 @@ class Base extends \XLite\Base\Singleton
         $obj = $this;
 
         foreach (explode('.', $name) as $part) {
-            
+
             if (is_object($obj)) {
-            
+
                 if ($obj instanceof \stdClass) {
                     $obj = isset($obj->$part) ? $obj->$part : null;
 
@@ -209,12 +208,12 @@ class Base extends \XLite\Base\Singleton
     }
 
     /**
-     * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in setters 
+     * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in setters
      * FIXME - must be removed
-     * 
+     *
      * @param string $name  List of params delimeted by the "." (dot)
      * @param mixed  $value Value to set
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -236,7 +235,7 @@ class Base extends \XLite\Base\Singleton
                 $obj = $obj->get($prevProp);
                 $prevVal = $obj;
             }
-       
+
             if (is_null($obj)) {
                 break;
             }
@@ -267,10 +266,10 @@ class Base extends \XLite\Base\Singleton
     }
 
     /**
-     * Maps the specified associative array to this object properties 
-     * 
+     * Maps the specified associative array to this object properties
+     *
      * @param array $assoc Array(properties) to set
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,15 +29,15 @@ namespace XLite\Model\Repo;
 
 /**
  * DB-based configuration registry
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Config extends \XLite\Model\Repo\Base\I18n
 {
     /**
-     * Repository type 
-     * 
+     * Repository type
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -47,7 +46,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Default 'order by' field name
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -55,8 +54,8 @@ class Config extends \XLite\Model\Repo\Base\I18n
     protected $defaultOrderBy = 'orderby';
 
     /**
-     * List of options which are not allowed 
-     * 
+     * List of options which are not allowed
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -65,7 +64,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Alternative record identifiers
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -90,7 +89,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Get the list of options of the specified category
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -102,7 +101,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
         if (!$force) {
             $data = $this->getFromCache('category', array('category' => $category));
         }
-        
+
         if (!isset($data)) {
             $data = $this->defineByCategoryQuery($category)->getResult();
             if (!$doNotProcess) {
@@ -116,9 +115,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Find all visible settings by category name
-     * 
+     *
      * @param string $category Category name
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -130,9 +129,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Get the list of all options
-     * 
+     *
      * @param boolean $force Do not use cache OPTIONAL
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -144,7 +143,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
         if (!$force) {
             $data = $this->getFromCache('all');
         }
-        
+
         if (!isset($data)) {
             $data = $this->defineAllOptionsQuery()->getResult();
             $data = $this->detachList($data);
@@ -157,9 +156,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Preprocess options and transform its to the hierarchy of \XLite\Core\CommonCell objects
-     * 
+     *
      * @param array $data Array of options data gathered from the database
-     *  
+     *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
      * @since  1.0.0
@@ -170,7 +169,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
         $config = new \XLite\Core\CommonCell();
 
         foreach ($data as $option) {
-        
+
             $category = $option->getCategory();
             $name     = $option->getName();
             $type     = $option->getType();
@@ -251,9 +250,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Create new option / Update option value
-     * 
+     *
      * @param array $data Option data in the following format
-     *  
+     *
      * @return void
      * @throws \Exception
      * @see    ____func_see____
@@ -275,7 +274,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
         foreach ($fields as $field => $required) {
             if (isset($data[$field])) {
                 $fields[$field] = $data[$field];
-            
+
             } elseif ($required) {
                 $errorFields[] = $field;
             }
@@ -283,7 +282,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
         if (!empty($errorFields)) {
             throw new \Exception(
-                'createOptions() failed: The following required fields are missed: ' . 
+                'createOptions() failed: The following required fields are missed: ' .
                 implode(', ', $errorFields)
             );
         }
@@ -329,11 +328,11 @@ class Config extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Remove option from the "black list" 
-     * 
+     * Remove option from the "black list"
+     *
      * @param string $category Option category
      * @param string $name     Option name
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -344,11 +343,11 @@ class Config extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Add option to the "black list" 
-     * 
+     * Add option to the "black list"
+     *
      * @param string $category Option category
      * @param string $name     Option name
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -363,8 +362,8 @@ class Config extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Return query (and its params) which is used to filter options 
-     * 
+     * Return query (and its params) which is used to filter options
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -391,9 +390,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Add "filter" condition to the query builder
-     * 
+     *
      * @param \Doctrine\ORM\QueryBuilder $qb Current query builder
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
@@ -402,8 +401,8 @@ class Config extends \XLite\Model\Repo\Base\I18n
     {
         list($condition, $params) = $this->getOptionsAvailabilityCondition();
 
-        return isset($condition) 
-            ? $qb->andWhere($condition)->setParameters($qb->getParameters() + $params) 
+        return isset($condition)
+            ? $qb->andWhere($condition)->setParameters($qb->getParameters() + $params)
             : $qb;
     }
 
@@ -425,9 +424,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Define query for findByCategoryAndVisible() method
-     * 
+     *
      * @param string $category Category name
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
@@ -454,12 +453,12 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Check (and modify) option name and value
-     * 
+     *
      * @param string &$category Option category
      * @param string &$name     Option name
      * @param mixed  &$value    Option value
-     *  
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -469,18 +468,18 @@ class Config extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Check if option type is a valid 
-     * 
+     * Check if option type is a valid
+     *
      * @param string $optionType Option type
-     *  
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function isValidOptionType($optionType)
     {
         return in_array(
-            $optionType, 
+            $optionType,
             array(
                 '',
                 'text',

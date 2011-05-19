@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,31 +13,30 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Select;
- 
+
 /**
  * Order status selector
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class OrderStatus extends \XLite\View\FormField\Select\Regular
 {
     /**
-     * Common params 
+     * Common params
      */
     const PARAM_ORDER_ID   = 'orderId';
     const PARAM_ALL_OPTION = 'allOption';
@@ -45,7 +44,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
 
     /**
      * Current order
-     * 
+     *
      * @var   \XLite\Model\Order
      * @see   ____func_see____
      * @since 1.0.0
@@ -54,7 +53,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
 
     /**
      * Inventory warning
-     * 
+     *
      * @var   boolean
      * @see   ____func_see____
      * @since 1.0.0
@@ -124,7 +123,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
 
     /**
      * Return default options list
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -161,7 +160,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
 
     /**
      * Flag to show status change warning
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -173,9 +172,9 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
 
     /**
      * Flag to show status change warning
-     * 
+     *
      * @param string $option Option value
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -188,7 +187,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
 
     /**
      * Inventory warning
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -217,7 +216,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
 
     /**
      * Get status warning content
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

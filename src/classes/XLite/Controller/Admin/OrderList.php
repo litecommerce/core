@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Controller\Admin;
 
 /**
  * Orders list controller
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -38,7 +37,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Return the current page title (for the content area)
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -49,13 +48,13 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getDateValue 
+     * getDateValue
      * FIXME - to remove
-     * 
+     *
      * @param string  $fieldName Field name (prefix)
      * @param boolean $isEndDate End date flag OPTIONAL
-     *  
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -89,9 +88,9 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Get search condition parameter by name
-     * 
+     *
      * @param string $paramName Parameter name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -111,9 +110,9 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Get date condition parameter (start or end)
-     * 
+     *
      * @param boolean $start Start date flag, otherwise - end date  OPTIONAL
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -142,8 +141,8 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * doActionUpdate 
-     * 
+     * doActionUpdate
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -154,8 +153,8 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * doActionDelete 
-     * 
+     * doActionDelete
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -166,8 +165,8 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * doActionSearch 
-     * 
+     * doActionSearch
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -191,7 +190,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
             $this->startDate = mktime(0, 0, 0, $date['mon'], 1, $date['year']);
             $this->endDate   = mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
         }
-        
+
         foreach ($searchParams as $modelParam => $requestParam) {
 
             if (\XLite\Model\Repo\Order::P_DATE === $requestParam) {
@@ -203,7 +202,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
                 $ordersSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
             }
         }
-        
+
         \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName()} = $ordersSearch;
 
         $this->setReturnURL($this->buildURL('order_list', '', array('mode' => 'search')));
@@ -211,7 +210,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Get search conditions
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

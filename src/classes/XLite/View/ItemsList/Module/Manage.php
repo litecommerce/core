@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -47,13 +46,13 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     {
         $result = parent::getAllowedTargets();
         $result[] = 'addons_list_installed';
-    
+
         return $result;
     }
 
     /**
      * Register JS files
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -61,7 +60,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $list[] = $this->getDir() . '/manage/js/script.js'; 
+        $list[] = $this->getDir() . '/manage/js/script.js';
 
         return $list;
     }
@@ -154,7 +153,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
 
     /**
      * Get current filter
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -172,7 +171,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
 
     /**
      * Get current tag
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -190,9 +189,9 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
 
     /**
      *  Get classes names for filter item
-     * 
+     *
      * @param string $filter Name of filter
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -204,9 +203,9 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
 
     /**
      * Get classes names for tag item
-     * 
+     *
      * @param string $tag Name of tag
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -218,9 +217,9 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
 
     /**
      * Return number of modules with certain type
-     * 
+     *
      * @param string $filter Filter criterion
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0

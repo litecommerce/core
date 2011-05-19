@@ -93,7 +93,7 @@ class XLite_Sniffs_JS_RestrictedSniff extends XLite_ReqCodesSniff
 			if ($next !== false && in_array($tokens[$next]["content"], array_keys($restricted_statements_new))) {
 				$statement = $tokens[$next]["content"];
 				$recommendation = $recommendations[$statement];
-				$error = $this->getReqPrefix($restricted_statements_new[$statement]) . "'new $statement' statement is not allowed. Use '$recommendation' instead"; 
+				$error = $this->getReqPrefix($restricted_statements_new[$statement]) . "'new $statement' statement is not allowed. Use '$recommendation' instead";
 			}
 
 		} else {

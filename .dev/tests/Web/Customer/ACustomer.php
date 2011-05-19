@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -63,7 +62,7 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
     {
         $result = \XLite\Core\Database::getRepo('XLite\Model\Product')
             ->findOneByEnabled(true);
-    
+
         $this->assertNotNull($result, 'getActiveProduct() returned null');
 
         return $result;
@@ -112,11 +111,11 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
 
     /**
      * Sets a widget parameter
-     * 
+     *
      * @param int    $widgetId ID of the widget in the list of LC Connector blocks
      * @param string $param    Param name
      * @param string $value    Param value
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -156,10 +155,10 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
     }
 
     /**
-     * Get payment method id by name 
-     * 
+     * Get payment method id by name
+     *
      * @param string $name Payment method name
-     *  
+     *
      * @return integer
      * @access protected
      * @see    ____func_see____

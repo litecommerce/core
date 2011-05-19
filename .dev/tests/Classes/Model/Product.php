@@ -10,7 +10,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -21,8 +20,8 @@ include_once __DIR__ . '/AProduct.php';
 class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 {
 	/**
-	 * getProductData 
-	 * 
+	 * getProductData
+	 *
 	 * @return void
 	 * @access protected
 	 * @see    ____func_see____
@@ -49,8 +48,8 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 	}
 
 	/**
-	 * testConstruct 
-	 * 
+	 * testConstruct
+	 *
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
@@ -90,8 +89,8 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 	}
 
 	/**
-	 * testAddCategoryProducts 
-	 * 
+	 * testAddCategoryProducts
+	 *
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
@@ -118,8 +117,8 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 	}
 
 	/**
-	 * testAddOptionGroups 
-	 * 
+	 * testAddOptionGroups
+	 *
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
@@ -146,8 +145,8 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
     }
 
     /**
-     * testAddTranslations 
-     * 
+     * testAddTranslations
+     *
      * @return void
      * @access public
      * @see    ____func_see____

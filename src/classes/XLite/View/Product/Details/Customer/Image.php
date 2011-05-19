@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View\Product\Details\Customer;
 
 /**
  * Image
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -45,7 +44,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
 
     // Cloud zoom layer maximum width
     const PARAM_ZOOM_MAX_WIDTH = 'zoomMaxWidth';
-    
+
     // Zoom coefficient
     const PARAM_K_ZOOM = 'kZoom';
 
@@ -67,7 +66,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     protected $isZoom;
 
 
-    /**  
+    /**
      * Register files from common repository
      *
      * @return array
@@ -100,10 +99,10 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     }
 
     /**
-     * Return a relative horizontal position of the zoom box 
+     * Return a relative horizontal position of the zoom box
      * depending on whether it is a quicklook popup, or not
-     * 
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -172,27 +171,27 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     protected function hasZoomImage()
     {
         if (!isset($this->isZoom)) {
-            
+
             $this->isZoom = false;
 
             if ($this->getProduct()->hasImage()) {
 
                 foreach ($this->getProduct()->getImages() as $img) {
-   
+
                     if ($img->getWidth() > $this->getParam(self::PARAM_K_ZOOM) * $this->getWidgetMaxWidth()) {
                         $this->isZoom = true;
                         break;
-                    } 
+                    }
                 }
             }
         }
-        
+
         return $this->isZoom;
     }
 
     /**
-     * Get zoom image 
-     * 
+     * Get zoom image
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -216,8 +215,8 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
 
     /**
      * Return the max image width depending on whether it is a quicklook popup, or not
-     * 
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -254,7 +253,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
 
     /**
      * Return data to send to JS
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -31,7 +30,7 @@ namespace XLite\Module\CDev\AustraliaPost\Model\Shipping\Processor;
 /**
  * Shipping processor model
  * API documentation: http://drc.edeliver.com.au/
- * 
+ *
  * @package    XLite
  * @subpackage Model
  * @see        ____class_see____
@@ -41,7 +40,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
 {
     /**
      * Unique processor Id
-     * 
+     *
      * @var    string
      * @access protected
      * @see    ____var_see____
@@ -50,8 +49,8 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     protected $processorId = 'aupost';
 
     /**
-     * Australia Post API URL 
-     * 
+     * Australia Post API URL
+     *
      * @var    string
      * @access protected
      * @see    ____var_see____
@@ -60,10 +59,10 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     protected $apiURL = 'http://drc.edeliver.com.au/ratecalc.asp';
 
     /**
-     * prepareInputData 
-     * 
-     * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier 
-     *  
+     * prepareInputData
+     *
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -84,7 +83,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
             if (isset($address)) {
                 $result['dstAddress'] = $address;
                 $result['weight'] = \XLite\Core\Converter::convertWeightUnits(
-                    $modifier->getWeight(), 
+                    $modifier->getWeight(),
                     \XLite\Core\Config::getInstance()->General->weight_unit,
                     'g'
                 );
@@ -99,11 +98,11 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     }
 
     /**
-     * doQuery 
-     * 
+     * doQuery
+     *
      * @param mixed $data        Can be either \XLite\Model\Order instance or an array
      * @param boolean  $ignoreCache Flag: if true then do not get rates from cache
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -167,7 +166,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                         break;
                     }
                 }
-            
+
                 $response = $this->parseResponse($result);
 
                 $this->apiCommunicationLog[] = array(
@@ -201,14 +200,14 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
 
     /**
      * Parses response and returns an associative array
-     * 
+     *
      * @param string $stringData Response of AUPOST API
      * example:
      *   'charge=2.50
      *   days=1
      *   err_msg=OK
      *   '
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -232,8 +231,8 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     }
 
     /**
-     * getProcessorName 
-     * 
+     * getProcessorName
+     *
      * @return string
      * @access public
      * @see    ____func_see____
@@ -245,11 +244,11 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     }
 
     /**
-     * Returns shipping rates 
-     * 
+     * Returns shipping rates
+     *
      * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
      * @param boolean                              $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
-     *  
+     *
      * @return array
      * @access public
      * @see    ____func_see____

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model;
 
 /**
  * Currency
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -41,7 +40,7 @@ class Currency extends \XLite\Model\Base\I18n
 {
     /**
      * Currency unique id (ISO 4217 number)
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -53,7 +52,7 @@ class Currency extends \XLite\Model\Base\I18n
 
     /**
      * Currency code (ISO 4217 alpha-3)
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -64,7 +63,7 @@ class Currency extends \XLite\Model\Base\I18n
 
     /**
      * Symbol
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -75,7 +74,7 @@ class Currency extends \XLite\Model\Base\I18n
 
     /**
      * Number of digits after the decimal separator.
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -97,11 +96,11 @@ class Currency extends \XLite\Model\Base\I18n
 
 
     /**
-     * Set currency Id 
-     * 
+     * Set currency Id
+     *
      * @param integer $value Currency id
      * TODO - Doctrine is not generate setter for identifier. We must reworkt it
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -112,10 +111,10 @@ class Currency extends \XLite\Model\Base\I18n
     }
 
     /**
-     * Round value 
-     * 
+     * Round value
+     *
      * @param float $value Value
-     *  
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
@@ -127,9 +126,9 @@ class Currency extends \XLite\Model\Base\I18n
 
     /**
      * Round value as integer
-     * 
+     *
      * @param float $value Value
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -140,10 +139,10 @@ class Currency extends \XLite\Model\Base\I18n
     }
 
     /**
-     * Convert integer to float 
-     * 
+     * Convert integer to float
+     *
      * @param integer $value Value
-     *  
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
@@ -154,10 +153,10 @@ class Currency extends \XLite\Model\Base\I18n
     }
 
     /**
-     * Format value 
-     * 
+     * Format value
+     *
      * @param float $value Value
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

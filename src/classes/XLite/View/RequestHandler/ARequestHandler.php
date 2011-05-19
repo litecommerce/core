@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View\RequestHandler;
 
 /**
  * Abstract base which can populate its params from request and session
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -70,7 +69,7 @@ abstract class ARequestHandler extends \XLite\View\AView
 
     /**
      * Return target to retrive this widget from AJAX
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -142,7 +141,7 @@ abstract class ARequestHandler extends \XLite\View\AView
 
     /**
      * Return name of this class
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -166,7 +165,7 @@ abstract class ARequestHandler extends \XLite\View\AView
 
     /**
      * Return data to send to JS
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -191,7 +190,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      * 2. Name of the session cell is passed in the request.
      * Then only the corresponded widget will use it
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____var_see____
      * @since  1.0.0
      */
@@ -203,9 +202,9 @@ abstract class ARequestHandler extends \XLite\View\AView
     }
 
     /**
-     * Check if we need to manage request params 
-     * 
-     * @return boolean 
+     * Check if we need to manage request params
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */

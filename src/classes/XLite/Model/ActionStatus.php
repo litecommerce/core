@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,15 +28,15 @@
 namespace XLite\Model;
 
 /**
- * \XLite\Model\ActionStatus 
- * 
+ * \XLite\Model\ActionStatus
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class ActionStatus extends \XLite\Base
 {
     /**
-     * Allowed statuses 
+     * Allowed statuses
      */
 
     const STATUS_UNDEFINED = -1;
@@ -46,8 +45,8 @@ class ActionStatus extends \XLite\Base
 
 
     /**
-     * Action status 
-     * 
+     * Action status
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -55,8 +54,8 @@ class ActionStatus extends \XLite\Base
     protected $status = self::STATUS_UNDEFINED;
 
     /**
-     * Code 
-     * 
+     * Code
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -65,7 +64,7 @@ class ActionStatus extends \XLite\Base
 
     /**
      * Status info
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -73,8 +72,8 @@ class ActionStatus extends \XLite\Base
     protected $message = null;
 
     /**
-     * allowedStatuses 
-     * 
+     * allowedStatuses
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -86,12 +85,12 @@ class ActionStatus extends \XLite\Base
 
 
     /**
-     * __construct 
-     * 
+     * __construct
+     *
      * @param integer $status  Action status
      * @param string  $message Status info OPTIONAL
      * @param integer $code    Code OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -110,9 +109,9 @@ class ActionStatus extends \XLite\Base
     }
 
     /**
-     * isError 
-     * 
-     * @return boolean 
+     * isError
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -122,9 +121,9 @@ class ActionStatus extends \XLite\Base
     }
 
     /**
-     * isSuccess 
-     * 
-     * @return boolean 
+     * isSuccess
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -134,9 +133,9 @@ class ActionStatus extends \XLite\Base
     }
 
     /**
-     * getStatus 
-     * 
-     * @return integer 
+     * getStatus
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -146,9 +145,9 @@ class ActionStatus extends \XLite\Base
     }
 
     /**
-     * getCode 
-     * 
-     * @return integer 
+     * getCode
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -158,8 +157,8 @@ class ActionStatus extends \XLite\Base
     }
 
     /**
-     * getMessage 
-     * 
+     * getMessage
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -171,11 +170,11 @@ class ActionStatus extends \XLite\Base
 
 
     /**
-     * checkStatus 
-     * 
+     * checkStatus
+     *
      * @param mixed $status Value to check
-     *  
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */

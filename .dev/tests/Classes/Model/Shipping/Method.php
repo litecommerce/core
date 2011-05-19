@@ -10,7 +10,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -20,7 +19,7 @@ class XLite_Tests_Model_Shipping_Method extends XLite_Tests_TestCase
 {
     /**
      * testCreate
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -42,7 +41,7 @@ class XLite_Tests_Model_Shipping_Method extends XLite_Tests_TestCase
         $methodId = $newMethod->getMethodId();
 
         $this->assertTrue(isset($methodId), 'Object could not be created');
-        
+
         if (isset($methodId)) {
             $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->find($methodId);
 

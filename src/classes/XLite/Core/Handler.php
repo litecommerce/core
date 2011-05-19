@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Core;
 
 /**
- * Abstract handler (common parent for viewer and controller) 
- * 
+ * Abstract handler (common parent for viewer and controller)
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -43,14 +42,14 @@ abstract class Handler extends \XLite\Base
     const PARAM_IS_EXPORTED = 'isExported';
 
     /**
-     * Controller-specific params 
+     * Controller-specific params
      */
 
     const PARAM_SILENT       = 'silent';
     const PARAM_DUMP_STARTED = 'dumpStarted';
 
     /**
-     * AJAX-specific parameters 
+     * AJAX-specific parameters
      */
 
     const PARAM_AJAX_TARGET = 'ajaxTarget';
@@ -60,7 +59,7 @@ abstract class Handler extends \XLite\Base
 
     /**
      * Widget params
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -69,10 +68,10 @@ abstract class Handler extends \XLite\Base
 
 
     /**
-     * Define and set handler attributes; initialize handler 
-     * 
+     * Define and set handler attributes; initialize handler
+     *
      * @param array $params Handler params OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -111,7 +110,7 @@ abstract class Handler extends \XLite\Base
                 $paramObject->setValue($params[$name]);
             }
             // FIXME - for mapping only
-            // FIXME - uncomment (at first), remove after check 
+            // FIXME - uncomment (at first), remove after check
             // unset($params[$name]);
         }
 
@@ -123,9 +122,9 @@ abstract class Handler extends \XLite\Base
 
     /**
      * Return widget parameters list (or a single object)
-     * 
+     *
      * @param string $param Param name OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -142,8 +141,8 @@ abstract class Handler extends \XLite\Base
     }
 
     /**
-     * getWidgetSettings 
-     * 
+     * getWidgetSettings
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -158,9 +157,9 @@ abstract class Handler extends \XLite\Base
 
     /**
      * Filter for getWidgetSettings() method
-     * 
+     *
      * @param \XLite\Model\WidgetParam\AWidgetParam $param Widget parameter
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -279,10 +278,10 @@ abstract class Handler extends \XLite\Base
     }
 
     /**
-     * Return widget param value 
-     * 
+     * Return widget param value
+     *
      * @param string $param Param to fetch
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -295,9 +294,9 @@ abstract class Handler extends \XLite\Base
     }
 
     /**
-     * isExported 
-     * 
-     * @return boolean 
+     * isExported
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -307,10 +306,10 @@ abstract class Handler extends \XLite\Base
     }
 
     /**
-     * getParamsHash 
-     * 
+     * getParamsHash
+     *
      * @param array $params List of params to use
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

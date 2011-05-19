@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Module\CDev\ProductOptions\Model;
 
 /**
  * Product option surcharge
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -44,15 +43,15 @@ namespace XLite\Module\CDev\ProductOptions\Model;
 class OptionSurcharge extends \XLite\Model\AEntity
 {
     /**
-     * Modifier types 
+     * Modifier types
      */
     const PERCENT_MODIFIER  = '%';
     const ABSOLUTE_MODIFIER = '$';
 
 
     /**
-     * Option surcharge unique id 
-     * 
+     * Option surcharge unique id
+     *
      * @var    integer
      * @access protected
      * @see    ____var_see____
@@ -65,7 +64,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
 
     /**
      * Type
-     * 
+     *
      * @var    string
      * @access protected
      * @see    ____var_see____
@@ -75,8 +74,8 @@ class OptionSurcharge extends \XLite\Model\AEntity
     protected $type = 'price';
 
     /**
-     * Modifier 
-     * 
+     * Modifier
+     *
      * @var    float
      * @access protected
      * @see    ____var_see____
@@ -86,8 +85,8 @@ class OptionSurcharge extends \XLite\Model\AEntity
     protected $modifier = 0.0000;
 
     /**
-     * Modifier type 
-     * 
+     * Modifier type
+     *
      * @var    string
      * @access protected
      * @see    ____var_see____
@@ -98,7 +97,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
 
     /**
      * Option (relation)
-     * 
+     *
      * @var    \XLite\Module\CDev\ProductOptions\Model\Option
      * @access protected
      * @see    ____var_see____
@@ -109,10 +108,10 @@ class OptionSurcharge extends \XLite\Model\AEntity
     protected $option;
 
     /**
-     * Set modifier type 
-     * 
+     * Set modifier type
+     *
      * @param string $type Modifier type code
-     *  
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____
@@ -133,8 +132,8 @@ class OptionSurcharge extends \XLite\Model\AEntity
     }
 
     /**
-     * Get surcharge sign 
-     * 
+     * Get surcharge sign
+     *
      * @return string
      * @access public
      * @see    ____func_see____
@@ -156,7 +155,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
 
     /**
      * Check - empty surcharge or not
-     * 
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____
@@ -168,8 +167,8 @@ class OptionSurcharge extends \XLite\Model\AEntity
     }
 
     /**
-     * Get surcharge absolute value 
-     * 
+     * Get surcharge absolute value
+     *
      * @return float
      * @access public
      * @see    ____func_see____
@@ -184,8 +183,8 @@ class OptionSurcharge extends \XLite\Model\AEntity
     }
 
     /**
-     * Get surcharge positive absolute value 
-     * 
+     * Get surcharge positive absolute value
+     *
      * @return float
      * @access public
      * @see    ____func_see____
@@ -198,7 +197,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
 
     /**
      * Get surcharge calculator method
-     * 
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -220,7 +219,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
 
     /**
      * Calculate absolute surcharge type
-     * 
+     *
      * @return mixed
      * @access protected
      * @see    ____func_see____
@@ -233,7 +232,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
 
     /**
      * Calculate relative surcharge type
-     * 
+     *
      * @return mixed
      * @access protected
      * @see    ____func_see____
@@ -246,7 +245,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
 
     /**
      * Get surcharge base value
-     * 
+     *
      * @return float
      * @access protected
      * @see    ____func_see____
@@ -271,7 +270,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
 
     /**
      * Get price-based surcharge base value
-     * 
+     *
      * @return float
      * @access protected
      * @see    ____func_see____
@@ -288,7 +287,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
 
     /**
      * Get weight-based surcharge base value
-     * 
+     *
      * @return integer
      * @access protected
      * @see    ____func_see____
@@ -303,10 +302,10 @@ class OptionSurcharge extends \XLite\Model\AEntity
     }
 
     /**
-     * Postprocess surcharge 
-     * 
+     * Postprocess surcharge
+     *
      * @param float $surcharge Surcharge
-     *  
+     *
      * @return mixed
      * @access protected
      * @see    ____func_see____
@@ -330,10 +329,10 @@ class OptionSurcharge extends \XLite\Model\AEntity
     }
 
     /**
-     * Postprocess price surcharge 
-     * 
+     * Postprocess price surcharge
+     *
      * @param float $surcharge Surcharge
-     *  
+     *
      * @return float
      * @access protected
      * @see    ____func_see____
@@ -346,9 +345,9 @@ class OptionSurcharge extends \XLite\Model\AEntity
 
     /**
      * Postprocess weight surcharge
-     * 
+     *
      * @param float $surcharge Surcharge
-     *  
+     *
      * @return integer
      * @access protected
      * @see    ____func_see____

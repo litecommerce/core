@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model\Shipping;
 
 /**
  * Shipping markup model
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -52,7 +51,7 @@ class Markup extends \XLite\Model\AEntity
 {
     /**
      * A unique ID of the markup
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -65,7 +64,7 @@ class Markup extends \XLite\Model\AEntity
 
     /**
      * Markup condition: min weight of products in the order
-     * 
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -76,7 +75,7 @@ class Markup extends \XLite\Model\AEntity
 
     /**
      * Markup condition: max weight of products in the order
-     * 
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -87,7 +86,7 @@ class Markup extends \XLite\Model\AEntity
 
     /**
      * Markup condition: min order subtotal
-     * 
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -98,7 +97,7 @@ class Markup extends \XLite\Model\AEntity
 
     /**
      * Markup condition: max order subtotal
-     * 
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -109,7 +108,7 @@ class Markup extends \XLite\Model\AEntity
 
     /**
      * Markup condition: min product items in the order
-     * 
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -120,7 +119,7 @@ class Markup extends \XLite\Model\AEntity
 
     /**
      * Markup condition: max product items in the order
-     * 
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -131,7 +130,7 @@ class Markup extends \XLite\Model\AEntity
 
     /**
      * Markup value: flat rate value
-     * 
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -142,7 +141,7 @@ class Markup extends \XLite\Model\AEntity
 
     /**
      * Markup value: percent value
-     * 
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -153,7 +152,7 @@ class Markup extends \XLite\Model\AEntity
 
     /**
      * Markup value: flat rate value per product item
-     * 
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -164,7 +163,7 @@ class Markup extends \XLite\Model\AEntity
 
     /**
      * Markup value: flat rate value per weight unit
-     * 
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -175,7 +174,7 @@ class Markup extends \XLite\Model\AEntity
 
     /**
      * Shipping method (relation)
-     * 
+     *
      * @var   \XLite\Model\Shipping\Method
      * @see   ____var_see____
      * @since 1.0.0
@@ -187,7 +186,7 @@ class Markup extends \XLite\Model\AEntity
 
     /**
      * Zone (relation)
-     * 
+     *
      * @var   \XLite\Model\Zone
      * @see   ____var_see____
      * @since 1.0.0
@@ -198,8 +197,8 @@ class Markup extends \XLite\Model\AEntity
     protected $zone;
 
     /**
-     * Calculated markup value 
-     * 
+     * Calculated markup value
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -207,8 +206,8 @@ class Markup extends \XLite\Model\AEntity
     protected $markupValue = 0;
 
     /**
-     * getMarkupValue 
-     * 
+     * getMarkupValue
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
@@ -219,10 +218,10 @@ class Markup extends \XLite\Model\AEntity
     }
 
     /**
-     * setMarkupValue 
-     * 
+     * setMarkupValue
+     *
      * @param integer $value Markup value
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

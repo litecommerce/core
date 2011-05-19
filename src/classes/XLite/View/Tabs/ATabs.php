@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -48,10 +47,10 @@ abstract class ATabs extends \XLite\View\AView
      *          ),
      *          ...
      *      );
-     * 
+     *
      * If a widget class is not specified for a target, the ATabs descendant will be used as the widget class.
      * If a template is not specified for a target, it will be used from the tab widget class.
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -60,7 +59,7 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Cached result of the getTabs() method
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -95,7 +94,7 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Checks whether no widget class is specified for the selected tab
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -109,7 +108,7 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Checks whether both a template and a widget class are specified for the selected tab
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -123,7 +122,7 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Checks whether no template is specified for the selected tab
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -137,7 +136,7 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Returns a widget class name for the selected tab
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -151,7 +150,7 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Returns a template name for the selected tab
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -165,7 +164,7 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Checks whether no template is specified for the selected tab
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -192,7 +191,7 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Returns the current target
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -203,8 +202,8 @@ abstract class ATabs extends \XLite\View\AView
     }
 
     /**
-     * Returns a list of targets for which the tabs are visible  
-     * 
+     * Returns a list of targets for which the tabs are visible
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -217,7 +216,7 @@ abstract class ATabs extends \XLite\View\AView
     /**
      * Checks whether the widget is visible, or not
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -228,9 +227,9 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Returns tab URL
-     * 
+     *
      * @param string $target Tab target
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -242,9 +241,9 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Checks whether a tab is selected
-     * 
+     *
      * @param mixed $target Tab target
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -256,7 +255,7 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Returns default values for a tab description
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -270,10 +269,10 @@ abstract class ATabs extends \XLite\View\AView
         );
     }
 
-    
+
     /**
      * Returns an array(tab) descriptions
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -304,8 +303,8 @@ abstract class ATabs extends \XLite\View\AView
     }
 
     /**
-     * getTitle 
-     * 
+     * getTitle
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -317,7 +316,7 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Returns a description of the selected tab. If no tab is selected, returns NULL.
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -326,7 +325,7 @@ abstract class ATabs extends \XLite\View\AView
     {
         $tabs = $this->getTabs();
         $target = $this->getCurrentTarget();
-        
+
         return (isset($tabs[$target]) ? $tabs[$target] : null);
     }
 }

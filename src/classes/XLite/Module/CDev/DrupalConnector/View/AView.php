@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Module\CDev\DrupalConnector\View;
 
 /**
  * Abstract widget
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -38,8 +37,8 @@ namespace XLite\Module\CDev\DrupalConnector\View;
 abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
     /**
-     * Relative path from web directory path to the XLite web directory 
-     * 
+     * Relative path from web directory path to the XLite web directory
+     *
      * @var    string
      * @access protected
      * @since  1.0.0
@@ -48,10 +47,10 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 
 
     /**
-     * prepareBasePath 
-     * 
+     * prepareBasePath
+     *
      * @param string $path Path to prepare
-     *  
+     *
      * @return array
      * @access protected
      * @since  1.0.0
@@ -64,10 +63,10 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     }
 
     /**
-     * Return relative path from web directory path to the XLite web directory 
+     * Return relative path from web directory path to the XLite web directory
      * FIXME - it's the hack
      * TODO - check if there is a more convenient way to implement this
-     * 
+     *
      * @return string
      * @access protected
      * @since  1.0.0
@@ -97,10 +96,10 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     }
 
     /**
-     * Add the relative part to the resources' URLs 
-     * 
+     * Add the relative part to the resources' URLs
+     *
      * @param array $data Data to prepare
-     *  
+     *
      * @return array
      * @access protected
      * @since  1.0.0
@@ -130,11 +129,11 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
         return static::modifyResources(parent::prepareResources($data, $isCommon));
     }
 
-    /** 
+    /**
      * Modify resources list
-     * 
+     *
      * @param mixed $data Data to prepare
-     *  
+     *
      * @return array
      * @access protected
      * @since  1.0.0
@@ -143,7 +142,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     {
         if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $data = static::modifyResourcePaths($data);
-        }   
+        }
 
         return $data;
     }
@@ -151,7 +150,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 
     /**
      * Get a list of JavaScript files required to display the widget properly
-     * 
+     *
      * @return void
      * @access public
      * @since  1.0.0
@@ -194,7 +193,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
         return $list;
     }
 
-    /**  
+    /**
      * Register files from common repository
      *
      * @return array

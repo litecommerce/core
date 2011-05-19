@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Upgrade;
 
 /**
- * Cell 
- * 
+ * Cell
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -53,8 +52,8 @@ class Cell extends \XLite\Base\Singleton
 
 
     /**
-     * List of cell entries 
-     * 
+     * List of cell entries
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -63,7 +62,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Core version to upgrade to
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -80,8 +79,8 @@ class Cell extends \XLite\Base\Singleton
     protected $coreVersions;
 
     /**
-     * List of incompatible modules 
-     * 
+     * List of incompatible modules
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -90,7 +89,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * List of error messages
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -98,8 +97,8 @@ class Cell extends \XLite\Base\Singleton
     protected $errorMessages;
 
     /**
-     * Flag to determine if upgrade is already performed 
-     * 
+     * Flag to determine if upgrade is already performed
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -111,7 +110,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Check if cell is valid
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -123,7 +122,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Getter
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -134,10 +133,10 @@ class Cell extends \XLite\Base\Singleton
     }
 
     /**
-     * Return list of incompatible modules 
-     * 
+     * Return list of incompatible modules
+     *
      * @param boolean $onlySelected Flag to return only the modules selected by admin
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -154,9 +153,9 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Set statuses (enable/disable) for incompatible modules
-     * 
+     *
      * @param array $statuses List of statuses (<moduleID,status>)
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -183,11 +182,11 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Method to clean up cell
-     * 
+     *
      * @param boolean $clearCoreVersion Flag OPTIONAL
      * @param boolean $clearEntries     Flag OPTIONAL
      * @param boolean $collectEntries   Flag OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -230,10 +229,10 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Add module to update/install
-     * 
+     *
      * @param \XLite\Model\Module $module Module model
      * @param boolean             $force  Flag to install modules OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -265,9 +264,9 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Add module to update/install
-     * 
+     *
      * @param string $path Path to uploaded module pack
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -283,7 +282,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Quick access to the "Core" entry
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -335,7 +334,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Check if we upgrade core major version
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -347,9 +346,9 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Helper
-     * 
+     *
      * @param string $method Name of method to call
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -368,7 +367,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Save data in DB
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -426,7 +425,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Check and add (if needed) upgrade entries
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -443,7 +442,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Check and add (if needed) core upgrade entry
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -477,11 +476,11 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Common method to add entries
-     * 
+     *
      * @param string $index Index in the "entries" array
      * @param string $class Entry class name
      * @param array  $args  Constructor arguments OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -503,28 +502,28 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Logging
-     *        
+     *
      * @param \Exception $exception Thrown exception
-     *                                              
-     * @return void                                 
-     * @see    ____func_see____                     
-     * @since  1.0.0                                
-     */                                             
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function logAddEntryError(\Exception $exception)
-    {                                                        
+    {
         \XLite\Logger::getInstance()->log($exception->getMessage(), $this->getLogLevel());
     }
 
     /**
      * Return type of log messages
-     *                            
-     * @return integer            
-     * @see    ____func_see____   
-     * @since  1.0.0              
-     */                           
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getLogLevel()
-    {                               
-        return PEAR_LOG_WARNING;    
+    {
+        return PEAR_LOG_WARNING;
     }
 
     // }}}
@@ -561,7 +560,7 @@ class Cell extends \XLite\Base\Singleton
     /**
      * Check if there is enpugh disk free space.
      * Return message on error
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -617,7 +616,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Check if upgrade is already performed
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -629,9 +628,9 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Common method to check entry packages
-     * 
+     *
      * @param boolean $isUnpacked Check type
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -658,7 +657,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Download all update packs
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -670,7 +669,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Unpack all archives
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -709,11 +708,11 @@ class Cell extends \XLite\Base\Singleton
     // {{{ Upgrade
 
     /**
-     * Perform upgrade 
-     * 
+     * Perform upgrade
+     *
      * @param boolean $isTestMode       Flag OPTIONAL
      * @param array   $filesToOverwrite List of custom files to overwrite OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -761,7 +760,7 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Clear log file
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

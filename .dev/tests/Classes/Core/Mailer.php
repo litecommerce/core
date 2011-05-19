@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Classes
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -39,14 +38,14 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
     const ADMIN_EMAIL = 'rnd_tester04@cdev.ru';
 
     /**
-     * User password 
+     * User password
      */
     const TESTER_PASSWORD = 'master';
 
 
     /**
-     * testSendProfileCreatedUserNotification 
-     * 
+     * testSendProfileCreatedUserNotification
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -71,13 +70,13 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
         $email = array_shift($emails);
 
         $result = (bool)preg_match('/Sign in notification.*' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['body']);
-        
+
         $this->assertTrue($result, 'Check if email contents keywords');
     }
 
     /**
-     * testSendProfileCreatedAdminNotification 
-     * 
+     * testSendProfileCreatedAdminNotification
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -109,8 +108,8 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
     }
 
     /**
-     * testSendProfileUpdatedUserNotification 
-     * 
+     * testSendProfileUpdatedUserNotification
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -135,13 +134,13 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
         $email = array_shift($emails);
 
         $result = (bool)preg_match('/Profile modified.*' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['body']);
-        
+
         $this->assertTrue($result, 'Check if email contents keywords');
     }
 
     /**
-     * testSendProfileUpdatedAdminNotification 
-     * 
+     * testSendProfileUpdatedAdminNotification
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -173,8 +172,8 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
     }
 
     /**
-     * testSendProfileDeletedAdminNotification 
-     * 
+     * testSendProfileDeletedAdminNotification
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -206,8 +205,8 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
     }
 
     /**
-     * testSendFailedAdminLoginNotification 
-     * 
+     * testSendFailedAdminLoginNotification
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -240,9 +239,9 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
     }
 
     /**
-     * testSendRecoverPasswordRequest 
+     * testSendRecoverPasswordRequest
      * TODO: add this test
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -275,7 +274,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
     }
 
     /**
-     * testSendRecoverPasswordConfirmation 
+     * testSendRecoverPasswordConfirmation
      * TODO: add this test
      *
      * @return void
@@ -300,7 +299,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
         if (empty($emails)) {
 
             $this->markTestSkipped('Email notification not found in the mail box');
-        }   
+        }
 
 
         $email = array_shift($emails);
@@ -312,7 +311,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
     /**
      * Returns profile instance
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____

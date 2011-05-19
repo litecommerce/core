@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model;
 
 /**
  * Module
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -52,7 +51,7 @@ class Module extends \XLite\Model\AEntity
 {
     /**
      * Module ID
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -64,8 +63,8 @@ class Module extends \XLite\Model\AEntity
     protected $moduleID;
 
     /**
-     * Name 
-     * 
+     * Name
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -75,8 +74,8 @@ class Module extends \XLite\Model\AEntity
     protected $name;
 
     /**
-     * Author 
-     * 
+     * Author
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -97,8 +96,8 @@ class Module extends \XLite\Model\AEntity
     protected $marketplaceID = '';
 
     /**
-     * Enabled 
-     * 
+     * Enabled
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -109,7 +108,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Installed status
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -133,7 +132,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Order creation timestamp
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -309,7 +308,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Module dependencies
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -323,25 +322,25 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Method to call functions from module main classes
-     * 
+     *
      * @param string $method Method to call
      * @param mixed  $result Method return value for the current class (model) OPTIONAL
      * @param array  $args   Call arguments OPTIONAL
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function callModuleMethod($method, $result = null, array $args = array())
     {
-        return $this->checkModuleMainClass() 
-            ? call_user_func_array(array($this->getMainClass(), $method), $args) 
+        return $this->checkModuleMainClass()
+            ? call_user_func_array(array($this->getMainClass(), $method), $args)
             : $result;
     }
 
     /**
      * Check if we can call method from the module main class
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -353,7 +352,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Return main class name for current module
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -381,7 +380,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Return module full version
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -393,7 +392,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Check if module has a custom icon
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -418,7 +417,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Get list of dependency modules as Doctrine entities
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -483,8 +482,8 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Check for custom module 
-     * 
+     * Check for custom module
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -496,7 +495,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Search for license key
-     * 
+     *
      * @return \XLite\Model\ModuleKey
      * @see    ____func_see____
      * @since  1.0.0
@@ -532,7 +531,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Return currency for paid modules
-     * 
+     *
      * @return \XLite\Model\Currency
      * @see    ____func_see____
      * @since  1.0.0
@@ -545,7 +544,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Check if module is installed in LC
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

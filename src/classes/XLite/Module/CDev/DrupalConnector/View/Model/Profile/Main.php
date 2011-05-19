@@ -20,7 +20,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -59,7 +58,7 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
     /**
      * Perform certain action for the model object
      *
-     * @return boolean 
+     * @return boolean
      * @access protected
      * @since  1.0.0
      */
@@ -77,9 +76,9 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
 
     /**
      * Make 'Access level' field available when administrator modifies other user's profile
-     * 
+     *
      * @param array &$data Widget params
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -93,9 +92,9 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
 
     /**
      * Make 'Status' field available when administrator modifies other user's profile
-     * 
+     *
      * @param array &$data Widget params
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -109,9 +108,9 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
 
     /**
      * Populate model object properties by the passed data
-     * 
+     *
      * @param array $data Data to set up
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

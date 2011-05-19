@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Deploy
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -46,8 +45,8 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     const PRODUCT_NAME = 'Ecommerce CMS';
 
     /**
-     * buildDir 
-     * 
+     * buildDir
+     *
      * @var    mixed
      * @access protected
      * @see    ____var_see____
@@ -56,8 +55,8 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected $buildDir = null;
 
     /**
-     * testInstall 
-     * 
+     * testInstall
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -103,7 +102,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
     /**
      * stepOne: License agreement page
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -128,7 +127,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         // Verify that LA text is presented (by part of it)
         $this->assertTextPresent(
-            'This package contains the following parts distributed under the', 
+            'This package contains the following parts distributed under the',
             'Check that part of license text is presented'
         );
 
@@ -168,7 +167,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
     /**
      * stepTwo: check requirements
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -200,14 +199,14 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $srcFile = constant('DRUPAL_SITE_PATH') . '/sites/default/default.settings.php';
         $dstFile = constant('DRUPAL_SITE_PATH') . '/sites/default/settings.php';
         copy($srcFile, $dstFile);
-        
+
         // Reload page
         $this->refreshAndWait();
     }
 
     /**
      * stepThree: database configuration
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -313,7 +312,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
     /**
      * stepFour: Set up LiteCommerce
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -351,7 +350,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
     /**
      * stepFive: installing LiteCommerce
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -396,7 +395,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
     /**
      * step Six: installing Drupal modules
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -442,7 +441,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
     /**
      * stepSeven: Configure site
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -524,7 +523,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             '//form[@id="install-configure-form"]/descendant::input[@id="edit-submit" and @name="op" and @value="Save and continue"]',
             sprintf('Check that "Save and Continue" button is presented on "Configure site" step (pass %d)', $pass)
         );
-       
+
         // Fill the form fields
         $this->type('css=#edit-site-name', 'Test ' . self::PRODUCT_NAME);
         $this->type('css=#edit-site-mail', self::TESTER_EMAIL);
@@ -552,7 +551,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
     /**
      * stepEight: Confirmation page
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -587,7 +586,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
     /**
      * stepNine: Checking the frontend page
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -612,8 +611,8 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     }
 
     /**
-     * getBuildDir 
-     * 
+     * getBuildDir
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -631,8 +630,8 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     }
 
     /**
-     * getConfigOptions 
-     * 
+     * getConfigOptions
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -661,8 +660,8 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     }
 
     /**
-     * emptyDatabase 
-     * 
+     * emptyDatabase
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -673,11 +672,11 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $options = $this->getConfigOptions();
 
         // Prepare db host
-        $dbhost = $options['database_details']['hostspec'] 
+        $dbhost = $options['database_details']['hostspec']
             . (!empty($options['database_details']['socket']) ? ':' . $options['database_details']['socket']
                 : (!empty($options['database_details']['port']) ? ':' . $options['database_details']['port'] : '')
             );
-            
+
         $connect = @mysql_connect(
             $dbhost,
             $options['database_details']['username'],
@@ -705,7 +704,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
     /**
      * prepareHtaccess: add RewriteBase value for clean URL feature
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____

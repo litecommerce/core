@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,16 +28,16 @@
 namespace Includes\Utils;
 
 /**
- * Database 
- * 
+ * Database
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 abstract class Database extends \Includes\Utils\AUtils
 {
     /**
-     * DB handler 
-     * 
+     * DB handler
+     *
      * @var    \PDO
      * @access protected
      * @see    ____var_see____
@@ -47,8 +46,8 @@ abstract class Database extends \Includes\Utils\AUtils
     protected static $handler;
 
     /**
-     * Database connection options 
-     * 
+     * Database connection options
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -58,7 +57,7 @@ abstract class Database extends \Includes\Utils\AUtils
 
     /**
      * Setter method for $dbOptions. Once tries to connect and return connection object
-     * 
+     *
      * @return \PDO
      * @access public
      * @see    ____func_see____
@@ -136,7 +135,7 @@ abstract class Database extends \Includes\Utils\AUtils
 
     /**
      * Getter method for $this->dbOptions
-     * 
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -151,8 +150,8 @@ abstract class Database extends \Includes\Utils\AUtils
     }
 
     /**
-     * Return name of database user 
-     * 
+     * Return name of database user
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -164,8 +163,8 @@ abstract class Database extends \Includes\Utils\AUtils
     }
 
     /**
-     * Return password of database user 
-     * 
+     * Return password of database user
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -177,8 +176,8 @@ abstract class Database extends \Includes\Utils\AUtils
     }
 
     /**
-     * Return list of the \PDO connection options 
-     * 
+     * Return list of the \PDO connection options
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -314,7 +313,7 @@ abstract class Database extends \Includes\Utils\AUtils
 
     /**
      * Get the database version
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -329,7 +328,7 @@ abstract class Database extends \Includes\Utils\AUtils
      * Execute a set of SQL queries from file
      *
      * :FIXME: must be completely revised
-     * 
+     *
      * @param string  $fileName Name of SQL-file
      * @param boolean $verbose  Display uploading progress flag OPTIONAL
      *
@@ -390,12 +389,12 @@ abstract class Database extends \Includes\Utils\AUtils
 
                         if ($result) {
                             static::getHandler()->commit();
-                        
+
                         } else {
                             static::getHandler()->rollBack();
                         }
 
-                        if ($verbose) {   
+                        if ($verbose) {
                             echo ('.');
                             flush();
                         }

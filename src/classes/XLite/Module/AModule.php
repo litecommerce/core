@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Module;
 
 /**
  * Module
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -49,7 +48,7 @@ abstract class AModule
 
     /**
      * Return module name
-     * 
+     *
      * @return string
      * @throws \Exception
      * @see    ____func_see____
@@ -62,7 +61,7 @@ abstract class AModule
 
     /**
      * Return author full name
-     * 
+     *
      * @return string
      * @throws \Exception
      * @see    ____func_see____
@@ -74,8 +73,8 @@ abstract class AModule
     }
 
     /**
-     * Return module description 
-     * 
+     * Return module description
+     *
      * @return string
      * @throws \Exception
      * @see    ____func_see____
@@ -100,7 +99,7 @@ abstract class AModule
 
     /**
      * Return link to the module author page
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -112,7 +111,7 @@ abstract class AModule
 
     /**
      * Return link to the module page
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -124,8 +123,8 @@ abstract class AModule
 
     /**
      * Determines if we need to show settings form link
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -136,7 +135,7 @@ abstract class AModule
 
     /**
      * Return link to settings form
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -160,7 +159,7 @@ abstract class AModule
 
     /**
      * Get post-installation user notes
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -172,7 +171,7 @@ abstract class AModule
 
     /**
      * Get post-deinstallation user notes
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -184,7 +183,7 @@ abstract class AModule
 
     /**
      * Custom installation routine
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -196,7 +195,7 @@ abstract class AModule
 
     /**
      * Custom deinstallation routine
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -208,7 +207,7 @@ abstract class AModule
 
     /**
      * Custom wake-up (enable) module routine
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -220,7 +219,7 @@ abstract class AModule
 
     /**
      * Custom sleep (disable) module routine
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -231,10 +230,10 @@ abstract class AModule
     }
 
     /**
-     * Get backup data 
-     * 
+     * Get backup data
+     *
      * @param \XLite\Model\Module $module Module
-     *  
+     *
      * @return array|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -286,7 +285,7 @@ abstract class AModule
 
     /**
      * Return module name by class name
-     * 
+     *
      * @return string
      * @throws \Exception
      * @see    ____func_see____

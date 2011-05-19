@@ -2,34 +2,33 @@
 
 /**
  * Check credit card data
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
 
-function isCreditCard(cc_number) 
+function isCreditCard(cc_number)
 {
   cc = cc_number.value.replace(/\D/, '');
   cc = String(cc);
-  if (cc.length < 4 || cc.length > 30) { 
+  if (cc.length < 4 || cc.length > 30) {
     alert('Credit card number is too short or too long');
-    return false; 
+    return false;
   }
 
   // Start the Mod10 checksum process...
   var checksum = 0;
 
   // Add even digits in even length strings or odd digits in odd length strings.
-  for (var location = 1 - (cc.length % 2); location < cc.length; location += 2) 
+  for (var location = 1 - (cc.length % 2); location < cc.length; location += 2)
   {
     var digit = parseInt(cc.substring(location, location + 1));
     if (isNaN(digit)) {
       alert('Credit card number must have only digits');
-      return false; 
+      return false;
     }
 
     checksum += digit;
@@ -75,15 +74,15 @@ function showSoloOrSwitch()
   var cvv2_label = document.getElementById('cvv2_label');
 
   switch(card_type.value) {
-    case 'SO': 
+    case 'SO':
     case 'SW':
       issue_no.style.display   = '';
-      start_date.style.display = '';          
+      start_date.style.display = '';
       break;
 
-    default: 
+    default:
       issue_no.style.display   = 'none';
-      start_date.style.display = 'none';   
+      start_date.style.display = 'none';
       break;
   }
 
@@ -119,12 +118,12 @@ function checkCVV2(cvv2, issue_no)
       alert(cvv2_text + ' must be a number');
       return false;
     }
-  } 
+  }
 
-  return true;  
+  return true;
 }
 
-function checkStartDate(st_year, st_month, ed_year, ed_month) 
+function checkStartDate(st_year, st_month, ed_year, ed_month)
 {
   var start_year  = parseInt(st_year.value.replace(/^0/gi, ''));
   var start_month = parseInt(st_month.value.replace(/^0/gi, ''));
@@ -139,7 +138,7 @@ function checkStartDate(st_year, st_month, ed_year, ed_month)
   return true;
 }
 
-function checkExpirationDate(ed_month, ed_year) 
+function checkExpirationDate(ed_month, ed_year)
 {
   var date          = new Date();
   var current_year  = parseInt(date.getFullYear());
