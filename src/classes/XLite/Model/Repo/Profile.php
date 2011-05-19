@@ -58,6 +58,12 @@ class Profile extends \XLite\Model\Repo\ARepo
     const SEARCH_LIMIT           = 'limit';
 
     /**
+     * Password length
+     */
+    const PASSWORD_LENGTH = 12;
+
+
+    /**
      * Repository type
      *
      * @var   string
@@ -75,6 +81,22 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected $currentSearchCnd = null;
 
+    /**
+     * Password characters list
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $chars = array(
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+        'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+        'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D',
+        'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+        'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+        'Y', 'Z',
+    );
 
     /**
      * Common search
@@ -218,6 +240,26 @@ class Profile extends \XLite\Model\Repo\ARepo
         return $entity;
     }
 
+    /**
+     * Generate password
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function generatePassword()
+    {
+        $limit = count($this->chars) - 1;
+        $x = explode('.', uniqid('', true));
+        mt_srand(microtime(true) + intval(hexdec($x[0])) + $x[1]);
+
+        $password = '';
+        for ($i = 0; self::PASSWORD_LENGTH > $i; $i++) {
+            $password .= $this->chars[mt_rand(0, $limit)];
+        }
+
+        return $password;
+    }
 
     /**
      * Return list of handling search params

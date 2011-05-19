@@ -137,12 +137,14 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
         $pass = user_password();
 
+        $status = variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL) == USER_REGISTER_VISITORS;
+
         $data = array(
             'name'   => \XLite\Core\Session::getInstance()->order_username,
             'init'   => $this->getCart()->getOrigProfile()->getLogin(),
             'mail'   => $this->getCart()->getOrigProfile()->getLogin(),
             'roles'  => array(),
-            'status' => variable_get('user_register', 1) == 1,
+            'status' => $status,
             'pass'   => $pass,
         );
 
@@ -163,21 +165,32 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
             $this->getCart()->getOrigProfile()->setPassword(md5($pass));
 
             \XLite\Core\Database::getRepo('XLite\Model\Profile')->linkProfiles(
-                $this->getCart()->getOrigProfile()->getProfileId(),
+                $this->getCart()->getOrigProfile(),
                 $account->uid
             );
 
-            /* Auto-login
-            db_query("UPDATE {users} SET status = 1 WHERE uid = %d", array($account->uid));
-
-            global $user;
-            $user = $account;
-
-            user_authenticate_finalize($formState);
-            */
         }
 
         unset(\XLite\Core\Session::getInstance()->order_username);
+    }
+
+    /**
+     * Login anonymous profile
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function loginAnonymousProfile()
+    {
+        $account = $this->getCart()->getOrigProfile()->getCMSProfile();
+
+        if ($account && $account->status) {
+            parent::loginAnonymousProfile();
+
+            $GLOBALS['user'] = user_load($account->uid);
+            user_login_finalize();
+        }
     }
 
     /**
