@@ -35,6 +35,15 @@ namespace XLite\Controller\Admin;
  */
 class Category extends \XLite\Controller\Admin\Base\Catalog
 {
+    /**
+     * FIXME- backward compatibility
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    public $params = array('target', 'category_id', 'mode');
+
 
     /**
      * Get pages sections
