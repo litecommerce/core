@@ -112,7 +112,7 @@ abstract class AOrderList extends \XLite\View\Dialog
         $result = array();
         $forbidden = array('widgetTarget', 'widgetAction', 'widgetClass');
 
-        foreach ($this->getAJAXRequestParams() as $key => $value) {
+        foreach ($params as $key => $value) {
             if (!in_array($key, $forbidden)) {
                 $result[] = $key . ': \'' . $value . '\'';
             }
@@ -135,7 +135,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Search result';
+        return null;
     }
 
     /**
