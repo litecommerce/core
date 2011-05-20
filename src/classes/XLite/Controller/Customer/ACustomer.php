@@ -102,6 +102,18 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
+     * Check if cuurrent user is logged in
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isLogged()
+    {
+        return \XLite\Core\Auth::getInstance()->isLogged();
+    }
+
+    /**
      * Handles the request
      *
      * @return void

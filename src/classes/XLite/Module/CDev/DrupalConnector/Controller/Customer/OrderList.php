@@ -67,7 +67,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
     }
 
     /**
-     * Check if current page is the "Order history" portal
+     * Check if current page is the "Orders" portal
      *
      * @return boolean
      * @access protected
@@ -133,7 +133,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
         parent::init();
 
         if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS() && static::isPortal()) {
-            drupal_set_title(t('Order history'));
+            drupal_set_title(t('Orders'));
         }
     }
 }

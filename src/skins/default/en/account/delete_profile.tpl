@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Delete profile link
+ * Register form template
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListCHild (list="menu.profile", zone="customer", weight="300")
+ * @ListChild (list="customer.account.details.after", weight="100")
  *}
 
-<a href="{buildURL(#profile#,##,_ARRAY_(#mode#^#delete#))}">{t(#Delete profile#)}</a>
+<widget class="\XLite\View\Button\Link" label="Delete profile" location="{buildURL(#profile#,##,_ARRAY_(#mode#^#delete#))}" />

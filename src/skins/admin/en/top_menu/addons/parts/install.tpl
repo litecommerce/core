@@ -12,4 +12,4 @@
  * @ListChild (list="menu.addons", weight="20")
  *}
 
-<widget class="\XLite\View\TopMenu\Node" title="Install new add-ons" linkTarget="addons_list_marketplace" />
+<widget class="\XLite\View\TopMenu\Node" title="Module Marketplace" linkTarget="addons_list_marketplace" />

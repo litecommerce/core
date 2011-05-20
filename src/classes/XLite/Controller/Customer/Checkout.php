@@ -435,8 +435,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Login anonymous profile 
-     * 
+     * Login anonymous profile
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

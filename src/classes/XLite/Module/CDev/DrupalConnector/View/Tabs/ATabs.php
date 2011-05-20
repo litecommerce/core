@@ -25,39 +25,26 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\SideBarBox;
+namespace XLite\Module\CDev\DrupalConnector\View\Tabs;
 
 /**
- * Sidebar help
+ * ATabs is a component allowing you to display multiple widgets as tabs depending
+ * on their targets
  *
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @ListChild (list="sidebar.first", zone="customer", weight="300")
  */
-class Profile extends \XLite\View\SideBarBox
+abstract class ATabs extends \XLite\View\Tabs\ATabs implements \XLite\Base\IDecorator
 {
     /**
-     * Get widget templates directory
+     * Flag: display (true) or hide (false) tabs
      *
-     * @return string
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDir()
+    protected function isWrapperVisible()
     {
-        return 'profile';
-    }
-
-    /**
-     * Get widge title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return 'Your profile';
+        return false;
     }
 }
