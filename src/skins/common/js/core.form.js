@@ -208,12 +208,28 @@ CommonForm.prototype.submitBackground = function(callback, disableValidation, op
       options
     );
 
-    if (!result) {
+    if (result) {
+      this.form.currentSubmitXHR = result;
+
+    } else {
       core.showInternalError();
     }
   }
 
   return result;
+}
+
+// Submit form in force mode
+CommonForm.prototype.submitForce = function()
+{
+  this.skipCurrentBgSubmit();
+
+  var oldValue = this.submitOnlyChanged;
+  this.submitOnlyChanged = false;
+
+  this.$form.submit();
+
+  this.submitOnlyChanged = oldValue;
 }
 
 // Prepare form before background submit
@@ -228,8 +244,27 @@ CommonForm.prototype.preprocessBackgroundSubmit = function()
 CommonForm.prototype.postprocessBackgroundSubmit = function()
 {
   this.form.isBgSubmitting = false;
+  if (this.form.currentSubmitXHR) {
+    delete this.form.currentSubmitXHR;
+  }
 
   this.getElements().commonController('postprocessBackgroundSubmit');
+}
+
+// Skip current background submit
+CommonForm.prototype.skipCurrentBgSubmit = function()
+{
+  if (this.form.isBgSubmitting) {
+    this.form.isBgSubmitting = false;
+
+    if (this.form.currentSubmitXHR) {
+      this.form.currentSubmitXHR.abort();
+      delete this.form.currentSubmitXHR;
+    }
+
+    this.getElements().commonController('skipCurrentBgSubmit');
+  }
+
 }
 
 // Form has any changed state watcher's elements
@@ -766,6 +801,12 @@ CommonElement.prototype.postprocessBackgroundSubmit = function()
     this.element.readonly = false;
     this.element.isTemporaryReadonly = null;
   }
+}
+
+// 'Skip current background submit' form event
+CommonElement.prototype.skipCurrentBgSubmit = function()
+{
+  this.postprocessBackgroundSubmit();
 }
 
 CommonElement.prototype.linkWithCountry = function()

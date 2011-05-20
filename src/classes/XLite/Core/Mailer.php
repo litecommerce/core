@@ -57,16 +57,18 @@ class Mailer extends \XLite\Base\Singleton
     /**
      * Send notification about created profile to the user
      *
-     * @param \XLite\Model\Profile $profile Profile object
+     * @param \XLite\Model\Profile $profile  Profile object
+     * @param string               $password Profile password
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function sendProfileCreatedUserNotification(\XLite\Model\Profile $profile)
+    public static function sendProfileCreatedUserNotification(\XLite\Model\Profile $profile, $password = null)
     {
         // Register variables
         static::register('profile', $profile);
+        static::register('password', $password);
 
         // Compose and send email
         static::compose(

@@ -194,6 +194,19 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
     }
 
     /**
+     * Send create profile notifications
+     *
+     * @param string $password Password
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function sendCreateProfileNotifications($password)
+    {
+    }
+
+    /**
      * Clone profile and move profile to original profile
      *
      * @return void
