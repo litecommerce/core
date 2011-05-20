@@ -105,7 +105,9 @@ abstract class Handler extends \XLite\Base
      */
     public function setWidgetParams(array $params)
     {
-        foreach ($this->getWidgetParams() as $name => $paramObject) {
+        $listParams = $this->getWidgetParams();
+        
+        foreach ($listParams as $name => $paramObject) {
             if (isset($params[$name])) {
                 $paramObject->setValue($params[$name]);
             }
