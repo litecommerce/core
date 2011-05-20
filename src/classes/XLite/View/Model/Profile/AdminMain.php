@@ -28,7 +28,7 @@
 namespace XLite\View\Model\Profile;
 
 /**
- * \XLite\View\Model\Profile\Main
+ * Administrator profile model widget. This widget is used in the admin interface
  *
  * @see   ____class_see____
  * @since 1.0.0

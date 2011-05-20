@@ -137,7 +137,6 @@ abstract class AController extends \XLite\Core\Handler
      * getPages
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -1001,6 +1000,7 @@ abstract class AController extends \XLite\Core\Handler
         $method = 'doAction' . \Includes\Utils\Converter::convertToPascalCase($action);
 
         if (method_exists($this, $method)) {
+            // Call method doAction<action-name-in-camel-case>
             $this->$method();
 
         } else {
@@ -1326,9 +1326,8 @@ abstract class AController extends \XLite\Core\Handler
         return $url;
     }
 
-
     /**
-     * Get viewer parameyers
+     * Get viewer parameters
      *
      * @return array
      * @see    ____func_see____
@@ -1353,5 +1352,17 @@ abstract class AController extends \XLite\Core\Handler
         }
 
         return $params;
+    }
+
+    /**
+     * Get current logged user profile
+     *
+     * @return \XLite\Model\Profile
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getProfile()
+    {
+        return \XLite\Core\Auth::getInstance()->getProfile();
     }
 }

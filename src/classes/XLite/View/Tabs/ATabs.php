@@ -178,6 +178,18 @@ abstract class ATabs extends \XLite\View\AView
 
 
     /**
+     * Flag: display (true) or hide (false) tabs
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isWrapperVisible()
+    {
+        return true;
+    }
+
+    /**
      * Returns the default widget template
      *
      * @return string
