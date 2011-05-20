@@ -60,6 +60,7 @@ select.validation-error
   .checkout-block .payment-step ul.payments li label,
   .checkout-block form.place .terms label,
   .checkout-block .steps .shipping-step .save label,
+  .checkout-block .steps .payment-step .save label,
   .checkout-block .payment-step .same-address label
 {
   display: inline;
@@ -983,7 +984,6 @@ div.product-details .product-image-gallery
   text-align: right;
   padding: 4px 6px;
   margin-left: 8px;
-  margin-right: 20px;
   vertical-align: middle;
 }
 
@@ -1034,7 +1034,7 @@ div.product-details button.continue
 
 div.product-details .continue-button-intend
 {
-  width: 94px;
+  width: 112px;
   float: left;
 }
 
@@ -1530,6 +1530,10 @@ body.store-cart #main h1 {
   text-align: center;
 }
 
+#cart-right .totals li.button button.disabled span {
+  background-image: none;
+}
+
 #cart-right .box {
   padding: 0px;
   background-color: #f6f6f6;
@@ -1866,6 +1870,14 @@ form.estimator .main,
   margin-right: 10px;
   color: #8a8a8a;
   padding: 15px 11px;
+}
+
+.checkout-block .disabled .step-box {
+  text-align: center;
+  color: #456583;
+  font-size: 16px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .checkout-block .shipping-step.current .step-box,
@@ -2308,6 +2320,10 @@ form.estimator .main,
   padding: 10px;
 }
 
+.checkout-block form.place .terms .terms-box * {
+  font-size: 14px;
+}
+
 .checkout-block form.place .terms div.mark {
   background: transparent none no-repeat center bottom;
   width: 17px;
@@ -2367,16 +2383,36 @@ form.estimator .main,
   margin-right: 30px;
   margin-bottom: 20px;
   position: relative;
+  cursor: pointer;
 }
 
 .select-address ul.addresses li.last {
   margin-right: 0px;
 }
 
+.select-address ul.addresses li .remove {
+  position: absolute;
+  right: 7px;
+  top: 4px;
+  text-decoration: none;
+  width: 13px;
+  height: 13px;
+}
+
+.select-address ul.addresses li .remove img {
+  background: transparent url(../images/icon_cross_circle.png) no-repeat left top;
+  width: 13px;
+  height: 13px;
+}
+
+.select-address ul.addresses li .remove img:hover {
+  background-position: left -13px;
+}
+
 .select-address ul.addresses li .shipping {
   position: absolute;
   right: 8px;
-  top: 15px;
+  bottom: 15px;
   background: transparent url(../images/icon_shipping.png) no-repeat left top;
   width: 42px;
   height: 20px;
@@ -2385,7 +2421,7 @@ form.estimator .main,
 .select-address ul.addresses li .billing {
   position: absolute;
   right: 9px;
-  top: 47px;
+  bottom: 47px;
   background: transparent url(../images/icon_billing.png) no-repeat left top;
   width: 38px;
   height: 22px;
@@ -2428,7 +2464,11 @@ ul.location-subnodes {
 }
 
 ul.location-subnodes li {
-  padding: 3px;
+  padding: 0px 2px;
+}
+
+ul.location-subnodes li a.current {
+  font-weight: bold;
 }
 
 /**
