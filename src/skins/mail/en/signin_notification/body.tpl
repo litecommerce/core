@@ -132,6 +132,16 @@
 <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/wholesaler_details.tpl" profile={profile}>
 </tbody>
 
+<tbody IF="password">
+<tr>
+    <td colspan="2"><b>Personal info</b><br><hr size="1" noshade></td>
+</tr>
+<tr>
+    <td align="right">Password</td>
+    <td>{password}</td>
+</tr>
+</tbody>
+
 </table>
 
 <p>{signature:h}

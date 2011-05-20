@@ -106,7 +106,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
             // Send notification to the users department
             \XLite\Core\Mailer::sendProfileCreatedAdminNotification($this->getModelForm()->getModelObject());
 
-            // Send notification to the user
             $params = array('profile_id' => $this->getModelForm()->getProfileId(false));
         }
 

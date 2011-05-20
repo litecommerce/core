@@ -169,7 +169,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     jQuery('.profile .create #create_profile_chk', this.commonBase).change(
       function() {
         if (this.form.validate(true)) {
-          jQuery(this.form).submit();
+          this.form.commonController.submitForce();
         }
       }
     );

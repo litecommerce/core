@@ -429,6 +429,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
         // Set cloned profile as original profile
         $this->getCart()->setOrigProfile($profile);
+
+        // Send notifications
+        $this->sendCreateProfileNotifications($pass);
     }
 
     /**
@@ -441,6 +444,26 @@ class Checkout extends \XLite\Controller\Customer\Cart
     protected function loginAnonymousProfile()
     {
         \XLite\Core\Auth::getInstance()->loginProfile($this->getCart()->getOrigProfile());
+    }
+
+    /**
+     * Send create profile notifications 
+     *
+     * @param string $password Password
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function sendCreateProfileNotifications($password)
+    {
+        $profile = $this->getCart()->getOrigProfile();
+
+        // Send notification to the user
+        \XLite\Core\Mailer::sendProfileCreatedUserNotification($profile, $password);
+
+        // Send notification to the users department
+        \XLite\Core\Mailer::sendProfileCreatedAdminNotification($profile);
     }
 
     /**
