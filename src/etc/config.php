@@ -142,7 +142,7 @@ auth_code = ""
 ;
 [performance]
 developer_mode = Off
-substutional_skins_cache = off
+substitutional_skins_cache = off
 
 ;
 ; Decorator options

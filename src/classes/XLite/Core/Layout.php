@@ -743,7 +743,7 @@ class Layout extends \XLite\Base\Singleton
         $this->setOptions();
 
         $this->substutionalSkinsCache = (bool)\XLite::getInstance()
-            ->getOptions(array('performance', 'substutional_skins_cache'));
+            ->getOptions(array('performance', 'substitutional_skins_cache'));
 
         if ($this->substutionalSkinsCache) {
             $this->restoreSubstitutonalSkins();
