@@ -39,7 +39,7 @@ class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
      * Title of module Marketplace page (installation/updating modules)
      */
     const MARKETPLACE_TITLE = 'Module Marketplace';
-    
+
     /**
      * Return the current page title (for the content area)
      *

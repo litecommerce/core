@@ -1745,8 +1745,8 @@ tinymce.html.Styles = function(settings, schema) {
 	};
 
 	// Build a lookup table for block elements both lowercase and uppercase
-	blockElementsMap = 'h1,h2,h3,h4,h5,h6,hr,p,div,address,pre,form,table,tbody,thead,tfoot,' + 
-						'th,tr,td,li,ol,ul,caption,blockquote,center,dl,dt,dd,dir,fieldset,' + 
+	blockElementsMap = 'h1,h2,h3,h4,h5,h6,hr,p,div,address,pre,form,table,tbody,thead,tfoot,' +
+						'th,tr,td,li,ol,ul,caption,blockquote,center,dl,dt,dd,dir,fieldset,' +
 						'noscript,menu,isindex,samp,header,footer,article,section,hgroup';
 	blockElementsMap = makeMap(blockElementsMap, ',', makeMap(blockElementsMap.toUpperCase()));
 
@@ -1784,89 +1784,89 @@ tinymce.html.Styles = function(settings, schema) {
 		C : 'onclick|ondblclick|onmousedown|onmouseup|onmouseover|onmousemove|onmouseout|onkeypress|onkeydown|onkeyup',
 		B : 'lang|xml:lang|dir',
 		A : 'id|class|style|title'
-	}, 'script[id|charset|type|language|src|defer|xml:space][]' + 
-		'style[B|id|type|media|title|xml:space][]' + 
-		'object[E|declare|classid|codebase|data|type|codetype|archive|standby|width|height|usemap|name|tabindex|align|border|hspace|vspace][#|param|Y]' + 
-		'param[id|name|value|valuetype|type][]' + 
-		'p[E|align][#|S]' + 
-		'a[E|D|charset|type|name|href|hreflang|rel|rev|shape|coords|target][#|Z]' + 
-		'br[A|clear][]' + 
-		'span[E][#|S]' + 
-		'bdo[A|C|B][#|S]' + 
-		'applet[A|codebase|archive|code|object|alt|name|width|height|align|hspace|vspace][#|param|Y]' + 
-		'h1[E|align][#|S]' + 
-		'img[E|src|alt|name|longdesc|width|height|usemap|ismap|align|border|hspace|vspace][]' + 
-		'map[B|C|A|name][X|form|Q|area]' + 
-		'h2[E|align][#|S]' + 
-		'iframe[A|longdesc|name|src|frameborder|marginwidth|marginheight|scrolling|align|width|height][#|Y]' + 
-		'h3[E|align][#|S]' + 
-		'tt[E][#|S]' + 
-		'i[E][#|S]' + 
-		'b[E][#|S]' + 
-		'u[E][#|S]' + 
-		's[E][#|S]' + 
-		'strike[E][#|S]' + 
-		'big[E][#|S]' + 
-		'small[E][#|S]' + 
-		'font[A|B|size|color|face][#|S]' + 
-		'basefont[id|size|color|face][]' + 
-		'em[E][#|S]' + 
-		'strong[E][#|S]' + 
-		'dfn[E][#|S]' + 
-		'code[E][#|S]' + 
-		'q[E|cite][#|S]' + 
-		'samp[E][#|S]' + 
-		'kbd[E][#|S]' + 
-		'var[E][#|S]' + 
-		'cite[E][#|S]' + 
-		'abbr[E][#|S]' + 
-		'acronym[E][#|S]' + 
-		'sub[E][#|S]' + 
-		'sup[E][#|S]' + 
-		'input[E|D|type|name|value|checked|disabled|readonly|size|maxlength|src|alt|usemap|onselect|onchange|accept|align][]' + 
-		'select[E|name|size|multiple|disabled|tabindex|onfocus|onblur|onchange][optgroup|option]' + 
-		'optgroup[E|disabled|label][option]' + 
-		'option[E|selected|disabled|label|value][]' + 
-		'textarea[E|D|name|rows|cols|disabled|readonly|onselect|onchange][]' + 
-		'label[E|for|accesskey|onfocus|onblur][#|S]' + 
-		'button[E|D|name|value|type|disabled][#|p|T|div|U|W|table|G|object|applet|img|map|K|N|Q]' + 
-		'h4[E|align][#|S]' + 
-		'ins[E|cite|datetime][#|Y]' + 
-		'h5[E|align][#|S]' + 
-		'del[E|cite|datetime][#|Y]' + 
-		'h6[E|align][#|S]' + 
-		'div[E|align][#|Y]' + 
-		'ul[E|type|compact][li]' + 
-		'li[E|type|value][#|Y]' + 
-		'ol[E|type|compact|start][li]' + 
-		'dl[E|compact][dt|dd]' + 
-		'dt[E][#|S]' + 
-		'dd[E][#|Y]' + 
-		'menu[E|compact][li]' + 
-		'dir[E|compact][li]' + 
-		'pre[E|width|xml:space][#|ZA]' + 
-		'hr[E|align|noshade|size|width][]' + 
-		'blockquote[E|cite][#|Y]' + 
-		'address[E][#|S|p]' + 
-		'center[E][#|Y]' + 
-		'noframes[E][#|Y]' + 
-		'isindex[A|B|prompt][]' + 
-		'fieldset[E][#|legend|Y]' + 
-		'legend[E|accesskey|align][#|S]' + 
-		'table[E|summary|width|border|frame|rules|cellspacing|cellpadding|align|bgcolor][caption|col|colgroup|thead|tfoot|tbody|tr]' + 
-		'caption[E|align][#|S]' + 
-		'col[ZG][]' + 
-		'colgroup[ZG][col]' + 
-		'thead[ZF][tr]' + 
-		'tr[ZF|bgcolor][th|td]' + 
-		'th[E|ZE][#|Y]' + 
-		'form[E|action|method|name|enctype|onsubmit|onreset|accept|accept-charset|target][#|X|R|Q]' + 
-		'noscript[E][#|Y]' + 
-		'td[E|ZE][#|Y]' + 
-		'tfoot[ZF][tr]' + 
-		'tbody[ZF][tr]' + 
-		'area[E|D|shape|coords|href|nohref|alt|target][]' + 
-		'base[id|href|target][]' + 
+	}, 'script[id|charset|type|language|src|defer|xml:space][]' +
+		'style[B|id|type|media|title|xml:space][]' +
+		'object[E|declare|classid|codebase|data|type|codetype|archive|standby|width|height|usemap|name|tabindex|align|border|hspace|vspace][#|param|Y]' +
+		'param[id|name|value|valuetype|type][]' +
+		'p[E|align][#|S]' +
+		'a[E|D|charset|type|name|href|hreflang|rel|rev|shape|coords|target][#|Z]' +
+		'br[A|clear][]' +
+		'span[E][#|S]' +
+		'bdo[A|C|B][#|S]' +
+		'applet[A|codebase|archive|code|object|alt|name|width|height|align|hspace|vspace][#|param|Y]' +
+		'h1[E|align][#|S]' +
+		'img[E|src|alt|name|longdesc|width|height|usemap|ismap|align|border|hspace|vspace][]' +
+		'map[B|C|A|name][X|form|Q|area]' +
+		'h2[E|align][#|S]' +
+		'iframe[A|longdesc|name|src|frameborder|marginwidth|marginheight|scrolling|align|width|height][#|Y]' +
+		'h3[E|align][#|S]' +
+		'tt[E][#|S]' +
+		'i[E][#|S]' +
+		'b[E][#|S]' +
+		'u[E][#|S]' +
+		's[E][#|S]' +
+		'strike[E][#|S]' +
+		'big[E][#|S]' +
+		'small[E][#|S]' +
+		'font[A|B|size|color|face][#|S]' +
+		'basefont[id|size|color|face][]' +
+		'em[E][#|S]' +
+		'strong[E][#|S]' +
+		'dfn[E][#|S]' +
+		'code[E][#|S]' +
+		'q[E|cite][#|S]' +
+		'samp[E][#|S]' +
+		'kbd[E][#|S]' +
+		'var[E][#|S]' +
+		'cite[E][#|S]' +
+		'abbr[E][#|S]' +
+		'acronym[E][#|S]' +
+		'sub[E][#|S]' +
+		'sup[E][#|S]' +
+		'input[E|D|type|name|value|checked|disabled|readonly|size|maxlength|src|alt|usemap|onselect|onchange|accept|align][]' +
+		'select[E|name|size|multiple|disabled|tabindex|onfocus|onblur|onchange][optgroup|option]' +
+		'optgroup[E|disabled|label][option]' +
+		'option[E|selected|disabled|label|value][]' +
+		'textarea[E|D|name|rows|cols|disabled|readonly|onselect|onchange][]' +
+		'label[E|for|accesskey|onfocus|onblur][#|S]' +
+		'button[E|D|name|value|type|disabled][#|p|T|div|U|W|table|G|object|applet|img|map|K|N|Q]' +
+		'h4[E|align][#|S]' +
+		'ins[E|cite|datetime][#|Y]' +
+		'h5[E|align][#|S]' +
+		'del[E|cite|datetime][#|Y]' +
+		'h6[E|align][#|S]' +
+		'div[E|align][#|Y]' +
+		'ul[E|type|compact][li]' +
+		'li[E|type|value][#|Y]' +
+		'ol[E|type|compact|start][li]' +
+		'dl[E|compact][dt|dd]' +
+		'dt[E][#|S]' +
+		'dd[E][#|Y]' +
+		'menu[E|compact][li]' +
+		'dir[E|compact][li]' +
+		'pre[E|width|xml:space][#|ZA]' +
+		'hr[E|align|noshade|size|width][]' +
+		'blockquote[E|cite][#|Y]' +
+		'address[E][#|S|p]' +
+		'center[E][#|Y]' +
+		'noframes[E][#|Y]' +
+		'isindex[A|B|prompt][]' +
+		'fieldset[E][#|legend|Y]' +
+		'legend[E|accesskey|align][#|S]' +
+		'table[E|summary|width|border|frame|rules|cellspacing|cellpadding|align|bgcolor][caption|col|colgroup|thead|tfoot|tbody|tr]' +
+		'caption[E|align][#|S]' +
+		'col[ZG][]' +
+		'colgroup[ZG][col]' +
+		'thead[ZF][tr]' +
+		'tr[ZF|bgcolor][th|td]' +
+		'th[E|ZE][#|Y]' +
+		'form[E|action|method|name|enctype|onsubmit|onreset|accept|accept-charset|target][#|X|R|Q]' +
+		'noscript[E][#|Y]' +
+		'td[E|ZE][#|Y]' +
+		'tfoot[ZF][tr]' +
+		'tbody[ZF][tr]' +
+		'area[E|D|shape|coords|href|nohref|alt|target][]' +
+		'base[id|href|target][]' +
 		'body[E|onload|onunload|background|bgcolor|text|link|vlink|alink][#|Y]'
 	);
 
@@ -3247,7 +3247,7 @@ tinymce.html.Styles = function(settings, schema) {
 								// Remove or padd the element depending on schema rule
 								if (elementRule.removeEmpty)
 									parent.remove();
-								else if (elementRule.paddEmpty) 
+								else if (elementRule.paddEmpty)
 									parent.empty().append(new tinymce.html.Node('#text', 3)).value = '\u00a0';
 							}
 						}
@@ -4809,7 +4809,7 @@ tinymce.html.Writer = function(settings) {
 				return _compareBoundaryPoints(ec, eo, rec, reo);
 	
 			// Check END_TO_START
-			if (h === 3) 
+			if (h === 3)
 				return _compareBoundaryPoints(sc, so, rec, reo);
 		};
 
@@ -5902,9 +5902,9 @@ tinymce.html.Writer = function(settings) {
 			el = dom.get(t.id);
 
 		tinymce.each(
-				('getPos,getRect,getParent,add,setStyle,getStyle,setStyles,' + 
-				'setAttrib,setAttribs,getAttrib,addClass,removeClass,' + 
-				'hasClass,getOuterHTML,setOuterHTML,remove,show,hide,' + 
+				('getPos,getRect,getParent,add,setStyle,getStyle,setStyles,' +
+				'setAttrib,setAttribs,getAttrib,addClass,removeClass,' +
+				'hasClass,getOuterHTML,setOuterHTML,remove,show,hide,' +
 				'isHidden,setHTML,get').split(/,/)
 			, function(k) {
 				t[k] = function() {
@@ -6647,7 +6647,7 @@ tinymce.html.Writer = function(settings) {
 					}
 
 					// If the anchor node is a element instead of a text node then return this element
-					//if (tinymce.isWebKit && sel.anchorNode && sel.anchorNode.nodeType == 1) 
+					//if (tinymce.isWebKit && sel.anchorNode && sel.anchorNode.nodeType == 1)
 					//	return sel.anchorNode.childNodes[sel.anchorOffset];
 
 					// Handle cases where the selection is immediately wrapped around a node and return that node instead of it's parent.
@@ -8067,8 +8067,8 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 
 			t.onShowMenu.dispatch(t);
 
-			if (s.keyboard_focus) { 
-				t._setupKeyboardNav(); 
+			if (s.keyboard_focus) {
+				t._setupKeyboardNav();
 			}
 		},
 
@@ -8163,7 +8163,7 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 
 		// Internal functions
 		_setupKeyboardNav : function(){
-			var contextMenu, menuItems, t=this; 
+			var contextMenu, menuItems, t=this;
 			contextMenu = DOM.select('#menu_' + t.id)[0];
 			menuItems = DOM.select('a[role=option]', 'menu_' + t.id);
 			menuItems.splice(0,0,contextMenu);
@@ -8266,7 +8266,7 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 			else
 				h += '<span class="mceIcon ' + s['class'] + '"></span>' + (l ? '<span class="' + cp + 'Label">' + l + '</span>' : '');
 
-			h += '<span class="mceVoiceLabel mceIconOnly" style="display: none;" id="' + this.id + '_voice">' + s.title + '</span>'; 
+			h += '<span class="mceVoiceLabel mceIconOnly" style="display: none;" id="' + this.id + '_voice">' + s.title + '</span>';
 			h += '</a>';
 			return h;
 		},
@@ -8379,7 +8379,7 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 			var h = '', t = this, s = t.settings, cp = t.classPrefix;
 
 			h = '<span role="button" aria-haspopup="true" aria-labelledby="' + t.id +'_text" aria-describedby="' + t.id + '_voiceDesc"><table role="presentation" tabindex="0" id="' + t.id + '" cellpadding="0" cellspacing="0" class="' + cp + ' ' + cp + 'Enabled' + (s['class'] ? (' ' + s['class']) : '') + '"><tbody><tr>';
-			h += '<td>' + DOM.createHTML('span', {id: t.id + '_voiceDesc', 'class': 'voiceLabel', style:'display:none;'}, t.settings.title); 
+			h += '<td>' + DOM.createHTML('span', {id: t.id + '_voiceDesc', 'class': 'voiceLabel', style:'display:none;'}, t.settings.title);
 			h += DOM.createHTML('a', {id : t.id + '_text', tabindex : -1, href : 'javascript:;', 'class' : 'mceText', onclick : "return false;", onmousedown : 'return false;'}, DOM.encode(t.settings.title)) + '</td>';
 			h += '<td>' + DOM.createHTML('a', {id : t.id + '_open', tabindex : -1, href : 'javascript:;', 'class' : 'mceOpen', onclick : "return false;", onmousedown : 'return false;'}, '<span><span style="display:none;" class="mceIconOnly" aria-hidden="true">\u25BC</span></span>') + '</td>';
 			h += '</tr></tbody></table></span>';
@@ -10003,10 +10003,10 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 
 			// Create iframe
 			// TODO: ACC add the appropriate description on this.
-			n = DOM.add(o.iframeContainer, 'iframe', { 
+			n = DOM.add(o.iframeContainer, 'iframe', {
 				id : t.id + "_ifr",
 				src : u || 'javascript:""', // Workaround for HTTPS warning in IE6/7
-				frameBorder : '0', 
+				frameBorder : '0',
 				title : s.aria_label,
 				style : {
 					width : '100%',
@@ -11840,7 +11840,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 					if (caretNode === rootNode) {
 						// Clean up the parent element by parsing and serializing it
 						// This will remove invalid elements/attributes and fix nesting issues
-						dom.setOuterHTML(parent, 
+						dom.setOuterHTML(parent,
 							new tinymce.html.Serializer({}, editor.schema).serialize(
 								new tinymce.html.DomParser({
 									remove_trailing_brs : true

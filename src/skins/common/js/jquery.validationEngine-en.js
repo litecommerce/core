@@ -115,7 +115,7 @@
                     "alertText": "* Please input HELLO"
                 }
             };
-            
+
         }
     };
     $.validationEngineLanguage.newLang();

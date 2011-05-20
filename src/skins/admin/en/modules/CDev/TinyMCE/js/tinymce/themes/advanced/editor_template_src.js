@@ -251,7 +251,7 @@
 					// Toggle off the current format
 					matches = ed.formatter.matchAll(formatNames);
 					if (!name || matches[0] == name) {
-						if (matches[0]) 
+						if (matches[0])
 							ed.formatter.remove(matches[0]);
 					} else
 						ed.formatter.apply(name);
@@ -858,7 +858,7 @@
 			var n, t = this, ed = t.editor, s = t.settings, r, mf, me, td;
 
 			n = DOM.add(tb, 'tr');
-			n = td = DOM.add(n, 'td', {'class' : 'mceStatusbar'}); 
+			n = td = DOM.add(n, 'td', {'class' : 'mceStatusbar'});
 			n = DOM.add(n, 'div', {id : ed.id + '_path_row', 'role': 'group', 'aria-labelledby': ed.id + '_path_voice'});
 			if (s.theme_advanced_path) {
 				DOM.add(n, 'span', {id: ed.id + '_path_voice'}, ed.translate('advanced.path'));

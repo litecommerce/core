@@ -38,7 +38,7 @@ abstract class ATabs extends \XLite\View\Tabs\ATabs implements \XLite\Base\IDeco
 {
     /**
      * Flag: display (true) or hide (false) tabs
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

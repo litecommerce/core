@@ -831,8 +831,8 @@
 				// plain text take the same style as the existing paragraph.)
 				if ((pos = h.indexOf("</p><p>")) != -1) {
 					rpos = h.lastIndexOf("</p><p>");
-					node = sel.getNode(); 
-					breakElms = [];		// Get list of elements to break 
+					node = sel.getNode();
+					breakElms = [];		// Get list of elements to break
 
 					do {
 						if (node.nodeType == 1) {

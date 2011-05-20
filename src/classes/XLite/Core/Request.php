@@ -273,10 +273,10 @@ class Request extends \XLite\Base\Singleton
     }
 
     /**
-     * Normalize request data 
-     * 
+     * Normalize request data
+     *
      * @param mixed $request Request data
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
