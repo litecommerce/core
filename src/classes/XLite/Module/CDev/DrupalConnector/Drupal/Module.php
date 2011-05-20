@@ -143,7 +143,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function registerPortals()
     {
-        $this->registerPortal('user/%/orders', '\XLite\Controller\Customer\OrderList', 'Order history');
+        $this->registerPortal('user/%/orders', '\XLite\Controller\Customer\OrderList', 'Orders');
         $this->registerPortal('user/%/orders/%', '\XLite\Controller\Customer\Order');
         $this->registerPortal('user/%/orders/%/invoice', '\XLite\Controller\Customer\Invoice');
 

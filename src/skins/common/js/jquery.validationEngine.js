@@ -81,14 +81,14 @@
                 form.find("[class*=validate][type=checkbox]").unbind("click", methods._onFieldEvent);
                 // unbind form.submit
                 form.unbind("submit", methods.onAjaxFormComplete);
-                
-               
+
+
                 // unbind live fields (kill)
                 form.find("[class*=validate]").not("[type=checkbox]").die(options.validationEventTrigger, methods._onFieldEvent);
                 form.find("[class*=validate][type=checkbox]").die("click", methods._onFieldEvent);
                 // unbind form.submit
                 form.die("submit", methods.onAjaxFormComplete);
-                
+
                 form.removeData('jqv');
             }
         },
@@ -1149,13 +1149,13 @@
 
         var form = $(this);
 		  if(!form[0]) return false;  // stop here if the form does not exist
-		  
+		
         if (typeof(method) === 'string' && method.charAt(0) != '_' && methods[method]) {
 
             // make sure init is called once
-            if(method != "showPrompt" && method != "hidePrompt" && method != "hide" && method != "hideAll") 
+            if(method != "showPrompt" && method != "hidePrompt" && method != "hide" && method != "hideAll")
             	methods.init.apply(form);
-             
+
             return methods[method].apply(form, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {
             // default constructor with or without arguments

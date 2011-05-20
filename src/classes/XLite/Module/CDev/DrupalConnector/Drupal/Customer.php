@@ -56,7 +56,7 @@ class Customer extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     }
 
     /**
-     * Return content for the "Order history" tab
+     * Return content for the "Orders" tab
      *
      * @param \stdClass $account Current user descriptor
      *

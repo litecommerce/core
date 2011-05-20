@@ -33,7 +33,6 @@ namespace XLite\View;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="center")
  */
 class OrderSearch extends \XLite\View\Dialog
 {

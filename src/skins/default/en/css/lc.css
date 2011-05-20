@@ -2514,12 +2514,6 @@ ul.location-subnodes li a.current {
   padding-bottom: 4px;
 }
 
-.order-box .links .track a {
-  background: transparent url(../images/icon_shipping.png) no-repeat left top;
-  padding: 2px 0px;
-  padding-left: 41px;
-}
-
 /**
  * Invoice
  */
@@ -2717,4 +2711,61 @@ ul.location-subnodes li a.current {
 
 .simple-search-box button.submit-button {
   display: none;
+}
+
+/* Page tabs */
+
+div.page-tabs
+{
+  height: 37px;
+  border-bottom: 1px solid #cadce8;
+  background: #f5f5f5;
+  padding-top: 10px;
+}
+
+div.tab-content
+{
+  margin: 15px;
+}
+
+div.page-tabs ul
+{
+  padding:0;
+  margin:0;
+  list-style:none;
+  margin-left: 10px;
+}
+
+div.page-tabs ul li
+{
+  float:left;
+  list-style: none;
+  padding-left: 0px;
+  margin: 0;
+  background: none;
+}
+
+div.page-tabs ul li a
+{
+  -moz-border-radius: 10px 10px 0 0;
+  -webkit-border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 0 0;
+  background: none repeat scroll 0 0 #ebf7ff;
+  border-color: #cadce8 #cadce8;
+  border-style: solid solid none;
+  border-width: 1px 1px 0;
+  display: block;
+  float: left;
+  margin-right: 10px;
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+div.page-tabs ul li.tab-current a
+{
+  background: #fff;
+  color: #333;
+  border-bottom: 1px solid #fff;
 }

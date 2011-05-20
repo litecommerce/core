@@ -2,8 +2,8 @@
 
 {**
  * Info about modified files
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -16,7 +16,7 @@
   <div class="header">{t(#Some files are modified#)}</div>
 
   <div class="description">
-    {t(#The system has detected that some custom modifications were made by editing core and 
+    {t(#The system has detected that some custom modifications were made by editing core and
     module files, not by writing new modules. In order to proceed with the upgrade you should decide
     what to do with the modifications#)}:
   </div>
@@ -45,10 +45,10 @@
   </ul>
 
   <div class="clear"></div>
-  
+
   <ul class="modified-files-group-list">
     <li class="modified-files-block">
-      
+
       <div class="modified-files-group" FOREACH="getCustomFiles(),entry,files">
         <div class="modified-file" FOREACH="files,file,status">
           <label>
@@ -57,14 +57,14 @@
           </label>
         </div>
       </div>
-      
+
     </li>
     <li class="switch-button-block">
       <widget class="\XLite\View\Button\SwitchButton" first="makeSmallHeight" second="makeLargeHeight" />
     </li>
   </ul>
-  
+
   <div class="clear"></div>
-  
+
 </div>
 </div>

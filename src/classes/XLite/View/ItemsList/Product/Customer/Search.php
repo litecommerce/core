@@ -32,7 +32,7 @@ namespace XLite\View\ItemsList\Product\Customer;
  *
  * @see   ____class_see____
  * @since 1.0.0
- * 
+ *
  */
 class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
 {
@@ -159,7 +159,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         return null;
     }
-    
+
     /**
      * Return title
      *

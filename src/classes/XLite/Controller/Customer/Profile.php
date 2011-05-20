@@ -56,6 +56,43 @@ class Profile extends \XLite\Controller\Customer\ACustomer
         return 'register';
     }
 
+    /**
+     * The "mode" parameter used to determine if we create new or modify existing profile
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isRegisterMode()
+    {
+        return self::getRegisterMode() === \XLite\Core\Request::getInstance()->mode;
+    }
+
+    /**
+     * Define current location for breadcrumbs
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Account details';
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->addLocationNode($this->t('My account'));
+    }
 
     /**
      * Return class name of the register form

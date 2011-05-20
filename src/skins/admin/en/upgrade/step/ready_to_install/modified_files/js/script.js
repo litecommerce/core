@@ -2,8 +2,8 @@
 
 /**
  * ____file_title____
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -59,23 +59,23 @@ core.bind(
       .attr('checked', 'checked')
       .attr('readonly', 'readonly')
       .addClass('readonly');
-      
+
       jQuery('a.unselect-all, a.select-all').unbind('click');
     });
-    
+
     jQuery('#radio-unselect').click(function () {
       attachClickOnSelectAll();
       attachClickOnUnselectAll();
-      
+
       jQuery('.modified-file input[type=checkbox]')
       .removeAttr('readonly')
       .removeClass('readonly');
     });
-    
+
     attachClickOnSelectAll();
-    
+
     attachClickOnUnselectAll();
-    
+
     // Must be selected by default
     jQuery('#radio-select-all').click();
   }

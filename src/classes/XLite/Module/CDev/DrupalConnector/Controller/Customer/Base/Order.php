@@ -67,7 +67,7 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
     }
 
     /**
-     * Check if current page is the "Order history" portal
+     * Check if current page is the "Orders" portal
      *
      * @return boolean
      * @access protected

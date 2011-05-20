@@ -524,8 +524,8 @@ class Auth extends \XLite\Base
     }
 
     /**
-     * Get stored profiel id 
-     * 
+     * Get stored profiel id
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
