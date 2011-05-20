@@ -188,7 +188,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
                     is_array($data[$period])
                     && \Includes\Utils\ArrayManager::getIndex($data[$period], $rownum)
                 )
-                    ? \Includes\Utils\ArrayManager::getIndex($data[$period][$rownum][0])
+                    ? $data[$period][$rownum][0]
                     : null;
             }
         }

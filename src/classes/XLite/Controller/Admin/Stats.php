@@ -200,8 +200,10 @@ class Stats extends \XLite\Controller\Admin\AAdmin
     {
         $cnd = new \XLite\Core\CommonCell();
 
+        $itervals = $this->getTimeIntervals();
+
         $cnd->date = array(
-            $this->getStartTime($interval ? $interval : array_pop($this->getTimeIntervals())),
+            $this->getStartTime($interval ? $interval : array_pop($itervals)),
             LC_START_TIME
         );
 
