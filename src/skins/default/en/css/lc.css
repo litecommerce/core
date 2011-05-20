@@ -2474,12 +2474,6 @@ ul.location-subnodes li {
   padding-bottom: 4px;
 }
 
-.order-box .links .track a {
-  background: transparent url(../images/icon_shipping.png) no-repeat left top;
-  padding: 2px 0px;
-  padding-left: 41px;
-}
-
 /**
  * Invoice
  */
