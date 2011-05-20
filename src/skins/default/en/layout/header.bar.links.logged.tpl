@@ -13,7 +13,8 @@
  *}
 
 
-<ul class="account-links inline" IF="!isLogged()">
-  <li class="account-link-1 first"><a href="{buildURL(#login#)}" class="log-in">{t(#Log in#)}</a></li>
-  <li class="account-link-2 last"><a href="{buildURL(#profile#,##,_ARRAY_(#mode#^#register#))}" class="register">{t(#Register#)}</a></li>
+<ul class="account-links inline" IF="isLogged()">
+  <li class="account-link-1 first">Hello, {auth.profile.login}{*<a href="{buildURL(#login#)}" class="log-in">{t(#Log in#)}</a>*}</li>
+  <li class="account-link-2"><a href="{buildURL(#profile#,##)}" class="register">{t(#My account#)}</a></li>
+  <li class="account-link-1 last"><a href="{buildURL(#login#,#logoff#)}" class="log-in">{t(#Log out#)}</a></li>
 </ul>

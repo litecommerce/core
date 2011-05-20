@@ -83,11 +83,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
         $auth = \XLite\Core\Auth::getInstance();
 
         return parent::checkAccess()
-            && $auth->isLogged()
-            && (
-                $auth->getProfile()->isAdmin()
-                || $auth->getProfile()->getProfileId() == \XLite\Core\Request::getInstance()->profile_id
-            );
+            && $auth->isLogged();
     }
 
     /**
@@ -124,7 +120,21 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      */
     protected function getLocation()
     {
-        return 'Search orders';
+        return 'Orders';
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->addLocationNode($this->t('My account'));
     }
 
     /**
