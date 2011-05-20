@@ -59,7 +59,7 @@ class Profile extends \XLite\Controller\Customer\ACustomer
     /**
      * The "mode" parameter used to determine if we create new or modify existing profile
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
