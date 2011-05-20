@@ -194,7 +194,7 @@ class OrderSearch extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return $this->getTotalCount() . ' orders';
+        return null;
     }
 
     /**
