@@ -61,6 +61,25 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
 
     /**
+     * handleRequest 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function handleRequest()
+    {
+        if (
+            \XLite\Core\Auth::getInstance()->isLogged()
+            && 'logoff' !== \XLite\Core\Request::getInstance()->{static::PARAM_ACTION}
+        ) {
+            $this->setReturnURL($this->buildURL());
+        }
+
+        return parent::handleRequest();
+    }
+
+    /**
      * Perform some actions after the "login" action
      *
      * @return void
