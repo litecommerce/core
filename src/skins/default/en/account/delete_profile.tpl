@@ -12,4 +12,4 @@
  * @ListChild (list="customer.account.details.after", weight="100")
  *}
 
-<widget class="\XLite\View\Button\Link" label="Delete profile" location="{buildURL(#profile#,##,_ARRAY_(#mode#^#delete#))}" />
+<widget IF="isLogged()" class="\XLite\View\Button\Link" label="Delete profile" location="{buildURL(#profile#,##,_ARRAY_(#mode#^#delete#))}" />
