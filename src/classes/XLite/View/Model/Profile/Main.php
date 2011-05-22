@@ -247,8 +247,11 @@ class Main extends \XLite\View\Model\Profile\AProfile
      */
     protected function setModelProperties(array $data)
     {
-        if (isset($data['password'])) {
+        if (!empty($data['password'])) {
             $data['password'] = \XLite\Core\Auth::encryptPassword($data['password']);
+
+        } elseif (isset($data['password'])) {
+            unset($data['password']);
         }
 
         parent::setModelProperties($data);

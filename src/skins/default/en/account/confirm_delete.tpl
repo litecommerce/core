@@ -10,18 +10,18 @@
  * @since     1.0.0
  *}
 
-<form action="cart.php" name="confirm_delete_profile" method="post">
+<p>You have selected to delete your profile. Please, confirm you want to proceed:</p>
 
-  Are you sure you want to delete your profile?
+<br />
 
-  <br />
-  <br />
-
-  <input type="hidden" foreach="allParams,_name,_value" name="{_name}" value="{_value}" />
+<form action="{buildURL()}" method="post" name="delete_account_form">
+  <input type="hidden" name="target" value="profile" />
   <input type="hidden" name="action" value="delete" />
 
-  <a href="javascript: void();" onclick="javascript: document.confirm_delete_profile.submit();"><img src="skins/admin/en/images/go.gif" width="13" height="13" align="absmiddle" alt="" /> Yes</a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="javascript: history.go(-1)"><img src="skins/admin/en/images/go.gif" width="13" height="13" align="absmiddle" alt="" /> No</a>
+  <div class="button">
+    <widget class="\XLite\View\Button\Submit" label="Proceed" style="button-proceed" />
+
+    <widget class="\XLite\View\Button\Regular" label="Cancel" jsCode="document.forms['delete_account_form'].elements['action'].value='cancel_delete'; document.forms['delete_account_form'].submit();" style="button-cancel" />
+  </div>
 
 </form>
