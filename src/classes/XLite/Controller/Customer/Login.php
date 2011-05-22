@@ -149,7 +149,8 @@ class Login extends \XLite\Controller\Customer\ACustomer
         if ($this->profile === \XLite\Core\Auth::RESULT_ACCESS_DENIED) {
             $this->set('valid', false);
             $this->addLoginFailedMessage(\XLite\Core\Auth::RESULT_ACCESS_DENIED);
-            \XLite\Logger::getInstance()->log(sprintf('Log in action is failed (%s)', \XLite\Core\Request::getInstance()->login), LOG_WARNING);
+            \XLite\Logger::getInstance()
+                ->log(sprintf('Log in action is failed (%s)', \XLite\Core\Request::getInstance()->login), LOG_WARNING);
 
         } else {
 
