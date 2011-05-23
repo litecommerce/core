@@ -266,6 +266,21 @@ table.form-data td {
   padding: 3px;
 }
 
+table.main-table,
+  table.main-table tr,
+  table.main-table td
+{
+  border-width: 0px;
+  border-color: #ffffff;
+  border-style: none;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+
+table.main-table td {
+  padding: 12px 3px;
+}
+
 /* Colorbox jQuery plugin */
 #colorbox,
   #cboxOverlay,
@@ -291,14 +306,13 @@ ul.subcategory-icons
   margin-bottom: 40px;
 }
 
-ul.subcategory-icons li
-{
-  margin: 21px 23px;
-}
-
 ul.subcategory-icons
 {
   margin-top: 5px;
+}
+
+ul.grid-list.subcategory-icons li {
+  margin: 21px 23px;
 }
 
 ul.subcategory-icons a
@@ -2719,7 +2733,7 @@ div.page-tabs
 {
   height: 37px;
   border-bottom: 1px solid #cadce8;
-  background: #f5f5f5;
+  background: #ffffff;
   padding-top: 10px;
 }
 
@@ -2745,7 +2759,8 @@ div.page-tabs ul li
   background: none;
 }
 
-div.page-tabs ul li a
+div.page-tabs ul li a,
+  div.page-tabs ul li a:hover
 {
   -moz-border-radius: 10px 10px 0 0;
   -webkit-border-radius: 10px 10px 0 0;
@@ -2761,6 +2776,11 @@ div.page-tabs ul li a
   text-decoration: none;
   font-size: 14px;
   line-height: 16px;
+}
+
+div.page-tabs ul li a:hover {
+  background: #ffffff;
+  color: #2C5FA6;
 }
 
 div.page-tabs ul li.tab-current a
