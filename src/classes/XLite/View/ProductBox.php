@@ -112,11 +112,11 @@ class ProductBox extends \XLite\View\SideBarBox
             self::PARAM_PRODUCT_ID => new \XLite\Model\WidgetParam\ObjectId\Product('Product Id', 0, true),
 
             self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon width', 180, true
+                'Maximal icon width', 110, true
             ),
 
             self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon height', 180, true
+                'Maximal icon height', 110, true
             ),
 
             self::PARAM_SHOW_BUY_NOW => new \XLite\Model\WidgetParam\Checkbox(
