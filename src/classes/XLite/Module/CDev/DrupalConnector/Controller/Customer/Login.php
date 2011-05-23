@@ -25,29 +25,26 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button;
-
+namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 
 /**
- * Delete user button widget
+ * Login page controller
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class DeleteUser extends \XLite\View\Button\Regular
+class Login extends \XLite\Controller\Customer\Login implements \XLite\Base\IDecorator
 {
     /**
-     * getJSFiles 
+     * Do not display any messages when logging in routine is called in Drupal interface
      * 
-     * @return array
+     * @param mixed $result Result of log in procedure
+     *  
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getJSFiles()
+    protected function addLoginFailedMessage($result)
     {
-        $list = parent::getJSFiles();
-        $list[] = 'account/controller.js';
-
-        return $list;
     }
 }
