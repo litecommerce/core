@@ -409,4 +409,23 @@ class Order extends \XLite\Model\Repo\ARepo
             // TODO - add logging here
         }
     }
+
+    /**
+     * Get detailed foreign keys
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDetailedForeignKeys()
+    {
+        return array(
+            array(
+                'fields'          => array('orig_profile_id'),
+                'referenceRepo'   => 'XLite\Model\Profile',
+                'referenceFields' => array('profile_id'),
+                'delete'          => 'NO ACTION',
+            ),
+        );
+    }
 }

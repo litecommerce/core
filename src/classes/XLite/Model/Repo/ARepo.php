@@ -836,12 +836,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
 
-            $schema = preg_replace(
-                '/(`\S+` ADD FOREIGN KEY \([^\)]+\) REFERENCES `\S+` \([^\)]+\)$\s*)$/Ss',
-                '$1 ON DELETE CASCADE',
-                $schema
-            );
-
             foreach ($this->getDetailedForeignKeys() as $cell) {
                 if (
                     is_array($cell)

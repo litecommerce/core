@@ -1259,6 +1259,12 @@ OUT;
         $schema = preg_replace('/ CHANGE ([a-z]\S+) (\S+) /Ss', ' CHANGE `$1` `$2` ', $schema);
         $schema = preg_replace('/ ADD ([a-z]\S+) /Ss', ' ADD `$1` ', $schema);
 
+        $schema = preg_replace(
+            '/(`\S+` ADD FOREIGN KEY \([^\)]+\) REFERENCES `\S+` \([^\)]+\)$\s*)$/Ss',
+            '$1 ON DELETE CASCADE',
+            $schema
+        );
+
         return $schema;
     }
 
