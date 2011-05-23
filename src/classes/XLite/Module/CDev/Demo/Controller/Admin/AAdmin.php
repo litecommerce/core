@@ -45,15 +45,23 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
      * @since  1.0.0
      */
     protected $demoControllers = array(
-        'XLite\Controller\Admin\AddonsList',
+        'XLite\Controller\Admin\AddonsInstall',
+        'XLite\Controller\Admin\AddonsListInstalled',
+        'XLite\Controller\Admin\AddonsListMarketplace',
         'XLite\Controller\Admin\AddressBook',
         'XLite\Controller\Admin\CacheManagement',
-        'XLite\Controller\Admin\BackupRestore',
+        'XLite\Controller\Admin\DbBackup',
+        'XLite\Controller\Admin\DbRestore',
+        'XLite\Controller\Admin\Measure',
+        'XLite\Controller\Admin\Memberships',
         'XLite\Controller\Admin\Module',
         'XLite\Controller\Admin\ModuleInstallation',
         'XLite\Controller\Admin\Modules',
         'XLite\Controller\Admin\Profile',
+        'XLite\Controller\Admin\PackDistr',
         'XLite\Controller\Admin\Settings',
+        'XLite\Controller\Admin\Upgrade',
+        'XLite\Controller\Admin\Aupost',
     );
 
 
