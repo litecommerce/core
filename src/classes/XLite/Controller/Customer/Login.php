@@ -61,6 +61,25 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
 
     /**
+     * handleRequest 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function handleRequest()
+    {
+        if (
+            \XLite\Core\Auth::getInstance()->isLogged()
+            && 'logoff' !== \XLite\Core\Request::getInstance()->{static::PARAM_ACTION}
+        ) {
+            $this->setReturnURL($this->buildURL());
+        }
+
+        return parent::handleRequest();
+    }
+
+    /**
      * Perform some actions after the "login" action
      *
      * @return void
@@ -148,6 +167,9 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
         if ($this->profile === \XLite\Core\Auth::RESULT_ACCESS_DENIED) {
             $this->set('valid', false);
+            $this->addLoginFailedMessage(\XLite\Core\Auth::RESULT_ACCESS_DENIED);
+            \XLite\Logger::getInstance()
+                ->log(sprintf('Log in action is failed (%s)', \XLite\Core\Request::getInstance()->login), LOG_WARNING);
 
         } else {
 
@@ -202,5 +224,21 @@ class Login extends \XLite\Controller\Customer\ACustomer
     protected function actionPostprocessLogin()
     {
         $this->redirectFromLogin();
+    }
+
+    /**
+     * Add top message if log in is failed
+     * 
+     * @param mixed $result Result of log in procedure
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addLoginFailedMessage($result)
+    {
+        if (\XLite\Core\Auth::RESULT_ACCESS_DENIED === $result) {
+            \XLite\Core\TopMessage::addError('Invalid login or password');
+        }
     }
 }

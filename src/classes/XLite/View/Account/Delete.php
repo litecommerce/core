@@ -25,29 +25,25 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button;
-
+namespace XLite\View\Account;
 
 /**
- * Delete user button widget
+ * Delete account confirmation widget
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class DeleteUser extends \XLite\View\Button\Regular
+class Delete extends \XLite\View\AView
 {
     /**
-     * getJSFiles 
-     * 
-     * @return array
+     * getDefaultTemplate
+     *
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getJSFiles()
+    protected function getDefaultTemplate()
     {
-        $list = parent::getJSFiles();
-        $list[] = 'account/controller.js';
-
-        return $list;
+        return 'account/confirm_delete.tpl';
     }
 }

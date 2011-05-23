@@ -115,7 +115,7 @@ class Subcategories extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'subcategories' . LC_DS . $this->getParam(self::PARAM_DISPLAY_MODE);
+        return 'subcategories/' . $this->getParam(self::PARAM_DISPLAY_MODE);
     }
 
     /**
@@ -160,10 +160,10 @@ class Subcategories extends \XLite\View\Dialog
                 'Display mode', self::DISPLAY_MODE_ICONS, true, $this->displayModes
             ),
             self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon width', 170, true
+                'Maximal icon width', 160, true
             ),
             self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon height', 170, true
+                'Maximal icon height', 160, true
             ),
         );
     }

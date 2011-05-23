@@ -57,6 +57,34 @@ class Profile extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
+     * handleRequest 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function handleRequest()
+    {
+        if (!$this->isLogged() && !$this->isRegisterMode()) {
+            $this->setReturnURL($this->buildURL('login'));
+        }
+
+        return parent::handleRequest();
+    }
+
+    /**
+     * Returns title of the page
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getTitle()
+    {
+        return ('delete' == \XLite\Core\Request::getInstance()->mode ? 'Delete account' : null);
+    }
+
+    /**
      * The "mode" parameter used to determine if we create new or modify existing profile
      *
      * @return boolean
@@ -65,7 +93,8 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      */
     public function isRegisterMode()
     {
-        return self::getRegisterMode() === \XLite\Core\Request::getInstance()->mode;
+        return self::getRegisterMode() === \XLite\Core\Request::getInstance()->mode
+            || !$this->getModelForm()->getModelObject()->isPersistent();
     }
 
     /**
@@ -144,6 +173,9 @@ class Profile extends \XLite\Controller\Customer\ACustomer
             \XLite\Core\Mailer::sendProfileCreatedAdminNotification($this->getModelForm()->getModelObject());
 
             $params = array('profile_id' => $this->getModelForm()->getProfileId(false));
+
+            // Log in user with created profile
+            \XLite\Core\Auth::getInstance()->loginProfile($this->getModelForm()->getModelObject());
         }
 
         $this->setReturnURL($this->buildURL('profile', '', $params));
@@ -183,7 +215,7 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      */
     protected function doActionModify()
     {
-        if ($this->getModelForm()->isRegisterMode()) {
+        if ($this->isRegisterMode()) {
 
             $this->doActionRegister();
 
@@ -210,6 +242,8 @@ class Profile extends \XLite\Controller\Customer\ACustomer
             // Send notification to the users department
             \XLite\Core\Mailer::sendProfileDeletedAdminNotification($userLogin);
         }
+
+        $this->setReturnURL($this->buildURL());
 
         return $result;
     }
