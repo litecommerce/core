@@ -552,7 +552,7 @@ abstract class AEntry
                 $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
             }
 
-        } elseif (/*$this->manageFile($path, 'write', array($this->getFileSource($path)))*/true) {
+        } elseif ($this->manageFile($path, 'write', array($this->getFileSource($path)))) {
             $this->log('File "' . $path . '" successfully added');
 
         } else {
@@ -579,7 +579,7 @@ abstract class AEntry
                 $this->addFileErrorMessage('File "{{file}}" is not writeable', $path);
             }
 
-        } elseif (/*$this->manageFile($path, 'write', array($this->getFileSource($path)))*/true) {
+        } elseif ($this->manageFile($path, 'write', array($this->getFileSource($path)))) {
             $this->log('File "' . $path . '" successfully updated');
 
         } else {
@@ -606,7 +606,7 @@ abstract class AEntry
                 $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
             }
 
-        } elseif (/*$this->manageFile($path, 'delete')*/true) {
+        } elseif ($this->manageFile($path, 'delete')) {
             $this->log('File "' . $path . '" successfully deleted');
 
         } else {

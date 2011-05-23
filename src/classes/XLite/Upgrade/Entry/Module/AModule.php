@@ -68,12 +68,13 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
         parent::upgrade($isTestMode, $filesToOverwrite);
 
         if (!$isTestMode) {
-            $this->updateDBRecords();
 
             if (!$this->isValid()) {
                 list($author, $name) = explode('\\', $this->getActualName());
                 \Includes\SafeMode::markModuleAsUnsafe($author, $name);
             }
+
+            $this->updateDBRecords();
         }
     }
 }
