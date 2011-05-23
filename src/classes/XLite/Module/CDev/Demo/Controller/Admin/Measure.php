@@ -28,27 +28,14 @@
 namespace XLite\Module\CDev\Demo\Controller\Admin;
 
 /**
- * AddressBook
+ * Measure
  *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
  */
-class AddressBook extends \XLite\Controller\Admin\AddressBook implements \XLite\Base\IDecorator
+class Measure extends \XLite\Controller\Admin\Measure implements \XLite\Base\IDecorator
 {
-    /**
-     * Check if we need to forbid current action
-     *
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function checkForDemoController()
-    {
-        return parent::checkForDemoController() && \XLite::isAdminZone();
-    }
-
     /**
      * URL to redirect if action is forbidden
      *
@@ -59,12 +46,6 @@ class AddressBook extends \XLite\Controller\Admin\AddressBook implements \XLite\
      */
     protected function getForbidInDemoModeRedirectURL()
     {
-        return \XLite\Core\Converter::buildURL(
-            'address_book', 
-            '',
-            $this->getProfile()->getProfileId()
-            ? array('profile_id' => $this->getProfile()->getProfileId())
-            : array()
-        );
+        return \XLite\Core\Converter::buildURL('main');
     }
 }
