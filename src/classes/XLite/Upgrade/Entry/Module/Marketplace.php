@@ -332,5 +332,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
 
         \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($this->getModuleForUpgrade());
         \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($this->getModuleInstalled());
+
+        $this->moduleIDInstalled = $this->getModuleForUpgrade()->getModuleID();
     }
 }

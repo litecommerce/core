@@ -204,21 +204,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
-     * Method to get entry package
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getSource()
-    {
-        return \XLite\Core\Marketplace::getInstance()->getCorePack(
-            $this->getMajorVersionNew(),
-            $this->getMinorVersionNew()
-        );
-    }
-
-    /**
      * Download hashes for current version
      *
      * @return array

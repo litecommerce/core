@@ -405,6 +405,10 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             $this->setReturnURL($this->buildURL('addons_list_installed'));
         }
 
+        // Set cell status
+        \XLite\Upgrade\Cell::getInstance()->clear(true, false, false);
+        \XLite\Upgrade\Cell::getInstance()->setUpgraded(true);
+
         // Rebuild cache
         \XLite::setCleanUpCacheFlag(true);
     }
