@@ -117,7 +117,7 @@ class Cell extends \XLite\Base\Singleton
      */
     public function isValid()
     {
-        return ! (bool) $this->getErrorMessages();
+        return ! (bool) array_filter($this->getErrorMessages());
     }
 
     /**

@@ -84,7 +84,7 @@ class ModifiedFiles extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInst
      */
     protected function isVisible()
     {
-        return parent::isVisible() && (bool) $this->getCustomFiles();
+        return parent::isVisible() && (bool) array_filter($this->getCustomFiles());
     }
 
     /**

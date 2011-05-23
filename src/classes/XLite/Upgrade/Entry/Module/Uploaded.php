@@ -45,6 +45,15 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     protected $metadata;
 
     /**
+     * Module (cache)
+     * 
+     * @var   \XLite\Model\Module
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $module;
+
+    /**
      * Return module actual name
      *
      * @return string
@@ -203,9 +212,22 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
-     * Calculate hashes for current version
+     * Unpack archive
      *
-     * :TODO: to improve. Check if module is installed and collect file hashes
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function unpack()
+    {
+        parent::unpack();
+        $this->saveHashesForInstalledFiles();
+
+        return $this->isUnpacked();
+    }
+
+    /**
+     * Calculate hashes for current version
      *
      * @return array
      * @see    ____func_see____
@@ -213,7 +235,25 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function loadHashesForInstalledFiles()
     {
-        return $this->getHashes();
+        $result = array();
+        $module = $this->getModuleInstalled();
+
+        if ($module) {
+            $pack = new \XLite\Core\Pack\Module($module);
+
+            foreach ($pack->getDirectoryIterator() as $file) {
+
+                if ($file->isFile()) {
+                    $relativePath = \Includes\Utils\FileManager::getRelativePath($file->getPathname(), LC_DIR_ROOT);
+
+                    if ($relativePath) {
+                        $result[$relativePath] = \Includes\Utils\FileManager::getHash($file->getPathname(), true);
+                    }
+                }
+            }
+        }
+
+        return $result ?: $this->getHashes();
     }
 
     /**
@@ -290,20 +330,13 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     /**
      * Update database records
      *
-     * @param string $author Module author
-     * @param string $name   Module name
-     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function updateDBRecords($author, $name)
+    protected function updateDBRecords()
     {
-        $module = new \XLite\Model\Module();
-        $module->setAuthor($author);
-        $module->setName($name);
-
-        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->getModuleInstalled($module) ?: $module;
+        $module = $this->getModuleInstalled() ?: $this->getModuleForUpgrade();
 
         $module->setEnabled(true);
         $module->setDate(time());
@@ -319,5 +352,39 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
 
         \XLite\Core\Database::getEM()->persist($module);
         \XLite\Core\Database::getEM()->flush();
+    }
+
+    /**
+     * Alias
+     *
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleInstalled()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->getModuleInstalled(
+            $this->getModuleForUpgrade()
+        );
+    }
+
+    /**
+     * Alias
+     *
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleForUpgrade()
+    {
+        if (!isset($this->module)) {
+            $this->module = new \XLite\Model\Module();
+
+            list($author, $name) = explode('\\', $this->getActualName());
+            $this->module->setAuthor($author);
+            $this->module->setName($name);
+        }
+
+        return $this->module;
     }
 }
