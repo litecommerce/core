@@ -231,7 +231,7 @@ class OrderSearch extends \XLite\View\Dialog
 
         $cnd = new \XLite\Core\CommonCell();
 
-        if ($this->getProfile()->isAdmin()) {
+        if ($this->getProfile()->isAdmin() && \XLite::isAdminZone()) {
 
             if (!empty(\XLite\Core\Request::getInstance()->profile_id)) {
 
