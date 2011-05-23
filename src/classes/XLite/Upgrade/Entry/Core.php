@@ -300,6 +300,8 @@ class Core extends \XLite\Upgrade\Entry\AEntry
             )
         );
 
+        $this->saveHashesForInstalledFiles();
+
         return parent::download();
     }
 

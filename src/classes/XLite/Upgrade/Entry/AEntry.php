@@ -292,8 +292,6 @@ abstract class AEntry
      */
     public function download()
     {
-        $this->saveHashesForInstalledFiles();
-
         return $this->isDownloaded();
     }
 
@@ -326,9 +324,7 @@ abstract class AEntry
     {
         $path = $this->getRepositoryPath();
 
-        return !empty($path)
-            && \Includes\Utils\FileManager::isFile($path)
-            && \Includes\Utils\FileManager::isFile($this->getCurrentVersionHashesFilePath());
+        return !empty($path) && \Includes\Utils\FileManager::isFile($path);
     }
 
     /**

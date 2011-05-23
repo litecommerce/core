@@ -254,6 +254,8 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUploadAddon()
     {
+        $this->setReturnURL($this->buildURL('addons_list_installed'));
+
         $path = \Includes\Utils\FileManager::moveUploadedFile('modulePack');
 
         if ($path) {
@@ -261,15 +263,12 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \XLite\Upgrade\Cell::getInstance()->addUploadedModule($path);
 
             if (\XLite\Upgrade\Cell::getInstance()->isValid()) {
-                $this->setReturnURL($this->buildURL('upgrade', 'download', $this->getActionParamsCommon()));
+                $this->setReturnURL($this->buildURL('upgrade', 'download', $this->getActionParamsCommon(true)));
             }
 
         } else {
-
             \XLite\Core\TopMessage::getInstance()->addError('Unable to upload module');
         }
-
-        $this->setReturnURL($this->buildURL('addons_list_installed'));
     }
 
     /**

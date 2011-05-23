@@ -170,18 +170,6 @@ abstract class AModule
     }
 
     /**
-     * Get post-deinstallation user notes
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getPostUninstallationNotes()
-    {
-        return '';
-    }
-
-    /**
      * Custom installation routine
      *
      * @return boolean

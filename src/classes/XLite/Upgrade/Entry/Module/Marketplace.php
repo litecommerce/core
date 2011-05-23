@@ -275,6 +275,8 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
             )
         );
 
+        $this->saveHashesForInstalledFiles();
+
         return parent::download();
     }
 
@@ -319,18 +321,13 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     /**
      * Update database records
      *
-     * @param string $author Module author
-     * @param string $name   Module name
-     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function updateDBRecords($author, $name)
+    protected function updateDBRecords()
     {
-        if (!$this->isInstalled()) {
-            $this->getModuleForUpgrade()->setEnabled(true);
-        }
+        $this->getModuleForUpgrade()->setEnabled(true);
         $this->getModuleForUpgrade()->setInstalled(true);
 
         \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($this->getModuleForUpgrade());
