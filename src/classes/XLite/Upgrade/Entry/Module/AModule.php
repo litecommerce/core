@@ -56,14 +56,14 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
     /**
      * Perform upgrade
      *
-     * @param boolean $isTestMode       Flag OPTIONAL
-     * @param array   $filesToOverwrite List of custom files to overwrite OPTIONAL
+     * @param boolean    $isTestMode       Flag OPTIONAL
+     * @param array|null $filesToOverwrite List of custom files to overwrite OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function upgrade($isTestMode = true, array $filesToOverwrite = array())
+    public function upgrade($isTestMode = true, $filesToOverwrite = null)
     {
         parent::upgrade($isTestMode, $filesToOverwrite);
 

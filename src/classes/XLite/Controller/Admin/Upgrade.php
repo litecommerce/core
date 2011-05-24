@@ -394,7 +394,10 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         \Includes\Utils\Operator::showMessage('Installing updates, please wait...');
 
         // Perform upgrade
-        \XLite\Upgrade\Cell::getInstance()->upgrade(false, (array) \XLite\Core\Request::getInstance()->toOverwrite);
+        \XLite\Upgrade\Cell::getInstance()->upgrade(
+            false,
+            $this->isForce() ? null : ((array) \XLite\Core\Request::getInstance()->toOverwrite)
+        );
 
         // Disable selected modules
         foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
