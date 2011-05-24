@@ -114,7 +114,7 @@ class Module extends \XLite\Core\Pack\APack
     public function getMetadata()
     {
         return parent::getMetadata() + array(
-            self::METADATA_FIELD_ACTUAL_NAME   => $this->module->callModuleMethod('getActualName'),
+            self::METADATA_FIELD_ACTUAL_NAME   => $this->module->getActualName(),
             self::METADATA_FIELD_VERSION_MAJOR => $this->module->callModuleMethod('getMajorVersion'),
             self::METADATA_FIELD_VERSION_MINOR => $this->module->callModuleMethod('getMinorVersion'),
             self::METADATA_FIELD_NAME          => $this->module->callModuleMethod('getModuleName'),
@@ -136,7 +136,7 @@ class Module extends \XLite\Core\Pack\APack
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDirs()
+    public function getDirs()
     {
         return array_merge($this->getClassDirs(), $this->getSkinDirs());
     }
@@ -173,6 +173,7 @@ class Module extends \XLite\Core\Pack\APack
 
             if (\Includes\Utils\FileManager::isDirReadable($path)) {
                 $data = $path;
+
             } else {
                 unset($result[$key]);
             }

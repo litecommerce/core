@@ -47,17 +47,4 @@ class Place extends \XLite\View\Form\Checkout\ACheckout
         return 'checkout';
     }
 
-    /**
-     * Return value for the <form action="..." ...> attribute
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormAction()
-    {
-        return $this->isSecure()
-            ? \XLite::getInstance()->getShopURL(parent::getFormAction(), true)
-            : parent::getFormAction();
-    }
 }

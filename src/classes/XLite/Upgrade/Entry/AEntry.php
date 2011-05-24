@@ -292,8 +292,6 @@ abstract class AEntry
      */
     public function download()
     {
-        $this->saveHashesForInstalledFiles();
-
         return $this->isDownloaded();
     }
 
@@ -326,9 +324,7 @@ abstract class AEntry
     {
         $path = $this->getRepositoryPath();
 
-        return !empty($path)
-            && \Includes\Utils\FileManager::isFile($path)
-            && \Includes\Utils\FileManager::isFile($this->getCurrentVersionHashesFilePath());
+        return !empty($path) && \Includes\Utils\FileManager::isFile($path);
     }
 
     /**
@@ -419,22 +415,25 @@ abstract class AEntry
     /**
      * Perform upgrade
      *
-     * @param boolean $isTestMode       Flag OPTIONAL
-     * @param array   $filesToOverwrite List of custom files to overwrite OPTIONAL
+     * @param boolean    $isTestMode       Flag OPTIONAL
+     * @param array|null $filesToOverwrite List of custom files to overwrite OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function upgrade($isTestMode = true, array $filesToOverwrite = array())
+    public function upgrade($isTestMode = true, $filesToOverwrite = null)
     {
         $this->errorMessages = array();
-        $this->customFiles   = $filesToOverwrite ?: array();
 
-        $hashes = $this->getHashes();
+        $hashesInstalled  = $this->getHashesForInstalledFiles();
+        $hashesForUpgrade = $this->getHashes();
 
+        // Overwrite only selected files or the all ones
+        $this->customFiles = is_array($filesToOverwrite) ? $filesToOverwrite : $hashesInstalled;
+    
         // Walk through the installed and known files list
-        foreach ($this->getHashesForInstalledFiles() as $path => $hash) {
+        foreach ($hashesInstalled as $path => &$hash) {
 
             // Check file on FS
             if ($this->manageFile($path, 'isFile')) {
@@ -444,9 +443,9 @@ abstract class AEntry
 
                 if (isset($fileHash)) {
 
-                    if (isset($hashes[$path])) {
+                    if (isset($hashesForUpgrade[$path])) {
                         // File has been modified (by user, or by LC Team, see the third param)
-                        if ($fileHash !== $hash || $hashes[$path] !== $hash) {
+                        if ($fileHash !== $hash || $hashesForUpgrade[$path] !== $hash) {
                             $this->updateFile($path, $isTestMode, $fileHash !== $hash);
                         }
 
@@ -466,11 +465,11 @@ abstract class AEntry
             }
 
             // Only the new files will remain
-            unset($hashes[$path]);
+            unset($hashesForUpgrade[$path]);
         }
 
         // Add new files
-        foreach ($hashes as $path => $hash) {
+        foreach ($hashesForUpgrade as $path => $hash) {
             $this->addFile($path, $isTestMode, $this->manageFile($path, 'isFile'));
         }
     }
@@ -556,7 +555,7 @@ abstract class AEntry
                 $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
             }
 
-        } elseif (/*$this->manageFile($path, 'write', array($this->getFileSource($path)))*/true) {
+        } elseif ($this->manageFile($path, 'write', array($this->getFileSource($path)))) {
             $this->log('File "' . $path . '" successfully added');
 
         } else {
@@ -583,7 +582,7 @@ abstract class AEntry
                 $this->addFileErrorMessage('File "{{file}}" is not writeable', $path);
             }
 
-        } elseif (/*$this->manageFile($path, 'write', array($this->getFileSource($path)))*/true) {
+        } elseif ($this->manageFile($path, 'write', array($this->getFileSource($path)))) {
             $this->log('File "' . $path . '" successfully updated');
 
         } else {
@@ -610,7 +609,7 @@ abstract class AEntry
                 $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
             }
 
-        } elseif (/*$this->manageFile($path, 'delete')*/true) {
+        } elseif ($this->manageFile($path, 'delete')) {
             $this->log('File "' . $path . '" successfully deleted');
 
         } else {
@@ -692,7 +691,7 @@ abstract class AEntry
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function addToCustomFiles($path, $flag = false)
+    protected function addToCustomFiles($path, $flag = true)
     {
         $this->customFiles[$path] = $flag;
     }
@@ -739,7 +738,7 @@ abstract class AEntry
         $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
 
         if (!\Includes\Utils\FileManager::isFileReadable($path)) {
-            $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable', $errorParams);
+            $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable (upgrade)', $errorParams);
 
         } else {
             $data = \Includes\Utils\FileManager::read($path);
@@ -772,7 +771,7 @@ abstract class AEntry
         $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
 
         if (!\Includes\Utils\FileManager::isFileReadable($path)) {
-            $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable', $errorParams);
+            $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable (installed)', $errorParams);
 
         } else {
             require_once ($path);
@@ -811,7 +810,9 @@ abstract class AEntry
      */
     protected function getFileSource($relativePath)
     {
-        return null;
+        return \Includes\Utils\FileManager::read(
+            \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath()) . $relativePath
+        );
     }
 
     // }}}
