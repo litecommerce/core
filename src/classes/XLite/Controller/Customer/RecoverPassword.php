@@ -87,7 +87,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
             $this->set('link_mailed', true); // redirect to passwordMessage mode
         } else {
             $this->set('valid', false);
-            $this->set('noSuchUser', true);
+            \XLite\Core\TopMessage::addError('There are no user with specified email address');
         }
     }
 
@@ -100,9 +100,9 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      */
     protected function doActionConfirm()
     {
-        if (!is_null($this->get('email')) && isset($_GET['request_id'])) {
-            if ($this->doPasswordRecovery($this->get('email'), $_GET['request_id'])) {
-                $this->set('mode', 'recoverMessage');
+        if (!is_null($this->get('email')) && \XLite\Core\Request::getInstance()->request_id) {
+            if ($this->doPasswordRecovery($this->get('email'), \XLite\Core\Request::getInstance()->request_id)) {
+                \XLite\Core\Request::getInstance()->mode = 'recoverMessage';
             }
         }
     }
