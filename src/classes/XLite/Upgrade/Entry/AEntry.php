@@ -415,22 +415,25 @@ abstract class AEntry
     /**
      * Perform upgrade
      *
-     * @param boolean $isTestMode       Flag OPTIONAL
-     * @param array   $filesToOverwrite List of custom files to overwrite OPTIONAL
+     * @param boolean    $isTestMode       Flag OPTIONAL
+     * @param array|null $filesToOverwrite List of custom files to overwrite OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function upgrade($isTestMode = true, array $filesToOverwrite = array())
+    public function upgrade($isTestMode = true, $filesToOverwrite = null)
     {
         $this->errorMessages = array();
-        $this->customFiles   = $filesToOverwrite ?: array();
 
-        $hashes = $this->getHashes();
+        $hashesInstalled  = $this->getHashesForInstalledFiles();
+        $hashesForUpgrade = $this->getHashes();
 
+        // Overwrite only selected files or the all ones
+        $this->customFiles = is_array($filesToOverwrite) ? $filesToOverwrite : $hashesInstalled;
+    
         // Walk through the installed and known files list
-        foreach ($this->getHashesForInstalledFiles() as $path => $hash) {
+        foreach ($hashesInstalled as $path => &$hash) {
 
             // Check file on FS
             if ($this->manageFile($path, 'isFile')) {
@@ -440,9 +443,9 @@ abstract class AEntry
 
                 if (isset($fileHash)) {
 
-                    if (isset($hashes[$path])) {
+                    if (isset($hashesForUpgrade[$path])) {
                         // File has been modified (by user, or by LC Team, see the third param)
-                        if ($fileHash !== $hash || $hashes[$path] !== $hash) {
+                        if ($fileHash !== $hash || $hashesForUpgrade[$path] !== $hash) {
                             $this->updateFile($path, $isTestMode, $fileHash !== $hash);
                         }
 
@@ -462,11 +465,11 @@ abstract class AEntry
             }
 
             // Only the new files will remain
-            unset($hashes[$path]);
+            unset($hashesForUpgrade[$path]);
         }
 
         // Add new files
-        foreach ($hashes as $path => $hash) {
+        foreach ($hashesForUpgrade as $path => $hash) {
             $this->addFile($path, $isTestMode, $this->manageFile($path, 'isFile'));
         }
     }

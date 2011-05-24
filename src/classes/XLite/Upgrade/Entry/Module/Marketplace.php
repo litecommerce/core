@@ -327,12 +327,18 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function updateDBRecords()
     {
-        $this->getModuleForUpgrade()->setEnabled(true);
-        $this->getModuleForUpgrade()->setInstalled(true);
+        $forUpgrade = $this->getModuleForUpgrade();
+        $installed  = $this->getModuleInstalled();
 
-        \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($this->getModuleForUpgrade());
-        \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($this->getModuleInstalled());
+        $forUpgrade->setEnabled(true);
+        $forUpgrade->setInstalled(true);
 
-        $this->moduleIDInstalled = $this->getModuleForUpgrade()->getModuleID();
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($forUpgrade);
+
+        if ($forUpgrade->getModuleID() !== $installed->getModuleID()) {
+            \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($installed);
+
+            $this->moduleIDInstalled = $forUpgrade->getModuleID();
+        }
     }
 }
