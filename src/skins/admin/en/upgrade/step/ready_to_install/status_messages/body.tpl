@@ -10,10 +10,15 @@
  * @since     1.0.0
  *}
 
-<div class="service-messages-section" FOREACH="getStatusMessages(),entry,messages">
-  <div class="ready-to-install-service-message" FOREACH="messages,message">
-    <div class="message-entry">
-      {t(message)}
+{* :TODO: merge with the "skins/admin/en/upgrade/step/prepare/status_messages/body.tpl" *}
+
+<div class="service-messages-section">
+  <div class="ready-to-install-service-message">
+    <div FOREACH="getMessages(),entryName,messageList">
+      {foreach:messageList,message}
+      {* :NOTE: do not add t(##) here: messages are already translated *}
+      <div class="message-entry">{message}</div>
+      {end:}
     </div>
   </div>
 </div>

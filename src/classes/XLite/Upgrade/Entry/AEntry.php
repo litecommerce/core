@@ -688,7 +688,7 @@ abstract class AEntry
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function addToCustomFiles($path, $flag = false)
+    protected function addToCustomFiles($path, $flag = true)
     {
         $this->customFiles[$path] = $flag;
     }
@@ -735,7 +735,7 @@ abstract class AEntry
         $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
 
         if (!\Includes\Utils\FileManager::isFileReadable($path)) {
-            $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable', $errorParams);
+            $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable (upgrade)', $errorParams);
 
         } else {
             $data = \Includes\Utils\FileManager::read($path);
@@ -768,7 +768,7 @@ abstract class AEntry
         $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
 
         if (!\Includes\Utils\FileManager::isFileReadable($path)) {
-            $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable', $errorParams);
+            $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable (installed)', $errorParams);
 
         } else {
             require_once ($path);
@@ -807,7 +807,9 @@ abstract class AEntry
      */
     protected function getFileSource($relativePath)
     {
-        return null;
+        return \Includes\Utils\FileManager::read(
+            \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath()) . $relativePath
+        );
     }
 
     // }}}
