@@ -210,7 +210,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
 
             // Remove from FS
             foreach ($pack->getDirs() as $dir) {
-                // \Includes\Utils\FileManager::unlinkRecursive($dir);
+                \Includes\Utils\FileManager::unlinkRecursive($dir);
             }
 
             // Disable this and depended modules

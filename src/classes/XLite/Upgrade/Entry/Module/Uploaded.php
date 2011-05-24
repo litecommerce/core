@@ -298,6 +298,26 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         return $list;
     }
 
+    // {{{ Upgrade
+
+    /**
+     * Perform upgrade
+     *
+     * @param boolean $isTestMode       Flag OPTIONAL
+     * @param array   $filesToOverwrite List of custom files to overwrite OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function upgrade($isTestMode = true, array $filesToOverwrite = array())
+    {
+        // :TODO: Temporary solution
+        parent::upgrade($isTestMode, $filesToOverwrite ?: $this->loadHashesForInstalledFiles());
+    }
+
+    // }}}
+
     /**
      * Get module metadata (or only the certain field from it)
      *

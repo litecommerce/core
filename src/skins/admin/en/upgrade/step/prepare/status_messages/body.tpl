@@ -10,6 +10,8 @@
  * @since     1.0.0
  *}
 
+{* :TODO: merge with the "admin/en/upgrade/step/ready_to_install/status_messages/body.tpl" *}
+
 <div class="service-messages-section">
   <div class="ready-to-install-service-message">
     <div FOREACH="getMessages(),entryName,messageList">
