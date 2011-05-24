@@ -25,8 +25,8 @@
   <div class="delete-address-form">
 
     <h4>{t(#Please, confirm you want to proceed#)}:</h4>
-
-    <form action="admin.php" method="post" name="delete_address_form">
+{*TODO: make it through FORM classes*}
+    <form action="{buildURL()}" method="post" name="delete_address_form">
       <input type="hidden" name="target" value="address_book" />
       <input type="hidden" name="action" value="delete" />
       <input type="hidden" name="address_id" value="{address.getAddressId()}" />
@@ -34,7 +34,7 @@
       <div class="button">
         <widget class="\XLite\View\Button\Submit" label="Proceed" style="button-proceed" />
 
-        <widget class="\XLite\View\Button\Regular" label="Cancel" jsCode="document.forms['delete_address_form'].elements['action'].value='cancel_delete'; document.forms['delete_address_form'].submit();" style="button-cancel" />
+        <widget class="\XLite\View\Button\Regular" label="Cancel" jsCode="void(0);" style="button-cancel" />
       </div>
 
     </form>

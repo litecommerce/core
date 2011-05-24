@@ -25,6 +25,21 @@ decorate(
   function (selector)
   {
     // Some autoloading could be added
+    jQuery('.button-cancel').each(
+      function () {
+
+        jQuery(this).attr('onclick', '')
+        .bind(
+          'click',
+          function (event) {
+            event.stopPropagation();
+
+            jQuery(selector).dialog('close');
+
+            return true;
+          });
+
+      });
   }
 );
 
