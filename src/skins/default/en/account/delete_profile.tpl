@@ -12,6 +12,4 @@
  * @ListChild (list="customer.account.details.after", weight="100")
  *}
 
-
-<widget IF="isLogged()" class="\XLite\View\Button\DeleteUser" name="Delete" label="Delete profile" jsCode="openDeleteProfile(this);" />
-
+<widget IF="isLogged()" class="\XLite\View\Button\DeleteUser" />

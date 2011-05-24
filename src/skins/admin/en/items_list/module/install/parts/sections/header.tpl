@@ -22,6 +22,7 @@
         </li>
       {end:}
     </ul>
+    <div class="clear"></div>
   </div>
 
   <div class="price-filter">

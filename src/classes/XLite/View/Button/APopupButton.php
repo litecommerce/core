@@ -36,20 +36,6 @@ namespace XLite\View\Button;
 abstract class APopupButton extends \XLite\View\Button\AButton
 {
     /**
-     * Several inner constants
-     */
-    const JS_SCRIPT = 'button/js/core.popup_button.js';
-
-    /**
-     * Return content for popup button
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    abstract protected function getButtonContent();
-
-    /**
      * Return URL parameters to use in AJAX popup
      *
      * @return array
@@ -70,21 +56,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
         return array(
             'url_params' => $this->prepareURLParams(),
         );
-    }
-
-    /**
-     * Get a list of JavaScript files required to display the widget properly
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-        $list[] = self::JS_SCRIPT;
-
-        return $list;
     }
 
     /**
@@ -114,10 +85,22 @@ abstract class APopupButton extends \XLite\View\Button\AButton
         $list = parent::getCommonFiles();
         // popup button is using several specific popup JS
         $list['js'][] = 'js/core.popup.js';
+        $list['js'][] = 'js/core.popup_button.js';
 
         return $list;
     }
 
+    /**
+     * Return content for popup button
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getButtonContent()
+    {
+        return $this->getParam(self::PARAM_LABEL) ?: $this->getDefaultLabel();
+    }
 
     /**
      * Return widget default template

@@ -1,29 +1,15 @@
-/* vim: set ts=2 sw=2 sts=2 et: */
+{* vim: set ts=2 sw=2 sts=2 et: *}
 
-/**
- * Profile box styles
+{**
+ * Popup button
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- */
-
-.profile-form .main-section
-{
-}
-
-.profile-form .form-field-comment
-{
-  text-align: left;
-}
-
-.model-form-buttons {
-  float: left;
-}
-
-.delete-user-button {
-  float: left;
-  margin: 15px 0px 0px 100px;
-}
+ *}
+<a href="javascript:void(0);" class="{getClass()}">
+{displayCommentedData(getURLParams())}
+{getButtonContent()}
+</a>

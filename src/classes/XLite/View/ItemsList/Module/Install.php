@@ -102,6 +102,10 @@ class Install extends \XLite\View\ItemsList\Module\AModule
 
         $list['js'][] = 'js/ui.selectmenu.js';
 
+        // popup button is using several specific popup JS
+        $list['js'][] = 'js/core.popup.js';
+        $list['js'][] = 'js/core.popup_button.js';
+
         $list['css'][] = 'css/ui.selectmenu.css';
 
         return $list;
@@ -149,7 +153,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         $list = parent::getJSFiles();
 
         // TODO must be taken from Button/InstallAddon widget
-        $list[] = 'button/js/core.popup_button.js';
         $list[] = 'button/js/install_addon.js';
         $list[] = 'button/js/select_installation_type.js';
 

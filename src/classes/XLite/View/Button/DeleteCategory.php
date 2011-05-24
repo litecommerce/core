@@ -57,18 +57,6 @@ class DeleteCategory extends \XLite\View\Button\APopupButton
     }
 
     /**
-     * Return content for popup button
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getButtonContent()
-    {
-        return $this->getParam(self::PARAM_LABEL);
-    }
-
-    /**
      * Return URL parameters to use in AJAX popup
      *
      * @return array
@@ -108,8 +96,7 @@ class DeleteCategory extends \XLite\View\Button\APopupButton
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
-
-        // :TODO: change label parameter in parent and check every popup button to use it
+        
         $this->widgetParams += array(
             self::PARAM_CATEGORY_ID          => new \XLite\Model\WidgetParam\Int('Category ID', 1),
             self::PARAM_REMOVE_SUBCATEGORIES => new \XLite\Model\WidgetParam\Bool('Remove subcategories', false),

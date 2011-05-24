@@ -25,38 +25,24 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button\Addon;
+namespace XLite\View\Button;
+
 
 /**
- * Install addon popup button
+ * Delete address button widget
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class SelectInstallationType extends \XLite\View\Button\APopupButton
+class DeleteAddress extends \XLite\View\Button\APopupButton
 {
-    /**
-     * Widget param names
+    /*
+     * Address identificator parameter
      */
-    const PARAM_MODULEID = 'moduleId';
+    const PARAM_ADDRESS_ID = 'addressId';
 
     /**
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = 'modules_manager/installation_type/css/style.css';
-
-        return $list;
-    }
-
-    /**
-     * Register JS files
+     * getJSFiles
      *
      * @return array
      * @see    ____func_see____
@@ -65,22 +51,40 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $list[] = 'button/js/install_addon.js';
-        $list[] = 'button/js/select_installation_type.js';
+        $list[] = 'button/js/delete_address.js';
 
         return $list;
     }
 
     /**
-     * Return content for popup button
+     * Register CSS files for delete address button
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultLabel()
+    public function getCSSFiles()
     {
-        return 'Install';
+        $list = parent::getCSSFiles();
+        $list[] = 'button/css/delete_address.css';
+
+        return $list;
+    }
+
+    /**
+     * Define widget params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_ADDRESS_ID => new \XLite\Model\WidgetParam\Int('Address ID', 0),
+        );
     }
 
     /**
@@ -93,27 +97,22 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
     protected function prepareURLParams()
     {
         return array(
-            'target'   => 'addon_install',
-            'action'   => 'select_installation_type',
-            'widget'   => '\XLite\View\ModulesManager\InstallationType',
-            'moduleId' => $this->getParam(self::PARAM_MODULEID),
+            'target'       => 'address_book',
+            'address_id'   => $this->getParam(self::PARAM_ADDRESS_ID),
+            'widget'       => '\XLite\View\Address\Delete',
         );
     }
 
     /**
-     * Define widgets parameters
+     * Return widget default template
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function defineWidgetParams()
+    protected function getDefaultTemplate()
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_MODULEID => new \XLite\Model\WidgetParam\String('ModuleId', '', true),
-        );
+        return 'button/delete_address.tpl';
     }
 
     /**
@@ -125,6 +124,7 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
      */
     protected function getClass()
     {
-        return 'select-installation-type-button';
+        return 'delete-address ' . ($this->getParam(self::PARAM_STYLE) ?: '');
     }
+
 }

@@ -9,6 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+ 
+ {*TODO: REMOVE??*}
+
 If you already have an account, you can authenticate yourself by filling in the form below. The fields which are marked with <font class="Star">*</font> are mandatory.
 
 <hr size="1" noshade>
