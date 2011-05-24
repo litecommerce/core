@@ -34,11 +34,11 @@
     <tr>
 
       <td>
-        <widget class="\XLite\View\Button\Regular" label="Change" jsCode="openModifyAddress(this, '{address.getAddressId()}');" />
+        <widget class="\XLite\View\Button\ModifyAddress" label="Change" addressId="{address.getAddressId()}" />
       </td>
 
       <td align="center">
-        <widget class="\XLite\View\Button\Link" label="Delete" jsCode="openDeleteAddress(this, '{address.getAddressId()}');" style="button delete-address" />
+        <widget class="\XLite\View\Button\DeleteAddress"  addressId="{address.getAddressId()}" />
       </td>
 
     </tr>
@@ -46,7 +46,7 @@
   </table>
 
   <div class="address-center-button" IF="{!address.getAddressId()}">
-    <widget class="\XLite\View\Button\Regular" label="Add new address" style="main-button" jsCode="openAddAddress(this, '{profile_id}');" />
+    <widget class="\XLite\View\Button\AddAddress" label="Add new address" style="main-button" profileId="{profile_id}" />
   </div>
 
 </div>
