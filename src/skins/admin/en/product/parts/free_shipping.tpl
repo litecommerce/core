@@ -6,17 +6,18 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="product.modify.list", weight="80")
+ * @ListChild (list="product.modify.list", weight="700")
  *}
+
 <tr>
-  <td valign="middle">{t(#Free shipping#)}</td>
-  <td valign="middle">
-   <select name="{getNamePostedData(#free_shipping#)}">
-        <option value="1" selected="{isSelected(product,#free_shipping#,#1#)}">Yes</option>
-        <option value="0" selected="{isSelected(product,#free_shipping#,#0#)}">No</option>
+  <td class="name-attribute">{t(#Shippable#)}</td>
+  <td class="star">*</td>
+  <td class="value-attribute">
+    <select name="{getNamePostedData(#free_shipping#)}">
+      <option value="0" selected="{isSelected(product,#free_shipping#,#0#)}">Yes</option>
+      <option value="1" selected="{isSelected(product,#free_shipping#,#1#)}">No</option>
     </select>
   </td>
 </tr>

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,16 +28,16 @@
 namespace XLite\Controller\Customer;
 
 /**
- * Checkout 
- * 
+ * Checkout
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Checkout extends \XLite\Controller\Customer\Cart
 {
     /**
-     * Request data 
-     * 
+     * Request data
+     *
      * @var   mixed
      * @see   ____var_see____
      * @since 1.0.0
@@ -48,7 +47,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
     /**
      * Go to cart view if cart is empty
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -80,7 +79,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     /**
      * External call processSucceed() method
      * TODO: to revise
-     * 
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -93,7 +92,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     /**
      * Check - controller must work in secure zone or not
      * TODO: to revise
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -104,8 +103,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Get login URL 
-     * 
+     * Get login URL
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -117,7 +116,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
     /**
      * Check - current profile is aninymous or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -187,9 +186,38 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Do payment 
+     * Remove address
+     *
+     * @returnvoid
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionRemoveAddress()
+    {
+        $id = intval(\XLite\Core\Request::getInstance()->id);
+        $found = false;
+        if ($id && $this->getCart()->getProfile() && 0 < count($this->getCart()->getProfile()->getAddresses())) {
+            foreach ($this->getCart()->getProfile()->getAddresses() as $address) {
+                if ($address->getAddressId() == $id) {
+                    \XLite\Core\Database::getEM()->remove($address);
+                    $this->getCart()->getProfile()->getAddresses()->removeElement($address);
+                    $found = true;
+                    break;
+                }
+            }
+        }
+
+        if ($found) {
+            $this->updateCart();
+        }
+
+        $this->redirect($this->buildURL('checkout'));
+    }
+
+    /**
+     * Do payment
      * TODO: to revise
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -214,7 +242,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         }
 
         // Get first (and only) payment transaction
-        
+
         $transaction = $cart->getFirstOpenPaymentTransaction();
 
         $result = null;
@@ -289,7 +317,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     /**
      * Return from payment gateway
      * TODO: to revise
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -338,9 +366,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Order placement is success 
+     * Order placement is success
      * TODO: to revise
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -355,6 +383,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
                 // Create profile based on anonymous order profile
                 $this->saveAnonymousProfile();
+                $this->loginAnonymousProfile();
+
+                $isAnonymous = false;
             }
 
         } else {
@@ -381,8 +412,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Save anonymous profile 
-     * 
+     * Save anonymous profile
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -392,13 +423,52 @@ class Checkout extends \XLite\Controller\Customer\Cart
         // Create cloned profile
         $profile = $this->getCart()->getProfile()->cloneEntity();
 
+        // Generate password
+        $pass = \XLite\Core\Database::getRepo('XLite\Model\Profile')->generatePassword();
+        $profile->setPassword(md5($pass));
+
         // Set cloned profile as original profile
         $this->getCart()->setOrigProfile($profile);
+
+        // Send notifications
+        $this->sendCreateProfileNotifications($pass);
+    }
+
+    /**
+     * Login anonymous profile
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function loginAnonymousProfile()
+    {
+        \XLite\Core\Auth::getInstance()->loginProfile($this->getCart()->getOrigProfile());
+    }
+
+    /**
+     * Send create profile notifications 
+     *
+     * @param string $password Password
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function sendCreateProfileNotifications($password)
+    {
+        $profile = $this->getCart()->getOrigProfile();
+
+        // Send notification to the user
+        \XLite\Core\Mailer::sendProfileCreatedUserNotification($profile, $password);
+
+        // Send notification to the users department
+        \XLite\Core\Mailer::sendProfileCreatedAdminNotification($profile);
     }
 
     /**
      * Clone profile and move profile to original profile
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -418,10 +488,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * isRegistrationNeeded 
+     * isRegistrationNeeded
      * (CHECKOUT_MODE_REGISTER step check)
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -432,8 +502,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
     /**
      * Check if order total is zero
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -444,8 +514,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
     /**
      * Check if we are ready to select payment method
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -455,8 +525,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Common method to determine current location 
-     *  
+     * Common method to determine current location
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -479,8 +549,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Update profile 
-     * 
+     * Update profile
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -499,8 +569,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Update profile 
-     * 
+     * Update profile
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -551,8 +621,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Update shipping address 
-     * 
+     * Update shipping address
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -604,8 +674,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Update profiel billing address 
-     * 
+     * Update profiel billing address
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -630,7 +700,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
             $address = $profile->getShippingAddress();
 
             if ($address) {
-    
+
                 // Link shipping and billing address
                 $address->setIsBilling(true);
 
@@ -644,7 +714,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
             && !$this->requestData['same_address']
         ) {
 
-            // Unlink shipping and billing addresses 
+            // Unlink shipping and billing addresses
             $address = $profile->getShippingAddress();
 
             if ($address && $address->getIsBilling()) {
@@ -695,10 +765,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Prepare address data 
-     * 
+     * Prepare address data
+     *
      * @param array $data Address data
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -727,7 +797,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
             \XLite\Core\TopMessage::addError(
                 'No payment method selected'
             );
-    
+
         } else {
 
             if ($this->getCart()->getProfile()) {
@@ -770,7 +840,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
     /**
      * Check checkout action accessibility
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -792,7 +862,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
     /**
      * Check review step - complete or not
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

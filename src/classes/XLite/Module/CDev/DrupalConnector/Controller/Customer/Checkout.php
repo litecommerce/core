@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 
 /**
  * Checkout controller
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -38,8 +37,8 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Base\IDecorator
 {
     /**
-     * isCreateProfile 
-     * 
+     * isCreateProfile
+     *
      * @return boolean
      * @access protected
      * @see    ____func_see____
@@ -52,9 +51,9 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
     }
 
     /**
-     * Update profile 
+     * Update profile
      * FIXME
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -119,14 +118,14 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
     public function getLoginURL()
     {
         return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
-            ? url('user') 
+            ? url('user')
             : parent::getLoginURL();
     }
 
     /**
-     * Save anonymous profile 
+     * Save anonymous profile
      * FIXME
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -138,12 +137,14 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
         $pass = user_password();
 
+        $status = variable_get('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL) == USER_REGISTER_VISITORS;
+
         $data = array(
             'name'   => \XLite\Core\Session::getInstance()->order_username,
             'init'   => $this->getCart()->getOrigProfile()->getLogin(),
             'mail'   => $this->getCart()->getOrigProfile()->getLogin(),
             'roles'  => array(),
-            'status' => variable_get('user_register', 1) == 1,
+            'status' => $status,
             'pass'   => $pass,
         );
 
@@ -164,26 +165,50 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
             $this->getCart()->getOrigProfile()->setPassword(md5($pass));
 
             \XLite\Core\Database::getRepo('XLite\Model\Profile')->linkProfiles(
-                $this->getCart()->getOrigProfile()->getProfileId(),
+                $this->getCart()->getOrigProfile(),
                 $account->uid
             );
 
-            /* Auto-login
-            db_query("UPDATE {users} SET status = 1 WHERE uid = %d", array($account->uid));
-
-            global $user;
-            $user = $account;
-
-            user_authenticate_finalize($formState);
-            */
         }
 
         unset(\XLite\Core\Session::getInstance()->order_username);
     }
 
     /**
+     * Login anonymous profile
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function loginAnonymousProfile()
+    {
+        $account = $this->getCart()->getOrigProfile()->getCMSProfile();
+
+        if ($account && $account->status) {
+            parent::loginAnonymousProfile();
+
+            $GLOBALS['user'] = user_load($account->uid);
+            user_login_finalize();
+        }
+    }
+
+    /**
+     * Send create profile notifications
+     *
+     * @param string $password Password
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function sendCreateProfileNotifications($password)
+    {
+    }
+
+    /**
      * Clone profile and move profile to original profile
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -199,7 +224,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
     /**
      * Get redirect mode - force redirect or not
-     * 
+     *
      * @return boolean
      * @access protected
      * @see    ____func_see____

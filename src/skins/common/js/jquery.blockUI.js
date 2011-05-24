@@ -42,7 +42,7 @@ jQuery.growlUI = function(title, message, timeout, onClose) {
 	jQuery.blockUI({
 		message: $m, fadeIn: 700, fadeOut: 1000, centerY: false,
 		timeout: timeout, showOverlay: false,
-		onUnblock: onClose, 
+		onUnblock: onClose,
 		css: jQuery.blockUI.defaults.growlCSS
 	});
 };
@@ -220,7 +220,7 @@ function install(el, opts) {
 	// layer2 is the overlay layer which has opacity and a wait cursor (by default)
 	// layer3 is the message content that is displayed while blocking
 
-	var lyr1 = (jQuery.browser.msie || opts.forceIframe) 
+	var lyr1 = (jQuery.browser.msie || opts.forceIframe)
 		? jQuery('<iframe class="blockUI" style="z-index:'+ (z++) +';display:none;border:none;margin:0;padding:0;position:absolute;width:100%;height:100%;top:0;left:0" src="'+opts.iframeSrc+'"></iframe>')
 		: jQuery('<div class="blockUI" style="display:none"></div>');
 	var lyr2 = jQuery('<div class="blockUI blockOverlay" style="z-index:'+ (z++) +';display:none;border:none;margin:0;padding:0;width:100%;height:100%;top:0;left:0"></div>');
@@ -236,7 +236,7 @@ function install(el, opts) {
 	else {
 		lyr3 = full ? jQuery('<div class="blockUI blockMsg blockPage" style="z-index:'+z+';display:none;position:fixed"></div>')
 					: jQuery('<div class="blockUI blockMsg blockElement" style="z-index:'+z+';display:none;position:absolute"></div>');
-	}						   
+	}						
 
 	// if we have a message, style it
 	if (msg) {
@@ -244,7 +244,7 @@ function install(el, opts) {
 			lyr3.css(themedCSS);
 			lyr3.addClass('ui-widget-content');
 		}
-		else 
+		else
 			lyr3.css(css);
 	}
 
@@ -420,7 +420,7 @@ function bind(b, el, opts) {
 		$el.data('blockUI.isBlocked', b);
 
 	// don't bind events when overlay is not in use or if bindEvents is false
-	if (!opts.bindEvents || (b && !opts.showOverlay)) 
+	if (!opts.bindEvents || (b && !opts.showOverlay))
 		return;
 
 	// bind anchors and inputs for mouse and key events

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -39,15 +38,9 @@ namespace XLite\View\ModulesManager;
 class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
 {
     /**
-     * Module license widget target 
+     * Module license widget target
      */
     const MODULE_LICENSE_TARGET = 'addon_install';
-
-    /**
-     * Title to show 
-     */
-    const WIDGET_TITLE = 'Install addon';
-
 
     /**
      * Return list of targets allowed for this widget
@@ -59,8 +52,8 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = static::MODULE_LICENSE_TARGET;
-    
+        $result[] = self::MODULE_LICENSE_TARGET;
+
         return $result;
     }
 
@@ -81,7 +74,7 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
 
     /**
      * Register JS files
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -103,7 +96,7 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getHead()
     {
-        return static::WIDGET_TITLE;
+        return 'Install addon';
     }
 
     /**
@@ -115,6 +108,18 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'license';
+        return parent::getDir() . '/license';
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && 'view_license' === \XLite\Core\Request::getInstance()->action;
     }
 }

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,15 +28,16 @@
 namespace XLite\View\ItemsList\Product\Customer;
 
 /**
- * Search 
- * 
+ * Search
+ *
  * @see   ____class_see____
  * @since 1.0.0
+ *
  */
 class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
 {
     /**
-     * Widget param names 
+     * Widget param names
      */
     const PARAM_SUBSTRING         = 'substring';
     const PARAM_CATEGORY_ID       = 'categoryId';
@@ -48,15 +48,15 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     const PARAM_BY_SKU            = 'by_sku';
 
     /**
-     * Widget target 
+     * Widget target
      */
     const WIDGET_TARGET = 'search';
 
 
     /**
      * Return search parameters.
-     * :TODO: refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchParams() 
-     * 
+     * :TODO: refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchParams()
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -73,7 +73,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         );
     }
 
-    /** 
+    /**
      * Return list of targets allowed for this widget
      *
      * @return array
@@ -84,14 +84,14 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         $result = parent::getAllowedTargets();
         $result[] = self::WIDGET_TARGET;
-    
+
         return $result;
     }
 
 
-    /** 
+    /**
      * Return target to retrive this widget from AJAX
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -102,9 +102,9 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
 
-    /** 
+    /**
      * Returns CSS classes for the container element
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -114,7 +114,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return parent::getListCSSClasses() . ' products-search-result';
     }
 
-    /** 
+    /**
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
@@ -131,7 +131,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return $list;
     }
 
-    /** 
+    /**
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
@@ -148,7 +148,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return $list;
     }
 
-
     /**
      * Return title
      *
@@ -158,12 +157,24 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getHead()
     {
+        return null;
+    }
+
+    /**
+     * Return title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getListHead()
+    {
         return $this->getItemsCount() . ' ' . $this->t('products found');
     }
 
-    /** 
+    /**
      * Check if head title is visible
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -173,21 +184,21 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return true;
     }
 
-    /** 
+    /**
      * Check if header is visible
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function isHeaderVisible()
-    {   
+    {
         return 0 < $this->getItemsCount();
-    }   
+    }
 
     /**
      * Check if pager is visible
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -200,7 +211,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * isFooterVisible
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -211,7 +222,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
     /**
      * Search widget must be visible always.
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -264,8 +275,8 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
                 'Category ID', 0
             ),
             self::PARAM_INCLUDING => new \XLite\Model\WidgetParam\Set(
-                'Including', 
-                \XLite\Model\Repo\Product::INCLUDING_PHRASE, 
+                'Including',
+                \XLite\Model\Repo\Product::INCLUDING_PHRASE,
                 array(
                     \XLite\Model\Repo\Product::INCLUDING_ALL,
                     \XLite\Model\Repo\Product::INCLUDING_ANY,
@@ -280,7 +291,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
             ),
             self::PARAM_BY_SKU => new \XLite\Model\WidgetParam\String(
                 'Search in SKU', 0
-            ),  
+            ),
         );
     }
 
@@ -296,14 +307,14 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         parent::defineRequestParams();
 
         $this->requestParams = array_merge(
-            $this->requestParams, 
+            $this->requestParams,
             \XLite\View\ItemsList\Product\Customer\Search::getSearchParams()
         );
     }
 
     /**
      * Return params list to use for search TODO refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchCondition()
-     *   
+     *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
      * @since  1.0.0
@@ -315,9 +326,9 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         foreach (\XLite\View\ItemsList\Product\Customer\Search::getSearchParams() as $modelParam => $requestParam) {
 
             $paramValue = $this->getParam($requestParam);
- 
+
             if ('' !== $paramValue && 0 !== $paramValue) {
- 
+
                 $result->$modelParam = $paramValue;
 
             }
@@ -340,16 +351,16 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\Product')->search(
-            $this->prepareCnd($cnd), 
+            $this->prepareCnd($cnd),
             $countOnly
         );
     }
 
     /**
      * Prepare search condition before search
-     * 
+     *
      * @param \XLite\Core\CommonCell $cnd Search condition
-     *  
+     *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
      * @since  1.0.0

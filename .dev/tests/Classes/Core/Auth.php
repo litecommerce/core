@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,22 +13,21 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Classes
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
  */
 
 /**
- * XLite_Tests_Core_Auth 
- * 
+ * XLite_Tests_Core_Auth
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -36,8 +35,8 @@
 class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
 {
     /**
-     * testAddSessionVarToClear 
-     * 
+     * testAddSessionVarToClear
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -55,8 +54,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testLogin 
-     * 
+     * testLogin
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -66,22 +65,22 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     {
         // Test #1
         $result = \XLite\Core\Auth::getInstance()->login(null, null, null);
-    
+
         $this->assertEquals(\XLite\Core\Auth::RESULT_ACCESS_DENIED, $result, 'Test #1');
 
         // Test #2
         $result = \XLite\Core\Auth::getInstance()->login(null, null, md5('testhashstring'));
-    
+
         $this->assertEquals(\XLite\Core\Auth::RESULT_ACCESS_DENIED, $result, 'Test #1');
 
         // Test #3
         $result = \XLite\Core\Auth::getInstance()->login('rnd_tester@rrf.ru', null);
-    
+
         $this->assertEquals(\XLite\Core\Auth::RESULT_ACCESS_DENIED, $result, 'Test #3');
 
         // Test #4
         $result = \XLite\Core\Auth::getInstance()->login(null, 'guest');
-    
+
         $this->assertEquals(\XLite\Core\Auth::RESULT_ACCESS_DENIED, $result, 'Test #4');
 
         // Test #5
@@ -126,14 +125,14 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->flush();
 
         $result = \XLite\Core\Auth::getInstance()->login('rnd_tester@rrf.ru', 'testpassword', $hashString); // Login by email/hash
-    
+
         $this->assertTrue($result instanceof \XLite\Model\Profile, 'Test #8');
         $this->assertEquals(2, $result->getProfileId(), 'Test #8: checking profile_id');
    }
 
     /**
-     * testLogoff 
-     * 
+     * testLogoff
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -144,7 +143,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
         $this->doRestoreDb();
 
         $result = \XLite\Core\Auth::getInstance()->login('rnd_tester@rrf.ru', 'guest');
-    
+
         $this->assertTrue($result instanceof \XLite\Model\Profile, 'Checking if user is logged in');
         $this->assertEquals(2, $result->getProfileId(), 'Checking profile_id');
 
@@ -158,8 +157,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testIsLogged 
-     * 
+     * testIsLogged
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -168,7 +167,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     public function testIsLogged()
     {
         $result = \XLite\Core\Auth::getInstance()->login('rnd_tester@rrf.ru', 'guest');
-    
+
         $this->assertTrue($result instanceof \XLite\Model\Profile, 'Checking if user is logged in');
         $this->assertEquals(2, $result->getProfileId(), 'Checking profile_id');
 
@@ -180,8 +179,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetProfile 
-     * 
+     * testGetProfile
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -190,7 +189,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     public function testGetProfile()
     {
         $result = \XLite\Core\Auth::getInstance()->login('rnd_tester@rrf.ru', 'guest');
-    
+
         $this->assertTrue($result instanceof \XLite\Model\Profile, 'Checking if user is logged in');
         $this->assertEquals(2, $result->getProfileId(), 'Checking profile_id');
 
@@ -204,8 +203,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testCheckProfile 
-     * 
+     * testCheckProfile
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -215,7 +214,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     {
         // Test #1
         $result = \XLite\Core\Auth::getInstance()->login('rnd_tester@rrf.ru', 'guest'); // Login customer
-    
+
         $this->assertTrue($result instanceof \XLite\Model\Profile, 'Checking if user is logged in');
         $this->assertEquals(2, $result->getProfileId(), 'Checking profile_id');
 
@@ -241,7 +240,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
 
         // Test #4
         $result = \XLite\Core\Auth::getInstance()->login('rnd_tester@cdev.ru', 'master'); // Administrator login
-    
+
         $this->assertTrue($result instanceof \XLite\Model\Profile, 'Checking if user is logged in');
         $this->assertEquals(1, $result->getProfileId(), 'Checking profile_id');
 
@@ -260,8 +259,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testIsAdmin 
-     * 
+     * testIsAdmin
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -270,22 +269,22 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     public function testIsAdmin()
     {
         $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find(2); // Customer profile
-    
+
         $result = \XLite\Core\Auth::getInstance()->isAdmin($profile);
 
         $this->assertFalse($result, 'Test #1: Checking if customer profile will be recognized as non-admin');
 
         // Test #2
         $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find(1); // Admin profile
-    
+
         $result = \XLite\Core\Auth::getInstance()->isAdmin($profile);
 
         $this->assertTrue($result, 'Test #2: Checking if admin profile will be recognized as admin');
     }
 
     /**
-     * testGetAccessLevel 
-     * 
+     * testGetAccessLevel
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -315,8 +314,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetAdminAccessLevel 
-     * 
+     * testGetAdminAccessLevel
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -328,8 +327,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetCustomerAccessLevel 
-     * 
+     * testGetCustomerAccessLevel
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -341,8 +340,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetAccessLevelsList 
-     * 
+     * testGetAccessLevelsList
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -361,8 +360,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetUserTypesRaw 
-     * 
+     * testGetUserTypesRaw
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -381,8 +380,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testSetSecureHash 
-     * 
+     * testSetSecureHash
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -402,8 +401,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testRemindLogin 
-     * 
+     * testRemindLogin
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -417,8 +416,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testLoginAdministrator 
-     * 
+     * testLoginAdministrator
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -439,8 +438,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
     }
 
     /**
-     * testIsAuthorized 
-     * 
+     * testIsAuthorized
+     *
      * @return void
      * @access public
      * @see    ____func_see____

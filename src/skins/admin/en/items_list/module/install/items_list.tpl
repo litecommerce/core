@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -59,8 +58,7 @@ sForm.submit(function(e){
   </div> *}
 
   <div class="action-buttons">
-    <widget class="\XLite\View\Button\UploadAddons" />
-    <widget class="\XLite\View\Button\EnterLicenseKey" IF="hasResults()" />
+    <widget class="\XLite\View\Button\Addon\EnterLicenseKey" IF="hasResults()" />
   </div>
 
 </div>

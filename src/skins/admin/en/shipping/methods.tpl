@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -16,7 +15,7 @@
 </div>
 
 <script type="text/javascript">
-//<![CDATA[ 
+//<![CDATA[
 function onDeleteButton(method_id)
 {
   formName = 'delete_method';
@@ -31,7 +30,7 @@ Use this section to define your store's shipping methods.
 <hr />
 
 <form action="admin.php" name="delete_method" method="post">
-  
+
   <input type="hidden" name="target" value="shipping_methods" />
   <input type="hidden" name="action" value="delete" />
   <input type="hidden" name="method_id" value="" />
@@ -40,7 +39,7 @@ Use this section to define your store's shipping methods.
 
 {foreach:getShippingProcessors(),processor}
 <form action="admin.php" name="shipping_method_{processor.getProcessorId()}" method="post">
-  
+
   <input type="hidden" name="target" value="shipping_methods" />
   <input type="hidden" name="action" value="update" />
   <input type="hidden" name="method_id" value="" />
@@ -120,7 +119,7 @@ Use this section to define your store's shipping methods.
   <input type="hidden" name="action" value="add" />
 
   <table cellpadding="0" cellspacing="0">
-    
+
     <tr>
       <td>&nbsp;</td>
     </tr>
@@ -168,4 +167,3 @@ Use this section to define your store's shipping methods.
   </table>
 
 </form>
-

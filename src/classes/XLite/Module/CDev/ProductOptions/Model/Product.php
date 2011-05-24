@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Module\CDev\ProductOptions\Model;
 
 /**
  * Product
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -39,7 +38,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     /**
      * Option groups (relation)
-     * 
+     *
      * @var    \Doctrine\Common\Collections\ArrayCollection
      * @access protected
      * @see    ____var_see____
@@ -51,7 +50,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
     /**
      * Product options list (cache)
-     * 
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -61,7 +60,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
     /**
      * Check - has product options list or not
-     * 
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____
@@ -74,7 +73,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
     /**
      * Get product options list
-     * 
+     *
      * @return array(\XLite\Module\CDev\ProductOptions\Model\OptionGroup)
      * @access public
      * @see    ____func_see____
@@ -92,7 +91,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
     /**
      * Check - display price modifier or not
-     * 
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____
@@ -104,10 +103,10 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     }
 
     /**
-     * Prepare options 
-     * 
+     * Prepare options
+     *
      * @param array $options Request-based selected options
-     *  
+     *
      * @return array|void
      * @access public
      * @see    ____func_see____
@@ -162,8 +161,8 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     }
 
     /**
-     * Get default product options 
-     * 
+     * Get default product options
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -219,10 +218,10 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     }
 
     /**
-     * Check options exception 
-     * 
+     * Check options exception
+     *
      * @param array $options Prepared array
-     *  
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____

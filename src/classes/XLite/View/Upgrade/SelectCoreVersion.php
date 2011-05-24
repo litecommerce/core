@@ -20,7 +20,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,13 +28,30 @@
 namespace XLite\View\Upgrade;
 
 /**
- * SelectCoreVersion 
- * 
+ * SelectCoreVersion
+ *
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="admin.center", zone="admin")
  */
 class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
 {
+    /**
+     * Return list of the modes allowed by default
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultModes()
+    {
+        $list = parent::getDefaultModes();
+        $list[] = 'select_core_version';
+
+        return $list;
+    }
+
     /**
      * Get directory where template is located (body.tpl)
      *
@@ -45,6 +61,57 @@ class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'select_core_version';
+        return parent::getDir() . '/select_core_version';
+    }
+
+    /**
+     * Return internal list name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getListName()
+    {
+        return parent::getListName() . '.select_core_version';
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && $this->isCoreSelection();
+    }
+
+    /**
+     * Label for cores list selectbox
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSelectBoxLabel()
+    {
+        return 'Your version (' . \XLite::getInstance()->getMajorVersion() . ') can be upgraded to';
+    }
+
+    /**
+     * Return list of all core versions available
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCoreVersionsList()
+    {
+        $result = \XLite\Upgrade\Cell::getInstance()->getCoreVersions();
+        unset($result[\XLite::getInstance()->getMajorVersion()]);
+
+        return $result;
     }
 }

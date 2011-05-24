@@ -5,10 +5,9 @@
  * Base class for all LiteCommerce tests
  *
  * @category  LiteCommerce_Tests
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -24,7 +23,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * List of tests (names w/o 'test' prefix) that should be runned
-     * 
+     *
      * @var    array
      * @see    ____var_see____
      * @since  1.0.0
@@ -32,8 +31,8 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     public static $testsRange = array();
 
     /**
-     * Message length 
-     * 
+     * Message length
+     *
      * @var    integer
      * @see    ____var_see____
      * @since  1.0.0
@@ -42,7 +41,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * IMAP mailbox resource
-     * 
+     *
      * @var    resource
      * @see    ____var_see____
      * @since  1.0.0
@@ -51,7 +50,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * last message counter in IMAP mailbox
-     * 
+     *
      * @var    float
      * @see    ____var_see____
      * @since  1.0.0
@@ -60,7 +59,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * Parameters registering when test starts
-     * 
+     *
      * @var    array
      * @see    ____var_see____
      * @since  1.0.0
@@ -78,7 +77,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * Array of testing options
-     * 
+     *
      * @var    array
      * @see    ____var_see____
      * @since  1.0.0
@@ -87,7 +86,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * Flag: generate database backup on test failure
-     * 
+     *
      * @var    boolean
      * @see    ____var_see____
      * @since  1.0.0
@@ -116,7 +115,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -179,7 +178,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     /**
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -188,7 +187,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     {
         // Timing
         $this->end['time'] = microtime(true);
-        
+
 //        if ($this->needAppInit()) {
 //            \XLite\Core\Converter::getInstance()->__destruct();
 //            \XLite\Core\Database::getInstance()->__destruct();
@@ -205,8 +204,8 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Run test 
-     * 
+     * Run test
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -216,7 +215,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         $result = null;
 
         $shortName = lcfirst(substr($this->getName(), 4));
-        
+
         if (self::$testsRange && !in_array($shortName, self::$testsRange)) {
             $this->markTestSkipped();
 
@@ -225,12 +224,12 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
             try {
 
                 $result = parent::runTest();
-        
+
             } catch (PHPUnit_Framework_AssertionFailedError $exception) {
 
                 if ($this->makeSqlBackupOnFailure) {
 
-                    $path = LC_ROOT_DIR . 'var/log/unit-' . date('Ymd-His') . '-' . $this->getName() . '.sql';
+                    $path = LC_DIR_ROOT . 'var/log/unit-' . date('Ymd-His') . '-' . $this->getName() . '.sql';
 
                     try {
                         ob_start();
@@ -265,15 +264,15 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
         if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {
             return $config;
-        
+
         } else {
             die('Config file not found: ' . $configFile);
         }
     }
 
     /**
-     * Return test execution time  
-     * 
+     * Return test execution time
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -293,7 +292,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * Return memory used by test
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -307,12 +306,12 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
         return sprintf('%8s', number_format($memory / 1024, 2)) . ' Kb .....';
     }
-    
+
     /**
      * Check if we need to construct/destruct application singleton
-     * 
+     *
      * @param array $request request info
-     *  
+     *
      * @return bool
      * @see    ____func_see____
      * @since  1.0.0
@@ -328,11 +327,11 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * Return message (common method)
-     * 
+     *
      * @param string $message custom part of message
      * @param string $class   called class name
      * @param string $method  called method name
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -354,7 +353,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * Return data needed to start application.
      * Derived class can redefine this method.
      * It's possible to detect current test using the $this->name variable
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -377,8 +376,8 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Write metric log 
-     * 
+     * Write metric log
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -403,17 +402,17 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     // }}}
 
 
-    // {{{ Exceptions checking method 
+    // {{{ Exceptions checking method
 
     /**
      * Check exception code
      * TODO: Review if this can be achived by native PHPUnit asserttions
      * http://www.phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.exceptions
-     * 
+     *
      * @param function $func    Function
      * @param string   $class   Exception class name
      * @param string   $message Exception message
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -430,7 +429,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
             $this->assertEquals($message, $exception->getMessage(), 'Check exception : "' . $message . '" message not found');
             $this->assertTrue($exception instanceof $class, 'Check exception : "' . $class . '" exception class not equal');
 
-        } 
+        }
     }
 
     // }}}
@@ -440,7 +439,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * Check IMAP extension
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -454,7 +453,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * Set start of emails counter
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -472,7 +471,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * Init mailbox
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -482,7 +481,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         $this->checkIMAP();
 
         if (
-            is_null($this->mailBox) 
+            is_null($this->mailBox)
             || false === $this->mailBox
         ) {
 
@@ -497,7 +496,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * close IMAP mailbox
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -511,7 +510,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     /**
      * check if there are new emails and fetch them
-     * 
+     *
      * @return array array of emails
      * @see    ____func_see____
      * @since  1.0.0
@@ -568,10 +567,10 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     // {{{ XLite-specific methods
 
     /**
-     * Do SQL query 
-     * 
+     * Do SQL query
+     *
      * @param sql $sql SQL query
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -582,8 +581,8 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * getProduct 
-     * 
+     * getProduct
+     *
      * @return \XLite\Model\Product
      * @see    ____func_see____
      * @since  1.0.0
@@ -594,10 +593,10 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * getProductBySku 
-     * 
+     * getProductBySku
+     *
      * @param string $sku Product SKU
-     *  
+     *
      * @return \XLite\Model\Product
      * @see    ____func_see____
      * @since  1.0.0
@@ -610,4 +609,3 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     // }}}
 
 }
-

@@ -6,23 +6,15 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="product.modify.list", weight="40")
+ * @ListChild (list="product.modify.list", weight="400")
  *}
+
 <tr>
-  <td>
-  <table cellpadding="0" cellspacing="0" width="100%">
-  <tr>
-      <td class="table-label" width="100%">{t(#Product classes#)}</td>
-        <td class="star">&nbsp;*&nbsp;</td>
-  </tr>
-  </table>
+  <td class="name-attribute">{t(#Product classes#)}</td>
+  <td class="star">&nbsp;*&nbsp;</td>
+  <td class="value-attribute">
+    <widget class="\XLite\View\FormField\Select\Classes" fieldName="{getNamePostedData(##,#class_ids#)}" fieldOnly=true value="{product.getClasses()}" /></tr>
   </td>
-  <td>
-    <table cellpadding="0" cellspacing="0" width="100%">
-      <tr><widget class="\XLite\View\FormField\Select\Classes" fieldName="{getNamePostedData(##,#class_ids#)}" fieldOnly=true value="{product.getClasses()}" /></tr>
-    </table>
-    </td>
 </tr>

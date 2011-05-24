@@ -96,7 +96,7 @@
 			nl = [];
 			tinymce.walk(ed.getBody(), function(n) {
 				if (n.nodeType == 1 && /^(absolute|relative|static)$/i.test(n.style.position))
-					nl.push(n); 
+					nl.push(n);
 			}, 'childNodes');
 
 			// Find z-indexes

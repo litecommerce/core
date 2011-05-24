@@ -96,7 +96,7 @@ class XLite_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff extends XLite_ReqCo
            	$error = 'Открывающая фигурная скобка, начинающаяся с отдельной строки, должна быть выровнена по названию класса';
            	$phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.8') . $error, $stackPtr);
 		}
-        
+
 		if ($multipleClasses === false) {
 			if ($lastSelectorLine !== $currentLine) {
             	$error = 'Если в селекторе один класс, открывающая фигурная скобка на той же строке что и селектор.';

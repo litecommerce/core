@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -41,7 +40,7 @@
 </tr>
 <tr>
     <td align="right">Phone:</td>
-    <td>{profile.billing_address.phone}</td>    
+    <td>{profile.billing_address.phone}</td>
 </tr>
 <tr>
     <td align="right">Address:</td>
@@ -88,7 +87,7 @@
 </tr>
 <tr>
     <td align="right">Phone:</td>
-    <td>{profile.shipping_address.phone}</td>    
+    <td>{profile.shipping_address.phone}</td>
 </tr>
 <tr>
     <td align="right">Address:</td>
@@ -131,6 +130,16 @@
     <td colspan="2">&nbsp;</td>
 </tr>
 <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/wholesaler_details.tpl" profile={profile}>
+</tbody>
+
+<tbody IF="password">
+<tr>
+    <td colspan="2"><b>Personal info</b><br><hr size="1" noshade></td>
+</tr>
+<tr>
+    <td align="right">Password</td>
+    <td>{password}</td>
+</tr>
 </tbody>
 
 </table>

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,39 +13,31 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Decorator
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ *
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace Includes\Decorator\Utils;
 
 /**
- * CacheManager 
- * 
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * CacheManager
+ *
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 {
     /**
-     * Text to display while working with cache 
-     */
-    const MESSAGE = 'Re-building cache, please wait...';
-
-    /**
      * Available hooks
      */
-
     const HOOK_BEFORE_CLEANUP  = 'before_cleanup';
     const HOOK_BEFORE_DECORATE = 'before_decorate';
     const HOOK_BEFORE_WRITE    = 'before_write';
@@ -53,14 +45,12 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     const HOOK_STEP_SECOND     = 'step_second';
     const HOOK_STEP_THIRD      = 'step_third';
 
-
     /**
-     * List of cache building steps 
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * List of cache building steps
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $steps = array(
         self::STEP_FIRST,
@@ -69,101 +59,80 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     );
 
     /**
-     * List of cache directories 
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * List of cache directories
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $cacheDirs = array(
-        LC_COMPILE_DIR,
-        LC_LOCALE_DIR,
-        LC_DATACACHE_DIR,
-        LC_TMP_DIR,
+        LC_DIR_COMPILE,
+        LC_DIR_LOCALE,
+        LC_DIR_DATACACHE,
+        LC_DIR_TMP,
     );
 
 
-    // ------------------------------ Dispaly message routines -
+    // {{{ Dispaly message routines
+
+    /**
+     * Get decorator message
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getMessage()
+    {
+        return 'Re-building cache [step ' . static::$step . '], please wait...';
+    }
 
     /**
      * Get plain text notice block
-     * 
+     *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getPlainMessage()
     {
-        return self::MESSAGE . "\n";
+        return static::getMessage() . "\n";
     }
 
     /**
-     * getHTMLMessageContent 
-     * 
+     * getHTMLMessage
+     *
      * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getHTMLMessageContent()
-    {
-        return '<table><tr><td><img src="'
-            . \Includes\Utils\URLManager::getShopURL('skins/progress_indicator.gif')
-            . '" alt="" /></td><td>' . self::MESSAGE . '</td></tr></table>';
-    }
-
-    /**
-     * Get HTML notice block
-     * 
-     * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getHTMLMessage()
     {
-        return '<script type="text/javascript">document.write(\''
-            . static::getHTMLMessageContent() . '\');</script>' . "\n"
-            . '<html>' . "\n" . '<body>' . "\n"
-            . '<noscript>' . static::getHTMLMessageContent() . '</noscript>' . "\n";
+        return '<table><tr><td><img src="'
+            . \Includes\Utils\URLManager::getShopURL('skins/progress_indicator.gif')
+            . '" alt="" /></td><td>' . static::getMessage() . '</td></tr></table>';
     }
 
-    /**
-     * Text to display while working with cache
-     * 
-     * @return null
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function showMessage()
-    {
-        \Includes\Utils\Operator::flush(LC_IS_CLI_MODE ? static::getPlainMessage() : static::getHTMLMessage());
-    }
+    // }}}
 
-
-    // ------------------------------ Cache state indicator routines -
+    // {{{ Cache state indicator routines
 
     /**
      * Clean up the cache rebuild indicator
      *
-     * @return null
-     * @access public
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function cleanupRebuildIndicator()
     {
-        \Includes\Utils\FileManager::delete(static::getRebuildIndicatorFileName());
+        \Includes\Utils\FileManager::deleteFile(static::getRebuildIndicatorFileName());
     }
 
     /**
      * Clean up the cache validity indicators
      *
-     * @return null
-     * @access public
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -171,7 +140,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     {
         // "Step is completed" indicators
         foreach (static::getCacheStateFiles() as $file) {
-            \Includes\Utils\FileManager::delete($file);
+            \Includes\Utils\FileManager::deleteFile($file);
         }
 
         // "Step is running" indicator
@@ -182,7 +151,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Check and (if needed) remove the rebuild indicator file
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -192,7 +160,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         $content = \Includes\Utils\FileManager::read($name);
 
         // Only the process created the file can delete
-        static::getRebuildIndicatorFileContent() != $content ?: \Includes\Utils\FileManager::delete($name);
+        static::getRebuildIndicatorFileContent() != $content ?: \Includes\Utils\FileManager::deleteFile($name);
 
         return (bool) $content;
     }
@@ -200,51 +168,51 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     /**
      * Remove cache validity indicator
      *
-     * @param string $step current step name
+     * @param string $step Current step name
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function clear($step)
     {
-        !($file = static::getCacheStateIndicatorFileName($step)) ?: \Includes\Utils\FileManager::delete($file);
+        $file = static::getCacheStateIndicatorFileName($step);
+
+        if ($file) {
+            \Includes\Utils\FileManager::deleteFile($file);
+        }
     }
 
     /**
      * Return name of the file, which indicates the cache state
      *
-     * @param string $step current step name
+     * @param string $step Current step name
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getCacheStateIndicatorFileName($step)
     {
-        return LC_COMPILE_DIR . '.cacheGenerated.' . $step . '.step';
+        return LC_DIR_COMPILE . '.cacheGenerated.' . $step . '.step';
     }
 
     /**
      * Return name of the file, which indicates if the build process started
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getRebuildIndicatorFileName()
     {
-        return LC_VAR_DIR . '.rebuildStarted';
+        return LC_DIR_VAR . '.rebuildStarted';
     }
 
     /**
      * Data to write into the "step completed" file indicator
-     * 
+     *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -257,7 +225,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Data to write into the "step started" file indicator
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -270,7 +237,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Check if cache rebuild process is already started
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -285,7 +251,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Return list of cache state indicator files
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -294,16 +259,16 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         return array_map(array('static', 'getCacheStateIndicatorFileName'), static::$steps);
     }
 
+    // }}}
 
-    // ------------------------------ Common routines to run step handlers -
+    // {{{ Common routines to run step handlers
 
     /**
      * Step started
      *
-     * @param string $step current step
+     * @param string $step Current step
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -317,16 +282,15 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
             static::getRebuildIndicatorFileContent()
         );
 
-        static::showMessage();
+        \Includes\Utils\Operator::showMessage(LC_IS_CLI_MODE ? static::getPlainMessage() : static::getHTMLMessage());
     }
 
     /**
      * Step completed
      *
-     * @param string $step current step
+     * @param string $step Current step
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -351,22 +315,20 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @param string $step Step name
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getStepCallback($step)
     {
-        return array(get_called_class(), 'executeStepHandler' . ucfirst($step));
+        return array(get_called_class(), 'executeStepHandler' . strval($step));
     }
 
     /**
      * Run a step
-     * 
+     *
      * @param string $step Step name
-     *  
-     * @return null
-     * @access protected
+     *
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -393,8 +355,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      *
      * @param string $step Step name
      *
-     * @return null
-     * @access protected
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -405,26 +366,27 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         }
     }
 
+    // }}}
 
-    // ------------------------------ Step handlers -
+    // {{{ Step handlers
 
     /**
      * Run handler for the current step
      *
-     * NOTE: method is public since it's called from
+     * :NOTE: method is public since it's called from
      * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
-     * 
-     * @return null
-     * @access public
+     *
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function executeStepHandlerFirst()
+    public static function executeStepHandler1()
     {
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_CLEANUP);
 
         // Delete cache folders
+        \Includes\Utils\Operator::showMessage('Cleaning up the cache...');
         static::cleanupCache();
 
         // Load classes from "classes" (do not use cache)
@@ -434,12 +396,14 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_DECORATE);
 
         // Main procedure: build decorator chains
+        \Includes\Utils\Operator::showMessage('Building classes tree...');
         static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'decorateClass'));
 
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_WRITE);
 
         // Write class files to FS
+        \Includes\Utils\Operator::showMessage('Writing class files to the cache...');
         static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'writeClassFile'));
 
         // Invoke plugins
@@ -452,12 +416,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * NOTE: method is public since it's called from
      * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
      *
-     * @return null
-     * @access public
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function executeStepHandlerSecond()
+    public static function executeStepHandler2()
     {
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_SECOND);
@@ -469,25 +432,24 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * NOTE: method is public since it's called from
      * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
      *
-     * @return null
-     * @access public
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function executeStepHandlerThird()
+    public static function executeStepHandler3()
     {
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_THIRD);
     }
 
+    // }}}
 
-    // ------------------------------ Top-level methods -
+    // {{{ Top-level methods
 
     /**
      * Main public method: rebuild classes cache
      *
-     * @return null
-     * @access public
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -500,9 +462,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
     /**
      * Return current step identifier
-     * 
+     *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -517,7 +478,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @param string $step Current step name OPTIONAL
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -533,8 +493,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     /**
      * Clean up the cache
      *
-     * @return null
-     * @access protected
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -542,4 +501,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     {
         array_walk(static::$cacheDirs, array('\Includes\Utils\FileManager', 'unlinkRecursive'));
     }
+
+    // }}}
 }

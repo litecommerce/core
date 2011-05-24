@@ -2,11 +2,10 @@
 
 /**
  * javascript core
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -95,7 +94,7 @@ window.core = {
     name = name.toLowerCase();
 
     if (this.isReady) {
-    
+
       if (this.isDebug && 'undefined' != typeof(window.console)) {
         if (params) {
           console.log('Fire \'' + name + '\' event with arguments: ' + var_export(params, true));
@@ -218,7 +217,7 @@ window.core = {
 
       result = false;
     }
-    
+
     return result;
   },
 
@@ -232,7 +231,7 @@ window.core = {
 
       for (var i = 0; i < list.length; i++) {
         if (-1 !== list[i].search(/^event-([^:]+):(.+)/i)) {
-  
+
           // Server-side event
           var m = list[i].match(/event-([^:]+):(.+)/i);
           core.trigger(m[1].toLowerCase(), eval('(' + m[2] + ')'));
@@ -408,7 +407,7 @@ window.core = {
     var children = jQuery(obj).get(0).childNodes;
     var re = /DATACELL/;
     var m = false;
-    
+
     for (var i = 0; i < children.length && !m; i++) {
       if (8 === children[i].nodeType && -1 != children[i].data.search(re)) {
         m = children[i].data.replace(re, '');
@@ -469,3 +468,21 @@ function isElement(obj, type)
 {
   return obj && typeof(obj.tagName) != 'undefined' && obj.tagName.toLowerCase() == type;
 }
+
+core.bind(
+  'load',
+  function () {
+    jQuery('input[type=checkbox]').each(
+      function () {
+        var checkbox = this;
+
+        jQuery(checkbox).bind(
+          'click',
+          function () {
+            return !jQuery(checkbox).attr('readonly');
+          }
+        );
+      }
+    );
+  }
+);

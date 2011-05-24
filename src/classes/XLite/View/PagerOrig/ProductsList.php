@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\View\PagerOrig;
 
 /**
- * Pager 
- * 
+ * Pager
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -46,8 +45,8 @@ class ProductsList extends \XLite\View\PagerOrig
     const PAGE_LAST     = 'last';
 
     /**
-     * pagesPerFrame 
-     * 
+     * pagesPerFrame
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -86,7 +85,7 @@ class ProductsList extends \XLite\View\PagerOrig
     /**
      * getFrameStartPage
      *
-     * @return integer 
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -112,11 +111,11 @@ class ProductsList extends \XLite\View\PagerOrig
     }
 
     /**
-     * isFurthermostPage 
-     * 
+     * isFurthermostPage
+     *
      * @param string $type Link type (first / previous / next / last)
-     *  
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -129,11 +128,11 @@ class ProductsList extends \XLite\View\PagerOrig
     }
 
     /**
-     * getPageIndexNotations 
-     * 
+     * getPageIndexNotations
+     *
      * @param mixed $index Page notation
-     *  
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -150,11 +149,11 @@ class ProductsList extends \XLite\View\PagerOrig
     }
 
     /**
-     * getLinkClassName 
-     * 
+     * getLinkClassName
+     *
      * @param mixed $index Page notation
-     *  
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -178,10 +177,10 @@ class ProductsList extends \XLite\View\PagerOrig
     }
 
     /**
-     * getPageClassName 
-     * 
+     * getPageClassName
+     *
      * @param integer $pageId Current page ID
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -194,7 +193,7 @@ class ProductsList extends \XLite\View\PagerOrig
     /**
      * Get page begin record number
      *
-     * @return integer 
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -206,7 +205,7 @@ class ProductsList extends \XLite\View\PagerOrig
     /**
      * Get page end record number
      *
-     * @return integer 
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */

@@ -2,46 +2,48 @@
 
 /**
  * ____file_title____
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
 
+// Switch button widget constructor
 function SwitchButton()
 {
   var obj = this;
 
+  // Every 'pattern' DOM element is changed to Switch button widget
   jQuery(this.pattern).each(
     function () {
       var button;
 
       button = this;
+      // callbacks are defined from HTML inner comments
       button.callbacks = core.getCommentedData(button, 'callbacks');
 
+      // 'first' callback is called first
       button.currentCallback = button.callbacks.first;
 
       jQuery(this).click(
         function () {
+          // inner calling of current callback
           window[button.currentCallback](this);
 
-          if (button.currentCallback == button.callbacks.first) {
-
-            button.currentCallback = button.callbacks.second;
-
-          } else {
-
-            button.currentCallback = button.callbacks.first;
-          }
+          // current callback is changed to another one (switch to next callback. There are two callbacks now TODO?)
+          button.currentCallback = button.currentCallback == button.callbacks.first
+            ? button.callbacks.second
+            : button.callbacks.first;
         }
       );
     }
   );
 }
 
-SwitchButton.prototype.pattern = '.switch-button';
+// Switch button widgets are buttons with 'switch-button' CSS class
+SwitchButton.prototype.pattern = 'button.switch-button';
 
+// Autoloading of new Switch button widget
 core.autoload(SwitchButton);

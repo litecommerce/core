@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -41,6 +40,7 @@
 <widget target="product_list" template="product/product_list_form.tpl">
 
 <widget target="product" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
+<widget target="add_product" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
 
 <widget target="profile" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl" IF="mode=#delete#" />
 

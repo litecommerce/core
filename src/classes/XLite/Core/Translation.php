@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,15 +29,15 @@ namespace XLite\Core;
 
 /**
  * Translation core rutine
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 {
     /**
-     * Current language code 
-     * 
+     * Current language code
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -46,8 +45,8 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     protected static $currentLanguageCode;
 
     /**
-     * Translation driver 
-     * 
+     * Translation driver
+     *
      * @var   \XLite\Core\TranslationDriver\ATranslationDriver
      * @see   ____var_see____
      * @since 1.0.0
@@ -55,8 +54,8 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     protected $driver;
 
     /**
-     * Translation drivers query 
-     * 
+     * Translation drivers query
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -68,7 +67,7 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 
     /**
      * Get current language code
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -84,11 +83,11 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 
     /**
      * Get translation (short static method)
-     * 
+     *
      * @param string $name      Label name
      * @param array  $arguments Substitute arguments OPTIONAL
      * @param string $code      Language code OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -100,7 +99,7 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 
     /**
      * Reset driver cache
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -112,11 +111,11 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 
     /**
      * Get translation
-     * 
+     *
      * @param string $name      Label name
      * @param array  $arguments Substitute arguments OPTIONAL
      * @param string $code      Language code OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -141,8 +140,8 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 
 
     /**
-     * Get REST entity names 
-     * 
+     * Get REST entity names
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -155,11 +154,11 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     }
 
     /**
-     * Get translation as REST 
-     * 
+     * Get translation as REST
+     *
      * @param string $id        Label name
      * @param array  $arguments Arguments
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -175,11 +174,11 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 
 
     /**
-     * Process substitute 
-     * 
+     * Process substitute
+     *
      * @param string $string Translated label
      * @param array  $args   Substitute arguments
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -197,8 +196,8 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     }
 
     /**
-     * Get translation driver 
-     * 
+     * Get translation driver
+     *
      * @return \XLite\Core\TranslationDriver\ATranslationDriver
      * @see    ____func_see____
      * @since  1.0.0
@@ -213,8 +212,8 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     }
 
     /**
-     * Define translation driver 
-     * 
+     * Define translation driver
+     *
      * @return \XLite\Core\TranslationDriver\ATranslationDriver
      * @see    ____func_see____
      * @since  1.0.0

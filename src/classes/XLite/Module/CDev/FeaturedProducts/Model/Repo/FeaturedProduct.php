@@ -20,7 +20,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -48,10 +47,10 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
     protected $defaultOrderBy = 'order_by';
 
     /**
-     * Find by type 
-     * 
+     * Find by type
+     *
      * @param integer $categoryId Category ID
-     *  
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -68,9 +67,9 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
 
     /**
      * Define query builder for findByCategoryId()
-     * 
+     *
      * @param integer $categoryId Category ID
-     *  
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
@@ -87,7 +86,7 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
      * Get featured products list
      *
      * @param integer $categoryId Category ID
-     * 
+     *
      * @return array(\XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct) Objects
      * @access public
      * @see    ____func_see____

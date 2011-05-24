@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,16 +29,16 @@ namespace XLite\Controller\Admin;
 
 /**
  * Settings. TODO FULL REFACTOR!!!
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Settings extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * params 
+     * params
      * FIXME
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -47,9 +46,9 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     public $params = array('target', 'page');
 
     /**
-     * page 
+     * page
      * FIXME
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -57,7 +56,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     public $page = 'General';
 
     /**
-     * _waiting_list 
+     * _waiting_list
      * FIXME
      *
      * @var   mixed
@@ -80,8 +79,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Check for the GDLib extension 
-     * 
+     * Check for the GDLib extension
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -92,8 +91,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Get tab names 
-     * 
+     * Get tab names
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -112,7 +111,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Get options for current tab (category)
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -122,10 +121,10 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         return \XLite\Core\Database::getRepo('\XLite\Model\Config')
             ->findByCategoryAndVisible($this->page);
     }
-    
+
     /**
-     * isOpenBasedirRestriction 
-     * 
+     * isOpenBasedirRestriction
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -133,20 +132,20 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     public function isOpenBasedirRestriction()
     {
         $res = (string) @ini_get('open_basedir');
-        
+
         return ('' != $res);
     }
-    
+
     /**
      * Returns value by request
-     * 
+     *
      * @param string $name Type of value
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function get($name) 
+    public function get($name)
     {
         $return = '';
 
@@ -174,10 +173,10 @@ class Settings extends \XLite\Controller\Admin\AAdmin
                 break;
 
             case 'web_server':
-                
+
                 if (isset($_SERVER['SERVER_SOFTWARE'])) {
                     $return = $_SERVER['SERVER_SOFTWARE'];
-                
+
                 } else {
                     $return = '';
                 }
@@ -189,10 +188,10 @@ class Settings extends \XLite\Controller\Admin\AAdmin
                 phpinfo(INFO_MODULES);
                 $phpInfo = ob_get_contents();
                 ob_end_clean();
-                
+
                 if (preg_match('/EXPAT.+>([\.\d]+)/mi', $phpInfo, $m)) {
                     $return = $m[1];
-                
+
                 } else {
                     $return = function_exists('xml_parser_create') ? 'found' : '';
                 }
@@ -233,13 +232,13 @@ class Settings extends \XLite\Controller\Admin\AAdmin
                 }
 
                 break;
-                                  
+
             case 'lite_version':
-                $return = \XLite\Core\Config::getInstance()->Version->version; 
+                $return = \XLite\Core\Config::getInstance()->Version->version;
                 break;
 
-            case 'libcurl': 
-      
+            case 'libcurl':
+
                 $libcurlVersion = curl_version();
 
                 if (is_array($libcurlVersion)) {
@@ -251,7 +250,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
                 break;
 
             case 'check_files':
-          
+
                 $result = array();
                 $files = array();
 
@@ -298,23 +297,23 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
             // :FIXME: checng to the constants
             case 'check_dirs':
-         
+
                 $result = array();
 
                 $dirs = array(
-                    'var/run', 
-                    'var/log', 
-                    'var/html', 
-                    'var/backup', 
-                    'var/tmp', 
-                    'catalog', 
-                    'images', 
-                    'classes/modules', 
-                    'skins/default/en/modules', 
-                    'skins/admin/en/modules', 
-                    'skins/default/en/images/modules', 
-                    'skins/admin/en/images/modules', 
-                    'skins/mail/en/modules', 
+                    'var/run',
+                    'var/log',
+                    'var/html',
+                    'var/backup',
+                    'var/tmp',
+                    'catalog',
+                    'images',
+                    'classes/modules',
+                    'skins/default/en/modules',
+                    'skins/admin/en/modules',
+                    'skins/default/en/images/modules',
+                    'skins/admin/en/images/modules',
+                    'skins/mail/en/modules',
                     'skins/mail/en/images/modules'
                 );
 
@@ -322,10 +321,10 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
                     $mode = $this->getDirPermission($dir);
                     $modeStr = $this->getDirPermissionStr($dir);
-                    
+
                     $res = array(
-                        'dir' => $dir, 
-                        'error' => '', 
+                        'dir' => $dir,
+                        'error' => '',
                         'subdirs' => array()
                     );
 
@@ -401,9 +400,9 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Get directory permission
-     * 
+     *
      * @param string $dir Directory path
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -413,19 +412,19 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         global $options;
 
         if ($this->getComplex('xlite.suMode') == 0) {
-            
+
             if (strpos($dir, 'var') === false) {
                 $mode = 0777;
 
             } else {
-                $mode = isset($options['filesystem_permissions']['nonprivileged_permission_dir']) 
-                    ? base_convert($options['filesystem_permissions']['nonprivileged_permission_dir'], 8, 10) 
+                $mode = isset($options['filesystem_permissions']['nonprivileged_permission_dir'])
+                    ? base_convert($options['filesystem_permissions']['nonprivileged_permission_dir'], 8, 10)
                     : 0755;
             }
 
         } else {
-            $mode = isset($options['filesystem_permissions']['privileged_permission_dir']) 
-                ? base_convert($options['filesystem_permissions']['privileged_permission_dir'], 8, 10) 
+            $mode = isset($options['filesystem_permissions']['privileged_permission_dir'])
+                ? base_convert($options['filesystem_permissions']['privileged_permission_dir'], 8, 10)
                 : 0711;
         }
 
@@ -433,10 +432,10 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getDirPermissionStr 
-     * 
+     * getDirPermissionStr
+     *
      * @param string $dir ____param_comment____ OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -444,15 +443,15 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     public function getDirPermissionStr($dir = '')
     {
         $mode = (int) $this->getDirPermission($dir);
-        
+
         return (string) '0' . base_convert($mode, 10, 8);
     }
 
     /**
-     * getFilePermission 
-     * 
+     * getFilePermission
+     *
      * @param mixed $file ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -462,13 +461,13 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         global $options;
 
         if ($this->getComplex('xlite.suMode') == 0) {
-            $mode = isset($options['filesystem_permissions']['nonprivileged_permission_file']) 
-                ? base_convert($options['filesystem_permissions']['nonprivileged_permission_file'], 8, 10) 
+            $mode = isset($options['filesystem_permissions']['nonprivileged_permission_file'])
+                ? base_convert($options['filesystem_permissions']['nonprivileged_permission_file'], 8, 10)
                 : 0644;
-        
+
         } else {
-            $mode = isset($options['filesystem_permissions']['privileged_permission_file']) 
-                ? base_convert($options['filesystem_permissions']['privileged_permission_file'], 8, 10) 
+            $mode = isset($options['filesystem_permissions']['privileged_permission_file'])
+                ? base_convert($options['filesystem_permissions']['privileged_permission_file'], 8, 10)
                 : 0600;
         }
 
@@ -476,10 +475,10 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getFilePermissionStr 
-     * 
+     * getFilePermissionStr
+     *
      * @param string $file ____param_comment____ OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -487,16 +486,16 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     public function getFilePermissionStr($file = '')
     {
         $mode = (int) $this->getFilePermission($file);
-        
+
         return (string) '0' . base_convert($mode, 10, 8);
     }
 
     /**
-     * checkSubdirs 
-     * 
+     * checkSubdirs
+     *
      * @param mixed $path          ____param_comment____
      * @param mixed &$subdirErrors ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -511,26 +510,26 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             $dh = @opendir($path);
 
             while (($file = @readdir($dh)) !== false) {
-            
+
                 if ('.' != $file && '..' != $file) {
-            
+
                     $fullpath = $path . DIRECTORY_SEPARATOR . $file;
-            
+
                     if (@is_dir($fullpath)) {
-            
+
                         $perm = substr(sprintf('%o', @fileperms($fullpath)), -4);
-            
+
                         if ($perm != $modeStr) {
-            
+
                             if (!@chmod($fullpath, $mode)) {
                                 $subdirErrors[] = $fullpath;
                                 continue;
                             }
-            
+
                         } else {
-            
+
                             if ($this->getComplex('xlite.suMode') != 0 || strpos($fullpath, 'var') !== false) {
-            
+
                                 if (!@chmod($fullpath, $mode)) {
                                     $subdirErrors[] = $fullpath;
                                     continue;
@@ -546,25 +545,25 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * action_phpinfo 
-     * 
+     * doActionPhpinfo
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function action_phpinfo()
+    public function doActionPhpinfo()
     {
         die(phpinfo());
     }
 
     /**
      * Re-generate safe mode access key
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function action_safe_mode_key_regen()
+    public function doActionSafeModeKeyRegen()
     {
         \Includes\SafeMode::regenerateAccessKey();
         \XLite\Core\TopMessage::addInfo('Safe mode access key has been re-generated');
@@ -581,13 +580,13 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * action_update 
-     * 
+     * doActionUpdate
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function action_update()
+    public function doActionUpdate()
     {
         $optionsToUpdate = array();
         $options = $this->getOptions();
@@ -607,7 +606,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
             } elseif ('text' == $type) {
                 $newValue = isset(\XLite\Core\Request::getInstance()->$name) ? trim(\XLite\Core\Request::getInstance()->$name) : '';
-            
+
             } else {
                 $newValue = isset(\XLite\Core\Request::getInstance()->$name) ? \XLite\Core\Request::getInstance()->$name : '';
             }
@@ -634,8 +633,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getCurrentIP 
-     * 
+     * getCurrentIP
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -646,7 +645,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * isCurrentIpValid 
+     * isCurrentIpValid
      * TODO: remove this
      *
      * @return void
@@ -659,13 +658,13 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * action_add_new_ip 
-     * 
+     * doActionAddNewIp
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function action_add_new_ip()
+    public function doActionAddNewIp()
     {
         $ip = \XLite\Core\Request::getInstance()->byte_1 . '.' .
               \XLite\Core\Request::getInstance()->byte_2 . '.' .
@@ -703,13 +702,13 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * action_delete_allowed_ip 
-     * 
+     * doActionDeleteAllowedIp
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function action_delete_allowed_ip()
+    public function doActionDeleteAllowedIp()
     {
         $ids = \XLite\Core\Request::getInstance()->allowed_ips;
 
@@ -742,13 +741,13 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * action_update_allowed_ip 
-     * 
+     * doActionUpdateAllowedIp
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function action_update_allowed_ip()
+    public function doActionUpdateAllowedIp()
     {
         $commentsList = \XLite\Core\Request::getInstance()->comment;
 
@@ -780,8 +779,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
 
     /**
-     * isWin 
-     * 
+     * isWin
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -792,8 +791,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getTimeZonesList 
-     * 
+     * getTimeZonesList
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -804,8 +803,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getCurrentTimeZone 
-     * 
+     * getCurrentTimeZone
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -816,10 +815,10 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getStateById 
-     * 
+     * getStateById
+     *
      * @param mixed $stateId ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -830,8 +829,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Get safe mode access key 
-     * 
+     * Get safe mode access key
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -842,8 +841,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Get Hard Reset URL 
-     * 
+     * Get Hard Reset URL
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -854,8 +853,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Get Soft Reset URL 
-     * 
+     * Get Soft Reset URL
+     *
      * @return string
      * @see    ____func_see____
      */
@@ -867,7 +866,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     /**
      * Return list of possible order statuses for inventory tracking
      * NOTE: currently not used; saved for future
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -894,8 +893,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getAllowedList 
-     * 
+     * getAllowedList
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -921,4 +920,3 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
 
 }
-

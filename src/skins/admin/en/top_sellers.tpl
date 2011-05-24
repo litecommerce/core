@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -14,14 +13,14 @@
 
 <h2>{t(#Top X products#,_ARRAY_(#count#^getRowsCount()))}</h2>
 
-<table class="data-table">
+<table class="data-table top-sellers">
   <tr class="TableHead">
-    <th align="left">&nbsp;</th>
-    <th FOREACH="getStatsColumns(),c" style="text-align:center;">{getColumnTitle(c)}</th>
+    <th class="title"><widget class="XLite\View\Order\Statistics\CurrencySelector" /></th>
+    <th FOREACH="getStatsColumns(),c">{getColumnTitle(c)}</th>
   </tr>
   <tr FOREACH="getStats(),idx,row" class="dialog-box">
-    <td>{inc(idx)}.</td>
-    <td FOREACH="row,idx1,val" align="center">
+    <td class="title">{inc(idx)}.</td>
+    <td FOREACH="row,idx1,val">
       <a IF="val" href="{buildURL(#product#,##,_ARRAY_(#product_id#^val.product.product_id))}">{val.name}</a>
       <span IF="!val">&mdash;</span>
     </td>

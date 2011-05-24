@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -82,13 +81,13 @@ CartView.prototype.postprocess = function(isSuccess, initial)
     // Remove item
     jQuery('.selected-product form input.remove', this.base).parents('form')
       .commonController(
-        'enableBackgroundSubmit', 
+        'enableBackgroundSubmit',
         function() {
           return o.preprocessAction();
         },
         function (event, XMLHttpRequest, textStatus, data, isValid) {
           return o.postprocessAction(XMLHttpRequest, textStatus, data, isValid);
-        }      
+        }
       );
 
     // Update item
@@ -113,7 +112,7 @@ CartView.prototype.postprocess = function(isSuccess, initial)
         },
         function (event, XMLHttpRequest, textStatus, data, isValid) {
           return o.postprocessAction(XMLHttpRequest, textStatus, data, isValid);
-        }      
+        }
       );
 
     // Shipping estimator

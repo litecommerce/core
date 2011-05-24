@@ -2,11 +2,10 @@
 
 /**
  * Top links
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -34,6 +33,7 @@
 #top-links li a
 {
   background: url("../images/top_links_arrow_bg.gif") no-repeat 100% 7px;
+  cursor: default;
 }
 
 #top-links a,
@@ -88,12 +88,14 @@
   background: 0 none;
   padding: 0;
   margin: 10px;
+  cursor: pointer;
 }
 
 #top-links ul ul li a,
 #top-links ul ul li a:visited
 {
   text-decoration: underline;
+  white-space: nowrap;
 }
 
 #top-links ul ul li a.text
@@ -101,6 +103,7 @@
   color: #fff;
   cursor: default;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 #top-links ul ul li a.frontend-opened

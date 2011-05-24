@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Classes
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -31,7 +30,7 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
 
     // TODO: implement using a test module package once installation and packing
     //       is complete. Currently Featured products module is used for testing
-    
+
     public function testCreate()
     {
         $module = $this->getTestModule();
@@ -150,10 +149,10 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
         \XLite\Core\Database::getEM()->flush();
 
         \XLite\Core\Database::getEM()->clear();
- 
+
         $module = \XLite\Core\Database::getRepo('XLite\Model\Module')->find($module->getModuleId());
         $this->assertFalse($module->getEnabled(), 'check if module is disabled');
-        
+
         $module->setEnabled(true);
         \XLite\Core\Database::getEM()->flush();
         $this->assertTrue($module->getEnabled(), 'check if module is enabled');
@@ -161,7 +160,7 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
 
     public function testProtectedStructures()
     {
-        $path = LC_VAR_DIR . '.disabled.structures.php';
+        $path = LC_DIR_VAR . '.disabled.structures.php';
 
         if (file_exists($path)) {
             unlink($path);
@@ -187,7 +186,7 @@ CDev\ProductOptions:
         foreach ($etalon as $key => $str) {
             $this->assertEquals(trim($subject[$key]), trim($str), 'check file content (' . $path . ')');
         }
-        
+
         if (file_exists($path)) {
             unlink($path);
         }
@@ -218,22 +217,22 @@ CDev\ProductOptions:
             $module->getSettingsFormLink(),
             'check general settings form link'
         );
-        
+
         $module = $this->getEnabledModule(true, 'AustraliaPost');
         $this->assertEquals('admin.php?target=aupost', $module->getSettingsFormLink(), 'check custom settings form link');
     }
-    
+
     public function testGetMainClass()
     {
         $module = $this->getEnabledModule(true, 'FeaturedProducts');
         $this->assertEquals('\XLite\Module\CDev\FeaturedProducts\Main', $module->getMainClass(), 'check main class');
     }
-    
+
     public function testGetDependenciesModules()
     {
         // TODO: implement after dependencies system refactoring
     }
-    
+
     public function testCanEnable()
     {
         $module = $this->getEnabledModule();
@@ -244,7 +243,7 @@ CDev\ProductOptions:
         // TODO: implement dependencies checker after dependencies system refactoring
         // TODO: implement checking of the static check() method of the main class
     }
-    
+
     public function testGetHash()
     {
         // TODO: implement after all upload/install functions and tests are completed
@@ -267,7 +266,7 @@ CDev\ProductOptions:
         $this->assertEquals('Featured Products', $module->__call('getModuleName'), 'check name call');
         $this->assertEquals('Creative Development LLC', $module->__call('getAuthorName'), 'check author call');
     }
-    
+
     public function testGetActualName()
     {
         $module = $this->getTestModule();
@@ -279,7 +278,7 @@ CDev\ProductOptions:
         $module = $this->getTestModule();
         $this->assertEquals('TestAuthor' . LC_DS . 'TestModule', $module->getPath(), 'check path');
     }
- 
+
     public function testGetModel()
     {
         $module = $this->getTestModule();

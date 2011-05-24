@@ -10,7 +10,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -20,8 +19,8 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
 {
 
     /**
-     * addressFields 
-     * 
+     * addressFields
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -41,8 +40,8 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
     );
 
     /**
-     * testCreate 
-     * 
+     * testCreate
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -201,8 +200,8 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetState 
-     * 
+     * testGetState
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -242,8 +241,8 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetCountry 
-     * 
+     * testGetCountry
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -261,8 +260,8 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetCountryCode 
-     * 
+     * testGetCountryCode
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -284,8 +283,8 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetStateId 
-     * 
+     * testGetStateId
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -296,7 +295,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         $address = new \XLite\Model\Address();
 
         $address->map($this->addressFields);
-        
+
         $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode('US', 'NY');
 
         $address->setState($state);
@@ -306,8 +305,8 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetAddressFields 
-     * 
+     * testGetAddressFields
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -340,7 +339,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         $this->assertFalse($address->create(), "Check that address is not created (all fields are identical)");
 
         foreach(\XLite\Model\Address::getAddressFields() as $field) {
-    
+
             $address = $origAddress->cloneEntity();
 
             if ('state_id' == $field) {

@@ -2,11 +2,10 @@
 
 {**
  * Pick address from address book
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -17,6 +16,7 @@
     <ul class="addresses">
       <li FOREACH="getAddresses(),address" class="{getItemClassName(address,addressArrayPointer)}">
         <widget template="checkout/parts/address.plain.tpl" address="{address}" />
+        <a class="remove" href="{buildURL(#checkout#,#removeAddress#,_ARRAY_(#id#^address.getAddressId()))}" title="{t(#Remove#)}"><img src="images/spacer.gif" alt="" /></a>
         <div IF="address.getIsShipping()" class="shipping"></div>
         <div IF="address.getIsBilling()" class="billing"></div>
       </li>

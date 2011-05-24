@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Decorator
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,8 +28,8 @@
 namespace Includes\Decorator\Utils;
 
 /**
- * Operator 
- * 
+ * Operator
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -71,7 +70,8 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
                 $parent = $index[$class];
 
                 // Decorator restriction (only for original classes repository)
-                if ($parent->isDecorator() && self::STEP_FIRST === static::$step) {
+                // :NOTE: do not use the "===" in the second part
+                if ($parent->isDecorator() && self::STEP_FIRST == static::$step) {
                     $parent->handleError('It\'s not allowed to extend a decorator', $node);
                 }
 
@@ -93,7 +93,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
 
     /**
      * Parse PHP files and return plain array with the class descriptors
-     * 
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -199,14 +199,14 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
 
         return $index;
     }
-      
+
     // ------------------------------ Decorator routines -
 
     /**
      * Main decorator callback: build class decoration chains
      *
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -214,7 +214,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      */
     public static function decorateClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        // Two kind of node parents: which implement the 
+        // Two kind of node parents: which implement the
         // \XLite\Base\IDecorator interface, and regular ones
         list($decorators, $regular) = static::divideChildrenIntoGroups($node);
 
@@ -242,7 +242,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
             // Add this stub node as a child to the last decorator in the chain
             $parent->addChild($topNode);
 
-            // Regular children must derive the top-level class in chain 
+            // Regular children must derive the top-level class in chain
             foreach ($regular as $child) {
                 $child->replant($node, $topNode);
             }
@@ -286,10 +286,10 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
 
     /**
      * Callback to sort decorators
-     * 
+     *
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node1 Node to compare (first)
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node2 Node to compare (second)
-     *  
+     *
      * @return integer
      * @access protected
      * @see    ____func_see____
@@ -338,7 +338,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         \Includes\Decorator\DataStructure\Graph\Classes $node,
         \Includes\Decorator\DataStructure\Graph\Classes $parent = null
     ) {
-        \Includes\Utils\FileManager::write(LC_CLASSES_CACHE_DIR . $node->getPath(), $node->getSource($parent));
+        \Includes\Utils\FileManager::write(LC_DIR_CACHE_CLASSES . $node->getPath(), $node->getSource($parent));
     }
 
 
@@ -359,7 +359,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
     {
         $result = array();
 
-        if (preg_match_all(static::getTagPattern($tags), $content, $matches)) {            
+        if (preg_match_all(static::getTagPattern($tags), $content, $matches)) {
             $result += static::parseTags($matches);
         }
 
@@ -368,9 +368,9 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
 
     /**
      * Return pattern to parse source for tags
-     * 
+     *
      * @param array $tags List of tags to search
-     *  
+     *
      * @return string
      * @access protected
      * @see    ____func_see____

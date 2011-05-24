@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,16 +28,16 @@
 namespace XLite\Controller\Console;
 
 /**
- * Abstarct console-zone controller 
- * 
+ * Abstarct console-zone controller
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 abstract class AConsole extends \XLite\Controller\AController
 {
     /**
-     * Action time 
-     * 
+     * Action time
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -47,7 +46,7 @@ abstract class AConsole extends \XLite\Controller\AController
 
     /**
      * Pure output flag
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -56,8 +55,8 @@ abstract class AConsole extends \XLite\Controller\AController
 
     /**
      * Handles the request.
-     * Parses the request variables if necessary. Attempts to call the specified action function 
-     * 
+     * Parses the request variables if necessary. Attempts to call the specified action function
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -68,6 +67,9 @@ abstract class AConsole extends \XLite\Controller\AController
             print ($this->getHelp());
 
         } else {
+
+            set_time_limit(0);
+
             $this->actionTime = microtime(true);
             parent::handleRequest();
 
@@ -88,7 +90,7 @@ abstract class AConsole extends \XLite\Controller\AController
     /**
      * isRedirectNeeded
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -100,7 +102,7 @@ abstract class AConsole extends \XLite\Controller\AController
     /**
      * Check if current page is accessible
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -111,7 +113,7 @@ abstract class AConsole extends \XLite\Controller\AController
 
     /**
      * Return Viewer object
-     * 
+     *
      * @return \XLite\View\Controller
      * @see    ____func_see____
      * @since  1.0.0
@@ -122,8 +124,8 @@ abstract class AConsole extends \XLite\Controller\AController
     }
 
     /**
-     * Get allowed actions 
-     * 
+     * Get allowed actions
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -145,8 +147,8 @@ abstract class AConsole extends \XLite\Controller\AController
 
 
     /**
-     * Check CLI key 
-     * 
+     * Check CLI key
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -159,8 +161,8 @@ abstract class AConsole extends \XLite\Controller\AController
     }
 
     /**
-     * Get help 
-     * 
+     * Get help
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -185,8 +187,8 @@ abstract class AConsole extends \XLite\Controller\AController
     }
 
     /**
-     * Get controller help 
-     * 
+     * Get controller help
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -198,10 +200,10 @@ abstract class AConsole extends \XLite\Controller\AController
     }
 
     /**
-     * Print content 
-     * 
+     * Print content
+     *
      * @param string $str Content
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -212,10 +214,10 @@ abstract class AConsole extends \XLite\Controller\AController
     }
 
     /**
-     * Print error 
-     * 
+     * Print error
+     *
      * @param string $error Error message
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -230,10 +232,10 @@ abstract class AConsole extends \XLite\Controller\AController
     }
 
     /**
-     * Perform redirect 
-     * 
+     * Perform redirect
+     *
      * @param string $url Redirect URL OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____var_see____
      * @since  1.0.0
@@ -256,7 +258,7 @@ abstract class AConsole extends \XLite\Controller\AController
 
     /**
      * Check - script run with input stream or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -276,8 +278,8 @@ abstract class AConsole extends \XLite\Controller\AController
     }
 
     /**
-     * Open input stream 
-     * 
+     * Open input stream
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -295,15 +297,15 @@ abstract class AConsole extends \XLite\Controller\AController
     }
 
     /**
-     * Read line form input stream 
-     * 
+     * Read line form input stream
+     *
      * @return string|boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function readInputStream()
     {
-        $this->openInputStream(); 
+        $this->openInputStream();
 
         if ($this->openInputStream() && feof($this->stdin)) {
             fclose($this->stdin);
@@ -315,18 +317,14 @@ abstract class AConsole extends \XLite\Controller\AController
 
     /**
      * Save input stream to temporary file
-     * 
+     *
      * @return string|void
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function saveInputStream()
     {
-        $dir = function_exists('sys_get_temp_dir')
-            ? sys_get_temp_dir() . LC_DS
-            : LC_VAR_DIR;
-
-        $path = tempnam($dir, 'input');
+        $path = tempnam(sys_get_temp_dir() . LC_DS, 'input');
         file_put_contents($path, file_get_contents('php://stdin'));
 
         return $path;

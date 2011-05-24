@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Classes
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -45,7 +44,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
 
     /**
      * First test sequence of the bestsellers
-     * 
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -59,7 +58,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
 
     /**
      * Second test sequence of the bestsellers
-     * 
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -73,7 +72,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
 
     /**
      *  Test of bestseller for the root category
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -82,7 +81,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
     public function testFindBestsellersRoot()
     {
         /**
-         * First order goes with processed status 
+         * First order goes with processed status
          */
         $order = $this->getLocalTestOrder(
             \XLite\Model\Order::STATUS_PROCESSED,
@@ -98,7 +97,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
         $this->assertEquals(count($this->test1), count($best), 'Wrong number of bestsellers was returned. (1)');
 
         /**
-         * First sequence 
+         * First sequence
          */
         foreach ($this->test1 as $index => $id) {
 
@@ -109,7 +108,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
         }
 
         /**
-         * Second order goes with completed status 
+         * Second order goes with completed status
          */
         $order = $this->getLocalTestOrder(
             \XLite\Model\Order::STATUS_COMPLETED,
@@ -123,7 +122,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
         $this->assertEquals(count($this->test2), count($best), 'Wrong number of bestsellers was returned. (2)');
 
         /**
-         * Second sequence  
+         * Second sequence
          */
         foreach ($this->test2 as $index => $id) {
 
@@ -137,7 +136,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
 
     /**
      * Test of bestseller in some non-root category
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -151,8 +150,8 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
                 self::PR1 => 500,
                 self::PR2 => 400,
                 self::PR4 => 300,
-            )   
-        );  
+            )
+        );
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => self::CATEGORY));
         $this->assertNotNull($c, 'check category');
@@ -172,10 +171,10 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
 
     /**
      * Prepare order
-     * 
+     *
      * @param mixed $status ____param_comment____
      * @param array $items  ____param_comment____
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -189,7 +188,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
 
         if (!is_null($status)) {
             $order->setStatus($status);
-        }   
+        }
 
         $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(3));
 
@@ -211,19 +210,19 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
 
     /**
      *  Wrapper for the REPO findBestsellers method
-     * 
+     *
      * @param int $count ____param_comment____
      * @param int $cat   ____param_comment____
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function findBestsellers($count = 0, $cat = 0)
-    {   
+    {
         return \XLite\Core\Database::getRepo('XLite\Model\Product')->findBestsellers($count, $cat);
-    }   
+    }
 
 
 }

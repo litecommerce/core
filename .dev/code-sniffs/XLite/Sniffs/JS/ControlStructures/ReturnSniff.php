@@ -17,7 +17,7 @@
 /**
  * XLite_Sniffs_JS_ControlStructures_ReturnSniff.
  *
- * Check "return" operator. 
+ * Check "return" operator.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -70,7 +70,7 @@ must have empty line before previous operator if not only in the code block
 */
 		$tokens = $phpcsFile->getTokens();
 
-		// Return must have preceeding empty line if it is not only operator in the current block. 
+		// Return must have preceeding empty line if it is not only operator in the current block.
 
 		if (empty($tokens[$stackPtr]["conditions"])) {
 			$phpcsFile->addError($this->getReqPrefix('REQ.JS.3.10.4') . "Return operator was used in global context. Must be used in functions", $stackPtr);

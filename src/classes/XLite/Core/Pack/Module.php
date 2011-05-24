@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Core\Pack;
 
 /**
- * Module 
- * 
+ * Module
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -39,6 +38,7 @@ class Module extends \XLite\Core\Pack\APack
     /**
      * Field names in metadata
      */
+    const METADATA_FIELD_ACTUAL_NAME   = 'ActualName';
     const METADATA_FIELD_VERSION_MINOR = 'VersionMinor';
     const METADATA_FIELD_VERSION_MAJOR = 'VersionMajor';
     const METADATA_FIELD_NAME          = 'Name';
@@ -48,8 +48,8 @@ class Module extends \XLite\Core\Pack\APack
     const METADATA_FIELD_DEPENDENCIES  = 'Dependencies';
 
     /**
-     * Current module 
-     * 
+     * Current module
+     *
      * @var   \XLite\Model\Module
      * @see   ____var_see____
      * @since 1.0.0
@@ -59,10 +59,10 @@ class Module extends \XLite\Core\Pack\APack
     // {{{ Public methods
 
     /**
-     * Constructor 
-     * 
+     * Constructor
+     *
      * @param \XLite\Model\Module $module Current module
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -82,7 +82,7 @@ class Module extends \XLite\Core\Pack\APack
     public function getName()
     {
         // It's the fix for PHAR::compress(): it's triming dots in file names
-        return str_replace('\\', '-', $this->module->getActualName()) 
+        return str_replace('\\', '-', $this->module->getActualName())
             . '-v' . str_replace('.', '_', $this->module->callModuleMethod('getVersion'));
     }
 
@@ -114,6 +114,7 @@ class Module extends \XLite\Core\Pack\APack
     public function getMetadata()
     {
         return parent::getMetadata() + array(
+            self::METADATA_FIELD_ACTUAL_NAME   => $this->module->getActualName(),
             self::METADATA_FIELD_VERSION_MAJOR => $this->module->callModuleMethod('getMajorVersion'),
             self::METADATA_FIELD_VERSION_MINOR => $this->module->callModuleMethod('getMinorVersion'),
             self::METADATA_FIELD_NAME          => $this->module->callModuleMethod('getModuleName'),
@@ -135,14 +136,14 @@ class Module extends \XLite\Core\Pack\APack
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDirs()
+    public function getDirs()
     {
         return array_merge($this->getClassDirs(), $this->getSkinDirs());
     }
 
     /**
      * Return list of module directories which contain class files
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -172,6 +173,7 @@ class Module extends \XLite\Core\Pack\APack
 
             if (\Includes\Utils\FileManager::isDirReadable($path)) {
                 $data = $path;
+
             } else {
                 unset($result[$key]);
             }

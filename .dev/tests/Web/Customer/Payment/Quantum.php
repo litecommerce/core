@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,13 +29,15 @@ require_once __DIR__ . '/../ACustomer.php';
 
 /**
  * Quantum payment gateway integration test (Quantum module)
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
  */
 class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 {
+    const ACCOUNT_EXPIRED_MESSAGE = 'Sorry but this account is not currently active';
+
     public function testPay()
     {
         $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => 'QuantumGateway'));
@@ -55,7 +56,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         // Set test settings
         $s->setValue($this->testConfig['quantum_gateway']['login']);
         \XLite\Core\Database::getEM()->flush();
-        
+
         // Enable payment method
         $pmethod->setEnabled(true);
         \XLite\Core\Database::getEM()->flush();
@@ -192,10 +193,18 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 
         // Wait when payment form will appear
         $this->waitForCondition(
-            'selenium.isElementPresent(\'//form/descendant::input[@name="ccnum"]\')',
+            'selenium.isElementPresent(\'//form/descendant::input[@name="ccnum"]\') || selenium.isTextPresent(\'' . self::ACCOUNT_EXPIRED_MESSAGE . '\')',
             30000,
             'ccnum input field not found'
         );
+
+        // Skip test if account is expired
+        if ($this->isTextPresent(self::ACCOUNT_EXPIRED_MESSAGE)) {
+            $this->markTestSkipped('QuantumGateway account is expired');
+        }
+
+        // Fail test if form element not found
+        $this->assertElementPresent('//form/descendant::input[@name="ccnum"]');
 
         // Type test credit card data
         $this->type('//input[@name="ccnum"]', '4111111111111111');
@@ -203,7 +212,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         $this->type('//input[@name="CVV2"]', '666');
 
         // Payment gateway processing - Selenium TTL prolongation
-        $this->setTimeout(120000);
+        $this->setTimeout(120);
         $this->clickAndWait('//input[@type="submit"]');
 
         $this->waitForLocalCondition(

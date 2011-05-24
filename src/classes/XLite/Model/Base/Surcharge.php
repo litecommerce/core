@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Model\Base;
 
 /**
- * Surcharge 
- * 
+ * Surcharge
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -39,7 +38,7 @@ namespace XLite\Model\Base;
 abstract class Surcharge extends \XLite\Model\AEntity
 {
     /**
-     * Surcharge type codes 
+     * Surcharge type codes
      */
     const TYPE_TAX      = 'tax';
     const TYPE_DISCOUNT = 'discount';
@@ -49,7 +48,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
 
     /**
      * ID
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -61,8 +60,8 @@ abstract class Surcharge extends \XLite\Model\AEntity
     protected $id;
 
     /**
-     * Type 
-     * 
+     * Type
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -72,8 +71,8 @@ abstract class Surcharge extends \XLite\Model\AEntity
     protected $type;
 
     /**
-     * Code 
-     * 
+     * Code
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -84,7 +83,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
 
     /**
      * Control class name
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -95,7 +94,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
 
     /**
      * Surcharge include flag
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -106,7 +105,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
 
     /**
      * Surcharge evailability
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -116,8 +115,8 @@ abstract class Surcharge extends \XLite\Model\AEntity
     protected $available = true;
 
     /**
-     * Value 
-     * 
+     * Value
+     *
      * @var   float
      * @see   ____var_see____
      * @since 1.0.0
@@ -128,7 +127,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
 
     /**
      * Name (stored)
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -138,8 +137,8 @@ abstract class Surcharge extends \XLite\Model\AEntity
     protected $name;
 
     /**
-     * Get order 
-     * 
+     * Get order
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -147,8 +146,8 @@ abstract class Surcharge extends \XLite\Model\AEntity
     abstract public function getOrder();
 
     /**
-     * Get modifier 
-     * 
+     * Get modifier
+     *
      * @return \XLite\Model\Order\Modifier
      * @see    ____func_see____
      * @since  1.0.0
@@ -168,8 +167,8 @@ abstract class Surcharge extends \XLite\Model\AEntity
     }
 
     /**
-     * Get surcharge info 
-     * 
+     * Get surcharge info
+     *
      * @return \XLite\DataSet\Transport\Surcharge
      * @see    ____func_see____
      * @since  1.0.0
@@ -184,8 +183,8 @@ abstract class Surcharge extends \XLite\Model\AEntity
     }
 
     /**
-     * Get name 
-     * 
+     * Get name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

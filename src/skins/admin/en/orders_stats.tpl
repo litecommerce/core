@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -14,14 +13,14 @@
 
 <br /><br />
 
-<table class="data-table" width="80%">
-  <tr class="TableHead" align="center">
-    <th align="left">&nbsp;</th>
-    <th FOREACH="getStatsColumns(),c" style="text-align:center;">{getColumnTitle(c)}</th>
+<table class="data-table order-statistics">
+  <tr class="TableHead">
+    <th class="title"><widget class="XLite\View\Order\Statistics\CurrencySelector" /></th>
+    <th FOREACH="getStatsColumns(),c">{getColumnTitle(c)}</th>
   </tr>
   <tr FOREACH="getStats(),idx,row" class="dialog-box{if:isTotalsRow(idx)} totals{end:}">
-    <td>{getRowTitle(idx)}</td>
-    <td FOREACH="row,idx1,val" align="center">
+    <td class="title">{getRowTitle(idx)}</td>
+    <td FOREACH="row,idx1,val">
       {if:isTotalsRow(idx)}{price_format(val)}{else:}{val}{end:}
     </td>
   </tr>

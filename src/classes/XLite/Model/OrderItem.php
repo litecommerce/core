@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model;
 
 /**
  * Something customer can put into his cart
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -52,12 +51,12 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     const PRODUCT_TYPE = 'product';
 
     /**
-     * Primary key 
-     * 
+     * Primary key
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
-     * 
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column         (type="integer")
@@ -66,7 +65,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Object (product)
-     * 
+     *
      * @var   \XLite\Model\Product
      * @see   ____var_see____
      * @since 1.0.0
@@ -88,8 +87,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     protected $name;
 
     /**
-     * Item SKU 
-     * 
+     * Item SKU
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -110,8 +109,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     protected $price;
 
     /**
-     * Item quantity 
-     * 
+     * Item quantity
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -121,12 +120,12 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     protected $amount = 1;
 
     /**
-     * Item order 
-     * 
+     * Item order
+     *
      * @var   \XLite\Model\Order
      * @see   ____var_see____
      * @since 1.0.0
-     * 
+     *
      * @ManyToOne  (targetEntity="XLite\Model\Order", inversedBy="items")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
      */
@@ -146,7 +145,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Dump product (deleted)
-     * 
+     *
      * @var   \XLite\Model\Product
      * @see   ____var_see____
      * @since 1.0.0
@@ -172,7 +171,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Reset surcharges list
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -189,8 +188,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     /**
      * Wrapper. If the product was deleted,
      * item will use save product name and SKU
-     * TODO - switch to getObject() and remove 
-     * 
+     * TODO - switch to getObject() and remove
+     *
      * @return \XLite\Model\Product
      * @see    ____func_see____
      * @since  1.0.0
@@ -201,15 +200,15 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         if ('XLite\Model\OrderItem' == get_called_class()) {
             $product = $this->getObject() ?: $this->getDeletedProduct();
         }
-    
+
         return $product;
     }
 
     /**
      * Save some fields from product
-     * 
+     *
      * @param \XLite\Model\Product $product Product to set OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -220,10 +219,10 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Set object 
-     * 
+     * Set object
+     *
      * @param \XLite\Model\Base\IOrderItem $item Order item related object OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -244,9 +243,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Modified setter
-     * 
+     *
      * @param integer $amount Value to set
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -262,8 +261,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get item weight 
-     * 
+     * Get item weight
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
@@ -279,8 +278,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Check if item has a image
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -291,7 +290,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Get item image URL
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -312,10 +311,10 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     {
         return $this->getProduct()->getImage();
     }
- 
+
     /**
-     * Get item description 
-     * 
+     * Get item description
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -326,8 +325,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get item URL 
-     * 
+     * Get item URL
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -339,19 +338,19 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Flag; is this item needs to be shipped
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isShipped()
+    public function isShippable()
     {
-        return !((bool) $this->getObject()->getFreeShipping());
+        return !$this->getObject()->getFreeShipping();
     }
 
     /**
      * This key is used when checking if item is unique in the cart
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -363,8 +362,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Check if item is valid
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -375,7 +374,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Initial calculate order item
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -389,8 +388,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get item taxable basis 
-     * 
+     * Get item taxable basis
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
@@ -403,8 +402,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get product classes 
-     * 
+     * Get product classes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -418,7 +417,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Get event cell base information
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -435,8 +434,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
 
     /**
-     * Get deleted product 
-     * 
+     * Get deleted product
+     *
      * @return \XLite\Model\Product|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -454,10 +453,10 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Save item state 
-     * 
+     * Save item state
+     *
      * @param \XLite\Model\Base\IOrderItem $item Item object
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -472,8 +471,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Reset item state 
-     * 
+     * Reset item state
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

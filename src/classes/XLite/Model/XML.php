@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model;
 
 /**
  * XML parser
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -38,7 +37,7 @@ class XML extends \XLite\Base
 {
     /**
      * XML parser
-     * 
+     *
      * @var   resource
      * @see   ____var_see____
      * @since 1.0.0
@@ -47,7 +46,7 @@ class XML extends \XLite\Base
 
     /**
      * XML error message
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -56,7 +55,7 @@ class XML extends \XLite\Base
 
     /**
      * Parser encode character set
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -64,8 +63,8 @@ class XML extends \XLite\Base
     protected $parserEncode = 'ISO-8859-1';
 
     /**
-     * Postprocessed XML with errors placeholder 
-     * 
+     * Postprocessed XML with errors placeholder
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -75,9 +74,9 @@ class XML extends \XLite\Base
 
     /**
      * Get formatted XML block
-     * 
+     *
      * @param string $xml XML
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -147,10 +146,10 @@ class XML extends \XLite\Base
     }
 
     /**
-     * Parse 
-     * 
+     * Parse
+     *
      * @param string $xml XML
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -168,7 +167,7 @@ class XML extends \XLite\Base
         $result = true;
         $values = array();
         $index = array();
-        
+
         if (!xml_parse_into_struct($this->xml_parser, $xml, $values, $index)) {
             $this->parseXMLErrors($xml);
             $result = false;
@@ -183,10 +182,10 @@ class XML extends \XLite\Base
 
 
     /**
-     * Parse XML errors 
-     * 
+     * Parse XML errors
+     *
      * @param string $xml Initial XML
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -208,10 +207,10 @@ class XML extends \XLite\Base
 
     /**
      * Build XML tree
-     * 
+     *
      * @param array   $values XML nodes
      * @param integer &$i     Pointer
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

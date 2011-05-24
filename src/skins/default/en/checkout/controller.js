@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -31,9 +30,10 @@ function CheckoutView(base)
           var addressId = core.getValueFromClass(this, 'address');
           if (addressId) {
             var form = jQuery(this).parents('form').eq(0);
-            if (form) {
+            if (form.length) {
               form.get(0).elements.namedItem('addressId').value = addressId;
               form.submit();
+              popup.openAsWait();
             }
           }
         }
@@ -169,7 +169,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     jQuery('.profile .create #create_profile_chk', this.commonBase).change(
       function() {
         if (this.form.validate(true)) {
-          jQuery(this.form).submit();
+          this.form.commonController.submitForce();
         }
       }
     );

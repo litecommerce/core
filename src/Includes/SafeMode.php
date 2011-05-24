@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -32,7 +31,7 @@ namespace Includes;
  * Safe Mode
  *
  * :TODO: reduce numder of public methods
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -46,7 +45,7 @@ abstract class SafeMode
     const PARAM_SOFT_RESET = 'soft_reset';
 
     /**
-     * Soft reset label 
+     * Soft reset label
      */
     const LABEL_SOFT_RESET = 'Soft reset';
 
@@ -58,51 +57,50 @@ abstract class SafeMode
 
     /**
      * Check request parameters
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function isSafeModeRequested()
     {
-        return static::checkAccessKey()
-            && \Includes\Utils\ArrayManager::getIndex($_GET, static::PARAM_SAFE_MODE);
+        return static::checkAccessKey() && isset($_GET[self::PARAM_SAFE_MODE]);
     }
 
     /**
      * Check if the safe mode requested in the "Soft reset" variant
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function isSoftResetRequested()
     {
-        return strpos(\Includes\Utils\FileManager::read(static::getIndicatorFileName()), static::LABEL_SOFT_RESET) > 0;
+        return 0 < strpos(\Includes\Utils\FileManager::read(static::getIndicatorFileName()), self::LABEL_SOFT_RESET);
     }
 
     /**
      * Check request parameters
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function isSafeModeStarted()
     {
-        return \Includes\Utils\FileManager::isExists(static::getIndicatorFileName());
+        return \Includes\Utils\FileManager::isFile(static::getIndicatorFileName());
     }
 
     /**
-     * Get Access Key 
-     * 
+     * Get Access Key
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function getAccessKey()
     {
-        if (!\Includes\Utils\FileManager::isExists(static::getAccessKeyFileName())) {
+        if (!\Includes\Utils\FileManager::isFile(static::getAccessKeyFileName())) {
             static::regenerateAccessKey();
         }
 
@@ -111,7 +109,7 @@ abstract class SafeMode
 
     /**
      * Re-generate access key
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -119,10 +117,7 @@ abstract class SafeMode
     public static function regenerateAccessKey()
     {
         // Put access key file
-        \Includes\Utils\FileManager::write(
-            static::getAccessKeyFileName(),
-            static::generateAccessKey()
-        );
+        \Includes\Utils\FileManager::write(static::getAccessKeyFileName(), static::generateAccessKey());
 
         // Send email notification
         static::sendNotification();
@@ -130,7 +125,7 @@ abstract class SafeMode
 
     /**
      * Send email notification to administrator about access key
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -149,7 +144,7 @@ abstract class SafeMode
      * Get safe mode URL
      *
      * @param boolean $soft Soft reset flag OPTIONAL
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -157,23 +152,16 @@ abstract class SafeMode
     public static function getResetURL($soft = false)
     {
         $params = array(
-            static::PARAM_SAFE_MODE => 1,
-            static::PARAM_ACCESS_KEY => static::getAccessKey()
+            self::PARAM_SAFE_MODE  => true,
+            self::PARAM_ACCESS_KEY => static::getAccessKey()
         );
 
-        if (true === $soft) {
-            $params += array(
-                static::PARAM_SOFT_RESET => 1
-            );
+        if ($soft) {
+            $params[self::PARAM_SOFT_RESET] = true;
         }
 
         return \Includes\Utils\URLManager::getShopURL(
-            \XLite\Core\Converter::buildURL(
-                'main',
-                '',
-                $params,
-                \XLite::ADMIN_SELF
-            )
+            \XLite\Core\Converter::buildURL('main', '', $params, \XLite::ADMIN_SELF)
         );
     }
 
@@ -186,78 +174,71 @@ abstract class SafeMode
      */
     public static function cleanupIndicator()
     {
-        \Includes\Utils\FileManager::delete(static::getIndicatorFileName());
+        \Includes\Utils\FileManager::deleteFile(static::getIndicatorFileName());
     }
 
     /**
      * Initialization
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function initialize()
     {
-        if (
-            !\Includes\SafeMode::isSafeModeRequested()
-            || \Includes\SafeMode::isSafeModeStarted()
-        ) {
-            return;
+        if (static::isSafeModeRequested() && !static::isSafeModeStarted()) {
+
+            // Put safe mode indicator
+            \Includes\Utils\FileManager::write(static::getIndicatorFileName(), static::getIndicatorFileContent());
+
+            // Clean cache indicators to force cache generation
+            \Includes\Decorator\Utils\CacheManager::cleanupCacheIndicators();
+
+            // Redirect to avoid loop
+            \Includes\Utils\Operator::redirect('admin.php?target=main');
         }
-
-        // Put safe mode indicator
-        \Includes\Utils\FileManager::write(
-            static::getIndicatorFileName(),
-            static::getIndicatorFileContent()
-        );
-
-        // Clean cache indicators to force cache generation
-        \Includes\Decorator\Utils\CacheManager::cleanupCacheIndicators();
-
-        // Redirect to avoid loop
-        \Includes\Utils\Operator::redirect('admin.php?target=main');
     }
 
 
     /**
-     * Check Access Key 
-     * 
+     * Check Access Key
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function checkAccessKey()
     {
-        return static::getAccessKey() === \Includes\Utils\ArrayManager::getIndex($_GET, static::PARAM_ACCESS_KEY);
+        return !empty($_GET[self::PARAM_ACCESS_KEY]) && static::getAccessKey() === $_GET[self::PARAM_ACCESS_KEY];
     }
 
     /**
-     * Get safe mode indicator file name 
-     * 
+     * Get safe mode indicator file name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getIndicatorFileName()
     {
-        return LC_VAR_DIR . '.safeModeStarted';
+        return LC_DIR_VAR . '.safeModeStarted';
     }
 
     /**
-     * Get safe mode access key file name 
-     * 
+     * Get safe mode access key file name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getAccessKeyFileName()
     {
-        return LC_DATA_DIR . '.safeModeAccessKey';
+        return LC_DIR_DATA . '.safeModeAccessKey';
     }
 
     /**
-     * Generate Access Key 
-     * 
+     * Generate Access Key
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -269,18 +250,14 @@ abstract class SafeMode
 
     /**
      * Data to write into the indicator file
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getIndicatorFileContent()
     {
-        $softResetMark = \Includes\Utils\ArrayManager::getIndex($_GET, static::PARAM_SOFT_RESET)
-            ? ', ' . static::LABEL_SOFT_RESET
-            : '';
-            
-        return date('r') . $softResetMark;
+        return date('r') . (isset($_GET[self::PARAM_SOFT_RESET]) ? ', ' . self::LABEL_SOFT_RESET : '');
     }
 
 
@@ -288,28 +265,28 @@ abstract class SafeMode
 
     /**
      * Remove file with active modules list
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function clearUnsafeModules()
     {
-        \Includes\Utils\FileManager::delete(static::getUnsafeModulesFilePath());
+        \Includes\Utils\FileManager::deleteFile(static::getUnsafeModulesFilePath());
     }
 
     /**
-     * Save modules to file 
-     * 
+     * Save modules to file
+     *
      * @param array $modules Modules array
-     *  
+     *
      * @return integer|boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function saveUnsafeModulesToFile(array $modules)
     {
-        $path = static::getUnsafeModulesFilePath(); 
+        $path = static::getUnsafeModulesFilePath();
 
         $string = '; <' . '?php /*' . PHP_EOL;
 
@@ -324,12 +301,12 @@ abstract class SafeMode
 
         $string .= '; */ ?' . '>';
 
-        return $i ? file_put_contents($path, $string) : false;
+        return $i ? \Includes\Utils\FileManager::write($path, $string) : false;
     }
 
     /**
-     * Get Unsafe Modules List 
-     * 
+     * Get Unsafe Modules List
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -348,34 +325,24 @@ abstract class SafeMode
 
     /**
      * Mark module as unsafe
-     * 
-     * @param string $author Module author 
-     * @param string $name   Module name 
-     * 
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function markModuleAsUnsafe($author, $name)
     {
-        $list = static::getUnsafeModulesList();
-
-        if (!\Includes\Utils\ArrayManager::getIndex($list, $author)) {
-            $list[$author] = array();
-        }
-
-        $list[$author] += array(
-            $name => 1
-        );
-
-        static::saveUnsafeModulesToFile($list);
+        static::markModulesAsUnsafe(array($author => array($name => true)));
     }
 
     /**
      * Mark modules as unsafe
-     * 
-     * @param array $modules Modules 
-     * 
+     *
+     * @param array $modules Modules
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -385,17 +352,11 @@ abstract class SafeMode
         $list = static::getUnsafeModulesList();
 
         foreach ($modules as $author => $names) {
-
             foreach ($names as $name => $key) {
 
-                if (!\Includes\Utils\ArrayManager::getIndex($list, $author)) {
+                if (!isset($list[$author])) {
                     $list[$author] = array();
                 }
-
-                $list[$author] += array(
-                    $name => 1
-                );
-
             }
         }
 
@@ -403,15 +364,15 @@ abstract class SafeMode
     }
 
     /**
-     * Get modules list file path 
-     * 
+     * Get modules list file path
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getUnsafeModulesFilePath()
     {
-        return LC_VAR_DIR . self::UNSAFE_MODULES_FILE_NAME;
+        return LC_DIR_VAR . self::UNSAFE_MODULES_FILE_NAME;
     }
 
     // }}}

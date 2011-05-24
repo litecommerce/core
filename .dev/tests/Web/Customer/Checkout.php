@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -34,7 +33,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
      * PHPUnit default function.
      * Redefine this method only if you really need to do so.
      * In any other cases redefine the getRequest() one
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -65,43 +64,6 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         return $product;
     }
 
-    public function testLowInventory()
-    {
-        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
-            ->createQueryBuilder()
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getSingleResult();
-
-        $this->skipCoverage();
-
-        $this->openAndWait('store/product//product_id-' . $product->getProductId());
-
-        $this->click("//button[@class='bright add2cart']");
-
-        $this->waitForLocalCondition(
-            'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
-            10000,
-            'check content reloading'
-        );
-
-        $inv = $product->getInventory();
-
-        $inv->setEnabled(true);
-        $inv->setAmount(0);
-        \XLite\Core\Database::getEM()->flush();
-
-        $this->openAndWait('store/checkout');
-        $this->waitForLocalCondition(
-            'jQuery(location).attr("pathname").match(/store\/cart/)',
-            3000,
-            'check redirect to cart'
-        );
-        
-        $inv->setAmount(50);
-        \XLite\Core\Database::getEM()->flush();
-    }
-
     public function testStructure()
     {
         $product = $this->addToCart();
@@ -126,7 +88,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             . "/div[@class='create']"
             . "/div[@class='selector']"
             . "/input[@id='create_profile_chk']"
-        );  
+        );
 
         $this->assertElementPresent(
             "//div[@class='checkout-block']"
@@ -345,7 +307,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             'check main button enabled after fill billing address'
         );
 
-        // Submit   
+        // Submit
         $this->click('css=.current .button-row button');
 
         $this->waitForLocalCondition(
@@ -353,7 +315,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             10000,
             'check swicth to next step'
         );
- 
+
     }
 
     public function testReviewStep()
@@ -363,10 +325,12 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->fillShippingAddress();
         $this->fillPaymentStep();
 
+        $this->assertElementPresent('css=.review-step.current', 'check review step is active');
+
         // Check items box
         $this->assertJqueryNotPresent('.review-step .list:visible', 'items box hide');
 
-        $this->click('css=.review-step .items-row a'); 
+        $this->click('css=.review-step .items-row a');
 
         $this->waitForLocalCondition(
             'jQuery(".review-step .list:visible").length == 1',
@@ -619,6 +583,41 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->assertFalse((bool)$profile->getAddresses()->get($profileCount)->getIsShipping(), 'check is shipping #2');
         $this->assertFalse((bool)$profile->getAddresses()->get($profileCount + 1)->getIsBilling(), 'check is billing #2');
     }
+
+    public function testLowInventory()
+    {
+        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
+            ->createQueryBuilder()
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
+
+        $this->skipCoverage();
+
+        $this->openAndWait('store/product//product_id-' . $product->getProductId());
+
+        $this->click("//button[@class='bright add2cart']");
+
+        $this->waitForLocalCondition(
+            'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
+            10000,
+            'check content reloading'
+        );
+
+        $inv = $product->getInventory();
+
+        $inv->setEnabled(true);
+        $inv->setAmount(0);
+        \XLite\Core\Database::getEM()->flush();
+
+        $this->openAndWait('store/checkout');
+
+        $this->assertLocation('*/store/cart/');
+
+        $inv->setAmount(50);
+        \XLite\Core\Database::getEM()->flush();
+    }
+
 
     protected function fillProfileData()
     {

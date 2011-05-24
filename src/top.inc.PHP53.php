@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -41,21 +40,29 @@ define('LC_MODEL_PROXY_NS',     LC_MODEL_NS . '\Proxy');
 
 // Paths
 define('LC_DIR',               realpath(__DIR__));
-define('LC_ROOT_DIR',          rtrim(LC_DIR, LC_DS) . LC_DS);
-define('LC_CLASSES_DIR',       LC_ROOT_DIR . 'classes' . LC_DS);
-define('LC_VAR_DIR',           LC_ROOT_DIR . 'var' . LC_DS);
-define('LC_LIB_DIR',           LC_ROOT_DIR . 'lib' . LC_DS);
-define('LC_SKINS_DIR',         LC_ROOT_DIR . 'skins' . LC_DS);
-define('LC_CONFIG_DIR',        LC_ROOT_DIR . 'etc' . LC_DS);
-define('LC_INCLUDES_DIR',      LC_ROOT_DIR . LC_NAMESPACE_INCLUDES . LC_DS);
-define('LC_MODULES_DIR',       LC_CLASSES_DIR . LC_NAMESPACE . LC_DS . 'Module' . LC_DS);
-define('LC_COMPILE_DIR',       LC_VAR_DIR . 'run' . LC_DS);
-define('LC_CLASSES_CACHE_DIR', LC_COMPILE_DIR . 'classes' . LC_DS);
-define('LC_MODEL_CACHE_DIR',   LC_CLASSES_CACHE_DIR . LC_NAMESPACE . LC_DS . 'Model' . LC_DS);
-define('LC_PROXY_CACHE_DIR',   LC_MODEL_CACHE_DIR . 'Proxy' . LC_DS);
-define('LC_BACKUP_DIR',        LC_VAR_DIR . 'backup' . LC_DS);
-define('LC_DATA_DIR',          LC_VAR_DIR . 'data' . LC_DS);
-define('LC_TMP_DIR',           LC_VAR_DIR . 'tmp' . LC_DS);
+define('LC_DIR_ROOT',          rtrim(LC_DIR, LC_DS) . LC_DS);
+define('LC_DIR_CLASSES',       LC_DIR_ROOT . 'classes' . LC_DS);
+define('LC_DIR_VAR',           LC_DIR_ROOT . 'var' . LC_DS);
+define('LC_DIR_LIB',           LC_DIR_ROOT . 'lib' . LC_DS);
+define('LC_DIR_SKINS',         LC_DIR_ROOT . 'skins' . LC_DS);
+define('LC_DIR_IMAGES',        LC_DIR_ROOT . 'images' . LC_DS);
+define('LC_DIR_CONFIG',        LC_DIR_ROOT . 'etc' . LC_DS);
+define('LC_DIR_INCLUDES',      LC_DIR_ROOT . LC_NAMESPACE_INCLUDES . LC_DS);
+define('LC_DIR_MODULES',       LC_DIR_CLASSES . LC_NAMESPACE . LC_DS . 'Module' . LC_DS);
+define('LC_DIR_COMPILE',       LC_DIR_VAR . 'run' . LC_DS);
+define('LC_DIR_CACHE_CLASSES', LC_DIR_COMPILE . 'classes' . LC_DS);
+define('LC_DIR_CACHE_SKINS',   LC_DIR_COMPILE . 'skins' . LC_DS);
+define('LC_DIR_CACHE_MODEL',   LC_DIR_CACHE_CLASSES . LC_NAMESPACE . LC_DS . 'Model' . LC_DS);
+define('LC_DIR_CACHE_PROXY',   LC_DIR_CACHE_MODEL . 'Proxy' . LC_DS);
+define('LC_DIR_BACKUP',        LC_DIR_VAR . 'backup' . LC_DS);
+define('LC_DIR_DATA',          LC_DIR_VAR . 'data' . LC_DS);
+define('LC_DIR_TMP',           LC_DIR_VAR . 'tmp' . LC_DS);
+define('LC_DIR_LOCALE',        LC_DIR_VAR . 'locale');
+define('LC_DIR_DATACACHE',     LC_DIR_VAR . 'datacache');
+define('LC_DIR_LOG',           LC_DIR_VAR . 'log' . LC_DS);
+define('LC_DIR_CACHE_IMAGES',  LC_DIR_VAR . 'images' . LC_DS);
+
+define('LC_OS_WINDOWS', 'WIN' === strtoupper(substr(PHP_OS, 0, 3)));
 
 // Disabled xdebug coverage for Selenium-based tests [DEVELOPMENT PURPOSE]
 if (isset($_COOKIE) && !empty($_COOKIE['no_xdebug_coverage']) && function_exists('xdebug_stop_code_coverage')) {
@@ -63,7 +70,7 @@ if (isset($_COOKIE) && !empty($_COOKIE['no_xdebug_coverage']) && function_exists
 }
 
 // Autoloading routines
-require_once (LC_INCLUDES_DIR . 'Autoloader.php');
+require_once (LC_DIR_INCLUDES . 'Autoloader.php');
 \Includes\Autoloader::registerAll();
 
 // Fire the error if LC is not installed
@@ -79,7 +86,7 @@ register_shutdown_function(array('\Includes\ErrorHandler', 'shutdown'));
 set_exception_handler(array('\Includes\ErrorHandler', 'handleException'));
 
 // :FIXME: to remove
-require_once (LC_INCLUDES_DIR . 'prepend.php');
+require_once (LC_DIR_INCLUDES . 'prepend.php');
 
 // Safe mode
 if (!defined('XLITE_INSTALL_MODE')) {

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -14,13 +14,12 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * PHP version 5.3.0 
+ * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,15 +29,15 @@ namespace XLite\Controller\Admin;
 
 /**
  * Controller for Database backup page
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
 {
     /**
-     * doActionBackup 
-     * 
+     * doActionBackup
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -49,14 +48,14 @@ class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
         $destfile = null; // write to 'stdout' by default
 
         if (\XLite\Core\Request::getInstance()->write_to_file) {
-            
+
             $destFile = $this->sqldumpFile;
             $verbose  = true;
 
             $this->startDump();
 
         } else {
-            $destFile = LC_BACKUP_DIR . sprintf('sqldump.backup.%d.sql', time());
+            $destFile = LC_DIR_BACKUP . sprintf('sqldump.backup.%d.sql', time());
             $this->startDownload('db_backup.sql');
         }
 
@@ -74,8 +73,8 @@ class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
     }
 
     /**
-     * doActionDelete 
-     * 
+     * doActionDelete
+     *
      * @return void
      * @throws
      * @see    ____func_see____
@@ -92,8 +91,8 @@ class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
     }
 
     /**
-     * getPageReturnURL 
-     * 
+     * getPageReturnURL
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -104,8 +103,8 @@ class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
 
         if ('backup' == \XLite\Core\Request::getInstance()->action) {
             $url[] = '<a href="admin.php?target=db_backup">Return to admin interface.</a>';
-        
-        } else { 
+
+        } else {
             $url = parent::getPageReturnURL();
         }
 

@@ -2,11 +2,10 @@
 
 {**
  * ____file_title____
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
@@ -18,9 +17,12 @@
   <div class="features">
     <ul>
       {foreach:getSortOptions(),fltr,desc}
-        <li class="{if:fltr=getSortBy()}hl{end:}"><a href="{buildURL(#addons_list_marketplace#,##,_ARRAY_(%static::PARAM_SORT_BY%^fltr))}">{t(desc)}</a></li>
+        <li class="{if:fltr=getSortBy()}hl{end:}">
+          <a href="{buildURL(#addons_list_marketplace#,##,_ARRAY_(%static::PARAM_SORT_BY%^fltr))}">{t(desc)}</a>
+        </li>
       {end:}
     </ul>
+    <div class="clear"></div>
   </div>
 
   <div class="price-filter">
@@ -29,14 +31,6 @@
     <select name="priceFilter" onchange="javascript: location.replace(this.value);">
       <option FOREACH="getPriceFilterOptions(),name,label" value="{getActionURL(_ARRAY_(#priceFilter#^name))}" selected="{isSelected(getParam(#priceFilter#),name)}">{t(label)}</option>
     </select>
-
-<script type="text/javascript">
-<!--
-jQuery(document).ready(function(){
-  jQuery('select[name=priceFilter]').selectmenu({style:'popup'});
-});
--->
-</script>
 
   </div>
 

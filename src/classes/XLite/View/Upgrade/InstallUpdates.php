@@ -20,7 +20,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View\Upgrade;
 
 /**
  * InstallUpdates
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -38,6 +37,21 @@ namespace XLite\View\Upgrade;
  */
 class InstallUpdates extends \XLite\View\Upgrade\AUpgrade
 {
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/css/style.css';
+
+        return $list;
+    }
+
     /**
      * Get directory where template is located (body.tpl)
      *
@@ -47,7 +61,19 @@ class InstallUpdates extends \XLite\View\Upgrade\AUpgrade
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'install_updates';
+        return parent::getDir() . '/install_updates';
+    }
+
+    /**
+     * Return internal list name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getListName()
+    {
+        return parent::getListName() . '.install_updates';
     }
 
     /**
@@ -59,6 +85,6 @@ class InstallUpdates extends \XLite\View\Upgrade\AUpgrade
      */
     protected function isVisible()
     {
-        return parent::isVisible() && !$this->isUpgrade();
+        return parent::isVisible() && $this->isUpdate();
     }
 }

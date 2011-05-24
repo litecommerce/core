@@ -2,11 +2,10 @@
 
 /**
  * Modules modify page styles
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -60,35 +59,32 @@ div.top-controls div.addons-search-panel {
 
 div.top-controls div.action-buttons {
   float: left;
-  margin-left: 90px;
+  margin-left: 10px;
 }
 
-.modules-list div.price-info {
+.modules-list .price,
+  .modules-list .installed
+{
   margin-bottom: 10px;
 }
 
-.modules-list span.price-value {
+.modules-list .price .currency {
   color: #ee5f00;
-  font-size: 16px;
   text-transform: uppercase;
 }
 
-.modules-list div.installed {
-  font-size: 16px;
-  color: #4a8946;
-  margin-bottom: 10px;
-}
-
-.modules-list span.currency {
-  color: #f49455;
+.modules-list .price .currency {
   font-size: 18px;
-  text-transform: uppercase;
+}
+
+.modules-list .installed {
+  color: #4a8946;
+  font-size: 16px;
 }
 
 .modules-list span.purchased {
+  color: #1d6d18;
   font-size: 16px;
-  color: #4a8946;
-  margin-bottom: 10px;
 }
 
 .modules-list span.enter-license {
@@ -102,10 +98,11 @@ div.top-controls div.action-buttons {
   width: 900px;
 }
 
-.addons-filters,
-  table.items-list.modules-list
-{
-  width: 945px;
+/*
+ These sizes depend on padding + margin
+*/
+.addons-filters {
+  width: 925px;
 }
 
 .addons-filters .features {
@@ -113,18 +110,19 @@ div.top-controls div.action-buttons {
 }
 
 .addons-filters ul {
-    list-style: none outside none;
-    margin: 0;
-    padding: 5px 0;
+  list-style: none outside none;
+  margin: 0;
+  padding: 5px 0;
 }
 
 .addons-filters ul li {
   -moz-border-radius: 15px 15px 15px 15px;
   -webkit-border-radius: 15px 15px 15px 15px;
   border-radius: 15px 15px 15px 15px;
-  display: inline;
+  float: left;
   font-size: 14px;
   margin-right: 20px;
+  margin-top: 5px;
 }
 
 .addons-filters ul li a {
@@ -134,13 +132,14 @@ div.top-controls div.action-buttons {
 }
 
 .addons-filters ul li.hl {
-    background: none repeat scroll 0 0 #3E77B8;
-    padding: 6px 12px;
+  background: none repeat scroll 0 0 #3E77B8;
+  padding: 6px 12px;
+  margin-top: 0px;
 }
 
 .addons-filters ul li.hl a {
-    color: #FFFFFF;
-    text-decoration: none;
+  color: #FFFFFF;
+  text-decoration: none;
 }
 
 .module-info {
@@ -225,4 +224,19 @@ div.price-filter select {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   padding: 3px 5px;
+}
+
+ul.dependencies-list {
+  list-style: inside disc;
+  line-height: 18px;
+}
+
+.dependency-element {
+  padding-bottom: 10px;
+}
+
+.dependency-element span.module-condition
+{
+  color: #C49A91;
+  white-space: nowrap;
 }

@@ -1,11 +1,10 @@
 # vim: set ts=2 sw=2 sts=2 et:
-# 
+#
 # Minimum data dump
-#  
-# @author    Creative Development LLC <info@cdev.ru> 
+#
+# @author    Creative Development LLC <info@cdev.ru>
 # @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
-# @version   SVN: $Id$
 # @link      http://www.litecommerce.com/
 # @since     3.0.0
 XLite\Model\Config:
@@ -414,6 +413,8 @@ XLite\Model\LanguageLabel:
   - { name: 'X field is required', translations: [{ code: en, label: "'{{field}}' field is required" }] }
   - { name: 'Image X', translations: [{ code: en, label: 'Image #{{index}}' }] }
   - { name: 'Top X products', translations: [{ code: en, label: 'Top {{count}} products' }] }
+  - { name: 'X module settings', translations: [{ code: en, label: '{{name}} ({{author}}) module settings' }] }
+  - { name: 'The benchmark evaluates server environment', translations: [{ code: en, label: "The benchmark evaluates server environment, namely:\n1. File subsystem — read and write speed.\n2. Database server — computing speed, DB data read and write speed.\n3. Computing power — speed of computing and exchanging data in the memory.\n<span>The total test time is the sum of the times, taken by each of these tests.</span>" }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
@@ -594,7 +595,6 @@ XLite\Model\Language:
   - { code: uz, code3: uzb, translations: [{ code: en, name: Uzbek }] }
   - { code: ve, code3: ven, translations: [{ code: en, name: Venda }] }
   - { code: vi, code3: vie, translations: [{ code: en, name: Vietnamese }] }
-  - { code: vo, code3: vol, translations: [{ code: en, name: 'Volap �k' }] }
   - { code: cy, code3: wel, translations: [{ code: en, name: Welsh }] }
   - { code: wa, code3: wln, translations: [{ code: en, name: Walloon }] }
   - { code: wo, code3: wol, translations: [{ code: en, name: Wolof }] }
@@ -1064,3 +1064,5 @@ XLite\Model\Shipping\Method:
   - { processor: offline, enabled: true, position: 0, translations: [{ code: en, name: Delivery }], shipping_markups: [{ zone: { zone_name: 'Default zone (all addresses)' }, min_weight: 0, max_weight: 999999, min_total: 0, max_total: 999999, min_items: 0, max_items: 999999, markup_flat: 0, markup_percent: 0, markup_per_item: 0, markup_per_weight: 0 }] }
 XLite\Model\Zone:
   - { zone_name: 'Default zone (all addresses)', is_default: true }
+XLite\Model\Task:
+  - { owner: 'XLite\Core\Task\Probe' }

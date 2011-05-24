@@ -2,11 +2,10 @@
 
 /**
  * Common form / element controller
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -187,9 +186,9 @@ CommonForm.prototype.submitBackground = function(callback, disableValidation, op
 
     var isPOST = 'POST' == this.$form.attr('method').toUpperCase();
     var method = isPOST ? 'post' : 'get';
- 
+
     options = options || {};
- 
+
     if (
       'undefined' == typeof(options.rpc)
       && ((isPOST && this.postAsRPC) || (!isPOST && this.getAsRPC))
@@ -209,12 +208,28 @@ CommonForm.prototype.submitBackground = function(callback, disableValidation, op
       options
     );
 
-    if (!result) {
+    if (result) {
+      this.form.currentSubmitXHR = result;
+
+    } else {
       core.showInternalError();
     }
   }
 
   return result;
+}
+
+// Submit form in force mode
+CommonForm.prototype.submitForce = function()
+{
+  this.skipCurrentBgSubmit();
+
+  var oldValue = this.submitOnlyChanged;
+  this.submitOnlyChanged = false;
+
+  this.$form.submit();
+
+  this.submitOnlyChanged = oldValue;
 }
 
 // Prepare form before background submit
@@ -229,8 +244,27 @@ CommonForm.prototype.preprocessBackgroundSubmit = function()
 CommonForm.prototype.postprocessBackgroundSubmit = function()
 {
   this.form.isBgSubmitting = false;
+  if (this.form.currentSubmitXHR) {
+    delete this.form.currentSubmitXHR;
+  }
 
   this.getElements().commonController('postprocessBackgroundSubmit');
+}
+
+// Skip current background submit
+CommonForm.prototype.skipCurrentBgSubmit = function()
+{
+  if (this.form.isBgSubmitting) {
+    this.form.isBgSubmitting = false;
+
+    if (this.form.currentSubmitXHR) {
+      this.form.currentSubmitXHR.abort();
+      delete this.form.currentSubmitXHR;
+    }
+
+    this.getElements().commonController('skipCurrentBgSubmit');
+  }
+
 }
 
 // Form has any changed state watcher's elements
@@ -485,7 +519,7 @@ CommonElement.prototype.unmarkAsInvalid = function()
     );
 }
 
-// Show element inline error message 
+// Show element inline error message
 CommonElement.prototype.showInlineError = function(message)
 {
   return jQuery(document.createElement('p'))
@@ -495,7 +529,7 @@ CommonElement.prototype.showInlineError = function(message)
     .html(message);
 }
 
-// Hide element inline error message 
+// Hide element inline error message
 CommonElement.prototype.hideInlineError = function()
 {
   return jQuery('p.inline-error', this.element.parentNode).remove();
@@ -767,6 +801,12 @@ CommonElement.prototype.postprocessBackgroundSubmit = function()
     this.element.readonly = false;
     this.element.isTemporaryReadonly = null;
   }
+}
+
+// 'Skip current background submit' form event
+CommonElement.prototype.skipCurrentBgSubmit = function()
+{
+  this.postprocessBackgroundSubmit();
 }
 
 CommonElement.prototype.linkWithCountry = function()
@@ -1117,4 +1157,3 @@ core.autoload(CommonForm);
   }
 
 })(jQuery);
-

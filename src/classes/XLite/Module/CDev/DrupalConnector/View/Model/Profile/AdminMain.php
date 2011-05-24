@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
 
 /**
- * \XLite\View\Model\Profile\AdminMain 
- * 
+ * \XLite\View\Model\Profile\AdminMain
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -39,7 +38,7 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
 {
     /**
      * List of fields of the "E-mail & Password" section that must be locked
-     * 
+     *
      * @var    array
      * @since  1.0.0
      */
@@ -47,7 +46,7 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
 
     /**
      * List of fields of the "E-mail & Password" section that must be removed
-     * 
+     *
      * @var    array
      * @since  1.0.0
      */
@@ -55,7 +54,7 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
 
     /**
      * List of fields of the "User access" section that must be locked
-     * 
+     *
      * @var    array
      * @since  1.0.0
      */
@@ -63,10 +62,10 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
 
 
     /**
-     * getDefaultFieldValue 
-     * 
+     * getDefaultFieldValue
+     *
      * @param string $name Field name
-     *  
+     *
      * @return mixed
      * @access public
      * @see    ____func_see____
@@ -77,7 +76,7 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
         $value = parent::getDefaultFieldValue($name);
 
         switch ($name) {
-            
+
             case 'access_level':
                 if (\XLite\Core\Auth::getInstance()->getCustomerAccessLevel() == $value) {
                     $value = $this->t('Customer');
@@ -103,7 +102,7 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
 
     /**
      * Return fields list by the corresponding schema
-     * 
+     *
      * @return array
      * @access protected
      * @since  1.0.0
@@ -126,12 +125,12 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
     }
 
     /**
-     * lockSectionField 
-     * 
-     * @param array  &$data      Field data 
+     * lockSectionField
+     *
+     * @param array  &$data      Field data
      * @param string $key        Field key
      * @param array  $lockFields Array of elements (keys) that must be locked
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -146,7 +145,7 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
 
     /**
      * Return fields list by the corresponding schema
-     * 
+     *
      * @return array
      * @access protected
      * @since  1.0.0

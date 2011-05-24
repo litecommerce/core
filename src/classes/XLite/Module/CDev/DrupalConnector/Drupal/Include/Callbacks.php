@@ -10,7 +10,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License, version 2
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -18,7 +17,7 @@
 
 /**
  * Return LC controller title
- * 
+ *
  * @return string
  * @see    ____func_see____
  * @since  1.0.0
@@ -42,10 +41,10 @@ function lcConnectorGetControllerContent()
 
 /**
  * Validate widget details form
- * 
+ *
  * @param array &$form      Form description
  * @param array &$formState Form state
- *  
+ *
  * @return void
  * @see    ____func_see____
  * @since  1.0.0

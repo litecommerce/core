@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -47,14 +46,14 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
 
         \Includes\Utils\FileManager::copyRecursive(
             $testModulesDir,
-            LC_MODULES_DIR . 'Test'
+            LC_DIR_MODULES . 'Test'
         );
     }
 
     protected function tearDown()
     {
         \Includes\Utils\FileManager::unlinkRecursive(
-            LC_MODULES_DIR . 'Test'
+            LC_DIR_MODULES . 'Test'
         );
 
         parent::tearDown();
@@ -80,7 +79,7 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
         $this->assertElementPresent(
             '//tr[@class="module-12 disabled"]/td[@class="module-main-section"]/div/div[@class="note version error"]/button/span[text()="Upgrade core"]',
             'Upgrade core button error'
-        );  
+        );
 
         $this->assertElementPresent(
             '//tr[@class="module-13 disabled"]/td[@class="module-main-section"]/div/div[@class="note dependencies"]/ul/li/a[text()="Test module 1 (by Test)"]',
@@ -90,7 +89,7 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
         $this->assertElementPresent(
             '//tr[@class="module-13 disabled"]/td[@class="module-main-section"]/div/div[@class="note dependencies"]/ul/li/a[text()="Test module 2 (by Test)"]',
             'test module 2 dependency is absent'
-        );  
+        );
 
     }
 
@@ -108,7 +107,7 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
 
         $this->click(self::BUTTON_ENTER_LICENSE_KEY);
 
-        $this->waitForAJAXProgress();        
+        $this->waitForAJAXProgress();
 
         $this->assertElementPresent(
             self::INPUT_KEY,

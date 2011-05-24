@@ -6,31 +6,46 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<p align=justify>In order to recover your password, please type in your valid e-mail address you used as a login.<br>Your account information will be e-mailed to you shortly.</p>
+ <div class="recover-password-message">
+  {t(#In order to recover your password, please type in your valid e-mail address you used as a login.#)}
+ </div>
+ <div class="recover-password-message"> 
+  {t(#Your account information will be e-mailed to you shortly.#)}
+ </div>
 
 <form action="cart.php" method=post name="recover_password">
-<input type="hidden" name="target" value="recover_password">
-<input type="hidden" name="action" value="recover_password">
+  <input type="hidden" name="target" value="recover_password" />
+  <input type="hidden" name="action" value="recover_password" />
 
-<table border=0 cellpadding=0 cellspacing=0>
+<table class="recover-password-form">
+
 <tr>
-    <td height="10" width="78" class=FormButton>E-mail</td>
-    <td width="10" height="10" class="Star">*</td>
-    <td height="10"><input type="text" name="email" value="{email:r}" size="30"><widget class="\XLite\Validator\EmailValidator" field="email"></td>
+    <td class="email-label label">{t(#E-mail#)}</td>
+    <td class="star">*</td>
+    <td class="email-field field">
+      <input type="text" name="email" value="{email:r}" size="30" />
+    </td>
 </tr>
+
 <tr IF="noSuchUser">
     <td colspan="2">&nbsp;</td>
-    <td class="ErrorMessage">No such user: {email}</td>
+    <td class="error-message">{t(#No such user#)}: {email}</td>
 </tr>
-<tr><td colspan="3">&nbsp;</td></tr>
+
+<tr>
+  <td colspan="3">&nbsp;</td>
+</tr>
+
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td><widget class="\XLite\View\Button\Submit" href="javascript: document.recover_password.submit()" font="FormButton"></td>
+    <td>
+      <widget class="\XLite\View\Button\Submit" style="action" />
+    </td>
 </tr>
+
 </table>
 
 </form>

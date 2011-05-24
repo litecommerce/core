@@ -1,6 +1,5 @@
 ; <?php /*
 ; WARNING: Do not change the line above
-; $Id$ 
 ;
 ; +-------------------------------------+
 ; |   LiteCommerce configuration file   |
@@ -125,8 +124,8 @@ mark_templates = off
 
 [images]
 default_image = "images/no_image.png"
-default_image_width = 140
-default_image_height = 140
+default_image_width = 110
+default_image_height = 110
 unsharp_mask_filter_on_resize = off
 
 ;
@@ -142,7 +141,7 @@ auth_code = ""
 ;
 [performance]
 developer_mode = Off
-substutional_skins_cache = off
+substitutional_skins_cache = off
 
 ;
 ; Decorator options
@@ -167,7 +166,7 @@ url = "https://www.litecommerce.com/marketplace/"
 ;
 [other]
 ; Translation drive code - auto / gettext / db
-translation_driver = db
+translation_driver = auto
 
 ; WARNING: Do not change the line below
 ; */ ?>

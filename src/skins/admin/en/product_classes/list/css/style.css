@@ -2,11 +2,10 @@
 
 /**
  * Product classes list styles
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -38,4 +37,14 @@ table.product-classes-list td.input-name {
   width: 1px;
   height: 15px;
   margin-right: 10px;
+}
+
+.new-product-class .advanced-input-text .original-label:hover {
+  background-color: inherit;
+}
+
+.new-product-class .advanced-input-text .original-label {
+  text-decoration: underline;
+  color: #154E9C;
+  cursor: pointer;
 }

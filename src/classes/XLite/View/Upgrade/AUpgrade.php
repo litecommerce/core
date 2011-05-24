@@ -20,7 +20,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\View\Upgrade;
 
 /**
- * AUpgrade 
- * 
+ * AUpgrade
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -64,53 +63,46 @@ abstract class AUpgrade extends \XLite\View\Dialog
     }
 
     /**
-     * Compose core version
-     * 
+     * Return internal list name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getCoreVersionForUpdate()
+    protected function getListName()
     {
-        return \Includes\Utils\Converter::composeVersion(
-            $this->getCoreMajorVersionForUpdate(),
-            $this->getCoreMinorVersionForUpdate()
-        );
+        $result = parent::getListName();
+
+        if (!empty($result)) {
+            $result .= '.';
+        }
+
+        return $result . 'upgrade';
     }
 
     /**
-     * Alias
-     * 
-     * @return string
+     * Return list of modules and/or core to upgrade
+     *
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getCoreVersionCurrent()
+    protected function getUpgradeEntries()
     {
-        return \XLite::getInstance()->getVersion();
+        return \XLite\Upgrade\Cell::getInstance()->getEntries();
     }
 
     /**
-     * Check if core requires an update/upgrade
+     * Check if passed entry is a module
+     *
+     * @param \XLite\Upgrade\Entry\AEntry $entry Object to check
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isCoreUpdateNeeded()
+    protected function isModule(\XLite\Upgrade\Entry\AEntry $entry)
     {
-        return version_compare($this->getCoreVersionCurrent(), $this->getCoreVersionForUpdate(), '<');
-    }
-
-    /**
-     * Is core upgrade available
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isCoreUpgradeAvailable()
-    {
-        return (bool) $this->getAvailableCoreVersions();
+        return $entry instanceof \XLite\Upgrade\Entry\Module\AModule;
     }
 }

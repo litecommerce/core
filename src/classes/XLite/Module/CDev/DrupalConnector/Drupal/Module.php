@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
 
 /**
- * Module 
- * 
+ * Module
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -50,8 +49,8 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
 
     /**
-     * List of registered portals 
-     * 
+     * List of registered portals
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -60,13 +59,13 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     protected $portals = array();
 
 
-    // ------------------------------ Auxiliary methods - 
+    // ------------------------------ Auxiliary methods -
 
     /**
      * For custom modules; ability to add Drupal menu nodes
-     * 
+     *
      * @param array &$menus List of node descriptions
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -136,7 +135,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
     /**
      * Here we can register so called "portals": controllers with custom URLs
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -144,7 +143,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function registerPortals()
     {
-        $this->registerPortal('user/%/orders', '\XLite\Controller\Customer\OrderList', 'Order history');
+        $this->registerPortal('user/%/orders', '\XLite\Controller\Customer\OrderList', 'Orders');
         $this->registerPortal('user/%/orders/%', '\XLite\Controller\Customer\Order');
         $this->registerPortal('user/%/orders/%/invoice', '\XLite\Controller\Customer\Invoice');
 
@@ -156,7 +155,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
     /**
      * Prepare portals for Drupal hook "menu"
-     * 
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -190,7 +189,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
     /**
      * Getter
-     * 
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -203,9 +202,9 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
     /**
      * Check if there is a portal corresponding to the passed path
-     * 
+     *
      * @param string $path Druapl path to check
-     *  
+     *
      * @return \XLite\Module\CDev\DrupalConnector\Model\Portal|null
      * @access public
      * @see    ____func_see____
@@ -220,8 +219,8 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     // ------------------------------ Drupal hook handlers -
 
     /**
-     * Hook "init" 
-     * 
+     * Hook "init"
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -229,12 +228,12 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function invokeHookInit()
     {
-        require_once LC_MODULES_DIR . 'CDev/DrupalConnector/Drupal/Include/Callbacks.php';
+        require_once LC_DIR_MODULES . 'CDev/DrupalConnector/Drupal/Include/Callbacks.php';
     }
 
     /**
      * Hook "menu"
-     * 
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -269,9 +268,9 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
     /**
      * Optimize javscript files list
-     * 
+     *
      * @param array $list Files list
-     *  
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -283,7 +282,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             uasort($list, 'drupal_sort_css_js');
 
             $i = 0;
-    
+
             foreach ($list as $name => $script) {
                 $list[$name]['weight'] = $i++;
                 $list[$name]['group'] = JS_DEFAULT;
@@ -339,14 +338,42 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         if (self::LANDING_LINK_PATH === $path) {
             $path = \Includes\Utils\URLManager::getShopURL('admin.php' . $this->getAdminAreaURLArgs());
             $options['external'] = true;
+
+        } else {
+            $url = $this->getHandler()->getDrupalCleanURL($path, $options);
+            if ($url) {
+                $path = $url;
+            }
         }
     }
 
     /**
-     * Initialize drupal_root_url option 
-     * 
+     * Alters inbound URLs
+     *
+     * @param string &$path        The inbound path to alter
+     * @param string $originalPath The original path, before being altered by any modules
+     * @param string $pathLanguage Path language
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function translateInboundURL(&$path, $originalPath, $pathLanguage)
+    {
+        if ($path) {
+            $url = $this->getHandler()->getURLByCleanURL($path);
+            if ($url) {
+                $path = $url;
+            }
+        }
+    }
+
+    /**
+     * Initialize drupal_root_url option
+     *
      * @param string $url Drupal base URL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -360,5 +387,18 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 'value'    => $url,
             )
         );
+    }
+
+    /**
+     * Run cron tasks
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function runCronTasks()
+    {
+        $cron = new \XLite\Controller\Console\Cron;
+        $cron->runTasksDirect();
     }
 }

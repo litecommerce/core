@@ -6,13 +6,12 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
 <span>
 {if:product.enabled}
-Product <b>"{product.name}"</b> (#{product.product_id}) has been added to the catalog and is available for sale now.<p> 
+Product <b>"{product.name}"</b> (#{product.product_id}) has been added to the catalog and is available for sale now.<p>
 {else:}
 Product <b>"{product.name}"</b> (#{product.product_id}) has been added to the store database but is not visible in the catalog and not available for sale until you set 'Available for sale' option to 'Yes' in the product details page.<p>
 {end:}

@@ -2,14 +2,23 @@
 
 /**
  * ____file_title____
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
+
+function makeSmallHeight(button)
+{
+  switchHeight('.license-area');
+}
+
+function makeLargeHeight(button)
+{
+  switchHeight('.license-area');
+}
 
 function switchHeight(area)
 {
@@ -26,10 +35,41 @@ function switchHeight(area)
   }
 }
 
-jQuery(document).ready(
-  function () {
-    jQuery(".switch-button").click = function () {
-      switchHeight("#license-area");
+function LicenseAgreement()
+{
+  jQuery(this.pattern).each(
+    function ()
+    {
+      var licenseBlock;
+      licenseBlock = this;
+
+      jQuery('input[name="agree"]', this).bind(
+        'click',
+        function (event)
+        {
+          var button;
+          button = jQuery('button.submit-button', licenseBlock);
+
+          if (jQuery(this).attr('checked')) {
+
+            button
+            .removeClass('disabled')
+            .attr('disabled', '');
+
+          } else {
+
+            button
+            .addClass('disabled')
+            .attr('disabled', 'disabled');
+
+          }
+        }
+      );
+
     }
-  }
-);
+  );
+}
+
+LicenseAgreement.prototype.pattern = 'div.module-license';
+
+core.autoload(LicenseAgreement);

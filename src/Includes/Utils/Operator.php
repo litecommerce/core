@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Includes_Utils
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,33 +28,17 @@
 namespace Includes\Utils;
 
 /**
- * Operator 
- * 
+ * Operator
+ *
  * @package    XLite
  * @see        ____class_see____
  * @since      1.0.0
  */
-class Operator extends AUtils
+abstract class Operator extends \Includes\Utils\AUtils
 {
     /**
-     * Javascript code to perform redirect
-     * 
-     * @param string $location URL to redirect to
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getJSRedirectCode($location)
-    {
-        return '<script type="text/javascript">self.location=\'' . $location . '\';</script>'
-            . '<noscript><a href="' . $location . '">Click here to redirect</a></noscript><br /><br />';
-    }
-
-    /**
      * Return length of the "dummy" buffer for flush
-     * 
+     *
      * @return int
      * @access protected
      * @see    ____func_see____
@@ -63,12 +46,12 @@ class Operator extends AUtils
      */
     protected static function getDummyBufferLength()
     {
-        return 256;
+        return 4096;
     }
 
     /**
      * Perform the "flush" itself
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -80,13 +63,29 @@ class Operator extends AUtils
         flush();
     }
 
+    /**
+     * Wrap message into some HTML tags (to fast output)
+     *
+     * @param string $message  Message to prepare
+     * @param string $jsOutput JS output
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getJSMessage($message, $jsOutput)
+    {
+        return '<noscript>' . $message . '</noscript>'
+             . '<script type="text/javascript">' . $jsOutput . '</script>';
+    }
+
 
     /**
-     * Redirect 
-     * 
+     * Redirect
+     *
      * @param string $location URL
      * @param int    $code     operation code
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -94,9 +93,13 @@ class Operator extends AUtils
      */
     public static function redirect($location, $code = 302)
     {
-        if ('cli' != PHP_SAPI) {
+        if ('cli' !== PHP_SAPI) {
+
             if (headers_sent()) {
-                static::flush(static::getJSRedirectCode($location));
+                $message  = '<a href="' . $location . '">Click here to redirect</a>';
+                $jsOutput = 'self.location = \'' . $location . '\';';
+
+                static::flush($message, true, $jsOutput);
 
             } else {
                 header('Location: ' . $location, true, $code);
@@ -120,36 +123,59 @@ class Operator extends AUtils
     }
 
     /**
-     * Echo message and flush output 
-     * 
-     * @param string $message    text to display
-     * @param bool   $dummyFlush output extra spaces or not
-     *  
+     * Echo message and flush output
+     *
+     * @param string  $message    Text to display
+     * @param boolean $dummyFlush Output extra spaces or not OPTIONAL
+     * @param string  $jsOutput   Flag to quick output OPTIONAL
+     *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function flush($message, $dummyFlush = true)
+    public static function flush($message, $dummyFlush = false, $jsOutput = null)
     {
-        // Print message
-        echo $message;
+        if ('cli' !== PHP_SAPI) {
 
-        // Send extra whitespace before flushing
-        if ($dummyFlush && 'cli' != PHP_SAPI) {
-            echo str_repeat(' ', static::getDummyBufferLength());
+            // Send extra whitespace before flushing
+            if ($dummyFlush) {
+                echo (str_repeat(' ', static::getDummyBufferLength()));
+            }
+
+            // Wrap message into the "<script>" tag
+            if (isset($jsOutput)) {
+                $message = static::getJSMessage($message, $jsOutput);
+            }
         }
+
+        // Print message
+        echo ($message);
 
         static::flushBuffers();
     }
 
     /**
+     * Wrapper to message quick display
+     *
+     * @param string $message Message text
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function showMessage($message)
+    {
+        static::flush($message, true, 'document.write(\'<div class="service-message">' . $message . '</div>\');');
+        static::flush(LC_EOL);
+    }
+
+    /**
      * Set custom value for the "max_execution_time" INI setting, and execute some function
-     * 
+     *
      * @param int   $time     time (in seconds) to set
      * @param mixed $callback function to execute
      * @param array $args     call arguments
-     *  
+     *
      * @return mixed
      * @access public
      * @see    ____func_see____
@@ -173,9 +199,9 @@ class Operator extends AUtils
      * Check if class is already declared.
      *
      * :NOTE: this function does not use autoloader
-     * 
+     *
      * @param string $name Class name
-     *  
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____

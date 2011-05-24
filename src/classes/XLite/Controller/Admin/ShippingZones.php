@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Controller\Admin;
 
 /**
  * Zones page controller
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -48,11 +47,11 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
         return 'Shipping zones';
     }
     /**
-     * Add elements into the specified zone 
-     * 
+     * Add elements into the specified zone
+     *
      * @param \XLite\Model\Zone $zone Zone object
      * @param array             $data Array of elements: array(<elementType> => array(value1, value2, value3...))
-     *  
+     *
      * @return \XLite\Model\Zone
      * @see    ____func_see____
      * @since  1.0.0
@@ -94,7 +93,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Do action 'Delete'
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -125,7 +124,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Do action 'Update'
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -191,7 +190,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Do action 'Create'
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -251,9 +250,9 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Get zone elements passed from post request
-     * 
+     *
      * @param array $postedData Array of data posted via post request
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -266,20 +265,20 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
             ? array_filter(explode(';', $postedData['zone_countries_store']))
             : array();
 
-        $data[\XLite\Model\ZoneElement::ZONE_ELEMENT_STATE] = !empty($postedData['zone_states_store']) 
-            ? array_filter(explode(';', $postedData['zone_states_store'])) 
+        $data[\XLite\Model\ZoneElement::ZONE_ELEMENT_STATE] = !empty($postedData['zone_states_store'])
+            ? array_filter(explode(';', $postedData['zone_states_store']))
             : array();
 
-        $data[\XLite\Model\ZoneElement::ZONE_ELEMENT_TOWN] = !empty($postedData['zone_cities']) 
-            ? array_filter(explode("\n", $postedData['zone_cities'])) 
+        $data[\XLite\Model\ZoneElement::ZONE_ELEMENT_TOWN] = !empty($postedData['zone_cities'])
+            ? array_filter(explode("\n", $postedData['zone_cities']))
             : array();
 
-        $data[\XLite\Model\ZoneElement::ZONE_ELEMENT_ZIPCODE] = !empty($postedData['zone_zipcodes']) 
-            ? array_filter(explode("\n", $postedData['zone_zipcodes'])) 
+        $data[\XLite\Model\ZoneElement::ZONE_ELEMENT_ZIPCODE] = !empty($postedData['zone_zipcodes'])
+            ? array_filter(explode("\n", $postedData['zone_zipcodes']))
             : array();
 
-        $data[\XLite\Model\ZoneElement::ZONE_ELEMENT_ADDRESS] = !empty($postedData['zone_addresses']) 
-            ? array_filter(explode("\n", $postedData['zone_addresses'])) 
+        $data[\XLite\Model\ZoneElement::ZONE_ELEMENT_ADDRESS] = !empty($postedData['zone_addresses'])
+            ? array_filter(explode("\n", $postedData['zone_addresses']))
             : array();
 
         foreach ($data[\XLite\Model\ZoneElement::ZONE_ELEMENT_STATE] as $value) {

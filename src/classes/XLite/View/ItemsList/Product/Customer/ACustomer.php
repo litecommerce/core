@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\View\ItemsList\Product\Customer;
 
 /**
- * ACustomer 
- * 
+ * ACustomer
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -114,7 +113,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     );
 
 
-    /** 
+    /**
      * Return list of targets allowed for this widget
      *
      * @return array
@@ -125,7 +124,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     {
         $result = parent::getAllowedTargets();
         $result[] = self::getWidgetTarget();
-    
+
         return $result;
     }
 
@@ -180,9 +179,9 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         return array_merge($list, $this->getPopupJS());
     }
 
-    /** 
+    /**
      * Return class attribute for the product cell
-     * 
+     *
      * @param \XLite\Model\Product $product The product to look for
      *
      * @return string
@@ -190,12 +189,12 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @since  1.0.0
      */
     public function getProductCellClass($product)
-    {   
-        return 'product productid-' 
-            . $product->getProductId() 
+    {
+        return 'product productid-'
+            . $product->getProductId()
             . ($this->isProductAdded($product) ? ' product-added' : '')
             . ($product->getInventory()->isOutOfStock() ? ' out-of-stock' : '');
-    }   
+    }
 
     /**
      * Register files from common repository
@@ -222,7 +221,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getHead()
     {
-        return $this->t('Catalog');
+        return null;
     }
 
     /**
@@ -277,10 +276,10 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
                 'Show \'Add to Cart\' button', true, true
             ),
             self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon width', 180, true
+                'Maximal icon width', 110, true
             ),
             self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon height', 180, true
+                'Maximal icon height', 110, true
             ),
             self::PARAM_SHOW_ALL_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Checkbox(
                 'Display all items on one page', false, true
@@ -308,7 +307,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * isSideBarBox
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -322,7 +321,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @param array $params Params to check
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -346,21 +345,21 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Check if pager control row is visible or not
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function isPagerVisible()
     {
-        return parent::isPagerVisible() 
-            && !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE) 
+        return parent::isPagerVisible()
+            && !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE)
             && !$this->isSideBarBox();
     }
 
     /**
      * isDisplayModeSelectorVisible
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -371,8 +370,8 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
     /**
      * isSortBySelectorVisible
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -384,7 +383,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * isHeaderVisible
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -411,7 +410,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @param string $displayMode Value to check
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -510,7 +509,10 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getPageBodyFile()
     {
-        if ($this->getParam(self::PARAM_DISPLAY_MODE) == self::DISPLAY_MODE_GRID) {
+        if (
+            $this->getParam(self::PARAM_WIDGET_TYPE) == self::WIDGET_TYPE_CENTER
+            && $this->getParam(self::PARAM_DISPLAY_MODE) == self::DISPLAY_MODE_GRID
+        ) {
             return $this->isCSSLayout() ? 'body-css-layout.tpl' : 'body-table-layout.tpl';
         } else {
             return parent::getPageBodyFile();
@@ -520,7 +522,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * getSidebarMaxItems
      *
-     * @return integer 
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -542,11 +544,11 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
-     * Get additional list item class 
-     * 
+     * Get additional list item class
+     *
      * @param integer $i     Item index
      * @param integer $count List length
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -585,7 +587,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Show product description or not
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -597,7 +599,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * isShowThumbnail
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -660,7 +662,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Get table columns count
      *
-     * @return integer 
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -672,7 +674,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Check status of 'More...' link for sidebar list
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -708,7 +710,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Prepare CSS files needed for popups
      * TODO: check if there is a more convinient way to do that
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -743,7 +745,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
     /**
      * Checks whether a product was added to the cart
-     * 
+     *
      * @param \XLite\Model\Product $product The product to look for
      *
      * @return boolean

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,13 +28,13 @@
 namespace Includes\Decorator\Utils;
 
 /**
- * Some useful constants 
+ * Some useful constants
  */
 define('LC_DS_QUOTED', preg_quote(LC_DS, '/'));
 define('LC_DS_OPTIONAL', '(' . LC_DS_QUOTED . '|$)');
 
 /**
- * ModulesManager 
+ * ModulesManager
  *
  * @see   ____class_see____
  * @since 1.0.0
@@ -55,7 +54,7 @@ abstract class ModulesManager extends AUtils
 
     /**
      * List of active modules
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -64,7 +63,7 @@ abstract class ModulesManager extends AUtils
 
     /**
      * Data for class tree walker
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -151,6 +150,20 @@ abstract class ModulesManager extends AUtils
     }
 
     /**
+     * Check if module is installed
+     *
+     * @param string $module Module actual name
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function isModuleInstalled($module)
+    {
+        return \Includes\Utils\Operator::checkIfClassExists(static::getClassNameByModuleName($module));
+    }
+
+    /**
      * Method to access module main clas methods
      *
      * @param string $module Module actual name
@@ -161,12 +174,11 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function callModuleMethod($module, $method, array $args = array())
+    public static function callModuleMethod($module, $method, array $args = array())
     {
         $result = null;
-        $class  = static::getClassNameByModuleName($module);
 
-        if (\Includes\Utils\Operator::checkIfClassExists($class)) {
+        if (static::isModuleInstalled($module)) {
             $result = call_user_func_array(array(static::getClassNameByModuleName($module), $method), $args);
         }
 
@@ -175,11 +187,11 @@ abstract class ModulesManager extends AUtils
 
     /**
      * Get module info from it's main class
-     * 
+     *
      * @param string $author         Module author
      * @param string $name           Module name
      * @param array  $additionalData Data to add to result
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -211,6 +223,7 @@ abstract class ModulesManager extends AUtils
             'price'         => 0.00,
             'currency'      => 'USD',
             'revisionDate'  => 0,
+            'packSize'      => 0,
         );
 
         return array_replace_recursive($result, $additionalData);
@@ -283,7 +296,7 @@ abstract class ModulesManager extends AUtils
 
     /**
      * Disable some (or all) modules in SafeMode
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -292,8 +305,8 @@ abstract class ModulesManager extends AUtils
     {
         if (\Includes\SafeMode::isSafeModeStarted()) {
 
-            // Get unsafe modules list 
-            $modules = \Includes\SafeMode::isSoftResetRequested() 
+            // Get unsafe modules list
+            $modules = \Includes\SafeMode::isSoftResetRequested()
                 ? \Includes\SafeMode::getUnsafeModulesList()
                 : array_keys(static::$activeModules);
 
@@ -374,7 +387,7 @@ abstract class ModulesManager extends AUtils
      */
     protected static function getModulesFilePath()
     {
-        return LC_VAR_DIR . self::MODULES_FILE_NAME;
+        return LC_DIR_VAR . self::MODULES_FILE_NAME;
     }
 
     // }}}
@@ -383,7 +396,7 @@ abstract class ModulesManager extends AUtils
 
     /**
      * Fetch modules list from the database
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -401,8 +414,8 @@ abstract class ModulesManager extends AUtils
     }
 
     /**
-     * Return name of the table where the module info is stored 
-     * 
+     * Return name of the table where the module info is stored
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -414,7 +427,7 @@ abstract class ModulesManager extends AUtils
 
     /**
      * Part of SQL query to fetch composed module name
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -473,7 +486,7 @@ abstract class ModulesManager extends AUtils
      */
     public static function removeFile()
     {
-        \Includes\Utils\FileManager::delete(static::getModulesFilePath());
+        \Includes\Utils\FileManager::deleteFile(static::getModulesFilePath());
     }
 
     /**
@@ -509,7 +522,7 @@ abstract class ModulesManager extends AUtils
      *
      * @param string $author Module author
      * @param string $name   Module name
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -571,7 +584,7 @@ abstract class ModulesManager extends AUtils
      */
     public static function getPathPatternForTemplates()
     {
-        return static::getPathPattern(preg_quote(LC_SKINS_DIR, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules', 'tpl');
+        return static::getPathPattern(preg_quote(LC_DIR_SKINS, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules', 'tpl');
     }
 
     /**

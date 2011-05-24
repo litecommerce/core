@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -30,7 +29,7 @@ if (0 > version_compare(phpversion(), '5.3.0')) {
     die(1);
 }
 
-function xlite_make_sql_backup($path = null) 
+function xlite_make_sql_backup($path = null)
 {
     // DB backup
     echo (PHP_EOL . 'DB backup ... ');
@@ -79,7 +78,7 @@ function xlite_make_sql_backup($path = null)
     return $result;
 }
 
-function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = true, &$message = null) 
+function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = true, &$message = null)
 {
     !$verbose && ob_start();
 
@@ -94,10 +93,10 @@ function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = tr
     if (file_exists($path)) {
 
         $config = \XLite::getInstance()->getOptions('database_details');
-        
+
         $cmd = defined('TEST_MYSQL_BIN') ? TEST_MYSQL_BIN : 'mysql';
         $cmd .= ' -h' . $config['hostspec'];
-        
+
         if ($config['port']) {
             $cmd .= ' -P' . $config['port'];
         }
@@ -110,7 +109,7 @@ function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = tr
         $message = '';
 
         if ($drop) {
-        
+
             // Drop&Create database
 
             exec($cmd . ' -e"drop database ' . $config['database'] . '"' , $message);
@@ -118,27 +117,27 @@ function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = tr
             if (empty($message)) {
                 exec($cmd . ' -e"create database ' . $config['database'] . '"', $message);
             }
-        }    
-     
+        }
+
         if (empty($message)) {
             exec($cmd . ' ' . $config['database'] . ' < ' . $path, $message);
         }
 
         if (empty($message)) {
             echo ('done' . PHP_EOL);
-        
+
         } else {
             $result = false;
             echo ('failed: ' . $message . PHP_EOL);
         }
-    
+
     } else {
         echo ('failed' . PHP_EOL);
         $result = false;
     }
 
     !$verbose && ob_end_clean();
-    
+
     return $result;
 }
 
@@ -165,7 +164,7 @@ if (file_exists(PATH_TESTS . '/local.php')) {
 if (defined('DRUPAL_SITE_PATH') && !defined('LOCAL_TESTS')) {
     define('PATH_SRC', realpath(DRUPAL_SITE_PATH . '/modules/lc_connector/litecommerce'));
 
-} else { 
+} else {
     define('PATH_SRC', realpath(PATH_ROOT . '/src'));
 }
 
@@ -218,7 +217,7 @@ if (!defined('SELENIUM_SERVER')) {
 }
 
 if (!defined('TESTS_LOG_DIR')) {
-    define('TESTS_LOG_DIR', LC_VAR_DIR . 'log' . LC_DS);
+    define('TESTS_LOG_DIR', LC_DIR_VAR . 'log' . LC_DS);
 }
 
 if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ', $_SERVER['argv']), $match)) {
@@ -233,13 +232,13 @@ if (!defined('INCLUDE_ONLY_TESTS') || !preg_match('/DEPLOY_/', constant('INCLUDE
     PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes' . LC_DS . 'XLite' . LC_DS . 'Model' . LC_DS . 'Proxy');
 }
 
-foreach (glob(LC_ROOT_DIR . 'var/log/selenium.*.html') as $f) {
+foreach (glob(LC_DIR_ROOT . 'var/log/selenium.*.html') as $f) {
     @unlink($f);
 }
 
 /**
  * Class to run all the tests
- * 
+ *
  * @package    X-Lite_Tests
  * @subpackage Main
  * @see        ____class_see____
@@ -249,7 +248,7 @@ class XLite_Tests_AllTests
 {
     /**
      * Test suite main method
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -261,8 +260,8 @@ class XLite_Tests_AllTests
     }
 
     /**
-     * Creates the phpunit test suite 
-     * 
+     * Creates the phpunit test suite
+     *
      * @return XLite_Tests_TestSuite
      * @access public
      * @see    ____func_see____
@@ -280,7 +279,7 @@ class XLite_Tests_AllTests
 
 
         if (defined('INCLUDE_ONLY_TESTS')) {
-            
+
             $includes = array_map('trim', explode(',', INCLUDE_ONLY_TESTS));
 
             if (in_array('LOCAL_TESTS', $includes)) {
@@ -392,9 +391,9 @@ class XLite_Tests_AllTests
             $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($iterator as $filePath => $fileObject) {
-                
+
                 if (
-                    preg_match($pattern, $filePath, $matches) 
+                    preg_match($pattern, $filePath, $matches)
                     && !empty($matches[1])
                     && !preg_match('/' . $ds . '(\w+Abstract|A[A-Z]\w+)\.php$/Ss', $filePath)
                     && !preg_match('/' . $ds . '(?:scripts|skins)' . $ds . '/Ss', $filePath)
@@ -406,7 +405,7 @@ class XLite_Tests_AllTests
                         (!$includes || in_array($matched, $includes))
                         && (!$excludes || !in_array($matched, $excludes))
                     ) {
-                    
+
                         $class = XLite_Tests_TestCase::CLASS_PREFIX
                             . str_replace('/', '_', $matched);
 
@@ -438,14 +437,14 @@ class XLite_Tests_AllTests
             $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($iterator as $filePath => $fileObject) {
-                
+
                 if (
                     preg_match($pattern, $filePath, $matches)
                     && !empty($matches[1])
                     && !preg_match('/' . $ds . '(\w+Abstract|A[A-Z]\w+)\.php/Ss', $filePath)
                     && !preg_match('/' . $ds . '(?:scripts|skins)' . $ds . '/Ss', $filePath)
                 ) {
-                    
+
                     $matched = str_replace(LC_DS, '/', $matches[1]);
 
                     if (
@@ -456,7 +455,7 @@ class XLite_Tests_AllTests
                         $classPrefix = !isset($deploy)
                             ? XLite_Tests_SeleniumTestCase::CLASS_PREFIX
                             : 'XLite_Deploy_' . $deploy . '_';
-                        
+
                         $class = $classPrefix . str_replace('/', '_', $matched);
 
                         require_once $filePath;
@@ -472,7 +471,7 @@ class XLite_Tests_AllTests
                         }
                     }
                 }
-            } 
+            }
         }
 
         error_reporting(E_ALL);

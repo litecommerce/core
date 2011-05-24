@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,16 +28,16 @@
 namespace XLite\Core;
 
 /**
- * File system cache 
- * 
+ * File system cache
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class FileCache extends \Doctrine\Common\Cache\AbstractCache
 {
     /**
-     * Cache directory path 
-     * 
+     * Cache directory path
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -46,8 +45,8 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     protected $path = null;
 
     /**
-     * File header 
-     * 
+     * File header
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -55,8 +54,8 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     protected $header = '<?php die(); ?>';
 
     /**
-     * File header length 
-     * 
+     * File header length
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -64,8 +63,8 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     protected $headerLength = 15;
 
     /**
-     * TTL block length 
-     * 
+     * TTL block length
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -74,7 +73,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
 
     /**
      * Constructor
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -85,10 +84,10 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
-     * Set cache path 
-     * 
+     * Set cache path
+     *
      * @param string $path Path
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -107,8 +106,8 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
-     * Get cache path 
-     * 
+     * Get cache path
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -119,8 +118,8 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
-     * Get cache repository ids list 
-     * 
+     * Get cache repository ids list
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -140,7 +139,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
 
     /**
      * Delete all cache entries
-     * 
+     *
      * @return array Array of the deleted cache ids
      * @see    ____func_see____
      * @since  1.0.0
@@ -159,10 +158,10 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
-     * Get cache cell by id 
-     * 
+     * Get cache cell by id
+     *
      * @param string $id CEll id
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -182,9 +181,9 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
 
     /**
      * Check - repository has cell with specified id or not
-     * 
+     *
      * @param string $id CEll id
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -197,12 +196,12 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
-     * Save cell data 
-     * 
+     * Save cell data
+     *
      * @param string  $id       Cell id
      * @param mixed   $data     Cell data
      * @param integer $lifeTime Cell TTL OPTIONAL
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -219,9 +218,9 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
 
     /**
      * Delete cell
-     * 
+     *
      * @param string $id Cell id
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -240,10 +239,10 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
-     * Get cell path by cell id 
-     * 
+     * Get cell path by cell id
+     *
      * @param string $id Cell id
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -255,9 +254,9 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
 
     /**
      * Check - cell file is valid or not
-     * 
+     *
      * @param string $path CEll file path
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -46,7 +45,7 @@ namespace XLite\Model;
 class Inventory extends \XLite\Model\AEntity
 {
     /**
-     * Default amounts 
+     * Default amounts
      */
 
     const AMOUNT_DEFAULT_INV_TRACK = 1000;
@@ -68,7 +67,7 @@ class Inventory extends \XLite\Model\AEntity
 
     /**
      * Is inventory tracking enabled or not
-     *                            
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -78,8 +77,8 @@ class Inventory extends \XLite\Model\AEntity
     protected $enabled = true;
 
     /**
-     * Amount 
-     * 
+     * Amount
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -112,7 +111,7 @@ class Inventory extends \XLite\Model\AEntity
 
     /**
      * Product (association)
-     * 
+     *
      * @var   \XLite\Model\Product
      * @see   ____var_see____
      * @since 1.0.0
@@ -125,9 +124,9 @@ class Inventory extends \XLite\Model\AEntity
 
     /**
      * Setter
-     * 
+     *
      * @param integer $amount Amount to set
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -139,9 +138,9 @@ class Inventory extends \XLite\Model\AEntity
 
     /**
      * Setter
-     * 
+     *
      * @param integer $amount Amount to set
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -169,7 +168,7 @@ class Inventory extends \XLite\Model\AEntity
 
     /**
      * Return product amount available to add to cart
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -193,7 +192,7 @@ class Inventory extends \XLite\Model\AEntity
 
     /**
      * Check if product amount is less than its low limit
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -205,7 +204,7 @@ class Inventory extends \XLite\Model\AEntity
 
     /**
      * Perform some actions before inventory saved
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -222,9 +221,9 @@ class Inventory extends \XLite\Model\AEntity
 
     /**
      * Check and (if needed) correct amount value
-     * 
+     *
      * @param integer $amount Value to check
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -236,7 +235,7 @@ class Inventory extends \XLite\Model\AEntity
 
     /**
      * Get list of cart items containing current product
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -248,7 +247,7 @@ class Inventory extends \XLite\Model\AEntity
 
     /**
      * Return "locked" amount: items already added to the cart
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -260,7 +259,7 @@ class Inventory extends \XLite\Model\AEntity
 
     /**
      * Default qty value to show to customers
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -272,7 +271,7 @@ class Inventory extends \XLite\Model\AEntity
 
     /**
      * Send notification to admin about product low limit
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

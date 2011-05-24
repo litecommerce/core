@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,7 +28,7 @@
 
 /**
  * LiteCommerce (standalone edition) web installation wizard
- * 
+ *
  * @package LiteCommerce
  * @see     ____class_see____
  * @since   1.0.0
@@ -213,7 +212,7 @@ OUT;
                 echo str_repeat(' ', 10000);
                 flush();
                 $result = doBuildCache();
-            
+
             } else {
                 die('<div id="finish">' . xtr('Cache is built') . '</div>');
             }
@@ -222,7 +221,7 @@ OUT;
             $pdoErrorMsg = '';
             echo xtr('Building cache: Preparing for cache generation and dropping an old LiteCommerce tables if exists') . $jsDots;
             echo '</body></html>';
-            echo str_repeat(' ', 10000); 
+            echo str_repeat(' ', 10000);
             flush();
             $result = doRemoveCache(null, $pdoErrorMsg);
         }
@@ -256,17 +255,17 @@ OUT;
         show_install_css();
 ?>
 
-<script type="text/javascript"> 
-    loaded = false; 
- 
-    function refresh() { 
-        window.scroll(0, 100000); 
-                 
-        if (loaded == false) 
-           setTimeout('refresh()', 1000); 
-    } 
-     
-    setTimeout('refresh()', 1000); 
+<script type="text/javascript">
+    loaded = false;
+
+    function refresh() {
+        window.scroll(0, 100000);
+
+        if (loaded == false)
+           setTimeout('refresh()', 1000);
+    }
+
+    setTimeout('refresh()', 1000);
 </script>
 
 <body>
@@ -277,7 +276,7 @@ OUT;
         $result = doInstallDirs();
 
 ?>
-        
+
 <script type="text/javascript">
     loaded = true;
 </script>
@@ -408,7 +407,7 @@ show_install_html_header();
 
 show_install_css();
 
-include LC_ROOT_DIR . 'Includes/install/templates/common_js_code.js.php'; 
+include LC_DIR_ROOT . 'Includes/install/templates/common_js_code.js.php';
 
 ?>
 
@@ -604,7 +603,7 @@ if ($current < count($modules)) {
   <input type="hidden" name="params[<?php echo $key ?>]" value="<?php echo $val ?>" />
 
 <?php
-    
+
         }
     }
 
@@ -617,7 +616,7 @@ if ($current < count($modules)) {
 
 if (isset($autoPost)) {
 
-    
+
 ?>
 
     <div><?php echo xtr('Redirecting to the next step...'); ?></div>
@@ -661,7 +660,7 @@ if (isset($autoPost)) {
 </td>
 
 <?php
-       
+
     }
 
 ?>
@@ -698,10 +697,10 @@ if (isset($autoPost)) {
 
 </div><!-- [/page-container] -->
 
-<?php 
+<?php
 
 if (2 == $current) {
-    include_once LC_DIR . '/Includes/install/templates/step1_report.tpl.php'; 
+    include_once LC_DIR . '/Includes/install/templates/step1_report.tpl.php';
 }
 
 ?>

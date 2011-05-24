@@ -163,5 +163,3 @@ if (defined('XLITE_DEV_LIB_DIR')) {
 
 // Define constant for include_path
 define('XLITE_DEV_PHPUNIT_PATH', implode(PATH_SEPARATOR, $__include_paths));
-
-

@@ -2,33 +2,22 @@
 
 /**
  * ____file_title____
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
 
-div.location-node {
-  display: inline;
-  position: relative;
-}
-
-div.location-node:hover ul.location-subnodes {
-  visibility: visible;
-}
-
-div.location-node.expandable {
+ul.breadcrumb li.location-node.expandable {
   padding-right: 0.8em;
-  background: url(images/down_arrow.png) no-repeat right 0.6em;
+  background: url(images/down_arrow.png) no-repeat right 0.8em;
 }
 
 ul.location-subnodes {
   position: absolute;
-  top: 15px;
-  right: 0px;
+  top: 20px;
   list-style-type: none;
   background-color: #fff;
   z-index: 10000;

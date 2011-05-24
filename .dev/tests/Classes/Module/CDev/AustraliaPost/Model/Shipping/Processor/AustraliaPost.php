@@ -10,7 +10,6 @@
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -52,8 +51,8 @@ extends XLite_Tests_Model_OrderAbstract
     }
 
     /**
-     * testGetProcessorName 
-     * 
+     * testGetProcessorName
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -67,8 +66,8 @@ extends XLite_Tests_Model_OrderAbstract
     }
 
     /**
-     * testGetProcessorId 
-     * 
+     * testGetProcessorId
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -82,8 +81,8 @@ extends XLite_Tests_Model_OrderAbstract
     }
 
     /**
-     * testGetApiUrl 
-     * 
+     * testGetApiUrl
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -97,8 +96,8 @@ extends XLite_Tests_Model_OrderAbstract
     }
 
     /**
-     * testIsMethodNamesAdjustable 
-     * 
+     * testIsMethodNamesAdjustable
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -112,8 +111,8 @@ extends XLite_Tests_Model_OrderAbstract
     }
 
     /**
-     * testGetShippingMethods 
-     * 
+     * testGetShippingMethods
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -134,8 +133,8 @@ extends XLite_Tests_Model_OrderAbstract
     }
 
     /**
-     * testGetRates 
-     * 
+     * testGetRates
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -148,7 +147,7 @@ extends XLite_Tests_Model_OrderAbstract
         // Test on anonymous order
 
         $tmpConfig = \XLite\Base::getInstance()->config->Company;
-        
+
         \XLite\Base::getInstance()->config->Company->location_country = 'AU';
         \XLite\Base::getInstance()->config->Company->location_zipcode = '3146';
 
@@ -202,7 +201,7 @@ extends XLite_Tests_Model_OrderAbstract
         }
 
         // Test on anonymous order if config.Company.location_country != 'AU'
-        
+
         $tmpConfig = \XLite\Base::getInstance()->config->Company;
 
         \XLite\Base::getInstance()->config->Company->location_country = 'US';
@@ -218,8 +217,8 @@ extends XLite_Tests_Model_OrderAbstract
     }
 
     /**
-     * getTestOrder 
-     * 
+     * getTestOrder
+     *
      * @return void
      * @access protected
      * @see    ____func_see____

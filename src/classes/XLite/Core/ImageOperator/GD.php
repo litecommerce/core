@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,16 +28,16 @@
 namespace XLite\Core\ImageOperator;
 
 /**
- * GD 
- * 
+ * GD
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class GD extends \XLite\Core\ImageOperator\AImageOperator
 {
     /**
-     * MIME types 
-     * 
+     * MIME types
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -56,7 +55,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
 
     /**
      * Image resource
-     * 
+     *
      * @var   resource
      * @see   ____var_see____
      * @since 1.0.0
@@ -97,7 +96,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
             if (function_exists($func)) {
                 $data = $image->getBody();
 
-                $fn = tempnam(LC_TMP_DIR, 'image');
+                $fn = tempnam(LC_DIR_TMP, 'image');
 
                 file_put_contents($fn, $data);
                 unset($data);
@@ -153,7 +152,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
             $newImage,
             $this->image,
             0,
-            0,  
+            0,
             0,
             0,
             $width,
@@ -169,8 +168,8 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
             $this->height = $height;
 
             if (\XLite::getInstance()->getOptions(array('images', 'unsharp_mask_filter_on_resize'))) {
-                        
-                include_once LC_LIB_DIR . 'phpunsharpmask.php';
+
+                include_once LC_DIR_LIB . 'phpunsharpmask.php';
 
                 $unsharpImage = UnsharpMask($this->image);
                 if ($unsharpImage) {
@@ -186,8 +185,8 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
     }
 
     /**
-     * Get image GD-based type 
-     * 
+     * Get image GD-based type
+     *
      * @return string|void
      * @see    ____func_see____
      * @since  1.0.0

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View\Tabs;
 
 /**
  * Tabs related to shipping settings
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -41,7 +40,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
 
     /**
      * Description of tabs related to shipping settings and their targets
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -67,8 +66,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     );
 
     /**
-     * Zones 
-     * 
+     * Zones
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -76,8 +75,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     protected $zones = null;
 
     /**
-     * Markups 
-     * 
+     * Markups
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -86,7 +85,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
 
     /**
      * Returns a list of shipping processors
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -98,7 +97,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
 
     /**
      * Returns a list of shipping methods
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -110,8 +109,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
 
     /**
      * Check if zone details page should be displayed
-     * 
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -122,8 +121,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     }
 
     /**
-     * getZone 
-     * 
+     * getZone
+     *
      * @return \XLite\Model\Zone
      * @see    ____func_see____
      * @since  1.0.0
@@ -148,8 +147,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     }
 
     /**
-     * getShippingZones 
-     * 
+     * getShippingZones
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -164,9 +163,9 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     }
 
     /**
-     * isZonesDefined 
-     * 
-     * @return boolean 
+     * isZonesDefined
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -176,8 +175,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     }
 
     /**
-     * hasShippingMarkups 
-     * 
+     * hasShippingMarkups
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -188,8 +187,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     }
 
     /**
-     * getShippingMarkups 
-     * 
+     * getShippingMarkups
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -228,8 +227,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     }
 
     /**
-     * getPreparedShippingMarkups 
-     * 
+     * getPreparedShippingMarkups
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -242,11 +241,11 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     /**
      * Service method for usage in the markups list template
      * Returns true if current markup number is lesser than count of markups of current method
-     * 
+     *
      * @param integer $id    Current index of markup
      * @param array   $array Array of markups
-     *  
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -275,9 +274,9 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      *    1 => ...
      *    )
      * )
-     * 
+     *
      * @param mixed $markups ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

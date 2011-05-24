@@ -2,11 +2,10 @@
 
 /**
  * Theme common styles
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -603,7 +602,7 @@ blockquote .quote-author em
  */
 
 ul,
-ol,
+ol
 {
   padding-left: 0;
   margin-left: 0;
@@ -1187,26 +1186,44 @@ ul.account-links a:hover
   color: #a2a2a2;
   position: relative;
   top: 1px;
+  float: left;
+  padding-left: 0px;
 }
 
-div.location-node {
-  display: inline;
+#breadcrumb ul.breadcrumb {
+  list-style: none;
+}
+
+ul.breadcrumb li.location-node {
+  float: left;
+  background: transparent none;
   position: relative;
+  padding-left: 0px;
+  margin: 2px 0 0;
 }
 
-div.location-node:hover ul.location-subnodes {
+ul.breadcrumb li.location-node a,
+  ul.breadcrumb li.location-node span
+{
+  line-height: 24px;
+}
+
+ul.breadcrumb li.location-node span.separator {
+  line-height: 20px;
+}
+
+ul.breadcrumb li:first-child {
+  margin: 0px;
+}
+
+li.location-node:hover ul.location-subnodes {
   visibility: visible;
-}
-
-div.location-node.expandable {
-  padding-right: 0.8em;
-  background: url(../images/down_arrow.png) no-repeat right 0.6em;
 }
 
 ul.location-subnodes {
   position: absolute;
-  top: 15px;
-  right: 0px;
+  top: 20px;
+  left: 0px;
   list-style-type: none;
   background-color: #fff;
   z-index: 10000;
@@ -1220,11 +1237,18 @@ ul.location-subnodes li {
   white-space: nowrap;
 }
 
+ul.location-subnodes li a {
+  line-height: inherit;
+}
+
 .location-title-subnodes-mark {
   text-decoration: none;
   padding-top: 0.2em;
 }
 
+ul.location-subnodes li a.current {
+  font-weight: bold;
+}
 
 /*
  *
@@ -1377,7 +1401,7 @@ ul.tabs li
 
 div.tabs .primary
 {
-  height: 32px;
+  height: 31px;
   line-height: 32px;
   padding: 0;
   border-bottom-style: solid;
@@ -1462,7 +1486,7 @@ div.tabs .secondary a.active
 }
 
 .powered-by {
-  border-top: 1px solid #dbdbdb; 
+  border-top: 1px solid #dbdbdb;
   padding-top: 13px;
   padding-bottom: 10px;
   font-size: 11px;
@@ -1598,7 +1622,7 @@ form .floatable-box.float-box {
   margin-top: 20px;
   padding-top: 10px;
   border-top: 1px solid #dfdfdf;
-} 
+}
 
 .item-list ul.pager li
 {
@@ -1781,4 +1805,3 @@ ul.pager li.next-page
   text-decoration: underline;
   vertical-align: middle;
 }
-

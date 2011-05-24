@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -14,13 +14,12 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * PHP version 5.3.0 
+ * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,26 +29,26 @@ namespace XLite\Controller\Admin;
 
 /**
  * Controller for Database restore page
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
 {
     /**
-     * doActionRestoreFromUploadedFile 
-     * 
+     * doActionRestoreFromUploadedFile
+     *
      * @return void
-     * @throws 
+     * @throws
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function doActionRestoreFromUploadedFile()
     {
-        // Check uploaded file with SQL data 
+        // Check uploaded file with SQL data
         if (isset($_FILES['userfile']) && !empty($_FILES['userfile']['tmp_name']) ) {
 
-            $sqlFile = LC_TMP_DIR . sprintf('sqldump.uploaded.%d.sql', time());
+            $sqlFile = LC_DIR_TMP . sprintf('sqldump.uploaded.%d.sql', time());
 
             $tmpFile = $_FILES['userfile']['tmp_name'];
 
@@ -69,7 +68,7 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
 
     /**
      * doActionRestoreFromLocalFile
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -84,9 +83,9 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
 
     /**
      * Common restore database method used by actions
-     * 
+     *
      * @param mixed $sqlFile File with SQL data for loading into database
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -96,7 +95,7 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
         $result = false;
 
         // File to create temporary backup to be able rollback database
-        $backupSQLFile = LC_BACKUP_DIR . sprintf('sqldump.backup.%d.sql', time());
+        $backupSQLFile = LC_DIR_BACKUP . sprintf('sqldump.backup.%d.sql', time());
 
         // Make the process of restoring database verbose
         $verbose = true;
@@ -149,8 +148,8 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
     }
 
     /**
-     * getPageReturnURL 
-     * 
+     * getPageReturnURL
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

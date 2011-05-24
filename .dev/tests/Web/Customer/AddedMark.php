@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -32,7 +31,7 @@ class XLite_Web_Customer_AddedMark extends XLite_Web_Customer_ACustomer
 {
     /**
      * Test whether the mark is displaed for products added to the cart from the product page
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -42,15 +41,15 @@ class XLite_Web_Customer_AddedMark extends XLite_Web_Customer_ACustomer
     {
         $this->openCategoryPage();
         $id = $this->getProductId(1);
-    
+
         $this->assertElementNotPresent(
             "css=.category-products .productid-$id.product-added .added-to-cart",
             "Added To Cart mark is shown for a product not in the cart"
         );
-    
+
         $this->clickAndWait("css=.category-products .productid-$id a");
 
-        $this->type("css=form.product-details input.quantity", "1");            
+        $this->type("css=form.product-details input.quantity", "1");
         $this->submitAndWait("css=form.product-details");
 
         $this->openCategoryPage();
@@ -59,12 +58,12 @@ class XLite_Web_Customer_AddedMark extends XLite_Web_Customer_ACustomer
             "css=.category-products .productid-$id.product-added .added-to-cart",
             "Added To Cart mark is shown for a product not in the cart"
         );
- 
+
     }
 
     /**
      * Test whether the mark is displayed for products added to the cart by AJAX drag'n'drop
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -80,7 +79,7 @@ class XLite_Web_Customer_AddedMark extends XLite_Web_Customer_ACustomer
             "css=.category-products .productid-$id1.product-added .added-to-cart",
             "Added To Cart mark is shown for a product not in the cart"
         );
- 
+
         $this->dragToCart($id1, $id2);
 
         $this->assertElementPresent(
@@ -92,10 +91,10 @@ class XLite_Web_Customer_AddedMark extends XLite_Web_Customer_ACustomer
 
     /**
      * Drag a product and drop it into the minicart tray
-     * 
+     *
      * @param integer $id1 ID of the product to drag
      * @param integer $id2 ID of the product to move the first product over when dragging to the cart
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -132,7 +131,7 @@ class XLite_Web_Customer_AddedMark extends XLite_Web_Customer_ACustomer
 
     /**
      * Open a test category page and return products from the category
-     * 
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -152,9 +151,9 @@ class XLite_Web_Customer_AddedMark extends XLite_Web_Customer_ACustomer
 
     /**
      * Get ID of a listed product
-     * 
+     *
      * @param integer $n Number of the product in the list
-     *  
+     *
      * @return integer
      * @access protected
      * @see    ____func_see____

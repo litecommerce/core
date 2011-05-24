@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    Tests
  * @subpackage Web
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -42,7 +41,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
     const SHIPPING_SELECTOR = '//div[@class="select-classes"]/select[@id="posteddata-class-ids-1-" and @name="postedData[class_ids][1][]" and @multiple="multiple"]';
 
-    const PRODUCT_UPDATE  = '//button[@type="submit"]/span[text()="Update"]';
+    const PRODUCT_UPDATE  = '//button[@type="submit"]/span[text()="Update product"]';
 
     const SHIPPING_UPDATE = '//form[@name="shipping_method_offline"]/table/tbody/tr/td/button[@type="submit"]/span[text()="Update"]';
 
@@ -58,7 +57,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
     /**
      * Test of product classes modify page
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -97,7 +96,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
     /**
      * Test of product modify page (product classes only)
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -152,7 +151,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
         $this->addSelection(
             self::PRODUCT_SELECTOR,
             'test1'
-        );  
+        );
 
         $this->controlKeyUp();
 
@@ -172,7 +171,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
     /**
      * Procedure to check product classes selector widget on the shipping methods modify page
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -187,7 +186,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
         foreach ($this->classes as $class) {
 
             $this->checkProductClassOption($class, 'Shipping methods page', self::SHIPPING_SELECTOR);
-        }   
+        }
 
         $this->select(
             self::SHIPPING_SELECTOR,
@@ -204,19 +203,19 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
         $this->open(self::PC_PAGE);
 
         foreach ($this->classes as $class) {
-        
+
             $this->removeInput($class);
-        }   
+        }
     }
 
 
     /**
      * Check product class option part of product classes selector widget
-     * 
+     *
      * @param string $class    Product class name
-     * @param string $text     Comment text 
+     * @param string $text     Comment text
      * @param string $selector Selector of product class
-     *  
+     *
      * @return void
      * @access private
      * @see    ____func_see____
@@ -225,16 +224,16 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
     private function checkProductClassOption($class, $text = '', $selector = self::PRODUCT_SELECTOR)
     {
         $this->assertElementPresent(
-            $selector . '/option[text()="' . $class . '"]', 
+            $selector . '/option[text()="' . $class . '"]',
             'No "' . $class . '" class option' . ('' !== $text ? ' (' . $text . ')' : '')
         );
     }
 
     /**
      * Procedure to add new product class
-     * 
+     *
      * @param string $name New product class name
-     *  
+     *
      * @return void
      * @access private
      * @see    ____func_see____
@@ -260,7 +259,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
     /**
      * Return number of rows in the product classes table
-     * 
+     *
      * @return integer
      * @access private
      * @see    ____func_see____
@@ -273,9 +272,9 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
     /**
      * Procedure to use remove link functionality
-     * 
+     *
      * @param mixed $name ____param_comment____
-     *  
+     *
      * @return void
      * @access private
      * @see    ____func_see____
@@ -301,10 +300,10 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
     /**
      * Procedure to check main advanced input element
-     * 
-     * @param string $name    Product class name in the input 
+     *
+     * @param string $name    Product class name in the input
      * @param string $newName New product class name (if there is some). Check to update.
-     *  
+     *
      * @return void
      * @access private
      * @see    ____func_see____

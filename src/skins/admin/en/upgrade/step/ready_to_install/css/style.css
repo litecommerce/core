@@ -1,0 +1,232 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.0
+ */
+
+
+/**
+ * Entries list styles
+ */
+
+table.downloaded-components {
+  border-collapse: collapse;
+  margin: 0px 0px 25px 0px;
+  width: 700px;
+}
+
+table.downloaded-components td,
+  table.downloaded-components th
+{
+  white-space: nowrap;
+  font-size: 14px;
+  padding: 1px 0px 1px 0px
+}
+
+table.downloaded-components tr.header {
+  background: none #f3f3f3;
+  height: 35px;
+}
+
+table.downloaded-components tr.header .module-info-header {
+  text-align: left;
+  padding: 5px 0px 5px 15px;
+  width: 550px;
+}
+
+table.downloaded-components tr.header th {
+  font-weight: normal;
+  color: #53769d;
+}
+
+table.downloaded-components tr.header th.version {
+  padding-left: 25px;
+}
+
+table.downloaded-components tr td {
+  color: #333333;
+}
+
+table.downloaded-components tr.module-entry {
+  border-top: #e5e5e5 1px solid;
+  border-bottom: #e5e5e5 1px solid;
+}
+
+table.downloaded-components tr.module-entry td
+{
+  padding: 10px 15px;
+}
+
+.downloaded-components td.module-info span.name {
+  color: #333333;
+  font-size: 16px;
+}
+
+.downloaded-components td.module-info span.author {
+  color: #9e9e9e;
+  font-size: 12px;
+}
+
+.downloaded-components .status.enabled {
+  background: transparent url(../images/icon_tick_module.png) 15px 10px no-repeat;
+  width: 19px;
+  height: 14px;
+}
+.downloaded-components .status.disabled {
+  color: #8f8f8f;
+}
+
+table.downloaded-components tr td.new-version {
+  color: #333333;
+  text-align: center;
+  padding-left: 35px;
+ }
+
+div.service-message {
+  display: none;
+}
+
+.modified-files-section {
+  border: solid #e9e9e9 1px;
+  width: 707px;
+  margin: 0px 0px 10px 0px;
+}
+
+.modified-files-section-frame {
+  border: solid #f7f7f7 6px;
+  background: transparent url(../images/warning_circle.png) 20px 15px no-repeat;
+  padding: 10px 10px 50px 85px;
+  width: 600px;
+  position: relative;
+}
+
+.modified-files-section .header {
+  color: #9e3b00;
+  font-size: 18px;
+  margin: 8px 0px 10px 0px;
+}
+
+.modified-files-section .description {
+  font-size: 14px;
+  line-height: 19px;
+  margin: 0px 0px 10px 0px;
+}
+
+.modified-files-section label {
+  padding: 0px 0px 0px 3px;
+}
+
+.modified-files-section input {
+  vertical-align: bottom;
+  margin-bottom: 2px;
+}
+
+.modified-files-section ul.selections-list {
+  margin: 22px 0px 26px 5px;
+}
+
+.modified-files-section ul.selections-list li {
+  margin: 0px 0px 15px 0px;
+}
+
+.modified-files-section ul.selections-list input {
+  margin-right: 5px;
+}
+
+.modified-files-section ul.selections-list label {
+  color: #53769d;
+  font-size: 12px;
+}
+
+.modified-files-section ul.selections-list .warning {
+  color: #9e3b00;
+  font-size: 14px;
+  margin: 0px 0px 0px 22px;
+}
+
+.modified-files-block {
+  height: 120px;
+  width: 545px;
+  overflow: auto;
+  display: block;
+  background-color: #f4f4f4;
+  padding: 6px 0px 10px 17px;
+  margin-right: 5px;
+  border: solid 1px #e5e5e5;
+}
+
+.select-actions a {
+  text-decoration: underline;
+}
+
+div.modified-file {
+  margin: 8px 0px 0px 0px;
+}
+
+li.switch-button-block,
+  li.switch-button-block *
+{
+  padding: 0px 0px 0px 0px
+}
+
+li.switch-button-block button {
+  position: absolute;
+  bottom: 52px;
+}
+
+ul.select-actions,
+  ul.modified-files-group-list
+{
+  list-style: none;
+}
+
+ul.select-actions {
+  margin: 0px 0px 50px 0px;
+}
+
+ul.select-actions li,
+  ul.modified-files-group-list li
+{
+  float: left;
+}
+
+ul.select-actions li {
+  padding: 0px 4px 0px 0px;
+}
+
+.ready-to-install-actions {
+  width: 700px;
+}
+
+.ready-to-install-actions button {
+  float: left;
+}
+
+.ready-to-install-actions button.main-button {
+  float: right;
+}
+
+.service-messages-section {
+  margin: 0px 0px 40px 0px;
+}
+
+.ready-to-install-service-message {
+  border: solid 1px #e9e9e9;
+  padding: 5px 5px 5px 5px;
+  background-color: #f7f7f7;
+  width: 420px;
+  margin: 0px 0px 20px 0px;
+}
+
+.ready-to-install-service-message .message-entry {
+  background-color: #ffffff;
+  padding: 15px 15px 15px 15px;
+  color: #d65335;
+  font-size: 16px;
+}

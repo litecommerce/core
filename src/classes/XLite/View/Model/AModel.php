@@ -20,7 +20,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -188,7 +187,7 @@ abstract class AModel extends \XLite\View\Dialog
 
     /**
      * The list of fields (fiel names) that must be excluded from the array(data) for mapping to the object
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -275,7 +274,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Check for the form errors
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -290,7 +289,7 @@ abstract class AModel extends \XLite\View\Dialog
      * @param string $action Action to perform
      * @param array  $data   Form data OPTIONAL
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -405,7 +404,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Check if current form is accessible
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -437,7 +436,7 @@ abstract class AModel extends \XLite\View\Dialog
     {
         return 'Access denied';
     }
- 
+
     /**
      * Return templates directory name
      *
@@ -553,8 +552,8 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * useBodyTemplate 
-     * 
+     * useBodyTemplate
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -700,7 +699,7 @@ abstract class AModel extends \XLite\View\Dialog
 
     /**
      * Add top message
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -712,7 +711,7 @@ abstract class AModel extends \XLite\View\Dialog
 
     /**
      * Add top message
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -799,7 +798,7 @@ abstract class AModel extends \XLite\View\Dialog
     protected function postprocessErrorAction()
     {
         \XLite\Core\TopMessage::getInstance()->addBatch($this->getErrorMessages(), \XLite\Core\TopMessage::ERROR);
-        
+
         $method = __FUNCTION__ . ucfirst($this->currentAction);
 
         if (method_exists($this, $method)) {
@@ -852,7 +851,7 @@ abstract class AModel extends \XLite\View\Dialog
         $class = $data[self::SCHEMA_CLASS];
 
         $method = 'prepareFieldParams' . \XLite\Core\Converter::convertToCamelCase($name);
-        
+
         if (method_exists($this, $method)) {
             // Call the corresponded method
             $this->$method($data);
@@ -927,7 +926,7 @@ abstract class AModel extends \XLite\View\Dialog
 
         return property_exists($this, $schema) ? $this->getFieldsBySchema($this->$schema) : array();
     }
- 
+
     /**
      * Return list of form fields
      *
@@ -943,7 +942,7 @@ abstract class AModel extends \XLite\View\Dialog
             $this->defineFormFields();
             $this->filterFormFields();
         }
- 
+
         return $onlyNames ? $this->formFieldNames : $this->formFields;
     }
 
@@ -994,7 +993,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @param string $section Name of section to check
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -1153,7 +1152,7 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Some JavaScript code to insert at the begin of form page 
+     * Some JavaScript code to insert at the begin of form page
      *
      * @return string
      * @see    ____func_see____
@@ -1165,7 +1164,7 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Some JavaScript code to insert at the end of form page 
+     * Some JavaScript code to insert at the end of form page
      *
      * @return string
      * @see    ____func_see____
@@ -1181,7 +1180,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @param string $action Action name OPTIONAL
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -1196,7 +1195,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Perform certain action for the model object
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -1208,7 +1207,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Perform certain action for the model object
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -1220,7 +1219,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Perform certain action for the model object
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -1241,7 +1240,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Perform certain action for the model object
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -1254,9 +1253,9 @@ abstract class AModel extends \XLite\View\Dialog
 
     /**
      * Retrieve property from the model object
-     * 
+     *
      * @param mixed $name Field/property name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -1271,14 +1270,14 @@ abstract class AModel extends \XLite\View\Dialog
             // Call the corresponded method
             $value = $this->getModelObject()->$methodName();
         }
-       
+
         return $value;
     }
 
     /**
      * Check if widget is visible
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -1289,21 +1288,21 @@ abstract class AModel extends \XLite\View\Dialog
 
     /**
      * Add field into the list of excluded fields
-     * 
+     *
      * @param string $fieldName Field name
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function excludeField($fieldName) 
+    protected function excludeField($fieldName)
     {
         $this->excludedFields[] = $fieldName;
     }
 
     /**
      * Prepare posted data for mapping to the object
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1325,8 +1324,8 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Prepare object for mapping 
-     * 
+     * Prepare object for mapping
+     *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.0

@@ -1,0 +1,41 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Modules installation type select popup
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.0
+ */
+
+.install-warning-description {
+  font-size: 14px;
+  line-height: 20px;
+  width: 480px;
+  margin: 0px 0px 0px 20px;
+}
+
+ul.actions
+{
+  width: 400px;
+}
+
+ul.actions {
+  list-style: none;
+  margin: 20px 0px 0px 110px;
+}
+
+ul.actions li {
+  float: left;
+}
+
+ul.actions li.button {
+  padding: 0px 4px 0px 10px;
+}
+
+ul.actions li.or {
+  color: #8f8f8f;
+  padding: 10px 0px 0px 0px;
+}

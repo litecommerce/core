@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\View;
 
 /**
- * \XLite\View\Address 
- * 
+ * \XLite\View\Address
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -57,8 +56,8 @@ class Address extends \XLite\View\Dialog
     const SCHEMA_REQUIRED = 'required';
 
     /**
-     * schema 
-     * 
+     * schema
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -113,7 +112,7 @@ class Address extends \XLite\View\Dialog
             self::SCHEMA_LABEL    => 'Phone',
             self::SCHEMA_REQUIRED => true,
         ),
-        /*  TODO: move to the shipping module where this field is required       
+        /*  TODO: move to the shipping module where this field is required
         'address_type' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\AddressType',
             self::SCHEMA_LABEL    => 'Address type',
@@ -123,8 +122,8 @@ class Address extends \XLite\View\Dialog
     );
 
     /**
-     * getSchemaFields 
-     * 
+     * getSchemaFields
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -135,11 +134,11 @@ class Address extends \XLite\View\Dialog
     }
 
     /**
-     * getFieldValue 
-     * 
+     * getFieldValue
+     *
      * @param string  $fieldName    Field name
      * @param boolean $processValue Process value flag OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -147,7 +146,7 @@ class Address extends \XLite\View\Dialog
     public function getFieldValue($fieldName, $processValue = false)
     {
         $result = '';
-        
+
         $address = $this->getParam(self::PARAM_ADDRESS);
 
         $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($fieldName);
@@ -176,8 +175,8 @@ class Address extends \XLite\View\Dialog
     }
 
     /**
-     * getProfileId 
-     * 
+     * getProfileId
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -188,8 +187,8 @@ class Address extends \XLite\View\Dialog
     }
 
     /**
-     * Get a list of JS files required to display the widget properly 
-     * 
+     * Get a list of JS files required to display the widget properly
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -199,7 +198,6 @@ class Address extends \XLite\View\Dialog
         $list = parent::getJSFiles();
 
         if ($this->getParam(self::PARAM_DISPLAY_WRAPPER)) {
-            $list[] = 'address/controller.js';
             $list[] = 'form_field/select_country.js';
         }
 
@@ -270,8 +268,8 @@ class Address extends \XLite\View\Dialog
     }
 
     /**
-     * getDefaultTemplate 
-     * 
+     * getDefaultTemplate
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -282,9 +280,9 @@ class Address extends \XLite\View\Dialog
     }
 
     /**
-     * useBodyTemplate 
-     * 
-     * @return boolean 
+     * useBodyTemplate
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */

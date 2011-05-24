@@ -1,0 +1,231 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.0
+ */
+
+
+/**
+ * Entries list styles
+ */
+
+table.entries-list {
+  border-collapse: collapse;
+  margin: 0px 0px 25px 0px;
+  width: 800px;
+}
+
+table.entries-list td,
+  table.entries-list th
+{
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+table.entries-list tr.header {
+  background: none #f3f3f3;
+  height: 35px;
+}
+
+table.entries-list tr.header .module-info-header {
+  text-align: left;
+  padding: 5px 5px 5px 15px;
+}
+
+table.entries-list tr.header th {
+  font-size: 16px;
+  font-weight: normal;
+  color: #53769d;
+}
+
+table.entries-list tr.separator,
+  table.entries-list tr.separator td
+{
+  height: 10px;
+}
+
+table.entries-list tr td {
+  color: #333333;
+}
+
+table.entries-list tr.core-entry {
+  background: none #eff8fe;
+  height: 45px;
+}
+
+table.entries-list tr.module-entry {
+  border-top: #e5e5e5 1px solid;
+  border-bottom: #e5e5e5 1px solid;
+}
+
+table.entries-list tr.module-entry td,
+  table.entries-list tr.core-entry td
+{
+  padding: 10px 15px;
+}
+
+.entries-list td.module-info span.name {
+  color: #333333;
+  font-size: 16px;
+}
+
+.entries-list td.module-info span.author {
+  color: #9e9e9e;
+  font-size: 12px;
+}
+
+.entries-list .status.disabled {
+  color: #8f8f8f;
+}
+
+.entries-list .status.not-installed {
+  color: #4a9821;
+}
+
+table.entries-list tr td.old-version {
+  color: #8f8f8f;
+  padding-right: 20px;
+  text-align: center;
+}
+
+table.entries-list tr td.version-separator {
+  width: 1px;
+  height: 14px;
+  padding: 10px;
+  background: transparent url(../images/icon_arrow_version.png) left 12px no-repeat;
+}
+
+table.entries-list tr.core-entry td.version-separator {
+  background-position: left 16px;
+}
+
+table.entries-list tr td.new-version {
+  color: #333333;
+  padding-left: 10px;
+}
+
+.entries-list .size {
+  color: #8f8f8f;
+  text-align: right;
+}
+
+
+
+/**
+ * Incompatible entries list styles
+ */
+
+.incompatible-module-list-description {
+  color: #333333;
+  width: 650px;
+  padding: 0px 5px 25px 5px;
+}
+
+table.incompatible-modules-list {
+  border-collapse: collapse;
+  margin: 0px 0px 30px 0px;
+  width: 800px;
+}
+
+.incompatible-modules-list tr td {
+  padding: 9px 14px;
+  border-top: #e5e5e5 1px solid;
+  border-bottom: #e5e5e5 1px solid;
+}
+
+.incompatible-modules-list tr td,
+  .incompatible-modules-list tr td span
+{
+  font-size: 16px;
+  color: #333333;
+}
+
+.incompatible-modules-list td.status-unknown,
+  .incompatible-modules-list td.status-incompatible
+{
+  cursor: help;
+}
+
+.incompatible-modules-list td.status-unknown {
+  background: transparent url(../images/icon_unknown.png) left 7px no-repeat;
+}
+
+.incompatible-modules-list td.status-incompatible {
+  background: transparent url(../images/icon_incompatible.png) left 7px no-repeat;
+}
+
+.incompatible-modules-list td.module-info {
+  min-width: 500px;
+}
+
+.incompatible-modules-list td.module-info span.name {
+
+}
+
+.incompatible-modules-list td.module-info span.author {
+  color: #8f8f8f;
+}
+
+.incompatible-modules-list td.disable {
+  font-size: 14px;
+  padding-top: 12px;
+}
+
+.incompatible-modules-list td.disable label {
+  padding: 0px 0px 0px 3px;
+}
+
+.incompatible-modules-list td.disable input
+{
+  vertical-align: bottom;
+  margin-bottom: 2px;
+}
+
+.incompatible-status-message,
+  .unknown-status-message
+{
+  display: none;
+}
+
+.incompatible-list-actions {
+  width: 800px;
+}
+
+.incompatible-list-actions button {
+  float: left;
+}
+
+.incompatible-list-actions button.main-button {
+  float: right;
+}
+
+.formError div.formErrorContent {
+  width: 300px;
+  line-height: 18px;
+}
+
+/* TODO: refactor with ready2install step!!  */
+.service-messages-section {
+  margin: 0px 0px 40px 0px;
+}
+
+.ready-to-install-service-message {
+  border: solid 1px #e9e9e9;
+  padding: 5px 5px 5px 5px;
+  background-color: #f7f7f7;
+  width: 420px;
+  margin: 0px 0px 20px 0px;
+}
+
+.ready-to-install-service-message .message-entry {
+  background-color: #ffffff;
+  padding: 15px 15px 15px 15px;
+  color: #d65335;
+  font-size: 16px;
+}

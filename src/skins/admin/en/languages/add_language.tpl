@@ -2,11 +2,10 @@
 
 {**
  * Add (activate) language
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -16,5 +15,3 @@
     <li FOREACH="getInactiveLanguages(),l"><img IF="l.flagURL" src="{l.flagURL}" alt="" /><span>{l.code}</span><a href="admin.php?target=languages&action=active&lng_id={l.lng_id}&language={l.code}&page={page}">{l.name}</a></li>
   </ul>
 </div>
-
-

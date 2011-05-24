@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Controller\Admin;
 
 /**
- * AddonsListInstalled 
- * 
+ * AddonsListInstalled
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -47,7 +46,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
     {
         return 'Manage add-ons';
     }
-    
+
     /**
      * Common method to determine current location
      *
@@ -86,6 +85,34 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
         return \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleId());
     }
 
+    /**
+     * Search for modules
+     *
+     * @param string $cellName Request cell name
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModules($cellName)
+    {
+        $ids = \XLite\Core\Request::getInstance()->$cellName;
+
+        $modules = array();
+
+        if (is_array($ids)) {
+            foreach ($ids as $id => $tmp) {
+                $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find(intval($id));
+                if ($module) {
+                    $modules[] = $module;
+                }
+            }
+
+        }
+
+        return $modules;
+    }
+
     // }}}
 
     // Action handlers
@@ -115,7 +142,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
 
     /**
      * Pack module into PHAR module file
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -168,7 +195,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
 
     /**
      * Uninstall module
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -179,22 +206,58 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
 
         if ($module) {
 
-            $class = $module->getMainClass();
-            $notes = $class::getPostUninstallationNotes();
+            $pack = new \XLite\Core\Pack\Module($module);
+
+            // Remove from FS
+            foreach ($pack->getDirs() as $dir) {
+                \Includes\Utils\FileManager::unlinkRecursive($dir);
+            }
 
             // Disable this and depended modules
             \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
 
-            $status = $module->uninstall();
+            // Remove from DB
+            \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($module);
 
-            if ($status) {
-                \XLite\Core\TopMessage::addInfo('The module has been uninstalled successfully');
+            if ($module->getModuleID()) {
+                \XLite\Core\TopMessage::addError('An error occured while uninstalling the module');
+
             } else {
-                \XLite\Core\TopMessage::addWarning('The module has been partially uninstalled');
+                \XLite\Core\TopMessage::addInfo('The module has been uninstalled successfully');
+            }
+        }
+    }
+
+    /**
+     * Switch module
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionSwitch()
+    {
+        $modules = $this->getModules('switch');
+
+        if ($modules) {
+            $request = \XLite\Core\Request::getInstance();
+            $changed = false;
+
+            foreach ($modules as $module) {
+
+                // Update data in DB
+                $old = 1 == $request->switch[$module->getModuleId()]['old'];
+                $new = !empty($request->switch[$module->getModuleId()]['new']);
+                if ($old != $new) {
+                    $module->setEnabled(!$module->getEnabled());
+                    $module->getRepository()->update($module);
+                    $changed = true;
+                }
             }
 
-            if ($notes) {
-                \XLite\Core\TopMessage::addInfo($notes);
+            // Flag to rebuild cache
+            if ($changed) {
+                \XLite::setCleanUpCacheFlag(true);
             }
         }
     }

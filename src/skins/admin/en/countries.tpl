@@ -6,7 +6,6 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -44,7 +43,7 @@
 		    </td>
 			    <widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/risk_country/checkbox.tpl">
 			<td align="center">
-				<input id="countries_ids" type="checkbox" name="delete_countries[]" value="{country.code}" />
+				<input id="countries_ids_{country.code}" type="checkbox" name="delete_countries[]" value="{country.code}" />
 			</td>
 		</tr>
 

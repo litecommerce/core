@@ -2,14 +2,14 @@
 
 /**
  * Modules modify page styles
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
+
 .modules-list .status
 {
   white-space: nowrap;
@@ -28,8 +28,9 @@
   color: #0055bd;
 }
 
-table.modules-list {
+table.modules-list.items-list {
   border-top: solid 2px #e5e5e5;
+  width: 965px;
 }
 
 table.modules-list tr td {
@@ -51,6 +52,7 @@ table.modules-list tr td.module-main-section {
 
 table.modules-list tr td.module-description-section {
   width: 66%;
+  white-space: normal;
 }
 
 table.modules-list tr.disabled td {
@@ -71,9 +73,7 @@ table.modules-list div.description {
   margin-bottom: 10px;
 }
 
-table.modules-list tr.disabled div.name,
-table.modules-list tr.disabled div.actions span
-{
+table.modules-list tr.disabled div.name {
   color: #8f8f8f;
 }
 
@@ -93,15 +93,74 @@ table.modules-list div.author {
   margin-right: 20px;
 }
 
-table.modules-list div.actions {
+table.modules-list .actions {
   margin-bottom: 10px;
 }
 
-table.modules-list div.actions a,
-table.modules-list div.actions span
+table.modules-list .actions li {
+  display: inline;
+  border-width: 1px;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-right-style: solid;
+  border-color: #d7e1e8;
+  background-color: #ebf4ff;
+  vertical-align: middle;
+  padding: 6px 5px 6px 9px;
+  margin: 0px;
+}
+
+table.modules-list .actions li,
+table.modules-list .actions label,
+table.modules-list .actions a
 {
-  margin-right: 20px;
   font-size: 14px;
+  text-decoration: none;
+}
+
+table.modules-list .actions label {
+  color: #5080a2;
+}
+
+table.modules-list .actions li.first {
+  -moz-border-radius: 3px 0 0 3px;
+  -webkit-border-radius: 3px 0 0 3px;
+  border-radius: 3px 0 0 3px;
+  border-left-style: solid;
+  padding-left: 8px;
+}
+
+table.modules-list .actions li.last {
+  -moz-border-radius: 0 3px 3px 0;
+  -webkit-border-radius: 0 3px 3px 0;
+  border-radius: 0 3px 3px 0;
+}
+
+table.modules-list .actions li.last a.text {
+  margin-right: 3px;
+}
+
+table.modules-list .actions li * {
+  vertical-align: middle;
+}
+
+table.modules-list .disabled .actions li {
+  background-color: #f5f5f5;
+}
+
+table.modules-list .actions li input {
+  margin-right: 3px;
+  margin-bottom: 2px;
+}
+
+table.modules-list .actions li label {
+  padding-bottom: 2px;
+}
+
+table.modules-list .actions .uninstall img {
+  background: transparent url(../../images/icon_trash.png) no-repeat left top;
+  width: 22px;
+  height: 21px;
 }
 
 table.modules-list tr.disabled div.module-name {
@@ -117,6 +176,11 @@ table.modules-list div.module-url {
 
 table.modules-list div.icon-container {
   position: relative;
+}
+
+.modules-buttons {
+  text-align: center;
+  width: 965px;
 }
 
 /* Notes */

@@ -1,0 +1,17 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# CDev.Bestsellers demo data
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+# @since     1.0.0
+XLite\Model\Module:
+  - author: CDev
+    name: Bestsellers
+    marketplaceID: c970fadbf5666a99045d2fe9ee4c2e06
+XLite\Model\ModuleKey:
+  - author: CDev
+    name: Bestsellers
+    keyValue: 94b78e4d06a480a32c929d1c03e6b637cd10dd0e068da9f3bf4d564cc8649407

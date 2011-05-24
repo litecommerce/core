@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Core\Pack;
 
 /**
- * Distr 
- * 
+ * Distr
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -44,7 +43,7 @@ class Distr extends \XLite\Core\Pack\APack
 
     /**
      * List of patterns which are not required in pack
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -61,8 +60,8 @@ class Distr extends \XLite\Core\Pack\APack
     protected $include = array();
 
     /**
-     * Exclude pattern 
-     * 
+     * Exclude pattern
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -70,8 +69,8 @@ class Distr extends \XLite\Core\Pack\APack
     protected $excludePattern;
 
     /**
-     * Include pattern 
-     * 
+     * Include pattern
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -81,8 +80,8 @@ class Distr extends \XLite\Core\Pack\APack
     // {{{ Public methods
 
     /**
-     * Constructor 
-     * 
+     * Constructor
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -124,7 +123,7 @@ class Distr extends \XLite\Core\Pack\APack
      */
     public function getDirectoryIterator()
     {
-        $result = new \Includes\Utils\FileFilter(LC_ROOT_DIR);
+        $result = new \Includes\Utils\FileFilter(LC_DIR_ROOT);
         $result = $result->getIterator();
         $this->preparePatterns();
         $result->registerCallback(array($this, 'filterCoreFiles'));
@@ -148,8 +147,8 @@ class Distr extends \XLite\Core\Pack\APack
     }
 
     /**
-     * Preapre patterns 
-     * 
+     * Preapre patterns
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -178,9 +177,9 @@ class Distr extends \XLite\Core\Pack\APack
 
     /**
      * Callback to filter files
-     * 
+     *
      * @param \Includes\Utils\FileFilter\FilterIterator $iterator Directory iterator
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -188,7 +187,7 @@ class Distr extends \XLite\Core\Pack\APack
     public function filterCoreFiles(\Includes\Utils\FileFilter\FilterIterator $iterator)
     {
         // Relative path in LC root directory
-        $path = \Includes\Utils\FileManager::getRelativePath($iterator->getPathname(), LC_ROOT_DIR);
+        $path = \Includes\Utils\FileManager::getRelativePath($iterator->getPathname(), LC_DIR_ROOT);
 
         return !preg_match($this->excludePattern, $path)
             || preg_match($this->includePattern, $path);

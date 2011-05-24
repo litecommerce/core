@@ -2,11 +2,10 @@
 
 /**
  * ____file_title____
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -16,7 +15,7 @@ div#location {
 }
 
 li.location-node {
-  display: inline;
+  float: left;
 }
 
 div.location-node {
@@ -35,12 +34,10 @@ div.location-node.expandable {
 
 ul.location-subnodes {
   position: absolute;
-  margin-top: 14px;
-  margin-left: -7px;
+  margin-left: 7px;
   list-style-type: none;
   background-color: #fff;
   z-index: 10000;
-  display: inline;
   visibility: hidden;
   padding: 10px;
   padding-top: 5px;

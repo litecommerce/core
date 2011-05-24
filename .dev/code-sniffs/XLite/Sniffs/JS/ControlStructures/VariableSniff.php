@@ -17,7 +17,7 @@
 /**
  * XLite_Sniffs_JS_ControlStructures_VariableSniff.
  *
- * Check JS variables. 
+ * Check JS variables.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer

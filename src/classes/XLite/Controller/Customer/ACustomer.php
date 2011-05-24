@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,15 +29,15 @@ namespace XLite\Controller\Customer;
 
 /**
  * Abstract controller for Customer interface
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 abstract class ACustomer extends \XLite\Controller\AController
 {
     /**
-     * cart 
-     * 
+     * cart
+     *
      * @var   \XLite\Model\Cart
      * @see   ____var_see____
      * @since 1.0.0
@@ -46,8 +45,8 @@ abstract class ACustomer extends \XLite\Controller\AController
     protected $cart;
 
     /**
-     * Initial cart fingerprint 
-     * 
+     * Initial cart fingerprint
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -56,8 +55,8 @@ abstract class ACustomer extends \XLite\Controller\AController
 
 
     /**
-     * Return cart instance 
-     * 
+     * Return cart instance
+     *
      * @return \XLite\Model\Order
      * @see    ____func_see____
      * @since  1.0.0
@@ -69,11 +68,11 @@ abstract class ACustomer extends \XLite\Controller\AController
 
     /**
      * Get the full URL of the page
-     * Example: getShopURL('cart.php') = "http://domain/dir/cart.php 
-     * 
+     * Example: getShopURL('cart.php') = "http://domain/dir/cart.php
+     *
      * @param string  $url    Relative URL OPTIONAL
      * @param boolean $secure Flag to use HTTPS OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -84,27 +83,20 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * Check - use secure (HTTPS) connection or not
-     * 
+     * Check if cuurrent user is logged in
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isSecure()
+    public function isLogged()
     {
-        $result = parent::isSecure();
-
-        if (!is_null($this->get('feed')) && $this->get('feed') == 'login') {
-
-            $result = \XLite\Core\Config::getInstance()->Security->customer_security;
-        }
-
-        return $result;
+        return \XLite\Core\Auth::getInstance()->isLogged();
     }
 
     /**
-     * Handles the request 
-     * 
+     * Handles the request
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -124,7 +116,7 @@ abstract class ACustomer extends \XLite\Controller\AController
 
     /**
      * Stub for the CMS connectors
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -135,15 +127,15 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * Perform some actions to prohibit access to storefornt 
-     * 
+     * Perform some actions to prohibit access to storefornt
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function closeStorefront()
     {
-        include LC_SKINS_DIR . '/storefront_closed.html';
+        include LC_DIR_SKINS . '/storefront_closed.html';
         exit (0);
     }
 
@@ -173,7 +165,7 @@ abstract class ACustomer extends \XLite\Controller\AController
 
     /**
      * Recalculates the shopping cart
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -198,8 +190,8 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * Assemble updateCart event 
-     * 
+     * Assemble updateCart event
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -253,9 +245,9 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * isCartProcessed 
-     * 
-     * @return boolean 
+     * isCartProcessed
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -265,8 +257,8 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * Get or create cart profile 
-     * 
+     * Get or create cart profile
+     *
      * @return \XLite\Model\Profile
      * @see    ____func_see____
      * @since  1.0.0

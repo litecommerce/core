@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,12 +29,21 @@ namespace XLite\View\ItemsList\Module;
 
 /**
  * Abstract product list
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 abstract class AModule extends \XLite\View\ItemsList\AItemsList
 {
+    /**
+     * List of core versions to update
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $coreVersions;
+
     /**
      * Return name of the base widgets list
      *
@@ -86,9 +94,9 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Check if the module can be enabled
-     * 
+     *
      * @param \XLite\Model\Module $module Module
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -143,9 +151,9 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     /**
      * Check if the module major version is the same as the core one.
      * Alias
-     * 
+     *
      * @param \XLite\Model\Module $module Module to check
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -186,11 +194,11 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Compare module version with the core one 
-     * 
+     * Compare module version with the core one
+     *
      * @param \XLite\Model\Module $module   Module to check
      * @param string              $operator Comparison operator
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -216,6 +224,22 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     abstract protected function isModuleUpdateAvailable(\XLite\Model\Module $module);
 
     /**
+     * Return list of core versions for update
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCoreVersions()
+    {
+        if (!isset($this->coreVersions)) {
+            $this->coreVersions = (array) \XLite\Core\Marketplace::getInstance()->getCores();
+        }
+
+        return $this->coreVersions;
+    }
+
+    /**
      * Is core upgrade available
      *
      * @param string $majorVersion core version to check
@@ -226,11 +250,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function isCoreUpgradeAvailable($majorVersion)
     {
-        return (bool) \Includes\Utils\ArrayManager::getIndex(
-            (array) \XLite\Core\Marketplace::getInstance()->getCoreVersions(),
-            $majorVersion,
-            true
-        );
+        return (bool) \Includes\Utils\ArrayManager::getIndex($this->getCoreVersions(), $majorVersion, true);
     }
 
     /**

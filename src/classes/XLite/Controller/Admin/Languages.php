@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Controller\Admin;
 
 /**
  * Languages and language labels controller
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -39,7 +38,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     /**
      * Controller parameters
      * FIXME: to remove
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -100,7 +99,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Search labels
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -123,7 +122,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Active (add) laneguage
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -161,7 +160,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Inactive (delete) language
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -207,7 +206,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Switch (enable / disabled) language
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -261,7 +260,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Update labels
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -324,8 +323,8 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Delete labels 
-     * 
+     * Delete labels
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -359,8 +358,8 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Delete label 
-     * 
+     * Delete label
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -373,7 +372,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
             if ($label) {
                 \XLite\Core\Database::getEM()->remove($label);
                 \XLite\Core\Database::getEM()->flush();
-            
+
                 \XLite\Core\Translation::getInstance()->reset();
 
                 \XLite\Core\TopMessage::addInfo('The text label has been deleted');
@@ -389,14 +388,14 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Add label
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function doActionAdd()
     {
-        $name = \XLite\Core\Request::getInstance()->name;
+        $name = substr(\XLite\Core\Request::getInstance()->name, 0, 255);
         $label = \XLite\Core\Request::getInstance()->label;
         $codeDefault = \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code;
         $codeInterface = \XLite\Core\Config::getInstance()->General->defaultLanguage->code;
@@ -431,7 +430,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
             $lbl->name = $name;
             \XLite\Core\Database::getEM()->persist($lbl);
             \XLite\Core\Database::getEM()->flush();
-        
+
             foreach ($label as $code => $l) {
                 if ($l) {
                     $lbl->getTranslation($code)->label = $l;
@@ -449,7 +448,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Edit label
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -500,7 +499,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Update language data
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -557,10 +556,10 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Save labels from array
-     * 
+     *
      * @param array  $values Array
      * @param string $code   Language code
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -585,4 +584,3 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         \XLite\Core\Database::getEM()->flush();
     }
 }
-

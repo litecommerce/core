@@ -2,11 +2,10 @@
 
 {**
  * Add/Modify category template
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
@@ -37,7 +36,7 @@
   <input type="hidden" name="action" value="{getRequestParamValue(#mode#)}" />
   <input type="hidden" name="mode" value="{getRequestParamValue(#mode#)}" />
   <input type="hidden" name="category_id" value="{category_id}" />
- 
+
   <table width="100%">
 
     <tr>
@@ -66,7 +65,7 @@
       <td><widget class="\XLite\View\FormField\Textarea\Advanced" fieldName="description" cols="50" rows="10" value="{category.description}" /></td>
     </tr>
 
-    <tr>
+    <tr IF="!getRootCategoryId()=category.getCategoryId()">
       <td>{if:category.hasImage()}<img src="{category.image.getURL()}" alt="" />{else:}<img src="images/no_image.png" alt="" />{end:}</td>
       <td>&nbsp;</td>
       <td valign="bottom" rowspan=2>
@@ -74,20 +73,20 @@
       </td>
     </tr>
 
-    <tr>
+    <tr IF="!getRootCategoryId()=category.getCategoryId()">
       <td valign="top">Image</td>
       <td>&nbsp;</td>
     </tr>
 
-    <tr>
+    <tr IF="!getRootCategoryId()=category.getCategoryId()">
       <td>Membership</td>
       <td class="star">*</td>
       <td>
         <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership_id" value="{category.membership}" />
-      </td>  
+      </td>
     </tr>
 
-    <tr>
+    <tr IF="!getRootCategoryId()=category.getCategoryId()">
       <td>Availability</td>
       <td class="star">*</td>
       <td>
@@ -96,7 +95,7 @@
           <option value="0" selected="{category.enabled=#0#}">Disabled</option>
         </select>
       </td>
-    </tr>  
+    </tr>
 
     <tr>
       <td>HTML title ('title' tag)</td>
@@ -116,7 +115,7 @@
       <td><input type="text" name="meta_desc" value="{category.meta_desc}" size="50" /></td>
     </tr>
 
-    <tr>
+    <tr IF="!getRootCategoryId()=category.getCategoryId()">
       <td>Clean URL </td>
       <td>&nbsp;</td>
       <td><input type="text" name="clean_url" value="{category.clean_url}" size="50" /></td>
@@ -128,7 +127,7 @@
 
     <tr>
       <td colspan="3">
-        {if:getRequestParamValue(#mode#)=#modify#}
+        {if:category.getCategoryId()}
           <widget class="\XLite\View\Button\Submit" label="Update" />
         {else:}
           <widget class="\XLite\View\Button\Submit" label="Create category" />
@@ -140,7 +139,7 @@
 
 </form>
 
-{if:category.category_id}
+{if:category.category_id&!getRootCategoryId()=category.getCategoryId()}
 <br /><br /><br />
 
 <b>Change category location</b>
@@ -181,4 +180,3 @@ Not available right now
 
 </form>*}
 {end:}
-

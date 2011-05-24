@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Decorator
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -29,8 +28,8 @@
 namespace Includes\Decorator\DataStructure\Graph;
 
 /**
- * Classes 
- * 
+ * Classes
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
@@ -59,7 +58,7 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Flag for so called "top-level" stub nodes
-     * 
+     *
      * @var    boolean
      * @access protected
      * @see    ____var_see____
@@ -69,7 +68,7 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Flag to determine if node was changed (e.g. its key was modified)
-     * 
+     *
      * @var    boolean
      * @access protected
      * @see    ____var_see____
@@ -94,7 +93,7 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Getter for the flag
-     * 
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____
@@ -133,7 +132,7 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Return list of class implementing interfaces
-     * 
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -146,9 +145,9 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Check if class implements interface
-     * 
+     *
      * @param string $interface Name of interface to check
-     *  
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____
@@ -187,7 +186,7 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Return top-level child
-     * 
+     *
      * @return self
      * @access public
      * @see    ____func_see____
@@ -224,7 +223,7 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Mark node as "low-level"
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -253,7 +252,7 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Transform class name into the relative path
-     * 
+     *
      * @return string
      * @access public
      * @see    ____func_see____
@@ -266,9 +265,9 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Prepare source code of the class
-     * 
+     *
      * @param self $parent Parent node OPTIONAL
-     *  
+     *
      * @return string
      * @access public
      * @see    ____func_see____
@@ -277,7 +276,7 @@ class Classes extends \Includes\DataStructure\Graph
     public function getSource(self $parent = null)
     {
         return $this->isChanged || $this->isDecorator()
-            ? $this->getActualSource($parent) 
+            ? $this->getActualSource($parent)
             : ($this->isTopLevelNode() ? $this->getEmptySource($parent) : $this->getRegularSource());
     }
 
@@ -285,7 +284,7 @@ class Classes extends \Includes\DataStructure\Graph
      * Actualize and return source code for node
      *
      * @param self $parent Parent node OPTIONAL
-     * 
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -355,7 +354,7 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Return namespace by class name
-     * 
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -370,7 +369,7 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Return base part of the class name
-     * 
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
@@ -385,7 +384,7 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Parse class name into parts
-     * 
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -403,9 +402,9 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Get tag info
-     * 
+     *
      * @param string $name Tag name
-     *  
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -418,7 +417,7 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Parse and return all tags
-     * 
+     *
      * @return array
      * @access public
      * @see    ____func_see____

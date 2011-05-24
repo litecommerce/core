@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\Core;
 
 /**
- * Request 
- * 
+ * Request
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -39,8 +38,8 @@ class Request extends \XLite\Base\Singleton
     const METHOD_CLI = 'cli';
 
     /**
-     * Cureent request method 
-     * 
+     * Cureent request method
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -48,8 +47,8 @@ class Request extends \XLite\Base\Singleton
     protected $requestMethod = null;
 
     /**
-     * Request data 
-     * 
+     * Request data
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -59,9 +58,9 @@ class Request extends \XLite\Base\Singleton
 
     /**
      * Map request data
-     * 
+     *
      * @param array $data Custom data OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -84,8 +83,8 @@ class Request extends \XLite\Base\Singleton
     }
 
     /**
-     * Return all data 
-     * 
+     * Return all data
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -97,7 +96,7 @@ class Request extends \XLite\Base\Singleton
 
     /**
      * Return current request method
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -122,9 +121,9 @@ class Request extends \XLite\Base\Singleton
     }
 
     /**
-     * Check if current request method is "GET" 
-     * 
-     * @return boolean 
+     * Check if current request method is "GET"
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -136,7 +135,7 @@ class Request extends \XLite\Base\Singleton
     /**
      * Check if current request method is "POST"
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -148,7 +147,7 @@ class Request extends \XLite\Base\Singleton
     /**
      * Check - is AJAX request or not
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -159,7 +158,7 @@ class Request extends \XLite\Base\Singleton
 
     /**
      * Check - is secure connection or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -176,7 +175,7 @@ class Request extends \XLite\Base\Singleton
 
     /**
      * Check - is command line interface or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -188,9 +187,9 @@ class Request extends \XLite\Base\Singleton
 
     /**
      * Getter
-     * 
+     *
      * @param string $name Property name
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -199,13 +198,13 @@ class Request extends \XLite\Base\Singleton
     {
         return isset($this->data[$name]) ? $this->data[$name] : null;
     }
-    
+
     /**
-     * Setter 
-     * 
+     * Setter
+     *
      * @param string $name  Property name
      * @param mixed  $value Property value
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -220,7 +219,7 @@ class Request extends \XLite\Base\Singleton
      *
      * @param string $name Property name
      *
-     * @return boolean 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -232,7 +231,7 @@ class Request extends \XLite\Base\Singleton
 
     /**
      * Constructor
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -245,9 +244,9 @@ class Request extends \XLite\Base\Singleton
 
     /**
      * Unescape single value
-     * 
+     *
      * @param string $value Value to sanitize
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -259,9 +258,9 @@ class Request extends \XLite\Base\Singleton
 
     /**
      * Remove automatically added escaping
-     * 
+     *
      * @param mixed $data Data to sanitize
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -271,6 +270,24 @@ class Request extends \XLite\Base\Singleton
         return is_array($data)
             ? array_map(array($this, __FUNCTION__), $data)
             : $this->doUnescapeSingle($data);
+    }
+
+    /**
+     * Normalize request data
+     *
+     * @param mixed $request Request data
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function normalizeRequestData($request)
+    {
+        if (ini_get('magic_quotes_gpc')) {
+            $request = $this->doUnescape($request);
+        }
+
+        return $request;
     }
 
     /**
@@ -284,23 +301,25 @@ class Request extends \XLite\Base\Singleton
      */
     protected function prepare($data)
     {
-        if (isset($data['target'])) {
-            $this->checkControlArgument($data['target'], 'Target');
+        if (is_array($data)) {
+            if (isset($data['target'])) {
+                $this->checkControlArgument($data['target'], 'Target');
+            }
+
+            if (isset($data['action'])) {
+                $this->checkControlArgument($data['action'], 'Action');
+            }
         }
 
-        if (isset($data['action'])) {
-            $this->checkControlArgument($data['action'], 'Action');
-        }
-
-        return $data;
+        return $this->normalizeRequestData($data);
     }
 
     /**
      * Check control argument (like target)
-     * 
+     *
      * @param mixed  $value Argument value
      * @param string $name  Argument name
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

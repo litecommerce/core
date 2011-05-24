@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -29,8 +28,8 @@
 namespace XLite\View;
 
 /**
- * Mailer 
- * 
+ * Mailer
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -39,13 +38,13 @@ class Mailer extends \XLite\View\AView
     const CRLF = "\r\n";
 
     /**
-     * Mail separator symbol 
+     * Mail separator symbol
      */
     const MAIL_SEPARATOR = ',';
 
     /**
-     * Compose runned 
-     * 
+     * Compose runned
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -54,7 +53,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Subject template file name
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -63,7 +62,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Body template file name
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -72,7 +71,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Signature template file name
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -81,7 +80,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Language locale (for PHPMailer)
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -90,7 +89,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Languages directory path (for PHPMailer)
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -99,7 +98,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * PHPMailer object
-     * 
+     *
      * @var   \PHPMailer
      * @see   ____var_see____
      * @since 1.0.0
@@ -107,8 +106,8 @@ class Mailer extends \XLite\View\AView
     protected $mail = null;
 
     /**
-     * Message charset 
-     * 
+     * Message charset
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -117,7 +116,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Saved templates skin
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -125,8 +124,8 @@ class Mailer extends \XLite\View\AView
     protected $templatesSkin = null;
 
     /**
-     * Current template 
-     * 
+     * Current template
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -135,7 +134,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Embedded images list
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -143,8 +142,8 @@ class Mailer extends \XLite\View\AView
     protected $images = array();
 
     /**
-     * Error message set by PHPMailer class 
-     * 
+     * Error message set by PHPMailer class
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -154,7 +153,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Check - is copose procedure runned or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -163,13 +162,13 @@ class Mailer extends \XLite\View\AView
     {
         return static::$composeRunned;
     }
- 
+
     /**
      * Setter
-     * 
+     *
      * @param string $name  Property name
      * @param mixed  $value Property value
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -178,9 +177,9 @@ class Mailer extends \XLite\View\AView
     {
         if (in_array($name, array('to', 'from'))) {
             /**
-             * Prevent the attack works by placing a newline character 
-             * (represented by \n in the following example) in the field 
-             * that asks for the user's e-mail address. 
+             * Prevent the attack works by placing a newline character
+             * (represented by \n in the following example) in the field
+             * that asks for the user's e-mail address.
              * For instance, they might put:
              * joe@example.com\nCC: victim1@example.com,victim2@example.com
              */
@@ -207,7 +206,7 @@ class Mailer extends \XLite\View\AView
      * @param string $dir           The directiry there mail parts template located
      * @param array  $customHeaders The headers you want to add/replace to. OPTIONAL
      * @param string $interface     Interface to use for mail OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -229,7 +228,7 @@ class Mailer extends \XLite\View\AView
         $this->set('body', $this->compile($dir . $this->get('bodyTemplate'), $interface));
 
         // find all images and fetch them; replace with cid:...
-        $fname = tempnam(LC_COMPILE_DIR, 'mail');
+        $fname = tempnam(LC_DIR_COMPILE, 'mail');
 
         file_put_contents($fname, $this->get('body'));
 
@@ -269,7 +268,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Send message
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -309,7 +308,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Return decription of the last occured error
-     * 
+     *
      * @return string|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -320,23 +319,23 @@ class Mailer extends \XLite\View\AView
     }
 
 
-    /** 
-      * Get default template  
-      *  
-      * @return string 
-      * @see    ____func_see____ 
+    /**
+      * Get default template
+      *
+      * @return string
+      * @see    ____func_see____
       * @since  1.0.0
-      */ 
-    protected function getDefaultTemplate() 
-    { 
-        return $this->template; 
+      */
+    protected function getDefaultTemplate()
+    {
+        return $this->template;
     }
 
     /**
      * Create alternative message body (text/plain)
-     * 
+     *
      * @param string $html Message body
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -355,7 +354,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Inner mailer initialization from set variables
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -408,7 +407,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Inner mailer initialization from DB configuration
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -418,7 +417,7 @@ class Mailer extends \XLite\View\AView
         if (!isset($this->mail)) {
 
             // Initialize PHPMailer
-            include_once LC_LIB_DIR . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
+            include_once LC_DIR_LIB . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
 
             $this->mail = new \PHPMailer();
 
@@ -449,11 +448,11 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Compile template
-     * 
+     *
      * @param string  $template     Template path
      * @param string  $interface    Interface OPTIONAL
      * @param boolean $switchLayout Switch laout flag OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -470,11 +469,11 @@ class Mailer extends \XLite\View\AView
             $layout->setMailSkin($interface);
         }
 
-        $this->widgetParams[static::PARAM_TEMPLATE]->setValue($template); 
+        $this->widgetParams[static::PARAM_TEMPLATE]->setValue($template);
 
-        $this->template = $template; 
+        $this->template = $template;
 
-        $this->init(); 
+        $this->init();
 
         $text = $this->getContent();
 
@@ -489,7 +488,7 @@ class Mailer extends \XLite\View\AView
 
     /**
      * Get headers as string
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

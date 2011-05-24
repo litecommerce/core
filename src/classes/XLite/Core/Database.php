@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,14 +29,14 @@ namespace XLite\Core;
 
 /**
  * Database
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Database extends \XLite\Base\Singleton
 {
     /**
-     * Schema generation modes 
+     * Schema generation modes
      */
     const SCHEMA_CREATE = 'create';
     const SCHEMA_UPDATE = 'update';
@@ -50,8 +49,8 @@ class Database extends \XLite\Base\Singleton
     const SCHEMA_FILE_IDENT = '  ';
 
     /**
-     * Doctrine entity manager 
-     * 
+     * Doctrine entity manager
+     *
      * @var   \Doctrine\ORM\EntityManager
      * @see   ____var_see____
      * @since 1.0.0
@@ -59,8 +58,8 @@ class Database extends \XLite\Base\Singleton
     protected static $em = null;
 
     /**
-     * Doctrine cache driver 
-     * 
+     * Doctrine cache driver
+     *
      * @var   \Doctrine\Common\Cache\AbtractCache
      * @see   ____var_see____
      * @since 1.0.0
@@ -68,8 +67,8 @@ class Database extends \XLite\Base\Singleton
     protected static $cacheDriver = null;
 
     /**
-     * Cache drivers query 
-     * 
+     * Cache drivers query
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -82,7 +81,7 @@ class Database extends \XLite\Base\Singleton
 
     /**
      * Doctrine config object
-     * 
+     *
      * @var   \Doctrine\ORM\Configuration
      * @see   ____var_see____
      * @since 1.0.0
@@ -90,8 +89,8 @@ class Database extends \XLite\Base\Singleton
     protected $configuration;
 
     /**
-     * Table prefix 
-     * 
+     * Table prefix
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -99,8 +98,8 @@ class Database extends \XLite\Base\Singleton
     protected $tablePrefix = '';
 
     /**
-     * connected 
-     * 
+     * connected
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -109,7 +108,7 @@ class Database extends \XLite\Base\Singleton
 
     /**
      * Doctrine unmanaged table names list
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -118,7 +117,7 @@ class Database extends \XLite\Base\Singleton
 
     /**
      * Forbid truncate tables if will truncate store-based tables
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -132,8 +131,8 @@ class Database extends \XLite\Base\Singleton
     );
 
     /**
-     * Fixtures loading procedure options 
-     * 
+     * Fixtures loading procedure options
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -144,8 +143,8 @@ class Database extends \XLite\Base\Singleton
     );
 
     /**
-     * Get entity manager 
-     * 
+     * Get entity manager
+     *
      * @return \Doctrine\ORM\EntityManager
      * @see    ____func_see____
      * @since  1.0.0
@@ -164,7 +163,7 @@ class Database extends \XLite\Base\Singleton
      * Get repository (short method)
      *
      * @param string $repository Entity class name
-     * 
+     *
      * @return \Doctrine\ORM\EntityRepository
      * @see    ____func_see____
      * @since  1.0.0
@@ -176,9 +175,9 @@ class Database extends \XLite\Base\Singleton
 
     /**
      * Get cache driver by options list
-     * 
+     *
      * @param mixed $options Options from config.ini
-     *  
+     *
      * @return \Doctrine\Common\Cache\Cache
      * @see    ____func_see____
      * @since  1.0.0
@@ -239,7 +238,7 @@ class Database extends \XLite\Base\Singleton
         } else {
 
             // Default cache - file system cache
-            $cache = new \XLite\Core\FileCache(LC_DATACACHE_DIR);
+            $cache = new \XLite\Core\FileCache(LC_DIR_DATACACHE);
 
         }
 
@@ -252,8 +251,8 @@ class Database extends \XLite\Base\Singleton
     }
 
     /**
-     * Register custom types 
-     * 
+     * Register custom types
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -309,10 +308,10 @@ class Database extends \XLite\Base\Singleton
 
     /**
      * Prepare array for IN () DQL function
-     * 
+     *
      * @param array  $data   Hash array
      * @param string $prefix Placeholder prefix OPTIONAL
-     *  
+     *
      * @return array (keys for IN () function & parameters hash array)
      * @see    ____func_see____
      * @since  1.0.0
@@ -332,12 +331,12 @@ class Database extends \XLite\Base\Singleton
     }
 
     /**
-     * Build IN () condition 
-     * 
+     * Build IN () condition
+     *
      * @param \Doctrine\ORM\QueryBuilder $qb     Query builder
      * @param array                      $data   Hash array
      * @param string                     $prefix Placeholder prefix OPTIONAL
-     *  
+     *
      * @return array Keys for IN () function
      * @see    ____func_see____
      * @since  1.0.0
@@ -356,7 +355,7 @@ class Database extends \XLite\Base\Singleton
 
     /**
      * Detect APC cache driver
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -368,7 +367,7 @@ class Database extends \XLite\Base\Singleton
 
     /**
      * Detect XCache cache driver
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -380,7 +379,7 @@ class Database extends \XLite\Base\Singleton
 
     /**
      * Detect Memcache cache driver
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -393,7 +392,7 @@ class Database extends \XLite\Base\Singleton
 
     /**
      * Constructor
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -407,7 +406,7 @@ class Database extends \XLite\Base\Singleton
 
     /**
      * Connect and set-up Doctrine
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -422,12 +421,12 @@ class Database extends \XLite\Base\Singleton
         // Set metadata driver
         $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
         $chain->addDriver(
-            $this->configuration->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
+            $this->configuration->newDefaultAnnotationDriver(LC_DIR_CACHE_MODEL),
             'XLite\Model'
         );
 
         $iterator = new \RecursiveDirectoryIterator(
-            LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module',
+            LC_DIR_CACHE_CLASSES . 'XLite' . LC_DS . 'Module',
             \FilesystemIterator::SKIP_DOTS
         );
 
@@ -440,7 +439,7 @@ class Database extends \XLite\Base\Singleton
                     $dir->getPathName(),
                     \FilesystemIterator::SKIP_DOTS
                 );
-     
+
                 foreach ($iterator2 as $dir2) {
                     if (
                         \Includes\Utils\FileManager::isDir($dir2->getPathName())
@@ -459,7 +458,7 @@ class Database extends \XLite\Base\Singleton
         $this->configuration->setMetadataDriverImpl($chain);
 
         // Set proxy settings
-        $this->configuration->setProxyDir(LC_PROXY_CACHE_DIR);
+        $this->configuration->setProxyDir(LC_DIR_CACHE_PROXY);
         $this->configuration->setProxyNamespace(LC_MODEL_PROXY_NS);
         $this->configuration->setAutoGenerateProxyClasses(false);
 
@@ -470,8 +469,8 @@ class Database extends \XLite\Base\Singleton
     }
 
     /**
-     * Start Doctrine entity manager 
-     * 
+     * Start Doctrine entity manager
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -504,10 +503,10 @@ class Database extends \XLite\Base\Singleton
 
     /**
      * Export SQL dump from database to the specified file
-     * 
+     *
      * @param string  $path    File path or directory where SQL dump should be exported OPTIONAL
      * @param boolean $verbose Is export should be verbose flag OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -516,7 +515,7 @@ class Database extends \XLite\Base\Singleton
     {
         // Suppose that $path is var directory if it's null
         if (!$path) {
-            $path = LC_VAR_DIR;
+            $path = LC_DIR_VAR;
         }
 
         // Prepare file path
@@ -553,9 +552,9 @@ OUT;
 
     /**
      * Returns database schema as an array ('create_tables' => array(...), 'alter_table' => array(...))
-     * 
+     *
      * @param string $path Export directory path OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -586,7 +585,7 @@ OUT;
 
     /**
      * Returns array of database data
-     * 
+     *
      * @return array
      * @throws
      * @see    ____func_see____
@@ -596,7 +595,7 @@ OUT;
     {
         $result = array();
 
-        // Get LiteCommerce table names 
+        // Get LiteCommerce table names
         $tableNames = self::$em->getConnection()->getSchemaManager()->listTableNames();
 
         // Get connection to the database
@@ -638,9 +637,9 @@ OUT;
 
     /**
      * Quote data gathered from database for writing to the file
-     * 
+     *
      * @param mixed $value Data of any type gathered from database
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -658,12 +657,12 @@ OUT;
         } elseif (is_string($value)) {
             // Do quoting string value
             $result = '\'' . str_replace($search, $replace, addslashes($value)) . '\'';
-        
+
         } else {
             // Numeric values should not be quoted
             $result = $value;
         }
-       
+
         return $result;
     }
 
@@ -671,7 +670,7 @@ OUT;
 
     /**
      * Check - DB is empty or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -682,8 +681,8 @@ OUT;
     }
 
     /**
-     * Create / update DB schema 
-     * 
+     * Create / update DB schema
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -696,8 +695,8 @@ OUT;
     }
 
     /**
-     * Drop DB schema 
-     * 
+     * Drop DB schema
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -709,9 +708,9 @@ OUT;
 
     /**
      * Execute queries list
-     * 
+     *
      * @param array $queries Queries list
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -746,7 +745,7 @@ OUT;
      * Get DB schema
      *
      * @param string $mode Schema generation mode OPTIONAL
-     * 
+     *
      * @return array(string)
      * @see    ____func_see____
      * @since  1.0.0
@@ -797,10 +796,10 @@ OUT;
     }
 
     /**
-     * Get fixtures loading procedure option 
+     * Get fixtures loading procedure option
      *
      * @param string $name Option name
-     * 
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -826,10 +825,10 @@ OUT;
     }
 
     /**
-     * Load fixtures from YAML file 
-     * 
+     * Load fixtures from YAML file
+     *
      * @param string $path YAML file path
-     *  
+     *
      * @return boolean|integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -862,10 +861,10 @@ OUT;
     }
 
     /**
-     * Unload fixtures from YAML file 
-     * 
+     * Unload fixtures from YAML file
+     *
      * @param string $path YAML file path
-     *  
+     *
      * @return boolean|integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -898,8 +897,8 @@ OUT;
     }
 
     /**
-     * Get table prefix 
-     * 
+     * Get table prefix
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -911,9 +910,9 @@ OUT;
 
     /**
      * postPersist event handler
-     * 
+     *
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -925,9 +924,9 @@ OUT;
 
     /**
      * postUpdate event handler
-     * 
+     *
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -939,9 +938,9 @@ OUT;
 
     /**
      * postRemove event handler
-     * 
+     *
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -953,9 +952,9 @@ OUT;
 
     /**
      * loadClassMetadata event handler
-     * 
+     *
      * @param \Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs Event arguments
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -988,7 +987,7 @@ OUT;
 
     /**
      * Get disabled structures
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1015,10 +1014,10 @@ OUT;
 
     /**
      * Set disabled tables list
-     * 
+     *
      * @param string $module     Module unique name
      * @param array  $structures Disabled structures OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1052,10 +1051,10 @@ OUT;
     }
 
     /**
-     * Import SQL 
-     * 
+     * Import SQL
+     *
      * @param string $sql SQL
-     *  
+     *
      * @return integer Lines count
      * @see    ____func_see____
      * @since  1.0.0
@@ -1081,11 +1080,11 @@ OUT;
     }
 
     /**
-     * Import SQL from file 
-     * 
+     * Import SQL from file
+     *
      * @param string  $path    File path
      * @param boolean $verbose Is import should be verbose flag OPTIONAL
-     *  
+     *
      * @return integer Lines count
      * @throws
      * @see    ____func_see____
@@ -1112,9 +1111,9 @@ OUT;
 
     /**
      * Truncate data by repository type
-     * 
+     *
      * @param string $type Repository type
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -1128,7 +1127,7 @@ OUT;
      * Truncate all data
      *
      * @param array $tableNames Table names OPTIONAL
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -1149,10 +1148,10 @@ OUT;
 
 
     /**
-     * Postprocess creation schema 
-     * 
+     * Postprocess creation schema
+     *
      * @param string $schema Schema
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1260,6 +1259,12 @@ OUT;
         $schema = preg_replace('/ CHANGE ([a-z]\S+) (\S+) /Ss', ' CHANGE `$1` `$2` ', $schema);
         $schema = preg_replace('/ ADD ([a-z]\S+) /Ss', ' ADD `$1` ', $schema);
 
+        $schema = preg_replace(
+            '/(`\S+` ADD FOREIGN KEY \([^\)]+\) REFERENCES `\S+` \([^\)]+\)$\s*)$/Ss',
+            '$1 ON DELETE CASCADE',
+            $schema
+        );
+
         return $schema;
     }
 
@@ -1283,7 +1288,7 @@ OUT;
         } elseif (preg_match('/DROP TABLE /Ss', $schema)) {
 
             $check = preg_match(
-                '/^DROP TABLE ' . $this->tablePrefix . '(?:' . implode('|', $this->unmanagedTables) . ')$/Ss', 
+                '/^DROP TABLE ' . $this->tablePrefix . '(?:' . implode('|', $this->unmanagedTables) . ')$/Ss',
                 $schema
             );
 
@@ -1318,14 +1323,14 @@ OUT;
     protected function postprocessDropSchema($schema)
     {
         $schema = preg_replace(
-            '/^ALTER TABLE (\S+) DROP FOREIGN KEY (\S+)/Ss', 
-            'ALTER TABLE `$1` DROP FOREIGN KEY `$2`', 
+            '/^ALTER TABLE (\S+) DROP FOREIGN KEY (\S+)/Ss',
+            'ALTER TABLE `$1` DROP FOREIGN KEY `$2`',
             $schema
         );
-        
+
         $schema = preg_replace(
-            '/^DROP TABLE (\S+)/Ss', 
-            'DROP TABLE IF EXISTS `$1`', 
+            '/^DROP TABLE (\S+)/Ss',
+            'DROP TABLE IF EXISTS `$1`',
             $schema
         );
 
@@ -1333,8 +1338,8 @@ OUT;
     }
 
     /**
-     * Get all metadata 
-     * 
+     * Get all metadata
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1352,10 +1357,10 @@ OUT;
     }
 
     /**
-     * Detect fixtures loading directives 
-     * 
+     * Detect fixtures loading directives
+     *
      * @param array $rows Entity fixtures
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1375,8 +1380,8 @@ OUT;
     }
 
     /**
-     * Reset fixtures loading directives 
-     * 
+     * Reset fixtures loading directives
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1388,8 +1393,8 @@ OUT;
     }
 
     /**
-     * Setup doctrine cache 
-     * 
+     * Setup doctrine cache
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1405,7 +1410,7 @@ OUT;
 
     /**
      * Get DSN in Doctrine style
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1446,22 +1451,22 @@ OUT;
     }
 
     /**
-     * Get disabled tables list storage path 
-     * 
+     * Get disabled tables list storage path
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getDisabledStructuresPath()
     {
-        return LC_VAR_DIR . '.disabled.structures.php';
+        return LC_DIR_VAR . '.disabled.structures.php';
     }
 
     /**
      * Detect custom repository class name by entity class name
-     * 
+     *
      * @param string $entityClass Entity class name
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1484,9 +1489,9 @@ OUT;
 
     /**
      * Get table names by type for truncate
-     * 
+     *
      * @param string $type Repository type
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1510,9 +1515,9 @@ OUT;
 
     /**
      * Get class metadata by type for truncate
-     * 
+     *
      * @param string $type Repository type
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1532,9 +1537,9 @@ OUT;
 
     /**
      * Detect truncate table names by class metadatas
-     * 
+     *
      * @param array $metadatas Class metadata list
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

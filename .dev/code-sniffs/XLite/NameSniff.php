@@ -12,7 +12,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'NVP', 'PHP', 'CURL', 'VS', 'PC', 'UTF8', 'TTL', 'SMTP', 'IP4', 'CC', 'CVV2', 'UK', 'FMF', 'CSSURL',
 		'HMACMD5', 'HMAC', 'URI', 'ID', 'JS', 'SSL', 'AVS', 'CVV', 'DB', 'HSBC', 'SOAP', 'GMT', 'HTTPS', 'CLI',
 		'CMS', 'GC', 'AJAX', 'URLAJAX', 'USPS', 'GD', 'PM', 'XPC', 'DSN', 'EM', 'QB', 'SKU', 'REST', 'FS', 'IREST',
-        'YAML', 'GZ', 'HTTP', 'SPL', 'PHAR',
+        'YAML', 'GZ', 'HTTP', 'SPL', 'PHAR', 'JSON',
 	);
 
 	protected $twoWordsAbbrs = array('ECard', 'ECards');
@@ -39,7 +39,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'mask', 'pay', 'clone', 'login', 'logoff', 'exclude', 'restart', 'invalidate',
 		'remember', 'remind', 'link', 'concat','split', 'round', 'depack', 'upload', 'hydrate', 'unload',
 		'download', 'deploy', 'construct', 'retrieve', 'print', 'increase', 'decrease', 'sum',
-		'drop', 'list', 'reverse', 'rand', 'extract', 'wake', 'sleep',
+		'drop', 'list', 'reverse', 'rand', 'extract', 'wake', 'sleep', 'mkdir', 'unlink', 'copy', 'chmod',
+		'complete', 'manage', 'upgrade', 'measure',
 
 		// FIXME - rename later
 		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout', 'display404',
@@ -69,8 +70,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * Get words from name (delimiter - underline symbol)
-	 * 
-	 * @param   string	$name 
+	 *
+	 * @param   string	$name
 	 * @access  protected
 	 * @return  array
 	 * @since   1.0.0
@@ -93,8 +94,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * Get words from name (delimiter - capital letter)
-	 * 
-	 * @param   string	$name 
+	 *
+	 * @param   string	$name
 	 * @access  protected
 	 * @return  array
 	 * @since   1.0.0
@@ -135,8 +136,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * Check word in Camel case style
-	 * 
-	 * @param   string	$name 
+	 *
+	 * @param   string	$name
 	 * @access  protected
 	 * @return  integer
 	 * @since   1.0.0
@@ -162,8 +163,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * Check word in low case style
-	 * 
-	 * @param   string	$name 
+	 *
+	 * @param   string	$name
 	 * @access  protected
 	 * @return  integer
 	 * @since   1.0.0
@@ -173,9 +174,9 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	}
 
 	/**
-	 * Check class path by class name 
-	 * 
-	 * @param   array	$words 
+	 * Check class path by class name
+	 *
+	 * @param   array	$words
 	 * @access  protected
 	 * @return  array
 	 * @since   1.0.0
@@ -196,9 +197,9 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	}
 
 	/**
-	 * check verb or not 
-	 * 
-	 * @param   string	$word 
+	 * check verb or not
+	 *
+	 * @param   string	$word
 	 * @access  protected
 	 * @return  boolean
 	 * @since   1.0.0
@@ -208,8 +209,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	}
 
 	/**
-	 * check noun or not 
-	 * 
+	 * check noun or not
+	 *
      * @param   string  $word
 	 * @access  protected
 	 * @return  boolean
@@ -235,9 +236,9 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 
 	/**
 	 * Check - is reserver method name or not
-	 * 
+	 *
 	 * @param string $methodName Method name
-	 *  
+	 *
 	 * @return boolean
 	 * @access protected
 	 * @see    ____func_see____

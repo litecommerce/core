@@ -2,11 +2,10 @@
 
 /**
  * Litecomerce specific styles
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -61,6 +60,7 @@ select.validation-error
   .checkout-block .payment-step ul.payments li label,
   .checkout-block form.place .terms label,
   .checkout-block .steps .shipping-step .save label,
+  .checkout-block .steps .payment-step .save label,
   .checkout-block .payment-step .same-address label
 {
   display: inline;
@@ -147,7 +147,7 @@ ul.pager .item span
   width: 28px;
   height: 28px;
   line-height: 28px;
-} 
+}
 
 ul.pager .more-pages
 {
@@ -266,6 +266,30 @@ table.form-data td {
   padding: 3px;
 }
 
+table.main-table,
+  table.main-table tbody,
+  table.main-table tr,
+  table.main-table th,
+  table.main-table td
+{
+  border: 0px none;
+  border-spacing: 0px;
+}
+
+table.main-table td {
+  padding: 12px 3px;
+}
+
+table.default-table,
+  table.default-table tbody,
+  table.default-table tr,
+  table.default-table th,
+  table.default-table td
+{
+  border: 0px none;
+  border-spacing: 0px;
+}
+
 /* Colorbox jQuery plugin */
 #colorbox,
   #cboxOverlay,
@@ -291,14 +315,13 @@ ul.subcategory-icons
   margin-bottom: 40px;
 }
 
-ul.subcategory-icons li
-{
-  margin: 21px 23px;
-}
-
 ul.subcategory-icons
 {
   margin-top: 5px;
+}
+
+ul.grid-list.subcategory-icons li {
+  margin: 21px 23px;
 }
 
 ul.subcategory-icons a
@@ -800,7 +823,7 @@ div.product-details .product-photo
 
 .product-details .product-photo-box .left-arrow img
 {
-  background: transparent url(../images/arrow_big_left.png) no-repeat left top; 
+  background: transparent url(../images/arrow_big_left.png) no-repeat left top;
 }
 
 .product-details .product-photo-box .right-arrow img
@@ -984,7 +1007,6 @@ div.product-details .product-image-gallery
   text-align: right;
   padding: 4px 6px;
   margin-left: 8px;
-  margin-right: 20px;
   vertical-align: middle;
 }
 
@@ -1035,7 +1057,7 @@ div.product-details button.continue
 
 div.product-details .continue-button-intend
 {
-  width: 94px;
+  width: 112px;
   float: left;
 }
 
@@ -1224,7 +1246,7 @@ table.list-body-list td
   font-size: 14px;
   margin: 0 20px 0 58px;
   text-transform: uppercase;
-  padding: 20px 0 0; 
+  padding: 20px 0 0;
 }
 
 .lc-minicart .items-list {
@@ -1529,6 +1551,10 @@ body.store-cart #main h1 {
   padding-top: 7px;
   padding-bottom: 0px;
   text-align: center;
+}
+
+#cart-right .totals li.button button.disabled span {
+  background-image: none;
 }
 
 #cart-right .box {
@@ -1869,9 +1895,17 @@ form.estimator .main,
   padding: 15px 11px;
 }
 
+.checkout-block .disabled .step-box {
+  text-align: center;
+  color: #456583;
+  font-size: 16px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .checkout-block .shipping-step.current .step-box,
-.checkout-block .payment-step.current .step-box, 
-.checkout-block .review-step.current .step-box .box 
+.checkout-block .payment-step.current .step-box,
+.checkout-block .review-step.current .step-box .box
 {
   background-color: transparent;
   border: 1px solid #dfdfdf;
@@ -1940,7 +1974,7 @@ form.estimator .main,
 }
 
 
-.address-box .address, 
+.address-box .address,
 .address-box .phone
 {
   padding-top: 8px;
@@ -2224,7 +2258,7 @@ form.estimator .main,
 }
 
 .checkout-block .review-step.current .modifiers li {
-  padding-bottom: 4px; 
+  padding-bottom: 4px;
 }
 
 .checkout-block .review-step .items-row span,
@@ -2309,6 +2343,10 @@ form.estimator .main,
   padding: 10px;
 }
 
+.checkout-block form.place .terms .terms-box * {
+  font-size: 14px;
+}
+
 .checkout-block form.place .terms div.mark {
   background: transparent none no-repeat center bottom;
   width: 17px;
@@ -2358,8 +2396,8 @@ form.estimator .main,
   list-style: none;
   width: 278px;
   float: left;
-  background: #eff8fe none;
-  border: 1px solid #cadce8;
+  background: #f4f4f4 none;
+  border: 1px solid #dfdfdf;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
@@ -2368,16 +2406,32 @@ form.estimator .main,
   margin-right: 30px;
   margin-bottom: 20px;
   position: relative;
+  cursor: pointer;
 }
 
 .select-address ul.addresses li.last {
   margin-right: 0px;
 }
 
+.select-address ul.addresses li .remove {
+  position: absolute;
+  right: 9px;
+  top: 9px;
+  text-decoration: none;
+  width: 18px;
+  height: 18px;
+}
+
+.select-address ul.addresses li .remove img {
+  background: transparent url(../images/icon_trash.png) no-repeat left top;
+  width: 18px;
+  height: 18px;
+}
+
 .select-address ul.addresses li .shipping {
   position: absolute;
   right: 8px;
-  top: 15px;
+  bottom: 15px;
   background: transparent url(../images/icon_shipping.png) no-repeat left top;
   width: 42px;
   height: 20px;
@@ -2386,7 +2440,7 @@ form.estimator .main,
 .select-address ul.addresses li .billing {
   position: absolute;
   right: 9px;
-  top: 47px;
+  bottom: 47px;
   background: transparent url(../images/icon_billing.png) no-repeat left top;
   width: 38px;
   height: 22px;
@@ -2408,12 +2462,12 @@ form.estimator .main,
 }
 
 .BlockMsg-address-book h2.ajax-title-loadable {
-  padding-left: 4px;  
+  padding-left: 4px;
   font-size: 30px;
 }
 
 /**
- * Breadcrumbs 
+ * Breadcrumbs
  */
 
 ul.location-subnodes {
@@ -2429,7 +2483,11 @@ ul.location-subnodes {
 }
 
 ul.location-subnodes li {
-  padding: 3px;
+  padding: 0px 2px;
+}
+
+ul.location-subnodes li a.current {
+  font-weight: bold;
 }
 
 /**
@@ -2473,12 +2531,6 @@ ul.location-subnodes li {
   background: transparent url(../images/icon_printer.png) no-repeat left 3px;
   padding-left: 27px;
   padding-bottom: 4px;
-}
-
-.order-box .links .track a {
-  background: transparent url(../images/icon_shipping.png) no-repeat left top;
-  padding: 2px 0px;
-  padding-left: 41px;
 }
 
 /**
@@ -2678,4 +2730,103 @@ ul.location-subnodes li {
 
 .simple-search-box button.submit-button {
   display: none;
+}
+
+/* Page tabs */
+
+div.page-tabs
+{
+  height: 37px;
+  border-bottom: 1px solid #cadce8;
+  background: #ffffff;
+  padding-top: 10px;
+}
+
+div.tab-content
+{
+  margin: 15px;
+}
+
+div.page-tabs ul
+{
+  padding:0;
+  margin:0;
+  list-style:none;
+  margin-left: 10px;
+}
+
+div.page-tabs ul li
+{
+  float:left;
+  list-style: none;
+  padding-left: 0px;
+  margin: 0;
+  background: none;
+}
+
+div.page-tabs ul li a,
+  div.page-tabs ul li a:hover
+{
+  -moz-border-radius: 10px 10px 0 0;
+  -webkit-border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 0 0;
+  background: none repeat scroll 0 0 #ebf7ff;
+  border-color: #cadce8 #cadce8;
+  border-style: solid solid none;
+  border-width: 1px 1px 0;
+  display: block;
+  float: left;
+  margin-right: 10px;
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+div.page-tabs ul li a:hover {
+  background: #ffffff;
+  color: #2C5FA6;
+}
+
+div.page-tabs ul li.tab-current a
+{
+  background: #fff;
+  color: #333;
+  border-bottom: 1px solid #fff;
+}
+
+table.login-form,
+  table.login-form tr,
+  table.login-form th,
+  table.login-form td,
+  table.login-form tbody
+{
+  border: 0px none;
+  border-spacing: 0px;
+}
+
+table.login-form td {
+  padding: 5px 0px;
+}
+
+.recover-password-message {
+  margin: 0px 0px 10px 0px;
+}
+
+table.recover-password-form {
+  margin: 20px 0px 0px 0px;
+}
+
+table.recover-password-form,
+  table.recover-password-form tr,
+  table.recover-password-form th,
+  table.recover-password-form td,
+  table.recover-password-form tbody
+{
+  border: 0px none;
+  border-spacing: 0px;
+}
+
+table.recover-password-form td {
+  padding: 5px 0px;
 }

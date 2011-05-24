@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,12 +29,21 @@ namespace XLite\Controller\Admin;
 
 /**
  * Category page controller
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Category extends \XLite\Controller\Admin\Base\Catalog
 {
+    /**
+     * FIXME- backward compatibility
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    public $params = array('target', 'category_id', 'mode');
+
 
     /**
      * Get pages sections
@@ -47,9 +55,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     public function getPages()
     {
         return array(
-            'category_modify' => ($this->getCategory()->getCategoryId())
-                ? 'Modify category'
-                : 'Add new category',
+            'category_modify' => ($this->getCategory()->getCategoryId()) ? 'Modify category' : 'Add new category'
         );
     }
 
@@ -77,7 +83,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     public function getCategory()
     {
-        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
+        return ('add_child' === \XLite\Core\Request::getInstance()->mode)
             ? new \XLite\Model\Category()
             : parent::getCategory();
     }
@@ -91,22 +97,29 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     public function getTitle()
     {
-        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
+        return ('add_child' === \XLite\Core\Request::getInstance()->mode)
             ? $this->t('Add category')
             : parent::getCategory()->getName();
     }
 
 
     /**
-     * Common method to determine current location 
-     * 
+     * Common method to determine current location
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getLocation()
     {
-        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
+        if (
+            'modify' == \XLite\Core\Request::getInstance()->mode
+            && $this->getRootCategoryId() == $this->getCategoryId()
+        ) {
+            $this->addLocationNode($this->t('Root category'));
+        }
+
+        return ('add_child' === \XLite\Core\Request::getInstance()->mode)
             ? $this->t('Add category')
             : $this->t('Details');
     }
@@ -124,7 +137,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     {
         if (empty($categoryId)) {
             $categoryId = $this->getCategoryId();
-        }   
+        }
 
         $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->find($categoryId);
 
@@ -139,15 +152,15 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
                 $img->setCategory($category);
                 $category->setImage($img);
                 \XLite\Core\Database::getEM()->persist($img);
-            }   
-        }   
+            }
+        }
 
         return $img;
     }
 
     /**
-     * doActionAddChild 
-     * 
+     * doActionAddChild
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -166,8 +179,8 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     }
 
     /**
-     * doActionModify 
-     * 
+     * doActionModify
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -186,10 +199,10 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     }
 
     /**
-     * Validate values passed from the REQUEST for updating/creating category 
-     * 
+     * Validate values passed from the REQUEST for updating/creating category
+     *
      * @param boolean $isNewObject Flag - is a data for a new category or for updaing existing category OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -229,7 +242,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
                 $data['clean_url'] = $this->sanitizeCleanURL($data['clean_url']);
 
                 if (
-                    !empty($data['clean_url']) 
+                    !empty($data['clean_url'])
                     && !$this->isCleanURLUnique($data['clean_url'], (!$isNewObject ? $data['category_id'] : null))
                 ) {
 
@@ -263,10 +276,10 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
 
     /**
      * Check - specified clean URL unique or not
-     * 
+     *
      * @param string  $cleanURL   Clean URL
      * @param integer $categoryId Category Id OPTIONAL
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

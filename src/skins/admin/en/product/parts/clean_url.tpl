@@ -6,12 +6,12 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="product.modify.list", weight="160")
+ * @ListChild (list="product.modify.list", weight="1040")
  *}
 <tr>
-    <td>{t(#Clean URL#)}</td>
-    <td><input type="text" name="{getNamePostedData(#clean_url#)}" value="{product.clean_url}" size="50" /></td>
+  <td class="name-attribute">{t(#Clean URL#)}</td>
+  <td class="star"></td>
+  <td class="value-attribute"><input type="text" name="{getNamePostedData(#clean_url#)}" value="{product.clean_url}" size="50" /></td>
 </tr>

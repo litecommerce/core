@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Core;
 
 /**
  * Flexy compiler
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -45,32 +44,32 @@ class FlexyCompiler extends \XLite\Base\Singleton
     const PHP_CLOSE = '?>';
 
     /**
-     * Template source code 
-     * 
+     * Template source code
+     *
      * @var   string
      * @since 1.0.0
      */
     protected $source = null;
 
     /**
-     * Template file name 
-     * 
+     * Template file name
+     *
      * @var   string
      * @since 1.0.0
      */
     protected $file = null;
 
     /**
-     * List of URLs to rewrite 
-     * 
+     * List of URLs to rewrite
+     *
      * @var   array
      * @since 1.0.0
      */
     protected $urlRewrite = array();
 
     /**
-     * patches 
-     * 
+     * patches
+     *
      * @var   mixed
      * @see   ____var_see____
      * @since 1.0.0
@@ -78,8 +77,8 @@ class FlexyCompiler extends \XLite\Base\Singleton
     protected $patches;
 
     /**
-     * Image URL output type 
-     * 
+     * Image URL output type
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -153,15 +152,15 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
     /**
      * Preprocess template
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function preprocess()
     {
-        if (0 === strpos($this->file, LC_SKINS_DIR)) {
-            $tpl = substr($this->file, strlen(LC_SKINS_DIR));
+        if (0 === strpos($this->file, LC_DIR_SKINS)) {
+            $tpl = substr($this->file, strlen(LC_DIR_SKINS));
             list($zone, $lang, $tpl) = explode(LC_DS, $tpl, 3);
 
             foreach ($this->getPatches($this->getZone($zone), $lang, $tpl) as $patch) {
@@ -178,9 +177,9 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
     /**
      * Get zone by skin name
-     * 
+     *
      * @param string $zone Skin name
-     *  
+     *
      * @return string (admin or customer)
      * @see    ____func_see____
      * @since  1.0.0
@@ -194,11 +193,11 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
     /**
      * Get patches list
-     * 
+     *
      * @param string $zone Interface code
      * @param string $lang Language code
      * @param string $tpl  Relative template pathg
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -229,10 +228,10 @@ class FlexyCompiler extends \XLite\Base\Singleton
     }
 
     /**
-     * Process XPath-based patch 
-     * 
+     * Process XPath-based patch
+     *
      * @param \XLite\Model\TemplatePatch $patch Patch record
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -262,12 +261,12 @@ class FlexyCompiler extends \XLite\Base\Singleton
     }
 
     /**
-     * Apply XPath-based patches 
-     * 
+     * Apply XPath-based patches
+     *
      * @param DOMNamedNodeMap $places         Patch placeholders
      * @param DOMNamedNodeMap $patches        Patches
      * @param string          $baseInsertType Patch insert type
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -282,7 +281,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
                 if (\XLite\Base\IPatcher::XPATH_INSERT_BEFORE == $insertType) {
 
-                    // Insert patch node before XPath result node 
+                    // Insert patch node before XPath result node
                     $place->parentNode->insertBefore($node, $place);
 
                 } elseif (\XLite\Base\IPatcher::XPATH_INSERT_AFTER == $insertType) {
@@ -316,10 +315,10 @@ class FlexyCompiler extends \XLite\Base\Singleton
     }
 
     /**
-     * Process regular expression-based patch 
-     * 
+     * Process regular expression-based patch
+     *
      * @param \XLite\Model\TemplatePatch $patch Patch record
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -334,10 +333,10 @@ class FlexyCompiler extends \XLite\Base\Singleton
     }
 
     /**
-     * Process callback-based patch 
-     * 
+     * Process callback-based patch
+     *
      * @param \XLite\Model\TemplatePatch $patch Patch record
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -592,6 +591,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 }
 
                 // Boolean-based attribute process
+                // :FIXME: <... disabled="disabled" checked="checked" ... /> does not work
 
                 $boolAttribute = false;
 
@@ -683,18 +683,18 @@ class FlexyCompiler extends \XLite\Base\Singleton
     }
 
     /**
-     * Get template info 
-     * 
+     * Get template info
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getTemplateInfo()
     {
-        $skin = preg_replace('/^([a-x0-9_]+)[^a-x0-9_].+$/Ssi', '\1', substr($this->file, strlen(LC_SKINS_DIR)));
+        $skin = preg_replace('/^([a-x0-9_]+)[^a-x0-9_].+$/Ssi', '\1', substr($this->file, strlen(LC_DIR_SKINS)));
         $template = 'common' == $skin
-            ? substr($this->file, strlen(LC_SKINS_DIR) + strlen($skin) + 1)
-            : substr($this->file, strlen(LC_SKINS_DIR) + strlen($skin) + 4);
+            ? substr($this->file, strlen(LC_DIR_SKINS) + strlen($skin) + 1)
+            : substr($this->file, strlen(LC_DIR_SKINS) + strlen($skin) + 4);
 
         return array($skin, $template);
     }
@@ -781,12 +781,12 @@ class FlexyCompiler extends \XLite\Base\Singleton
             if (empty($arguments) && (1 == count($attrs)) && isset($attrs['template'])) {
                 $result .= '$this->includeCompiledFile(' . $this->flexyAttribute($attrs['template'])  . ', \'' . $skin . '\', \'' . $template . '\');';
             } else {
-                $result .= '$this->getWidget(' 
-                    . (empty($attrs) ? (empty($arguments) ? '' : 'array()') : $this->getAttributesList($attrs)) 
+                $result .= '$this->getWidget('
+                    . (empty($attrs) ? (empty($arguments) ? '' : 'array()') : $this->getAttributesList($attrs))
                     . (empty($arguments) ? '' : ', ' . $arguments) . ')->setPreviousTpl(\'' . $skin . '\', \'' . $template . '\')->display();';
             }
 
-            
+
             if (!empty($conditions)) {
                 $result = 'if (' . implode(' && ', $conditions) . '):' . "\n" . '  ' . $result . "\n" . 'endif;';
             }
@@ -813,10 +813,10 @@ class FlexyCompiler extends \XLite\Base\Singleton
     }
 
     /**
-     * Rewrite URL 
-     * 
+     * Rewrite URL
+     *
      * @param string $url Short URL
-     *  
+     *
      * @return boolean|array
      * @see    ____func_see____
      * @since  1.0.0
@@ -825,7 +825,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
     {
         $result = false;
 
-        foreach ($this->urlRewrite as $find => $replace) {  
+        foreach ($this->urlRewrite as $find => $replace) {
             $len = strlen($find);
 
             if (0 === strncmp($url, $find, $len)) {
@@ -844,11 +844,11 @@ class FlexyCompiler extends \XLite\Base\Singleton
     }
 
     /**
-     * Rewrite image URL 
-     * 
+     * Rewrite image URL
+     *
      * @param string  $url    Image short URL
      * @param integer $length Replace part length
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -957,7 +957,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
         switch ($str) {
             case ':h':	// will display variable "as is"
                 break;
-    
+
             case '':	// default display
                 $expr = 'func_htmlspecialchars(' . $expr . ')';
                 break;
@@ -1218,7 +1218,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
         $prev_pos = 0;
         while ($pos = strpos($text, $search_text, $prev_pos)) {
             $blocks[] = array(
-                'start' => $prev_pos, 
+                'start' => $prev_pos,
                 'end'   => $pos + strlen($search_text),
                 'body'  => substr($text, $prev_pos, $pos + strlen($search_text) - $prev_pos),
             );
@@ -1250,8 +1250,8 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
 
     /**
-     * Flag 
-     * 
+     * Flag
+     *
      * @var    boolean
      * @see    ____var_see____
      * @since  1.0.0
@@ -1259,8 +1259,8 @@ class FlexyCompiler extends \XLite\Base\Singleton
     protected $checkTemplateStatus = true;
 
     /**
-     * Layout 
-     * 
+     * Layout
+     *
      * @var    \XLite\Core\Layout
      * @see    ____var_see____
      * @since  1.0.0
@@ -1268,8 +1268,8 @@ class FlexyCompiler extends \XLite\Base\Singleton
     protected $layout;
 
     /**
-     * Root directory path length 
-     * 
+     * Root directory path length
+     *
      * @var    integer
      * @see    ____var_see____
      * @since  1.0.0
@@ -1278,10 +1278,10 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
     /**
      * Compile and save template
-     * 
+     *
      * @param string  $original Relative file path
      * @param boolean $force    Flag to force compilation OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -1289,19 +1289,22 @@ class FlexyCompiler extends \XLite\Base\Singleton
     public function prepare($original, $force = false)
     {
         $compiled = \Includes\Utils\FileManager::normalize(
-            LC_COMPILE_DIR . substr($original, $this->rootDirLength) . '.php'
+            LC_DIR_COMPILE . substr($original, $this->rootDirLength) . '.php'
         );
+
         $original = \Includes\Utils\FileManager::normalize($original);
 
         if (($this->checkTemplateStatus && !$this->isTemplateValid($original, $compiled)) || $force) {
 
             // Create directory for compiled template (if not exists)
             $dir = dirname($compiled);
+
             if (!file_exists($dir)) {
                 \Includes\Utils\FileManager::mkdirRecursive($dir, 0755);
             }
 
             file_put_contents($compiled, $this->parse($original));
+
             touch($compiled, filemtime($original));
         }
 
@@ -1310,11 +1313,11 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
     /**
      * Check if template is up-to-date
-     * 
+     *
      * @param string $original Original template
      * @param string $compiled Compiled one
-     *  
-     * @return boolean 
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -1324,10 +1327,10 @@ class FlexyCompiler extends \XLite\Base\Singleton
     }
 
     /**
-     * Set new file for compile 
-     * 
+     * Set new file for compile
+     *
      * @param string $file Template to compile
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1344,7 +1347,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
     /**
      * Constructor
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1358,7 +1361,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
         $this->layout = \XLite\Core\Layout::getInstance();
 
-        $this->rootDirLength = strlen(LC_ROOT_DIR);
+        $this->rootDirLength = strlen(LC_DIR_ROOT);
     }
 }
-

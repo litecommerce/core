@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
  * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
@@ -39,7 +38,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
     /**
      * Execute certain hook handle
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -50,7 +49,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
         if (!$this->areProxiesExist()) {
 
             // Create the proxies folder
-            \Includes\Utils\FileManager::mkdirRecursive(LC_PROXY_CACHE_DIR);
+            \Includes\Utils\FileManager::mkdirRecursive(LC_DIR_CACHE_PROXY);
 
             // Create model proxy classes (second step of cache generation)
             \Includes\Decorator\Plugin\Doctrine\Utils\EntityManager::generateProxies();
@@ -67,6 +66,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      */
     protected function areProxiesExist()
     {
-        return \Includes\Utils\FileManager::isDirReadable(LC_PROXY_CACHE_DIR);
+        return \Includes\Utils\FileManager::isDirReadable(LC_DIR_CACHE_PROXY);
     }
 }

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model\Repo;
 
 /**
  * The "order_item" model repository
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -94,6 +93,7 @@ class OrderItem extends \XLite\Model\Repo\ARepo
 
         $queryBuilder->addSelect('SUM(o.amount) as cnt')
             ->innerJoin('o.order', 'o1')
+            ->innerJoin('o1.currency', 'currency', 'WITH', 'currency.currency_id = :currency_id')
             ->addSelect('o1.date')
             ->andWhere('o1.date >= :start')
             ->setParameter('start', $start)
@@ -102,6 +102,7 @@ class OrderItem extends \XLite\Model\Repo\ARepo
             ->andWhere('o1.status IN (:statusProcessed, :statusCompleted)')
             ->setParameter('statusProcessed', \XLite\Model\Order::STATUS_PROCESSED)
             ->setParameter('statusCompleted', \XLite\Model\Order::STATUS_COMPLETED)
+            ->setParameter('currency_id', $cnd->currency)
             ->setMaxResults($cnd->limit)
             ->addGroupBy('o.sku')
             ->addOrderBy('cnt', 'desc')

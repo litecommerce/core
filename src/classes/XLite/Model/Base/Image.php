@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\Model\Base;
 
 /**
  * Image abstract store
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -40,8 +39,8 @@ namespace XLite\Model\Base;
 abstract class Image extends \XLite\Model\AEntity
 {
     /**
-     * Image unique id 
-     * 
+     * Image unique id
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -54,7 +53,7 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * Image path (URL or file name in images storage directory)
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -65,7 +64,7 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * MIME type
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -76,7 +75,7 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * Width
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -87,7 +86,7 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * Height
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -98,7 +97,7 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * Size
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -109,7 +108,7 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * Create / modify date (UNIX timestamp)
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -120,7 +119,7 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * Image hash
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -130,8 +129,8 @@ abstract class Image extends \XLite\Model\AEntity
     protected $hash = '';
 
     /**
-     * Get image body 
-     * 
+     * Get image body
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -144,8 +143,8 @@ abstract class Image extends \XLite\Model\AEntity
     }
 
     /**
-     * Get image file extension 
-     * 
+     * Get image file extension
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -157,7 +156,7 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * Get image file extension by MIME type
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -190,8 +189,8 @@ abstract class Image extends \XLite\Model\AEntity
     }
 
     /**
-     * Get image URL 
-     * 
+     * Get image URL
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -203,7 +202,7 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * Get image URL for customer front-end
-     * 
+     *
      * @return string|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -214,11 +213,11 @@ abstract class Image extends \XLite\Model\AEntity
     }
 
     /**
-     * Get resized image URL 
-     * 
+     * Get resized image URL
+     *
      * @param integer $width  Width limit OPTIONAL
      * @param integer $height Height limit OPTIONAL
-     *  
+     *
      * @return array (new width + new height + URL)
      * @see    ____func_see____
      * @since  1.0.0
@@ -251,7 +250,8 @@ abstract class Image extends \XLite\Model\AEntity
             // File is not exists
             $operator = new \XLite\Core\ImageOperator($this);
             $result = $operator->resizeDown($width, $height);
-            $result[2] = (!$result[2] || !file_put_contents($path . $fn, $operator->getImage()))
+            // :FIXME:
+            $result[2] = (!file_put_contents($path . $fn, $operator->getImage()) || !$result[2])
                 ? $this->getURL()
                 : $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn;
 
@@ -264,11 +264,11 @@ abstract class Image extends \XLite\Model\AEntity
     }
 
     /**
-     * Load from request 
-     * 
+     * Load from request
+     *
      * @param string $key    Key in $_FILES service array
      * @param string $subkey Optional subkey OPTIONAL
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -298,18 +298,18 @@ abstract class Image extends \XLite\Model\AEntity
                     }
                 }
             }
-        
+
         }
 
         return $result;
     }
 
     /**
-     * Load image from local file 
-     * 
+     * Load image from local file
+     *
      * @param string $path     Absolute path
      * @param string $basename File name OPTIONAL
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -338,11 +338,11 @@ abstract class Image extends \XLite\Model\AEntity
     }
 
     /**
-     * Load image from URL 
-     * 
+     * Load image from URL
+     *
      * @param string  $url     URL
      * @param boolean $copy2fs Copy image to file system or not OPTIONAL
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -356,7 +356,7 @@ abstract class Image extends \XLite\Model\AEntity
         $result = true;
 
         if ($copy2fs) {
-            $fn = tempnam(LC_TMP_DIR, 'load_image');
+            $fn = tempnam(LC_DIR_TMP, 'load_image');
             $image = \XLite\Core\Operator::getURLContent($url);
             $result = ($image && file_put_contents($fn, $image))
                 ? $this->loadFromLocalFile($fn)
@@ -372,8 +372,8 @@ abstract class Image extends \XLite\Model\AEntity
     }
 
     /**
-     * Remove image file 
-     * 
+     * Remove image file
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -391,7 +391,7 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * Check - image hash is equal data from DB or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -400,31 +400,31 @@ abstract class Image extends \XLite\Model\AEntity
     {
         list($path, $isTempFile) = $this->getImagePath();
 
-        $hash = md5_file($path);
+        $hash = \Includes\Utils\FileManager::getHash($path);
 
         if ($isTempFile) {
-            unlink($path);
+            \Includes\Utils\FileManager::deleteFile($path);
         }
 
-        return $this->hash == $hash;
+        return $this->hash === $hash;
     }
 
     /**
      * Check image is URL-based or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function isURL()
     {
-        return (bool)preg_match('/^https?:\/\//Ss', $this->path);
+        return (bool) preg_match('/^https?:\/\//Ss', $this->path);
     }
 
     /**
      * Check - image is exists in DB or not
      * TODO - remove - old method
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -436,7 +436,7 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * Prepare order before save data operation
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -452,9 +452,9 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * Save path into entity
-     * 
+     *
      * @param string $path Full path
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -472,8 +472,8 @@ abstract class Image extends \XLite\Model\AEntity
     }
 
     /**
-     * Renew image parameters 
-     * 
+     * Renew image parameters
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -490,7 +490,7 @@ abstract class Image extends \XLite\Model\AEntity
             $this->width = $data[0];
             $this->height = $data[1];
             $this->mime = $data['mime'];
-            $this->hash = md5_file($path);
+            $this->hash = \Includes\Utils\FileManager::getHash($path);
             $this->size = intval(filesize($path));
             $this->date = time();
 
@@ -506,7 +506,7 @@ abstract class Image extends \XLite\Model\AEntity
 
     /**
      * Get image path for file-based PHP functions
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -520,7 +520,7 @@ abstract class Image extends \XLite\Model\AEntity
                 $path = $this->path;
 
             } else {
-                $path = tempnam(LC_TMP_DIR, 'analyse_image');
+                $path = tempnam(LC_DIR_TMP, 'analyse_image');
                 file_put_contents($path, $this->getBody());
                 $isTempFile = true;
             }

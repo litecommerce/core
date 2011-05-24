@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -30,7 +29,7 @@ namespace XLite\View\Model\Address;
 
 /**
  * Profile model widget
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -78,11 +77,11 @@ class Address extends \XLite\View\Model\AModel
         'state_id' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\State',
             self::SCHEMA_LABEL    => 'State',
-            self::SCHEMA_REQUIRED => false,
+            self::SCHEMA_REQUIRED => true,
         ),
         'custom_state' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Other state',
+            self::SCHEMA_LABEL    => 'State',
             self::SCHEMA_REQUIRED => false,
         ),
         'zipcode' => array(
@@ -104,7 +103,7 @@ class Address extends \XLite\View\Model\AModel
 
     /**
      * Address instance
-     * 
+     *
      * @var   \XLite\Model\Address
      * @see   ____var_see____
      * @since 1.0.0
@@ -113,8 +112,8 @@ class Address extends \XLite\View\Model\AModel
 
 
     /**
-     * getAddressSchema 
-     * 
+     * getAddressSchema
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -150,8 +149,8 @@ class Address extends \XLite\View\Model\AModel
     }
 
     /**
-     * getRequestAddressId 
-     * 
+     * getRequestAddressId
+     *
      * @return integer|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -163,8 +162,8 @@ class Address extends \XLite\View\Model\AModel
 
     /**
      * Return current address ID
-     * 
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -174,8 +173,8 @@ class Address extends \XLite\View\Model\AModel
     }
 
     /**
-     * getRequestProfileId 
-     * 
+     * getRequestProfileId
+     *
      * @return integer|void
      * @see    ____func_see____
      * @since  1.0.0
@@ -187,8 +186,8 @@ class Address extends \XLite\View\Model\AModel
 
     /**
      * Return current profile ID
-     * 
-     * @return integer 
+     *
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -201,8 +200,8 @@ class Address extends \XLite\View\Model\AModel
 
 
     /**
-     * Returns widget head 
-     * 
+     * Returns widget head
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -222,12 +221,12 @@ class Address extends \XLite\View\Model\AModel
     protected function getDefaultModelObject()
     {
         if (!isset($this->address)) {
-            
+
             $addressId = $this->getAddressId();
 
             if (isset($addressId)) {
                 $this->address = \XLite\Core\Database::getRepo('XLite\Model\Address')->find($this->getAddressId());
-            
+
             } else {
 
                 $this->address = new \XLite\Model\Address();
@@ -235,7 +234,7 @@ class Address extends \XLite\View\Model\AModel
                 $profileId = $this->getProfileId();
 
                 if (0 < intval($profileId)) {
-                    
+
                     $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($profileId);
 
                     if (isset($profile)) {
@@ -262,9 +261,9 @@ class Address extends \XLite\View\Model\AModel
 
     /**
      * Pass the DOM IDs of the "State" selectbox to the "CountrySelector" widget
-     * 
+     *
      * @param array &$fields Widgets list
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -309,7 +308,7 @@ class Address extends \XLite\View\Model\AModel
 
     /**
      * Return text for the "Submit" button
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -330,15 +329,18 @@ class Address extends \XLite\View\Model\AModel
     {
         $result = parent::getFormButtons();
         $result['submit'] = new \XLite\View\Button\Submit(
-            array(\XLite\View\Button\AButton::PARAM_LABEL => $this->getSubmitButtonLabel())
+            array(
+                \XLite\View\Button\AButton::PARAM_LABEL => $this->getSubmitButtonLabel(),
+                \XLite\View\Button\AButton::PARAM_STYLE => 'action',
+            )
         );
 
         return $result;
     }
 
     /**
-     * prepareDataForMapping 
-     * 
+     * prepareDataForMapping
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -348,7 +350,7 @@ class Address extends \XLite\View\Model\AModel
         $data = parent::prepareDataForMapping();
 
         foreach ($data as $key => $value) {
-            
+
             $newKey = preg_replace('/^([^_]*_)(.*)$/', '\2', $key);
 
             $data[$newKey] = $value;
@@ -365,7 +367,7 @@ class Address extends \XLite\View\Model\AModel
             if (isset($data['state_id'])) {
 
                 $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($data['state_id']);
-                
+
                 if (isset($state) && $state->getCountry()->getCode() == $data['country_code']) {
                     $data['state'] = $state;
                     $data['custom_state'] = '';
@@ -373,7 +375,7 @@ class Address extends \XLite\View\Model\AModel
 
                 unset($data['state_id']);
             }
-            
+
             if (!isset($data['state'])) {
                 $data['state'] = $data['custom_state'];
             }
@@ -382,5 +384,56 @@ class Address extends \XLite\View\Model\AModel
         }
 
         return $data;
+    }
+
+    /**
+     * Check if fields are valid
+     *
+     * @param array $data Current section data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function validateFields(array $data)
+    {
+        $this->prepareDataToValidate($data);
+
+        parent::validateFields($data);
+    }
+
+    /**
+     * Prepare section data for validation
+     *
+     * @param array $data Current section data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareDataToValidate($data)
+    {
+        $keys = array_keys($data[self::SECTION_PARAM_FIELDS]);
+        $namePrefix = preg_replace('/^([^_]*_)(.*)$/', '\1', $keys[0]);
+
+        if (
+            isset($data[self::SECTION_PARAM_FIELDS][$namePrefix . 'state_id'])
+            && isset($data[self::SECTION_PARAM_FIELDS][$namePrefix . 'country_code'])
+        ) {
+
+            $stateField = $data[self::SECTION_PARAM_FIELDS][$namePrefix . 'state_id'];
+
+            if ('' == $stateField->getValue()) {
+
+                $countryField = $data[self::SECTION_PARAM_FIELDS][$namePrefix . 'country_code'];
+
+                $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($countryField->getValue());
+
+                // Disable state field required flag if selected country hasn't states
+                if (!$country->hasStates()) {
+                    $stateField->getWidgetParams(\XLite\View\FormField\AFormField::PARAM_REQUIRED)->setValue(false);
+                }
+            }
+        }
     }
 }

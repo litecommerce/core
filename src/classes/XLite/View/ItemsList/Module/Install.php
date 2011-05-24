@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,14 +13,13 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -69,9 +68,8 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'addons_list_marketplace';
-    
+
         return $result;
     }
 
@@ -104,6 +102,10 @@ class Install extends \XLite\View\ItemsList\Module\AModule
 
         $list['js'][] = 'js/ui.selectmenu.js';
 
+        // popup button is using several specific popup JS
+        $list['js'][] = 'js/core.popup.js';
+        $list['js'][] = 'js/core.popup_button.js';
+
         $list['css'][] = 'css/ui.selectmenu.css';
 
         return $list;
@@ -119,11 +121,19 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules_manager/common.css';
 
         // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
         $list[] = 'modules_manager/enter_key/css/style.css';
+
+        // TODO must be taken from LICENSE module widget!!!
+        $list[] = 'modules_manager/license/css/style.css';
+
+        $list[] = 'modules_manager/installation_type/css/style.css';
+
+        // TODO must be taken from SwitchButton widget
+        $list[] = \XLite\View\Button\SwitchButton::SWITCH_CSS_FILE;
+
 
         $list[] = $this->getDir() . '/style.css';
 
@@ -132,7 +142,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
 
     /**
      * Register JS files. TODO REWORK with Popup button widget
-     * 
+     *
      * @return array
      * @access public
      * @see    ____func_see____
@@ -142,7 +152,16 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'button/js/core.popup-button.js';
+        // TODO must be taken from Button/InstallAddon widget
+        $list[] = 'button/js/install_addon.js';
+        $list[] = 'button/js/select_installation_type.js';
+
+        // TODO must be taken from SwitchButton widget
+        $list[] = \XLite\View\Button\SwitchButton::JS_SCRIPT;
+
+        // TODO must be taken from LICENSE module widget
+        $list[] = 'modules_manager/license/js/switch-button.js';
+
 
         $list[] = $this->getDir() . '/' . $this->getPageBodyDir() . '/js/controller.js';
 
@@ -279,7 +298,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
 
     /**
      * Return list of price filter options
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -391,8 +410,8 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function canInstall(\XLite\Model\Module $module)
     {
-        return !$this->isInstalled($module) 
-            && ($this->isPurchased($module) || $this->isFree($module)) 
+        return !$this->isInstalled($module)
+            && ($this->isPurchased($module) || $this->isFree($module))
             && $this->canEnable($module)
             && $module->getMarketplaceID();
     }
@@ -408,8 +427,8 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function canPurchase(\XLite\Model\Module $module)
     {
-        return !$this->isInstalled($module) 
-            && !$this->isPurchased($module) 
+        return !$this->isInstalled($module)
+            && !$this->isPurchased($module)
             && !$this->isFree($module)
             && $this->canEnable($module);
     }
@@ -431,8 +450,8 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     {
         $installed = $this->getModuleInstalled($module);
 
-        return $installed 
-            && version_compare($installed->getMajorVersion(), $module->getMajorVersion(), '=') 
+        return $installed
+            && version_compare($installed->getMajorVersion(), $module->getMajorVersion(), '=')
             && version_compare($installed->getMinorVersion(), $module->getMinorVersion(), '<');
     }
 
@@ -441,7 +460,9 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     // {{{ Purchase form
 
     /**
-     * Get purchase page URL 
+     * Get purchase page URL
+     *
+     * :FIXME: is it really needed???
      *
      * @return string
      * @see    ____func_see____
@@ -461,7 +482,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
 
     /**
      * Get return URL for Purchase operation
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
