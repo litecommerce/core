@@ -46,6 +46,29 @@ class Profile extends \XLite\Controller\Admin\Profile implements \XLite\Base\IDe
      */
     protected function checkForDemoController()
     {
-        return parent::checkForDemoController() && $this->getProfile()->isAdmin();
+        return parent::checkForDemoController() && \XLite::isAdminZone();
+    }
+
+    /**
+     * URL to redirect if action is forbidden
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getForbidInDemoModeRedirectURL()
+    {
+        return 'delete' == \XLite\Core\Request::getInstance()->action
+            ? \XLite\Core\Converter::buildURL('users', '', array('mode' => 'search'))
+            : (
+                $this->getProfile()->getProfileId()
+                ? \XLite\Core\Converter::buildURL(
+                    'profile', 
+                    '', 
+                    array('profile_id' => $this->getProfile()->getProfileId())
+                )
+                : \XLite\Core\Converter::buildURL('profile', '', array('mode' => 'register'))
+            );
     }
 }

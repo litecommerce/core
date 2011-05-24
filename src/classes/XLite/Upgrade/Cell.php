@@ -117,7 +117,7 @@ class Cell extends \XLite\Base\Singleton
      */
     public function isValid()
     {
-        return ! (bool) $this->getErrorMessages();
+        return ! (bool) array_filter($this->getErrorMessages());
     }
 
     /**
@@ -198,7 +198,7 @@ class Cell extends \XLite\Base\Singleton
         }
 
         $this->incompatibleModules = array();
-        $this->isUpgraded = false;
+        $this->setUpgraded(false);
 
         if ($clearCoreVersion) {
             $this->setCoreVersion(null);
@@ -225,6 +225,20 @@ class Cell extends \XLite\Base\Singleton
     public function setCoreVersion($version)
     {
         $this->coreVersion = $version;
+    }
+
+    /**
+     * Set cell status
+     * 
+     * @param boolean $value Flag
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setUpgraded($value)
+    {
+        $this->isUpgraded = (bool) $value;
     }
 
     /**
@@ -375,9 +389,9 @@ class Cell extends \XLite\Base\Singleton
     public function __destruct()
     {
         \XLite\Core\TmpVars::getInstance()->{self::CELL_NAME} = array(
-            $this->entries,
+            $this->getEntries(),
             $this->incompatibleModules,
-            $this->isUpgraded,
+            $this->isUpgraded(),
         );
     }
 
@@ -400,7 +414,7 @@ class Cell extends \XLite\Base\Singleton
         if (is_array($entries)) {
             $this->entries = array_merge($this->entries, $entries);
             $this->incompatibleModules = $this->incompatibleModules + (array) $incompatibleModules;
-            $this->isUpgraded = !empty($isUpgraded);
+            $this->setUpgraded(!empty($isUpgraded));
 
         } else {
             $this->collectEntries();
@@ -734,8 +748,6 @@ class Cell extends \XLite\Base\Singleton
         }
 
         if (!$isTestMode) {
-            $this->clear(true, false, false);
-            $this->isUpgraded = true;
             $this->completeLog();
         }
 

@@ -254,6 +254,8 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUploadAddon()
     {
+        $this->setReturnURL($this->buildURL('addons_list_installed'));
+
         $path = \Includes\Utils\FileManager::moveUploadedFile('modulePack');
 
         if ($path) {
@@ -261,15 +263,12 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \XLite\Upgrade\Cell::getInstance()->addUploadedModule($path);
 
             if (\XLite\Upgrade\Cell::getInstance()->isValid()) {
-                $this->setReturnURL($this->buildURL('upgrade', 'download', $this->getActionParamsCommon()));
+                $this->setReturnURL($this->buildURL('upgrade', 'download', $this->getActionParamsCommon(true)));
             }
 
         } else {
-
             \XLite\Core\TopMessage::getInstance()->addError('Unable to upload module');
         }
-
-        $this->setReturnURL($this->buildURL('addons_list_installed'));
     }
 
     /**
@@ -395,7 +394,10 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         \Includes\Utils\Operator::showMessage('Installing updates, please wait...');
 
         // Perform upgrade
-        \XLite\Upgrade\Cell::getInstance()->upgrade(false, (array) \XLite\Core\Request::getInstance()->toOverwrite);
+        \XLite\Upgrade\Cell::getInstance()->upgrade(
+            false,
+            $this->isForce() ? null : ((array) \XLite\Core\Request::getInstance()->toOverwrite)
+        );
 
         // Disable selected modules
         foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
@@ -405,6 +407,10 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         if ($this->isForce() && \XLite\Upgrade\Cell::getInstance()->isValid()) {
             $this->setReturnURL($this->buildURL('addons_list_installed'));
         }
+
+        // Set cell status
+        \XLite\Upgrade\Cell::getInstance()->clear(true, false, false);
+        \XLite\Upgrade\Cell::getInstance()->setUpgraded(true);
 
         // Rebuild cache
         \XLite::setCleanUpCacheFlag(true);

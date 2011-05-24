@@ -357,7 +357,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getMainClass()
+    public function getMainClass()
     {
         return '\XLite\Module\\' . $this->getActualName() . '\Main';
     }

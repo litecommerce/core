@@ -273,6 +273,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
                 if ($file->isDir()) {
                     static::deleteDir($file->getRealPath(), true);
+
                 } else {
                     static::deleteFile($file->getRealPath(), true);
                 }
@@ -520,7 +521,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getDiskFreeSpace($dir = LC_ROOT_DIR)
+    public static function getDiskFreeSpace($dir = LC_DIR_ROOT)
     {
         return disk_free_space(
             LC_OS_WINDOWS ? static::getRealPath('/') : $dir

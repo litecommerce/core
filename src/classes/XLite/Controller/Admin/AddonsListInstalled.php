@@ -206,22 +206,24 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
 
         if ($module) {
 
-            $class = $module->getMainClass();
-            $notes = $class::getPostUninstallationNotes();
+            $pack = new \XLite\Core\Pack\Module($module);
+
+            // Remove from FS
+            foreach ($pack->getDirs() as $dir) {
+                \Includes\Utils\FileManager::unlinkRecursive($dir);
+            }
 
             // Disable this and depended modules
             \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
 
-            $status = $module->uninstall();
+            // Remove from DB
+            \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($module);
 
-            if ($status) {
-                \XLite\Core\TopMessage::addInfo('The module has been uninstalled successfully');
+            if ($module->getModuleID()) {
+                \XLite\Core\TopMessage::addError('An error occured while uninstalling the module');
+
             } else {
-                \XLite\Core\TopMessage::addWarning('The module has been partially uninstalled');
-            }
-
-            if ($notes) {
-                \XLite\Core\TopMessage::addInfo($notes);
+                \XLite\Core\TopMessage::addInfo('The module has been uninstalled successfully');
             }
         }
     }

@@ -424,7 +424,7 @@ class Order extends \XLite\Model\Repo\ARepo
                 'fields'          => array('orig_profile_id'),
                 'referenceRepo'   => 'XLite\Model\Profile',
                 'referenceFields' => array('profile_id'),
-                'delete'          => 'NO ACTION',
+                'delete'          => 'SET NULL',
             ),
         );
     }

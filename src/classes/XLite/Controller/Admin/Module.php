@@ -46,6 +46,22 @@ class Module extends \XLite\Controller\Admin\AAdmin
 
 
     /**
+     * handleRequest 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function handleRequest()
+    {
+        if (!$this->getModuleID()) {
+            $this->setReturnURL($this->buildURL('addons_list_installed'));
+        }
+
+        parent::handleRequest();
+    }
+
+    /**
      * Return current module options
      *
      * @return array

@@ -301,6 +301,9 @@ abstract class AController extends \XLite\Core\Handler
         } elseif (!$this->isVisible()) {
             $this->display404();
 
+        } elseif ($this->needSecure()) {
+            $this->redirectToSecure();
+
         } else {
             $this->run();
         }
@@ -1365,4 +1368,34 @@ abstract class AController extends \XLite\Core\Handler
     {
         return \XLite\Core\Auth::getInstance()->getProfile();
     }
+
+    /**
+     * Check - need use secure protocol or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function needSecure()
+    {
+        return $this->isSecure()
+            && !\XLite\Core\Request::getInstance()->isHTTPS()
+            && !\XLite\Core\Request::getInstance()->isCLI()
+            && \XLite\Core\Request::getInstance()->isGet();
+    }
+
+    /**
+     * Redirect to secure protocol
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function redirectToSecure()
+    {
+        $request = \XLite\Core\Request::getInstance();
+
+        return $this->redirect($this->getShopUrl($this->getURL(), true));
+    }
+
 }

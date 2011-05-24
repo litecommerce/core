@@ -25,63 +25,28 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Upgrade\Step\ReadyToInstall;
+namespace XLite\Module\CDev\Demo\Core;
 
 /**
- * StatusMessages
+ * Marketplace
  *
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @ListChild (list="admin.center", weight="200", zone="admin")
  */
-class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInstall
+class Marketplace extends \XLite\Core\Marketplace implements \XLite\Base\IDecorator
 {
     /**
-     * Get directory where template is located (body.tpl)
+     * Send request to marketplace endpoint and return the response
+     *
+     * @param string $action Name of the action
+     * @param array  $data   Custom data to send in request OPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDir()
+    protected function sendRequestToMarketplace($action, array $data = array())
     {
-        return parent::getDir() . '/status_messages';
-    }
-
-    /**
-     * Return internal list name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getListName()
-    {
-        return parent::getListName() . '.status_messages';
-    }
-
-    /**
-     * Check widget visibility
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && (bool) $this->getMessages();
-    }
-
-    /**
-     * Return list of messages
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getMessages()
-    {
-        return \XLite\Upgrade\Cell::getInstance()->getErrorMessages();
+        return null;
     }
 }

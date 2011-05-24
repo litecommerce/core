@@ -83,25 +83,6 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * Check - use secure (HTTPS) connection or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isSecure()
-    {
-        $result = parent::isSecure();
-
-        if (!is_null($this->get('feed')) && $this->get('feed') == 'login') {
-
-            $result = \XLite\Core\Config::getInstance()->Security->customer_security;
-        }
-
-        return $result;
-    }
-
-    /**
      * Check if cuurrent user is logged in
      *
      * @return boolean
