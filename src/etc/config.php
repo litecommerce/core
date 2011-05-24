@@ -1,6 +1,5 @@
 ; <?php /*
 ; WARNING: Do not change the line above
-; $Id$
 ;
 ; +-------------------------------------+
 ; |   LiteCommerce configuration file   |
