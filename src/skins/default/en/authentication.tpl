@@ -46,6 +46,7 @@
     <td colspan="2">&nbsp;</td>
     <td>
         <widget class="\XLite\View\Button\Submit" style="action" />
+        <a href="{buildURL(#recover_password#)}">{t(#Forgot password?#)}</a>
     </td>
 </tr>
 </table>
