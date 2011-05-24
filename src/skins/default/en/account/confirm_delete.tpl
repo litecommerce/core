@@ -10,9 +10,9 @@
  * @since     1.0.0
  *}
 
-<p>You have selected to delete your profile. Please, confirm you want to proceed:</p>
-
-<br />
+<div class="delete-profile-message">
+  {t(#You have selected to delete your profile. Please, confirm you want to proceed#)}:
+</div>
 
 <form action="{buildURL()}" method="post" name="delete_account_form">
   <input type="hidden" name="target" value="profile" />
@@ -21,7 +21,7 @@
   <div class="button">
     <widget class="\XLite\View\Button\Submit" label="Proceed" style="button-proceed" />
 
-    <widget class="\XLite\View\Button\Regular" label="Cancel" jsCode="document.forms['delete_account_form'].elements['action'].value='cancel_delete'; document.forms['delete_account_form'].submit();" style="button-cancel" />
+    <widget class="\XLite\View\Button\Regular" label="Cancel" jsCode="void(0);" style="button-cancel" />
   </div>
 
 </form>
