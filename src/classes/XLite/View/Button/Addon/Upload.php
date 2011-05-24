@@ -57,7 +57,7 @@ class Upload extends \XLite\View\Button\PopupButton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getButtonContent()
+    protected function getDefaultLabel()
     {
         return 'Upload add-on';
     }

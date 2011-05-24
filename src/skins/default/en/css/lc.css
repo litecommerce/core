@@ -267,18 +267,27 @@ table.form-data td {
 }
 
 table.main-table,
+  table.main-table tbody,
   table.main-table tr,
+  table.main-table th,
   table.main-table td
 {
-  border-width: 0px;
-  border-color: #ffffff;
-  border-style: none;
-  border-collapse: collapse;
+  border: 0px none;
   border-spacing: 0px;
 }
 
 table.main-table td {
   padding: 12px 3px;
+}
+
+table.default-table,
+  table.default-table tbody,
+  table.default-table tr,
+  table.default-table th,
+  table.default-table td
+{
+  border: 0px none;
+  border-spacing: 0px;
 }
 
 /* Colorbox jQuery plugin */
@@ -2387,8 +2396,8 @@ form.estimator .main,
   list-style: none;
   width: 278px;
   float: left;
-  background: #eff8fe none;
-  border: 1px solid #cadce8;
+  background: #f4f4f4 none;
+  border: 1px solid #dfdfdf;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
@@ -2406,21 +2415,17 @@ form.estimator .main,
 
 .select-address ul.addresses li .remove {
   position: absolute;
-  right: 7px;
-  top: 4px;
+  right: 9px;
+  top: 9px;
   text-decoration: none;
-  width: 13px;
-  height: 13px;
+  width: 18px;
+  height: 18px;
 }
 
 .select-address ul.addresses li .remove img {
-  background: transparent url(../images/icon_cross_circle.png) no-repeat left top;
-  width: 13px;
-  height: 13px;
-}
-
-.select-address ul.addresses li .remove img:hover {
-  background-position: left -13px;
+  background: transparent url(../images/icon_trash.png) no-repeat left top;
+  width: 18px;
+  height: 18px;
 }
 
 .select-address ul.addresses li .shipping {
@@ -2788,4 +2793,40 @@ div.page-tabs ul li.tab-current a
   background: #fff;
   color: #333;
   border-bottom: 1px solid #fff;
+}
+
+table.login-form,
+  table.login-form tr,
+  table.login-form th,
+  table.login-form td,
+  table.login-form tbody
+{
+  border: 0px none;
+  border-spacing: 0px;
+}
+
+table.login-form td {
+  padding: 5px 0px;
+}
+
+.recover-password-message {
+  margin: 0px 0px 10px 0px;
+}
+
+table.recover-password-form {
+  margin: 20px 0px 0px 0px;
+}
+
+table.recover-password-form,
+  table.recover-password-form tr,
+  table.recover-password-form th,
+  table.recover-password-form td,
+  table.recover-password-form tbody
+{
+  border: 0px none;
+  border-spacing: 0px;
+}
+
+table.recover-password-form td {
+  padding: 5px 0px;
 }

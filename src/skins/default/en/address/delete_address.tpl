@@ -12,27 +12,33 @@
 
 <div class="address-dialog">
 
-  <h2>Delete address</h2>
+  <h2>{t(#Delete address#)}</h2>
 
-  <h4>You have selected to delete this address:</h4>
+  <h4>{t(#You have selected to delete this address#)}:</h4>
 
   <div class="address-plain">
     <widget class="\XLite\View\Address" displayMode="text" displayWapper="" address="{address}" />
   </div>
 
-  <h4>Please, confirm you want to proceed:</h4>
+  <div class="clear"></div>
 
-  <form action="admin.php" method="post" name="delete_address_form">
-    <input type="hidden" name="target" value="address_book" />
-    <input type="hidden" name="action" value="delete" />
-    <input type="hidden" name="address_id" value="{address.getAddressId()}" />
+  <div class="delete-address-form">
 
-    <div class="button">
-      <widget class="\XLite\View\Button\Submit" label="Proceed" style="button-proceed" />
+    <h4>{t(#Please, confirm you want to proceed#)}:</h4>
 
-      <widget class="\XLite\View\Button\Regular" label="Cancel" jsCode="document.forms['delete_address_form'].elements['action'].value='cancel_delete'; document.forms['delete_address_form'].submit();" style="button-cancel" />
-    </div>
+    <form action="admin.php" method="post" name="delete_address_form">
+      <input type="hidden" name="target" value="address_book" />
+      <input type="hidden" name="action" value="delete" />
+      <input type="hidden" name="address_id" value="{address.getAddressId()}" />
 
-  </form>
+      <div class="button">
+        <widget class="\XLite\View\Button\Submit" label="Proceed" style="button-proceed" />
+
+        <widget class="\XLite\View\Button\Regular" label="Cancel" jsCode="document.forms['delete_address_form'].elements['action'].value='cancel_delete'; document.forms['delete_address_form'].submit();" style="button-cancel" />
+      </div>
+
+    </form>
+
+  </div>
 
 </div>

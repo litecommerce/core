@@ -198,7 +198,6 @@ class Address extends \XLite\View\Dialog
         $list = parent::getJSFiles();
 
         if ($this->getParam(self::PARAM_DISPLAY_WRAPPER)) {
-            $list[] = 'address/controller.js';
             $list[] = 'form_field/select_country.js';
         }
 

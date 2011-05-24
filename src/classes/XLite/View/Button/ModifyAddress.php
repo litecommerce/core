@@ -25,26 +25,51 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button\Addon;
+namespace XLite\View\Button;
+
 
 /**
- * Enter license key popup text
+ * Delete address button widget
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class EnterLicenseKey extends \XLite\View\Button\PopupButton
+class ModifyAddress extends \XLite\View\Button\APopupButton
 {
+    /*
+     * Address identificator parameter
+     */
+    const PARAM_ADDRESS_ID = 'addressId';
+
     /**
-     * Return content for popup button
+     * getJSFiles
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultLabel()
+    public function getJSFiles()
     {
-        return 'Enter license key';
+        $list = parent::getJSFiles();
+        $list[] = 'button/js/modify_address.js';
+
+        return $list;
+    }
+
+    /**
+     * Define widget params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_ADDRESS_ID => new \XLite\Model\WidgetParam\Int('Address ID', 0),
+        );
     }
 
     /**
@@ -57,9 +82,22 @@ class EnterLicenseKey extends \XLite\View\Button\PopupButton
     protected function prepareURLParams()
     {
         return array(
-            'target' => 'module_key',
-            'action' => 'view',
-            'widget' => '\XLite\View\ModulesManager\AddonKey',
+            'target'       => 'address_book',
+            'address_id'   => $this->getParam(self::PARAM_ADDRESS_ID),
+            'widget'       => '\XLite\View\Address\Modify',
         );
     }
+
+    /**
+     * Return CSS classes
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getClass()
+    {
+        return 'modify-address ' . ($this->getParam(self::PARAM_STYLE) ?: '');
+    }
+
 }

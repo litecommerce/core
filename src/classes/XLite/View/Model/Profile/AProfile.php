@@ -132,7 +132,10 @@ abstract class AProfile extends \XLite\View\Model\AModel
     {
         $result = parent::getFormButtons();
         $result['submit'] = new \XLite\View\Button\Submit(
-            array(\XLite\View\Button\AButton::PARAM_LABEL => $this->getSubmitButtonLabel())
+            array(
+                \XLite\View\Button\AButton::PARAM_LABEL => $this->getSubmitButtonLabel(),
+                \XLite\View\Button\AButton::PARAM_STYLE => 'action',
+            )
         );
 
         return $result;

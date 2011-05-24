@@ -6,7 +6,7 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   SVN: $Id$
+ * @version   SVN: $Id: 689c0075d83e846bd04c0b675bcb25684967e637 $
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
@@ -39,6 +39,11 @@
   width: 300px;
   border-color: #dfdfdf;
   background-color: #f4f4f4;
+  float: left;
+}
+
+.delete-address-form {
+  float: left;
 }
 
 .address-dialog button.button-proceed
@@ -81,39 +86,71 @@
 
 td.address-text {
   width: 100%;
+  padding: 0px;
 }
 
 ul.address-entry,
   ul.address-text
 {
   list-style: none;
+  margin: 0px;
 }
 
-ul.address-entry li {
-  clear: left;
+ul.address-entry {
+  float: left;
+}
+
+div.address-box div.address-icons {
+  float: right;
+  margin-top: -26px;
+}
+
+ul.address-entry li
+{
+  background: none;
+  margin: 0px;
+}
+
+div.address-box table td.address-entry-actions-cell {
+  padding: 10px 0px 0px 0px;
+}
+
+div.address-box div.delete-action {
+  float: right;
+}
+
+div.address-box div.change-action {
+  float: left;
 }
 
 ul.address-text li {
-  float: left;
   padding: 0px;
   margin: 0px;
-  clear: none;
 }
 
-ul.address-entry li span.address-text-value {
+ul.address-entry ul.address-text li.address-text-value,
+  ul.address-entry ul.address-text li.address-text-label
+{
   padding: 0px;
 }
 
-ul li.address-text-title,
-ul li.address-text-firstname,
-ul li.address-text-lastname,
-ul li.address-text-city,
-ul li.address-text-state_id,
-ul li.address-text-custom_state
+ul.address-entry li.address-text-cell,
+  ul.address-text li
 {
   float: left;
-  clear: none;
-  padding-right: 5px;
+  padding-left: 5px;
+}
+
+ul.address-entry ul.address-text li.address-text-comma {
+  padding-left: 0px;
+}
+
+ul.address-entry li.address-text-street,
+  ul.address-entry li.address-text-city,
+  ul.address-entry li.address-text-country_code,
+  ul.address-entry li.address-text-phone
+{
+  clear: both;
 }
 
 li.address-text-street,
@@ -146,20 +183,39 @@ li.address-text-phone
   display: none;
 }
 
-div.address-box
-{
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
+li.address-text-phone ul.address-text li.address-text-value {
+  padding-left: 5px;
+}
+
+div.address-box {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
   border-style: solid;
   border-width: 1px;
   float: left;
   margin-right: 20px;
   margin-bottom: 20px;
-  padding: 20px;
-  width: 300px;
+  padding: 15px;
+  width: 260px;
   border-color: #dfdfdf;
   background-color: #f4f4f4;
+}
+
+div.address-box table,
+  div.address-box table tbody,
+  div.address-box table tr,
+  div.address-box table th,
+  div.address-box table td
+{
+  background-color: #f4f4f4;
+  border: 0px none;
+  border-spacing: 0px;
+  padding: 0px;
+}
+
+div.address-box table {
+  margin: 0px;
 }
 
 .address-center-button
@@ -178,7 +234,7 @@ div.address-box
 img.address-type-icon
 {
   display: block;
-  padding: 5px;
+  padding: 5px 0px;
 }
 
 .address-form-label
@@ -192,24 +248,6 @@ img.address-type-icon
   padding-bottom: 5px;
 }
 
-button.delete-address
-{
-  border: 0px;
-  vertical-align: middle;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-position: left center;
-  background-image: url(../images/icon_trash.png);
-  height: 24px;
-  padding-left: 15px;
-  padding-right: 5px;
-  cursor: pointer;
-}
-
-button.delete-address span
-{
-  font-family: Helvetica,Arial,sans-serif;
-  font-size: 10px;
-  color: #666;
-  text-decoration: underline;
+div.popup {
+  width: 600px !important;
 }

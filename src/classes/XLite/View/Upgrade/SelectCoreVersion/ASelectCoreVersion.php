@@ -58,7 +58,7 @@ abstract class ASelectCoreVersion extends \XLite\View\Button\APopupButton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getButtonContent()
+    protected function getDefaultLabel()
     {
         return 'Upgrade available';
     }

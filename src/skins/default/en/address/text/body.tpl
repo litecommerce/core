@@ -13,13 +13,11 @@
 
 {foreach:getSchemaFields(),fieldName,fieldData}
 
-<li class="address-text-{fieldName}" IF="{getFieldValue(fieldName)}">
-
-  <div class="clear"></div>
+<li class="address-text-cell address-text-{fieldName}" IF="{getFieldValue(fieldName)}">
 
   <ul class="address-text">
 
-    <li class="address-text-label-{fieldName}">
+    <li class="address-text-label address-text-label-{fieldName}">
       {fieldData.label}:
     </li>
 
@@ -27,14 +25,14 @@
       {getFieldValue(fieldName,1)}
     </li>
 
-    <li class="address-text-comma-{fieldName}">,</li>
+    <li class="address-text-comma address-text-comma-{fieldName}">,</li>
 
   </ul>
-
-  <div class="clear"></div>
 
 </li>
 
 {end:}
 
 </ul>
+
+ <div class="clear"></div>

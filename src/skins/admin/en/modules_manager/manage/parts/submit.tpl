@@ -13,6 +13,6 @@
 
  {* TODO: rework design to make it more flexy *}
 
-<widget class="\XLite\View\Button\Regular" label="{t(#Add new add-ons#)}" style="main-button" jsCode="self.location.replace('{buildURL(#addons_list_marketplace#)}')" />
+<widget class="\XLite\View\Button\Link" label="{t(#Visit Module Marketplace#)}" style="main-button" location="{buildURL(#addons_list_marketplace#)}" />
 
 <widget class="\XLite\View\Button\Addon\Upload" style="main-button" />

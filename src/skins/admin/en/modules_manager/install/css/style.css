@@ -110,18 +110,19 @@ div.top-controls div.action-buttons {
 }
 
 .addons-filters ul {
-    list-style: none outside none;
-    margin: 0;
-    padding: 5px 0;
+  list-style: none outside none;
+  margin: 0;
+  padding: 5px 0;
 }
 
 .addons-filters ul li {
   -moz-border-radius: 15px 15px 15px 15px;
   -webkit-border-radius: 15px 15px 15px 15px;
   border-radius: 15px 15px 15px 15px;
-  display: inline;
+  float: left;
   font-size: 14px;
   margin-right: 20px;
+  margin-top: 5px;
 }
 
 .addons-filters ul li a {
@@ -131,13 +132,14 @@ div.top-controls div.action-buttons {
 }
 
 .addons-filters ul li.hl {
-    background: none repeat scroll 0 0 #3E77B8;
-    padding: 6px 12px;
+  background: none repeat scroll 0 0 #3E77B8;
+  padding: 6px 12px;
+  margin-top: 0px;
 }
 
 .addons-filters ul li.hl a {
-    color: #FFFFFF;
-    text-decoration: none;
+  color: #FFFFFF;
+  text-decoration: none;
 }
 
 .module-info {

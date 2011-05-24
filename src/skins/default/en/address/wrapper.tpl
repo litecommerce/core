@@ -17,28 +17,34 @@
     <tr>
 
       <td class="address-text">
+
         <widget template="address/text/body.tpl" />
-      </td>
 
-      <td valign="top" align="center">
-        <img src="images/icon_billing.png" title="Billing address" class="address-type-icon" IF="{address.getIsBilling()}" alt="" />
-        <img src="images/icon_shipping.png" title="Shipping address" class="address-type-icon" IF="{address.getIsBilling()}" alt="" />
-      </td>
+        <div class="delete-action">
+          <widget class="\XLite\View\Button\DeleteAddress" addressId="{address.getAddressId()}" />
+        </div>
+
+        <div class="clear"></div>
+
+     </td>
 
     </tr>
 
     <tr>
-      <td colspan="2">&nbsp;</td>
-    </tr>
 
-    <tr>
+      <td class="address-entry-actions-cell">
 
-      <td>
-        <widget class="\XLite\View\Button\Regular" label="Change" jsCode="openModifyAddress(this, '{address.getAddressId()}');" />
-      </td>
+        <div class="change-action">
+          <widget class="\XLite\View\Button\ModifyAddress" label="Change" addressId="{address.getAddressId()}" />
+        </div>
 
-      <td align="center">
-        <widget class="\XLite\View\Button\Link" label="Delete" jsCode="openDeleteAddress(this, '{address.getAddressId()}');" style="button delete-address" />
+        <div class="address-icons">
+          <img src="images/icon_billing.png" title="Billing address" class="address-type-icon" IF="{address.getIsBilling()}" alt="" />
+          <img src="images/icon_shipping.png" title="Shipping address" class="address-type-icon" IF="{address.getIsBilling()}" alt="" />
+        </div>
+
+        <div class="clear"></div>
+
       </td>
 
     </tr>
@@ -46,7 +52,7 @@
   </table>
 
   <div class="address-center-button" IF="{!address.getAddressId()}">
-    <widget class="\XLite\View\Button\Regular" label="Add new address" style="main-button" jsCode="openAddAddress(this, '{profile_id}');" />
+    <widget class="\XLite\View\Button\AddAddress" style="action" label="Add new address" profileId="{profile_id}" />
   </div>
 
 </div>
