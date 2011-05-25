@@ -10,10 +10,9 @@
  * @since     1.0.0
  *}
 <script type="text/javascript">
-if (typeof(window._gat) != 'undefined') {
-  var tracker = _gat._createTracker('{getAccount()}');
+if (typeof(window._gaq) != 'undefined') {
 {foreach:getGatCommands(),command}
-  {command:h}
+  _gaq.push([{command:h}]);
 
 {end:}
 }
