@@ -28,50 +28,44 @@
 namespace XLite\Core\Validator;
 
 /**
- * Integer
+ * Enumrable
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Float extends \XLite\Core\Validator\Scalar
+class Enum extends \XLite\Core\Validator\Scalar
 {
     /**
-     * Range minimum
-     *
-     * @var   float
+     * Items list 
+     * 
+     * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $min;
+    protected $list;
 
     /**
-     * Range maximum
-     *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $max;
-
-    /**
-     * Set range
-     *
-     * @param float $min Minimum
-     * @param float $max Maximum OPTIONAL
-     *
+     * Constructor
+     * 
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function setRange($min, $max = null)
+    public function __construct()
     {
-        if (isset($min) && is_numeric($min)) {
-            $this->min = $min;
-        }
+        $this->list = new \Doctrine\Common\Collections\ArrayCollection;
+    }
 
-        if (isset($max) && is_numeric($max)) {
-            $this->max = $max;
-        }
+    /**
+     * Get list 
+     * 
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getList()
+    {
+        return $this->list;
     }
 
     /**
@@ -86,33 +80,8 @@ class Float extends \XLite\Core\Validator\Scalar
      */
     public function validate($data)
     {
-        if (!is_numeric($data)) {
-            throw $this->throwError('Not a numeric');
-        }
-
-        $data = $this->sanitize($data);
-
-        if (isset($this->min) && $data < $this->min) {
-            throw $this->throwError('Minimum limit is broken', array('min' => $this->min));
-        }
-
-        if (isset($this->max) && $data > $this->max) {
-            throw $this->throwError('Maximum limit is broken', array('max' => $this->max));
+        if (!$this->list->contains($data)) {
+            throw $this->throwError('Value is forbidden');
         }
     }
-
-    /**
-     * Sanitaize
-     *
-     * @param mixed $data Daa
-     *
-     * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function sanitize($data)
-    {
-        return doubleval($data);
-    }
-
 }

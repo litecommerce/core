@@ -45,6 +45,43 @@ class PlainArray extends \XLite\Core\Validator\AValidator
     protected $itemValidator;
 
     /**
+     * Non-empty validation flag
+     *
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $nonEmpty = false;
+
+    /**
+     * Constructor
+     *
+     * @param boolean $nonEmpty Non-empty flag OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __construct($nonEmpty = false)
+    {
+        $this->markAsNonEmpty($nonEmpty);
+    }
+
+    /**
+     * Mark validator as requried non-empty
+     *
+     * @param boolean $nonEmpty Flag OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function markAsNonEmpty($nonEmpty = true)
+    {
+        $this->nonEmpty = $nonEmpty;
+    }
+
+    /**
      * Get validator
      *
      * @return \XLite\Core\Validator\AValidator
@@ -95,6 +132,10 @@ class PlainArray extends \XLite\Core\Validator\AValidator
         $wrongKeys = preg_grep('/^\d+$/Ss', array_keys($data), PREG_GREP_INVERT);
         if ($wrongKeys) {
             throw $this->throwError('Not a plain array');
+        }
+
+        if ($this->nonEmpty && empty($data)) {
+            throw $this->throwError('Array is empty');
         }
 
         try {

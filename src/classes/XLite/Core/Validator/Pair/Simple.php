@@ -54,6 +54,15 @@ class Simple extends \XLite\Core\Validator\Pair\APair
     protected $name;
 
     /**
+     * Public name 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $publicName;
+
+    /**
      * Cell value validator
      *
      * @var   \XLite\Core\Validator\AValidator
@@ -95,6 +104,20 @@ class Simple extends \XLite\Core\Validator\Pair\APair
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * Set cell public name
+     *
+     * @param string $name Name
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setPublicName($name)
+    {
+        $this->publicName = $name;
     }
 
     /**
@@ -181,11 +204,14 @@ class Simple extends \XLite\Core\Validator\Pair\APair
 
             } catch (\XLite\Core\Validator\Exception $exception) {
                 $exception->addPathItem($this->name);
+                if ($this->publicName) {
+                    $exception->setPublicName($this->publicName);
+                }
                 throw $exception;
             }
 
         } elseif (self::STRICT == $this->mode) {
-            throw $this->throwError('Pair did not found', array(), $this->name);
+            throw $this->throwError('Value did not found', array(), $this->name, $this->publicName);
         }
     }
 
