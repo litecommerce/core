@@ -62,4 +62,29 @@ abstract class AInput extends \XLite\View\FormField\AFormField
             'value' => $this->getValue(),
         );
     }
+
+    /**
+     * Register some data that will be sent to template as special HTML comment
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCommentedData()
+    {
+        return array();
+    }
+
+    /**
+     * Register CSS class to use for wrapper block (SPAN) of input field.
+     * It is usable to make unique changes of the field.
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getWrapperClass()
+    {
+        return 'input';
+    }
 }
