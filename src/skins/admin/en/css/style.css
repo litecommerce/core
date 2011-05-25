@@ -475,7 +475,7 @@ div.page-tabs ul li.tab-current a
 table.data-table th,
 table.data-table td
 {
-  padding: 5px 10px;
+  padding: 10px 10px;
   white-space: nowrap;
   color: #333;
   vertical-align: top;
