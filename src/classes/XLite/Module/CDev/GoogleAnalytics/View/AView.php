@@ -25,66 +25,46 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\FormField\Input;
-
+namespace XLite\Module\CDev\GoogleAnalytics\View;
 
 /**
- * \XLite\View\FormField\Input\AInput
+ * Abstract widget
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class AInput extends \XLite\View\FormField\AFormField
+abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
     /**
-     * Return field template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFieldTemplate()
-    {
-        return 'input.tpl';
-    }
-
-    /**
-     * getCommonAttributes
+     * Register JS files
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getCommonAttributes()
+    public function getJSFiles()
     {
-        return parent::getCommonAttributes() + array(
-            'type'  => $this->getFieldType(),
-            'value' => $this->getValue(),
-        );
+        $list = parent::getJSFiles();
+
+        if ($this->isIncludeController()) {
+            $list[] = 'modules/CDev/GoogleAnalytics/drupal.js';
+        }
+
+        return $list;
     }
 
     /**
-     * Register some data that will be sent to template as special HTML comment
+     * Display widget as Standalone-specific
      *
-     * @return array
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getCommentedData()
+    protected function isIncludeController()
     {
-        return array();
-    }
+        return \XLite\Core\Operator::isClassExists('\XLite\Module\CDev\DrupalConnector\Handler')
+            && \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+            && function_exists('googleanalytics_theme');
 
-    /**
-     * Register CSS class to use for wrapper block (SPAN) of input field.
-     * It is usable to make unique changes of the field.
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getWrapperClass()
-    {
-        return 'input';
     }
 }

@@ -20,35 +20,11 @@
 
       <input FOREACH="getURLParams(),name,value" type="hidden" name="{name}" value="{value}" />
 
-      <input IF="getParam(#substring#)" id="search_substring" type="text" name="substring" value="{getParam(#substring#)}" />
-      <input IF="!getParam(#substring#)" id="search_substring" type="text" name="substring" value="{t(#Enter keywords#)}" class="default-value" />
+      <widget class="\XLite\View\FormField\Input\Text" fieldOnly="true" fieldName="substring" value="{getParam(#substring#)}" defaultValue="{t(#Enter keywords#)}" />
 
       <widget class="\XLite\View\Button\Submit" label="{t(#Search#)}" />
 
     </form>
-
-{* :TODO: move it into a JS file *}
-<script type="text/javascript">
-var default_substring = '{t(#Enter keywords#)}';
-var sObj = jQuery('#search_substring');
-var sForm = jQuery('form[name=search_form]');
-sObj.blur(function(e){
-<!--
-  if (jQuery(this).val() == '') {
-    jQuery(this).addClass('default-value').val(default_substring);
-  }
-});
-sObj.focus(function(e){
-  if (jQuery(this).val() == default_substring) {
-    jQuery(this).val('').removeClass('default-value');
-  }
-});
-sForm.submit(function(e){
-  if (sObj.val() == default_substring)
-    sObj.val('');
-})
--->
-</script>
 
   </div>
 

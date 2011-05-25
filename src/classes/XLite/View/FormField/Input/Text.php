@@ -35,6 +35,8 @@ namespace XLite\View\FormField\Input;
  */
 class Text extends \XLite\View\FormField\Input\AInput
 {
+    const PARAM_DEFAULT_VALUE = 'defaultValue';
+
     /**
      * Return field type
      *
@@ -46,4 +48,50 @@ class Text extends \XLite\View\FormField\Input\AInput
     {
         return self::FIELD_TYPE_TEXT;
     }
+
+    /**
+     * Get a list of JS files required to display the widget properly
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = $this->getDir() . '/js/text.js';
+
+        return $list;
+    }
+
+    /**
+     * Define widget params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_DEFAULT_VALUE => new \XLite\Model\WidgetParam\String('Default value', ''),
+        );
+    }
+
+    /**
+     * Register some data that will be sent to template as special HTML comment
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCommentedData()
+    {
+        return array(
+            'defaultValue' => $this->getParam(self::PARAM_DEFAULT_VALUE),
+        );
+    }
+
 }

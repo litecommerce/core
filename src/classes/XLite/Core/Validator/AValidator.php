@@ -63,20 +63,25 @@ abstract class AValidator
     /**
      * Throw error exception
      *
-     * @param string $message   Message
-     * @param array  $arguments Language label arguments OPTIONAL
-     * @param mixed  $pathItem  Path item key OPTIONAL
+     * @param string $message    Message
+     * @param array  $arguments  Language label arguments OPTIONAL
+     * @param mixed  $pathItem   Path item key OPTIONAL
+     * @param string $publicName Path item public name OPTIONAL
      *
      * @return \XLite\Core\Validator\Exception
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function throwError($message, array $arguments = array(), $pathItem = null)
+    protected function throwError($message, array $arguments = array(), $pathItem = null, $publicName = null)
     {
         $exception = new \XLite\Core\Validator\Exception($message);
         $exception->setLabelArguments($arguments);
         if (isset($pathItem)) {
             $exception->addPathItem($pathItem);
+        }
+
+        if ($publicName) {
+            $exception->setPublicName($publicName);
         }
 
         return $exception;
