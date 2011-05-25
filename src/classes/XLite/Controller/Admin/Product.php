@@ -334,30 +334,39 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionAdd()
     {
-        // Insert record into main table
-        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert($this->getPostedData());
+        $form = new \XLite\View\Form\Product\Modify\Single;
+        $requestData = $form->getRequestData();
 
-        if ($product) {
+        if ($form->getValidationMessage()) {
+            \XLite\Core\TopMessage::addError($form->getValidationMessage());
 
-            $inventory = new \XLite\Model\Inventory();
+        } else {
 
-            $inventory->setProduct($product);
+            // Insert record into main table
+            $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert($this->getPostedData());
 
-            // Create associations (categories and images)
-            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
-                $product,
-                $this->getCategoryProducts($product)
-                + array(
-                    'inventory' => $inventory,
-                )
-            );
+            if ($product) {
 
-            \XLite\Core\TopMessage::addInfo(
-                'New product has been successfully added'
-            );
+                $inventory = new \XLite\Model\Inventory();
 
-            // Add the ID of created product to the return URL
-            $this->setReturnURL($this->buildURL('product', '', array('product_id' => $product->getProductId())));
+                $inventory->setProduct($product);
+
+                // Create associations (categories and images)
+                \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
+                    $product,
+                    $this->getCategoryProducts($product)
+                    + array(
+                        'inventory' => $inventory,
+                    )
+                );
+
+                \XLite\Core\TopMessage::addInfo(
+                    'New product has been successfully added'
+                );
+
+                // Add the ID of created product to the return URL
+                $this->setReturnURL($this->buildURL('product', '', array('product_id' => $product->getProductId())));
+            }
         }
     }
 
