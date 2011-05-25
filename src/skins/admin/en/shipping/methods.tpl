@@ -67,8 +67,11 @@ Use this section to define your store's shipping methods.
             <th style="width:90%;">Shipping method</th>
             <th>{t(#Pos.#)}</th>
             <th>{t(#Assigned classes#)}</th>
-            <th class="center">{t(#Active#)}<br />
-              <input class="column-selector" id="enable_method_{processor.getProcessorId()}" type="checkbox" />
+            <th class="center">
+              <label for="enable_method_{processor.getProcessorId()}">
+                <input class="column-selector" id="enable_method_{processor.getProcessorId()}" type="checkbox" />
+                {t(#Active#)}
+              </label>
             </th>
             <th valign="top">&nbsp;</th>
           </tr>
