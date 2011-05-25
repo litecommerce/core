@@ -475,16 +475,18 @@ div.page-tabs ul li.tab-current a
 table.data-table th,
 table.data-table td
 {
-  padding: 10px 10px;
+  padding: 5px 10px;
   white-space: nowrap;
   color: #333;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 table.data-table th
 {
   background-color: #e5ebef;
   text-align: left;
+  padding: 10px;
+  vertical-align: top;
 }
 
 table.data-table th.center
