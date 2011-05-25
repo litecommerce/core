@@ -502,7 +502,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	# Do not create LC Standalone distributive when generate demo version
 	if [ "x${DEMO_VERSION}" = "x" ]; then
 
-		tar -czf litecommerce-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
+		tar -czf litecommerce3-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
 
 		echo -e "\n  + LiteCommerce $VERSION distributive is completed"
 
@@ -605,7 +605,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	cd $OUTPUT_DIR
 
 	# Pack Drupal+LC distributive
-	tar -czf drupal-lc-${VERSION}.tgz ${DRUPAL_DIRNAME}
+	tar -czf drupal-lc3-${VERSION}.tgz ${DRUPAL_DIRNAME}
 
 	# Remove obsolete directories
 	rm -rf ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
