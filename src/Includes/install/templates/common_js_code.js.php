@@ -161,12 +161,12 @@ function showDetails(code)
 
     for (var i = 0; i < failedCodes.length; i++) {
         if (failedCodes[i] != code) {
-            var failedElement = document.getElementById('failed-' + failedCodes[i]);
+            failedElement = document.getElementById('failed-' + failedCodes[i]);
             if (failedElement) {
                 // failedElement.style.textDecoration = 'underline';
                 failedElement.className = 'status-failed-link';
             }
-            var failedImageElement = document.getElementById('failed-image-' + failedCodes[i]);
+            failedImageElement = document.getElementById('failed-image-' + failedCodes[i]);
             if (failedImageElement) {
                 failedImageElement.style.display = 'none';
             }
