@@ -26,6 +26,9 @@ div.addons-search-panel input {
 div.addons-search-panel input.default-value {
   font-style: italic;
   color: #a5a5a5;
+}
+
+div.addons-search-panel input.search-substring {
   width: 390px;
 }
 

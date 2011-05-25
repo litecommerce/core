@@ -11,10 +11,10 @@
  *}
 
 <div class="advanced-input-text">
-<div class="original-label">{getLabel()}</div>
-<div class="original-input">
-<widget template="{getDir()}/{getParentFieldTemplate()}" />
-<a class="cancel-input" href="javascript:void(0);">{t(#Cancel#)}</a>
-<img src="images/spacer.gif" class="progress" alt="" />
-</div>
+  <div class="original-label">{getLabel()}</div>
+  <div class="original-input">
+    <widget template="{getDir()}/{getParentFieldTemplate()}" />
+    <a class="cancel-input" href="javascript:void(0);">{t(#Cancel#)}</a>
+    <img src="images/spacer.gif" class="progress" alt="" />
+  </div>
 </div>
