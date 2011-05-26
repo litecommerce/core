@@ -88,6 +88,8 @@ class Measure extends \XLite\Controller\Admin\AAdmin
             )
         );
 
+        set_time_limit(0);
+
         $request = new \XLite\Core\HTTP\Request($url);
         $request->sendRequest();
     }
