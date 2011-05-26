@@ -59,9 +59,10 @@ class HashArray extends \XLite\Core\Validator\AValidator
     /**
      * Add pair validator
      *
-     * @param mixed                            $name      Cell name or pair validator
-     * @param \XLite\Core\Validator\AValidator $validator Cell validator OPTIONAL
-     * @param string                           $mode      Pair validation mode OPTIONAL
+     * @param mixed                            $name       Cell name or pair validator
+     * @param \XLite\Core\Validator\AValidator $validator  Cell validator OPTIONAL
+     * @param string                           $mode       Pair validation mode OPTIONAL
+     * @param string                           $publicName Cell public name OPTIONAL
      *
      * @return \XLite\Core\Validator\AValidator
      * @see    ____func_see____
@@ -70,9 +71,13 @@ class HashArray extends \XLite\Core\Validator\AValidator
     public function addPair(
         $name,
         \XLite\Core\Validator\AValidator $validator = null,
-        $mode = \XLite\Core\Validator\Pair\APair::STRICT
+        $mode = \XLite\Core\Validator\Pair\APair::STRICT,
+        $publicName = null
     ) {
         $result = null;
+
+        $mode = isset($mode) ? $mode : \XLite\Core\Validator\Pair\APair::STRICT;
+        
 
         if (is_object($name) && $name instanceof \XLite\Core\Validator\Pair\APair) {
 
@@ -85,6 +90,9 @@ class HashArray extends \XLite\Core\Validator\AValidator
             $result = new \XLite\Core\Validator\Pair\Simple($mode);
             $result->setName($name);
             $result->setValidator($validator);
+            if ($publicName) {
+                $result->setPublicName($publicName);
+            }
         }
 
         if ($result) {
