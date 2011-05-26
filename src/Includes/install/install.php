@@ -1152,7 +1152,7 @@ function doPrepareFixtures(&$params, $silentMode = false)
         }
     }
 
-    \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($enabledModules);
+    \Includes\Utils\ModulesManager::saveModulesToFile($enabledModules);
 
     // Generate fixtures list
     $yamlFiles = $lcSettings['yaml_files']['base'];

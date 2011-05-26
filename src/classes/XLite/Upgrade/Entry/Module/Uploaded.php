@@ -184,7 +184,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function isInstalled()
     {
-        return \Includes\Decorator\Utils\ModulesManager::isModuleInstalled($this->getActualName());
+        return \Includes\Utils\ModulesManager::isModuleInstalled($this->getActualName());
     }
 
     /**
@@ -324,7 +324,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function callModuleMethod($method, array $args = array())
     {
-        return \Includes\Decorator\Utils\ModulesManager::callModuleMethod($this->getActualName(), $method, $args);
+        return \Includes\Utils\ModulesManager::callModuleMethod($this->getActualName(), $method, $args);
     }
 
     /**

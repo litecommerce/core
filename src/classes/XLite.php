@@ -293,7 +293,7 @@ class XLite extends \XLite\Base
      */
     public function initModules()
     {
-        \Includes\Decorator\Utils\ModulesManager::initModules();
+        \Includes\Utils\ModulesManager::initModules();
     }
 
     /**

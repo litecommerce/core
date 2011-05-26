@@ -375,7 +375,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getActualName()
     {
-        return \Includes\Decorator\Utils\ModulesManager::getActualName($this->getAuthor(), $this->getName());
+        return \Includes\Utils\ModulesManager::getActualName($this->getAuthor(), $this->getName());
     }
 
     /**

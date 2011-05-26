@@ -108,7 +108,7 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
     {
         return new \Includes\Utils\FileFilter(
             LC_DIR_SKINS,
-            \Includes\Decorator\Utils\ModulesManager::getPathPatternForTemplates()
+            \Includes\Utils\ModulesManager::getPathPatternForTemplates()
         );
     }
 
