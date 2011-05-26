@@ -350,8 +350,21 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         $module->setIconURL($this->getIconURL());
         $module->setDependencies($this->getDependencies());
 
+        // :TRICKY: convention for marketplaceIDs generation
+        $marketplaceID = md5(
+            $module->getAuthor() . $module->getName() . $module->getMajorVersion() . $module->getMinorVersion()
+        );
+        $data = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID, $module->getLicenseKey());
+
+        if ($data) {
+            $module->setMarketplaceID($data[\XLite\Core\Marketplace::FIELD_MODULE_ID]);
+        }
+
         \XLite\Core\Database::getEM()->persist($module);
         \XLite\Core\Database::getEM()->flush();
+
+        // :TRICKY: to restore previous state
+        \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
     }
 
     /**
