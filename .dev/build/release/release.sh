@@ -503,6 +503,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	if [ "x${DEMO_VERSION}" = "x" ]; then
 
 		tar -czf litecommerce3-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
+		zip -rq litecommerce3-${VERSION}.zip ${LITECOMMERCE_DIRNAME}
 
 		echo -e "\n  + LiteCommerce $VERSION distributive is completed"
 
@@ -554,6 +555,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		# Pack LC Connector module distributive
 		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/modules
 		tar -czf ${OUTPUT_DIR}/lc_connector-${VERSION}.tgz lc_connector
+		zip -rq ${OUTPUT_DIR}/lc_connector-${VERSION}.zip lc_connector
+
 
 		echo "  + LC Connector v.$VERSION module for Drupal is completed"
 
@@ -566,6 +569,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		# Pack LCCMS theme
 		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes
 		tar -czf ${OUTPUT_DIR}/lc3_clean_theme-${VERSION}.tgz lc3_clean
+		zip -rq ${OUTPUT_DIR}/lc3_clean_theme-${VERSION}.zip lc3_clean
+
 
 		echo "  + LC3 v.$VERSION theme for Drupal is completed"
 
@@ -606,6 +611,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	# Pack Drupal+LC distributive
 	tar -czf drupal-lc3-${VERSION}.tgz ${DRUPAL_DIRNAME}
+	zip -rq drupal-lc3-${VERSION}.zip ${DRUPAL_DIRNAME}
 
 	# Remove obsolete directories
 	rm -rf ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
