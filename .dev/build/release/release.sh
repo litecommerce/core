@@ -62,7 +62,7 @@ insert_seo_phrases ()
 	# Prepare sed command
 	search_for="protected \$phrases = array();"
 
-	sed_cmd="sed -i $SED_EXT '/$search_for/ c\\
+	sed_cmd="$SED_EXT '/$search_for/ c\\
     $REPLACEMENT
 ' $2/classes/XLite/View/PoweredBy.php"
 
@@ -202,10 +202,10 @@ BASE_DIR=`realpath $T`
 
 
 if [ "`uname`" = "Linux" ]; then
-	SED_EXT='';
+	SED_EXT="sed -i";
 	SED_REGEX_LINUX='-regextype posix-extended';
 else
-	SED_EXT='""';
+	SED_EXT="sed -i ''";
 	SED_REGEX_FBSD='-E';
 fi
 
@@ -474,8 +474,10 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 #	fi
 
 	# Modify version of release
-	sed -i $SED_EXT "s/Version, value: xlite_3_0_x/Version, value: '${XLITE_VERSION}'/" sql/xlite_data.yaml
-	sed -i $SED_EXT "s/define('LC_VERSION', '[^']*'/define('LC_VERSION', '${XLITE_VERSION}'/" Includes/install/install_settings.php
+	sed_cmd="$SED_EXT \"s/Version, value: xlite_3_0_x/Version, value: '${XLITE_VERSION}'/\" sql/xlite_data.yaml"
+	eval "$sed_cmd"
+	sed_cmd="$SED_EXT \"s/define('LC_VERSION', '[^']*'/define('LC_VERSION', '${XLITE_VERSION}'/\" Includes/install/install_settings.php"
+	eval "$sed_cmd"
 
 
 	# Save copy of original file PoweredBy.php
@@ -485,7 +487,9 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	# Patch file PoweredBy.php
 	insert_seo_phrases "$LC_SEO_PHRASES" "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}"
 
-	sed -i $SED_EXT "/'DrupalConnector', \/\/ Allows to use Drupal CMS as a storefront/d" ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/Includes/install/install_settings.php
+	sed_cmd="$SED_EXT \"/'DrupalConnector', \/\/ Allows to use Drupal CMS as a storefront/d\" ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/Includes/install/install_settings.php"
+	eval "$sed_cmd"
+
 
 	$PHP ${BASE_DIR}/../devcode_postprocess.php silentMode=1
 
@@ -498,7 +502,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	# Do not create LC Standalone distributive when generate demo version
 	if [ "x${DEMO_VERSION}" = "x" ]; then
 
-		tar -czf litecommerce-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
+		tar -czf litecommerce3-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
 
 		echo -e "\n  + LiteCommerce $VERSION distributive is completed"
 
@@ -529,7 +533,9 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		echo "Warning! Logo image file $LOGO_IMAGE not found"
 	fi
 
-	sed -i $SED_EXT 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info
+	sed_cmd="$SED_EXT 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info"
+	eval "$sed_cmd"
+
 
 	# Restore original file PoweredBy.php from temporary directory
 	cp ${OUTPUT_DIR}/tmp/PoweredBy.php ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/classes/XLite/View/
@@ -599,7 +605,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	cd $OUTPUT_DIR
 
 	# Pack Drupal+LC distributive
-	tar -czf drupal-lc-${VERSION}.tgz ${DRUPAL_DIRNAME}
+	tar -czf drupal-lc3-${VERSION}.tgz ${DRUPAL_DIRNAME}
 
 	# Remove obsolete directories
 	rm -rf ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
