@@ -177,7 +177,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
         if ($module) {
 
             // Update data in DB
-            \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
+            \Includes\Utils\ModulesManager::disableModule($module->getActualName());
 
             // Flag to rebuild cache
             \XLite::setCleanUpCacheFlag(true);
@@ -205,7 +205,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
             }
 
             // Disable this and depended modules
-            \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
+            \Includes\Utils\ModulesManager::disableModule($module->getActualName());
 
             // Remove from DB
             \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($module);

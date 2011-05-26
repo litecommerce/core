@@ -25,7 +25,13 @@
  * @since      1.0.0
  */
 
-class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
+/**
+ * XLite_Tests_Model_Repo_Module 
+ * 
+ * @see   ____class_see____
+ * @since 1.0.0
+ */
+class XLite_Tests_Model_Repo_Module extends XLite_Tests_TestCase
 {
     protected function setUp()
     {

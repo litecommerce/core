@@ -109,7 +109,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
             $dependencies = $module->getDependencies();
 
             if ($dependencies) {
-                $modules = array_keys(\Includes\Decorator\Utils\ModulesManager::getActiveModules());
+                $modules = array_keys(\Includes\Utils\ModulesManager::getActiveModules());
                 $result  = ! (bool) array_diff($dependencies, $modules);
             }
         }

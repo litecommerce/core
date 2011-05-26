@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace Includes\Decorator\Utils;
+namespace Includes\Utils;
 
 /**
  * Some useful constants
@@ -39,7 +39,7 @@ define('LC_DS_OPTIONAL', '(' . LC_DS_QUOTED . '|$)');
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class ModulesManager extends AUtils
+abstract class ModulesManager extends \Includes\Utils\AUtils
 {
     /**
      * Pattern to get module name by class name
@@ -572,7 +572,9 @@ abstract class ModulesManager extends AUtils
      */
     public static function getPathPatternForPHP()
     {
-        return static::getPathPattern(preg_quote(static::getClassesDir(), '/') . '\w+', 'Module', 'php');
+        return static::getPathPattern(
+            preg_quote(\Includes\Decorator\ADecorator::getClassesDir(), '/') . '\w+', 'Module', 'php'
+        );
     }
 
     /**
@@ -584,7 +586,9 @@ abstract class ModulesManager extends AUtils
      */
     public static function getPathPatternForTemplates()
     {
-        return static::getPathPattern(preg_quote(LC_DIR_SKINS, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules', 'tpl');
+        return static::getPathPattern(
+            preg_quote(LC_DIR_SKINS, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules', 'tpl'
+        );
     }
 
     /**
@@ -612,7 +616,9 @@ abstract class ModulesManager extends AUtils
     {
         if (!isset(static::$quotedPaths)) {
             static::$quotedPaths = array();
-            static::getModulesGraph()->walkThrough(array(get_called_class(), 'getModuleQuotedPathsCallback'));
+            \Includes\Decorator\ADecorator::getModulesGraph()->walkThrough(
+                array(get_called_class(), 'getModuleQuotedPathsCallback')
+            );
         }
 
         return static::$quotedPaths;
