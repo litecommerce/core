@@ -115,11 +115,28 @@ class CheckoutSuccess extends \XLite\View\AView
                 . '\'' . $this->escapeJavascript($country) . '\'';
 
             foreach ($order->getItems() as $item) {
+
+                $product = $item->getProduct();
+                $category = $product ? $product->getCategory() : null;
+                if ($category && $category->getCategoryId()) {
+                    $categories = \XLite\Core\Database::getRepo('XLite\Model\Category')
+                        ->getCategoryPath($category->getCategoryId());
+                    $category = array();
+                    foreach ($categories as $cat) {
+                        $category[] = $cat->getName();
+                    }
+
+                    $category = implode(' / ', $category);
+
+                } else {
+                    $category = '';
+                }
+
                 $list[] = '\'_addItem\', '
                     . '\'' . $order->getOrderId() . '\', '
                     . '\'' . $this->escapeJavascript($item->getSku()) . '\', '
                     . '\'' . $this->escapeJavascript($item->getName()) . '\', '
-                    . '\'\', '
+                    . '\'' . $this->escapeJavascript($category) . '\', '
                     . '\'' . $item->getPrice() . '\', '
                     . '\'' . $item->getAmount() . '\'';
             }
