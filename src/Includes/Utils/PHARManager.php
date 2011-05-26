@@ -80,7 +80,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      */
     public static function packModule(\XLite\Core\Pack\Module $pack)
     {
-        static::download($pack);
+        static::download($pack, false);
     }
 
     /**
@@ -114,17 +114,17 @@ abstract class PHARManager extends \Includes\Utils\AUtils
     /**
      * Download pack
      *
-     * @param \XLite\Core\Pack\APack $pack Files to pack
-     *
+     * @param \XLite\Core\Pack\APack $pack     Files to pack
+     * @param boolean                $compress Flag OPTIONAL
+     *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function download(\XLite\Core\Pack\APack $pack)
+    protected static function download(\XLite\Core\Pack\APack $pack, $compress = true)
     {
         $path = LC_DIR_TMP . $pack->getName() . '.tar';
-        $phar = static::pack($path, $pack->getDirectoryIterator(), $pack->getMetadata());
+        $phar = static::pack($path, $pack->getDirectoryIterator(), $pack->getMetadata(), $compress);
 
         header('Content-Type: application/force-download');
         header('Content-Disposition: attachment; filename="' . basename($path) . '"');
@@ -132,6 +132,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
         echo (\Includes\Utils\FileManager::read($path));
         \Includes\Utils\FileManager::deleteFile($path);
+
         exit (0);
     }
 
@@ -141,13 +142,14 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @param string    &$name    Pack name
      * @param \Iterator $iterator Directory iterator
      * @param array     $metadata Archive description OPTIONAL
+     * @param boolean   $compress Flag OPTIONAL
      *
      * @return \Phar
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function pack(&$name, \Iterator $iterator, array $metadata = array())
+    protected static function pack(&$name, \Iterator $iterator, array $metadata = array(), $compress = true)
     {
         // To prevent existsing files usage
         \Includes\Utils\FileManager::deleteFile($name);
@@ -164,7 +166,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
         static::addPackHash($phar, $iterator);
 
         // GZ compression
-        return static::compress($phar, $name);
+        return $compress ? static::compress($phar, $name) : $phar;
     }
 
     /**
