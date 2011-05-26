@@ -126,7 +126,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
         $list[] = 'modules_manager/enter_key/css/style.css';
 
-        // TODO must be taken from LICENSE module widget!!!
+        // TODO must be taken from LICENSE module widget
         $list[] = 'modules_manager/license/css/style.css';
 
         $list[] = 'modules_manager/installation_type/css/style.css';
@@ -161,7 +161,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
 
         // TODO must be taken from LICENSE module widget
         $list[] = 'modules_manager/license/js/switch-button.js';
-
 
         $list[] = $this->getDir() . '/' . $this->getPageBodyDir() . '/js/controller.js';
 
@@ -462,7 +461,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     /**
      * Get purchase page URL
      *
-     * :FIXME: is it really needed???
+     * :FIXME: is it really needed?
      *
      * @return string
      * @see    ____func_see____

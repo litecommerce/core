@@ -450,6 +450,7 @@ class Module extends \XLite\Model\Repo\ARepo
 
         if ($installed) {
             $result = $this->getModuleForUpdate($installed) ?: $installed;
+
         } else {
             $result = $this->defineModuleFromMarketplaceQuery($module)->getSingleResult();
         }
@@ -524,7 +525,7 @@ class Module extends \XLite\Model\Repo\ARepo
         $this->prepareCndSingleModuleSearch($queryBuilder, $module);
 
         $queryBuilder
-            ->addOrderBy('m.majorVersion', 'DESC')
+            ->addOrderBy('m.majorVersion', 'ASC')
             ->addOrderBy('m.minorVersion', 'DESC');
 
 
