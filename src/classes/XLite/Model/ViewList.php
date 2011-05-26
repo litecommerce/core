@@ -36,7 +36,8 @@ namespace XLite\Model;
  * @Entity (repositoryClass="\XLite\Model\Repo\ViewList")
  * @Table  (name="view_lists",
  *          indexes={
- *              @Index (name="clzw", columns={"class", "list", "zone", "weight"})
+ *              @Index (name="tl", columns={"tpl", "list"}),
+ *              @Index (name="lz", columns={"list", "zone"})
  *          }
  * )
  */
@@ -80,7 +81,7 @@ class ViewList extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="512")
+     * @Column (type="string")
      */
     protected $class = '';
 
@@ -91,7 +92,7 @@ class ViewList extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string")
      */
     protected $list;
 
