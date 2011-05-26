@@ -1163,6 +1163,7 @@ table.top-sellers th.title {
 
 .benchmark-summary {
   width: 348px;
+  margin-bottom: 20px;
 }
 
 .summary-box-content p {
@@ -1186,8 +1187,11 @@ table.top-sellers th.title {
 }
 
 .benchmark-summary .completed .score {
-  color: #9d2307;
   font-size: 22px;
+}
+
+.benchmark-summary .completed .score-high {
+  color: #9d2307;
 }
 
 .benchmark-summary .date {
@@ -1221,34 +1225,31 @@ table.top-sellers th.title {
   vertical-align: top;
 }
 
-.benchmark-summary li {
+.benchmark-summary td {
   padding: 11px 0px;
   vertical-align: middle;
 }
 
-.benchmark-summary li * {
+.benchmark-summary td * {
   vertical-align: middle;
 }
 
-.benchmark-summary li,
-.benchmark-summary li span
+.benchmark-summary td,
+.benchmark-summary td span
 {
   font-size: 15px;
 }
 
-.benchmark-summary li span.name {
-  display: inline-block;
-  position: relative;
-  width: 132px;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.benchmark-summary ul a {
+.benchmark-summary td a {
   text-decoration: underline;
 }
 
-.benchmark-summary li span.score {
+.benchmark-summary td.dash {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.benchmark-summary td .score {
   color: #338d0f;
 }
 
