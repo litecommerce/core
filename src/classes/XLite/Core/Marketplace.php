@@ -378,7 +378,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function validateResponseForGetCoreHashAction(array $data)
     {
-        return !empty($data);
+        return !empty($data) && empty($data['error']);
     }
 
     // }}}
@@ -714,7 +714,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function validateResponseForGetAddonHashAction(array $data)
     {
-        return !empty($data);
+        return !empty($data) && empty($data['error']);
     }
 
     // }}}
@@ -876,6 +876,7 @@ class Marketplace extends \XLite\Base\Singleton
 
         if ($response) {
             $result = $this->prepareResponse($response, $action);
+
         } else {
             $this->setError(null, 'Bouncer general error, see the log');
         }
