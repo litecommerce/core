@@ -609,7 +609,7 @@ abstract class AEntry
                 $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
             }
 
-        } elseif ($this->manageFile($path, 'delete')) {
+        } elseif ($this->manageFile($path, 'deleteFile')) {
             $this->log('File "' . $path . '" successfully deleted');
 
         } else {

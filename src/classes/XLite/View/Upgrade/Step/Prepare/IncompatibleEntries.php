@@ -136,7 +136,7 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
         $versionCore   = \XLite\Upgrade\Cell::getInstance()->getCoreMajorVersion();
         $versionModule = $module->getMajorVersion();
 
-        $classModule = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($module->getActualName());
+        $classModule = \Includes\Utils\ModulesManager::getClassNameByModuleName($module->getActualName());
         $reflection  = new \ReflectionMethod($classModule, 'getMajorVersion');
 
         $classModule = \Includes\Utils\Converter::prepareClassName($classModule);

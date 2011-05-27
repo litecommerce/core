@@ -401,7 +401,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
 
         // Disable selected modules
         foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
-            \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
+            \Includes\Utils\ModulesManager::disableModule($module->getActualName());
         }
 
         if ($this->isForce() && \XLite\Upgrade\Cell::getInstance()->isValid()) {

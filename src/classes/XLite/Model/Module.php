@@ -321,6 +321,18 @@ class Module extends \XLite\Model\AEntity
     // {{{ Routines to access methods of (non)installed modules
 
     /**
+     * Return main class name for current module
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMainClass()
+    {
+        return '\XLite\Module\\' . $this->getActualName() . '\Main';
+    }
+
+    /**
      * Method to call functions from module main classes
      *
      * @param string $method Method to call
@@ -350,18 +362,6 @@ class Module extends \XLite\Model\AEntity
         return $this->getInstalled() && \Includes\Utils\Operator::checkIfClassExists($this->getMainClass());
     }
 
-    /**
-     * Return main class name for current module
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getMainClass()
-    {
-        return '\XLite\Module\\' . $this->getActualName() . '\Main';
-    }
-
     // }}}
 
     // {{{ Some common getters and setters
@@ -375,7 +375,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getActualName()
     {
-        return \Includes\Decorator\Utils\ModulesManager::getActualName($this->getAuthor(), $this->getName());
+        return \Includes\Utils\ModulesManager::getActualName($this->getAuthor(), $this->getName());
     }
 
     /**

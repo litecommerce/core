@@ -9,6 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  * @ListChild (list="itemsList.product.grid.customer.info", weight="30")
+ * @ListChild (list="itemsList.product.sidebar.customer.info", weight="30")
  * @ListChild (list="itemsList.product.list.customer.info", weight="40")
  * @ListChild (list="itemsList.product.table.customer.columns", weight="40")
  *}

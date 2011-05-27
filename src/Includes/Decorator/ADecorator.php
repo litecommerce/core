@@ -107,11 +107,10 @@ abstract class ADecorator
      * Return classes repository path
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function getClassesDir()
+    public static function getClassesDir()
     {
         return (self::STEP_FIRST === static::$step) ? LC_DIR_CLASSES : LC_DIR_CACHE_CLASSES;
     }

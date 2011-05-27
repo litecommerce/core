@@ -287,7 +287,7 @@ foreach ($files as $file) {
 }
 
 // Create modules list
-\Includes\Decorator\Utils\ModulesManager::saveModulesToFile($modules);
+\Includes\Utils\ModulesManager::saveModulesToFile($modules);
 
 // Remove disabled structures
 $path = LC_DIR_VAR . '.disabled.structures.php';

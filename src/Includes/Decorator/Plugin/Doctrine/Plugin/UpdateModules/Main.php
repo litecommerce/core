@@ -46,7 +46,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
     public function executeHookHandlerStepThird()
     {
         // To cache data
-        \Includes\Decorator\Utils\ModulesManager::getActiveModules();
+        \Includes\Utils\ModulesManager::getActiveModules();
 
         // Walk through the "XLite/Module" directory
         foreach ($this->getModuleMainFileIterator()->getIterator() as $path => $data) {
@@ -54,16 +54,16 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
             $dir    = $path;
             $name   = basename($dir = dirname($dir));
             $author = basename($dir = dirname($dir));
-            $class  = \Includes\Decorator\Utils\ModulesManager::getClassNameByAuthorAndName($author, $name);
+            $class  = \Includes\Utils\ModulesManager::getClassNameByAuthorAndName($author, $name);
 
             if (!\Includes\Utils\Operator::checkIfClassExists($class)) {
                 require_once ($path);
             }
 
-            \Includes\Decorator\Utils\ModulesManager::switchModule($author, $name);
+            \Includes\Utils\ModulesManager::switchModule($author, $name);
         }
 
-        \Includes\Decorator\Utils\ModulesManager::removeFile();
+        \Includes\Utils\ModulesManager::removeFile();
     }
 
     /**

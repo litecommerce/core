@@ -96,21 +96,13 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      */
     protected function getModules($cellName)
     {
-        $ids = \XLite\Core\Request::getInstance()->$cellName;
-
         $modules = array();
 
-        if (is_array($ids)) {
-            foreach ($ids as $id => $tmp) {
-                $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find(intval($id));
-                if ($module) {
-                    $modules[] = $module;
-                }
-            }
-
+        foreach (((array) \XLite\Core\Request::getInstance()->$cellName) as $id => $value) {
+            $modules[] = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find(intval($id));
         }
 
-        return $modules;
+        return array_filter($modules);
     }
 
     // }}}
@@ -150,12 +142,12 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
     protected function doActionPack()
     {
         if (LC_DEVELOPER_MODE) {
-
             $module = $this->getModule();
 
             if ($module) {
                 if ($module->getEnabled()) {
                     \Includes\Utils\PHARManager::packModule(new \XLite\Core\Pack\Module($module));
+
                 } else {
                     \XLite\Core\TopMessage::addError('Only enabled modules can be packed');
                 }
@@ -165,7 +157,6 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
             }
 
         } else {
-
             \XLite\Core\TopMessage::addError(
                 'Module packing is available in the DEVELOPER mode only. Check etc/config.php file'
             );
@@ -186,7 +177,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
         if ($module) {
 
             // Update data in DB
-            \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
+            \Includes\Utils\ModulesManager::disableModule($module->getActualName());
 
             // Flag to rebuild cache
             \XLite::setCleanUpCacheFlag(true);
@@ -214,7 +205,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
             }
 
             // Disable this and depended modules
-            \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
+            \Includes\Utils\ModulesManager::disableModule($module->getActualName());
 
             // Remove from DB
             \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($module);
