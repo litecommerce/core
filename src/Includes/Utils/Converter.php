@@ -272,6 +272,13 @@ abstract class Converter extends \Includes\Utils\AUtils
             $multiplier++;
         }
 
-        return array(number_format($size), static::$byteMultipliers[$multiplier]);
+        // Do not display numbers after decimal point if size is in kilobytes.
+        // When size is greater then display one number after decimal point.
+        $decimal = $multiplier > 1 ? 1 : 0;
+
+        return array(
+            number_format($size, $decimal),
+            static::$byteMultipliers[$multiplier],
+        );
     }
 }

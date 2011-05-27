@@ -108,7 +108,7 @@ class Content extends \XLite\View\AView
     }
 
     /**
-     * Chewck - first sidebar is visible or not
+     * Check - first sidebar is visible or not
      *
      * @return boolean
      * @see    ____func_see____
