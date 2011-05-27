@@ -1885,6 +1885,10 @@ function change_config(&$params)
 
     $_params = $params;
 
+    if (!isset($_params['mysqlpass'])) {
+        $_params['mysqlpass'] = '';
+    }
+
     if (!isset($_params['mysqlport'])) {
         $_params['mysqlport'] = '';
     }
