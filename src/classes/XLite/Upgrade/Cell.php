@@ -749,6 +749,8 @@ class Cell extends \XLite\Base\Singleton
 
         if (!$isTestMode) {
             $this->completeLog();
+            // :FIXME:
+            \XLite\Core\TmpVars::getInstance()->{'check_for_updatesTTL'} = 0;
         }
 
         return $result;

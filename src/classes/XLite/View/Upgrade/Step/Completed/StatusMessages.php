@@ -70,7 +70,7 @@ class StatusMessages extends \XLite\View\Upgrade\Step\Completed\ACompleted
      */
     protected function isVisible()
     {
-        return parent::isVisible() && (bool) $this->getStatusMessages();
+        return parent::isVisible() && (bool) $this->getMessages();
     }
 
     /**
@@ -80,7 +80,7 @@ class StatusMessages extends \XLite\View\Upgrade\Step\Completed\ACompleted
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getStatusMessages()
+    protected function getMessages()
     {
         return \XLite\Upgrade\Cell::getInstance()->getErrorMessages();
     }

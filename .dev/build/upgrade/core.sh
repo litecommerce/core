@@ -259,6 +259,8 @@ cp -r skins skins_original
 # Modify version of release
 sed -i "" "s/Version, value: xlite_3_0_x/Version, value: '${VERSION}'/" sql/xlite_data.yaml
 sed -i "" "s/define('LC_VERSION', '[^']*'/define('LC_VERSION', '${VERSION}'/" Includes/install/install_settings.php
+# sed -i "" "s/'1.0'/'1.2'/" classes/XLite.php
+# sed -i "" "s/'0'/'3'/" classes/XLite.php
 
 # Patch file PoweredBy.php
 insert_seo_phrases "$LC_SEO_PHRASES" "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}"
