@@ -9,10 +9,14 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+ {displayViewListContent(#itemsList.product.cart#)}
+
 <ul class="list-body-sidebar products products-sidebar">
 
-  <li FOREACH="getSideBarData(),i,product" class="hproduct item {getAdditionalItemClass(productArrayPointer,productArraySize)}">
-    {displayInheritedViewListContent(#info#,_ARRAY_(#product#^product))}
+  <li FOREACH="getSideBarData(),i,product" class="product-cell hproduct item {getAdditionalItemClass(productArrayPointer,productArraySize)}">
+    <div class="{getProductCellClass(product)}">
+      {displayInheritedViewListContent(#info#,_ARRAY_(#product#^product))}
+    </div>
   </li>
 
   <li IF="isShowMoreLink()">

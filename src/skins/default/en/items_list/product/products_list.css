@@ -90,10 +90,15 @@ ul.products-sidebar li
 
 ul.products-sidebar li {
   padding-bottom: 20px;
+  position: relative;
 }
 
 ul.products-sidebar li.last {
   padding-bottom: 0px;
+}
+
+ul.products-sidebar li .product {
+  padding: 2px 8px 8px;
 }
 
 .products div.product,
