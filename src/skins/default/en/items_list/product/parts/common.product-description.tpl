@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="itemsList.product.list.customer.info", weight="30")
  *}
-<div IF="product.getBriefDescription" class="description product-description">{product.getBriefDescription():h}</div>
+<div IF="product.getBriefDescription()" class="description product-description">{product.getBriefDescription():h}</div>

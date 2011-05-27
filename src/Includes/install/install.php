@@ -1152,7 +1152,7 @@ function doPrepareFixtures(&$params, $silentMode = false)
         }
     }
 
-    \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($enabledModules);
+    \Includes\Utils\ModulesManager::saveModulesToFile($enabledModules);
 
     // Generate fixtures list
     $yamlFiles = $lcSettings['yaml_files']['base'];
@@ -1884,6 +1884,10 @@ function change_config(&$params)
     }
 
     $_params = $params;
+
+    if (!isset($_params['mysqlpass'])) {
+        $_params['mysqlpass'] = '';
+    }
 
     if (!isset($_params['mysqlport'])) {
         $_params['mysqlport'] = '';

@@ -129,7 +129,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
     {
         return new \Includes\Utils\FileFilter(
             static::getClassesDir(),
-            \Includes\Decorator\Utils\ModulesManager::getPathPatternForPHP()
+            \Includes\Utils\ModulesManager::getPathPatternForPHP()
         );
     }
 
@@ -191,7 +191,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
 
         // Fetch all active modules from database.
         // Dependencies are checked and corrected by the ModulesManager
-        foreach (\Includes\Decorator\Utils\ModulesManager::getActiveModules() as $module => $tmp) {
+        foreach (\Includes\Utils\ModulesManager::getActiveModules() as $module => $tmp) {
 
             // Unconditionally add module to the index (since its dependencies are already checked)
             $index[$module] = new \Includes\Decorator\DataStructure\Graph\Modules($module);

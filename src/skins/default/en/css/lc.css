@@ -386,7 +386,8 @@ ul.subcategory-icons a
 
 
 .products-grid .product-cell,
-.products-grid .product-cell .ui-draggable-dragging
+  .products-grid .product-cell .ui-draggable-dragging,
+  .product-cell.ui-draggable-dragging
 {
   border-color: #eee;
   border-style: solid;

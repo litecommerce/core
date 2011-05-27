@@ -184,7 +184,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function isInstalled()
     {
-        return \Includes\Decorator\Utils\ModulesManager::isModuleInstalled($this->getActualName());
+        return \Includes\Utils\ModulesManager::isModuleInstalled($this->getActualName());
     }
 
     /**
@@ -324,7 +324,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function callModuleMethod($method, array $args = array())
     {
-        return \Includes\Decorator\Utils\ModulesManager::callModuleMethod($this->getActualName(), $method, $args);
+        return \Includes\Utils\ModulesManager::callModuleMethod($this->getActualName(), $method, $args);
     }
 
     /**
@@ -350,8 +350,21 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         $module->setIconURL($this->getIconURL());
         $module->setDependencies($this->getDependencies());
 
+        // :TRICKY: convention for marketplaceIDs generation
+        $marketplaceID = md5(
+            $module->getAuthor() . $module->getName() . $module->getMajorVersion() . $module->getMinorVersion()
+        );
+        $data = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID, $module->getLicenseKey());
+
+        if ($data) {
+            $module->setMarketplaceID($data[\XLite\Core\Marketplace::FIELD_MODULE_ID]);
+        }
+
         \XLite\Core\Database::getEM()->persist($module);
         \XLite\Core\Database::getEM()->flush();
+
+        // :TRICKY: to restore previous state
+        \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
     }
 
     /**
