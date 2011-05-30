@@ -9,5 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-
-<a class="uninstall" href="{buildURL(#addons_list_installed#,#uninstall#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall', '{module.getModuleId()}');"><img src="images/spacer.gif" alt="{t(#Uninstall#)}" /></a>
+<a
+  class="uninstall"
+  href="{buildURL(#addons_list_installed#,#uninstall#,_ARRAY_(#moduleId#^module.getModuleId()))}"
+  onclick="javascript: return confirm(confirmNote('uninstall', '{module.getModuleId()}'));">
+  <img src="images/spacer.gif" alt="{t(#Uninstall#)}" />
+</a>
