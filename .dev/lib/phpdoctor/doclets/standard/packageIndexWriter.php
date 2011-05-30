@@ -52,6 +52,7 @@ class PackageIndexWriter extends HTMLWriter
 		echo "<hr>\n\n";
 		
 		echo '<h1>'.$this->_doclet->docTitle()."</h1>\n\n";
+        echo '<div class="generate-date">This documentation was automatically generated from LiteCommerce source files on &lt;' . date('F d, Y') . '&gt;.</div>' . "\n\n";
 
 		$rootDoc =& $this->_doclet->rootDoc();
 
