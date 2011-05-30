@@ -83,7 +83,7 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
      */
     protected function getHead()
     {
-        return 'These components are suspicious and may require your attention';
+        return 'These components require your attention';
     }
 
     /**

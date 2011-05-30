@@ -11,20 +11,23 @@
  *
  * @ListChild (list="itemsList.module.manage.columns.module-main-section.actions", weight="10")
  *}
-{if:module.getEnabled()}
+<span class="disable" IF="{module.getEnabled()}">
+  <input type="hidden" name="switch[{module.getModuleId()}][old]" value="1" />
+  <input
+    type="checkbox"
+    name="switch[{module.getModuleId()}][new]"
+    {if:!canDisable(module)} disabled="disabled"{end:}
+    checked="checked"
+    id="switch{module.getModuleId()}" />
+  <label for="switch{module.getModuleId()}">{t(#Enabled#)}</label>
+</span>
 
-  <span class="disable">
-    <input type="hidden" name="switch[{module.getModuleId()}][old]" value="1" />
-    <input type="checkbox" name="switch[{module.getModuleId()}][new]" {if:!canDisable(module)} disabled="disabled"{end:} checked="checked" id="switch{module.getModuleId()}" />
-    <label for="switch{module.getModuleId()}">{t(#Enabled#)}</label>
-  </span>
-
-{else:}
-
-  <span class="enable">
-    <input type="hidden" name="switch[{module.getModuleId()}][old]" value="0" />
-    <input type="checkbox" name="switch[{module.getModuleId()}][new]" {if:!canEnable(module)} disabled="disabled"{end:} id="switch{module.getModuleId()}" />
-    <label for="switch{module.getModuleId()}">{t(#Enabled#)}</label>
-  </span>
-
-{end:}
+<span class="enable" IF="{!module.getEnabled()}">
+  <input type="hidden" name="switch[{module.getModuleId()}][old]" value="0" />
+  <input
+    type="checkbox"
+    name="switch[{module.getModuleId()}][new]"
+    {if:!canEnable(module)} disabled="disabled"{end:}
+    id="switch{module.getModuleId()}" />
+  <label for="switch{module.getModuleId()}">{t(#Disabled#)}</label>
+</span>
