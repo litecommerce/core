@@ -104,6 +104,10 @@ ul li, dd, dt {
   line-height: 150%;
 }
 
+.generate-date {
+  font-size: 14px;
+}
+
 /* page header */
 
 div.header {
