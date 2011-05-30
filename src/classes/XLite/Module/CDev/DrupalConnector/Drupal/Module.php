@@ -147,6 +147,8 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         $this->registerPortal('user/%/orders/%', '\XLite\Controller\Customer\Order');
         $this->registerPortal('user/%/orders/%/invoice', '\XLite\Controller\Customer\Invoice');
 
+        $this->registerPortal('user/%/address-book', '\XLite\Controller\Customer\AddressBook', 'Address book');
+
         // So called "landing link"
         $this->registerPortal(
             self::LANDING_LINK_PATH, '\XLite\Controller\Admin\Main', 'LC admin area', MENU_NORMAL_ITEM
