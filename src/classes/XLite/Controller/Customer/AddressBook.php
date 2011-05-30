@@ -83,12 +83,7 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
             $profileId = \XLite\Core\Request::getInstance()->profile_id;
 
             if (!isset($profileId)) {
-
-                $profileId = $this->getAddress()->getProfile()->getProfileId();
-
-                if (\XLite\Core\Auth::getInstance()->getProfile()->getProfileId() === $profileId) {
-                    unset($profileId);
-                }
+                $profileId = $this->correctProfileIdForURLParams($this->getAddress()->getProfile()->getProfileId());
             }
 
             $params = isset($profileId) ? array('profile_id' => $profileId) : array();
@@ -100,6 +95,24 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
         }
 
         return $url;
+    }
+
+    /**
+     * Remove profileId from URL params if it is profileId of already logged in user
+     * 
+     * @param integer $profileId Profile ID
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function correctProfileIdForURLParams($profileId)
+    {
+        if (\XLite\Core\Auth::getInstance()->getProfile()->getProfileId() === $profileId) {
+            $profileId = null;
+        }
+
+        return $profileId;
     }
 
     /**
