@@ -155,6 +155,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 array('language' => $language->name)
             );
 
+            \XLite\Core\Translation::getInstance()->reset();
         }
     }
 
@@ -201,6 +202,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 array('language' => $language->name)
             );
 
+            \XLite\Core\Translation::getInstance()->reset();
         }
     }
 
@@ -255,6 +257,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
             }
 
+            \XLite\Core\Translation::getInstance()->reset();
         }
     }
 
