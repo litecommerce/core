@@ -881,7 +881,7 @@ function checkFilePermissions(&$errorMsg, &$value)
 
             foreach ($array as $file => $perm) {
 
-                if (LC_OS_CODE === 'win') {
+                if (LC_OS_IS_WIN) {
                     $perms[] = $file;
 
                 } else {
@@ -904,7 +904,7 @@ function checkFilePermissions(&$errorMsg, &$value)
 
     if (count($perms) > 0) {
         $result = false;
-        if (LC_OS_CODE === 'win') {
+        if (LC_OS_IS_WIN) {
             $errorMsg = xtr("Permissions checking failed. Please make sure that the following files have writable permissions:\n<br /><br /><i>:perms</i>", array(':perms' => implode("<br />\n", $perms)));
 
         } else {
@@ -1489,7 +1489,7 @@ function doFinishInstallation(&$params, $silentMode = false)
     // Prepare files permissions recommendation text
     $perms = '';
 
-    if (!(LC_OS_CODE === 'win')) {
+    if (!LC_OS_IS_WIN) {
 
         $_perms = array();
 
@@ -1991,7 +1991,7 @@ function get_info()
     $php_info = ob_get_contents();
     ob_end_clean();
 
-    $dll_sfix = ((LC_OS_CODE === 'win') ? '.dll' : '.so');
+    $dll_sfix = (LC_OS_IS_WIN ? '.dll' : '.so');
 
     foreach (explode("\n",$php_info) as $line) {
 
@@ -2158,7 +2158,7 @@ function check_memory_limit($current_limit, $required_limit)
     if ($limit < $required) {
 
 		// workaround for http://bugs.php.net/bug.php?id=36568
-        if (!(LC_OS_CODE == 'win' && version_compare(phpversion(), '5.1.0') < 0)) {
+        if (!LC_OS_IS_WIN && version_compare(phpversion(), '5.1.0') < 0)) {
             @ini_set('memory_limit', $required_limit);
             $limit = ini_get('memory_limit');
         }
