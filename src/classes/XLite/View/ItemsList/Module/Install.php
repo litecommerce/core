@@ -144,7 +144,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Register JS files. TODO REWORK with Popup button widget
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -176,7 +175,20 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . '/' . $this->getPageBodyDir() . '/items_list.tpl';
+        return $this->getDir() . '/' . $this->getPageBodyDir() . '/'
+            . ($this->isMarketplaceAccessible() ? 'items_list' : 'marketplace_not_accessible') . '.tpl';
+    }
+
+    /**
+     * Check if marketplace is accessible
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isMarketplaceAccessible()
+    {
+        return !is_null(\XLite\Core\Marketplace::getInstance()->checkForUpdates());
     }
 
     /**
@@ -469,7 +481,12 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function getPurchaseURL()
     {
-        $apiURL = trim(\Includes\Utils\Converter::trimTrailingChars(\XLite\Core\Marketplace::getInstance()->getMarketplaceURL(), '/'));
+        $apiURL = trim(
+            \Includes\Utils\Converter::trimTrailingChars(
+                \XLite\Core\Marketplace::getInstance()->getMarketplaceURL()
+                , '/'
+            )
+        );
         $apiURL = preg_replace('/^http:\/\//Ss', 'https://', $apiURL);
 
         // Remove 'api' directory
