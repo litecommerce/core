@@ -369,7 +369,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     // {{{ Helpers to use in templates
 
     /**
-     * Check if the module is purchased
+     * Check if the module is installed
      *
      * @param \XLite\Model\Module $module Module
      *
