@@ -1089,7 +1089,9 @@ class Marketplace extends \XLite\Base\Singleton
             }
 
             // Set new expiration time
-            $this->setTTLStart($cellTTL);
+            if (isset($result)) {
+                $this->setTTLStart($cellTTL);
+            }
         }
 
         return $saveInTmpVars ? \XLite\Core\TmpVars::getInstance()->$cellData : $result;

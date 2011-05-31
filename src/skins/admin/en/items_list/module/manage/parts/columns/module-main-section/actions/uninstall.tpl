@@ -9,6 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <a
   class="uninstall"
   href="{buildURL(#addons_list_installed#,#uninstall#,_ARRAY_(#moduleId#^module.getModuleId()))}"

@@ -198,23 +198,42 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
         if ($module) {
 
             $pack = new \XLite\Core\Pack\Module($module);
+            $dirs = $pack->getDirs();
 
-            // Remove from FS
-            foreach ($pack->getDirs() as $dir) {
-                \Includes\Utils\FileManager::unlinkRecursive($dir);
+            $nonWritableDirs = array();
+
+            // Check permissions
+            foreach ($dirs as $dir) {
+                if (!\Includes\Utils\FileManager::isDirWritable($dir)) {
+                    $nonWritableDirs[] = \Includes\Utils\FileManager::getRelativePath($dir, LC_DIR_ROOT);
+                }
             }
 
-            // Disable this and depended modules
-            \Includes\Utils\ModulesManager::disableModule($module->getActualName());
+            if (empty($nonWritableDirs)) {
 
-            // Remove from DB
-            \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($module);
+                // Remove from FS
+                foreach ($dirs as $dir) {
+                    \Includes\Utils\FileManager::unlinkRecursive($dir);
+                }
 
-            if ($module->getModuleID()) {
-                \XLite\Core\TopMessage::addError('An error occured while uninstalling the module');
+                // Disable this and depended modules
+                \Includes\Utils\ModulesManager::disableModule($module->getActualName());
+
+                // Remove from DB
+                \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($module);
+
+                if ($module->getModuleID()) {
+                    \XLite\Core\TopMessage::addError('An error occured while uninstalling the module');
+
+                } else {
+                    \XLite\Core\TopMessage::addInfo('The module has been uninstalled successfully');
+                }
 
             } else {
-                \XLite\Core\TopMessage::addInfo('The module has been uninstalled successfully');
+                \XLite\Core\TopMessage::addError(
+                    'Unable to delete module files: some dirs have no writable permissions:' 
+                    . '<br />' . implode('<br />', $nonWritableDirs)
+                );
             }
         }
     }

@@ -260,10 +260,23 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
 
         if ($path) {
             \XLite\Upgrade\Cell::getInstance()->clear(true, true, false);
-            \XLite\Upgrade\Cell::getInstance()->addUploadedModule($path);
+            $entry = \XLite\Upgrade\Cell::getInstance()->addUploadedModule($path);
 
-            if (\XLite\Upgrade\Cell::getInstance()->isValid()) {
+            if (!isset($entry)) {
+                \XLite\Core\TopMessage::getInstance()->addError(
+                    'Unable to add module to the upgrade list'
+                );
+
+            } elseif (\XLite::getInstance()->checkVersion($entry->getMajorVersionNew(), '<')) {
+                \XLite\Core\TopMessage::getInstance()->addError(
+                    'Module version (' . $entry->getMajorVersionNew() . ') is greater than the core one'
+                );
+
+            } elseif (\XLite\Upgrade\Cell::getInstance()->isValid()) {
                 $this->setReturnURL($this->buildURL('upgrade', 'download', $this->getActionParamsCommon(true)));
+
+            } else {
+                \XLite\Core\TopMessage::getInstance()->addError('Unexpected error');
             }
 
         } else {
