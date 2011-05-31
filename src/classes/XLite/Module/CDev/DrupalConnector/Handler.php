@@ -48,6 +48,7 @@ class Handler extends \XLite\Core\CMSConnector
         \XLite\Core\TopMessage::ERROR   => 'error',
     );
 
+
     /**
      * Return name of current CMS
      *
@@ -71,6 +72,80 @@ class Handler extends \XLite\Core\CMSConnector
     {
         return 'drupal';
     }
+
+    /**
+     * Get portal object by path
+     *
+     * @param string $path Path to compare
+     *
+     * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPortalByPath($path)
+    {
+        return \XLite\Module\CDev\DrupalConnector\Drupal\Module::getInstance()->getPortal($path);
+    }
+
+    /**
+     * Get portal object by target
+     *
+     * @param string $target Target to search
+     *
+     * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPortalByTarget($target)
+    {
+        $class = \XLite\Core\Converter::getControllerClass($target);
+
+        $portals = array_filter(
+            \XLite\Module\CDev\DrupalConnector\Drupal\Module::getInstance()->getPortals(),
+            function (\XLite\Module\CDev\DrupalConnector\Model\Portal $portal) use ($class) {
+                return $portal->getController() === $class;
+            }
+        );
+
+        return is_array($portals) ? array_shift($portals) : null;
+    }
+
+    /**
+     * Initialization
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        $this->mapRequest($this->getLCArgs());
+        $this->setPreviousTopMessages();
+    }
+
+    /**
+     * Get Drupal-based Clean URL
+     *
+     * @param mixed $path    ____param_comment____
+     * @param array $options ____param_comment____
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getDrupalCleanURL($path, array $options)
+    {
+        $url = null;
+        if (0 === strpos($path, \XLite\Core\Converter::DRUPAL_ROOT_NODE . '/')) {
+            $args = explode('/', substr($path, strlen(\XLite\Core\Converter::DRUPAL_ROOT_NODE) + 1));
+            $url = $this->getCleanURL($this->getControllerArgs($args));
+        }
+
+        return $url;
+    }
+
 
     /**
      * Method to get raw Drupal request arguments
@@ -210,79 +285,6 @@ class Handler extends \XLite\Core\CMSConnector
     }
 
     /**
-     * Get portal object by path
-     *
-     * @param string $path Path to compare
-     *
-     * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPortalByPath($path)
-    {
-        return \XLite\Module\CDev\DrupalConnector\Drupal\Module::getInstance()->getPortal($path);
-    }
-
-    /**
-     * Get portal object by target
-     *
-     * @param string $target Target to search
-     *
-     * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPortalByTarget($target)
-    {
-        $class = \XLite\Core\Converter::getControllerClass($target);
-
-        $portals = array_filter(
-            \XLite\Module\CDev\DrupalConnector\Drupal\Module::getInstance()->getPortals(),
-            function (\XLite\Module\CDev\DrupalConnector\Model\Portal $portal) use ($class) {
-                return $portal->getController() === $class;
-            }
-        );
-
-        return is_array($portals) ? array_shift($portals) : null;
-    }
-
-    /**
-     * Initialization
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function init()
-    {
-        parent::init();
-
-        $this->mapRequest($this->getLCArgs());
-        $this->setPreviousTopMessages();
-    }
-
-    /**
-     * Get Drupal-based Clean URL
-     *
-     * @param mixed $path    ____param_comment____
-     * @param array $options ____param_comment____
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDrupalCleanURL($path, array $options)
-    {
-        $url = null;
-        if (0 === strpos($path, \XLite\Core\Converter::DRUPAL_ROOT_NODE . '/')) {
-            $args = explode('/', substr($path, strlen(\XLite\Core\Converter::DRUPAL_ROOT_NODE) + 1));
-            $url = $this->getCleanURL($this->getControllerArgs($args));
-        }
-
-        return $url;
-    }
-
-    /**
      * Set Drupal messages using LC top messages data
      *
      * @return void
@@ -302,9 +304,9 @@ class Handler extends \XLite\Core\CMSConnector
     /**
      * Build CleanURL
      *
-     * @param string $target    Page identifier
-     * @param string $action    Action to perform OPTIONAL
-     * @param array  $params    Additional params OPTIONAL
+     * @param string $target Page identifier
+     * @param string $action Action to perform OPTIONAL
+     * @param array  $params Additional params OPTIONAL
      *
      * @return string
      * @see    ____func_see____

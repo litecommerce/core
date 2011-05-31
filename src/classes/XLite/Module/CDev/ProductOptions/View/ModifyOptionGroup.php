@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\View;
@@ -30,87 +30,34 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Modify option group
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class ModifyOptionGroup extends \XLite\View\AView
 {
     /**
      * Option group (cache)
      *
-     * @var    \XLite\Module\CDev\ProductOptions\Model\OptionGroup
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \XLite\Module\CDev\ProductOptions\Model\OptionGroup
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $group;
 
     /**
      * Options list (cache)
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $options;
 
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'modules/CDev/ProductOptions/option_group.tpl';
-    }
-
-    /**
-     * Get option group
-     *
-     * @return \XLite\Module\CDev\ProductOptions\Model\OptionGroup
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getGroup()
-    {
-        if (!isset($this->group)) {
-            if (\XLite\Core\Request::getInstance()->groupId) {
-                $this->group = \XLite\Core\Database::getRepo('\XLite\Module\CDev\ProductOptions\Model\OptionGroup')
-                    ->find(\XLite\Core\Request::getInstance()->groupId);
-            }
-
-            if (!$this->group) {
-                $this->group = new \XLite\Module\CDev\ProductOptions\Model\OptionGroup;
-            }
-        }
-
-        return $this->group;
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible()
-            && ($this->getGroup()->getGroupId() || $this->isNew());
-    }
 
     /**
      * Check - is option group createion procedure or not
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -123,7 +70,6 @@ class ModifyOptionGroup extends \XLite\View\AView
      * Get product id
      *
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -136,7 +82,6 @@ class ModifyOptionGroup extends \XLite\View\AView
      * Get group id
      *
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -151,7 +96,6 @@ class ModifyOptionGroup extends \XLite\View\AView
      * Get option group translation storage
      *
      * @return \XLite\Module\CDev\ProductOptions\Model\OptionGroupTranslation
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -166,7 +110,6 @@ class ModifyOptionGroup extends \XLite\View\AView
      * Get options groups list
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -183,7 +126,6 @@ class ModifyOptionGroup extends \XLite\View\AView
      * Check if theare are any options created for the group
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -196,10 +138,9 @@ class ModifyOptionGroup extends \XLite\View\AView
      * Get option translation storage
      *
      * @param \XLite\Module\CDev\ProductOptions\Model\Option $option Option
-     * @param string                                    $field  Field name
+     * @param string                                         $field  Field name
      *
      * @return \XLite\Module\CDev\ProductOptions\Model\OptionTranslation
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -213,7 +154,6 @@ class ModifyOptionGroup extends \XLite\View\AView
      * Get option modifier types names
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -228,10 +168,9 @@ class ModifyOptionGroup extends \XLite\View\AView
     /**
      * Get option modifiers
      *
-     * @param \XLite\Module\CDev\ProductOptions\Model\Option $option Options
+     * @param \XLite\Module\CDev\ProductOptions\Model\Option $option Options OPTIONAL
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -259,7 +198,6 @@ class ModifyOptionGroup extends \XLite\View\AView
      * Get option group types
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -275,7 +213,6 @@ class ModifyOptionGroup extends \XLite\View\AView
      * Get option group view types
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -293,7 +230,6 @@ class ModifyOptionGroup extends \XLite\View\AView
      * Get option surcharge modifier types
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -305,4 +241,52 @@ class ModifyOptionGroup extends \XLite\View\AView
         );
     }
 
+    /**
+     * Get option group
+     *
+     * @return \XLite\Module\CDev\ProductOptions\Model\OptionGroup
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getGroup()
+    {
+        if (!isset($this->group)) {
+            if (\XLite\Core\Request::getInstance()->groupId) {
+                $this->group = \XLite\Core\Database::getRepo('\XLite\Module\CDev\ProductOptions\Model\OptionGroup')
+                    ->find(\XLite\Core\Request::getInstance()->groupId);
+            }
+
+            if (!$this->group) {
+                $this->group = new \XLite\Module\CDev\ProductOptions\Model\OptionGroup;
+            }
+        }
+
+        return $this->group;
+    }
+
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/CDev/ProductOptions/option_group.tpl';
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && ($this->getGroup()->getGroupId() || $this->isNew());
+    }
 }

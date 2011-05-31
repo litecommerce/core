@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Demo\View;
@@ -30,38 +30,15 @@ namespace XLite\Module\CDev\Demo\View;
 /**
  * Abstract widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
     /**
-     * Compile and display a template
-     *
-     * @param string $original         Template file name
-     * @param string $previousSkin     Previous skin
-     * @param string $previousTemplate Previous template
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function includeCompiledFile($original = null, $previousSkin = null, $previousTemplate = null)
-    {
-        if (\XLite::isAdminZone() && 'main.tpl' === basename($this->getTemplateFile($original))) {
-            echo (self::getAdditionalHeader());
-        }
-
-        parent::includeCompiledFile($original);
-    }
-
-    /**
      * Get additional header
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -93,5 +70,26 @@ body {
 -->
 </style>
 HTML;
+    }
+
+
+    /**
+     * Compile and display a template
+     *
+     * @param string $original         Template file name OPTIONAL
+     * @param string $previousSkin     Previous skin OPTIONAL
+     * @param string $previousTemplate Previous template OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function includeCompiledFile($original = null, $previousSkin = null, $previousTemplate = null)
+    {
+        if (\XLite::isAdminZone() && 'main.tpl' === basename($this->getTemplateFile($original))) {
+            echo (self::getAdditionalHeader());
+        }
+
+        parent::includeCompiledFile($original);
     }
 }

@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 /**
  * \XLite\Module\CDev\DrupalConnector\Controller\Customer\Profile
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\IDecorator
 {
@@ -49,7 +48,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Return params for the "Personal info" part of the register form
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -62,7 +60,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Return params for the "Addresses" part of the register form
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -75,7 +72,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Return params for the whole register form
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -90,7 +86,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * @param string $type Part(s) identifier
      *
      * @return \XLite\View\Model\Profile\AProfile
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -106,7 +101,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Register the account with the basic data
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -119,7 +113,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * Update the account with the basic data
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -187,7 +180,9 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
 
                 if (isset($role->rid)) {
 
-                    $rolesToDelete = \XLite\Core\Database::getRepo('\XLite\Module\CDev\DrupalConnector\Model\DrupalRole')->findBy(array('drupal_role_id' => $role->rid));
+                    $rolesToDelete 
+                        = \XLite\Core\Database::getRepo('\XLite\Module\CDev\DrupalConnector\Model\DrupalRole')
+                            ->findBy(array('drupal_role_id' => $role->rid));
 
                     if ($rolesToDelete) {
                         \XLite\Core\Database::getRepo('\XLite\Module\CDev\DrupalConnector\Model\DrupalRole')

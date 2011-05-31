@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\Model\Repo;
@@ -30,21 +30,35 @@ namespace XLite\Module\CDev\FeaturedProducts\Model\Repo;
 /**
  * Featured Product repository
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class FeaturedProduct extends \XLite\Model\Repo\ARepo
 {
     /**
      * Default 'order by' field name
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $defaultOrderBy = 'order_by';
+
+
+    /**
+     * Get featured products list
+     *
+     * @param integer $categoryId Category ID
+     *
+     * @return array(\XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct) Objects
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getFeaturedProducts($categoryId)
+    {
+        return $this->findByCategoryId($categoryId);
+    }
+
 
     /**
      * Find by type
@@ -52,13 +66,12 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
      * @param integer $categoryId Category ID
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function findByCategoryId($categoryId)
     {
-        if (!is_numeric($categoryId) || $categoryId <= 0) {
+        if (!is_numeric($categoryId) || 0 >= $categoryId) {
             $categoryId = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getRootCategoryId();
         }
 
@@ -71,7 +84,6 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
      * @param integer $categoryId Category ID
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -81,20 +93,4 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
             ->andWhere('f.category = :categoryId')
             ->setParameter('categoryId', $categoryId);
     }
-
-    /**
-     * Get featured products list
-     *
-     * @param integer $categoryId Category ID
-     *
-     * @return array(\XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct) Objects
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getFeaturedProducts($categoryId)
-    {
-        return $this->findByCategoryId($categoryId);
-    }
-
 }

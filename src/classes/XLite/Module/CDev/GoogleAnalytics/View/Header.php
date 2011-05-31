@@ -159,11 +159,11 @@ class Header extends \XLite\View\AView
     protected function isDisplayStandalone()
     {
         return (
-                !\XLite\Core\Operator::isClassExists('\XLite\Module\CDev\DrupalConnector\Handler')
-                || !\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
-            )
-            && \XLite\Core\Config::getInstance()->GoogleAnalytics
-            && \XLite\Core\Config::getInstance()->GoogleAnalytics->ga_account;
+            !\XLite\Core\Operator::isClassExists('\XLite\Module\CDev\DrupalConnector\Handler')
+            || !\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+        )
+        && \XLite\Core\Config::getInstance()->GoogleAnalytics
+        && \XLite\Core\Config::getInstance()->GoogleAnalytics->ga_account;
     }
 
     /**
@@ -177,11 +177,11 @@ class Header extends \XLite\View\AView
      */
     protected function escapeJavascript($string)
     {
-         return strtr(
+        return strtr(
             $string,
             array(
                 '\\' => '\\\\',
-                '\'' => "\\'",
+                '\'' => '\\\'',
                 '"'  => '\\"',
                 "\r" => '\\r',
                 "\n" => '\\n',

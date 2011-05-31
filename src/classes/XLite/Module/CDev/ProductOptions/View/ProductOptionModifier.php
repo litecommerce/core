@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\View;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Product option modifier widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class ProductOptionModifier extends \XLite\View\AView
 {
@@ -44,10 +43,37 @@ class ProductOptionModifier extends \XLite\View\AView
 
 
     /**
+     * Get modifiers
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getModifiers()
+    {
+        return $this->getParam(self::PARAM_OPTION)->getNotEmptyModifiers();
+    }
+
+    /**
+     * Get modifier personal template
+     *
+     * @param \XLite\Module\CDev\ProductOptions\Model\OptionSurcharge $surcharge Modifier
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getModifierTemplate(\XLite\Module\CDev\ProductOptions\Model\OptionSurcharge $surcharge)
+    {
+        return 'modules/CDev/ProductOptions/display/modifier/' . $surcharge->getType() . '.tpl';
+    }
+
+
+    /**
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getDefaultTemplate()
@@ -59,7 +85,7 @@ class ProductOptionModifier extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -80,40 +106,12 @@ class ProductOptionModifier extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function isVisible()
     {
         return parent::isVisible()
             && $this->getParam(self::PARAM_OPTION)->isModifier();
-    }
-
-    /**
-     * Get modifiers
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getModifiers()
-    {
-        return $this->getParam(self::PARAM_OPTION)->getNotEmptyModifiers();
-    }
-
-    /**
-     * Get modifier personal template
-     *
-     * @param \XLite\Module\CDev\ProductOptions\Model\OptionSurcharge $surcharge Modifier
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getModifierTemplate(\XLite\Module\CDev\ProductOptions\Model\OptionSurcharge $surcharge)
-    {
-        return 'modules/CDev/ProductOptions/display/modifier/' . $surcharge->getType() . '.tpl';
     }
 }

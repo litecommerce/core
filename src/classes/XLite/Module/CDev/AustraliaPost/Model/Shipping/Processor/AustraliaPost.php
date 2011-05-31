@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\AustraliaPost\Model\Shipping\Processor;
@@ -31,32 +31,81 @@ namespace XLite\Module\CDev\AustraliaPost\Model\Shipping\Processor;
  * Shipping processor model
  * API documentation: http://drc.edeliver.com.au/
  *
- * @package    XLite
- * @subpackage Model
- * @see        ____class_see____
- * @since      1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implements \XLite\Base\IDecorator
 {
     /**
      * Unique processor Id
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $processorId = 'aupost';
 
     /**
      * Australia Post API URL
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $apiURL = 'http://drc.edeliver.com.au/ratecalc.asp';
+
+
+    /**
+     * getProcessorName
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getProcessorName()
+    {
+        return 'Australia Post';
+    }
+
+    /**
+     * Returns shipping rates
+     *
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
+     * @param boolean                              $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
+    {
+        $rates = array();
+
+        $inputData = $this->prepareInputData($modifier);
+
+        if (isset($inputData)) {
+            $rates = $this->doQuery($inputData, $ignoreCache);
+        }
+
+        // Return shipping rates list
+        return $rates;
+    }
+
+    /**
+     * Returns shipping rates
+     *
+     * @param array   $inputData   Array with data for shipping calculation
+     * @param boolean $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getRatesByArray(array $inputData, $ignoreCache = false)
+    {
+        return $this->doQuery($inputData, $ignoreCache);
+    }
+
 
     /**
      * prepareInputData
@@ -64,7 +113,6 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -100,11 +148,10 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     /**
      * doQuery
      *
-     * @param mixed $data        Can be either \XLite\Model\Order instance or an array
-     * @param boolean  $ignoreCache Flag: if true then do not get rates from cache
+     * @param mixed   $data        Can be either \XLite\Model\Order instance or an array
+     * @param boolean $ignoreCache Flag: if true then do not get rates from cache
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -112,10 +159,11 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     {
         $rates = array();
 
-        $availableMethods = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findMethodsByProcessor($this->getProcessorId());
+        $availableMethods = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')
+            ->findMethodsByProcessor($this->getProcessorId());
 
         $currencyRate = doubleval(\XLite\Core\Config::getInstance()->CDev->AustraliaPost->currency_rate);
-        $currencyRate = $currencyRate > 0 ?: 1;
+        $currencyRate = 0 < $currencyRate ?: 1;
 
         $errorMsg = null;
 
@@ -161,6 +209,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                     if (200 == $response->code) {
                         $result = $response->body;
                         $this->saveDataInCache($postURL, $result);
+                    
                     } else {
                         $errorMsg = 'Bouncer error';
                         break;
@@ -209,7 +258,6 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      *   '
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -229,59 +277,4 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
 
         return $result;
     }
-
-    /**
-     * getProcessorName
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getProcessorName()
-    {
-        return 'Australia Post';
-    }
-
-    /**
-     * Returns shipping rates
-     *
-     * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
-     * @param boolean                              $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
-    {
-        $rates = array();
-
-        $inputData = $this->prepareInputData($modifier);
-
-        if (isset($inputData)) {
-            $rates = $this->doQuery($inputData, $ignoreCache);
-        }
-
-        // Return shipping rates list
-        return $rates;
-    }
-
-    /**
-     * Returns shipping rates
-     *
-     * @param array   $modifier    Shipping order modifier
-     * @param boolean $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getRatesByArray(array $inputData, $ignoreCache = false)
-    {
-        return $this->doQuery($inputData, $ignoreCache);
-    }
-
 }
