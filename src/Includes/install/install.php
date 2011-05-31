@@ -2158,7 +2158,7 @@ function check_memory_limit($current_limit, $required_limit)
     if ($limit < $required) {
 
 		// workaround for http://bugs.php.net/bug.php?id=36568
-        if (!LC_OS_IS_WIN && version_compare(phpversion(), '5.1.0') < 0)) {
+        if (!LC_OS_IS_WIN && version_compare(phpversion(), '5.1.0') < 0) {
             @ini_set('memory_limit', $required_limit);
             $limit = ini_get('memory_limit');
         }
