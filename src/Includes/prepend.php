@@ -39,7 +39,7 @@ define('LC_IMAGES_URL', 'images');
 define('LC_IMAGES_CACHE_URL', LC_VAR_URL . '/images');
 
 // OS
-define('LC_OS_NAME', substr(PHP_OS, 0, strpos(PHP_OS,' ')));
+define('LC_OS_NAME', preg_replace('/^([^ ]+)/', '\\1', PHP_OS));
 define('LC_OS_CODE', strtolower(substr(LC_OS_NAME, 0, 3)));
 define('LC_OS_IS_WIN', LC_OS_CODE === 'win');
 
