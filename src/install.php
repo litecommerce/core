@@ -219,7 +219,7 @@ OUT;
 
         } else {
             $pdoErrorMsg = '';
-            echo xtr('Building cache: Preparing for cache generation and dropping an old LiteCommerce tables if exists') . $jsDots;
+            echo xtr('Building cache: Preparing for cache generation and dropping old LiteCommerce tables if exists') . $jsDots;
             echo '</body></html>';
             echo str_repeat(' ', 10000);
             flush();
