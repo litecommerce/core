@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\View;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Selected product options widget (minicart)
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  *
  * @ListChild (list="minicart.horizontal.item", weight="25")
  * @ListChild (list="minicart.vertical.item", weight="25")
@@ -47,10 +46,23 @@ class MinicartSelectedOptions extends \XLite\View\AView
 
 
     /**
+     * Get options list
+     *
+     * @return \Doctrine\Common\Collection\ArrayCollection
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getOptions()
+    {
+        return $this->getItem()->getOptions();
+    }
+
+
+    /**
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getDefaultTemplate()
@@ -62,7 +74,7 @@ class MinicartSelectedOptions extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -78,7 +90,7 @@ class MinicartSelectedOptions extends \XLite\View\AView
      * Get order item
      *
      * @return \XLite\Model\OrderItem
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getItem()
@@ -90,24 +102,11 @@ class MinicartSelectedOptions extends \XLite\View\AView
      * Check widget visibility
      *
      * @return boolean
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function isVisible()
     {
         return parent::isVisible() && $this->getItem()->hasOptions();
-    }
-
-    /**
-     * Get options list
-     *
-     * @return \Doctrine\Common\Collection\ArrayCollection
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getOptions()
-    {
-        return $this->getItem()->getOptions();
     }
 }

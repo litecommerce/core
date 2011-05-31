@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer\Base;
@@ -30,64 +30,19 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer\Base;
 /**
  * Order controller
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class Order extends \XLite\Controller\Customer\Base\Order implements \XLite\Base\IDecorator
 {
     /**
-     * Get ID of LC profile
-     *
-     * @param integer $id Drupal profile ID
-     *
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getLCProfileId($id)
-    {
-        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getProfileIdByCMSId($id);
-    }
-
-    /**
-     * Get ID of Drupal profile
-     *
-     * @param integer $id LC profile ID
-     *
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getDrupalProfileId($id)
-    {
-        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSIdByProfileId($id);
-    }
-
-    /**
-     * Check if current page is the "Orders" portal
-     *
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function isPortal()
-    {
-        return (bool) \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalByPath('user/%/orders/%');
-    }
-
-    /**
      * Argument convertion: <DRUPAL> --> <LC>
      *
      * @param string $path     Portal path
-     * @param array  $args     Druapl URL arguments
-     * @param array  $pageArgs LC-specific URL arguments
+     * @param array  $args     Druapl URL arguments OPTIONAL
+     * @param array  $pageArgs LC-specific URL arguments OPTIONAL
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -107,10 +62,9 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
      * Argument convertion: <LC> --> <DRUPAL>
      *
      * @param string $path Drupal path
-     * @param array  $args LC URL arguments
+     * @param array  $args LC URL arguments OPTIONAL
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -128,5 +82,46 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
         $result = preg_replace('/\%/', $orderId, $result, 1);
 
         return $result;
+    }
+
+
+    /**
+     * Get ID of LC profile
+     *
+     * @param integer $id Drupal profile ID
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getLCProfileId($id)
+    {
+        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getProfileIdByCMSId($id);
+    }
+
+    /**
+     * Get ID of Drupal profile
+     *
+     * @param integer $id LC profile ID
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getDrupalProfileId($id)
+    {
+        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSIdByProfileId($id);
+    }
+
+    /**
+     * Check if current page is the "Orders" portal
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function isPortal()
+    {
+        return (bool) \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalByPath('user/%/orders/%');
     }
 }

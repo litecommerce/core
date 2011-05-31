@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\ProductOptions\Model;
 /**
  * Product option group
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Module\CDev\ProductOptions\Model\Repo\OptionGroup")
  * @Table  (name="option_groups",
@@ -63,10 +62,9 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Group unique id
      *
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -77,10 +75,9 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Sort position
      *
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -89,10 +86,9 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Group type
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Column (type="string", length="1")
      */
@@ -101,10 +97,9 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Group visialization type
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Column (type="string", length="1")
      */
@@ -113,10 +108,9 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Columns count
      *
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -125,10 +119,9 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Rows count
      *
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -137,10 +130,9 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Enabled
      *
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -149,10 +141,9 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Product (relation)
      *
-     * @var    \XLite\Model\Product
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \XLite\Model\Product
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="optionGroups")
      * @JoinColumn (name="product_id", referencedColumnName="product_id")
@@ -162,10 +153,9 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Options (relation)
      *
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\ProductOptions\Model\Option", mappedBy="group", cascade={"all"})
      */
@@ -177,7 +167,6 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @param string $type Option group type
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -205,7 +194,6 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @param string $type Option group view type
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -229,7 +217,6 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * Get display name
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -242,7 +229,6 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * Get active options list
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -265,7 +251,6 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @param integer $startIdx Start scan index OPTIONAL
      *
      * @return \XLite\Module\CDev\ProductOptions\Model\Options|void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -282,7 +267,6 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @param integer $startIdx Start scan index OPTIONAL
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -308,10 +292,9 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -325,10 +308,9 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Set product
      *
-     * @param \XLite\Model\Product $product Product
+     * @param \XLite\Model\Product $product Product OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */

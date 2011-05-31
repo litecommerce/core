@@ -50,7 +50,6 @@ abstract class AModule
      * Return module name
      *
      * @return string
-     * @throws \Exception
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -63,7 +62,6 @@ abstract class AModule
      * Return author full name
      *
      * @return string
-     * @throws \Exception
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -76,7 +74,6 @@ abstract class AModule
      * Return module description
      *
      * @return string
-     * @throws \Exception
      * @see    ____func_see____
      * @since  1.0.0
      */

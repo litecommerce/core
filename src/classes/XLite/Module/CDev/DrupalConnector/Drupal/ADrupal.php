@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -30,39 +30,35 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * ADrupal
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class ADrupal extends \XLite\Base\Singleton
 {
     /**
      * Initialized handler instance
      *
-     * @var    \XLite\Module\CDev\DrupalConnector\Handler
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \XLite\Module\CDev\DrupalConnector\Handler
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $handler;
 
     /**
      * Already registered resources
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $registeredResources = array('js' => array(), 'css' => array());
 
     /**
      * Resources weight counter
      *
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $resourcesCounter = 0;
 
@@ -72,7 +68,6 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * Return instance of current CMS connector
      *
      * @return \XLite\Module\CDev\DrupalConnector\Handler
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -90,11 +85,10 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * Execute a controller action
      *
      * @param string $target Controller target
-     * @param string $action Action to perform
-     * @param array  $data   Request data
+     * @param string $action Action to perform OPTIONAL
+     * @param array  $data   Request data OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -116,9 +110,8 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @param array  $files Resource files
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
-     i* @since  1.0.0
+     * @since  1.0.0
      */
     protected function getUniqueResources($type, array $files)
     {
@@ -135,7 +128,6 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @param string $file Resource file path
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -150,7 +142,6 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @param string $file Resource file path
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -165,7 +156,6 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @param array $file Resource file info
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -184,7 +174,6 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @param array $file Resource file info
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -194,7 +183,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
 
         return array(
             'scope' => $scope,
-            'defer' => $scope == 'footer',
+            'defer' => ('footer' == $scope),
         );
     }
 
@@ -204,7 +193,6 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @param array $file Resource file info
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -223,7 +211,6 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @param array  $file Resource file info
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -239,7 +226,6 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @param array  $file Resource file info
      *
      * @return mixed
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -254,7 +240,6 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @param \XLite\View\AView $widget LC widget to get resources list
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */

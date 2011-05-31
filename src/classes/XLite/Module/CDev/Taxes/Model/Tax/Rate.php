@@ -48,9 +48,9 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Product unique ID
      *
-     * @var    int
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -83,9 +83,9 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Tax (relation)
      *
-     * @var    \XLite\Module\CDev\Taxes\Model\Tax
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \XLite\Module\CDev\Taxes\Model\Tax
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Module\CDev\Taxes\Model\Tax", inversedBy="rates")
      * @JoinColumn (name="tax_id", referencedColumnName="id")
@@ -95,9 +95,9 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Zone (relation)
      *
-     * @var    \XLite\Model\Zone
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \XLite\Model\Zone
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Zone", inversedBy="tax_rates")
      * @JoinColumn (name="zone_id", referencedColumnName="zone_id")
@@ -107,9 +107,9 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Product class (relation)
      *
-     * @var    \XLite\Model\ProductClass
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \XLite\Model\ProductClass
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\ProductClass", inversedBy="tax_rates")
      * @JoinColumn (name="product_class_id", referencedColumnName="id")
@@ -119,9 +119,9 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Membership (relation)
      *
-     * @var    \XLite\Model\Membership
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \XLite\Model\Membership
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership", inversedBy="tax_rates")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
@@ -146,6 +146,15 @@ class Rate extends \XLite\Model\AEntity
 
     // {{{ Calculation
 
+    /**
+     * calculate 
+     * 
+     * @param array $items ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function calculate(array $items)
     {
         $cost = 0;
@@ -167,6 +176,15 @@ class Rate extends \XLite\Model\AEntity
         return array($cost, $list);
     }
 
+    /**
+     * getBasis 
+     * 
+     * @param array $items ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getBasis(array $items)
     {
         $basis = 0;
@@ -178,6 +196,15 @@ class Rate extends \XLite\Model\AEntity
         return $basis;
     }
 
+    /**
+     * getQuantity 
+     * 
+     * @param array $items ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getQuantity(array $items)
     {
         $quantity = 0;
@@ -189,11 +216,29 @@ class Rate extends \XLite\Model\AEntity
         return $quantity;
     }
 
+    /**
+     * calculateExcludePercent 
+     * 
+     * @param array $items ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function calculateExcludePercent(array $items)
     {
         $cost = $this->getBasis($items) * (100 + $this->getValue()) / 100;
     }
 
+    /**
+     * calculateExcludeAbsolute 
+     * 
+     * @param array $items ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function calculateExcludeAbsolute(array $items)
     {
         $cost = $this->getValue() * $this->getQuantity();
@@ -209,6 +254,15 @@ class Rate extends \XLite\Model\AEntity
         return array($cost, $list);
     }
 
+    /**
+     * calculateIncludePercent 
+     * 
+     * @param array $items ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function calculateIncludePercent(array $items)
     {
         $base = $this->getBasis($items);
@@ -216,6 +270,15 @@ class Rate extends \XLite\Model\AEntity
         $cost = $base - $base / (100 + $this->getValue()) * 100;
     }
 
+    /**
+     * calculateIncludeAbsolute 
+     * 
+     * @param array $items ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function calculateIncludeAbsolute(array $items)
     {
         $cost = $this->getValue() * $this->getQuantity();
