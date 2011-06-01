@@ -44,6 +44,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     const HOOK_STEP_FIRST      = 'step_first';
     const HOOK_STEP_SECOND     = 'step_second';
     const HOOK_STEP_THIRD      = 'step_third';
+    const HOOK_STEP_FOUR       = 'step_four';
+    const HOOK_STEP_FIVE       = 'step_five';
 
     /**
      * List of cache building steps
@@ -56,6 +58,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         self::STEP_FIRST,
         self::STEP_SECOND,
         self::STEP_THIRD,
+        self::STEP_FOUR,
+        self::STEP_FIVE,
     );
 
     /**
@@ -440,6 +444,38 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     {
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_THIRD);
+    }
+
+    /**
+     * Run handler for the current step
+     *
+     * NOTE: method is public since it's called from
+     * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function executeStepHandler4()
+    {
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FOUR);
+    }
+
+    /**
+     * Run handler for the current step
+     *
+     * NOTE: method is public since it's called from
+     * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function executeStepHandler5()
+    {
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIVE);
     }
 
     // }}}
