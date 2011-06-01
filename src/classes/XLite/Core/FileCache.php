@@ -128,9 +128,13 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     {
         $keys = array();
 
-        foreach (glob($this->path . LC_DS . '*.php') as $f) {
-            if ($this->isKeyValid($f)) {
-                $keys[] = substr(basename($f), 0, -4);
+        $list = glob($this->path . LC_DS . '*.php');
+
+        if ($list) {
+            foreach ($list as $f) {
+                if ($this->isKeyValid($f)) {
+                    $keys[] = substr(basename($f), 0, -4);
+                }
             }
         }
 
@@ -148,9 +152,13 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     {
         $keys = array();
 
-        foreach (glob($this->path . LC_DS . '*.php') as $f) {
-            if (unlink($f)) {
-                $keys[] = substr(basename($f), 0, -4);
+        $list = glob($this->path . LC_DS . '*.php');
+
+        if ($list) {
+            foreach ($list as $f) {
+                if (unlink($f)) {
+                    $keys[] = substr(basename($f), 0, -4);
+                }
             }
         }
 
