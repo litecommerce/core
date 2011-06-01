@@ -72,6 +72,17 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     protected $ttlLength = 11;
 
     /**
+     * Validation cache 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $validationCache = array();
+
+    protected $_namespace;
+
+    /**
      * Constructor
      *
      * @return void
@@ -115,6 +126,63 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     public function getPath()
     {
         return $this->path;
+    }
+
+    /**
+     * Delete by prefix 
+     * 
+     * @param string $prefix Prefix
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function deleteByPrefix($prefix)
+    {
+        $deleted = array();
+
+        $prefix = $this->_getNamespacedId($prefix);
+
+        $list = glob($this->path . LC_DS . $prefix . '*.php');
+
+        if ($list) {
+            foreach ($list as $f) {
+                if ($this->isKeyValid($f)) {
+                    $id = substr(basename($f), 0, -4);
+                    $this->delete($id);
+                    $deleted[] = $id;
+                }
+            }
+        }
+
+        return $deleted;
+    }
+
+    /**
+     * Delete by regular expression
+     * 
+     * @param string $regex Regular expression
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function deleteByRegex($regex)
+    {
+        $iterator = new \XLite\Core\FileCache\Iterator(new \FilesystemIterator($this->path));
+        $iterator->setRegexp($regex);
+
+        $deleted = array();
+
+        foreach ($iterator as $path => $info) {
+            if ($this->isKeyValid($path)) {
+                $id = substr(basename($path), 0, -4);
+                $this->delete($id);
+                $deleted[] = $id;
+            }
+        }
+
+        return $deleted;
     }
 
     /**
@@ -163,6 +231,22 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
         }
 
         return $keys;
+    }
+
+    /**
+     * Get id + namespace
+     * 
+     * @param string $id Cell id
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function _getNamespacedId($id)
+    {
+        return (!$this->_namespace || strpos($id, $this->_namespace) === 0)
+            ? $id
+            : $this->_namespace . $id;
     }
 
     /**
@@ -271,15 +355,20 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      */
     protected function isKeyValid($path)
     {
-        $result = true;
+        if (!isset($this->validationCache[$path]) || !$this->validationCache[$path]) {
 
-        $ttl = intval(file_get_contents($path, false, null, $this->headerLength, $this->ttlLength));
+            $result = true;
 
-        if (0 < $ttl && time() > $ttl) {
-            unlink($path);
-            $result = false;
+            $ttl = intval(file_get_contents($path, false, null, $this->headerLength, $this->ttlLength));
+
+            if (0 < $ttl && time() > $ttl) {
+                unlink($path);
+                $result = false;
+            }
+
+            $this->validationCache[$path] = $result;
         }
 
-        return $result;
+        return $this->validationCache[$path];
     }
 }
