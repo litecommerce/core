@@ -51,10 +51,8 @@ abstract class Handler extends \XLite\Base
     /**
      * AJAX-specific parameters
      */
-
-    const PARAM_AJAX_TARGET = 'ajaxTarget';
-    const PARAM_AJAX_ACTION = 'ajaxAction';
-    const PARAM_AJAX_CLASS  = 'ajaxClass';
+    const PARAM_AJAX_TARGET = 'target';
+    const PARAM_AJAX_WIDGET = 'widget';
 
 
     /**

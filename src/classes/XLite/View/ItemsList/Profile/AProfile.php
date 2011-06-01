@@ -22,28 +22,24 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.1
  */
 
-namespace XLite\View\ItemsList\Order;
+namespace XLite\View\ItemsList\Profile;
 
 /**
- * Abstract orders list
+ * Abstract profiles list
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.1
  */
-abstract class AOrder extends \XLite\View\ItemsList\AItemsList
+abstract class AProfile extends \XLite\View\ItemsList\AItemsList
 {
     /**
      * Allowed sort criterions
      */
 
-    const SORT_BY_MODE_ID      = 'o.order_id';
-    const SORT_BY_MODE_STATUS  = 'o.status';
-    const SORT_BY_MODE_DATE    = 'o.date';
     const SORT_BY_MODE_PROFILE = 'p.login';
-    const SORT_BY_MODE_TOTAL   = 'o.total';
 
 
     /**
@@ -51,14 +47,14 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.1
      */
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
 
         // Static call of the non-static function
-        $list[] = self::getDir() . '/orders_list.css';
+        $list[] = self::getDir() . '/css/profiles_list.css';
 
         return $list;
     }
@@ -75,7 +71,7 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
         $list = parent::getJSFiles();
 
         // Static call of the non-static function
-        $list[] = self::getDir() . '/orders_list.js';
+        $list[] = self::getDir() . '/js/profiles_list.js';
 
         return $list;
     }
@@ -92,7 +88,6 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
     public function __construct(array $params = array())
     {
         $this->sortByModes += array(
-            self::SORT_BY_MODE_ID => '# Id',
         );
 
         parent::__construct($params);
@@ -108,7 +103,7 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      */
     protected function getListName()
     {
-        return parent::getListName() . '.order';
+        return parent::getListName() . '.profile';
     }
 
     /**
@@ -121,7 +116,7 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      */
     protected function getDir()
     {
-        return parent::getDir() . '/order';
+        return parent::getDir() . '/profile';
     }
 
     /**
@@ -145,7 +140,9 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      */
     protected function getSortByModeDefault()
     {
-        return self::SORT_BY_MODE_ID;
+        return self::SORT_BY_MODE_PROFILE;
+
+
     }
 
     /**
@@ -158,7 +155,6 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
     protected function getSearchCondition()
     {
         $result = parent::getSearchCondition();
-        $result->{\XLite\Model\Repo\Order::P_ORDER_BY} = array($this->getSortBy(), $this->getSortOrder());
 
         return $result;
     }
@@ -172,6 +168,6 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
      */
     protected function getJSHandlerClassName()
     {
-        return 'OrdersList';
+        return 'ProfilesList';
     }
 }

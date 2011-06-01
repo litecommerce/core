@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Orders list (table variant)
+ * Profiles list (table variant)
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -13,14 +13,14 @@
 <table class="data-table items-list">
 
   <tr>
-    {displayInheritedViewListContent(#header#,_ARRAY_(#order#^order))}
+    {displayInheritedViewListContent(#header#,_ARRAY_(#profile#^profile))}
   </tr>
 
-  <tr FOREACH="getPageData(),idx,order" class="{getRowClass(idx,##,#highlight#)}">
-    {displayInheritedViewListContent(#columns#,_ARRAY_(#order#^order))}
+  <tr FOREACH="getPageData(),idx,profile" class="{getRowClass(idx,##,#highlight#)}">
+    {displayInheritedViewListContent(#columns#,_ARRAY_(#profile#^profile))}
   </tr>
 
-  <tr FOREACH="getViewList(#itemsList.order.admin.items#),w">
+  <tr FOREACH="getViewList(#itemsList.profile.items#),w">
     {w.display()}
   </tr>
 

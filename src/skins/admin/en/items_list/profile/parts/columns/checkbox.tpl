@@ -8,9 +8,14 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="itemsList.order.admin.search.columns", weight="10")
+ * @ListChild (list="itemsList.profile.search.columns", weight="10")
  *}
 
 <td>
-  <input type="checkbox" class="checkbox {order.getOrderId()}" value="1" name="{getNameToDelete(order.getOrderId())}" />
+  <widget
+    class="XLite\View\FormField\Input\UserProfileId"
+    fieldOnly=true
+    fieldName="profile_id"
+    value="{profile.profile_id}"
+    isChecked="{isSelected(id,#0#)}" />
 </td>

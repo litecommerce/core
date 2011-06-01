@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * Orders list styles
+ * ____file_title____
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,18 +10,16 @@
  * @since     1.0.0
  */
 
-.items-list .table td.id
+// Profiles list class
+function ProfilesList(cell, URLParams, URLAJAXParams)
 {
-  text-align: center;
+  if (!cell) {
+    return;
+  }
+
+  this.constructor.prototype.constructor(cell, URLParams, URLAJAXParams);
 }
 
-.items-list .table th.customer
-{
-  width: 100%;
-}
 
-.items-list .table td.total
-{
-  text-align: right;
-  font-weight: bold;
-}
+ProfilesList.prototype = new ItemsList();
+ProfilesList.prototype.constructor = ItemsList;

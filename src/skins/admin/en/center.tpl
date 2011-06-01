@@ -33,8 +33,6 @@
 
 <widget target="settings" class="\XLite\View\Tabber" body="general_settings.tpl" switch="page" />
 
-<widget template="users/search.tpl" target="users">
-
 <widget target="recent_login" template="common/dialog.tpl" body="recent_login.tpl" />
 
 <widget target="product_list" template="product/product_list_form.tpl">

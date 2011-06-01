@@ -122,14 +122,9 @@ class Regular extends \XLite\View\Button\AButton
             $formParams['action'] = $this->getParam(self::PARAM_ACTION);
         }
 
-        if ($formParams) {
-            $result = 'submitForm(this.form, {' . $this->getJSFormParams($formParams) . '})';
-
-        } else {
-            $result = 'submitFormDefault(this.form);';
-        }
-
-        return $result;
+        return $formParams
+            ? 'submitForm(this.form, {' . $this->getJSFormParams($formParams) . '})'
+            : 'submitFormDefault(this.form);';
     }
 
     /**
