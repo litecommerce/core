@@ -38,9 +38,9 @@ abstract class Zone extends \XLite\Model\Zone implements \XLite\Base\IDecorator
     /**
      * Tax rates (relation)
      *
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\Taxes\Model\Tax\Rate", mappedBy="zone", cascade={"all"})
      */
@@ -49,7 +49,7 @@ abstract class Zone extends \XLite\Model\Zone implements \XLite\Base\IDecorator
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -61,5 +61,4 @@ abstract class Zone extends \XLite\Model\Zone implements \XLite\Base\IDecorator
 
         parent::__construct($data);
     }
-
 }

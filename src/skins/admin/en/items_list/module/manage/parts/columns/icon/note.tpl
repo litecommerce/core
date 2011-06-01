@@ -13,6 +13,7 @@
  * @ListChild (list="itemsList.module.install.columns.icon", weight="300")
  *}
 
-<div IF="!module.getEnabled()" class="addon-icon addon-disabled-note">
-  {t(#Disabled#)}
+<div IF="!isEnabled(module)" class="addon-icon addon-disabled-note">
+  <span IF="isInstalled(module)">{t(#Disabled#)}</span>
+  <span IF="!isInstalled(module)">{t(#Not installed#)}</span>
 </div>

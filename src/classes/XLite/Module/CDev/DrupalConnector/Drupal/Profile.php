@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -30,19 +30,44 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * Profile
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
-    // ------------------------------ Ancillary methods -
+    // {{{ Ancillary methods
+
+    /**
+     * Checks if user has Drupal's role with LiteCommerce administrator permissions
+     *
+     * @param array $roles Array of user's roles in Drupal
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function isRoleHasAdminPermission(array $roles)
+    {
+        $rolePermissions = user_role_permissions($roles);
+
+        $found = false;
+
+        foreach ($rolePermissions as $rid => $perms) {
+
+            $found = isset($perms['lc admin']);
+
+            if ($found) {
+                break;
+            }
+        }
+
+        return $found;
+    }
 
     /**
      * Check if current page is the "Reset password" one
      *
-     * @return bool
-     * @access protected
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -65,11 +90,10 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Prepare main data for the LC profile
      *
      * @param \stdClass  $user            Drupal user profile
-     * @param array|null $edit            data from request
-     * @param bool       $addConfirmation flag; add password confirmation field or not
+     * @param array|null $edit            Data from request
+     * @param boolean    $addConfirmation Flag; add password confirmation field or not OPTIONAL
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -87,7 +111,9 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         foreach ($fields as $lcKey => $drupalKey) {
             // Only use data from user profile if they do not passed in request
-            $data[$lcKey] = isset($values[$drupalKey]) ? $values[$drupalKey] : (isset($user->$drupalKey) ? $user->$drupalKey : null);
+            $data[$lcKey] = isset($values[$drupalKey]) 
+                ? $values[$drupalKey] 
+                : (isset($user->$drupalKey) ? $user->$drupalKey : null);
         }
 
         // Initialize flag when new user is created
@@ -143,40 +169,12 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     }
 
     /**
-     * Checks if user has Drupal's role with LiteCommerce administrator permissions
-     *
-     * @param array $roles Array of user's roles in Drupal
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function isRoleHasAdminPermission(array $roles)
-    {
-        $role_permissions = user_role_permissions($roles);
-
-        $found = false;
-
-        foreach ($role_permissions as $rid => $perms) {
-
-            $found = isset($perms['lc admin']);
-
-            if ($found) {
-                break;
-            }
-        }
-
-        return $found;
-    }
-
-    /**
      * Prepare data for the \XLite\Controller\Customer\Login
      *
      * @param \stdClass  $user Drupal user profile
-     * @param array|null $edit data from request
+     * @param array|null $edit Data from request
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -200,13 +198,14 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         return $data;
     }
 
+    // }}}
 
-    // ------------------------------ Action handlers -
+    // {{{ Action handlers
 
     /**
      * Handler for certain action
      *
-     * @param array     $edit     The array of form values submitted by the user
+     * @param array     &$edit    The array of form values submitted by the user
      * @param \stdClass $account  The user object on which the operation is performed
      * @param mixed     $category The active category of user information being edited
      *
@@ -222,7 +221,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Handler for certain action
      *
-     * @param array     $edit     The array of form values submitted by the user
+     * @param array     &$edit    The array of form values submitted by the user
      * @param \stdClass $account  The user object on which the operation is performed
      * @param mixed     $category The active category of user information being edited
      *
@@ -238,7 +237,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Handler for certain action
      *
-     * @param array     $edit     The array of form values submitted by the user
+     * @param array     &$edit    The array of form values submitted by the user
      * @param \stdClass $account  The user object on which the operation is performed
      * @param mixed     $category The active category of user information being edited
      *
@@ -254,9 +253,9 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Handler for certain action
      *
-     * @param array     $edit     The array of form values submitted by the user
-     * @param \stdClass $account  The user object on which the operation is performed
-     * @param mixed     $category The active category of user information being edited
+     * @param array     &$edit   The array of form values submitted by the user
+     * @param \stdClass $account The user object on which the operation is performed
+     * @param mixed     $method  The method of user cancelling selected on Drupal side
      *
      * @return mixed
      * @see    ____func_see____
@@ -270,7 +269,8 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Handler for certain action
      *
-     * @param array     $uid User profile Id on Drupal side
+     * @param array     &$edit   The array of form values submitted by the user
+     * @param \stdClass $account The user object on which the operation is performed
      *
      * @return mixed
      * @see    ____func_see____
@@ -284,7 +284,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Handler for certain action
      *
-     * @param array     $edit     The array of form values submitted by the user
+     * @param array     &$edit    The array of form values submitted by the user
      * @param \stdClass $account  The user object on which the operation is performed
      * @param mixed     $category The active category of user information being edited
      *
@@ -300,7 +300,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Handler for certain action
      *
-     * @param array     $edit     The array of form values submitted by the user
+     * @param array     &$edit    The array of form values submitted by the user
      * @param \stdClass $account  The user object on which the operation is performed
      * @param mixed     $category The active category of user information being edited
      *
@@ -316,9 +316,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Handler for certain action
      *
-     * @param array     $edit     The array of form values submitted by the user
-     * @param \stdClass $account  The user object on which the operation is performed
-     * @param mixed     $category The active category of user information being edited
+     * @param array $roles The array of roles
      *
      * @return mixed
      * @see    ____func_see____
@@ -332,9 +330,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Handler for certain action
      *
-     * @param array     $edit     The array of form values submitted by the user
-     * @param \stdClass $account  The user object on which the operation is performed
-     * @param mixed     $category The active category of user information being edited
+     * @param array $roles The array of roles
      *
      * @return mixed
      * @see    ____func_see____
@@ -349,7 +345,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Common method to call action handlers
      *
      * @param string    $action   Action to perform
-     * @param array     $edit     The array of form values submitted by the user
+     * @param array     &$edit    The array of form values submitted by the user
      * @param \stdClass $account  The user object on which the operation is performed
      * @param mixed     $category The active category of user information being edited
      *
@@ -361,4 +357,6 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     {
         return call_user_func_array(array($this, __FUNCTION__ . ucfirst($action)), array(&$edit, $account, $category));
     }
+
+    // }}}
 }

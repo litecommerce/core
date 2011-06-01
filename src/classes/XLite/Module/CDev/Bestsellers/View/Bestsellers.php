@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Bestsellers\View;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\Bestsellers\View;
 /**
  * Bestsellers widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  *
  * @ListChild (list="center.bottom", zone="customer", weight="400")
  * @ListChild (list="sidebar.first", zone="customer", weight="150")
@@ -50,28 +49,44 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Category id
      *
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $rootCategoryId = null;
 
     /**
      * Bestsellers products
      *
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $bestsellProducts = null;
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+
+        $result[] = 'main';
+        $result[] = 'category';
+
+        return $result;
+    }
+
 
     /**
      * Get title
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -84,7 +99,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return class name for the list pager
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -97,7 +111,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define widget parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -131,7 +144,8 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue(true);
-        $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue(\XLite\Core\Config::getInstance()->CDev->Bestsellers->number_of_bestsellers);
+        $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]
+            ->setValue(\XLite\Core\Config::getInstance()->CDev->Bestsellers->number_of_bestsellers);
 
         $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);
@@ -144,7 +158,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define so called "request" parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -159,7 +172,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return products list
      *
      * @return mixed
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -189,7 +201,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return category Id to use
      *
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -207,35 +218,20 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-
-        $result[] = 'main';
-        $result[] = 'category';
-
-        return $result;
-    }
-
-    /**
      * Return template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getTemplate()
     {
         $template = parent::getTemplate();
 
-        if ($template == $this->getDefaultTemplate() && self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)) {
+        if (
+            $template == $this->getDefaultTemplate() 
+            && self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
+        ) {
             $template = 'common/sidebar_box.tpl';
         }
 
@@ -246,7 +242,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Check if widget is visible
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */

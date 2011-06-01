@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model;
@@ -30,19 +30,17 @@ namespace XLite\Module\CDev\ProductOptions\Model;
 /**
  * Product
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     /**
      * Option groups (relation)
      *
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\ProductOptions\Model\OptionGroup", mappedBy="product", cascade={"all"})
      */
@@ -51,18 +49,17 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * Product options list (cache)
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $productOptions = null;
+
 
     /**
      * Check - has product options list or not
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -75,7 +72,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * Get product options list
      *
      * @return array(\XLite\Module\CDev\ProductOptions\Model\OptionGroup)
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -93,7 +89,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * Check - display price modifier or not
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -108,7 +103,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @param array $options Request-based selected options
      *
      * @return array|void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -164,7 +158,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * Get default product options
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -223,7 +216,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @param array $options Prepared array
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -244,10 +236,9 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */

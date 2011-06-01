@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\AuthorizeNet;
@@ -30,17 +30,15 @@ namespace XLite\Module\CDev\AuthorizeNet;
 /**
  * Authorize.Net SIM module
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class Main extends \XLite\Module\AModule
 {
     /**
      * Author name
      *
-     * @var    string
-     * @access public
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -52,8 +50,7 @@ abstract class Main extends \XLite\Module\AModule
     /**
      * Module name
      *
-     * @var    string
-     * @access public
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -66,7 +63,7 @@ abstract class Main extends \XLite\Module\AModule
      * Module version
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  1.0.0
      */
     public static function getMinorVersion()
@@ -78,7 +75,7 @@ abstract class Main extends \XLite\Module\AModule
      * Module description
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  1.0.0
      */
     public static function getDescription()

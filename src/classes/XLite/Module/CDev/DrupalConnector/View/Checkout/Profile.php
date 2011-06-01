@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View\Checkout;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\DrupalConnector\View\Checkout;
 /**
  * Profile widget on Checkout page
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecorator
 {
@@ -40,7 +39,6 @@ class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecor
      * Get cart Drupal's user name
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -53,7 +51,6 @@ class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecor
      * Get current profile username
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -68,7 +65,6 @@ class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecor
      * Get profile page URL
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -83,7 +79,6 @@ class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecor
      * Get log-off page URL
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */

@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\View;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Change options widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -46,58 +45,26 @@ class ChangeOptions extends \XLite\View\AView
 
 
     /**
-     * Return widget default template
+     * Return list of targets allowed for this widget
      *
-     * @return string
-     * @access protected
+     * @return array
+     * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultTemplate()
+    public static function getAllowedTargets()
     {
-        return 'modules/CDev/ProductOptions/change_options.tpl';
+        $list = parent::getAllowedTargets();
+
+        $list[] = 'change_options';
+
+        return $list;
     }
 
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_ITEM => new \XLite\Model\WidgetParam\Object('Item', null, false, '\XLite\Model\OrderItem'),
-        );
-    }
-
-    /**
-     * Check widget visibility
-     *
-     * @return boolean
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        $result = parent::isVisible() && \XLite::getController()->getItem();
-
-        if ($result) {
-            $this->widgetParams[self::PARAM_ITEM]->setValue(\XLite::getController()->getItem());
-
-            $result = $this->getParam(self::PARAM_ITEM)->hasOptions();
-        }
-
-        return $result;
-    }
 
     /**
      * Get selected options
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -115,27 +82,9 @@ class ChangeOptions extends \XLite\View\AView
     }
 
     /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $list = parent::getAllowedTargets();
-
-        $list[] = 'change_options';
-
-        return $list;
-    }
-
-    /**
      * Register CSS files
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -146,5 +95,54 @@ class ChangeOptions extends \XLite\View\AView
         $list[] = 'modules/CDev/ProductOptions/product_details.css';
 
         return $list;
+    }
+
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/CDev/ProductOptions/change_options.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_ITEM => new \XLite\Model\WidgetParam\Object('Item', null, false, '\XLite\Model\OrderItem'),
+        );
+    }
+
+    /**
+     * Check widget visibility
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        $result = parent::isVisible() && \XLite::getController()->getItem();
+
+        if ($result) {
+            $this->widgetParams[self::PARAM_ITEM]->setValue(\XLite::getController()->getItem());
+
+            $result = $this->getParam(self::PARAM_ITEM)->hasOptions();
+        }
+
+        return $result;
     }
 }

@@ -14,35 +14,33 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\Model;
 
 /**
- * Category
+ * Category model
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
 {
     /**
      * Featured products (relation)
      *
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct", mappedBy="category", cascade={"all"})
      */
@@ -52,10 +50,9 @@ class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */

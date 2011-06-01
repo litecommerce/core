@@ -44,6 +44,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      */
     protected $code = 'CDEV.TAXES';
 
+
     /**
      * Check - can apply this modifier or not
      *
@@ -77,15 +78,36 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
         }
     }
 
+    /**
+     * isEnabled 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function isEnabled()
     {
         return (bool)$this->getTaxes();
     }
 
+    /**
+     * isAvailable 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function isAvailable()
     {
     }
 
+    /**
+     * calculateAsAvailable 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function calculateAsAvailable()
     {
         $zones = $this->getZonesList();
@@ -141,6 +163,13 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
         }
     }
 
+    /**
+     * calculateAsNotAvailable 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function calculateAsNotAvailable()
     {
         foreach ($this->getTaxes() as $tax) {
@@ -153,11 +182,25 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
         }
     }
 
+    /**
+     * getTaxes 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getTaxes()
     {
         return \XLite\Core\Database::getRepo('XLite\Module\CDev\Taxes\Model\Tax')->findActive();
     }
 
+    /**
+     * getZonesList 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getZonesList()
     {
         $address = $this->getAddress();
@@ -171,6 +214,13 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
         return $zones;
     }
 
+    /**
+     * getMembership 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getMembership()
     {
         return $this->getOrder()->getProfile()
@@ -178,6 +228,16 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
             : null;
     }
 
+    /**
+     * getTaxableItems 
+     * 
+     * @param \XLite\Model\ProductClass $class         ____param_comment____
+     * @param array                     $previousItems ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getTaxableItems(\XLite\Model\ProductClass $class, array $previousItems)
     {
         $list = array();
@@ -194,6 +254,13 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
         return $list;
     }
 
+    /**
+     * getAddress 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getAddress()
     {
         $address = null;
@@ -215,27 +282,34 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
         return $address;
     }
 
+    /**
+     * getOrderAddress 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getOrderAddress()
     {
-        return $this->getOrder()->getProfile() && $this->getOrder()->getProfile()->getBillingAddress()
+        return ($this->getOrder()->getProfile() && $this->getOrder()->getProfile()->getBillingAddress())
             ? $this->getOrder()->getProfile()->getBillingAddress()
             : null;
     }
 
     // }}}
 
-	// {{{ Surcharge operations
+    // {{{ Surcharge operations
 
-	/**
-	 * Get surcharge name
-	 *
-	 * @param \XLite\Model\Order\Surcharge $surcharge Surcharge
-	 *
-	 * @return \XLite\DataSet\Transport\Order\Surcharge
-	 * @see    ____func_see____
-	 * @since  1.0.0
-	 */
-	public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge)
+    /**
+     * Get surcharge name
+     *
+     * @param \XLite\Model\Order\Surcharge $surcharge Surcharge
+     *
+     * @return \XLite\DataSet\Transport\Order\Surcharge
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge)
     {
         $info = new \XLite\DataSet\Transport\Order\Surcharge;
 
@@ -246,5 +320,4 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     }
 
     // }}}
-
 }

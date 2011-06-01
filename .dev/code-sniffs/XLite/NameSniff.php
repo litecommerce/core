@@ -45,7 +45,8 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		// FIXME - rename later
 		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout', 'display404',
 		// Method offsetSet() defined in Doctrine
-		'offset',
+        'offset',
+        'forbid', 'alter', 'submit', 'invoke', 'optimize', 'escape',
 	);
 
 	protected $cssPseudoClasses = array(

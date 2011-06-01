@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\AuthorizeNet\Model\Payment\Processor;
@@ -30,19 +30,17 @@ namespace XLite\Module\CDev\AuthorizeNet\Model\Payment\Processor;
 /**
  * Authorize.Net SIM processor
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
 {
     /**
      * AVS messages
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $avserr = array(
         'A' => 'Address (Street) matches, ZIP does not',
@@ -63,10 +61,9 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     /**
      * CVV messages
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $cvverr = array(
         'M' => 'Match',
@@ -79,10 +76,9 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     /**
      * Error messages
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $err = array(
         '1' => 'This transaction has been approved.',
@@ -204,11 +200,11 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
         '165' => 'This transaction has been declined. The system-generated void for the original card code-rejected transaction failed.',
     );
 
+
     /**
      * Get operation types
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -224,7 +220,6 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * Get settings widget or template
      *
      * @return string Widget class name or template path
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -234,10 +229,91 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
+     * Process return
+     *
+     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
+    {
+        parent::processReturn($transaction);
+
+        $request = \XLite\Core\Request::getInstance();
+
+        $status = 1 == $request->x_response_code ? $transaction::STATUS_SUCCESS : $transaction::STATUS_FAILED;
+
+        if (isset($request->x_response_reason_text)) {
+            $this->getOrder()->setDetail('response', $request->x_response_reason_text, 'Response');
+            $this->transaction->setNote($request->x_response_reason_text);
+
+        } elseif (isset($this->err[$request->x_response_reason_code])) {
+            $this->getOrder()->setDetail('response', $this->err[$request->x_response_reason_code], 'Response');
+            $this->transaction->setNote($this->err[$request->x_response_reason_code]);
+        }
+
+        if ($request->x_auth_code) {
+            $this->getOrder()->setDetail('authCode', $request->x_auth_code, 'Auth code');
+        }
+
+        if ($request->x_trans_id) {
+            $this->getOrder()->setDetail('transId', $request->x_trans_id, 'Transaction ID');
+        }
+
+        if ($request->x_response_subcode) {
+            $this->getOrder()->setDetail('responseSubcode', $request->x_response_subcode, 'Response subcode');
+        }
+
+        if (isset($request->x_avs_code) && isset($this->avserr[$request->x_avs_code])) {
+            $this->getOrder()->setDetail('avs', $this->avserr[$request->x_avs_code], 'AVS status');
+        }
+
+        if (isset($request->x_CVV2_Resp_Code) && isset($this->cvverr[$request->x_CVV2_Resp_Code])) {
+            $this->getOrder()->setDetail('cvv', $this->cvverr[$request->x_CVV2_Resp_Code], 'CVV status');
+        }
+
+        if (!$this->checkTotal($request->x_amount)) {
+            $status = $transaction::STATUS_FAILED;
+        }
+
+        $this->transaction->setStatus($status);
+    }
+
+    /**
+     * Check - payment method is configured or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isConfigured(\XLite\Model\Payment\Method $method)
+    {
+        return parent::isConfigured()
+            && $method->getSetting('login')
+            && $method->getSetting('type');
+    }
+
+    /**
+     * Get return type
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getReturnType()
+    {
+        return self::RETURN_TYPE_HTML_REDIRECT;
+    }
+
+
+    /**
      * Get redirect form URL
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -252,7 +328,6 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * Get redirect form fields list
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -326,97 +401,12 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
-     * Process return
-     *
-     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
-    {
-        parent::processReturn($transaction);
-
-        $request = \XLite\Core\Request::getInstance();
-
-        $status = 1 == $request->x_response_code ? $transaction::STATUS_SUCCESS : $transaction::STATUS_FAILED;
-
-        if (isset($request->x_response_reason_text)) {
-            $this->getOrder()->setDetail('response', $request->x_response_reason_text, 'Response');
-            $this->transaction->setNote($request->x_response_reason_text);
-
-        } elseif (isset($this->err[$request->x_response_reason_code])) {
-            $this->getOrder()->setDetail('response', $this->err[$request->x_response_reason_code], 'Response');
-            $this->transaction->setNote($this->err[$request->x_response_reason_code]);
-        }
-
-        if ($request->x_auth_code) {
-            $this->getOrder()->setDetail('authCode', $request->x_auth_code, 'Auth code');
-        }
-
-        if ($request->x_trans_id) {
-            $this->getOrder()->setDetail('transId', $request->x_trans_id, 'Transaction ID');
-        }
-
-        if ($request->x_response_subcode) {
-            $this->getOrder()->setDetail('responseSubcode', $request->x_response_subcode, 'Response subcode');
-        }
-
-        if (isset($request->x_avs_code) && isset($this->avserr[$request->x_avs_code])) {
-            $this->getOrder()->setDetail('avs', $this->avserr[$request->x_avs_code], 'AVS status');
-        }
-
-        if (isset($request->x_CVV2_Resp_Code) && isset($this->cvverr[$request->x_CVV2_Resp_Code])) {
-            $this->getOrder()->setDetail('cvv', $this->cvverr[$request->x_CVV2_Resp_Code], 'CVV status');
-        }
-
-        if (!$this->checkTotal($request->x_amount)) {
-            $status = $transaction::STATUS_FAILED;
-        }
-
-        $this->transaction->setStatus($status);
-    }
-
-    /**
-     * Check - payment method is configured or not
-     *
-     * @param \XLite\Model\Payment\Method $method Payment method
-     *
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isConfigured(\XLite\Model\Payment\Method $method)
-    {
-        return parent::isConfigured()
-            && $method->getSetting('login')
-            && $method->getSetting('type');
-    }
-
-    /**
-     * Get return type
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getReturnType()
-    {
-        return self::RETURN_TYPE_HTML_REDIRECT;
-    }
-
-    /**
      * Get RFC 2104 HMAC (MD5)
      *
      * @param string $key  Key
      * @param string $data Data
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
