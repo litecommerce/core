@@ -23,6 +23,9 @@ function ItemsList(cell, URLParams, URLAJAXParams)
   this.URLParams = URLParams;
   this.URLAJAXParams = URLAJAXParams;
 
+  // Common form support
+  CommonForm.autoassign(this.container);
+
   this.addListeners();
 }
 

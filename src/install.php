@@ -206,7 +206,7 @@ OUT;
 
             $step = intval($_GET['step']);
 
-            if ($step <= 3) {
+            if ($step <= 5) {
                 echo xtr('Building cache: Pass #:step', array(':step' => $step)) . $jsDots;
                 echo '</body></html>';
                 echo str_repeat(' ', 10000);
@@ -288,7 +288,7 @@ OUT;
 
 <?php
         exit();
-    }
+    
 
 
 	// Memory test action
