@@ -41,6 +41,8 @@ abstract class ADecorator
     const STEP_FIRST  = 1;
     const STEP_SECOND = 2;
     const STEP_THIRD  = 3;
+    const STEP_FOUR   = 4;
+    const STEP_FIVE   = 5;
 
 
     /**
