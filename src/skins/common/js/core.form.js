@@ -111,6 +111,26 @@ CommonForm.autoload = function()
   );
 }
 
+// Autassign class method
+CommonForm.autoassign = function(base)
+{
+  jQuery('form', base).each(
+    function() {
+      new CommonForm(this);
+    }
+  );
+
+  jQuery(base).parents('form').each(
+    function() {
+      if (typeof(this.commonController) != 'undefined') {
+        this.commonController.bindElements();
+      }
+    }
+  );
+
+}
+
+
 // Form DOM element
 CommonForm.prototype.form = null;
 

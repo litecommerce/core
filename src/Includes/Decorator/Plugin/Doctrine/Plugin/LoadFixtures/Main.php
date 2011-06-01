@@ -44,7 +44,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function executeHookHandlerStepThird()
+    public function executeHookHandlerStepFour()
     {
         foreach (\Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::getFixtures() as $fixture) {
             \XLite\Core\Database::getInstance()->loadFixturesFromYaml($fixture);
