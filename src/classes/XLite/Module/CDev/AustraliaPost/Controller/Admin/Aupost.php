@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\AustraliaPost\Controller\Admin;
@@ -30,17 +30,28 @@ namespace XLite\Module\CDev\AustraliaPost\Controller\Admin;
 /**
  * ____description____
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Aupost extends \XLite\Controller\Admin\ShippingSettings
 {
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getTitle()
+    {
+        return 'AustraliaPost settings';
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -50,22 +61,9 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
     }
 
     /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @access public
-     * @since  1.0.0
-     */
-    public function getTitle()
-    {
-        return 'AustraliaPost settings';
-    }
-
-    /**
      * getOptionsCategory
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -78,7 +76,6 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      * doActionTest
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -119,14 +116,14 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
             $errorFields[] = 'destinationCountry';
         }
 
-        echo "<h2>Input data</h2>";
+        echo ('<h2>Input data</h2>');
 
         ob_start();
         print_r($data);
         $dataStr = '<pre>' . ob_get_contents() . '</pre>';
         ob_clean();
 
-        echo $dataStr;
+        echo ($dataStr);
 
         if (empty($errorFields)) {
 
@@ -143,24 +140,28 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
             if (!empty($rates)) {
 
                 // Rates have been successfully calculated, display them
-                echo "<h2>Rates:</h2>";
+                echo ('<h2>Rates:</h2>');
 
                 foreach ($rates as $rate) {
-                    echo sprintf("%s (%0.2f)<br>", $rate->getMethodName(), $rate->getBaseRate());
+                    echo (sprintf('%s (%0.2f)<br>', $rate->getMethodName(), $rate->getBaseRate()));
                 }
 
-                echo sprintf("<br /><i>Time elapsed: %0.3f seconds</i>", $proceedTime);
+                echo (sprintf('<br /><i>Time elapsed: %0.3f seconds</i>', $proceedTime));
 
             } else {
-                $errorMsg = $this->t('There are no rates available for specified source/destination and/or package measurements/weight.');
+                $errorMsg = $this->t(
+                    'There are no rates available for specified source/destination and/or package measurements/weight.'
+                );
             }
 
         } else {
-            $errorMsg = $this->t('The following expected input data have wrong format or empty: ' . implode(', ', $errorFields));
+            $errorMsg = $this->t(
+                'The following expected input data have wrong format or empty: ' . implode(', ', $errorFields)
+            );
         }
 
         if (!empty($errorMsg)) {
-            echo "<h3>$errorMsg</h3>";
+            echo ('<h3>$errorMsg</h3>');
         }
 
         if (isset($aupost)) {
@@ -169,24 +170,24 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
 
         if (isset($cmLog)) {
 
-            echo "<h2>Communication log</h2>";
+            echo ('<h2>Communication log</h2>');
 
             ob_start();
 
-            echo "API URL: " . $aupost->getApiURL() . "\n\n";
+            echo ('API URL: ' . $aupost->getApiURL() . PHP_EOL . PHP_EOL);
 
             foreach ($cmLog as $log) {
                 print_r($log);
-                echo "\n<hr />\n";
+                echo (PHP_EOL . '<hr />' . PHP_EOL);
             }
 
             $msg = '<pre>' . ob_get_contents() . '</pre>';
             ob_clean();
 
-            echo $msg;
+            echo ($msg);
         }
 
-        die();
+        die ();
     }
 
 }

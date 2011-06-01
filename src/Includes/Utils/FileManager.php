@@ -312,6 +312,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
                 if ($file->isDir()) {
                     static::mkdirRecursive($pathTo);
+
                 } else {
                     static::copy($pathFrom, $pathTo);
                 }

@@ -73,7 +73,7 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
             }
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->addError('Markeplace ID is not set for module');
+            \XLite\Core\TopMessage::addError('Markeplace ID is not set for the module');
         }
 
         // Since this action is performed in popup

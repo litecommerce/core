@@ -328,46 +328,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
-     * Update database records
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function updateDBRecords()
-    {
-        $module = $this->getModuleInstalled() ?: $this->getModuleForUpgrade();
-
-        $module->setEnabled(true);
-        $module->setDate(time());
-        $module->setInstalled(true);
-        $module->setMajorVersion($this->getMajorVersionNew());
-        $module->setMinorVersion($this->getMinorVersionNew());
-        $module->setRevisionDate($this->getRevisionDate());
-        $module->setPackSize($this->getPackSize());
-        $module->setModuleName($this->getName());
-        $module->setAuthorName($this->getAuthor());
-        $module->setIconURL($this->getIconURL());
-        $module->setDependencies($this->getDependencies());
-
-        // :TRICKY: convention for marketplaceIDs generation
-        $marketplaceID = md5(
-            $module->getAuthor() . $module->getName() . $module->getMajorVersion() . $module->getMinorVersion()
-        );
-        $data = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID, $module->getLicenseKey());
-
-        if ($data) {
-            $module->setMarketplaceID($data[\XLite\Core\Marketplace::FIELD_MODULE_ID]);
-        }
-
-        \XLite\Core\Database::getEM()->persist($module);
-        \XLite\Core\Database::getEM()->flush();
-
-        // :TRICKY: to restore previous state
-        \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
-    }
-
-    /**
      * Alias
      *
      * @return \XLite\Model\Module
@@ -399,5 +359,53 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         }
 
         return $this->module;
+    }
+
+    /**
+     * Update database records
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function updateDBRecords()
+    {
+        $module = ($installed = $this->getModuleInstalled()) ?: $this->getModuleForUpgrade();
+
+        // Do not enable already installed modules
+        if (!isset($installed)) {
+            $module->setEnabled(true);
+        }
+
+        $module->setDate(time());
+        $module->setInstalled(true);
+        $module->setMajorVersion($this->getMajorVersionNew());
+        $module->setMinorVersion($this->getMinorVersionNew());
+        $module->setRevisionDate($this->getRevisionDate());
+        $module->setPackSize($this->getPackSize());
+        $module->setModuleName($this->getName());
+        $module->setAuthorName($this->getAuthor());
+        $module->setIconURL($this->getIconURL());
+        $module->setDependencies($this->getDependencies());
+
+        // :TRICKY: convention for marketplaceIDs generation
+        $marketplaceID = md5(
+            $module->getAuthor() . $module->getName() . $module->getMajorVersion() . $module->getMinorVersion()
+        );
+        $data = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID, $module->getLicenseKey());
+
+        if ($data) {
+            $module->setMarketplaceID($data[\XLite\Core\Marketplace::FIELD_MODULE_ID]);
+        }
+
+        if (!isset($installed)) {
+            \XLite\Core\Database::getEM()->persist($module);
+        }
+
+        // Save changes in DB
+        \XLite\Core\Database::getEM()->flush();
+
+        // :TRICKY: to restore previous state
+        \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
     }
 }

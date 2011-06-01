@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View\Form;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\DrupalConnector\View\Form;
 /**
  * Abstract form widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDecorator
 {
@@ -40,7 +39,7 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
      * Chech if widget is exported into Drupal and current form has its method = "GET"
      *
      * @return boolean
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function isDrupalGetForm()
@@ -53,7 +52,7 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
      * This JavaScript code will be performed when form submits
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getJSOnSubmitCode()
@@ -65,7 +64,7 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
      * JavaScript: compose the "{'a':<a>,'b':<b>,...}" string (JS array) by the params array
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getFormParamsAsJSArray()
@@ -77,7 +76,7 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()

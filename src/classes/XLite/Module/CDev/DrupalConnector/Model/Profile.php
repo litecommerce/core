@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Model;
@@ -30,46 +30,27 @@ namespace XLite\Module\CDev\DrupalConnector\Model;
 /**
  * \XLite\Module\CDev\DrupalConnector\Model\Profile
  *
- * @package    XLite
- * @subpackage Model
- * @see        ____class_see____
- * @since      1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 {
     /**
      * User roles defined on Drupal side
      *
-     * @var    \XLite\Module\CDev\DrupalConnector\Model\DrupalRole
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \XLite\Module\CDev\DrupalConnector\Model\DrupalRole
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\DrupalConnector\Model\DrupalRole", mappedBy="profile", cascade={"all"})
      */
     protected $drupalRoles;
 
-    /**
-     * prepareCreate
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function prepareCreate()
-    {
-        parent::prepareCreate();
-
-        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
-            $this->setCmsName(\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName());
-        }
-    }
 
     /**
      * Get CMS profile
      *
      * @return object|void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -119,6 +100,23 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
             $newDrupalRole->setDrupalRoleId($roleId);
 
             $this->addDrupalRoles($newDrupalRole);
+        }
+    }
+
+
+    /**
+     * prepareCreate
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareCreate()
+    {
+        parent::prepareCreate();
+
+        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+            $this->setCmsName(\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName());
         }
     }
 }
