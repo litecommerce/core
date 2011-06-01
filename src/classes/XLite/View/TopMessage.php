@@ -47,7 +47,6 @@ class TopMessage extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/style.css';
 
         return $list;
@@ -63,12 +62,10 @@ class TopMessage extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = $this->getDir() . '/controller.js';
 
         return $list;
     }
-
 
     /**
      * getDir
@@ -147,25 +144,27 @@ class TopMessage extends \XLite\View\AView
      */
     protected function getPrefix(array $data)
     {
-        $prefix = null;
-
         switch ($data[\XLite\Core\TopMessage::FIELD_TYPE]) {
-            case 'error':
-                $prefix = $this->t('Error') . ':';
+
+            case \XLite\Core\TopMessage::ERROR:
+                $prefix = 'Error';
                 break;
 
-            case 'warning':
-                $prefix = $this->t('Warning') . ':';
+            case \XLite\Core\TopMessage::WARNING:
+                $prefix = 'Warning';
                 break;
 
             default:
+                // ...
         }
 
-        return $prefix;
+        return isset($prefix) ? (static::t($prefix) . ':') : '';
     }
 
     /**
-     * Check - box display as hidden or not
+     * Check id box is visible or not
+     *
+     * :TODO: check if it's really needed, or it's possible to use "isVisible()" instead
      *
      * @return boolean
      * @see    ____func_see____

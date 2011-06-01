@@ -370,7 +370,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function updateDBRecords()
     {
-        $module = ($installed = $this->getModuleForUpgrade()) ?: $this->getModuleForUpgrade();
+        $module = ($installed = $this->getModuleInstalled()) ?: $this->getModuleForUpgrade();
 
         // Do not enable already installed modules
         if (!isset($installed)) {
@@ -398,7 +398,11 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
             $module->setMarketplaceID($data[\XLite\Core\Marketplace::FIELD_MODULE_ID]);
         }
 
-        \XLite\Core\Database::getEM()->persist($module);
+        if (!isset($installed)) {
+            \XLite\Core\Database::getEM()->persist($module);
+        }
+
+        // Save changes in DB
         \XLite\Core\Database::getEM()->flush();
 
         // :TRICKY: to restore previous state
