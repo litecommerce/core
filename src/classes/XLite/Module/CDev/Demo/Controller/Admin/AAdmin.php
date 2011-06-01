@@ -97,7 +97,7 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
     protected function forbidInDemoMode()
     {
         if ($message = $this->getForbidInDemoModeMessage()) {
-            \XLite\Core\TopMessage::getInstance()->addWarning($message);
+            \XLite\Core\TopMessage::addWarning($message);
         }
 
         if ($url = $this->getForbidInDemoModeRedirectURL()) {

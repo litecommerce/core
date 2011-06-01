@@ -219,11 +219,11 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                 }
 
             } else {
-                \XLite\Core\TopMessage::getInstance()->addError('Trying to install non-marketplace module');
+                \XLite\Core\TopMessage::addError('Trying to install non-marketplace module');
             }
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->addError('Invalid module ID passed - "' . $moduleId . '"');
+            \XLite\Core\TopMessage::addError('Invalid module ID passed - "' . $moduleId . '"');
         }
     }
 
@@ -263,12 +263,10 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             $entry = \XLite\Upgrade\Cell::getInstance()->addUploadedModule($path);
 
             if (!isset($entry)) {
-                \XLite\Core\TopMessage::getInstance()->addError(
-                    'Unable to add module to the upgrade list'
-                );
+                \XLite\Core\TopMessage::addError('Unable to add module to the upgrade list');
 
             } elseif (\XLite::getInstance()->checkVersion($entry->getMajorVersionNew(), '<')) {
-                \XLite\Core\TopMessage::getInstance()->addError(
+                \XLite\Core\TopMessage::addError(
                     'Module version (' . $entry->getMajorVersionNew() . ') is greater than the core one'
                 );
 
@@ -276,11 +274,11 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                 $this->setReturnURL($this->buildURL('upgrade', 'download', $this->getActionParamsCommon(true)));
 
             } else {
-                \XLite\Core\TopMessage::getInstance()->addError('Unexpected error');
+                \XLite\Core\TopMessage::addError('Unexpected error');
             }
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->addError('Unable to upload module');
+            \XLite\Core\TopMessage::addError('Unable to upload module');
         }
     }
 
@@ -299,7 +297,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \XLite\Upgrade\Cell::getInstance()->setCoreVersion($version);
             \XLite\Upgrade\Cell::getInstance()->clear(false);
         } else {
-            \XLite\Core\TopMessage::getInstance()->addError('Unexpected error: version value is not passed');
+            \XLite\Core\TopMessage::addError('Unexpected error: version value is not passed');
         }
     }
 
@@ -328,11 +326,11 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                 $this->setReturnURL($this->buildURL('upgrade', 'unpack', $this->getActionParamsCommon()));
 
             } else {
-                \XLite\Core\TopMessage::getInstance()->addError('Not all upgrade packs were downloaded');
+                \XLite\Core\TopMessage::addError('Not all upgrade packs were downloaded');
             }
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->addError('Not ready to download packs');
+            \XLite\Core\TopMessage::addError('Not ready to download packs');
         }
     }
 
@@ -353,14 +351,14 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \Includes\Utils\Operator::showMessage('Unpacking archives, please wait...');
 
             if (!\XLite\Upgrade\Cell::getInstance()->unpackAll()) {
-                \XLite\Core\TopMessage::getInstance()->addError('Not all archives were unpacked');
+                \XLite\Core\TopMessage::addError('Not all archives were unpacked');
 
             } elseif ($this->isForce() && \XLite\Upgrade\Cell::getInstance()->isValid()) {
                 $this->setReturnURL($this->buildURL('upgrade', 'check_integrity', $this->getActionParamsCommon()));
             }
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->addError('Trying to unpack non-downloaded archives');
+            \XLite\Core\TopMessage::addError('Trying to unpack non-downloaded archives');
         }
     }
 
@@ -385,12 +383,12 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \XLite\Upgrade\Cell::getInstance()->upgrade(true);
 
             if ($this->isForce() && \XLite\Upgrade\Cell::getInstance()->isValid()) {
-                \XLite\Core\TopMessage::getInstance()->addInfo('Module has been successfully installed');
+                \XLite\Core\TopMessage::addInfo('Module has been successfully installed');
                 $this->setReturnURL($this->buildURL('upgrade', 'install_upgrades', $this->getActionParamsCommon()));
             }
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->addError('Unable to test files: not all archives were unpacked');
+            \XLite\Core\TopMessage::addError('Unable to test files: not all archives were unpacked');
         }
     }
 
@@ -407,10 +405,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         \Includes\Utils\Operator::showMessage('Installing updates, please wait...');
 
         // Perform upgrade
-        \XLite\Upgrade\Cell::getInstance()->upgrade(
-            false,
-            $this->isForce() ? null : ((array) \XLite\Core\Request::getInstance()->toOverwrite)
-        );
+        \XLite\Upgrade\Cell::getInstance()->upgrade(false, (array) \XLite\Core\Request::getInstance()->toOverwrite);
 
         // Disable selected modules
         foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {

@@ -66,7 +66,8 @@ abstract class SuperClass
 
     /**
      * Stop script execution
-     * FIXME - must be static
+     *
+     * :FIXME: - must be static
      *
      * @param string $message Text to display
      *

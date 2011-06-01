@@ -204,7 +204,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
 
             // Check permissions
             foreach ($dirs as $dir) {
-                if (!\Includes\Utils\FileManager::isDirWritable($dir)) {
+                if (!\Includes\Utils\FileManager::isDirWriteable($dir)) {
                     $nonWritableDirs[] = \Includes\Utils\FileManager::getRelativePath($dir, LC_DIR_ROOT);
                 }
             }

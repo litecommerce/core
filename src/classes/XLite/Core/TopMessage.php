@@ -38,7 +38,6 @@ class TopMessage extends \XLite\Base\Singleton
     /**
      * Message types
      */
-
     const INFO    = 'info';
     const WARNING = 'warning';
     const ERROR   = 'error';
@@ -46,10 +45,8 @@ class TopMessage extends \XLite\Base\Singleton
     /**
      * Message fields
      */
-
     const FIELD_TEXT = 'text';
     const FIELD_TYPE = 'type';
-
 
     /**
      * Types list
@@ -58,11 +55,7 @@ class TopMessage extends \XLite\Base\Singleton
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $types = array(
-        self::INFO,
-        self::WARNING,
-        self::ERROR,
-    );
+    protected $types = array(self::INFO, self::WARNING, self::ERROR);
 
     /**
      * Current messages
@@ -72,7 +65,6 @@ class TopMessage extends \XLite\Base\Singleton
      * @since 1.0.0
      */
     protected $messages = array();
-
 
     /**
      * Add information-type message with additional translation arguments
@@ -139,7 +131,6 @@ class TopMessage extends \XLite\Base\Singleton
         $result = false;
 
         if (!empty($text)) {
-
             $text = strval($text);
 
             if (0 < strlen($text)) {
@@ -245,7 +236,6 @@ class TopMessage extends \XLite\Base\Singleton
     {
         \XLite\Core\Session::getInstance()->topMessages = array();
     }
-
 
     /**
      * Constructor
