@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\View;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\ProductOptions\View;
 /**
  * Modify product options
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class ModifyProductOptions extends \XLite\View\AView
 {
@@ -45,18 +44,89 @@ class ModifyProductOptions extends \XLite\View\AView
     /**
      * Option groups list (cache)
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $options;
+
+
+    /**
+     * Get product id
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getProductId()
+    {
+        return $this->getParam(self::PARAM_PRODUCT)->getProductId();
+    }
+
+    /**
+     * Get options groups list
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getOptions()
+    {
+        if (!isset($this->options)) {
+            $this->options = $this->getParam(self::PARAM_PRODUCT)->getOptionGroups();
+            if (is_object($this->options)) {
+                $this->options = $this->options->toArray();
+            }
+        }
+
+        return $this->options;
+    }
+
+    /**
+     * Get option group link
+     *
+     * @param \XLite\Module\CDev\ProductOptions\Model\OptionGroup $option Option group
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getOptionGroupLink(\XLite\Module\CDev\ProductOptions\Model\OptionGroup $option)
+    {
+        return $this->buildURL(
+            'product',
+            '',
+            array(
+                'page'       => 'product_options',
+                'product_id' => $this->getProductId(),
+                'groupId'    => $option->getGroupId(),
+                'language'   => \XLite\Core\Request::getInstance()->language,
+            )
+        );
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'modules/CDev/ProductOptions/style.css';
+
+        return $list;
+    }
+
 
     /**
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -79,7 +149,7 @@ class ModifyProductOptions extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getDefaultTemplate()
@@ -91,7 +161,6 @@ class ModifyProductOptions extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -100,79 +169,4 @@ class ModifyProductOptions extends \XLite\View\AView
         return parent::isVisible()
             && $this->getParam(self::PARAM_PRODUCT);
     }
-
-    /**
-     * Get product id
-     *
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getProductId()
-    {
-        return $this->getParam(self::PARAM_PRODUCT)->getProductId();
-    }
-
-    /**
-     * Get options groups list
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getOptions()
-    {
-        if (!isset($this->options)) {
-            $this->options = $this->getParam(self::PARAM_PRODUCT)->getOptionGroups();
-            if (is_object($this->options)) {
-                $this->options = $this->options->toArray();
-            }
-        }
-
-        return $this->options;
-    }
-
-    /**
-     * Get option group link
-     *
-     * @param \XLite\Module\CDev\ProductOptions\Model\OptionGroup $option Option group
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getOptionGroupLink(\XLite\Module\CDev\ProductOptions\Model\OptionGroup $option)
-    {
-        return $this->buildURL(
-            'product',
-            '',
-            array(
-                'page'       => 'product_options',
-                'product_id' => $this->getProductId(),
-                'groupId'    => $option->getGroupId(),
-                'language'   => \XLite\Core\Request::getInstance()->language,
-            )
-        );
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'modules/CDev/ProductOptions/style.css';
-
-        return $list;
-    }
-
 }

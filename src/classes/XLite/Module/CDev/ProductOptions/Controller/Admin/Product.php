@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Controller\Admin;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\ProductOptions\Controller\Admin;
 /**
  * Product modify
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
@@ -42,7 +41,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @param array $params Parameters
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -101,7 +99,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Update option groups list
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -143,7 +140,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Delete selected option groups
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -177,11 +173,10 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Update option group
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function doActionUpdateOptionGroup()
+    protected function doActionUpdateOptionGroup()
     {
         if ('0' === \XLite\Core\Request::getInstance()->groupId) {
             $group = new \XLite\Module\CDev\ProductOptions\Model\OptionGroup;
@@ -284,7 +279,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Delete selected options
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -320,7 +314,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Update option groups exceptions
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -370,7 +363,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Delete option groups exceptions
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -403,10 +395,9 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * Save option
      *
      * @param \XLite\Module\CDev\ProductOptions\Model\Option $option Option
-     * @param array                                     $data   Data
+     * @param array                                          $data   Data
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -470,7 +461,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @param array   $data Exception cell data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -491,5 +481,4 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
             }
         }
     }
-
 }

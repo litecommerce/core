@@ -135,7 +135,7 @@ class Cell extends \XLite\Base\Singleton
     /**
      * Return list of incompatible modules
      *
-     * @param boolean $onlySelected Flag to return only the modules selected by admin
+     * @param boolean $onlySelected Flag to return only the modules selected by admin OPTIONAL
      *
      * @return array
      * @see    ____func_see____
@@ -247,7 +247,7 @@ class Cell extends \XLite\Base\Singleton
      * @param \XLite\Model\Module $module Module model
      * @param boolean             $force  Flag to install modules OPTIONAL
      *
-     * @return void
+     * @return \XLite\Upgrade\Entry\Module\Marketplace
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -269,7 +269,7 @@ class Cell extends \XLite\Base\Singleton
         $hash = $module->getActualName();
 
         if ($toUpgrade) {
-            $this->addEntry($hash, 'Module\Marketplace', array($module, $toUpgrade));
+            return $this->addEntry($hash, 'Module\Marketplace', array($module, $toUpgrade));
 
         } elseif ($module->getEnabled()) {
             $this->incompatibleModules[$module->getModuleID()] = false;
@@ -281,13 +281,13 @@ class Cell extends \XLite\Base\Singleton
      *
      * @param string $path Path to uploaded module pack
      *
-     * @return void
+     * @return \XLite\Upgrade\Entry\Module\Uploaded
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function addUploadedModule($path)
     {
-        $this->addEntry(md5($path), 'Module\Uploaded', array($path));
+        return $this->addEntry(md5($path), 'Module\Uploaded', array($path));
     }
 
     // }}}
@@ -457,7 +457,7 @@ class Cell extends \XLite\Base\Singleton
     /**
      * Check and add (if needed) core upgrade entry
      *
-     * @return void
+     * @return \XLite\Upgrade\Entry\Core
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -467,7 +467,7 @@ class Cell extends \XLite\Base\Singleton
         $data = \Includes\Utils\ArrayManager::getIndex($this->getCoreVersions(), $majorVersion, true);
 
         if (is_array($data)) {
-            $this->addEntry(self::CORE_IDENTIFIER, 'Core', array_merge(array($majorVersion), $data));
+            return $this->addEntry(self::CORE_IDENTIFIER, 'Core', array_merge(array($majorVersion), $data));
         }
     }
 
@@ -495,7 +495,7 @@ class Cell extends \XLite\Base\Singleton
      * @param string $class Entry class name
      * @param array  $args  Constructor arguments OPTIONAL
      *
-     * @return void
+     * @return \XLite\Upgrade\Entry\AEntry
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -512,6 +512,8 @@ class Cell extends \XLite\Base\Singleton
         if (isset($entry)) {
             $this->entries[$index] = $entry;
         }
+
+        return $entry;
     }
 
     /**

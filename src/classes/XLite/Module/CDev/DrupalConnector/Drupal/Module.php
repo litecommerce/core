@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * Module
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -51,15 +50,14 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * List of registered portals
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $portals = array();
 
 
-    // ------------------------------ Auxiliary methods -
+    // {{{ Auxiliary methods
 
     /**
      * For custom modules; ability to add Drupal menu nodes
@@ -67,7 +65,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$menus List of node descriptions
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -79,7 +76,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Return URL to redirect to
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -97,14 +93,41 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         return $query;
     }
 
+    // }}}
 
-    // ------------------------------ Portals -
+    // {{{ Portals
+
+    /**
+     * Getter
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPortals()
+    {
+        return $this->portals;
+    }
+
+    /**
+     * Check if there is a portal corresponding to the passed path
+     *
+     * @param string $path Druapl path to check
+     *
+     * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPortal($path)
+    {
+        return isset($this->portals[$path]) ? $this->portals[$path] : null;
+    }
+
 
     /**
      * Constructor
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -120,11 +143,10 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      *
      * @param string  $url        Drupal URL
      * @param string  $controller Controller class name
-     * @param string  $title      Portal title
-     * @param integer $type       Node type
+     * @param string  $title      Portal title OPTIONAL
+     * @param integer $type       Node type OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -137,7 +159,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Here we can register so called "portals": controllers with custom URLs
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -159,7 +180,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Prepare portals for Drupal hook "menu"
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -180,7 +200,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $menus List to prepare
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -189,55 +208,26 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         return $this->getPortalMenus() + $menus;
     }
 
-    /**
-     * Getter
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPortals()
-    {
-        return $this->portals;
-    }
+    // }}}
 
-    /**
-     * Check if there is a portal corresponding to the passed path
-     *
-     * @param string $path Druapl path to check
-     *
-     * @return \XLite\Module\CDev\DrupalConnector\Model\Portal|null
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPortal($path)
-    {
-        return isset($this->portals[$path]) ? $this->portals[$path] : null;
-    }
-
-
-    // ------------------------------ Drupal hook handlers -
+    // {{{ Drupal hook handlers
 
     /**
      * Hook "init"
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function invokeHookInit()
     {
-        require_once LC_DIR_MODULES . 'CDev/DrupalConnector/Drupal/Include/Callbacks.php';
+        include_once LC_DIR_MODULES . 'CDev/DrupalConnector/Drupal/Include/Callbacks.php';
     }
 
     /**
      * Hook "menu"
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -274,7 +264,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $list Files list
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -286,10 +275,12 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             $i = 0;
 
             foreach ($list as $name => $script) {
-                $list[$name]['weight'] = $i++;
+                $list[$name]['weight'] = $i;
                 $list[$name]['group'] = JS_DEFAULT;
                 $list[$name]['defer'] = true;
                 $list[$name]['every_page'] = false;
+
+                $i++;
             }
         }
 
@@ -302,7 +293,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $list Files list
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -314,9 +304,11 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             $i = 0;
 
             foreach ($list as $name => $style) {
-                $list[$name]['weight'] = $i++;
+                $list[$name]['weight'] = $i;
                 $list[$name]['group'] = CSS_DEFAULT;
                 $list[$name]['every_page'] = false;
+
+                $i++;
             }
         }
 
@@ -326,12 +318,11 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Alters outbound URLs
      *
-     * @param string &$path         The outbound path to alter
-     * @param array  &$options      A set of URL options
+     * @param string &$path        The outbound path to alter
+     * @param array  &$options     A set of URL options
      * @param string $originalPath The original path, before being altered by any modules
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -357,7 +348,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $pathLanguage Path language
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -382,13 +372,14 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function setDrupalRootURL($url)
     {
-         \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
-            array(
-                'name'     => 'drupal_root_url',
-                'category' => 'CDev\\DrupalConnector',
-                'value'    => $url,
-            )
-        );
+        \XLite\Core\Database::getRepo('XLite\Model\Config')
+            ->createOption(
+                array(
+                    'name'     => 'drupal_root_url',
+                    'category' => 'CDev\\DrupalConnector',
+                    'value'    => $url,
+                )
+            );
     }
 
     /**
@@ -403,4 +394,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         $cron = new \XLite\Controller\Console\Cron;
         $cron->runTasksDirect();
     }
+
+    // }}}
 }

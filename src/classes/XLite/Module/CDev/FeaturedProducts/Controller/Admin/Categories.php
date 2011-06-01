@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\Controller\Admin;
@@ -30,28 +30,62 @@ namespace XLite\Module\CDev\FeaturedProducts\Controller\Admin;
 /**
  * \XLite\Module\CDev\FeaturedProducts\Controller\Admin\Categories
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Base\IDecorator
 {
-
     /**
      * FIXME- backward compatibility
      *
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     public $params = array('category_id');
+
+
+    /**
+     * Get search condition parameter by name
+     *
+     * @param string $paramName Parameter name
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCondition($paramName)
+    {
+        $searchParams = $this->getConditions();
+
+        if (isset($searchParams[$paramName])) {
+
+            $return = $searchParams[$paramName];
+        }
+
+        return isset($searchParams[$paramName])
+            ? $searchParams[$paramName]
+            : null;
+    }
+
+    /**
+     * Get featured products list
+     *
+     * @return array(\XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct) Objects
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getFeaturedProductsList()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct')
+            ->getFeaturedProducts($this->category_id);
+    }
+
 
     /**
      * doActionAddFeaturedProducts
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -97,19 +131,18 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
                             'The product SKU#"' . $product->getSku() . '" is already set as featured for the category'
                         );
 
-                        continue;
+                    } else {
+
+                        $fp = new \XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct();
+
+                        $fp->setProduct($product);
+
+                        if ($category) {
+                            $fp->setCategory($category);
+                        }
+
+                        \XLite\Core\Database::getEM()->persist($fp);
                     }
-
-                    $fp = new \XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct();
-
-                    $fp->setProduct($product);
-
-                    if ($category) {
-
-                        $fp->setCategory($category);
-                    }
-
-                    \XLite\Core\Database::getEM()->persist($fp);
                 }
             }
 
@@ -121,7 +154,6 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * Process action 'update_featured_products'
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -173,7 +205,6 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * Get search conditions
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -189,43 +220,4 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
 
         return $searchParams;
     }
-
-    /**
-     * Get search condition parameter by name
-     *
-     * @param string $paramName
-     *
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCondition($paramName)
-    {
-        $searchParams = $this->getConditions();
-
-        if (isset($searchParams[$paramName])) {
-
-            $return = $searchParams[$paramName];
-        }
-
-        return isset($searchParams[$paramName])
-            ? $searchParams[$paramName]
-            : null;
-    }
-
-    /**
-     * Get featured products list
-     *
-     * @return array(\XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct) Objects
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getFeaturedProductsList()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct')
-            ->getFeaturedProducts($this->category_id);
-    }
-
 }

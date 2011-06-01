@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Quantum\Model\Payment\Processor;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\Quantum\Model\Payment\Processor;
 /**
  * QuantumGateway QGWdatabase Engine payment processor
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Quantum extends \XLite\Model\Payment\Base\WebBased
 {
@@ -40,7 +39,6 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * Get settings widget or template
      *
      * @return string Widget class name or template path
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -50,74 +48,11 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
-     * Get redirect form URL
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormURL()
-    {
-        return 'https://secure.quantumgateway.com/cgi/qgwdbe.php';
-    }
-
-    /**
-     * Get redirect form fields list
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormFields()
-    {
-        return array(
-            'gwlogin'                  => $this->getSetting('login'),
-            'post_return_url_approved' => $this->getReturnURL('ID'),
-            'post_return_url_declined' => $this->getReturnURL('ID'),
-            'ID'                       => $this->transaction->getTransactionId(),
-            'amount'                   => $this->transaction->getValue(),
-            'BADDR1'                   => $this->getProfile()->getBillingAddress()->getStreet(),
-            'BZIP1'                    => $this->getProfile()->getBillingAddress()->getZipcode(),
-
-            'FNAME'       => $this->getProfile()->getBillingAddress()->getFirstname(),
-            'LNAME'       => $this->getProfile()->getBillingAddress()->getLastname(),
-            'BCITY'       => $this->getProfile()->getBillingAddress()->getCity(),
-            'BSTATE'      => $this->getProfile()->getBillingAddress()->getState()->getState(),
-            'BCOUNTRY'    => $this->getProfile()->getBillingAddress()->getCountry()
-                ? $this->getProfile()->getBillingAddress()->getCountry()->getCode()
-                : '',
-            'BCUST_EMAIL' => $this->getProfile()->getLogin(),
-
-            'SFNAME'   => $this->getProfile()->getShippingAddress()->getFirstname(),
-            'SLNAME'   => $this->getProfile()->getShippingAddress()->getLastname(),
-            'SADDR1'   => $this->getProfile()->getShippingAddress()->getStreet(),
-            'SCITY'    => $this->getProfile()->getShippingAddress()->getCity(),
-            'SSTATE'   => $this->getProfile()->getShippingAddress()->getState()->getState(),
-            'SZIP1'    => $this->getProfile()->getShippingAddress()->getZipcode(),
-            'SCOUNTRY' => $this->getProfile()->getShippingAddress()->getCountry()
-                ? $this->getProfile()->getShippingAddress()->getCountry()->getCode()
-                : '',
-
-            'PHONE'               => $this->getProfile()->getBillingAddress()->getPhone(),
-            'trans_method'        => 'CC',
-            'ResponseMethod'      => 'POST',
-            'cust_id'             => $this->getProfile()->getLogin(),
-            'customer_ip'         => $this->getClientIP(),
-            'invoice_num'         => $this->getOrder()->getOrderId(),
-            'invoice_description' => $this->getInvoiceDescription(),
-            'MAXMIND'             => '1',
-        );
-    }
-
-    /**
      * Process return
      *
      * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -167,7 +102,6 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -177,11 +111,71 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
             && $method->getSetting('login');
     }
 
+
+    /**
+     * Get redirect form URL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFormURL()
+    {
+        return 'https://secure.quantumgateway.com/cgi/qgwdbe.php';
+    }
+
+    /**
+     * Get redirect form fields list
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFormFields()
+    {
+        return array(
+            'gwlogin'                  => $this->getSetting('login'),
+            'post_return_url_approved' => $this->getReturnURL('ID'),
+            'post_return_url_declined' => $this->getReturnURL('ID'),
+            'ID'                       => $this->transaction->getTransactionId(),
+            'amount'                   => $this->transaction->getValue(),
+            'BADDR1'                   => $this->getProfile()->getBillingAddress()->getStreet(),
+            'BZIP1'                    => $this->getProfile()->getBillingAddress()->getZipcode(),
+
+            'FNAME'       => $this->getProfile()->getBillingAddress()->getFirstname(),
+            'LNAME'       => $this->getProfile()->getBillingAddress()->getLastname(),
+            'BCITY'       => $this->getProfile()->getBillingAddress()->getCity(),
+            'BSTATE'      => $this->getProfile()->getBillingAddress()->getState()->getState(),
+            'BCOUNTRY'    => $this->getProfile()->getBillingAddress()->getCountry()
+                ? $this->getProfile()->getBillingAddress()->getCountry()->getCode()
+                : '',
+            'BCUST_EMAIL' => $this->getProfile()->getLogin(),
+
+            'SFNAME'   => $this->getProfile()->getShippingAddress()->getFirstname(),
+            'SLNAME'   => $this->getProfile()->getShippingAddress()->getLastname(),
+            'SADDR1'   => $this->getProfile()->getShippingAddress()->getStreet(),
+            'SCITY'    => $this->getProfile()->getShippingAddress()->getCity(),
+            'SSTATE'   => $this->getProfile()->getShippingAddress()->getState()->getState(),
+            'SZIP1'    => $this->getProfile()->getShippingAddress()->getZipcode(),
+            'SCOUNTRY' => $this->getProfile()->getShippingAddress()->getCountry()
+                ? $this->getProfile()->getShippingAddress()->getCountry()->getCode()
+                : '',
+
+            'PHONE'               => $this->getProfile()->getBillingAddress()->getPhone(),
+            'trans_method'        => 'CC',
+            'ResponseMethod'      => 'POST',
+            'cust_id'             => $this->getProfile()->getLogin(),
+            'customer_ip'         => $this->getClientIP(),
+            'invoice_num'         => $this->getOrder()->getOrderId(),
+            'invoice_description' => $this->getInvoiceDescription(),
+            'MAXMIND'             => '1',
+        );
+    }
+
     /**
      * Define saved into transaction data schema
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -204,7 +198,6 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * @param array $list Form fields list
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -214,5 +207,4 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
 
         parent::logRedirect($list);
     }
-
 }

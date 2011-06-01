@@ -189,11 +189,11 @@ class CheckoutSuccess extends \XLite\View\AView
      */
     protected function escapeJavascript($string)
     {
-         return strtr(
+        return strtr(
             $string,
             array(
                 '\\' => '\\\\',
-                '\'' => "\\'",
+                '\'' => '\\\'',
                 '"'  => '\\"',
                 "\r" => '\\r',
                 "\n" => '\\n',

@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Demo\Controller\Admin;
@@ -30,31 +30,29 @@ namespace XLite\Module\CDev\Demo\Controller\Admin;
 /**
  * Login / logoff
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Login extends \XLite\Controller\Admin\Login implements \XLite\Base\IDecorator
 {
-	/**
-	 * Demo admin login
-	 *
-	 * @var    string
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  1.0.0
-	 */
-	protected $demoLogin = 'bit-bucket@litecommerce.com';
+    /**
+     * Demo admin login
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $demoLogin = 'bit-bucket@litecommerce.com';
 
     /**
      * Demo admin password
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $demoPassword = 'master';
+
 
     /**
      * Handles the request.
@@ -62,16 +60,19 @@ class Login extends \XLite\Controller\Admin\Login implements \XLite\Base\IDecora
      * FIXME - adapt after the mapping will be removed
      *
      * @return void
-     * @access public
+     * @see    ____var_see____
      * @since  1.0.0
      */
     public function handleRequest()
     {
-		parent::handleRequest();
+        parent::handleRequest();
 
-		$this->set('login', $this->demoLogin);
-		$this->set('password', $this->demoPassword);
-		$this->set('additional_note', '<center>(login: ' . $this->demoLogin . ', password: ' . $this->demoPassword . ')</center>');
+        $this->set('login', $this->demoLogin);
+        $this->set('password', $this->demoPassword);
+        $this->set(
+            'additional_note', 
+            '<center>(login: ' . $this->demoLogin . ', password: ' . $this->demoPassword . ')</center>'
+        );
         $this->set('additional_header', \XLite\Module\CDev\Demo\View\AView::getAdditionalHeader());
-	}
+    }
 }

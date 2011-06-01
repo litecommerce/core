@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Model;
@@ -33,102 +33,57 @@ namespace XLite\Module\CDev\DrupalConnector\Model;
  * TODO: if there will be more properties,
  * derive this class from the \Includes\DataStructure\Cell one
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Portal extends \XLite\Base\SuperClass
 {
     /**
      * Drupal URL where the controller will be displayed
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $url;
 
     /**
      * Controller class name
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $controller;
 
     /**
      * Portal title
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $title = '';
 
     /**
      * Portal type for Drupal
      *
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $type;
 
-
-    /**
-     * Return portal default page content callback
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getContentCallback()
-    {
-        return 'lcConnectorGetControllerContent';
-    }
-
-    /**
-     * Return portal default page access callback
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getAccessCallback()
-    {
-        return 'lc_connector_check_controller_access';
-    }
-
-    /**
-     * Get default portal type
-     *
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultType()
-    {
-        return defined('MENU_LOCAL_TASK') ? MENU_LOCAL_TASK : 132;
-    }
 
     /**
      * Constructor
      *
      * @param string  $url        Drupal URL
      * @param string  $controller Controller class name
-     * @param string  $title      Portal title
-     * @param integer $type       Node type
+     * @param string  $title      Portal title OPTIONAL
+     * @param integer $type       Node type OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -149,7 +104,6 @@ class Portal extends \XLite\Base\SuperClass
      * Getter
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -162,7 +116,6 @@ class Portal extends \XLite\Base\SuperClass
      * Getter
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -175,7 +128,6 @@ class Portal extends \XLite\Base\SuperClass
      * Return portal default title
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -188,7 +140,6 @@ class Portal extends \XLite\Base\SuperClass
      * Getter
      *
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -201,7 +152,6 @@ class Portal extends \XLite\Base\SuperClass
      * Return menu node description in Drupal-specific form
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -219,11 +169,10 @@ class Portal extends \XLite\Base\SuperClass
      * Argument convertion: <DRUPAL> --> <LC>
      *
      * @param string $path     Portal path
-     * @param array  $args     Druapl URL arguments
-     * @param array  $pageArgs LC-specific URL arguments
+     * @param array  $args     Druapl URL arguments OPTIONAL
+     * @param array  $pageArgs LC-specific URL arguments OPTIONAL
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -240,10 +189,9 @@ class Portal extends \XLite\Base\SuperClass
      *
      * @param string $target Current target
      * @param string $action Current action
-     * @param array  $args   LC URL arguments
+     * @param array  $args   LC URL arguments OPTIONAL
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -253,5 +201,42 @@ class Portal extends \XLite\Base\SuperClass
             array($this->getController(), 'getPortalDrupalArgs'),
             array($this->getURL(), $args + (empty($action) ? array() : array('action' => $action)))
         );
+    }
+
+
+    /**
+     * Return portal default page content callback
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getContentCallback()
+    {
+        return 'lcConnectorGetControllerContent';
+    }
+
+    /**
+     * Return portal default page access callback
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getAccessCallback()
+    {
+        return 'lc_connector_check_controller_access';
+    }
+
+    /**
+     * Get default portal type
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultType()
+    {
+        return defined('MENU_LOCAL_TASK') ? MENU_LOCAL_TASK : 132;
     }
 }
