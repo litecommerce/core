@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="menus", weight="30")
  *}
-<widget class="\XLite\View\TopMenu\Node" list="users" title="Users" linkTarget="users" />
+<widget class="\XLite\View\TopMenu\Node" list="users" title="Users" linkTarget="profile_list" />

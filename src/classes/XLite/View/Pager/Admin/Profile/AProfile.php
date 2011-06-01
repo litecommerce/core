@@ -25,56 +25,25 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Order\Search;
+namespace XLite\View\Pager\Admin\Profile;
 
 /**
- * Languages and language labels modification
+ * Abstract pager class for the ProfileList widget
  *
  * @see   ____class_see____
- * @since 1.0.0
- *
- * @ListChild (list="admin.center", zone="admin")
+ * @since 1.0.1
  */
-class Recent extends \XLite\View\AView
+abstract class AProfile extends \XLite\View\Pager\Admin\AAdmin
 {
     /**
-     * Return list of targets allowed for this widget
+     * Return number of items per page
      *
-     * @return array
+     * @return integer
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.1
      */
-    public static function getAllowedTargets()
+    protected function getItemsPerPageDefault()
     {
-        $result = parent::getAllowedTargets();
-
-        $result[] = 'recent_orders';
-
-        return $result;
-    }
-
-
-    /**
-     * Return default template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return $this->getDir() .  '/recent.tpl';
-    }
-
-    /**
-     * Return templates directory name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDir()
-    {
-        return 'order';
+        return intval(\XLite\Core\Config::getInstance()->General->users_per_page);
     }
 }

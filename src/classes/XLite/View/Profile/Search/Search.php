@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Order\Search;
+namespace XLite\View\Profile\Search;
 
 /**
  * Languages and language labels modification
@@ -35,7 +35,7 @@ namespace XLite\View\Order\Search;
  *
  * @ListChild (list="admin.center", zone="admin")
  */
-class Recent extends \XLite\View\AView
+class Search extends \XLite\View\AView
 {
     /**
      * Return list of targets allowed for this widget
@@ -48,11 +48,10 @@ class Recent extends \XLite\View\AView
     {
         $result = parent::getAllowedTargets();
 
-        $result[] = 'recent_orders';
+        $result[] = 'profile_list';
 
         return $result;
     }
-
 
     /**
      * Return default template
@@ -63,7 +62,7 @@ class Recent extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() .  '/recent.tpl';
+        return $this->getDir() . '/search.tpl';
     }
 
     /**
@@ -75,6 +74,6 @@ class Recent extends \XLite\View\AView
      */
     protected function getDir()
     {
-        return 'order';
+        return 'profile';
     }
 }

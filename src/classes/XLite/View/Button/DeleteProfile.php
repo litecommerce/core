@@ -25,56 +25,34 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Order\Search;
+namespace XLite\View\Button;
+
 
 /**
- * Languages and language labels modification
+ * Delete profile button
  *
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class Recent extends \XLite\View\AView
+class DeleteProfile extends \XLite\View\Button\Regular
 {
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-
-        $result[] = 'recent_orders';
-
-        return $result;
-    }
-
 
     /**
-     * Return default template
+     * Return specified JS code
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.1
      */
-    protected function getDefaultTemplate()
+    protected function getJSCode()
     {
-        return $this->getDir() .  '/recent.tpl';
-    }
+        // We got the default JS code.
+        $jsCode = $this->getDefaultJSCode();
 
-    /**
-     * Return templates directory name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDir()
-    {
-        return 'order';
+        // Message to show admin user. the profile will be removed.
+        $message = $this->t('Are you sure you want to delete the selected user?');
+
+        // We show confirmation message and remove user profile after admin confirmation only
+        return 'if(confirm(\'' . $message . '\')){' . $jsCode . '}';
     }
 }

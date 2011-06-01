@@ -8,9 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="itemsList.order.admin.search.columns", weight="10")
+ * @ListChild (list="itemsList.profile.search.header", weight="10")
  *}
 
-<td>
-  <input type="checkbox" class="checkbox {order.getOrderId()}" value="1" name="{getNameToDelete(order.getOrderId())}" />
-</td>
+<th class="checkboxes">&nbsp;</th>
