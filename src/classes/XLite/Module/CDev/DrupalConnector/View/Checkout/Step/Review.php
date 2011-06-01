@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View\Checkout\Step;
@@ -30,13 +30,11 @@ namespace XLite\Module\CDev\DrupalConnector\View\Checkout\Step;
 /**
  * Review checkout step
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Review extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDecorator
 {
-
     /**
      * Terms and conditions static page
      */
@@ -47,7 +45,6 @@ class Review extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDe
      * Get Terms and Conditions page URL
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -57,5 +54,4 @@ class Review extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDe
             ? url(static::TERMS_AND_CONDITIONS)
             : parent::getTermsURL();
     }
-
 }

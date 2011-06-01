@@ -80,7 +80,7 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
                     $entity = $repo->insert($info + array('keyValue' => $key));
                 }
 
-                \XLite\Core\TopMessage::getInstance()->addInfo(
+                \XLite\Core\TopMessage::addInfo(
                     'License key has been successfully verified for "{{name}}" module by "{{author}}" author',
                     array(
                         'name'   => $module->getModuleName(),
@@ -89,7 +89,7 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
                 );
 
             } else {
-                \XLite\Core\TopMessage::getInstance()->addError(
+                \XLite\Core\TopMessage::addError(
                     'Key is validate, but the module [' . explode(',', $info) . '] was not found'
                 );
             }

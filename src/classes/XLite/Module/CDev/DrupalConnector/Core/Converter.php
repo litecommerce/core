@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Core;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\DrupalConnector\Core;
 /**
  * Miscelaneous convertion routines
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
 {
@@ -56,7 +55,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @param string $interface Interface script OPTIONAL
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  1.0.0
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
@@ -90,11 +89,10 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      *
      * @param string $target Target OPTIONAL
      * @param string $action Action OPTIONAL
-     * @param array  $params Parameters list
-     * @param string $node   Node
+     * @param array  $params Parameters list OPTIONAL
+     * @param string $node   Node OPTIONAL
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -104,7 +102,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
             $action = self::EMPTY_ACTION;
         }
 
-        $url = implode('/', $parts = array($node, $target, $action));
+        $url = implode('/', array($node, $target, $action));
 
         if ($params) {
             $url .= '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/');
@@ -118,11 +116,11 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      *
      * @param string $target Page identifier OPTIONAL
      * @param string $action Action to perform OPTIONAL
-     * @param array  $params Additional params
-     * @param string $node   Node
+     * @param array  $params Additional params OPTIONAL
+     * @param string $node   Node OPTIONAL
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  1.0.0
      */
     public static function buildDrupalURL($target = '', $action = '', array $params = array(), $node = self::DRUPAL_ROOT_NODE)
@@ -136,7 +134,6 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @param string $url Short URL
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */

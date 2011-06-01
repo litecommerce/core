@@ -982,12 +982,13 @@ class Marketplace extends \XLite\Base\Singleton
         $common = '["' . \XLite\Core\Request::getInstance()->target . '"' . ($code ? ', code ' . $code : '') . ']: ';
 
         if (isset($message)) {
-            \XLite\Core\TopMessage::getInstance()->addError(
+            \XLite\Core\TopMessage::addError(
                 $common . 'Marketplace connection error (' . $action . ', "' . $message . '")',
                 $args
             );
+
         } else {
-            \XLite\Core\TopMessage::getInstance()->addInfo(
+            \XLite\Core\TopMessage::addInfo(
                 $common . 'Successfully connected to marketplace (' . $action . ')',
                 $args
             );
@@ -1022,7 +1023,7 @@ class Marketplace extends \XLite\Base\Singleton
         list(, $message, $args) = $this->getError();
 
         if (!empty($message)) {
-            \XLite\Core\TopMessage::getInstance()->addError($message, $args);
+            \XLite\Core\TopMessage::addError($message, $args);
         }
     }
 
@@ -1089,7 +1090,9 @@ class Marketplace extends \XLite\Base\Singleton
             }
 
             // Set new expiration time
-            $this->setTTLStart($cellTTL);
+            if (isset($result)) {
+                $this->setTTLStart($cellTTL);
+            }
         }
 
         return $saveInTmpVars ? \XLite\Core\TmpVars::getInstance()->$cellData : $result;

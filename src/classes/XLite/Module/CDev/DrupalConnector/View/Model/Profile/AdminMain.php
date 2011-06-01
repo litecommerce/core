@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
@@ -30,33 +30,35 @@ namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
 /**
  * \XLite\View\Model\Profile\AdminMain
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Base\IDecorator
 {
     /**
      * List of fields of the "E-mail & Password" section that must be locked
      *
-     * @var    array
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $mainSchemaReadonlyFields = array('login');
 
     /**
      * List of fields of the "E-mail & Password" section that must be removed
      *
-     * @var    array
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $mainSchemaRemovedFields = array('password', 'password_conf');
 
     /**
      * List of fields of the "User access" section that must be locked
      *
-     * @var    array
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $accessSchemaReadonlyFields = array('access_level', 'status');
 
@@ -67,7 +69,6 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
      * @param string $name Field name
      *
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -104,7 +105,7 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
      * Return fields list by the corresponding schema
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getFormFieldsForSectionMain()
@@ -147,7 +148,7 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
      * Return fields list by the corresponding schema
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getFormFieldsForSectionAccess()

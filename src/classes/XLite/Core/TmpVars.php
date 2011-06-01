@@ -68,6 +68,7 @@ class TmpVars extends \XLite\Base\Singleton
 
             if (!isset($var)) {
                 $var = $this->getRepo()->insert($data + array('name' => $name));
+
             } else {
                 $this->getRepo()->update($var, $data);
             }
@@ -75,6 +76,20 @@ class TmpVars extends \XLite\Base\Singleton
         } elseif ($var) {
             $this->getRepo()->delete($var);
         }
+    }
+
+    /**
+     * Check if value is set
+     * 
+     * @param string $name Variable name to check
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __isset($name)
+    {
+        return !is_null($this->getVar($name));
     }
 
     /**

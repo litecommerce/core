@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\ProductOptions\Model;
 /**
  * Order item options
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="XLite\Module\CDev\ProductOptions\Model\Repo\OrderItemOption")
  * @Table  (name="order_item_options",
@@ -46,10 +45,9 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Primary key
      *
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -60,10 +58,9 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Option id
      *
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Column (type="integer", nullable=true)
      */
@@ -72,10 +69,10 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Group option id
      *
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
      * @Column (type="integer", nullable=true)
      */
     protected $group_id;
@@ -83,10 +80,9 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Saved option name
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Column (type="string", length="255", nullable=false)
      */
@@ -95,10 +91,9 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Saved option value
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Column (type="text")
      */
@@ -107,10 +102,10 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Group option sort position (from XLite\Module\CDev\ProductOptions\Model\OptionGroup)
      *
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
      * @Column (type="integer")
      */
     protected $orderby;
@@ -118,10 +113,9 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Option group (relation)
      *
-     * @var    \XLite\Module\CDev\ProductOptions\Model\OptionGroup
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \XLite\Module\CDev\ProductOptions\Model\OptionGroup
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Module\CDev\ProductOptions\Model\OptionGroup")
      * @JoinColumn (name="group_id", referencedColumnName="group_id")
@@ -131,10 +125,9 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Option (relation)
      *
-     * @var    \XLite\Module\CDev\ProductOptions\Model\Option
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \XLite\Module\CDev\ProductOptions\Model\Option
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Module\CDev\ProductOptions\Model\Option")
      * @JoinColumn (name="option_id", referencedColumnName="option_id")
@@ -144,10 +137,9 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Order item (relation)
      *
-     * @var    \XLite\Model\OrderItem
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \XLite\Model\OrderItem
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\OrderItem", inversedBy="options")
      * @JoinColumn (name="item_id", referencedColumnName="item_id")
@@ -158,7 +150,6 @@ class OrderItemOption extends \XLite\Model\AEntity
      * Get actual selected option name
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -171,7 +162,6 @@ class OrderItemOption extends \XLite\Model\AEntity
      * Get actual selected option value
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
