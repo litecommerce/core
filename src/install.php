@@ -288,7 +288,8 @@ OUT;
 
 <?php
         exit();
-    
+
+    }
 
 
 	// Memory test action
