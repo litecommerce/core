@@ -107,7 +107,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Search profiles', $this->buildURL('users'));
+        $this->addLocationNode('Users', $this->buildURL('users'));
     }
 
     /**

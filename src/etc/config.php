@@ -128,6 +128,15 @@ default_image_width = 110
 default_image_height = 110
 unsharp_mask_filter_on_resize = off
 
+; Installation path of Image Magick executables:
+; for example:
+; image_magick_path = "C:\\Program Files\\ImageMagick-6.7.0-Q16\\"   (in Windows)
+; image_magick_path = "/usr/local/imagemagick/" (in Unix/Linux )
+; You should consult with your hosting provider to find where Image Magick is installed
+; If you leave it empty then PHP GD library will be used.
+; 
+image_magick_path =
+
 ;
 ; Installer authcode.
 ; A person who do not know the auth code can not access the installation script.

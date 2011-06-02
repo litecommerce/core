@@ -11,4 +11,4 @@
  * @ListChild (list="itemsList.profile.search.header", weight="30")
  *}
 
-<th class="name">{t(#Name#)}</th>
+<th class="name table-label">{t(#Name#)}</th>

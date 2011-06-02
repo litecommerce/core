@@ -44,7 +44,7 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Search user profiles';
+        return 'Users';
     }
 
     /**
@@ -74,7 +74,7 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return $this->t('Search profiles');
+        return $this->t('Users');
     }
 
     /**

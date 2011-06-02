@@ -548,25 +548,20 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
         if (!LC_OS_IS_WIN) {
             array_unshift($directories, '/usr/bin', '/usr/local/bin');
+        } else {
+            $filename .= '.exe';
         }
 
         $result = null;
 
         foreach ($directories as $dir) {
 
-            $file = $dir . LC_DS . $filename;
+            $file = ($dir ? $dir . LC_DS : '') . $filename;
 
-            if (LC_OS_IS_WIN) {
-                if (is_executable($file . '.exe')) {
-                    $result = $file . '.exe';
-                    break;
-                }
-
-            } elseif (is_executable($file)) {
+            if (is_executable($file)) {
                 $result = $file;
                 break;
             }
-
         }
 
         return $result;

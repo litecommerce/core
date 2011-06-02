@@ -11,6 +11,6 @@
  * @ListChild (list="itemsList.profile.search.columns", weight="70")
  *}
 
-<td class="last-login">
+<td class="last-login table-label">
 {if:profile.last_login}{formatTime(profile.last_login):h}{else:}Never{end:}
 </td>

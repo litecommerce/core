@@ -11,7 +11,7 @@
  * @ListChild (list="itemsList.profile.search.columns", weight="40")
  *}
 
-<td class="access">
+<td class="access table-label">
 
   {if:profile.access_level=0}
   Customer

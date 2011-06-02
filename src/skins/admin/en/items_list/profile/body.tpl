@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<table class="data-table items-list">
+<table class="profile-list data-table items-list">
 
   <tr>
     {displayInheritedViewListContent(#header#,_ARRAY_(#profile#^profile))}
@@ -25,3 +25,5 @@
   </tr>
 
 </table>
+
+{displayInheritedViewListContent(#footer#)}

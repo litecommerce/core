@@ -11,4 +11,4 @@
  * @ListChild (list="itemsList.profile.search.header", weight="10")
  *}
 
-<th class="checkboxes">&nbsp;</th>
+<th class="profileid table-label">&nbsp;</th>

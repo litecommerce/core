@@ -11,7 +11,7 @@
  * @ListChild (list="itemsList.profile.search.columns", weight="30")
  *}
 
-<td class="name">
+<td class="name table-label">
   <a
     href="{buildURL(#address_book#,##,_ARRAY_(#profile_id#^profile.profile_id))}"
     IF="profile.billing_address.firstname&profile.billing_address.lastname">
