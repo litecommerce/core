@@ -3187,9 +3187,12 @@ function module_install_cache(&$params)
     $result = doPrepareFixtures($params);
 
     if ($result) {
+        
+        doRemoveCache(null);
+
 ?>
 
-<iframe id="process_iframe" style="padding-top: 15px;" src="install.php?target=install&amp;action=build_cache&<?php echo time(); ?>" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
+<iframe id="process_iframe" style="padding-top: 15px;" src="cart.php?doNotRedirectAfterCacheIsBuilt&<?php echo time(); ?>" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
 
 <br />
 <br />
