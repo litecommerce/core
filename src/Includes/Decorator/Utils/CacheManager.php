@@ -117,6 +117,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
             . '" alt="" /></td><td>' . static::getMessage() . '</td></tr></table>';
     }
 
+    protected static function displayCompleteMessage()
+    {
+        echo '<div id="finish">Cache is built successfully</div>';
+    }
+
     // }}}
 
     // {{{ Cache state indicator routines
@@ -289,6 +294,12 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         \Includes\Utils\Operator::showMessage(LC_IS_CLI_MODE ? static::getPlainMessage() : static::getHTMLMessage());
     }
 
+    protected static function isRedirectNeeded($step)
+    {
+        return !(self::STEP_FIVE == $step
+            && isset($_GET['doNotRedirectAfterCacheIsBuilt']));
+    }
+
     /**
      * Step completed
      *
@@ -309,8 +320,14 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         // Remove the "rebuilding cache" indicator file
         static::checkRebuildIndicatorState();
 
-        // Perform redirect (needed for two-step cache generation)
-        \Includes\Utils\Operator::refresh();
+        if (static::isRedirectNeeded($step)) {
+            // Perform redirect (needed for two-step cache generation)
+            \Includes\Utils\Operator::refresh();
+
+        } else {
+            static::displayCompleteMessage();
+            exit ();
+        }
     }
 
     /**
