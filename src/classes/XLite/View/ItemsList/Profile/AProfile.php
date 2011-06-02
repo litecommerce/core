@@ -38,7 +38,7 @@ abstract class AProfile extends \XLite\View\ItemsList\AItemsList
     /**
      * Allowed sort criterions
      */
-
+    
     const SORT_BY_MODE_PROFILE = 'p.login';
 
 
@@ -54,7 +54,7 @@ abstract class AProfile extends \XLite\View\ItemsList\AItemsList
         $list = parent::getCSSFiles();
 
         // Static call of the non-static function
-        $list[] = self::getDir() . '/css/profiles_list.css';
+        $list[] = self::getDir() . '/profiles_list.css';
 
         return $list;
     }
@@ -71,7 +71,7 @@ abstract class AProfile extends \XLite\View\ItemsList\AItemsList
         $list = parent::getJSFiles();
 
         // Static call of the non-static function
-        $list[] = self::getDir() . '/js/profiles_list.js';
+        $list[] = self::getDir() . '/profiles_list.js';
 
         return $list;
     }
@@ -141,8 +141,6 @@ abstract class AProfile extends \XLite\View\ItemsList\AItemsList
     protected function getSortByModeDefault()
     {
         return self::SORT_BY_MODE_PROFILE;
-
-
     }
 
     /**

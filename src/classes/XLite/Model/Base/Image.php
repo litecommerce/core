@@ -233,25 +233,28 @@ abstract class Image extends \XLite\Model\AEntity
 
         $fn = $this->image_id . '.' . $this->getExtension();
 
-        if (file_exists($path . $fn)) {
+        if (
+            file_exists($path . $fn)
+            && filesize($path . $fn) > 0
+        ) {
 
             // File is exists
-            $result = \XLite\Core\ImageOperator::getCroppedDimensions(
+            list($newWidth, $newHeight) = \XLite\Core\ImageOperator::getCroppedDimensions(
                 $this->width,
                 $this->height,
                 $width,
                 $height
             );
 
-            $result[2] = $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn;
+            $url = $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn;
 
         } else {
 
             // File is not exists
             $operator = new \XLite\Core\ImageOperator($this);
-            $result = $operator->resizeDown($width, $height);
-            // :FIXME:
-            $result[2] = (!file_put_contents($path . $fn, $operator->getImage()) || !$result[2])
+            list($newWidth, $newHeight, $result) = $operator->resizeDown($width, $height);
+
+            $url = (false === $result || !file_put_contents($path . $fn, $operator->getImage()))
                 ? $this->getURL()
                 : $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn;
 
@@ -260,7 +263,11 @@ abstract class Image extends \XLite\Model\AEntity
             }
         }
 
-        return $result;
+        return array(
+            $newWidth,
+            $newHeight,
+            $url
+        );
     }
 
     /**

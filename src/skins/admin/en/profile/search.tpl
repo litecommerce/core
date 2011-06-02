@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<widget template="common/dialog.tpl" name="searchProfilesForm" body="profile/search_form.tpl" />
+{displayViewListContent(#admin.profile.search#)}
 
 {* Open <form ...> tag *}
 {*

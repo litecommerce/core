@@ -11,4 +11,4 @@
  * @ListChild (list="itemsList.profile.search.header", weight="40")
  *}
 
-<th class="access-level">{t(#Access level#)}</th>
+<th class="access-level table-label">{t(#Access level#)}</th>

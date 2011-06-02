@@ -11,4 +11,4 @@
  * @ListChild (list="itemsList.profile.search.header", weight="20")
  *}
 
-<th class="login">{t(#Login#)}/{t(#E-mail#)}</th>
+<th class="login table-label">{t(#Login#)}/{t(#E-mail#)}</th>

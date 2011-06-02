@@ -11,6 +11,6 @@
  * @ListChild (list="itemsList.profile.search.columns", weight="60")
  *}
 
-<td class="created">
+<td class="created table-label">
 {if:profile.added}{formatTime(profile.added):h}{else:}Unknown{end:}
 </td>

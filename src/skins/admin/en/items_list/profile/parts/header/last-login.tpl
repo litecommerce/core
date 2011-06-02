@@ -11,4 +11,4 @@
  * @ListChild (list="itemsList.profile.search.header", weight="70")
  *}
 
-<th class="last-login">{t(#Last login#)}</th>
+<th class="last-login table-label">{t(#Last login#)}</th>

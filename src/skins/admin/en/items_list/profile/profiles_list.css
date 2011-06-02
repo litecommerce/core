@@ -10,7 +10,10 @@
  * @since     1.0.0
  */
 
-.items-list .table td.id
+.profile-list td.profileid,
+  .profile-list th.profileid
 {
-  text-align: center;
+  width: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
 }

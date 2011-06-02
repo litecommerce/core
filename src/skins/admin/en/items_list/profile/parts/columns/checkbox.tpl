@@ -11,7 +11,7 @@
  * @ListChild (list="itemsList.profile.search.columns", weight="10")
  *}
 
-<td>
+<td class="profileid table-label">
   <widget
     class="XLite\View\FormField\Input\UserProfileId"
     fieldOnly=true

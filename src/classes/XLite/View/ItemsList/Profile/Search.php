@@ -75,7 +75,7 @@ class Search extends \XLite\View\ItemsList\Profile\AProfile
      */
     protected function getHead()
     {
-        return $this->t('Search result');
+        return null;
     }
 
     /**
@@ -93,7 +93,7 @@ class Search extends \XLite\View\ItemsList\Profile\AProfile
 
         if ($this->getListName() . '.footer' === $list) {
 
-
+            $result[] = $this->getWidget(array('label' => 'Delete user'), '\XLite\View\Button\DeleteProfile');
         }
 
         return $result;

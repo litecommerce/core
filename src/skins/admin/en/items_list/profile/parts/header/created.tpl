@@ -11,4 +11,4 @@
  * @ListChild (list="itemsList.profile.search.header", weight="60")
  *}
 
-<th class="created">{t(#Created#)}</th>
+<th class="created table-label">{t(#Created#)}</th>

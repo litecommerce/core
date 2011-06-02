@@ -8,6 +8,8 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
+ *
+ * TODO: RESTORE/REFACTOR Search form. ListChild (list="admin.profile.search", weight="10")
  *}
 
 <script type="text/javascript">
@@ -256,7 +258,3 @@ managedate('date', true);
 </script>
 
 </form>
-
-<br />
-
-<widget class="\XLite\View\Button\AddUser" label="Add user" jsCode="self.location = '{buildURL(#profile#,##,_ARRAY_(#mode#^#register#))}';" />
