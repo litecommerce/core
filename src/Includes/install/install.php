@@ -2422,7 +2422,7 @@ function rename_install_script()
     @rename(LC_DIR_ROOT . 'install.php', LC_DIR_ROOT . $install_name);
     @clearstatcache();
 
-    $result = (!@file_exists(LC_DIR_ROOT . 'install.php') && @file_exists(LC_DIR_ROOT . $install_name) ? $install_name : false);
+    $result = (!file_exists(LC_DIR_ROOT . 'install.php') && file_exists(LC_DIR_ROOT . $install_name) ? $install_name : false);
 
     if ($result) {
         x_install_log(xtr('Installation script renamed to :filename', array(':filename' => $install_name)));
