@@ -245,9 +245,16 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
                 $order = \XLite\Core\Layout::getInstance()->getSkins($interface);
                 foreach ($order as $skin) {
                     foreach ($skins[$skin] as $tpl => $index) {
+                        $inhetited = isset($list[$index]) && in_array($list[$index]['path'], static::$inheritedTemplates);
                         foreach ($skins as $otherSkin => $otherTpls) {
                             if ($otherSkin != $skin && isset($otherTpls[$tpl])) {
-                                unset($list[$otherTpls[$tpl]]);
+
+                                if ($inhetited) {
+                                    $inhetited = in_array($list[$otherTpls[$tpl]]['path'], static::$inheritedTemplates);
+
+                                } else {
+                                    unset($list[$otherTpls[$tpl]]);
+                                }
                             }
                         }
                     }
