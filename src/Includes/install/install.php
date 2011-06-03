@@ -245,7 +245,7 @@ function doCheckRequirements()
 
     $checkRequirements['lc_loopback'] = array(
         'title'    => xtr('Loopback test'),
-        'critical' => true,
+        'critical' => false,
         'depends' => 'lc_install_script'
     );
 
@@ -3002,11 +3002,6 @@ function module_cfg_install_db(&$params)
         $checkError = false;
         $checkWarning = false;
 
-        // Check if web server host and web_dir provided are valid
-        $url = 'http://' . $params['xlite_http_host'] . $params['xlite_web_dir'];
-
-        $response = inst_http_request_install("action=http_host", $url);
-
         if (strstr($params['xlite_http_host'], ':')) {
             list($_host, $_port) = explode(':', $params['xlite_http_host']);
 
@@ -3014,8 +3009,8 @@ function module_cfg_install_db(&$params)
             $_host = $params['xlite_http_host'];
         }
 
-        if (strpos($response, $_host) === false) {
-            fatal_error(xtr('The web server name and/or web drectory is invalid! Press \'BACK\' button and review web server settings you provided'));
+        if (!$_host) {
+            fatal_error(xtr('The web server name and/or web drectory is invalid (:host). Press \'BACK\' button and review web server settings you provided', array(':host' => $_host)));
             $checkError = true;
 
         // Check if database settings provided are valid
