@@ -179,7 +179,84 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      */
     protected function getListChildTagsFromTemplates()
     {
-        return $this->getAllListChildTagAttributes($this->getAnnotatedTemplates());
+        return $this->getAllListChildTagAttributes($this->prepareListChildTemplates($this->getAnnotatedTemplates()));
+    }
+
+    /**
+     * Prepare list childs templates-based
+     * 
+     * @param array $list List
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareListChildTemplates(array $list)
+    {
+        \XLite::getInstance()->initModules();
+
+        // Get substitutional skins
+        $customerSkins = \XLite\Core\Layout::getInstance()->getSkins(\XLite::CUSTOMER_INTERFACE);
+        $adminSkins = \XLite\Core\Layout::getInstance()->getSkins(\XLite::ADMIN_INTERFACE);
+        $mailSkins = \XLite\Core\Layout::getInstance()->getSkins(\XLite::MAIL_INTERFACE);
+        $allSkins = array_merge($customerSkins, $adminSkins, $mailSkins);
+
+        // Proceed if system has substitutional skins
+        if (3 < count($allSkins)) {
+
+            // Create empty hash
+            $hash = array(
+                \XLite::CUSTOMER_INTERFACE => array_combine(
+                    $customerSkins,
+                    array_fill(0, count($customerSkins), array())
+                ),
+                \XLite::ADMIN_INTERFACE    => array_combine(
+                    $adminSkins,
+                    array_fill(0, count($adminSkins), array())
+                ),
+                \XLite::MAIL_INTERFACE     => array_combine(
+                    $mailSkins,
+                    array_fill(0, count($mailSkins), array())
+                ),
+            );
+
+            // Build skins / templates hash
+            foreach ($list as $index => $item) {
+                $skin = preg_replace('/^(\w+).+$/Ss', '$1', substr($item['path'], strlen(LC_DIR_SKINS)));
+                if (
+                    (!in_array($skin, $customerSkins) && $item['zone'] == \XLite::CUSTOMER_INTERFACE)
+                    || (!in_array($skin, $adminSkins) && $item['zone'] == \XLite::ADMIN_INTERFACE)
+                    || (!in_array($skin, $mailSkins) && $item['zone'] == \XLite::MAIL_INTERFACE)
+                    || (!in_array($skin, $allSkins))
+                ) {
+                    unset($list[$index]);
+
+                } else {
+                    $list[$index]['skin'] = $skin;
+
+                    if (isset($hash[$item['zone']])) {
+                        $hash[$item['zone']][$skin][$item['tpl']] = $index;
+                    }
+                }
+            }
+
+            // Remove templates from dependent skins
+            foreach ($hash as $interface => $skins) {
+                $order = \XLite\Core\Layout::getInstance()->getSkins($interface);
+                foreach ($order as $skin) {
+                    foreach ($skins[$skin] as $tpl => $index) {
+                        foreach ($skins as $otherSkin => $otherTpls) {
+                            if ($otherSkin != $skin && isset($otherTpls[$tpl])) {
+                                unset($list[$otherTpls[$tpl]]);
+                            }
+                        }
+                    }
+                    unset($skins[$skin]);
+                }
+            }
+        }
+
+        return $list;
     }
 
     /**

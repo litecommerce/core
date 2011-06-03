@@ -271,27 +271,29 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Get template full path
      *
-     * @param string $shortPath       Template short path
-     * @param string $currentSkin     Current skin
-     * @param string $currentTemplate Current template short path
+     * @param string $shortPath Template short path
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTemplateFullPath($shortPath, $currentSkin, $currentTemplate)
+    public function getTemplateFullPath($shortPath)
     {
         $parts = explode(':', $shortPath, 2);
 
         if (1 == count($parts)) {
             if ('parent' == $shortPath) {
-                $result = $this->getResourceParentFullPath($this->currentTemplate, $currentSkin);
+
+                list($currentSkin, $currentTemplate) = $this->getCurrentTemplateInfo();
+                $result = $this->getResourceParentFullPath($currentTemplate, $currentSkin);
 
             } else {
                 $result = $this->getResourceFullPath($shortPath);
             }
 
         } elseif ('parent' == $parts[0]) {
+
+            list($currentSkin, $currentTemplate) = $this->getCurrentTemplateInfo();
             $result = $this->getResourceParentFullPath($parts[1], $currentSkin);
 
         } else {
@@ -502,6 +504,23 @@ class Layout extends \XLite\Base\Singleton
         }
 
         return $this->skinPaths[$interface];
+    }
+
+    /**
+     * Get current template info 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCurrentTemplateInfo()
+    {
+        $tail = \XLite\View\AView::getTail();
+        $last = array_pop($tail);
+
+        return preg_match('/^(\w+)\W\w+\W(.+)$/Ss', substr($last, strlen(LC_DIR_SKINS)), $match)
+            ? array($match[1], $match[2])
+            : array(null, null);
     }
 
     /**
