@@ -73,7 +73,6 @@ class Country extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Id
      * @Column (type="fixedstring", length="3")
      */
     protected $code3 = '';
