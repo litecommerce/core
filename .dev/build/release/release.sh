@@ -458,10 +458,10 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	rm -rf quickstart
 
-	mv skins skins_original
+#	mv skins skins_original
 
-	mkdir skins
-	cp skins_original/.htaccess skins/.htaccess
+#	mkdir skins
+#	cp skins_original/.htaccess skins/.htaccess
 
 #	LOGO_IMAGE=${OUTPUT_DIR}/xlite_dev/build/release/files/images/lc_logo-${XLITE_VERSION}.png
 
