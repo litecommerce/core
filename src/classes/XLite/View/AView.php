@@ -1329,44 +1329,31 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function defineViewList($list)
     {
-        $widgets    = array();
-        $hash       = array();
+        $widgets = array();
 
         foreach ($this->getViewListChildren($list) as $widget) {
 
-            if (!$widget->getTpl() || !isset($hash[$widget->getTpl()])) {
+            if ($widget->getChild()) {
 
-                $w = false;
+                // List child is widget
+                $widgets[] = $this->getWidget(
+                    array(
+                        'viewListClass' => $this->getViewListClass(),
+                        'viewListName'  => $list,
+                    ),
+                    $widget->getChild()
+                );
 
-                if ($widget->getChild()) {
+            } elseif ($widget->getTpl()) {
 
-                    // List child is widget
-                    $w = $this->getWidget(
-                        array(
-                            'viewListClass' => $this->getViewListClass(),
-                            'viewListName'  => $list,
-                        ),
-                        $widget->getChild()
-                    );
-
-                } elseif ($widget->getTpl()) {
-
-                    // List child is template
-                    $w = $this->getWidget(
-                        array(
-                            'viewListClass' => $this->getViewListClass(),
-                            'viewListName'  => $list,
-                            'template'      => $widget->getTpl(),
-                        )
-                    );
-                }
-
-                if ($w) {
-                    $widgets[] = $w;
-                    if ($widget->getTpl()) {
-                        $hash[$widget->getTpl()] = true;
-                    }
-                }
+                // List child is template
+                $widgets[] = $this->getWidget(
+                    array(
+                        'viewListClass' => $this->getViewListClass(),
+                        'viewListName'  => $list,
+                        'template'      => $widget->getTpl(),
+                    )
+                );
             }
         }
 
