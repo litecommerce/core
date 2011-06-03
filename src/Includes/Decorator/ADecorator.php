@@ -44,6 +44,8 @@ abstract class ADecorator
     const STEP_FOUR   = 4;
     const STEP_FIVE   = 5;
 
+    const LAST_STEP   = 5;
+
 
     /**
      * Current step
