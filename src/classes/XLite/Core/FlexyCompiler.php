@@ -1288,11 +1288,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     public function prepare($original, $force = false)
     {
-        $compiled = \Includes\Utils\FileManager::normalize(
-            LC_DIR_COMPILE . substr($original, $this->rootDirLength) . '.php'
-        );
-
-        $original = \Includes\Utils\FileManager::normalize($original);
+        $compiled = LC_DIR_COMPILE . substr($original, $this->rootDirLength) . '.php';
 
         if (($this->checkTemplateStatus && !$this->isTemplateValid($original, $compiled)) || $force) {
 
