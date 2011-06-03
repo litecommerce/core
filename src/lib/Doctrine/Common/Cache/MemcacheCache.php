@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id$
+ *  $Id: a028b05b89bfe300ac51c60783663ba5e3c58895 $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -74,7 +74,7 @@ class MemcacheCache extends AbstractCache
         foreach ($allSlabs as $server => $slabs) {
             if (is_array($slabs)) {
                 foreach (array_keys($slabs) as $slabId) {
-                    if (!ctype_digit($slabId)) {
+                    if (!is_int($slabId)) {
                         continue;
                     }
                     $dump = $this->_memcache->getExtendedStats('cachedump', (int) $slabId);
@@ -121,6 +121,6 @@ class MemcacheCache extends AbstractCache
      */
     protected function _doDelete($id)
     {
-        return $this->_memcache->delete($id);
+        return $this->_memcache->delete($id, 0);
     }
 }
