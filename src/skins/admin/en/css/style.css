@@ -987,6 +987,10 @@ button.bright:active
   vertical-align: top;
 }
 
+.checkboxes {
+  width: 1px;
+}
+
 .table-input-checkbox input {
   margin-top: 7px;
   margin-bottom: 7px;
@@ -1004,6 +1008,10 @@ button.bright:active
 form.profile-form
 {
   margin-top: 15px;
+}
+
+.users-delete-note {
+  margin: 20px 0px 0px 0px;
 }
 
 table.data-table th.table-id-column,

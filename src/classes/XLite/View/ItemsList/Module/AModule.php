@@ -76,7 +76,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'module';
+        return parent::getDir() . '/module';
     }
 
     /**

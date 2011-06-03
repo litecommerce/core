@@ -25,26 +25,55 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\DrupalConnector\View\Button;
-
+namespace XLite\View\Profile\Search;
 
 /**
- * 'Add user' button
+ * Languages and language labels modification
  *
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="admin.center", zone="admin")
  */
-class DeleteUser extends \XLite\View\Button\DeleteUser implements \XLite\Base\IDecorator
+class Search extends \XLite\View\AView
 {
     /**
-     * Disable button 'Add user'
+     * Return list of targets allowed for this widget
      *
-     * @return void
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isVisible()
+    public static function getAllowedTargets()
     {
-        return false;
+        $result = parent::getAllowedTargets();
+
+        $result[] = 'profile_list';
+
+        return $result;
+    }
+
+    /**
+     * Return default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return $this->getDir() . '/search.tpl';
+    }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDir()
+    {
+        return 'profile';
     }
 }

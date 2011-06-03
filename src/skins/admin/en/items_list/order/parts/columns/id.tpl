@@ -11,4 +11,8 @@
  * @ListChild (list="itemsList.order.admin.search.columns", weight="20")
  *}
 
-<td class="id"><a class="id" href="{buildURL(#order#,##,_ARRAY_(#order_id#^order.getOrderId()))}">{order.getOrderId()}</a></td>
+<td class="id">
+  <a class="id" href="{buildURL(#order#,##,_ARRAY_(#order_id#^order.getOrderId()))}">
+    {order.getOrderId()}
+  </a>
+</td>

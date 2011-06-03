@@ -15,17 +15,9 @@
 <script type="text/javascript">
 <!--
 
-function deleteProfile()
-{
-	if (confirm('Are you sure you want to delete the selected user?')) {
-		document.forms['user_profile'].elements['action'].value = 'delete';
-		document.forms['user_profile'].submit();
-	}
-}
-
 function searchOrders()
 {
-  document.forms['user_profile'].elements['target'].value = 'users';
+  document.forms['user_profile'].elements['target'].value = 'profile_list';
   document.forms['user_profile'].elements['action'].value = 'orders';
   document.forms['user_profile'].submit();
 }
@@ -102,7 +94,7 @@ function searchOrders()
 
   <p align="left">
 
-    <widget class="\XLite\View\Button\Regular" name="Delete" label="Delete selected profile" jsCode="deleteProfile();" />
+    <widget class="\XLite\View\Button\DeleteProfile" name="Delete" label="Delete selected profile" />
 
   </p>
 

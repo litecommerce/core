@@ -223,12 +223,8 @@ abstract class AImageOperator extends \XLite\Base\Singleton
             $height
         );
 
-        $result = array($newWidth, $newHeight, false);
-
-        if ($newWidth != $this->width || $newHeight != $this->height) {
-            $result[2] = $this->resize($newWidth, $newHeight);
-        }
-
-        return $result;
+        return ($newWidth != $this->width || $newHeight != $this->height)
+            ? array($newWidth, $newHeight, $this->resize($newWidth, $newHeight))
+            : array($newWidth, $newHeight, false);
     }
 }
