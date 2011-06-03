@@ -131,6 +131,14 @@
 		<!-- Rebuild cache: third pass -->
 		<exec executable="${php53}" dir="${installDir}">
 			<arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
+		</exec>
+		<!-- Rebuild cache: fourth pass -->
+		<exec executable="${php53}" dir="${installDir}">
+			<arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
+		</exec>
+		<!-- Rebuild cache: fifth pass -->
+		<exec executable="${php53}" dir="${installDir}">
+			<arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
         </exec>
 	</target>
 
