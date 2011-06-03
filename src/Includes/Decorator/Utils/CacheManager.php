@@ -294,10 +294,30 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         \Includes\Utils\Operator::showMessage(LC_IS_CLI_MODE ? static::getPlainMessage() : static::getHTMLMessage());
     }
 
-    protected static function isRedirectNeeded($step)
+    /**
+     * Check if current step is last and redirect is prohibited after that step 
+     * 
+     * @param integer $step Current step
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function isSkipRedirectAfterLastStep($step)
     {
-        return !(self::STEP_FIVE == $step
-            && isset($_GET['doNotRedirectAfterCacheIsBuilt']));
+        return self::LAST_STEP === $step && isset($_GET['doNotRedirectAfterCacheIsBuilt']);
+    }
+
+    /**
+     * Check if only one step must be performed
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function isDoOneStepOnly()
+    {
+        return defined('DO_ONE_STEP_ONLY');
     }
 
     /**
@@ -320,13 +340,14 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         // Remove the "rebuilding cache" indicator file
         static::checkRebuildIndicatorState();
 
-        if (static::isRedirectNeeded($step)) {
-            // Perform redirect (needed for two-step cache generation)
-            \Includes\Utils\Operator::refresh();
-
-        } else {
+        if (static::isSkipRedirectAfterLastStep($step)) {
+            // Do not redirect after last step (this mode is used when cache builder was launched from LC standalone installation script)
             static::displayCompleteMessage();
             exit ();
+
+        } elseif (!static::isDoOneStepOnly()) {
+            // Perform redirect (needed for multi-step cache generation)
+            \Includes\Utils\Operator::refresh();
         }
     }
 
@@ -372,7 +393,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * Run a step
+     * Run a step and return true if step is actually was performed or false if step has already been performed before
      *
      * @param string $step Step name
      *
@@ -382,9 +403,14 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function runStepConditionally($step)
     {
+        $result = false;
+
         if (static::isRebuildNeeded($step)) {
             static::runStep($step);
+            $result = true; 
         }
+
+        return $result;
     }
 
     // }}}
@@ -509,7 +535,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function rebuildCache()
     {
         foreach (static::$steps as $step) {
-            static::runStepConditionally($step);
+            if (static::runStepConditionally($step) && static::isDoOneStepOnly()) {
+                // Break after first performed step if isDoOneStepOnly() returned true
+                break;
+            }
         }
     }
 

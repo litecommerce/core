@@ -110,7 +110,7 @@ $modules = array (
         ),
 	array( // 4
 			"name"          => 'install_dirs',
-			"comment"       => xtr('Setting up templates'),
+			"comment"       => xtr('Setting up directories'),
             "auth_required" => true,
 			"js_back"       => 0,
 			"js_next"       => 0,
@@ -400,7 +400,7 @@ if (isset($params['force_current']) && (isset($_POST['go_back']) && $_POST['go_b
 	unset($params['force_current']);
 }
 
-$skinsDir = 'skins_original/admin/en/';
+$skinsDir = 'skins/admin/en/';
 
 // start html output
 
