@@ -55,7 +55,7 @@ class Country extends \XLite\Model\AEntity
     protected $country;
 
     /**
-     * Country code
+     * Country code (ISO 3166-1 alpha-2)
      *
      * @var   string
      * @see   ____var_see____
@@ -65,6 +65,18 @@ class Country extends \XLite\Model\AEntity
      * @Column (type="fixedstring", length="2", unique=true)
      */
     protected $code;
+
+    /**
+     * Country code (ISO 3166-1 alpha-3)
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Id
+     * @Column (type="fixedstring", length="3")
+     */
+    protected $code3 = '';
 
     /**
      * Enabled falg
