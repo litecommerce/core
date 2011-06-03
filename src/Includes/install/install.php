@@ -245,7 +245,7 @@ function doCheckRequirements()
 
     $checkRequirements['lc_loopback'] = array(
         'title'    => xtr('Loopback test'),
-        'critical' => true,
+        'critical' => false,
         'depends' => 'lc_install_script'
     );
 
@@ -1307,17 +1307,23 @@ function doBuildCache()
 {
     $result = true;
 
-    $data = parse_ini_file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'));
+    x_install_log(xtr('Cache building...'));
 
-    $url = 'http://' . $data['http_host'] . $data['web_dir'];
+    ob_start();
 
-    $url_request = $url . '/cart.php';
+    try {
+        define('DO_ONE_STEP_ONLY', true);
+        \Includes\Decorator\Utils\CacheManager::rebuildCache();
 
-    $response = inst_http_request($url_request);
-
-    if (preg_match('/(?:404 Not Found|error|warning|notice)/Ssi', $response)) {
-        fatal_error(xtr("Cache building procedure failed:<br />\n\nRequest URL: :requesturl<br />\n\nResponse: :response", array(':requesturl' => $url_request, ':response' => $response)));
+    } catch (\Exception $e) {
         $result = false;
+    }
+
+    $message = ob_get_contents();
+    ob_end_clean();
+
+    if (!$result) {
+        x_install_log(xtr('Cache building procedure failed: :message', array(':message' => $e->getMessage())));
     }
 
     return $result;
@@ -1352,16 +1358,6 @@ function doInstallDirs($silentMode = false)
     if (!empty($lcSettings['directories_to_create'])) {
         echo '<div class="section-title">' . xtr('Creating directories...') . '</div>';
         $result = create_dirs($lcSettings['directories_to_create']);
-    }
-
-    if ($result) {
-        echo '<div class="section-title">' . xtr('Copying templates...') . '</div>';
-        $failedList = array();
-        $result = copy_files(constant('LC_TEMPLATES_REPOSITORY'), "", constant('LC_TEMPLATES_DIRECTORY'), $failedList);
-
-        if (!$result) {
-            x_install_log(xtr('copy_files() failed'), $failedList);
-        }
     }
 
     if ($result && !empty($lcSettings['files_to_create'])) {
@@ -3006,11 +3002,6 @@ function module_cfg_install_db(&$params)
         $checkError = false;
         $checkWarning = false;
 
-        // Check if web server host and web_dir provided are valid
-        $url = 'http://' . $params['xlite_http_host'] . $params['xlite_web_dir'];
-
-        $response = inst_http_request_install("action=http_host", $url);
-
         if (strstr($params['xlite_http_host'], ':')) {
             list($_host, $_port) = explode(':', $params['xlite_http_host']);
 
@@ -3018,8 +3009,8 @@ function module_cfg_install_db(&$params)
             $_host = $params['xlite_http_host'];
         }
 
-        if (strpos($response, $_host) === false) {
-            fatal_error(xtr('The web server name and/or web drectory is invalid! Press \'BACK\' button and review web server settings you provided'));
+        if (!$_host) {
+            fatal_error(xtr('The web server name and/or web drectory is invalid (:host). Press \'BACK\' button and review web server settings you provided', array(':host' => $_host)));
             $checkError = true;
 
         // Check if database settings provided are valid
@@ -3187,9 +3178,12 @@ function module_install_cache(&$params)
     $result = doPrepareFixtures($params);
 
     if ($result) {
+        
+        doRemoveCache(null);
+
 ?>
 
-<iframe id="process_iframe" style="padding-top: 15px;" src="install.php?target=install&amp;action=build_cache&<?php echo time(); ?>" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
+<iframe id="process_iframe" style="padding-top: 15px;" src="cart.php?doNotRedirectAfterCacheIsBuilt&<?php echo time(); ?>" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
 
 <br />
 <br />

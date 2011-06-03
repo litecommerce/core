@@ -52,12 +52,6 @@ define('LC_PHP_MEMORY_LIMIT_MIN', '64M');
 // Minimum MySQL version supported
 define('LC_MYSQL_VERSION_MIN', '5.0.3');
 
-// Original templates repository name
-define('LC_TEMPLATES_REPOSITORY', 'skins_original');
-
-// Templates directory name
-define('LC_TEMPLATES_DIRECTORY', 'skins');
-
 // Config file name
 define('LC_CONFIG_FILE', 'config.php');
 
@@ -79,7 +73,6 @@ $lcSettings = array(
         'var',
         'images',
         'files',
-        constant('LC_TEMPLATES_DIRECTORY'),
         'etc' . LC_DS . 'config.php'
     ),
 
@@ -88,7 +81,6 @@ $lcSettings = array(
         'var',
         'images',
         'files',
-        constant('LC_TEMPLATES_DIRECTORY'),
     ),
 
     // The list of directories that should be created by installation script
