@@ -170,7 +170,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      */
     protected function getInlineJSCode()
     {
-        return '$(document).ready(function() { '
+        return 'jQuery(document).ready(function() { '
             . 'stateSelectors[\'' . $this->getFieldId() . '\'] = new StateSelector('
             . '\'' . $this->getFieldId() . '\', '
             . '\'' . $this->getParam(self::PARAM_STATE_SELECTOR_ID) . '\', '
