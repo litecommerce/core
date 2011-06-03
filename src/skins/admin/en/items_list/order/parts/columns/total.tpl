@@ -11,4 +11,6 @@
  * @ListChild (list="itemsList.order.admin.search.columns", weight="70")
  *}
 
-<td class="total">{price_format(order,#total#):h}</td>
+<td class="total">
+  {price_format(order,#total#):h}
+</td>

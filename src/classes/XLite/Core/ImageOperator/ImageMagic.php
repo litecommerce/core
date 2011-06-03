@@ -45,16 +45,41 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
     protected $image;
 
     /**
+     * Image Magick installation path
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $imageMagick = '';
+
+    /**
+     * Return Image Magick executable
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    public static function getImageMagickExecutable()
+    {
+        $imageMagickPath = \Includes\Utils\ConfigParser::getOptions(array('images', 'image_magick_path'));
+
+        return !empty($imageMagickPath)
+            ? \Includes\Utils\FileManager::findExecutable($imageMagickPath . 'convert')
+            : '';
+    }
+
+    /**
      * Check - enabled or not
      *
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function isEnabled()
     {
         return parent::isEnabled()
-            && (bool)\Includes\Utils\FileManager::findExecutable('convert');
+            && (bool) self::getImageMagickExecutable();
     }
 
     /**
@@ -88,7 +113,7 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
     }
 
     /**
-     * Resize
+     * Resize procedure
      *
      * @param integer $width  Width
      * @param integer $height Height
@@ -99,22 +124,67 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
      */
     public function resize($width, $height)
     {
-        $path = \Includes\Utils\FileManager::findExecutable('convert');
-
         $new = tempnam(LC_DIR_TMP, 'image.new');
 
-        $output = array();
-        $return = 0;
-        exec($path . ' ' . $this->image . ' -coalesce ' . $new, $output, $return);
+        $result = $this->execFilmStripLook($new);
 
-        if (!$return) {
-            exec($path . ' ' . $new . ' -adaptive-resize ' . $width . 'x' . $height . ' ' . $new, $output, $return);
+        if (0 === $result) {
 
-            if (!$return) {
+            $result = $this->execResize($new, $width, $height);
+
+            if (0 === $result) {
                 $this->image = $new;
             }
         }
 
-        return !$return;
+        return 0 === $result;
+    }
+
+    /**
+     * Execution of preparing film strip look
+     *
+     * @param string $newImage File path to new image
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function execFilmStripLook($newImage)
+    {
+        exec(
+            '"' . self::getImageMagickExecutable()
+                . '" ' . $this->image . ' -coalesce '
+                . $newImage,
+            $output,
+            $result
+        );
+
+        return $result;
+    }
+
+    /**
+     * Execution of resizing
+     *
+     * @param string  $newImage File path to new image
+     * @param integer $width    Width
+     * @param integer $height   Height
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function execResize($newImage, $width, $height)
+    {
+        exec(
+            '"' . self::getImageMagickExecutable() . '" '
+                . $newImage
+                . ' -adaptive-resize '
+                . $width . 'x' . $height . ' '
+                . $newImage,
+            $output,
+            $result
+        );
+
+        return $result;
     }
 }

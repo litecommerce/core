@@ -63,7 +63,7 @@ class Recent extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . LC_DS . 'recent.tpl';
+        return $this->getDir() .  '/recent.tpl';
     }
 
     /**

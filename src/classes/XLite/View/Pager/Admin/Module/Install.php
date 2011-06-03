@@ -86,7 +86,7 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      */
     protected function getDefaultTemplate()
     {
-        return 'items_list' . LC_DS . 'module' . LC_DS . 'install' . LC_DS . 'pager' . LC_DS . 'body.tpl';
+        return 'items_list/module/install/pager/body.tpl';
     }
 
     /**

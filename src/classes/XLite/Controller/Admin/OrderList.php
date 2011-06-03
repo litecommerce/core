@@ -99,10 +99,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     {
         $searchParams = $this->getConditions();
 
-        if (isset($searchParams[$paramName])) {
-            $return = $searchParams[$paramName];
-        }
-
         return isset($searchParams[$paramName])
             ? $searchParams[$paramName]
             : null;
@@ -187,6 +183,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
             || $this->startDate > $this->endDate
         ) {
             $date = getdate(time());
+
             $this->startDate = mktime(0, 0, 0, $date['mon'], 1, $date['year']);
             $this->endDate   = mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
         }

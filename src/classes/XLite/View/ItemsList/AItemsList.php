@@ -605,9 +605,8 @@ abstract class AItemsList extends \XLite\View\Container
     protected function getAJAXSpecificParams()
     {
         return array(
+            self::PARAM_AJAX_WIDGET => get_class($this),
             self::PARAM_AJAX_TARGET => \XLite\Core\Request::getInstance()->target,
-            self::PARAM_AJAX_ACTION => '',
-            self::PARAM_AJAX_CLASS  => get_class($this),
         );
     }
 
@@ -632,7 +631,7 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected function getURLAJAXParams()
     {
-        return array('target' => 'get_widget') + $this->getCommonParams() + $this->getAJAXSpecificParams();
+        return $this->getCommonParams() + $this->getAJAXSpecificParams();
     }
 
     /**

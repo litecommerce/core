@@ -63,7 +63,7 @@ class Search extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . LC_DS . 'search.tpl';
+        return $this->getDir() . '/search.tpl';
     }
 
     /**
