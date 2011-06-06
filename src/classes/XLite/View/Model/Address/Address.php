@@ -53,51 +53,61 @@ class Address extends \XLite\View\Model\AModel
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Title',
             self::SCHEMA_LABEL    => 'Title',
             self::SCHEMA_REQUIRED => false,
+            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-title',
         ),
         'firstname' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Firstname',
             self::SCHEMA_REQUIRED => true,
+            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-firstname',
         ),
         'lastname' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Lastname',
             self::SCHEMA_REQUIRED => true,
+            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-lastname',
         ),
         'street' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Street',
+            self::SCHEMA_LABEL    => 'Address',
             self::SCHEMA_REQUIRED => true,
+            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-street',
         ),
-        'city' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'City',
+        'country_code' => array(
+            self::SCHEMA_CLASS => '\XLite\View\FormField\Select\Country',
+            self::SCHEMA_LABEL => 'Country',
             self::SCHEMA_REQUIRED => true,
+            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-country',
         ),
         'state_id' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\State',
             self::SCHEMA_LABEL    => 'State',
             self::SCHEMA_REQUIRED => true,
+            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-state',
         ),
         'custom_state' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'State',
             self::SCHEMA_REQUIRED => false,
+            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-customer-state',
+        ),
+        'city' => array(
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
+            self::SCHEMA_LABEL    => 'City',
+            self::SCHEMA_REQUIRED => true,
+            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-city',
         ),
         'zipcode' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Zip code',
             self::SCHEMA_REQUIRED => true,
-        ),
-        'country_code' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Country',
-            self::SCHEMA_LABEL    => 'Country',
-            self::SCHEMA_REQUIRED => true,
+            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-zipcode',
         ),
         'phone' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Phone',
             self::SCHEMA_REQUIRED => true,
+            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-phone',
         ),
     );
 
@@ -315,7 +325,7 @@ class Address extends \XLite\View\Model\AModel
      */
     protected function getSubmitButtonLabel()
     {
-        return $this->t('Save');
+        return $this->t('Save changes');
     }
 
     /**
@@ -354,6 +364,7 @@ class Address extends \XLite\View\Model\AModel
             $newKey = preg_replace('/^([^_]*_)(.*)$/', '\2', $key);
 
             $data[$newKey] = $value;
+            
             unset($data[$key]);
         }
 

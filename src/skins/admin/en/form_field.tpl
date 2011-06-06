@@ -9,14 +9,15 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<td class="table-label {getFieldId()}-label">
+<div class="table-label {getFieldId()}-label">
   <label for="{getFieldId()}">{getParam(#label#)}:</label>
-</td>
-<td class="star">
+</div>
+<div class="star">
   {if:getParam(#required#)}*{else:}&nbsp;{end:}
-</td>
-<td class="table-value {getFieldId()}-value">
+</div>
+<div class="table-value {getFieldId()}-value">
   <widget template="{getDir()}/{getFieldTemplate()}" />
   <div class="form-field-comment {getFieldId()}-comment">{getParam(#comment#):r}</div>
   <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
-</td>
+</div>
+ <div class="clear"></div>

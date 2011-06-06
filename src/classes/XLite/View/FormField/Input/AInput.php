@@ -74,17 +74,4 @@ abstract class AInput extends \XLite\View\FormField\AFormField
     {
         return array();
     }
-
-    /**
-     * Register CSS class to use for wrapper block (SPAN) of input field.
-     * It is usable to make unique changes of the field.
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getWrapperClass()
-    {
-        return 'input';
-    }
 }
