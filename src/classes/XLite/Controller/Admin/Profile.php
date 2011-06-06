@@ -107,7 +107,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Users', $this->buildURL('users'));
+        $this->addLocationNode('Users', $this->buildURL('profile_list', '', array('mode' => 'search')));
     }
 
     /**
@@ -205,6 +205,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
         // Send notification to the user
         \XLite\Core\Mailer::sendProfileDeletedAdminNotification($userLogin);
 
-        $this->setReturnURL($this->buildURL('users', '', array('mode' => 'search')));
+        $this->setReturnURL($this->buildURL('profile_list', '', array('mode' => 'search')));
     }
 }

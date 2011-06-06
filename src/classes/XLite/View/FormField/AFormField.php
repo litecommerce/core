@@ -46,6 +46,7 @@ abstract class AFormField extends \XLite\View\AView
     const PARAM_LABEL      = 'label';
     const PARAM_COMMENT    = 'comment';
     const PARAM_FIELD_ONLY = 'fieldOnly';
+    const PARAM_WRAPPER_CLASS = 'wrapperClass';
 
     const PARAM_IS_ALLOWED_FOR_CUSTOMER = 'isAllowedForCustomer';
 
@@ -470,6 +471,7 @@ abstract class AFormField extends \XLite\View\AView
             self::PARAM_REQUIRED   => new \XLite\Model\WidgetParam\Bool('Required', false),
             self::PARAM_COMMENT    => new \XLite\Model\WidgetParam\String('Comment', null),
             self::PARAM_ATTRIBUTES => new \XLite\Model\WidgetParam\Collection('Attributes', $this->getDefaultAttributes()),
+            self::PARAM_WRAPPER_CLASS => new \XLite\Model\WidgetParam\String('Wrapper class', 'input'),
 
             self::PARAM_IS_ALLOWED_FOR_CUSTOMER => new \XLite\Model\WidgetParam\Bool(
                 'Is allowed for customer',
@@ -555,5 +557,18 @@ abstract class AFormField extends \XLite\View\AView
     protected function isVisible()
     {
         return parent::isVisible() && $this->checkFieldAccessability();
+    }
+
+    /**
+     * Register CSS class to use for wrapper block (SPAN) of input field.
+     * It is usable to make unique changes of the field.
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function getWrapperClass()
+    {
+        return $this->getParam(self::PARAM_WRAPPER_CLASS);
     }
 }
