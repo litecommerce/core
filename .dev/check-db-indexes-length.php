@@ -1,43 +1,29 @@
+#!/usr/bin/env php
 <?php
 // vim: set ts=4 sw=4 sts=4 et:
-
-/**
- * LiteCommerce
- * 
- * NOTICE OF LICENSE
- * 
- * This source file is subject to the Open Software License (OSL 3.0)
- * that is bundled with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
- * PHP version 5.3.0
- * 
- * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
- */
 
 /**
  * Check DB indexes length
  */
 
-define('MYSQL_USER', '');
-define('MYSQL_PASSWORD', '');
-define('MYSQL_DB', '');
+$dir = dirname(__FILE__) . '/..';
+$options = parse_ini_file($dir . '/src/etc/config.php', true);
+$options = $options['database_details'];
+if (file_exists($dir . '/src/etc/config.local.php')) {
+    $tmp = parse_ini_file($dir . '/src/etc/config.local.php', true);
+    if (isset($tmp['database_details'])) {
+        $options = array_merge($options, $tmp['database_details']);
+    }
+}
+
+define('MYSQL_USER', $options['username']);
+define('MYSQL_PASSWORD', $options['password']);
+define('MYSQL_DB', $options['database']);
 define('INDEX_LENGTH_LIMIT', 1000);
 
 
 mysql_connect('localhost', MYSQL_USER, MYSQL_PASSWORD);
 mysql_select_db(MYSQL_DB);
-
 
 $res = mysql_query('SHOW TABLES');
 
@@ -51,10 +37,13 @@ while($row = mysql_fetch_assoc($res)) {
     }
 
     $columns = array();
-    $res2 = mysql_query('show columns from ' . $table);
+    $res2 = mysql_query('show full columns from ' . $table);
     while ($row = mysql_fetch_assoc($res2))  {
         if (preg_match('/^(?:var)?char\((\d+)\)/Ss', $row['Type'], $match)) {
             $columns[$row['Field']] = $match[1];
+            if (preg_match('/utf8/Ss', $row['Collation'])) {
+                $columns[$row['Field']] = $columns[$row['Field']] * 3;
+            }
         }
     }
 
@@ -67,7 +56,8 @@ while($row = mysql_fetch_assoc($res)) {
         }
 
         if ($length > INDEX_LENGTH_LIMIT) {
-            var_dump($table, $name, $rows, $length);
+            echo $table . ': ' . PHP_EOL
+                . "\t" . $name . ': [' . implode(', ', $rows) . '] : ' .  $length . PHP_EOL;
         }
     }
-
+}
