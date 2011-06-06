@@ -1316,3 +1316,44 @@ table.top-sellers th.title {
   padding-left: 35%;
   padding-top: 10px;
 }
+
+div.default-section {
+  float: left;
+}
+
+div.model-form-buttons {
+  clear: left;
+}
+
+ul.default-table {
+  list-style: none;
+  min-width: 450px;
+}
+
+ul.default-table li {
+  background-image: none;
+  padding: 0px;
+  float: left;
+  clear: left;
+}
+
+div.table-label {
+  float: left;
+}
+
+ul.default-table div.table-label label {
+  width: 80px;
+}
+
+div.star {
+  float: left;
+  width: 10px;
+}
+
+div.table-value {
+  float: left;
+}
+
+div.table-label label {
+  display: block;
+}

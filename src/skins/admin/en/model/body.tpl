@@ -17,7 +17,7 @@
   <widget class="{getFormClass()}" name="{getFormName()}" />
 
     <widget template="{getDir()}/form_content.tpl" />
-    <br /><widget template="{getDir()}/{getFormTemplate(#buttons#)}" />
+    <widget template="{getDir()}/{getFormTemplate(#buttons#)}" />
 
   <widget name="{getFormName()}" end />
 
