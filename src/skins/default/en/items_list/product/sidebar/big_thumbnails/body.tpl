@@ -12,12 +12,11 @@
 
 {displayViewListContent(#itemsList.product.cart#)}
 
-<ul class="list-body-sidebar products products-sidebar products-sidebar-small-thumbnails">
+<ul class="list-body-sidebar products products-sidebar products-sidebar-big-thumbnails">
 
   <li FOREACH="getSideBarData(),i,product" class="product-cell hproduct item {getAdditionalItemClass(productArrayPointer,productArraySize)}">
     <div class="{getProductCellClass(product)}">
       {displayInheritedViewListContent(#info#,_ARRAY_(#product#^product))}
-      <div class="clearboth"></div>
     </div>
   </li>
 

@@ -71,6 +71,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     const DISPLAY_MODE_ROTATOR = 'rotator';
 
     const DISPLAY_MODE_STHUMB = 'small_thumbnails';
+    const DISPLAY_MODE_BTHUMB = 'big_thumbnails';
 
 
     /**
@@ -137,6 +138,20 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(
             self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE) ? self::DISPLAY_MODE_STHUMB : self::DISPLAY_MODE_GRID
         );
+
+        if (
+            self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
+            && self::DISPLAY_MODE_BTHUMB == $this->getParam(self::PARAM_DISPLAY_MODE)
+        ) {
+            $this->widgetParams[self::PARAM_ICON_MAX_WIDTH]->setValue(80);
+            $this->widgetParams[self::PARAM_ICON_MAX_HEIGHT]->setValue(80);
+
+        } else {
+            $this->widgetParams[self::PARAM_ICON_MAX_WIDTH]->setValue(110);
+            $this->widgetParams[self::PARAM_ICON_MAX_HEIGHT]->setValue(110);
+        }
+
+        parent::setWidgetParams($params);
 
         // FIXME - not a good idea, but I don't see a better way
         if ($this->isWrapper() && $this->checkSideBarParams($params)) {
@@ -298,6 +313,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         if (self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)) {
             $list = array(
                 self::DISPLAY_MODE_STHUMB  => 'Small thumbnails',
+                self::DISPLAY_MODE_BTHUMB  => 'Big thumbnails',
             );
 
         } else {

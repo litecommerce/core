@@ -12,5 +12,6 @@
  * @ListChild (list="itemsList.product.grid.customer.info", weight="998")
  * @ListChild (list="itemsList.product.list.customer.photo", weight="998")
  * @ListChild (list="itemsList.product.small_thumbnails.customer.info", weight="998")
+ * @ListChild (list="itemsList.product.big_thumbnails.customer.info")
  *}
 <div title="Added to cart" class="added-to-cart"></div>
