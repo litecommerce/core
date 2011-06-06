@@ -137,7 +137,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode($this->t('Search profiles'), $this->buildURL('users'));
+        $this->addLocationNode($this->t('Search profiles'), $this->buildURL('profile_list', '', array('mode' => 'search')));
     }
 
     /**

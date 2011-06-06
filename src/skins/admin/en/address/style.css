@@ -58,19 +58,58 @@
   margin-bottom: 6px;
 }
 
-.address-dialog tr td
+.address-dialog ul li
 {
   padding: 0px 5px 6px 0px;
 }
 
-.address-dialog input
-{
+.address-dialog input {
   width: 300px;
+}
+
+span.address-firstname input {
+  width: 240px;
+}
+
+span.address-lastname input {
+  width: 240px;
+}
+
+span.address-street input {
+  width: 290px;
+}
+
+li.address-country select {
+  width: 300px;
+}
+
+li.address-state select {
+  width: 240px;
+}
+
+span.address-city input {
+  width: 240px;
+}
+
+span.address-zipcode input {
+  width: 75px;
+}
+
+span.address-phone input {
+  width: 125px;
 }
 
 .address-dialog input.name {
   height: 17px;
   border: 1px solid #ddd;
+}
+
+ul.default-table li.address-phone {
+  clear: none;
+}
+
+ul.default-table li.address-phone label {
+  width: 50px;
 }
 
 .address-dialog .button {

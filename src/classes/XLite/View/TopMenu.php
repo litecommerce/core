@@ -52,7 +52,7 @@ class TopMenu extends \XLite\View\AView
         'categories' => array(
             'category',
         ),
-        'users' => array(
+        'profile_list' => array(
             'profile',
             'address_book',
         ),

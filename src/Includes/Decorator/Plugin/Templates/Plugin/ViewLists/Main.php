@@ -184,9 +184,9 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 
     /**
      * Prepare list childs templates-based
-     * 
+     *
      * @param array $list List
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -245,12 +245,12 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
                 $order = \XLite\Core\Layout::getInstance()->getSkins($interface);
                 foreach ($order as $skin) {
                     foreach ($skins[$skin] as $tpl => $index) {
-                        $inhetited = isset($list[$index]) && in_array($list[$index]['path'], static::$inheritedTemplates);
+                        $inherited = isset($list[$index]) && in_array($list[$index]['path'], static::$inheritedTemplates);
                         foreach ($skins as $otherSkin => $otherTpls) {
                             if ($otherSkin != $skin && isset($otherTpls[$tpl])) {
 
-                                if ($inhetited) {
-                                    $inhetited = in_array($list[$otherTpls[$tpl]]['path'], static::$inheritedTemplates);
+                                if ($inherited) {
+                                    $inherited = in_array($list[$otherTpls[$tpl]]['path'], static::$inheritedTemplates);
 
                                 } else {
                                     unset($list[$otherTpls[$tpl]]);
