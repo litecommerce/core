@@ -99,19 +99,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         self::WIDGET_TYPE_CENTER   => 'Center',
     );
 
-    /**
-     * Display modes
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $displayModes = array(
-        self::DISPLAY_MODE_GRID  => 'Grid',
-        self::DISPLAY_MODE_LIST  => 'List',
-        self::DISPLAY_MODE_TABLE => 'Table',
-    );
-
 
     /**
      * Return list of targets allowed for this widget
@@ -141,6 +128,8 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     public function setWidgetParams(array $params)
     {
         parent::setWidgetParams($params);
+
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setOptions($this->getDisplayModes());
 
         // FIXME - not a good idea, but I don't see a better way
         if ($this->isWrapper() && $this->checkSideBarParams($params)) {
@@ -252,7 +241,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
                 'Widget type', self::WIDGET_TYPE_CENTER, true, $this->widgetTypes
             ),
             self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\Set(
-                'Display mode', self::DISPLAY_MODE_GRID, true, $this->displayModes
+                'Display mode', self::DISPLAY_MODE_GRID, true, array()
             ),
             self::PARAM_SHOW_DISPLAY_MODE_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
                 'Show "Display mode" selector', true, true
@@ -288,6 +277,31 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
                 'The maximum number of products displayed in sidebar', 5, true
             ),
         );
+    }
+
+    /**
+     * Get display modes 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDisplayModes()
+    {
+        if (self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)) {
+            $list = array(
+                self::DISPLAY_MODE_LIST  => 'List',
+            );
+
+        } else {
+            $list = array(
+                self::DISPLAY_MODE_GRID  => 'Grid',
+                self::DISPLAY_MODE_LIST  => 'List',
+                self::DISPLAY_MODE_TABLE => 'Table',
+            );
+        }
+
+        return $list;
     }
 
     /**
