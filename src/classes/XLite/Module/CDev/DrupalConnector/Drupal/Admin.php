@@ -198,7 +198,12 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     protected function addSettingsFieldset(array &$form, $class, $label, array $block = array())
     {
         // Get settings from LC
-        if ($settings = $this->getHandler()->getWidget($class)->getWidgetSettings()) {
+        $widget = $this->getHandler()->getWidget($class);
+        if (isset($block['options']) && is_array($block['options'])) {
+            $widget->setWidgetParams($block['options']);
+        }
+        $settings = $widget->getWidgetSettings();
+        if ($settings) {
 
             // To prevent some unpredictable errors related to backslashes in element IDs
             $key = $this->getBlockName($class);
