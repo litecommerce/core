@@ -141,13 +141,13 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      */
     protected function addTags(array $data, $path)
     {
-        $template = \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_SKINS);
+        $base = \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_SKINS);
 
         foreach ($data as $tags) {
 
-            $skin = \Includes\Utils\ArrayManager::getIndex(explode(LC_DS, $template), 0, true);
+            $skin = \Includes\Utils\ArrayManager::getIndex(explode(LC_DS, $base), 0, true);
             $zone = array_search($skin, static::$zones) ?: \XLite\Model\ViewList::INTERFACE_CUSTOMER;
-            $template = substr($template, strpos($template, LC_DS) + ('common' == $skin ? 1 : 4));
+            $template = substr($base, strpos($base, LC_DS) + ('common' == $skin ? 1 : 4));
 
             static::$annotatedTemplates[] = array('tpl' => $template, 'zone' => $zone, 'path' => $path) + $tags;
         }
