@@ -179,6 +179,20 @@ class Inventory extends \XLite\Model\AEntity
     }
 
     /**
+     * Get low available amount 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getLowAvailableAmount()
+    {
+        return $this->getEnabled()
+            ? min($this->getLowDefaultAmount(), $this->getAmount() - $this->getLockedAmount())
+            : $this->getLowDefaultAmount();
+    }
+
+    /**
      * Alias: is product in stock or not
      *
      * @return boolean
@@ -255,6 +269,18 @@ class Inventory extends \XLite\Model\AEntity
     protected function getLockedAmount()
     {
         return \Includes\Utils\ArrayManager::sumObjectsArrayFieldValues($this->getLockedItems(), 'getAmount', true);
+    }
+
+    /**
+     * Get low defaultA aount 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLowDefaultAmount()
+    {
+        return 1;
     }
 
     /**

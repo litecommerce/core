@@ -114,6 +114,18 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
+     * Check - amount is set into request data or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isSetAmount()
+    {
+        return isset(\XLite\Core\Request::getInstance()->amount);
+    }
+
+    /**
      * Alias
      *
      * @return \XLite\Model\Product
@@ -172,15 +184,18 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * Check product amount before add it to the cart
      *
      * @param \XLite\Model\Product $product Product to add
+     * @param integer              $amount  Amount OPTIONAL
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function checkAmountToAdd(\XLite\Model\Product $product)
+    protected function checkAmountToAdd(\XLite\Model\Product $product, $amount = null)
     {
+        $amount = isset($amount) ? $amount : $this->getAmount();
+
         return $this->checkAmount($product)
-            || $this->getProductAvailableAmount($product) >= $this->getAmount();
+            || $this->getProductAvailableAmount($product) >= $amount;
     }
 
     /**
@@ -209,9 +224,17 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     protected function correctAmount(\XLite\Model\Product $product)
     {
-        $amount = $this->getAmount();
+        if ($this->isSetAmount()) {
+            $amount = $this->getAmount();
 
-        if (!$this->checkAmountToAdd($product)) {
+        } elseif ($product->getInventory()) {
+            $amount = $product->getInventory()->getLowAvailableAmount();
+
+        } else {
+            $amount = 1;
+        }
+        
+        if (!$this->checkAmountToAdd($product, $amount)) {
             $amount = $this->getProductAvailableAmount($product);
             $this->processInvalidAmountError($product, $this->getProductAvailableAmount($product));
         }
@@ -305,9 +328,15 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         $url = \XLite\Core\Session::getInstance()->productListURL;
 
         if (!$url) {
-            $url = empty($_SERVER['HTTP_REFERER'])
-                ? $this->buildURL('product', '', array('product_id' => $this->getProductId()))
-                : $_SERVER['HTTP_REFERER'];
+            if (\XLite\Core\Request::getInstance()->returnURL) {
+                $url = \XLite\Core\Request::getInstance()->returnURL;
+
+            } elseif (!empty($_SERVER['HTTP_REFERER'])) {
+                $url = $_SERVER['HTTP_REFERER'];
+
+            } else {
+                $url = $this->buildURL('product', '', array('product_id' => $this->getProductId()));
+            }
         }
 
         return $url;
