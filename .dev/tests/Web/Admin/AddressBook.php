@@ -25,20 +25,20 @@
  * @since      1.0.0
  */
 
-require_once __DIR__ . '/ACustomer.php';
+require_once __DIR__ . '/AAdmin.php';
 
-class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
+class XLite_Web_Admin_AddressBook extends XLite_Web_Admin_AAdmin
 {
 
-    const ADD_BUTTON = '//button[@class="add-address action"]';
+    const ADD_BUTTON = '//button[@class="add-address main-button"]';
 
     const SAVE_BUTTON = "//div[@class='model-form-buttons']/div[@class='button submit']/button[@type='submit']";
 
-    const DELETE_BUTTON = '//div[@class="delete-action"]/button[@type="button"]';
+    const DELETE_BUTTON = '//button[@class="delete-address "]';
 
     const PROCEED_BUTTON = "//button[@class='button-proceed' and @type='submit']";
 
-    const CHANGE_BUTTON = "//div[@class='change-action']/button[@type='button']";
+    const CHANGE_BUTTON = "//button[@class='modify-address ']";
 
 
 
@@ -53,14 +53,14 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
     {
         $this->logIn();
 
-        $this->open('user/1/address-book');
+        $this->open('admin.php?target=address_book');
 
         $this->assertElementPresent(self::ADD_BUTTON, 'No add to address book button');
 
         $this->click(self::ADD_BUTTON);
 
         $this->waitForLocalCondition(
-            "jQuery('#ui-dialog-title-2').length > 0",
+            "jQuery('.ui-dialog-title').length > 0",
             10000,
             "No add address popup"
         );  
@@ -72,19 +72,19 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
         $this->click(self::DELETE_BUTTON); 
 
         $this->waitForLocalCondition(
-            "jQuery('#ui-dialog-title-2').length > 0",
+            "jQuery('.ui-dialog-title').length > 0",
             10000,
             "No delete popup"
         );
 
         $this->clickAndWait(self::PROCEED_BUTTON);
 
-        $this->assertElementNotPresent("//li[@class='address-text-cell address-text-street']/ul[@class='address-text']/li[@class='address-text-value']", 'address was not removed');
+        $this->assertElementNotPresent("//li[@class='address-text-cell address-text-street']/ul[@class='address-text']/li[@class='address-text-value']");
 
         $this->click(self::ADD_BUTTON);
 
         $this->waitForLocalCondition(
-            "jQuery('#ui-dialog-title-2').length > 0",
+            "jQuery('.ui-dialog-title').length > 0",
             10000,
             "No add address popup"
         );  
@@ -96,7 +96,7 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
         $this->click(self::CHANGE_BUTTON);
 
         $this->waitForLocalCondition(
-            "jQuery('#ui-dialog-title-2').length > 0",
+            "jQuery('.ui-dialog-title').length > 0",
             10000,
             "No change address popup"
         );
