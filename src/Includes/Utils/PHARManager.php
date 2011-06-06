@@ -123,6 +123,9 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      */
     protected static function download(\XLite\Core\Pack\APack $pack, $compress = true)
     {
+        if (!\Includes\Utils\FileManager::isExists(LC_DIR_TMP)) {
+            \Includes\Utils\FileManager::mkdir(LC_DIR_TMP);
+        }
         $path = LC_DIR_TMP . $pack->getName() . '.tar';
         $phar = static::pack($path, $pack->getDirectoryIterator(), $pack->getMetadata(), $compress);
 
