@@ -38,7 +38,7 @@ namespace=XLite
 ; List of memcache servers. Semicolon is used as a delimiter.
 ; Each server is specified with a host name and port number, divided
 ; by a colon. If the port is not specified, the default
-; port 112211 is used.
+; port 11211 is used.
 servers=
 
 ;

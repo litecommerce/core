@@ -57,6 +57,21 @@ class ViewList extends \XLite\Model\Repo\ARepo
         'tpl'    => true,
     );
 
+    /**
+     * Columns' character sets definitions
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $columnsCharSets = array(
+        'class' => 'latin1',
+        'list'  => 'latin1',
+        'zone'  => 'latin1',
+        'child' => 'latin1',
+        'tpl'   => 'latin1',
+    );
+
 
     /**
      * Find class list
