@@ -258,6 +258,17 @@ ul.products-sidebar li .product {
   padding: 20px;
 }
 
+.products-sidebar-small-thumbnails {
+  width: 100%;
+}
+
+.products-sidebar-small-thumbnails li.product-cell {
+  clear: both;
+}
+
+.products-sidebar-small-thumbnails div.product-photo {
+  float: left;
+}
 
 
 /*
