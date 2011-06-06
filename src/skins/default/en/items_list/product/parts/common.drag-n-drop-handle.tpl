@@ -11,7 +11,7 @@
  *
  * @ListChild (list="itemsList.product.grid.customer.info", weight="0")
  * @ListChild (list="itemsList.product.list.customer.info", weight="0")
- * @ListChild (list="itemsList.product.sidebar.customer.info", weight="0")
+ * @ListChild (list="itemsList.product.small_thumbnails.customer.info", weight="0")
  *}
 
 <div class="drag-n-drop-handle">

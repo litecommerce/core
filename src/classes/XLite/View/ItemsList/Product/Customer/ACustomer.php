@@ -70,6 +70,9 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     const DISPLAY_MODE_TABLE   = 'table';
     const DISPLAY_MODE_ROTATOR = 'rotator';
 
+    const DISPLAY_MODE_STHUMB = 'small_thumbnails';
+
+
     /**
      * A special option meaning that a CSS layout is to be used
      */
@@ -129,7 +132,11 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     {
         parent::setWidgetParams($params);
 
+        // Modify display modes and default display mode
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setOptions($this->getDisplayModes());
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(
+            self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE) ? self::DISPLAY_MODE_STHUMB : self::DISPLAY_MODE_GRID
+        );
 
         // FIXME - not a good idea, but I don't see a better way
         if ($this->isWrapper() && $this->checkSideBarParams($params)) {
@@ -290,7 +297,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     {
         if (self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)) {
             $list = array(
-                self::DISPLAY_MODE_LIST  => 'List',
+                self::DISPLAY_MODE_STHUMB  => 'Small thumbnails',
             );
 
         } else {
@@ -319,18 +326,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
-     * isSideBarBox
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isSideBarBox()
-    {
-        return self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE);
-    }
-
-    /**
      * checkSideBarParams
      *
      * @param array $params Params to check
@@ -353,7 +348,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getPageBodyDir()
     {
-        return $this->isSideBarBox() ? 'sidebar' : parent::getPageBodyDir();
+        return $this->getParam(self::PARAM_WIDGET_TYPE) . '/' . parent::getPageBodyDir();
     }
 
     /**
@@ -366,8 +361,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     protected function isPagerVisible()
     {
         return parent::isPagerVisible()
-            && !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE)
-            && !$this->isSideBarBox();
+            && !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE);
     }
 
     /**
@@ -403,8 +397,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function isHeaderVisible()
     {
-        return !$this->isSideBarBox()
-            && ($this->isDisplayModeSelectorVisible() || $this->isSortBySelectorVisible());
+        return $this->isDisplayModeSelectorVisible() || $this->isSortBySelectorVisible();
     }
 
     /**
@@ -416,7 +409,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getDisplayMode()
     {
-        return $this->isSideBarBox() ? 'sidebar' : $this->getParam(self::PARAM_DISPLAY_MODE);
+        return $this->getParam(self::PARAM_DISPLAY_MODE);
     }
 
     /**
