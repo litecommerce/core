@@ -272,6 +272,10 @@ $PHP ${BASE_DIR}/../devcode_postprocess.php silentMode=1
 # Add metadata
 mkdir -p .phar
 $PHP ${BASE_DIR}/metadata.core.php -v ${VERSION} > .phar/.metadata.bin
+if [ $? -gt 0 ]; then
+	echo 'Metadata is not assembled'
+	exit $?
+fi
 chmod 400 .phar/.metadata.bin
 
 # Create upgrade dir
