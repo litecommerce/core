@@ -17,6 +17,7 @@
   <li FOREACH="getSideBarData(),i,product" class="product-cell hproduct item {getAdditionalItemClass(productArrayPointer,productArraySize)}">
     <div class="{getProductCellClass(product)}">
       {displayInheritedViewListContent(#info#,_ARRAY_(#product#^product))}
+      <div class="clear"></div>
     </div>
   </li>
 
