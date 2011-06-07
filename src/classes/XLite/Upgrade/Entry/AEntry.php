@@ -69,15 +69,6 @@ abstract class AEntry
     protected $customFiles = array();
 
     /**
-     * Flag 
-     * 
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $isTestMode = true;
-
-    /**
      * Return entry readable name
      *
      * @return string
@@ -433,7 +424,6 @@ abstract class AEntry
     public function upgrade($isTestMode = true, $filesToOverwrite = null)
     {
         $this->errorMessages = array();
-        $this->isTestMode = $isTestMode;
 
         $hashesInstalled  = $this->getHashesForInstalledFiles();
         $hashesForUpgrade = $this->getHashes();
@@ -455,22 +445,22 @@ abstract class AEntry
                     if (isset($hashesForUpgrade[$path])) {
                         // File has been modified (by user, or by LC Team, see the second param)
                         if ($fileHash !== $hash || $hashesForUpgrade[$path] !== $hash) {
-                            $this->updateFile($path, $fileHash !== $hash);
+                            $this->updateFile($path, $isTestMode, $fileHash !== $hash);
                         }
 
                     } else {
                         // File has been removed (by user, or by LC Team, see the second param)
-                        $this->deleteFile($path, $fileHash !== $hash);
+                        $this->deleteFile($path, $isTestMode, $fileHash !== $hash);
                     }
 
                 } else {
                     // Do not skip any files during upgrade: all of them must be writable
-                    $this->addFileErrorMessage('File is not readable', $path, !$this->isTestMode);
+                    $this->addFileErrorMessage('File is not readable', $path, !$isTestMode);
                 }
 
             } else {
                 // File has been removed from installation (by user)
-                $this->addFile($path, true);
+                $this->addFile($path, $isTestMode, true);
             }
 
             // Only the new files will remain
@@ -479,70 +469,71 @@ abstract class AEntry
 
         // Add new files
         foreach ($hashesForUpgrade as $path => $hash) {
-            $this->addFile($path, $this->manageFile($path, 'isFile'));
+            $this->addFile($path, $isTestMode, /*$this->manageFile($path, 'isFile')*/false);
         }
-
-        // Restore default value
-        $this->isTestMode = true;
     }
 
     /**
      * Perform some common operation for upgrade
      *
      * @param string  $path              File short path
+     * @param boolean $isTestMode        If in test mode
      * @param boolean $manageCustomFiles Flag for custom files
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function addFile($path, $manageCustomFiles)
+    protected function addFile($path, $isTestMode, $manageCustomFiles)
     {
-        $this->modifyFile($path, $manageCustomFiles, 'addFileCallback');
+        $this->modifyFile($path, $isTestMode, $manageCustomFiles, 'addFileCallback');
     }
 
     /**
      * Perform some common operation for upgrade
      *
      * @param string  $path              File short path
+     * @param boolean $isTestMode        If in test mode
      * @param boolean $manageCustomFiles Flag for custom files
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function updateFile($path, $manageCustomFiles)
+    protected function updateFile($path, $isTestMode, $manageCustomFiles)
     {
-        $this->modifyFile($path, $manageCustomFiles, 'updateFileCallback');
+        $this->modifyFile($path, $isTestMode, $manageCustomFiles, 'updateFileCallback');
     }
 
     /**
      * Perform some common operation for upgrade
      *
      * @param string  $path              File short path
+     * @param boolean $isTestMode        If in test mode
      * @param boolean $manageCustomFiles Flag for custom files
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function deleteFile($path, $manageCustomFiles)
+    protected function deleteFile($path, $isTestMode, $manageCustomFiles)
     {
-        $this->modifyFile($path, $manageCustomFiles, 'deleteFileCallback');
+        $this->modifyFile($path, $isTestMode, $manageCustomFiles, 'deleteFileCallback');
     }
 
     /**
      * Callback for a common operation for upgrade
      *
-     * @param string $path File short path
+     * @param string  $path       File short path
+     * @param boolean $isTestMode If in test mode
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function addFileCallback($path)
+    protected function addFileCallback($path, $isTestMode)
     {
-        if ($this->isTestMode) {
+        if ($isTestMode) {
 
             // Short names
             $topDir  = \Includes\Utils\FileManager::getRealPath($this->manageFile($path, 'getDir'));
@@ -574,15 +565,16 @@ abstract class AEntry
     /**
      * Callback for a common operation for upgrade
      *
-     * @param string $path File short path
+     * @param string  $path       File short path
+     * @param boolean $isTestMode If in test mode
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function updateFileCallback($path)
+    protected function updateFileCallback($path, $isTestMode)
     {
-        if ($this->isTestMode) {
+        if ($isTestMode) {
             if (!$this->manageFile($path, 'isFileWriteable')) {
                 $this->addFileErrorMessage('File is not writeable', $path, false);
             }
@@ -598,15 +590,16 @@ abstract class AEntry
     /**
      * Callback for a common operation for upgrade
      *
-     * @param string $path File short path
+     * @param string  $path       File short path
+     * @param boolean $isTestMode If in test mode
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function deleteFileCallback($path)
+    protected function deleteFileCallback($path, $isTestMode)
     {
-        if ($this->isTestMode) {
+        if ($isTestMode) {
             if (!\Includes\Utils\FileManager::isDirWriteable($this->manageFile($path, 'getDir'))) {
                 $this->addFileErrorMessage('File\'s directory is not writable', $path, false);
             }
@@ -625,6 +618,7 @@ abstract class AEntry
      * :TODO: advise a more convinient logic for this method
      *
      * @param string  $path              File short path
+     * @param boolean $isTestMode        If in test mode
      * @param boolean $manageCustomFiles Flag for custom files
      * @param string  $callback          Callback to execute
      *
@@ -632,21 +626,21 @@ abstract class AEntry
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function modifyFile($path, $manageCustomFiles, $callback)
+    protected function modifyFile($path, $isTestMode, $manageCustomFiles, $callback)
     {
-        if ($this->isTestMode) {
+        if ($isTestMode) {
 
             if ($manageCustomFiles) {
                 $this->addToCustomFiles($path);
             }
 
             // Call a specific class method
-            $this->$callback($path);
+            $this->$callback($path, $isTestMode);
 
         } elseif (!$manageCustomFiles || $this->checkForCustomFileRewrite($path)) {
 
             // Call a specific class method
-            $this->$callback($path);
+            $this->$callback($path, $isTestMode);
         }
     }
 
@@ -757,17 +751,19 @@ abstract class AEntry
      */
     protected function getHashesForInstalledFiles()
     {
-        $path = $this->getCurrentVersionHashesFilePath();
+        if ($this->isInstalled()) {
+            $path = $this->getCurrentVersionHashesFilePath();
 
-        if (!\Includes\Utils\FileManager::isFileReadable($path)) {
-            $message = 'Hash file for installed entry "{{entry}}" doesn\'t exist or is not readable';
+            if (!\Includes\Utils\FileManager::isFileReadable($path)) {
+                $message = 'Hash file for installed entry "{{entry}}" doesn\'t exist or is not readable';
 
-        } else {
-            require_once ($path);
-        }
+            } else {
+                require_once ($path);
+            }
 
-        if (!empty($message)) {
-            $this->addFileErrorMessage($message, $path);
+            if (!empty($message)) {
+                $this->addFileErrorMessage($message, $path);
+            }
         }
 
         return (empty($data) || !is_array($data)) ? array() : $data;
@@ -861,7 +857,7 @@ abstract class AEntry
      */
     protected function addFileInfoMessage($message, $file, $log, array $args = array())
     {
-        $this->addFileMessage('Info', $method, $message, $file, $log, $args);
+        $this->addFileMessage('Info', $message, $file, $log, $args);
     }
 
     /**
@@ -878,7 +874,7 @@ abstract class AEntry
      */
     protected function addFileErrorMessage($message, $file, $log, array $args = array())
     {
-        $this->addFileMessage('Error', $method, $message, $file, $log, $args);
+        $this->addFileMessage('Error', $message, $file, $log, $args);
     }
 
     /**
@@ -899,8 +895,8 @@ abstract class AEntry
         $args += array(self::TOKEN_ENTRY => $this->getActualName());
 
         // Write message to the log (if needed)
-        if (!empty($log) || !$this->isTestMode) {
-            \XLite\Upgrade\Logger::getInstance()->{'add' . $method}($message, $args, false);
+        if (!empty($log)) {
+            \XLite\Upgrade\Logger::getInstance()->{'log' . $method}($message, $args, false);
         }
     }
 
@@ -921,8 +917,8 @@ abstract class AEntry
     {
         $this->{'add' . $method . 'Message'}(
             $message . ': "{{' . self::TOKEN_FILE . '}}"',
-            $args + array(self::TOKEN_FILE => \Includes\Utils\FileManager::getRelativePath($file, LC_DIR_TMP)),
-            $log
+            $log,
+            $args + array(self::TOKEN_FILE => \Includes\Utils\FileManager::getRelativePath($file, LC_DIR_TMP))
         );
     }
 

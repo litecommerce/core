@@ -351,11 +351,17 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     protected function getModuleForUpgrade()
     {
         if (!isset($this->module)) {
-            $this->module = new \XLite\Model\Module();
-
             list($author, $name) = explode('\\', $this->getActualName());
-            $this->module->setAuthor($author);
-            $this->module->setName($name);
+
+            $data = array(
+                'name'         => $name,
+                'author'       => $author,
+                'majorVersion' => $this->getMajorVersionNew(),
+                'minorVersion' => $this->getMinorVersionNew(),
+            );
+
+            $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($data)
+                ?: new \XLite\Model\Module($data);
         }
 
         return $this->module;
@@ -370,17 +376,20 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function updateDBRecords()
     {
-        $module = ($installed = $this->getModuleInstalled()) ?: $this->getModuleForUpgrade();
+        $installed  = $this->getModuleInstalled();
+        $forUpgrade = $this->getModuleForUpgrade();
+
+        $module = ($forUpgrade->isPersistent() || !isset($installed)) ? $forUpgrade : $installed;
 
         // Do not enable already installed modules
-        if (!isset($installed)) {
+        if (!$module->getInstalled()) {
+            $module->setInstalled(true);
             $module->setEnabled(true);
+            $module->setMinorVersion($this->getMinorVersionNew());
+            $module->setRevisionDate($this->getRevisionDate());
         }
 
         $module->setDate(time());
-        $module->setInstalled(true);
-        $module->setMajorVersion($this->getMajorVersionNew());
-        $module->setMinorVersion($this->getMinorVersionNew());
         $module->setRevisionDate($this->getRevisionDate());
         $module->setPackSize($this->getPackSize());
         $module->setModuleName($this->getName());
@@ -389,17 +398,24 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         $module->setDependencies($this->getDependencies());
 
         // :TRICKY: convention for marketplaceIDs generation
-        $marketplaceID = md5(
-            $module->getAuthor() . $module->getName() . $module->getMajorVersion() . $module->getMinorVersion()
-        );
-        $data = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID, $module->getLicenseKey());
+        if (!$module->getMarketplaceID()) {
+            $marketplaceID = md5(
+                $module->getAuthor() . $module->getName() . $module->getMajorVersion() . $module->getMinorVersion()
+            );
+            $data = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID, $module->getLicenseKey());
 
-        if ($data) {
-            $module->setMarketplaceID($data[\XLite\Core\Marketplace::FIELD_MODULE_ID]);
+            if ($data) {
+                $module->setMarketplaceID($data[\XLite\Core\Marketplace::FIELD_MODULE_ID]);
+            }
         }
 
-        if (!isset($installed)) {
+        if (!$module->isPersistent()) {
             \XLite\Core\Database::getEM()->persist($module);
+        }
+
+        if ($forUpgrade->getModuleID() !== $installed->getModuleID()) {
+            \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($installed);
+
         }
 
         // Save changes in DB
