@@ -216,7 +216,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
     /**
      * Do payment
-     * TODO: to revise
+     *
+     * :TODO: to revise
+     * :FIXME: decompose
      *
      * @return void
      * @see    ____func_see____
@@ -284,6 +286,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
                 \XLite\Core\TopMessage::getInstance()->add(
                     $transaction->getNote(),
+                    array(),
+                    null,
                     $transaction->isFailed() ? \XLite\Core\TopMessage::ERROR : \XLite\Core\TopMessage::INFO,
                     true
                 );
@@ -316,7 +320,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
     /**
      * Return from payment gateway
-     * TODO: to revise
+     *
+     * :TODO: to revise
+     * :FIXME: decompose
      *
      * @return void
      * @see    ____func_see____
@@ -367,7 +373,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
     /**
      * Order placement is success
-     * TODO: to revise
+     *
+     * :TODO: to revise
+     * :FIXME: decompose
      *
      * @return void
      * @see    ____func_see____

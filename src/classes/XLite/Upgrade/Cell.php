@@ -506,7 +506,6 @@ class Cell extends \XLite\Base\Singleton
 
         } catch (\Exception $exception) {
             $entry = null;
-            $this->logAddEntryError($exception);
         }
 
         if (isset($entry)) {
@@ -514,32 +513,6 @@ class Cell extends \XLite\Base\Singleton
         }
 
         return $entry;
-    }
-
-    /**
-     * Logging
-     *
-     * @param \Exception $exception Thrown exception
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function logAddEntryError(\Exception $exception)
-    {
-        \XLite\Logger::getInstance()->log($exception->getMessage(), $this->getLogLevel());
-    }
-
-    /**
-     * Return type of log messages
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLogLevel()
-    {
-        return PEAR_LOG_WARNING;
     }
 
     // }}}
@@ -729,7 +702,7 @@ class Cell extends \XLite\Base\Singleton
      * @param boolean $isTestMode       Flag OPTIONAL
      * @param array   $filesToOverwrite List of custom files to overwrite OPTIONAL
      *
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -739,63 +712,18 @@ class Cell extends \XLite\Base\Singleton
             \Includes\ErrorHandler::fireError('Trying to perform upgrade while not all archives were unpacked');
         }
 
-        if (!$isTestMode) {
-            $this->clearLog();
-        }
-
         $result = true;
 
         foreach ($this->getEntries() as $entry) {
             $result = $entry->upgrade($isTestMode, $filesToOverwrite) && $result;
         }
 
+        // :FIXME:
         if (!$isTestMode) {
-            $this->completeLog();
-            // :FIXME:
             \XLite\Core\TmpVars::getInstance()->{'check_for_updatesTTL'} = 0;
         }
 
         return $result;
-    }
-
-    // }}}
-
-    // {{{ Logging
-
-    /**
-     * Return relative path to the log file
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getLogFilePath()
-    {
-        return LC_DIR_LOG . 'upgrade.log';
-    }
-
-    /**
-     * Clear log file
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function clearLog()
-    {
-        return \Includes\Utils\FileManager::write($this->getLogFilePath(), '<pre>' . PHP_EOL);
-    }
-
-    /**
-     * Complete log file
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function completeLog()
-    {
-        return \Includes\Utils\FileManager::write($this->getLogFilePath(), '</pre>', FILE_APPEND);
     }
 
     // }}}
