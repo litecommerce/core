@@ -344,10 +344,25 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
         $fp = @fopen($poPath, 'wb');
         if ($fp) {
 
+            fwrite(
+                $fp,
+                'msgid ""' . "\n"
+                . 'msgstr ""' . "\n"
+                . '"Project-Id-Version: ' . \XLite::getInstance()->getVersion() . '\n"' . "\n"
+                . '"PO-Revision-Date: ' . date('Y-m-d H:iO') . '\n"' . "\n"
+                . '"Last-Translator: local\n"' . "\n"
+                . '"Language-Team: local\n"' . "\n"
+                . '"MIME-Version: 1.0\n"' . "\n"
+                . '"Content-Type: text/plain; charset=UTF-8\n"' . "\n"
+                . '"Content-Transfer-Encoding: 8bit\n"' . "\n"
+                . "\n"
+            );
+
             foreach ($list as $k => $v) {
                 fwrite(
                     $fp,
-                    'msgid "' . addcslashes($k, '"\\') . '"' . "\n" . 'msgstr "' . addcslashes($v, '"\\') . '"' . "\n\n"
+                    'msgid "' . addcslashes($k, '"\\') . '"' . "\n"
+                    . 'msgstr "' . addcslashes(str_replace("\n", '\n', $v), '"\\') . '"' . "\n\n"
                 );
             }
 
@@ -357,7 +372,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
             if ($exec) {
                 $exec .= ' ' . $poPath . ' -o ' . $path;
                 exec($exec);
-                unlink($poPath);
+//                unlink($poPath);
             }
 
             $result = file_exists($path);
