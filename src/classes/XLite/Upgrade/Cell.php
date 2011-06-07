@@ -506,6 +506,7 @@ class Cell extends \XLite\Base\Singleton
 
         } catch (\Exception $exception) {
             $entry = null;
+            \XLite\Upgrade\Logger::getInstance()->logError($exception->getMessage());
         }
 
         if (isset($entry)) {
@@ -665,11 +666,16 @@ class Cell extends \XLite\Base\Singleton
      */
     public function unpackAll()
     {
+        $result = false;
+
         if (!$this->isDownloaded()) {
-            \Includes\ErrorHandler::fireError('Trying to unpack non-downloaded archives');
+            \XLite\Upgrade\Logger::getInstance()->logError('Trying to unpack non-downloaded archives');
+
+        } else {
+            $result = $this->manageEntryPackages(true);
         }
 
-        return $this->manageEntryPackages(true);
+        return $result;
     }
 
     /**
@@ -708,19 +714,24 @@ class Cell extends \XLite\Base\Singleton
      */
     public function upgrade($isTestMode = true, array $filesToOverwrite = array())
     {
+        $result = false;
+
         if (!$this->isUnpacked()) {
-            \Includes\ErrorHandler::fireError('Trying to perform upgrade while not all archives were unpacked');
-        }
+            \XLite\Upgrade\Logger::getInstance()->logError(
+                'Trying to perform upgrade while not all archives were unpacked'
+            );
 
-        $result = true;
+        } else {
+            foreach ($this->getEntries() as $entry) {
+                $entry->upgrade($isTestMode, $filesToOverwrite);
+            }
 
-        foreach ($this->getEntries() as $entry) {
-            $result = $entry->upgrade($isTestMode, $filesToOverwrite) && $result;
-        }
+            // :FIXME:
+            if (!$isTestMode) {
+                \XLite\Core\TmpVars::getInstance()->{'check_for_updatesTTL'} = 0;
+            }
 
-        // :FIXME:
-        if (!$isTestMode) {
-            \XLite\Core\TmpVars::getInstance()->{'check_for_updatesTTL'} = 0;
+            $result = $this->isValid();
         }
 
         return $result;

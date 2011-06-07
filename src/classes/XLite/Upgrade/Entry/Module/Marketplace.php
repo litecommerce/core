@@ -268,16 +268,27 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function download()
     {
-        $this->setRepositoryPath(
-            \XLite\Core\Marketplace::getInstance()->getAddonPack(
-                $this->getModuleForUpgrade()->getMarketplaceID(),
-                $this->getModuleForUpgrade()->getLicenseKey()
-            )
+        $result = false;
+
+        $path = \XLite\Core\Marketplace::getInstance()->getAddonPack(
+            $this->getModuleForUpgrade()->getMarketplaceID(),
+            $this->getModuleForUpgrade()->getLicenseKey()
         );
+        $params = array('name' => $this->getActualName());
 
-        $this->saveHashesForInstalledFiles();
+        if (isset($path)) {
+            $this->addFileInfoMessage('Module pack ("{{name}}") is recieved:', $path, true, $params);
 
-        return parent::download();
+            $this->setRepositoryPath($path);
+            $this->saveHashesForInstalledFiles();
+
+            $result = parent::download();
+
+        } else {
+            $this->addFileErrorMessage('Module pack ("{{name}}") is not recieved:', $path, true, $params);
+        }
+
+        return $result;
     }
 
     /**

@@ -1197,7 +1197,7 @@ class Marketplace extends \XLite\Base\Singleton
             uniqid() . '.' . \Includes\Utils\PHARManager::getExtension() ?: 'tar'
         );
 
-        return \Includes\Utils\FileManager::write($path, $response->body) ? $path : null;
+        return isset($response->body) && \Includes\Utils\FileManager::write($path, $response->body) ? $path : null;
     }
 
     /**
