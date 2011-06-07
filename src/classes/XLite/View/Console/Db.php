@@ -50,10 +50,6 @@ class Db extends \XLite\View\Console\AConsole
         $result[] = 'db_backup';
         $result[] = 'db_restore';
 
-        if (LC_DEVELOPER_MODE) {
-            $result[] = 'pack_distr';
-        }
-
         return $result;
     }
 

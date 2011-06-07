@@ -55,36 +55,6 @@ class BackupRestore extends \XLite\View\Tabs\ATabs
         ),
     );
 
-    /**
-     * Description of additioanl tab related to Pack distributive section
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $devModeTabs = array(
-        'pack_distr' => array(
-            'title'    => 'Pack distributive',
-            'template' => 'db/pack.tpl',
-        )
-    );
-
-
-    /**
-     * init
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function init()
-    {
-        parent::init();
-
-        if (LC_DEVELOPER_MODE) {
-            $this->tabs = array_merge($this->tabs, $this->devModeTabs);
-        }
-    }
 
     /**
      * File size limit

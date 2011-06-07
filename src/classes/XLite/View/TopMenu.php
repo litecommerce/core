@@ -66,7 +66,6 @@ class TopMenu extends \XLite\View\AView
         ),
         'db_backup' => array(
             'db_restore',
-            'pack_distr',
         ),
     );
 
