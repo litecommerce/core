@@ -204,6 +204,18 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
+     * Return module actual name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getActualName()
+    {
+        return $this->getName();
+    }
+
+    /**
      * Download hashes for current version
      *
      * @return array

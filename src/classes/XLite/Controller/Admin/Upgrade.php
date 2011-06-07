@@ -143,8 +143,8 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Check upgrade cell status
-     *
+     * Check if next step of upgrade id available
+     * 
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -212,37 +212,32 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
 
             if ($module->getMarketplaceID()) {
                 \XLite\Upgrade\Cell::getInstance()->clear(true, true, !$this->isForce());
-                \XLite\Upgrade\Cell::getInstance()->addMarketplaceModule($module, true);
 
-                if ($this->isForce() && \XLite\Upgrade\Cell::getInstance()->isValid()) {
-                    $this->setReturnURL($this->buildURL('upgrade', 'download', $this->getActionParamsCommon()));
+                if (\XLite\Upgrade\Cell::getInstance()->addMarketplaceModule($module, true)) {
+
+                    if ($this->isNextStepAvailable()) {
+                        if ($this->isForce()) {
+                            $this->setReturnURL($this->buildURL('upgrade', 'download', $this->getActionParamsCommon()));
+                        }
+
+                    } else {
+                        $this->showError(__FUNCTION__);
+                    }
+
+                } else {
+                    $message = 'unable to add module entry to the install list: "{{name}}"';
+                    $this->showError(__FUNCTION__, $message, array('name' => $module->getActualName()));
                 }
 
             } else {
-                \XLite\Core\TopMessage::addError('Trying to install non-marketplace module');
+                $message = 'trying to install a non-marketplace module: "{{name}}"';
+                $this->showError(__FUNCTION__, $message, array('name' => $module->getActualName()));
             }
 
         } else {
-            \XLite\Core\TopMessage::addError('Invalid module ID passed - "' . $moduleId . '"');
+            $message = 'invalid module ID passed: "{{moduleId}}"';
+            $this->showError(__FUNCTION__, $message, array('moduleId' => $moduleId));
         }
-    }
-
-    /**
-     * Install add-on from marketplace
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionInstallAddonForce()
-    {
-        $this->setReturnURL(
-            $this->buildURL(
-                'upgrade',
-                'install_addon',
-                array('moduleId' => \XLite\Core\Request::getInstance()->moduleId) + $this->getActionParamsCommon(true)
-            )
-        );
     }
 
     /**
@@ -263,41 +258,22 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             $entry = \XLite\Upgrade\Cell::getInstance()->addUploadedModule($path);
 
             if (!isset($entry)) {
-                \XLite\Core\TopMessage::addError('Unable to add module to the upgrade list');
+                $message = 'unable to add module entry to the install list: "{{path}}"';
+                $this->showError(__FUNCTION__, $message, array('path' => $path));
 
             } elseif (\XLite::getInstance()->checkVersion($entry->getMajorVersionNew(), '<')) {
-                \XLite\Core\TopMessage::addError(
-                    'Module version (' . $entry->getMajorVersionNew() . ') is greater than the core one'
-                );
+                $message = 'module version "{{version}}" is greater than the core one';
+                $this->showError(__FUNCTION__, $message, array('version' => $entry->getMajorVersionNew()));
 
-            } elseif (\XLite\Upgrade\Cell::getInstance()->isValid()) {
+            } elseif ($this->isNextStepAvailable()) {
                 $this->setReturnURL($this->buildURL('upgrade', 'download', $this->getActionParamsCommon(true)));
 
             } else {
-                \XLite\Core\TopMessage::addError('Unexpected error');
+                $this->showError(__FUNCTION__);
             }
 
         } else {
-            \XLite\Core\TopMessage::addError('Unable to upload module');
-        }
-    }
-
-    /**
-     * Select core version for upgrade
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionSelectCoreVersion()
-    {
-        $version = \XLite\Core\Request::getInstance()->version;
-
-        if ($version) {
-            \XLite\Upgrade\Cell::getInstance()->setCoreVersion($version);
-            \XLite\Upgrade\Cell::getInstance()->clear(false);
-        } else {
-            \XLite\Core\TopMessage::addError('Unexpected error: version value is not passed');
+            $this->showError(__FUNCTION__, 'unable to upload module');
         }
     }
 
@@ -310,8 +286,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDownload()
     {
-        $this->setReturnURL($this->buildURL('upgrade'));
-
         if ($this->isNextStepAvailable()) {
 
             // :DEVCODE: to remove
@@ -326,11 +300,11 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                 $this->setReturnURL($this->buildURL('upgrade', 'unpack', $this->getActionParamsCommon()));
 
             } else {
-                \XLite\Core\TopMessage::addError('Not all upgrade packs were downloaded');
+                $this->showError(__FUNCTION__, 'not all upgrade packs were downloaded');
             }
 
         } else {
-            \XLite\Core\TopMessage::addError('Not ready to download packs');
+            $this->showError(__FUNCTION__, 'not ready to download packs');
         }
     }
 
@@ -351,14 +325,19 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \Includes\Utils\Operator::showMessage('Unpacking archives, please wait...');
 
             if (!\XLite\Upgrade\Cell::getInstance()->unpackAll()) {
-                \XLite\Core\TopMessage::addError('Not all archives were unpacked');
+                $this->showError(__FUNCTION__, 'not all archives were unpacked');
 
-            } elseif ($this->isForce() && \XLite\Upgrade\Cell::getInstance()->isValid()) {
-                $this->setReturnURL($this->buildURL('upgrade', 'check_integrity', $this->getActionParamsCommon()));
+            } elseif ($this->isNextStepAvailable()) {
+                if ($this->isForce()) {
+                    $this->setReturnURL($this->buildURL('upgrade', 'check_integrity', $this->getActionParamsCommon()));
+                }
+
+            } else {
+                $this->showError(__FUNCTION__);
             }
 
         } else {
-            \XLite\Core\TopMessage::addError('Trying to unpack non-downloaded archives');
+            $this->showError(__FUNCTION__, 'trying to unpack non-downloaded archives');
         }
     }
 
@@ -382,13 +361,12 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             // Perform upgrade in test mode
             \XLite\Upgrade\Cell::getInstance()->upgrade(true);
 
-            if ($this->isForce() && \XLite\Upgrade\Cell::getInstance()->isValid()) {
-                \XLite\Core\TopMessage::addInfo('Module has been successfully installed');
+            if ($this->isForce() && $this->isNextStepAvailable()) {
                 $this->setReturnURL($this->buildURL('upgrade', 'install_upgrades', $this->getActionParamsCommon()));
             }
 
         } else {
-            \XLite\Core\TopMessage::addError('Unable to test files: not all archives were unpacked');
+            $this->showError(__FUNCTION__, 'unable to test files: not all archives were unpacked');
         }
     }
 
@@ -412,8 +390,17 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \Includes\Utils\ModulesManager::disableModule($module->getActualName());
         }
 
-        if ($this->isForce() && \XLite\Upgrade\Cell::getInstance()->isValid()) {
-            $this->setReturnURL($this->buildURL('addons_list_installed'));
+        if ($this->isForce()) {
+            if ($this->isNextStepAvailable()) {
+                $target = 'installed';
+                $this->showInfo(null, 'Module has been successfully installed');
+
+            } else {
+                $target = 'marketplace';
+                $this->showError(__FUNCTION__);
+            }
+
+            $this->setReturnURL($this->buildURL('addons_list_' . $target));
         }
 
         // Set cell status
@@ -433,9 +420,119 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionViewLogFile()
     {
-        \Includes\Utils\Operator::flush(\Includes\Utils\FileManager::read(\XLite\Upgrade\Cell::getLogFilePath()));
+        \Includes\Utils\Operator::flush(\Includes\Utils\FileManager::read(\XLite\Upgrade\Logger::getLogFile()));
 
         exit (0);
+    }
+
+    /**
+     * Install add-on from marketplace
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionInstallAddonForce()
+    {
+        $data = array('moduleId' => \XLite\Core\Request::getInstance()->moduleId) + $this->getActionParamsCommon(true);
+        $this->setReturnURL($this->buildURL('upgrade', 'install_addon', $data));
+    }
+
+    /**
+     * Select core version for upgrade
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionSelectCoreVersion()
+    {
+        $version = \XLite\Core\Request::getInstance()->version;
+
+        if ($version) {
+            \XLite\Upgrade\Cell::getInstance()->setCoreVersion($version);
+            \XLite\Upgrade\Cell::getInstance()->clear(false);
+
+        } else {
+            \XLite\Core\TopMessage::addError('Unexpected error: version value is not passed');
+        }
+    }
+
+    // }}}
+
+    // {{{ Error handling
+
+    /**
+     * Log upgrade error and show top message
+     * 
+     * @param string $action  Current action
+     * @param string $message Message to log and show OPTIONAL
+     * @param array  $args    Arguments to subsistute OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function showError($action, $message = null, array $args = array())
+    {
+        $this->showCommon('Error', $action, $message, $args);
+    }
+
+    /**
+     * Log upgrade warning and show top message
+     *
+     * @param string $action  Current action
+     * @param string $message Message to log and show OPTIONAL
+     * @param array  $args    Arguments to subsistute OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function showWarning($action, $message = null, array $args = array())
+    {
+        $this->showCommon('Warning', $action, $message, $args);
+    }
+
+    /**
+     * Log upgrade info and show top message
+     *
+     * @param string $action  Current action
+     * @param string $message Message to log and show OPTIONAL
+     * @param array  $args    Arguments to subsistute OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function showInfo($action, $message = null, array $args = array())
+    {
+        $this->showCommon('Info', $action, $message, $args);
+    }
+
+    /**
+     * Log upgrade info and show top message
+     *
+     * @param string $method  Method to call
+     * @param string $action  Current action
+     * @param string $message Message to log and show
+     * @param array  $args    Arguments to subsistute
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function showCommon($method, $action, $message, array $args)
+    {
+        if (!isset($message)) {
+            $message = 'upgrade cell error';
+        }
+
+        if (isset($action)) {
+            $message = 'Action "' . $action . '", ' . $message;
+        }
+
+        \XLite\Upgrade\Logger::getInstance()->{'log' . $method}($message, $args, true);
     }
 
     // }}}

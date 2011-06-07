@@ -36,15 +36,6 @@ namespace XLite\Upgrade\Entry\Module;
 abstract class AModule extends \XLite\Upgrade\Entry\AEntry
 {
     /**
-     * Return module actual name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    abstract public function getActualName();
-
-    /**
      * Update database records
      *
      * @return array
