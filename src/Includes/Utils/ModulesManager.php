@@ -572,9 +572,16 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     public static function getPathPatternForPHP()
     {
-        return static::getPathPattern(
-            preg_quote(\Includes\Decorator\ADecorator::getClassesDir(), '/') . '\w+', 'Module', 'php'
-        );
+        $root = preg_quote(\Includes\Decorator\ADecorator::getClassesDir(), '/') . 'XLite';
+        $modules = '(' . implode('|', static::getModuleQuotedPaths()) . ')';
+
+        return '/^(?:'
+            . $root . LC_DS_QUOTED . '((?!Module)[a-zA-Z0-9]+)' . LC_DS_QUOTED . '.+'
+            . '|' . $root . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED . $modules . LC_DS_QUOTED . '.+'
+            . '|' . $root
+            . '|' . $root . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED . '[a-zA-Z0-9]+'
+            . '|' . $root . LC_DS_QUOTED . '[a-zA-Z0-9]+'
+            .')\.php$/Ss';
     }
 
     /**
