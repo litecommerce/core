@@ -135,23 +135,48 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
         // Modify display modes and default display mode
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setOptions($this->getDisplayModes());
-        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(
-            self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE) ? self::DISPLAY_MODE_STHUMB : self::DISPLAY_MODE_GRID
-        );
-
-        if (
-            self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
-            && self::DISPLAY_MODE_BTHUMB == $this->getParam(self::PARAM_DISPLAY_MODE)
-        ) {
-            $this->widgetParams[self::PARAM_ICON_MAX_WIDTH]->setValue(80);
-            $this->widgetParams[self::PARAM_ICON_MAX_HEIGHT]->setValue(80);
+        if (isset($params[self::PARAM_DISPLAY_MODE])) {
+            $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($params[self::PARAM_DISPLAY_MODE]);
 
         } else {
-            $this->widgetParams[self::PARAM_ICON_MAX_WIDTH]->setValue(110);
-            $this->widgetParams[self::PARAM_ICON_MAX_HEIGHT]->setValue(110);
+            $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(
+                self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
+                    ? self::DISPLAY_MODE_STHUMB
+                    : self::DISPLAY_MODE_GRID
+            );
         }
 
-        parent::setWidgetParams($params);
+        if (
+            !isset($params[self::PARAM_ICON_MAX_WIDTH])
+            && !isset($params[self::PARAM_ICON_MAX_HEIGHT])
+            && 0 == $this->getParam(self::PARAM_ICON_MAX_WIDTH)
+            && 0 == $this->getParam(self::PARAM_ICON_MAX_HEIGHT)
+        ) {
+            if (
+                self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
+                && self::DISPLAY_MODE_STHUMB == $this->getParam(self::PARAM_DISPLAY_MODE)
+            ) {
+
+                // Icons size for small thumbnails mode
+                $this->widgetParams[self::PARAM_ICON_MAX_WIDTH]->setValue(80);
+                $this->widgetParams[self::PARAM_ICON_MAX_HEIGHT]->setValue(80);
+
+            } elseif (
+                self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
+                && self::DISPLAY_MODE_BTHUMB == $this->getParam(self::PARAM_DISPLAY_MODE)
+            ) {
+
+                // Icons size for big thumbnails mode
+                $this->widgetParams[self::PARAM_ICON_MAX_WIDTH]->setValue(160);
+                $this->widgetParams[self::PARAM_ICON_MAX_HEIGHT]->setValue(160);
+
+            } else {
+
+                // Default icons size
+                $this->widgetParams[self::PARAM_ICON_MAX_WIDTH]->setValue(110);
+                $this->widgetParams[self::PARAM_ICON_MAX_HEIGHT]->setValue(110);
+            }
+        }
 
         // FIXME - not a good idea, but I don't see a better way
         if ($this->isWrapper() && $this->checkSideBarParams($params)) {
@@ -287,10 +312,10 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
                 'Show \'Add to Cart\' button', true, true
             ),
             self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon width', 110, true
+                'Maximal icon width', 0, true
             ),
             self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon height', 110, true
+                'Maximal icon height', 0, true
             ),
             self::PARAM_SHOW_ALL_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Checkbox(
                 'Display all items on one page', false, true
