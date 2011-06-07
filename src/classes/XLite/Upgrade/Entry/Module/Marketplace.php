@@ -330,8 +330,10 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
         $forUpgrade = $this->getModuleForUpgrade();
         $installed  = $this->getModuleInstalled();
 
-        $forUpgrade->setInstalled(true);
-        $forUpgrade->setEnabled($installed->getEnabled());
+        if (!$forUpgrade->getInstalled()) {
+            $forUpgrade->setInstalled(true);
+            $forUpgrade->setEnabled(true);
+        }
 
         if ($forUpgrade->getModuleID() !== $installed->getModuleID()) {
             \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($installed);
