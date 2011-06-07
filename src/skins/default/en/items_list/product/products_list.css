@@ -270,6 +270,12 @@ ul.products-sidebar li .product {
   float: left;
 }
 
+.products-sidebar-small-thumbnails .clear,
+.products-sidebar-big-thumbnails .clear,
+{
+  clear: both;
+}
+
 
 /*
 TODO: REMOVE!!!
