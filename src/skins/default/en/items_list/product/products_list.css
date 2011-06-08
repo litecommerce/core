@@ -271,7 +271,7 @@ ul.products-sidebar li .product {
 }
 
 .products-sidebar-small-thumbnails .clear,
-.products-sidebar-big-thumbnails .clear,
+.products-sidebar-big-thumbnails .clear
 {
   clear: both;
 }
