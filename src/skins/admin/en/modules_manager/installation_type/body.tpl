@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<form action="admin.php" method="post">
+<form action="admin.php" method="post" name="getAddonForm">
   <input type="hidden" name="target" value="upgrade" />
   <input type="hidden" name="action" value="install_addon" />
   <input type="hidden" name="moduleId" value="{getModuleId()}" />
@@ -21,9 +21,9 @@
 
   <ul class="actions">
     <li class="button">
-      <widget class="\XLite\View\Button\Addon\Install" label="Install anyway" moduleId="{getModuleId()}" />
+      <widget class="\XLite\View\Button\Regular" label="Install anyway" jsCode="document.getAddonForm.action.value='install_addon_force';document.getAddonForm.submit();" />
     </li>
-    <li class="or">or</li>
+    <li class="or">{t(#or#)}</li>
     <li class="button">
       <widget class="\XLite\View\Button\Submit" label="Update modules" />
     </li>

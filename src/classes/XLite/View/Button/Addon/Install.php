@@ -57,6 +57,8 @@ class Install extends \XLite\View\Button\APopupButton
         // :TODO: must be taken from SwitchButton widget
         $list[] = \XLite\View\Button\SwitchButton::SWITCH_CSS_FILE;
 
+        $list[] = 'modules_manager/installation_type/css/style.css';
+
         return $list;
     }
 
@@ -77,6 +79,8 @@ class Install extends \XLite\View\Button\APopupButton
 
         // :TODO: must be taken from SwitchButton widget
         $list[] = \XLite\View\Button\SwitchButton::JS_SCRIPT;
+
+        $list[] = 'button/js/select_installation_type.js';
 
         return $list;
     }
@@ -135,6 +139,6 @@ class Install extends \XLite\View\Button\APopupButton
      */
     protected function getClass()
     {
-        return 'install-addon-button';
+        return parent::getClass() . ' install-addon-button';
     }
 }
