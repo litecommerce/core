@@ -389,36 +389,32 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         $toOverwrite = (array) \XLite\Core\Request::getInstance()->toOverwrite;
 
         // Perform upgrade
-        if (\XLite\Upgrade\Cell::getInstance()->upgrade(false, $toOverwrite)) {
+        \XLite\Upgrade\Cell::getInstance()->upgrade(false, $toOverwrite);
 
-            // Disable selected modules
-            foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
-                \Includes\Utils\ModulesManager::disableModule($module->getActualName());
-            }
-
-            if ($this->isForce()) {
-                if ($this->isNextStepAvailable()) {
-                    $target = 'installed';
-                    $this->showInfo(null, 'Module has been successfully installed');
-
-                } else {
-                    $target = 'marketplace';
-                    $this->showError(__FUNCTION__);
-                }
-
-                $this->setReturnURL($this->buildURL('addons_list_' . $target));
-            }
-
-            // Set cell status
-            \XLite\Upgrade\Cell::getInstance()->clear(true, false, false);
-            \XLite\Upgrade\Cell::getInstance()->setUpgraded(true);
-
-            // Rebuild cache
-            \XLite::setCleanUpCacheFlag(true);
-
-        } else {
-            $this->showError(__FUNCTION__);
+        // Disable selected modules
+        foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
+            \Includes\Utils\ModulesManager::disableModule($module->getActualName());
         }
+
+        if ($this->isForce()) {
+            if ($this->isNextStepAvailable()) {
+                $target = 'installed';
+                $this->showInfo(null, 'Module has been successfully installed');
+
+            } else {
+                $target = 'marketplace';
+                $this->showError(__FUNCTION__);
+            }
+
+            $this->setReturnURL($this->buildURL('addons_list_' . $target));
+        }
+
+        // Set cell status
+        \XLite\Upgrade\Cell::getInstance()->clear(true, false, false);
+        \XLite\Upgrade\Cell::getInstance()->setUpgraded(true);
+
+        // Rebuild cache
+        \XLite::setCleanUpCacheFlag(true);
     }
 
     /**
