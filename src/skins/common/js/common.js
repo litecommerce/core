@@ -20,7 +20,9 @@ var URLHandler = {
   // Return query param
   getParamValue: function(name, params)
   {
-    return name + this.nameValueSeparator + params[name];
+    return name
+      + this.nameValueSeparator
+      + (typeof params[name] === 'boolean' ? Number(params[name]) : params[name]);
   },
 
   // Get param value for the target and action params

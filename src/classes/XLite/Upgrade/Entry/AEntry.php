@@ -36,6 +36,12 @@ namespace XLite\Upgrade\Entry;
 abstract class AEntry
 {
     /**
+     * Some common tokens in messages
+     */
+    const TOKEN_ENTRY = 'entry';
+    const TOKEN_FILE  = 'file';
+
+    /**
      * Path to the unpacked entry archive
      *
      * @var   string
@@ -61,7 +67,6 @@ abstract class AEntry
      * @since 1.0.0
      */
     protected $customFiles = array();
-
 
     /**
      * Return entry readable name
@@ -163,6 +168,15 @@ abstract class AEntry
     abstract public function getPackSize();
 
     /**
+     * Return entry actual name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function getActualName();
+
+    /**
      * Get hashes for current version
      *
      * @return array
@@ -181,7 +195,7 @@ abstract class AEntry
     public function __construct()
     {
         if (0 >= $this->getPackSize()) {
-            $this->addErrorMessage('Pack for "' . $this->getName() . '" is empty');
+            $this->addErrorMessage('Size of the entry "{{' . self::TOKEN_ENTRY . '}}" pack is zero', true);
         }
     }
 
@@ -393,21 +407,6 @@ abstract class AEntry
         return ! (bool) $this->getErrorMessages();
     }
 
-    /**
-     * Add new error message
-     *
-     * @param string $message Message to add
-     * @param array  $args    Substitution arguments OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addErrorMessage($message, array $args = array())
-    {
-        $this->errorMessages[] = \XLite\Core\Translation::getInstance()->translate($message, $args);
-    }
-
     // }}}
 
     // {{{ Upgrade
@@ -444,19 +443,19 @@ abstract class AEntry
                 if (isset($fileHash)) {
 
                     if (isset($hashesForUpgrade[$path])) {
-                        // File has been modified (by user, or by LC Team, see the third param)
+                        // File has been modified (by user, or by LC Team, see the second param)
                         if ($fileHash !== $hash || $hashesForUpgrade[$path] !== $hash) {
                             $this->updateFile($path, $isTestMode, $fileHash !== $hash);
                         }
 
                     } else {
-                        // File has been removed (by user, or by LC Team, see the third param)
+                        // File has been removed (by user, or by LC Team, see the second param)
                         $this->deleteFile($path, $isTestMode, $fileHash !== $hash);
                     }
 
                 } else {
                     // Do not skip any files during upgrade: all of them must be writable
-                    $this->addErrorMessage('File "{{file}}" is not readable', $path);
+                    $this->addFileErrorMessage('File is not readable', $path, !$isTestMode);
                 }
 
             } else {
@@ -470,7 +469,7 @@ abstract class AEntry
 
         // Add new files
         foreach ($hashesForUpgrade as $path => $hash) {
-            $this->addFile($path, $isTestMode, $this->manageFile($path, 'isFile'));
+            $this->addFile($path, $isTestMode, /*$this->manageFile($path, 'isFile')*/false);
         }
     }
 
@@ -552,15 +551,14 @@ abstract class AEntry
 
             // Permissions are invalid
             if (!$flag) {
-                $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
+                $this->addFileErrorMessage('File\'s directory is not writable', $path, false);
             }
 
         } elseif ($this->manageFile($path, 'write', array($this->getFileSource($path)))) {
-            $this->log('File "' . $path . '" successfully added');
+            $this->addFileInfoMessage('File is added', $path, true);
 
         } else {
-            $this->addFileErrorMessage('Unable to write "{{file}}" file', $path);
-            $this->log('Unable to write "' . $path . '" file');
+            $this->addFileErrorMessage('Unable to add file', $path, true);
         }
     }
 
@@ -577,17 +575,15 @@ abstract class AEntry
     protected function updateFileCallback($path, $isTestMode)
     {
         if ($isTestMode) {
-
             if (!$this->manageFile($path, 'isFileWriteable')) {
-                $this->addFileErrorMessage('File "{{file}}" is not writeable', $path);
+                $this->addFileErrorMessage('File is not writeable', $path, false);
             }
 
         } elseif ($this->manageFile($path, 'write', array($this->getFileSource($path)))) {
-            $this->log('File "' . $path . '" successfully updated');
+            $this->addFileInfoMessage('File is updated', $path, true);
 
         } else {
-            $this->addFileErrorMessage('Unable to write "{{file}}" file', $path);
-            $this->log('Unable to write "' . $path . '" file');
+            $this->addFileErrorMessage('Unable to update file', $path, true);
         }
     }
 
@@ -604,22 +600,22 @@ abstract class AEntry
     protected function deleteFileCallback($path, $isTestMode)
     {
         if ($isTestMode) {
-
             if (!\Includes\Utils\FileManager::isDirWriteable($this->manageFile($path, 'getDir'))) {
-                $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
+                $this->addFileErrorMessage('File\'s directory is not writable', $path, false);
             }
 
         } elseif ($this->manageFile($path, 'deleteFile')) {
-            $this->log('File "' . $path . '" successfully deleted');
+            $this->addFileInfoMessage('File is deleted', $path, true);
 
         } else {
-            $this->addFileErrorMessage('Unable to delete "{{file}}" file', $path);
-            $this->log('Unable to delete "' . $path . '" file');
+            $this->addFileErrorMessage('Unable to delete file', $path, true);
         }
     }
 
     /**
      * Common operation for add/update/delete
+     *
+     * :TODO: advise a more convinient logic for this method
      *
      * @param string  $path              File short path
      * @param boolean $isTestMode        If in test mode
@@ -711,21 +707,6 @@ abstract class AEntry
     }
 
     /**
-     * Short name for the "addFileErrorMessage" method
-     *
-     * @param string $message Message to set
-     * @param string $path    File short path
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addFileErrorMessage($message, $path)
-    {
-        $this->addErrorMessage($message, array('file' => $path));
-    }
-
-    /**
      * Return file hashes
      *
      * @return array
@@ -735,24 +716,27 @@ abstract class AEntry
     protected function getHashes()
     {
         $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath()) . '.hash';
-        $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
 
         if (!\Includes\Utils\FileManager::isFileReadable($path)) {
-            $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable (upgrade)', $errorParams);
+            $message = 'Hash file for new entry "{{entry}}" doesn\'t exist or is not readable';
 
         } else {
             $data = \Includes\Utils\FileManager::read($path);
 
             if (empty($data)) {
-                $this->addErrorMessage('Unable to read hash file "{{file}}" or it\'s empty', $errorParams);
+                $message = 'Unable to read hash file for new entry "{{entry}}" (or it\'s empty)';
 
             } else {
                 $data = json_decode($data, true);
 
                 if (!is_array($data)) {
-                    $this->addErrorMessage('Hash file "{{file}}" has a wrong format', $errorParams);
+                    $message = 'Hash file for new entry "{{entry}}" has a wrong format';
                 }
             }
+        }
+
+        if (!empty($message)) {
+            $this->addFileErrorMessage($message, $path);
         }
 
         return (empty($data) || !is_array($data)) ? array() : $data;
@@ -767,14 +751,19 @@ abstract class AEntry
      */
     protected function getHashesForInstalledFiles()
     {
-        $path = $this->getCurrentVersionHashesFilePath();
-        $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
+        if ($this->isInstalled()) {
+            $path = $this->getCurrentVersionHashesFilePath();
 
-        if (!\Includes\Utils\FileManager::isFileReadable($path)) {
-            $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable (installed)', $errorParams);
+            if (!\Includes\Utils\FileManager::isFileReadable($path)) {
+                $message = 'Hash file for installed entry "{{entry}}" doesn\'t exist or is not readable';
 
-        } else {
-            require_once ($path);
+            } else {
+                require_once ($path);
+            }
+
+            if (!empty($message)) {
+                $this->addFileErrorMessage($message, $path);
+            }
         }
 
         return (empty($data) || !is_array($data)) ? array() : $data;
@@ -817,40 +806,120 @@ abstract class AEntry
 
     // }}}
 
-    // {{{ Logging
+    // {{{ Logging and error handling
 
     /**
-     * Log message to the file
+     * Add new info message
      *
-     * @param string  $message Message text
-     * @param boolean $isError Message type OPTIONAL
+     * @param string  $message Message to add
+     * @param boolean $log     Flag
+     * @param array   $args    Substitution arguments OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function log($message, $isError = false)
+    protected function addInfoMessage($message, $log, array $args = array())
     {
-        \Includes\Utils\FileManager::write(
-            \XLite\Upgrade\Cell::getLogFilePath(),
-            $this->getLogMessage($message, $isError),
-            FILE_APPEND
-        );
+        $this->addMessage('Info', $message, $log, $args);
     }
 
     /**
-     * Log message to the file
+     * Add new error message
      *
-     * @param string  $message Message text
-     * @param boolean $isError Message type
+     * @param string  $message Message to add
+     * @param boolean $log     Flag
+     * @param array   $args    Substitution arguments OPTIONAL
      *
-     * @return string
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getLogMessage($message, $isError)
+    protected function addErrorMessage($message, $log, array $args = array())
     {
-        return '[' . ($isError ? 'Error' : 'Info') . ']: ' . $message . PHP_EOL;
+        $this->addMessage('Error', $message, $log, $args);
+
+        // Add message to the internal array
+        $this->errorMessages[] = \XLite\Core\Translation::getInstance()->translate($message, $args);
+    }
+
+    /**
+     * Add new info message which contains file path
+     *
+     * @param string  $message Message to add
+     * @param string  $file    File path
+     * @param boolean $log     Flag
+     * @param array   $args    Substitution arguments OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addFileInfoMessage($message, $file, $log, array $args = array())
+    {
+        $this->addFileMessage('Info', $message, $file, $log, $args);
+    }
+
+    /**
+     * Add new error message which contains file path
+     *
+     * @param string  $message Message to add
+     * @param string  $file    File path
+     * @param boolean $log     Flag
+     * @param array   $args    Substitution arguments OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addFileErrorMessage($message, $file, $log, array $args = array())
+    {
+        $this->addFileMessage('Error', $message, $file, $log, $args);
+    }
+
+    /**
+     * Add new message
+     *
+     * @param string  $method  Logger method to call
+     * @param string  $message Message to add
+     * @param boolean $log     Flag
+     * @param array   $args    Substitution arguments OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addMessage($method, $message, $log, array $args = array())
+    {
+        // It's a quite common case
+        $args += array(self::TOKEN_ENTRY => $this->getActualName());
+
+        // Write message to the log (if needed)
+        if (!empty($log)) {
+            \XLite\Upgrade\Logger::getInstance()->{'log' . $method}($message, $args, false);
+        }
+    }
+
+    /**
+     * Add new error message which contains file path
+     *
+     * @param string  $method  Logger method to call
+     * @param string  $message Message to add
+     * @param string  $file    File path
+     * @param boolean $log     Flag
+     * @param array   $args    Substitution arguments OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addFileMessage($method, $message, $file, $log, array $args = array())
+    {
+        $this->{'add' . $method . 'Message'}(
+            $message . ': "{{' . self::TOKEN_FILE . '}}"',
+            $log,
+            $args + array(self::TOKEN_FILE => \Includes\Utils\FileManager::getRelativePath($file, LC_DIR_TMP))
+        );
     }
 
     // }}}

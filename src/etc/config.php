@@ -168,7 +168,7 @@ page = "public/error.html"
 ; Marketplace
 ;
 [marketplace]
-url = "https://www.litecommerce.com/marketplace/"
+url = "http://www.litecommerce.com/?q=api/"
 
 ;
 ; Other options

@@ -176,6 +176,8 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
     /**
      * Validates and prepares posted data for markup objects
      *
+     * :FIXME: decompose
+     *
      * @param array   $data  Array of posted data
      * @param boolean $isNew If true then prepares data for creating a new markup  OPTIONAL
      *
@@ -186,10 +188,8 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
     protected function prepareData($data, $isNew = false)
     {
         // Allowed markup fields
-        $fields = ($isNew ? array('method_id', 'zone_id') : array());
-
         $fields = array_merge(
-            $fields,
+            $isNew ? array('method_id', 'zone_id') : array(),
             array(
                 'min_weight',
                 'max_weight',
@@ -226,7 +226,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
                         $data['shipping_method'] = $method;
 
                     } else {
-                        $errorMsg = $this->t('Wrong method_id specifed');
+                        $errorMsg = 'Wrong method_id specifed';
                         break;
                     }
                 }
@@ -239,7 +239,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
                         $data['zone'] = $zone;
 
                     } else {
-                        $errorMsg = $this->t('Wrong zone_id specifed');
+                        $errorMsg = 'Wrong zone_id specifed';
                         break;
                     }
                 }
@@ -252,11 +252,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
         // If error occured then returns false, else returns data
         if (isset($errorMsg)) {
             $result = false;
-
-            \XLite\Core\TopMessage::getInstance()->add(
-                $errorMsg,
-                \XLite\Core\TopMessage::ERROR
-            );
+            \XLite\Core\TopMessage::addError($errorMsg);
 
         } else {
             $result = $data;

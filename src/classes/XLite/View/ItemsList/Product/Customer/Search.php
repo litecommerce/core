@@ -257,7 +257,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * Define widget parameters TODO refactor with XLite\View\ItemsList\Product\Admin\Search::defineWidgetParams()
+     * Define widget parameters
      *
      * @return void
      * @see    ____func_see____
