@@ -46,6 +46,20 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 
 
     /**
+     * Modify resource path 
+     * 
+     * @param string $path Absolute resource path
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function modifyResourcePath($path)
+    {
+        return str_replace(LC_DS, '/', static::getDrupalRelativePath() . str_replace(LC_DIR_ROOT, '', $path));
+    }
+
+    /**
      * prepareBasePath
      *
      * @param string $path Path to prepare
@@ -106,7 +120,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     protected static function modifyResourcePaths(array $data)
     {
         foreach ($data as &$file) {
-            $file['file'] = str_replace(LC_DS, '/', static::getDrupalRelativePath() . str_replace(LC_DIR_ROOT, '', $file['file']));
+            $file['file'] = static::modifyResourcePath($file['file']);
         }
 
         return $data;
