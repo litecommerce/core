@@ -22,6 +22,7 @@ Usage: $0 [options]
   -l   generate distributives from local repository instead of remote
   -s   safe mode (output directory is not removed and checkout is skipped)
   -t   generate builds for testing (with additional data)
+  -u   generate only LiteCommerce core package for upgrade (requires CORE_VERSION)
   -h   this help
 
 Examples:
@@ -29,6 +30,7 @@ Examples:
   $0 -b 1234
   $0 -f myconfig.sh -b 1234
   $0 -d /u/homes/myhome/tmp/outputdir -c
+  $0 -u
   $0 -h
 EOT
 	exit 2
@@ -181,7 +183,7 @@ get_current_time 'START_TIME';
 echo -e "LiteCommerce distributives generator\n"
 
 # Read options
-while getopts "b:cd:f:lsth" option; do
+while getopts "b:cd:f:lstuh" option; do
 	case $option in
 		b) XLITE_BUILD_NUMBER=$OPTARG ;;
 		c) CLEAR_OUTPUT_DIR=1 ;;
@@ -190,6 +192,7 @@ while getopts "b:cd:f:lsth" option; do
 		l) LOCAL_REPO=1;;
 		s) SAFE_MODE=1 ;;
 		t) TEST_MODE=1 ;;
+		u) GENERATE_CORE=1 ;;
 		h) show_usage $0 ;;
 	esac
 done
@@ -233,6 +236,13 @@ if [ "x${XLITE_VERSION}" = "x" ]; then
 	exit 2
 fi
 
+# Check parameters
+if [ "${GENERATE_CORE}" -a "x${CORE_VERSION}" = "x" ]; then
+	echo "Failed: LiteCommerce core version is not specified";
+	exit 2
+fi
+
+
 if [ "x${LOCAL_REPO}" = "x" ]; then
 
 	if [ "x${XLITE_REPO}" = "x" ]; then
@@ -240,14 +250,14 @@ if [ "x${LOCAL_REPO}" = "x" ]; then
 		exit 2
 	fi
 
-	if [ "x${DRUPAL_REPO}" = "x" ]; then
+	if [ ! "${GENERATE_CORE}" -a "x${DRUPAL_REPO}" = "x" ]; then
 		echo "Failed: Drupal repository is not specified";
 		exit 2
 	fi
 
 else
 
-	if [ "x${DRUPAL_LOCAL_REPO}" = "x" ]; then
+	if [ ! "${GENERATE_CORE}" -a "x${DRUPAL_LOCAL_REPO}" = "x" ]; then
 		echo "Failed: Drupal local repository is not specified";
 		exit 2
 	fi
@@ -293,13 +303,17 @@ echo "Input data:"
 echo "*** CONFIG: ${CONFIG}"
 echo "*** VERSION: ${VERSION}"
 
+if [ "${GENERATE_CORE}" ]; then
+	echo "*** CORE VERSION: ${CORE_VERSION}"
+fi
+
 if [ "x${LOCAL_REPO}" = "x" ]; then
 	echo "*** MODE: REMOTE REPO"
 	echo "*** LC REPOSITORY: $XLITE_REPO"
-	echo "*** DRUPAL REPOSITORY: $DRUPAL_REPO"
+	[ ! "${GENERATE_CORE}" ] && echo "*** DRUPAL REPOSITORY: $DRUPAL_REPO"
 else
 	echo "*** MODE: LOCAL REPO"
-	echo "*** DRUPAL LOCAL REPOSITORY: $DRUPAL_LOCAL_REPO"
+	[ ! "${GENERATE_CORE}" ] && echo "*** DRUPAL LOCAL REPOSITORY: $DRUPAL_LOCAL_REPO"
 fi
 
 echo "*** OUTPUT_DIR: $OUTPUT_DIR"
@@ -307,6 +321,7 @@ echo "*** OUTPUT_DIR: $OUTPUT_DIR"
 [ $SAFE_MODE ] && echo "*** SAFE_MODE enabled"
 
 echo "";
+
 
 # Prepare output directory
 if [ -d "$OUTPUT_DIR" -a ! "$SAFE_MODE" ]; then
@@ -358,41 +373,46 @@ if [ ! $SAFE_MODE ]; then
 	fi
 
 
-	# Do Drupal checkout...
+	if [ ! "${GENERATE_CORE}" ]; then
+
+		# Do Drupal checkout...
+
+		TMP_DRUPAL_REPO='_tmp_drupal_repo';
+
+		if [ "x${LOCAL_REPO}" = "x" ]; then
+			echo -n "Getting Drupal from GitHub..."
+			prepare_directory $TMP_DRUPAL_REPO $DRUPAL_REPO
+		else
+			echo -n "Getting Drupal from local git repository..."
+			prepare_directory $TMP_DRUPAL_REPO $DRUPAL_LOCAL_REPO
+		fi
 
 
-	TMP_DRUPAL_REPO='_tmp_drupal_repo';
+		echo -n "   Removing .git* service files/directories..."
 
-	if [ "x${LOCAL_REPO}" = "x" ]; then
-		echo -n "Getting Drupal from GitHub..."
-		prepare_directory $TMP_DRUPAL_REPO $DRUPAL_REPO
-	else
-		echo -n "Getting Drupal from local git repository..."
-		prepare_directory $TMP_DRUPAL_REPO $DRUPAL_LOCAL_REPO
-	fi
+		cd $TMP_DRUPAL_REPO
+		find . -name ".git*" -exec rm -rf {} \;
+		cd ..
+		echo " [ok]"
 
+		if [ -d ${TMP_DRUPAL_REPO}/.dev ]; then
+			mv ${TMP_DRUPAL_REPO}/.dev drupal_dev
+			mv ${TMP_DRUPAL_REPO} ${DRUPAL_DIRNAME}
+		else
+			echo "Wrong Drupal repository structure"
+			exit 2
+		fi
 
-	echo -n "   Removing .git* service files/directories..."
-
-	cd $TMP_DRUPAL_REPO
-	find . -name ".git*" -exec rm -rf {} \;
-	cd ..
-	echo " [ok]"
-
-	if [ -d ${TMP_DRUPAL_REPO}/.dev ]; then
-		mv ${TMP_DRUPAL_REPO}/.dev drupal_dev
-		mv ${TMP_DRUPAL_REPO} ${DRUPAL_DIRNAME}
-	else
-		echo "Wrong Drupal repository structure"
-		exit 2
-	fi
+	fi # / if [ "${GENERATE_CORE}" ]
 
 fi # / if [ ! $SAFE_MODE ]
 
 
 # Preparing distributives...
 
-if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DIRNAME}" ]; then
+[ "${GENERATE_CORE}" -o -d "${OUTPUT_DIR}/${DRUPAL_DIRNAME}" ] && _is_drupal_dir_exists=1
+
+if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ]; then
 
 	echo "Preparing the distributives...";
 
@@ -439,8 +459,17 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	for i in ${MODULE_DIRS}; do
 
 		if [ -d $i ]; then
-			find $SED_REGEX_FBSD $i $SED_REGEX_LINUX -mindepth 2 -maxdepth 2 -type d ! -regex ".*/($modules_list_regexp)" -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
-			find $i -maxdepth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+
+			if [ ! "${GENERATE_CORE}" ]; then
+				# Find modules by pattern
+				find $SED_REGEX_FBSD $i $SED_REGEX_LINUX -mindepth 2 -maxdepth 2 -type d ! -regex ".*/($modules_list_regexp)" -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+				# Find all empty module authors dirs
+				find $i -maxdepth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+
+			else
+				# Find all module dirs
+				find $i -maxdepth 1 -type d -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+			fi
 		fi
 	
 	done
@@ -450,10 +479,17 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	done
 
 	if [ "x${DEMO_VERSION}" = "x" -a "x${TEST_MODE}" = "x" ]; then
-		find ./images/* -type f -name "demo_store_*" -exec rm -rf {} \;
-		for i in $CATEGORY_IMAGES_LIST; do
-			rm -f ./public/$i
-		done
+
+		if [ ! "${GENERATE_CORE}" ]; then
+
+			find ./images/* -type f -name "demo_store_*" -exec rm -rf {} \;
+			for i in $CATEGORY_IMAGES_LIST; do
+				rm -f ./public/$i
+			done
+		
+		else
+			find ./images/* -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} \;
+		fi
 	fi
 
 	rm -rf quickstart
@@ -497,121 +533,170 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	find . -type d -exec chmod 755 {} \;
 	find . -type f -exec chmod 644 {} \;
 
+	if [ "${GENERATE_CORE}" ]; then
+
+		# Add metadata
+		mkdir -p .phar
+		$PHP ${BASE_DIR}/metadata.core.php -v ${CORE_VERSION} > .phar/.metadata.bin
+
+		if [ $? -gt 0 ]; then
+			echo 'Metadata is not assembled'
+			exit $?
+		fi
+
+		chmod 400 .phar/.metadata.bin
+
+		# Create upgrade dir
+		if [ -d ${BASE_DIR}/../upgrades/core/$VERSION ]; then
+
+			mkdir -p .core-upgrades/$VERSION
+
+			cp ${CURRENT_DIR}/upgrades/core/$VERSION/* .core-upgrades/$VERSION/
+
+		else
+
+			echo "WARNING! Upgrades scrips is not exists!"
+
+		fi
+
+	fi
+
 	cd $OUTPUT_DIR
 
-	# Do not create LC Standalone distributive when generate demo version
-	if [ "x${DEMO_VERSION}" = "x" ]; then
+	if [ ! "${GENERATE_CORE}" ]; then
 
-		tar -czf litecommerce3-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
-		zip -rq litecommerce3-${VERSION}.zip ${LITECOMMERCE_DIRNAME}
+		# Do not create LC Standalone distributive when generate demo version
+		if [ "x${DEMO_VERSION}" = "x" ]; then
 
-		echo -e "\n  + LiteCommerce $VERSION distributive is completed"
+			tar -czf litecommerce3-${VERSION}.tgz ${LITECOMMERCE_DIRNAME}
+			zip -rq litecommerce3-${VERSION}.zip ${LITECOMMERCE_DIRNAME}
 
+			echo -e "\n  + LiteCommerce $VERSION distributive is completed"
+
+		fi
+
+	else
+
+		# Generate core package
+		cd ${LITECOMMERCE_DIRNAME}
+		tar -czf ${OUTPUT_DIR}/lc-core-${CORE_VERSION}.tar.gz * .phar
+		cd $OUTPUT_DIR
+
+		rm -rf ${LITECOMMERCE_DIRNAME}
+
+		echo -e "\n  + LiteCommerce $CORE_VERSION upgrade pack is completed\n"
 	fi
 
 	#
 	# LiteCommerce+Drupal distributive generating...
 	#
 
-	cd "${OUTPUT_DIR}/${DRUPAL_DIRNAME}"
+	if [ ! "${GENERATE_CORE}" ]; then
 
-	# Remove redundant files
-	if [ ! "x${DRUPAL_FILES_TODELETE}" = "x" ]; then
+		cd "${OUTPUT_DIR}/${DRUPAL_DIRNAME}"
 
-		for fn in $DRUPAL_FILES_TODELETE; do
-			rm -rf $fn
-		done
+		# Remove redundant files
+		if [ ! "x${DRUPAL_FILES_TODELETE}" = "x" ]; then
 
-	fi
+			for fn in $DRUPAL_FILES_TODELETE; do
+				rm -rf $fn
+			done
 
-	LOGO_IMAGE=${OUTPUT_DIR}/drupal_dev/images/lc_logo-${XLITE_VERSION}.png
+		fi
 
-	if [ -f $LOGO_IMAGE ]; then
-		[ -d ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce ] && cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce/lc_logo.png
-		# Copying logo with version number to the theme is temporary disabled
-		# cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes/lc3/logo.png
-	else
-		echo "Warning! Logo image file $LOGO_IMAGE not found"
-	fi
+		LOGO_IMAGE=${OUTPUT_DIR}/drupal_dev/images/lc_logo-${XLITE_VERSION}.png
 
-	sed_cmd="$SED_EXT 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info"
-	eval "$sed_cmd"
+		if [ -f $LOGO_IMAGE ]; then
+			[ -d ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce ] && cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce/lc_logo.png
+			# Copying logo with version number to the theme is temporary disabled
+			# cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes/lc3/logo.png
+		else
+			echo "Warning! Logo image file $LOGO_IMAGE not found"
+		fi
 
-
-	# Restore original file PoweredBy.php from temporary directory
-	cp ${OUTPUT_DIR}/tmp/PoweredBy.php ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/classes/XLite/View/
-	cp ${OUTPUT_DIR}/tmp/install_settings.php ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/Includes/install/
-
-	# Patch file PoweredBy.php
-	insert_seo_phrases "$DRUPAL_SEO_PHRASES" "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}"
-
-	# Prepare permissions
-	find . -type d -exec chmod 755 {} \;
-	find . -type f -exec chmod 644 {} \;
-
-	# Do not create some distributives when generate demo version
-	if [ "x${DEMO_VERSION}" = "x" ]; then
-
-		# Pack LC Connector module distributive
-		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/modules
-		tar -czf ${OUTPUT_DIR}/lc_connector-${VERSION}.tgz lc_connector
-		zip -rq ${OUTPUT_DIR}/lc_connector-${VERSION}.zip lc_connector
+		sed_cmd="$SED_EXT 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info"
+		eval "$sed_cmd"
 
 
-		echo "  + LC Connector v.$VERSION module for Drupal is completed"
+		# Restore original file PoweredBy.php from temporary directory
+		cp ${OUTPUT_DIR}/tmp/PoweredBy.php ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/classes/XLite/View/
+		cp ${OUTPUT_DIR}/tmp/install_settings.php ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/Includes/install/
 
-		# Pack Bettercrumbs module distributive
-		#cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/modules
-		#tar -czf ${OUTPUT_DIR}/bettercrumbs-${VERSION}.tgz bettercrumbs
+		# Patch file PoweredBy.php
+		insert_seo_phrases "$DRUPAL_SEO_PHRASES" "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}"
 
-		#echo "  + Bettercrumbs v.$VERSION module for Drupal is completed"
+		# Prepare permissions
+		find . -type d -exec chmod 755 {} \;
+		find . -type f -exec chmod 644 {} \;
 
-		# Pack LCCMS theme
-		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes
-		tar -czf ${OUTPUT_DIR}/lc3_clean_theme-${VERSION}.tgz lc3_clean
-		zip -rq ${OUTPUT_DIR}/lc3_clean_theme-${VERSION}.zip lc3_clean
+		# Do not create some distributives when generate demo version
+		if [ "x${DEMO_VERSION}" = "x" ]; then
+
+			# Pack LC Connector module distributive
+			cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/modules
+			tar -czf ${OUTPUT_DIR}/lc_connector-${VERSION}.tgz lc_connector
+			zip -rq ${OUTPUT_DIR}/lc_connector-${VERSION}.zip lc_connector
 
 
-		echo "  + LC3 v.$VERSION theme for Drupal is completed"
+			echo "  + LC Connector v.$VERSION module for Drupal is completed"
 
-	else
+			# Pack Bettercrumbs module distributive
+			#cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/modules
+			#tar -czf ${OUTPUT_DIR}/bettercrumbs-${VERSION}.tgz bettercrumbs
 
-		# Create directory for service files and scripts for demo version
-		mkdir -p ${OUTPUT_DIR}/demo_tools/drupal_sql
+			#echo "  + Bettercrumbs v.$VERSION module for Drupal is completed"
 
-		# Copy Drupal SQL-files
-		cp ${OUTPUT_DIR}/drupal_dev/sql/* ${OUTPUT_DIR}/demo_tools/drupal_sql/
+			# Pack LCCMS theme
+			cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes
+			tar -czf ${OUTPUT_DIR}/lc3_clean_theme-${VERSION}.tgz lc3_clean
+			zip -rq ${OUTPUT_DIR}/lc3_clean_theme-${VERSION}.zip lc3_clean
 
-		cp ${OUTPUT_DIR}/xlite_dev/deploy/*.sh ${OUTPUT_DIR}/demo_tools/
-		cp ${OUTPUT_DIR}/xlite_dev/deploy/*.php ${OUTPUT_DIR}/demo_tools/
 
-		cd ${OUTPUT_DIR}
-		tar -czf demo_tools.tgz demo_tools
-		rm -rf demo_tools
+			echo "  + LC3 v.$VERSION theme for Drupal is completed"
 
-		cp -R $DEMO_FILES/* ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}
+		else
 
-		# Patch Drupal code for proxy support (see M:92464 for the details)
-		#cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
-		#RES=`patch < ${OUTPUT_DIR}/xlite_dev/build/release/files/proxy.drupal.6.16.patch 2>&1 | grep -E "(patch: **** malformed patch at line)|(Hunk #([0-9]+) .*(malformed patch)|(with fuzz)|(failed))"`
-		#[ "x${RES}" != "x" ] && die "[ERROR] Patch applying failed: ${OUTPUT_DIR}/xlite_dev/build/release/files/proxy.drupal.6.16.patch"
+			# Create directory for service files and scripts for demo version
+			mkdir -p ${OUTPUT_DIR}/demo_tools/drupal_sql
+
+			# Copy Drupal SQL-files
+			cp ${OUTPUT_DIR}/drupal_dev/sql/* ${OUTPUT_DIR}/demo_tools/drupal_sql/
+
+			cp ${OUTPUT_DIR}/xlite_dev/deploy/*.sh ${OUTPUT_DIR}/demo_tools/
+			cp ${OUTPUT_DIR}/xlite_dev/deploy/*.php ${OUTPUT_DIR}/demo_tools/
+
+			cd ${OUTPUT_DIR}
+			tar -czf demo_tools.tgz demo_tools
+			rm -rf demo_tools
+
+			cp -R $DEMO_FILES/* ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}
+
+			# Patch Drupal code for proxy support (see M:92464 for the details)
+			#cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
+			#RES=`patch < ${OUTPUT_DIR}/xlite_dev/build/release/files/proxy.drupal.6.16.patch 2>&1 | grep -E "(patch: **** malformed patch at line)|(Hunk #([0-9]+) .*(malformed patch)|(with fuzz)|(failed))"`
+			#[ "x${RES}" != "x" ] && die "[ERROR] Patch applying failed: ${OUTPUT_DIR}/xlite_dev/build/release/files/proxy.drupal.6.16.patch"
 		
 
-	fi
+		fi
 	
-	# Return to the Drupal root directory
-	cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
+		# Return to the Drupal root directory
+		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
 
-	# Move LiteCommerce into LC Connector module directory
-	mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} modules/lc_connector/
+		# Move LiteCommerce into LC Connector module directory
+		mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} modules/lc_connector/
 
-	cd modules/lc_connector/${LITECOMMERCE_DIRNAME}
+		cd modules/lc_connector/${LITECOMMERCE_DIRNAME}
 
-	cd $OUTPUT_DIR
+		cd $OUTPUT_DIR
 
-	# Pack Drupal+LC distributive
-	tar -czf drupal-lc3-${VERSION}.tgz ${DRUPAL_DIRNAME}
-	zip -rq drupal-lc3-${VERSION}.zip ${DRUPAL_DIRNAME}
+		# Pack Drupal+LC distributive
+		tar -czf drupal-lc3-${VERSION}.tgz ${DRUPAL_DIRNAME}
+		zip -rq drupal-lc3-${VERSION}.zip ${DRUPAL_DIRNAME}
+
+
+		echo -e "  + Drupal+LiteCommerce v.$VERSION distributive is completed\n"
+
+	fi # / if [ ! "${GENERATE_CORE}" ]
 
 	# Remove obsolete directories
 	rm -rf ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
@@ -620,8 +705,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	rm -rf ${OUTPUT_DIR}/xlite_dev
 	rm -rf ${OUTPUT_DIR}/modules2remove
 
-	echo -e "  + Drupal+LiteCommerce v.$VERSION distributive is completed\n"
-
+	echo "Output directory contains (${OUTPUT_DIR}):"
 	ls -al
 
 else # / if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DIRNAME}" ]
