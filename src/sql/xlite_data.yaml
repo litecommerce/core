@@ -719,7 +719,7 @@ XLite\Model\Country:
   - { country: Guam, code3: GUM, code: GU }
   - { country: Guatemala, code3: GTM, code: GT }
   - { country: Guinea, code3: GIN, code: GN }
-  - { country: Guinea, code3: GIN-Bissau, code: GW }
+  - { country: Guinea-Bissau, code3: GNB, code: GW }
   - { country: Guyana, code3: GUY, code: GY }
   - { country: Haiti, code3: HTI, code: HT }
   - { country: 'Heard and McDonald Islands', code: HM }
@@ -784,7 +784,7 @@ XLite\Model\Country:
   - { country: 'New Zealand', code3: NZL, code: NZ }
   - { country: Nicaragua, code3: NIC, code: NI }
   - { country: Niger, code3: NER, code: NE }
-  - { country: Niger, code3: NERia, code: NG }
+  - { country: Nigeria, code3: NGA, code: NG }
   - { country: Niue, code3: NIU, code: NU }
   - { country: 'Norfolk Island', code3: NFK, code: NF }
   - { country: 'Northern Mariana Islands', code3: MNP, code: MP }
