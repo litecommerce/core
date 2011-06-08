@@ -186,27 +186,32 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Add "LC widget settings" fieldset for the form
      *
-     * @param array  &$form Form description
-     * @param string $class LC widget class
-     * @param string $label Widget class readable name
-     * @param array  $block Block description OPTIONAL
+     * @param array  &$form     Form description
+     * @param string $class     LC widget class
+     * @param string $label     Widget class readable name
+     * @param array  $block     Block description OPTIONAL
+     * @param array  $formInput Form input OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function addSettingsFieldset(array &$form, $class, $label, array $block = array())
+    protected function addSettingsFieldset(array &$form, $class, $label, array $block = array(), array $formInput = array())
     {
         // Get settings from LC
         $widget = $this->getHandler()->getWidget($class);
         if (isset($block['options']) && is_array($block['options'])) {
             $widget->setWidgetParams($block['options']);
         }
+
+        // To prevent some unpredictable errors related to backslashes in element IDs
+        $key = $this->getBlockName($class);
+        if ($formInput && $block && isset($formInput['lc_widget']) && isset($formInput['lc_widget'][$key])) {
+            $widget->setWidgetParams($formInput['lc_widget'][$key]);
+        }
+
         $settings = $widget->getWidgetSettings();
         if ($settings) {
-
-            // To prevent some unpredictable errors related to backslashes in element IDs
-            $key = $this->getBlockName($class);
 
             $form[$key] = array(
                 '#type'       => 'fieldset',
@@ -367,7 +372,8 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 $form['settings']['lc_widget_details']['lc_widget'],
                 $class,
                 $label,
-                ($delta && ($class === $actualClass)) ? $this->getBlock($delta) : array()
+                ($delta && ($class === $actualClass)) ? $this->getBlock($delta) : array(),
+                isset($formState['input']) ? $formState['input'] : array()
             );
         }
 
