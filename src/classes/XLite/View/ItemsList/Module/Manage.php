@@ -269,7 +269,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      */
     protected function isModuleUpdateAvailable(\XLite\Model\Module $module)
     {
-        return $module->getInstalled() && $this->isModuleCompatible($module) && $this->getModuleForUpdate($module);
+        return $module->isInstalled() && $this->isModuleCompatible($module) && $this->getModuleForUpdate($module);
     }
 
     /**
