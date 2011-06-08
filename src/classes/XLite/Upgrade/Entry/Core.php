@@ -204,6 +204,18 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
+     * Return module actual name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getActualName()
+    {
+        return $this->getName();
+    }
+
+    /**
      * Download hashes for current version
      *
      * @return array
@@ -233,14 +245,12 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     public function __construct($majorVersion, $minorVersion, $revisionDate, $size)
     {
         if (!$this->checkMajorVersion($majorVersion) || !$this->checkMinorVersion($majorVersion, $minorVersion)) {
-            \Includes\ErrorHandler::fireError(
-                'Unallowed core version for upgrade: '
-                . \Includes\Utils\Converter::composeVersion($majorVersion, $minorVersion)
-            );
+            $version = \Includes\Utils\Converter::composeVersion($majorVersion, $minorVersion);
+            \Includes\ErrorHandler::fireError('Unallowed core version for upgrade: ' . $version);
         }
 
         if ($revisionDate >= time()) {
-            \Includes\ErrorHandler::fireError('Invalid core revision date: "' . date(DATE_RFC822) . '"');
+            \Includes\ErrorHandler::fireError('Invalid core revision date: "' . date(DATE_RFC822, $revisionDate) . '"');
         }
 
         $this->majorVersion = $majorVersion;
@@ -278,16 +288,27 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      */
     public function download()
     {
-        $this->setRepositoryPath(
-            \XLite\Core\Marketplace::getInstance()->getCorePack(
-                $this->getMajorVersionNew(),
-                $this->getMinorVersionNew()
-            )
-        );
+        $result = false;
 
-        $this->saveHashesForInstalledFiles();
+        $majorVersion = $this->getMajorVersionNew();
+        $minorVersion = $this->getMinorVersionNew();
 
-        return parent::download();
+        $path   = \XLite\Core\Marketplace::getInstance()->getCorePack($majorVersion, $minorVersion);
+        $params = array('major' => $majorVersion, 'minor' => $minorVersion);
+
+        if (isset($path)) {
+            $this->addFileInfoMessage('Core pack (v.{{major}}.{{minor}}) is recieved:', $path, true, $params);
+                
+            $this->setRepositoryPath($path);
+            $this->saveHashesForInstalledFiles();
+
+            $result = parent::download();
+
+        } else {
+            $this->addFileErrorMessage('Core pack (v.{{major}}.{{minor}}) is not recieved:', $path, true, $params);
+        }
+
+        return $result;
     }
 
     /**

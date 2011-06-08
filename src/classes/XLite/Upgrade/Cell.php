@@ -506,7 +506,7 @@ class Cell extends \XLite\Base\Singleton
 
         } catch (\Exception $exception) {
             $entry = null;
-            $this->logAddEntryError($exception);
+            \XLite\Upgrade\Logger::getInstance()->logError($exception->getMessage());
         }
 
         if (isset($entry)) {
@@ -514,32 +514,6 @@ class Cell extends \XLite\Base\Singleton
         }
 
         return $entry;
-    }
-
-    /**
-     * Logging
-     *
-     * @param \Exception $exception Thrown exception
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function logAddEntryError(\Exception $exception)
-    {
-        \XLite\Logger::getInstance()->log($exception->getMessage(), $this->getLogLevel());
-    }
-
-    /**
-     * Return type of log messages
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLogLevel()
-    {
-        return PEAR_LOG_WARNING;
     }
 
     // }}}
@@ -692,11 +666,16 @@ class Cell extends \XLite\Base\Singleton
      */
     public function unpackAll()
     {
+        $result = false;
+
         if (!$this->isDownloaded()) {
-            \Includes\ErrorHandler::fireError('Trying to unpack non-downloaded archives');
+            \XLite\Upgrade\Logger::getInstance()->logError('Trying to unpack non-downloaded archives');
+
+        } else {
+            $result = $this->manageEntryPackages(true);
         }
 
-        return $this->manageEntryPackages(true);
+        return $result;
     }
 
     /**
@@ -729,73 +708,33 @@ class Cell extends \XLite\Base\Singleton
      * @param boolean $isTestMode       Flag OPTIONAL
      * @param array   $filesToOverwrite List of custom files to overwrite OPTIONAL
      *
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function upgrade($isTestMode = true, array $filesToOverwrite = array())
     {
+        $result = false;
+
         if (!$this->isUnpacked()) {
-            \Includes\ErrorHandler::fireError('Trying to perform upgrade while not all archives were unpacked');
-        }
+            \XLite\Upgrade\Logger::getInstance()->logError(
+                'Trying to perform upgrade while not all archives were unpacked'
+            );
 
-        if (!$isTestMode) {
-            $this->clearLog();
-        }
+        } else {
+            foreach ($this->getEntries() as $entry) {
+                $entry->upgrade($isTestMode, $filesToOverwrite);
+            }
 
-        $result = true;
-
-        foreach ($this->getEntries() as $entry) {
-            $result = $entry->upgrade($isTestMode, $filesToOverwrite) && $result;
-        }
-
-        if (!$isTestMode) {
-            $this->completeLog();
             // :FIXME:
-            \XLite\Core\TmpVars::getInstance()->{'check_for_updatesTTL'} = 0;
+            if (!$isTestMode) {
+                \XLite\Core\TmpVars::getInstance()->{'check_for_updatesTTL'} = 0;
+            }
+
+            $result = $this->isValid();
         }
 
         return $result;
-    }
-
-    // }}}
-
-    // {{{ Logging
-
-    /**
-     * Return relative path to the log file
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getLogFilePath()
-    {
-        return LC_DIR_LOG . 'upgrade.log';
-    }
-
-    /**
-     * Clear log file
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function clearLog()
-    {
-        return \Includes\Utils\FileManager::write($this->getLogFilePath(), '<pre>' . PHP_EOL);
-    }
-
-    /**
-     * Complete log file
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function completeLog()
-    {
-        return \Includes\Utils\FileManager::write($this->getLogFilePath(), '</pre>', FILE_APPEND);
     }
 
     // }}}
