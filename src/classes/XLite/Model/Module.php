@@ -359,7 +359,7 @@ class Module extends \XLite\Model\AEntity
      */
     protected function checkModuleMainClass()
     {
-        return $this->getInstalled() && \Includes\Utils\Operator::checkIfClassExists($this->getMainClass());
+        return $this->isInstalled() && \Includes\Utils\Operator::checkIfClassExists($this->getMainClass());
     }
 
     // }}}
