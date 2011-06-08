@@ -1192,6 +1192,10 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function writeDataToFile(\PEAR2\HTTP\Request\Response $response)
     {
+        if (!\Includes\Utils\FileManager::isExists(LC_DIR_TMP)) {
+            \Includes\Utils\FileManager::mkdir(LC_DIR_TMP);
+        }
+
         $path = \Includes\Utils\FileManager::getUniquePath(
             LC_DIR_TMP,
             uniqid() . '.' . \Includes\Utils\PHARManager::getExtension() ?: 'tar'
