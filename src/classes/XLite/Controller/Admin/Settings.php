@@ -568,15 +568,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         \Includes\SafeMode::regenerateAccessKey();
         \XLite\Core\TopMessage::addInfo('Safe mode access key has been re-generated');
 
-        $this->setReturnURL(
-            $this->buildURL(
-                $this->get('target'),
-                '',
-                array(
-                    'page' => 'Security'
-                )
-            )
-        );
+        $this->setReturnURL($this->buildURL($this->get('target'), '', array('page' => 'Security')));
     }
 
     /**

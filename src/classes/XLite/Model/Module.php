@@ -549,7 +549,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getInstalled()
+    public function isInstalled()
     {
         return $this->installed ?: (bool) $this->getRepository()->getModuleInstalled($this);
     }

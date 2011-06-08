@@ -380,7 +380,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function isInstalled(\XLite\Model\Module $module)
     {
-        return $module->getInstalled();
+        return $module->isInstalled();
     }
 
     /**
