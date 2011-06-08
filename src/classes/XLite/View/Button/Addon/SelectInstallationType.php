@@ -65,7 +65,6 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $list[] = 'button/js/install_addon.js';
         $list[] = 'button/js/select_installation_type.js';
 
         return $list;
@@ -125,6 +124,6 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
      */
     protected function getClass()
     {
-        return 'select-installation-type-button';
+        return parent::getClass() . ' select-installation-type-button';
     }
 }

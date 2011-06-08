@@ -28,7 +28,6 @@ decorate(
     // They are shown in License agreement popup window.
     // TODO. make it dynamically and move it to ONE widget initialization (Main widget)
 
-    core.autoload(PopupButtonInstallAddon);
   }
 );
 

@@ -13,13 +13,10 @@
 {* :TODO: divide into parts *}
 
 <div class="module-license">
-  <div class="form">
-    <form action="admin.php" method="post" name="getAddonForm" >
-      <input type="hidden" name="target" value="upgrade" />
-      <input type="hidden" name="action" value="install_addon_force" />
-      <input type="hidden" name="moduleId" value="{getModuleId()}" />
 
-      <div class="license-block">
+  <div class="form">
+
+    <div class="license-block">
 
         <table>
           <tr>
@@ -48,11 +45,10 @@
       <table class="install-addon">
         <tr>
           <td>
-            <widget class="\XLite\View\Button\Submit" label="Install add-on" style="submit-button main-button" disabled=true />
+            <widget class="\XLite\View\Button\Addon\SelectInstallationType" moduleId="{getModuleId()}" label="Install add-on" style="submit-button main-button" disabled=true />
           </td>
         </tr>
       </table>
 
-    </form>
   </div>
 </div>
