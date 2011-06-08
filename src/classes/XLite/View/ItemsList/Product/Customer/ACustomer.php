@@ -119,6 +119,36 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         return $result;
     }
 
+    /**
+     * Get display modes for sidebar widget type
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getSidebarDisplayModes()
+    {
+        return array(
+            self::DISPLAY_MODE_STHUMB  => 'Small thumbnails',
+            self::DISPLAY_MODE_BTHUMB  => 'Big thumbnails',
+        );
+    }
+
+    /**
+     * Get display modes for center widget type
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getCenterDisplayModes()
+    {
+        return array(
+                self::DISPLAY_MODE_GRID  => 'Grid',
+                self::DISPLAY_MODE_LIST  => 'List',
+                self::DISPLAY_MODE_TABLE => 'Table',
+            );
+    }
 
     /**
      * Initialize widget (set attributes)
@@ -335,21 +365,9 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getDisplayModes()
     {
-        if (self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)) {
-            $list = array(
-                self::DISPLAY_MODE_STHUMB  => 'Small thumbnails',
-                self::DISPLAY_MODE_BTHUMB  => 'Big thumbnails',
-            );
-
-        } else {
-            $list = array(
-                self::DISPLAY_MODE_GRID  => 'Grid',
-                self::DISPLAY_MODE_LIST  => 'List',
-                self::DISPLAY_MODE_TABLE => 'Table',
-            );
-        }
-
-        return $list;
+        return self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
+            ? static::getSidebarDisplayModes()
+            : static::getCenterDisplayModes();
     }
 
     /**

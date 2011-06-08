@@ -214,6 +214,8 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 '#attributes' => array('id' => $key),
             );
 
+            $extendedItemsList = is_subclass_of($widget->getProtectedWidget(), 'XLite\View\ItemsList\Product\Customer\ACustomer');
+
             // Translate native LC options into Drupal format
             foreach ($settings as $name => $param) {
 
@@ -226,7 +228,30 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 if ('select' === $form[$key][$name]['#type']) {
 
                     $form[$key][$name]['#options'] = $param->options;
+
+                    if ($extendedItemsList && \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_DISPLAY_MODE == $name) {
+                        $jsData = array(
+                            \XLite\View\ItemsList\Product\Customer\ACustomer::WIDGET_TYPE_SIDEBAR => \XLite\View\ItemsList\Product\Customer\ACustomer::getSidebarDisplayModes(),
+                            \XLite\View\ItemsList\Product\Customer\ACustomer::WIDGET_TYPE_CENTER  => \XLite\View\ItemsList\Product\Customer\ACustomer::getCenterDisplayModes(),
+                        );
+                        drupal_add_js('var lcConnectorBlocks = ' . json_encode($jsData) . ';', 'inline');
+                    }
                 }
+            }
+
+            if ($extendedItemsList) {
+                if (!isset($form['#attached'])) {
+                    $form['#attached'] = array('js' => array());
+
+                } elseif (!isset($form['#attached']['js'])) {
+                    $form['#attached']['js'] = array();
+                }
+
+                $path = \XLite\Core\Layout::getInstance()->getResourceFullPath(
+                    'modules/CDev/DrupalConnector/blocks.js',
+                    \XLite::CUSTOMER_INTERFACE
+                );
+                $form['#attached']['js'][] = \XLite\View\AView::modifyResourcePath($path);
             }
         }
     }
