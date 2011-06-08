@@ -102,6 +102,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
         } catch (\Exception $exception) {
             $result = false;
+            \XLite\Upgrade\Logger::getInstance()->logError($exception->getMessage());
         }
 
         return $result ? $dir : null;

@@ -209,6 +209,8 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
                 }
             }
 
+            $params = array('name' => $module->getActualName());
+
             if (empty($nonWritableDirs)) {
 
                 // Remove from FS
@@ -223,17 +225,17 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
                 \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($module);
 
                 if ($module->getModuleID()) {
-                    \XLite\Core\TopMessage::addError('An error occured while uninstalling the module');
+                    $message = 'A DB error occured while uninstalling the module "{{name}}"';
+                    $this->showError(__FUNCTION__, $message, $params);
 
                 } else {
-                    \XLite\Core\TopMessage::addInfo('The module has been uninstalled successfully');
+                    $message = 'The module "{{name}}" has been uninstalled successfully';
+                    $this->showInfo(__FUNCTION__, $message, $params);
                 }
 
             } else {
-                \XLite\Core\TopMessage::addError(
-                    'Unable to delete module files: some dirs have no writable permissions:' 
-                    . '<br />' . implode('<br />', $nonWritableDirs)
-                );
+                $message = 'Unable to delete module "{{name}}" files: some dirs have no writable permissions: {{dirs}}';
+                $this->showError(__FUNCTION__, $message, $params + array('dirs' => implode(', ', $nonWritableDirs)));
             }
         }
     }
