@@ -321,7 +321,12 @@ abstract class AEntry
         if ($this->isDownloaded()) {
 
             // Extract archive files into a new directory
-            $this->setRepositoryPath(\Includes\Utils\PHARManager::unpack($this->getRepositoryPath(), LC_DIR_TMP));
+            $dir = \Includes\Utils\PHARManager::unpack($this->getRepositoryPath(), LC_DIR_TMP);
+
+            if ($dir) {
+                $this->setRepositoryPath($dir);
+                $this->addFileInfoMessage('Entry "{{' . self::TOKEN_ENTRY . '}}" archive is unpacked', $dir, true);
+            }
         }
 
         return $this->isUnpacked();
@@ -425,8 +430,8 @@ abstract class AEntry
     {
         $this->errorMessages = array();
 
-        $hashesInstalled  = $this->getHashesForInstalledFiles();
-        $hashesForUpgrade = $this->getHashes();
+        $hashesInstalled  = $this->getHashesForInstalledFiles($isTestMode);
+        $hashesForUpgrade = $this->getHashes($isTestMode);
 
         // Overwrite only selected files or the all ones
         $this->customFiles = is_array($filesToOverwrite) ? $filesToOverwrite : $hashesInstalled;
@@ -709,11 +714,13 @@ abstract class AEntry
     /**
      * Return file hashes
      *
+     * @param boolean $isTestMode Flag
+     *  
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getHashes()
+    protected function getHashes($isTestMode)
     {
         $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath()) . '.hash';
 
@@ -736,7 +743,7 @@ abstract class AEntry
         }
 
         if (!empty($message)) {
-            $this->addFileErrorMessage($message, $path);
+            $this->addFileErrorMessage($message, $path, !$isTestMode);
         }
 
         return (empty($data) || !is_array($data)) ? array() : $data;
@@ -745,11 +752,13 @@ abstract class AEntry
     /**
      * Return file hashes for the currently installed version
      *
+     * @param boolean $isTestMode Flag
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getHashesForInstalledFiles()
+    protected function getHashesForInstalledFiles($isTestMode)
     {
         if ($this->isInstalled()) {
             $path = $this->getCurrentVersionHashesFilePath();
@@ -762,7 +771,7 @@ abstract class AEntry
             }
 
             if (!empty($message)) {
-                $this->addFileErrorMessage($message, $path);
+                $this->addFileErrorMessage($message, $path, !$isTestMode);
             }
         }
 
