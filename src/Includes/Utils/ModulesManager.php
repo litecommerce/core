@@ -311,7 +311,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
                 : array_keys(static::$activeModules);
 
             // Disable modules
-            array_walk_recursive($modules, array('static', 'disableModule'));
+            array_walk($modules, array('static', 'disableModule'));
             \Includes\SafeMode::cleanupIndicator();
         }
     }
