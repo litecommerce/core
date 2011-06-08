@@ -359,14 +359,10 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \Includes\Utils\Operator::showMessage('Checking integrity, please wait...');
 
             // Perform upgrade in test mode
-            if (\XLite\Upgrade\Cell::getInstance()->upgrade(true)) {
+            \XLite\Upgrade\Cell::getInstance()->upgrade(true);
 
-                if ($this->isForce() && $this->isNextStepAvailable()) {
-                    $this->setReturnURL($this->buildURL('upgrade', 'install_upgrades', $this->getActionParamsCommon()));
-                }
-
-            } else {
-                $this->showError(__FUNCTION__);
+            if ($this->isForce() && $this->isNextStepAvailable()) {
+                $this->setReturnURL($this->buildURL('upgrade', 'install_upgrades', $this->getActionParamsCommon()));
             }
 
         } else {
