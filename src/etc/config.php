@@ -22,7 +22,6 @@ port     = ""
 database = ""
 username = ""
 password = ""
-persistent = Off
 table_prefix = "xlite_"
 
 ;
@@ -103,7 +102,6 @@ suppress_log_errors = Off
 ;
 [skin_details]
 skin = default
-inifile = "layout.ini"
 locale = en
 
 ;
@@ -113,15 +111,17 @@ locale = en
 enabled = Off
 process_widgets = On
 xdebug_log_trace = Off
-eta = On
 show_messages_on_top = Off
 
-[recorder]
-record_queries = off
-
+;
+; Debug log settings
+;
 [debug]
 mark_templates = off
 
+;
+; Default image settings
+;
 [images]
 default_image = "images/no_image.png"
 default_image_width = 110
