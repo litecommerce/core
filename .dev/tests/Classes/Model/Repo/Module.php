@@ -33,238 +33,173 @@
  */
 class XLite_Tests_Model_Repo_Module extends XLite_Tests_TestCase
 {
+    /**
+     * setUp 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function setUp()
     {
         parent::setUp();
 
-        $this->markTestSkipped('Awaiting for new marketplace');
+        $this->doRestoreDb(__DIR__ . '/sql/module/setup.sql', false);
     }
 
     /**
-     * getDefaultCnd
-     *
-     * @return \XLite\Core\CommonCell
-     * @access protected
+     * testSearchAll 
+     * 
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultCnd()
+    public function testSearchAll()
     {
-        return new \XLite\Core\CommonCell(
-            array(
-                \XLite\Model\Repo\Module::P_SUBSTRING => '',
-                \XLite\Model\Repo\Module::P_ORDER_BY => array(
-                    \XLite\View\ItemsList\Module\AModule::SORT_BY_MODE_NAME,
-                    \XLite\View\ItemsList\Module\AModule::SORT_ORDER_ASC
-                ),
-                \XLite\Model\Repo\Module::P_LIMIT => array(0, 100),
-            )
-        );
+        $this->searchTest(null, null, 19, 'CDev\TinyMCE');
     }
 
     /**
-     * testSearchAll
+     * testSearchSubstring 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchSubstring()
+    {
+        $this->searchTest('P_SUBSTRING', 'f', 9, 'CDev\ProductOptions');
+    }
+
+    /**
+     * testSearchPriceFilter 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchPriceFilterFree()
+    {
+        $this->searchTest('P_PRICE_FILTER', \XLite\Model\Repo\Module::PRICE_FREE, 16, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testSearchPriceFilterPaid 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchPriceFilterPaid()
+    {
+        $this->searchTest('P_PRICE_FILTER', \XLite\Model\Repo\Module::PRICE_PAID, 4, 'Test\Module7');
+    }
+
+    /**
+     * testSearchInstalled 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchInstalled()
+    {
+        $this->searchTest('P_INSTALLED', true, 12, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testSearchNotInstalled 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchNotInstalled()
+    {
+        $this->searchTest('P_INSTALLED', false, 10, 'Test\Module7');
+    }
+
+    /**
+     * testSearchInactive 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchInactive()
+    {
+        $this->searchTest('P_INACTIVE', true, 12, 'Test\Module7');
+    }
+
+    /**
+     * testSearchCoreVersion1
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchCoreVersion1()
+    {
+        $this->searchTest('P_INSTALLED', true, 12, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testSearchFromMarketplace 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchFromMarketplace()
+    {
+        $this->searchTest('P_FROM_MARKETPLACE', true, 17, 'CDev\TinyMCE');
+    }
+
+    // {{{ Protected methods
+
+    /**
+     * getRepo
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function testSearch()
+    protected function getRepo()
     {
-        $cnd = $this->getDefaultCnd();
-
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->search($cnd);
-
-        // If all products selected
-        $this->assertEquals(44, count($result), 'Number of found modules does not match');
-
-        // If the first selected (SORT_BY_MODE_NAME, SORT_ORDER_ASC) is the "AustraliaPost" one
-        $this->assertEquals('2checkout', $result[0]->getModuleName(), 'Name of the first found module does not match');
-        $this->assertEquals('X-Payments connector', $result[count($result)-1]->getModuleName(), 'Name of the last found module does not match');
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module');
     }
 
     /**
-     * testFindAllModules
-     *
+     * searchTest 
+     * 
+     * @param mixed $param ____param_comment____
+     * @param mixed $value ____param_comment____
+     * @param mixed $count ____param_comment____
+     * @param mixed $name  ____param_comment____
+     *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function testFindAllModules()
+    protected function searchTest($param, $value, $count, $name)
     {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllModules();
+        $cnd = new \XLite\Core\CommonCell();
 
-        $this->assertEquals(44, count($result), 'Number of found modules does not match');
+        if (isset($param)) {
+            $cnd->{constant('\XLite\Model\Repo\Module::' . $param)} = $value;
+        }
+
+        $result = $this->getRepo()->search($cnd, true);
+        $this->assertEquals($count, $result, 'check modules count in search result');
+
+        if ($result = $this->getRepo()->search($cnd)) {
+            $result = array_pop($result);
+            $this->assertEquals($name, $result->getActualName(), 'check module ID for the last item in search result');
+
+        } else {
+            $this->fail('Empty result');
+        }
     }
 
-    /**
-     * testFindInactiveModules
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testFindInactiveModules()
-    {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findInactiveModules();
-
-        $this->assertEquals(37, count($result), 'Number of found inactive modules does not match');
-        $this->assertEquals('Accounting Package', $result[0]->getModuleName(), 'Name of the first found module does not match');
-        $this->assertEquals('X-Payments connector', $result[count($result)-1]->getModuleName(), 'Name of the last found module does not match');
-    }
-
-    /**
-     * testFindUpgradableModules
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testFindUpgradableModules()
-    {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findUpgradableModules();
-
-        $this->assertEquals(0, count($result), 'Number of found upgradable modules does not match');
-    }
-
-    /**
-     * testFindAllNames
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testFindAllNames()
-    {
-        \XLite\Core\Database::getCacheDriver()->delete('Model_Module.data.names.all');
-
-        $result = \XLite\Core\Database::getRepo('XLite\Model\Module')->findAllNames();
-
-        $this->assertEquals(44, count($result), 'Number of found modules does not match');
-
-        $this->assertEquals('CDev\AustraliaPost', $result[0], 'First found module name does not match');
-        // NOTE: This test work is all another test is passed + data cache cell 'names' must be removed
-        $this->assertEquals('CDev\XPaymentsConnector', $result[count($result)-1], 'Last found module name does not match');
-    }
-
-    /**
-     * testFindAllByModuleIds
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testFindAllByModuleIds()
-    {
-        $ids = array(1,3,5);
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllByModuleIds($ids);
-
-        $this->assertEquals(3, count($result), 'Number of found modules does not match');
-
-        $this->assertEquals(1, $result[0]->getModuleId(), 'First found module name does not match');
-        $this->assertEquals(5, $result[count($result)-1]->getModuleId(), 'Last found module name does not match');
-    }
-
-    /**
-     * testFindAllByModuleIds
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testFindAllEnabled()
-    {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllEnabled();
-
-        $this->assertEquals(7, count($result), 'Number of found active modules does not match');
-        $this->assertEquals(1, $result[0]->getModuleId(), 'ID of the first found module does not match');
-        $this->assertEquals(7, $result[count($result)-1]->getModuleId(), 'ID of the last found module does not match');
-    }
-
-    /**
-     * testFindAllByModuleIds
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testFindByActualName()
-    {
-        $name = 'FeaturedProducts';
-        $author = 'CDev';
-
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findByActualName($name, $author);
-        $this->assertEquals('FeaturedProducts', $result->getName(), 'Did not find module by actual name');
-        $this->assertEquals('CDev', $result->getAuthor(), 'Did not find module by actual name');
-    }
-
-    /**
-     * testGetActiveModules
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testGetActiveModules()
-    {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->getActiveModules();
-
-        $checkModule = 'CDev\AustraliaPost';
-
-        $this->assertEquals(7, count($result), 'Number of found active modules does not match');
-        $this->assertEquals($checkModule, $result[$checkModule]->getActualName(), 'Check found active modules format');
-    }
-
-    /**
-     * testIsModuleActive
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testIsModuleActive()
-    {
-        $nameA = 'CDev\FeaturedProducts';
-        $nameD = 'CDev\AOM';
-
-        $this->assertTrue(\XLite\Core\Database::getRepo('\XLite\Model\Module')->isModuleActive($nameA), 'active module check failed');
-        $this->assertFalse(\XLite\Core\Database::getRepo('\XLite\Model\Module')->isModuleActive($nameD), 'inactive module check failed');
-    }
-
-    /**
-     * testGetActiveModules
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testInitialize()
-    {
-        // TODO: check after tests on modules installation and depack are created
-    }
-
-    /**
-     * testGetActiveModules
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testCheckModules()
-    {
-        // TODO: check after tests on modules installation and depack are created
-    }
-
+    // }}}
 }
