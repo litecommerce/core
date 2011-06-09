@@ -13,7 +13,6 @@
 core.bind(
   "load",
   function () {
-    attachTooltip("td.status-unknown", jQuery(".unknown-status-message").html());
     attachTooltip("td.status-incompatible", jQuery(".incompatible-status-message").html());
   }
 );
