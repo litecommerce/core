@@ -172,7 +172,7 @@ class TopMessage extends \XLite\Base\Singleton
         $result = true;
 
         foreach ($messages as $message) {
-            $result = $result && $this->add($message, $type);
+            $result = $result && $this->add($message, array(), null, $type);
         }
 
         return $result;
