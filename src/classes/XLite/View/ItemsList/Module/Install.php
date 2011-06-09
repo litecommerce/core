@@ -48,7 +48,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     const PRICE_FILTER_OPT_ALL  = 'all';
     const PRICE_FILTER_OPT_FREE = \XLite\Model\Repo\Module::PRICE_FREE;
-    const PRICE_FILTER_OPT_PAID = \XLite\Model\Repo\Module::PRICE_PAID;
 
     /**
      * Widget param names
@@ -317,9 +316,8 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     protected function getPriceFilterOptions()
     {
         return array(
-            self::PRICE_FILTER_OPT_ALL  => 'No price filtering',
+            self::PRICE_FILTER_OPT_ALL  => 'All add-ons',
             self::PRICE_FILTER_OPT_FREE => 'Free add-ons',
-            self::PRICE_FILTER_OPT_PAID => 'Commercial add-ons',
         );
     }
 
