@@ -75,6 +75,20 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
     }
 
     /**
+     * Get cookie TTL (seconds)
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCookieTTL()
+    {
+        $ttl = intval(ini_get('session.cookie_lifetime'));
+
+        return 0 < $ttl ? time() + $ttl : 0;
+    }
+
+    /**
      * Get current language
      * FIXME
      *

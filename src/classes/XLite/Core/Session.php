@@ -503,7 +503,7 @@ class Session extends \XLite\Base\Singleton
             setcookie(
                 $arg,
                 $this->session->getSid(),
-                0,
+                $this->getCookieTTL(),
                 $this->getCookiePath(),
                 $httpDomain,
                 false,
@@ -514,7 +514,7 @@ class Session extends \XLite\Base\Singleton
                 setcookie(
                     $arg,
                     $this->session->getSid(),
-                    0,
+                    $this->getCookieTTL(),
                     $this->getCookiePath(true),
                     $httpsDomain,
                     false,
@@ -574,6 +574,18 @@ class Session extends \XLite\Base\Singleton
         $url = $this->getCookieURL($secure);
 
         return $url['path'];
+    }
+
+    /**
+     * Get cookie TTL (seconds)
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCookieTTL()
+    {
+        return 0;
     }
 
     /**
