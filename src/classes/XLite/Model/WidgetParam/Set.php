@@ -91,6 +91,18 @@ class Set extends \XLite\Model\WidgetParam\String
     }
 
     /**
+     * Get options 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
      * Return list of conditions to check
      *
      * @param mixed $value Value to validate
