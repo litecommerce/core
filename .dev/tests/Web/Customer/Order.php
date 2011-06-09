@@ -171,15 +171,6 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             . "/span[text()='Print invoice']"
         );
 
-        $this->assertElementPresent(
-            "//div[@class='order-box']"
-            . "/ul[@class='links']"
-            . "/li[@class='track']"
-            . "/a"
-            . "/span[text()='Track package']"
-        );
-
-
         $this->assertEquals(
             1,
             intval($this->getJSExpression('jQuery(".invoice-box").length')),
