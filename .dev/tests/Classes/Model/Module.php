@@ -60,7 +60,7 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
     {
         parent::setUp();
 
-        $this->doRestoreDb(__DIR__ . '/sql/module/setup.sql', false);
+        $this->doRestoreDb(__DIR__ . '/Repo/sql/module/setup.sql', false);
     }
 
     /**
@@ -112,7 +112,7 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
                 $this->assertEquals(
                     $expected,
                     $$module->callModuleMethod($method, self::SOME_WRONG_VALUE),
-                    'check ' . $module . 'for' . '"' . $method . '"'
+                    'check "' . $module . '" for the ' . '"' . $method . '"'
                 );
             }
         }
@@ -366,6 +366,48 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
         $this->assertFalse($module->isInstalled(), 'check if the fake module is installed [2]');
     }
 
+    /**
+     * testGetSet 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testGetSet()
+    {
+        $module = new \XLite\Model\Module();
+
+        $data = array(
+            'name'          => 'Module1',
+            'author'        => 'Test',
+            'marketplaceID' => '11111111',
+            'enabled'       => true,
+            'installed'     => true,
+            'dataInstalled' => false,
+            'date'          => time(),
+            'rating'        => 3.56,
+            'votes'         => 13,
+            'downloads'     => 123,
+            'price'         => 3.12,
+            'majorVersion'  => '1.0',
+            'minorVersion'  => '1',
+            'revisionDate'  => time() - 10,
+            'packSize'      => 12345,
+            'moduleName'    => 'Test module',
+            'authorName'    => 'Test author',
+            'description'   => 'Description',
+            'iconURL'       => 'http:://www.example.com/1',
+            'pageURL'       => 'http:://www.example.com/2',
+            'authorPageURL' => 'http:://www.example.com/3',
+            'dependencies'  => array('CDev\DrupalConnector', 'CDev\AustraliaPost'),
+        );
+
+        foreach ($data as $name => $value) {
+            $module->{'set' . ucfirst($name)}($value);
+            $this->assertEquals($value, $module->{'get' . ucfirst($name)}(), 'check getter/setter for the "' . $name . '" field');
+        }
+    }
+
     // {{{ Protected methods
 
     /**
@@ -423,13 +465,13 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
 
             $module->setAuthor($author);
             $module->setName($name);
-        }
 
-        if (isset($version)) {
-            $module->setMajorVersion($version);
+            if (isset($version)) {
+                $module->setMajorVersion($version);
 
-            if (isset($revision)) {
-                $module->setMinorVersion($revision);
+                if (isset($revision)) {
+                    $module->setMinorVersion($revision);
+                }
             }
         }
 
