@@ -261,9 +261,15 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                 $message = 'unable to add module entry to the install list: "{{path}}"';
                 $this->showError(__FUNCTION__, $message, array('path' => $path));
 
-            } elseif (\XLite::getInstance()->checkVersion($entry->getMajorVersionNew(), '<')) {
-                $message = 'module version "{{version}}" is greater than the core one';
-                $this->showError(__FUNCTION__, $message, array('version' => $entry->getMajorVersionNew()));
+            } elseif (\XLite::getInstance()->checkVersion($entry->getMajorVersionNew(), '!=')) {
+                $this->showError(
+                    __FUNCTION__,
+                    'module version "{{module_version}}" is not equal to the core one ("{{core_version}}")',
+                    array(
+                        'module_version' => $entry->getMajorVersionNew(),
+                        'core_version'   => \XLite::getInstance()->getMajorVersion(),
+                    )
+                );
 
             } elseif ($this->isNextStepAvailable()) {
                 $this->setReturnURL($this->buildURL('upgrade', 'download', $this->getActionParamsCommon(true)));
