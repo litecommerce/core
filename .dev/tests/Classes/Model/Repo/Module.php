@@ -140,7 +140,19 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_TestCase
      */
     public function testSearchCoreVersion1()
     {
-        $this->searchTest('P_INSTALLED', true, 12, 'CDev\TinyMCE');
+        $this->searchTest('P_CORE_VERSION', '1.0', 17, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testSearchCoreVersion2
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchCoreVersion2()
+    {
+        $this->searchTest('P_CORE_VERSION', '1.0', 17, 'CDev\TinyMCE');
     }
 
     /**
@@ -153,6 +165,228 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_TestCase
     public function testSearchFromMarketplace()
     {
         $this->searchTest('P_FROM_MARKETPLACE', true, 17, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testSearchOrderByAsc 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchOrderByAsc()
+    {
+        $this->searchTest('P_ORDER_BY', array('m.name', 'ASC'), 19, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testSearchOrderByDesc
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchOrderByDesc()
+    {
+        $this->searchTest('P_ORDER_BY', array('m.name', 'DESC'), 19, 'CDev\AustraliaPost');
+    }
+
+    /**
+     * testSearchLimit 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchLimit()
+    {
+        $this->searchTest('P_LIMIT', array(2, 7), 7, 'Test\Module1');
+    }
+
+    /**
+     * testSearchTag 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchTag()
+    {
+        $this->searchTest('P_TAG', 'Test', 19, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testpUdateMarketplaceModules 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testUpdateMarketplaceModules()
+    {
+        $data = array(
+            array(
+                'name'          => 'Module1',
+                'author'        => 'Test',
+                'enabled'       => 1,
+                'installed'     => 1,
+                'dataInstalled' => 1,
+                'date'          => time(),
+                'marketplaceID' => '',
+                'majorVersion'  => '1.0',
+                'minorVersion'  => '1',
+                'moduleName'    => 'Module2',
+                'authorName'    => 'Test',
+                'description'   => 'Description',
+                'iconURL'       => '',
+                'pageURL'       => '',
+                'authorPageURL' => '',
+                'dependencies'  => array(),
+                'rating'        => 0,
+                'votes'         => 0,
+                'downloads'     => 0,
+                'price'         => 0.00,
+                'currency'      => 'USD',
+                'revisionDate'  => 0,
+                'packSize'      => 0,
+            ),
+            array(
+                'name'          => 'Module2',
+                'author'        => 'Test',
+                'enabled'       => 1,
+                'installed'     => 1,
+                'dataInstalled' => 1,
+                'date'          => time(),
+                'marketplaceID' => '',
+                'majorVersion'  => '1.0',
+                'minorVersion'  => '1',
+                'moduleName'    => 'Module2',
+                'authorName'    => 'Test',
+                'description'   => 'Description',
+                'iconURL'       => '',
+                'pageURL'       => '',
+                'authorPageURL' => '',
+                'dependencies'  => array(),
+                'rating'        => 0,
+                'votes'         => 0,
+                'downloads'     => 0,
+                'price'         => 0.00,
+                'currency'      => 'USD',
+                'revisionDate'  => 0,
+                'packSize'      => 0,
+            ),
+        );
+
+        $this->getRepo()->updateMarketplaceModules($data);
+
+        $this->searchTest(null, null, 14, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testGetModuleForUpdate 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testGetModuleForUpdate()
+    {
+        $installed = $this->getModuleByAuthorAndName('CDev', 'DrupalConnector', '1.0', '0');
+        $forUpdate = $this->getRepo()->getModuleForUpdate($installed);
+
+        $this->assertNotNull($forUpdate, 'check if module is found');
+        $this->assertNotEquals($installed->getModuleID(), $forUpdate->getModuleID(), 'check module IDs');
+
+        $installed = $this->getModuleByAuthorAndName('CDev', 'Bestsellers', '1.0', '0');
+        $forUpdate = $this->getRepo()->getModuleForUpdate($installed);
+
+        $this->assertNull($forUpdate, 'check if module is found');
+    }
+
+    /**
+     * testGetModuleFromMarketplace 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testGetModuleFromMarketplace()
+    {
+        $installed = $this->getModuleByAuthorAndName('CDev', 'DrupalConnector', '1.0', '0');
+        $fromMarketplace = $this->getRepo()->getModuleFromMarketplace($installed);
+
+        $this->assertNotNull($fromMarketplace, 'check if module is found [1]');
+        $this->assertNotEquals($installed->getModuleID(), $fromMarketplace->getModuleID(), 'check module IDs [1]');
+        $this->assertNotEmpty($fromMarketplace->getMarketplaceID(), 'check marketplace ID [1]');
+
+        $installed = $this->getModuleByAuthorAndName('CDev', 'Bestsellers', '1.0', '0');
+        $fromMarketplace = $this->getRepo()->getModuleFromMarketplace($installed);
+
+        $this->assertNotNull($fromMarketplace, 'check if module is found [2]');
+        $this->assertEquals($installed->getModuleID(), $fromMarketplace->getModuleID(), 'check module IDs [2]');
+        $this->assertNotEmpty($fromMarketplace->getMarketplaceID(), 'check marketplace ID [2]');
+    }
+
+    /**
+     * testGetModuleInstalled 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testGetModuleInstalled()
+    {
+        $fromMarketplace = $this->getModuleByAuthorAndName('CDev', 'DrupalConnector', '1.0', '1');
+        $installed = $this->getRepo()->getModuleInstalled($fromMarketplace);
+
+        $this->assertNotNull($installed, 'check if module is found [1]');
+        $this->assertEquals($installed->getModuleID(), $fromMarketplace->getModuleID(), 'check module IDs [1]');
+        $this->assertEquals('1.0', $installed->getMajorVersion(), 'check major version [1]');
+        $this->assertEquals('0', $installed->getMinorVersion(), 'check minor version [1]');
+
+        $fromMarketplace = $this->getModuleByAuthorAndName('CDev', 'TinyMCE', '1.0', '0');
+        $installed = $this->getRepo()->getModuleInstalled($fromMarketplace);
+
+        $this->assertNotNull($installed, 'check if module is found [2]');
+        $this->assertEquals($installed->getModuleID(), $fromMarketplace->getModuleID(), 'check module IDs [2]');
+        $this->assertEquals('1.0', $installed->getMajorVersion(), 'check major version [2]');
+        $this->assertEquals('0', $installed->getMinorVersion(), 'check minor version [2]');
+    }
+
+    /**
+     * testGetModuleForUpgrade 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testGetModuleForUpgrade()
+    {
+        $installed = $this->getModuleByAuthorAndName('CDev', 'DrupalConnector', '1.0', '0');
+        $forUpgrade = $this->getRepo()->getModuleForUpgrade($installed, '1.0');
+
+        $this->assertNotNull($forUpgrade, 'check if module is found [1]');
+        $this->assertNotEquals($installed->getModuleID(), $forUpgrade->getModuleID(), 'check module IDs [1]');
+        $this->assertNotEmpty($forUpgrade->getMarketplaceID(), 'check marketplace ID [1]');
+        $this->assertEquals('1.0', $forUpgrade->getMajorVersion(), 'check major version [1]');
+        $this->assertEquals('1', $forUpgrade->getMinorVersion(), 'check minor version [1]');
+
+        $installed = $this->getModuleByAuthorAndName('CDev', 'Bestsellers', '1.0', '0');
+        $forUpgrade = $this->getRepo()->getModuleForUpgrade($installed, '1.0');
+
+        $this->assertNotNull($forUpgrade, 'check if module is found [2]');
+        $this->assertEquals($installed->getModuleID(), $forUpgrade->getModuleID(), 'check module IDs [2]');
+        $this->assertEquals('1.0', $forUpgrade->getMajorVersion(), 'check major version [2]');
+        $this->assertEquals('0', $forUpgrade->getMinorVersion(), 'check minor version [2]');
+
+        $installed = $this->getModuleByAuthorAndName('CDev', 'Bestsellers', '1.0', '0');
+        $forUpgrade = $this->getRepo()->getModuleForUpgrade($installed, '1.2');
+
+        $this->assertNotNull($forUpgrade, 'check if module is found [3]');
+        $this->assertNotEquals($installed->getModuleID(), $forUpgrade->getModuleID(), 'check module IDs [3]');
+        $this->assertNotEmpty($forUpgrade->getMarketplaceID(), 'check marketplace ID [3]');
+        $this->assertEquals('1.2', $forUpgrade->getMajorVersion(), 'check major version [3]');
+        $this->assertEquals('1', $forUpgrade->getMinorVersion(), 'check minor version [3]');
     }
 
     // {{{ Protected methods
@@ -199,6 +433,38 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_TestCase
         } else {
             $this->fail('Empty result');
         }
+    }
+
+    /**
+     * getModuleByAuthorAndName
+     *
+     * @param mixed $author   ____param_comment____
+     * @param mixed $name     ____param_comment____
+     * @param mixed $version  ____param_comment____
+     * @param mixed $revision ____param_comment____
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleByAuthorAndName($author, $name, $version = null, $revision = null)
+    {
+        if (!($module = $this->getRepo()->findOneBy(array('author' => $author, 'name' => $name)))) {
+            $module = new \XLite\Model\Module();
+
+            $module->setAuthor($author);
+            $module->setName($name);
+
+            if (isset($version)) {
+                $module->setMajorVersion($version);
+    
+                if (isset($revision)) {
+                    $module->setMinorVersion($revision);
+                }
+            }
+        }
+
+        return $module;
     }
 
     // }}}
