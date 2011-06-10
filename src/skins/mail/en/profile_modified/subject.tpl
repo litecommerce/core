@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-{config.Company.company_name:h}: Profile modified
+{config.Company.company_name:h}: Your profile modified

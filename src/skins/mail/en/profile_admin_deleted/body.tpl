@@ -10,9 +10,12 @@
  * @since     1.0.0
  *}
 <html>
-<head><title>Profile deleted</title></head>
+<head><title>{t(#User profile deleted#)}</title></head>
 <body>
-<p>The profile has been deleted: {userLogin:h}
-<p>{signature:h}
+
+<p>{t(#The user profile has been deleted:#)} {userLogin:h}</p>
+
+<p>{signature:h}</p>
+
 </body>
 </html>
