@@ -102,16 +102,6 @@ class Marketplace extends \XLite\Base\Singleton
     const TTL_NOT_EXPIRED = '____TTL_NOT_EXPIRED____';
 
 
-    /**
-     * Error info (code, message, arguments)
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $error;
-
-
     // {{{ "Check for updates" request
 
     /**
@@ -868,9 +858,6 @@ class Marketplace extends \XLite\Base\Singleton
     {
         $result = null;
 
-        // Prepare for request
-        $this->clearError();
-
         // Run bouncer
         $response = $this->getRequest($action, $data)->sendRequest();
 
@@ -878,12 +865,7 @@ class Marketplace extends \XLite\Base\Singleton
             $result = $this->prepareResponse($response, $action);
 
         } else {
-            $this->setError(null, 'Bouncer general error, see the log');
-        }
-
-        // For developer mode only
-        if (LC_DEVELOPER_MODE) {
-            $this->showDeveloperTopMessage($action);
+            $this->logError($action, 'Bouncer general error (response is not recieved)');
         }
 
         return $result;
@@ -901,8 +883,13 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function getRequest($action, array $data = array())
     {
-        $request = new \XLite\Core\HTTP\Request($this->getMarketplaceActionURL($action));
-        $request->body = $data + $this->getRequestCommonData();
+        $url   = $this->getMarketplaceActionURL($action);
+        $data += $this->getRequestCommonData();
+
+        $request = new \XLite\Core\HTTP\Request($url);
+        $request->body = $data;
+
+        $this->logInfo($action, 'The "{{url}}" URL requested', array('url' => $url), $data);
 
         return $request;
     }
@@ -945,11 +932,11 @@ class Marketplace extends \XLite\Base\Singleton
                 $result = $this->{'parse' . $method}($response);
 
             } else {
-                $this->setError(null, 'An empty response recieved');
+                $this->logError($action, 'An empty response recieved');
             }
 
         } else {
-            $this->setError(null, 'Unable to access marketplace by the URL "' . $response->uri . '"');
+            $this->logError($action, 'Returned the "{{code}}" code', array('code' => $response->code));
         }
 
         if (is_array($result)) {
@@ -959,100 +946,15 @@ class Marketplace extends \XLite\Base\Singleton
                     $result = $this->{'prepare' . $method}($result);
                 }
 
+                $this->logInfo($action, 'Valid response recieved', array(), $result);
+
             } else {
                 $result = null;
+                $this->logError($action, 'Response has an invalid format', array(), $result);
             }
         }
 
         return $result;
-    }
-
-    /**
-     * Show diagnostic message
-     *
-     * @param string $action Current action
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function showDeveloperTopMessage($action)
-    {
-        list($code, $message, $args) = $this->getError();
-        $common = '["' . \XLite\Core\Request::getInstance()->target . '"' . ($code ? ', code ' . $code : '') . ']: ';
-
-        if (isset($message)) {
-            \XLite\Core\TopMessage::addError(
-                $common . 'Marketplace connection error (' . $action . ', "' . $message . '")',
-                $args
-            );
-
-        } else {
-            \XLite\Core\TopMessage::addInfo(
-                $common . 'Successfully connected to marketplace (' . $action . ')',
-                $args
-            );
-        }
-    }
-
-    // }}}
-
-    // {{{ Error handling
-
-    /**
-     * Return error info
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getError()
-    {
-        return $this->error;
-    }
-
-    /**
-     * Set top message with error info
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function setErrorTopMessage()
-    {
-        list(, $message, $args) = $this->getError();
-
-        if (!empty($message)) {
-            \XLite\Core\TopMessage::addError($message, $args);
-        }
-    }
-
-    /**
-     * Unset the error-related variables
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function clearError()
-    {
-        $this->setError(null, null, array());
-    }
-
-    /**
-     * Common setter
-     *
-     * @param integer $code    Error code
-     * @param string  $message Error description
-     * @param array   $args    List of message arguments OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function setError($code, $message, array $args = array())
-    {
-        $this->error = array($code, $message, $args);
     }
 
     // }}}
@@ -1277,19 +1179,84 @@ class Marketplace extends \XLite\Base\Singleton
         \XLite\Core\TmpVars::getInstance()->{\XLite\Upgrade\Cell::CELL_NAME} = null;
     }
 
+    // }}}
+
+    // {{{ Error handling
+
     /**
-     * Constructor
+     * Log error
+     * 
+     * @param string $action  Current request action
+     * @param string $message Message to log
+     * @param array  $args    Message args OPTIONAL
+     * @param array  $data    Data sent/recieved OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function logError($action, $message, array $args = array(), array $data = array())
+    {
+        $this->logCommon('Error', $action, $message, $args, $data);
+    }
+
+    /**
+     * Log warning
+     *
+     * @param string $action  Current request action
+     * @param string $message Message to log
+     * @param array  $args    Message args OPTIONAL
+     * @param array  $data    Data sent/recieved OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function __construct()
+    protected function logWarning($action, $message, array $args = array(), array $data = array())
     {
-        parent::__construct();
+        $this->logCommon('Warning', $action, $message, $args, $data);
+    }
 
-        // Set variable format
-        $this->clearError();
+    /**
+     * Log info
+     *
+     * @param string $action  Current request action
+     * @param string $message Message to log
+     * @param array  $args    Message args OPTIONAL
+     * @param array  $data    Data sent/recieved OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function logInfo($action, $message, array $args = array(), array $data = array())
+    {
+        $this->logCommon('Info', $action, $message, $args, $data);
+    }
+
+    /**
+     * Common logging procedure
+     *
+     * @param string $method  Method to call
+     * @param string $action  Current request action
+     * @param string $message Message to log
+     * @param array  $args    Message args OPTIONAL
+     * @param array  $data    Data sent/recieved OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function logCommon($method, $action, $message, array $args = array(), array $data = array())
+    {
+        $message = 'Marketplace [' . $action . ']: ' . lcfirst($message);
+
+        if (!empty($data) && \Includes\Utils\ConfigParser::getOptions(array('marketplace', 'log_data'))) {
+            $message .= '; data: ' . PHP_EOL . '{{data}}';
+            $args += array('data' => print_r($data, true));
+        }
+
+        \XLite\Upgrade\Logger::getInstance()->{'log' . $method}($message, $args, false);
     }
 
     // }}}

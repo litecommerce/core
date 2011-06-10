@@ -36,15 +36,6 @@ namespace XLite\Upgrade;
 class Logger extends \XLite\Base\Singleton
 {
     /**
-     * Current timestamp
-     * 
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $timestamp;
-
-    /**
      * Clear log file
      * 
      * @return boolean
@@ -66,6 +57,18 @@ class Logger extends \XLite\Base\Singleton
     public function getLogFile()
     {
         return LC_DIR_LOG . 'upgrade.log';
+    }
+
+    /**
+     * Return link to view the log file
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getLogURL()
+    {
+        return 'admin.php?target=upgrade&action=view_log_file';
     }
 
     /**
@@ -117,33 +120,6 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Destructor 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function __destruct()
-    {
-        $this->write('</pre>');
-    }
-
-    /**
-     * Constructur
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function __construct()
-    {
-        parent::__construct();
-
-        $this->timestamp = time();
-        $this->write('<pre title="' . date(DATE_RFC822, $this->timestamp) . '" id="' . $this->timestamp . '">');
-    }
-
-    /**
      * Add message to the log
      * 
      * @param string  $message        Message text
@@ -191,7 +167,7 @@ class Logger extends \XLite\Base\Singleton
      */
     protected function getPrefix($type)
     {
-        return '[' . $type . '] ';
+        return '[' . $type . ', ' . date('M d Y H:i:s') . '] ';
     }
 
     /**
@@ -206,17 +182,5 @@ class Logger extends \XLite\Base\Singleton
     protected function getTopMessage($message)
     {
         return $message . '<p /><a target="_blank" href=' . $this->getLogURL() . '><u>See log file for details</u></a>';
-    }
-
-    /**
-     * Return link to view the log file
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLogURL()
-    {
-        return 'admin.php?target=upgrade&action=view_log_file#' . $this->timestamp;
     }
 }

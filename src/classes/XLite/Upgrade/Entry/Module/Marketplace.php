@@ -277,7 +277,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
         $params = array('name' => $this->getActualName());
 
         if (isset($path)) {
-            $this->addFileInfoMessage('Module pack ("{{name}}") is recieved:', $path, true, $params);
+            $this->addFileInfoMessage('Module pack ("{{name}}") is recieved', $path, true, $params);
 
             $this->setRepositoryPath($path);
             $this->saveHashesForInstalledFiles();
