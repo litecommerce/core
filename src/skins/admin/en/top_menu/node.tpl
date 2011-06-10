@@ -9,6 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <li class="menu-item {getCSSClass()}">
   <a href="{getLink()}">{getParam(%static::PARAM_TITLE%):h}</a>
   <div IF="hasChildren()">

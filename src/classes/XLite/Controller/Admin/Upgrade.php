@@ -422,7 +422,9 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionViewLogFile()
     {
-        \Includes\Utils\Operator::flush(\Includes\Utils\FileManager::read(\XLite\Upgrade\Logger::getLogFile()));
+        \Includes\Utils\Operator::flush(
+            '<pre>' . \Includes\Utils\FileManager::read(\XLite\Upgrade\Logger::getLogFile()) . '</pre>'
+        );
 
         exit (0);
     }

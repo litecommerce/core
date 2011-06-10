@@ -80,7 +80,6 @@ class TopMenu extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/menu.css';
 
         return $list;

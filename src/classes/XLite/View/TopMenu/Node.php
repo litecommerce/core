@@ -129,6 +129,7 @@ class Node extends \XLite\View\TopMenu
 
         if ('' !== $this->getParam(self::PARAM_LINK)) {
             $link = $this->getParam(self::PARAM_LINK);
+
         } elseif ('' !== $this->getParam(self::PARAM_TARGET)) {
             $link = $this->buildURL($this->getParam(self::PARAM_TARGET), '', $this->getParam(self::PARAM_EXTRA));
         }
