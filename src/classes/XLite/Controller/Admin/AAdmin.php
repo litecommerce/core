@@ -561,7 +561,7 @@ OUT;
         }
 
         if (isset($action)) {
-            $message = 'Action "' . $action . '", ' . $message;
+            $message = 'Action "' . get_class($this) . '::' . $action . '", ' . lcfirst($message);
         }
 
         \XLite\Upgrade\Logger::getInstance()->{'log' . $method}($message, $args, true);

@@ -277,7 +277,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
         $params = array('name' => $this->getActualName());
 
         if (isset($path)) {
-            $this->addFileInfoMessage('Module pack ("{{name}}") is recieved:', $path, true, $params);
+            $this->addFileInfoMessage('Module pack ("{{name}}") is recieved', $path, true, $params);
 
             $this->setRepositoryPath($path);
             $this->saveHashesForInstalledFiles();
@@ -341,15 +341,17 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
         $forUpgrade = $this->getModuleForUpgrade();
         $installed  = $this->getModuleInstalled();
 
-        if (!$forUpgrade->getInstalled()) {
-            $forUpgrade->setInstalled(true);
-            $forUpgrade->setEnabled(true);
-        }
+        $forUpgrade->setInstalled(true);
 
         if ($forUpgrade->getModuleID() !== $installed->getModuleID()) {
+            $forUpgrade->setEnabled($installed->getEnabled());
+
             \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($installed);
 
             $this->moduleIDInstalled = $forUpgrade->getModuleID();
+
+        } else {
+            $forUpgrade->setEnabled(true);
         }
 
         \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($forUpgrade);
