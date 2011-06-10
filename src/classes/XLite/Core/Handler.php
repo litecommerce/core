@@ -218,6 +218,22 @@ abstract class Handler extends \XLite\Base
     }
 
     /**
+     * Compose complete URL from target, action and additional params
+     *
+     * @param string $target Page identifier OPTIONAL
+     * @param string $action Action to perform OPTIONAL
+     * @param array  $params Additional params OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function buildFullURL($target = '', $action = '', array $params = array())
+    {
+        return \XLite\Core\Converter::buildFullURL($target, $action, $params);
+    }
+
+    /**
      * Compose URL path from target, action and additional params
      * FIXME - this method must be removed
      *
