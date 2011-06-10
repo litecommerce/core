@@ -9,9 +9,13 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
---<br>
-Thank you for using LiteCommerce shopping system<br>
-<br>
-Phone: {config.Company.company_phone}<br>
-Fax: {config.Company.company_fax}<br>
-URL: {config.Company.company_website}
+--<br />
+<div>{t(#Thank you for using LiteCommerce services#,_ARRAY_(#LiteCommerce#^config.Company.company_name))}</div>
+
+<br />
+
+<div IF="config.Company.company_phone">Phone: {config.Company.company_phone}</div>
+
+<div IF="config.Company.company_fax">Fax: {config.Company.company_fax}</div>
+
+<div IF="config.Company.company_website">Website: {config.Company.company_website}</div>
