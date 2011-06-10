@@ -927,7 +927,7 @@ abstract class AEntry
         $this->{'add' . $method . 'Message'}(
             $message . ': "{{' . self::TOKEN_FILE . '}}"',
             $log,
-            $args + array(self::TOKEN_FILE => \Includes\Utils\FileManager::getRelativePath($file, LC_DIR_TMP))
+            $args + array(self::TOKEN_FILE => \Includes\Utils\FileManager::getRelativePath($file, LC_DIR_ROOT))
         );
     }
 

@@ -169,6 +169,7 @@ page = "public/error.html"
 ;
 [marketplace]
 url = "http://www.litecommerce.com/?q=api/"
+log_data = Off
 
 ;
 ; Other options
