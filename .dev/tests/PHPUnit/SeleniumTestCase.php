@@ -615,6 +615,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
         $checked = isset($checked) ? $checked : !$this->getJSExpression('jQuery("' . $jqueryExpression . '").get(0).checked');
         $this->getJSExpression('jQuery("' . $jqueryExpression . '").get(0).checked = ' . ($checked ? 'true' : 'false'));
+        sleep(1);
         $this->getJSExpression('jQuery("' . $jqueryExpression . '").change()');
 
         return (bool)$this->getJSExpression('jQuery("' . $jqueryExpression . '").get(0).checked');
