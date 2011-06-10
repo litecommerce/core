@@ -229,9 +229,9 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Set cell status
-     * 
+     *
      * @param boolean $value Flag
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -690,12 +690,17 @@ class Cell extends \XLite\Base\Singleton
     protected function manageEntryPackages($isUnpack)
     {
         foreach ($this->getEntries() as $entry) {
-            if (!$entry->{$isUnpack ? 'unpack' : 'download'}()) {
+
+            $result = $isUnpack ? $entry->unpack() : $entry->download();
+
+            if (!$result) {
                 break;
             }
         }
 
-        return $this->{$isUnpack ? 'isUnpacked' : 'isDownloaded'}();
+        return $isUnpack
+            ? $this->isUnpacked()
+            : $this->isDownloaded();
     }
 
     // }}}

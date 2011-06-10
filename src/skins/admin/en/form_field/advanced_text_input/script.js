@@ -27,7 +27,8 @@ AdvancedInputHandler.prototype.changeActions = function ()
 
   this.block.each(
     function () {
-      o.addActions(o.initWidget(this));
+      this.widget = o.initWidget(this);
+      o.addActions(this.widget);
     }
   );
 }
@@ -43,7 +44,10 @@ AdvancedInputHandler.prototype.initWidget = function (obj)
   widget.inputBlock   = jQuery('.original-input', obj);
   widget.cancel       = jQuery('.cancel-input', widget.inputBlock);
   widget.input        = jQuery('input', widget.inputBlock).eq(0);
-  widget.cancelValue  = widget.input.val();
+
+  if ('undefined' == typeof widget.input.cancelValue) {
+    widget.input.cancelValue  = widget.input.val();
+  }
 
   return widget;
 }
@@ -71,7 +75,12 @@ AdvancedInputHandler.prototype.addActions = function (widget)
             }
           );
 
-          widget.inputBlock.click(function(event) {event.stopPropagation();});
+          widget.inputBlock.bind(
+            'click',
+            function(event) {
+              event.stopPropagation();
+            }
+          );
         },
         50
       );
@@ -81,8 +90,7 @@ AdvancedInputHandler.prototype.addActions = function (widget)
 
   widget.cancel.click(
     function () {
-      widget.input.val(widget.cancelValue);
-      o.enterValue(widget);
+      o.cancel(widget);
     }
   );
 }
@@ -91,8 +99,15 @@ AdvancedInputHandler.prototype.enterValue = function (widget)
 {
   widget.label.html(widget.input.val()).show();
   widget.inputBlock.hide();
+  widget.input.cancelValue = widget.input.val();
 
   jQuery('body').unbind('click');
+}
+
+AdvancedInputHandler.prototype.cancel = function (widget)
+{
+  widget.input.val(widget.input.cancelValue);
+  this.enterValue(widget);
 }
 
 core.bind(
