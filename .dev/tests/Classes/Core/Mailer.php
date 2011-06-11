@@ -69,7 +69,8 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
         $email = array_shift($emails);
 
-        $result = (bool)preg_match('/Sign in notification.*' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['body']);
+        $result = (bool)preg_match('/To: ' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['header'])
+            && (bool)preg_match('/Sign in notification/msS', $email['body']);
 
         $this->assertTrue($result, 'Check if email contents keywords');
     }
@@ -102,7 +103,8 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
         $email = array_shift($emails);
 
-        $result = (bool)preg_match('/Sign in notification.*' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['body']);
+        $result = (bool)preg_match('/To: ' . preg_quote(self::ADMIN_EMAIL) . '/msS', $email['header'])
+            && (bool)preg_match('/New user profile has been registered/msS', $email['body']);
 
         $this->assertTrue($result, 'Check if email contents keywords');
     }
@@ -133,7 +135,8 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
         $email = array_shift($emails);
 
-        $result = (bool)preg_match('/Profile modified.*' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['body']);
+        $result = (bool)preg_match('/To: ' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['header'])
+            && (bool)preg_match('/Your profile has been modified/msS', $email['body']);
 
         $this->assertTrue($result, 'Check if email contents keywords');
     }
@@ -166,7 +169,9 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
         $email = array_shift($emails);
 
-        $result = (bool)preg_match('/Profile modified.*' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['body']);
+        $result = (bool)preg_match('/To: ' . preg_quote(self::ADMIN_EMAIL) . '/msS', $email['header'])
+            && (bool)preg_match('/User profile modified/msS', $email['body']);
+
 
         $this->assertTrue($result, 'Check if email contents keywords');
     }
@@ -199,7 +204,8 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
         $email = array_shift($emails);
 
-        $result = (bool)preg_match('/Profile deleted.*' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['body']);
+        $result = (bool)preg_match('/To: ' . preg_quote(self::ADMIN_EMAIL) . '/msS', $email['header'])
+            && (bool)preg_match('/User profile deleted/msS', $email['body']);
 
         $this->assertTrue($result, 'Check if email contents keywords');
     }
