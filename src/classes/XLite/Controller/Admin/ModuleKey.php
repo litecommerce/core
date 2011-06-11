@@ -76,11 +76,13 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
                 if ($entity) {
                     $entity->setKeyValue($key);
                     $repo->update($entity);
+
                 } else {
                     $entity = $repo->insert($info + array('keyValue' => $key));
                 }
 
-                \XLite\Core\TopMessage::addInfo(
+                $this->showInfo(
+                    __FUNCTION__,
                     'License key has been successfully verified for "{{name}}" module by "{{author}}" author',
                     array(
                         'name'   => $module->getModuleName(),
@@ -89,13 +91,14 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
                 );
 
             } else {
-                \XLite\Core\TopMessage::addError(
-                    'Key is validate, but the module [' . explode(',', $info) . '] was not found'
+                $this->showError(
+                    __FUNCTION__,
+                    'Key is validated, but the module [' . explode(',', $info) . '] was not found'
                 );
             }
 
         } else {
-            \XLite\Core\Marketplace::getInstance()->setErrorTopMessage();
+            $this->showError(__FUNCTION__, 'Response from marketplace is not recived');
         }
 
         $this->setReturnURL($this->buildURL('addons_list_marketplace'));
