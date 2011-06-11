@@ -164,11 +164,9 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         parent::setWidgetParams($params);
 
         // Modify display modes and default display mode
-        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setOptions($this->getDisplayModes());
-        if (isset($params[self::PARAM_DISPLAY_MODE])) {
-            $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($params[self::PARAM_DISPLAY_MODE]);
-
-        } else {
+        $options = $this->getDisplayModes();
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setOptions($options);
+        if (!isset($options[$this->getParam(self::PARAM_DISPLAY_MODE)])) {
             $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(
                 self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
                     ? self::DISPLAY_MODE_STHUMB
