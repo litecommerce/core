@@ -21,7 +21,7 @@
 
     <tr>
       <td colspan="3">
-        {t(#The following categories was selected to be removed#)}:
+        {t(#The following categories were selected to be removed#)}:
       </td>
     </tr>
 
