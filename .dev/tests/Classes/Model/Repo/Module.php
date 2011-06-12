@@ -164,7 +164,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_TestCase
      */
     public function testSearchFromMarketplace()
     {
-        $this->searchTest('P_FROM_MARKETPLACE', true, 17, 'CDev\TinyMCE');
+        $this->searchTest('P_FROM_MARKETPLACE', true, 10, 'Test\Module7');
     }
 
     /**
