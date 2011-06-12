@@ -949,8 +949,8 @@ class Marketplace extends \XLite\Base\Singleton
                 $this->logInfo($action, 'Valid response recieved', array(), $result);
 
             } else {
-                $result = null;
                 $this->logError($action, 'Response has an invalid format', array(), $result);
+                $result = null;
             }
         }
 
