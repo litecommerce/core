@@ -372,7 +372,11 @@ class Mailer extends \XLite\View\AView
         $this->mail->FromName = $this->get('from');
         $this->mail->Sender   = $this->get('from');
 
-        $emails = explode(static::MAIL_SEPARATOR, $this->to);
+        $this->mail->ClearAllRecipients();
+        $this->mail->ClearAttachments();
+        $this->mail->ClearCustomHeaders();
+
+        $emails = explode(static::MAIL_SEPARATOR, $this->get('to'));
 
         foreach ($emails as $email) {
 
