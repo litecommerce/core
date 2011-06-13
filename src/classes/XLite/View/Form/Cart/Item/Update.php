@@ -36,18 +36,6 @@ namespace XLite\View\Form\Cart\Item;
 class Update extends \XLite\View\Form\Cart\Item\AItem
 {
     /**
-     * Current form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'update_' . parent::getFormName();
-    }
-
-    /**
      * getDefaultAction
      *
      * @return string

@@ -37,18 +37,6 @@ namespace XLite\View\Form\Search\Product;
 class Simple extends \XLite\View\Form\AForm
 {
     /**
-     * Current form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'search_form';
-    }
-
-    /**
      * getDefaultTarget
      *
      * @return string

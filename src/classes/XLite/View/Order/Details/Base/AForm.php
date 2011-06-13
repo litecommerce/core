@@ -36,18 +36,6 @@ namespace XLite\View\Order\Details\Base;
 abstract class AForm extends \XLite\View\Form\AForm
 {
     /**
-     * Each form must define its own name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'order_details';
-    }
-
-    /**
      * Return default value for the "target" parameter
      *
      * @return string

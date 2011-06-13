@@ -36,18 +36,6 @@ namespace XLite\View\Form\Checkout;
 class ModifyProfile extends \XLite\View\Form\Checkout\ACheckout
 {
     /**
-     * Current form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'modify_profile_form';
-    }
-
-    /**
      * getDefaultAction
      *
      * @return string

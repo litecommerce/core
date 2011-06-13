@@ -36,18 +36,6 @@ namespace XLite\View\Form\Order;
 class CurrencySelector extends \XLite\View\Form\AForm
 {
     /**
-     * Current form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'currency_selector';
-    }
-
-    /**
      * getDefaultFormMethod
      *
      * @return string

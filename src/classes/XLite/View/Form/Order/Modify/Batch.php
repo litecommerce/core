@@ -36,18 +36,6 @@ namespace XLite\View\Form\Order\Modify;
 class Batch extends \XLite\View\Form\Order\Modify\AModify
 {
     /**
-     * Return form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'modify_orders';
-    }
-
-    /**
      * getDefaultTarget
      *
      * @return string

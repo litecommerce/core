@@ -35,15 +35,4 @@ namespace XLite\View\Form\Module;
  */
 abstract class AModule extends \XLite\View\Form\AForm
 {
-    /**
-     * Each form must define its own name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'modules_form';
-    }
 }

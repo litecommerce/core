@@ -36,18 +36,6 @@ namespace XLite\View\Form\Checkout;
 abstract class ACheckout extends \XLite\View\Form\AForm
 {
     /**
-     * Current form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return $this->getDefaultAction() . '_checkout_form';
-    }
-
-    /**
      * getDefaultTarget
      *
      * @return string

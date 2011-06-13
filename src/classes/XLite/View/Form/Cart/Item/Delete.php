@@ -36,18 +36,6 @@ namespace XLite\View\Form\Cart\Item;
 class Delete extends \XLite\View\Form\Cart\Item\AItem
 {
     /**
-     * Current form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'delete_' . parent::getFormName();
-    }
-
-    /**
      * Define widget parameters
      *
      * @return void
