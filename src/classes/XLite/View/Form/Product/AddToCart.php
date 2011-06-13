@@ -36,18 +36,6 @@ namespace XLite\View\Form\Product;
 class AddToCart extends \XLite\View\Form\Product\AProduct
 {
     /**
-     * Current form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'add_to_cart_' . $this->getProduct()->getProductId();
-    }
-
-    /**
      * getDefaultTarget
      *
      * @return string

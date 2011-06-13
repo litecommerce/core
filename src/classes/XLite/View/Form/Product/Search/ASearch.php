@@ -50,18 +50,6 @@ abstract class ASearch extends \XLite\View\Form\Product\AProduct
     }
 
     /**
-     * Return form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'search_products';
-    }
-
-    /**
      * getDefaultFormMethod
      *
      * @return string

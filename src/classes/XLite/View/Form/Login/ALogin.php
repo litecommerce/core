@@ -46,18 +46,6 @@ abstract class ALogin extends \XLite\View\Form\AForm
 
 
     /**
-     * Current form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'login_form';
-    }
-
-    /**
      * getDefaultTarget
      *
      * @return string

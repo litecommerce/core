@@ -41,17 +41,6 @@ class Search extends \XLite\View\Form\AForm
 
     const PARAM_MODE = 'mode';
 
-    /**
-     * Current form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'orders_search';
-    }
 
     /**
      * getDefaultTarget

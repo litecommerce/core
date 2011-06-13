@@ -70,16 +70,6 @@ abstract class AForm extends \XLite\View\AView
     protected $validationMessage;
 
     /**
-     * Form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    abstract protected function getFormName();
-
-
-    /**
      * Get request data
      *
      * @return mixed

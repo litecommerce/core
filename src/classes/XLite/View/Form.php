@@ -35,15 +35,4 @@ namespace XLite\View;
  */
 class Form extends \XLite\View\Form\AForm
 {
-    /**
-     * Return form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return $this->getParam(self::PARAM_FORM_NAME);
-    }
 }
