@@ -319,6 +319,37 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Find installed module
+     * 
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleInstalled()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($this->getModuleData());
+    }
+
+    /**
+     * Return common module data 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleData()
+    {
+        return array(
+            'name'            => $this->getName(),
+            'author'          => $this->getAuthor(),
+            'majorVersion'    => $this->getMajorVersionNew(),
+            'minorVersion'    => $this->getMinorVersionNew(),
+            'fromMarketplace' => false,
+            'installed'       => true,
+        );
+    }
+
+    /**
      * Update database records
      *
      * @return array
@@ -327,17 +358,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function updateDBRecords()
     {
-        $data = array(
-            'name'            => $name,
-            'author'          => $author,
-            'majorVersion'    => $this->getMajorVersionNew(),
-            'minorVersion'    => $this->getMinorVersionNew(),
-            'fromMarketplace' => false,
-            'installed'       => true,
-        );
-
-        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($data)
-            ?: new \XLite\Model\Module($data);
+        $module = $this->getModuleInstalled() ?: new \XLite\Model\Module($this->getModuleData());
 
         $module->setDate(time());
         $module->setRevisionDate($this->getRevisionDate());
