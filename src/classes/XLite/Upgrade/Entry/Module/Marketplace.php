@@ -208,7 +208,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     {
         return \XLite\Core\Marketplace::getInstance()->getAddonHash(
             $this->getModuleInstalled()->getMarketplaceID(),
-            $this->getModuleInstalled()->getLicenseKey()
+            $this->getModuleInstalled()->getLicenseKey()->getKeyValue()
         );
     }
 
@@ -271,7 +271,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
 
         $path = \XLite\Core\Marketplace::getInstance()->getAddonPack(
             $this->getModuleForUpgrade()->getMarketplaceID(),
-            $this->getModuleForUpgrade()->getLicenseKey()
+            $this->getModuleForUpgrade()->getLicenseKey()->getKeyValue()
         );
         $params = array('name' => $this->getActualName());
 

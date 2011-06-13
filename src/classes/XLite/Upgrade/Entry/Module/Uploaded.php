@@ -244,7 +244,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
             }
         }
 
-        return $result ?: $this->getHashes();
+        return $result ?: $this->getHashes(true);
     }
 
     /**
@@ -367,11 +367,10 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         $module->setAuthorName($this->getAuthor());
         $module->setIconURL($this->getIconURL());
         $module->setDependencies($this->getDependencies());
-        $module->setFromMarketplace(false);
 
-        if (!$module->isPersistent()) {
+        if (!$module->getModuleID()) {
             $module->setEnabled(true);
-            \XLite\Core\Database::getEM()->persist($module);
+            // \XLite\Core\Database::getEM()->persist($module);
         }
 
         // Save changes in DB
