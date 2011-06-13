@@ -396,6 +396,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         $module->setAuthorName($this->getAuthor());
         $module->setIconURL($this->getIconURL());
         $module->setDependencies($this->getDependencies());
+        $module->setFromMarketplace(false);
 
         if (!$module->isPersistent()) {
             \XLite\Core\Database::getEM()->persist($module);
