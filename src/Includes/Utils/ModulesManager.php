@@ -542,13 +542,15 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         \Includes\Utils\Database::execute($query, array(0, 0, $author, $name));
 
         // Search for module
-        $query    = 'SELECT moduleID FROM ' . $table . $condition . ' AND majorVersion = ? AND minorVersion = ?';
-        $moduleID = \Includes\Utils\Database::fetchColumn($query, array($author, $name, $majorVersion, $minorVersion));
+        $condition .= ' AND fromMarketplace = ?';
+        $query      = 'SELECT moduleID FROM ' . $table . $condition . ' AND majorVersion = ? AND minorVersion = ?';
+        $moduleID   = \Includes\Utils\Database::fetchColumn($query, array($author, $name, 0, $majorVersion, $minorVersion));
 
         // If found in DB
         if ($moduleID) {
             $data  = array(intval(static::isActiveModule($module)), 1, $moduleID);
             $query = 'UPDATE ' . $table . ' SET enabled = ?, installed = ? WHERE moduleID = ?';
+
         } else {
             $data  = static::getModuleDataFromClass($author, $name);
             $query = 'REPLACE INTO ' . $table . ' SET ' . implode(' = ?,', array_keys($data)) . ' = ?';
