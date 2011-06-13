@@ -45,15 +45,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     protected $metadata;
 
     /**
-     * Module (cache)
-     * 
-     * @var   \XLite\Model\Module
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $module;
-
-    /**
      * Return module actual name
      *
      * @return string
@@ -328,46 +319,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
-     * Alias
-     *
-     * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getModuleInstalled()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->getModuleInstalled(
-            $this->getModuleForUpgrade()
-        );
-    }
-
-    /**
-     * Alias
-     *
-     * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getModuleForUpgrade()
-    {
-        if (!isset($this->module)) {
-            list($author, $name) = explode('\\', $this->getActualName());
-
-            $data = array(
-                'name'         => $name,
-                'author'       => $author,
-                'majorVersion' => $this->getMajorVersionNew(),
-                'minorVersion' => $this->getMinorVersionNew(),
-            );
-
-            $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($data)
-                ?: new \XLite\Model\Module($data);
-        }
-
-        return $this->module;
-    }
-
-    /**
      * Update database records
      *
      * @return array
@@ -376,18 +327,17 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function updateDBRecords()
     {
-        $installed  = $this->getModuleInstalled();
-        $forUpgrade = $this->getModuleForUpgrade();
+        $data = array(
+            'name'            => $name,
+            'author'          => $author,
+            'majorVersion'    => $this->getMajorVersionNew(),
+            'minorVersion'    => $this->getMinorVersionNew(),
+            'fromMarketplace' => false,
+            'installed'       => true,
+        );
 
-        $module = ($forUpgrade->isPersistent() || !isset($installed)) ? $forUpgrade : $installed;
-
-        // Do not enable already installed modules
-        if (!$module->getInstalled()) {
-            $module->setInstalled(true);
-            $module->setEnabled(true);
-            $module->setMinorVersion($this->getMinorVersionNew());
-            $module->setRevisionDate($this->getRevisionDate());
-        }
+        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($data)
+            ?: new \XLite\Model\Module($data);
 
         $module->setDate(time());
         $module->setRevisionDate($this->getRevisionDate());
@@ -399,12 +349,8 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         $module->setFromMarketplace(false);
 
         if (!$module->isPersistent()) {
+            $module->setEnabled(true);
             \XLite\Core\Database::getEM()->persist($module);
-        }
-
-        if ($forUpgrade->getModuleID() !== $installed->getModuleID()) {
-            \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($installed);
-
         }
 
         // Save changes in DB
