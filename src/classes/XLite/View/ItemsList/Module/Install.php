@@ -422,7 +422,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         return !$this->isInstalled($module)
             && ($this->isPurchased($module) || $this->isFree($module))
             && $this->canEnable($module)
-            && $module->getMarketplaceID();
+            && $module->getFromMarketplace();
     }
 
     /**

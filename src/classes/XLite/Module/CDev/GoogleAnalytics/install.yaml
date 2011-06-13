@@ -10,7 +10,6 @@
 XLite\Model\Module:
   - author: CDev
     name: GoogleAnalytics
-    marketplaceID: 22170c1d9cd96e98b1495e2fb856f542
 XLite\Model\Config:
   - name: ga_account
     category: CDev\GoogleAnalytics

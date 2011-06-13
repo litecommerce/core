@@ -10,7 +10,6 @@
 XLite\Model\Module:
   - author: CDev
     name: AustraliaPost
-    marketplaceID: 170091a2d7978c56f881f3750a324fd9
 XLite\Model\Config:
   - name: currency_rate
     category: CDev\AustraliaPost

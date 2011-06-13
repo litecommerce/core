@@ -230,9 +230,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_TestCase
                 'author'        => 'Test',
                 'enabled'       => 1,
                 'installed'     => 1,
-                'dataInstalled' => 1,
                 'date'          => time(),
-                'marketplaceID' => '',
                 'majorVersion'  => '1.0',
                 'minorVersion'  => '1',
                 'moduleName'    => 'Module2',
@@ -255,9 +253,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_TestCase
                 'author'        => 'Test',
                 'enabled'       => 1,
                 'installed'     => 1,
-                'dataInstalled' => 1,
                 'date'          => time(),
-                'marketplaceID' => '',
                 'majorVersion'  => '1.0',
                 'minorVersion'  => '1',
                 'moduleName'    => 'Module2',
@@ -375,18 +371,14 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_TestCase
         $forUpgrade = $this->getRepo()->getModuleForUpgrade($installed, '1.0');
 
         $this->assertNotNull($forUpgrade, 'check if module is found [2]');
-        $this->assertEquals($installed->getModuleID(), $forUpgrade->getModuleID(), 'check module IDs [2]');
+        $this->assertNotEquals($installed->getModuleID(), $forUpgrade->getModuleID(), 'check module IDs [2]');
         $this->assertEquals('1.0', $forUpgrade->getMajorVersion(), 'check major version [2]');
         $this->assertEquals('0', $forUpgrade->getMinorVersion(), 'check minor version [2]');
 
         $installed = $this->getModuleByAuthorAndName('CDev', 'Bestsellers', '1.0', '0');
         $forUpgrade = $this->getRepo()->getModuleForUpgrade($installed, '1.2');
 
-        $this->assertNotNull($forUpgrade, 'check if module is found [3]');
-        $this->assertNotEquals($installed->getModuleID(), $forUpgrade->getModuleID(), 'check module IDs [3]');
-        $this->assertNotEmpty($forUpgrade->getMarketplaceID(), 'check marketplace ID [3]');
-        $this->assertEquals('1.2', $forUpgrade->getMajorVersion(), 'check major version [3]');
-        $this->assertEquals('1', $forUpgrade->getMinorVersion(), 'check minor version [3]');
+        $this->assertNull($forUpgrade, 'check if module is found [3]');
     }
 
     // {{{ Protected methods

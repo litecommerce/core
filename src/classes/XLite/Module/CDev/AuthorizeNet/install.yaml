@@ -10,7 +10,6 @@
 XLite\Model\Module:
   - author: CDev
     name: AuthorizeNet
-    marketplaceID: 875eac9985b55ae961120916bcc385ee
 XLite\Model\Payment\Method:
   - service_name: AuthorizeNet SIM
     class: Module\CDev\AuthorizeNet\Model\Payment\Processor\AuthorizeNetSIM

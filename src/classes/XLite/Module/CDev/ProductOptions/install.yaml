@@ -10,6 +10,5 @@
 XLite\Model\Module:
   - author: CDev
     name: ProductOptions
-    marketplaceID: 143c7b8a9b8ad488206002b1d9cc173b
 XLite\Model\LanguageLabel:
   - { name: '"X product" options', translations: [{ code: en, label: '"{{product}}" options' }] }

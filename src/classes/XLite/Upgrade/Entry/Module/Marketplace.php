@@ -233,10 +233,9 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
             );
         }
 
-        if (is_null($this->getModuleForUpgrade()) || !$this->getModuleForUpgrade()->getMarketplaceID()) {
+        if (is_null($this->getModuleForUpgrade()) || !$this->getModuleForUpgrade()->getFromMarketplace()) {
             \Includes\ErrorHandler::fireError(
-                'Module with ID "' . $this->moduleIDInstalled . '" is not found in DB'
-                . ' or has an invaid markeplace identifier'
+                'Module with ID "' . $this->moduleIDInstalled . '" is not found in DB or is not a marketplace module'
             );
         }
 
@@ -341,8 +340,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
         $forUpgrade = $this->getModuleForUpgrade();
         $installed  = $this->getModuleInstalled();
 
-        $forUpgrade->setInstalled(true);
-
         if ($forUpgrade->getModuleID() !== $installed->getModuleID()) {
             $forUpgrade->setEnabled($installed->getEnabled());
 
@@ -353,6 +350,9 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
         } else {
             $forUpgrade->setEnabled(true);
         }
+
+        $forUpgrade->setInstalled(true);
+        $forUpgrade->setFromMarketplace(false);
 
         \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($forUpgrade);
     }
