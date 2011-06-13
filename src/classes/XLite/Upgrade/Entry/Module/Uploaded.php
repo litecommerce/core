@@ -370,7 +370,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
 
         if (!$module->getModuleID()) {
             $module->setEnabled(true);
-            // \XLite\Core\Database::getEM()->persist($module);
         }
 
         // Save changes in DB

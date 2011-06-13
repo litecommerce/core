@@ -206,9 +206,11 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function loadHashesForInstalledFiles()
     {
+        $licenseKey = $this->getModuleForUpgrade()->getLicenseKey();
+
         return \XLite\Core\Marketplace::getInstance()->getAddonHash(
             $this->getModuleInstalled()->getMarketplaceID(),
-            $this->getModuleInstalled()->getLicenseKey()->getKeyValue()
+            $licenseKey ? $licenseKey->getKeyValue() : null
         );
     }
 
@@ -268,10 +270,11 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     public function download()
     {
         $result = false;
+        $licenseKey = $this->getModuleForUpgrade()->getLicenseKey();
 
         $path = \XLite\Core\Marketplace::getInstance()->getAddonPack(
             $this->getModuleForUpgrade()->getMarketplaceID(),
-            $this->getModuleForUpgrade()->getLicenseKey()->getKeyValue()
+            $licenseKey ? $licenseKey->getKeyValue() : null
         );
         $params = array('name' => $this->getActualName());
 

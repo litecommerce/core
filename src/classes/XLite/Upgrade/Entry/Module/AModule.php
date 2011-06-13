@@ -66,9 +66,6 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
             }
 
             $this->updateDBRecords();
-
-            // To restore previous state
-            \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
         }
     }
 }
