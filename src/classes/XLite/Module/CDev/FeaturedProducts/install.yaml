@@ -10,7 +10,6 @@
 XLite\Model\Module:
   - author: CDev
     name: FeaturedProducts
-    marketplaceID: 6e8ccf80ef108d63c393d5b9695834ce
 XLite\Model\Config:
   - name: featured_products_look
     category: CDev\FeaturedProducts

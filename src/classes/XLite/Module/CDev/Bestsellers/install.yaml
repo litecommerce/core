@@ -10,7 +10,6 @@
 XLite\Model\Module:
   - author: CDev
     name: Bestsellers
-    marketplaceID: 7d3ac61683b7e0552efa8a1a28487482
 XLite\Model\Config:
   - name: bestsellers_menu
     category: CDev\Bestsellers

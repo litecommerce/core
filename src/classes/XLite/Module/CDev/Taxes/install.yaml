@@ -10,7 +10,6 @@
 XLite\Model\Module:
   - author: CDev
     name: Taxes
-    marketplaceID: 878939a417a24e9393cc1923ef1ba00e
 XLite\Module\CDev\Taxes\Model\Tax:
   - included: true
     enabled: true

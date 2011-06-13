@@ -205,9 +205,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
             'author'        => $author,
             'enabled'       => intval(static::isActiveModule($module)),
             'installed'     => 1,
-            'dataInstalled' => 1,
             'date'          => time(),
-            'marketplaceID' => '',
             'majorVersion'  => static::callModuleMethod($module, 'getMajorVersion'),
             'minorVersion'  => static::callModuleMethod($module, 'getMinorVersion'),
             'moduleName'    => static::callModuleMethod($module, 'getModuleName'),
@@ -539,8 +537,8 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         $minorVersion = static::callModuleMethod($module, 'getMinorVersion');
 
         // Reset exisiting settings
-        $query = 'UPDATE ' . $table . ' SET enabled = ?, installed = ?, dataInstalled = ?' . $condition;
-        \Includes\Utils\Database::execute($query, array(0, 0, 0, $author, $name));
+        $query = 'UPDATE ' . $table . ' SET enabled = ?, installed = ?' . $condition;
+        \Includes\Utils\Database::execute($query, array(0, 0, $author, $name));
 
         // Search for module
         $query    = 'SELECT moduleID FROM ' . $table . $condition . ' AND majorVersion = ? AND minorVersion = ?';
@@ -548,8 +546,8 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
 
         // If found in DB
         if ($moduleID) {
-            $data  = array(intval(static::isActiveModule($module)), 1, 1, $moduleID);
-            $query = 'UPDATE ' . $table . ' SET enabled = ?, installed = ?, dataInstalled = ? WHERE moduleID = ?';
+            $data  = array(intval(static::isActiveModule($module)), 1, $moduleID);
+            $query = 'UPDATE ' . $table . ' SET enabled = ?, installed = ? WHERE moduleID = ?';
         } else {
             $data  = static::getModuleDataFromClass($author, $name);
             $query = 'REPLACE INTO ' . $table . ' SET ' . implode(' = ?,', array_keys($data)) . ' = ?';

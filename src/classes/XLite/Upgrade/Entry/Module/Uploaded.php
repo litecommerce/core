@@ -397,18 +397,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         $module->setIconURL($this->getIconURL());
         $module->setDependencies($this->getDependencies());
 
-        // :TRICKY: convention for marketplaceIDs generation
-        if (!$module->getMarketplaceID()) {
-            $marketplaceID = md5(
-                $module->getAuthor() . $module->getName() . $module->getMajorVersion() . $module->getMinorVersion()
-            );
-            $data = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID, $module->getLicenseKey());
-
-            if ($data) {
-                $module->setMarketplaceID($data[\XLite\Core\Marketplace::FIELD_MODULE_ID]);
-            }
-        }
-
         if (!$module->isPersistent()) {
             \XLite\Core\Database::getEM()->persist($module);
         }
@@ -420,8 +408,5 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
 
         // Save changes in DB
         \XLite\Core\Database::getEM()->flush();
-
-        // :TRICKY: to restore previous state
-        \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
     }
 }

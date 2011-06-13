@@ -373,15 +373,9 @@ class Module extends \XLite\Model\Repo\ARepo
     protected function prepareCndFromMarketplace(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if ($value) {
-            $expr = new \Doctrine\ORM\Query\Expr\Orx();
-
-            $expr->add('COUNT(m.marketplaceID) > :count');
-            $expr->add('m.installed = :installed');
-
             $queryBuilder
-                ->andHaving($expr)
-                ->setParameter('count', 1)
-                ->setParameter('installed', false);
+                ->andWhere('m.fromMarketplace = :fromMarketplace')
+                ->setParameter('fromMarketplace', true);
         }
     }
 
