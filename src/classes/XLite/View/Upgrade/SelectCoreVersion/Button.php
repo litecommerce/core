@@ -66,6 +66,18 @@ class Button extends \XLite\View\Upgrade\SelectCoreVersion\ASelectCoreVersion
     }
 
     /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && (bool) $this->getCoreVersionsList();
+    }
+
+    /**
      * Return widget default template
      *
      * @return string

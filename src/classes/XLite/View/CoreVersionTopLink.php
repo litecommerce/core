@@ -92,11 +92,7 @@ class CoreVersionTopLink extends \XLite\View\AView
     {
         $flags = $this->getUpdateFlags();
 
-        return (bool) \Includes\Utils\ArrayManager::getIndex(
-            $flags,
-            \XLite\Core\Marketplace::FIELD_IS_UPGRADE_AVAILABLE,
-            true
-        );
+        return !empty($flags[\XLite\Core\Marketplace::FIELD_IS_UPGRADE_AVAILABLE]);
     }
 
     /**
@@ -110,11 +106,7 @@ class CoreVersionTopLink extends \XLite\View\AView
     {
         $flags = $this->getUpdateFlags();
 
-        return (bool) \Includes\Utils\ArrayManager::getIndex(
-            $flags,
-            \XLite\Core\Marketplace::FIELD_ARE_UPDATES_AVAILABLE,
-            true
-        );
+        return !empty($flags[\XLite\Core\Marketplace::FIELD_ARE_UPDATES_AVAILABLE]);
     }
 
     /**
