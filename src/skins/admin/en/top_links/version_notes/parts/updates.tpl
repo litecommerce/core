@@ -10,6 +10,7 @@
  * @since     1.0.0
  * @ListChild (list="top_links.version_notes", weight="20")
  *}
+
 <li IF="areUpdatesAvailable()" class="updates-note">
   <a
   href="{buildURL(#upgrade#,##,_ARRAY_(#mode#^#install_updates#))}"
