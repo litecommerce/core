@@ -1,4 +1,3 @@
-# SVN: $Id$
 #
 # Data definition for LiteCommerce release script
 #
@@ -24,11 +23,15 @@ DRUPAL_DIRNAME="drupal"
 
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES="
-CDev/AustraliaPost
-CDev/AuthorizeNet
 CDev/Bestsellers
 CDev/DrupalConnector
 CDev/FeaturedProducts
+"
+
+# LiteCommerce modules which should be packed as separate distributives
+XLITE_SEPARATE_MODULES="
+CDev/AustraliaPost
+CDev/AuthorizeNet
 CDev/GoogleAnalytics
 CDev/ProductOptions
 CDev/Quantum
@@ -69,6 +72,7 @@ CATEGORY_IMAGES_LIST="
 apparel.png
 downloadables.png
 igoods.png
+store-index-banner.png
 toys.png
 "
 
