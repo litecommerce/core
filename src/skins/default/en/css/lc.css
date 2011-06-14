@@ -2451,21 +2451,6 @@ form.estimator .main,
   margin-right: 0px;
 }
 
-.select-address ul.addresses li .remove {
-  position: absolute;
-  right: 9px;
-  top: 9px;
-  text-decoration: none;
-  width: 18px;
-  height: 18px;
-}
-
-.select-address ul.addresses li .remove img {
-  background: transparent url(../images/icon_trash.png) no-repeat left top;
-  width: 18px;
-  height: 18px;
-}
-
 .select-address ul.addresses li .shipping {
   position: absolute;
   right: 8px;
