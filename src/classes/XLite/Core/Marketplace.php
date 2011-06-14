@@ -874,7 +874,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action Action name
      * @param array  $data   Request data OPTIONAL
      *
-     * @return \XLite\Model\HTTPS
+     * @return \XLite\Core\HTTP\Request
      * @see    ____func_see____
      * @since  1.0.0
      */
