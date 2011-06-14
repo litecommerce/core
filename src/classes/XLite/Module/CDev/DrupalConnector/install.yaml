@@ -11,7 +11,6 @@
 XLite\Model\Module:
   - author: CDev
     name: DrupalConnector
-    marketplaceID: 791c0e7076cd7cfb6b1b461e5fdcfce8
 XLite\Model\Config:
   - name: drupal_root_url
     category: CDev\DrupalConnector

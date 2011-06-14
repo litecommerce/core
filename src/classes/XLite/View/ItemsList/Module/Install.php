@@ -360,7 +360,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         $cnd->{\XLite\Model\Repo\Module::P_PRICE_FILTER}     = $this->getParam(self::PARAM_PRICE_FILTER);
         $cnd->{\XLite\Model\Repo\Module::P_SUBSTRING}        = $this->getParam(self::PARAM_SUBSTRING);
         $cnd->{\XLite\Model\Repo\Module::P_FROM_MARKETPLACE} = true;
-        $cnd->{\XLite\Model\Repo\Module::P_INSTALLED}        = false;
 
         return $cnd;
     }
@@ -423,7 +422,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         return !$this->isInstalled($module)
             && ($this->isPurchased($module) || $this->isFree($module))
             && $this->canEnable($module)
-            && $module->getMarketplaceID();
+            && $module->getFromMarketplace();
     }
 
     /**

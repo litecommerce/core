@@ -380,10 +380,8 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
         $data = array(
             'name'          => 'Module1',
             'author'        => 'Test',
-            'marketplaceID' => '11111111',
             'enabled'       => true,
             'installed'     => true,
-            'dataInstalled' => false,
             'date'          => time(),
             'rating'        => 3.56,
             'votes'         => 13,

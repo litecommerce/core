@@ -17,13 +17,9 @@
 
   <ul class="address-text">
 
-    <li class="address-text-label address-text-label-{fieldName}">
-      {fieldData.label}:
-    </li>
+    <li class="address-text-label address-text-label-{fieldName}">{fieldData.label}:</li>
 
-    <li class="address-text-value">
-      {getFieldValue(fieldName,1)}
-    </li>
+    <li class="address-text-value">{getFieldValue(fieldName,1)}</li>
 
     <li class="address-text-comma address-text-comma-{fieldName}">,</li>
 
@@ -35,4 +31,4 @@
 
 </ul>
 
- <div class="clear"></div>
+<div class="clear"></div>

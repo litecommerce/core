@@ -458,35 +458,32 @@ class Marketplace extends \XLite\Base\Singleton
             $minorVersion = $this->getField($version, self::FIELD_VERSION_MINOR);
 
             // Short names
-            $key    = $author . '_' . $name . '_' . $majorVersion;
-            $search = compact('name', 'author', 'majorVersion', 'minorVersion') + array('installed' => true);
+            $key = $author . '_' . $name . '_' . $majorVersion;
 
             // To make modules list unique
-            if (
-                (!isset($result[$key]) || version_compare($result[$key]['minorVersion'], $minorVersion, '<'))
-                && !\XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($search)
-            ) {
+            if (!isset($result[$key]) || version_compare($result[$key]['minorVersion'], $minorVersion, '<')) {
+
                 // It's the structure of \XLite\Model\Module class data
                 $result[$key] = array(
-                    'name'          => $name,
-                    'author'        => $author,
-                    'marketplaceID' => $this->getField($module, self::FIELD_MODULE_ID),
-                    'rating'        => $this->getField($rating, self::FIELD_RATING_RATE),
-                    'votes'         => $this->getField($rating, self::FIELD_RATING_VOTES_COUNT),
-                    'downloads'     => $this->getField($module, self::FIELD_DOWNLOADS_COUNT),
-                    'price'         => $this->getField($module, self::FIELD_PRICE),
-                    'currency'      => $this->getField($module, self::FIELD_CURRENCY),
-                    'majorVersion'  => $majorVersion,
-                    'minorVersion'  => $minorVersion,
-                    'revisionDate'  => $this->getField($module, self::FIELD_REVISION_DATE),
-                    'moduleName'    => $this->getField($module, self::FIELD_READABLE_NAME),
-                    'authorName'    => $this->getField($module, self::FIELD_READABLE_AUTHOR),
-                    'description'   => $this->getField($module, self::FIELD_DESCRIPTION),
-                    'iconURL'       => $this->getField($module, self::FIELD_ICON_URL),
-                    'pageURL'       => $this->getField($module, self::FIELD_PAGE_URL),
-                    'authorPageURL' => $this->getField($module, self::FIELD_AUTHOR_PAGE_URL),
-                    'dependencies'  => (array) $this->getField($module, self::FIELD_DEPENDENCIES),
-                    'packSize'      => $this->getField($module, self::FIELD_LENGTH),
+                    'name'            => $name,
+                    'author'          => $author,
+                    'fromMarketplace' => true,
+                    'rating'          => $this->getField($rating, self::FIELD_RATING_RATE),
+                    'votes'           => $this->getField($rating, self::FIELD_RATING_VOTES_COUNT),
+                    'downloads'       => $this->getField($module, self::FIELD_DOWNLOADS_COUNT),
+                    'price'           => $this->getField($module, self::FIELD_PRICE),
+                    'currency'        => $this->getField($module, self::FIELD_CURRENCY),
+                    'majorVersion'    => $majorVersion,
+                    'minorVersion'    => $minorVersion,
+                    'revisionDate'    => $this->getField($module, self::FIELD_REVISION_DATE),
+                    'moduleName'      => $this->getField($module, self::FIELD_READABLE_NAME),
+                    'authorName'      => $this->getField($module, self::FIELD_READABLE_AUTHOR),
+                    'description'     => $this->getField($module, self::FIELD_DESCRIPTION),
+                    'iconURL'         => $this->getField($module, self::FIELD_ICON_URL),
+                    'pageURL'         => $this->getField($module, self::FIELD_PAGE_URL),
+                    'authorPageURL'   => $this->getField($module, self::FIELD_AUTHOR_PAGE_URL),
+                    'dependencies'    => (array) $this->getField($module, self::FIELD_DEPENDENCIES),
+                    'packSize'        => $this->getField($module, self::FIELD_LENGTH),
                 );
 
             } else {
@@ -949,8 +946,8 @@ class Marketplace extends \XLite\Base\Singleton
                 $this->logInfo($action, 'Valid response recieved', array(), $result);
 
             } else {
-                $result = null;
                 $this->logError($action, 'Response has an invalid format', array(), $result);
+                $result = null;
             }
         }
 

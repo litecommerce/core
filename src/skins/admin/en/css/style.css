@@ -478,7 +478,7 @@ table.data-table td
   padding: 5px 10px;
   white-space: nowrap;
   color: #333;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 table.data-table th
@@ -979,7 +979,6 @@ button.bright:active
 {
   white-space: nowrap;
   vertical-align: top;
-  line-height: 24px;
 }
 
 .table-input {
@@ -1350,10 +1349,41 @@ div.star {
   width: 10px;
 }
 
+.table-label,
+  .table-value
+{
+  line-height: 24px;
+}
+
 div.table-value {
   float: left;
 }
 
 div.table-label label {
   display: block;
+}
+
+ul.summary-table,
+  ul.main-table,
+  ul.access-table
+{
+  margin: 8px 0px 5px 27px;
+}
+
+ul.summary-table li,
+  ul.main-table li,
+  ul.access-table li
+{
+  padding: 0px 0px 13px 0px;
+}
+
+ul.summary-table .table-value,
+  ul.main-table .table-value,
+  ul.access-table .table-value
+{
+  padding: 0px 0px 0px 56px;
+}
+
+table.payment-methods {
+  width: 600px;
 }

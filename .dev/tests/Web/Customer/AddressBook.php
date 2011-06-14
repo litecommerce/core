@@ -79,7 +79,7 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
 
         $this->clickAndWait(self::PROCEED_BUTTON);
 
-        $this->assertElementNotPresent("//li[@class='address-text-cell address-text-street']/ul[@class='address-text']/li[@class='address-text-value']", 'address was not removed');
+        $this->assertElementNotPresent("//li[@class='address-text-cell address-text-street']/ul[@class='address-text']/li[@class='address-text-value' and text()='street-test1']", 'address was not removed');
 
         $this->click(self::ADD_BUTTON);
 

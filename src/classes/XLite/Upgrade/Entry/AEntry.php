@@ -377,7 +377,7 @@ abstract class AEntry
     // {{{ Error handling
 
     /**
-     * Retrun list of error messages
+     * Return list of error messages
      *
      * @return array
      * @see    ____func_see____
@@ -435,7 +435,7 @@ abstract class AEntry
 
         // Overwrite only selected files or the all ones
         $this->customFiles = is_array($filesToOverwrite) ? $filesToOverwrite : $hashesInstalled;
-    
+
         // Walk through the installed and known files list
         foreach ($hashesInstalled as $path => &$hash) {
 
@@ -715,7 +715,7 @@ abstract class AEntry
      * Return file hashes
      *
      * @param boolean $isTestMode Flag
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

@@ -374,8 +374,8 @@ class Module extends \XLite\Model\Repo\ARepo
     {
         if ($value) {
             $queryBuilder
-                ->andWhere('m.marketplaceID != :marketplaceID')
-                ->setParameter('marketplaceID', '');
+                ->andWhere('m.fromMarketplace = :fromMarketplace')
+                ->setParameter('fromMarketplace', true);
         }
     }
 

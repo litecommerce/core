@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="admin.profile.search", weight="1000")
+ * @ListChild (list="admin.profile.details", weight="1000")
  *}
 
 <div class="warning-message profile-note">
