@@ -33,7 +33,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
     const NEW_PRODUCT_CLASS_LABEL = '//div[@class="advanced-input-text"]/div[@class="original-label" and text()="New product class"]';
 
-    const NEW_PRODUCT_CLASS_INPUT = '//div[@class="advanced-input-text"]/div[@class="original-input"]/input[@type="text" and @id="posteddata-new-name" and @name="postedData[new_name]"]';
+    const NEW_PRODUCT_CLASS_INPUT = '//div[@class="advanced-input-text"]/div[@class="original-input"]/span/input[@type="text" and @id="posteddata-new-name" and @name="postedData[new_name]"]';
 
     const PC_PAGE = 'admin.php?target=product_classes';
 
@@ -312,7 +312,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
     private function checkAdvancedInput($name, $newName = '')
     {
         $label = '//div[@class="advanced-input-text"]/div[@class="original-label" and text()="' . $name . '"]';
-        $input = '//div[@class="advanced-input-text"]/div[@class="original-label" and text()="' . $name . '"]/../div[@class="original-input"]/input';
+        $input = '//div[@class="advanced-input-text"]/div[@class="original-label" and text()="' . $name . '"]/../div[@class="original-input"]/span/input';
 
         $this->assertElementPresent(
             $label,
@@ -332,14 +332,14 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
         );
 
         $this->assertTrue(
-            'none' == $this->getJSExpression($inputJS . '.parent().css("display")'),
+            'none' == $this->getJSExpression($inputJS . '.parent().parent().css("display")'),
             'Visible input for "' . $name . '"'
         );
 
         $this->click($label);
 
         $this->assertTrue(
-            'block' == $this->getJSExpression($inputJS . '.parent().css("display")'),
+            'block' == $this->getJSExpression($inputJS . '.parent().parent().css("display")'),
             'NOT visible input for "' . $name . '"'
         );
 
