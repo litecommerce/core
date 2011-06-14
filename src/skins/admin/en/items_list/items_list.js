@@ -216,7 +216,14 @@ ItemsList.prototype.hideModalScreen = function()
 // Build URL
 ItemsList.prototype.buildURL = function(forAJAX)
 {
-  return URLHandler.buildURL(forAJAX ? this.URLAJAXParams : this.URLParams);
+  var list = forAJAX ? this.URLAJAXParams : this.URLParams;
+
+  if (typeof(list.sessionCell) != 'undefined') {
+      list.sessionCell = null;
+      delete list.sessionCell;
+  }
+
+  return URLHandler.buildURL(list);
 }
 
 // AJAX onload event handler

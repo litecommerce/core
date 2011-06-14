@@ -817,5 +817,7 @@ abstract class AItemsList extends \XLite\View\Container
 
         $this->requestParams[] = self::PARAM_SORT_BY;
         $this->requestParams[] = self::PARAM_SORT_ORDER;
+
+        $this->requestParams = array_merge($this->requestParams, $this->getPager()->getRequestParams());
     }
 }
