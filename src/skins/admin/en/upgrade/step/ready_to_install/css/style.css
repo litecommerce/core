@@ -58,6 +58,15 @@ table.downloaded-components tr.module-entry {
   border-bottom: #e5e5e5 1px solid;
 }
 
+table.downloaded-components tr.module-entry.module-errors {
+  border-bottom: #ffffff 1px solid;
+}
+
+table.downloaded-components tr.error-messages {
+  border-top: #ffffff 1px solid;
+  border-bottom: #e5e5e5 1px solid;
+}
+
 table.downloaded-components tr.module-entry td
 {
   padding: 10px 15px;
@@ -79,7 +88,8 @@ table.downloaded-components tr.module-entry td
   height: 14px;
 }
 .downloaded-components .status.disabled {
-  color: #8f8f8f;
+  color: #cc2802;
+  text-decoration: underline;
 }
 
 table.downloaded-components tr td.new-version {
@@ -150,7 +160,9 @@ div.service-message {
   margin: 0px 0px 0px 22px;
 }
 
-.modified-files-block {
+.modified-files-block,
+  .error-message-block
+{
   height: 120px;
   width: 545px;
   overflow: auto;
@@ -229,4 +241,16 @@ ul.select-actions li {
   padding: 15px 15px 15px 15px;
   color: #d65335;
   font-size: 16px;
+}
+
+.error-message-block{
+  width: 650px;
+  height: 100px;
+  margin-bottom: 25px;
+}
+
+.error-message-block .error-message {
+  color: #cc2802;
+  font-weight: normal;
+  margin: 9px 5px;
 }
