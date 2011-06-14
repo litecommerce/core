@@ -172,11 +172,23 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
       start: function(event, ui)
       {
+        isActive = cartTray.hasClass('cart-tray-active');
+
         cartTray.data('isProductDrag', true);
         cartTray.not('.cart-tray-adding').not('.cart-tray-added')
           .addClass('cart-tray-active')
           .addClass('cart-tray-moving')
           .attr('style', '');
+
+        // If cart tray is not active (displayed) yet then
+        // move it to the right or to the left side according to the current mouse position
+        if (!isActive) {
+          if ((jQuery('body').width() / 2) < ui.offset.left) {
+            cartTray.css('left', '5em').css('right', 'inherit');
+          } else {
+            cartTray.css('right', '5em').css('left', 'inherit');
+          }
+        }
       }, // start()
 
       stop: function(event, ui)
