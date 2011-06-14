@@ -155,6 +155,21 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Return list of all core versions available
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCoreVersionsList()
+    {
+        $result = \XLite\Upgrade\Cell::getInstance()->getCoreVersions();
+        unset($result[\XLite::getInstance()->getMajorVersion()]);
+
+        return $result;
+    }
+
+    /**
      * Common method to set current location
      *
      * @return string
