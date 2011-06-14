@@ -234,7 +234,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function mkdir($dir, $mode = 0755)
     {
-        return mkdir($dir, $mode) && static::chmod($dir, $mode);
+        return mkdir($dir, $mode);
     }
 
     /**
@@ -402,9 +402,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function write($path, $data, $flags = 0, $mode = 0644)
     {
-        return static::mkdirRecursive(static::getDir($path))
-            && false !== file_put_contents($path, $data, $flags)
-            && static::chmod($path, $mode);
+        return static::mkdirRecursive(static::getDir($path)) && false !== file_put_contents($path, $data, $flags);
     }
 
     /**
