@@ -1,8 +1,6 @@
 #!/bin/sh
 
 #
-# SVN: $Id$
-#
 # Release generator script for LiteCommerce
 #
 
@@ -439,14 +437,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		done
 
 	fi
-
-	modules_list_regexp=""
-	for j in ${XLITE_MODULES}; do
-		modules_list_regexp=$modules_list_regexp"|"$j
-	done
-
-	modules_list_regexp=`echo $modules_list_regexp | sed 's/^|//'`
-
+	
+	# Directories where can be located module files
 	MODULE_DIRS="
 		classes/XLite/Module
 		skins/admin/en/modules
@@ -454,7 +446,73 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		skins/default/en/modules
 		skins/default/en/images/modules
 		skins/mail/en/modules
-		"
+	"
+
+	if [ ! "${GENERATE_CORE}" ]; then
+
+		if [ -f "classes/XLite.php" ]; then
+			default_module_major_version=`cat classes/XLite.php| grep -A 2 "function getMajorVersion()" | grep -o -E "[0-9]+\.[0-9]+"`
+		else
+			die "classes/XLite.php file not found"
+		fi
+
+		# Pack separate modules distributives
+		for j in ${XLITE_SEPARATE_MODULES}; do
+
+			module_files_list=""
+			for k in ${MODULE_DIRS}; do
+				[ -d $k/$j ] && module_files_list=$module_files_list" "$k/$j
+			done
+
+			module_file_name=`echo "$j" | sed 's!/!-!'`
+
+			module_main_file="classes/XLite/Module/${j}/Main.php"
+
+			if [ -f $module_main_file ]; then
+				module_major_version=`cat $module_main_file | grep -A 2 "function getMajorVersion()" | grep -o -E "'.+'" | sed "s!'!!g"`
+
+				if [ "$module_major_version" = "" ]; then
+					module_major_version=$default_module_major_version
+				fi
+
+				module_minor_version=`cat $module_main_file | grep -A 2 "function getMinorVersion()" | grep -o -E "'.+'" | sed "s!'!!g"`
+
+				module_version=`echo "${module_major_version}.${module_minor_version}" | sed "s!\.!_!g"`
+
+				module_actual_name=`echo "$j" | sed 's!/!\\\\!g'`
+				module_author=`cat $module_main_file | grep -A 2 "function getAuthorName()" | grep -o -E "'.+'" | sed "s!'!!g"`
+				module_name=`cat $module_main_file | grep -A 2 "function getModuleName()" | grep -o -E "'.+'" | sed "s!'!!g"`
+				module_icon=`cat $module_main_file | grep -A 2 "function getIconURL()" | grep -o -E "'.+'" | sed "s!'!!g"`
+				module_descr=`cat $module_main_file | grep -A 2 "function getDescription()" | grep -o -E "'.+'" | sed "s!'!!g"`
+
+			else
+				die "File classes/XLite/Module/${j} not found!"
+			fi
+
+			# Generate module meta data
+			mkdir -p .phar
+
+			_php_code="echo serialize(array('RevisionDate'=>time(),'ActualName'=>'${module_actual_name}','VersionMajor'=>'${module_major_version}','VersionMinor'=>'${module_minor_version}','Name'=>'${module_name}','Author'=>'${module_author}','IconLink'=>'${module_icon}','Description'=>'${module_descr}','Dependencies'=>array()));"
+
+			$PHP -qr "$_php_code" > .phar/metadata.bin
+
+			tar -cf ${OUTPUT_DIR}/${module_file_name}-v${module_version}.tar .phar $module_files_list
+			rm -rf .phar
+
+			echo "  + ${module_name} module package is complete: ${module_file_name}-v${module_version}.tar"
+
+		done
+
+	fi
+
+	# Delete modules from LiteCommerce distributive
+
+	modules_list_regexp=""
+	for j in ${XLITE_MODULES}; do
+		modules_list_regexp=$modules_list_regexp"|"$j
+	done
+
+	modules_list_regexp=`echo $modules_list_regexp | sed 's/^|//'`
 
 	for i in ${MODULE_DIRS}; do
 
