@@ -45,15 +45,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     protected $metadata;
 
     /**
-     * Module (cache)
-     * 
-     * @var   \XLite\Model\Module
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $module;
-
-    /**
      * Return module actual name
      *
      * @return string
@@ -253,7 +244,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
             }
         }
 
-        return $result ?: $this->getHashes();
+        return $result ?: $this->getHashes(true);
     }
 
     /**
@@ -328,43 +319,34 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
-     * Alias
-     *
+     * Find installed module
+     * 
      * @return \XLite\Model\Module
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getModuleInstalled()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->getModuleInstalled(
-            $this->getModuleForUpgrade()
-        );
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($this->getModuleData());
     }
 
     /**
-     * Alias
-     *
-     * @return \XLite\Model\Module
+     * Return common module data 
+     * 
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getModuleForUpgrade()
+    protected function getModuleData()
     {
-        if (!isset($this->module)) {
-            list($author, $name) = explode('\\', $this->getActualName());
-
-            $data = array(
-                'name'         => $name,
-                'author'       => $author,
-                'majorVersion' => $this->getMajorVersionNew(),
-                'minorVersion' => $this->getMinorVersionNew(),
-            );
-
-            $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($data)
-                ?: new \XLite\Model\Module($data);
-        }
-
-        return $this->module;
+        return array(
+            'name'            => $this->getName(),
+            'author'          => $this->getAuthor(),
+            'majorVersion'    => $this->getMajorVersionNew(),
+            'minorVersion'    => $this->getMinorVersionNew(),
+            'fromMarketplace' => false,
+            'installed'       => true,
+        );
     }
 
     /**
@@ -376,18 +358,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function updateDBRecords()
     {
-        $installed  = $this->getModuleInstalled();
-        $forUpgrade = $this->getModuleForUpgrade();
-
-        $module = ($forUpgrade->isPersistent() || !isset($installed)) ? $forUpgrade : $installed;
-
-        // Do not enable already installed modules
-        if (!$module->getInstalled()) {
-            $module->setInstalled(true);
-            $module->setEnabled(true);
-            $module->setMinorVersion($this->getMinorVersionNew());
-            $module->setRevisionDate($this->getRevisionDate());
-        }
+        $module = $this->getModuleInstalled() ?: new \XLite\Model\Module($this->getModuleData());
 
         $module->setDate(time());
         $module->setRevisionDate($this->getRevisionDate());
@@ -397,31 +368,11 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         $module->setIconURL($this->getIconURL());
         $module->setDependencies($this->getDependencies());
 
-        // :TRICKY: convention for marketplaceIDs generation
-        if (!$module->getMarketplaceID()) {
-            $marketplaceID = md5(
-                $module->getAuthor() . $module->getName() . $module->getMajorVersion() . $module->getMinorVersion()
-            );
-            $data = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID, $module->getLicenseKey());
-
-            if ($data) {
-                $module->setMarketplaceID($data[\XLite\Core\Marketplace::FIELD_MODULE_ID]);
-            }
-        }
-
-        if (!$module->isPersistent()) {
-            \XLite\Core\Database::getEM()->persist($module);
-        }
-
-        if ($forUpgrade->getModuleID() !== $installed->getModuleID()) {
-            \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($installed);
-
+        if (!$module->getModuleID()) {
+            $module->setEnabled(true);
         }
 
         // Save changes in DB
         \XLite\Core\Database::getEM()->flush();
-
-        // :TRICKY: to restore previous state
-        \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
     }
 }

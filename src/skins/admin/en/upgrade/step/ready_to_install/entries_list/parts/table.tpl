@@ -15,7 +15,18 @@
 
 <table class="downloaded-components">
   <tr class="header">{displayInheritedViewListContent(#sections.table.header#)}</tr>
-  <tr class="module-entry" FOREACH="getUpgradeEntries(),entry">
+  {foreach:getUpgradeEntries(),entry}
+
+  <tr IF="!entry.getErrorMessages()" class="module-entry">
     {displayInheritedViewListContent(#sections.table.columns#,_ARRAY_(#entry#^entry))}
   </tr>
+
+  <tr IF="entry.getErrorMessages()" class="module-entry module-errors">
+    {displayInheritedViewListContent(#sections.table.columns#,_ARRAY_(#entry#^entry))}
+  </tr>
+
+  <tr IF="entry.getErrorMessages()" class="error-messages">
+    {displayInheritedViewListContent(#sections.table.columns.error#,_ARRAY_(#messages#^entry.getErrorMessages()))}
+  </tr>
+  {end:}
 </table>

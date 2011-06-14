@@ -210,7 +210,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
 
         if ($module) {
 
-            if ($module->getMarketplaceID()) {
+            if ($module->getFromMarketplace()) {
                 \XLite\Upgrade\Cell::getInstance()->clear(true, true, !$this->isForce());
 
                 if (\XLite\Upgrade\Cell::getInstance()->addMarketplaceModule($module, true)) {

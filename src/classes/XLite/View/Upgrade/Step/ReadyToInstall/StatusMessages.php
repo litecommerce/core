@@ -74,7 +74,8 @@ class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToIns
     }
 
     /**
-     * Return list of messages
+     * Return list of diagnostic messages (main issues of the whole upgrade process)
+     * Not applicable for now. The issues go in the entries block of errors messages.
      *
      * @return array
      * @see    ____func_see____
@@ -82,6 +83,6 @@ class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToIns
      */
     protected function getMessages()
     {
-        return \XLite\Upgrade\Cell::getInstance()->getErrorMessages();
+        return array();
     }
 }

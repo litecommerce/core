@@ -10,7 +10,6 @@
 XLite\Model\Module:
   - author: CDev
     name: Quantum
-    marketplaceID: 97ff229e326506dcb02a66433908f09b
 XLite\Model\Payment\Method:
   - service_name: QuantumGateway
     class: Module\CDev\Quantum\Model\Payment\Processor\Quantum
