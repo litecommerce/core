@@ -437,7 +437,58 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		done
 
 	fi
-	
+
+
+	rm -rf quickstart
+
+#	mv skins skins_original
+
+#	mkdir skins
+#	cp skins_original/.htaccess skins/.htaccess
+
+#	LOGO_IMAGE=${OUTPUT_DIR}/xlite_dev/build/release/files/images/lc_logo-${XLITE_VERSION}.png
+
+#	if [ -f $LOGO_IMAGE ]; then
+#		cp $LOGO_IMAGE ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/skins_original/default/en/images/logo.png
+#		cp $LOGO_IMAGE ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/skins_original/drupal/en/images/logo.png
+
+#	else
+#		echo "Warning! Logo image file $LOGO_IMAGE not found"
+#	fi
+
+	# Modify version of release
+	sed_cmd="$SED_EXT \"s/Version, value: xlite_3_0_x/Version, value: '${XLITE_VERSION}'/\" sql/xlite_data.yaml"
+	eval "$sed_cmd"
+	sed_cmd="$SED_EXT \"s/define('LC_VERSION', '[^']*'/define('LC_VERSION', '${XLITE_VERSION}'/\" Includes/install/install_settings.php"
+	eval "$sed_cmd"
+
+
+	# Save copy of original file PoweredBy.php
+	cp ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/classes/XLite/View/PoweredBy.php ${OUTPUT_DIR}/tmp
+	cp ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/Includes/install/install_settings.php ${OUTPUT_DIR}/tmp
+
+	# Patch file PoweredBy.php
+	insert_seo_phrases "$LC_SEO_PHRASES" "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}"
+
+	sed_cmd="$SED_EXT \"/'DrupalConnector', \/\/ Allows to use Drupal CMS as a storefront/d\" ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/Includes/install/install_settings.php"
+	eval "$sed_cmd"
+
+
+	$PHP ${BASE_DIR}/../devcode_postprocess.php silentMode=1
+
+	# Prepare permisions
+	find . -type d -exec chmod 755 {} \;
+	find . -type f -exec chmod 644 {} \;
+
+
+	if [ ! "$TEST_MODE" = "" ]; then
+		XLITE_MODULES="
+		${XLITE_MODULES}
+		${XLITE_SEPARATE_MODULES}
+		"
+		XLITE_SEPARATE_MODULES=""
+	fi
+
 	# Directories where can be located module files
 	MODULE_DIRS="
 		classes/XLite/Module
@@ -448,7 +499,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		skins/mail/en/modules
 	"
 
-	if [ ! "${GENERATE_CORE}" ]; then
+	if [ ! "${GENERATE_CORE}" -a ! "${XLITE_SEPARATE_MODULES}" = "" ]; then
 
 		if [ -f "classes/XLite.php" ]; then
 			default_module_major_version=`cat classes/XLite.php| grep -A 2 "function getMajorVersion()" | grep -o -E "[0-9]+\.[0-9]+"`
@@ -521,13 +572,15 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 			if [ ! "${GENERATE_CORE}" ]; then
 				# Find modules by pattern
 				find $SED_REGEX_FBSD $i $SED_REGEX_LINUX -mindepth 2 -maxdepth 2 -type d ! -regex ".*/($modules_list_regexp)" -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
-				# Find all empty module authors dirs
-				find $i -maxdepth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
 
 			else
 				# Find all module dirs
-				find $i -maxdepth 1 -type d -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+				find $i -mindepth 2 -maxdepth 2 -type d -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
 			fi
+
+			# Find all empty module authors dirs
+			find $i -maxdepth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+
 		fi
 	
 	done
@@ -549,48 +602,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 			find ./images/* -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} \;
 		fi
 	fi
-
-	rm -rf quickstart
-
-#	mv skins skins_original
-
-#	mkdir skins
-#	cp skins_original/.htaccess skins/.htaccess
-
-#	LOGO_IMAGE=${OUTPUT_DIR}/xlite_dev/build/release/files/images/lc_logo-${XLITE_VERSION}.png
-
-#	if [ -f $LOGO_IMAGE ]; then
-#		cp $LOGO_IMAGE ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/skins_original/default/en/images/logo.png
-#		cp $LOGO_IMAGE ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/skins_original/drupal/en/images/logo.png
-
-#	else
-#		echo "Warning! Logo image file $LOGO_IMAGE not found"
-#	fi
-
-	# Modify version of release
-	sed_cmd="$SED_EXT \"s/Version, value: xlite_3_0_x/Version, value: '${XLITE_VERSION}'/\" sql/xlite_data.yaml"
-	eval "$sed_cmd"
-	sed_cmd="$SED_EXT \"s/define('LC_VERSION', '[^']*'/define('LC_VERSION', '${XLITE_VERSION}'/\" Includes/install/install_settings.php"
-	eval "$sed_cmd"
-
-
-	# Save copy of original file PoweredBy.php
-	cp ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/classes/XLite/View/PoweredBy.php ${OUTPUT_DIR}/tmp
-	cp ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/Includes/install/install_settings.php ${OUTPUT_DIR}/tmp
-
-	# Patch file PoweredBy.php
-	insert_seo_phrases "$LC_SEO_PHRASES" "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}"
-
-	sed_cmd="$SED_EXT \"/'DrupalConnector', \/\/ Allows to use Drupal CMS as a storefront/d\" ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/Includes/install/install_settings.php"
-	eval "$sed_cmd"
-
-
-	$PHP ${BASE_DIR}/../devcode_postprocess.php silentMode=1
-
-	# Prepare permisions
-	find . -type d -exec chmod 755 {} \;
-	find . -type f -exec chmod 644 {} \;
-
+	
 	if [ "${GENERATE_CORE}" ]; then
 
 		# Add metadata

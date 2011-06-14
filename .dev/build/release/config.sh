@@ -72,6 +72,7 @@ CATEGORY_IMAGES_LIST="
 apparel.png
 downloadables.png
 igoods.png
+store-index-banner.png
 toys.png
 "
 
