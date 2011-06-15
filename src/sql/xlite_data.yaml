@@ -356,7 +356,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Select language to edit', translations: [{ code: en, label: 'Select language to edit' }] }
   - { name: 'Add new language', translations: [{ code: en, label: 'Add new language' }] }
   - { name: Save, translations: [{ code: en, label: Save }] }
-  - { name: 'Please specify text labels for each language', translations: [{ code: en, label: 'Please specify text labels for each language.' }] }
+  - { name: 'Please specify text labels for each language', translations: [{ code: en, label: 'Please specify text labels for each language. If you do not specify a value for some language, the {{language}} label wiil be used.' }] }
   - { name: 'Label name', translations: [{ code: en, label: 'Label name' }] }
   - { name: required, translations: [{ code: en, label: required }] }
   - { name: 'Confirm deletion', translations: [{ code: en, label: 'Confirm deletion' }] }
