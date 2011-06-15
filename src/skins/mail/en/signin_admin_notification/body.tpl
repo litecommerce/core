@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 <html>
-<head><title>Sign in notification</title></head>
+<head><title>{t(#Sign in notification#)}</title></head>
 <body>
 
 <p>{t(#New user profile has been registered:#)} {profile.login:h}</p>

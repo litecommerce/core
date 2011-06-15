@@ -10,10 +10,10 @@
  * @since     1.0.0
  *}
 <html>
-<head><title>Your profile modified</title></head>
+<head><title>{t(#Your profile modified#)}</title></head>
 <body>
 
-<p>Your profile has been modified. You can check your account after you logging in to the site at {buildFullURL()}</p>
+<p>{t(#Your profile has been modified. You can check your account after you logging in to the site#,_ARRAY_(#url#^buildFullURL()))}</p>
 
 <p>{signature:h}</p>
 
