@@ -19,14 +19,6 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: Display the list of bestsellers in
-  - name: bestsellers_thumbnails
-    category: CDev\Bestsellers
-    type: checkbox
-    orderby: 115
-    value: Y
-    translations:
-      - code: en
-        option_name: Show thumbnails in the list
   - name: number_of_bestsellers
     category: CDev\Bestsellers
     type: text

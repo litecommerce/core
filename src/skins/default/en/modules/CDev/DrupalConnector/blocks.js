@@ -45,9 +45,65 @@ jQuery().ready(
             displayMode.options[displayMode.options.length] = new Option(v, k);
           }
         );
+
+        jQuery(displayMode).change();
+
+        // Show / hide some settings
+        var isShow = 'sidebar' != this.options[this.selectedIndex].value;
+        var elements = [
+          jQuery('input[name="' + this.name.replace(/widgetType/, 'showDisplayModeSelector') + '"]', this.form).parents('.form-item').eq(0),
+          jQuery('select[name="' + this.name.replace(/widgetType/, 'gridColumns') + '"]', this.form).parents('.form-item').eq(0),
+          jQuery('input[name="' + this.name.replace(/widgetType/, 'showItemsPerPageSelector') + '"]', this.form).parents('.form-item').eq(0),
+          jQuery('input[name="' + this.name.replace(/widgetType/, 'showSortBySelector') + '"]', this.form).parents('.form-item').eq(0)
+        ];
+
+        for (var i = 0; i < elements.length; i++) {
+          var elm = elements[i];
+          if (isShow) {
+            elm.show();
+
+          } else {
+            elm.hide();
+          }
+        }
+
       }
 
     );
+
+    jQuery('form select').filter(
+
+      function() {
+        return -1 != this.name.search(/lc_widget.lc_block_XLite_.+_ItemsList_Product_Customer_.+..displayMode./);
+      }
+
+    ).change(
+
+      function() {
+
+        var name = this.name.replace(/displayMode/, 'gridColumns');
+
+        var select = jQuery('select', this.form).filter(
+          function() {
+            return this.name == name;
+          }
+        ).eq(0);
+
+        if ('grid' == this.options[this.selectedIndex].value) {
+          select.removeAttr('disabled');
+
+        } else {
+          select.attr('disabled', 'disabled');
+        }
+
+      }
+    );
+
+    jQuery('form select').filter(
+      function() {
+        return -1 != this.name.search(/lc_widget.lc_block_XLite_.+_ItemsList_Product_Customer_.+..widgetType./);
+      }
+    ).change();
   }
 );
 

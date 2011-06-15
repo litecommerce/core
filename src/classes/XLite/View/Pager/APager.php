@@ -315,7 +315,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
                 'Items per page', $this->getItemsPerPageDefault(), true
             ),
             self::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
-                'Show "Items per page" selector', true, true
+                'Show pagination', true, true
             ),
             self::PARAM_LIST => new \XLite\Model\WidgetParam\Object(
                 'List object', null, false, '\XLite\View\ItemsList\AItemsList'

@@ -13,4 +13,4 @@
  * @ListChild (list="itemsList.product.list.customer.info", weight="40")
  * @ListChild (list="itemsList.product.table.customer.columns", weight="40")
  *}
-<widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
+<widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" />
