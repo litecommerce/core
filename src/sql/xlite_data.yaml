@@ -415,6 +415,9 @@ XLite\Model\LanguageLabel:
   - { name: 'Top X products', translations: [{ code: en, label: 'Top {{count}} products' }] }
   - { name: 'X module settings', translations: [{ code: en, label: '{{name}} ({{author}}) module settings' }] }
   - { name: 'The benchmark evaluates server environment', translations: [{ code: en, label: "The benchmark evaluates server environment, namely:\n1. File subsystem — read and write speed.\n2. Database server — computing speed, DB data read and write speed.\n3. Computing power — speed of computing and exchanging data in the memory.\n<span>The total test time is the sum of the times, taken by each of these tests.</span>" }] }
+  - { name: 'Thank you for registering at LiteCommerce', translations: [{ code: en, label: 'Thank you for registering at {{LiteCommerce}}' }] }
+  - { name: 'Thank you for using LiteCommerce services', translations: [{ code: en, label: 'Thank you for using {{LiteCommerce}} services' }] }
+  - { name: 'Your profile has been modified. You can check your account after you logging in to the site', translations: [{ code: en, label: 'Your profile has been modified. You can check your account after you logging in to the site at {{url}}' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
