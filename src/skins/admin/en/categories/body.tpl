@@ -87,7 +87,7 @@
 
 </table>
 
-<widget IF="getRootCategoryId()=category.getCategoryId()" class="\XLite\View\Button\Regular" id="modify-root" label="Modify root category" jsCode="self.location='{buildURL(#category#,##,_ARRAY_(#category_id#^getRootCategoryId(),#mode#^#modify#))}'" />
+<widget IF="getRootCategoryId()=category.getCategoryId()" class="\XLite\View\Button\Regular" id="modify-root" label="Modify root category (the front shop page)" jsCode="self.location='{buildURL(#category#,##,_ARRAY_(#category_id#^getRootCategoryId(),#mode#^#modify#))}'" />
 
 <br />
 <br />
@@ -104,7 +104,7 @@
     <tr>
       <th colspan="2" align="left" IF="category">
 
-        <span IF="category.parent=0">{t(#Root categories#)}</span>
+        <span IF="category.parent=0">{t(#Categories#)}</span>
         <span IF="!category.parent=0">{t(#Subcategories#)}</span>
 
         <hr />

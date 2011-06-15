@@ -1,8 +1,6 @@
 #!/bin/sh
 
 #
-# SVN: $Id$
-#
 # Release generator script for LiteCommerce
 #
 
@@ -440,57 +438,6 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 	fi
 
-	modules_list_regexp=""
-	for j in ${XLITE_MODULES}; do
-		modules_list_regexp=$modules_list_regexp"|"$j
-	done
-
-	modules_list_regexp=`echo $modules_list_regexp | sed 's/^|//'`
-
-	MODULE_DIRS="
-		classes/XLite/Module
-		skins/admin/en/modules
-		skins/admin/en/images/modules
-		skins/default/en/modules
-		skins/default/en/images/modules
-		skins/mail/en/modules
-		"
-
-	for i in ${MODULE_DIRS}; do
-
-		if [ -d $i ]; then
-
-			if [ ! "${GENERATE_CORE}" ]; then
-				# Find modules by pattern
-				find $SED_REGEX_FBSD $i $SED_REGEX_LINUX -mindepth 2 -maxdepth 2 -type d ! -regex ".*/($modules_list_regexp)" -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
-				# Find all empty module authors dirs
-				find $i -maxdepth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
-
-			else
-				# Find all module dirs
-				find $i -maxdepth 1 -type d -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
-			fi
-		fi
-	
-	done
-
-	for i in `cat ${OUTPUT_DIR}/modules2remove`; do
-		rm -rf $i
-	done
-
-	if [ "x${DEMO_VERSION}" = "x" -a "x${TEST_MODE}" = "x" ]; then
-
-		if [ ! "${GENERATE_CORE}" ]; then
-
-			find ./images/* -type f -name "demo_store_*" -exec rm -rf {} \;
-			for i in $CATEGORY_IMAGES_LIST; do
-				rm -f ./public/$i
-			done
-		
-		else
-			find ./images/* -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} \;
-		fi
-	fi
 
 	rm -rf quickstart
 
@@ -533,6 +480,129 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 	find . -type d -exec chmod 755 {} \;
 	find . -type f -exec chmod 644 {} \;
 
+
+	if [ ! "$TEST_MODE" = "" ]; then
+		XLITE_MODULES="
+		${XLITE_MODULES}
+		${XLITE_SEPARATE_MODULES}
+		"
+		XLITE_SEPARATE_MODULES=""
+	fi
+
+	# Directories where can be located module files
+	MODULE_DIRS="
+		classes/XLite/Module
+		skins/admin/en/modules
+		skins/admin/en/images/modules
+		skins/default/en/modules
+		skins/default/en/images/modules
+		skins/mail/en/modules
+	"
+
+	if [ ! "${GENERATE_CORE}" -a ! "${XLITE_SEPARATE_MODULES}" = "" ]; then
+
+		if [ -f "classes/XLite.php" ]; then
+			default_module_major_version=`cat classes/XLite.php| grep -A 2 "function getMajorVersion()" | grep -o -E "[0-9]+\.[0-9]+"`
+		else
+			die "classes/XLite.php file not found"
+		fi
+
+		# Pack separate modules distributives
+		for j in ${XLITE_SEPARATE_MODULES}; do
+
+			module_files_list=""
+			for k in ${MODULE_DIRS}; do
+				[ -d $k/$j ] && module_files_list=$module_files_list" "$k/$j
+			done
+
+			module_file_name=`echo "$j" | sed 's!/!-!'`
+
+			module_main_file="classes/XLite/Module/${j}/Main.php"
+
+			if [ -f $module_main_file ]; then
+				module_major_version=`cat $module_main_file | grep -A 2 "function getMajorVersion()" | grep -o -E "'.+'" | sed "s!'!!g"`
+
+				if [ "$module_major_version" = "" ]; then
+					module_major_version=$default_module_major_version
+				fi
+
+				module_minor_version=`cat $module_main_file | grep -A 2 "function getMinorVersion()" | grep -o -E "'.+'" | sed "s!'!!g"`
+
+				module_version=`echo "${module_major_version}.${module_minor_version}" | sed "s!\.!_!g"`
+
+				module_actual_name=`echo "$j" | sed 's!/!\\\\!g'`
+				module_author=`cat $module_main_file | grep -A 2 "function getAuthorName()" | grep -o -E "'.+'" | sed "s!'!!g"`
+				module_name=`cat $module_main_file | grep -A 2 "function getModuleName()" | grep -o -E "'.+'" | sed "s!'!!g"`
+				module_icon=`cat $module_main_file | grep -A 2 "function getIconURL()" | grep -o -E "'.+'" | sed "s!'!!g"`
+				module_descr=`cat $module_main_file | grep -A 2 "function getDescription()" | grep -o -E "'.+'" | sed "s!'!!g"`
+
+			else
+				die "File classes/XLite/Module/${j} not found!"
+			fi
+
+			# Generate module meta data
+			mkdir -p .phar
+
+			_php_code="echo serialize(array('RevisionDate'=>time(),'ActualName'=>'${module_actual_name}','VersionMajor'=>'${module_major_version}','VersionMinor'=>'${module_minor_version}','Name'=>'${module_name}','Author'=>'${module_author}','IconLink'=>'${module_icon}','Description'=>'${module_descr}','Dependencies'=>array()));"
+
+			$PHP -qr "$_php_code" > .phar/metadata.bin
+
+			tar -cf ${OUTPUT_DIR}/${module_file_name}-v${module_version}.tar .phar $module_files_list
+			rm -rf .phar
+
+			echo "  + ${module_name} module package is complete: ${module_file_name}-v${module_version}.tar"
+
+		done
+
+	fi
+
+	# Delete modules from LiteCommerce distributive
+
+	modules_list_regexp=""
+	for j in ${XLITE_MODULES}; do
+		modules_list_regexp=$modules_list_regexp"|"$j
+	done
+
+	modules_list_regexp=`echo $modules_list_regexp | sed 's/^|//'`
+
+	for i in ${MODULE_DIRS}; do
+
+		if [ -d $i ]; then
+
+			if [ ! "${GENERATE_CORE}" ]; then
+				# Find modules by pattern
+				find $SED_REGEX_FBSD $i $SED_REGEX_LINUX -mindepth 2 -maxdepth 2 -type d ! -regex ".*/($modules_list_regexp)" -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+
+			else
+				# Find all module dirs
+				find $i -mindepth 2 -maxdepth 2 -type d -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+			fi
+
+			# Find all empty module authors dirs
+			find $i -maxdepth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+
+		fi
+	
+	done
+
+	for i in `cat ${OUTPUT_DIR}/modules2remove`; do
+		rm -rf $i
+	done
+
+	if [ "x${DEMO_VERSION}" = "x" -a "x${TEST_MODE}" = "x" ]; then
+
+		if [ ! "${GENERATE_CORE}" ]; then
+
+			find ./images/* -type f -name "demo_store_*" -exec rm -rf {} \;
+			for i in $CATEGORY_IMAGES_LIST; do
+				rm -f ./public/$i
+			done
+		
+		else
+			find ./images/* -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} \;
+		fi
+	fi
+	
 	if [ "${GENERATE_CORE}" ]; then
 
 		# Add metadata

@@ -104,12 +104,8 @@ $lcSettings = array(
     'enable_modules' => array(
         'CDev' => array(
             'DrupalConnector', // Allows to use Drupal CMS as a storefront
-            'AustraliaPost',
-            'AuthorizeNet',
             'Bestsellers',
             'FeaturedProducts',
-            'ProductOptions',
-            'Quantum',
         ),
     ),
 );
