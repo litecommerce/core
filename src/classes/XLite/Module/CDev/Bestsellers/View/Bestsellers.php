@@ -82,6 +82,23 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return $result;
     }
 
+    /**
+     * Initialize widget (set attributes)
+     *
+     * @param array $params Widget params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        $this->widgetParams[\XLite\View\Pager\APager::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR]->setValue(false);
+        $this->widgetParams[\XLite\View\Pager\APager::PARAM_ITEMS_COUNT]
+            ->setValue(\XLite\Core\Config::getInstance()->CDev->Bestsellers->number_of_bestsellers);
+    }
 
     /**
      * Get title
@@ -138,17 +155,8 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
-        $this->widgetParams[self::PARAM_SHOW_THUMBNAIL]->setValue(
-            'Y' == \XLite\Core\Config::getInstance()->CDev->Bestsellers->bestsellers_thumbnails
-        );
-        $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);
-        $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue(true);
-        $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue(true);
-        $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]
-            ->setValue(\XLite\Core\Config::getInstance()->CDev->Bestsellers->number_of_bestsellers);
 
         $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
-        $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
         $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
@@ -179,9 +187,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         if (is_null($this->bestsellProducts)) {
 
-            $limit = self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
-                ? $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS)
-                : \XLite\Core\Config::getInstance()->CDev->Bestsellers->number_of_bestsellers;
+            $limit = \XLite\Core\Config::getInstance()->CDev->Bestsellers->number_of_bestsellers;
 
             $this->bestsellProducts = \XLite\Core\Database::getRepo('XLite\Model\Product')
                 ->findBestsellers(
