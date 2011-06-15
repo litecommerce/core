@@ -169,7 +169,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         $content = \Includes\Utils\FileManager::read($name);
 
         // Only the process created the file can delete
-        static::getRebuildIndicatorFileContent() != $content ?: \Includes\Utils\FileManager::deleteFile($name);
+        // :NOTE: do not change the operator to the "==="
+        if (static::getRebuildIndicatorFileContent() == $content) {
+            \Includes\Utils\FileManager::deleteFile($name);
+        }
 
         return (bool) $content;
     }

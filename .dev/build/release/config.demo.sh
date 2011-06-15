@@ -1,4 +1,3 @@
-# SVN: $Id$
 #
 # Data definition for LiteCommerce release script
 #
@@ -15,9 +14,13 @@ DRUPAL_DIRNAME="drupal_demo"
 DEMO_FILES=""
 
 # LiteCommerce modules for including to the distributives
-XLITE_MODULES=${XLITE_MODULES}"
+XLITE_MODULES="
+${XLITE_MODULES}
+${XLITE_SEPARATE_MODULES}
 CDev/Demo
 "
+
+XLITE_SEPARATE_MODULES=""
 
 # The list of modules which should never be included into the demo version
 XLITE_EXCLUDE_MODULES="
