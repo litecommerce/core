@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Tooltip widget
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,10 +9,8 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<input
-  type="image"
-  src="images/spacer.gif"
-  class="{getClass()}"
-  value="{getButtonLabel()}"
-  title="{getButtonLabel()}"
-  onclick="javascript:{getJSCode():h}" />
+<span class="tooltip-main">
+  {displayCommentedData(getHelpText())}
+  <img IF="getParam(#isImage#)" class="tooltip-caption {getParam(#className#)}" src="images/spacer.gif" alt="Help" />
+  <span IF="!getParam(#isImage#)" class="tooltip-caption {getParam(#className#)}">{getParam(#caption#)}</span>
+</span>
