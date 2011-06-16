@@ -49,6 +49,13 @@ ItemsList.prototype.listeners.pagesCount = function(handler)
 {
   jQuery('input.page-length', handler.container).change(
     function() {
+      if (this.form) {
+        var hnd = function() { return false; }
+        jQuery(this.form).submit(hnd);
+        var f = this.form;
+        setTimeout(function() { jQuery(f).unbind('submit', hnd); }, 500);
+      }
+
       return !handler.changePageLength(this);
     }
   );
