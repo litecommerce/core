@@ -42,19 +42,11 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     const PARAM_DISPLAY_MODE = 'displayMode';
     const PARAM_GRID_COLUMNS = 'gridColumns';
 
-    const PARAM_SHOW_ALL_ITEMS_PER_PAGE    = 'showAllItemsPerPage';
     const PARAM_SHOW_DISPLAY_MODE_SELECTOR = 'showDisplayModeSelector';
     const PARAM_SHOW_SORT_BY_SELECTOR      = 'showSortBySelector';
 
-    const PARAM_SHOW_DESCR     = 'showDescription';
-    const PARAM_SHOW_PRICE     = 'showPrice';
-    const PARAM_SHOW_THUMBNAIL = 'showThumbnail';
-    const PARAM_SHOW_ADD2CART  = 'showAdd2Cart';
-
     const PARAM_ICON_MAX_WIDTH = 'iconWidth';
     const PARAM_ICON_MAX_HEIGHT = 'iconHeight';
-
-    const PARAM_SIDEBAR_MAX_ITEMS = 'sidebarMaxItems';
 
     /**
      * Allowed widget types
@@ -82,7 +74,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Columns number range
      */
-    const GRID_COLUMNS_MIN = 1;
+    const GRID_COLUMNS_MIN = 2;
     const GRID_COLUMNS_MAX = 5;
 
     /**
@@ -151,6 +143,24 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
+     * Get icon sizes 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getIconSizes()
+    {
+        return array(
+            self::WIDGET_TYPE_SIDEBAR . '.' . self::DISPLAY_MODE_STHUMB => array(80, 80),
+            self::WIDGET_TYPE_SIDEBAR . '.' . self::DISPLAY_MODE_BTHUMB => array(160, 160),
+            self::WIDGET_TYPE_CENTER . '.' . self::DISPLAY_MODE_GRID => array(160, 160),
+            self::WIDGET_TYPE_CENTER . '.' . self::DISPLAY_MODE_LIST => array(160, 160),
+            'other' => array(110, 110),
+        );
+    }
+
+    /**
      * Initialize widget (set attributes)
      *
      * @param array $params Widget params
@@ -180,30 +190,12 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
             && 0 == $this->getParam(self::PARAM_ICON_MAX_WIDTH)
             && 0 == $this->getParam(self::PARAM_ICON_MAX_HEIGHT)
         ) {
-            if (
-                self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
-                && self::DISPLAY_MODE_STHUMB == $this->getParam(self::PARAM_DISPLAY_MODE)
-            ) {
+            $sizes = static::getIconSizes();
+            $key = $this->getParam(self::PARAM_WIDGET_TYPE) . '.' . $this->getParam(self::PARAM_DISPLAY_MODE);
+            $size = isset($sizes[$key]) ? $sizes[$key] : $sizes['other'];
 
-                // Icons size for small thumbnails mode
-                $this->widgetParams[self::PARAM_ICON_MAX_WIDTH]->setValue(80);
-                $this->widgetParams[self::PARAM_ICON_MAX_HEIGHT]->setValue(80);
-
-            } elseif (
-                self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
-                && self::DISPLAY_MODE_BTHUMB == $this->getParam(self::PARAM_DISPLAY_MODE)
-            ) {
-
-                // Icons size for big thumbnails mode
-                $this->widgetParams[self::PARAM_ICON_MAX_WIDTH]->setValue(160);
-                $this->widgetParams[self::PARAM_ICON_MAX_HEIGHT]->setValue(160);
-
-            } else {
-
-                // Default icons size
-                $this->widgetParams[self::PARAM_ICON_MAX_WIDTH]->setValue(110);
-                $this->widgetParams[self::PARAM_ICON_MAX_HEIGHT]->setValue(110);
-            }
+            $this->widgetParams[self::PARAM_ICON_MAX_WIDTH]->setValue($size[0]);
+            $this->widgetParams[self::PARAM_ICON_MAX_HEIGHT]->setValue($size[1]);
         }
 
         // FIXME - not a good idea, but I don't see a better way
@@ -327,29 +319,11 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
             self::PARAM_GRID_COLUMNS => new \XLite\Model\WidgetParam\Set(
                 'Number of columns (for Grid mode only)', 3, true, $this->getGridColumnsRange()
             ),
-            self::PARAM_SHOW_DESCR => new \XLite\Model\WidgetParam\Checkbox(
-                'Show product description (for List mode only)', true, true
-            ),
-            self::PARAM_SHOW_PRICE => new \XLite\Model\WidgetParam\Checkbox(
-                'Show product price', true, true
-            ),
-            self::PARAM_SHOW_THUMBNAIL => new \XLite\Model\WidgetParam\Checkbox(
-                'Show product thumbnail', true, true
-            ),
-            self::PARAM_SHOW_ADD2CART => new \XLite\Model\WidgetParam\Checkbox(
-                'Show \'Add to Cart\' button', true, true
-            ),
             self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
                 'Maximal icon width', 0, true
             ),
             self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
                 'Maximal icon height', 0, true
-            ),
-            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Checkbox(
-                'Display all items on one page', false, true
-            ),
-            self::PARAM_SIDEBAR_MAX_ITEMS => new \XLite\Model\WidgetParam\Int(
-                'The maximum number of products displayed in sidebar', 5, true
             ),
         );
     }
@@ -418,7 +392,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     protected function isPagerVisible()
     {
         return parent::isPagerVisible()
-            && !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE);
+            && $this->getParam(\XLite\View\Pager\APager::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR);
     }
 
     /**
@@ -592,7 +566,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getSidebarMaxItems()
     {
-        return $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS);
+        return $this->getParam(\XLite\View\Pager\APager::PARAM_ITEMS_PER_PAGE);
     }
 
     /**
@@ -649,57 +623,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
-     * Show product description or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isShowDescription()
-    {
-        return $this->getParam(self::PARAM_SHOW_DESCR);
-    }
-
-    /**
-     * isShowThumbnail
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isShowThumbnails()
-    {
-        return $this->getParam(self::PARAM_SHOW_THUMBNAIL)
-            && \XLite\Core\Config::getInstance()->General->show_thumbnails;
-    }
-
-    /**
-     * Show product price or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isShowPrice()
-    {
-        return $this->getParam(self::PARAM_SHOW_PRICE);
-    }
-
-    /**
-     * Show Add to cart button or not
-     *
-     * @param \XLite\Model\Product $product Product
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isShowAdd2Cart(\XLite\Model\Product $product)
-    {
-        return $this->getParam(self::PARAM_SHOW_ADD2CART);
-    }
-
-    /**
      * Return the maximal icon width
      *
      * @return integer
@@ -732,7 +655,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getTableColumnsCount()
     {
-        return 2 + ($this->isShowPrice() ? 1 : 0) + ($this->isShowAdd2Cart() ? 1 : 0);
+        return 3 + ($this->isShowAdd2Cart() ? 1 : 0);
     }
 
     /**

@@ -231,16 +231,13 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 );
 
                 if ('select' === $form[$key][$name]['#type']) {
-
                     $form[$key][$name]['#options'] = $param->options;
 
-                    if ($extendedItemsList && \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_DISPLAY_MODE == $name) {
-                        $jsData = array(
-                            \XLite\View\ItemsList\Product\Customer\ACustomer::WIDGET_TYPE_SIDEBAR => \XLite\View\ItemsList\Product\Customer\ACustomer::getSidebarDisplayModes(),
-                            \XLite\View\ItemsList\Product\Customer\ACustomer::WIDGET_TYPE_CENTER  => \XLite\View\ItemsList\Product\Customer\ACustomer::getCenterDisplayModes(),
-                        );
-                        drupal_add_js('var lcConnectorBlocks = ' . json_encode($jsData) . ';', 'inline');
+                } else {
+                    if ($extendedItemsList && in_array($name, array(\XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_WIDTH, \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_HEIGHT))) {
+                        $form[$key][$name]['#description'] = t('recommended: !size', array('!size' => 110));
                     }
+                    
                 }
             }
 
@@ -257,6 +254,22 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                     \XLite::CUSTOMER_INTERFACE
                 );
                 $form['#attached']['js'][] = \XLite\View\AView::modifyResourcePath($path);
+
+                // Display modes data
+                $jsData = array(
+                    \XLite\View\ItemsList\Product\Customer\ACustomer::WIDGET_TYPE_SIDEBAR => \XLite\View\ItemsList\Product\Customer\ACustomer::getSidebarDisplayModes(),
+                    \XLite\View\ItemsList\Product\Customer\ACustomer::WIDGET_TYPE_CENTER  => \XLite\View\ItemsList\Product\Customer\ACustomer::getCenterDisplayModes(),
+                );
+                drupal_add_js('var lcConnectorBlocks = ' . json_encode($jsData) . ';', 'inline');
+
+                // Recommended icons sizes
+                $jsData = \XLite\View\ItemsList\Product\Customer\ACustomer::getIconSizes();
+                $lbl = t('recommended: !size');
+                drupal_add_js(
+                    'var lcConnectorRecommendedIconSizes = ' . json_encode($jsData) . ';' . PHP_EOL
+                    . 'var lcConnectorRecommendedLabel = \'' . $lbl . '\';',
+                    'inline'
+                );
             }
         }
     }
