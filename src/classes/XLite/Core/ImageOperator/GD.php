@@ -51,6 +51,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
         'image/gd2'  => 'gd2',
         'image/wbmp' => 'wbmp',
         'image/bmp'  => 'wbmp',
+        'image/png'  => 'png',
     );
 
     /**
@@ -121,15 +122,20 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      */
     public function getImage()
     {
+        $image = null;
+
         $func = 'image' . $this->getImageType();
 
-        ob_start();
-        // $func is assembled from 'image' + image type
-        $result = $func($this->image);
-        $image = ob_get_contents();
-        ob_end_clean();
+        if (function_exists($func)) {
 
-        return $result ? $image : null;
+            ob_start();
+           // $func is assembled from 'image' + image type
+            $result = $func($this->image);
+            $image = ob_get_contents();
+            ob_end_clean();
+        }
+
+        return $image;
     }
 
     /**
