@@ -22,7 +22,7 @@
           <td class="product-photo">
             <div class="product-photo">
               {displayInheritedViewListContent(#photo#,_ARRAY_(#product#^product))}
-              <div IF="isShowThumbnails()&product.hasImage()">
+              <div IF="product.hasImage()">
                 {displayInheritedViewListContent(#quicklook#,_ARRAY_(#product#^product))}
               </div>
             </div>
@@ -30,7 +30,7 @@
           <td class="product-info">
             <div class="product-info">
               {displayInheritedViewListContent(#info#,_ARRAY_(#product#^product))}
-              <div IF="!isShowThumbnails()|!product.hasImage()">
+              <div IF="!product.hasImage()">
                 {displayInheritedViewListContent(#quicklook#,_ARRAY_(#product#^product))}
               </div>
             </div>

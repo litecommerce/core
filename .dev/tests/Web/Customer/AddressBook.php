@@ -34,7 +34,7 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
 
     const SAVE_BUTTON = "//div[@class='model-form-buttons']/div[@class='button submit']/button[@type='submit']";
 
-    const DELETE_BUTTON = '//div[@class="delete-action"]/button[@type="button"]';
+    const DELETE_BUTTON = '//div[@class="delete-action"]/button';
 
     const PROCEED_BUTTON = "//button[@class='button-proceed' and @type='submit']";
 
@@ -54,6 +54,19 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
         $this->logIn();
 
         $this->open('user/1/address-book');
+
+        while ($this->isElementPresent(self::DELETE_BUTTON)) {
+
+            $this->click(self::DELETE_BUTTON);
+
+            $this->waitForLocalCondition(
+                "jQuery('#ui-dialog-title-2').length > 0",
+                10000,
+                "No delete popup"
+            );
+
+            $this->clickAndWait(self::PROCEED_BUTTON);
+        }
 
         $this->assertElementPresent(self::ADD_BUTTON, 'No add to address book button');
 
