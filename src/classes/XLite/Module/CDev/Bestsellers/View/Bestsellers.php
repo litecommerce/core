@@ -137,7 +137,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
         $this->widgetParams += array(
             self::PARAM_USE_NODE => new \XLite\Model\WidgetParam\Checkbox(
-                'Use current category id', true, true
+                'Show products only for current category', true, true
             ),
             self::PARAM_ROOT_ID => new \XLite\Model\WidgetParam\ObjectId\Category(
                 'Root category Id', 0, true, true

@@ -12,6 +12,43 @@
 
 jQuery().ready(
   function() {
+
+    var processRecommendedSizes = function(form) {
+      var widgetType = jQuery('select', form).filter(
+        function() {
+          return -1 != this.name.search(/lc_widget.lc_block_XLite_.+_ItemsList_Product_Customer_.+..widgetType./);
+        }
+      );
+      var displayMode = jQuery('select', form).filter(
+        function() {
+          return -1 != this.name.search(/lc_widget.lc_block_XLite_.+_ItemsList_Product_Customer_.+..displayMode./);
+        }
+      );
+      var key = widgetType.get(0).value + '.' + displayMode.get(0).value;
+      widgetType = widgetType.get(0);
+
+      var width = jQuery('input[name="' + widgetType.name.replace(/widgetType/, 'iconWidth') + '"]', this.form);
+      var descWidth = width.parents('.form-item').find('.description').eq(0);
+      var height = jQuery('input[name="' + widgetType.name.replace(/widgetType/, 'iconHeight') + '"]', this.form);
+      var descHeight = height.parents('.form-item').find('.description').eq(0);
+
+      if (typeof(window.lcConnectorRecommendedIconSizes) != 'undefined' && typeof(lcConnectorRecommendedIconSizes[key]) != 'undefined') {
+        var size = lcConnectorRecommendedIconSizes[key];
+
+        descWidth.show().html(lcConnectorRecommendedLabel.replace(/!size/, size[0]));
+        descHeight.show().html(lcConnectorRecommendedLabel.replace(/!size/, size[1]));
+        width.removeAttr('disabled', 'disabled');
+        height.removeAttr('disabled', 'disabled');
+
+      } else {
+        descWidth.hide();
+        descHeight.hide();
+        width.attr('disabled', 'disabled');
+        height.attr('disabled', 'disabled');
+      }
+
+    }
+
     jQuery('form select').filter(
 
       function() {
@@ -96,6 +133,7 @@ jQuery().ready(
           select.attr('disabled', 'disabled');
         }
 
+        processRecommendedSizes(this.form);
       }
     );
 
