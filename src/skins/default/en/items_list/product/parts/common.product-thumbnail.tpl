@@ -14,7 +14,6 @@
  * @ListChild (list="itemsList.product.big_thumbnails.customer.info.photo", weight="10")
  *}
 <a
-  IF="product.hasImage()"
   href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"
   class="product-thumbnail"
   title="{t(#Thumbnail#)}">
