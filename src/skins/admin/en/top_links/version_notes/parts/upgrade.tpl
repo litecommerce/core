@@ -10,7 +10,7 @@
  * @since     1.0.0
  * @ListChild (list="top_links.version_notes", weight="30")
  *}
-{* :TODO: this link must open the popup to select core version *}
+
 <li IF="isCoreUpgradeAvailable()&!areUpdatesAvailable()" class="upgrade-note">
   <widget class="\XLite\View\Upgrade\SelectCoreVersion\Link" />
 </li>

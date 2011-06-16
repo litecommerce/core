@@ -44,6 +44,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     const HOOK_STEP_FIRST      = 'step_first';
     const HOOK_STEP_SECOND     = 'step_second';
     const HOOK_STEP_THIRD      = 'step_third';
+    const HOOK_STEP_FOUR       = 'step_four';
+    const HOOK_STEP_FIVE       = 'step_five';
 
     /**
      * List of cache building steps
@@ -56,6 +58,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         self::STEP_FIRST,
         self::STEP_SECOND,
         self::STEP_THIRD,
+        self::STEP_FOUR,
+        self::STEP_FIVE,
     );
 
     /**
@@ -113,6 +117,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
             . '" alt="" /></td><td>' . static::getMessage() . '</td></tr></table>';
     }
 
+    protected static function displayCompleteMessage()
+    {
+        echo '<div id="finish">Cache is built successfully</div>';
+    }
+
     // }}}
 
     // {{{ Cache state indicator routines
@@ -160,7 +169,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         $content = \Includes\Utils\FileManager::read($name);
 
         // Only the process created the file can delete
-        static::getRebuildIndicatorFileContent() != $content ?: \Includes\Utils\FileManager::deleteFile($name);
+        // :NOTE: do not change the operator to the "==="
+        if (static::getRebuildIndicatorFileContent() == $content) {
+            \Includes\Utils\FileManager::deleteFile($name);
+        }
 
         return (bool) $content;
     }
@@ -286,6 +298,32 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
+     * Check if current step is last and redirect is prohibited after that step 
+     * 
+     * @param integer $step Current step
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function isSkipRedirectAfterLastStep($step)
+    {
+        return self::LAST_STEP === $step && isset($_GET['doNotRedirectAfterCacheIsBuilt']);
+    }
+
+    /**
+     * Check if only one step must be performed
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function isDoOneStepOnly()
+    {
+        return defined('DO_ONE_STEP_ONLY');
+    }
+
+    /**
      * Step completed
      *
      * @param string $step Current step
@@ -305,8 +343,15 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         // Remove the "rebuilding cache" indicator file
         static::checkRebuildIndicatorState();
 
-        // Perform redirect (needed for two-step cache generation)
-        \Includes\Utils\Operator::refresh();
+        if (static::isSkipRedirectAfterLastStep($step)) {
+            // Do not redirect after last step (this mode is used when cache builder was launched from LC standalone installation script)
+            static::displayCompleteMessage();
+            exit ();
+
+        } elseif (!static::isDoOneStepOnly()) {
+            // Perform redirect (needed for multi-step cache generation)
+            \Includes\Utils\Operator::refresh();
+        }
     }
 
     /**
@@ -351,7 +396,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * Run a step
+     * Run a step and return true if step is actually was performed or false if step has already been performed before
      *
      * @param string $step Step name
      *
@@ -361,9 +406,14 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function runStepConditionally($step)
     {
+        $result = false;
+
         if (static::isRebuildNeeded($step)) {
             static::runStep($step);
+            $result = true; 
         }
+
+        return $result;
     }
 
     // }}}
@@ -442,6 +492,38 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_THIRD);
     }
 
+    /**
+     * Run handler for the current step
+     *
+     * NOTE: method is public since it's called from
+     * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function executeStepHandler4()
+    {
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FOUR);
+    }
+
+    /**
+     * Run handler for the current step
+     *
+     * NOTE: method is public since it's called from
+     * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function executeStepHandler5()
+    {
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIVE);
+    }
+
     // }}}
 
     // {{{ Top-level methods
@@ -456,7 +538,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function rebuildCache()
     {
         foreach (static::$steps as $step) {
-            static::runStepConditionally($step);
+            if (static::runStepConditionally($step) && static::isDoOneStepOnly()) {
+                // Break after first performed step if isDoOneStepOnly() returned true
+                break;
+            }
         }
     }
 

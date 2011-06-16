@@ -125,6 +125,8 @@ table.entries-list tr td.new-version {
   color: #333333;
   width: 650px;
   padding: 0px 5px 25px 5px;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 table.incompatible-modules-list {
@@ -146,14 +148,10 @@ table.incompatible-modules-list {
   color: #333333;
 }
 
-.incompatible-modules-list td.status-unknown,
-  .incompatible-modules-list td.status-incompatible
+
+.incompatible-modules-list td.status-incompatible
 {
   cursor: help;
-}
-
-.incompatible-modules-list td.status-unknown {
-  background: transparent url(../images/icon_unknown.png) left 7px no-repeat;
 }
 
 .incompatible-modules-list td.status-incompatible {
@@ -187,8 +185,7 @@ table.incompatible-modules-list {
   margin-bottom: 2px;
 }
 
-.incompatible-status-message,
-  .unknown-status-message
+.incompatible-status-message
 {
   display: none;
 }

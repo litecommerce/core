@@ -11,4 +11,6 @@
  * @ListChild (list="itemsList.order.admin.search.columns", weight="50")
  *}
 
-<td class="date">{formatTime(order.getDate())}</td>
+<td class="date">
+{formatTime(order.getDate())}
+</td>

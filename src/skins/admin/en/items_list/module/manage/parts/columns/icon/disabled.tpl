@@ -13,6 +13,7 @@
  * @ListChild (list="itemsList.module.install.columns.icon", weight="100")
  *}
 
-<div IF="!module.getEnabled()" class="addon-disabled">
-  <img src="images/spacer.gif" class="disabled" alt="{t(#Disabled#)}" />
+<div IF="!isEnabled(module)" class="addon-disabled">
+  <img IF="isInstalled(module)" src="images/spacer.gif" class="disabled" alt="{t(#Disabled#)}" />
+  <img IF="!isInstalled(module)" src="images/spacer.gif" class="disabled" alt="{t(#Not installed#)}" />
 </div>

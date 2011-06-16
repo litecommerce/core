@@ -36,7 +36,7 @@ namespace XLite\Model;
  * @Entity (repositoryClass="\XLite\Model\Repo\Module")
  * @Table  (name="modules",
  *      uniqueConstraints={
- *          @UniqueConstraint (name="moduleVersion", columns={"author","name","majorVersion","minorVersion"})
+ *          @UniqueConstraint (name="moduleVersion", columns={"author","name","majorVersion","minorVersion","fromMarketplace"})
  *      },
  *      indexes={
  *          @Index (name="enabled", columns={"enabled"}),
@@ -85,17 +85,6 @@ class Module extends \XLite\Model\AEntity
     protected $author;
 
     /**
-     * Public identifier
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="32")
-     */
-    protected $marketplaceID = '';
-
-    /**
      * Enabled
      *
      * @var   boolean
@@ -116,19 +105,6 @@ class Module extends \XLite\Model\AEntity
      * @Column (type="boolean")
      */
     protected $installed = false;
-
-    /**
-     * Module data dump (YAML or SQL) installed status
-     *
-     * TODO: check if it's really needed
-     *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="boolean")
-     */
-    protected $dataInstalled = false;
 
     /**
      * Order creation timestamp
@@ -317,8 +293,40 @@ class Module extends \XLite\Model\AEntity
      */
     protected $dependencies = array();
 
+    /**
+     * Flag
+     *
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="boolean")
+     */
+    protected $fromMarketplace = false;
+
+    /**
+     * Public identifier (cache)
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $marketplaceID;
+
 
     // {{{ Routines to access methods of (non)installed modules
+
+    /**
+     * Return main class name for current module
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMainClass()
+    {
+        return '\XLite\Module\\' . $this->getActualName() . '\Main';
+    }
 
     /**
      * Method to call functions from module main classes
@@ -347,19 +355,7 @@ class Module extends \XLite\Model\AEntity
      */
     protected function checkModuleMainClass()
     {
-        return $this->getInstalled() && \Includes\Utils\Operator::checkIfClassExists($this->getMainClass());
-    }
-
-    /**
-     * Return main class name for current module
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getMainClass()
-    {
-        return '\XLite\Module\\' . $this->getActualName() . '\Main';
+        return $this->isInstalled() && \Includes\Utils\Operator::checkIfClassExists($this->getMainClass());
     }
 
     // }}}
@@ -375,7 +371,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getActualName()
     {
-        return \Includes\Decorator\Utils\ModulesManager::getActualName($this->getAuthor(), $this->getName());
+        return \Includes\Utils\ModulesManager::getActualName($this->getAuthor(), $this->getName());
     }
 
     /**
@@ -549,9 +545,27 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getInstalled()
+    public function isInstalled()
     {
         return $this->installed ?: (bool) $this->getRepository()->getModuleInstalled($this);
+    }
+
+    /**
+     * Generate marketplace ID
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMarketplaceID()
+    {
+        if (!isset($this->marketplaceID)) {
+            $this->marketplaceID = md5(
+                $this->getAuthor() . $this->getName() . $this->getMajorVersion() . $this->getMinorVersion()
+            );
+        }
+
+        return $this->marketplaceID;
     }
 
     // }}}

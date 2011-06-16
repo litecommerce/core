@@ -305,9 +305,9 @@ abstract class SafeMode
     }
 
     /**
-     * Get Unsafe Modules List
+     * Get unsafe modules list
      *
-     * @return void
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -317,7 +317,11 @@ abstract class SafeMode
         $path = static::getUnsafeModulesFilePath();
 
         if (\Includes\Utils\FileManager::isFileReadable($path)) {
-            $list = parse_ini_file($path, true);
+            foreach (parse_ini_file($path, true) as $author => $names) {
+                foreach (array_filter($names) as $name => $flag) {
+                    $list[] = $author . '\\' . $name;
+                }
+            }
         }
 
         return $list;
@@ -357,6 +361,8 @@ abstract class SafeMode
                 if (!isset($list[$author])) {
                     $list[$author] = array();
                 }
+
+                $list[$author][$name] = 1;
             }
         }
 

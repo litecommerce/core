@@ -266,28 +266,65 @@ table.form-data td {
   padding: 3px;
 }
 
-table.main-table,
-  table.main-table tbody,
-  table.main-table tr,
-  table.main-table th,
-  table.main-table td
-{
-  border: 0px none;
-  border-spacing: 0px;
+div.default-section {
+  float: left;
 }
 
-table.main-table td {
-  padding: 12px 3px;
+div.table-label label {
+  display: block;
 }
 
-table.default-table,
-  table.default-table tbody,
-  table.default-table tr,
-  table.default-table th,
-  table.default-table td
-{
-  border: 0px none;
-  border-spacing: 0px;
+ul.main-table {
+  list-style: none;
+}
+
+ul.main-table li {
+  background-image: none;
+  padding: 6px 3px;
+  float: left;
+  clear: left;
+}
+
+ul.main-table div.table-label label {
+  width: 200px;
+}
+
+div.default-section {
+  float: left;
+}
+
+div.model-form-buttons {
+  clear: left;
+  padding-top: 40px;
+}
+
+ul.default-table {
+  list-style: none;
+  min-width: 450px;
+}
+
+ul.default-table li {
+  background-image: none;
+  padding: 6px 0px 0px 0px;
+  float: left;
+  clear: left;
+}
+
+div.table-label {
+  float: left;
+}
+
+ul.default-table div.table-label label {
+  width: 80px;
+}
+
+div.star {
+  float: left;
+  width: 10px;
+}
+
+div.table-value {
+  float: left;
 }
 
 /* Colorbox jQuery plugin */
@@ -386,7 +423,8 @@ ul.subcategory-icons a
 
 
 .products-grid .product-cell,
-.products-grid .product-cell .ui-draggable-dragging
+  .products-grid .product-cell .ui-draggable-dragging,
+  .product-cell.ui-draggable-dragging
 {
   border-color: #eee;
   border-style: solid;
@@ -2411,21 +2449,6 @@ form.estimator .main,
 
 .select-address ul.addresses li.last {
   margin-right: 0px;
-}
-
-.select-address ul.addresses li .remove {
-  position: absolute;
-  right: 9px;
-  top: 9px;
-  text-decoration: none;
-  width: 18px;
-  height: 18px;
-}
-
-.select-address ul.addresses li .remove img {
-  background: transparent url(../images/icon_trash.png) no-repeat left top;
-  width: 18px;
-  height: 18px;
 }
 
 .select-address ul.addresses li .shipping {

@@ -38,8 +38,7 @@ abstract class Main extends \XLite\Module\AModule
     /**
      * Author name
      *
-     * @var    string
-     * @access public
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -52,7 +51,7 @@ abstract class Main extends \XLite\Module\AModule
      * Module version
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  1.0.0
      */
     public static function getMinorVersion()
@@ -63,8 +62,7 @@ abstract class Main extends \XLite\Module\AModule
     /**
      * Module name
      *
-     * @var    string
-     * @access public
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -77,7 +75,6 @@ abstract class Main extends \XLite\Module\AModule
      * Module description
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */

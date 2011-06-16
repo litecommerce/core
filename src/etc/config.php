@@ -22,7 +22,6 @@ port     = ""
 database = ""
 username = ""
 password = ""
-persistent = Off
 table_prefix = "xlite_"
 
 ;
@@ -38,7 +37,7 @@ namespace=XLite
 ; List of memcache servers. Semicolon is used as a delimiter.
 ; Each server is specified with a host name and port number, divided
 ; by a colon. If the port is not specified, the default
-; port 112211 is used.
+; port 11211 is used.
 servers=
 
 ;
@@ -103,7 +102,6 @@ suppress_log_errors = Off
 ;
 [skin_details]
 skin = default
-inifile = "layout.ini"
 locale = en
 
 ;
@@ -113,20 +111,31 @@ locale = en
 enabled = Off
 process_widgets = On
 xdebug_log_trace = Off
-eta = On
 show_messages_on_top = Off
 
-[recorder]
-record_queries = off
-
+;
+; Debug log settings
+;
 [debug]
 mark_templates = off
 
+;
+; Default image settings
+;
 [images]
 default_image = "images/no_image.png"
 default_image_width = 110
 default_image_height = 110
 unsharp_mask_filter_on_resize = off
+
+; Installation path of Image Magick executables:
+; for example:
+; image_magick_path = "C:\\Program Files\\ImageMagick-6.7.0-Q16\\"   (in Windows)
+; image_magick_path = "/usr/local/imagemagick/" (in Unix/Linux )
+; You should consult with your hosting provider to find where Image Magick is installed
+; If you leave it empty then PHP GD library will be used.
+; 
+image_magick_path =
 
 ;
 ; Installer authcode.
@@ -159,7 +168,8 @@ page = "public/error.html"
 ; Marketplace
 ;
 [marketplace]
-url = "https://www.litecommerce.com/marketplace/"
+url = "http://www.litecommerce.com/?q=api/"
+log_data = Off
 
 ;
 ; Other options

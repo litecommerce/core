@@ -374,8 +374,8 @@ class Module extends \XLite\Model\Repo\ARepo
     {
         if ($value) {
             $queryBuilder
-                ->andWhere('m.marketplaceID != :marketplaceID')
-                ->setParameter('marketplaceID', '');
+                ->andWhere('m.fromMarketplace = :fromMarketplace')
+                ->setParameter('fromMarketplace', true);
         }
     }
 
@@ -450,6 +450,7 @@ class Module extends \XLite\Model\Repo\ARepo
 
         if ($installed) {
             $result = $this->getModuleForUpdate($installed) ?: $installed;
+
         } else {
             $result = $this->defineModuleFromMarketplaceQuery($module)->getSingleResult();
         }
@@ -524,7 +525,7 @@ class Module extends \XLite\Model\Repo\ARepo
         $this->prepareCndSingleModuleSearch($queryBuilder, $module);
 
         $queryBuilder
-            ->addOrderBy('m.majorVersion', 'DESC')
+            ->addOrderBy('m.majorVersion', 'ASC')
             ->addOrderBy('m.minorVersion', 'DESC');
 
 

@@ -23,6 +23,9 @@ function ItemsList(cell, URLParams, URLAJAXParams)
   this.URLParams = URLParams;
   this.URLAJAXParams = URLAJAXParams;
 
+  // Common form support
+  CommonForm.autoassign(this.container);
+
   this.addListeners();
 }
 
@@ -46,6 +49,13 @@ ItemsList.prototype.listeners.pagesCount = function(handler)
 {
   jQuery('input.page-length', handler.container).change(
     function() {
+      if (this.form) {
+        var hnd = function() { return false; }
+        jQuery(this.form).submit(hnd);
+        var f = this.form;
+        setTimeout(function() { jQuery(f).unbind('submit', hnd); }, 500);
+      }
+
       return !handler.changePageLength(this);
     }
   );
@@ -213,7 +223,14 @@ ItemsList.prototype.hideModalScreen = function()
 // Build URL
 ItemsList.prototype.buildURL = function(forAJAX)
 {
-  return URLHandler.buildURL(forAJAX ? this.URLAJAXParams : this.URLParams);
+  var list = forAJAX ? this.URLAJAXParams : this.URLParams;
+
+  if (typeof(list.sessionCell) != 'undefined') {
+      list.sessionCell = null;
+      delete list.sessionCell;
+  }
+
+  return URLHandler.buildURL(list);
 }
 
 // AJAX onload event handler

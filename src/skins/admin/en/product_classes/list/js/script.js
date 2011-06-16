@@ -35,6 +35,7 @@ window.core.updateProductClassAJAX = function (obj, widget)
         obj.enterValue(widget);
 
         if ('add' === action) {
+          widget.input.val('');
           core.addProductClass(widget, jQuery.parseJSON(xhr.responseText).data);
         }
       }
@@ -52,10 +53,10 @@ window.core.addProductClass = function (widget, data)
       type: 'get',
       url: URLHandler.buildURL(
         {
-          'target': 'product_classes',
-          'widget': '\\XLite\\View\\ProductClass\\MainInput',
-          'className': data.name,
-          'classId' : data.id
+          'target':     'product_classes',
+          'widget':     '\\XLite\\View\\ProductClass\\MainInput',
+          'className':  data.name,
+          'classId' :   data.id
         }
       ),
       timeout: 15000,
@@ -134,20 +135,55 @@ core.bind(
               core.updateProductClassAJAX(o, widget);
             }
           }
-        ).blur(
-          function (event) {
-            if (
-              widget.cancelValue !== jQuery(this).val()
-              && 'update' === core.getProductClassAction(widget)
-            ) {
-              core.updateProductClassAJAX(o, widget);
-            }
-            // Clean value if "add new" input is out of focus
-            if ('add' === core.getProductClassAction(widget)) {
-              jQuery(this).val('');
-            }
-          }
         );
+
+        widget.label.click(function (e) {
+          var obj = jQuery(this);
+
+          e.stopImmediatePropagation();
+
+          o.block.each(function () {
+            var widgetToUpdate = this.widget;
+
+            if (
+              widget.input.attr('name') != widgetToUpdate.input.attr('name')
+            ) {
+              if (
+                'add' != core.getProductClassAction(widgetToUpdate)
+                && 'none' != widgetToUpdate.inputBlock.css('display')
+                && widgetToUpdate.input.cancelValue != widgetToUpdate.input.val()
+              ) {
+                core.updateProductClassAJAX(o, widgetToUpdate);
+              } else {
+                o.enterValue(widgetToUpdate);
+              }
+            }
+          });
+
+          jQuery('body')
+          .unbind('click')
+          .bind(
+            'click',
+            function (event) {
+              event.stopImmediatePropagation();
+
+              if (
+                widget.input.cancelValue !== widget.input.val()
+                && 'update' === core.getProductClassAction(widget)
+              ) {
+                core.updateProductClassAJAX(o, widget);
+              } else {
+                o.enterValue(widget);
+              }
+
+          });
+        });
+
+        widget.cancel.click(function (event) {
+          event.stopImmediatePropagation();
+
+          o.cancel(widget);
+        });
 
         var removeActionObject = jQuery('.remove-product-class a.remove', widget.inputBlock.closest('tr'));
         var href = removeActionObject.attr('href');

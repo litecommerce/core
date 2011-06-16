@@ -61,19 +61,13 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
     public function getLicense()
     {
         $result = null;
-        $marketplaceID = $this->getModule()->getMarketplaceID();
+        $info = \XLite\Core\Marketplace::getInstance()->getAddonInfo($this->getModule()->getMarketplaceID());
 
-        if (!empty($marketplaceID)) {
-            $info = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID);
-
-            if ($info) {
-                $result = $info[\XLite\Core\Marketplace::FIELD_LICENSE];
-            } else {
-                \XLite\Core\Marketplace::getInstance()->setErrorTopMessage();
-            }
+        if ($info) {
+            $result = $info[\XLite\Core\Marketplace::FIELD_LICENSE];
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->addError('Markeplace ID is not set for module');
+            $this->showError(__FUNCTION__, 'License is not recieved');
         }
 
         // Since this action is performed in popup

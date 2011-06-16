@@ -149,4 +149,30 @@ class BenchmarkSummary extends \XLite\View\AView
     {
         return \XLite\Core\Marketplace::getInstance()->getHostingScore();
     }
+
+    /**
+     * Check - score is high or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isHighScore()
+    {
+        $infelicity = 0.05;
+        $measure = $this->getMeasure();
+
+        $hostingScores = $this->getHostingScore();
+
+        $highScore = null;
+        if ($hostingScores) {
+            foreach ($hostingScores as $hostingScore) {
+                if (!isset($highScore) || $hostingScore['score'] > $highScore) {
+                    $highScore = $hostingScore['score'];
+                }
+            }
+        }
+
+        return isset($highScore) && $measure && ($highScore * (1 + $infelicity)) < $measure['total'];
+    }
 }

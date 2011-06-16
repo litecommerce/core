@@ -356,7 +356,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Select language to edit', translations: [{ code: en, label: 'Select language to edit' }] }
   - { name: 'Add new language', translations: [{ code: en, label: 'Add new language' }] }
   - { name: Save, translations: [{ code: en, label: Save }] }
-  - { name: 'Please specify text labels for each language', translations: [{ code: en, label: 'Please specify text labels for each language. If you do not specify a value for some languag' }] }
+  - { name: 'Please specify text labels for each language', translations: [{ code: en, label: 'Please specify text labels for each language. If you do not specify a value for some language, the {{language}} label wiil be used.' }] }
   - { name: 'Label name', translations: [{ code: en, label: 'Label name' }] }
   - { name: required, translations: [{ code: en, label: required }] }
   - { name: 'Confirm deletion', translations: [{ code: en, label: 'Confirm deletion' }] }
@@ -415,6 +415,9 @@ XLite\Model\LanguageLabel:
   - { name: 'Top X products', translations: [{ code: en, label: 'Top {{count}} products' }] }
   - { name: 'X module settings', translations: [{ code: en, label: '{{name}} ({{author}}) module settings' }] }
   - { name: 'The benchmark evaluates server environment', translations: [{ code: en, label: "The benchmark evaluates server environment, namely:\n1. File subsystem — read and write speed.\n2. Database server — computing speed, DB data read and write speed.\n3. Computing power — speed of computing and exchanging data in the memory.\n<span>The total test time is the sum of the times, taken by each of these tests.</span>" }] }
+  - { name: 'Thank you for registering at LiteCommerce', translations: [{ code: en, label: 'Thank you for registering at {{LiteCommerce}}' }] }
+  - { name: 'Thank you for using LiteCommerce services', translations: [{ code: en, label: 'Thank you for using {{LiteCommerce}} services' }] }
+  - { name: 'Your profile has been modified. You can check your account after you logging in to the site', translations: [{ code: en, label: 'Your profile has been modified. You can check your account after you logging in to the site at {{url}}' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
@@ -613,45 +616,45 @@ XLite\Model\Payment\Method:
   - { service_name: COD, class: Model\Payment\Processor\Offline, orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
 XLite\Model\Country:
   directives: { insert: true }
-  - { country: Afghanistan, code: AF, enabled: false }
-  - { country: Albania, code: AL }
-  - { country: Algeria, code: DZ }
-  - { country: 'American Samoa', code: AS }
-  - { country: Andorra, code: AD }
-  - { country: Angola, code: AO }
-  - { country: Anguilla, code: AI }
-  - { country: Antarctica, code: AQ }
-  - { country: 'Antigua and Barbuda', code: AG }
-  - { country: Argentina, code: AR }
-  - { country: Armenia, code: AM }
-  - { country: Aruba, code: AW }
-  - { country: Australia, code: AU }
-  - { country: Austria, code: AT, eu_member: true }
-  - { country: Azerbaijan, code: AZ }
-  - { country: Bahamas, code: BS }
-  - { country: Bahrain, code: BH }
-  - { country: Bangladesh, code: BD }
-  - { country: Barbados, code: BB }
-  - { country: Belarus, code: BY }
-  - { country: Belgium, code: BE, eu_member: true }
-  - { country: Belize, code: BZ }
-  - { country: Benin, code: BJ }
-  - { country: Bermuda, code: BM }
-  - { country: Bhutan, code: BT }
+  - { country: Afghanistan, code3: AFG, code: AF, enabled: false }
+  - { country: Albania, code3: ALB, code: AL }
+  - { country: Algeria, code3: DZA, code: DZ }
+  - { country: 'American Samoa', code3: ASM, code: AS }
+  - { country: Andorra, code3: AND, code: AD }
+  - { country: Angola, code3: AGO, code: AO }
+  - { country: Anguilla, code3: AIA, code: AI }
+  - { country: Antarctica, code3: ATA, code: AQ }
+  - { country: 'Antigua and Barbuda', code3: ATG, code: AG }
+  - { country: Argentina, code3: ARG, code: AR }
+  - { country: Armenia, code3: ARM, code: AM }
+  - { country: Aruba, code3: ABW, code: AW }
+  - { country: Australia, code3: AUS, code: AU }
+  - { country: Austria, code3: AUT, code: AT, eu_member: true }
+  - { country: Azerbaijan, code3: AZE, code: AZ }
+  - { country: Bahamas, code3: BHS, code: BS }
+  - { country: Bahrain, code3: BHR, code: BH }
+  - { country: Bangladesh, code3: BGD, code: BD }
+  - { country: Barbados, code3: BRB, code: BB }
+  - { country: Belarus, code3: BLR, code: BY }
+  - { country: Belgium, code3: BEL, code: BE, eu_member: true }
+  - { country: Belize, code3: BLZ, code: BZ }
+  - { country: Benin, code3: BEN, code: BJ }
+  - { country: Bermuda, code3: BMU, code: BM }
+  - { country: Bhutan, code3: BTN, code: BT }
   - { country: Bolivia, code: BO }
   - { country: 'Bosnia and Herzegowina', code: BA }
-  - { country: Botswana, code: BW }
-  - { country: 'Bouvet Island', code: BV }
-  - { country: Brazil, code: BR }
-  - { country: 'British Indian Ocean Territory', code: IO }
+  - { country: Botswana, code3: BWA, code: BW }
+  - { country: 'Bouvet Island', code3: BVT, code: BV }
+  - { country: Brazil, code3: BRA, code: BR }
+  - { country: 'British Indian Ocean Territory', code3: IOT, code: IO }
   - { country: 'British Virgin Islands', code: VG }
-  - { country: 'Brunei Darussalam', code: BN }
-  - { country: Bulgaria, code: BG, eu_member: true }
-  - { country: 'Burkina Faso', code: BF }
-  - { country: Burundi, code: BI }
-  - { country: Cambodia, code: KH }
-  - { country: Cameroon, code: CM }
-  - country: Canada
+  - { country: 'Brunei Darussalam', code3: BRN, code: BN }
+  - { country: Bulgaria, code3: BGR, code: BG, eu_member: true }
+  - { country: 'Burkina Faso', code3: BFA, code: BF }
+  - { country: Burundi, code3: BDI, code: BI }
+  - { country: Cambodia, code3: KHM, code: KH }
+  - { country: Cameroon, code3: CMR, code: CM }
+  - country: Canada, code3: CAN
     code: CA
     states:
       - { state: Alberta, code: AB }
@@ -667,190 +670,190 @@ XLite\Model\Country:
       - { state: Quebec, code: QC }
       - { state: Saskatchewan, code: SK }
       - { state: Yukon, code: YT }
-  - { country: 'Cape Verde', code: CV }
-  - { country: 'Cayman Islands', code: KY }
-  - { country: 'Central African Republic', code: CF }
-  - { country: Chad, code: TD }
-  - { country: Chile, code: CL }
-  - { country: China, code: CN }
-  - { country: 'Christmas Island', code: CX }
-  - { country: 'Cocos (Keeling) Islands', code: CC }
-  - { country: Colombia, code: CO }
-  - { country: Comoros, code: KM }
-  - { country: 'Congo, Democratic Republic of', code: CD }
-  - { country: 'Cook Islands', code: CK }
-  - { country: 'Costa Rica', code: CR }
+  - { country: 'Cape Verde', code3: CPV, code: CV }
+  - { country: 'Cayman Islands', code3: CYM, code: KY }
+  - { country: 'Central African Republic', code3: CAF, code: CF }
+  - { country: Chad, code3: TCD, code: TD }
+  - { country: Chile, code3: CHL, code: CL }
+  - { country: China, code3: CHN, code: CN }
+  - { country: 'Christmas Island', code3: CXR, code: CX }
+  - { country: 'Cocos (Keeling) Islands', code3: CCK, code: CC }
+  - { country: Colombia, code3: COL, code: CO }
+  - { country: Comoros, code3: COM, code: KM }
+  - { country: 'Congo, Democratic Republic of', code3: COG, code: CD }
+  - { country: 'Cook Islands', code3: COK, code: CK }
+  - { country: 'Costa Rica', code3: CRI, code: CR }
   - { country: 'Cote D''ivoire', code: CI }
-  - { country: Croatia, code: HR }
-  - { country: Cuba, code: CU }
-  - { country: Cyprus, code: CY, eu_member: true }
-  - { country: 'Czech Republic', code: CZ }
+  - { country: Croatia, code3: HRV, code: HR }
+  - { country: Cuba, code3: CUB, code: CU }
+  - { country: Cyprus, code3: CYP, code: CY, eu_member: true }
+  - { country: 'Czech Republic', code3: CZE, code: CZ }
   - { country: Czechoslovakia, code: CS }
-  - { country: Denmark, code: DK, eu_member: true }
-  - { country: Djibouti, code: DJ }
-  - { country: Dominica, code: DM }
-  - { country: 'Dominican Republic', code: DO }
+  - { country: Denmark, code3: DNK, code: DK, eu_member: true }
+  - { country: Djibouti, code3: DJI, code: DJ }
+  - { country: Dominica, code3: DMA, code: DM }
+  - { country: 'Dominican Republic', code3: DOM, code: DO }
   - { country: 'East Timor', code: TP }
-  - { country: Ecuador, code: EC }
-  - { country: Egypt, code: EG }
-  - { country: 'El Salvador', code: SV }
-  - { country: 'Equatorial Guinea', code: GQ }
-  - { country: Eritrea, code: ER }
-  - { country: Estonia, code: EE, eu_member: true }
-  - { country: Ethiopia, code: ET }
-  - { country: 'Falkland Islands (Malvinas)', code: FK }
-  - { country: 'Faroe Islands', code: FO }
-  - { country: Fiji, code: FJ }
-  - { country: Finland, code: FI, enabled: false }
-  - { country: France, code: FR, eu_member: true }
-  - { country: 'France, Metropolitan', code: FX, enabled: false }
-  - { country: 'French Guiana', code: GF }
-  - { country: 'French Polynesia', code: PF }
-  - { country: 'French Southern Territories', code: TF }
-  - { country: Gabon, code: GA }
-  - { country: Gambia, code: GM }
-  - { country: Georgia, code: GE }
-  - { country: Germany, code: DE, eu_member: true }
-  - { country: Ghana, code: GH }
-  - { country: Gibraltar, code: GI }
-  - { country: Greece, code: GR, eu_member: true }
-  - { country: Greenland, code: GL }
-  - { country: Grenada, code: GD }
-  - { country: Guadeloupe, code: GP }
-  - { country: Guam, code: GU }
-  - { country: Guatemala, code: GT }
-  - { country: Guinea, code: GN }
-  - { country: Guinea-Bissau, code: GW }
-  - { country: Guyana, code: GY }
-  - { country: Haiti, code: HT }
+  - { country: Ecuador, code3: ECU, code: EC }
+  - { country: Egypt, code3: EGY, code: EG }
+  - { country: 'El Salvador', code3: SLV, code: SV }
+  - { country: 'Equatorial Guinea', code3: GNQ, code: GQ }
+  - { country: Eritrea, code3: ERI, code: ER }
+  - { country: Estonia, code3: EST, code: EE, eu_member: true }
+  - { country: Ethiopia, code3: ETH, code: ET }
+  - { country: 'Falkland Islands (Malvinas)', code3: FLK, code: FK }
+  - { country: 'Faroe Islands', code3: FRO, code: FO }
+  - { country: Fiji, code3: FJI, code: FJ }
+  - { country: Finland, code3: FIN, code: FI, enabled: false }
+  - { country: France, code3: FRA, code: FR, eu_member: true }
+  - { country: 'French Guiana', code3: GUF, code: GF }
+  - { country: 'French Polynesia', code3: PYF, code: PF }
+  - { country: 'French Southern Territories', code3: ATF, code: TF }
+  - { country: Gabon, code3: GAB, code: GA }
+  - { country: Gambia, code3: GMB, code: GM }
+  - { country: Georgia, code3: GEO, code: GE }
+  - { country: Germany, code3: DEU, code: DE, eu_member: true }
+  - { country: Ghana, code3: GHA, code: GH }
+  - { country: Gibraltar, code3: GIB, code: GI }
+  - { country: Greece, code3: GRC, code: GR, eu_member: true }
+  - { country: Greenland, code3: GRL, code: GL }
+  - { country: Grenada, code3: GRD, code: GD }
+  - { country: Guadeloupe, code3: GLP, code: GP }
+  - { country: Guam, code3: GUM, code: GU }
+  - { country: Guatemala, code3: GTM, code: GT }
+  - { country: Guinea, code3: GIN, code: GN }
+  - { country: Guinea-Bissau, code3: GNB, code: GW }
+  - { country: Guyana, code3: GUY, code: GY }
+  - { country: Haiti, code3: HTI, code: HT }
   - { country: 'Heard and McDonald Islands', code: HM }
-  - { country: Honduras, code: HN }
-  - { country: 'Hong Kong', code: HK }
-  - { country: Hungary, code: HU, eu_member: true }
-  - { country: Iceland, code: IS }
-  - { country: India, code: IN }
-  - { country: Indonesia, code: ID }
-  - { country: Iraq, code: IQ }
-  - { country: Ireland, code: IE, eu_member: true }
+  - { country: Honduras, code3: HND, code: HN }
+  - { country: 'Hong Kong', code3: HKG, code: HK }
+  - { country: Hungary, code3: HUN, code: HU, eu_member: true }
+  - { country: Iceland, code3: ISL, code: IS }
+  - { country: India, code3: IND, code: IN }
+  - { country: Indonesia, code3: IDN, code: ID }
+  - { country: Iraq, code3: IRQ, code: IQ }
+  - { country: Ireland, code3: IRL, code: IE, eu_member: true }
   - { country: 'Islamic Republic of Iran', code: IR }
-  - { country: Israel, code: IL }
-  - { country: Italy, code: IT, eu_member: true }
-  - { country: Jamaica, code: JM }
-  - { country: Japan, code: JP }
-  - { country: Jordan, code: JO }
-  - { country: Kazakhstan, code: KZ }
-  - { country: Kenya, code: KE }
-  - { country: Kiribati, code: KI }
+  - { country: Israel, code3: ISR, code: IL }
+  - { country: Italy, code3: ITA, code: IT, eu_member: true }
+  - { country: Jamaica, code3: JAM, code: JM }
+  - { country: Japan, code3: JPN, code: JP }
+  - { country: Jordan, code3: JOR, code: JO }
+  - { country: Kazakhstan, code3: KAZ, code: KZ }
+  - { country: Kenya, code3: KEN, code: KE }
+  - { country: Kiribati, code3: KIR, code: KI }
   - { country: Korea, code: KP }
-  - { country: 'Korea, Republic of', code: KR }
-  - { country: Kuwait, code: KW }
-  - { country: Kyrgyzstan, code: KG }
+  - { country: 'Korea, Republic of', code3: KOR, code: KR }
+  - { country: Kuwait, code3: KWT, code: KW }
+  - { country: Kyrgyzstan, code3: KGZ, code: KG }
   - { country: Laos, code: LA }
-  - { country: Latvia, code: LV, eu_member: true }
-  - { country: Lebanon, code: LB }
-  - { country: Lesotho, code: LS }
-  - { country: Liberia, code: LR }
-  - { country: 'Libyan Arab Jamahiriya', code: LY }
-  - { country: Liechtenstein, code: LI }
-  - { country: Lithuania, code: LT, eu_member: true }
-  - { country: Luxembourg, code: LU, eu_member: true }
+  - { country: Latvia, code3: LVA, code: LV, eu_member: true }
+  - { country: Lebanon, code3: LBN, code: LB }
+  - { country: Lesotho, code3: LSO, code: LS }
+  - { country: Liberia, code3: LBR, code: LR }
+  - { country: 'Libyan Arab Jamahiriya', code3: LBY, code: LY }
+  - { country: Liechtenstein, code3: LIE, code: LI }
+  - { country: Lithuania, code3: LTU, code: LT, eu_member: true }
+  - { country: Luxembourg, code3: LUX, code: LU, eu_member: true }
   - { country: Macau, code: MO }
   - { country: Macedonia, code: MK }
-  - { country: Madagascar, code: MG }
-  - { country: Malawi, code: MW }
-  - { country: Malaysia, code: MY }
-  - { country: Maldives, code: MV }
-  - { country: Mali, code: ML }
-  - { country: Malta, code: MT, eu_member: true }
-  - { country: 'Marshall Islands', code: MH }
-  - { country: Martinique, code: MQ }
-  - { country: Mauritania, code: MR }
-  - { country: Mauritius, code: MU }
-  - { country: Mayotte, code: YT }
-  - { country: Mexico, code: MX }
+  - { country: Madagascar, code3: MDG, code: MG }
+  - { country: Malawi, code3: MWI, code: MW }
+  - { country: Malaysia, code3: MYS, code: MY }
+  - { country: Maldives, code3: MDV, code: MV }
+  - { country: Mali, code3: MLI, code: ML }
+  - { country: Malta, code3: MLT, code: MT, eu_member: true }
+  - { country: 'Marshall Islands', code3: MHL, code: MH }
+  - { country: Martinique, code3: MTQ, code: MQ }
+  - { country: Mauritania, code3: MRT, code: MR }
+  - { country: Mauritius, code3: MUS, code: MU }
+  - { country: Mayotte, code3: MYT, code: YT }
+  - { country: Mexico, code3: MEX, code: MX }
   - { country: Micronesia, code: FM }
-  - { country: 'Moldova, Republic of', code: MD }
-  - { country: Monaco, code: MC, eu_member: true }
-  - { country: Mongolia, code: MN }
-  - { country: Montserrat, code: MS }
-  - { country: Morocco, code: MA }
-  - { country: Mozambique, code: MZ }
-  - { country: Myanmar, code: MM }
-  - { country: Namibia, code: NA }
-  - { country: Nauru, code: NR }
-  - { country: Nepal, code: NP }
-  - { country: Netherlands, code: NL, eu_member: true }
-  - { country: 'Netherlands Antilles', code: AN }
-  - { country: 'New Caledonia', code: NC }
-  - { country: 'New Zealand', code: NZ }
-  - { country: Nicaragua, code: NI }
-  - { country: Niger, code: NE }
-  - { country: Nigeria, code: NG }
-  - { country: Niue, code: NU }
-  - { country: 'Norfolk Island', code: NF }
-  - { country: 'Northern Mariana Islands', code: MP }
-  - { country: Norway, code: NO }
-  - { country: Oman, code: OM }
-  - { country: Pakistan, code: PK }
-  - { country: Palau, code: PW }
-  - { country: Panama, code: PA }
-  - { country: 'Papua New Guinea', code: PG }
-  - { country: Paraguay, code: PY }
-  - { country: Peru, code: PE }
-  - { country: Philippines, code: PH }
-  - { country: Pitcairn, code: PN }
-  - { country: Poland, code: PL, eu_member: true }
-  - { country: Portugal, code: PT, eu_member: true }
-  - { country: 'Puerto Rico', code: PR }
-  - { country: Qatar, code: QA }
+  - { country: 'Moldova, Republic of', code3: MDA, code: MD }
+  - { country: Monaco, code3: MCO, code: MC, eu_member: true }
+  - { country: Mongolia, code3: MNG, code: MN }
+  - { country: Montserrat, code3: MSR, code: MS }
+  - { country: Morocco, code3: MAR, code: MA }
+  - { country: Mozambique, code3: MOZ, code: MZ }
+  - { country: Myanmar, code3: MMR, code: MM }
+  - { country: Namibia, code3: NAM, code: NA }
+  - { country: Nauru, code3: NRU, code: NR }
+  - { country: Nepal, code3: NPL, code: NP }
+  - { country: Netherlands, code3: NLD, code: NL, eu_member: true }
+  - { country: 'Netherlands Antilles', code3: ANT, code: AN }
+  - { country: 'New Caledonia', code3: NCL, code: NC }
+  - { country: 'New Zealand', code3: NZL, code: NZ }
+  - { country: Nicaragua, code3: NIC, code: NI }
+  - { country: Niger, code3: NER, code: NE }
+  - { country: Nigeria, code3: NGA, code: NG }
+  - { country: Niue, code3: NIU, code: NU }
+  - { country: 'Norfolk Island', code3: NFK, code: NF }
+  - { country: 'Northern Mariana Islands', code3: MNP, code: MP }
+  - { country: Norway, code3: NOR, code: NO }
+  - { country: Oman, code3: OMN, code: OM }
+  - { country: Pakistan, code3: PAK, code: PK }
+  - { country: Palau, code3: PLW, code: PW }
+  - { country: Panama, code3: PAN, code: PA }
+  - { country: 'Papua New Guinea', code3: PNG, code: PG }
+  - { country: Paraguay, code3: PRY, code: PY }
+  - { country: Peru, code3: PER, code: PE }
+  - { country: Philippines, code3: PHL, code: PH }
+  - { country: Pitcairn, code3: PCN, code: PN }
+  - { country: Poland, code3: POL, code: PL, eu_member: true }
+  - { country: Portugal, code3: PRT, code: PT, eu_member: true }
+  - { country: 'Puerto Rico', code3: PRI, code: PR }
+  - { country: Qatar, code3: QAT, code: QA }
   - { country: Reunion, code: RE }
-  - { country: Romania, code: RO, eu_member: true }
-  - { country: 'Russian Federation', code: RU }
-  - { country: Rwanda, code: RW }
-  - { country: 'Saint Lucia', code: LC }
-  - { country: Samoa, code: WS }
-  - { country: 'San Marino', code: SM }
-  - { country: 'Sao Tome and Principe', code: ST }
-  - { country: 'Saudi Arabia', code: SA }
-  - { country: Senegal, code: SN }
-  - { country: Seychelles, code: SC }
-  - { country: 'Sierra Leone', code: SL }
-  - { country: Singapore, code: SG }
-  - { country: Slovakia, code: SK, eu_member: true }
-  - { country: Slovenia, code: SI, eu_member: true }
-  - { country: 'Solomon Islands', code: SB }
-  - { country: Somalia, code: SO }
-  - { country: 'South Africa', code: ZA }
-  - { country: Spain, code: ES, eu_member: true }
-  - { country: 'Sri Lanka', code: LK }
+  - { country: Romania, code3: ROU, code: RO, eu_member: true }
+  - { country: 'Russian Federation', code3: RUS, code: RU }
+  - { country: Rwanda, code3: RWA, code: RW }
+  - { country: 'Saint Lucia', code3: LCA, code: LC }
+  - { country: Samoa, code3: WSM, code: WS }
+  - { country: 'San Marino', code3: SMR, code: SM }
+  - { country: 'Sao Tome and Principe', code3: STP, code: ST }
+  - { country: 'Saudi Arabia', code3: SAU, code: SA }
+  - { country: Senegal, code3: SEN, code: SN }
+  - { country: Seychelles, code3: SYC, code: SC }
+  - { country: 'Sierra Leone', code3: SLE, code: SL }
+  - { country: Singapore, code3: SGP, code: SG }
+  - { country: Slovakia, code3: SVK, code: SK, eu_member: true }
+  - { country: Slovenia, code3: SVN, code: SI, eu_member: true }
+  - { country: 'Solomon Islands', code3: SLB, code: SB }
+  - { country: Somalia, code3: SOM, code: SO }
+  - { country: 'South Africa', code3: ZAF, code: ZA }
+  - { country: Spain, code3: ESP, code: ES, eu_member: true }
+  - { country: 'Sri Lanka', code3: LKA, code: LK }
   - { country: 'St. Helena', code: SH }
   - { country: 'St. Kitts And Nevis', code: KN }
   - { country: 'St. Pierre and Miquelon', code: PM }
   - { country: 'St. Vincent And The Greadines', code: VC }
-  - { country: Sudan, code: SD }
-  - { country: Suriname, code: SR }
-  - { country: 'Svalbard and Jan Mayen Islands', code: SJ }
-  - { country: Swaziland, code: SZ }
-  - { country: Sweden, code: SE, eu_member: true }
-  - { country: Switzerland, code: CH }
-  - { country: 'Syrian Arab Republic', code: SY }
+  - { country: Sudan, code3: SDN, code: SD }
+  - { country: Suriname, code3: SUR, code: SR }
+  - { country: 'Svalbard and Jan Mayen', code3: SJM, code: SJ }
+  - { country: Swaziland, code3: SWZ, code: SZ }
+  - { country: Sweden, code3: SWE, code: SE, eu_member: true }
+  - { country: Switzerland, code3: CHE, code: CH }
+  - { country: 'Syrian Arab Republic', code3: SYR, code: SY }
   - { country: Taiwan, code: TW }
-  - { country: Tajikistan, code: TJ }
-  - { country: 'Tanzania, United Republic of', code: TZ }
-  - { country: Thailand, code: TH }
-  - { country: Togo, code: TG }
-  - { country: Tokelau, code: TK }
-  - { country: Tonga, code: TO }
-  - { country: 'Trinidad and Tobago', code: TT }
-  - { country: Tunisia, code: TN }
-  - { country: Turkey, code: TR }
-  - { country: Turkmenistan, code: TM }
-  - { country: 'Turks and Caicos Islands', code: TC }
-  - { country: Tuvalu, code: TV }
-  - { country: Uganda, code: UG }
-  - { country: Ukraine, code: UA }
-  - { country: 'United Arab Emirates', code: AE }
-  - country: 'United Kingdom (Great Britain)'
+  - { country: Tajikistan, code3: TJK, code: TJ }
+  - { country: 'Tanzania, United Republic of', code3: TZA, code: TZ }
+  - { country: Thailand, code3: THA, code: TH }
+  - { country: Togo, code3: TGO, code: TG }
+  - { country: Tokelau, code3: TKL, code: TK }
+  - { country: Tonga, code3: TON, code: TO }
+  - { country: 'Trinidad and Tobago', code3: TTO, code: TT }
+  - { country: Tunisia, code3: TUN, code: TN }
+  - { country: Turkey, code3: TUR, code: TR }
+  - { country: Turkmenistan, code3: TKM, code: TM }
+  - { country: 'Turks and Caicos Islands', code3: TCA, code: TC }
+  - { country: Tuvalu, code3: TUV, code: TV }
+  - { country: Uganda, code3: UGA, code: UG }
+  - { country: Ukraine, code3: UKR, code: UA }
+  - { country: 'United Arab Emirates', code3: ARE, code: AE }
+  - country: 'United Kingdom'
+    code3: GBR
     code: GB
     eu_member: true
     states:
@@ -988,7 +991,7 @@ XLite\Model\Country:
       - { state: 'West Midlands', code: WM }
       - { state: 'West Sussex', code: WS }
       - { state: 'West Yorkshire', code: WYK }
-  - country: 'United States'
+  - country: 'United States', code3: USA
     code: US
     states:
       - { state: Alabama, code: AL }
@@ -1045,19 +1048,19 @@ XLite\Model\Country:
       - { state: 'West Virginia', code: WV }
       - { state: Wisconsin, code: WI }
       - { state: Wyoming, code: WY }
-  - { country: 'United States Virgin Islands', code: VI }
-  - { country: Uruguay, code: UY }
-  - { country: Uzbekistan, code: UZ }
-  - { country: Vanuatu, code: VU }
+  - { country: 'USA Virgin Islands', code3: VGB, code: VI }
+  - { country: Uruguay, code3: URY, code: UY }
+  - { country: Uzbekistan, code3: UZB, code: UZ }
+  - { country: Vanuatu, code3: VUT, code: VU }
   - { country: 'Vatican City State', code: VA }
   - { country: Venezuela, code: VE }
-  - { country: 'Viet Nam', code: VN }
+  - { country: 'Viet Nam', code3: VNM, code: VN }
   - { country: 'Wallis And Futuna Islands', code: WF }
-  - { country: 'Western Sahara', code: EH }
-  - { country: Yemen, code: YE }
-  - { country: 'Serbia and Montenegro', code: YU }
-  - { country: Zambia, code: ZM }
-  - { country: Zimbabwe, code: ZW }
+  - { country: 'Western Sahara', code3: ESH, code: EH }
+  - { country: Yemen, code3: YEM, code: YE }
+  - { country: Serbia, code3: SRB, code: RS }
+  - { country: Zambia, code3: ZMB, code: ZM }
+  - { country: Zimbabwe, code3: ZWE, code: ZW }
 XLite\Model\Order\Modifier:
   - { class: '\XLite\Logic\Order\Modifier\Shipping' }
 XLite\Model\Shipping\Method:

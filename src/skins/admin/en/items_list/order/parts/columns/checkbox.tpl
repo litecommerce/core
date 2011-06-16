@@ -11,4 +11,6 @@
  * @ListChild (list="itemsList.order.admin.search.columns", weight="10")
  *}
 
-<td><input type="checkbox" class="checkbox {order.getOrderId()}" value="1" name="{getNameToDelete(order.getOrderId())}" /></td>
+<td>
+  <input type="checkbox" class="checkbox {order.getOrderId()}" value="1" name="{getNameToDelete(order.getOrderId())}" />
+</td>

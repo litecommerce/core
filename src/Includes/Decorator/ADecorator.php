@@ -41,6 +41,10 @@ abstract class ADecorator
     const STEP_FIRST  = 1;
     const STEP_SECOND = 2;
     const STEP_THIRD  = 3;
+    const STEP_FOUR   = 4;
+    const STEP_FIVE   = 5;
+
+    const LAST_STEP   = 5;
 
 
     /**
@@ -107,11 +111,10 @@ abstract class ADecorator
      * Return classes repository path
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function getClassesDir()
+    public static function getClassesDir()
     {
         return (self::STEP_FIRST === static::$step) ? LC_DIR_CLASSES : LC_DIR_CACHE_CLASSES;
     }

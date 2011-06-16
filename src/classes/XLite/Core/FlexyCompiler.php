@@ -742,7 +742,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
     {
         $result = '';
 
-        if (!isset($module) || \Includes\Decorator\Utils\ModulesManager::isActiveModule($module)) {
+        if (!isset($module) || \Includes\Utils\ModulesManager::isActiveModule($module)) {
 
             $class = isset($attrs['class']) ? $this->flexyAttribute($attrs['class'], false) : null;
 
@@ -776,14 +776,13 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
             $this->unsetAttributes($attrs, array('IF', 'FOREACH', 'class', 'mode'));
 
-            list($skin, $template) = $this->getTemplateInfo();
-
             if (empty($arguments) && (1 == count($attrs)) && isset($attrs['template'])) {
-                $result .= '$this->includeCompiledFile(' . $this->flexyAttribute($attrs['template'])  . ', \'' . $skin . '\', \'' . $template . '\');';
+                $result .= '$this->includeCompiledFile(' . $this->flexyAttribute($attrs['template'])  . ');';
+
             } else {
                 $result .= '$this->getWidget('
                     . (empty($attrs) ? (empty($arguments) ? '' : 'array()') : $this->getAttributesList($attrs))
-                    . (empty($arguments) ? '' : ', ' . $arguments) . ')->setPreviousTpl(\'' . $skin . '\', \'' . $template . '\')->display();';
+                    . (empty($arguments) ? '' : ', ' . $arguments) . ')->display();';
             }
 
 
@@ -1288,11 +1287,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     public function prepare($original, $force = false)
     {
-        $compiled = \Includes\Utils\FileManager::normalize(
-            LC_DIR_COMPILE . substr($original, $this->rootDirLength) . '.php'
-        );
-
-        $original = \Includes\Utils\FileManager::normalize($original);
+        $compiled = LC_DIR_COMPILE . substr($original, $this->rootDirLength) . '.php';
 
         if (($this->checkTemplateStatus && !$this->isTemplateValid($original, $compiled)) || $force) {
 

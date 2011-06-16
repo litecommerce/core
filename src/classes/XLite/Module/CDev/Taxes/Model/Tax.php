@@ -41,9 +41,9 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * Product unique ID
      *
-     * @var    int
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -76,18 +76,19 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * Tax rates (relation)
      *
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\Taxes\Model\Tax\Rate", mappedBy="tax", cascade={"all"})
      */
     protected $rates;
 
+
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -103,7 +104,7 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * Get filtered rates by zones and membership
      *
-     * @param array                  $zones      Zone id list
+     * @param array                   $zones      Zone id list
      * @param \XLite\Model\Membership $membership Membership
      *
      * @return array

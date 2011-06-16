@@ -519,18 +519,6 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Return name of the current form
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return get_class($this);
-    }
-
-    /**
      * Define widget parameters
      *
      * @return void
@@ -1333,5 +1321,17 @@ abstract class AModel extends \XLite\View\Dialog
     protected function prepareObjectForMapping()
     {
         return $this->getModelObject();
+    }
+
+    /**
+     * Return name of the current form
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFormName()
+    {
+        return get_class($this);
     }
 }

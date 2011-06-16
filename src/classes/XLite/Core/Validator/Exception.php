@@ -54,6 +54,15 @@ class Exception extends \XLite\Core\Exception
     protected $arguments = array();
 
     /**
+     * Public name 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $publicName;
+
+    /**
      * Add path item
      *
      * @param mixed $item Path item key
@@ -65,6 +74,32 @@ class Exception extends \XLite\Core\Exception
     public function addPathItem($item)
     {
         array_unshift($this->path, $item);
+    }
+
+    /**
+     * Set public name 
+     * 
+     * @param string $name Public name
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setPublicName($name)
+    {
+        $this->publicName = $name;
+    }
+
+    /**
+     * Get public name 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPublicName()
+    {
+        return $this->publicName;
     }
 
     /**

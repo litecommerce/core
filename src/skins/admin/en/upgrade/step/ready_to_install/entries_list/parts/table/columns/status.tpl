@@ -14,4 +14,4 @@
  *}
 
 <td IF="entry.isValid()" class="status enabled"></td>
-<td IF="!entry.isValid()" class="status disabled">X</td>
+<td IF="!entry.isValid()" class="status disabled">{t(#Failure#)}</td>

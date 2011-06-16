@@ -92,6 +92,6 @@ class CommonCell extends \Includes\DataStructure\Cell implements \Iterator
      */
     public function valid()
     {
-        return false !== $this->current();
+        return !is_null($this->key());
     }
 }

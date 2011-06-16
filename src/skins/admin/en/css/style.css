@@ -485,6 +485,8 @@ table.data-table th
 {
   background-color: #e5ebef;
   text-align: left;
+  padding: 10px;
+  vertical-align: top;
 }
 
 table.data-table th.center
@@ -977,12 +979,15 @@ button.bright:active
 {
   white-space: nowrap;
   vertical-align: top;
-  line-height: 24px;
 }
 
 .table-input {
   line-height: 24px;
   vertical-align: top;
+}
+
+.checkboxes {
+  width: 1px;
 }
 
 .table-input-checkbox input {
@@ -1002,6 +1007,10 @@ button.bright:active
 form.profile-form
 {
   margin-top: 15px;
+}
+
+.users-delete-note {
+  margin: 20px 0px 0px 0px;
 }
 
 table.data-table th.table-id-column,
@@ -1161,6 +1170,7 @@ table.top-sellers th.title {
 
 .benchmark-summary {
   width: 348px;
+  margin-bottom: 20px;
 }
 
 .summary-box-content p {
@@ -1184,8 +1194,11 @@ table.top-sellers th.title {
 }
 
 .benchmark-summary .completed .score {
-  color: #9d2307;
   font-size: 22px;
+}
+
+.benchmark-summary .completed .score-high {
+  color: #9d2307;
 }
 
 .benchmark-summary .date {
@@ -1219,34 +1232,31 @@ table.top-sellers th.title {
   vertical-align: top;
 }
 
-.benchmark-summary li {
+.benchmark-summary td {
   padding: 11px 0px;
   vertical-align: middle;
 }
 
-.benchmark-summary li * {
+.benchmark-summary td * {
   vertical-align: middle;
 }
 
-.benchmark-summary li,
-.benchmark-summary li span
+.benchmark-summary td,
+.benchmark-summary td span
 {
   font-size: 15px;
 }
 
-.benchmark-summary li span.name {
-  display: inline-block;
-  position: relative;
-  width: 132px;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.benchmark-summary ul a {
+.benchmark-summary td a {
   text-decoration: underline;
 }
 
-.benchmark-summary li span.score {
+.benchmark-summary td.dash {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.benchmark-summary td .score {
   color: #338d0f;
 }
 
@@ -1304,4 +1314,76 @@ table.top-sellers th.title {
 .upgrade-core-frame .action {
   padding-left: 35%;
   padding-top: 10px;
+}
+
+div.default-section {
+  float: left;
+}
+
+div.model-form-buttons {
+  clear: left;
+}
+
+ul.default-table {
+  list-style: none;
+  min-width: 450px;
+}
+
+ul.default-table li {
+  background-image: none;
+  padding: 0px;
+  float: left;
+  clear: left;
+}
+
+div.table-label {
+  float: left;
+}
+
+ul.default-table div.table-label label {
+  width: 80px;
+}
+
+div.star {
+  float: left;
+  width: 10px;
+}
+
+.table-label,
+  .table-value
+{
+  line-height: 24px;
+}
+
+div.table-value {
+  float: left;
+}
+
+div.table-label label {
+  display: block;
+}
+
+ul.summary-table,
+  ul.main-table,
+  ul.access-table
+{
+  margin: 8px 0px 5px 27px;
+}
+
+ul.summary-table li,
+  ul.main-table li,
+  ul.access-table li
+{
+  padding: 0px 0px 13px 0px;
+}
+
+ul.summary-table .table-value,
+  ul.main-table .table-value,
+  ul.access-table .table-value
+{
+  padding: 0px 0px 0px 56px;
+}
+
+table.payment-methods {
+  width: 600px;
 }

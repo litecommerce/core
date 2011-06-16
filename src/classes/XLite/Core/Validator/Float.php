@@ -57,13 +57,13 @@ class Float extends \XLite\Core\Validator\Scalar
      * Set range
      *
      * @param float $min Minimum
-     * @param float $max Maximum
+     * @param float $max Maximum OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function setRange($min, $max)
+    public function setRange($min, $max = null)
     {
         if (isset($min) && is_numeric($min)) {
             $this->min = $min;

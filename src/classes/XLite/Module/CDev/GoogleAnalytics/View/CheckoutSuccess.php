@@ -95,15 +95,6 @@ class CheckoutSuccess extends \XLite\View\AView
 
         $order = $this->getOrder();
         if (!in_array($order->getOrderId(), $orders)) {
-            foreach ($order->getItems() as $item) {
-                $list[] = 'tracker._addItem('
-                    . '\'' . $order->getOrderId() . '\', '
-                    . '\'' . $this->escapeJavascript($item->getSku()) . '\', '
-                    . '\'' . $this->escapeJavascript($item->getName()) . '\', '
-                    . '\'\', '
-                    . '\'' . $item->getPrice() . '\', '
-                    . '\'' . $item->getAmount() . '\');';
-            }
 
             $bAddress = $order->getProfile()->getBillingAddress();
             $city = $bAddress ? $bAddress->getCity() : '';
@@ -113,7 +104,7 @@ class CheckoutSuccess extends \XLite\View\AView
             $tax = $order->getSurchargeSumByType('TAX');
             $shipping = $order->getSurchargeSumByType('SHIPPING');
 
-            $list[] = 'tracker._addTrans('
+            $list[] = '\'_addTrans\', '
                 . '\'' . $order->getOrderId() . '\', '
                 . '\'' . $this->escapeJavascript(\XLite\Core\Config::getInstance()->Company->company_name) . '\', '
                 . '\'' . $order->getTotal() . '\', '
@@ -121,9 +112,36 @@ class CheckoutSuccess extends \XLite\View\AView
                 . '\'' . $shipping . '\', '
                 . '\'' . $this->escapeJavascript($city) . '\', '
                 . '\'' . $this->escapeJavascript($state) . '\', '
-                . '\'' . $this->escapeJavascript($country) . '\');';
+                . '\'' . $this->escapeJavascript($country) . '\'';
 
-            $list[] = 'tracker._trackTrans();';
+            foreach ($order->getItems() as $item) {
+
+                $product = $item->getProduct();
+                $category = $product ? $product->getCategory() : null;
+                if ($category && $category->getCategoryId()) {
+                    $categories = \XLite\Core\Database::getRepo('XLite\Model\Category')
+                        ->getCategoryPath($category->getCategoryId());
+                    $category = array();
+                    foreach ($categories as $cat) {
+                        $category[] = $cat->getName();
+                    }
+
+                    $category = implode(' / ', $category);
+
+                } else {
+                    $category = '';
+                }
+
+                $list[] = '\'_addItem\', '
+                    . '\'' . $order->getOrderId() . '\', '
+                    . '\'' . $this->escapeJavascript($item->getSku()) . '\', '
+                    . '\'' . $this->escapeJavascript($item->getName()) . '\', '
+                    . '\'' . $this->escapeJavascript($category) . '\', '
+                    . '\'' . $item->getPrice() . '\', '
+                    . '\'' . $item->getAmount() . '\'';
+            }
+
+            $list[] = '\'_trackTrans\'';
 
             $orders[] = $order->getOrderId();
             \XLite\Core\Session::getInstance()->gaProcessedOrders = $orders;
@@ -171,11 +189,11 @@ class CheckoutSuccess extends \XLite\View\AView
      */
     protected function escapeJavascript($string)
     {
-         return strtr(
+        return strtr(
             $string,
             array(
                 '\\' => '\\\\',
-                '\'' => "\\'",
+                '\'' => '\\\'',
                 '"'  => '\\"',
                 "\r" => '\\r',
                 "\n" => '\\n',

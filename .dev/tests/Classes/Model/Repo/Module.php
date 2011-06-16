@@ -25,240 +25,439 @@
  * @since      1.0.0
  */
 
-class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
+/**
+ * XLite_Tests_Model_Repo_Module 
+ * 
+ * @see   ____class_see____
+ * @since 1.0.0
+ */
+class XLite_Tests_Model_Repo_Module extends XLite_Tests_TestCase
 {
+    /**
+     * setUp 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function setUp()
     {
         parent::setUp();
 
-        $this->markTestSkipped('Awaiting for new marketplace');
+        $this->doRestoreDb(__DIR__ . '/sql/module/setup.sql', false);
     }
 
     /**
-     * getDefaultCnd
-     *
-     * @return \XLite\Core\CommonCell
-     * @access protected
+     * testSearchAll 
+     * 
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultCnd()
+    public function testSearchAll()
     {
-        return new \XLite\Core\CommonCell(
+        $this->searchTest(null, null, 19, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testSearchSubstring 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchSubstring()
+    {
+        $this->searchTest('P_SUBSTRING', 'f', 9, 'CDev\ProductOptions');
+    }
+
+    /**
+     * testSearchPriceFilter 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchPriceFilterFree()
+    {
+        $this->searchTest('P_PRICE_FILTER', \XLite\Model\Repo\Module::PRICE_FREE, 16, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testSearchPriceFilterPaid 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchPriceFilterPaid()
+    {
+        $this->searchTest('P_PRICE_FILTER', \XLite\Model\Repo\Module::PRICE_PAID, 4, 'Test\Module7');
+    }
+
+    /**
+     * testSearchInstalled 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchInstalled()
+    {
+        $this->searchTest('P_INSTALLED', true, 12, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testSearchNotInstalled 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchNotInstalled()
+    {
+        $this->searchTest('P_INSTALLED', false, 10, 'Test\Module7');
+    }
+
+    /**
+     * testSearchInactive 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchInactive()
+    {
+        $this->searchTest('P_INACTIVE', true, 12, 'Test\Module7');
+    }
+
+    /**
+     * testSearchCoreVersion1
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchCoreVersion1()
+    {
+        $this->searchTest('P_CORE_VERSION', '1.0', 17, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testSearchCoreVersion2
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchCoreVersion2()
+    {
+        $this->searchTest('P_CORE_VERSION', '1.0', 17, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testSearchFromMarketplace 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchFromMarketplace()
+    {
+        $this->searchTest('P_FROM_MARKETPLACE', true, 10, 'Test\Module7');
+    }
+
+    /**
+     * testSearchOrderByAsc 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchOrderByAsc()
+    {
+        $this->searchTest('P_ORDER_BY', array('m.name', 'ASC'), 19, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testSearchOrderByDesc
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchOrderByDesc()
+    {
+        $this->searchTest('P_ORDER_BY', array('m.name', 'DESC'), 19, 'CDev\AustraliaPost');
+    }
+
+    /**
+     * testSearchLimit 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchLimit()
+    {
+        $this->searchTest('P_LIMIT', array(2, 7), 7, 'Test\Module1');
+    }
+
+    /**
+     * testSearchTag 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testSearchTag()
+    {
+        $this->searchTest('P_TAG', 'Test', 19, 'CDev\TinyMCE');
+    }
+
+    /**
+     * testpUdateMarketplaceModules 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testUpdateMarketplaceModules()
+    {
+        $data = array(
             array(
-                \XLite\Model\Repo\Module::P_SUBSTRING => '',
-                \XLite\Model\Repo\Module::P_ORDER_BY => array(
-                    \XLite\View\ItemsList\Module\AModule::SORT_BY_MODE_NAME,
-                    \XLite\View\ItemsList\Module\AModule::SORT_ORDER_ASC
-                ),
-                \XLite\Model\Repo\Module::P_LIMIT => array(0, 100),
-            )
+                'name'          => 'Module1',
+                'author'        => 'Test',
+                'enabled'       => 1,
+                'installed'     => 1,
+                'date'          => time(),
+                'majorVersion'  => '1.0',
+                'minorVersion'  => '1',
+                'moduleName'    => 'Module2',
+                'authorName'    => 'Test',
+                'description'   => 'Description',
+                'iconURL'       => '',
+                'pageURL'       => '',
+                'authorPageURL' => '',
+                'dependencies'  => array(),
+                'rating'        => 0,
+                'votes'         => 0,
+                'downloads'     => 0,
+                'price'         => 0.00,
+                'currency'      => 'USD',
+                'revisionDate'  => 0,
+                'packSize'      => 0,
+            ),
+            array(
+                'name'          => 'Module2',
+                'author'        => 'Test',
+                'enabled'       => 1,
+                'installed'     => 1,
+                'date'          => time(),
+                'majorVersion'  => '1.0',
+                'minorVersion'  => '1',
+                'moduleName'    => 'Module2',
+                'authorName'    => 'Test',
+                'description'   => 'Description',
+                'iconURL'       => '',
+                'pageURL'       => '',
+                'authorPageURL' => '',
+                'dependencies'  => array(),
+                'rating'        => 0,
+                'votes'         => 0,
+                'downloads'     => 0,
+                'price'         => 0.00,
+                'currency'      => 'USD',
+                'revisionDate'  => 0,
+                'packSize'      => 0,
+            ),
         );
+
+        $this->getRepo()->updateMarketplaceModules($data);
+
+        $this->searchTest(null, null, 14, 'CDev\TinyMCE');
     }
 
     /**
-     * testSearchAll
-     *
+     * testGetModuleForUpdate 
+     * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function testSearch()
+    public function testGetModuleForUpdate()
     {
-        $cnd = $this->getDefaultCnd();
+        $installed = $this->getModuleByAuthorAndName('CDev', 'DrupalConnector', '1.0', '0');
+        $forUpdate = $this->getRepo()->getModuleForUpdate($installed);
 
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->search($cnd);
+        $this->assertNotNull($forUpdate, 'check if module is found');
+        $this->assertNotEquals($installed->getModuleID(), $forUpdate->getModuleID(), 'check module IDs');
 
-        // If all products selected
-        $this->assertEquals(44, count($result), 'Number of found modules does not match');
+        $installed = $this->getModuleByAuthorAndName('CDev', 'Bestsellers', '1.0', '0');
+        $forUpdate = $this->getRepo()->getModuleForUpdate($installed);
 
-        // If the first selected (SORT_BY_MODE_NAME, SORT_ORDER_ASC) is the "AustraliaPost" one
-        $this->assertEquals('2checkout', $result[0]->getModuleName(), 'Name of the first found module does not match');
-        $this->assertEquals('X-Payments connector', $result[count($result)-1]->getModuleName(), 'Name of the last found module does not match');
+        $this->assertNull($forUpdate, 'check if module is found');
     }
 
     /**
-     * testFindAllModules
-     *
+     * testGetModuleFromMarketplace 
+     * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function testFindAllModules()
+    public function testGetModuleFromMarketplace()
     {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllModules();
+        $installed = $this->getModuleByAuthorAndName('CDev', 'DrupalConnector', '1.0', '0');
+        $fromMarketplace = $this->getRepo()->getModuleFromMarketplace($installed);
 
-        $this->assertEquals(44, count($result), 'Number of found modules does not match');
+        $this->assertNotNull($fromMarketplace, 'check if module is found [1]');
+        $this->assertNotEquals($installed->getModuleID(), $fromMarketplace->getModuleID(), 'check module IDs [1]');
+        $this->assertNotEmpty($fromMarketplace->getMarketplaceID(), 'check marketplace ID [1]');
+
+        $installed = $this->getModuleByAuthorAndName('CDev', 'Bestsellers', '1.0', '0');
+        $fromMarketplace = $this->getRepo()->getModuleFromMarketplace($installed);
+
+        $this->assertNotNull($fromMarketplace, 'check if module is found [2]');
+        $this->assertEquals($installed->getModuleID(), $fromMarketplace->getModuleID(), 'check module IDs [2]');
+        $this->assertNotEmpty($fromMarketplace->getMarketplaceID(), 'check marketplace ID [2]');
     }
 
     /**
-     * testFindInactiveModules
-     *
+     * testGetModuleInstalled 
+     * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function testFindInactiveModules()
+    public function testGetModuleInstalled()
     {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findInactiveModules();
+        $fromMarketplace = $this->getModuleByAuthorAndName('CDev', 'DrupalConnector', '1.0', '1');
+        $installed = $this->getRepo()->getModuleInstalled($fromMarketplace);
 
-        $this->assertEquals(37, count($result), 'Number of found inactive modules does not match');
-        $this->assertEquals('Accounting Package', $result[0]->getModuleName(), 'Name of the first found module does not match');
-        $this->assertEquals('X-Payments connector', $result[count($result)-1]->getModuleName(), 'Name of the last found module does not match');
+        $this->assertNotNull($installed, 'check if module is found [1]');
+        $this->assertEquals($installed->getModuleID(), $fromMarketplace->getModuleID(), 'check module IDs [1]');
+        $this->assertEquals('1.0', $installed->getMajorVersion(), 'check major version [1]');
+        $this->assertEquals('0', $installed->getMinorVersion(), 'check minor version [1]');
+
+        $fromMarketplace = $this->getModuleByAuthorAndName('CDev', 'TinyMCE', '1.0', '0');
+        $installed = $this->getRepo()->getModuleInstalled($fromMarketplace);
+
+        $this->assertNotNull($installed, 'check if module is found [2]');
+        $this->assertEquals($installed->getModuleID(), $fromMarketplace->getModuleID(), 'check module IDs [2]');
+        $this->assertEquals('1.0', $installed->getMajorVersion(), 'check major version [2]');
+        $this->assertEquals('0', $installed->getMinorVersion(), 'check minor version [2]');
     }
 
     /**
-     * testFindUpgradableModules
-     *
+     * testGetModuleForUpgrade 
+     * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function testFindUpgradableModules()
+    public function testGetModuleForUpgrade()
     {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findUpgradableModules();
+        $installed = $this->getModuleByAuthorAndName('CDev', 'DrupalConnector', '1.0', '0');
+        $forUpgrade = $this->getRepo()->getModuleForUpgrade($installed, '1.0');
 
-        $this->assertEquals(0, count($result), 'Number of found upgradable modules does not match');
+        $this->assertNotNull($forUpgrade, 'check if module is found [1]');
+        $this->assertNotEquals($installed->getModuleID(), $forUpgrade->getModuleID(), 'check module IDs [1]');
+        $this->assertNotEmpty($forUpgrade->getMarketplaceID(), 'check marketplace ID [1]');
+        $this->assertEquals('1.0', $forUpgrade->getMajorVersion(), 'check major version [1]');
+        $this->assertEquals('1', $forUpgrade->getMinorVersion(), 'check minor version [1]');
+
+        $installed = $this->getModuleByAuthorAndName('CDev', 'Bestsellers', '1.0', '0');
+        $forUpgrade = $this->getRepo()->getModuleForUpgrade($installed, '1.0');
+
+        $this->assertNotNull($forUpgrade, 'check if module is found [2]');
+        $this->assertNotEquals($installed->getModuleID(), $forUpgrade->getModuleID(), 'check module IDs [2]');
+        $this->assertEquals('1.0', $forUpgrade->getMajorVersion(), 'check major version [2]');
+        $this->assertEquals('0', $forUpgrade->getMinorVersion(), 'check minor version [2]');
+
+        $installed = $this->getModuleByAuthorAndName('CDev', 'Bestsellers', '1.0', '0');
+        $forUpgrade = $this->getRepo()->getModuleForUpgrade($installed, '1.2');
+
+        $this->assertNull($forUpgrade, 'check if module is found [3]');
+    }
+
+    // {{{ Protected methods
+
+    /**
+     * getRepo
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getRepo()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module');
     }
 
     /**
-     * testFindAllNames
-     *
+     * searchTest 
+     * 
+     * @param mixed $param ____param_comment____
+     * @param mixed $value ____param_comment____
+     * @param mixed $count ____param_comment____
+     * @param mixed $name  ____param_comment____
+     *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function testFindAllNames()
+    protected function searchTest($param, $value, $count, $name)
     {
-        \XLite\Core\Database::getCacheDriver()->delete('Model_Module.data.names.all');
+        $cnd = new \XLite\Core\CommonCell();
 
-        $result = \XLite\Core\Database::getRepo('XLite\Model\Module')->findAllNames();
+        if (isset($param)) {
+            $cnd->{constant('\XLite\Model\Repo\Module::' . $param)} = $value;
+        }
 
-        $this->assertEquals(44, count($result), 'Number of found modules does not match');
+        $result = $this->getRepo()->search($cnd, true);
+        $this->assertEquals($count, $result, 'check modules count in search result');
 
-        $this->assertEquals('CDev\AustraliaPost', $result[0], 'First found module name does not match');
-        // NOTE: This test work is all another test is passed + data cache cell 'names' must be removed
-        $this->assertEquals('CDev\XPaymentsConnector', $result[count($result)-1], 'Last found module name does not match');
+        if ($result = $this->getRepo()->search($cnd)) {
+            $result = array_pop($result);
+            $this->assertEquals($name, $result->getActualName(), 'check module ID for the last item in search result');
+
+        } else {
+            $this->fail('Empty result');
+        }
     }
 
     /**
-     * testFindAllByModuleIds
+     * getModuleByAuthorAndName
+     *
+     * @param mixed $author   ____param_comment____
+     * @param mixed $name     ____param_comment____
+     * @param mixed $version  ____param_comment____
+     * @param mixed $revision ____param_comment____
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function testFindAllByModuleIds()
+    protected function getModuleByAuthorAndName($author, $name, $version = null, $revision = null)
     {
-        $ids = array(1,3,5);
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllByModuleIds($ids);
+        if (!($module = $this->getRepo()->findOneBy(array('author' => $author, 'name' => $name)))) {
+            $module = new \XLite\Model\Module();
 
-        $this->assertEquals(3, count($result), 'Number of found modules does not match');
+            $module->setAuthor($author);
+            $module->setName($name);
 
-        $this->assertEquals(1, $result[0]->getModuleId(), 'First found module name does not match');
-        $this->assertEquals(5, $result[count($result)-1]->getModuleId(), 'Last found module name does not match');
+            if (isset($version)) {
+                $module->setMajorVersion($version);
+    
+                if (isset($revision)) {
+                    $module->setMinorVersion($revision);
+                }
+            }
+        }
+
+        return $module;
     }
 
-    /**
-     * testFindAllByModuleIds
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testFindAllEnabled()
-    {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllEnabled();
-
-        $this->assertEquals(7, count($result), 'Number of found active modules does not match');
-        $this->assertEquals(1, $result[0]->getModuleId(), 'ID of the first found module does not match');
-        $this->assertEquals(7, $result[count($result)-1]->getModuleId(), 'ID of the last found module does not match');
-    }
-
-    /**
-     * testFindAllByModuleIds
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testFindByActualName()
-    {
-        $name = 'FeaturedProducts';
-        $author = 'CDev';
-
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findByActualName($name, $author);
-        $this->assertEquals('FeaturedProducts', $result->getName(), 'Did not find module by actual name');
-        $this->assertEquals('CDev', $result->getAuthor(), 'Did not find module by actual name');
-    }
-
-    /**
-     * testGetActiveModules
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testGetActiveModules()
-    {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->getActiveModules();
-
-        $checkModule = 'CDev\AustraliaPost';
-
-        $this->assertEquals(7, count($result), 'Number of found active modules does not match');
-        $this->assertEquals($checkModule, $result[$checkModule]->getActualName(), 'Check found active modules format');
-    }
-
-    /**
-     * testIsModuleActive
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testIsModuleActive()
-    {
-        $nameA = 'CDev\FeaturedProducts';
-        $nameD = 'CDev\AOM';
-
-        $this->assertTrue(\XLite\Core\Database::getRepo('\XLite\Model\Module')->isModuleActive($nameA), 'active module check failed');
-        $this->assertFalse(\XLite\Core\Database::getRepo('\XLite\Model\Module')->isModuleActive($nameD), 'inactive module check failed');
-    }
-
-    /**
-     * testGetActiveModules
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testInitialize()
-    {
-        // TODO: check after tests on modules installation and depack are created
-    }
-
-    /**
-     * testGetActiveModules
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testCheckModules()
-    {
-        // TODO: check after tests on modules installation and depack are created
-    }
-
+    // }}}
 }

@@ -97,15 +97,6 @@ abstract class AView extends \XLite\Core\Handler
     protected static $countLevel = 0;
 
     /**
-     * isCloned
-     *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $isCloned = false;
-
-    /**
      * Widgets resources collector
      *
      * @var   array
@@ -116,6 +107,24 @@ abstract class AView extends \XLite\Core\Handler
         self::RESOURCE_JS  => array(),
         self::RESOURCE_CSS => array(),
     );
+
+    /**
+     * Templates tail 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected static $tail = array();
+
+    /**
+     * isCloned
+     *
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $isCloned = false;
 
     /**
      * "Named" widgets cache
@@ -134,24 +143,6 @@ abstract class AView extends \XLite\Core\Handler
      * @since 1.0.0
      */
     protected $viewLists = array();
-
-    /**
-     * Previous skin name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $previousSkin;
-
-    /**
-     * Previous template short path
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $previousTemplate;
 
     /**
      * Return widget default template
@@ -197,6 +188,18 @@ abstract class AView extends \XLite\Core\Handler
     public static function getAllowedTargets()
     {
         return array();
+    }
+
+    /**
+     * Get templates tail 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getTail()
+    {
+        return \XLite\View\AView::$tail;
     }
 
 
@@ -545,24 +548,6 @@ abstract class AView extends \XLite\Core\Handler
         return isset($value) ? $value : \XLite::getController()->get($name);
     }
 
-    /**
-     * setPreviousTpl
-     *
-     * @param string $skin     Skin name
-     * @param string $template Template name
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function setPreviousTpl($skin, $template)
-    {
-        $this->previousSkin = $skin;
-        $this->previousTemplate = $template;
-
-        return $this;
-    }
-
 
     /**
      * Return current template
@@ -580,19 +565,15 @@ abstract class AView extends \XLite\Core\Handler
      * Return full template file name
      *
      * @param string $template         Template file name OPTIONAL
-     * @param string $previousSkin     Previous skin OPTIONAL
-     * @param string $previousTemplate Previous template OPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getTemplateFile($template = null, $previousSkin = null, $previousTemplate = null)
+    protected function getTemplateFile($template = null)
     {
         return static::$layout->getTemplateFullPath(
-            $template ?: $this->getTemplate(),
-            $previousSkin ?: $this->previousSkin,
-            $previousTemplate ?: $this->previousTemplate
+            $template ?: $this->getTemplate()
         );
     }
 
@@ -748,17 +729,16 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Compile and display a template
      *
-     * @param string $original         Template file name OPTIONAL
-     * @param string $previousSkin     Previous skin OPTIONAL
-     * @param string $previousTemplate Previous template OPTIONAL
+     * @param string $original Template file name OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function includeCompiledFile($original = null, $previousSkin = null, $previousTemplate = null)
+    protected function includeCompiledFile($original = null)
     {
-        $compiled = static::$flexy->prepare($this->getTemplateFile($original, $previousSkin, $previousTemplate));
+        $normalized = $this->getTemplateFile($original);
+        $compiled = static::$flexy->prepare($normalized);
 
         // Execute PHP code from compiled template
         $cnt = \XLite\View\AView::$countDeep++;
@@ -780,10 +760,14 @@ abstract class AView extends \XLite\Core\Handler
             echo ('<!-- ' . $markTplText . ' {' . '{{ -->');
         }
 
+        \XLite\View\AView::$tail[] = $normalized;
+
         ob_start();
         include $compiled;
         $content = ob_get_contents();
         ob_end_clean();
+
+        array_pop(\XLite\View\AView::$tail);
 
         echo ($this->postprocessContent($content));
 
@@ -1345,44 +1329,31 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function defineViewList($list)
     {
-        $widgets    = array();
-        $hash       = array();
+        $widgets = array();
 
         foreach ($this->getViewListChildren($list) as $widget) {
 
-            if (!$widget->getTpl() || !isset($hash[$widget->getTpl()])) {
+            if ($widget->getChild()) {
 
-                $w = false;
+                // List child is widget
+                $widgets[] = $this->getWidget(
+                    array(
+                        'viewListClass' => $this->getViewListClass(),
+                        'viewListName'  => $list,
+                    ),
+                    $widget->getChild()
+                );
 
-                if ($widget->getChild()) {
+            } elseif ($widget->getTpl()) {
 
-                    // List child is widget
-                    $w = $this->getWidget(
-                        array(
-                            'viewListClass' => $this->getViewListClass(),
-                            'viewListName'  => $list,
-                        ),
-                        $widget->getChild()
-                    );
-
-                } elseif ($widget->getTpl()) {
-
-                    // List child is template
-                    $w = $this->getWidget(
-                        array(
-                            'viewListClass' => $this->getViewListClass(),
-                            'viewListName'  => $list,
-                            'template'      => $widget->getTpl(),
-                        )
-                    );
-                }
-
-                if ($w) {
-                    $widgets[] = $w;
-                    if ($widget->getTpl()) {
-                        $hash[$widget->getTpl()] = true;
-                    }
-                }
+                // List child is template
+                $widgets[] = $this->getWidget(
+                    array(
+                        'viewListClass' => $this->getViewListClass(),
+                        'viewListName'  => $list,
+                        'template'      => $widget->getTpl(),
+                    )
+                );
             }
         }
 

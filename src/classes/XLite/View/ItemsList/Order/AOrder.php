@@ -28,7 +28,7 @@
 namespace XLite\View\ItemsList\Order;
 
 /**
- * Abstract product list
+ * Abstract orders list
  *
  * @see   ____class_see____
  * @since 1.0.0

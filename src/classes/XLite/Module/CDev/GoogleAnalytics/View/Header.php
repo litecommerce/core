@@ -83,6 +83,22 @@ class Header extends \XLite\View\AView
             $order = $this->getOrder();
             if (!in_array($order->getOrderId(), $orders)) {
                 foreach ($order->getItems() as $item) {
+
+                    $product = $item->getProduct();
+                    $category = $product ? $product->getCategory() : null;
+                    if ($category && $category->getCategoryId()) {
+                        $categories = \XLite\Core\Database::getRepo('XLite\Model\Category')
+                            ->getCategoryPath($category->getCategoryId());
+                        $category = array();
+                        foreach ($categories as $cat) {
+                            $category[] = $cat->getName();
+                        }
+
+                        $category = implode(' / ', $category);
+
+                    } else {
+                        $category = '';
+                    }
                     $list[] = '\'_addItem\', '
                         . '\'' . $order->getOrderId() . '\', '
                         . '\'' . $this->escapeJavascript($item->getSku()) . '\', '
@@ -143,11 +159,11 @@ class Header extends \XLite\View\AView
     protected function isDisplayStandalone()
     {
         return (
-                !\XLite\Core\Operator::isClassExists('\XLite\Module\CDev\DrupalConnector\Handler')
-                || !\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
-            )
-            && \XLite\Core\Config::getInstance()->GoogleAnalytics
-            && \XLite\Core\Config::getInstance()->GoogleAnalytics->ga_account;
+            !\XLite\Core\Operator::isClassExists('\XLite\Module\CDev\DrupalConnector\Handler')
+            || !\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+        )
+        && \XLite\Core\Config::getInstance()->GoogleAnalytics
+        && \XLite\Core\Config::getInstance()->GoogleAnalytics->ga_account;
     }
 
     /**
@@ -161,11 +177,11 @@ class Header extends \XLite\View\AView
      */
     protected function escapeJavascript($string)
     {
-         return strtr(
+        return strtr(
             $string,
             array(
                 '\\' => '\\\\',
-                '\'' => "\\'",
+                '\'' => '\\\'',
                 '"'  => '\\"',
                 "\r" => '\\r',
                 "\n" => '\\n',

@@ -52,7 +52,7 @@ class TopMenu extends \XLite\View\AView
         'categories' => array(
             'category',
         ),
-        'users' => array(
+        'profile_list' => array(
             'profile',
             'address_book',
         ),
@@ -66,7 +66,6 @@ class TopMenu extends \XLite\View\AView
         ),
         'db_backup' => array(
             'db_restore',
-            'pack_distr',
         ),
     );
 
@@ -81,7 +80,6 @@ class TopMenu extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/menu.css';
 
         return $list;

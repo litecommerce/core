@@ -234,7 +234,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function mkdir($dir, $mode = 0755)
     {
-        return mkdir($dir, $mode) && static::chmod($dir, $mode);
+        return mkdir($dir, $mode);
     }
 
     /**
@@ -312,6 +312,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
                 if ($file->isDir()) {
                     static::mkdirRecursive($pathTo);
+
                 } else {
                     static::copy($pathFrom, $pathTo);
                 }
@@ -401,9 +402,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function write($path, $data, $flags = 0, $mode = 0644)
     {
-        return static::mkdirRecursive(static::getDir($path))
-            && false !== file_put_contents($path, $data, $flags)
-            && static::chmod($path, $mode);
+        return static::mkdirRecursive(static::getDir($path)) && false !== file_put_contents($path, $data, $flags);
     }
 
     /**
@@ -523,9 +522,12 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function getDiskFreeSpace($dir = LC_DIR_ROOT)
     {
-        return disk_free_space(
-            LC_OS_WINDOWS ? static::getRealPath('/') : $dir
-        );
+        if (LC_OS_WINDOWS) {
+            $parts = explode('\\', $dir);
+            $dir = array_shift($parts);
+        }
+
+        return disk_free_space($dir);
     }
 
     // {{{ :TODO: must be refactored
@@ -547,25 +549,20 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
         if (!LC_OS_IS_WIN) {
             array_unshift($directories, '/usr/bin', '/usr/local/bin');
+        } else {
+            $filename .= '.exe';
         }
 
         $result = null;
 
         foreach ($directories as $dir) {
 
-            $file = $dir . LC_DS . $filename;
+            $file = ($dir ? $dir . LC_DS : '') . $filename;
 
-            if (LC_OS_IS_WIN) {
-                if (is_executable($file . '.exe')) {
-                    $result = $file . '.exe';
-                    break;
-                }
-
-            } elseif (is_executable($file)) {
+            if (is_executable($file)) {
                 $result = $file;
                 break;
             }
-
         }
 
         return $result;

@@ -47,6 +47,8 @@ class Main extends \XLite\Controller\Customer\Category
     /**
      * handleRequest
      *
+     * :FIXME: is it really needed?
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -59,21 +61,15 @@ class Main extends \XLite\Controller\Customer\Category
             $addOnModePage = \XLite\Core\Config::getInstance()->General->add_on_mode_page;
 
             if ('cart.php' !== $addOnModePage) {
-
                 $this->redirect($addOnModePage);
 
             } else {
-
                 parent::handleRequest();
-
             }
 
         } else {
-
             parent::handleRequest();
-
         }
-
     }
 
 

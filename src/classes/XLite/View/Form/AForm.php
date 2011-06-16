@@ -60,16 +60,14 @@ abstract class AForm extends \XLite\View\AView
      */
     protected $plainList = null;
 
-
     /**
-     * Form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
+     * Validation message 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      */
-    abstract protected function getFormName();
-
+    protected $validationMessage;
 
     /**
      * Get request data
@@ -100,12 +98,24 @@ abstract class AForm extends \XLite\View\AView
                 );
             }
 
-
+            $this->validationMessage = ($exception->getPublicName() ? $exception->getPublicName() . ': ' : '')
+                . $message;
         }
 
         return $data;
     }
 
+    /**
+     * Get validation message 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getValidationMessage()
+    {
+        return $this->validationMessage;
+    }
 
     /**
      * Return widget default template

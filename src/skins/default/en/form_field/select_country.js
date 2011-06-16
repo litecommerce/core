@@ -55,10 +55,10 @@ StateSelector.prototype.stateSavedValue = null;
 
 StateSelector.prototype.getParentBlock = function(selector)
 {
-    var block = selector.parent('td').parent('tr');
+    var block = selector.closest('li');
 
     if (!block.length) {
-        block = selector.parent('div');
+        block = selector.closest('div');
     }
 
     return block;

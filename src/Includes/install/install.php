@@ -245,7 +245,7 @@ function doCheckRequirements()
 
     $checkRequirements['lc_loopback'] = array(
         'title'    => xtr('Loopback test'),
-        'critical' => true,
+        'critical' => false,
         'depends' => 'lc_install_script'
     );
 
@@ -881,7 +881,7 @@ function checkFilePermissions(&$errorMsg, &$value)
 
             foreach ($array as $file => $perm) {
 
-                if (LC_OS_CODE === 'win') {
+                if (LC_OS_IS_WIN) {
                     $perms[] = $file;
 
                 } else {
@@ -904,7 +904,7 @@ function checkFilePermissions(&$errorMsg, &$value)
 
     if (count($perms) > 0) {
         $result = false;
-        if (LC_OS_CODE === 'win') {
+        if (LC_OS_IS_WIN) {
             $errorMsg = xtr("Permissions checking failed. Please make sure that the following files have writable permissions:\n<br /><br /><i>:perms</i>", array(':perms' => implode("<br />\n", $perms)));
 
         } else {
@@ -1152,7 +1152,7 @@ function doPrepareFixtures(&$params, $silentMode = false)
         }
     }
 
-    \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($enabledModules);
+    \Includes\Utils\ModulesManager::saveModulesToFile($enabledModules);
 
     // Generate fixtures list
     $yamlFiles = $lcSettings['yaml_files']['base'];
@@ -1307,17 +1307,23 @@ function doBuildCache()
 {
     $result = true;
 
-    $data = parse_ini_file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'));
+    x_install_log(xtr('Cache building...'));
 
-    $url = 'http://' . $data['http_host'] . $data['web_dir'];
+    ob_start();
 
-    $url_request = $url . '/cart.php';
+    try {
+        define('DO_ONE_STEP_ONLY', true);
+        \Includes\Decorator\Utils\CacheManager::rebuildCache();
 
-    $response = inst_http_request($url_request);
-
-    if (preg_match('/(?:404 Not Found|error|warning|notice)/Ssi', $response)) {
-        fatal_error(xtr("Cache building procedure failed:<br />\n\nRequest URL: :requesturl<br />\n\nResponse: :response", array(':requesturl' => $url_request, ':response' => $response)));
+    } catch (\Exception $e) {
         $result = false;
+    }
+
+    $message = ob_get_contents();
+    ob_end_clean();
+
+    if (!$result) {
+        x_install_log(xtr('Cache building procedure failed: :message', array(':message' => $e->getMessage())));
     }
 
     return $result;
@@ -1352,16 +1358,6 @@ function doInstallDirs($silentMode = false)
     if (!empty($lcSettings['directories_to_create'])) {
         echo '<div class="section-title">' . xtr('Creating directories...') . '</div>';
         $result = create_dirs($lcSettings['directories_to_create']);
-    }
-
-    if ($result) {
-        echo '<div class="section-title">' . xtr('Copying templates...') . '</div>';
-        $failedList = array();
-        $result = copy_files(constant('LC_TEMPLATES_REPOSITORY'), "", constant('LC_TEMPLATES_DIRECTORY'), $failedList);
-
-        if (!$result) {
-            x_install_log(xtr('copy_files() failed'), $failedList);
-        }
     }
 
     if ($result && !empty($lcSettings['files_to_create'])) {
@@ -1489,7 +1485,7 @@ function doFinishInstallation(&$params, $silentMode = false)
     // Prepare files permissions recommendation text
     $perms = '';
 
-    if (!(LC_OS_CODE === 'win')) {
+    if (!LC_OS_IS_WIN) {
 
         $_perms = array();
 
@@ -1885,6 +1881,10 @@ function change_config(&$params)
 
     $_params = $params;
 
+    if (!isset($_params['mysqlpass'])) {
+        $_params['mysqlpass'] = '';
+    }
+
     if (!isset($_params['mysqlport'])) {
         $_params['mysqlport'] = '';
     }
@@ -1987,7 +1987,7 @@ function get_info()
     $php_info = ob_get_contents();
     ob_end_clean();
 
-    $dll_sfix = ((LC_OS_CODE === 'win') ? '.dll' : '.so');
+    $dll_sfix = (LC_OS_IS_WIN ? '.dll' : '.so');
 
     foreach (explode("\n",$php_info) as $line) {
 
@@ -2154,7 +2154,7 @@ function check_memory_limit($current_limit, $required_limit)
     if ($limit < $required) {
 
 		// workaround for http://bugs.php.net/bug.php?id=36568
-        if (!(LC_OS_CODE == 'win' && version_compare(phpversion(), '5.1.0') < 0)) {
+        if (!LC_OS_IS_WIN && version_compare(phpversion(), '5.1.0') < 0) {
             @ini_set('memory_limit', $required_limit);
             $limit = ini_get('memory_limit');
         }
@@ -2422,7 +2422,7 @@ function rename_install_script()
     @rename(LC_DIR_ROOT . 'install.php', LC_DIR_ROOT . $install_name);
     @clearstatcache();
 
-    $result = (!@file_exists(LC_DIR_ROOT . 'install.php') && @file_exists(LC_DIR_ROOT . $install_name) ? $install_name : false);
+    $result = (!file_exists(LC_DIR_ROOT . 'install.php') && file_exists(LC_DIR_ROOT . $install_name) ? $install_name : false);
 
     if ($result) {
         x_install_log(xtr('Installation script renamed to :filename', array(':filename' => $install_name)));
@@ -3002,11 +3002,6 @@ function module_cfg_install_db(&$params)
         $checkError = false;
         $checkWarning = false;
 
-        // Check if web server host and web_dir provided are valid
-        $url = 'http://' . $params['xlite_http_host'] . $params['xlite_web_dir'];
-
-        $response = inst_http_request_install("action=http_host", $url);
-
         if (strstr($params['xlite_http_host'], ':')) {
             list($_host, $_port) = explode(':', $params['xlite_http_host']);
 
@@ -3014,8 +3009,8 @@ function module_cfg_install_db(&$params)
             $_host = $params['xlite_http_host'];
         }
 
-        if (strpos($response, $_host) === false) {
-            fatal_error(xtr('The web server name and/or web drectory is invalid! Press \'BACK\' button and review web server settings you provided'));
+        if (!$_host) {
+            fatal_error(xtr('The web server name and/or web drectory is invalid (:host). Press \'BACK\' button and review web server settings you provided', array(':host' => $_host)));
             $checkError = true;
 
         // Check if database settings provided are valid
@@ -3183,9 +3178,12 @@ function module_install_cache(&$params)
     $result = doPrepareFixtures($params);
 
     if ($result) {
+        
+        doRemoveCache(null);
+
 ?>
 
-<iframe id="process_iframe" style="padding-top: 15px;" src="install.php?target=install&amp;action=build_cache&<?php echo time(); ?>" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
+<iframe id="process_iframe" style="padding-top: 15px;" src="cart.php?doNotRedirectAfterCacheIsBuilt&<?php echo time(); ?>" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
 
 <br />
 <br />

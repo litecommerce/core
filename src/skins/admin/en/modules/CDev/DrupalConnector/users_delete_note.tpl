@@ -9,8 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="admin.users.results.bottom")
+ * @ListChild (list="itemsList.profile.search.footer", weight="10")
  *}
 
-
+<div class="warning-message users-delete-note">
 {t(#It is impossible to delete or create user accounts because your store currently works as an integration with Drupal and shares users with Drupal. Deleting/creating user accounts is possible via Drupal administrator interface.#)}
+</div>

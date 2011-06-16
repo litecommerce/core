@@ -110,7 +110,7 @@ $modules = array (
         ),
 	array( // 4
 			"name"          => 'install_dirs',
-			"comment"       => xtr('Setting up templates'),
+			"comment"       => xtr('Setting up directories'),
             "auth_required" => true,
 			"js_back"       => 0,
 			"js_next"       => 0,
@@ -157,95 +157,6 @@ if (isset($_GET['target']) && $_GET['target'] == 'install') {
 		die('LOOPBACK-TEST-OK');
 	}
 
-    // Return HTTP_HOST value
-    if (isset($_GET['action']) && $_GET['action'] == 'http_host') {
-        die($_SERVER['HTTP_HOST']);
-    }
-
-    // Building cache action
-    if (isset($_GET['action']) && $_GET['action'] == 'build_cache') {
-
-        $step = 0;
-        $result = true;
-
-        show_install_html_header();
-        show_install_css();
-?>
-
-</head>
-
-<body>
-
-<?php
-
-        $jsDots =<<<OUT
-<span id="progress-dots"></span>
-
-<script type="text/javascript">
-
-loaded = false;
-maxCounter = 100;
-counter = 0;
-
-function doProgressDots() {
-
-    if (!loaded && counter < maxCounter) {
-        document.getElementById('progress-dots').innerHTML = document.getElementById('progress-dots').innerHTML + ' .';
-        counter = counter + 1;
-        setTimeout('doProgressDots()', 1000);
-    }
-}
-
-doProgressDots();
-
-</script>
-
-OUT;
-
-        if (isset($_GET['step']) && intval($_GET['step']) > 0) {
-
-            $step = intval($_GET['step']);
-
-            if ($step <= 3) {
-                echo xtr('Building cache: Pass #:step', array(':step' => $step)) . $jsDots;
-                echo '</body></html>';
-                echo str_repeat(' ', 10000);
-                flush();
-                $result = doBuildCache();
-
-            } else {
-                die('<div id="finish">' . xtr('Cache is built') . '</div>');
-            }
-
-        } else {
-            $pdoErrorMsg = '';
-            echo xtr('Building cache: Preparing for cache generation and dropping an old LiteCommerce tables if exists') . $jsDots;
-            echo '</body></html>';
-            echo str_repeat(' ', 10000);
-            flush();
-            $result = doRemoveCache(null, $pdoErrorMsg);
-        }
-
-        if ($result) {
-            $location = sprintf('install.php?target=install&action=build_cache&step=%d&%d', ++$step, time());
-
-?>
-
-<script type="text/javascript">
-    loaded = true;
-    self.location="<?php echo $location; ?>";
-</script>
-
-<noscript>
-    <a href="' . $location . '"><?php echo xtr('Click here to redirect'); ?></a>
-</noscript>
-
-<?php
-        }
-
-        exit();
-    }
-
     // Creating dirs action
     if (isset($_GET['action']) && $_GET['action'] == 'dirs') {
 
@@ -288,6 +199,7 @@ OUT;
 
 <?php
         exit();
+
     }
 
 
@@ -399,7 +311,7 @@ if (isset($params['force_current']) && (isset($_POST['go_back']) && $_POST['go_b
 	unset($params['force_current']);
 }
 
-$skinsDir = 'skins_original/admin/en/';
+$skinsDir = 'skins/admin/en/';
 
 // start html output
 

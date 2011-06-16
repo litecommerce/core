@@ -10,6 +10,11 @@
  * @since     1.0.0
  * @ListChild (list="itemsList.product.grid.customer.info", weight="20")
  * @ListChild (list="itemsList.product.list.customer.info", weight="20")
- * @ListChild (list="itemsList.product.sidebar.customer.info", weight="20")
+ * @ListChild (list="itemsList.product.small_thumbnails.customer.info", weight="20")
+ * @ListChild (list="itemsList.product.big_thumbnails.customer.info", weight="200")
  *}
-<h3 class="product-name"><a class="fn url" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}">{product.name:h}</a></h3>
+<h3 class="product-name">
+  <a class="fn url" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}">
+    {product.name:h}
+  </a>
+</h3>

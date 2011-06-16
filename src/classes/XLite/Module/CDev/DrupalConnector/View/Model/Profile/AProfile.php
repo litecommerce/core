@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
@@ -30,17 +30,57 @@ namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
 /**
  * \XLite\Module\CDev\DrupalConnector\View\Model\Profile\AProfile
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \XLite\Base\IDecorator
 {
     /**
+     * Save current form reference and sections list, and initialize the cache
+     *
+     * @param array $params   Widget params OPTIONAL
+     * @param array $sections Sections list OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __construct(array $params = array(), array $sections = array())
+    {
+        parent::__construct($params, $sections);
+
+        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+            $this->formFieldNames[] = $this->composeFieldName('cms_profile_id');
+            $this->formFieldNames[] = $this->composeFieldName('drupal_roles');
+        }
+    }
+
+    /**
+     * Return current profile ID
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getProfileId()
+    {
+        $result = parent::getProfileId();
+
+        // If current user is admin and 'createNewUser' parameter passed in request...
+        if (\XLite\Core\Request::getInstance()->createNewUser && \XLite\Core\Auth::getInstance()->isAdmin()) {
+
+            // ...then profileId for form model object should be null
+            $result = null;
+        }
+
+        return $result;
+    }
+
+
+    /**
      * Error message - Drupal and LC profiles are not synchronized
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -54,7 +94,6 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * Use the specific message in Drupal
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -94,32 +133,11 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
         return $obj;
     }
 
-   /**
-    * Return current profile ID
-    *
-    * @return void
-    * @see    ____func_see____
-    * @since  1.0.0
-    */
-    public function getProfileId()
-    {
-        $result = parent::getProfileId();
-
-        // If current user is admin and 'createNewUser' parameter passed in request...
-        if (\XLite\Core\Request::getInstance()->createNewUser && \XLite\Core\Auth::getInstance()->isAdmin()) {
-
-            // ...then profileId for form model object should be null
-            $result = null;
-        }
-
-        return $result;
-    }
-
     /**
      * Access denied if user is logged into Drupal but not logged into LC
      *
      * @return boolean
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function checkAccess()
@@ -129,33 +147,10 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
             : parent::checkAccess();
     }
 
-
-    /**
-     * Save current form reference and sections list, and initialize the cache
-     *
-     * @param array $params   Widget params
-     * @param array $sections Sections list
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function __construct(array $params = array(), array $sections = array())
-    {
-        parent::__construct($params, $sections);
-
-        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
-            $this->formFieldNames[] = $this->composeFieldName('cms_profile_id');
-            $this->formFieldNames[] = $this->composeFieldName('drupal_roles');
-        }
-    }
-
     /**
      * Do not add additional message when update profile via Drupal interface
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -170,7 +165,6 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * Do not add additional message when delete profile via Drupal interface
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -180,5 +174,4 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
             parent::addDataDeletedTopMessage();
         }
     }
-
 }

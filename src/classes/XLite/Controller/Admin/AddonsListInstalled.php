@@ -96,21 +96,13 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      */
     protected function getModules($cellName)
     {
-        $ids = \XLite\Core\Request::getInstance()->$cellName;
-
         $modules = array();
 
-        if (is_array($ids)) {
-            foreach ($ids as $id => $tmp) {
-                $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find(intval($id));
-                if ($module) {
-                    $modules[] = $module;
-                }
-            }
-
+        foreach (((array) \XLite\Core\Request::getInstance()->$cellName) as $id => $value) {
+            $modules[] = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find(intval($id));
         }
 
-        return $modules;
+        return array_filter($modules);
     }
 
     // }}}
@@ -150,12 +142,12 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
     protected function doActionPack()
     {
         if (LC_DEVELOPER_MODE) {
-
             $module = $this->getModule();
 
             if ($module) {
                 if ($module->getEnabled()) {
                     \Includes\Utils\PHARManager::packModule(new \XLite\Core\Pack\Module($module));
+
                 } else {
                     \XLite\Core\TopMessage::addError('Only enabled modules can be packed');
                 }
@@ -165,7 +157,6 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
             }
 
         } else {
-
             \XLite\Core\TopMessage::addError(
                 'Module packing is available in the DEVELOPER mode only. Check etc/config.php file'
             );
@@ -186,7 +177,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
         if ($module) {
 
             // Update data in DB
-            \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
+            \Includes\Utils\ModulesManager::disableModule($module->getActualName());
 
             // Flag to rebuild cache
             \XLite::setCleanUpCacheFlag(true);
@@ -207,23 +198,47 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
         if ($module) {
 
             $pack = new \XLite\Core\Pack\Module($module);
+            $dirs = $pack->getDirs();
 
-            // Remove from FS
-            foreach ($pack->getDirs() as $dir) {
-                \Includes\Utils\FileManager::unlinkRecursive($dir);
+            $nonWritableDirs = array();
+
+            // Check permissions
+            foreach ($dirs as $dir) {
+                if (!\Includes\Utils\FileManager::isDirWriteable($dir)) {
+                    $nonWritableDirs[] = \Includes\Utils\FileManager::getRelativePath($dir, LC_DIR_ROOT);
+                }
             }
 
-            // Disable this and depended modules
-            \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
+            $params = array('name' => $module->getActualName());
 
-            // Remove from DB
-            \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($module);
+            if (empty($nonWritableDirs)) {
 
-            if ($module->getModuleID()) {
-                \XLite\Core\TopMessage::addError('An error occured while uninstalling the module');
+                // Remove from FS
+                foreach ($dirs as $dir) {
+                    \Includes\Utils\FileManager::unlinkRecursive($dir);
+                }
+
+                // Disable this and depended modules
+                \Includes\Utils\ModulesManager::disableModule($module->getActualName());
+
+                // Remove from DB
+                \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($module);
+
+                if ($module->getModuleID()) {
+                    $message = 'A DB error occured while uninstalling the module "{{name}}"';
+                    $this->showError(__FUNCTION__, $message, $params);
+
+                } else {
+                    $message = 'The module "{{name}}" has been uninstalled successfully';
+                    $this->showInfo(__FUNCTION__, $message, $params);
+                }
+
+                // To restore previous state
+                \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
 
             } else {
-                \XLite\Core\TopMessage::addInfo('The module has been uninstalled successfully');
+                $message = 'Unable to delete module "{{name}}" files: some dirs have no writable permissions: {{dirs}}';
+                $this->showError(__FUNCTION__, $message, $params + array('dirs' => implode(', ', $nonWritableDirs)));
             }
         }
     }

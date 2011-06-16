@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -30,9 +30,8 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * Admin
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -47,10 +46,9 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Translation tables for (<litecommerce> => <drupal>) field types
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $fieldTypesTranslationTable = array(
         'string'   => 'textfield',
@@ -60,13 +58,12 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     );
 
 
-    // ------------------------------ Auxiliary methods -
+    // {{{ Auxiliary methods
 
     /**
      * Return list of available block types
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -82,10 +79,9 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Check if current block is an LC one
      *
      * @param array  $data  Form state
-     * @param string $field Field in data array to retrieve field
+     * @param string $field Field in data array to retrieve field OPTIONAL
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -100,7 +96,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $form Form description
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -116,7 +111,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string  $info  Block description
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -139,7 +133,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param integer $delta Block ID
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -153,8 +146,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      *
      * @param array $form Form description
      *
-     * @return array|null
-     * @access protected
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -169,7 +161,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $form Form description
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -184,7 +175,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array $form Form description
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -196,29 +186,40 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Add "LC widget settings" fieldset for the form
      *
-     * @param array  $form  Form description
-     * @param string $class LC widget class
-     * @param string $label Widget class readable name
-     * @param array  $block Block description
+     * @param array  &$form     Form description
+     * @param string $class     LC widget class
+     * @param string $label     Widget class readable name
+     * @param array  $block     Block description OPTIONAL
+     * @param array  $formInput Form input OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function addSettingsFieldset(array &$form, $class, $label, array $block = array())
+    protected function addSettingsFieldset(array &$form, $class, $label, array $block = array(), array $formInput = array())
     {
         // Get settings from LC
-        if ($settings = $this->getHandler()->getWidget($class)->getWidgetSettings()) {
+        $widget = $this->getHandler()->getWidget($class);
+        if (isset($block['options']) && is_array($block['options'])) {
+            $widget->setWidgetParams($block['options']);
+        }
 
-            // To prevent some unpredictable errors related to backslashes in element IDs
-            $key = $this->getBlockName($class) ;
+        // To prevent some unpredictable errors related to backslashes in element IDs
+        $key = $this->getBlockName($class);
+        if ($formInput && $block && isset($formInput['lc_widget']) && isset($formInput['lc_widget'][$key])) {
+            $widget->setWidgetParams($formInput['lc_widget'][$key]);
+        }
+
+        $settings = $widget->getWidgetSettings();
+        if ($settings) {
 
             $form[$key] = array(
                 '#type'       => 'fieldset',
                 '#title'      => 'Parameters',
                 '#attributes' => array('id' => $key),
             );
+
+            $extendedItemsList = is_subclass_of($widget->getProtectedWidget(), 'XLite\View\ItemsList\Product\Customer\ACustomer');
 
             // Translate native LC options into Drupal format
             foreach ($settings as $name => $param) {
@@ -230,9 +231,45 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 );
 
                 if ('select' === $form[$key][$name]['#type']) {
-
                     $form[$key][$name]['#options'] = $param->options;
+
+                } else {
+                    if ($extendedItemsList && in_array($name, array(\XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_WIDTH, \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_HEIGHT))) {
+                        $form[$key][$name]['#description'] = t('recommended: !size', array('!size' => 110));
+                    }
+                    
                 }
+            }
+
+            if ($extendedItemsList) {
+                if (!isset($form['#attached'])) {
+                    $form['#attached'] = array('js' => array());
+
+                } elseif (!isset($form['#attached']['js'])) {
+                    $form['#attached']['js'] = array();
+                }
+
+                $path = \XLite\Core\Layout::getInstance()->getResourceFullPath(
+                    'modules/CDev/DrupalConnector/blocks.js',
+                    \XLite::CUSTOMER_INTERFACE
+                );
+                $form['#attached']['js'][] = \XLite\View\AView::modifyResourcePath($path);
+
+                // Display modes data
+                $jsData = array(
+                    \XLite\View\ItemsList\Product\Customer\ACustomer::WIDGET_TYPE_SIDEBAR => \XLite\View\ItemsList\Product\Customer\ACustomer::getSidebarDisplayModes(),
+                    \XLite\View\ItemsList\Product\Customer\ACustomer::WIDGET_TYPE_CENTER  => \XLite\View\ItemsList\Product\Customer\ACustomer::getCenterDisplayModes(),
+                );
+                drupal_add_js('var lcConnectorBlocks = ' . json_encode($jsData) . ';', 'inline');
+
+                // Recommended icons sizes
+                $jsData = \XLite\View\ItemsList\Product\Customer\ACustomer::getIconSizes();
+                $lbl = t('recommended: !size');
+                drupal_add_js(
+                    'var lcConnectorRecommendedIconSizes = ' . json_encode($jsData) . ';' . PHP_EOL
+                    . 'var lcConnectorRecommendedLabel = \'' . $lbl . '\';',
+                    'inline'
+                );
             }
         }
     }
@@ -244,7 +281,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array  $data  Form data
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -259,10 +295,9 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Method to modify LC widget settings in DB
      *
      * @param integer $blockId  Block delta
-     * @param array   $settings Settings list
+     * @param array   $settings Settings list OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -287,7 +322,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $class Class name
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -296,8 +330,9 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         return 'lc_block' . str_replace('\\', '_', $class);
     }
 
+    // }}}
 
-    // ------------------------------ Hook handlers -
+    // {{{ Hook handlers
 
     /**
      * Modify widget details form
@@ -306,7 +341,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -351,7 +385,8 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 $form['settings']['lc_widget_details']['lc_widget'],
                 $class,
                 $label,
-                ($delta && ($class === $actualClass)) ? $this->getBlock($delta) : array()
+                ($delta && ($class === $actualClass)) ? $this->getBlock($delta) : array(),
+                isset($formState['input']) ? $formState['input'] : array()
             );
         }
 
@@ -371,7 +406,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -387,7 +421,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -412,9 +445,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             } else {
 
                 // Check LC widget params
-                $errors = $this
-                    ->getHandler()
-                    ->getWidget($class)
+                $errors = $this->getHandler()->getWidget($class)
                     ->validateAttributes(
                         $this->extractWidgetSettings($class, $data['lc_widget'])
                     );
@@ -435,7 +466,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -472,7 +502,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$formState Form state
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -480,4 +509,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     {
         $this->updateWidgetSettings($formState['delta'], array());
     }
+
+    // }}}
 }

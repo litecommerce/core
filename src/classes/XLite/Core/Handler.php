@@ -51,10 +51,8 @@ abstract class Handler extends \XLite\Base
     /**
      * AJAX-specific parameters
      */
-
-    const PARAM_AJAX_TARGET = 'ajaxTarget';
-    const PARAM_AJAX_ACTION = 'ajaxAction';
-    const PARAM_AJAX_CLASS  = 'ajaxClass';
+    const PARAM_AJAX_TARGET = 'target';
+    const PARAM_AJAX_WIDGET = 'widget';
 
 
     /**
@@ -217,6 +215,22 @@ abstract class Handler extends \XLite\Base
     public function buildURL($target = '', $action = '', array $params = array())
     {
         return \XLite\Core\Converter::buildURL($target, $action, $params);
+    }
+
+    /**
+     * Compose complete URL from target, action and additional params
+     *
+     * @param string $target Page identifier OPTIONAL
+     * @param string $action Action to perform OPTIONAL
+     * @param array  $params Additional params OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function buildFullURL($target = '', $action = '', array $params = array())
+    {
+        return \XLite\Core\Converter::buildFullURL($target, $action, $params);
     }
 
     /**

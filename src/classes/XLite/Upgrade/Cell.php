@@ -135,7 +135,7 @@ class Cell extends \XLite\Base\Singleton
     /**
      * Return list of incompatible modules
      *
-     * @param boolean $onlySelected Flag to return only the modules selected by admin
+     * @param boolean $onlySelected Flag to return only the modules selected by admin OPTIONAL
      *
      * @return array
      * @see    ____func_see____
@@ -229,9 +229,9 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Set cell status
-     * 
+     *
      * @param boolean $value Flag
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -247,7 +247,7 @@ class Cell extends \XLite\Base\Singleton
      * @param \XLite\Model\Module $module Module model
      * @param boolean             $force  Flag to install modules OPTIONAL
      *
-     * @return void
+     * @return \XLite\Upgrade\Entry\Module\Marketplace
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -269,7 +269,7 @@ class Cell extends \XLite\Base\Singleton
         $hash = $module->getActualName();
 
         if ($toUpgrade) {
-            $this->addEntry($hash, 'Module\Marketplace', array($module, $toUpgrade));
+            return $this->addEntry($hash, 'Module\Marketplace', array($module, $toUpgrade));
 
         } elseif ($module->getEnabled()) {
             $this->incompatibleModules[$module->getModuleID()] = false;
@@ -281,13 +281,13 @@ class Cell extends \XLite\Base\Singleton
      *
      * @param string $path Path to uploaded module pack
      *
-     * @return void
+     * @return \XLite\Upgrade\Entry\Module\Uploaded
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function addUploadedModule($path)
     {
-        $this->addEntry(md5($path), 'Module\Uploaded', array($path));
+        return $this->addEntry(md5($path), 'Module\Uploaded', array($path));
     }
 
     // }}}
@@ -457,7 +457,7 @@ class Cell extends \XLite\Base\Singleton
     /**
      * Check and add (if needed) core upgrade entry
      *
-     * @return void
+     * @return \XLite\Upgrade\Entry\Core
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -467,7 +467,7 @@ class Cell extends \XLite\Base\Singleton
         $data = \Includes\Utils\ArrayManager::getIndex($this->getCoreVersions(), $majorVersion, true);
 
         if (is_array($data)) {
-            $this->addEntry(self::CORE_IDENTIFIER, 'Core', array_merge(array($majorVersion), $data));
+            return $this->addEntry(self::CORE_IDENTIFIER, 'Core', array_merge(array($majorVersion), $data));
         }
     }
 
@@ -495,7 +495,7 @@ class Cell extends \XLite\Base\Singleton
      * @param string $class Entry class name
      * @param array  $args  Constructor arguments OPTIONAL
      *
-     * @return void
+     * @return \XLite\Upgrade\Entry\AEntry
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -506,38 +506,14 @@ class Cell extends \XLite\Base\Singleton
 
         } catch (\Exception $exception) {
             $entry = null;
-            $this->logAddEntryError($exception);
+            \XLite\Upgrade\Logger::getInstance()->logError($exception->getMessage());
         }
 
         if (isset($entry)) {
             $this->entries[$index] = $entry;
         }
-    }
 
-    /**
-     * Logging
-     *
-     * @param \Exception $exception Thrown exception
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function logAddEntryError(\Exception $exception)
-    {
-        \XLite\Logger::getInstance()->log($exception->getMessage(), $this->getLogLevel());
-    }
-
-    /**
-     * Return type of log messages
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLogLevel()
-    {
-        return PEAR_LOG_WARNING;
+        return $entry;
     }
 
     // }}}
@@ -690,11 +666,16 @@ class Cell extends \XLite\Base\Singleton
      */
     public function unpackAll()
     {
+        $result = false;
+
         if (!$this->isDownloaded()) {
-            \Includes\ErrorHandler::fireError('Trying to unpack non-downloaded archives');
+            \XLite\Upgrade\Logger::getInstance()->logError('Trying to unpack non-downloaded archives');
+
+        } else {
+            $result = $this->manageEntryPackages(true);
         }
 
-        return $this->manageEntryPackages(true);
+        return $result;
     }
 
     /**
@@ -709,12 +690,17 @@ class Cell extends \XLite\Base\Singleton
     protected function manageEntryPackages($isUnpack)
     {
         foreach ($this->getEntries() as $entry) {
-            if (!$entry->{$isUnpack ? 'unpack' : 'download'}()) {
+
+            $result = $isUnpack ? $entry->unpack() : $entry->download();
+
+            if (!$result) {
                 break;
             }
         }
 
-        return $this->{$isUnpack ? 'isUnpacked' : 'isDownloaded'}();
+        return $isUnpack
+            ? $this->isUnpacked()
+            : $this->isDownloaded();
     }
 
     // }}}
@@ -727,71 +713,33 @@ class Cell extends \XLite\Base\Singleton
      * @param boolean $isTestMode       Flag OPTIONAL
      * @param array   $filesToOverwrite List of custom files to overwrite OPTIONAL
      *
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function upgrade($isTestMode = true, array $filesToOverwrite = array())
     {
+        $result = false;
+
         if (!$this->isUnpacked()) {
-            \Includes\ErrorHandler::fireError('Trying to perform upgrade while not all archives were unpacked');
-        }
+            \XLite\Upgrade\Logger::getInstance()->logError(
+                'Trying to perform upgrade while not all archives were unpacked'
+            );
 
-        if (!$isTestMode) {
-            $this->clearLog();
-        }
+        } else {
+            foreach ($this->getEntries() as $entry) {
+                $entry->upgrade($isTestMode, $filesToOverwrite);
+            }
 
-        $result = true;
+            if (!$isTestMode) {
+                \XLite\Core\Marketplace::getInstance()->checkForUpdates(0);
+                \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
+            }
 
-        foreach ($this->getEntries() as $entry) {
-            $result = $entry->upgrade($isTestMode, $filesToOverwrite) && $result;
-        }
-
-        if (!$isTestMode) {
-            $this->completeLog();
+            $result = $this->isValid();
         }
 
         return $result;
-    }
-
-    // }}}
-
-    // {{{ Logging
-
-    /**
-     * Return relative path to the log file
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getLogFilePath()
-    {
-        return LC_DIR_LOG . 'upgrade.log';
-    }
-
-    /**
-     * Clear log file
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function clearLog()
-    {
-        return \Includes\Utils\FileManager::write($this->getLogFilePath(), '<pre>' . PHP_EOL);
-    }
-
-    /**
-     * Complete log file
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function completeLog()
-    {
-        return \Includes\Utils\FileManager::write($this->getLogFilePath(), '</pre>', FILE_APPEND);
     }
 
     // }}}

@@ -45,15 +45,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     protected $metadata;
 
     /**
-     * Module (cache)
-     * 
-     * @var   \XLite\Model\Module
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $module;
-
-    /**
      * Return module actual name
      *
      * @return string
@@ -184,7 +175,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function isInstalled()
     {
-        return \Includes\Decorator\Utils\ModulesManager::isModuleInstalled($this->getActualName());
+        return \Includes\Utils\ModulesManager::isModuleInstalled($this->getActualName());
     }
 
     /**
@@ -253,7 +244,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
             }
         }
 
-        return $result ?: $this->getHashes();
+        return $result ?: $this->getHashes(true);
     }
 
     /**
@@ -324,7 +315,38 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function callModuleMethod($method, array $args = array())
     {
-        return \Includes\Decorator\Utils\ModulesManager::callModuleMethod($this->getActualName(), $method, $args);
+        return \Includes\Utils\ModulesManager::callModuleMethod($this->getActualName(), $method, $args);
+    }
+
+    /**
+     * Find installed module
+     * 
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleInstalled()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($this->getModuleData());
+    }
+
+    /**
+     * Return common module data 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleData()
+    {
+        return array(
+            'name'            => $this->getName(),
+            'author'          => $this->getAuthor(),
+            'majorVersion'    => $this->getMajorVersionNew(),
+            'minorVersion'    => $this->getMinorVersionNew(),
+            'fromMarketplace' => false,
+            'installed'       => true,
+        );
     }
 
     /**
@@ -336,13 +358,9 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function updateDBRecords()
     {
-        $module = $this->getModuleInstalled() ?: $this->getModuleForUpgrade();
+        $module = $this->getModuleInstalled() ?: new \XLite\Model\Module($this->getModuleData());
 
-        $module->setEnabled(true);
         $module->setDate(time());
-        $module->setInstalled(true);
-        $module->setMajorVersion($this->getMajorVersionNew());
-        $module->setMinorVersion($this->getMinorVersionNew());
         $module->setRevisionDate($this->getRevisionDate());
         $module->setPackSize($this->getPackSize());
         $module->setModuleName($this->getName());
@@ -350,41 +368,11 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         $module->setIconURL($this->getIconURL());
         $module->setDependencies($this->getDependencies());
 
-        \XLite\Core\Database::getEM()->persist($module);
-        \XLite\Core\Database::getEM()->flush();
-    }
-
-    /**
-     * Alias
-     *
-     * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getModuleInstalled()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->getModuleInstalled(
-            $this->getModuleForUpgrade()
-        );
-    }
-
-    /**
-     * Alias
-     *
-     * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getModuleForUpgrade()
-    {
-        if (!isset($this->module)) {
-            $this->module = new \XLite\Model\Module();
-
-            list($author, $name) = explode('\\', $this->getActualName());
-            $this->module->setAuthor($author);
-            $this->module->setName($name);
+        if (!$module->getModuleID()) {
+            $module->setEnabled(true);
         }
 
-        return $this->module;
+        // Save changes in DB
+        \XLite\Core\Database::getEM()->flush();
     }
 }

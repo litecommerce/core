@@ -181,7 +181,7 @@ class Classes extends \Includes\DataStructure\Graph
      */
     public function getModuleName()
     {
-        return \Includes\Decorator\Utils\ModulesManager::getModuleNameByClassName($this->getClass());
+        return \Includes\Utils\ModulesManager::getModuleNameByClassName($this->getClass());
     }
 
     /**

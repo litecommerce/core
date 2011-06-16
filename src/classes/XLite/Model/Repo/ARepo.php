@@ -145,6 +145,15 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected $queryBuilderClass;
 
+    /**
+     * Columns' character sets definitions
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $columnsCharSets = array();
+
 
     /**
      * Get repository type
@@ -920,6 +929,16 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                         );
                     }
                 }
+            }
+
+            // Assign columns' character sets
+            foreach ($this->columnsCharSets as $column => $charset) {
+                $schema = preg_replace(
+                    '/(`' . $this->_class->getTableName() .'`.+`' . $column . '`\s+'
+                    . '(?:char|varchar|tinytext|text|mediumtext|longtext)(?:\(\d+\))?)/Ssi',
+                    '$1 CHARACTER SET ' . $charset,
+                    $schema
+                );
             }
 
             // Clear empty ALTER TABLE

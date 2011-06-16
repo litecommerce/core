@@ -8,6 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="menu.maintenance", weight="10")
+ * @ListChild (list="menu.maintenance", weight="100")
  *}
+
 <widget class="\XLite\View\TopMenu\Node" title="Backup/Restore" linkTarget="db_backup" />

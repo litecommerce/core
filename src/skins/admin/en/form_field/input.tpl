@@ -9,5 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-
-<input{getAttributesCode():h} />
+<span class="input-field-wrapper {getWrapperClass()}">
+  {displayCommentedData(getCommentedData())}
+  <input{getAttributesCode():h} />
+</span>

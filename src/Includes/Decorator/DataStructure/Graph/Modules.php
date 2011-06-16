@@ -84,7 +84,7 @@ class Modules extends \Includes\DataStructure\Graph
      */
     protected function getModuleClass()
     {
-        return \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($this->getActualName());
+        return \Includes\Utils\ModulesManager::getClassNameByModuleName($this->getActualName());
     }
 
 

@@ -10,8 +10,19 @@
  * @since     1.0.0
  *
  * @ListChild (list="itemsList.product.grid.customer.info.photo", weight="10")
- * @ListChild (list="itemsList.product.sidebar.customer.info.photo", weight="10")
+ * @ListChild (list="itemsList.product.small_thumbnails.customer.info.photo", weight="10")
+ * @ListChild (list="itemsList.product.big_thumbnails.customer.info.photo", weight="10")
  *}
-<a IF="isShowThumbnails()&product.hasImage()" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-thumbnail" title="{t(#Thumbnail#)}">
-  <widget class="\XLite\View\Image" image="{product.getImage()}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" className="photo" />
+<a
+  IF="product.hasImage()"
+  href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"
+  class="product-thumbnail"
+  title="{t(#Thumbnail#)}">
+  <widget
+    class="\XLite\View\Image"
+    image="{product.getImage()}"
+    maxWidth="{getIconWidth()}"
+    maxHeight="{getIconHeight()}"
+    alt="{product.name}"
+    className="photo" />
 </a>

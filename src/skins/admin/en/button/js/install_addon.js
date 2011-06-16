@@ -29,6 +29,7 @@ decorate(
     // TODO. make it dynamically and move it to ONE widget initialization (Main widget)
     core.autoload(SwitchButton);
     core.autoload(LicenseAgreement);
+    core.autoload(PopupButtonSelectInstallationType);
   }
 );
 

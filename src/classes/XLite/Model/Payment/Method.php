@@ -147,7 +147,7 @@ class Method extends \XLite\Model\Base\I18n
      */
     public function isEnabled()
     {
-        $modules = \Includes\Decorator\Utils\ModulesManager::getActiveModules();
+        $modules = \Includes\Utils\ModulesManager::getActiveModules();
         $disabledModule = false;
         if (preg_match('/^Module\\\([\w_]+\\\[\w_]+)\\\/Ss', $this->getClass(), $match)) {
             $disabledModule = !isset($modules[$match[1]]);

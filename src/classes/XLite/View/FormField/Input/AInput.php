@@ -62,4 +62,16 @@ abstract class AInput extends \XLite\View\FormField\AFormField
             'value' => $this->getValue(),
         );
     }
+
+    /**
+     * Register some data that will be sent to template as special HTML comment
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCommentedData()
+    {
+        return array();
+    }
 }

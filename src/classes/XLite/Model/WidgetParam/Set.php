@@ -72,10 +72,35 @@ class Set extends \XLite\Model\WidgetParam\String
 
         // TODO - check if there are more convinient ways to extend this class
         if (!isset($this->options)) {
-            $this->options = $options;
+            $this->setOptions($options);
         }
     }
 
+    /**
+     * Set options 
+     * 
+     * @param array $options Options
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
+    }
+
+    /**
+     * Get options 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
 
     /**
      * Return list of conditions to check

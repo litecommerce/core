@@ -45,6 +45,17 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     protected $coreVersions;
 
     /**
+     * Check if the module is installed
+     *                                 
+     * @param \XLite\Model\Module $module Module to check
+     *                                          
+     * @return boolean                          
+     * @see    ____func_see____                 
+     * @since  1.0.0                            
+     */                                         
+    abstract protected function isInstalled(\XLite\Model\Module $module);
+
+    /**
      * Return name of the base widgets list
      *
      * @return string
@@ -65,7 +76,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'module';
+        return parent::getDir() . '/module';
     }
 
     /**
@@ -109,7 +120,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
             $dependencies = $module->getDependencies();
 
             if ($dependencies) {
-                $modules = array_keys(\Includes\Decorator\Utils\ModulesManager::getActiveModules());
+                $modules = array_keys(\Includes\Utils\ModulesManager::getActiveModules());
                 $result  = ! (bool) array_diff($dependencies, $modules);
             }
         }
@@ -129,6 +140,22 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     protected function canDisable(\XLite\Model\Module $module)
     {
         return ! (bool) $module->getDependentModules();
+    }
+
+    /**
+     * Check if the module is enabled
+     *
+     * @param \XLite\Model\Module $module Module
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isEnabled(\XLite\Model\Module $module)
+    {
+        $installed = $this->getModuleInstalled($module);
+
+        return isset($installed) && $installed->getEnabled();
     }
 
     /**

@@ -22,7 +22,7 @@
 
   <widget template="{getPageBodyTemplate()}" />
 
-  <div class="list-pager list-pager-bottom" IF="pager.isPagesListVisible()">{pager.display()}</div>
+  <div class="list-pager list-pager-bottom" IF="isPagerVisible()&pager.isPagesListVisible()">{pager.display()}</div>
 
   <div IF="isFooterVisible()" class="list-footer">{displayInheritedViewListContent(#footer#)}</div>
 

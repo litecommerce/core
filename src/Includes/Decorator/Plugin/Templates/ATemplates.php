@@ -40,6 +40,7 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * Predefined tag names
      */
     const TAG_LIST_CHILD = 'listchild';
+    const TAG_INHERITED_LIST_CHILD = 'inheritedlistchild';
 
 
     /**
@@ -51,6 +52,16 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * @since  1.0.0
      */
     protected static $annotatedTemplates;
+
+    /**
+     * List of .tpl files with @InheritedListChild tag
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
+    protected static $inheritedTemplates;
 
     /**
      * List of zones
@@ -79,16 +90,21 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
     {
         if (!isset(static::$annotatedTemplates)) {
             static::$annotatedTemplates = array();
+            static::$inheritedTemplates = array();
 
             foreach ($this->getTemplateFileIterator()->getIterator() as $path => $data) {
 
                 $data = \Includes\Decorator\Utils\Operator::getTags(
                     \Includes\Utils\FileManager::read($path, true),
-                    array(self::TAG_LIST_CHILD)
+                    array(self::TAG_LIST_CHILD, self::TAG_INHERITED_LIST_CHILD)
                 );
 
                 if (isset($data[self::TAG_LIST_CHILD])) {
                     $this->addTags($data[self::TAG_LIST_CHILD], $path);
+                }
+
+                if (isset($data[self::TAG_INHERITED_LIST_CHILD])) {
+                    static::$inheritedTemplates[] = $path;
                 }
             }
         }
@@ -108,7 +124,7 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
     {
         return new \Includes\Utils\FileFilter(
             LC_DIR_SKINS,
-            \Includes\Decorator\Utils\ModulesManager::getPathPatternForTemplates()
+            \Includes\Utils\ModulesManager::getPathPatternForTemplates()
         );
     }
 
@@ -125,12 +141,13 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      */
     protected function addTags(array $data, $path)
     {
+        $base = \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_SKINS);
+
         foreach ($data as $tags) {
 
-            $template = \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_SKINS);
-            $skin = \Includes\Utils\ArrayManager::getIndex(explode(LC_DS, $template), 0, true);
+            $skin = \Includes\Utils\ArrayManager::getIndex(explode(LC_DS, $base), 0, true);
             $zone = array_search($skin, static::$zones) ?: \XLite\Model\ViewList::INTERFACE_CUSTOMER;
-            $template = substr($template, strpos($template, LC_DS) + ('common' == $skin ? 1 : 4));
+            $template = substr($base, strpos($base, LC_DS) + ('common' == $skin ? 1 : 4));
 
             static::$annotatedTemplates[] = array('tpl' => $template, 'zone' => $zone, 'path' => $path) + $tags;
         }

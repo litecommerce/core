@@ -69,9 +69,8 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
         $email = array_shift($emails);
 
-        $result = (bool)preg_match('/Sign in notification.*' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['body']);
-
-        $this->assertTrue($result, 'Check if email contents keywords');
+        $this->assertRegexp('/To: ' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['header'], 'Wrong email recipient: ' . $email['header']);
+        $this->assertRegexp('/Sign in notification/msS', $email['body'], '"Sign in notification" text not found in the email body');
     }
 
     /**
@@ -102,9 +101,8 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
         $email = array_shift($emails);
 
-        $result = (bool)preg_match('/Sign in notification.*' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['body']);
-
-        $this->assertTrue($result, 'Check if email contents keywords');
+        $this->assertRegexp('/To: ' . preg_quote(self::ADMIN_EMAIL) . '/msS', $email['header'], 'Wrong email recipient' . $email['header']);
+        $this->assertRegexp('/New user profile has been registered/msS', $email['body'], '"New user profile has been registered" text not found in the email body');
     }
 
     /**
@@ -133,9 +131,8 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
         $email = array_shift($emails);
 
-        $result = (bool)preg_match('/Profile modified.*' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['body']);
-
-        $this->assertTrue($result, 'Check if email contents keywords');
+        $this->assertRegexp('/To: ' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['header'], 'Wrong email recipient' . $email['header']);
+        $this->assertRegexp('/Your profile has been modified/msS', $email['body'], '"Your profile has been modified" text not found in the email body');
     }
 
     /**
@@ -166,9 +163,8 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
         $email = array_shift($emails);
 
-        $result = (bool)preg_match('/Profile modified.*' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['body']);
-
-        $this->assertTrue($result, 'Check if email contents keywords');
+        $this->assertRegexp('/To: ' . preg_quote(self::ADMIN_EMAIL) . '/msS', $email['header'], 'Wrong email recipient' . $email['header']);
+        $this->assertRegexp('/User profile modified/msS', $email['body'], '"User profile modified" text not found in the email body');
     }
 
     /**
@@ -199,9 +195,8 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
         $email = array_shift($emails);
 
-        $result = (bool)preg_match('/Profile deleted.*' . preg_quote(self::TESTER_EMAIL) . '/msS', $email['body']);
-
-        $this->assertTrue($result, 'Check if email contents keywords');
+        $this->assertRegexp('/To: ' . preg_quote(self::ADMIN_EMAIL) . '/msS', $email['header'], 'Wrong email recipient' . $email['header']);
+        $this->assertRegexp('/User profile deleted/msS', $email['body'], '"User profile deleted" text not found in the email body');
     }
 
     /**

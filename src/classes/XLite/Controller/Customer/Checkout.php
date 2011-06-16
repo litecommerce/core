@@ -186,37 +186,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Remove address
-     *
-     * @returnvoid
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionRemoveAddress()
-    {
-        $id = intval(\XLite\Core\Request::getInstance()->id);
-        $found = false;
-        if ($id && $this->getCart()->getProfile() && 0 < count($this->getCart()->getProfile()->getAddresses())) {
-            foreach ($this->getCart()->getProfile()->getAddresses() as $address) {
-                if ($address->getAddressId() == $id) {
-                    \XLite\Core\Database::getEM()->remove($address);
-                    $this->getCart()->getProfile()->getAddresses()->removeElement($address);
-                    $found = true;
-                    break;
-                }
-            }
-        }
-
-        if ($found) {
-            $this->updateCart();
-        }
-
-        $this->redirect($this->buildURL('checkout'));
-    }
-
-    /**
      * Do payment
-     * TODO: to revise
+     *
+     * :TODO: to revise
+     * :FIXME: decompose
      *
      * @return void
      * @see    ____func_see____
@@ -284,6 +257,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
                 \XLite\Core\TopMessage::getInstance()->add(
                     $transaction->getNote(),
+                    array(),
+                    null,
                     $transaction->isFailed() ? \XLite\Core\TopMessage::ERROR : \XLite\Core\TopMessage::INFO,
                     true
                 );
@@ -316,7 +291,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
     /**
      * Return from payment gateway
-     * TODO: to revise
+     *
+     * :TODO: to revise
+     * :FIXME: decompose
      *
      * @return void
      * @see    ____func_see____
@@ -367,7 +344,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
     /**
      * Order placement is success
-     * TODO: to revise
+     *
+     * :TODO: to revise
+     * :FIXME: decompose
      *
      * @return void
      * @see    ____func_see____
@@ -447,10 +426,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Send create profile notifications 
+     * Send create profile notifications
      *
      * @param string $password Password
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

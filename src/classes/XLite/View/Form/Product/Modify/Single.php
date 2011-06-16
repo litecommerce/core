@@ -36,18 +36,6 @@ namespace XLite\View\Form\Product\Modify;
 class Single extends \XLite\View\Form\Product\Modify\Base\Single
 {
     /**
-     * Return form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'modify_product';
-    }
-
-    /**
      * getDefaultAction
      *
      * @return string
@@ -70,4 +58,43 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
     {
         return true;
     }
+
+    /**
+     * Get validator
+     *
+     * @return \XLite\Core\Validator\HashArray
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getValidator()
+    {
+        $validator = parent::getValidator();
+
+        $strict = \XLite\Core\Validator\Pair\APair::STRICT;
+        $soft = \XLite\Core\Validator\Pair\APair::SOFT;
+
+        $data = $validator->addPair(
+            'postedData',
+            new \XLite\Core\Validator\HashArray
+        );
+        $data->addPair('sku', new \XLite\Core\Validator\String(), null, $this->t('SKU'));
+        $data->addPair('name', new \XLite\Core\Validator\String(true), null, $this->t('Product Name'));
+        $data->addPair('category_ids', new \XLite\Core\Validator\PlainArray(), null, $this->t('Category'))
+            ->setValidator(new \XLite\Core\Validator\Integer());
+        $data->addPair('price', new \XLite\Core\Validator\Float(), null, $this->t('Price'))
+            ->setRange(0);
+        $data->addPair('weight', new \XLite\Core\Validator\Float(), null, $this->t('Weight'))
+            ->setRange(0);
+        $data->addPair('free_shipping', new \XLite\Core\Validator\Enum\Boolean(), null, $this->t('Shippable'));
+        $data->addPair('enabled', new \XLite\Core\Validator\Enum\Boolean(), null, $this->t('Available for sale'));
+        $data->addPair('meta_title', new \XLite\Core\Validator\String(), null, $this->t('Product page title'));
+        $data->addPair('brief_description', new \XLite\Core\Validator\String(), null, $this->t('Brief descrption'));
+        $data->addPair('description', new \XLite\Core\Validator\String(), null, $this->t('Full description'));
+        $data->addPair('meta_tags', new \XLite\Core\Validator\String(), null, $this->t('Meta keywords'));
+        $data->addPair('meta_desc', new \XLite\Core\Validator\String(), null, $this->t('Meta description'));
+        $data->addPair('clean_url', new \XLite\Core\Validator\String(), null, $this->t('Clean URL'));
+
+        return $validator;
+    }
+
 }

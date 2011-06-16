@@ -9,8 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="admin.profile.details")
+ * @ListChild (list="admin.profile.details", weight="1000")
  *}
 
-
+<div class="warning-message profile-note">
 {t(#It is impossible to edit some user profile fields because your store currently works as an integration with Drupal and shares users with Drupal. Modifying these fields is possible via Drupal administrator interface.#)}
+</div>

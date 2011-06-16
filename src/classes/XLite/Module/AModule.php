@@ -50,39 +50,36 @@ abstract class AModule
      * Return module name
      *
      * @return string
-     * @throws \Exception
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function getModuleName()
     {
-        throw new \Exception('Name is not specified for the ' . $this->getName() . ' add-on');
+        \Includes\ErrorHandler::fireError('Abstract method call: ' . __METHOD__);
     }
 
     /**
      * Return author full name
      *
      * @return string
-     * @throws \Exception
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function getAuthorName()
     {
-        throw new \Exception('Full name is not specified for the ' . $this->getAuthor() . ' author class');
+        \Includes\ErrorHandler::fireError('Abstract method call: ' . __METHOD__);
     }
 
     /**
      * Return module description
      *
      * @return string
-     * @throws \Exception
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function getDescription()
     {
-        throw new \Exception('Description is not specified for the ' . $this->getName() . ' add-on');
+        \Includes\ErrorHandler::fireError('Abstract method call: ' . __METHOD__);
     }
 
     /**
@@ -158,94 +155,6 @@ abstract class AModule
     }
 
     /**
-     * Get post-installation user notes
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getPostInstallationNotes()
-    {
-        return '';
-    }
-
-    /**
-     * Custom installation routine
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function installModule(\XLite\Model\Module $module)
-    {
-        return true;
-    }
-
-    /**
-     * Custom deinstallation routine
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function uninstallModule(\XLite\Model\Module $module)
-    {
-        return true;
-    }
-
-    /**
-     * Custom wake-up (enable) module routine
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function wakeUpModule(\XLite\Model\Module $module)
-    {
-        return true;
-    }
-
-    /**
-     * Custom sleep (disable) module routine
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function sleepModule(\XLite\Model\Module $module)
-    {
-        return true;
-    }
-
-    /**
-     * Get backup data
-     *
-     * @param \XLite\Model\Module $module Module
-     *
-     * @return array|void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getBackupData(\XLite\Model\Module $module)
-    {
-        return null;
-    }
-
-    // {{{ Module versions
-
-    /**
-     * Get module version
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getVersion()
-    {
-        return \Includes\Utils\Converter::composeVersion(static::getMajorVersion(), static::getMinorVersion());
-    }
-
-    /**
      * Get module major version
      *
      * @return string
@@ -269,22 +178,15 @@ abstract class AModule
         \Includes\ErrorHandler::fireError('Abstract method call: ' . __METHOD__);
     }
 
-    // }}}
-
     /**
-     * Return module name by class name
+     * Get module version
      *
      * @return string
-     * @throws \Exception
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function getModuleCode()
+    public static function getVersion()
     {
-        if (!preg_match('/XLite\\\Module\\\(\w+)\\\Main/S', get_called_class(), $matches)) {
-            throw new \Exception('Could not resolve base module code from the class name: ' . get_called_class());
-        }
-
-        return $matches[1];
+        return \Includes\Utils\Converter::composeVersion(static::getMajorVersion(), static::getMinorVersion());
     }
 }

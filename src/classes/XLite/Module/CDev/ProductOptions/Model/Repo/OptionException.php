@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model\Repo;
@@ -30,19 +30,19 @@ namespace XLite\Module\CDev\ProductOptions\Model\Repo;
 /**
  * Option exception repository
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class OptionException extends \XLite\Model\Repo\ARepo
 {
+    // {{{ checkOptions
+
     /**
      * Check options ids list
      *
      * @param array $ids Option id list
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -67,12 +67,11 @@ class OptionException extends \XLite\Model\Repo\ARepo
     /**
      * Define check exception query
      *
-     * :FIXME: decompose; move query definition to a separate method
+     * FIXME: decompose; move query definition to a separate method
      *
      * @param array $ids Option ids list
      *
      * @return \Doctrine\ORM\NativeQuery
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -109,11 +108,14 @@ class OptionException extends \XLite\Model\Repo\ARepo
         return $query;
     }
 
+    // }}}
+
+    // {{{ getNextExceptionId
+
     /**
      * Get next free exception id
      *
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -126,7 +128,6 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * Define query builder for getNextExceptionId() method
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -136,13 +137,16 @@ class OptionException extends \XLite\Model\Repo\ARepo
             ->select('MAX(o.exception_id)');
     }
 
+    // }}}
+
+    // {{{ findByExceptionId
+
     /**
      * Find exceptions by exception id
      *
      * @param integer $exceptionId Exception id
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -157,7 +161,6 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @param integer $exceptionId Exception id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -168,13 +171,16 @@ class OptionException extends \XLite\Model\Repo\ARepo
             ->setParameter('exceptionId', $exceptionId);
     }
 
+    // }}}
+
+    // {{{ findByExceptionIds
+
     /**
      * Find exceptions by exception ids list
      *
      * @param array $exceptionIds Exception ids list
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -189,7 +195,6 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @param array $exceptionIds Exception ids list
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -202,4 +207,5 @@ class OptionException extends \XLite\Model\Repo\ARepo
         return $qb->andWhere('o.exception_id IN (' . implode(', ', $keys) . ')');
     }
 
+    // }}}
 }

@@ -38,7 +38,6 @@ class TopMessage extends \XLite\Base\Singleton
     /**
      * Message types
      */
-
     const INFO    = 'info';
     const WARNING = 'warning';
     const ERROR   = 'error';
@@ -46,10 +45,8 @@ class TopMessage extends \XLite\Base\Singleton
     /**
      * Message fields
      */
-
     const FIELD_TEXT = 'text';
     const FIELD_TYPE = 'type';
-
 
     /**
      * Types list
@@ -58,11 +55,7 @@ class TopMessage extends \XLite\Base\Singleton
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $types = array(
-        self::INFO,
-        self::WARNING,
-        self::ERROR,
-    );
+    protected $types = array(self::INFO, self::WARNING, self::ERROR);
 
     /**
      * Current messages
@@ -72,7 +65,6 @@ class TopMessage extends \XLite\Base\Singleton
      * @since 1.0.0
      */
     protected $messages = array();
-
 
     /**
      * Add information-type message with additional translation arguments
@@ -87,7 +79,7 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public static function addInfo($text, array $arguments = array(), $code = null)
     {
-        static::getInstance()->add(static::t($text, $arguments, $code), self::INFO, true);
+        return static::getInstance()->add($text, $arguments, $code, self::INFO);
     }
 
     /**
@@ -103,7 +95,7 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public static function addWarning($text, array $arguments = array(), $code = null)
     {
-        static::getInstance()->add(static::t($text, $arguments, $code), self::WARNING, true);
+        return static::getInstance()->add($text, $arguments, $code, self::WARNING);
     }
 
     /**
@@ -119,49 +111,47 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public static function addError($text, array $arguments = array(), $code = null)
     {
-        static::getInstance()->add(static::t($text, $arguments, $code), self::ERROR, true);
+        return static::getInstance()->add($text, $arguments, $code, self::ERROR);
     }
 
 
     /**
      * Add message
      *
-     * @param string  $text    Message text
-     * @param string  $type    Message type OPTIONAL
-     * @param boolean $rawText Preprocessing text flag OPTIONAL
+     * @param string  $text      Message text
+     * @param array   $arguments Substitution arguments OPTIONAL
+     * @param string  $code      Language code OPTIONAL
+     * @param string  $type      Message type OPTIONAL
+     * @param boolean $rawText   Preprocessing text flag OPTIONAL
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function add($text, $type = self::INFO, $rawText = false)
+    public function add($text, array $arguments = array(), $code = null, $type = self::INFO, $rawText = false)
     {
         $result = false;
 
         if (!empty($text)) {
 
-            $text = strval($text);
-
-            if (0 < strlen($text)) {
-
-                if (!$rawText) {
-                    $text = static::t($text);
-                }
-
-                if (!in_array($type, $this->types)) {
-                    $type = self::INFO;
-                }
-
-                // To prevent repeats in top messages texts we use unique key for text
-                $this->messages[$type . md5($text)] = array(
-                    self::FIELD_TEXT => $text,
-                    self::FIELD_TYPE => $type,
-                );
-
-                \XLite\Core\Session::getInstance()->topMessages = $this->messages;
-
-                $result = true;
+            if (!$rawText) {
+                $text = static::t($text, $arguments, $code);
             }
+
+            if (!in_array($type, $this->types)) {
+                $type = self::INFO;
+            }
+
+            // To prevent duplicated messages
+            // :TODO: use "array_unique()" instead
+            $this->messages[$type . md5($text)] = array(
+                self::FIELD_TEXT => $text,
+                self::FIELD_TYPE => $type,
+            );
+
+            \XLite\Core\Session::getInstance()->topMessages = $this->messages;
+
+            $result = true;
         }
 
         return $result;
@@ -182,7 +172,7 @@ class TopMessage extends \XLite\Base\Singleton
         $result = true;
 
         foreach ($messages as $message) {
-            $result = $result && $this->add($message, $type);
+            $result = $result && $this->add($message, array(), null, $type);
         }
 
         return $result;
@@ -245,7 +235,6 @@ class TopMessage extends \XLite\Base\Singleton
     {
         \XLite\Core\Session::getInstance()->topMessages = array();
     }
-
 
     /**
      * Constructor

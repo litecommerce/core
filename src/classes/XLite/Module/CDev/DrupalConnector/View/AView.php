@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View;
@@ -30,21 +30,34 @@ namespace XLite\Module\CDev\DrupalConnector\View;
 /**
  * Abstract widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
     /**
      * Relative path from web directory path to the XLite web directory
      *
-     * @var    string
-     * @access protected
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $drupalRelativePath = null;
 
+
+    /**
+     * Modify resource path 
+     * 
+     * @param string $path Absolute resource path
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function modifyResourcePath($path)
+    {
+        return str_replace(LC_DS, '/', static::getDrupalRelativePath() . str_replace(LC_DIR_ROOT, '', $path));
+    }
 
     /**
      * prepareBasePath
@@ -52,7 +65,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @param string $path Path to prepare
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function prepareBasePath($path)
@@ -68,7 +81,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * TODO - check if there is a more convenient way to implement this
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getDrupalRelativePath()
@@ -101,13 +114,13 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @param array $data Data to prepare
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function modifyResourcePaths(array $data)
     {
         foreach ($data as &$file) {
-            $file['file'] = str_replace(LC_DS, '/', static::getDrupalRelativePath() . str_replace(LC_DIR_ROOT, '', $file['file']));
+            $file['file'] = static::modifyResourcePath($file['file']);
         }
 
         return $data;
@@ -120,7 +133,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @param boolean $isCommon Flag to determine how to prepare URL OPTIONAL
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -135,7 +147,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @param mixed $data Data to prepare
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function modifyResources(array $data)
@@ -152,7 +164,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  1.0.0
      */
     public function getJSFiles()
@@ -170,7 +182,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Register CSS files
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -197,7 +208,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Register files from common repository
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */

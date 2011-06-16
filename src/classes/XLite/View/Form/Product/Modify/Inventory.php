@@ -36,18 +36,6 @@ namespace XLite\View\Form\Product\Modify;
 class Inventory extends \XLite\View\Form\Product\Modify\Base\Single
 {
     /**
-     * Return form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'product_inventory';
-    }
-
-    /**
      * getDefaultAction
      *
      * @return string

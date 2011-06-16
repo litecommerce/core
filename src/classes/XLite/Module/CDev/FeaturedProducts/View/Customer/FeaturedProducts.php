@@ -69,6 +69,23 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
+     * Initialize widget (set attributes)
+     *
+     * @param array $params Widget params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        $this->widgetParams[\XLite\View\Pager\APager::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR]->setValue(false);
+        $this->widgetParams[\XLite\View\Pager\APager::PARAM_ITEMS_COUNT]->setValue(5);
+    }
+
+    /**
      * Return title
      *
      * @return string
@@ -111,14 +128,8 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
             ->setValue(\XLite\Core\Config::getInstance()->CDev->FeaturedProducts->featured_products_look);
 
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
-        $this->widgetParams[self::PARAM_SHOW_THUMBNAIL]->setValue(true);
-        $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);
-        $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue(true);
-        $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue(true);
-        $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue(5);
 
         $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
-        $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
     }
 

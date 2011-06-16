@@ -206,9 +206,11 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function loadHashesForInstalledFiles()
     {
+        $licenseKey = $this->getModuleForUpgrade()->getLicenseKey();
+
         return \XLite\Core\Marketplace::getInstance()->getAddonHash(
             $this->getModuleInstalled()->getMarketplaceID(),
-            $this->getModuleInstalled()->getLicenseKey()
+            $licenseKey ? $licenseKey->getKeyValue() : null
         );
     }
 
@@ -233,10 +235,9 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
             );
         }
 
-        if (is_null($this->getModuleForUpgrade()) || !$this->getModuleForUpgrade()->getMarketplaceID()) {
+        if (is_null($this->getModuleForUpgrade()) || !$this->getModuleForUpgrade()->getFromMarketplace()) {
             \Includes\ErrorHandler::fireError(
-                'Module with ID "' . $this->moduleIDInstalled . '" is not found in DB'
-                . ' or has an invaid markeplace identifier'
+                'Module with ID "' . $this->moduleIDInstalled . '" is not found in DB or is not a marketplace module'
             );
         }
 
@@ -268,16 +269,28 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function download()
     {
-        $this->setRepositoryPath(
-            \XLite\Core\Marketplace::getInstance()->getAddonPack(
-                $this->getModuleForUpgrade()->getMarketplaceID(),
-                $this->getModuleForUpgrade()->getLicenseKey()
-            )
+        $result = false;
+        $licenseKey = $this->getModuleForUpgrade()->getLicenseKey();
+
+        $path = \XLite\Core\Marketplace::getInstance()->getAddonPack(
+            $this->getModuleForUpgrade()->getMarketplaceID(),
+            $licenseKey ? $licenseKey->getKeyValue() : null
         );
+        $params = array('name' => $this->getActualName());
 
-        $this->saveHashesForInstalledFiles();
+        if (isset($path)) {
+            $this->addFileInfoMessage('Module pack ("{{name}}") is recieved', $path, true, $params);
 
-        return parent::download();
+            $this->setRepositoryPath($path);
+            $this->saveHashesForInstalledFiles();
+
+            $result = parent::download();
+
+        } else {
+            $this->addFileErrorMessage('Module pack ("{{name}}") is not recieved:', $path, true, $params);
+        }
+
+        return $result;
     }
 
     /**
@@ -330,15 +343,20 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
         $forUpgrade = $this->getModuleForUpgrade();
         $installed  = $this->getModuleInstalled();
 
-        $forUpgrade->setEnabled(true);
-        $forUpgrade->setInstalled(true);
-
-        \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($forUpgrade);
-
         if ($forUpgrade->getModuleID() !== $installed->getModuleID()) {
+            $forUpgrade->setEnabled($installed->getEnabled());
+
             \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($installed);
 
             $this->moduleIDInstalled = $forUpgrade->getModuleID();
+
+        } else {
+            $forUpgrade->setEnabled(true);
         }
+
+        $forUpgrade->setInstalled(true);
+        $forUpgrade->setFromMarketplace(false);
+
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($forUpgrade);
     }
 }

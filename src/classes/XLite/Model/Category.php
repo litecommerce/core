@@ -231,11 +231,18 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getSubCategoriesCount()
     {
-        $method = 'getSubcategoriesCount'
-            . ($this->getRepository()->getEnabledCondition() ? 'Enabled' : 'All');
+        $result = null;
 
-        // $method assembled from 'getSubcategoriesCount' + 'Enabled' or 'All'
-        return $this->getQuickFlags() ? $this->getQuickFlags()->$method() : null;
+        $enabledCondition = $this->getRepository()->getEnabledCondition();
+        $quickFlags = $this->getQuickFlags();
+
+        if ($quickFlags) {
+            $result = $enabledCondition
+                ? $quickFlags->getSubcategoriesCountEnabled()
+                : $quickFlags->getSubcategoriesCountAll();
+        }
+
+        return $result;
     }
 
     /**

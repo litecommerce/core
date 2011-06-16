@@ -48,7 +48,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     const PRICE_FILTER_OPT_ALL  = 'all';
     const PRICE_FILTER_OPT_FREE = \XLite\Model\Repo\Module::PRICE_FREE;
-    const PRICE_FILTER_OPT_PAID = \XLite\Model\Repo\Module::PRICE_PAID;
 
     /**
      * Widget param names
@@ -126,7 +125,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
         $list[] = 'modules_manager/enter_key/css/style.css';
 
-        // TODO must be taken from LICENSE module widget!!!
+        // TODO must be taken from LICENSE module widget
         $list[] = 'modules_manager/license/css/style.css';
 
         $list[] = 'modules_manager/installation_type/css/style.css';
@@ -144,7 +143,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Register JS files. TODO REWORK with Popup button widget
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -162,7 +160,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         // TODO must be taken from LICENSE module widget
         $list[] = 'modules_manager/license/js/switch-button.js';
 
-
         $list[] = $this->getDir() . '/' . $this->getPageBodyDir() . '/js/controller.js';
 
         return $list;
@@ -177,7 +174,20 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . '/' . $this->getPageBodyDir() . '/items_list.tpl';
+        return $this->getDir() . '/' . $this->getPageBodyDir() . '/'
+            . ($this->isMarketplaceAccessible() ? 'items_list' : 'marketplace_not_accessible') . '.tpl';
+    }
+
+    /**
+     * Check if marketplace is accessible
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isMarketplaceAccessible()
+    {
+        return !is_null(\XLite\Core\Marketplace::getInstance()->checkForUpdates());
     }
 
     /**
@@ -306,9 +316,8 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     protected function getPriceFilterOptions()
     {
         return array(
-            self::PRICE_FILTER_OPT_ALL  => 'No price filtering',
+            self::PRICE_FILTER_OPT_ALL  => 'All add-ons',
             self::PRICE_FILTER_OPT_FREE => 'Free add-ons',
-            self::PRICE_FILTER_OPT_PAID => 'Commercial add-ons',
         );
     }
 
@@ -358,7 +367,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     // {{{ Helpers to use in templates
 
     /**
-     * Check if the module is purchased
+     * Check if the module is installed
      *
      * @param \XLite\Model\Module $module Module
      *
@@ -368,7 +377,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function isInstalled(\XLite\Model\Module $module)
     {
-        return $module->getInstalled();
+        return $module->isInstalled();
     }
 
     /**
@@ -413,7 +422,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         return !$this->isInstalled($module)
             && ($this->isPurchased($module) || $this->isFree($module))
             && $this->canEnable($module)
-            && $module->getMarketplaceID();
+            && $module->getFromMarketplace();
     }
 
     /**
@@ -462,7 +471,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     /**
      * Get purchase page URL
      *
-     * :FIXME: is it really needed???
+     * :FIXME: is it really needed?
      *
      * @return string
      * @see    ____func_see____
@@ -470,7 +479,12 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function getPurchaseURL()
     {
-        $apiURL = trim(\Includes\Utils\Converter::trimTrailingChars(\XLite\Core\Marketplace::getInstance()->getMarketplaceURL(), '/'));
+        $apiURL = trim(
+            \Includes\Utils\Converter::trimTrailingChars(
+                \XLite\Core\Marketplace::getInstance()->getMarketplaceURL()
+                , '/'
+            )
+        );
         $apiURL = preg_replace('/^http:\/\//Ss', 'https://', $apiURL);
 
         // Remove 'api' directory

@@ -36,18 +36,6 @@ namespace XLite\View\Form\Cart;
 class Clear extends \XLite\View\Form\AForm
 {
     /**
-     * Current form name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormName()
-    {
-        return 'clear_cart_form';
-    }
-
-    /**
      * getDefaultTarget
      *
      * @return string
