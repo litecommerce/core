@@ -29,5 +29,5 @@
     name="switch[{module.getModuleId()}][new]"
     {if:!canEnable(module)} disabled="disabled"{end:}
     id="switch{module.getModuleId()}" />
-  <label for="switch{module.getModuleId()}">{t(#Disabled#)}</label>
+  <label for="switch{module.getModuleId()}">{t(#Enabled#)}</label>
 </span>
