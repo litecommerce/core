@@ -11,10 +11,7 @@
  *}
 <div class="summary-box benchmark-summary">
   <div class="summary-box-content">
-    {if:isAlreadyMeasure()}
-      <widget template="benchmark_summary/measure.tpl" />
-    {else:}
-      <widget template="benchmark_summary/empty.tpl" />
-    {end:}
+      <widget IF="isAlreadyMeasure()" template="benchmark_summary/measure.tpl" />
+      <widget IF="!isAlreadyMeasure()" template="benchmark_summary/empty.tpl" />
   </div>
 </div>

@@ -61,23 +61,6 @@ class BenchmarkSummary extends \XLite\View\AView
     }
 
     /**
-     * Get a list of JS files required to display the widget properly
-     * FIXME - decompose these files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        $list[] = 'benchmark_summary/controller.js';
-
-        return $list;
-    }
-
-    /**
      * Return widget default template
      *
      * @return string
@@ -152,7 +135,7 @@ class BenchmarkSummary extends \XLite\View\AView
 
     /**
      * Check - score is high or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
