@@ -19,12 +19,10 @@ function Tooltip()
 
   jQuery(this.pattern).each(
     function () {
-      var helpText;
-      var caption;
-
-      caption = jQuery(obj.caption, this);
-      helpText = core.getCommentedData(this, 'help_text');
-      attachTooltip(caption, helpText);
+      attachTooltip(
+        jQuery(obj.caption, this),
+        jQuery('.help-text', this).hide().html()
+      );
     }
   );
 }

@@ -35,6 +35,9 @@ namespace XLite\Model\WidgetParam;
  */
 class Bool extends \XLite\Model\WidgetParam\Set
 {
+    const TRUE  = 'true';
+    const FALSE = 'false';
+
     /**
      * Options
      *
@@ -43,7 +46,23 @@ class Bool extends \XLite\Model\WidgetParam\Set
      * @since 1.0.0
      */
     protected $options = array(
-        'true'  => 'Yes',
-        'false' => 'No',
+        self::TRUE  => 'Yes',
+        self::FALSE => 'No',
     );
+
+    /**
+     * Get value by name
+     *
+     * @param mixed $name Value to get
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __get($name)
+    {
+        $value = parent::__get($name);
+
+        return self::TRUE === $value;
+    }
 }

@@ -13,7 +13,13 @@
 <p class="date">{formatDate(lastDate)}</p>
 <div class="buttons buttons-rerun">
   <widget class="\XLite\View\Button\Link" location="{buildURL(#measure#,#measure#)}" label="{t(#Rerun benchmark#)}" />
-  <a id="measure-help-text" href="#" onclick="javascript: return false;" class="help">{t(#What is benchmark?#)}</a>
+  <widget
+    class="\XLite\View\Tooltip"
+    id="measure-help-text"
+    text="{t(#The benchmark evaluates server environment#):h}"
+    caption="{t(#What is benchmark?#)}"
+    isImageTag="false"
+    className="help" />
 </div>
 {if:getHostingScore()}
 <hr />

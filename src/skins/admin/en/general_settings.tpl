@@ -156,7 +156,7 @@ function setUnitSymbol(symbol) {
 
             {displayViewListContent(#general_settings.general.parts#,_ARRAY_(#page#^page,#option#^option))}
 
-            <widget IF="option.optionComment" class="\XLite\View\Tooltip" text="{option.optionComment}" isImage="true" className="help-icon" />
+            <widget IF="option.optionComment" class="\XLite\View\Tooltip" text="{option.optionComment}" isImageTag=true className="help-icon" />
 
           </td>
 

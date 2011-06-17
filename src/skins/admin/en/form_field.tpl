@@ -12,9 +12,8 @@
 <div class="table-label {getFieldId()}-label">
   <label for="{getFieldId()}">{getParam(#label#)}:</label>
 </div>
-<div class="star">
-  {if:getParam(#required#)}*{else:}&nbsp;{end:}
-</div>
+<div IF="getParam(#required#)" class="star">*</div>
+<div IF="!getParam(#required#)" class="star">&nbsp;</div>
 <div class="table-value {getFieldId()}-value">
   <widget template="{getDir()}/{getFieldTemplate()}" />
   <div class="form-field-comment {getFieldId()}-comment">{getParam(#comment#):r}</div>

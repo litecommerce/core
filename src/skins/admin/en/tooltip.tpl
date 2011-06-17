@@ -9,8 +9,13 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<span class="tooltip-main">
-  {displayCommentedData(getHelpText())}
-  <img IF="getParam(#isImage#)" class="tooltip-caption {getParam(#className#)}" src="images/spacer.gif" alt="Help" />
-  <span IF="!getParam(#isImage#)" class="tooltip-caption {getParam(#className#)}">{getParam(#caption#)}</span>
-</span>
+
+<div class="tooltip-main">
+  {if:isImageTag()}
+  <img {getAttributesCode():h} src="images/spacer.gif" alt="Help" />
+  {else:}
+  <span {getAttributesCode():h}>{getParam(#caption#)}</span>
+  {end:}
+  <div class="help-text">{getParam(#text#):h}</div>
+</div>
+<div class="clear"></div>
