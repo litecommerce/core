@@ -312,6 +312,7 @@ ul.default-table li {
 
 div.table-label {
   float: left;
+  padding-top: 2px;
 }
 
 ul.default-table div.table-label label {
