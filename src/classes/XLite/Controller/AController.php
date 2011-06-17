@@ -1139,12 +1139,10 @@ abstract class AController extends \XLite\Core\Handler
     {
         \XLite::setController(null);
 
-        \XLite\Core\Request::getInstance()->target = \XLite::TARGET_DEFAULT;
+        \XLite\Core\Request::getInstance()->target = \XLite::TARGET_404;
         \XLite\Core\Request::getInstance()->action = '';
 
-        \XLite::getController();
-
-        \XLite\Core\Operator::getInstance()->display404();
+        \XLite::getController()->handleRequest();
     }
 
     /**

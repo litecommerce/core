@@ -48,6 +48,7 @@ class XLite extends \XLite\Base
      */
 
     const TARGET_DEFAULT = 'main';
+    const TARGET_404     = 'page_not_found';
 
     /**
      * Interfaces codes
@@ -145,7 +146,8 @@ class XLite extends \XLite\Base
             if (!\XLite\Core\Operator::isClassExists($class)) {
                 \XLite\Core\Request::getInstance()->target = self::TARGET_DEFAULT;
                 \XLite\Logger::getInstance()->log('Controller class ' . $class . ' not found!', LOG_ERR);
-                \XLite\Core\Operator::getInstance()->display404();
+                \XLite\Core\Request::getInstance()->target = self::TARGET_404;
+                $class = self::getControllerClass();
             }
 
             self::$controller = new $class(\XLite\Core\Request::getInstance()->getData());
@@ -181,13 +183,11 @@ class XLite extends \XLite\Base
      */
     protected static function getTarget()
     {
-        $target = \XLite\Core\Request::getInstance()->target;
-
-        if (empty($target)) {
-            \XLite\Core\Request::getInstance()->target = $target = self::TARGET_DEFAULT;
+        if (empty(\XLite\Core\Request::getInstance()->target)) {
+            \XLite\Core\Request::getInstance()->target = self::TARGET_DEFAULT;
         }
 
-        return $target;
+        return \XLite\Core\Request::getInstance()->target;
     }
 
     /**
