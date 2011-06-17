@@ -256,7 +256,9 @@ class Inventory extends \XLite\Model\AEntity
      */
     protected function getLockedItems()
     {
-        return \XLite\Model\Cart::getInstance()->getItemsByProductId($this->getProduct()->getProductId());
+        return $this->getProduct()
+            ? \XLite\Model\Cart::getInstance()->getItemsByProductId($this->getProduct()->getProductId())
+            : array();
     }
 
     /**
