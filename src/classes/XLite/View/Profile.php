@@ -47,7 +47,6 @@ class Profile extends \XLite\View\SectionDialog
     public static function getAllowedTargets()
     {
         $list = parent::getAllowedTargets();
-
         $list[] = 'profile';
 
         return $list;

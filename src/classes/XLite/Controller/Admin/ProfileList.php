@@ -48,6 +48,25 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Users';
+    }
+
+
+
+
+
+
+
+
+    /**
      * Get search condition parameter by name
      *
      * @param string $paramName Parameter name
@@ -56,7 +75,7 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getCondition($paramName)
+/*    public function getCondition($paramName)
     {
         $searchParams = $this->getConditions();
 
@@ -66,25 +85,13 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->t('Users');
-    }
-
-    /**
      * doActionDelete
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionDelete()
+/*    protected function doActionDelete()
     {
 
     }
@@ -96,7 +103,7 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionSearch()
+/*    protected function doActionSearch()
     {
         $profilesSearch = array();
         $searchParams   = \XLite\View\ItemsList\Profile\Search::getSearchParams();
@@ -121,7 +128,7 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getConditions()
+/*    protected function getConditions()
     {
         $searchParams = \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Profile\Search::getSessionCellName()};
 
@@ -131,5 +138,5 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
         }
 
         return $searchParams;
-    }
+    }*/
 }

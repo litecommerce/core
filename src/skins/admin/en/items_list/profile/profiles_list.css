@@ -11,9 +11,16 @@
  */
 
 .profile-list td.profileid,
-  .profile-list th.profileid
+.profile-list th.profileid
 {
   width: 10px;
   padding-left: 0px;
   padding-right: 0px;
+}
+
+div.top-controls {
+  margin-bottom: 20px;
+}
+
+div.top-controls div.user-search-panel {
 }
