@@ -38,23 +38,23 @@ class Profile extends \XLite\Model\Repo\ARepo
     /**
      * Allowable search params
      */
-    const SEARCH_PROFILE_ID      = 'profile_id';
-    const SEARCH_ORDER_ID        = 'order_id';
-    const SEARCH_REFERER         = 'referer';
-    const SEARCH_MEMBERSHIP      = 'membership';
-    const SEARCH_LANGUAGE        = 'language';
-    const SEARCH_PATTERN         = 'pattern';
-    const SEARCH_PHONE           = 'phone';
-    const SEARCH_COUNTRY         = 'country';
-    const SEARCH_STATE           = 'state';
-    const SEARCH_ADDRESS_PATTERN = 'address_pattern';
-    const SEARCH_USER_TYPE       = 'user_type';
-    const SEARCH_DATE_TYPE       = 'date_type';
-    const SEARCH_DATE_PERIOD     = 'date_period';
-    const SEARCH_START_DATE      = 'startDate';
-    const SEARCH_END_DATE        = 'endDate';
-    const SEARCH_ORDERBY         = 'order_by';
-    const SEARCH_LIMIT           = 'limit';
+    const SEARCH_PROFILE_ID  = 'profile_id';
+    const SEARCH_ORDER_ID    = 'order_id';
+    const SEARCH_REFERER     = 'referer';
+    const SEARCH_MEMBERSHIP  = 'membership';
+    const SEARCH_LANGUAGE    = 'language';
+    const SEARCH_PATTERN     = 'pattern';
+    const SEARCH_PHONE       = 'phone';
+    const SEARCH_COUNTRY     = 'country';
+    const SEARCH_STATE       = 'state';
+    const SEARCH_ADDRESS     = 'address';
+    const SEARCH_USER_TYPE   = 'user_type';
+    const SEARCH_DATE_TYPE   = 'date_type';
+    const SEARCH_DATE_PERIOD = 'date_period';
+    const SEARCH_START_DATE  = 'startDate';
+    const SEARCH_END_DATE    = 'endDate';
+    const SEARCH_ORDERBY     = 'order_by';
+    const SEARCH_LIMIT       = 'limit';
 
     /**
      * Password length
@@ -291,7 +291,7 @@ class Profile extends \XLite\Model\Repo\ARepo
             self::SEARCH_PHONE,
             self::SEARCH_COUNTRY,
             self::SEARCH_STATE,
-            self::SEARCH_ADDRESS_PATTERN,
+            self::SEARCH_ADDRESS,
             self::SEARCH_USER_TYPE,
             self::SEARCH_DATE_TYPE,
             self::SEARCH_ORDERBY,
@@ -576,7 +576,7 @@ class Profile extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * prepareCndAddressPattern
+     * prepareCndAddress
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
      * @param mixed                      $value        Searchable value
@@ -585,7 +585,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareCndAddressPattern(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    protected function prepareCndAddress(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
             $cnd = new \Doctrine\ORM\Query\Expr\Orx();

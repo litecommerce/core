@@ -40,7 +40,23 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
     /**
      * Widget param names
      */
-    const PARAM_PATTERN = 'pattern';
+    const PARAM_PATTERN    = 'pattern';
+    const PARAM_USER_TYPE  = 'user_type';
+    const PARAM_MEMBERSHIP = 'membership';
+    const PARAM_COUNTRY    = 'country';
+    const PARAM_STATE      = 'state';
+    const PARAM_ADDRESS    = 'address';
+    const PARAM_PHONE      = 'phone';
+    const PARAM_DATE_TYPE  = 'date_type';
+
+    /**
+     * List of search params for this widget (cache)
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $searchParams;
 
     /**
      * Return list of targets allowed for this widget
@@ -115,7 +131,10 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
     protected function getSearchCondition()
     {
         $result = parent::getSearchCondition();
-        $result->{\XLite\Model\Repo\Profile::SEARCH_PATTERN} = $this->getParam(self::PARAM_PATTERN);
+
+        foreach ($this->getSearchParamsRepo() as $repoParam => $widgetParam) {
+            $result->$repoParam = $this->getParam($widgetParam);
+        }
 
         return $result;
     }
@@ -146,9 +165,7 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams += array(
-            self::PARAM_PATTERN => new \XLite\Model\WidgetParam\String('Pattern', ''),
-        );
+        $this->widgetParams += $this->getSearchParams();
     }
 
     /**
@@ -162,6 +179,49 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
     {
         parent::defineRequestParams();
 
-        $this->requestParams[] = self::PARAM_PATTERN;
+        $this->requestParams = array_merge($this->requestParams, array_keys($this->getSearchParams()));
+    }
+
+    /**
+     * Return list of search params for this widget
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSearchParams()
+    {
+        if (!isset($this->searchParams)) {
+            $this->searchParams = array(
+                self::PARAM_PATTERN    => new \XLite\Model\WidgetParam\String('Pattern', ''),
+                self::PARAM_USER_TYPE  => new \XLite\Model\WidgetParam\Set('Type', '', false, array('', 'A', 'C')),
+                self::PARAM_MEMBERSHIP => new \XLite\Model\WidgetParam\String('Membership', ''),
+                self::PARAM_COUNTRY    => new \XLite\Model\WidgetParam\String('Country', ''),
+                self::PARAM_STATE      => new \XLite\Model\WidgetParam\String('State', ''),
+                self::PARAM_ADDRESS    => new \XLite\Model\WidgetParam\String('Address', ''),
+                self::PARAM_PHONE      => new \XLite\Model\WidgetParam\String('Phone', ''),
+                self::PARAM_DATE_TYPE  => new \XLite\Model\WidgetParam\Set('Date type', '', false, array('', 'R', 'L')),
+            );
+        }
+
+        return $this->searchParams;
+    }
+
+    /**
+     * Return list of search params for this widget associated with the Repo params
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSearchParamsRepo()
+    {
+        return array_combine(
+            array_map(
+                function ($item) { return constant('\XLite\Model\Repo\Profile::SEARCH_' . $item); },
+                array('PATTERN', 'USER_TYPE', 'MEMBERSHIP', 'COUNTRY', 'STATE', 'ADDRESS', 'PHONE', 'DATE_TYPE')
+            ),
+            array_keys($this->getSearchParams())
+        );
     }
 }
