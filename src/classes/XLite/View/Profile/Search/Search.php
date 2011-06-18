@@ -32,8 +32,6 @@ namespace XLite\View\Profile\Search;
  *
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @ListChild (list="admin.center", zone="admin")
  */
 class Search extends \XLite\View\AView
 {

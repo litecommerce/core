@@ -54,7 +54,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return \XLite\Core\Request::getInstance()->widget ? $this->t('Address details') : $this->t('Edit profile');
+        return \XLite\Core\Request::getInstance()->widget ? 'Address details' : 'Edit profile';
     }
 
     /**
@@ -137,7 +137,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode($this->t('Search profiles'), $this->buildURL('profile_list', '', array('mode' => 'search')));
+        $this->addLocationNode('Search profiles', $this->buildURL('profile_list'));
     }
 
     /**

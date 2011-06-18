@@ -38,7 +38,7 @@
             <td colspan="5">&nbsp;</td>
         </tr>
         <tr>
-            <widget template="menu_item.tpl" href="admin.php?target=profile_list&mode=search" icon="menu/icon_users.gif" text="<span class='main-menu-item-header'>Users</span><br />Manage customer and administrator accounts" />
+            <widget template="menu_item.tpl" href="admin.php?target=profile_list" icon="menu/icon_users.gif" text="<span class='main-menu-item-header'>Users</span><br />Manage customer and administrator accounts" />
             <td style="width:1%;">&nbsp;&nbsp;</td>
             <widget template="menu_item.tpl" href="admin.php?target=db_backup" icon="menu/icon_catalog.gif" text="<span class='main-menu-item-header'>Store Maintenance</span><br>Perform backup of your store database" />
         </tr>
