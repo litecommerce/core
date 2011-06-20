@@ -326,10 +326,7 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected function preparePagerCSSFiles($list)
     {
-        return array_merge(
-            $list,
-            self::getPager()->getCSSFiles()
-        );
+        return array_merge($list, self::getPager()->getCSSFiles());
     }
 
     /**
