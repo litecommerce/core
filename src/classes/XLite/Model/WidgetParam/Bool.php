@@ -35,8 +35,19 @@ namespace XLite\Model\WidgetParam;
  */
 class Bool extends \XLite\Model\WidgetParam\Set
 {
-    const TRUE  = 'true';
-    const FALSE = 'false';
+    /**
+     * Values for TRUE value
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.1
+     */
+    protected $trueValues = array(
+        '1',
+        'true',
+        1,
+        true,
+    );
 
     /**
      * Options
@@ -46,8 +57,8 @@ class Bool extends \XLite\Model\WidgetParam\Set
      * @since 1.0.0
      */
     protected $options = array(
-        self::TRUE  => 'Yes',
-        self::FALSE => 'No',
+        'true'  => 'Yes',
+        'false' => 'No',
     );
 
     /**
@@ -63,6 +74,21 @@ class Bool extends \XLite\Model\WidgetParam\Set
     {
         $value = parent::__get($name);
 
-        return self::TRUE === $value;
+        return $this->isTrue($value);
+    }
+
+
+    /**
+     * Find if it is true value
+     *
+     * @param mixed $value Value of widget parameter
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function isTrue($value)
+    {
+        return in_array($value, $this->trueValues, true);
     }
 }
