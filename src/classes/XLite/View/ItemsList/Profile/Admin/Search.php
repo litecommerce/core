@@ -200,7 +200,7 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
                 self::PARAM_USER_TYPE   => new \XLite\Model\WidgetParam\Set('Type', '', false, array('', 'A', 'C')),
                 self::PARAM_MEMBERSHIP  => new \XLite\Model\WidgetParam\String('Membership', ''),
                 self::PARAM_COUNTRY     => new \XLite\Model\WidgetParam\String('Country', ''),
-                self::PARAM_STATE       => new \XLite\Model\WidgetParam\Int('State', -1),
+                self::PARAM_STATE       => new \XLite\Model\WidgetParam\Int('State', null),
                 self::PARAM_ADDRESS     => new \XLite\Model\WidgetParam\String('Address', ''),
                 self::PARAM_PHONE       => new \XLite\Model\WidgetParam\String('Phone', ''),
                 self::PARAM_DATE_TYPE   => new \XLite\Model\WidgetParam\Set('Date type', '', false, array('', 'R', 'L')),
