@@ -153,6 +153,7 @@ abstract class AProfile extends \XLite\View\ItemsList\AItemsList
     protected function getSearchCondition()
     {
         $result = parent::getSearchCondition();
+        $result->{\XLite\Model\Repo\Profile::SEARCH_ORDER_ID} = 0;
 
         return $result;
     }

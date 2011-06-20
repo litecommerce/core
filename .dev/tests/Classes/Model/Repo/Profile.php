@@ -150,7 +150,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
         // Test dataset #15
         14 => array(
             'cnd' => array(
-                'address_pattern' => 'Paris',
+                'address' => 'Paris',
             ),
             'result' => array(
                 'ids' => array(4),
@@ -159,7 +159,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
         // Test dataset #16
         15 => array(
             'cnd' => array(
-                'address_pattern' => 'est str',
+                'address' => 'est str',
             ),
             'result' => array(
                 'ids' => array(7),
@@ -168,7 +168,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
         // Test dataset #17
         16 => array(
             'cnd' => array(
-                'address_pattern' => 'ate te',
+                'address' => 'ate te',
             ),
             'result' => array(
                 'ids' => array(4),
@@ -177,7 +177,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
         // Test dataset #18
         17 => array(
             'cnd' => array(
-                'address_pattern' => '435',
+                'address' => '435',
             ),
             'result' => array(
                 'ids' => array(4),
