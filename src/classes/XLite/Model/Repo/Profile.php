@@ -98,20 +98,6 @@ class Profile extends \XLite\Model\Repo\ARepo
     );
 
     /**
-     * Create a new QueryBuilder instance that is prepopulated for this entity name
-     *
-     * @param string $alias Table alias OPTIONAL
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function createQueryBuilder($alias = 'p')
-    {
-        return parent::createQueryBuilder($alias)->andWhere($alias . '.order IS NULL'); 
-    }
-
-    /**
      * Common search
      *
      * @param \XLite\Core\CommonCell $cnd       Search condition
