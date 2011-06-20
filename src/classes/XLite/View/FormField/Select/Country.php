@@ -38,11 +38,9 @@ class Country extends \XLite\View\FormField\Select\Regular
     /**
      * Widget param names
      */
-
     const PARAM_ALL               = 'all';
     const PARAM_STATE_SELECTOR_ID = 'stateSelectorId';
     const PARAM_STATE_INPUT_ID    = 'stateInputId';
-
 
     /**
      * Display only enabled countries
@@ -52,7 +50,6 @@ class Country extends \XLite\View\FormField\Select\Regular
      * @since 1.0.0
      */
     protected $onlyEnabled = true;
-
 
     /**
      * Save current form reference and sections list, and initialize the cache
@@ -174,6 +171,7 @@ class Country extends \XLite\View\FormField\Select\Regular
             . 'stateSelectors[\'' . $this->getFieldId() . '\'] = new StateSelector('
             . '\'' . $this->getFieldId() . '\', '
             . '\'' . $this->getParam(self::PARAM_STATE_SELECTOR_ID) . '\', '
-            . '\'' . $this->getParam(self::PARAM_STATE_INPUT_ID) . '\'); });';
+            . '\'' . $this->getParam(self::PARAM_STATE_INPUT_ID) . '\'); });' . PHP_EOL
+            . $this->getWidget(array(), '\XLite\View\JS\StatesList')->getContent();
     }
 }

@@ -40,14 +40,17 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
     /**
      * Widget param names
      */
-    const PARAM_PATTERN    = 'pattern';
-    const PARAM_USER_TYPE  = 'user_type';
-    const PARAM_MEMBERSHIP = 'membership';
-    const PARAM_COUNTRY    = 'country';
-    const PARAM_STATE      = 'state';
-    const PARAM_ADDRESS    = 'address';
-    const PARAM_PHONE      = 'phone';
-    const PARAM_DATE_TYPE  = 'date_type';
+    const PARAM_PATTERN     = 'pattern';
+    const PARAM_USER_TYPE   = 'user_type';
+    const PARAM_MEMBERSHIP  = 'membership';
+    const PARAM_COUNTRY     = 'country';
+    const PARAM_STATE       = 'state';
+    const PARAM_ADDRESS     = 'address';
+    const PARAM_PHONE       = 'phone';
+    const PARAM_DATE_TYPE   = 'date_type';
+    const PARAM_DATE_PERIOD = 'date_period';
+    const PARAM_START_DATE  = 'startDate';
+    const PARAM_END_DATE    = 'endDate';
 
     /**
      * List of search params for this widget (cache)
@@ -193,14 +196,17 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
     {
         if (!isset($this->searchParams)) {
             $this->searchParams = array(
-                self::PARAM_PATTERN    => new \XLite\Model\WidgetParam\String('Pattern', ''),
-                self::PARAM_USER_TYPE  => new \XLite\Model\WidgetParam\Set('Type', '', false, array('', 'A', 'C')),
-                self::PARAM_MEMBERSHIP => new \XLite\Model\WidgetParam\String('Membership', ''),
-                self::PARAM_COUNTRY    => new \XLite\Model\WidgetParam\String('Country', ''),
-                self::PARAM_STATE      => new \XLite\Model\WidgetParam\String('State', ''),
-                self::PARAM_ADDRESS    => new \XLite\Model\WidgetParam\String('Address', ''),
-                self::PARAM_PHONE      => new \XLite\Model\WidgetParam\String('Phone', ''),
-                self::PARAM_DATE_TYPE  => new \XLite\Model\WidgetParam\Set('Date type', '', false, array('', 'R', 'L')),
+                self::PARAM_PATTERN     => new \XLite\Model\WidgetParam\String('Pattern', ''),
+                self::PARAM_USER_TYPE   => new \XLite\Model\WidgetParam\Set('Type', '', false, array('', 'A', 'C')),
+                self::PARAM_MEMBERSHIP  => new \XLite\Model\WidgetParam\String('Membership', ''),
+                self::PARAM_COUNTRY     => new \XLite\Model\WidgetParam\String('Country', ''),
+                self::PARAM_STATE       => new \XLite\Model\WidgetParam\Int('State', -1),
+                self::PARAM_ADDRESS     => new \XLite\Model\WidgetParam\String('Address', ''),
+                self::PARAM_PHONE       => new \XLite\Model\WidgetParam\String('Phone', ''),
+                self::PARAM_DATE_TYPE   => new \XLite\Model\WidgetParam\Set('Date type', '', false, array('', 'R', 'L')),
+                self::PARAM_DATE_PERIOD => new \XLite\Model\WidgetParam\Set('Date period', '', false, array('', 'M', 'W', 'D', 'C')),
+                self::PARAM_START_DATE  => new \XLite\Model\WidgetParam\Int('Start date', null),
+                self::PARAM_END_DATE    => new \XLite\Model\WidgetParam\Int('End date', null),
             );
         }
 
@@ -219,7 +225,19 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
         return array_combine(
             array_map(
                 function ($item) { return constant('\XLite\Model\Repo\Profile::SEARCH_' . $item); },
-                array('PATTERN', 'USER_TYPE', 'MEMBERSHIP', 'COUNTRY', 'STATE', 'ADDRESS', 'PHONE', 'DATE_TYPE')
+                array(
+                    'PATTERN',
+                    'USER_TYPE',
+                    'MEMBERSHIP',
+                    'COUNTRY',
+                    'STATE',
+                    'ADDRESS',
+                    'PHONE',
+                    'DATE_TYPE',
+                    'DATE_PERIOD',
+                    'START_DATE',
+                    'END_DATE',
+                )
             ),
             array_keys($this->getSearchParams())
         );

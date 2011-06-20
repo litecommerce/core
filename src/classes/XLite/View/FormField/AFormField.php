@@ -43,6 +43,7 @@ abstract class AFormField extends \XLite\View\AView
     const PARAM_REQUIRED   = 'required';
     const PARAM_ATTRIBUTES = 'attributes';
     const PARAM_NAME       = 'fieldName';
+    const PARAM_ID         = 'fieldId';
     const PARAM_LABEL      = 'label';
     const PARAM_COMMENT    = 'comment';
     const PARAM_FIELD_ONLY = 'fieldOnly';
@@ -171,7 +172,7 @@ abstract class AFormField extends \XLite\View\AView
      */
     public function getFieldId()
     {
-        return strtolower(strtr($this->getName(), array('['=>'-', ']'=>'', '_'=>'-')));
+        return $this->getParam(self::PARAM_ID) ?: strtolower(strtr($this->getName(), array('['=>'-', ']'=>'', '_'=>'-')));
     }
 
     /**
@@ -230,20 +231,6 @@ abstract class AFormField extends \XLite\View\AView
     protected function getDefaultTemplate()
     {
         return 'form_field.tpl';
-    }
-
-    /**
-     * Return widget template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getTemplate()
-    {
-        return $this->getParam(self::PARAM_FIELD_ONLY)
-            ? $this->getDir() . LC_DS . $this->getFieldTemplate()
-            : $this->getDefaultTemplate();
     }
 
     /**
@@ -465,6 +452,7 @@ abstract class AFormField extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
+            self::PARAM_ID         => new \XLite\Model\WidgetParam\String('Id', ''),
             self::PARAM_NAME       => new \XLite\Model\WidgetParam\String('Name', $this->getDefaultName()),
             self::PARAM_VALUE      => new \XLite\Model\WidgetParam\String('Value', $this->getDefaultValue()),
             self::PARAM_LABEL      => new \XLite\Model\WidgetParam\String('Label', $this->getDefaultLabel()),

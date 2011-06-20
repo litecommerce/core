@@ -75,7 +75,6 @@ StateSelector.prototype.changeState = function(state)
 
 StateSelector.prototype.changeCountry = function(country)
 {
-
     if (statesList[country]) {
 
         this.removeOptions();

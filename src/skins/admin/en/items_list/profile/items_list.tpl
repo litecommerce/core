@@ -13,7 +13,7 @@
 <div class="top-controls">
   <div class="form-panel users-search-panel">
 
-    <form name="search_form" method="get" action="admin.php">
+    <form name="searchform" method="get" action="admin.php">
       <input FOREACH="getURLParams(),name,value" type="hidden" name="{name}" value="{value}" />
 
       <table cellpadding="1" cellspacing="5">

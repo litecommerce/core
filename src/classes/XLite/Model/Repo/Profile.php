@@ -106,7 +106,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function createQueryBuilder($alias = null)
+    public function createQueryBuilder($alias = 'p')
     {
         return parent::createQueryBuilder($alias)->andWhere($alias . '.order IS NULL'); 
     }
