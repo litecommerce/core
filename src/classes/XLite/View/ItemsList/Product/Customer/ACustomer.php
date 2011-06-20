@@ -121,8 +121,8 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     public static function getSidebarDisplayModes()
     {
         return array(
-            self::DISPLAY_MODE_STHUMB  => 'Small thumbnails',
-            self::DISPLAY_MODE_BTHUMB  => 'Big thumbnails',
+            self::DISPLAY_MODE_STHUMB  => 'Cells',
+            self::DISPLAY_MODE_BTHUMB  => 'List',
         );
     }
 
