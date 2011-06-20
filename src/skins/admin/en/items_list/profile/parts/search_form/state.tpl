@@ -14,5 +14,8 @@
 
 <tr>
   <td>{t(#State#)}</td>
-  <td><widget class="\XLite\View\StateSelect" field="state" country="{getParam(#state#)}" /></td>
+  <td>
+    <widget class="\XLite\View\FormField\Select\State" fieldName="state" fieldOnly=true fieldId="stateSelectorId" value="{getParam(#state#)}" />
+    <widget class="\XLite\View\FormField\Input\Text" fieldName="state" fieldOnly=true fieldId="stateBoxId" value="{getParam(#state#)}" />
+  </td>
 </tr>

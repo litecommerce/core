@@ -47,3 +47,22 @@
     </table>
   </td>
 </tr>
+
+<script type="text/javascript">
+<!--
+visibleBox('1');
+managedate('date_type');
+-->
+</script>
+
+<script type="text/javascript" IF="getParam(#date_period#)=#C#">
+<!--
+managedate('date', false);
+-->
+</script>
+
+<script type="text/javascript" IF="!getParam(#date_period#)=#C#">
+<!--
+managedate('date', true);
+-->
+</script>
