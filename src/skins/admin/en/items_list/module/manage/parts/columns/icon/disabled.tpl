@@ -10,7 +10,6 @@
  * @since     1.0.0
  *
  * @ListChild (list="itemsList.module.manage.columns.icon", weight="100")
- * @ListChild (list="itemsList.module.install.columns.icon", weight="100")
  *}
 
 <div IF="!isEnabled(module)" class="addon-disabled">
