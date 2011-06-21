@@ -32,6 +32,9 @@ CDev/FeaturedProducts
 XLITE_SEPARATE_MODULES="
 CDev/AustraliaPost
 CDev/AuthorizeNet
+CDev/Bestsellers
+CDev/DrupalConnector
+CDev/FeaturedProducts
 CDev/GoogleAnalytics
 CDev/ProductOptions
 CDev/Quantum
