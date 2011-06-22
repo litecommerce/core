@@ -44,8 +44,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     const HOOK_STEP_FIRST      = 'step_first';
     const HOOK_STEP_SECOND     = 'step_second';
     const HOOK_STEP_THIRD      = 'step_third';
-    const HOOK_STEP_FOUR       = 'step_four';
-    const HOOK_STEP_FIVE       = 'step_five';
+    const HOOK_STEP_FOURTH     = 'step_fourth';
+    const HOOK_STEP_FIFTH      = 'step_fifth';
 
     /**
      * List of cache building steps
@@ -58,8 +58,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         self::STEP_FIRST,
         self::STEP_SECOND,
         self::STEP_THIRD,
-        self::STEP_FOUR,
-        self::STEP_FIVE,
+        self::STEP_FOURTH,
+        self::STEP_FIFTH,
     );
 
     /**
@@ -578,7 +578,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandler4()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FOUR);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FOURTH);
     }
 
     /**
@@ -594,7 +594,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandler5()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIVE);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIFTH);
     }
 
     // }}}
