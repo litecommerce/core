@@ -46,6 +46,9 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
     const CATEGORY      = 'LC_MESSAGES';
 
 
+    const SERVICE_LBL   = '___service___';
+    const SERVICE_VALUE = 'service';
+
     /**
      * Dynamic domains list
      *
@@ -125,6 +128,14 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
                 && is_dir(LC_DIR_TMP)
                 && is_readable(LC_DIR_TMP)
                 && is_writable(LC_DIR_TMP);
+
+            if ($result) {
+                $label = $this->translate(
+                    self::SERVICE_LBL,
+                    \XLite\Core\Session::getInstance()->getLanguage()->getCode()
+                );
+                $result = self::SERVICE_VALUE == $label;
+            }
         }
 
         return $result;
@@ -269,6 +280,8 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
         $list = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')
             ->findLabelsByCode($code);
 
+        $list[self::SERVICE_LBL] = self::SERVICE_VALUE;
+
         $result = false;
 
         // .mo-file format source: http://www.gnu.org/software/gettext/manual/gettext.html#MO-Files
@@ -334,6 +347,8 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
     {
         $list = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')
             ->findLabelsByCode($code);
+
+        $list[self::SERVICE_LBL] = self::SERVICE_VALUE;
 
         $result = false;
 
