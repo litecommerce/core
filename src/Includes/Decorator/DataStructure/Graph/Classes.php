@@ -127,7 +127,7 @@ class Classes extends \Includes\DataStructure\Graph
      */
     public function getParentClass()
     {
-        return ($class = $this->getReflection()->getParentClass()) ? $this->prepareClassName($class->getName()) : null;
+        return $this->getReflection()->parentClass;
     }
 
     /**
@@ -140,7 +140,7 @@ class Classes extends \Includes\DataStructure\Graph
      */
     public function getInterfaces()
     {
-        return array_map(array($this, 'prepareClassName'), (array) $this->getReflection()->getInterfaceNames());
+        return $this->getReflection()->interfaceNames;
     }
 
     /**
@@ -155,7 +155,7 @@ class Classes extends \Includes\DataStructure\Graph
      */
     public function isImplements($interface)
     {
-        return $this->getReflection()->implementsInterface($interface);
+        return in_array($this->prepareClassName($interface), $this->getInterfaces());
     }
 
     /**
@@ -293,7 +293,7 @@ class Classes extends \Includes\DataStructure\Graph
     protected function getActualSource(self $parent = null)
     {
         return \Includes\Decorator\Utils\Tokenizer::getSourceCode(
-            $this->getReflection()->getFileName(),
+            $this->getReflection()->fileName,
             $this->getActualNamespace(),
             $this->getClassBaseName(),
             $this->getActualParentClassName($parent),
@@ -315,10 +315,10 @@ class Classes extends \Includes\DataStructure\Graph
     {
         return '<?php' . PHP_EOL . PHP_EOL
             . (($namespace = $this->getActualNamespace()) ? ('namespace ' . $namespace . ';' . PHP_EOL . PHP_EOL) : '')
-            . (($comment = $this->getReflection()->getDocComment()) ? ($comment . PHP_EOL) : '')
-            . ($this->getReflection()->isFinal() ? 'final '    : '')
-            . ($this->getReflection()->isAbstract() ? 'abstract ' : '')
-            . ($this->getReflection()->isInterface() ? 'interface' : 'class') . ' ' . $this->getClassBaseName()
+            . (($comment = $this->getReflection()->docComment) ? ($comment . PHP_EOL) : '')
+            . ($this->getReflection()->isFinal ? 'final '    : '')
+            . ($this->getReflection()->isAbstract ? 'abstract ' : '')
+            . ($this->getReflection()->isInterface ? 'interface' : 'class') . ' ' . $this->getClassBaseName()
             . (($class = $this->getActualParentClassName($parent)) ? (' extends ' . $class) : '')
             . (($interfaces = $this->getInterfaces()) ? (' implements \\' . implode(', \\', $interfaces)) : '')
             . PHP_EOL . '{' . PHP_EOL . '}';
@@ -334,7 +334,7 @@ class Classes extends \Includes\DataStructure\Graph
      */
     protected function getRegularSource()
     {
-        return \Includes\Utils\FileManager::read($this->getReflection()->getFileName());
+        return \Includes\Utils\FileManager::read($this->getReflection()->fileName);
     }
 
     /**
@@ -426,7 +426,7 @@ class Classes extends \Includes\DataStructure\Graph
     public function getTags()
     {
         if (!isset($this->tags)) {
-            $this->tags = \Includes\Decorator\Utils\Operator::getTags($this->getReflection()->getDocComment());
+            $this->tags = \Includes\Decorator\Utils\Operator::getTags($this->getReflection()->docComment);
         }
 
         return $this->tags;
@@ -446,7 +446,35 @@ class Classes extends \Includes\DataStructure\Graph
     public function getReflection()
     {
         if (!isset($this->reflection)) {
-            $this->reflection = new \ReflectionClass($this->getClass());
+            $reflection = new \ReflectionClass($this->getClass());
+            $this->reflection = new \StdClass();
+
+            $this->reflection->parentClass    = null;
+            $this->reflection->interfaceNames = array();
+            $this->reflection->fileName       = $reflection->getFileName();
+            $this->reflection->docComment     = $reflection->getDocComment();
+            $this->reflection->isFinal        = $reflection->isFinal();
+            $this->reflection->isAbstract     = $reflection->isAbstract();
+            $this->reflection->isInterface    = $reflection->isInterface();
+
+            // :KLUDGE: the "StaticRoutines" plugin support
+            $this->reflection->hasStaticConstructor = $reflection->hasMethod(
+                \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD
+            );
+
+            if ($class = $reflection->getParentClass()) {
+                $this->reflection->parentClass = $this->prepareClassName($class->getName());
+    
+                $class = null;
+                unset($class);
+            }
+
+            if ($interfaces = $reflection->getInterfaceNames()) {
+                $this->reflection->interfaceNames = array_map(array($this, 'prepareClassName'), $interfaces);
+            }
+
+            $reflection = null;
+            unset($reflection);
         }
 
         return $this->reflection;

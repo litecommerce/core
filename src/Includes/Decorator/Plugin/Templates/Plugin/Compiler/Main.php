@@ -70,7 +70,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      */
     public function __construct()
     {
-        $this->flexy = \Xlite\Core\FlexyCompiler::getInstance();
+        $this->flexy = \XLite\Core\FlexyCompiler::getInstance();
     }
 
     /**
