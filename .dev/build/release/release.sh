@@ -545,10 +545,23 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 			_php_code="echo serialize(array('RevisionDate'=>time(),'ActualName'=>'${module_actual_name}','VersionMajor'=>'${module_major_version}','VersionMinor'=>'${module_minor_version}','Name'=>'${module_name}','Author'=>'${module_author}','IconLink'=>'${module_icon}','Description'=>'${module_descr}','Dependencies'=>array()));"
 
-			$PHP -qr "$_php_code" > .phar/metadata.bin
+			$PHP -qr "$_php_code" > .phar/.metadata.bin
 
-			tar -cf ${OUTPUT_DIR}/${module_file_name}-v${module_version}.tar .phar $module_files_list
+			module_hash_data='array('
+			for h in $module_files_list; do
+				for hd in `find $h -type f`; do
+					module_hash_data=$module_hash_data"'${hd}'=>'`md5 -q ${hd}`',"
+				done
+			done
+			module_hash_data=$module_hash_data")"
+
+			_php_code="echo json_encode(${module_hash_data});"
+
+			$PHP -qr "$_php_code" > .hash
+
+			tar -cf ${OUTPUT_DIR}/${module_file_name}-v${module_version}.tar .phar $module_files_list .hash
 			rm -rf .phar
+			rm .hash
 
 			echo "  + ${module_name} module package is complete: ${module_file_name}-v${module_version}.tar"
 
@@ -579,7 +592,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 			fi
 
 			# Find all empty module authors dirs
-			find $i -maxdepth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+			find $i -maxdepth 2 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
 
 		fi
 	
@@ -599,7 +612,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 			done
 		
 		else
-			find ./images/* -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} \;
+			rm -rf images
+			find ./public/ -mindepth 1 -maxdepth 1 -type f -not -name "error*" -delete
 		fi
 	fi
 	
@@ -625,7 +639,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 		else
 
-			echo "WARNING! Upgrades scrips is not exists!"
+			echo "WARNING! Upgrades scripts not found!"
 
 		fi
 
