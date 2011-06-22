@@ -76,8 +76,62 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         LC_DIR_TMP,
     );
 
+    /**
+     * Timestamp of the step start 
+     * 
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected static $stepStart;
+
+    /**
+     * Memory usage
+     * 
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected static $stepMemory;
+
 
     // {{{ Dispaly message routines
+
+    /**
+     * showStepMessage 
+     * 
+     * @param string  $text       Message text
+     * @param boolean $addNewline Flag OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function showStepMessage($text, $addNewline = false)
+    {
+        static::$stepStart  = microtime(true);
+        static::$stepMemory = memory_get_usage();
+
+        \Includes\Utils\Operator::showMessage($text, $addNewline);
+    }
+
+    /**
+     * showStepInfo 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function showStepInfo()
+    {
+        $text = number_format(microtime(true) - static::$stepStart, 2) . 'sec, ';
+
+        $memory = memory_get_usage();
+        $text .= \Includes\Utils\Converter::formatFileSize($memory, '');
+        $text .= ' (' . \Includes\Utils\Converter::formatFileSize(memory_get_usage() - static::$stepMemory, '') . ')';
+        
+        \Includes\Utils\Operator::showMessage(' [' . $text . ']');
+    }
 
     /**
      * Get decorator message
@@ -117,6 +171,13 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
             . '" alt="" /></td><td>' . static::getMessage() . '</td></tr></table>';
     }
 
+    /**
+     * displayCompleteMessage 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected static function displayCompleteMessage()
     {
         echo '<div id="finish">Cache is built successfully</div>';
@@ -294,7 +355,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
             static::getRebuildIndicatorFileContent()
         );
 
-        \Includes\Utils\Operator::showMessage(LC_IS_CLI_MODE ? static::getPlainMessage() : static::getHTMLMessage());
+        static::showStepMessage(LC_IS_CLI_MODE ? static::getPlainMessage() : static::getHTMLMessage(), true);
     }
 
     /**
@@ -344,7 +405,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         static::checkRebuildIndicatorState();
 
         if (static::isSkipRedirectAfterLastStep($step)) {
-            // Do not redirect after last step (this mode is used when cache builder was launched from LC standalone installation script)
+            // Do not redirect after last step 
+            // (this mode is used when cache builder was launched from LC standalone installation script)
             static::displayCompleteMessage();
             exit ();
 
@@ -432,12 +494,15 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     public static function executeStepHandler1()
     {
+        // var_dump(\Includes\Utils\Converter::formatFileSize(memory_get_peak_usage()));
+
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_CLEANUP);
 
         // Delete cache folders
-        \Includes\Utils\Operator::showMessage('Cleaning up the cache...');
+        static::showStepMessage('Cleaning up the cache...');
         static::cleanupCache();
+        static::showStepInfo();
 
         // Load classes from "classes" (do not use cache)
         \Includes\Autoloader::switchLcAutoloadDir();
@@ -446,18 +511,22 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_DECORATE);
 
         // Main procedure: build decorator chains
-        \Includes\Utils\Operator::showMessage('Building classes tree...');
+        static::showStepMessage('Building classes tree...');
         static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'decorateClass'));
+        static::showStepInfo();
 
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_WRITE);
 
         // Write class files to FS
-        \Includes\Utils\Operator::showMessage('Writing class files to the cache...');
+        static::showStepMessage('Writing class files to the cache...');
         static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'writeClassFile'));
+        static::showStepInfo();
 
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIRST);
+
+        // var_dump(\Includes\Utils\Converter::formatFileSize(memory_get_peak_usage()));die;
     }
 
     /**
