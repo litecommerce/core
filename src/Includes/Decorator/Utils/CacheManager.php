@@ -401,6 +401,14 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
             static::getCacheStateIndicatorFileContent()
         );
 
+        // Write classes cache
+        if ($root = static::getClassesTree(false)) {
+            \Includes\Utils\FileManager::write(
+                static::getClassesHashPath(),
+                serialize(array_merge($root->findAll(), array($root)))
+            );
+        }
+
         // Remove the "rebuilding cache" indicator file
         static::checkRebuildIndicatorState();
 
@@ -494,8 +502,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     public static function executeStepHandler1()
     {
-        // var_dump(\Includes\Utils\Converter::formatFileSize(memory_get_peak_usage()));
-
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_CLEANUP);
 
@@ -525,8 +531,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIRST);
-
-        // var_dump(\Includes\Utils\Converter::formatFileSize(memory_get_peak_usage()));die;
     }
 
     /**
@@ -612,6 +616,9 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
                 break;
             }
         }
+
+        // Clear classes cache
+        \Includes\Utils\FileManager::deleteFile(static::getClassesHashPath());
     }
 
     /**
