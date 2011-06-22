@@ -547,7 +547,6 @@ return;
         $mode = $this->getDisplayMode();
         $listSelector = $this->getListSelector();
         $selector = "$listSelector .list-header .sort-box select.sort-crit";
-        $orderSelector = "$listSelector .list-header .sort-box a.sort-order";
 
         // Display all products and store displayed product data for further reference
         $productsCount = $this->countAllTestProducts();
@@ -560,18 +559,27 @@ return;
         $this->openTestPage();
 
         $optionLabels = array(
-            'Name'=>'name',
-            'Price'=>'price',
-            'Default'=>'name',   // for some reasons the default sort method is neither by name nor by id; can't find a way to test it
+            'Name: A-Z'      => array(
+                'name',
+                'asc'
+            ),
+            'Name: Z-A'      => array(
+                'name',
+                'desc'
+            ),
+            'Price: low to high'     => array(
+                'price',
+                'asc'
+            ),
+            'Price: high to low'     => array(
+                'price',
+                'desc'
+            ),
         );
 
-        if ('table' === $mode) {
-            $optionLabels['SKU'] = 'sku';
-        }
+        foreach ($optionLabels as $label => $value) {
 
-        $sortOrder = 'asc';
-
-        foreach ($optionLabels as $label=>$field) {
+            list($field, $sortOrder) = $value;
 
             $this->assertElementPresent(
                 "css=$selector",
@@ -582,21 +590,7 @@ return;
 
             $this->waitForAjaxProgress();
 
-            $this->testSortedProducts($field, $label, $mode, ($sortOrder=='asc'));
-
-            $this->assertElementPresent(
-                "css=$orderSelector",
-                "Asc/Desc link is missing ($label label, $field field, $mode mode)"
-            );
-
-            $this->click("css=$orderSelector");
-
-            $this->waitForAjaxProgress();
-
-            $sortOrder = ($sortOrder == 'asc') ? 'desc' : 'asc';
-
-            $this->testSortedProducts($field, $label, $mode, ($sortOrder=='asc'));
-
+            $this->testSortedProducts($field, $label, $mode, ($sortOrder == 'asc'));
         }
     }
 
