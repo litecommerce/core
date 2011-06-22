@@ -67,6 +67,20 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
 
     /**
+     * Allowed sort criterions
+     */
+    const SORT_BY_MODE_PRICE_ASC  = 'p.price asc';
+    const SORT_BY_MODE_NAME_ASC   = 'translations.name asc';
+    const SORT_BY_MODE_SKU_ASC    = 'p.sku asc';
+    const SORT_BY_MODE_AMOUNT_ASC = 'i.amount asc';
+
+    const SORT_BY_MODE_PRICE_DESC  = 'p.price desc';
+    const SORT_BY_MODE_NAME_DESC   = 'translations.name desc';
+    const SORT_BY_MODE_SKU_DESC    = 'p.sku desc';
+    const SORT_BY_MODE_AMOUNT_DESC = 'i.amount desc';
+
+
+    /**
      * A special option meaning that a CSS layout is to be used
      */
     const DISPLAY_GRID_CSS_LAYOUT = 'css-defined';
@@ -113,7 +127,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
     /**
      * Get display modes for sidebar widget type
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -128,7 +142,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
     /**
      * Get display modes for center widget type
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -143,8 +157,8 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
-     * Get icon sizes 
-     * 
+     * Get icon sizes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -157,6 +171,31 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
             self::WIDGET_TYPE_CENTER . '.' . self::DISPLAY_MODE_GRID => array(160, 160),
             self::WIDGET_TYPE_CENTER . '.' . self::DISPLAY_MODE_LIST => array(160, 160),
             'other' => array(110, 110),
+        );
+    }
+
+    /**
+     * Define and set widget attributes; initialize widget
+     *
+     * @param array $params Widget params OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    public function __construct(array $params = array())
+    {
+        parent::__construct($params);
+
+        $this->sortByModes = array(
+            self::SORT_BY_MODE_PRICE_ASC    => static::t('Price: low to high'),
+            self::SORT_BY_MODE_PRICE_DESC   => static::t('Price: high to low'),
+            self::SORT_BY_MODE_NAME_ASC     => static::t('Name: A-Z'),
+            self::SORT_BY_MODE_NAME_DESC    => static::t('Name: Z-A'),
+            self::SORT_BY_MODE_SKU_ASC      => static::t('SKU: a-z'),
+            self::SORT_BY_MODE_SKU_DESC     => static::t('SKU: z-a'),
+            self::SORT_BY_MODE_AMOUNT_ASC   => static::t('Amount: low to high'),
+            self::SORT_BY_MODE_AMOUNT_DESC  => static::t('Amount: high to low'),
         );
     }
 
@@ -175,7 +214,9 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
         // Modify display modes and default display mode
         $options = $this->getDisplayModes();
+
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setOptions($options);
+
         if (!isset($options[$this->getParam(self::PARAM_DISPLAY_MODE)])) {
             $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(
                 self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
@@ -329,8 +370,8 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
-     * Get display modes 
-     * 
+     * Get display modes
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -340,6 +381,33 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         return self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
             ? static::getSidebarDisplayModes()
             : static::getCenterDisplayModes();
+    }
+
+    /**
+     * Return params list to use for search
+     *
+     * @return \XLite\Core\CommonCell
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSearchCondition()
+    {
+        $result = parent::getSearchCondition();
+        $result->{\XLite\Model\Repo\Product::P_ORDER_BY} = explode(' ', $this->getSortBy());
+
+        return $result;
+    }
+
+    /**
+     * getSortByModeDefault
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSortByModeDefault()
+    {
+        return self::SORT_BY_MODE_NAME_ASC;
     }
 
     /**

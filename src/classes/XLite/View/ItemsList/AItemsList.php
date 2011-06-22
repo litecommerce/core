@@ -433,7 +433,7 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * Get pager
      *
-     * @return \XLite\View\PagerOrig
+     * @return \XLite\View\Pager\APager
      * @see    ____func_see____
      * @since  1.0.0
      */
