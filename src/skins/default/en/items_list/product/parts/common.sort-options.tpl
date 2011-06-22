@@ -20,7 +20,4 @@
   <select class="sort-crit" id="{getSortWidgetId(true)}">
     <option FOREACH="sortByModes,key,name" value="{key}" selected="{isSortByModeSelected(key)}">{name}</option>
   </select>
-
-  <a href="{getActionURL(_ARRAY_(#sortOrder#^getSortOrderToChange()))}" class="sort-order">{if:isSortOrderAsc()}&darr;{else:}&uarr;{end:}</a>
-
 </div>
