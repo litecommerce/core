@@ -54,6 +54,15 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
     protected static $tokens;
 
     /**
+     * decoratorFlag 
+     * 
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected static $decoratorFlag;
+
+    /**
      * List of "public" methods
      * 
      * @var   array
@@ -98,9 +107,25 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
         }
 
         // Prepare tokens
-        static::reset($path);
+        static::reset($path, static::getDecoratorFlag() || !LC_DEVELOPER_MODE || 'getFullClassName' !== $method);
 
         return call_user_func_array(array('static', $method), $args);
+    }
+
+    /**
+     * getDecoratorFlag 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getDecoratorFlag()
+    {
+        if (!isset(static::$decoratorFlag)) {
+            static::$decoratorFlag = \Includes\Utils\ConfigParser::getOptions(array('decorator', 'use_tokenizer'));
+        }
+
+        return static::$decoratorFlag;
     }
 
     // }}}
@@ -505,19 +530,22 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
     /**
      * Reset tokenizer state
      *
-     * @param string $path New file path
+     * @param string  $path    New file path
+     * @param boolean $prepare Flag OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function reset($path)
+    protected static function reset($path, $prepare = true)
     {
         if ($path !== static::$path) {
-            static::$path = $path;
-            static::$tokens = static::prepareTokens(
-                token_get_all(\Includes\Utils\FileManager::read($path, LC_DEVELOPER_MODE))
-            );
+            static::$path   = $path;
+            static::$tokens = token_get_all(\Includes\Utils\FileManager::read($path, LC_DEVELOPER_MODE));
+
+            if ($prepare) {
+                static::$tokens = static::prepareTokens(static::$tokens);
+            }
         }
     }
 
@@ -649,7 +677,6 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
                 }
 
                 if (!empty($found)) {
-
                     $start = $key;
 
                     do {

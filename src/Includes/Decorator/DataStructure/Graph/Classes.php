@@ -485,24 +485,42 @@ class Classes extends \Includes\DataStructure\Graph
     {
         if (!isset($this->reflection)) {
             $this->reflection = new \StdClass();
+            $util = '\Includes\Decorator\Utils\Tokenizer';
 
-            $this->reflection->parentClass = $this->prepareClassName(
-                \Includes\Decorator\Utils\Tokenizer::getParentClassName($this->getFile())
-            );
-            $this->reflection->interfaces = array_map(
-                array($this, 'prepareClassName'),
-                \Includes\Decorator\Utils\Tokenizer::getInterfaces($this->getFile())
-            );
-            $this->reflection->docComment  = \Includes\Decorator\Utils\Tokenizer::getDockBlock($this->getFile());
-            $this->reflection->isFinal     = \Includes\Decorator\Utils\Tokenizer::getFlag($this->getFile(), T_FINAL);
-            $this->reflection->isAbstract  = \Includes\Decorator\Utils\Tokenizer::getFlag($this->getFile(), T_ABSTRACT);
-            $this->reflection->isInterface = (bool) \Includes\Decorator\Utils\Tokenizer::getInterfaceName($this->getFile());
+            if ($util::getDecoratorFlag()) {
+                $util = '\Includes\Decorator\Utils\Tokenizer';
 
-            // :KLUDGE: the "StaticRoutines" plugin support
-            $this->reflection->hasStaticConstructor = \Includes\Decorator\Utils\Tokenizer::hasMethod(
-                $this->getFile(),
-                \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD
-            );
+                $this->reflection->parentClass = $util::getParentClassName($this->getFile());
+                $this->reflection->interfaces  = $util::getInterfaces($this->getFile());
+                $this->reflection->docComment  = $util::getDockBlock($this->getFile());
+                $this->reflection->isFinal     = $util::getFlag($this->getFile(), T_FINAL);
+                $this->reflection->isAbstract  = $util::getFlag($this->getFile(), T_ABSTRACT);
+                $this->reflection->isInterface = (bool) $util::getInterfaceName($this->getFile());
+
+                // :KLUDGE: the "StaticRoutines" plugin support
+                $this->reflection->hasStaticConstructor = $util::hasMethod(
+                    $this->getFile(),
+                    \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD
+                );
+
+            } else {
+                $reflection = new \ReflectionClass($this->getClass());
+
+                $this->reflection->parentClass = ($class = $reflection->getParentClass()) ? $class->getName() : null;
+                $this->reflection->interfaces  = (array) $reflection->getInterfaceNames();
+                $this->reflection->docComment  = $reflection->getDocComment();
+                $this->reflection->isFinal     = $reflection->isFinal();
+                $this->reflection->isAbstract  = $reflection->isAbstract();
+                $this->reflection->isInterface = $reflection->isInterface();
+
+                // :KLUDGE: the "StaticRoutines" plugin support
+                $this->reflection->hasStaticConstructor = $reflection->hasMethod(
+                    \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD
+                );
+            }
+
+            $this->reflection->parentClass = $this->prepareClassName($this->reflection->parentClass);
+            $this->reflection->interfaces  = array_map(array($this, 'prepareClassName'), $this->reflection->interfaces);
         }
 
         return $this->reflection;
