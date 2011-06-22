@@ -77,7 +77,9 @@ abstract class ADecorator
 
     /**
      * Return classes tree
-     *
+     * 
+     * @param boolean $create Flag OPTIONAL
+     *  
      * @return \Includes\Decorator\DataStructure\Graph\Classes
      * @see    ____func_see____
      * @since  1.0.0
