@@ -44,7 +44,7 @@ class Probe extends \XLite\Core\Task\Base\Periodic
      */
     public function getTitle()
     {
-        return 'Environment benchmark';
+        return null;
     }
 
     /**
