@@ -276,6 +276,53 @@ ul.products-sidebar li .product {
   clear: both;
 }
 
+.products .labels {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+.products .labels li {
+  background-image: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+.products-grid .labels,
+.products-list .labels
+{
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+.products-grid .labels li,
+.products-list .labels li
+{
+  margin-bottom: 10px;
+}
+
+.products-grid .labels {
+  right: 10px;
+  top: 23px;
+}
+
+.products-list .labels {
+  right: 0px;
+  top: 2px;
+}
+
+.products-table .labels {
+  white-space: nowrap;
+}
+
+.products-table .labels li {
+  display: inline-block;
+  white-space: nowrap;
+  margin-left: 10px;
+}
 
 /*
 TODO: REMOVE!!!
