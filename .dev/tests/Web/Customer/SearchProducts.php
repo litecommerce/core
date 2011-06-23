@@ -93,7 +93,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
     public function testSearchSubstring()
     {
         // TODO Correct it ASAP
-        $this->markTestSkipped("Strange behaviour in Cormorant stand in Firefox 3.6.15. Could not debug with Firebug");
+        //$this->markTestSkipped("Strange behaviour in Cormorant stand in Firefox 3.6.15. Could not debug with Firebug");
 
         $this->configurePager($this->countAllTestProducts());
 

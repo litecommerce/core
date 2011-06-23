@@ -40,6 +40,13 @@ class XLite_Web_Admin_ModuleManage extends XLite_Web_Admin_AAdmin
 
     public function testModulesManage()
     {
+
+
+    $this->markTestSkipped('Awaiting for new Selenuim version');
+/*
+    Whole test does not work in Firefox 4.0 (known issue)
+    Must be fixed in the next Selenuim version
+
         $this->logIn();
 
         $this->open('admin.php?target=addons_list_installed');
@@ -60,5 +67,6 @@ class XLite_Web_Admin_ModuleManage extends XLite_Web_Admin_AAdmin
         $this->clickAndWait(self::SAVE_CHANGES);
 
         $this->assertEquals($confirm, 'Are you sure you want to uninstall this add-on?', 'Wrong confirmation dialog');
+*/
     }
 }
