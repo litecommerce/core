@@ -269,6 +269,10 @@ ul.products-sidebar li .product {
   clear: both;
 }
 
+.products-sidebar-small-thumbnails .details {
+  padding-left: 88px;
+}
+
 .products-sidebar-small-thumbnails div.product-photo {
   float: left;
 }
@@ -286,6 +290,7 @@ ul.products-sidebar li .product {
 }
 
 .products .labels li {
+  background-color: transparent;
   background-image: none;
   margin: 0px;
   padding: 0px;
@@ -293,7 +298,8 @@ ul.products-sidebar li .product {
 
 
 .products-grid .labels,
-.products-list .labels
+.products-list .labels,
+.products-sidebar-big-thumbnails .labels
 {
   position: absolute;
   margin: 0px;
@@ -302,7 +308,8 @@ ul.products-sidebar li .product {
 }
 
 .products-grid .labels li,
-.products-list .labels li
+.products-list .labels li,
+.products-sidebar-big-thumbnails .labels li
 {
   margin-bottom: 10px;
 }
@@ -321,11 +328,30 @@ ul.products-sidebar li .product {
   white-space: nowrap;
 }
 
+.products-sidebar-big-thumbnails .labels {
+  right: 0px;
+  top: 2px;
+}
+
 .products-table .labels li {
   display: inline-block;
   white-space: nowrap;
   margin-left: 10px;
 }
+
+.products-sidebar-small-thumbnails .labels {
+  display: inline;
+  position: static;
+}
+
+.products-sidebar-small-thumbnails .labels li {
+  display: inline;
+}
+
+.products-sidebar-small-thumbnails .labels li div {
+  display: inline;
+}
+
 
 /*
 TODO: REMOVE!!!
