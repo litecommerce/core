@@ -56,8 +56,7 @@
         </td>
 
         <td class="less-search-options-cell">
-          <a href="javascript:void(0);" onclick="javascript:core.toggleText(this,'Less search options','#advanced_search_options');">
-          {t(#More search options#)}</a>
+          <a href="javascript:void(0);" onclick="javascript:core.toggleText(this,'Less search options','#advanced_search_options');">{t(#More search options#)}</a>
         </td>
 
     </table>
