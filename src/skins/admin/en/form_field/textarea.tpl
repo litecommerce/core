@@ -10,4 +10,4 @@
  * @since     1.0.0
  *}
 
-<textarea{getAttributesCode():h}>{getValue():h}</textarea>
+<textarea{getAttributesCode():h}>{getValue()}</textarea>
