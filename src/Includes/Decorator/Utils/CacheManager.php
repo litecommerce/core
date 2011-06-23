@@ -107,7 +107,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function showStepMessage($text, $addNewline = false)
+    public static function showStepMessage($text, $addNewline = false)
     {
         static::$stepStart  = microtime(true);
         static::$stepMemory = memory_get_usage();
@@ -122,7 +122,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function showStepInfo()
+    public static function showStepInfo()
     {
         $text = number_format(microtime(true) - static::$stepStart, 2) . 'sec, ';
 
