@@ -134,7 +134,9 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     protected function getProduct()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
+        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
+
+        return ($product && $product->isAvailable()) ? $product : null;
     }
 
     /**

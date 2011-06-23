@@ -131,7 +131,8 @@ ul.products-sidebar li .product {
   visibility: visible;
 }
 
-.products .out-of-stock .drag-n-drop-handle
+.products .out-of-stock .drag-n-drop-handle,
+.products .not-available .drag-n-drop-handle
 {
   background: transparent none;
   padding-left: 0;
@@ -143,7 +144,8 @@ ul.products-sidebar li .product {
   display: none;
 }
 
-.products .out-of-stock .drag-n-drop-handle .drag-message
+.products .out-of-stock .drag-n-drop-handle .drag-message,
+.products .not-available .drag-n-drop-handle .drag-message
 {
   display: none;
 }
@@ -200,7 +202,8 @@ ul.products-sidebar li .product {
   height: 24px;
 }
 
-.products .products-table .out-of-stock input[type="image"]
+.products .products-table .out-of-stock input[type="image"],
+.products .products-table .not-available input[type="image"]
 {
   background: transparent url(images/bag/out.png) no-repeat;
   width: 19px;

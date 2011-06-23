@@ -59,4 +59,16 @@ abstract class ACustomer extends \XLite\View\Product\Details\ADetails
     {
         return parent::isVisible() && $this->getProduct();
     }
+
+    /**
+     * Check - product is available for sale or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isProductAvailableForSale()
+    {
+        return $this->getProduct()->isAvailable();
+    }
 }

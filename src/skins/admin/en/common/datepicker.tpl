@@ -11,9 +11,9 @@
  *}
 <input type="text" name="{getParam(#field#)}" value="{getValueAsString()}" class="date-picker {getClassName()}" />
 <script type="text/javascript">
-$(document).ready(
+jQuery().ready(
   function() {
-    $('.date-picker.{getClassName()}').datepicker(
+    jQuery('.date-picker.{getClassName()}').datepicker(
       {
         dateFormat:        '{getDateFormat()}',
         gotoCurrent:       true,
