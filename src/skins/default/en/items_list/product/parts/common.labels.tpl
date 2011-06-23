@@ -12,6 +12,8 @@
  * @ListChild (list="itemsList.product.grid.customer.info", weight="998")
  * @ListChild (list="itemsList.product.list.customer.photo", weight="998")
  * @ListChild (list="itemsList.product.table.customer.columns", weight="25")
+ * @ListChild (list="itemsList.product.big_thumbnails.customer.info", weight="998")
+ * @ListChild (list="itemsList.product.small_thumbnails.customer.details", weight="25")
  *}
 <ul class="labels" IF="getProductLabels(product)">
   <li FOREACH="getProductLabels(product),key,name" class="label-{key:h}"><div>{name}</div></li>
