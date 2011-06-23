@@ -158,7 +158,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      *
      * @Column (type="integer")
      */
-    protected $arrivalDate;
+    protected $arrivalDate = 0;
 
     /**
      * Creation date (UNIX timestamp)
@@ -169,7 +169,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      *
      * @Column (type="integer")
      */
-    protected $date;
+    protected $date = 0;
 
 
     /**
@@ -549,6 +549,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
+     *
      * @PrePersist
      */
     public function prepareDate()
