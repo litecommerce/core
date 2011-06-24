@@ -12,9 +12,8 @@
  * @ListChild (list="layout.header.bar", weight="100")
  *}
 
-
 <ul class="account-links inline" IF="isLogged()">
-  <li class="account-link-1 first">Hello, {auth.profile.login}{*<a href="{buildURL(#login#)}" class="log-in">{t(#Log in#)}</a>*}</li>
+  <li class="account-link-1 first">{t(#Hello, user#,_ARRAY_(#name#^auth.profile.login))}</li>
   <li class="account-link-2"><a href="{buildURL(#profile#,##)}" class="register">{t(#My account#)}</a></li>
   <li class="account-link-1 last"><a href="{buildURL(#login#,#logoff#)}" class="log-in">{t(#Log out#)}</a></li>
 </ul>

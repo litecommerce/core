@@ -11,7 +11,7 @@
  *}
 <widget class="\XLite\View\Form\Sort" name="sort_form" params="{getFormParams()}" />
 
-<span>Sort by</span>
+<span>{t(#Sort by#)}</span>
 <select name="sortCriterion">
   <option FOREACH="getParam(#sortCriterions#),key,name" value="{key}" selected="{isSortCriterionSelected(key)}">{name}</option>
 </select>

@@ -418,6 +418,43 @@ XLite\Model\LanguageLabel:
   - { name: 'Thank you for registering at LiteCommerce', translations: [{ code: en, label: 'Thank you for registering at {{LiteCommerce}}' }] }
   - { name: 'Thank you for using LiteCommerce services', translations: [{ code: en, label: 'Thank you for using {{LiteCommerce}} services' }] }
   - { name: 'Your profile has been modified. You can check your account after you logging in to the site', translations: [{ code: en, label: 'Your profile has been modified. You can check your account after you logging in to the site at {{url}}' }] }
+  - { name: 'The confirmation URL link was mailed to email', translations: [{ code: en, label: 'The confirmation URL link was mailed to {{email}}' }] }
+  - { name: 'The email with your account information was mailed to email', translations: [{ code: en, label: 'The email with your account information was mailed to {{email}}. We encourage you to authenticate again to verify the received data.' }] }
+  - { name: 'Show filter options', translations: [{ code: en, label: 'Show filter options' }] }
+  - { name: 'Customer note', translations: [{ code: en, label: 'Customer note' }] }
+  - { name: 'Invoice X', translations: [{ code: en, label: 'Invoice #{{id}}' }] }
+  - { name: 'Welcome to LiteCommerce', translations: [{ code: en, label: 'Welcome to LiteCommerce' }] }
+  - { name: 'Quantity', translations: [{ code: en, label: 'Quantity' }] }
+  - { name: 'Total', translations: [{ code: en, label: 'Total' }] }
+  - { name: 'Cart is empty', translations: [{ code: en, label: 'Cart is empty' }] }
+  - { name: 'X item(s)', translations: [{ code: en, label: '{{count}} items(s)' }] }
+  - { name: 'Items', translations: [{ code: en, label: 'Items' }] }
+  - { name: 'Checkout', translations: [{ code: en, label: 'Checkout' }] }
+  - { name: 'View cart', translations: [{ code: en, label: 'View cart' }] }
+  - { name: 'Email address', translations: [{ code: en, label: 'Email address' }] }
+  - { name: 'Password', translations: [{ code: en, label: 'Password' }] }
+  - { name: 'Recover password', translations: [{ code: en, label: 'Recover password' }] }
+  - { name: 'Your cart', translations: [{ code: en, label: 'Your cart' }] }
+  - { name: 'This is a demo store with powerful LiteCommerce engine inside', translations: [{ code: en, label: 'This is a demo store with powerful LiteCommerce engine inside, based on PHP5 templates technology integrated with SQL database.' }] }
+  - { name: 'Price', translations: [{ code: en, label: 'Price' }] }
+  - { name: 'Product name', translations: [{ code: en, label: 'Product name' }] }
+  - { name: 'Select one', translations: [{ code: en, label: 'Select one...' }] }
+  - { name: 'Other', translations: [{ code: en, label: 'Other' }] }
+  - { name: 'Hello, user', translations: [{ code: en, label: 'Hello, {{name}}' }] }
+  - { name: 'All', translations: [{ code: en, label: 'All' }] }
+  - { name: 'None', translations: [{ code: en, label: 'None' }] }
+  - { name: 'Root level', translations: [{ code: en, label: '[Root level]' }] }
+  - { name: '-- No categories --', translations: [{ code: en, label: '-- No categories --' }] }
+  - { name: 'Sort by', translations: [{ code: en, label: 'Sort by' }] }
+  - { name: 'Pending membership', translations: [{ code: en, label: 'Pending membership' }] }
+  - { name: 'X results found', translations: [{ code: en, label: '{{count}} results found' }] }
+  - { name: 'per page', translations: [{ code: en, label: 'per page' }] }
+  - { name: 'X orders', translations: [{ code: en, label: '<span>{{count}}</span> orders' }] }
+  - { name: 'Logged in!', translations: [{ code: en, label: 'Logged in!' }] }
+  - { name: 'Logoff', translations: [{ code: en, label: 'Logoff' }] }
+  - { name: 'Account settings', translations: [{ code: en, label: 'Account settings' }] }
+  - { name: 'User X is logged in', translations: [{ code: en, label: 'User <strong>{{login}}</strong> is logged in.' }] }
+  - { name: 'X products found', translations: [{ code: en, label: '{{count}} products found' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

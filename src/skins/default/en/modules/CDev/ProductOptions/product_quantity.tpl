@@ -12,20 +12,20 @@
 <tbody IF="product.productOptions&product.inventory.found&!product.tracking">
 
   <tr>
-    <td width="30%" class="ProductDetails">Quantity:</td>
-    <td IF="{product.inventory.amount}" class="ProductDetails" nowrap>{product.inventory.amount} item(s) available</td>
-    <td IF="{!product.inventory.amount}" class="ErrorMessage" nowrap>- out of stock -</td>
+    <td width="30%" class="ProductDetails">{t(#Quantity#)}:</td>
+    <td IF="{product.inventory.amount}" class="ProductDetails" nowrap>{t(#X item(s) available#,_ARRAY(#count#product.inventory.amount))}</td>
+    <td IF="{!product.inventory.amount}" class="ErrorMessage" nowrap>{t(#- out of stock -#)}</td>
   </tr>
 
-  <widget module="CDev\ProductAdviser"  class="\XLite\Module\CDev\ProductAdviser\View\NotifyLink">
+  <widget module="CDev\ProductAdviser"  class="\XLite\Module\CDev\ProductAdviser\View\NotifyLink" />
 
 </tbody>
 
 <tbody IF="product.productOptions&product.tracking&product.outOfStock">
 
   <tr>
-    <td width="30%" class="ProductDetails">Quantity:</td>
-    <td class="ErrorMessage" nowrap>- out of stock -</td>
+    <td width="30%" class="ProductDetails">{t(#Quantity#)}:</td>
+    <td class="ErrorMessage" nowrap>{t(#- out of stock -#)}</td>
   </tr>
 
 </tbody>

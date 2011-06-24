@@ -10,4 +10,4 @@
  * @since     1.0.0
  *}
 
-{*<h3 IF="!disable_head" align="center" class="WelcomeHeader">Welcome to LiteCommerce</h3>*}
+{*<h3 IF="!disable_head" align="center" class="WelcomeHeader">{t(#Welcome to LiteCommerce#)}</h3>*}
