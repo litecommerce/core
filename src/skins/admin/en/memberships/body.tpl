@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<p>Use this section to review the list of existing membership levels and add new ones.</p>
+<p>{t(#Use this section to review the list of existing membership levels and add new ones#)}.</p>
 
 <div class="right-panel">
   <widget class="\XLite\View\EditorLanguageSelector" />
@@ -21,20 +21,30 @@
   <input type="hidden" name="language" value="{language}" />
 
   <table cellspacing="1" class="data-table">
-		<tr>
-			<th>Pos.</th>
-			<th class="extender">Membership name</th>
-      <th>Active</th>
-      <th><input type="checkbox" class="column-selector" /></th>
-		</tr>
-		<tr FOREACH="getMemberships(),membership_id,membership">
-			<td><input type="text" name="update_memberships[{membership_id}][orderby]" value="{membership.orderby}" class="orderby" /></td>
-			<td class="extender"><input type="text" name="update_memberships[{membership_id}][membership]" value="{membership.name}" /></td>
-      <td class="center"><input type="checkbox" name="update_memberships[{membership_id}][active]" value="1" checked="{membership.active}"/></td>
-      <td class="center"><input type="checkbox" name="deleted_memberships[]" value="{membership_id}" /></td>
-		</tr>
 
-	</table>
+    <tr>
+      <th>{t(#Pos#)}.</th>
+      <th class="extender">{t(#Membership name#)}</th>
+      <th>{t(#Active#)}</th>
+      <th><input type="checkbox" class="column-selector" /></th>
+    </tr>
+
+    <tr FOREACH="getMemberships(),membership_id,membership">
+      <td>
+        <input type="text" name="update_memberships[{membership_id}][orderby]" value="{membership.orderby}" class="orderby" />
+      </td>
+      <td class="extender">
+        <input type="text" name="update_memberships[{membership_id}][membership]" value="{membership.name}" />
+      </td>
+      <td class="center">
+        <input type="checkbox" name="update_memberships[{membership_id}][active]" value="1" checked="{membership.active}"/>
+      </td>
+      <td class="center">
+        <input type="checkbox" name="deleted_memberships[]" value="{membership_id}" />
+      </td>
+    </tr>
+
+  </table>
 
   <div class="buttons">
     <widget class="\XLite\View\Button\Submit" label="Update" />
@@ -43,7 +53,7 @@
 </form>
 
 <div IF="!getMemberships()">
-  No memberships defined.
+  {t(#No memberships defined#)}.
 </div>
 
 <hr />
@@ -53,18 +63,18 @@
   <input type="hidden" name="action" value="add" />
   <input type="hidden" name="language" value="{language}" />
 
-  <h2>Add new membership level</h2>
+  <h2>{t(#Add new membership level#)}</h2>
 
   <ul class="form">
 
     <li>
-      <label for="orderby">Position</label>
+      <label for="orderby">{t(#Position#)}</label>
       <input id="orderby" type="text" name="new_membership[orderby]" value="{getNextOrderBy()}" class="orderby" />
     </li>
 
     <li>
-      <label for="membership">Membership name</label>
-    	<input id="membership" type="text" name="new_membership[membership]" value="" class="field-required" />
+      <label for="membership">{t(#Membership name#)}</label>
+      <input id="membership" type="text" name="new_membership[membership]" value="" class="field-required" />
     </li>
 
   </ul>
