@@ -87,7 +87,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
                 // Username is already exists
                 $this->valid = false;
-                $label = $this->t(
+                $label = static::t(
                     'This user name is used for an existing account. Enter another user name or sign in',
                     array('URL' => $this->getLoginURL())
                 );
@@ -100,7 +100,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
                 // E-mail is already exists in Drupal DB
                 $this->valid = false;
-                $label = $this->t(
+                $label = static::t(
                     'This email address is used for an existing account. Enter another user name or sign in',
                     array('URL' => $this->getLoginURL())
                 );

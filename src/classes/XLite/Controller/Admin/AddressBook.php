@@ -180,7 +180,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->flush();
 
             \XLite\Core\TopMessage::addInfo(
-                $this->t('Address has been deleted')
+                static::t('Address has been deleted')
             );
         }
     }
