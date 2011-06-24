@@ -10,9 +10,13 @@
  * @since     1.0.0
  *}
 <div class="add-new-label-dialog label-dialog">
+
   <h2>{t(#Add new label#)}</h2>
+
   {t(#Please specify text labels for each language#,_ARRAY_(#language#^defaultLanguage.name))}
+
   <form action="admin.php" method="post" name="add_label_form">
+    
     <input type="hidden" name="target" value="languages" />
     <input type="hidden" name="action" value="add" />
     <input type="hidden" name="language" value="{language}" />

@@ -12,6 +12,7 @@
 <div class="language-options-dialog">
   <h2>{t(#X Language (Code: Y)#,_ARRAY_(#language#^editLanguage.name,#code#^editLanguage.code))}</h2>
   <form action="admin.php" method="post" name="confirm_delete_form">
+
     <input type="hidden" name="target" value="languages" />
     <input type="hidden" name="action" value="update_language" />
     <input type="hidden" name="language" value="{language}" />
@@ -32,7 +33,7 @@
 
     </ul>
 
-    <div class="{getSwictherClass()}">
+    <div class="{getSwitcherClass()}">
       {if:!canSwitch()}
         <img src="images/spacer.gif" alt="" /> {t(#The language is enabled#):h}
       {else:}
@@ -45,27 +46,36 @@
 
       {if:canSwitch()}
         [
-          <a href="admin.php?target=languages&action=switch&lng_id={editLanguage.lng_id}&language={language}&page={page}">{if:editLanguage.enabled}{t(#Disable#)}{else:}{t(#Enable#)}{end:}</a>
+          <a
+            href="admin.php?target=languages&action=switch&lng_id={editLanguage.lng_id}&language={language}&page={page}">
+            {if:editLanguage.enabled}{t(#Disable#)}{else:}{t(#Enable#)}{end:}
+          </a>
         ]
       {end:}
 
     </div>
 
     {if:!canSwitch()}
-      <div class="default-language">{t(#Default for customer zone and can not disabled or deleted#)}</div>
+      <div class="default-language">{t(#Default for customer zone and cannot be disabled or deleted#)}</div>
     {else:}
       <div class="default-switcher">
         {if:editLanguage.enabled}
           <input type="checkbox" name="default" id="default_switcher" value="Y" />
           <label for="default_switcher">{t(#Set this language as default for customer zone#)}</label>
         {else:}
-          {t(#Disabled language can not be set as default for customer zone#)}
+          {t(#Disabled language cannot be set as default for customer zone#)}
         {end:}
       </div>
     {end:}
 
     <div class="buttons">
-      <a IF="canDelete()" href="admin.php?target=languages&action=delete&lng_id={editLanguage.lng_id}&page={page}" class="delete" onclick="javascript: return confirmLanguageDelete(this, {editLanguage.lng_id}, '', '{editLanguage.flagURL}', '{editLanguage.name}');"><span>{t(#Delete Language#)}</span></a>
+      <a
+        IF="canDelete()"
+        href="admin.php?target=languages&action=delete&lng_id={editLanguage.lng_id}&page={page}"
+        class="delete"
+        onclick="javascript: return confirmLanguageDelete(this, {editLanguage.lng_id}, '', '{editLanguage.flagURL}', '{editLanguage.name}');">
+        <span>{t(#Delete Language#)}</span>
+      </a>
       <widget class="\XLite\View\Button\Submit" label="Save" style="main invert" />
     </div>
   </form>

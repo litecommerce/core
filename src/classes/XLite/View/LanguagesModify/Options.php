@@ -143,7 +143,7 @@ class Options extends \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getSwictherClass()
+    public function getSwitcherClass()
     {
         $classes = array('switcher');
 
