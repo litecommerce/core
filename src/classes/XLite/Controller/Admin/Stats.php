@@ -64,7 +64,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return $this->t('Statistics');
+        return static::t('Statistics');
     }
 
     /**

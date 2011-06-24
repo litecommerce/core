@@ -53,7 +53,7 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
             $tmpFile = $_FILES['userfile']['tmp_name'];
 
             if (!move_uploaded_file($tmpFile, $sqlFile)) {
-                throw new \Exception($this->t('Error of uploading file.'));
+                throw new \Exception(static::t('Error of uploading file.'));
             }
 
             $this->restoreDatabase($sqlFile);
@@ -105,18 +105,18 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
         $this->startDump();
 
         // Making the temporary backup file
-        echo ($this->t('Making backup of the current database state...'));
+        echo (static::t('Making backup of the current database state...'));
 
         $result = \XLite\Core\Database::getInstance()->exportSQLToFile($backupSQLFile, $verbose);
 
         // Loading specified SQL-file to the database
-        echo ('<br /><br />' . $this->t('Loading the database from file...'));
+        echo ('<br /><br />' . static::t('Loading the database from file...'));
 
         $result = \Includes\Utils\Database::uploadSQLFromFile($sqlFile, $verbose);
 
         if ($result) {
             // If file has been loaded into database successfully
-            $message = $this->t('Database restored successfully!');
+            $message = static::t('Database restored successfully!');
 
             // Prepare the cache rebuilding
             \XLite::setCleanUpCacheFlag(true);
@@ -124,10 +124,10 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
         } else {
             // If an error occured while loading file into database
             $message
-                = $this->t('The database has not been restored because of the errors');
+                = static::t('The database has not been restored because of the errors');
 
             // Restore database from temporary backup
-            echo ('<br /><br />' . $this->t('Restoring database from the backup...'));
+            echo ('<br /><br />' . static::t('Restoring database from the backup...'));
 
             \Includes\Utils\Database::uploadSQLFromFile($backupSQLFile, $verbose);
         }

@@ -63,7 +63,7 @@ class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
         $result = \XLite\Core\Database::getInstance()->exportSQLToFile($destFile, $verbose);
 
         if (\XLite\Core\Request::getInstance()->write_to_file) {
-            echo ('<br /><b>' . $this->t('Database backup created successfully') . '</b><br />');
+            echo ('<br /><b>' . static::t('Database backup created successfully') . '</b><br />');
 
         } else {
             readfile($destFile);
@@ -85,7 +85,7 @@ class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
         if (file_exists($this->sqldumpFile)) {
 
             if (!@unlink($this->sqldumpFile)) {
-                throw new \Exception($this->t('Unable to delete file') . ' ' . $this->sqldumpFile);
+                throw new \Exception(static::t('Unable to delete file') . ' ' . $this->sqldumpFile);
             }
         }
     }

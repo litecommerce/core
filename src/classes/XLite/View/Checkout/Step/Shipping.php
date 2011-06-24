@@ -65,7 +65,7 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      */
     public function getTitle()
     {
-        return $this->t('Shipping info');
+        return static::t('Shipping info');
     }
 
     /**
