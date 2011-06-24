@@ -457,8 +457,7 @@ class Profile extends \XLite\Model\AEntity
         }
 
         if (isset($sameProfile)) {
-
-            \XLite\Core\TopMessage::addError('Specified e-mail address is already used by other user.');
+            $this->addErrorEmailExists();
             $result = false;
 
         } else {
@@ -701,5 +700,17 @@ class Profile extends \XLite\Model\AEntity
         }
 
         return $result;
+    }
+
+    /**
+     * Add error top message 'Email already exists...'
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addErrorEmailExists()
+    {
+        \XLite\Core\TopMessage::addError('Specified e-mail address is already used by other user.');
     }
 }
