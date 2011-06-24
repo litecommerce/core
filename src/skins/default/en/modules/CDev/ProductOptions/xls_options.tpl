@@ -10,14 +10,14 @@
  * @since     1.0.0
  *}
 <tbody IF="product.hasOptions()">
-<tr>
-    <td valign="top" nowrap>Selected options</td>
+  <tr>
+    <td valign="top" nowrap="nowrap">{t(#Selected options#)}</td>
     <td>
-	<table cellpadding="0" cellspacing="0" border="0">
-	<tr FOREACH="getOptions(),option">
-    		<td nowrap>{option.class:h}: {option.option:h}<br></td>
-	</tr>
-	</table>
+	    <table cellpadding="0" cellspacing="0" border="0">
+	      <tr FOREACH="getOptions(),option">
+    		  <td nowrap>{option.class:h}: {option.option:h}<br></td>
+	      </tr>
+      </table>
     </td>
-</tr>
+  </tr>
 </tbody>

@@ -14,7 +14,7 @@
   <table width="100%">
 
     <tr IF="cart.isEmpty()">
-      <td><img src="images/cart.isEmpty().gif" alt=""> Cart is empty</td>
+      <td><img src="images/cart.isEmpty().gif" alt="">{t(#Cart is empty#)}</td>
     </tr>
 
     <tr IF="!cart.isEmpty()">
@@ -25,9 +25,9 @@
           <tr>
             <td><img src="images/cart_full.gif" alt=""></td>
             <td>
-              <strong>Items:</strong> {cart.getItemsCount()}
+              <strong>{t(#Items#)}:</strong> {cart.getItemsCount()}
               <br />
-              <strong>Total:</strong> {price_format(cart,#total#):h}
+              <strong>{t(#Total#)}:</strong> {price_format(cart,#total#):h}
             </td>
           </tr>
 
@@ -37,9 +37,9 @@
 
           <tr>
             <td colspan="2">
-              <img src="images/dark_arrows.gif" width="6" height="6" align="middle" alt="">&nbsp;<a href="{buildURL(#cart#)}" class="SidebarItems">View cart</a>
+              <img src="images/dark_arrows.gif" width="6" height="6" align="middle" alt="">&nbsp;<a href="{buildURL(#cart#)}" class="SidebarItems">{t(#View cart#)}</a>
               <br>
-              <img src="images/dark_arrows.gif" width="6" height="6" align="middle" alt="">&nbsp;<a href="{buildURL(#checkout#)}" class="SidebarItems">Checkout</a><br>
+              <img src="images/dark_arrows.gif" width="6" height="6" align="middle" alt="">&nbsp;<a href="{buildURL(#checkout#)}" class="SidebarItems">{t(#Checkout#)}</a><br>
             </td>
           </tr>
 
