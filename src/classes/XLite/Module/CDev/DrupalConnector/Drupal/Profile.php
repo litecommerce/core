@@ -35,6 +35,12 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
  */
 class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
+    /*
+     * The name of user role with LiteCommerce administrator permissions
+     */
+    const LC_DRUPAL_ADMIN_ROLE_NAME = 'lc admin';
+
+
     // {{{ Ancillary methods
 
     /**
@@ -54,7 +60,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         foreach ($rolePermissions as $rid => $perms) {
 
-            $found = isset($perms['lc admin']);
+            $found = isset($perms[self::LC_DRUPAL_ADMIN_ROLE_NAME]);
 
             if ($found) {
                 break;
