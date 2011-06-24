@@ -437,7 +437,9 @@ OUT;
                 );
 
                 if (user_save($newAccount, $newAccountData)) {
-                
+
+                    $this->drupalAccountNames[] = $newAccount->name;
+
                     \XLite\Core\Database::getRepo('XLite\Model\Profile')->linkProfiles(
                         \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($account['profile_id']),
                         $newAccount->uid
