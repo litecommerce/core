@@ -119,4 +119,18 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
             $this->setCmsName(\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName());
         }
     }
+    
+    /**
+     * Allow to suppress 'email already exists...' message in some cases (e.g. in user sync process)
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addErrorEmailExists() 
+    {
+        if (!defined('LC_SUPPRESS_EMAIL_ALREADY_EXISTS_MESSAGE')) {
+            parent::addErrorEmailExists();
+        }
+    }
 }
