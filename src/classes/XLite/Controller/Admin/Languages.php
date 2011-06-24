@@ -121,7 +121,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Active (add) laneguage
+     * Active (add) language
      *
      * @return void
      * @see    ____func_see____
@@ -335,8 +335,11 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     protected function doActionDeleteLabels()
     {
         $ids = \XLite\Core\Request::getInstance()->mark;
+
         if ($ids && is_array($ids)) {
+
             $labels = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findByIds($ids);
+
             foreach ($labels as $label) {
                 \XLite\Core\Database::getEM()->remove($label);
             }
@@ -370,8 +373,11 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     protected function doActionDeleteLabel()
     {
         $id = \XLite\Core\Request::getInstance()->label_id;
+
         if ($id) {
+
             $label = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->find($id);
+
             if ($label) {
                 \XLite\Core\Database::getEM()->remove($label);
                 \XLite\Core\Database::getEM()->flush();

@@ -23,4 +23,5 @@
   <div class="form-field-comment {getFieldId()}-comment">{getParam(#comment#):r}</div>
   <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
 </div>
- <div class="clear"></div>
+
+<div class="clear"></div>
