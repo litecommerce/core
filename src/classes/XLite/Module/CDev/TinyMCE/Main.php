@@ -56,7 +56,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '0';
+        return '1';
     }
 
     /**
@@ -80,6 +80,6 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'This module integrates TinyMCE WYSIWYG editor into LC widgets. Textarea widgets involved';
+        return 'Enables TinyMCE WYSIWYG editor for editing product and category descriptions.';
     }
 }
