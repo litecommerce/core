@@ -330,12 +330,16 @@ class Classes extends \Includes\DataStructure\Graph
      */
     protected function getActualSource(self $parent = null)
     {
+        $this->getReflection()->docComment = $this->isLowLevelNode() 
+            ? '/**' . PHP_EOL . ' * MOVED' . PHP_EOL . ' */' 
+            : null;
+
         return \Includes\Decorator\Utils\Tokenizer::getSourceCode(
             $this->getFile(),
             $this->getActualNamespace(),
             $this->getClassBaseName(),
             $this->getActualParentClassName($parent),
-            $this->isLowLevelNode() ? '/**' . PHP_EOL . ' * MOVED' . PHP_EOL . ' */' : null
+            $this->getReflection()->docComment
         );
     }
 
