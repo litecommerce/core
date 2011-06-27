@@ -174,7 +174,7 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      */
     public static function searchInArraysArray(array $array, $field, $value)
     {
-        $list = static::searchAllInObjectsArray($array, $field, $value);
+        $list = static::searchAllInArraysArray($array, $field, $value);
 
         return $list ? reset($list) : null;
     }
