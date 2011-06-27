@@ -513,12 +513,17 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         // Load classes from "classes" (do not use cache)
         \Includes\Autoloader::switchLcAutoloadDir();
 
+        // Main procedure: build decorator chains
+        static::showStepMessage('Building classes tree...');
+        $tree = static::getClassesTree();
+        static::showStepInfo();
+
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_DECORATE);
 
         // Main procedure: build decorator chains
-        static::showStepMessage('Building classes tree...');
-        static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'decorateClass'));
+        static::showStepMessage('Decorate classes...');
+        $tree->walkThrough(array('\Includes\Decorator\Utils\Operator', 'decorateClass'));
         static::showStepInfo();
 
         // Invoke plugins
@@ -526,7 +531,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
         // Write class files to FS
         static::showStepMessage('Writing class files to the cache...');
-        static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'writeClassFile'));
+        $tree->walkThrough(array('\Includes\Decorator\Utils\Operator', 'writeClassFile'));
         static::showStepInfo();
 
         // Invoke plugins
