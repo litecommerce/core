@@ -68,7 +68,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '0';
+        return '1';
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'This module introduces Australia Post real-time shipping cost calculations';
+        return 'Gets shipping quotes for Australia Post delivery methods.';
     }
 
     /**

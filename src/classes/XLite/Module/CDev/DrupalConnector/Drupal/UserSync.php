@@ -119,13 +119,13 @@ class UserSync extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         if ($this->isUserSynchronizationRequired()) {
 
             $formDescription = <<<OUT
-<p>Non-synchronized user accounts were found in the Drupal and LiteCommerce databases. This means that when user is logged in to the Drupal site he/she if hasn't a LiteCommerce account cannot use the catalog of products as a registered user. By clicking on the button below Drupal and LiteCommerce account will be linked with the following rules:</p>
+<p>Non-synchronized user accounts found in the Drupal and LiteCommerce databases. This means that when user is logged in to the Drupal site but doesn't have a LiteCommerce account, the user cannot use the catalog of products as a registered user. Clicking on the button below will link the Drupal and LiteCommerce accounts, observing the following rules:</p>
 <ul>
-<li>If non-linked accounts with same email presented both in Drupal and LiteCommerce databases then these account will be linked</li>
-<li>If account presented in Drupal but missed in LiteCommerce database then the linked account will be created in LiteCommerce database with randomly generated password and the same email as Drupal account has</li>
-<li>If account presented in LiteCommerce but missed in Drupal database then the linked account will be created in Drupal database with randomly generated password and the same email as LiteCommerce account has</li>
+<li>If non-linked accounts with same email are present in both Drupal and LiteCommerce databases, these accounts will be linked.</li>
+<li>If an account is present in Drupal but is missing in the LiteCommerce database, the linked account will be created in the LiteCommerce database with a randomly generated password and the same email as in the Drupal account.</li>
+<li>If an account is present in LiteCommerce but is missing in the Drupal database, the linked account will be created in the Drupal database with a randomly generated password and the same email as in the LiteCommerce account.</li>
 </ul>
-<p>Tick the checkbox below to send notifications with links to reset password to the users who will get new Drupal accounts.</p>
+<p>Tick the check box below to send notifications and links to reset password to users who get the new Drupal accounts.</p>
 OUT;
 
             $form['lcc']['usersync'] = array(
@@ -437,7 +437,9 @@ OUT;
                 );
 
                 if (user_save($newAccount, $newAccountData)) {
-                
+
+                    $this->drupalAccountNames[] = $newAccount->name;
+
                     \XLite\Core\Database::getRepo('XLite\Model\Profile')->linkProfiles(
                         \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($account['profile_id']),
                         $newAccount->uid
