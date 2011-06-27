@@ -20,9 +20,9 @@
 
       <input FOREACH="getURLParams(),name,value" type="hidden" name="{name}" value="{value}" />
 
-      <widget class="\XLite\View\FormField\Input\Text" fieldOnly="true" fieldName="substring" value="{getParam(#substring#)}" defaultValue="{t(#Enter keywords#)}" />
+      <widget class="\XLite\View\FormField\Input\Text" fieldOnly=true fieldName="substring" value="{getParam(#substring#)}" defaultValue="{t(#Enter keywords#)}" />
 
-      <widget class="\XLite\View\Button\Submit" label="{t(#Search#)}" />
+      <widget class="\XLite\View\Button\Submit" style="addon-search" label="{t(#Search#)}" />
 
     </form>
 
