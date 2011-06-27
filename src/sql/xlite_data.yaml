@@ -399,6 +399,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Your shopping bag - X items', translations: [{ code: en, label: 'Your shopping bag — {{count}} items' }] }
   - { name: 'Greetings, X', translations: [{ code: en, label: 'Greetings, {{name}}' }] }
   - { name: 'X items', translations: [{ code: en, label: '{{count}} items' }] }
+  - { name: '_X items_ in bag', translations: [{ code: en, label: '<a href="#">{{count}} items</a> in bag' }] }
   - { name: 'This email address is used for an existing account. Enter another email address or sign in', translations: [{ code: en, label: 'This email address is used for an existing account. Enter another email address or <a href="{{URL}}" class="log-in">sign in</a>' }] }
   - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: en, label: 'This user names is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>' }] }
   - { name: 'I accept Terms and Conditions', translations: [{ code: en, label: 'I accept <a href="{{URL}}">Terms & Conditions</a>' }] }
@@ -455,6 +456,8 @@ XLite\Model\LanguageLabel:
   - { name: 'Account settings', translations: [{ code: en, label: 'Account settings' }] }
   - { name: 'User X is logged in', translations: [{ code: en, label: 'User <strong>{{login}}</strong> is logged in.' }] }
   - { name: 'X products found', translations: [{ code: en, label: '{{count}} products found' }] }
+  - { name: 'Thank you for registering a customer account, your profile has been created successfully', translations: [{ code: en, label: 'Thank you for registering a customer account, your profile has been created successfully.<br />As a registered customer you can enjoy simplified checkout process and review your order history.<br /><br />Registration confirmation with your account details has been sent to your e-mail <b>{profile.login}</b> address.<br />Please use your e-mail address and the specified password every time you place orders at our store.<br /><br />You are now logged in and are welcome to continue shopping.' }] }
+  - { name: 'BEGIN - END of TOTAL', translations: [{ code: en, label: '<span class="begin-record-number">{{begin}}</span>&ndash;<span class="end-record-number">{{end}}</span> of <span class="records-count">{{total}}</span>' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
