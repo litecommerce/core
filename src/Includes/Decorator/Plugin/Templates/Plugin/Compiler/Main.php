@@ -55,9 +55,11 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function executeHookHandlerStepFive()
+    public function executeHookHandlerStepFifth()
     {
-        LC_DEVELOPER_MODE ?: $this->createTemplatesCache();
+        if (!LC_DEVELOPER_MODE) {
+            $this->createTemplatesCache();
+        }
     }
 
     /**
@@ -70,7 +72,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      */
     public function __construct()
     {
-        $this->flexy = \Xlite\Core\FlexyCompiler::getInstance();
+        $this->flexy = \XLite\Core\FlexyCompiler::getInstance();
     }
 
     /**

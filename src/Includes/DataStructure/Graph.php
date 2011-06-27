@@ -207,19 +207,19 @@ class Graph
     /**
      * Find all nodes by key
      *
-     * @param string $key Key to search
+     * @param string $key Key to search OPTIONAL
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function findAll($key)
+    public function findAll($key = null)
     {
         $searchResult = array();
 
         $this->walkThrough(
             function (\Includes\DataStructure\Graph $node) use ($key, &$searchResult) {
-                if ($node->getKey() == $key) {
+                if (!isset($key) || $node->getKey() == $key) {
                     $searchResult[] = $node;
                 }
             }
