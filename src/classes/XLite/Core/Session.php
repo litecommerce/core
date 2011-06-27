@@ -41,6 +41,11 @@ class Session extends \XLite\Base\Singleton
     const ARGUMENT_NAME = 'xid';
 
     /**
+     * Referer cookie name
+     */
+    const LC_REFERER_COOKIE_NAME = 'LCRefererCookie';
+
+    /**
      * Session
      *
      * @var   \XLite\Model\Session
@@ -521,6 +526,35 @@ class Session extends \XLite\Base\Singleton
                     true
                 );
             }
+
+            $this->setLCRefererCookie();
+        }
+    }
+
+    /**
+     * Set referer cookie (this is stored when user register new profile)
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function setLCRefererCookie()
+    {
+        if (!isset($_COOKIE[self::LC_REFERER_COOKIE_NAME]) && isset($_SERVER['HTTP_REFERER'])) {
+
+            $referer = parse_url($_SERVER['HTTP_REFERER']);
+            
+            if (isset($referer['host']) && $referer['host'] != $_SERVER['HTTP_HOST']) {
+                setcookie(
+                    self::LC_REFERER_COOKIE_NAME,
+                    $_SERVER['HTTP_REFERER'],
+                    $this->getLCRefererCookieTTL(),
+                    $this->getCookiePath(),
+                    $this->getCookieDomain(),
+                    false,
+                    true
+                );
+            }
         }
     }
 
@@ -586,6 +620,18 @@ class Session extends \XLite\Base\Singleton
     protected function getCookieTTL()
     {
         return 0;
+    }
+
+    /**
+     * Get referer cookie TTL (seconds)
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function getLCRefererCookieTTL()
+    {
+        return time() + 3600 * 24 * 180; // TTL is 180 days
     }
 
     /**
