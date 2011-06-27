@@ -204,7 +204,7 @@ Select a country or a state from a list, specify the zone where the country or s
 </textarea>
       </td>
       <td align="center">&nbsp;</td>
-      <td>Examples</td>
+      <td>2204%<br />38245<br />23%</td>
     </tr>
 
 
