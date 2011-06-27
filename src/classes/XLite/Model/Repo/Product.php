@@ -136,7 +136,9 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         $this->addEnabledCondition($result, $alias);
 
         if (!\XLite::isAdminZone()) {
-            $result->andWhere('p.enabled = :enabled')->setParameter('enabled', true);
+            $result->andWhere('p.enabled = :enabled AND (p.arrivalDate = 0 OR p.arrivalDate > :now)')
+                ->setParameter('enabled', true)
+                ->setParameter('now', time());
         }
 
         $result->groupBy('p.product_id');

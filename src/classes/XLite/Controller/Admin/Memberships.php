@@ -44,7 +44,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return $this->t('Membership levels');
+        return static::t('Membership levels');
     }
 
     /**
@@ -56,7 +56,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return $this->t('Membership levels');
+        return static::t('Membership levels');
     }
 
     /**

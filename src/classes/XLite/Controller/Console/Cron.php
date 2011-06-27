@@ -67,18 +67,25 @@ class Cron extends \XLite\Controller\Console\AConsole
         foreach (\XLite\Core\Database::getRepo('XLite\Model\Task')->getCurrentQuery() as $task) {
             $task = $task[0];
             $runner = $task->getOwnerInstance();
+            $silence = !$runner->getTitle();
             if ($runner && $runner->isReady()) {
-                $this->printContent($runner->getTitle() . ' ... ');
+                if (!$silence) {
+                    $this->printContent($runner->getTitle() . ' ... ');
+                }
 
                 $runner->run();
 
-                $message = $runner->getMessage();
-                if ($message) {
-                    $this->printContent($runner->getMessage());
+                if (!$silence) {
+                    $message = $runner->getMessage();
+                    if ($message) {
+                        $this->printContent($runner->getMessage());
+                    }
                 }
             }
 
-            $this->printContent(PHP_EOL);
+            if (!$silence) {
+                $this->printContent(PHP_EOL);
+            }
             \XLite\Core\Database::getEM()->flush();
 
             sleep($this->sleepTime);

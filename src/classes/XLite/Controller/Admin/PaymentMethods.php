@@ -44,7 +44,7 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return $this->t('Payment methods');
+        return static::t('Payment methods');
     }
 
 
@@ -57,7 +57,7 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return $this->t('Payment methods');
+        return static::t('Payment methods');
     }
 
     /**

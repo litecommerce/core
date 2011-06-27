@@ -44,6 +44,7 @@ namespace XLite\Model;
  *              @Index (name="clean_url", columns={"clean_url"})
  *          }
  * )
+ * @HasLifecycleCallbacks
  */
 class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrderItem
 {
@@ -147,6 +148,28 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @Column (type="text")
      */
     protected $javascript = '';
+
+    /**
+     * Arrival date (UNIX timestamp)
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $arrivalDate = 0;
+
+    /**
+     * Creation date (UNIX timestamp)
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $date = 0;
 
 
     /**
@@ -323,7 +346,15 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function isAvailable()
     {
-        return \XLite::isAdminZone() ?: (bool) $this->getEnabled();
+        $result = true;
+
+        if (!\XLite::isAdminZone()) {
+            $result = $this->getEnabled()
+                && (!$this->getArrivalDate() || time() < $this->getArrivalDate())
+                && !$this->getInventory()->isOutOfStock();
+        }
+
+        return $result;
     }
 
     /**
@@ -455,7 +486,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function getInventory()
     {
-        return is_null($this->inventory)
+        return !isset($this->inventory)
             ? new \XLite\Model\Inventory()
             : $this->inventory;
     }
@@ -512,6 +543,25 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
         return $this->getPrice();
     }
 
+    /**
+     * Prepare creation date 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     *
+     * @PrePersist
+     */
+    public function prepareDate()
+    {
+        if (!$this->getDate()) {
+            $this->setDate(time());
+        }
+
+        if (!$this->getArrivalDate()) {
+            $this->setArrivalDate(time());
+        }
+    }
 
     /**
      * Return certain Product <--> Category association

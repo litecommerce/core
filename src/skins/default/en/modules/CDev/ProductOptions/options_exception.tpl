@@ -10,11 +10,14 @@
  * @since     1.0.0
  *}
 <div id="optionsException" IF="invalid_options">
-  The option combination you selected:
+  {t(#The option combination you selected#)}:
 
   <ul>
-    <li FOREACH="invalid_options,option,value"><strong>{option:h}:</strong> {value:h}</li>
+    <li FOREACH="invalid_options,option,value">
+      <strong>{option:h}:</strong>
+      {value:h}
+    </li>
   </ul>
 
-  is not available. Please make another choice.
+  {t(#is not available. Please make another choice.#)}
 </div>

@@ -12,8 +12,7 @@
  *}
 
 <div IF="isItemsPerPageVisible()" class="pager-items-total">
-  Items:
-  <span class="begin-record-number">{getBeginRecordNumber()}</span>
-  &ndash;
-  <span class="end-record-number">{getEndRecordNumber()}</span> of <span class="records-count">{getItemsTotal()}</span><span IF="isItemsPerPageSelectorVisible()">, <input type="text" value="{getItemsPerPage()}" class="page-length" title="{t(#Items per page#)}" /> per page</span>
+  {t(#Items#)}:
+  {t(#BEGIN - END of TOTAL#,_ARRAY_(#begin#^getBeginRecordNumber(),#end#^getEndRecordNumber(),#total#^getItemsTotal()))}
+  <span IF="isItemsPerPageSelectorVisible()">, <input type="text" value="{getItemsPerPage()}" class="page-length" title="{t(#Items per page#)}" />{t(#per page#)}</span>
 </div>

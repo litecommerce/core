@@ -124,7 +124,7 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return $this->t('Shipping settings');
+        return static::t('Shipping settings');
     }
 
     /**
@@ -136,6 +136,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      */
     protected function getOptionsCategory()
     {
-        return $this->t('Shipping');
+        return static::t('Shipping');
     }
 }

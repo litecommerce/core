@@ -56,7 +56,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '0';
+        return '1';
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Support for product options, enabling you to provide customers with a choice of product variants';
+        return 'Enables customers to choose options when buying products.';
     }
 
     /**

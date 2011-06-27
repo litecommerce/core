@@ -77,22 +77,22 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
             'postedData',
             new \XLite\Core\Validator\HashArray
         );
-        $data->addPair('sku', new \XLite\Core\Validator\String(), null, $this->t('SKU'));
-        $data->addPair('name', new \XLite\Core\Validator\String(true), null, $this->t('Product Name'));
-        $data->addPair('category_ids', new \XLite\Core\Validator\PlainArray(), null, $this->t('Category'))
+        $data->addPair('sku', new \XLite\Core\Validator\String(), null, static::t('SKU'));
+        $data->addPair('name', new \XLite\Core\Validator\String(true), null, static::t('Product Name'));
+        $data->addPair('category_ids', new \XLite\Core\Validator\PlainArray(), null, static::t('Category'))
             ->setValidator(new \XLite\Core\Validator\Integer());
-        $data->addPair('price', new \XLite\Core\Validator\Float(), null, $this->t('Price'))
+        $data->addPair('price', new \XLite\Core\Validator\Float(), null, static::t('Price'))
             ->setRange(0);
-        $data->addPair('weight', new \XLite\Core\Validator\Float(), null, $this->t('Weight'))
+        $data->addPair('weight', new \XLite\Core\Validator\Float(), null, static::t('Weight'))
             ->setRange(0);
-        $data->addPair('free_shipping', new \XLite\Core\Validator\Enum\Boolean(), null, $this->t('Shippable'));
-        $data->addPair('enabled', new \XLite\Core\Validator\Enum\Boolean(), null, $this->t('Available for sale'));
-        $data->addPair('meta_title', new \XLite\Core\Validator\String(), null, $this->t('Product page title'));
-        $data->addPair('brief_description', new \XLite\Core\Validator\String(), null, $this->t('Brief descrption'));
-        $data->addPair('description', new \XLite\Core\Validator\String(), null, $this->t('Full description'));
-        $data->addPair('meta_tags', new \XLite\Core\Validator\String(), null, $this->t('Meta keywords'));
-        $data->addPair('meta_desc', new \XLite\Core\Validator\String(), null, $this->t('Meta description'));
-        $data->addPair('clean_url', new \XLite\Core\Validator\String(), null, $this->t('Clean URL'));
+        $data->addPair('free_shipping', new \XLite\Core\Validator\Enum\Boolean(), null, static::t('Shippable'));
+        $data->addPair('enabled', new \XLite\Core\Validator\Enum\Boolean(), null, static::t('Available for sale'));
+        $data->addPair('meta_title', new \XLite\Core\Validator\String(), null, static::t('Product page title'));
+        $data->addPair('brief_description', new \XLite\Core\Validator\String(), null, static::t('Brief descrption'));
+        $data->addPair('description', new \XLite\Core\Validator\String(), null, static::t('Full description'));
+        $data->addPair('meta_tags', new \XLite\Core\Validator\String(), null, static::t('Meta keywords'));
+        $data->addPair('meta_desc', new \XLite\Core\Validator\String(), null, static::t('Meta description'));
+        $data->addPair('clean_url', new \XLite\Core\Validator\String(), null, static::t('Clean URL'));
 
         return $validator;
     }
