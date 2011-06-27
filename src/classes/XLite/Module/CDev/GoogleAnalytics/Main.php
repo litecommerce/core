@@ -56,7 +56,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '0';
+        return '1';
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'This module enables Google Analytics tracking';
+        return 'Enables tracking and analyzing your LiteCommerce website e-commerce statistics with Google Analytics.';
     }
 
     /**
