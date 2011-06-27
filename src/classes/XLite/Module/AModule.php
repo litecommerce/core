@@ -91,7 +91,12 @@ abstract class AModule
      */
     public static function getIconURL()
     {
-        return '';
+        list($author, $name) = explode(
+            '\\',
+            \Includes\Utils\ModulesManager::getModuleNameByClassName(get_called_class())
+        );
+
+        return \XLite\Core\Converter::buildURL(null, null, array('type' => 'module') + compact($author, $name));
     }
 
     /**
