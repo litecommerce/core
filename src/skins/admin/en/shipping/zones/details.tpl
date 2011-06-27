@@ -157,7 +157,7 @@ Select a country or a state from a list, specify the zone where the country or s
     </tr>
 
     {* City masks *}
-
+    {* TODO - disabled until design review 
 	  <tr class="dialog-box">
 	  	<td class="admin-head" colspan="3">City masks<hr /></td>
 	  </tr>
@@ -180,6 +180,7 @@ Select a country or a state from a list, specify the zone where the country or s
       <td align="center">&nbsp;</td>
       <td>Examples</td>
     </tr>
+    *}
 
     {* Zip code masks *}
 
@@ -208,6 +209,7 @@ Select a country or a state from a list, specify the zone where the country or s
 
 
     {* Address masks *}
+    {* TODO - disabled until design review
 
 	  <tr class="dialog-box">
 	  	<td class="admin-head" colspan="3">Address masks<hr /></td>
@@ -231,6 +233,7 @@ Select a country or a state from a list, specify the zone where the country or s
       <td align="center">&nbsp;</td>
       <td>Examples</td>
     </tr>
+    *}
 
     <tr>
       <td colspan="3"><br /><br /><hr />
