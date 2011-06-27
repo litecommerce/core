@@ -131,6 +131,51 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         return static::getClassNameByModuleName(static::getActualName($author, $name));
     }
 
+    /**
+     * Return module relative dir
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getRelativeDir($author, $name)
+    {
+        return $author . LC_DS . $name . LC_DS;
+    }
+
+    /**
+     * Return module absolute dir
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getAbsoluteDir($author, $name)
+    {
+        return LC_DIR_MODULES . static::getRelativeDir($author, $name);
+    }
+
+    /**
+     * Return module icon file path
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getModuleIconFile($author, $name)
+    {
+        return static::getAbsoluteDir($author, $name) . '';
+    }
+
     // }}}
 
     // {{{ Methods to access installed module main class
