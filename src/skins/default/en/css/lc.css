@@ -781,6 +781,7 @@ ul.products-sidebar-text-links li .product {
   background-repeat: no-repeat;
   padding-left: 12px;
   height: 25px;
+  opacity: 0.9;
 }
 
 .products .labels li div {
