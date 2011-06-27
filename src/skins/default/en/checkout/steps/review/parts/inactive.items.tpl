@@ -13,7 +13,7 @@
 <div class="box">
 
   <div class="items-row">
-    <a href="#">{t(#X items#,_ARRAY_(#count#^cart.countQuantity()))}</a> {t(#in bag#)}
+    {t(#_X items_ in bag#,_ARRAY_(#count#^cart.countQuantity())):h}
     <span class="price">{formatPrice(cart.getSubtotal(),cart.getCurrency())}</span>
   </div>
 
