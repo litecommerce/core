@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Install updates or not
+ * Install updates or not (select installation type)
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<form action="admin.php" method="post" name="getAddonForm">
+<form action="admin.php" method="post">
   <input type="hidden" name="target" value="upgrade" />
   <input type="hidden" name="action" value="install_addon" />
   <input type="hidden" name="moduleId" value="{getModuleId()}" />
@@ -21,13 +21,17 @@
 
   <ul class="actions">
     <li class="button">
-      <widget class="\XLite\View\Button\Regular" label="Install anyway" jsCode="document.getAddonForm.action.value='install_addon_force';document.getAddonForm.submit();" />
+      <widget
+        class="\XLite\View\Button\Regular"
+        label="Install anyway"
+        action="install_addon_force" />
     </li>
     <li class="or">{t(#or#)}</li>
     <li class="button">
       <widget class="\XLite\View\Button\Submit" label="Update modules" />
     </li>
   </ul>
+
   <div class="clear"></div>
 
 </form>
