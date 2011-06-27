@@ -11,4 +11,4 @@
  *
  * @ListChild (list="itemsList.product.table.customer.captions", weight="10")
  *}
-<th class="caption-product-sku">SKU</th>
+<th class="caption-product-sku">{t(#SKU#)}</th>

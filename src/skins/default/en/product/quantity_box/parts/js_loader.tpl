@@ -11,5 +11,8 @@
  *
  * @ListChild (list="product.quantity-box", weight="30")
  *}
-
-<script type="text/javascript" IF="isAJAX()">core.autoload(ProductQuantityBoxController);</script>
+<script type="text/javascript" IF="isAJAX()">
+<!--
+core.autoload(ProductQuantityBoxController);
+-->
+</script>

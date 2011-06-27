@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="order.status", weight="20")
  *}
-<!--div class="payment">Fake</div-->
+<!--div class="payment"></div-->

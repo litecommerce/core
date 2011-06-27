@@ -62,7 +62,7 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      */
     public function getTitle()
     {
-        return $this->t('Recent orders');
+        return static::t('Recent orders');
     }
 
 
@@ -75,7 +75,7 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      */
     protected function getLocation()
     {
-        return $this->t('Recent orders');
+        return static::t('Recent orders');
     }
 
     /**

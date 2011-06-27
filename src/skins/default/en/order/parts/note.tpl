@@ -11,6 +11,6 @@
  * @ListChild (list="order.children", weight="40")
  *}
 <div IF="order.getNotes()" class="customer-note">
-  <strong>Customer note:</strong>
+  <strong>{t(#Customer note#)}:</strong>
   <div>{order.notes}</div>
 </div>

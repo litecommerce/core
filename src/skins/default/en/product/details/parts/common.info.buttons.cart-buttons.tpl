@@ -15,6 +15,6 @@
  * @ListChild (list="product.details.quicklook.info.buttons-added", weight="20")
  *}
 
-<div class="buttons-row" IF="!product.inventory.isOutOfStock()">
+<div class="buttons-row" IF="isProductAvailableForSale()">
   {displayNestedViewListContent(#cart-buttons#)}
 </div>

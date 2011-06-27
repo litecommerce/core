@@ -575,7 +575,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
                 $this->valid = false;
 
-                $label = $this->t(
+                $label = static::t(
                     'This email address is used for an existing account. Enter another email address or sign in',
                     array('URL' => $this->getLoginURL())
                 );

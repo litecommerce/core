@@ -251,13 +251,13 @@ class AdminMain extends \XLite\View\Model\AModel
                     $value = date('r', $value);
 
                 } else {
-                    $value = $this->t('never');
+                    $value = static::t('never');
                 }
 
                 break;
 
             case 'referer':
-                $value = $value ?: $this->t('unknown');
+                $value = $value ?: static::t('unknown');
                 break;
 
             case 'language':
@@ -266,7 +266,7 @@ class AdminMain extends \XLite\View\Model\AModel
                 break;
 
             case 'pending_membership_id':
-                $value = 0 < $value ? $this->getModelObject()->getPendingMembership()->getName() : $this->t('none');
+                $value = 0 < $value ? $this->getModelObject()->getPendingMembership()->getName() : static::t('none');
                 break;
 
             default:

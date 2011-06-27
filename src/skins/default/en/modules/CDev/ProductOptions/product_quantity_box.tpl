@@ -10,17 +10,14 @@
  * @since     1.0.0
  *}
 <div IF="product.productOptions&product.inventory.found&!product.tracking" class="quantity">
-
-  <strong>Quantity:</strong>
-  <span IF="{product.inventory.amount}">{product.inventory.amount} item(s) available</span>
-  <span IF="{!product.inventory.amount}">- out of stock -</span>
+  <strong>{t(#Quantity#)}:</strong>
+  <span IF="{product.inventory.amount}">{t(#X item(s) available#,_ARRAY(#count#product.inventory.amount))}</span>
+  <span IF="{!product.inventory.amount}">{t(#- out of stock -#)}</span>
 </div>
 
-<widget module="CDev\ProductAdviser"  class="\XLite\Module\CDev\ProductAdviser\View\NotifyLink">
+<widget module="CDev\ProductAdviser" class="\XLite\Module\CDev\ProductAdviser\View\NotifyLink" />
 
 <div IF="product.productOptions&product.tracking&product.outOfStock" class="quantity">
-
-  <strong>Quantity:</strong>
-  <span>- out of stock -</span>
-
+  <strong>{t(#Quantity#)}:</strong>
+  <span>{t(#- out of stock -#)}</span>
 </div>

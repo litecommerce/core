@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<p><font class="OutOfStock">Product is out of stock!</font>
+<p><font class="OutOfStock">{t(#Product is out of stock!#)}</font>

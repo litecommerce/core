@@ -16,7 +16,7 @@
 
 <div class="search-orders-box">
   <div class="search-orders-conditions">
-    <a IF="getTotalCount()" href="javascript:void(0);" onclick="javascript:core.toggleText(this,'Hide filter options','#advanced_search_order_options');">Show filter options</a>
+    <a IF="getTotalCount()" href="javascript:void(0);" onclick="javascript:core.toggleText(this,'Hide filter options','#advanced_search_order_options');">{t(#Show filter options#)}</a>
   </div>
 
   <div id="advanced_search_order_options" style="display:none;">

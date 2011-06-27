@@ -12,11 +12,16 @@
 
 {* :TODO: divide into parts *}
 
-<div class="module-license">
+<form action="admin.php" method="post">
+  <input type="hidden" name="target" value="upgrade" />
+  <input type="hidden" name="action" value="install_addon_force" />
+  <input type="hidden" name="moduleId" value="{getModuleId()}" />
 
-  <div class="form">
+  <div class="module-license">
 
-    <div class="license-block">
+    <div class="form">
+
+      <div class="license-block">
 
         <table>
           <tr>
@@ -26,8 +31,8 @@
               </textarea>
             </td>
             <td class="switch-button">
-              <widget class="\XLite\View\Button\SwitchButton" first="makeSmallHeight" second="makeLargeHeight" />
-            </td>
+          <widget class="\XLite\View\Button\SwitchButton" first="makeSmallHeight" second="makeLargeHeight" />
+          </td>
           </tr>
         </table>
 
@@ -45,10 +50,25 @@
       <table class="install-addon">
         <tr>
           <td>
-            <widget class="\XLite\View\Button\Addon\SelectInstallationType" moduleId="{getModuleId()}" label="Install add-on" style="submit-button main-button" disabled=true />
-          </td>
+            <widget
+              IF="isUpgradeEntryAvailable()"
+              class="\XLite\View\Button\Addon\SelectInstallationType"
+              moduleId="{getModuleId()}"
+              label="Install add-on"
+              style="submit-button main-button"
+              disabled=true />
+
+            <widget
+              IF="!isUpgradeEntryAvailable()"
+              class="\XLite\View\Button\Submit"
+              label="Install add-on"
+              style="submit-button main-button"
+              disabled=true />
+        </td>
         </tr>
       </table>
 
+    </div>
   </div>
-</div>
+
+</form>

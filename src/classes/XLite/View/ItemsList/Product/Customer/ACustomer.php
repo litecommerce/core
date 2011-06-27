@@ -64,6 +64,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
     const DISPLAY_MODE_STHUMB = 'small_thumbnails';
     const DISPLAY_MODE_BTHUMB = 'big_thumbnails';
+    const DISPLAY_MODE_TEXTS  = 'text_links';
 
 
     /**
@@ -137,6 +138,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         return array(
             self::DISPLAY_MODE_STHUMB  => 'Cells',
             self::DISPLAY_MODE_BTHUMB  => 'List',
+            self::DISPLAY_MODE_TEXTS   => 'Text links',
         );
     }
 
@@ -219,7 +221,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
         if (!isset($options[$this->getParam(self::PARAM_DISPLAY_MODE)])) {
             $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(
-                self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
+                $this->isSidebar()
                     ? self::DISPLAY_MODE_STHUMB
                     : self::DISPLAY_MODE_GRID
             );
@@ -290,7 +292,8 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         return 'product productid-'
             . $product->getProductId()
             . ($this->isProductAdded($product) ? ' product-added' : '')
-            . ($product->getInventory()->isOutOfStock() ? ' out-of-stock' : '');
+            . ($product->getInventory()->isOutOfStock() ? ' out-of-stock' : '')
+            . (!$product->isAvailable() ? ' not-available' : '');
     }
 
     /**
@@ -378,7 +381,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getDisplayModes()
     {
-        return self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
+        return $this->isSidebar()
             ? static::getSidebarDisplayModes()
             : static::getCenterDisplayModes();
     }
@@ -435,7 +438,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function checkSideBarParams(array $params)
     {
-        return isset($params[self::PARAM_WIDGET_TYPE]) && self::WIDGET_TYPE_SIDEBAR == $params[self::PARAM_WIDGET_TYPE];
+        return isset($params[self::PARAM_WIDGET_TYPE]) && $this->isSidebar();
     }
 
     /**
@@ -451,6 +454,18 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
+     * Check - current widget type is sidebar
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isSidebar()
+    {
+        return self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE);
+    }
+
+    /**
      * Check if pager control row is visible or not
      *
      * @return boolean
@@ -460,6 +475,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     protected function isPagerVisible()
     {
         return parent::isPagerVisible()
+            && !$this->isSidebar()
             && $this->getParam(\XLite\View\Pager\APager::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR);
     }
 
@@ -472,7 +488,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function isDisplayModeSelectorVisible()
     {
-        return $this->getParam(self::PARAM_SHOW_DISPLAY_MODE_SELECTOR);
+        return $this->getParam(self::PARAM_SHOW_DISPLAY_MODE_SELECTOR) && !$this->isSidebar();
     }
 
     /**
@@ -484,7 +500,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function isSortBySelectorVisible()
     {
-        return $this->getParam(self::PARAM_SHOW_SORT_BY_SELECTOR);
+        return $this->getParam(self::PARAM_SHOW_SORT_BY_SELECTOR) && !$this->isSidebar();
     }
 
     /**
@@ -807,8 +823,22 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isProductAdded($product)
+    protected function isProductAdded(\XLite\Model\Product $product)
     {
         return $this->getCart()->isProductAdded($product->getProductId());
+    }
+
+    /**
+     * Get product labels 
+     * 
+     * @param \XLite\Model\Product $product Product
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getProductLabels(\XLite\Model\Product $product)
+    {
+        return array();
     }
 }

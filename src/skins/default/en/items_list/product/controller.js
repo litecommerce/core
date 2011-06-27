@@ -41,6 +41,7 @@ function ProductsListController(base)
             jQuery(productPattern, base)
               .addClass('out-of-stock')
               .draggable('disable');
+
           } else {
             jQuery(productPattern, base)
               .removeClass('out-of-stock')
@@ -216,6 +217,10 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
     // Disable out-of-stock product to drag
     var draggableDisablePattern = '.products-grid .product.out-of-stock, .products-list .product.out-of-stock';
+    jQuery(draggableDisablePattern, this.base).draggable('disable');
+
+    // Disable not-available product to drag
+    var draggableDisablePattern = '.products-grid .product.not-available, .products-list .product.not-available';
     jQuery(draggableDisablePattern, this.base).draggable('disable');
 
     cartTray.droppable(

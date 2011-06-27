@@ -26,6 +26,16 @@ table.items-list .sort-order div.part
   display: inline;
 }
 
+.items-list .sort-order .order-by .asc-order {
+  padding-right: 14px;
+  background: transparent url(images/arrow_up.png) no-repeat right 2px;
+}
+
+.items-list .sort-order .order-by .desc-order {
+  padding-right: 14px;
+  background: transparent url(images/arrow_down.png) no-repeat right 2px;
+}
+
 table.items-list tr th span.currency {
   color: #959595;
 }

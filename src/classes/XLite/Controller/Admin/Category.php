@@ -98,7 +98,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     public function getTitle()
     {
         return ('add_child' === \XLite\Core\Request::getInstance()->mode)
-            ? $this->t('Add category')
+            ? static::t('Add category')
             : parent::getCategory()->getName();
     }
 
@@ -116,12 +116,12 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
             'modify' == \XLite\Core\Request::getInstance()->mode
             && $this->getRootCategoryId() == $this->getCategoryId()
         ) {
-            $this->addLocationNode($this->t('Root category'));
+            $this->addLocationNode(static::t('Root category'));
         }
 
         return ('add_child' === \XLite\Core\Request::getInstance()->mode)
-            ? $this->t('Add category')
-            : $this->t('Details');
+            ? static::t('Add category')
+            : static::t('Details');
     }
 
     /**

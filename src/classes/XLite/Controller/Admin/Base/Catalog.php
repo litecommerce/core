@@ -105,7 +105,7 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode($this->t('Manage categories'), $this->buildURL('categories'));
+        $this->addLocationNode(static::t('Manage categories'), $this->buildURL('categories'));
 
         foreach ($this->getCategoryPath() as $category) {
             $this->addLocationNode(

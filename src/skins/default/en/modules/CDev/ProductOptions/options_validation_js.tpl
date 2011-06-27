@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<script language="JavaScript" IF="product.hasOptionValidator()" type="text/javascript">
+<script IF="product.hasOptionValidator()" type="text/javascript">
 var optionsCount = {count(product.productOptions)};
 <!--
 function product_option(name_of_option)

@@ -120,7 +120,7 @@ class Profile extends \XLite\Controller\Customer\ACustomer
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode($this->t('My account'));
+        $this->addLocationNode(static::t('My account'));
     }
 
     /**

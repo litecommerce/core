@@ -37,9 +37,9 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
     const PC_PAGE = 'admin.php?target=product_classes';
 
-    const PRODUCT_SELECTOR = '//div[@class="select-classes"]/select[@id="posteddata-class-ids-" and @name="postedData[class_ids][]" and @multiple="multiple"]';
+    const PRODUCT_SELECTOR = '//div[@class="select-classes"]/select[@name="postedData[class_ids][]" and @multiple="multiple"]';
 
-    const SHIPPING_SELECTOR = '//div[@class="select-classes"]/select[@id="posteddata-class-ids-1-" and @name="postedData[class_ids][1][]" and @multiple="multiple"]';
+    const SHIPPING_SELECTOR = '//div[@class="select-classes"]/select[@name="postedData[class_ids][1][]" and @multiple="multiple"]';
 
     const PRODUCT_UPDATE  = '//button[@type="submit"]/span[text()="Update product"]';
 
@@ -109,9 +109,9 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
         $productPage = 'admin.php?target=product&page=info&product_id=5';
 
         $this->open($productPage);
-
+        
         $this->assertElementPresent(
-            '//td/span[@class="empty-list"]/a[@href="admin.php?target=product_classes" and text()="Define classes"]',
+            '//td/div/span[@class="empty-list"]/a[@href="admin.php?target=product_classes" and text()="Define classes"]',
             'No "define classes" link'
         );
 
@@ -282,7 +282,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      */
     private function removeInput($name)
     {
-        $remove = '//div[@class="advanced-input-text"]/div[@class="original-label" and text()="' . $name . '"]/../../../td[@class="remove-product-class"]/a[@class="remove"]';
+        $remove = '//div[@class="advanced-input-text"]/div[@class="original-label" and text()="' . $name . '"]/../../../../td[@class="remove-product-class"]/a[@class="remove"]';
 
         $count = $this->getTableLength();
 

@@ -63,27 +63,27 @@ class Top extends \XLite\View\Menu\AMenu
         $menu[] = array(
             'target' => \XLite::TARGET_DEFAULT,
             'url'    => $this->buildURL(''),
-            'label'  => $this->t('Home'),
+            'label'  => static::t('Home'),
         );
 
         $menu[] = array(
             'target' => 'cart',
             'url'    => $this->buildURL('cart'),
-            'label'  => $this->t('Shopping bag'),
+            'label'  => static::t('Shopping bag'),
         );
 
         if (\XLite\Core\Auth::getInstance()->isLogged()) {
             $menu[] = array(
                 'target' => 'profile',
                 'url'    => $this->buildURL('profile'),
-                'label'  => $this->t('My account'),
+                'label'  => static::t('My account'),
             );
 
         } else {
             $menu[] = array(
                 'target' => 'profile',
                 'url'    => $this->buildURL('profile', '', array('mode' => 'register')),
-                'label'  => $this->t('Register'),
+                'label'  => static::t('Register'),
             );
         }
 

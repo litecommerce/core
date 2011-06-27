@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Item SKU
+ * Item price
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,4 +11,4 @@
  *
  * @ListChild (list="itemsList.product.table.customer.captions", weight="40")
  *}
-<th class="caption-product-price">Price</th>
+<th class="caption-product-price">{t(#Price#)}</th>

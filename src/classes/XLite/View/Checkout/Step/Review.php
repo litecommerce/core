@@ -56,7 +56,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      */
     public function getTitle()
     {
-        return $this->t('Order review');
+        return static::t('Order review');
     }
 
     /**
@@ -92,7 +92,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      */
     public function getPlaceTitle()
     {
-        return $this->t(
+        return static::t(
             'Place order X',
             array(
                 'total' => $this->formatPrice($this->getCart()->getTotal(), $this->getCart()->getCurrency()),

@@ -65,7 +65,7 @@ class Header extends \XLite\View\AView
     {
         $description = method_exists(\XLite::getController(), 'getMetaDescription')
             ? \XLite::getController()->getMetaDescription()
-            : $this->t($this->defaultMetaDescription);
+            : static::t($this->defaultMetaDescription);
 
         return trim(strip_tags($description));
     }
@@ -79,7 +79,7 @@ class Header extends \XLite\View\AView
      */
     protected function getTitle()
     {
-        return \XLite::getController()->getPageTitle() ?: $this->t($this->defaultTitle);
+        return \XLite::getController()->getPageTitle() ?: static::t($this->defaultTitle);
     }
 
     /**
