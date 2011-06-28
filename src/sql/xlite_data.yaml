@@ -694,7 +694,8 @@ XLite\Model\Country:
   - { country: Burundi, code3: BDI, code: BI }
   - { country: Cambodia, code3: KHM, code: KH }
   - { country: Cameroon, code3: CMR, code: CM }
-  - country: Canada, code3: CAN
+  - country: Canada
+    code3: CAN
     code: CA
     states:
       - { state: Alberta, code: AB }
