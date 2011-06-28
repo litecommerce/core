@@ -15,7 +15,7 @@
 </div>
 
 <div class="cart-items" IF="!cart.isEmpty()">
-  <p><span class="toggle-button"><a href="{buildURL(#cart#)}" onClick="javascript:xlite_minicart_toggle('lc-minicart-{displayMode}'); return false;">{t(#X item(s)#,_ARRAY(#count#^cart.getItemsCount()))}</a></span></p>
+  <p><span class="toggle-button"><a href="{buildURL(#cart#)}" onClick="javascript:xlite_minicart_toggle('lc-minicart-{displayMode}'); return false;">{t(#X item(s)#,_ARRAY_(#count#^cart.getItemsCount()))}</a></span></p>
   <div class="items-list">
     <ul>
       <li FOREACH="getItemsList(),item">
