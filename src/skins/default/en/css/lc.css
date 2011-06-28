@@ -805,6 +805,26 @@ ul.products-sidebar-text-links li .product {
 }
 
 /**
+ * Product block
+ */
+.product-block .product {
+  padding: 0px;
+}
+
+.product-block .product-name
+{
+  font-size: 16px;
+  padding-top: 0px;
+  font-family: Helvetica, Arial;
+  text-align: left;
+}
+
+.product-block .product-price {
+  padding-top: 3px;
+  line-height: 21px;
+}
+
+/**
  * Categories menu
  */
 .sidebar .catalog-categories > li > a
