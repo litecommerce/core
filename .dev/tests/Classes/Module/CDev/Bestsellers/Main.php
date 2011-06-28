@@ -36,13 +36,13 @@ class XLite_Tests_Module_CDev_Bestsellers_Main extends XLite_Tests_TestCase
     public function testGetDescription()
     {
         $main = $this->getMain();
-        $this->assertEquals('This module enables bestsellers list', $main::getDescription(), 'Wrong description');
+        $this->assertEquals('Lists best-selling products at any place of the customer interface.', $main::getDescription(), 'Wrong description');
     }
 
     public function testGetVersion()
     {
         $main = $this->getMain();
-        $this->assertEquals('1.0.0', $main::getVersion(), 'Wrong version');
+        $this->assertEquals('1.0.1', $main::getVersion(), 'Wrong version');
     }
 
 
