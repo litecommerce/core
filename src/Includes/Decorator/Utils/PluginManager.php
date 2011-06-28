@@ -77,10 +77,13 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
             }
 
             // Show message
-            \Includes\Utils\Operator::showMessage('Run the "' . $plugin . '" plugin...');
+            \Includes\Decorator\Utils\CacheManager::showStepMessage('Run the "' . $plugin . '" plugin...');
 
             // Execute plugin main method
             $instance->{'executeHookHandler' . ucfirst(\Includes\Utils\Converter::convertToCamelCase($hook))}();
+
+            // Show memory usage
+            \Includes\Decorator\Utils\CacheManager::showStepInfo();
         }
     }
 

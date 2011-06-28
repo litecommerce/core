@@ -157,16 +157,20 @@ abstract class Operator extends \Includes\Utils\AUtils
     /**
      * Wrapper to message quick display
      *
-     * @param string $message Message text
+     * @param string  $message    Message text
+     * @param boolean $addNewline Flag OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function showMessage($message)
+    public static function showMessage($message, $addNewline = true)
     {
-        static::flush($message, true, 'document.write(\'<div class="service-message">' . $message . '</div>\');');
-        static::flush(LC_EOL);
+        static::flush($message, true, 'document.write(\'' . $message . '\');');
+
+        if ($addNewline) {
+            static::flush(LC_EOL);
+        }
     }
 
     /**

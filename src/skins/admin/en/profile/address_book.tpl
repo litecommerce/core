@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Register form template
+ * Address book list. Admin area.
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,7 +10,12 @@
  * @since     1.0.0
  *}
 
-<widget FOREACH="profile.getAddresses(),address" class="\XLite\View\Address" displayMode="text" displayWrapper="1" address="{address}" />
+<widget
+  FOREACH="getAddresses(),address"
+  class="\XLite\View\Address"
+  displayMode="text"
+  displayWrapper="1"
+  address="{address}" />
 
 <widget class="\XLite\View\Address" displayMode="text" displayWrapper="1" />
 
