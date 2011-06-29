@@ -189,7 +189,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
                 'user_type' => 'C',
             ),
             'result' => array(
-                'ids' => array(2, 3, 4, 5, 6, 8),
+                'ids' => array(2, 3, 4, 5, 6),
             ),
         ),
         // Test dataset #20
@@ -257,7 +257,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
                 'limit'    => array(1, 4), // 1 - start, 4 - limit
             ),
             'result' => array(
-                'ids' => array(4, 6, 7),
+                'ids' => array(6, 7, 3, 2),
             ),
         ),
     );
