@@ -12,7 +12,7 @@
  *}
 <ul class="cart-sums">
   <li>
-    <em>Subtotal:</em>
+    <em>{t(#Subtotal#)}:</em>
     <span>{price_format(cart,#subtotal#):h}</span>
   </li>
 </ul>

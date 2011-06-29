@@ -14,23 +14,24 @@
 
 <div class="languages-dialog">
 
-<widget IF="countLabels()" class="\XLite\View\SavePanel" formName="updateForm" />
-
 <form action="admin.php" method="post" name="search_language_form" >
   <input type="hidden" name="target" value="languages" />
   <input type="hidden" name="action" value="search" />
   <input IF="isTranslatedLanguageSelected()" type="hidden" name="language" value="{language}" />
 
   <div class="form-panel languages-search-panel">
+
     <input type="text" name="name" value="{getSearchSubstring()}" class="big" lang="{defaultLanguage.code}" xml:lang="{defaultLanguage.code}" />
+
     <widget class="\XLite\View\Button\Submit" label="Search" style="main-button" />
-    {if:isTranslatedLanguageSelected()}
-      <a href="admin.php?target=languages&action=search&language={language}">{t(#Show all labels#)}</a>
-    {else:}
-      <a href="admin.php?target=languages&action=search">{t(#Show all labels#)}</a>
-    {end:}
+
+    <a IF="isTranslatedLanguageSelected()" href="admin.php?target=languages&action=search&language={language}">{t(#Show all labels#)}</a>
+    <a IF="!isTranslatedLanguageSelected()" href="admin.php?target=languages&action=search">{t(#Show all labels#)}</a>
+
     <em IF="isSearch()" class="counter">{t(#N items found#,_ARRAY_(#n#^countLabels()))}</em>
+
   </div>
+
 </form>
 
 <form action="admin.php" method="get" name="change_language_form" >
@@ -39,34 +40,41 @@
   <div class="language-translate-panel">
     <div class="left">
       <div class="language">
-        <img IF="defaultLanguage.flagURL" src="{defaultLanguage.flagURL}" alt="{defaultLanguage.name}" /> {t(#X labels#,_ARRAY_(#language#^defaultLanguage.name))} <span class="separator">{t(#translate to#)}:</span>
+        <img IF="defaultLanguage.flagURL" src="{defaultLanguage.flagURL}" alt="{defaultLanguage.name}" />
+        {t(#X labels#,_ARRAY_(#language#^defaultLanguage.name))}
+        <span class="separator">{t(#translate to#)}:</span>
       </div>
       <div class="options">
-        <a href="javascript:void(0);" onclick="javascript: return openLanguageOptions(this, {defaultLanguage.lng_id}, '{language}', {getPage()});">{t(#Language options#)}</a>
+        <a
+          href="javascript:void(0);"
+          onclick="javascript: return openLanguageOptions(this, {defaultLanguage.lng_id}, '{language}', {getPage()});">
+          {t(#Language options#)}
+        </a>
       </div>
     </div>
 
     <div class="right">
 
-      {if:isAnotherLanguagesAdded()}
+      <div IF="isAnotherLanguagesAdded()" class="language">
+        <input
+          IF="isTranslatedLanguageSelected()"
+          type="text"
+          readonly="readonly"
+          value="{translatedLanguage.name}"
+          style="background-image: url({translatedLanguage.flagURL});"
+          class="big flag" />
+        <input IF="!isTranslatedLanguageSelected()" type="text" readonly="readonly" value="" class="big" />
+        <a href="javascript:void(0);" class="select" onclick="javascript: return openSelectLanguage(this, '{language}', {getPage()});">{t(#Select language#)}</a>
+      </div>
 
-        <div class="language">
-          {if:isTranslatedLanguageSelected()}
-            <input type="text" readonly="readonly" value="{translatedLanguage.name}" style="background-image: url({translatedLanguage.flagURL});" class="big flag" />
-          {else:}
-            <input type="text" readonly="readonly" value="" class="big" />
-          {end:}
-          <a href="javascript:void(0);" class="select" onclick="javascript: return openSelectLanguage(this, '{language}', {getPage()});">{t(#Select language#)}</a>
-        </div>
-
-      {else:}
-
-        <div class="language empty">{t(#No other languages defined#)}</div>
-
-      {end:}
+      <div IF="!isAnotherLanguagesAdded()" class="language empty">{t(#No other languages defined#)}</div>
 
       <div IF="isTranslatedLanguageSelected()" class="options">
-        <a href="javascript:void(0);" onclick="javascript: return openLanguageOptions(this, {translatedLanguage.lng_id}, '{language}', {getPage()});">{t(#Language options#)}</a>
+        <a
+          href="javascript:void(0);"
+          onclick="javascript: return openLanguageOptions(this, {translatedLanguage.lng_id}, '{language}', {getPage()});">
+          {t(#Language options#)}
+        </a>
       </div>
 
     </div>
@@ -75,14 +83,17 @@
 </form>
 
 <div class="language-buttons-panel">
+
   <div class="left">
     <widget class="\XLite\View\LanguagesModify\Button\AddNewLabel" language="{language}" page="{getPage()}" style="add-new-label" />
     <widget class="\XLite\View\LanguagesModify\Button\AddNewLanguage" page="{getPage()}" style="add-new-language" />
   </div>
+
   <div IF="countLabels()" class="right">
     <widget class="\XLite\View\PagerOrig\Simple" pages="{getPages()}" page="{getPage()}" url="{getPagerURL()}" />
     (<strong>{t(#N items#,_ARRAY_(#n#^countLabels()))}</strong> total)
   </div>
+
   <div class="clear"></div>
 </div>
 
@@ -105,20 +116,43 @@
 
         <input type="text" readonly="readonly" value="{label.name}" class="name" />
 
-        <a href="javascript:void(0);" class="edit" onclick="javascript: return openEditLabelDialog(this, {label.label_id}, '{language}', {getPage()});"><img src="images/spacer.gif" alt="" /></a>
+        <a
+          href="javascript:void(0);"
+          class="edit"
+          onclick="javascript: return openEditLabelDialog(this, {label.label_id}, '{language}', {getPage()});">
+          <img src="images/spacer.gif" alt="" />
+        </a>
 
-        <a href="admin.php?target=languages&action=delete_label&label_id={label.label_id}&language={language}&page={getPage()}" class="delete"><img src="images/spacer.gif" alt="" /></a>
+        <a
+          href="admin.php?target=languages&action=delete_label&label_id={label.label_id}&language={language}&page={getPage()}"
+          class="delete">
+          <img src="images/spacer.gif" alt="" />
+        </a>
 
       </div>
 
-      <textarea name="current[{label.label_id}]"{if:isTranslatedLanguageSelected()} class="left"{end:} lang="{defaultLanguage.code}" xml:lang="{defaultLanguage.code}">{getLabelDefaultValue(label)}</textarea>
+      <textarea
+        name="current[{label.label_id}]"
+        {if:isTranslatedLanguageSelected()} class="left"{end:}
+        lang="{defaultLanguage.code}"
+        xml:lang="{defaultLanguage.code}">{getLabelDefaultValue(label)}</textarea>
 
-      <textarea IF="isTranslatedLanguageSelected()" name="translated[{label.label_id}]" class="right" lang="{translatedLanguage.code}" xml:lang="{translatedLanguage.code}"{if:translatedLanguage.r2l} dir="rtl"{end:}>{getTranslation(label)}</textarea>
+      <textarea
+        IF="isTranslatedLanguageSelected()"
+        name="translated[{label.label_id}]"
+        class="right"
+        lang="{translatedLanguage.code}"
+        xml:lang="{translatedLanguage.code}"
+        {if:translatedLanguage.r2l} dir="rtl"{end:}>{getTranslation(label)}</textarea>
 
       <div class="clear"></div>
 
     </li>
   </ul>
+
+  <div class="buttons">
+  {displayViewListContent(#languages.actions#)}
+  </div>
 
 </form>
 

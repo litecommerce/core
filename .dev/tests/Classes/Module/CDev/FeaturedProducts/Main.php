@@ -36,13 +36,13 @@ class XLite_Tests_Module_CDev_FeaturedProducts_Main extends XLite_Tests_TestCase
     public function testGetDescription()
     {
         $main = $this->getMain();
-        $this->assertEquals('This module enables featured products list', $main::getDescription(), 'Wrong description');
+        $this->assertEquals('Shows your best and most profitable products to customers.', $main::getDescription(), 'Wrong description');
     }
 
     public function testGetVersion()
     {
         $main = $this->getMain();
-        $this->assertEquals('1.0.0', $main::getVersion(), 'Wrong version');
+        $this->assertEquals('1.0.1', $main::getVersion(), 'Wrong version');
     }
 
     public function testShowSettingsForm()

@@ -2,8 +2,8 @@
 
 {**
  * User country state
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -16,6 +16,6 @@
   <td>{t(#State#)}</td>
   <td>
     <widget class="\XLite\View\FormField\Select\State" fieldName="state" fieldOnly=true fieldId="stateSelectorId" value="{getParam(#state#)}" />
-    <widget class="\XLite\View\FormField\Input\Text" fieldName="state" fieldOnly=true fieldId="stateBoxId" value="{getParam(#state#)}" />
+    <widget class="\XLite\View\FormField\Input\Text" fieldName="customState" fieldOnly=true fieldId="stateBoxId" value="{getParam(#customState#)}" />
   </td>
 </tr>

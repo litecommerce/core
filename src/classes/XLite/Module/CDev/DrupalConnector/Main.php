@@ -56,7 +56,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '0';
+        return '1';
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Integration with the Drupal CMS';
+        return 'Exports LiteCommerce widgets and pages to Drupal.';
     }
 
     /**

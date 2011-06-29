@@ -226,7 +226,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
         $content = '';
 
         if ($this->isInventoryWarning()) {
-            $content .= $this->t('Warning! There is not enough product items in stock to process the order');
+            $content .= static::t('Warning! There is not enough product items in stock to process the order');
         }
 
         return $content;

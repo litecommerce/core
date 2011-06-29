@@ -462,7 +462,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
             $this->pages[] = array(
                 'type'  => 'previous-page',
                 'num'   => $id,
-                'title' => $this->t('Previous page'),
+                'title' => static::t('Previous page'),
             );
 
             $firstId = $this->getFirstPageId();
@@ -472,7 +472,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
                 $this->pages[] = array(
                     'type'  => 'first-page',
                     'num'   => $firstId,
-                    'title' => $this->t('First page'),
+                    'title' => static::t('First page'),
                 );
 
                 $this->pages[] = array(
@@ -507,7 +507,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
                 $this->pages[] = array(
                     'type'  => 'last-page',
                     'num'   => $lastId,
-                    'title' => $this->t('Last page'),
+                    'title' => static::t('Last page'),
                 );
             }
 
@@ -515,7 +515,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
             $this->pages[] = array(
                 'type'  => 'next-page',
                 'num'   => $id,
-                'title' => $this->t('Next page'),
+                'title' => static::t('Next page'),
             );
 
             // Now prepare data for the view

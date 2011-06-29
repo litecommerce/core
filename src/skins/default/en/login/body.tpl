@@ -18,9 +18,9 @@
 <table cellpadding="10" cellspacing="0" border="0">
 <tr>
     <td>
-        <FONT class="SidebarItems">Email address</FONT><br>
+        <FONT class="SidebarItems">{t(#Email address#)}</FONT><br>
         <input type="text" name="login" value="{login:r}" size="14" maxlength="128"><br>
-        <FONT class="SidebarItems">Password</FONT><br>
+        <FONT class="SidebarItems">{t(#Password#)}</FONT><br>
         <input type="password" name="password" value="" size="14" maxlength="128"><br>
         <input type="hidden" name="target" value="login">
         <input type="hidden" name="action" value="login">
@@ -42,7 +42,7 @@
     </td>
 </tr>
 </table>
-<a href="cart.php?target=recover_password"><u>Recover password</u></a>
+<a href="cart.php?target=recover_password"><u>{t(#Recover password#)}</u></a>
 
 </td>
 </tr>

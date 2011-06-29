@@ -149,13 +149,13 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
                 echo (sprintf('<br /><i>Time elapsed: %0.3f seconds</i>', $proceedTime));
 
             } else {
-                $errorMsg = $this->t(
+                $errorMsg = static::t(
                     'There are no rates available for specified source/destination and/or package measurements/weight.'
                 );
             }
 
         } else {
-            $errorMsg = $this->t(
+            $errorMsg = static::t(
                 'The following expected input data have wrong format or empty: ' . implode(', ', $errorFields)
             );
         }

@@ -131,7 +131,8 @@ ul.products-sidebar li .product {
   visibility: visible;
 }
 
-.products .out-of-stock .drag-n-drop-handle
+.products .out-of-stock .drag-n-drop-handle,
+.products .not-available .drag-n-drop-handle
 {
   background: transparent none;
   padding-left: 0;
@@ -143,7 +144,8 @@ ul.products-sidebar li .product {
   display: none;
 }
 
-.products .out-of-stock .drag-n-drop-handle .drag-message
+.products .out-of-stock .drag-n-drop-handle .drag-message,
+.products .not-available .drag-n-drop-handle .drag-message
 {
   display: none;
 }
@@ -200,7 +202,8 @@ ul.products-sidebar li .product {
   height: 24px;
 }
 
-.products .products-table .out-of-stock input[type="image"]
+.products .products-table .out-of-stock input[type="image"],
+.products .products-table .not-available input[type="image"]
 {
   background: transparent url(images/bag/out.png) no-repeat;
   width: 19px;
@@ -266,6 +269,10 @@ ul.products-sidebar li .product {
   clear: both;
 }
 
+.products-sidebar-small-thumbnails .details {
+  padding-left: 88px;
+}
+
 .products-sidebar-small-thumbnails div.product-photo {
   float: left;
 }
@@ -274,6 +281,75 @@ ul.products-sidebar li .product {
 .products-sidebar-big-thumbnails .clear
 {
   clear: both;
+}
+
+.products .labels {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+.products .labels li {
+  background-color: transparent;
+  background-image: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+.products-grid .labels,
+.products-list .labels,
+.products-sidebar-big-thumbnails .labels
+{
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+.products-grid .labels li,
+.products-list .labels li,
+.products-sidebar-big-thumbnails .labels li
+{
+  margin-bottom: 10px;
+}
+
+.products-grid .labels {
+  right: 10px;
+  top: 23px;
+}
+
+.products-list .labels {
+  right: 0px;
+  top: 2px;
+}
+
+.products-table .labels {
+  white-space: nowrap;
+}
+
+.products-sidebar-big-thumbnails .labels {
+  right: 0px;
+  top: 2px;
+}
+
+.products-table .labels li {
+  display: inline-block;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.products-sidebar-small-thumbnails .labels {
+  display: inline;
+  position: static;
+}
+
+.products-sidebar-small-thumbnails .labels li {
+  display: inline;
+}
+
+.products-sidebar-small-thumbnails .labels li div {
+  display: inline;
 }
 
 

@@ -38,7 +38,8 @@
 <tr IF="!valid">
     <td colspan="2">&nbsp;</td>
     <td class="error-message">
-      {t(#Invalid login or password#)} <a href="{buildURL(#recover_password#)}">{t(#Forgot password#)}?</a>
+      {t(#Invalid login or password#)}
+      <a href="{buildURL(#recover_password#)}">{t(#Forgot password#)}?</a>
     </td>
 </tr>
 
@@ -52,7 +53,8 @@
 </table>
 
 <div class="register-message">
-  {t(#If you do not have an account, you can easily#)} <a href="{buildURL(#profile#,##,_ARRAY_(#mode#^#register#))}">{t(#register here#)}</a>
+  {t(#If you do not have an account, you can easily#)}
+  <a href="{buildURL(#profile#,##,_ARRAY_(#mode#^#register#))}">{t(#register here#)}</a>
 </div>
 
 <widget name="login_form" end />

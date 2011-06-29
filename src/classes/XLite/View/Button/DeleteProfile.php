@@ -50,7 +50,7 @@ class DeleteProfile extends \XLite\View\Button\Regular
         $jsCode = $this->getDefaultJSCode();
 
         // Message to show admin user. the profile will be removed.
-        $message = $this->t('Are you sure you want to delete the selected user?');
+        $message = static::t('Are you sure you want to delete the selected user?');
 
         // We show confirmation message and remove user profile after admin confirmation only
         return 'if(confirm(\'' . $message . '\')){' . $jsCode . '}';

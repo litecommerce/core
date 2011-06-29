@@ -11,17 +11,17 @@
  * @ListChild (list="#minicart.vertical.children", weight="10")
  *}
 <div class="cart-items" IF="cart.isEmpty()">
-  <p class="cart.isEmpty()">Cart is empty</p>
+  <p class="cart.isEmpty()">{t(#Cart is empty#)}</p>
 </div>
 
 <div class="cart-items" IF="!cart.isEmpty()">
-  <p><span class="toggle-button"><a href="{buildURL(#cart#)}" onClick="javascript:xlite_minicart_toggle('lc-minicart-{displayMode}'); return false;">{cart.getItemsCount()} item(s)</a> </span></p>
+  <p><span class="toggle-button"><a href="{buildURL(#cart#)}" onClick="javascript:xlite_minicart_toggle('lc-minicart-{displayMode}'); return false;">{t(#X item(s)#,_ARRAY_(#count#^cart.getItemsCount()))}</a></span></p>
   <div class="items-list">
     <ul>
       <li FOREACH="getItemsList(),item">
         {displayViewListContent(#minicart.vertical.item#,_ARRAY_(#item#^item))}
       </li>
     </ul>
-    <p IF="isTruncated()" class="other-items"><a href="{buildURL(#cart#)}">Other items</a></p>
+    <p IF="isTruncated()" class="other-items"><a href="{buildURL(#cart#)}">{t(#Other items#)}</a></p>
   </div>
 </div>

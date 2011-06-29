@@ -13,46 +13,44 @@
 jQuery().ready(
   function() {
 
-    var processRecommendedSizes = function(form) {
-      var widgetType = jQuery('select', form).filter(
-        function() {
-          return -1 != this.name.search(/lc_widget.lc_block_XLite_.+_ItemsList_Product_Customer_.+..widgetType./);
+    var processRecommendedSizes = function(displayMode) {
+      var widgetType = jQuery('select[name="' + displayMode.name.replace(/displayMode/, 'widgetType') + '"]', displayMode.form);
+      displayMode = jQuery(displayMode);
+
+      if (widgetType.length && displayMode.length) {
+        var key = widgetType.get(0).value + '.' + displayMode.get(0).value;
+        widgetType = widgetType.get(0);
+        var wkey = widgetType.name.replace(/^lc_widget\[(.+)\]\[.+$/, '$1');
+
+        var width = jQuery('input[name="' + widgetType.name.replace(/widgetType/, 'iconWidth') + '"]', widgetType.form);
+        var descWidth = width.parents('.form-item').find('.description').eq(0);
+        var height = jQuery('input[name="' + widgetType.name.replace(/widgetType/, 'iconHeight') + '"]', widgetType.form);
+        var descHeight = height.parents('.form-item').find('.description').eq(0);
+
+        if (
+          typeof(window.lcConnectorRecommendedIconSizes[wkey]) != 'undefined'
+          && typeof(lcConnectorRecommendedIconSizes[wkey][key]) != 'undefined'
+        ) {
+          var size = lcConnectorRecommendedIconSizes[wkey][key];
+
+          descWidth.show().html(lcConnectorRecommendedLabel.replace(/!size/, size[0]));
+          descHeight.show().html(lcConnectorRecommendedLabel.replace(/!size/, size[1]));
+          width.removeAttr('disabled', 'disabled');
+          height.removeAttr('disabled', 'disabled');
+
+        } else {
+          descWidth.hide();
+          descHeight.hide();
+          width.attr('disabled', 'disabled');
+          height.attr('disabled', 'disabled');
         }
-      );
-      var displayMode = jQuery('select', form).filter(
-        function() {
-          return -1 != this.name.search(/lc_widget.lc_block_XLite_.+_ItemsList_Product_Customer_.+..displayMode./);
-        }
-      );
-      var key = widgetType.get(0).value + '.' + displayMode.get(0).value;
-      widgetType = widgetType.get(0);
-
-      var width = jQuery('input[name="' + widgetType.name.replace(/widgetType/, 'iconWidth') + '"]', this.form);
-      var descWidth = width.parents('.form-item').find('.description').eq(0);
-      var height = jQuery('input[name="' + widgetType.name.replace(/widgetType/, 'iconHeight') + '"]', this.form);
-      var descHeight = height.parents('.form-item').find('.description').eq(0);
-
-      if (typeof(window.lcConnectorRecommendedIconSizes) != 'undefined' && typeof(lcConnectorRecommendedIconSizes[key]) != 'undefined') {
-        var size = lcConnectorRecommendedIconSizes[key];
-
-        descWidth.show().html(lcConnectorRecommendedLabel.replace(/!size/, size[0]));
-        descHeight.show().html(lcConnectorRecommendedLabel.replace(/!size/, size[1]));
-        width.removeAttr('disabled', 'disabled');
-        height.removeAttr('disabled', 'disabled');
-
-      } else {
-        descWidth.hide();
-        descHeight.hide();
-        width.attr('disabled', 'disabled');
-        height.attr('disabled', 'disabled');
       }
-
     }
 
     jQuery('form select').filter(
 
       function() {
-        return -1 != this.name.search(/lc_widget.lc_block_XLite_.+_ItemsList_Product_Customer_.+..widgetType./);
+        return -1 != this.name.search(/lc_widget.lc_block_XLite_.+\[widgetType\]/);
       }
 
     ).change(
@@ -69,41 +67,47 @@ jQuery().ready(
           ).get(0);
         }
 
-        // Remove old options
-        while (0 < this.displayMode.options.length) {
-          this.displayMode.options[0] = null;
-        }
+        if (this.displayMode) {
 
-        // Add new options
-        var displayMode = this.displayMode;
-        jQuery.each(
-          lcConnectorBlocks[this.options[this.selectedIndex].value],
-          function(k, v) {
-            displayMode.options[displayMode.options.length] = new Option(v, k);
+          var key = this.name.replace(/^lc_widget\[(.+)\]\[.+$/, '$1');
+          if (typeof(lcConnectorBlocks[key]) != 'undefined') {
+
+            // Remove old options
+            while (0 < this.displayMode.options.length) {
+              this.displayMode.options[0] = null;
+            }
+
+            // Add new options
+            var displayMode = this.displayMode;
+            jQuery.each(
+              lcConnectorBlocks[key][this.options[this.selectedIndex].value],
+              function(k, v) {
+                displayMode.options[displayMode.options.length] = new Option(v, k);
+              }
+            );
+
+            jQuery(displayMode).change();
           }
-        );
 
-        jQuery(displayMode).change();
+          // Show / hide some settings
+          var isShow = 'sidebar' != this.options[this.selectedIndex].value;
+          var elements = [
+            jQuery('input[name="' + this.name.replace(/widgetType/, 'showDisplayModeSelector') + '"]', this.form).parents('.form-item').eq(0),
+            jQuery('select[name="' + this.name.replace(/widgetType/, 'gridColumns') + '"]', this.form).parents('.form-item').eq(0),
+            jQuery('input[name="' + this.name.replace(/widgetType/, 'showItemsPerPageSelector') + '"]', this.form).parents('.form-item').eq(0),
+            jQuery('input[name="' + this.name.replace(/widgetType/, 'showSortBySelector') + '"]', this.form).parents('.form-item').eq(0)
+          ];
 
-        // Show / hide some settings
-        var isShow = 'sidebar' != this.options[this.selectedIndex].value;
-        var elements = [
-          jQuery('input[name="' + this.name.replace(/widgetType/, 'showDisplayModeSelector') + '"]', this.form).parents('.form-item').eq(0),
-          jQuery('select[name="' + this.name.replace(/widgetType/, 'gridColumns') + '"]', this.form).parents('.form-item').eq(0),
-          jQuery('input[name="' + this.name.replace(/widgetType/, 'showItemsPerPageSelector') + '"]', this.form).parents('.form-item').eq(0),
-          jQuery('input[name="' + this.name.replace(/widgetType/, 'showSortBySelector') + '"]', this.form).parents('.form-item').eq(0)
-        ];
+          for (var i = 0; i < elements.length; i++) {
+            var elm = elements[i];
+            if (isShow) {
+              elm.show();
 
-        for (var i = 0; i < elements.length; i++) {
-          var elm = elements[i];
-          if (isShow) {
-            elm.show();
-
-          } else {
-            elm.hide();
+            } else {
+              elm.hide();
+            }
           }
         }
-
       }
 
     );
@@ -111,7 +115,7 @@ jQuery().ready(
     jQuery('form select').filter(
 
       function() {
-        return -1 != this.name.search(/lc_widget.lc_block_XLite_.+_ItemsList_Product_Customer_.+..displayMode./);
+        return -1 != this.name.search(/lc_widget.lc_block_XLite_.+\[displayMode\]/);
       }
 
     ).change(
@@ -120,26 +124,24 @@ jQuery().ready(
 
         var name = this.name.replace(/displayMode/, 'gridColumns');
 
-        var select = jQuery('select', this.form).filter(
-          function() {
-            return this.name == name;
+        var select = jQuery('select[name="' + name + '"]', this.form).eq(0);
+
+        if (select.length) {
+          if ('grid' == this.options[this.selectedIndex].value) {
+            select.removeAttr('disabled');
+
+          } else {
+            select.attr('disabled', 'disabled');
           }
-        ).eq(0);
-
-        if ('grid' == this.options[this.selectedIndex].value) {
-          select.removeAttr('disabled');
-
-        } else {
-          select.attr('disabled', 'disabled');
         }
 
-        processRecommendedSizes(this.form);
+        processRecommendedSizes(this);
       }
     );
 
     jQuery('form select').filter(
       function() {
-        return -1 != this.name.search(/lc_widget.lc_block_XLite_.+_ItemsList_Product_Customer_.+..widgetType./);
+        return -1 != this.name.search(/lc_widget.lc_block_XLite_.+\[widgetType\]/);
       }
     ).change();
   }

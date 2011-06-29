@@ -80,19 +80,19 @@ class AdminMain extends \XLite\View\Model\Profile\AdminMain implements \XLite\Ba
 
             case 'access_level':
                 if (\XLite\Core\Auth::getInstance()->getCustomerAccessLevel() == $value) {
-                    $value = $this->t('Customer');
+                    $value = static::t('Customer');
 
                 } elseif (\XLite\Core\Auth::getInstance()->getAdminAccessLevel() == $value) {
-                    $value = $this->t('Administrator');
+                    $value = static::t('Administrator');
 
                 } else {
-                    $value = $this->t('Unknown');
+                    $value = static::t('Unknown');
                 }
 
                 break;
 
             case 'status':
-                $value = 'E' === $value ? $this->t('Enabled') : $this->t('Disabled');
+                $value = 'E' === $value ? static::t('Enabled') : static::t('Disabled');
                 break;
 
             default:

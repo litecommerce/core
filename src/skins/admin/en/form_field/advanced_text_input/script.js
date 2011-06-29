@@ -13,10 +13,11 @@
 function AdvancedInputHandler()
 {
   // block initialization
-  this.block = jQuery('div.advanced-input-text');
+  this.block = jQuery(this.pattern);
 }
 
 AdvancedInputHandler.prototype.block = null;
+AdvancedInputHandler.prototype.pattern = 'div.advanced-input-text';
 
 /**
  * Main changing actions method. Widget is prepared and actions are added to it.

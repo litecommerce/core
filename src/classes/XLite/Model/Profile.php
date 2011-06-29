@@ -457,8 +457,7 @@ class Profile extends \XLite\Model\AEntity
         }
 
         if (isset($sameProfile)) {
-
-            \XLite\Core\TopMessage::addError('Specified e-mail address is already used by other user.');
+            $this->addErrorEmailExists();
             $result = false;
 
         } else {
@@ -645,28 +644,14 @@ class Profile extends \XLite\Model\AEntity
         }
 
         // Assign referer value
-        if (empty($this->referer) && isset($_SERVER['HTTP_REFERER'])) {
+        if (empty($this->referer)) {
+            if (\XLite\Core\Auth::getInstance()->isAdmin()) {
+                $currentlyLoggedInProfile = \XLite\Core\Auth::getInstance()->getProfile();
+                $this->setReferer(sprintf('Created by administrator (%s)', $currentlyLoggedInProfile->getLogin()));
 
-            // TODO: move setting up cookie to the up level of application (e.g. session start method)
-            if (!isset($_COOKIE['LCReferrerCookie'])) {
-
-                $referer = $_SERVER['HTTP_REFERER'];
-
-                setcookie(
-                    'LCReferrerCookie',
-                    $referer,
-                    time() + 3600 * 24 * 180,
-                    '/',
-                    \XLite::getInstance()->getOptions(
-                        array('host_details', 'http_host')
-                    )
-                );
-
-            } else {
-                $referer = $_COOKIE['LCReferrerCookie'];
+            } elseif (isset($_COOKIE[\XLite\Core\Session::LC_REFERER_COOKIE_NAME])) {
+                $this->setReferer($_COOKIE[\XLite\Core\Session::LC_REFERER_COOKIE_NAME]);
             }
-
-            $this->setReferer($referer);
         }
 
         // Assign status 'Enabled' if not defined
@@ -701,5 +686,17 @@ class Profile extends \XLite\Model\AEntity
         }
 
         return $result;
+    }
+
+    /**
+     * Add error top message 'Email already exists...'
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addErrorEmailExists()
+    {
+        \XLite\Core\TopMessage::addError('Specified e-mail address is already used by other user.');
     }
 }

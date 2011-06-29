@@ -482,4 +482,56 @@ class Converter extends \XLite\Base\Singleton
 
         return $size . ' ' . ($suffix ? static::t($suffix) : '');
     }
+
+    // {{{ Time
+
+    /**
+     * Convert user time to server time
+     * 
+     * @param integer $time User time
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function convertTimeToServer($time)
+    {
+        $server = new \DateTime();
+        $server = $server->getTimezone()->getOffset($server);
+
+        $user = new \DateTime();
+        $timeZone = \XLite\Core\Config::getInstance()->General->time_zone ?: $user->getTimezone()->getName();
+        $user->setTimezone(new \DateTimeZone($timeZone));
+        $user = $user->getTimezone()->getOffset($user);
+
+        $offset = $server - $user;
+
+        return $time + $offset;
+    }
+
+    /**
+     * Convert server time to user time
+     * 
+     * @param integer $time Server time
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function convertTimeToUser($time)
+    {
+        $server = new \DateTime();
+        $server = $server->getTimezone()->getOffset($server);
+
+        $user = new \DateTime();
+        $timeZone = \XLite\Core\Config::getInstance()->General->time_zone ?: $user->getTimezone()->getName();
+        $user->setTimezone(new \DateTimezone($timeZone));
+        $user = $user->getTimezone()->getOffset($user);
+
+        $offset = $server - $user;
+
+        return $time - $offset;
+    }
+
+    // }}}
 }

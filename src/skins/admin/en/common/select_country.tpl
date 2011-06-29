@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 <select name="{field}" onchange="{onchange}" id="{fieldId}">
-   <option value="">Select one..</option>
+   <option value="">{t(#Select one#)}..</option>
    <option FOREACH="getCountries(),v" value="{v.code:r}" selected="{v.code=country}">{v.country:h}</option>
 </select>
