@@ -524,13 +524,8 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             'check address box'
         );
 
-        $this->assertElementPresent(
-            "//div[@class='box']"
-            . "/div[@class='estimator']"
-            . "/ul"
-            . "/li[contains(text(),'United States, CA, 10001')]",
-            'check address'
-        );
+        $html = $this->getJSExpression('jQuery(".box .estimator ul li:eq(1)").html()');
+        $this->assertTrue((bool)preg_match('/United States, CA, 10001/Ss', $html), 'check address');
 
         $this->assertElementPresent(
             "//div[@class='box']"

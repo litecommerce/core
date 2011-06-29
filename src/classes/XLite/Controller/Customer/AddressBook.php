@@ -54,7 +54,7 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return \XLite\Core\Request::getInstance()->widget ? $this->t('Address details') : '';
+        return \XLite\Core\Request::getInstance()->widget ? static::t('Address details') : '';
     }
 
     /**
@@ -150,7 +150,7 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode($this->t('My account'));
+        $this->addLocationNode(static::t('My account'));
     }
 
     /**
@@ -193,7 +193,7 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
             \XLite\Core\Database::getEM()->flush();
 
             \XLite\Core\TopMessage::addInfo(
-                $this->t('Address has been deleted')
+                static::t('Address has been deleted')
             );
         }
     }

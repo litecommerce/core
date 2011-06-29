@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 {* TODO: REMOVE? we are using items_list/products/* templates instead*}
-<div class="{getListTitleClass()}">{getCount()} results found</div>
+<div class="{getListTitleClass()}">{t(#X results found#,_ARRAY_(#count#^getCount()))}</div>
 
 <widget template="products_list/body.tpl" />

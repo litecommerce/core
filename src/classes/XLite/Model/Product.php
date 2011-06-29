@@ -35,15 +35,16 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Product")
  * @Table  (name="products",
- *          indexes={
- *              @Index (name="price", columns={"price"}),
- *              @Index (name="sku", columns={"sku"}),
- *              @Index (name="enabled", columns={"enabled"}),
- *              @Index (name="weight", columns={"weight"}),
- *              @Index (name="free_shipping", columns={"free_shipping"}),
- *              @Index (name="clean_url", columns={"clean_url"})
- *          }
+ *      indexes={
+ *          @Index (name="price", columns={"price"}),
+ *          @Index (name="sku", columns={"sku"}),
+ *          @Index (name="enabled", columns={"enabled"}),
+ *          @Index (name="weight", columns={"weight"}),
+ *          @Index (name="free_shipping", columns={"free_shipping"}),
+ *          @Index (name="clean_url", columns={"clean_url"})
+ *      }
  * )
+ * @HasLifecycleCallbacks
  */
 class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrderItem
 {
@@ -147,6 +148,28 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @Column (type="text")
      */
     protected $javascript = '';
+
+    /**
+     * Arrival date (UNIX timestamp)
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $arrivalDate = 0;
+
+    /**
+     * Creation date (UNIX timestamp)
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $date = 0;
 
 
     /**
@@ -323,7 +346,15 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function isAvailable()
     {
-        return \XLite::isAdminZone() ?: (bool) $this->getEnabled();
+        $result = true;
+
+        if (!\XLite::isAdminZone()) {
+            $result = $this->getEnabled()
+                && (!$this->getArrivalDate() || time() < $this->getArrivalDate())
+                && !$this->getInventory()->isOutOfStock();
+        }
+
+        return $result;
     }
 
     /**
@@ -455,7 +486,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function getInventory()
     {
-        return is_null($this->inventory)
+        return !isset($this->inventory)
             ? new \XLite\Model\Inventory()
             : $this->inventory;
     }
@@ -512,6 +543,75 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
         return $this->getPrice();
     }
 
+    /**
+     * Get arrival date 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getArrivalDate()
+    {
+        if ($this->getId()) {
+            $date = $this->arrivalDate;
+
+        } elseif (!$this->arrivalDate) {
+            $date = time();
+
+        } else {
+            $date = $this->arrivalDate;
+        }
+
+        return \XLite\Core\Converter::convertTimeToUser($date);
+    }
+
+    /**
+     * Set arrival date 
+     * 
+     * @param integer $date Arrival date
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setArrivalDate($date)
+    {
+        $this->arrivalDate = \XLite\Core\Converter::convertTimeToServer(
+            mktime(0, 0, 0, date('m', $date), date('d', $date), date('Y', $date))
+        );
+    }
+
+    /**
+     * Get labels 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getLabels()
+    {
+        return array();
+    }
+
+    /**
+     * Prepare creation date 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     *
+     * @PrePersist
+     */
+    public function prepareDate()
+    {
+        if (!$this->getDate()) {
+            $this->setDate(time());
+        }
+
+        if (!$this->getArrivalDate()) {
+            $this->setArrivalDate(time());
+        }
+    }
 
     /**
      * Return certain Product <--> Category association

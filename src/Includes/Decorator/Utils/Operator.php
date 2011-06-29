@@ -110,7 +110,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
             if ($class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path)) {
 
                 // File contains a class declaration: add node (descriptor) to the index
-                $index[$class] = new \Includes\Decorator\DataStructure\Graph\Classes($class);
+                $index[$class] = new \Includes\Decorator\DataStructure\Graph\Classes($class, $path);
             }
         }
 
@@ -236,7 +236,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
             }
 
             // Special top-level node: stub class with empty body
-            $topNode = new \Includes\Decorator\DataStructure\Graph\Classes($node->getClass());
+            $topNode = new \Includes\Decorator\DataStructure\Graph\Classes($node->getClass(), $node->getFile());
             $topNode->setTopLevelNodeFlag();
 
             // Add this stub node as a child to the last decorator in the chain

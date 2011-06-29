@@ -57,7 +57,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getModuleName()
     {
-        return 'Quantum';
+        return 'QuantumGateway';
     }
 
     /**
@@ -69,7 +69,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '0';
+        return '1';
     }
 
     /**
@@ -81,7 +81,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'QuantumGateway integration (QGWdatabase Engine API)';
+        return 'Enables taking credit card payments for your online store via QuantumGateway (QGWdatabase Engine API).';
     }
 
     /**

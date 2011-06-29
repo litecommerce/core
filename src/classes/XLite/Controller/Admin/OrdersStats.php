@@ -199,7 +199,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      */
     protected function getLocation()
     {
-        return $this->t('Order statistics');
+        return static::t('Order statistics');
     }
 
     /**
@@ -213,7 +213,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode($this->t('Statistics'), $this->buildURL('orders_stats'));
+        $this->addLocationNode(static::t('Statistics'), $this->buildURL('orders_stats'));
     }
 
     /**

@@ -59,8 +59,8 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     public function getTitle()
     {
         return $this->getCart()->isEmpty()
-            ? $this->t('Your shopping bag is empty')
-            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countQuantity()));
+            ? static::t('Your shopping bag is empty')
+            : static::t('Your shopping bag - X items', array('count' => $this->getCart()->countQuantity()));
     }
 
     /**
@@ -134,7 +134,9 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     protected function getProduct()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
+        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
+
+        return ($product && $product->isAvailable()) ? $product : null;
     }
 
     /**

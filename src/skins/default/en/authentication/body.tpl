@@ -9,15 +9,15 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<table border="0" cellpadding="0" cellspacing="0" width="100%">
-<tr>
+<table cellpadding="0" cellspacing="0" width="100%">
+  <tr>
     <td>&nbsp;&nbsp;&nbsp;</td>
     <td class="VertMenuItems" valign="top">
-        {auth.profile.login}<br>
-        Logged in!<br>
-        <br>
-        <a href="cart.php?target=login&amp;action=logoff" class="SidebarItems"><img src="images/go.gif" width="13" height="13" border="0" align="middle" alt=""> Logoff</a>
-        <br>
+      {auth.profile.login}<br />
+      {t(#Logged in!#)}<br />
+      <br />
+      <a href="cart.php?target=login&amp;action=logoff" class="SidebarItems"><img src="images/go.gif" width="13" height="13" border="0" align="middle" alt="">{t(#Logoff#)}</a>
+      <br />
     </td>
-</tr>
+  </tr>
 </table>

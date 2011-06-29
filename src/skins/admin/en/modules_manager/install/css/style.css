@@ -10,6 +10,10 @@
  * @since     1.0.0
  */
 
+.top-controls button {
+  margin: 0px;
+}
+
 div.addons-search-panel input {
   padding: 4px 7px;
   vertical-align: middle;
@@ -30,6 +34,15 @@ div.addons-search-panel input.default-value {
 
 div.addons-search-panel input.search-substring {
   width: 390px;
+}
+
+div.addons-search-panel .clear {
+  clear: none;
+  float: left;
+}
+
+div.addons-search-panel .addon-search {
+  float: left;
 }
 
 div.tags {
@@ -62,7 +75,7 @@ div.top-controls div.addons-search-panel {
 
 div.top-controls div.action-buttons {
   float: left;
-  margin-left: 10px;
+  margin-left: 30px;
 }
 
 .modules-list .price,

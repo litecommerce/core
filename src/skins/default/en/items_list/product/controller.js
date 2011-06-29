@@ -41,6 +41,7 @@ function ProductsListController(base)
             jQuery(productPattern, base)
               .addClass('out-of-stock')
               .draggable('disable');
+
           } else {
             jQuery(productPattern, base)
               .removeClass('out-of-stock')
@@ -173,16 +174,15 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
       start: function(event, ui)
       {
         cartTray.data('isProductDrag', true);
-        cartTray.not('.cart-tray-adding').not('.cart-tray-added')
-          .addClass('cart-tray-active')
-          .addClass('cart-tray-moving')
-          .attr('style', '');
+        cartTray.not('.cart-tray-adding, .cart-tray-added')
+          .addClass('cart-tray-active cart-tray-moving')
+          .attr('style', 'display:block');
       }, // start()
 
       stop: function(event, ui)
       {
         cartTray.data('isProductDrag', false);
-        cartTray.not('.cart-tray-adding').not('.cart-tray-added')
+        cartTray.not('.cart-tray-adding, .cart-tray-added')
           .fadeOut(
             cartTrayFadeOutDuration,
             function() {
@@ -191,9 +191,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
               } else {
                 jQuery(this)
-                  .removeClass('cart-tray-active')
-                  .removeClass('cart-tray-moving')
-                  .removeClass('cart-tray-added');
+                  .removeClass('cart-tray-active cart-tray-moving cart-tray-added');
               }
             }
           );
@@ -218,6 +216,10 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
     var draggableDisablePattern = '.products-grid .product.out-of-stock, .products-list .product.out-of-stock';
     jQuery(draggableDisablePattern, this.base).draggable('disable');
 
+    // Disable not-available product to drag
+    draggableDisablePattern = '.products-grid .product.not-available, .products-list .product.not-available';
+    jQuery(draggableDisablePattern, this.base).draggable('disable');
+
     cartTray.droppable(
     {
       tolerance: 'intersect',
@@ -237,8 +239,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
         var pid = core.getValueFromClass(ui.draggable, 'productid');
         if (pid) {
           cartTray
-            .removeClass('cart-tray-moving')
-            .removeClass('cart-tray-added')
+            .removeClass('cart-tray-moving cart-tray-added')
             .addClass('cart-tray-adding')
             .find('.tray-area')
             .removeClass('droppable');
@@ -291,8 +292,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
                               } else {
                                 jQuery(this)
-                                .removeClass('cart-tray-active')
-                                .removeClass('cart-tray-added');
+                                .removeClass('cart-tray-active cart-tray-added');
                               }
                             }
                           );
@@ -303,8 +303,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
                 } else {
                   cartTray
-                    .removeClass('cart-tray-adding')
-                    .removeClass('cart-tray-active');
+                    .removeClass('cart-tray-adding cart-tray-active');
 
                 }
               } // if (0 == countRequests)

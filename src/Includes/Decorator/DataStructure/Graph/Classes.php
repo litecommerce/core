@@ -47,6 +47,15 @@ class Classes extends \Includes\DataStructure\Graph
     protected $reflection;
 
     /**
+     * File path
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $file;
+
+    /**
      * Flag for so called "low-level" nodes
      *
      * @var    boolean
@@ -77,7 +86,24 @@ class Classes extends \Includes\DataStructure\Graph
     protected $isChanged;
 
 
-    // ------------------------------ Common getters -
+    // ------------------------------ Constructor and common getters -
+
+    /**
+     * Constructor
+     *
+     * @param string $key  Node unique key OPTIONAL
+     * @param string $file File name OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __construct($key = self::ROOT_NODE_KEY, $file = null)
+    {
+        parent::__construct($key);
+
+        $this->file = $file;
+    }
 
     /**
      * Alias
@@ -127,7 +153,7 @@ class Classes extends \Includes\DataStructure\Graph
      */
     public function getParentClass()
     {
-        return ($class = $this->getReflection()->getParentClass()) ? $this->prepareClassName($class->getName()) : null;
+        return $this->getReflection()->parentClass;
     }
 
     /**
@@ -140,7 +166,7 @@ class Classes extends \Includes\DataStructure\Graph
      */
     public function getInterfaces()
     {
-        return array_map(array($this, 'prepareClassName'), (array) $this->getReflection()->getInterfaceNames());
+        return $this->getReflection()->interfaces;
     }
 
     /**
@@ -155,7 +181,7 @@ class Classes extends \Includes\DataStructure\Graph
      */
     public function isImplements($interface)
     {
-        return $this->getReflection()->implementsInterface($interface);
+        return in_array($this->prepareClassName($interface), $this->getInterfaces());
     }
 
     /**
@@ -251,6 +277,18 @@ class Classes extends \Includes\DataStructure\Graph
     // ------------------------------ Methods to get paths and source code -
 
     /**
+     * Name of the origin class file 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
      * Transform class name into the relative path
      *
      * @return string
@@ -292,12 +330,16 @@ class Classes extends \Includes\DataStructure\Graph
      */
     protected function getActualSource(self $parent = null)
     {
+        $this->getReflection()->docComment = $this->isLowLevelNode() 
+            ? '/**' . PHP_EOL . ' * MOVED' . PHP_EOL . ' */' 
+            : null;
+
         return \Includes\Decorator\Utils\Tokenizer::getSourceCode(
-            $this->getReflection()->getFileName(),
+            $this->getFile(),
             $this->getActualNamespace(),
             $this->getClassBaseName(),
             $this->getActualParentClassName($parent),
-            $this->isLowLevelNode() ? '/**' . PHP_EOL . ' * MOVED' . PHP_EOL . ' */' : null
+            $this->getReflection()->docComment
         );
     }
 
@@ -315,10 +357,10 @@ class Classes extends \Includes\DataStructure\Graph
     {
         return '<?php' . PHP_EOL . PHP_EOL
             . (($namespace = $this->getActualNamespace()) ? ('namespace ' . $namespace . ';' . PHP_EOL . PHP_EOL) : '')
-            . (($comment = $this->getReflection()->getDocComment()) ? ($comment . PHP_EOL) : '')
-            . ($this->getReflection()->isFinal() ? 'final '    : '')
-            . ($this->getReflection()->isAbstract() ? 'abstract ' : '')
-            . ($this->getReflection()->isInterface() ? 'interface' : 'class') . ' ' . $this->getClassBaseName()
+            . (($comment = $this->getReflection()->docComment) ? ($comment . PHP_EOL) : '')
+            . ($this->getReflection()->isFinal ? 'final '    : '')
+            . ($this->getReflection()->isAbstract ? 'abstract ' : '')
+            . ($this->getReflection()->isInterface ? 'interface' : 'class') . ' ' . $this->getClassBaseName()
             . (($class = $this->getActualParentClassName($parent)) ? (' extends ' . $class) : '')
             . (($interfaces = $this->getInterfaces()) ? (' implements \\' . implode(', \\', $interfaces)) : '')
             . PHP_EOL . '{' . PHP_EOL . '}';
@@ -334,7 +376,7 @@ class Classes extends \Includes\DataStructure\Graph
      */
     protected function getRegularSource()
     {
-        return \Includes\Utils\FileManager::read($this->getReflection()->getFileName());
+        return \Includes\Utils\FileManager::read($this->getFile());
     }
 
     /**
@@ -426,7 +468,7 @@ class Classes extends \Includes\DataStructure\Graph
     public function getTags()
     {
         if (!isset($this->tags)) {
-            $this->tags = \Includes\Decorator\Utils\Operator::getTags($this->getReflection()->getDocComment());
+            $this->tags = \Includes\Decorator\Utils\Operator::getTags($this->getReflection()->docComment);
         }
 
         return $this->tags;
@@ -446,7 +488,43 @@ class Classes extends \Includes\DataStructure\Graph
     public function getReflection()
     {
         if (!isset($this->reflection)) {
-            $this->reflection = new \ReflectionClass($this->getClass());
+            $this->reflection = new \StdClass();
+            $util = '\Includes\Decorator\Utils\Tokenizer';
+
+            if ($util::getDecoratorFlag()) {
+                $util = '\Includes\Decorator\Utils\Tokenizer';
+
+                $this->reflection->parentClass = $util::getParentClassName($this->getFile());
+                $this->reflection->interfaces  = $util::getInterfaces($this->getFile());
+                $this->reflection->docComment  = $util::getDockBlock($this->getFile());
+                $this->reflection->isFinal     = $util::getFlag($this->getFile(), T_FINAL);
+                $this->reflection->isAbstract  = $util::getFlag($this->getFile(), T_ABSTRACT);
+                $this->reflection->isInterface = (bool) $util::getInterfaceName($this->getFile());
+
+                // :KLUDGE: the "StaticRoutines" plugin support
+                $this->reflection->hasStaticConstructor = $util::hasMethod(
+                    $this->getFile(),
+                    \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD
+                );
+
+            } else {
+                $reflection = new \ReflectionClass($this->getClass());
+
+                $this->reflection->parentClass = ($class = $reflection->getParentClass()) ? $class->getName() : null;
+                $this->reflection->interfaces  = (array) $reflection->getInterfaceNames();
+                $this->reflection->docComment  = $reflection->getDocComment();
+                $this->reflection->isFinal     = $reflection->isFinal();
+                $this->reflection->isAbstract  = $reflection->isAbstract();
+                $this->reflection->isInterface = $reflection->isInterface();
+
+                // :KLUDGE: the "StaticRoutines" plugin support
+                $this->reflection->hasStaticConstructor = $reflection->hasMethod(
+                    \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD
+                );
+            }
+
+            $this->reflection->parentClass = $this->prepareClassName($this->reflection->parentClass);
+            $this->reflection->interfaces  = array_map(array($this, 'prepareClassName'), $this->reflection->interfaces);
         }
 
         return $this->reflection;

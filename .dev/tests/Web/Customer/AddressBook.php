@@ -120,7 +120,9 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
 
         $this->clickAndWait(self::SAVE_BUTTON);
 
-        $this->assertTrue('street-test5' == $this->getJSExpression("jQuery('.address-text-street .address-text-value').eq(0).text().trim()"), 'No update');
+        $street = $this->getJSExpression("jQuery('.address-text-street .address-text-value').eq(0).text().trim()");
+
+        $this->assertTrue('street-test5' == $street, 'No update: ' . $street);
 
     }
 

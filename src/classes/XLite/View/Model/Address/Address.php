@@ -325,7 +325,7 @@ class Address extends \XLite\View\Model\AModel
      */
     protected function getSubmitButtonLabel()
     {
-        return $this->t('Save changes');
+        return static::t('Save changes');
     }
 
     /**

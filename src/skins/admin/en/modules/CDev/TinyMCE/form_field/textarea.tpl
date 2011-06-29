@@ -12,7 +12,7 @@
 
 <ul class="tinymce-widget">
   <li class="textarea">
-    <textarea class="tinymce" {getAttributesCode():h}>{getValue():h}</textarea>
+    <textarea class="tinymce" {getAttributesCode():h}>{getValue()}</textarea>
   </li>
   <li class="button">
     <widget class="\XLite\View\Button\SwitchButton" first="makeTinyAdvanced" second="makeTinySimple" />

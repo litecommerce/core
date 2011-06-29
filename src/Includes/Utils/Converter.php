@@ -45,7 +45,7 @@ abstract class Converter extends \Includes\Utils\AUtils
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected static $byteMultipliers = array('', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+    protected static $byteMultipliers = array('b', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 
 
     /**
@@ -253,13 +253,14 @@ abstract class Converter extends \Includes\Utils\AUtils
     /**
      * Prepare human-readable output for file size
      *
-     * @param integer $size Size in bytes
+     * @param integer $size      Size in bytes
+     * @param string  $separator To return a string OPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function formatFileSize($size)
+    public static function formatFileSize($size, $separator = null)
     {
         $multiplier = 0;
 
@@ -274,11 +275,8 @@ abstract class Converter extends \Includes\Utils\AUtils
 
         // Do not display numbers after decimal point if size is in kilobytes.
         // When size is greater then display one number after decimal point.
-        $decimal = $multiplier > 1 ? 1 : 0;
+        $result = array(number_format($size, $multiplier > 1 ? 1 : 0), static::$byteMultipliers[$multiplier]);
 
-        return array(
-            number_format($size, $decimal),
-            static::$byteMultipliers[$multiplier],
-        );
+        return isset($separator) ? implode($separator, $result) : $result;
     }
 }

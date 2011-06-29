@@ -70,6 +70,24 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Get addresses array for working profile
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    public function getAddresses()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Address')
+            ->findBy(
+                array(
+                    'profile' => $this->getProfile()->getProfileId(),
+                )
+            );
+
+    }
+
+    /**
      * Get return URL
      *
      * @return string
@@ -180,7 +198,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->flush();
 
             \XLite\Core\TopMessage::addInfo(
-                $this->t('Address has been deleted')
+                static::t('Address has been deleted')
             );
         }
     }

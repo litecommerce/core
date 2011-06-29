@@ -133,7 +133,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return $this->t('Search orders');
+        return static::t('Search orders');
     }
 
     /**

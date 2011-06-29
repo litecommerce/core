@@ -41,10 +41,10 @@ abstract class ADecorator
     const STEP_FIRST  = 1;
     const STEP_SECOND = 2;
     const STEP_THIRD  = 3;
-    const STEP_FOUR   = 4;
-    const STEP_FIVE   = 5;
+    const STEP_FOURTH = 4;
+    const STEP_FIFTH  = 5;
 
-    const LAST_STEP   = 5;
+    const LAST_STEP   = self::STEP_FIFTH;
 
 
     /**
@@ -77,15 +77,24 @@ abstract class ADecorator
 
     /**
      * Return classes tree
-     *
+     * 
+     * @param boolean $create Flag OPTIONAL
+     *  
      * @return \Includes\Decorator\DataStructure\Graph\Classes
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getClassesTree()
+    public static function getClassesTree($create = true)
     {
-        if (!isset(static::$classesTree)) {
-            static::$classesTree = \Includes\Decorator\Utils\Operator::createClassesTree();
+        if (!isset(static::$classesTree) && $create) {
+
+            if (\Includes\Utils\FileManager::isFileReadable(static::getClassesHashPath())) {
+                $data = unserialize(\Includes\Utils\FileManager::read(static::getClassesHashPath()));
+                static::$classesTree = array_pop($data);
+
+            } else {
+                static::$classesTree = \Includes\Decorator\Utils\Operator::createClassesTree();
+            }
         }
 
         return static::$classesTree;
@@ -117,5 +126,17 @@ abstract class ADecorator
     public static function getClassesDir()
     {
         return (self::STEP_FIRST === static::$step) ? LC_DIR_CLASSES : LC_DIR_CACHE_CLASSES;
+    }
+
+    /**
+     * Return name of the file with the classes hash 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getClassesHashPath()
+    {
+        return LC_DIR_COMPILE . 'Classes.php';
     }
 }
