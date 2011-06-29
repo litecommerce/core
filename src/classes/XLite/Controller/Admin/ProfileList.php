@@ -44,25 +44,7 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Users';
-    }
-
-    /**
-     * Get search condition parameter by name
-     *
-     * @param string $paramName Parameter name
-     *
-     * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCondition($paramName)
-    {
-        $searchParams = $this->getConditions();
-
-        return isset($searchParams[$paramName])
-            ? $searchParams[$paramName]
-            : null;
+        return 'Search users';
     }
 
     /**
@@ -74,7 +56,7 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return $this->t('Users');
+        return 'Users';
     }
 
     /**
@@ -86,50 +68,6 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDelete()
     {
-
-    }
-
-    /**
-     * doActionSearch
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionSearch()
-    {
-        $profilesSearch = array();
-        $searchParams   = \XLite\View\ItemsList\Profile\Search::getSearchParams();
-
-        foreach ($searchParams as $modelParam => $requestParam) {
-
-           if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
-
-                $profilesSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
-            }
-        }
-
-        \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Profile\Search::getSessionCellName()} = $profilesSearch;
-
-        $this->setReturnURL($this->buildURL('profile_list', '', array('mode' => 'search')));
-    }
-
-    /**
-     * Get search conditions
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getConditions()
-    {
-        $searchParams = \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Profile\Search::getSessionCellName()};
-
-        if (!is_array($searchParams)) {
-
-            $searchParams = array();
-        }
-
-        return $searchParams;
+        // :TODO: check if it's really needed
     }
 }

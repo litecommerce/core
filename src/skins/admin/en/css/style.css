@@ -1181,6 +1181,10 @@ table.top-sellers th.title {
   margin-top: 7px;
 }
 
+.benchmark-summary .buttons button {
+  float: left;
+}
+
 .benchmark-summary .help {
   float: right;
   margin-top: 19px;
@@ -1386,4 +1390,32 @@ ul.summary-table .table-value,
 
 table.payment-methods {
   width: 600px;
+}
+
+table.settings-table td {
+  white-space: nowrap;
+}
+
+table.settings-table td * {
+  float: left;
+  vertical-align: middle;
+}
+
+table.settings-table td input[type=checkbox] {
+  margin: 5px 0px 0px 0px;
+}
+
+.tooltip-main {
+  float: left;
+}
+
+.tooltip-main .tooltip-caption {
+  cursor: help;
+}
+
+.tooltip-caption.help-icon {
+  margin: 0px 0px 0px 8px;
+  width: 23px;
+  height: 23px;
+  background: transparent url(../images/icon_help.png) no-repeat left top;
 }

@@ -9,6 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <ul class="subcategory-icons grid-list" IF="getSubcategories()">
   <li FOREACH="getSubcategories(),subcategory">
     <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}">

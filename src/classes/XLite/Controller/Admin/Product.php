@@ -525,4 +525,27 @@ class Product extends \XLite\Controller\Admin\AAdmin
         \XLite\Core\Database::getEM()->persist($inv);
         \XLite\Core\Database::getEM()->flush();
     }
+
+    /**
+     * Get posted data
+     *
+     * @param string $field Name of the field to retrieve OPTIONAL
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPostedData($field = null)
+    {
+        $value = parent::getPostedData($field);
+
+        if ('arrivalDate' == $field) {
+            $value = intval(strtotime($value)) ?: time();
+
+        } elseif (!isset($field) && isset($value['arrivalDate'])) {
+            $value['arrivalDate'] = intval(strtotime($value['arrivalDate'])) ?: time();
+        }
+
+        return $value;
+    }
 }

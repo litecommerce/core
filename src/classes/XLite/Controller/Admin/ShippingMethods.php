@@ -180,6 +180,6 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return $this->t('Shipping methods');
+        return static::t('Shipping methods');
     }
 }

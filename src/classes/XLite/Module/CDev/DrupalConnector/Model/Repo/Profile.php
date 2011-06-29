@@ -73,7 +73,8 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
         return $qb->update($this->_entityName, 'p')
             ->set('p.cms_name', $qb->expr()->literal(''))
             ->set('p.cms_profile_id', 0)
-            ->andWhere('p.cms_name = :cmsName AND p.cms_profile_id = :cmsProfileId')
+            ->andWhere('p.cms_name = :cmsName')
+            ->andWhere('p.cms_profile_id = :cmsProfileId')
             ->setParameter('cmsName', \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName())
             ->setParameter('cmsProfileId', $cmsProfileId);
     }
@@ -197,6 +198,46 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
             ->setParameter('cmsName', \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName());
 
         return $qb;
+    }
+
+    // }}}
+
+    // {{{ findAllProfilesArray
+
+    /**
+     * Returns an array of all profiles with order_id = NULL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function findAllProfilesArray()
+    {
+        return $this->defineAllProfilesArrayQuery()->getArrayResult();
+    }
+
+
+    /**
+     * Define query for findAllProfilesArray() method
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineAllProfilesArrayQuery()
+    {
+        $cnd = new \Doctrine\ORM\Query\Expr\Orx();
+        $cnd->add('p.cms_name = :cmsName');
+        $cnd->add('p.cms_name = \'\'');
+
+        return $this->createQueryBuilder()
+            ->select('p.profile_id')
+            ->addSelect('p.login')
+            ->addSelect('p.cms_profile_id')
+            ->addSelect('p.cms_name')
+            ->andWhere('p.order is null')
+            ->andWhere($cnd)
+            ->setParameter('cmsName', \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName());
     }
 
     // }}}

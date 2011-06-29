@@ -44,7 +44,7 @@ class Main extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return $this->t('Administrator panel');
+        return static::t('Administrator panel');
     }
 
     /**

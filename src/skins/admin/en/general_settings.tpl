@@ -20,9 +20,9 @@
       <tr>
         {if:!option.type=#separator#}
           {if:!option.type=#serialized#}
-            <td class="setting-name" width="50%">{option.option_name:h}: </td>
+            <td class="setting-name" width="30%">{option.option_name:h}: </td>
           {end:}
-          <td style="width:50%;">
+          <td>
 
             {if:option.type=#checkbox#}
               <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
@@ -156,9 +156,12 @@ function setUnitSymbol(symbol) {
 
             {displayViewListContent(#general_settings.general.parts#,_ARRAY_(#page#^page,#option#^option))}
 
+            <widget IF="option.optionComment" class="\XLite\View\Tooltip" text="{option.optionComment}" isImageTag=true className="help-icon" />
+
           </td>
+
         {else:}
-          <td colspan="2">
+          <td colspan="3">
             <h2>{option.option_name:h}</h2>
           </td>
         {end:}
@@ -169,11 +172,11 @@ function setUnitSymbol(symbol) {
 
     {if:!page=#Environment#}
         <tr>
-          <td colspan="2">&nbsp;</td>
+          <td colspan="3">&nbsp;</td>
         </tr>
         <tr>
           <td><widget class="\XLite\View\Button\Submit" label="Submit" /></td>
-          <td>&nbsp;</td>
+          <td colspan="2">&nbsp;</td>
         </tr>
     {end:}
   </table>

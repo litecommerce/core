@@ -38,24 +38,24 @@ class Profile extends \XLite\Model\Repo\ARepo
     /**
      * Allowable search params
      */
-
-    const SEARCH_PROFILE_ID      = 'profile_id';
-    const SEARCH_ORDER_ID        = 'order_id';
-    const SEARCH_REFERER         = 'referer';
-    const SEARCH_MEMBERSHIP      = 'membership';
-    const SEARCH_LANGUAGE        = 'language';
-    const SEARCH_PATTERN         = 'pattern';
-    const SEARCH_PHONE           = 'phone';
-    const SEARCH_COUNTRY         = 'country';
-    const SEARCH_STATE           = 'state';
-    const SEARCH_ADDRESS_PATTERN = 'address_pattern';
-    const SEARCH_USER_TYPE       = 'user_type';
-    const SEARCH_DATE_TYPE       = 'date_type';
-    const SEARCH_DATE_PERIOD     = 'date_period';
-    const SEARCH_START_DATE      = 'startDate';
-    const SEARCH_END_DATE        = 'endDate';
-    const SEARCH_ORDERBY         = 'order_by';
-    const SEARCH_LIMIT           = 'limit';
+    const SEARCH_PROFILE_ID     = 'profile_id';
+    const SEARCH_ORDER_ID       = 'order_id';
+    const SEARCH_REFERER        = 'referer';
+    const SEARCH_MEMBERSHIP     = 'membership';
+    const SEARCH_LANGUAGE       = 'language';
+    const SEARCH_PATTERN        = 'pattern';
+    const SEARCH_PHONE          = 'phone';
+    const SEARCH_COUNTRY        = 'country';
+    const SEARCH_STATE          = 'state';
+    const SEARCH_CUSTOM_STATE   = 'custom_state';
+    const SEARCH_ADDRESS        = 'address';
+    const SEARCH_USER_TYPE      = 'user_type';
+    const SEARCH_DATE_TYPE      = 'date_type';
+    const SEARCH_DATE_PERIOD    = 'date_period';
+    const SEARCH_START_DATE     = 'startDate';
+    const SEARCH_END_DATE       = 'endDate';
+    const SEARCH_ORDERBY        = 'order_by';
+    const SEARCH_LIMIT          = 'limit';
 
     /**
      * Password length
@@ -111,6 +111,7 @@ class Profile extends \XLite\Model\Repo\ARepo
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         $queryBuilder = $this->createQueryBuilder('p')
+            ->addGroupBy('p.profile_id')
             ->addSelect('addresses')
             ->leftJoin('p.addresses', 'addresses')
             ->leftJoin('addresses.country', 'country')
@@ -119,7 +120,6 @@ class Profile extends \XLite\Model\Repo\ARepo
         $this->currentSearchCnd = $cnd;
 
         foreach ($this->currentSearchCnd as $key => $value) {
-
             $this->callSearchConditionHandler($value, $key, $queryBuilder);
         }
 
@@ -233,7 +233,6 @@ class Profile extends \XLite\Model\Repo\ARepo
             $entity = $this->defineOneByRecord($data['login'])->getSingleResult();
 
         } else {
-
             $entity = parent::findOneByRecord($data, $parent);
         }
 
@@ -280,7 +279,8 @@ class Profile extends \XLite\Model\Repo\ARepo
             self::SEARCH_PHONE,
             self::SEARCH_COUNTRY,
             self::SEARCH_STATE,
-            self::SEARCH_ADDRESS_PATTERN,
+            self::SEARCH_CUSTOM_STATE,
+            self::SEARCH_ADDRESS,
             self::SEARCH_USER_TYPE,
             self::SEARCH_DATE_TYPE,
             self::SEARCH_ORDERBY,
@@ -316,7 +316,6 @@ class Profile extends \XLite\Model\Repo\ARepo
     protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
     {
         if ($this->isSearchParamHasHandler($key)) {
-
             $methodName = 'prepareCnd' . \XLite\Core\Converter::getInstance()->convertToCamelCase($key);
 
             // Call method for preparing param condition
@@ -462,25 +461,18 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndMembership(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $checkParam = self::SEARCH_USER_TYPE;
-
-        if (
-            !isset($this->currentSearchCnd->$checkParam)
-            || ('A' != $this->currentSearchCnd->$checkParam)
-        ) {
+        if ('A' !== $this->currentSearchCnd->{self::SEARCH_USER_TYPE}) {
             $value = trim($value);
 
             if ('pending_membership' == $value) {
-
                 $queryBuilder->andWhere('p.pending_membership IS NOT NULL');
 
             } elseif ('' == $value) {
-
                 $queryBuilder->andWhere('p.membership IS NULL');
 
             } elseif (0 < intval($value)) {
-
-                $queryBuilder->innerJoin('p.membership', 'membership')
+                $queryBuilder
+                    ->innerJoin('p.membership', 'membership')
                     ->andWhere('membership.membership_id = :membershipId')
                     ->setParameter('membershipId', intval($value));
             }
@@ -515,15 +507,15 @@ class Profile extends \XLite\Model\Repo\ARepo
     protected function prepareCndPattern(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
-
             $cnd = new \Doctrine\ORM\Query\Expr\Orx();
 
             foreach ($this->getNameSubstringSearchFields() as $field) {
-
                 $cnd->add($field . ' LIKE :pattern');
             }
 
-            $queryBuilder->andWhere($cnd)->setParameter('pattern', '%' . $value . '%');
+            $queryBuilder
+                ->andWhere($cnd)
+                ->setParameter('pattern', '%' . $value . '%');
         }
     }
 
@@ -573,7 +565,22 @@ class Profile extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * prepareCndAddressPattern
+     * prepareCndCustomState
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
+     * @param mixed                      $value        Searchable value
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function prepareCndCustomState(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        $this->prepareCndCommon($queryBuilder, $value, 'custom_state', true, 'addresses');
+    }
+
+    /**
+     * prepareCndAddress
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
      * @param mixed                      $value        Searchable value
@@ -582,18 +589,18 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareCndAddressPattern(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    protected function prepareCndAddress(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
-
             $cnd = new \Doctrine\ORM\Query\Expr\Orx();
 
             foreach ($this->getAddressSubstringSearchFields() as $field) {
-
                 $cnd->add($field . ' LIKE :addressPattern');
             }
 
-            $queryBuilder->andWhere($cnd)->setParameter('addressPattern', '%' . $value . '%');
+            $queryBuilder
+                ->andWhere($cnd)
+                ->setParameter('addressPattern', '%' . $value . '%');
         }
     }
 
@@ -612,15 +619,14 @@ class Profile extends \XLite\Model\Repo\ARepo
         if (!empty($value)) {
 
             if ('A' == $value) {
-
                 $accessLevel = \XLite\Core\Auth::getInstance()->getAdminAccessLevel();
 
             } elseif ('C' == $value) {
-
                 $accessLevel = \XLite\Core\Auth::getInstance()->getCustomerAccessLevel();
             }
 
-            $queryBuilder->andWhere('p.access_level = :accessLevel')
+            $queryBuilder
+                ->andWhere('p.access_level = :accessLevel')
                 ->setParameter('accessLevel', $accessLevel);
         }
     }
@@ -640,10 +646,10 @@ class Profile extends \XLite\Model\Repo\ARepo
         $dateRange = $this->getDateRange();
 
         if (isset($dateRange) && in_array($value, array('R', 'L'))) {
-
             $field = 'R' == $value ? 'added' : 'last_login';
 
-            $queryBuilder->andWhere('p.' . $field . ' >= :startDate')
+            $queryBuilder
+                ->andWhere('p.' . $field . ' >= :startDate')
                 ->andWhere('p.' . $field . ' <= :endDate')
                 ->setParameter('startDate', $dateRange->startDate)
                 ->setParameter('endDate', $dateRange->endDate);
@@ -652,6 +658,8 @@ class Profile extends \XLite\Model\Repo\ARepo
 
     /**
      * getDateRange
+     *
+     * :FIXME: simplify
      *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
@@ -781,7 +789,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected function defineFindUserWithSameLoginQuery(\XLite\Model\Profile $profile)
     {
-        $qb = $this->createQueryBuilder()
+        $queryBuilder = $this->createQueryBuilder()
             ->andWhere('p.login = :login')
             ->andWhere('p.profile_id != :profileId')
             ->setParameter('login', $profile->getLogin())
@@ -789,17 +797,16 @@ class Profile extends \XLite\Model\Repo\ARepo
             ->setMaxResults(1);
 
         if ($profile->getOrder()) {
-
-            $qb->innerJoin('p.order', 'porder')
+            $queryBuilder
+                ->innerJoin('p.order', 'porder')
                 ->andWhere('porder.order_id = :orderId')
                 ->setParameter('orderId', $profile->getOrder()->getOrderId());
 
         } else {
-
-            $qb->andWhere('p.order is null');
+            $queryBuilder->andWhere('p.order is null');
         }
 
-        return $qb;
+        return $queryBuilder;
     }
 
     /**
@@ -829,17 +836,17 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected function defineFindOneByCMSIdQuery(array $fields)
     {
-        $qb = $this->createQueryBuilder()
+        $queryBuilder = $this->createQueryBuilder()
             ->andWhere('p.order is null')
             ->setMaxResults(1);
 
         foreach ($fields as $name => $value) {
-
-            $qb->andWhere('p.' . $name . ' = :' . $name)
+            $queryBuilder
+                ->andWhere('p.' . $name . ' = :' . $name)
                 ->setParameter($name, $value);
         }
 
-        return $qb;
+        return $queryBuilder;
     }
 
     /**
@@ -855,7 +862,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected function defineFindByLoginPasswordQuery($login, $password, $orderId)
     {
-        $qb = $this->createQueryBuilder()
+        $queryBuilder = $this->createQueryBuilder()
             ->andWhere('p.login = :login')
             ->andWhere('p.status = :status')
             ->setParameter('login', $login)
@@ -863,20 +870,22 @@ class Profile extends \XLite\Model\Repo\ARepo
             ->setMaxResults(1);
 
         if (isset($password)) {
-            $qb->andWhere('p.password = :password')
+            $queryBuilder
+                ->andWhere('p.password = :password')
                 ->setParameter('password', $password);
         }
 
         if ($orderId) {
-            $qb->innerJoin('p.order', 'porder')
+            $queryBuilder
+                ->innerJoin('p.order', 'porder')
                 ->andWhere('porder.order_id = :orderId')
                 ->setParameter('orderId', $orderId);
 
         } else {
-            $qb->andWhere('p.order is null');
+            $queryBuilder->andWhere('p.order is null');
         }
 
-        return $qb;
+        return $queryBuilder;
     }
 
     /**

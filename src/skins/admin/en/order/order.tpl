@@ -27,7 +27,7 @@
 <tr>
 	<td>Status:</td>
 	<td>
-    <widget class="\XLite\View\FormField\Select\OrderStatus" fieldOnly=true fieldName="status" value="{order.getStatus()}" orderId="{order.getOrderId()}" />
+    <widget class="\XLite\View\FormField\Select\OrderStatus" fieldOnly="true" fieldName="status" value="{order.getStatus()}" orderId="{order.getOrderId()}" />
   </td>
 </tr>
 

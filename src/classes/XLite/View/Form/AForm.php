@@ -86,7 +86,7 @@ abstract class AForm extends \XLite\View\AView
             $data = $validator->sanitize(\XLite\Core\Request::getInstance()->getData());
 
         } catch (\XLite\Core\Validator\Exception $exception) {
-            $message = $this->t($exception->getMessage(), $exception->getLabelArguments());
+            $message = static::t($exception->getMessage(), $exception->getLabelArguments());
 
             if ($exception->isInternal()) {
                 \XLite\Logger::getInstance()->log($message, LOG_ERR);

@@ -61,14 +61,14 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 
 
     /**
-     *  Execute certain hook handler
+     * Execute certain hook handler
      *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function executeHookHandlerStepFive()
+    public function executeHookHandlerStepFifth()
     {
         // Truncate old
         $this->clearAll();
@@ -184,6 +184,8 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 
     /**
      * Prepare list childs templates-based
+     *
+     * :FIXME: must be completely refactored
      *
      * @param array $list List
      *

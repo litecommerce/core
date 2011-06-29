@@ -302,12 +302,13 @@ class Request extends \XLite\Base\Singleton
     protected function prepare($data)
     {
         if (is_array($data)) {
-            if (isset($data['target'])) {
-                $this->checkControlArgument($data['target'], 'Target');
+            if (isset($data['target']) && !$this->checkControlArgument($data['target'], 'Target')) {
+                $data['target'] = \XLite::TARGET_404;
+                $data['action'] = null;
             }
 
-            if (isset($data['action'])) {
-                $this->checkControlArgument($data['action'], 'Action');
+            if (isset($data['action']) && !$this->checkControlArgument($data['action'], 'Action')) {
+                unset($data['action']);
             }
         }
 
@@ -320,17 +321,23 @@ class Request extends \XLite\Base\Singleton
      * @param mixed  $value Argument value
      * @param string $name  Argument name
      *
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function checkControlArgument($value, $name)
     {
+        $result = true;
+
         if (!is_string($value)) {
-            $this->doDie($name . ' has a wrong type');
+            \XLite\Logger::getInstance()->log($name . ' has a wrong type');
+            $result = false;
 
         } elseif (!preg_match('/^[a-z0-9_]*$/Ssi', $value)) {
-            $this->doDie($name . ' has a wrong format');
+            \XLite\Logger::getInstance()->log($name . ' has a wrong format');
+            $result = false;
         }
+
+        return $result;
     }
 }

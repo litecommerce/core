@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 <select id="{getFieldId()}" name="{getName()}"{getAttributesCode():h}>
-  <option value="">Select one...</option>
+  <option value="">{t(#Select one#)}</option>
   <option FOREACH="getOptions(),optionValue" value="{optionValue.code:r}" selected="{optionValue.code=getValue()}">{optionValue.country:h}</option>
 </select>

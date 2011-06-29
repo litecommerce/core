@@ -69,7 +69,7 @@ window.core.addProductClass = function (widget, data)
 
         var newHandler = new AdvancedInputHandler();
 
-        newHandler.addActions(newHandler.initWidget(jQuery('table.product-classes-list tbody').children().eq(-2)));
+        newHandler.changeActions();
 
         jQuery('img.progress', widget.inputBlock).removeClass('ajax-progress');
       }
@@ -129,6 +129,8 @@ core.bind(
 
         widget.input.keypress(
           function (event) {
+            event.stopImmediatePropagation();
+
             if (13 === event.which) {
               event.preventDefault();
 
@@ -142,7 +144,7 @@ core.bind(
 
           e.stopImmediatePropagation();
 
-          o.block.each(function () {
+          jQuery(o.pattern).each(function () {
             var widgetToUpdate = this.widget;
 
             if (

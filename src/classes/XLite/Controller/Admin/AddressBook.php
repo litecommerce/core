@@ -54,7 +54,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return \XLite\Core\Request::getInstance()->widget ? $this->t('Address details') : $this->t('Edit profile');
+        return \XLite\Core\Request::getInstance()->widget ? 'Address details' : 'Edit profile';
     }
 
     /**
@@ -67,6 +67,24 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     public function getAddress()
     {
         return $this->address = $this->getModelForm()->getModelObject();
+    }
+
+    /**
+     * Get addresses array for working profile
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    public function getAddresses()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Address')
+            ->findBy(
+                array(
+                    'profile' => $this->getProfile()->getProfileId(),
+                )
+            );
+
     }
 
     /**
@@ -137,7 +155,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode($this->t('Search profiles'), $this->buildURL('profile_list', '', array('mode' => 'search')));
+        $this->addLocationNode('Search profiles', $this->buildURL('profile_list'));
     }
 
     /**
@@ -180,7 +198,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->flush();
 
             \XLite\Core\TopMessage::addInfo(
-                $this->t('Address has been deleted')
+                static::t('Address has been deleted')
             );
         }
     }

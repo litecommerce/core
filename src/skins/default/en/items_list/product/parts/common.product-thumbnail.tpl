@@ -12,9 +12,9 @@
  * @ListChild (list="itemsList.product.grid.customer.info.photo", weight="10")
  * @ListChild (list="itemsList.product.small_thumbnails.customer.info.photo", weight="10")
  * @ListChild (list="itemsList.product.big_thumbnails.customer.info.photo", weight="10")
+ * @ListChild (list="productBlock.info.photo", weight="100")
  *}
 <a
-  IF="product.hasImage()"
   href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"
   class="product-thumbnail"
   title="{t(#Thumbnail#)}">

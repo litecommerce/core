@@ -44,7 +44,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return $this->t('Shipping rates');
+        return static::t('Shipping rates');
     }
 
     /**

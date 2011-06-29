@@ -46,7 +46,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     const PARAM_BY_DESCR          = 'by_descr';
     const PARAM_INVENTORY         = 'inventory';
 
-
     /**
      * Return search parameters
      *
@@ -76,7 +75,7 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      */
     protected function getHead()
     {
-        return $this->t('Search result');
+        return 'Search result';
     }
 
     /**

@@ -21,7 +21,6 @@ XLite\Model\Config:
   - { name: company_fax, category: Company, type: text, orderby: 420, value: '(555) 555-5555', translations: [{ code: en, option_name: Fax, option_comment: '' }] }
   - { name: company_identity, category: Company, type: separator, orderby: 350, translations: [{ code: en, option_name: Identity, option_comment: '' }] }
   - { name: company_name, category: Company, type: text, orderby: 360, value: '*Your company name*', translations: [{ code: en, option_name: 'Company name', option_comment: '' }] }
-  - { name: company_phone, category: Company, type: text, orderby: 410, value: '(555) 555-5555', translations: [{ code: en, option_name: Phone, option_comment: '' }] }
   - { name: company_website, category: Company, type: text, orderby: 370, value: '', translations: [{ code: en, option_name: 'Company website', option_comment: '' }] }
   - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings', option_comment: '' }] }
   - { name: customer_security, category: Security, type: checkbox, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Customer Zone (for login, Checkout and profile pages)' }] }
@@ -49,11 +48,12 @@ XLite\Model\Config:
   - { name: last_date, category: Htaccess, value: '0' }
   - { name: license, category: License, type: text }
   - { name: location_address, category: Company, type: text, orderby: 390, value: '*Your company address*', translations: [{ code: en, option_name: 'Street address', option_comment: '' }] }
-  - { name: location_city, category: Company, type: text, orderby: 400, value: '*You company city*', translations: [{ code: en, option_name: City, option_comment: '' }] }
-  - { name: location_country, category: Company, type: country, orderby: 450, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
-  - { name: location_custom_state, category: Company, type: text, orderby: 435, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
-  - { name: location_state, category: Company, type: state, orderby: 430, value: '17', translations: [{ code: en, option_name: State, option_comment: '' }] }
-  - { name: location_zipcode, category: Company, type: text, orderby: 440, value: '50001', translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
+  - { name: location_country, category: Company, type: country, orderby: 400, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
+  - { name: location_state, category: Company, type: state, orderby: 410, value: '17', translations: [{ code: en, option_name: State, option_comment: '' }] }
+  - { name: location_custom_state, category: Company, type: text, orderby: 415, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
+  - { name: location_city, category: Company, type: text, orderby: 420, value: '*You company city*', translations: [{ code: en, option_name: City, option_comment: '' }] }
+  - { name: location_zipcode, category: Company, type: text, orderby: 430, value: '50001', translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
+  - { name: company_phone, category: Company, type: text, orderby: 440, value: '(555) 555-5555', translations: [{ code: en, option_name: Phone, option_comment: '' }] }
   - { name: login_lifetime, category: General, type: text, orderby: 450, value: '3', translations: [{ code: en, option_name: 'Days to store last login data', option_comment: '' }] }
   - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Clear cart on customer logoff', option_comment: '' }] }
   - { name: maximal_order_amount, category: General, type: text, orderby: 290, value: '99999', translations: [{ code: en, option_name: 'Maximum allowed order total', option_comment: '' }] }
@@ -103,11 +103,11 @@ XLite\Model\Config:
   - { name: default_language, category: General, orderby: 330, value: en }
   - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address', option_comment: '' }] }
   - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line', option_comment: '' }] }
-  - { name: anonymous_city, category: Shipping, type: text, orderby: 50, translations: [{ code: en, option_name: City, option_comment: '' }] }
-  - { name: anonymous_country, category: Shipping, type: country, orderby: 90, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
-  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
+  - { name: anonymous_country, category: Shipping, type: country, orderby: 50, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
   - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State, option_comment: '' }] }
-  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 80, value: '10001', translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
+  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
+  - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City, option_comment: '' }] }
+  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, value: '10001', translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
   - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime', option_comment: '' }] }
   - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key', option_comment: '' }] }
 XLite\Model\Category:
@@ -399,6 +399,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Your shopping bag - X items', translations: [{ code: en, label: 'Your shopping bag — {{count}} items' }] }
   - { name: 'Greetings, X', translations: [{ code: en, label: 'Greetings, {{name}}' }] }
   - { name: 'X items', translations: [{ code: en, label: '{{count}} items' }] }
+  - { name: '_X items_ in bag', translations: [{ code: en, label: '<a href="#">{{count}} items</a> in bag' }] }
   - { name: 'This email address is used for an existing account. Enter another email address or sign in', translations: [{ code: en, label: 'This email address is used for an existing account. Enter another email address or <a href="{{URL}}" class="log-in">sign in</a>' }] }
   - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: en, label: 'This user names is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>' }] }
   - { name: 'I accept Terms and Conditions', translations: [{ code: en, label: 'I accept <a href="{{URL}}">Terms & Conditions</a>' }] }
@@ -414,10 +415,49 @@ XLite\Model\LanguageLabel:
   - { name: 'Image X', translations: [{ code: en, label: 'Image #{{index}}' }] }
   - { name: 'Top X products', translations: [{ code: en, label: 'Top {{count}} products' }] }
   - { name: 'X module settings', translations: [{ code: en, label: '{{name}} ({{author}}) module settings' }] }
-  - { name: 'The benchmark evaluates server environment', translations: [{ code: en, label: "The benchmark evaluates server environment, namely:\n1. File subsystem — read and write speed.\n2. Database server — computing speed, DB data read and write speed.\n3. Computing power — speed of computing and exchanging data in the memory.\n<span>The total test time is the sum of the times, taken by each of these tests.</span>" }] }
+  - { name: 'The benchmark evaluates server environment', translations: [{ code: en, label: "The benchmark evaluates server environment, namely:<br />1. File subsystem - read and write speed.<br />2. Database server - computing speed, DB data read and write speed.<br />3. Computing power - speed of computing and exchanging data in the memory.<br /><span>The total test time is the sum of the times, taken by each of these tests.</span>" }] }
   - { name: 'Thank you for registering at LiteCommerce', translations: [{ code: en, label: 'Thank you for registering at {{LiteCommerce}}' }] }
   - { name: 'Thank you for using LiteCommerce services', translations: [{ code: en, label: 'Thank you for using {{LiteCommerce}} services' }] }
   - { name: 'Your profile has been modified. You can check your account after you logging in to the site', translations: [{ code: en, label: 'Your profile has been modified. You can check your account after you logging in to the site at {{url}}' }] }
+  - { name: 'The confirmation URL link was mailed to email', translations: [{ code: en, label: 'The confirmation URL link was mailed to {{email}}' }] }
+  - { name: 'The email with your account information was mailed to email', translations: [{ code: en, label: 'The email with your account information was mailed to {{email}}. We encourage you to authenticate again to verify the received data.' }] }
+  - { name: 'Show filter options', translations: [{ code: en, label: 'Show filter options' }] }
+  - { name: 'Customer note', translations: [{ code: en, label: 'Customer note' }] }
+  - { name: 'Invoice X', translations: [{ code: en, label: 'Invoice #{{id}}' }] }
+  - { name: 'Welcome to LiteCommerce', translations: [{ code: en, label: 'Welcome to LiteCommerce' }] }
+  - { name: 'Quantity', translations: [{ code: en, label: 'Quantity' }] }
+  - { name: 'Total', translations: [{ code: en, label: 'Total' }] }
+  - { name: 'Cart is empty', translations: [{ code: en, label: 'Cart is empty' }] }
+  - { name: 'X item(s)', translations: [{ code: en, label: '{{count}} items(s)' }] }
+  - { name: 'Items', translations: [{ code: en, label: 'Items' }] }
+  - { name: 'Checkout', translations: [{ code: en, label: 'Checkout' }] }
+  - { name: 'View cart', translations: [{ code: en, label: 'View cart' }] }
+  - { name: 'Email address', translations: [{ code: en, label: 'Email address' }] }
+  - { name: 'Password', translations: [{ code: en, label: 'Password' }] }
+  - { name: 'Recover password', translations: [{ code: en, label: 'Recover password' }] }
+  - { name: 'Your cart', translations: [{ code: en, label: 'Your cart' }] }
+  - { name: 'This is a demo store with powerful LiteCommerce engine inside', translations: [{ code: en, label: 'This is a demo store with powerful LiteCommerce engine inside, based on PHP5 templates technology integrated with SQL database.' }] }
+  - { name: 'Price', translations: [{ code: en, label: 'Price' }] }
+  - { name: 'Product name', translations: [{ code: en, label: 'Product name' }] }
+  - { name: 'Select one', translations: [{ code: en, label: 'Select one...' }] }
+  - { name: 'Other', translations: [{ code: en, label: 'Other' }] }
+  - { name: 'Hello, user', translations: [{ code: en, label: 'Hello, {{name}}' }] }
+  - { name: 'All', translations: [{ code: en, label: 'All' }] }
+  - { name: 'None', translations: [{ code: en, label: 'None' }] }
+  - { name: 'Root level', translations: [{ code: en, label: '[Root level]' }] }
+  - { name: '-- No categories --', translations: [{ code: en, label: '-- No categories --' }] }
+  - { name: 'Sort by', translations: [{ code: en, label: 'Sort by' }] }
+  - { name: 'Pending membership', translations: [{ code: en, label: 'Pending membership' }] }
+  - { name: 'X results found', translations: [{ code: en, label: '{{count}} results found' }] }
+  - { name: 'per page', translations: [{ code: en, label: 'per page' }] }
+  - { name: 'X orders', translations: [{ code: en, label: '<span>{{count}}</span> orders' }] }
+  - { name: 'Logged in!', translations: [{ code: en, label: 'Logged in!' }] }
+  - { name: 'Logoff', translations: [{ code: en, label: 'Logoff' }] }
+  - { name: 'Account settings', translations: [{ code: en, label: 'Account settings' }] }
+  - { name: 'User X is logged in', translations: [{ code: en, label: 'User <strong>{{login}}</strong> is logged in.' }] }
+  - { name: 'X products found', translations: [{ code: en, label: '{{count}} products found' }] }
+  - { name: 'Thank you for registering a customer account, your profile has been created successfully', translations: [{ code: en, label: 'Thank you for registering a customer account, your profile has been created successfully.<br />As a registered customer you can enjoy simplified checkout process and review your order history.<br /><br />Registration confirmation with your account details has been sent to your e-mail <b>{profile.login}</b> address.<br />Please use your e-mail address and the specified password every time you place orders at our store.<br /><br />You are now logged in and are welcome to continue shopping.' }] }
+  - { name: 'BEGIN - END of TOTAL', translations: [{ code: en, label: '<span class="begin-record-number">{{begin}}</span>&ndash;<span class="end-record-number">{{end}}</span> of <span class="records-count">{{total}}</span>' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
@@ -654,7 +694,8 @@ XLite\Model\Country:
   - { country: Burundi, code3: BDI, code: BI }
   - { country: Cambodia, code3: KHM, code: KH }
   - { country: Cameroon, code3: CMR, code: CM }
-  - country: Canada, code3: CAN
+  - country: Canada
+    code3: CAN
     code: CA
     states:
       - { state: Alberta, code: AB }

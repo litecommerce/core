@@ -65,7 +65,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      */
     public function getTitle()
     {
-        return $this->t('Payment info');
+        return static::t('Payment info');
     }
 
     /**

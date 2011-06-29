@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="orders.search.base", weight="10")
  *}
-<h2 class="order-search-title"><span>{getTotalCount()}</span> orders</h2>
+<h2 class="order-search-title">{t(#X orders#,_ARRAY_(#count#^getTotalCount())):h}</h2>

@@ -147,9 +147,8 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
             'test substutional template'
         );
 
-        $length = $this->getJSExpression('jQuery("img").filter(function() { return -1 != this.src.search(/test.en.images.spacer.gif/); }).length');
-        $this->assertTrue(0 < $length, 'check spacer.gif substitute');
-
+        $length = $this->getJSExpression('jQuery(\'img[src*="default/en/images/spacer.gif"]\').length');
+        $this->assertTrue(0 == $length, 'check spacer.gif substitute');
     }
 
     public function testSubstituteMultilanguage()

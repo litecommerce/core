@@ -312,6 +312,7 @@ ul.default-table li {
 
 div.table-label {
   float: left;
+  padding-top: 2px;
 }
 
 ul.default-table div.table-label label {
@@ -725,8 +726,103 @@ ul.subcategory-icons a
   top: -12px;
 }
 
+.products-sidebar-small-thumbnails .product-cell .product {
+  padding-left: 0px;
+}
 
+.products-sidebar-small-thumbnails div.product-photo {
+  padding-right: 8px;
+}
 
+.products-sidebar-small-thumbnails .product-name,
+.products-sidebar-big-thumbnails .product-name
+{
+  font-size: 16px;
+  padding-top: 10px;
+}
+
+.products-sidebar-small-thumbnails .product-name {
+  line-height: 18px;
+}
+
+.products-sidebar-big-thumbnails .product-name
+{
+  text-align: center;
+}
+
+.products-sidebar-small-thumbnails .product-price {
+  padding-top: 5px;
+}
+
+ul.products-sidebar-text-links li.product-cell {
+  background-image: url(../images/products-sidebar-bullet.png);
+  background-position: 1px 10px;
+  background-repeat: no-repeat;
+}
+
+ul.products-sidebar-text-links li .product {
+  line-height: normal;
+  padding-bottom: 0px;
+  padding-left: 11px;
+}
+
+.products-sidebar-text-links .product-name {
+  font-size: 14px;
+  font-family: Helvetica, Arial;
+}
+
+.products-grid .labels li,
+.products-list .labels li,
+.products-table .labels li,
+.products-sidebar-big-thumbnails .labels li
+{
+  background-image: url(../images/label_grey_left.png);
+  background-position: left top;
+  background-repeat: no-repeat;
+  padding-left: 12px;
+  height: 25px;
+  opacity: 0.9;
+}
+
+.products .labels li div {
+  font-style: italic;
+  font-size: 12px;
+  color: #615656;
+}
+
+.products-grid .labels li div,
+.products-list .labels li div,
+.products-table .labels li div,
+.products-sidebar-big-thumbnails .labels li div
+{
+  background-image: url(../images/label_grey_right.png);
+  background-position: right top;
+  background-repeat: no-repeat;
+  line-height: 25px;
+  color: #fff;
+  padding-left: 3px;
+  padding-right: 9px;
+}
+
+/**
+ * Product block
+ */
+.product-block .product {
+  padding: 0px;
+}
+
+.product-block .product-name
+{
+  font-size: 16px;
+  padding-top: 0px;
+  font-family: Helvetica, Arial;
+  text-align: left;
+}
+
+.product-block .product-price {
+  padding-top: 3px;
+  line-height: 21px;
+}
 
 /**
  * Categories menu
