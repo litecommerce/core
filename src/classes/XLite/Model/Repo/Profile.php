@@ -117,7 +117,7 @@ class Profile extends \XLite\Model\Repo\ARepo
             ->leftJoin('addresses.country', 'country')
             ->leftJoin('addresses.state', 'state');
 
-        $this->currentSearchCnd = $cnd;
+        $this->currentSearchCnd = $this->preprocessCnd($cnd);
 
         foreach ($this->currentSearchCnd as $key => $value) {
             $this->callSearchConditionHandler($value, $key, $queryBuilder);
@@ -258,6 +258,22 @@ class Profile extends \XLite\Model\Repo\ARepo
         }
 
         return $password;
+    }
+
+    /**
+     * Preprocess condition. Order id must be placed into condition in any case.
+     *
+     * @return \XLite\Core\CommonCell
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function preprocessCnd(\XLite\Core\CommonCell $cnd)
+    {
+        if (!$cnd->{self::SEARCH_ORDER_ID}) {
+            $cnd->{self::SEARCH_ORDER_ID} = 0;
+        }
+
+        return $cnd;
     }
 
     /**
