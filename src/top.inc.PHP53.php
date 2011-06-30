@@ -81,6 +81,9 @@ if (!defined('XLITE_INSTALL_MODE')) {
 // So called "developer" mode. Set it to "false" in production mode!
 define('LC_DEVELOPER_MODE', (bool) \Includes\Utils\ConfigParser::getOptions(array('performance', 'developer_mode')));
 
+// Correct error handling mode
+ini_set('display_errors', LC_DEVELOPER_MODE);
+
 // Fatal error and exception handlers
 register_shutdown_function(array('\Includes\ErrorHandler', 'shutdown'));
 set_exception_handler(array('\Includes\ErrorHandler', 'handleException'));
