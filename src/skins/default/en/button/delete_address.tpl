@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Delete address widget. popup button.
+ * Delete address widget.
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,5 +10,5 @@
  * @since     1.0.0
  *}
 <button type="button" class="{getClass()}">
-{displayCommentedData(getURLParams())}
+{displayCommentedData(getJSParams())}
 </button>

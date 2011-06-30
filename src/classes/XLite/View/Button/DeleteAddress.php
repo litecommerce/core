@@ -34,7 +34,7 @@ namespace XLite\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class DeleteAddress extends \XLite\View\Button\APopupButton
+class DeleteAddress extends \XLite\View\Button\Regular
 {
     /*
      * Address identificator parameter
@@ -88,18 +88,17 @@ class DeleteAddress extends \XLite\View\Button\APopupButton
     }
 
     /**
-     * Return URL parameters to use in AJAX popup
+     * Return JS parameters
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareURLParams()
+    protected function getJSParams()
     {
         return array(
-            'target'       => 'address_book',
-            'address_id'   => $this->getParam(self::PARAM_ADDRESS_ID),
-            'widget'       => '\XLite\View\Address\Delete',
+            'address_id'    => $this->getParam(self::PARAM_ADDRESS_ID),
+            'warning_text'  => static::t('Delete this address?'),
         );
     }
 
