@@ -55,6 +55,11 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Request::getInstance()->action = 'check_integrity';
         }
 
+        if (\XLite\Core\Request::getInstance()->isUpgraded()) {
+            \XLite\Core\Marketplace::getInstance()->checkForUpdates(0);
+            \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
+        }
+
         parent::run();
     }
 
