@@ -74,4 +74,19 @@ class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         return true;
     }
+
+    /**
+     * Preprocess theme variables for a specific theme block
+     * 
+     * @param array  &$variables Data to modify
+     * @param string $class      LC widget class
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function addCSSClass(array &$data, $class)
+    {
+        $data['classes_array'][] = preg_replace('/([A-Z0-9]+)/Ss', '-\\1', ltrim($class, '\\'));
+    }
 }

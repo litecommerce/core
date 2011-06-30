@@ -837,6 +837,8 @@ function func_htmlspecialchars($str) {
 /**
  * Check if LiteCommerce installed
  *
+ * :FIXME: check this carefully
+ *
  * @param string $dbURL Database Url string (e.g. mysql://username:password@localhost/databasename)
  *
  * @return bool
