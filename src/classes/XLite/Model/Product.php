@@ -350,7 +350,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
 
         if (!\XLite::isAdminZone()) {
             $result = $this->getEnabled()
-                && (!$this->getArrivalDate() || time() < $this->getArrivalDate())
+                && (!$this->getArrivalDate() || time() > $this->getArrivalDate())
                 && !$this->getInventory()->isOutOfStock();
         }
 
@@ -579,6 +579,18 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
         $this->arrivalDate = \XLite\Core\Converter::convertTimeToServer(
             mktime(0, 0, 0, date('m', $date), date('d', $date), date('Y', $date))
         );
+    }
+
+    /**
+     * Get labels 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getLabels()
+    {
+        return array();
     }
 
     /**
