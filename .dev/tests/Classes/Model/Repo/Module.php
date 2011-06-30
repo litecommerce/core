@@ -319,7 +319,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_TestCase
         $fromMarketplace = $this->getRepo()->getModuleFromMarketplace($installed);
 
         $this->assertNotNull($fromMarketplace, 'check if module is found [2]');
-        $this->assertEquals($installed->getModuleID(), $fromMarketplace->getModuleID(), 'check module IDs [2]');
+        $this->assertNotEquals($installed->getModuleID(), $fromMarketplace->getModuleID(), 'check module IDs [2]');
         $this->assertNotEmpty($fromMarketplace->getMarketplaceID(), 'check marketplace ID [2]');
     }
 
