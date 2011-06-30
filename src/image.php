@@ -31,12 +31,13 @@ define('LC_DO_NOT_REBUILD_CACHE', true);
 
 require_once (__DIR__ . DIRECTORY_SEPARATOR . 'top.inc.php');
 
-if (isset($_REQUEST['type'])) {
-    switch ($_REQUEST['type']) {
+if (isset($_REQUEST['target'])) {
+    switch ($_REQUEST['target']) {
 
         case 'module':
             if (!empty($_REQUEST['author']) && !empty($_REQUEST['name'])) {
                 $path = \Includes\Utils\ModulesManager::getModuleIconFile($_REQUEST['author'], $_REQUEST['name']);
+            }
             break;
 
         default:
@@ -45,15 +46,13 @@ if (isset($_REQUEST['type'])) {
 
     if (!empty($path)) {
 
-        $type   = 'gif';
-        $length = 0;
+        $type   = 'png';
+        $data   = \Includes\Utils\FileManager::read($path);
+        $length = strlen($data);
 
-        $mimeTypes = array(
-            'gif' => array('gif'),
-        );
-
-        header('Content-Type: ' . $type);
+        header('Content-Type: image/' . $type);
         header('Content-Length: ' . $length);
-        echo (\Includes\Utils\FileManager::read($path));
+
+        echo ($data);
     }
 }

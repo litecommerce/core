@@ -96,7 +96,14 @@ abstract class AModule
             \Includes\Utils\ModulesManager::getModuleNameByClassName(get_called_class())
         );
 
-        return \XLite\Core\Converter::buildURL(null, null, array('type' => 'module') + compact($author, $name));
+        $path = \Includes\Utils\ModulesManager::getModuleIconFile($author, $name);
+        $url  = '';
+
+        if (\Includes\Utils\FileManager::isFileReadable($path)) {
+            $url = \XLite\Core\Converter::buildURL('module', null, compact('author', 'name'), 'image.php');
+        }
+
+        return $url;
     }
 
     /**

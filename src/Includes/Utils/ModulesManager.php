@@ -173,7 +173,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     public static function getModuleIconFile($author, $name)
     {
-        return static::getAbsoluteDir($author, $name) . '';
+        return static::getAbsoluteDir($author, $name) . 'icon.png';
     }
 
     // }}}
