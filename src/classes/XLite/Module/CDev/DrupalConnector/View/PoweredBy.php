@@ -36,6 +36,34 @@ namespace XLite\Module\CDev\DrupalConnector\View;
 class PoweredBy extends \XLite\View\PoweredBy implements \XLite\Base\IDecorator
 {
     /**
+     * Advertise phrases
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $phrases = array(
+        'Powered by [e-commerce CMS]: LiteCommerce plus Drupal',
+        'Powered by [e-commerce CMS]: LiteCommerce plus Drupal',
+        'Powered by [e-commerce CMS]: LiteCommerce plus Drupal',
+        'Powered by [eCommerce CMS]: LiteCommerce plus Drupal',
+        'Powered by [eCommerce CMS]: LiteCommerce plus Drupal',
+        'Powered by [eCommerce CMS]: LiteCommerce plus Drupal',
+        'Powered by [e-commerce CMS software]: LiteCommerce plus Drupal',
+        'Powered by [eCommerce CMS software]: LiteCommerce plus Drupal',
+        'Powered by [e-commerce CMS solution]: LiteCommerce plus Drupal',
+        'Powered by [eCommerce CMS solution]: LiteCommerce plus Drupal',
+        'Powered by LiteCommerce [shopping cart] and Drupal CMS',
+        'Powered by LiteCommerce [shopping cart software] and Drupal CMS',
+        'Powered by LiteCommerce [eCommerce shopping cart] and Drupal CMS',
+        'Powered by LiteCommerce [eCommerce software] and Drupal CMS',
+        'Powered by LiteCommerce [eCommerce solution] and Drupal CMS',
+        'Powered by LiteCommerce [e-commerce software] and Drupal CMS',
+        'Powered by LiteCommerce [e-commerce solution] and Drupal CMS',
+    );
+
+
+    /**
      * Check - display widget as link or as box
      *
      * @return boolean

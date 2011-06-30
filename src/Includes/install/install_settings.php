@@ -106,9 +106,12 @@ $lcSettings = array(
     // The list of modules that must be enabled by installation script
     'enable_modules' => array(
         'CDev' => array(
-            'DrupalConnector', // Allows to use Drupal CMS as a storefront
             'Bestsellers',
             'FeaturedProducts',
         ),
     ),
 );
+
+if (defined('DRUPAL_CMS_INSTALL_MODE')) {
+    $lcSettings['enable_modules']['CDev'][] = 'DrupalConnector';
+}

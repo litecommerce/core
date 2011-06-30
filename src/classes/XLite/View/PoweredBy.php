@@ -50,7 +50,24 @@ class PoweredBy extends \XLite\View\AView
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $phrases = array();
+    protected $phrases = array(
+        'Powered by LiteCommerce [shopping cart]',
+        'Powered by LiteCommerce [shopping cart]',
+        'Powered by LiteCommerce [shopping cart software]',
+        'Powered by LiteCommerce [shopping cart software]',
+        'Powered by LiteCommerce [PHP shopping cart]',
+        'Powered by LiteCommerce [PHP shopping cart system]',
+        'Powered by LiteCommerce [eCommerce shopping cart]',
+        'Powered by LiteCommerce [online shopping cart] ',
+        'Powered by LiteCommerce [eCommerce software]',
+        'Powered by LiteCommerce [eCommerce software]',
+        'Powered by LiteCommerce [e-commerce software]',
+        'Powered by LiteCommerce [e-commerce software]',
+        'Powered by LiteCommerce [eCommerce solution]',
+        'Powered by LiteCommerce [eCommerce solution]',
+        'Powered by LiteCommerce [e-commerce solution]',
+        'Powered by LiteCommerce [e-commerce solution]',
+    );
 
 
     /**
