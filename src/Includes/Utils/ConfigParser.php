@@ -67,7 +67,8 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      * @since  1.0.0
      */
     protected static $configFiles = array(
-        'config.local.php'
+        'config.php',
+        'config.local.php',
     );
 
     /**
@@ -80,7 +81,7 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
      */
     protected static function getMainFile()
     {
-        return LC_DIR_CONFIG . 'config.php';
+        return LC_DIR_CONFIG . 'config.default.php';
     }
 
     /**
