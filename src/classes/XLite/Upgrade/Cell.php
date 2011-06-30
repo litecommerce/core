@@ -731,11 +731,6 @@ class Cell extends \XLite\Base\Singleton
                 $entry->upgrade($isTestMode, $filesToOverwrite);
             }
 
-            if (!$isTestMode) {
-                \XLite\Core\Marketplace::getInstance()->checkForUpdates(0);
-                \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
-            }
-
             $result = $this->isValid();
         }
 
