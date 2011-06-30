@@ -280,4 +280,6 @@ LiteCommerce Installation Wizard
   'lc_docblocks_support_description' => 'The Docblocks comments are used in LiteCommerce and should not be stripped out by any PHP extensions.<br /><br />If you have the eAccelerator extension loaded, unload it in php.ini file or reconfigure eAccelerator with the --with-eaccelerator-doc-comment-inclusion switch, then clean eAccelerator cache directory.',
   'Redirecting to the next step...' => 'Redirecting to the next step...',
   'Preparing data for cache generation...' => 'Preparing data for generating cache...',
+  'Config file' => 'Config file',
+  'lc_config_file_description' => 'Config file does not exist and cannot be copied from the default config file. It is required to proceed an installation.<br /><br />Please, follow these steps: <br /><br />1. Go to directory :dir<br />2. Copy <i>:file1</i> to <i>:file2</i><br />3. Set writeable permissions on <i>:file2</i><br /><br />Then try again.',
 );

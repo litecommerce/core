@@ -52,6 +52,9 @@ define('LC_PHP_MEMORY_LIMIT_MIN', '64M');
 // Minimum MySQL version supported
 define('LC_MYSQL_VERSION_MIN', '5.0.3');
 
+// Default config file name
+define('LC_DEFAULT_CONFIG_FILE', 'config.default.php');
+
 // Config file name
 define('LC_CONFIG_FILE', 'config.php');
 
