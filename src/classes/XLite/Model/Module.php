@@ -502,30 +502,6 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Get module root directory
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getRootDirectory()
-    {
-        return LC_DIR_MODULES . $this->getPath() . LC_DS;
-    }
-
-    /**
-     * Return relative module path
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPath()
-    {
-        return str_replace('\\', LC_DS, $this->getActualName());
-    }
-
-    /**
      * Return currency for paid modules
      *
      * @return \XLite\Model\Currency
