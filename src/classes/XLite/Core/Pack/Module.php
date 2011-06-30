@@ -151,7 +151,7 @@ class Module extends \XLite\Core\Pack\APack
     protected function getClassDirs()
     {
         return array(
-            \Includes\Utils\ModulesManager::getRootDirectory($this->module->getAuthor(), $this->module->getName())
+            \Includes\Utils\ModulesManager::getAbsoluteDir($this->module->getAuthor(), $this->module->getName())
         );
     }
 
