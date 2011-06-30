@@ -102,23 +102,27 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
     {
         $data = $this->getIframeData();
 
-        $html = is_array($data) ? $this->assembleFormIframe($data) : $this->assembleURLIframe($data);
+        if (isset($data)) {
 
-        $page = <<<HTML
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body>
-    $html
-</body>
-</html>
-HTML;
+            list($width, $height) = $this->getIframeSize();
 
-        print ($page);
+            $viewer = new \XLite\View\Payment\Iframe(
+                array(
+                    'width'  => $width,
+                    'height' => $height,
+                    'src'    => is_array($data) ? $this->assembleFormIframe($data) : $this->assembleURLIframe($data),
+                )
+            );
+            $viewer->init();
+            $viewer->display();
 
-        return self::PROLONGATION;
+            $status = self::PROLONGATION;
+
+        } else {
+            $status = self::FAILED;
+        }
+
+        return $status;
     }
 
     /**
@@ -132,8 +136,6 @@ HTML;
      */
     protected function assembleFormIframe(array $data)
     {
-        list($width, $height) = $this->getIframeSize();
-
         $content = new \XLite\Model\IframeContent;
         $content->setData($data);
         $content->setUrl($this->getIframeFormURL());
@@ -141,10 +143,7 @@ HTML;
         \XLite\Core\Database::getEM()->persist($content);
         \XLite\Core\Database::getEM()->flush();
 
-        $url = \XLite\Core\Converter::buildURL('iframe_content', '', array('id' => $content->getId()));
-
-        return '<iframe id="pay_iframe" width="' . $width . '" height="' . $height . '" src="' . $url . '">'
-            . '</iframe>';
+        return \XLite\Core\Converter::buildURL('iframe_content', '', array('id' => $content->getId()));
     }
 
     /**
@@ -158,10 +157,7 @@ HTML;
      */
     protected function assembleURLIframe($data)
     {
-        list($width, $height) = $this->getIframeSize();
-
-        return '<iframe id="pay_iframe" width="' . $width . '" height="' . $height . '" src="' . $data . '">'
-            . '</iframe>';
+        return $data;
     }
 
 
