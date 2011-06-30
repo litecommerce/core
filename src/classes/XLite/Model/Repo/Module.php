@@ -119,6 +119,7 @@ class Module extends \XLite\Model\Repo\ARepo
     {
         if ($this->isSearchParamHasHandler($key)) {
             $this->{'prepareCnd' . ucfirst($key)}($queryBuilder, $value);
+
         } else {
             // TODO - add logging here
         }
@@ -446,16 +447,7 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     public function getModuleFromMarketplace(\XLite\Model\Module $module)
     {
-        $installed = $this->getModuleInstalled($module);
-
-        if ($installed) {
-            $result = $this->getModuleForUpdate($installed) ?: $installed;
-
-        } else {
-            $result = $this->defineModuleFromMarketplaceQuery($module)->getSingleResult();
-        }
-
-        return $result;
+        return $this->defineModuleFromMarketplaceQuery($module)->getSingleResult();
     }
 
     /**
@@ -528,6 +520,7 @@ class Module extends \XLite\Model\Repo\ARepo
             ->addOrderBy('m.majorVersion', 'ASC')
             ->addOrderBy('m.minorVersion', 'DESC');
 
+        $this->prepareCndFromMarketplace($queryBuilder, true);
 
         return $queryBuilder;
     }

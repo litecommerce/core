@@ -150,7 +150,9 @@ class Module extends \XLite\Core\Pack\APack
      */
     protected function getClassDirs()
     {
-        return array($this->module->getRootDirectory());
+        return array(
+            \Includes\Utils\ModulesManager::getAbsoluteDir($this->module->getAuthor(), $this->module->getName())
+        );
     }
 
     /**
@@ -169,7 +171,8 @@ class Module extends \XLite\Core\Pack\APack
         }
 
         foreach ($result as $key => &$data) {
-            $path = $data['fs'] . LC_DS . 'modules' . LC_DS . $this->module->getPath();
+            $path = \Includes\Utils\ModulesManager::getRelativeDir($this->module->getAuthor(), $this->module->getName());
+            $path = $data['fs'] . LC_DS . 'modules' . LC_DS . $path;
 
             if (\Includes\Utils\FileManager::isDirReadable($path)) {
                 $data = $path;
