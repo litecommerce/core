@@ -72,7 +72,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     {
         $id = $this->getSessionId();
 
-        return $id ? $this->getPostURL . '?sid=' . $id : null;
+        return $id ? $this->getPostURL() . '?sid=' . $id : null;
     }
 
     /**
@@ -87,16 +87,16 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
         $data = array(
             'pay_to_email'          => $this->getSetting('email'),
             'language'              => $this->getLanguageCode(),
-            'recipient_description' => \XLite\Core\Config::getInstance()->Company->company_name,
+            'recipient_description' => substr(\XLite\Core\Config::getInstance()->Company->company_name, 0, 30),
             'transaction_id'        => $this->transaction->getTransactionId(),
             'pay_from_email'        => $this->getProfile()->getLogin(),
             'firstname'             => $this->getProfile()->getBillingAddress()->getFirstname(),
             'lastname'              => $this->getProfile()->getBillingAddress()->getLastname(),
-            'address'               => $this->getProfile()->getBillingAddress()->getAddress(),
+            'address'               => $this->getProfile()->getBillingAddress()->getStreet(),
             'postal_code'           => $this->getProfile()->getBillingAddress()->getZipcode(),
             'city'                  => $this->getProfile()->getBillingAddress()->getCity(),
             'country'               => $this->getCountryCode(),
-            'amount'                => $this->getOrder()->getCurrency()->roundValueAsInteger($this->transaction->getValue()),
+            'amount'                => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
             'currency'              => $this->getCurrencyCode(),
             'status_url'            => $this->getReturnURL('transaction_id'),
             'return_url'            => $this->getReturnURL('transaction_id'),
@@ -109,13 +109,17 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             $data['logo_url'] = $this->getSetting('logo_url');
         }
 
-        $request = \XLite\Core\HTPP\Request($this->getPostURL());
+        $request = new \XLite\Core\HTTP\Request($this->getPostURL());
         $request->body = $data;
         $response = $request->sendRequest();
 
         $id = null;
-        if (200 == $response->code && isset($response->cookies['SESSION_ID'])) {
-            $id = $response->cookies['SESSION_ID'];
+        if (
+            200 == $response->code
+            && preg_match('/SESSION_ID=([a-z0-9]+)/iSs', $response->headers->SetCookie, $match)
+            && $response->body == $match[1]
+        ) {
+            $id = $match[1];
         }
 
         return $id;
@@ -196,7 +200,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      */
     protected function getLanguageCode()
     {
-        $code = strtoupper(\XLite\Core\Session::getInsatnce()->getLanguage()->getCode());
+        $code = strtoupper(\XLite\Core\Session::getInstance()->getLanguage()->getCode());
         
         return in_array($code, $this->allowedLanguages) ? $code : 'EN';
     }
@@ -235,7 +239,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      */
     protected function getPostURL()
     {
-        return $this->getSetting('test')
+        return '1' == $this->getSetting('test')
             ? 'http://www.moneybookers.com/app/test_payment.pl'
             : 'https://www.moneybookers.com/app/payment.pl';
     }    
