@@ -50,7 +50,10 @@ function lcConnectorGetControllerContent()
  */
 function lcConnectorValidateWidgetModifyForm(array &$form, array &$formState)
 {
-    return \XLite\Module\CDev\DrupalConnector\Drupal\Admin::getInstance()->validateWidgetModifyForm($form, $formState);
+    return \XLite\Module\CDev\DrupalConnector\Drupal\Admin::getInstance()->validateWidgetModifyForm(
+        $form,
+        $formState
+    );
 }
 
 /**
@@ -65,7 +68,10 @@ function lcConnectorValidateWidgetModifyForm(array &$form, array &$formState)
  */
 function lcConnectorSubmitWidgetModifyForm(array &$form, array &$formState)
 {
-    return \XLite\Module\CDev\DrupalConnector\Drupal\Admin::getInstance()->submitWidgetModifyForm($form, $formState);
+    return \XLite\Module\CDev\DrupalConnector\Drupal\Admin::getInstance()->submitWidgetModifyForm(
+        $form,
+        $formState
+    );
 }
 
 /**
@@ -80,5 +86,80 @@ function lcConnectorSubmitWidgetModifyForm(array &$form, array &$formState)
  */
 function lcConnectorSubmitWidgetDeleteForm(array &$form, array &$formState)
 {
-    return \XLite\Module\CDev\DrupalConnector\Drupal\Admin::getInstance()->submitWidgetDeleteForm($form, $formState);
+    return \XLite\Module\CDev\DrupalConnector\Drupal\Admin::getInstance()->submitWidgetDeleteForm(
+        $form,
+        $formState
+    );
+}
+
+/**
+ * Submit user profile/register form
+ *
+ * @param array &$form       Form description
+ * @param array &$form_state Form state
+ *
+ * @return void
+ * @see    ____func_see____
+ * @since  1.0.0
+ */
+function lcConnectorUserProfileFormSubmit(array &$form, array &$formState)
+{
+    return \XLite\Module\CDev\DrupalConnector\Drupal\Admin::getInstance()->submitUserProfileForm(
+        $form,
+        $formState
+    );
+}
+
+/**
+ * Submit admin permissions form
+ *
+ * @param array &$form       Form description
+ * @param array &$form_state Form state
+ *
+ * @return void
+ * @see    ____func_see____
+ * @since  1.0.0
+ */
+function lcConnectorUserPermissionsSubmit(array &$form, array &$formState)
+{
+    return \XLite\Module\CDev\DrupalConnector\Drupal\Admin::getInstance()->submitUserPermissionsForm(
+        $form,
+        $formState
+    );
+}
+
+/**
+ * Do user accounts synchronization in batch mode
+ *
+ * @param array &$context Batch process context data
+ *
+ * @return void
+ * @see    ____func_see____
+ * @since  1.0.0
+ */
+function lcConnectorUserSync(array &$context)
+{
+    return \XLite\Module\CDev\DrupalConnector\Drupal\UserSync::getInstance()->doUserSynchronization(
+        $context
+    );
+}
+
+/**
+ * Finalize user accounts synchronization batch process
+ *
+ * @param boolean $success    Batch process status
+ * @param array   $results    Batch process results array
+ * @param array   $operations Batch process operations array
+ *
+ * @return void
+ * @see    ____func_see____
+ * @since  1.0.0
+ */
+function lcConnectorUserSyncFinishedCallback($success, array $results, array $operations)
+{
+    return \XLite\Module\CDev\DrupalConnector\Drupal\UserSync::getInstance()->doUserSyncFinished(
+        $success,
+        $results,
+        $operations
+    );
 }

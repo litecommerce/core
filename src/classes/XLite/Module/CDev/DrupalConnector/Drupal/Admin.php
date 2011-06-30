@@ -38,7 +38,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Available block types
      */
-
     const BLOCK_TYPE_REGULAR   = 'regular';
     const BLOCK_TYPE_LC_WIDGET = 'lc_widget';
 
@@ -185,6 +184,8 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
     /**
      * Add "LC widget settings" fieldset for the form
+     *
+     * :FIXME: to revize
      *
      * @param array  &$form     Form description
      * @param string $class     LC widget class
@@ -516,6 +517,83 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     public function submitWidgetDeleteForm(array &$form, array &$formState)
     {
         $this->updateWidgetSettings($formState['delta'], array());
+    }
+
+    /**
+     * Alter user profile form
+     *
+     * @param array &$form      Form description
+     * @param array &$formState Form state
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function alterUserProfileForm(array &$form, array &$formState)
+    {
+        array_unshift($form['#submit'], 'lcConnectorUserProfileFormSubmit');
+    }
+
+    /**
+     * Alter user register form
+     *
+     * @param array &$form      Form description
+     * @param array &$formState Form state
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function alterUserRegisterForm(array &$form, array &$formState)
+    {
+        array_unshift($form['#submit'], 'lcConnectorUserProfileFormSubmit');
+    }
+
+    /**
+     * Handler to submit user profile/register form
+     *
+     * @param array &$form      Form description
+     * @param array &$formState Form state
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function submitUserProfileForm(array &$form, array &$formState)
+    {
+        if (isset($formState['input']) && isset($formState['input']['pass']['pass1'])) {
+            LCConnector_Handler::saveVariable('passwd', $formState['input']['pass']['pass1'], true);
+        }
+    }
+
+    /**
+     * Alter admin permissions form
+     *
+     * @param array &$form      Form description
+     * @param array &$formState Form state
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function alterUserPermissionsForm(array &$form, array &$formState)
+    {
+        $form['#submit'][] = 'lcConnectorUserPermissionsSubmit';
+    }
+
+    /**
+     * Submit admin permissions form
+     *
+     * @param array &$form      Form description
+     * @param array &$formState Form state
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function submitUserPermissionsForm(array &$form, array &$formState)
+    {
+        return \XLite\Module\CDev\DrupalConnector\Drupal\Profile::getInstance()->performActionUpdateRoles(user_roles());
     }
 
     // }}}
