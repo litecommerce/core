@@ -49,9 +49,9 @@ XLite\Model\Config:
   - { name: license, category: License, type: text }
   - { name: location_address, category: Company, type: text, orderby: 390, value: '*Your company address*', translations: [{ code: en, option_name: 'Street address', option_comment: '' }] }
   - { name: location_country, category: Company, type: country, orderby: 400, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
-  - { name: location_state, category: Company, type: state, orderby: 410, value: '17', translations: [{ code: en, option_name: State, option_comment: '' }] }
+  - { name: location_state, category: Company, type: state, orderby: 410, value: '181', translations: [{ code: en, option_name: State, option_comment: '' }] }
   - { name: location_custom_state, category: Company, type: text, orderby: 415, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
-  - { name: location_city, category: Company, type: text, orderby: 420, value: '*You company city*', translations: [{ code: en, option_name: City, option_comment: '' }] }
+  - { name: location_city, category: Company, type: text, orderby: 420, value: 'New York', translations: [{ code: en, option_name: City, option_comment: '' }] }
   - { name: location_zipcode, category: Company, type: text, orderby: 430, value: '50001', translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
   - { name: company_phone, category: Company, type: text, orderby: 440, value: '(555) 555-5555', translations: [{ code: en, option_name: Phone, option_comment: '' }] }
   - { name: login_lifetime, category: General, type: text, orderby: 450, value: '3', translations: [{ code: en, option_name: 'Days to store last login data', option_comment: '' }] }
