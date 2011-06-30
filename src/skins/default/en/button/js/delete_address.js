@@ -10,37 +10,32 @@
  * @since     1.0.0
  */
 
-function PopupButtonDeleteAddress()
+function ButtonDeleteAddress()
 {
-  PopupButtonDeleteAddress.superclass.constructor.apply(this, arguments);
+  var obj = this;
+
+  jQuery('.delete-address').each(
+    function () {
+      var o = jQuery(this);
+      var addressId = core.getCommentedData(o, 'address_id');
+      var warningText = core.getCommentedData(o, 'warning_text');
+
+      o.click(function (event) {
+        result = confirm(warningText);
+        if (result) {
+          self.location = URLHandler.buildURL(obj.getParams(addressId));
+        }
+      });
+    }
+  );
 }
 
-extend(PopupButtonDeleteAddress, PopupButton);
+ButtonDeleteAddress.prototype.getParams = function (addressId) {
+  return {
+    'address_id'  : addressId,
+    'target'      : 'address_book',
+    'action'      : 'delete'
+  };
+}
 
-PopupButtonDeleteAddress.prototype.pattern = '.delete-address';
-
-decorate(
-  'PopupButtonDeleteAddress',
-  'callback',
-  function (selector)
-  {
-    // Some autoloading could be added
-    jQuery('.button-cancel').each(
-      function () {
-
-        jQuery(this).attr('onclick', '')
-        .bind(
-          'click',
-          function (event) {
-            event.stopPropagation();
-
-            jQuery(selector).dialog('close');
-
-            return true;
-          });
-
-      });
-  }
-);
-
-core.autoload(PopupButtonDeleteAddress);
+core.autoload(ButtonDeleteAddress);
