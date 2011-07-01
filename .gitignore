@@ -9,6 +9,7 @@
 /coverage
 /var
 /src/etc/config.local*.php
+/src/sql/local
 /src/update.sh
 /src/var/addons
 /src/var/backup
