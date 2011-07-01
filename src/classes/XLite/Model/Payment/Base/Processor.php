@@ -39,6 +39,8 @@ abstract class Processor extends \XLite\Base
      * Payment procedure result codes
      */
     const PROLONGATION = 'R';
+    const SILENT       = 'W';
+    const SEPARATE     = 'E';
     const COMPLETED    = 'S';
     const PENDING      = 'P';
     const FAILED       = 'F';
