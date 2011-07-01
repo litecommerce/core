@@ -61,6 +61,8 @@ class Transaction extends \XLite\Model\AEntity
 
     const PROLONGATION = 'R';
     const COMPLETED    = 'C';
+    const SILENT       = 'S';
+    const SEPARATE     = 'E';
 
 
     /**
@@ -199,6 +201,14 @@ class Transaction extends \XLite\Model\AEntity
         switch ($result) {
             case \XLite\Model\Payment\Base\Processor::PROLONGATION:
                 $return = self::PROLONGATION;
+                break;
+
+            case \XLite\Model\Payment\Base\Processor::SILENT:
+                $return = self::SILENT;
+                break;
+
+            case \XLite\Model\Payment\Base\Processor::SEPARATE:
+                $return = self::SEPARATE;
                 break;
 
             case \XLite\Model\Payment\Base\Processor::COMPLETED:

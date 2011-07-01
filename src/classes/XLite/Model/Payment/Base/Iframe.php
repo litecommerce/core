@@ -36,6 +36,15 @@ namespace XLite\Model\Payment\Base;
 abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
 {
     /**
+     * Payment widget data 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $paymentWidgetData = array();
+
+    /**
      * Get iframe data
      *
      * @return string|array URL or POST data
@@ -66,6 +75,18 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
     public function getReturnOwnerTransaction()
     {
         return null;
+    }
+
+    /**
+     * Get payment widget data 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPaymentWidgetData()
+    {
+        return $this->paymentWidgetData;
     }
 
     /**
@@ -106,19 +127,19 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
 
             list($width, $height) = $this->getIframeSize();
 
-            $viewer = new \XLite\View\Payment\Iframe(
-                array(
-                    'width'  => $width,
-                    'height' => $height,
-                    'src'    => is_array($data) ? $this->assembleFormIframe($data) : $this->assembleURLIframe($data),
-                )
+            \XLite\Core\Session::getInstance()->iframePaymentData = array(
+                'width'  => $width,
+                'height' => $height,
+                'src'    => is_array($data) ? $this->assembleFormIframe($data) : $this->assembleURLIframe($data),
             );
-            $viewer->init();
-            $viewer->display();
 
-            $status = self::PROLONGATION;
+            $status = self::SEPARATE;
 
         } else {
+            $this->setDetail(
+                'iframe_data_error',
+                'Payment processor \'' . get_called_class() . '\' did not assemble service data successfull.'
+            );
             $status = self::FAILED;
         }
 
@@ -159,114 +180,4 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
     {
         return $data;
     }
-
-
-    /**
-     * Get form method
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFormMethod()
-    {
-        return self::FORM_METHOD_POST;
-    }
-
-    /**
-     * Get transactionId-based return URL
-     *
-     * @param string $fieldName TransactionId field name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getReturnURL($fieldName)
-    {
-        return \XLite::getInstance()->getShopURL(
-            \XLite\Core\Converter::buildURL('payment_return', '', array('txn_id_name' => $fieldName)),
-            true
-        );
-    }
-
-    /**
-     * Check total (transaction total and total from gateway response)
-     *
-     * @param float $total Total from gateway response
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function checkTotal($total)
-    {
-        $result = true;
-
-        if ($total && $this->transaction->getValue() != $total) {
-            $msg = 'Total amount doesn\'t match. Transaction total: ' . $this->transaction->getValue()
-                . '; payment gateway amount: ' . $total;
-            $this->setDetail(
-                'total_checking_error',
-                $msg,
-                'Hacking attempt'
-            );
-
-            $result = false;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Check currency (order currency and transaction response currency)
-     *
-     * @param string $currency Transaction response currency code
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function checkCurrency($currency)
-    {
-        $result = true;
-
-        if ($currency && $this->transaction->getOrder()->getCurrency()->getCode() != $currency) {
-            $msg = 'Currency code doesn\'t match. Order currency: '
-                . $this->transaction->getOrder()->getCurrency()->getCode()
-                . '; payment gateway currency: ' . $currency;
-            $this->setDetail(
-                'currency_checking_error',
-                $msg,
-                'Hacking attempt details'
-            );
-
-            $result = false;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Assemble form body (field set)
-     *
-     * @return string HTML
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function assembleFormBody()
-    {
-        $inputs = array();
-        foreach ($this->getFormFields() as $name => $value) {
-            $inputs[] = '<input type="hidden" name="' . htmlspecialchars($name)
-                . '" value="' . htmlspecialchars($value) . '" />';
-        }
-
-        if ($inputs) {
-            $body = '      ' . implode("\n" . '      ', $inputs);
-        }
-
-        return $body;
-    }
-
 }

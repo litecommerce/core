@@ -30,6 +30,12 @@
   </li>
 
   <li>
+    <label for="settings_secret_word">{t(#Secret word#)}</label>
+    <input type="text" id="settings_secret_word" value="{paymentMethod.getSetting(#secret_word#)}" name="settings[secret_word]" />
+    <div class="description">{t(#The uppercase MD5 value of the ASCII equivalent of the secret word#)}</div>
+  </li>
+
+  <li>
     <label for="settings_prefix">{t(#Invoice number prefix#)}</label>
     <input type="text" id="settings_prefix" value="{paymentMethod.getSetting(#prefix#)}" name="settings[prefix]" />
   </li>

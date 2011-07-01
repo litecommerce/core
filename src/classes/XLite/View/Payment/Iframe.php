@@ -27,6 +27,14 @@
 
 namespace XLite\View\Payment;
 
+/**
+ * IFRAME-based payment page
+ * 
+ * @see   ____class_see____
+ * @since 1.0.0
+ *
+ * @ListChild (list="center")
+ */
 class Iframe extends \XLite\View\AView
 {
     /**
@@ -36,6 +44,35 @@ class Iframe extends \XLite\View\AView
     const PARAM_HEIGHT = 'height';
     const PARAM_SRC    = 'src';
 
+
+    /**
+     * Return list of allowed targets
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $targets = parent::getAllowedTargets();
+
+        $targets[] = 'checkoutPayment';
+
+        return $targets;
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && \XLite\Core\Session::getInstance()->iframePaymentData;
+    }
 
     /**
      * Define widget parameters
@@ -67,5 +104,22 @@ class Iframe extends \XLite\View\AView
         return 'payment/iframe.tpl';
     }
 
+    /**
+     * Set widget params
+     *
+     * @param array $params Handler params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        if (is_array(\XLite\Core\Session::getInstance()->iframePaymentData)) {
+            $params = array_merge($params, \XLite\Core\Session::getInstance()->iframePaymentData);
+        }
+
+        parent::setWidgetParams($params);
+    }
 }
 

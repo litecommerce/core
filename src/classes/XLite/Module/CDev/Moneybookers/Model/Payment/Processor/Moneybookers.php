@@ -49,6 +49,20 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     );
 
     /**
+     * Statuses 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $statuses = array(
+        '-2' => 'Failed',
+        '2'  => 'Processed',
+        '0'  => 'Pending',
+        '-1' => 'Cancelled',
+    );
+
+    /**
      * Get settings widget or template
      *
      * @return string Widget class name or template path
@@ -98,9 +112,9 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             'country'               => $this->getCountryCode(),
             'amount'                => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
             'currency'              => $this->getCurrencyCode(),
-            'status_url'            => $this->getReturnURL('transaction_id'),
-            'return_url'            => $this->getReturnURL('transaction_id'),
-            'cancel_url'            => $this->getReturnURL('transaction_id'),
+            'status_url'            => $this->getCallbackURL(null, true),
+            'return_url'            => $this->getReturnURL(null, true),
+            'cancel_url'            => $this->getReturnURL(null, true, true),
             'hide_login'            => 1,
             'prepare_only'          => 1,
         );
@@ -120,6 +134,18 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             && $response->body == $match[1]
         ) {
             $id = $match[1];
+
+        } elseif (200 != $response->code) {
+            $this->setDetail(
+                'moneybookers_session_error',
+                'Moneybookers payment processor did not recieve session ID successfull (HTTP error: ' . $response->code . ').'
+            );
+
+        } else {
+            $this->setDetail(
+                'moneybookers_session_error',
+                'Moneybookers payment processor did not recieve session ID successfull.'
+            );
         }
 
         return $id;
@@ -139,39 +165,84 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     {
         parent::processReturn($transaction);
 
+        if (\XLite\Core\Request::getInstance()->cancel) {
+            $this->setDetail(
+                'cancel',
+                'Payment transaction is cancelled'
+            );
+            $this->transaction->setStatus($transaction::STATUS_FAILED);
+
+        } elseif ($transaction::STATUS_INPROGRESS == $this->transaction->getStatus()) {
+            $this->transaction->setStatus($transaction::STATUS_PENDING);        
+        }
+    }
+
+    /**
+     * Process callback
+     *
+     * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function processCallback(\XLite\Model\Payment\Transaction $transaction)
+    {
+        parent::processCallback($transaction);
+
         $request = \XLite\Core\Request::getInstance();
 
-        if ($request->isPost() && isset($request->trans_result)) {
-            $status = 'APPROVED' == $request->trans_result
-                ? $transaction::STATUS_SUCCESS
-                : $transaction::STATUS_FAILED;
+        if ($request->isPost() && isset($request->status)) {
+            $message = isset($this->statuses[$request->status]) ? $this->statuses[$request->status] : 'Failed';
 
             $this->saveDataFromRequest();
+
+            switch ($request->status) {
+                case 0:
+                    $status = $transaction::STATUS_PENDING;
+                    break;
+
+                case 2:
+                    $status = $transaction::STATUS_SUCCESS;
+                    break;
+
+                default:
+                    $status = $transaction::STATUS_FAILED;
+            }
 
             // Amount checking
             if (isset($request->amount) && !$this->checkTotal($request->amount)) {
                 $status = $transaction::STATUS_FAILED;
             }
 
-            if (isset($request->decline_reason)) {
-                $this->transaction->setNote($request->decline_reason);
+            // Currency checking
+            if (isset($request->currency) && !$this->checkCurrency($request->currency)) {
+                $status = $transaction::STATUS_FAILED;
             }
 
-            // MD5 hash checking
-            if ($status == $transaction::STATUS_SUCCESS && isset($request->md5_hash)) {
-                $hash = md5(
-                    strval($this->getSetting('hash'))
-                    . $this->getSetting('login')
-                    . $request->transID
-                    . $request->amount
-                );
-                if ($hash != $request->md5_hash) {
+            // Check MD5 hash
+            if (
+                $status == $transaction::STATUS_SUCCESS
+                && $request->md5sig
+                && $this->getSetting('secret_word')
+            ) {
+                $base = $request->merchant_id
+                    . $request->transaction_id
+                    . $this->getSetting('secret_word')
+                    . $request->mb_amount
+                    . $request->mb_currency
+                    . $request->status; 
+                if (strtoupper(md5($base)) != strtoupper($request->md5sig)) {
+                    $this->setDetail(
+                        'signature_error',
+                        'Payment transaction\'s secure signature is corrupted',
+                        'Hacking attempt'
+                    );
                     $status = $transaction::STATUS_FAILED;
-                    $this->setDetail('hash_checking', 'failed', 'MD5 hash checking');
                 }
             }
 
-            $this->transaction->setStatus($status);
+            $this->transaction->setStatus($status); 
         }
     }
 
