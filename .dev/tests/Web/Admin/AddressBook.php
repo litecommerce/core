@@ -36,8 +36,6 @@ class XLite_Web_Admin_AddressBook extends XLite_Web_Admin_AAdmin
 
     const DELETE_BUTTON = '//button[@class="delete-address "]';
 
-    const PROCEED_BUTTON = "//button[@class='button-proceed' and @type='submit']";
-
     const CHANGE_BUTTON = "//button[@class='modify-address ']";
 
 
@@ -51,6 +49,9 @@ class XLite_Web_Admin_AddressBook extends XLite_Web_Admin_AAdmin
      */
     public function testAddressBookAdd()
     {
+        $this->markTestSkipped('Awaiting for new Selenuim version. Problems with JS confirmation dialogs');
+
+/*
         $this->logIn();
 
         $this->open('admin.php?target=address_book');
@@ -69,15 +70,7 @@ class XLite_Web_Admin_AddressBook extends XLite_Web_Admin_AAdmin
 
         $this->clickAndWait(self::SAVE_BUTTON);
 
-        $this->click(self::DELETE_BUTTON); 
-
-        $this->waitForLocalCondition(
-            "jQuery('.ui-dialog-title').length > 0",
-            10000,
-            "No delete popup"
-        );
-
-        $this->clickAndWait(self::PROCEED_BUTTON);
+        $this->clickAndWait(self::DELETE_BUTTON); 
 
         $this->assertElementNotPresent("//li[@class='address-text-cell address-text-street']/ul[@class='address-text']/li[@class='address-text-value']");
 
@@ -109,6 +102,7 @@ class XLite_Web_Admin_AddressBook extends XLite_Web_Admin_AAdmin
 
         $this->assertTrue('street-test5' == $this->getJSExpression("jQuery('.address-text-street .address-text-value').eq(0).text().trim()"), 'No update');
 
+    */
     }
 
     private function enterAddress($id, $value = 'test', $number = '11111') 
