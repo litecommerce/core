@@ -4,7 +4,7 @@
  *
  * Loosely Based on PEAR HTTP_Response
  *
- * @version $Id$
+ * @version $Id: f6f014dc8a5a67bac85eeb812e3cc7b6b1ea33d8 $
  */
 namespace PEAR2\HTTP;
 class Request 
