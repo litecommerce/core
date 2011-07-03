@@ -100,6 +100,10 @@ clear: both;
   vertical-align: top;
 }
 
+.advanced-search-options td.title-category {
+  vertical-align: middle;
+}
+
 .search-product-form table.search-form-main-part tr:last-child td {
   padding-bottom: 10px;
 }
