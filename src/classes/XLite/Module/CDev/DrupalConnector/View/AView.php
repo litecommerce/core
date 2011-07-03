@@ -145,8 +145,8 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
             $ds = preg_quote(LC_DS, '/');
 
             $filter = array(
-                '/common' . $ds . 'css' . $ds . 'style\.css$/Ss',
-                '/common' . $ds . 'css' . $ds . 'print\.css$/Ss',
+                '/' . $ds . '\w+' . $ds . '[a-z]{2}' . $ds . 'css' . $ds . 'style\.css$/Ss',
+                '/' . $ds . '\w+' . $ds . '[a-z]{2}' . $ds . 'css' . $ds . 'print\.css$/Ss',
                 '/common' . $ds . 'js' . $ds . 'jquery\.min\.js$/Ss',
                 '/common' . $ds . 'js' . $ds . 'jquery\.blockUI\.js$/Ss',
             );

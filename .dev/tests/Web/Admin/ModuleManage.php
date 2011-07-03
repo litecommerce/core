@@ -42,7 +42,8 @@ class XLite_Web_Admin_ModuleManage extends XLite_Web_Admin_AAdmin
     {
 
 
-    $this->markTestSkipped('Awaiting for new Selenuim version');
+    $this->markTestSkipped('Awaiting for new Selenuim version. Problems with JS confirmation dialogs');
+
 /*
     Whole test does not work in Firefox 4.0 (known issue)
     Must be fixed in the next Selenuim version

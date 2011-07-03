@@ -25,25 +25,50 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Address;
+namespace XLite\Controller\Customer;
 
 /**
- * \XLite\View\Address\Delete
+ * Separate checkout payment page
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Delete extends \XLite\View\AView
+class CheckoutPayment extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * getDefaultTemplate
+     * Get page title
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultTemplate()
+    public function getTitle()
     {
-        return 'address/delete_address.tpl';
+        return static::t('Payment');
+    }
+
+    /**
+     * isSecure
+     * TODO: check if this method is used
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isSecure()
+    {
+        return $this->is('HTTPS') ? true : parent::isSecure();
+    }
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLocation()
+    {
+        return $this->getTitle();
     }
 }

@@ -36,6 +36,12 @@ namespace XLite\Model\Payment\Base;
 abstract class Online extends \XLite\Model\Payment\Base\Processor
 {
     /**
+     * Default return transaction id field name 
+     */
+    const RETURN_TXN_ID = 'txnId';
+
+
+    /**
      * Process callback
      *
      * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
@@ -161,4 +167,119 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
             LOG_DEBUG
         );
     }
+
+    /**
+     * Get transactionId-based return URL
+     *
+     * @param string  $fieldName TransactionId field name OPTIONAL
+     * @param boolean $withId    Add to URL transaction id or not OPTIONAL
+     * @param boolean $asCancel  Mark URL as cancel action
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getReturnURL($fieldName = self::RETURN_TXN_ID, $withId = false, $asCancel = false)
+    {
+        $query = array(
+            'txn_id_name' => $fieldName ?: self::RETURN_TXN_ID,
+        );
+
+        if ($withId) {
+            $query[$fieldName] = $this->transaction->getTransactionId();
+        }
+
+        if ($asCancel) {
+            $query['cancel'] = 1;
+        }
+        return \XLite::getInstance()->getShopURL(
+            \XLite\Core\Converter::buildURL('payment_return', '', $query),
+            true
+        );
+    }
+
+    /**
+     * Get transactionId-based callback URL
+     *
+     * @param string  $fieldName TransactionId field name OPTIONAL
+     * @param boolean $withId    Add to URL transaction id or not OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCallbackURL($fieldName = self::RETURN_TXN_ID, $withId = false)
+    {
+        $query = array(
+            'txn_id_name' => $fieldName ?: self::RETURN_TXN_ID,
+        );
+
+        if ($withId) {
+            $query[$fieldName] = $this->transaction->getTransactionId();
+        }
+
+        return \XLite::getInstance()->getShopURL(
+            \XLite\Core\Converter::buildURL('callback', '', $query),
+            true
+        );
+    }
+
+    /**
+     * Check total (transaction total and total from gateway response)
+     *
+     * @param float $total Total from gateway response
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkTotal($total)
+    {
+        $result = true;
+
+        if ($total && $this->transaction->getValue() != $total) {
+            $msg = 'Total amount doesn\'t match. Transaction total: ' . $this->transaction->getValue()
+                . '; payment gateway amount: ' . $total;
+            $this->setDetail(
+                'total_checking_error',
+                $msg,
+                'Hacking attempt'
+            );
+
+            $result = false;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check currency (order currency and transaction response currency)
+     *
+     * @param string $currency Transaction response currency code
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkCurrency($currency)
+    {
+        $result = true;
+
+        if ($currency && $this->transaction->getOrder()->getCurrency()->getCode() != $currency) {
+            $msg = 'Currency code doesn\'t match. Order currency: '
+                . $this->transaction->getOrder()->getCurrency()->getCode()
+                . '; payment gateway currency: ' . $currency;
+            $this->setDetail(
+                'currency_checking_error',
+                $msg,
+                'Hacking attempt details'
+            );
+
+            $result = false;
+        }
+
+        return $result;
+    }
+
+
 }
