@@ -25,13 +25,13 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Quantum;
+namespace XLite\Module\CDev\PaypalWPS;
 
 /**
- * QuantumGatewaya payment gateway integration (QGWdatabase Engine API)
+ * Paypal Website Payments Standard
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.1
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -41,7 +41,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.1
      */
     public static function getAuthorName()
     {
@@ -57,7 +57,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getModuleName()
     {
-        return 'QuantumGateway';
+        return 'Paypal Website Payments Standard';
     }
 
     /**
@@ -81,7 +81,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Enables taking credit card payments for your online store via QuantumGateway (QGWdatabase Engine API).';
+        return 'Enables taking credit card payments for your online store via Paypal (Website Payments Standard).';
     }
 
     /**

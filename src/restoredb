@@ -4,9 +4,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -14,11 +14,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -82,7 +82,7 @@ where:
         demo       - install all demo data (excluding the admin user),
         standalone - do not enable DrupalConnector module
         admin      - install admin user account
-        site       - install data for website (storefront demo) 
+        site       - install data for website (storefront demo)
         siteadmin  - install data for website (administrator interface demo)
 
 Examples:
@@ -119,10 +119,10 @@ if (file_exists('etc/config.local.php')) {
 }
 
 if (R_INSTALL_SITEADMIN) {
-    
+
     if (file_exists('etc/config.demo.php')) {
         $config = array_replace_recursive($config, parse_ini_file('etc/config.demo.php'));
-    
+
     } else {
         die('etc/config.demo.php file required');
     }
@@ -198,7 +198,9 @@ if (R_INSTALL_SITE || R_INSTALL_SITEADMIN) {
     $enabledModules['CDev'][] = 'AustraliaPost';
     $enabledModules['CDev'][] = 'AuthorizeNet';
     $enabledModules['CDev'][] = 'Quantum';
+    $enabledModules['CDev'][] = 'PaypalWPS';
     $enabledModules['CDev'][] = 'Taxes';
+
 }
 
 
@@ -245,7 +247,7 @@ if (R_INSTALL_SITE) {
     $files[] = 'sql/demo/xlite_demo_orders.yaml';
 
 } elseif (R_INSTALL_SITEADMIN) {
-    
+
     $files[] = 'sql/xlite_demo.yaml';
     array_splice($files, count($files), 0, $moduleFiles);
     $files[] = 'sql/demo/xlite_demo_data.yaml';
@@ -274,7 +276,7 @@ if (R_INSTALL_SITE) {
         $files[] = 'sql/demo/xlite_demo_orders.yaml';
         // $files[] = 'sql/local/xlite_test_accounts.yaml';
     }
-    
+
     if (file_exists('sql/local/xlite_local_demo.yaml')) {
         $files[] = 'sql/local/xlite_local_demo.yaml';
     }
