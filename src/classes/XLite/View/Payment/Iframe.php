@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -25,54 +25,57 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button;
-
+namespace XLite\View\Payment;
 
 /**
- * Delete address button widget
- *
+ * IFRAME-based payment page
+ * 
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="center")
  */
-class DeleteAddress extends \XLite\View\Button\Regular
+class Iframe extends \XLite\View\AView
 {
-    /*
-     * Address identificator parameter
+    /**
+     * Common widget parameter names
      */
-    const PARAM_ADDRESS_ID = 'addressId';
+    const PARAM_WIDTH  = 'width';
+    const PARAM_HEIGHT = 'height';
+    const PARAM_SRC    = 'src';
+
 
     /**
-     * getJSFiles
+     * Return list of allowed targets
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getJSFiles()
+    public static function getAllowedTargets()
     {
-        $list = parent::getJSFiles();
-        $list[] = 'button/js/delete_address.js';
+        $targets = parent::getAllowedTargets();
 
-        return $list;
+        $targets[] = 'checkoutPayment';
+
+        return $targets;
     }
 
     /**
-     * Register CSS files for delete address button
+     * Check if widget is visible
      *
-     * @return array
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getCSSFiles()
+    protected function isVisible()
     {
-        $list = parent::getCSSFiles();
-        $list[] = 'button/css/delete_address.css';
-
-        return $list;
+        return parent::isVisible()
+            && \XLite\Core\Session::getInstance()->iframePaymentData;
     }
 
     /**
-     * Define widget params
+     * Define widget parameters
      *
      * @return void
      * @see    ____func_see____
@@ -83,22 +86,9 @@ class DeleteAddress extends \XLite\View\Button\Regular
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ADDRESS_ID => new \XLite\Model\WidgetParam\Int('Address ID', 0),
-        );
-    }
-
-    /**
-     * Return JS parameters
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getJSParams()
-    {
-        return array(
-            'address_id'    => $this->getParam(self::PARAM_ADDRESS_ID),
-            'warning_text'  => static::t('Delete this address?'),
+            self::PARAM_WIDTH  => new \XLite\Model\WidgetParam\Int('Width', 400),
+            self::PARAM_HEIGHT => new \XLite\Model\WidgetParam\Int('Height', 400),
+            self::PARAM_SRC    => new \XLite\Model\WidgetParam\String('Source', ''),
         );
     }
 
@@ -111,19 +101,25 @@ class DeleteAddress extends \XLite\View\Button\Regular
      */
     protected function getDefaultTemplate()
     {
-        return 'button/delete_address.tpl';
+        return 'payment/iframe.tpl';
     }
 
     /**
-     * Return CSS classes
+     * Set widget params
      *
-     * @return string
+     * @param array $params Handler params
+     *
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getClass()
+    public function setWidgetParams(array $params)
     {
-        return 'delete-address ' . ($this->getParam(self::PARAM_STYLE) ?: '');
-    }
+        if (is_array(\XLite\Core\Session::getInstance()->iframePaymentData)) {
+            $params = array_merge($params, \XLite\Core\Session::getInstance()->iframePaymentData);
+        }
 
+        parent::setWidgetParams($params);
+    }
 }
+

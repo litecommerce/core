@@ -17,37 +17,11 @@
   padding-bottom: 25px;
 }
 
-.address-dialog h4 {
+.address-dialog .message {
   color: #336699;
   font-size: 14px;
   font-weight: normal;
   padding-bottom: 10px;
-}
-
-.address-dialog .address-plain
-{
-  font-size: 12px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  border-style: solid;
-  border-width: 1px;
-  padding: 20px;
-  margin-left: 30px;
-  margin-bottom: 30px;
-  width: 300px;
-  border-color: #dfdfdf;
-  background-color: #f4f4f4;
-  float: left;
-}
-
-.delete-address-form {
-  float: left;
-}
-
-.address-dialog button.button-proceed
-{
-  margin-right: 100px;
 }
 
 .address-dialog label {
@@ -89,7 +63,8 @@ td.address-text {
 }
 
 ul.address-entry,
-  ul.address-text
+  ul.address-text,
+  ul.address-book
 {
   list-style: none;
   margin: 0px;
@@ -97,6 +72,7 @@ ul.address-entry,
 
 ul.address-entry {
   float: left;
+  width: 230px;
 }
 
 div.address-box div.address-icons {
@@ -104,10 +80,16 @@ div.address-box div.address-icons {
   margin-top: -26px;
 }
 
-ul.address-entry li
+ul.address-entry li,
+  ul.address-book li
 {
   background: none;
   margin: 0px;
+}
+
+ul.address-book li.address-book {
+  float: left;
+  min-height: 300px;
 }
 
 div.address-box table td.address-entry-actions-cell {
@@ -192,11 +174,11 @@ div.address-box {
   border-radius: 10px;
   border-style: solid;
   border-width: 1px;
-  float: left;
   margin-right: 20px;
   margin-bottom: 20px;
   padding: 15px;
   width: 260px;
+  min-height: 170px;
   border-color: #dfdfdf;
   background-color: #f4f4f4;
 }
