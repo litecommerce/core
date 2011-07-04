@@ -186,7 +186,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
         );
 
         if ($withId) {
-            $query[$fieldName] = $this->transaction->getTransactionId();
+            $query[$query['txn_id_name']] = $this->transaction->getTransactionId();
         }
 
         if ($asCancel) {
@@ -216,7 +216,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
         );
 
         if ($withId) {
-            $query[$fieldName] = $this->transaction->getTransactionId();
+            $query[$query['txn_id_name']] = $this->transaction->getTransactionId();
         }
 
         return \XLite::getInstance()->getShopURL(
