@@ -189,6 +189,7 @@ class Transaction extends \XLite\Model\AEntity
     public function handleCheckoutAction()
     {
         $this->setStatus(self::STATUS_INPROGRESS);
+        \XLite\Core\Database::getEM()->flush();
 
         $data = is_array(\XLite\Core\Request::getInstance()->payment)
             ? \XLite\Core\Request::getInstance()->payment
