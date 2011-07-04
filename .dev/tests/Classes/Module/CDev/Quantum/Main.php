@@ -48,7 +48,7 @@ class XLite_Tests_Module_CDev_Quantum_Main extends XLite_Tests_TestCase
     public function testShowSettingsForm()
     {
         $main = $this->getMain();
-        $this->assertTrue($main::showSettingsForm(), 'Wrong flag to show settings form');
+        $this->assertFalse($main::showSettingsForm(), 'Wrong flag to show settings form');
     }
 
     protected function getMain()
