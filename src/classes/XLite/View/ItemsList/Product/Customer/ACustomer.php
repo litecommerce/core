@@ -827,18 +827,4 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     {
         return $this->getCart()->isProductAdded($product->getProductId());
     }
-
-    /**
-     * Get product labels 
-     * 
-     * @param \XLite\Model\Product $product Product
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getProductLabels(\XLite\Model\Product $product)
-    {
-        return array();
-    }
 }

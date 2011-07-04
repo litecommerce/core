@@ -36,13 +36,13 @@ class XLite_Tests_Module_CDev_AustraliaPost_Main extends XLite_Tests_TestCase
     public function testGetDescription()
     {
         $main = $this->getMain();
-        $this->assertEquals('This module introduces Australia Post real-time shipping cost calculations', $main::getDescription(), 'Wrong description');
+        $this->assertEquals('Gets shipping quotes for Australia Post delivery methods.', $main::getDescription(), 'Wrong description');
     }
 
     public function testGetVersion()
     {
         $main = $this->getMain();
-        $this->assertEquals('1.0.0', $main::getVersion(), 'Wrong version');
+        $this->assertEquals('1.0.1', $main::getVersion(), 'Wrong version');
     }
 
     public function testShowSettingsForm()

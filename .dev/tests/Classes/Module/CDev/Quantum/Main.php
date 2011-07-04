@@ -30,25 +30,25 @@ class XLite_Tests_Module_CDev_Quantum_Main extends XLite_Tests_TestCase
     public function testGetModuleName()
     {
         $main = $this->getMain();
-        $this->assertEquals('Quantum', $main::getModuleName(), 'Wrong module name');
+        $this->assertEquals('QuantumGateway', $main::getModuleName(), 'Wrong module name');
     }
 
     public function testGetDescription()
     {
         $main = $this->getMain();
-        $this->assertEquals('QuantumGateway integration (QGWdatabase Engine API)', $main::getDescription(), 'Wrong description');
+        $this->assertEquals('Enables taking credit card payments for your online store via QuantumGateway (QGWdatabase Engine API).', $main::getDescription(), 'Wrong description');
     }
 
     public function testGetVersion()
     {
         $main = $this->getMain();
-        $this->assertEquals('1.0.0', $main::getVersion(), 'Wrong version');
+        $this->assertEquals('1.0.1', $main::getVersion(), 'Wrong version');
     }
 
     public function testShowSettingsForm()
     {
         $main = $this->getMain();
-        $this->assertTrue($main::showSettingsForm(), 'Wrong flag to show settings form');
+        $this->assertFalse($main::showSettingsForm(), 'Wrong flag to show settings form');
     }
 
     protected function getMain()

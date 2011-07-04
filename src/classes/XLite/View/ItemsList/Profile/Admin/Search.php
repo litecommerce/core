@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -28,8 +28,8 @@
 namespace XLite\View\ItemsList\Profile\Admin;
 
 /**
- * Search 
- * 
+ * Search
+ *
  * @see   ____class_see____
  * @since 1.0.0
  *
@@ -40,21 +40,22 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
     /**
      * Widget param names
      */
-    const PARAM_PATTERN     = 'pattern';
-    const PARAM_USER_TYPE   = 'user_type';
-    const PARAM_MEMBERSHIP  = 'membership';
-    const PARAM_COUNTRY     = 'country';
-    const PARAM_STATE       = 'state';
-    const PARAM_ADDRESS     = 'address';
-    const PARAM_PHONE       = 'phone';
-    const PARAM_DATE_TYPE   = 'date_type';
-    const PARAM_DATE_PERIOD = 'date_period';
-    const PARAM_START_DATE  = 'startDate';
-    const PARAM_END_DATE    = 'endDate';
+    const PARAM_PATTERN         = 'pattern';
+    const PARAM_USER_TYPE       = 'user_type';
+    const PARAM_MEMBERSHIP      = 'membership';
+    const PARAM_COUNTRY         = 'country';
+    const PARAM_STATE           = 'state';
+    const PARAM_CUSTOM_STATE    = 'customState';
+    const PARAM_ADDRESS         = 'address';
+    const PARAM_PHONE           = 'phone';
+    const PARAM_DATE_TYPE       = 'date_type';
+    const PARAM_DATE_PERIOD     = 'date_period';
+    const PARAM_START_DATE      = 'startDate';
+    const PARAM_END_DATE        = 'endDate';
 
     /**
      * List of search params for this widget (cache)
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -187,7 +188,7 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
 
     /**
      * Return list of search params for this widget
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -196,17 +197,18 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
     {
         if (!isset($this->searchParams)) {
             $this->searchParams = array(
-                self::PARAM_PATTERN     => new \XLite\Model\WidgetParam\String('Pattern', ''),
-                self::PARAM_USER_TYPE   => new \XLite\Model\WidgetParam\Set('Type', '', false, array('', 'A', 'C')),
-                self::PARAM_MEMBERSHIP  => new \XLite\Model\WidgetParam\String('Membership', ''),
-                self::PARAM_COUNTRY     => new \XLite\Model\WidgetParam\String('Country', ''),
-                self::PARAM_STATE       => new \XLite\Model\WidgetParam\Int('State', null),
-                self::PARAM_ADDRESS     => new \XLite\Model\WidgetParam\String('Address', ''),
-                self::PARAM_PHONE       => new \XLite\Model\WidgetParam\String('Phone', ''),
-                self::PARAM_DATE_TYPE   => new \XLite\Model\WidgetParam\Set('Date type', '', false, array('', 'R', 'L')),
-                self::PARAM_DATE_PERIOD => new \XLite\Model\WidgetParam\Set('Date period', '', false, array('', 'M', 'W', 'D', 'C')),
-                self::PARAM_START_DATE  => new \XLite\Model\WidgetParam\Int('Start date', null),
-                self::PARAM_END_DATE    => new \XLite\Model\WidgetParam\Int('End date', null),
+                self::PARAM_PATTERN         => new \XLite\Model\WidgetParam\String('Pattern', ''),
+                self::PARAM_USER_TYPE       => new \XLite\Model\WidgetParam\Set('Type', '', false, array('', 'A', 'C')),
+                self::PARAM_MEMBERSHIP      => new \XLite\Model\WidgetParam\String('Membership', ''),
+                self::PARAM_COUNTRY         => new \XLite\Model\WidgetParam\String('Country', ''),
+                self::PARAM_STATE           => new \XLite\Model\WidgetParam\Int('State', null),
+                self::PARAM_CUSTOM_STATE    => new \XLite\Model\WidgetParam\String('State name (custom)', ''),
+                self::PARAM_ADDRESS         => new \XLite\Model\WidgetParam\String('Address', ''),
+                self::PARAM_PHONE           => new \XLite\Model\WidgetParam\String('Phone', ''),
+                self::PARAM_DATE_TYPE       => new \XLite\Model\WidgetParam\Set('Date type', '', false, array('', 'R', 'L')),
+                self::PARAM_DATE_PERIOD     => new \XLite\Model\WidgetParam\Set('Date period', '', false, array('', 'M', 'W', 'D', 'C')),
+                self::PARAM_START_DATE      => new \XLite\Model\WidgetParam\Int('Start date', null),
+                self::PARAM_END_DATE        => new \XLite\Model\WidgetParam\Int('End date', null),
             );
         }
 
@@ -231,6 +233,7 @@ class Search extends \XLite\View\ItemsList\Profile\Admin\AAdmin
                     'MEMBERSHIP',
                     'COUNTRY',
                     'STATE',
+                    'CUSTOM_STATE',
                     'ADDRESS',
                     'PHONE',
                     'DATE_TYPE',

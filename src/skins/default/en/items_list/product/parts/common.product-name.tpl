@@ -13,6 +13,7 @@
  * @ListChild (list="itemsList.product.small_thumbnails.customer.details", weight="20")
  * @ListChild (list="itemsList.product.big_thumbnails.customer.info", weight="200")
  * @ListChild (list="itemsList.product.text_links.customer.info", weight="100")
+ * @ListChild (list="productBlock.info", weight="200")
  *}
 <h3 class="product-name">
   <a class="fn url" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}">

@@ -36,13 +36,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Main extends XLite_Tests_TestCase
     public function testGetDescription()
     {
         $main = $this->getMain();
-        $this->assertEquals('Support for product options, enabling you to provide customers with a choice of product variants', $main::getDescription(), 'Wrong description');
+        $this->assertEquals('Enables customers to choose options when buying products.', $main::getDescription(), 'Wrong description');
     }
 
     public function testGetVersion()
     {
         $main = $this->getMain();
-        $this->assertEquals('1.0.0', $main::getVersion(), 'Wrong version');
+        $this->assertEquals('1.0.1', $main::getVersion(), 'Wrong version');
     }
 
     public function testShowSettingsForm()

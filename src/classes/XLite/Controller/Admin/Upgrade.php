@@ -55,6 +55,11 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Request::getInstance()->action = 'check_integrity';
         }
 
+        if (\XLite\Upgrade\Cell::getInstance()->isUpgraded()) {
+            \XLite\Core\Marketplace::getInstance()->checkForUpdates(0);
+            \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
+        }
+
         parent::run();
     }
 
@@ -317,7 +322,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                 (array) \XLite\Core\Request::getInstance()->toDisable
             );
 
-            if (\XLite\Upgrade\Cell::getInstance()->downloadUpgradePacks()) {
+            if ($this->runStep('downloadUpgradePacks')) {
                 $this->setReturnURL($this->buildURL('upgrade', 'unpack', $this->getActionParamsCommon()));
 
             } else {
@@ -345,7 +350,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             // :DEVCODE: to remove
             \Includes\Utils\Operator::showMessage('Unpacking archives, please wait...');
 
-            if (!\XLite\Upgrade\Cell::getInstance()->unpackAll()) {
+            if (!$this->runStep('unpackAll')) {
                 $this->showError(__FUNCTION__, 'not all archives were unpacked');
 
             } elseif ($this->isNextStepAvailable()) {
@@ -380,7 +385,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \Includes\Utils\Operator::showMessage('Checking integrity, please wait...');
 
             // Perform upgrade in test mode
-            \XLite\Upgrade\Cell::getInstance()->upgrade(true);
+            $this->runStep('upgrade', array(true));
 
             if ($this->isForce() && $this->isNextStepAvailable()) {
                 $this->setReturnURL($this->buildURL('upgrade', 'install_upgrades', $this->getActionParamsCommon()));
@@ -406,7 +411,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         $toOverwrite = (array) \XLite\Core\Request::getInstance()->toOverwrite;
 
         // Perform upgrade
-        \XLite\Upgrade\Cell::getInstance()->upgrade(false, $toOverwrite);
+        $this->runStep('upgrade', array(false, $toOverwrite));
 
         // Disable selected modules
         foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
@@ -481,6 +486,25 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         } else {
             \XLite\Core\TopMessage::addError('Unexpected error: version value is not passed');
         }
+    }
+
+    /**
+     * Run an upgrade step
+     * 
+     * @param string $method Upgrade cell method to call
+     * @param array  $params Call params OPTIONAL
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function runStep($method, array $params = array())
+    {
+        return \Includes\Utils\Operator::executeWithCustomMaxExecTime(
+            \Includes\Utils\ConfigParser::getOptions(array('marketplace', 'upgrade_step_time_limit')),
+            array(\XLite\Upgrade\Cell::getInstance(), $method),
+            $params
+        );
     }
 
     // }}}

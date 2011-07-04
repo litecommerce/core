@@ -38,23 +38,24 @@ class Profile extends \XLite\Model\Repo\ARepo
     /**
      * Allowable search params
      */
-    const SEARCH_PROFILE_ID  = 'profile_id';
-    const SEARCH_ORDER_ID    = 'order_id';
-    const SEARCH_REFERER     = 'referer';
-    const SEARCH_MEMBERSHIP  = 'membership';
-    const SEARCH_LANGUAGE    = 'language';
-    const SEARCH_PATTERN     = 'pattern';
-    const SEARCH_PHONE       = 'phone';
-    const SEARCH_COUNTRY     = 'country';
-    const SEARCH_STATE       = 'state';
-    const SEARCH_ADDRESS     = 'address';
-    const SEARCH_USER_TYPE   = 'user_type';
-    const SEARCH_DATE_TYPE   = 'date_type';
-    const SEARCH_DATE_PERIOD = 'date_period';
-    const SEARCH_START_DATE  = 'startDate';
-    const SEARCH_END_DATE    = 'endDate';
-    const SEARCH_ORDERBY     = 'order_by';
-    const SEARCH_LIMIT       = 'limit';
+    const SEARCH_PROFILE_ID     = 'profile_id';
+    const SEARCH_ORDER_ID       = 'order_id';
+    const SEARCH_REFERER        = 'referer';
+    const SEARCH_MEMBERSHIP     = 'membership';
+    const SEARCH_LANGUAGE       = 'language';
+    const SEARCH_PATTERN        = 'pattern';
+    const SEARCH_PHONE          = 'phone';
+    const SEARCH_COUNTRY        = 'country';
+    const SEARCH_STATE          = 'state';
+    const SEARCH_CUSTOM_STATE   = 'custom_state';
+    const SEARCH_ADDRESS        = 'address';
+    const SEARCH_USER_TYPE      = 'user_type';
+    const SEARCH_DATE_TYPE      = 'date_type';
+    const SEARCH_DATE_PERIOD    = 'date_period';
+    const SEARCH_START_DATE     = 'startDate';
+    const SEARCH_END_DATE       = 'endDate';
+    const SEARCH_ORDERBY        = 'order_by';
+    const SEARCH_LIMIT          = 'limit';
 
     /**
      * Password length
@@ -110,12 +111,13 @@ class Profile extends \XLite\Model\Repo\ARepo
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         $queryBuilder = $this->createQueryBuilder('p')
+            ->addGroupBy('p.profile_id')
             ->addSelect('addresses')
             ->leftJoin('p.addresses', 'addresses')
             ->leftJoin('addresses.country', 'country')
             ->leftJoin('addresses.state', 'state');
 
-        $this->currentSearchCnd = $cnd;
+        $this->currentSearchCnd = $this->preprocessCnd($cnd);
 
         foreach ($this->currentSearchCnd as $key => $value) {
             $this->callSearchConditionHandler($value, $key, $queryBuilder);
@@ -259,6 +261,22 @@ class Profile extends \XLite\Model\Repo\ARepo
     }
 
     /**
+     * Preprocess condition. Order id must be placed into condition in any case.
+     *
+     * @return \XLite\Core\CommonCell
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function preprocessCnd(\XLite\Core\CommonCell $cnd)
+    {
+        if (!$cnd->{self::SEARCH_ORDER_ID}) {
+            $cnd->{self::SEARCH_ORDER_ID} = 0;
+        }
+
+        return $cnd;
+    }
+
+    /**
      * Return list of handling search params
      *
      * @return array
@@ -277,6 +295,7 @@ class Profile extends \XLite\Model\Repo\ARepo
             self::SEARCH_PHONE,
             self::SEARCH_COUNTRY,
             self::SEARCH_STATE,
+            self::SEARCH_CUSTOM_STATE,
             self::SEARCH_ADDRESS,
             self::SEARCH_USER_TYPE,
             self::SEARCH_DATE_TYPE,
@@ -559,6 +578,21 @@ class Profile extends \XLite\Model\Repo\ARepo
     protected function prepareCndState(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         $this->prepareCndCommon($queryBuilder, $value, 'state_id', true, 'state');
+    }
+
+    /**
+     * prepareCndCustomState
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
+     * @param mixed                      $value        Searchable value
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function prepareCndCustomState(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        $this->prepareCndCommon($queryBuilder, $value, 'custom_state', true, 'addresses');
     }
 
     /**

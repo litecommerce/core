@@ -131,19 +131,12 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     public function createQueryBuilder($alias = null)
     {
-        $result = parent::createQueryBuilder($alias);
+        $queryBuilder = parent::createQueryBuilder($alias);
 
-        $this->addEnabledCondition($result, $alias);
+        $alias = $alias ?: $queryBuilder->getRootAlias();
+        $this->addEnabledCondition($queryBuilder, $alias);
 
-        if (!\XLite::isAdminZone()) {
-            $result->andWhere('p.enabled = :enabled AND (p.arrivalDate = 0 OR p.arrivalDate > :now)')
-                ->setParameter('enabled', true)
-                ->setParameter('now', time());
-        }
-
-        $result->groupBy('p.product_id');
-
-        return $result;
+        return $queryBuilder->groupBy($alias . '.product_id');
     }
 
     /**
@@ -158,7 +151,11 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     public function findOneByCleanURL($url)
     {
-        return $this->findOneBy(array('clean_url' => $url));
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.clean_url = :url')
+            ->setParameter('url', $url)
+            ->setMaxResults(1)
+            ->getSingleResult();
     }
 
     /**
@@ -401,13 +398,25 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
             $including = $this->currentSearchCnd->{self::P_INCLUDING};
 
-            $including = empty($including) ? self::INCLUDING_PHRASE : $including;
+            $including = in_array($including, $this->getAllowedIncludingValues()) ? $including : self::INCLUDING_PHRASE;
 
             $cnd = $this->{'getCndSubstring' . ucfirst($including)} ($queryBuilder, $value);
 
             $queryBuilder->andWhere($cnd);
 
         }
+    }
+
+    /**
+     * Returns array of allowed values for 'includes' input variable
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function getAllowedIncludingValues()
+    {
+        return array(self::INCLUDING_ALL, self::INCLUDING_ANY, self::INCLUDING_PHRASE);
     }
 
     /**
@@ -639,8 +648,11 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         if (!\XLite::isAdminZone()) {
-            $queryBuilder->andWhere(($alias ?: $queryBuilder->getRootAlias()) . '.enabled = :enabled')
-                ->setParameter('enabled', true);
+            $alias = $alias ?: $queryBuilder->getRootAlias();
+            $queryBuilder->andWhere($alias . '.enabled = :enabled')
+                ->andWhere($alias . '.arrivalDate < :now')
+                ->setParameter('enabled', true)
+                ->setParameter('now', time());
         }
     }
 }

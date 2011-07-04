@@ -25,9 +25,11 @@
           <tr>
             <td><img src="images/cart_full.gif" alt=""></td>
             <td>
-              <strong>{t(#Items#)}:</strong> {cart.getItemsCount()}
+              <strong>{t(#Items#)}:</strong>
+              {cart.getItemsCount()}
               <br />
-              <strong>{t(#Total#)}:</strong> {price_format(cart,#total#):h}
+              <strong>{t(#Total#)}:</strong>
+              {price_format(cart,#total#):h}
             </td>
           </tr>
 

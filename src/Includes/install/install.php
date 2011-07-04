@@ -243,6 +243,11 @@ function doCheckRequirements()
         'critical' => true,
     );
 
+    $checkRequirements['lc_config_file'] = array(
+        'title'    => xtr('Config file'),
+        'critical' => true,
+    );
+
     $checkRequirements['lc_loopback'] = array(
         'title'    => xtr('Loopback test'),
         'critical' => false,
@@ -444,6 +449,42 @@ function checkInstallScript(&$errorMsg, $value = null)
 
     if (!$result) {
         $errorMsg = xtr('LiteCommerce installation script not found. Restore it  and try again');
+    }
+
+    return $result;
+}
+
+/**
+ * Check if config file exists 
+ *
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *
+ * @return bool
+ * @see    ____func_see____
+ * @since  1.0.0
+ */
+function checkConfigFile(&$errorMsg, $value = null)
+{
+    $result = @file_exists(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'));
+
+    if (!$result) {
+
+        if (!@copy(LC_DIR_CONFIG . constant('LC_DEFAULT_CONFIG_FILE'), LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
+            
+            $result = false;
+            
+            $errorMsg = xtr(
+                'lc_config_file_description',
+                array(
+                    ':dir'   => LC_DIR_CONFIG,
+                    ':file1' => constant('LC_DEFAULT_CONFIG_FILE'), 
+                    ':file2' => constant('LC_CONFIG_FILE')
+                )
+            );
+        } else {
+            $result = true;
+        }
     }
 
     return $result;
@@ -1593,7 +1634,7 @@ function create_dirs($dirs)
 
     $dir_permission = 0777;
 
-    $data = @parse_ini_file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'));
+    $data = parse_config();
 
     if(constant('LC_SUPHP_MODE') != 0) {
         $dir_permission = isset($data['privileged_permission_dir']) ? base_convert($data['privileged_permission_dir'], 8, 10) : 0711;
@@ -1638,7 +1679,7 @@ function create_dirs($dirs)
 function chmod_others_directories($dirs)
 {
     if (constant('LC_SUPHP_MODE') != 0) {
-        $data = @parse_ini_file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'));
+        $data = parse_config();
         $dir_permission = isset($data['privileged_permission_dir']) ? base_convert($data['privileged_permission_dir'], 8, 10) : 0711;
 
         foreach($dirs as $dir) {
@@ -1772,7 +1813,7 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
     $dir_permission = 0777;
 
     if (constant('LC_SUPHP_MODE') != 0) {
-        $data = @parse_ini_file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'));
+        $data = parse_config();
         $dir_permission = isset($data['privileged_permission_dir']) ? base_convert($data['privileged_permission_dir'], 8, 10) : 0711;
     }
 
@@ -2572,11 +2613,42 @@ function check_authcode(&$params)
  */
 function get_authcode()
 {
-    if (!$data = @parse_ini_file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
+    if (!$data = parse_config()) {
         fatal_error(xtr('Config file not found (:filename)', array(':filename' => constant('LC_CONFIG_FILE'))));
     }
 
     return !empty($data['auth_code']) ? $data['auth_code'] : null;
+}
+
+/**
+ * Read config files and returns array of options
+ *
+ * @return array
+ * @see    ____func_see____
+ * @since  1.0.0
+ */
+function parse_config()
+{
+    $result = array();
+
+    $configFiles = array(
+        constant('LC_DEFAULT_CONFIG_FILE'),
+        constant('LC_CONFIG_FILE'),
+    );
+
+    foreach ($configFiles as $configFile) {
+
+        if (file_exists(LC_DIR_CONFIG . $configFile)) {
+
+            $data = @parse_ini_file(LC_DIR_CONFIG . $configFile);
+            
+            if (!empty($data) && is_array($data)) {
+                $result = array_replace_recursive($result, $data);
+            }
+        }
+    }
+
+    return $result;
 }
 
 /**
@@ -2822,6 +2894,7 @@ function module_check_cfg()
                 'lc_docblocks_support',
                 'lc_php_mysql_support',
                 'lc_php_pdo_mysql',
+                'lc_config_file',
                 'lc_file_permissions'
             )
         ),

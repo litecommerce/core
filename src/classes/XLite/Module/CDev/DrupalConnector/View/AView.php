@@ -138,7 +138,30 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      */
     protected static function prepareResources(array $data, $isCommon = false)
     {
-        return static::modifyResources(parent::prepareResources($data, $isCommon));
+        $resources = parent::prepareResources($data, $isCommon);
+
+        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+
+            $ds = preg_quote(LC_DS, '/');
+
+            $filter = array(
+                '/' . $ds . '\w+' . $ds . '[a-z]{2}' . $ds . 'css' . $ds . 'style\.css$/Ss',
+                '/' . $ds . '\w+' . $ds . '[a-z]{2}' . $ds . 'css' . $ds . 'print\.css$/Ss',
+                '/common' . $ds . 'js' . $ds . 'jquery\.min\.js$/Ss',
+                '/common' . $ds . 'js' . $ds . 'jquery\.blockUI\.js$/Ss',
+            );
+
+            foreach ($resources as $k => $v) {
+                foreach ($filter as $pattern) {
+                    if (preg_match($pattern, $k)) {
+                        unset($resources[$k]);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return static::modifyResources($resources);
     }
 
     /**
@@ -178,51 +201,4 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
         return $result;
     }
 
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
-
-            $filter = array('css/style.css', 'css/print.css');
-
-            foreach ($list as $k => $v) {
-                $fn = is_string($v) ? $v : $v['file'];
-                if (in_array($fn, $filter)) {
-                    unset($list[$k]);
-                }
-            }
-        }
-
-        return $list;
-    }
-
-    /**
-     * Register files from common repository
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCommonFiles()
-    {
-        $list = parent::getCommonFiles();
-
-        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
-
-            // TODO: check if it's really needed
-            if (false !== ($key = array_search('js/jquery.min.js', $list['js']))) {
-                unset($list['js'][$key]);
-            }
-        }
-
-        return $list;
-    }
 }

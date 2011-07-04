@@ -73,7 +73,7 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
     protected function doActionReturn()
     {
         $txn = null;
-        $txnIdName = 'txnId';
+        $txnIdName = \XLite\Model\Payment\Base\Online::RETURN_TXN_ID;
 
         if (isset(\XLite\Core\Request::getInstance()->txn_id_name)) {
             /**

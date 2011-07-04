@@ -923,7 +923,7 @@ CommonElement.prototype.linkWithCountry = function()
         var previousSelected = null;
         if (isElement(this.stateInput, 'select')) {
 
-          if (this.stateInput.selectedIndex > 1) {
+          if (this.stateInput.options.length > 0 && this.stateInput.options[this.stateInput.selectedIndex].value !== '' ) {
             previousSelected = this.stateInput.options[this.stateInput.selectedIndex].value;
             jQuery('option', this.stateInput).remove();
           }
