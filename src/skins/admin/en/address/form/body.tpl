@@ -20,7 +20,12 @@
     </tr>
 
     <tr FOREACH="getSchemaFields(),fieldName,fieldData">
-      <widget class="{fieldData.class}" label="{fieldData.label}" fieldName="{fieldName}" value="{getFieldValue(fieldName)}" required="{fieldData.required}" />
+      <widget
+        class="{fieldData.class}"
+        label="{fieldData.label}"
+        fieldName="{fieldName}"
+        value="{getFieldValue(fieldName)}"
+        required="{fieldData.required}" />
     </tr>
 
   </table>

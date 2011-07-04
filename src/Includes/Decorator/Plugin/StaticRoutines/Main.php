@@ -93,7 +93,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     protected function checkForStaticConstructor(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        return $node->getReflection()->hasMethod(self::STATIC_CONSTRUCTOR_METHOD);
+        return $node->getReflection()->hasStaticConstructor;
     }
 
     /**

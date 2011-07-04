@@ -260,13 +260,13 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                     \XLite\View\ItemsList\Product\Customer\ACustomer::WIDGET_TYPE_SIDEBAR => \XLite\View\ItemsList\Product\Customer\ACustomer::getSidebarDisplayModes(),
                     \XLite\View\ItemsList\Product\Customer\ACustomer::WIDGET_TYPE_CENTER  => \XLite\View\ItemsList\Product\Customer\ACustomer::getCenterDisplayModes(),
                 );
-                drupal_add_js('var lcConnectorBlocks = ' . json_encode($jsData) . ';', 'inline');
+                drupal_add_js('lcConnectorBlocks.' . $key . ' = ' . json_encode($jsData) . ';', 'inline');
 
                 // Recommended icons sizes
                 $jsData = \XLite\View\ItemsList\Product\Customer\ACustomer::getIconSizes();
                 $lbl = t('recommended: !size');
                 drupal_add_js(
-                    'var lcConnectorRecommendedIconSizes = ' . json_encode($jsData) . ';' . PHP_EOL
+                    'lcConnectorRecommendedIconSizes.' . $key . ' = ' . json_encode($jsData) . ';' . PHP_EOL
                     . 'var lcConnectorRecommendedLabel = \'' . $lbl . '\';',
                     'inline'
                 );
@@ -378,6 +378,14 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             : null;
 
         $form['settings']['lc_widget_details']['lc_widget'] = array('#tree' => true);
+
+        $lbl = t('recommended: !size');
+        drupal_add_js(
+            'var lcConnectorBlocks = {};' . PHP_EOL
+            . 'var lcConnectorRecommendedIconSizes = {};' . PHP_EOL
+            . 'var lcConnectorRecommendedLabel = \'' . $lbl . '\';',
+            'inline'
+        );
 
         foreach ($this->getHandler()->getWidgetsList() as $class => $label) {
 

@@ -44,6 +44,14 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected $requestData;
 
+    /**
+     * Payment widget data 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $paymentWidgetData = array();
 
     /**
      * Go to cart view if cart is empty
@@ -126,6 +134,18 @@ class Checkout extends \XLite\Controller\Customer\Cart
         return !$this->getCart()->getProfile() || $this->getCart()->getProfile()->getOrder();
     }
 
+    /**
+     * Get payment widget data 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPaymentWidgetData()
+    {
+        return $this->paymentWidgetData;
+    }
+
 
     /**
      * Checkout
@@ -164,10 +184,13 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 ? \XLite\Core\Request::getInstance()->payment
                 : array();
 
-            $errors = $this->getCart()->getFirstOpenPaymentTransaction()
-                ->getPaymentMethod()
-                ->getProcessor()
-                ->getInputErrors($data);
+            $errors = array();
+            if ($this->getCart()->getFirstOpenPaymentTransaction()) {
+                $errors = $this->getCart()->getFirstOpenPaymentTransaction()
+                    ->getPaymentMethod()
+                    ->getProcessor()
+                    ->getInputErrors($data);
+            }
 
             if ($errors) {
 
@@ -248,6 +271,15 @@ class Checkout extends \XLite\Controller\Customer\Cart
             $this->set('silent', true);
 
             exit (0);
+
+        } elseif (\XLite\Model\Payment\Transaction::SILENT == $result) {
+
+            $this->paymentWidgetData = $transaction->getPaymentMethod()->getProcessor()->getPaymentWidgetData();
+            $this->set('silent', true);
+
+        } elseif (\XLite\Model\Payment\Transaction::SEPARATE == $result) {
+
+            $this->setReturnURL($this->buildURL('checkoutPayment'));
 
         } elseif ($cart->isOpen()) {
 

@@ -66,11 +66,9 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
             ->innerJoin('p.order_items', 'o')
             ->innerJoin('o.order', 'ord')
             ->addSelect('sum(o.amount) as product_amount')
-            ->andWhere('p.enabled = :enabled')
             ->andWhere('ord.status IN (:complete_status, :processed_status)')
             ->groupBy('o.object')
             ->orderBy('product_amount', 'DESC')
-            ->setParameter('enabled', true)
             ->setParameter('complete_status', \XLite\Model\Order::STATUS_COMPLETED)
             ->setParameter('processed_status', \XLite\Model\Order::STATUS_PROCESSED);
 

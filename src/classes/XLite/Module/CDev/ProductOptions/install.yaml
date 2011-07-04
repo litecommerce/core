@@ -16,3 +16,5 @@ XLite\Model\LanguageLabel:
   - { name: 'X item(s) available', translations: [{ code: en, label: '{{count}} item(s) available' }] }
   - { name: '- out of stock -', translations: [{ code: en, label: '- out of stock -' }] }
   - { name: 'Product is out of stock!', translations: [{ code: en, label: 'Product is out of stock!' }] }
+  - { name: 'The option combination you selected', translations: [{ code: en, label: 'The option combination you selected' }] }
+  - { name: 'is not available. Please make another choice.', translations: [{ code: en, label: 'is not available. Please make another choice.' }] }

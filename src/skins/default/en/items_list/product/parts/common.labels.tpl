@@ -14,7 +14,8 @@
  * @ListChild (list="itemsList.product.table.customer.columns", weight="25")
  * @ListChild (list="itemsList.product.big_thumbnails.customer.info", weight="998")
  * @ListChild (list="itemsList.product.small_thumbnails.customer.details", weight="25")
+ * @ListChild (list="productBlock.info.photo", weight="998")
  *}
-<ul class="labels" IF="getProductLabels(product)">
-  <li FOREACH="getProductLabels(product),key,name" class="label-{key:h}"><div>{name}</div></li>
+<ul class="labels" IF="product.getLabels()">
+  <li FOREACH="product.getLabels(),key,name" class="label-{key:h}"><div>{name}</div></li>
 </ul>

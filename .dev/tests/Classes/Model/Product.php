@@ -19,6 +19,24 @@ include_once __DIR__ . '/AProduct.php';
 
 class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 {
+    /**
+     * Return data needed to start application.
+     * Derived class can redefine this method.
+     * It's possible to detect current test using the $this->name variable
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getRequest()
+    {
+        $request = parent::getRequest();
+
+        $request['controller'] = false;
+
+        return $request;
+    }
+
 	/**
 	 * getProductData
 	 *
@@ -174,7 +192,16 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
         $this->assertTrue($p->isAvailable(), 'check enabled');
 
         $p->setEnabled(false);
-        $this->assertTrue($p->isAvailable(), 'check disabled (is admin zone)');
+        $this->assertFalse($p->isAvailable(), 'check disabled');
+
+        $p->setEnabled(true);
+        $p->setArrivalDate(100);
+        $this->assertTrue($p->isAvailable(), 'check enabled (old product)');
+
+        $p->setArrivalDate(time() + 86400);
+        $this->assertFalse($p->isAvailable(), 'check disabled (comming soon)');
+
+
     }
 
     public function testgetListPrice()

@@ -32,6 +32,9 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
     const SUBMIT_BUTTON = "//table[@class='search-form-main-part']/tbody/tr/td/button[@class='search-form-submit' and @type='submit']";
 
     const SUBSTRING = "//table[@class='search-form-main-part']/tbody/tr/td/input[@type='text' and @name='substring']";
+    const SIMPLE_SUBSTRING = "//div[@class='simple-search-box']/input[@type='text' and @name='substring']";
+
+    const SIMPLE_BUTTON = "//div[@class='simple-search-box']/button[@type='submit']";
 
     const LESS_SEARCH_OPTIONS = "//td[@class='less-search-options-cell']/a[text()='Less search options']";
     const MORE_SEARCH_OPTIONS = "//td[@class='less-search-options-cell']/a[text()='More search options']";
@@ -64,6 +67,9 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
         $url = $this->getSearchURL();
 
         $this->open($url);
+
+        $this->type(self::SIMPLE_SUBSTRING, 'Apple');
+        $this->clickAndWait(self::SIMPLE_BUTTON);
 
         $this->isOpen = true;
 
@@ -183,15 +189,23 @@ return;
         }
     }
 
+    protected function getSearchCell()
+    {
+        return new \XLite\Core\CommonCell(
+            array(
+                'substring' => 'Apple',
+            )
+        );
+    }
 
     protected function countAllTestProducts()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->search(new \XLite\Core\CommonCell(), true);
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->search($this->getSearchCell(), true);
     }
 
     protected function getAllTestProducts()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->search(new \XLite\Core\CommonCell(), false);
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->search($this->getSearchCell(), false);
     }
 
     protected function setDisplayMode($mode = 'list', $columns = null)

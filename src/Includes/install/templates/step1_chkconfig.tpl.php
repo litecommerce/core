@@ -33,6 +33,19 @@ if (!defined('XLITE_INSTALL_MODE')) {
     die('Incorrect call of the script. Stopping.');
 }
 
+
+function get_lc_config_file_description()
+{
+    return xtr(
+        'lc_config_file_description', 
+        array(
+            ':dir'   => LC_DIR_ROOT,
+            ':file1' => constant('LC_DEFAULT_CONFIG_FILE'), 
+            ':file2' => constant('LC_CONFIG_FILE'),
+        )
+    );
+}
+
 function get_lc_loopback_description()
 {
     return xtr('lc_loopback_description', array(':host' => $_SERVER["HTTP_HOST"]));

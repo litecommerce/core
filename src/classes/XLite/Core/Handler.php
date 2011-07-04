@@ -106,7 +106,7 @@ abstract class Handler extends \XLite\Base
         $listParams = $this->getWidgetParams();
 
         foreach ($listParams as $name => $paramObject) {
-            if (isset($params[$name])) {
+            if (0 < strlen($name) && isset($params[$name])) {
                 $paramObject->setValue($params[$name]);
             }
             // FIXME - for mapping only
@@ -116,7 +116,9 @@ abstract class Handler extends \XLite\Base
 
         // FIXME - backward compatibility - mapping; to remove
         foreach ($params as $name => $value) {
-            $this->$name = $value;
+            if (0 < strlen($name)) {
+                $this->$name = $value;
+            }
         }
     }
 

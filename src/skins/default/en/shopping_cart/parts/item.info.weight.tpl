@@ -10,4 +10,7 @@
  * @since     1.0.0
  * @ListChild (list="cart.item.info", weight="30")
  *}
-<p class="item-weight" IF="{item.getWeight()}"><span>{t(#Weight#)}:</span> {item.getWeight()} {config.General.weight_symbol}</p>
+<p class="item-weight" IF="{item.getWeight()}">
+  <span>{t(#Weight#)}:</span>
+  {item.getWeight()} {config.General.weight_symbol}
+</p>

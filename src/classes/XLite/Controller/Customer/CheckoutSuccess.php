@@ -76,6 +76,8 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      */
     public function handleRequest()
     {
+        \XLite\Core\Session::getInstance()->iframePaymentData = null;
+
         // security check on return page
         $orderId = \XLite\Core\Request::getInstance()->order_id;
         if (

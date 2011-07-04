@@ -282,48 +282,6 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetRootDirectory 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testGetRootDirectory()
-    {
-        $this->assertEquals(
-            LC_DIR_MODULES . self::TEST_AUTHOR . LC_DS . self::TEST_MODULE_1 . LC_DS,
-            $this->getTestModule1()->getRootDirectory(),
-            'check module ' . self::TEST_MODULE_1 . ' root directory'
-        );
-        $this->assertEquals(
-            LC_DIR_MODULES . self::TEST_AUTHOR . LC_DS . self::TEST_MODULE_2 . LC_DS,
-            $this->getTestModule2()->getRootDirectory(),
-            'check module ' . self::TEST_MODULE_2 . ' root directory'
-        );
-    }
-
-    /**
-     * testGetPath 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testGetPath()
-    {
-        $this->assertEquals(
-            self::TEST_AUTHOR . LC_DS . self::TEST_MODULE_1,
-            $this->getTestModule1()->getPath(),
-            'check module ' . self::TEST_MODULE_1 . ' relative path'
-        );
-        $this->assertEquals(
-            self::TEST_AUTHOR . LC_DS . self::TEST_MODULE_2,
-            $this->getTestModule2()->getPath(),
-            'check module ' . self::TEST_MODULE_2 . ' relative path'
-        );
-    }
-
-    /**
      * testGetCurrency 
      * 
      * @return void

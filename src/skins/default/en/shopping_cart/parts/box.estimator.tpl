@@ -14,8 +14,14 @@
   {if:isShippingEstimate()}
 
     <ul>
-      <li><span>{t(#Shipping#)}:</span> {modifier.method.getName():h} ({getShippingCost()})</li>
-      <li><span>{t(#Estimated for#)}:</span> {getEstimateAddress()}</li>
+      <li>
+        <span>{t(#Shipping#)}:</span>
+        {modifier.method.getName():h} ({getShippingCost()})
+      </li>
+      <li>
+        <span>{t(#Estimated for#)}:</span>
+        {getEstimateAddress()}
+      </li>
     </ul>
 
     <div class="link">

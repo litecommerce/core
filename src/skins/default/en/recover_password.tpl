@@ -12,7 +12,7 @@
  <div class="recover-password-message">
   {t(#In order to recover your password, please type in your valid e-mail address you used as a login.#)}
  </div>
- <div class="recover-password-message"> 
+ <div class="recover-password-message">
   {t(#Your account information will be e-mailed to you shortly.#)}
  </div>
 
