@@ -43,14 +43,6 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 
 
     /**
-     * Return response type
-     */
-    const RETURN_TYPE_HTTP_REDIRECT = 'http';
-    const RETURN_TYPE_HTML_REDIRECT = 'html';
-    const RETURN_TYPE_CUSTOM        = 'custom';
-
-
-    /**
      * Get redirect form URL
      *
      * @return string
@@ -91,34 +83,6 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
     public function getReturnOwnerTransaction()
     {
         return null;
-    }
-
-    /**
-     * Process return
-     *
-     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
-    {
-        $this->transaction = $transaction;
-
-        $this->logReturn(\XLite\Core\Request::getInstance()->getData());
-    }
-
-    /**
-     * Get return type
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getReturnType()
-    {
-        return self::RETURN_TYPE_HTTP_REDIRECT;
     }
 
     /**
@@ -221,24 +185,6 @@ HTML;
             $this->transaction->getPaymentMethod()->getServiceName() . ' payment gateway : redirect' . PHP_EOL
             . 'Method: ' . $this->getFormMethod() . PHP_EOL
             . 'URL: ' . $this->getFormURL() . PHP_EOL
-            . 'Data: ' . var_export($list, true),
-            LOG_DEBUG
-        );
-    }
-
-    /**
-     * Log return request
-     *
-     * @param array $list Request data
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function logReturn(array $list)
-    {
-        \XLite\Logger::getInstance()->log(
-            $this->transaction->getPaymentMethod()->getServiceName() . ' payment gateway : return' . PHP_EOL
             . 'Data: ' . var_export($list, true),
             LOG_DEBUG
         );
