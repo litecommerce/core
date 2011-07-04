@@ -67,7 +67,26 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
 
         $request = \XLite\Core\Request::getInstance();
 
+        if ($request->isPost() && isset($request->status)) {
+            $message = isset($this->statuses[$request->status]) ? $this->statuses[$request->status] : 'Failed';
 
+            $this->saveDataFromRequest();
+
+            switch ($request->status) {
+                case 0:
+                    $status = $transaction::STATUS_PENDING;
+                    break;
+
+                case 2:
+                    $status = $transaction::STATUS_SUCCESS;
+                    break;
+
+                default:
+                    $status = $transaction::STATUS_FAILED;
+            }
+
+            $this->transaction->setStatus($status);
+        }
     }
 
     /**
@@ -83,28 +102,17 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     {
         parent::processReturn($transaction);
 
-        $request = \XLite\Core\Request::getInstance();
+        if (\XLite\Core\Request::getInstance()->cancel) {
+            $this->setDetail(
+                'cancel',
+                'Payment transaction is cancelled'
+            );
+            $this->transaction->setStatus($transaction::STATUS_FAILED);
 
-        if ($request->isPost() && isset($request->trans_result)) {
-
-            $status = 'APPROVED' == $request->trans_result
-                ? $transaction::STATUS_SUCCESS
-                : $transaction::STATUS_FAILED;
-
-            $this->saveDataFromRequest();
-
-            // Amount checking
-            if (isset($request->amount) && !$this->checkTotal($request->amount)) {
-                $status = $transaction::STATUS_FAILED;
-            }
-
-            if (isset($request->decline_reason)) {
-                $this->transaction->setNote($request->decline_reason);
-            }
-
-            $this->transaction->setStatus($status);
+        } elseif ($transaction::STATUS_INPROGRESS == $this->transaction->getStatus()) {
+            $this->transaction->setStatus($transaction::STATUS_PENDING);
         }
-    }
+   }
 
     /**
      * Check - payment method is configured or not
@@ -191,12 +199,10 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             'weight_cart'   => 0,
             'currency_code' => $this->getOrder()->getCurrency()->getCode(),
 
-            /////////////////////////////
-            'return'        => $_location."/payment/ps_paypal.php?mode=success&secureid=$order_secureid",
-            'cancel_return' => $_location."/payment/ps_paypal.php?mode=cancel&secureid=$order_secureid",
-            'shopping_url'  => $_location."/payment/ps_paypal.php?mode=cancel&secureid=$order_secureid",
-            'notify_url'    => $_location.'/payment/ps_paypal.php',
-            //////////////////////////////////
+            'return'        => $this->getReturnURL(null, true),
+            'cancel_return' => $this->getReturnURL(null, true, true),
+            'shopping_url'  => $this->getReturnURL(null, true, true),
+            'notify_url'    => $this->getCallbackURL(null, true),
 
             'country'       => $this->getProfile()->getBillingAddress()->getCountry()
                 ? $this->getProfile()->getBillingAddress()->getCountry()->getCode()

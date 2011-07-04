@@ -36,7 +36,7 @@ namespace XLite\Model\Payment\Base;
 abstract class Online extends \XLite\Model\Payment\Base\Processor
 {
     /**
-     * Default return transaction id field name 
+     * Default return transaction id field name
      */
     const RETURN_TXN_ID = 'txnId';
 
@@ -192,6 +192,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
         if ($asCancel) {
             $query['cancel'] = 1;
         }
+        
         return \XLite::getInstance()->getShopURL(
             \XLite\Core\Converter::buildURL('payment_return', '', $query),
             true
