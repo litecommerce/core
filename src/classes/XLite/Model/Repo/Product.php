@@ -410,13 +410,11 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Returns array of allowed values for 'includes' input variable
      * 
-     * @param string $value Value of 'includes' input variable
-     *  
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.1
      */
-    protected function getAllowedIncludingValues($value)
+    protected function getAllowedIncludingValues()
     {
         return array(self::INCLUDING_ALL, self::INCLUDING_ANY, self::INCLUDING_PHRASE);
     }
