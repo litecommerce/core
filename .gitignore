@@ -8,7 +8,10 @@
 /build
 /coverage
 /var
+/src/etc/config.php
+/src/etc/config.demo.php
 /src/etc/config.local*.php
+/src/sql/local
 /src/update.sh
 /src/var/addons
 /src/var/backup

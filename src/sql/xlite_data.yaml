@@ -1032,7 +1032,8 @@ XLite\Model\Country:
       - { state: 'West Midlands', code: WM }
       - { state: 'West Sussex', code: WS }
       - { state: 'West Yorkshire', code: WYK }
-  - country: 'United States', code3: USA
+  - country: 'United States'
+    code3: USA
     code: US
     states:
       - { state: Alabama, code: AL }

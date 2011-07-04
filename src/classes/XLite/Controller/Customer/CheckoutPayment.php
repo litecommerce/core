@@ -25,40 +25,50 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Product\Search\Customer;
+namespace XLite\Controller\Customer;
 
 /**
- * Simple form
+ * Separate checkout payment page
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class SimpleForm extends \XLite\View\Form\Product\Search\Customer\Main
+class CheckoutPayment extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * JavaScript: this value will be returned on form submit
-     * NOTE - this function designed for AJAX easy switch on/off
+     * Get page title
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getOnSubmitResult()
+    public function getTitle()
     {
-        return 'true';
+        return static::t('Payment');
     }
 
     /**
-     * getDefaultParams
+     * isSecure
+     * TODO: check if this method is used
      *
-     * @return array
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultParams()
+    public function isSecure()
     {
-        return parent::getDefaultParams() + array(
-            \XLite\View\ItemsList\Product\Customer\Search::PARAM_INCLUDING => \XLite\Model\Repo\Product::INCLUDING_ANY,
-        );
+        return $this->is('HTTPS') ? true : parent::isSecure();
+    }
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLocation()
+    {
+        return $this->getTitle();
     }
 }

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -25,40 +25,63 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Product\Search\Customer;
+namespace XLite\Model;
 
 /**
- * Simple form
- *
+ * Iframe content 
+ * 
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @Entity
+ * @Table  (name="iframe_contents")
  */
-class SimpleForm extends \XLite\View\Form\Product\Search\Customer\Main
+class IframeContent extends \XLite\Model\AEntity
 {
     /**
-     * JavaScript: this value will be returned on form submit
-     * NOTE - this function designed for AJAX easy switch on/off
+     * Unique id 
+     * 
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
      *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="uinteger")
      */
-    protected function getOnSubmitResult()
-    {
-        return 'true';
-    }
+    protected $id;
 
     /**
-     * getDefaultParams
+     * Form URL
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @Column (type="string")
      */
-    protected function getDefaultParams()
-    {
-        return parent::getDefaultParams() + array(
-            \XLite\View\ItemsList\Product\Customer\Search::PARAM_INCLUDING => \XLite\Model\Repo\Product::INCLUDING_ANY,
-        );
-    }
+    protected $url;
+
+    /**
+     * Form method
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="string", length="16")
+     */
+    protected $method = 'POST';
+
+    /**
+     * Form data 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="array")
+     */
+    protected $data = array();
 }
+
