@@ -111,6 +111,9 @@ class CategorySelect extends \XLite\View\AView
             if (isset($currentCategory)) {
                 foreach ($this->categories as $id => $category) {
                     if (!($category->lpos >= $currentCategory->lpos && $category->rpos <= $currentCategory->rpos)) {
+
+                        $category->categoryPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryPath($category->getCategoryId());
+
                         $categories[] = $category;
                     }
                 }
@@ -134,6 +137,26 @@ class CategorySelect extends \XLite\View\AView
         return !$this->getParam(self::PARAM_ALL_OPTION) && !$this->getCategories();
     }
 
+    /**
+     * Return category path
+     *
+     * @param \XLite\Model\Category $category
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function getCategoryPath(\XLite\Model\Category $category)
+    {
+        $path = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryPath($category->getCategoryId());
+        $categoryPath = array();
+
+        foreach ($path as $category) {
+            $categoryPath[] = $category->getName();
+        }
+
+        return implode('/', $categoryPath);
+    }
 
     /**
      * Return widget default template
