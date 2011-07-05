@@ -95,7 +95,7 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
 
             foreach ($methods as $method) {
 
-                if (method_exists($method->getProcessor(), 'getCallbackOwnerTransaction')) {
+                if (method_exists($method->getProcessor(), 'getReturnOwnerTransaction')) {
 
                     $txn = $method->getProcessor()->getReturnOwnerTransaction();
 

@@ -398,13 +398,25 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
             $including = $this->currentSearchCnd->{self::P_INCLUDING};
 
-            $including = empty($including) ? self::INCLUDING_PHRASE : $including;
+            $including = in_array($including, $this->getAllowedIncludingValues()) ? $including : self::INCLUDING_PHRASE;
 
             $cnd = $this->{'getCndSubstring' . ucfirst($including)} ($queryBuilder, $value);
 
             $queryBuilder->andWhere($cnd);
 
         }
+    }
+
+    /**
+     * Returns array of allowed values for 'includes' input variable
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function getAllowedIncludingValues()
+    {
+        return array(self::INCLUDING_ALL, self::INCLUDING_ANY, self::INCLUDING_PHRASE);
     }
 
     /**

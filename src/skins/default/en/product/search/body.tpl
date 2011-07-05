@@ -65,7 +65,7 @@
 
       <tr>
 
-        <td class="option-name">
+        <td class="option-name title-search-by-options">
           {t(#Search in#)}:
         </td>
 
@@ -94,7 +94,7 @@
       </tr>
 
       <tr>
-        <td class="option-name">
+        <td class="option-name title-category">
           {t(#Category#)}:
         </td>
         <td>

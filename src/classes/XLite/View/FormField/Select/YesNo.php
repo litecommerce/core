@@ -25,40 +25,34 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Product\Search\Customer;
+namespace XLite\View\FormField\Select;
 
 /**
- * Simple form
+ * \XLite\View\FormField\Select\YesNo
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.1
  */
-class SimpleForm extends \XLite\View\Form\Product\Search\Customer\Main
+class YesNo extends \XLite\View\FormField\Select\Regular
 {
     /**
-     * JavaScript: this value will be returned on form submit
-     * NOTE - this function designed for AJAX easy switch on/off
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
+     * Yes/No mode values
      */
-    protected function getOnSubmitResult()
-    {
-        return 'true';
-    }
+    const YES = 'Y';
+    const NO  = 'N';
 
     /**
-     * getDefaultParams
+     * getDefaultOptions
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.1
      */
-    protected function getDefaultParams()
+    protected function getDefaultOptions()
     {
-        return parent::getDefaultParams() + array(
-            \XLite\View\ItemsList\Product\Customer\Search::PARAM_INCLUDING => \XLite\Model\Repo\Product::INCLUDING_ANY,
+        return array(
+            self::YES  => 'Yes',
+            self::NO   => 'No',
         );
     }
 }
