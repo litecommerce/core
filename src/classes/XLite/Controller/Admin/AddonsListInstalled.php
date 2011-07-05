@@ -212,6 +212,9 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
             $params = array('name' => $module->getActualName());
 
             if (empty($nonWritableDirs)) {
+                $yaml = \Includes\Utils\FileManager::read(
+                    \Includes\Utils\ModulesManager::getModuleYAMLFile($module->getAuthor(), $module->getName())
+                );
 
                 // Remove from FS
                 foreach ($dirs as $dir) {
@@ -229,6 +232,10 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
                     $this->showError(__FUNCTION__, $message, $params);
 
                 } else {
+                    if (!empty($yaml)) {
+                        \XLite\Core\Database::getInstance()->unloadFixturesFromYaml($yaml);
+                    }
+
                     $message = 'The module "{{name}}" has been uninstalled successfully';
                     $this->showInfo(__FUNCTION__, $message, $params);
                 }

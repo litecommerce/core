@@ -59,13 +59,20 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
         parent::upgrade($isTestMode, $filesToOverwrite);
 
         if (!$isTestMode) {
+            list($author, $name) = explode('\\', $this->getActualName());
 
             if (!$this->isValid()) {
-                list($author, $name) = explode('\\', $this->getActualName());
                 \Includes\SafeMode::markModuleAsUnsafe($author, $name);
             }
 
             $this->updateDBRecords();
+
+            // Load fixtures
+            $yaml = \Includes\Utils\ModulesManager::getModuleYAMLFile($author, $name);
+
+            if (\Includes\Utils\FileManager::isFileReadable($yaml)) {
+                \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yaml);
+            }
         }
     }
 }
