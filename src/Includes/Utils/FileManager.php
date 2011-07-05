@@ -385,7 +385,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function read($path, $skipCheck = false)
     {
-        return ($skipCheck || static::isFile($path)) ? file_get_contents($path) : null;
+        return ($skipCheck || static::isFileReadable($path)) ? file_get_contents($path) : null;
     }
 
     /**
