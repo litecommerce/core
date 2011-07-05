@@ -49,6 +49,20 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     );
 
     /**
+     * Allowed currencies codes
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $allowedCurrencies = array(
+        'EUR', 'TWD', 'USD', 'THB', 'GBP', 'CZK', 'HKD', 'HUF', 'SGD', 'SKK',
+        'JPY', 'EEK', 'CAD', 'BGN', 'AUD', 'PLN', 'CHF', 'ISK', 'DKK', 'INR',
+        'SEK', 'LVL', 'NOK', 'KRW', 'ILS', 'ZAR', 'MYR', 'RON', 'NZD', 'HRK',
+        'TRY', 'LTL', 'AED', 'JOD', 'MAD', 'OMR', 'QAR', 'RSD', 'SAR', 'TND',
+    );
+
+    /**
      * Statuses 
      * 
      * @var   array
@@ -167,6 +181,21 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             $this->setDetail(
                 'moneybookers_session_error',
                 'Moneybookers payment processor did not recieve session ID successfull.',
+                'Session initialization error'
+            );
+        }
+
+        if (
+            !$id
+            && preg_match('/<h1[^>]*>(.+)<\/h1>/USs', $response->body, $m1)
+            && preg_match('/<div class="gateway_content">(.+)<\/div>/USs', $response->body, $m2)
+        ) {
+            $m1 = trim($m1[1]);
+            $m2 = trim(strip_tags($m2[1]));
+
+            $this->setDetail(
+                'moneybookers_session_error',
+                $m1 . ': ' . $m2,
                 'Session initialization error'
             );
         }
@@ -305,6 +334,21 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     {
         return parent::isConfigured($method)
             && $method->getSetting('email');
+    }
+
+    /**
+     * Check - payment processor is applicable for specified order or not
+     *
+     * @param \XLite\Model\Order $order Order
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isApplicable(\XLite\Model\Order $order)
+    {
+        return parent::isApplicable($order)
+            && in_array(strtoupper($order->getCurrency()->getCode()), $this->allowedCurrencies);
     }
 
     /**
