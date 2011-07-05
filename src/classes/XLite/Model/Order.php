@@ -919,8 +919,16 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function getPaymentMethods()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
             ->findAllActive();
+
+        foreach ($list as $i => $method) {
+            if (!$method->getProcessor()->isApplicable($this)) {
+                unset($list[$i]);
+            }
+        }
+
+        return $list;
     }
 
     /**
