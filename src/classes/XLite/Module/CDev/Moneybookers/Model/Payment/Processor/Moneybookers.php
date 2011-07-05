@@ -141,6 +141,13 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
                 'Moneybookers payment processor did not recieve session ID successfull (HTTP error: ' . $response->code . ').'
             );
 
+        } elseif (preg_match('/SESSION_ID=([a-z0-9]+)/iSs', $response->headers->SetCookie, $match)) {
+
+            $this->setDetail(
+                'moneybookers_session_error',
+                'Moneybookers payment processor did not recieve session ID successfull (page body has not session ID).'
+            );
+
         } else {
             $this->setDetail(
                 'moneybookers_session_error',
@@ -313,5 +320,23 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
         return '1' == $this->getSetting('test')
             ? 'http://www.moneybookers.com/app/test_payment.pl'
             : 'https://www.moneybookers.com/app/payment.pl';
-    }    
+    }
+
+    /**
+     * Define saved into transaction data schema
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineSavedData()
+    {
+        $data = parent::defineSavedData();
+
+        $data['mb_transaction_id']  = 'Moneybookers\' transaction ID';
+        $data['failed_reason_code'] = 'Failed reson code';
+        $data['payment_type']       = 'Payment type';
+
+        return $data;
+    }
 }

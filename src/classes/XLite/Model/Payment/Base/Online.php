@@ -36,10 +36,46 @@ namespace XLite\Model\Payment\Base;
 abstract class Online extends \XLite\Model\Payment\Base\Processor
 {
     /**
-     * Default return transaction id field name 
+     * Default return transaction id field name
      */
     const RETURN_TXN_ID = 'txnId';
 
+
+    /**
+     * Return response type
+     */
+    const RETURN_TYPE_HTTP_REDIRECT = 'http';
+    const RETURN_TYPE_HTML_REDIRECT = 'html';
+    const RETURN_TYPE_CUSTOM        = 'custom';
+
+
+    /**
+     * Process return
+     *
+     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
+    {
+        $this->transaction = $transaction;
+
+        $this->logReturn(\XLite\Core\Request::getInstance()->getData());
+    }
+
+    /**
+     * Get return type
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getReturnType()
+    {
+        return self::RETURN_TYPE_HTTP_REDIRECT;
+    }
 
     /**
      * Process callback
@@ -151,6 +187,24 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     }
 
     /**
+     * Log return request
+     *
+     * @param array $list Request data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function logReturn(array $list)
+    {
+        \XLite\Logger::getInstance()->log(
+            $this->transaction->getPaymentMethod()->getServiceName() . ' payment gateway : return' . PHP_EOL
+            . 'Data: ' . var_export($list, true),
+            LOG_DEBUG
+        );
+    }
+
+    /**
      * Log callback
      *
      * @param array $list Callback data
@@ -186,15 +240,16 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
         );
 
         if ($withId) {
-            $query[$fieldName] = $this->transaction->getTransactionId();
+            $query[$query['txn_id_name']] = $this->transaction->getTransactionId();
         }
 
         if ($asCancel) {
             $query['cancel'] = 1;
         }
+        
         return \XLite::getInstance()->getShopURL(
             \XLite\Core\Converter::buildURL('payment_return', '', $query),
-            true
+            \XLite\Core\Config::getInstance()->Security->customer_security
         );
     }
 
@@ -215,12 +270,12 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
         );
 
         if ($withId) {
-            $query[$fieldName] = $this->transaction->getTransactionId();
+            $query[$query['txn_id_name']] = $this->transaction->getTransactionId();
         }
 
         return \XLite::getInstance()->getShopURL(
             \XLite\Core\Converter::buildURL('callback', '', $query),
-            true
+            \XLite\Core\Config::getInstance()->Security->customer_security
         );
     }
 

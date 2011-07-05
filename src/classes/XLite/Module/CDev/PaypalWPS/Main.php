@@ -25,40 +25,74 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Product\Search\Customer;
+namespace XLite\Module\CDev\PaypalWPS;
 
 /**
- * Simple form
+ * Paypal Website Payments Standard
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.1
  */
-class SimpleForm extends \XLite\View\Form\Product\Search\Customer\Main
+abstract class Main extends \XLite\Module\AModule
 {
+
     /**
-     * JavaScript: this value will be returned on form submit
-     * NOTE - this function designed for AJAX easy switch on/off
+     * Author name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    public static function getAuthorName()
+    {
+        return 'Creative Development LLC';
+    }
+
+    /**
+     * Module name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getOnSubmitResult()
+    public static function getModuleName()
     {
-        return 'true';
+        return 'Paypal Website Payments Standard';
     }
 
     /**
-     * getDefaultParams
+     * Module version
      *
-     * @return array
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultParams()
+    public static function getMinorVersion()
     {
-        return parent::getDefaultParams() + array(
-            \XLite\View\ItemsList\Product\Customer\Search::PARAM_INCLUDING => \XLite\Model\Repo\Product::INCLUDING_ANY,
-        );
+        return '0';
+    }
+
+    /**
+     * Module description
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getDescription()
+    {
+        return 'Enables taking credit card payments for your online store via Paypal (Website Payments Standard).';
+    }
+
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function showSettingsForm()
+    {
+        return false;
     }
 }

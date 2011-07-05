@@ -25,40 +25,34 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Product\Search\Customer;
+namespace XLite\View\FormField\Select;
 
 /**
- * Simple form
+ * \XLite\View\FormField\Select\TestLiveMode
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.1
  */
-class SimpleForm extends \XLite\View\Form\Product\Search\Customer\Main
+class TestLiveMode extends \XLite\View\FormField\Select\Regular
 {
     /**
-     * JavaScript: this value will be returned on form submit
-     * NOTE - this function designed for AJAX easy switch on/off
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
+     * Test/Live mode values
      */
-    protected function getOnSubmitResult()
-    {
-        return 'true';
-    }
+    const LIVE = 'live';
+    const TEST = 'test';
 
     /**
-     * getDefaultParams
+     * getDefaultOptions
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.1
      */
-    protected function getDefaultParams()
+    protected function getDefaultOptions()
     {
-        return parent::getDefaultParams() + array(
-            \XLite\View\ItemsList\Product\Customer\Search::PARAM_INCLUDING => \XLite\Model\Repo\Product::INCLUDING_ANY,
+        return array(
+            self::LIVE => 'Live',
+            self::TEST => 'Test',
         );
     }
 }
