@@ -171,7 +171,7 @@ OUT;
                 $maxSteps = $this->totalNonSynchronizedAccounts;  // $this->userAccountsPerStepCounter) + 1;
                 $operations = array();
                 for ($i = 0; $i < $maxSteps; $i++) {
-                    $operations[] = array('_lc_connector_user_sync', array());
+                    $operations[] = array('lcConnectorUserSync', array());
                 }
 
                 // Initialize batch (to set title).
@@ -179,7 +179,7 @@ OUT;
                     'title' => t('Synchronize user accounts'),
                     'init_message' => t('Starting user accounts synchronization...'),
                     'operations' => $operations,
-                    'finished' => '_lc_connector_user_sync_finished_callback',
+                    'finished' => 'lcConnectorUserSyncFinishedCallback',
                 );
                 batch_set($batch);
 
@@ -195,11 +195,13 @@ OUT;
     /**
      * Perform a single step of user synchronization batch process
      * 
+     * @param array $context Batch process context data
+     *  
      * @return void
      * @see    ____func_see____
-     * @since  1.0.1
+     * @since  1.0.0
      */
-    public function doUserSynchronization(&$context)
+    public function doUserSynchronization(array &$context)
     {
         if ($this->isUserSynchronizationRequired()) {
 
