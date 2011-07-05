@@ -153,7 +153,9 @@ class Method extends \XLite\Model\Base\I18n
             $disabledModule = !isset($modules[$match[1]]);
         }
 
-        return $this->getEnabled() && !$disabledModule;
+        return $this->getEnabled()
+            && !$disabledModule
+            && $this->getProcessor()->isConfigured($this);
     }
 
     /**

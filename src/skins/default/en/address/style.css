@@ -89,7 +89,7 @@ ul.address-entry li,
 
 ul.address-book li.address-book {
   float: left;
-  min-height: 300px;
+  min-height: 250px;
 }
 
 div.address-box table td.address-entry-actions-cell {
