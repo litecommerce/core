@@ -110,8 +110,10 @@ class Callback extends \XLite\Controller\Customer\ACustomer
             $txn->getPaymentMethod()->getProcessor()->processCallback($txn);
 
         } else {
-            // TODO - add error logging
+            \XLite\Logger::getInstance()->log('Request callback with undefined payment transaction', LOG_ERR);
         }
+
+        \XLite\Core\Database::getEM()->flush();
 
         $this->set('silent', true);
     }
