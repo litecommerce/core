@@ -63,6 +63,19 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     );
 
     /**
+     * Payment types 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $paymentTypes = array(
+        'MBD' => 'Moneybooker direct',
+        'WLT' => 'E-wallet',
+        'PBT' => 'Pending bank transfer',
+    );
+
+    /**
      * Get settings widget or template
      *
      * @return string Widget class name or template path
@@ -102,7 +115,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             'pay_to_email'          => $this->getSetting('email'),
             'language'              => $this->getLanguageCode(),
             'recipient_description' => substr(\XLite\Core\Config::getInstance()->Company->company_name, 0, 30),
-            'transaction_id'        => $this->transaction->getTransactionId(),
+            'transaction_id'        => $this->getSetting('prefix') . $this->transaction->getTransactionId(),
             'pay_from_email'        => $this->getProfile()->getLogin(),
             'firstname'             => $this->getProfile()->getBillingAddress()->getFirstname(),
             'lastname'              => $this->getProfile()->getBillingAddress()->getLastname(),
@@ -138,20 +151,23 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
         } elseif (200 != $response->code) {
             $this->setDetail(
                 'moneybookers_session_error',
-                'Moneybookers payment processor did not recieve session ID successfull (HTTP error: ' . $response->code . ').'
+                'Moneybookers payment processor did not recieve session ID successfull (HTTP error: ' . $response->code . ').',
+                'Session initialization error'
             );
 
         } elseif (preg_match('/SESSION_ID=([a-z0-9]+)/iSs', $response->headers->SetCookie, $match)) {
 
             $this->setDetail(
                 'moneybookers_session_error',
-                'Moneybookers payment processor did not recieve session ID successfull (page body has not session ID).'
+                'Moneybookers payment processor did not recieve session ID successfull (page body has not session ID).',
+                'Session initialization error'
             );
 
         } else {
             $this->setDetail(
                 'moneybookers_session_error',
-                'Moneybookers payment processor did not recieve session ID successfull.'
+                'Moneybookers payment processor did not recieve session ID successfull.',
+                'Session initialization error'
             );
         }
 
@@ -174,8 +190,9 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
 
         if (\XLite\Core\Request::getInstance()->cancel) {
             $this->setDetail(
-                'cancel',
-                'Payment transaction is cancelled'
+                'status',
+                'Payment transaction is cancelled',
+                'Status'
             );
             $this->transaction->setStatus($transaction::STATUS_FAILED);
 
@@ -199,8 +216,18 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
 
         $request = \XLite\Core\Request::getInstance();
 
-        if ($request->isPost() && isset($request->status)) {
-            $message = isset($this->statuses[$request->status]) ? $this->statuses[$request->status] : 'Failed';
+        if (!$request->isPost()) {
+            $this->markCallbackRequestAsInvalid(static::t('Request type must be POST'));
+
+        } elseif (!isset($request->status)) {
+            $this->markCallbackRequestAsInvalid(static::t('\'status\' request argument can not found'));
+
+        } else {
+            $this->setDetail(
+                'status',
+                isset($this->statuses[$request->status]) ? $this->statuses[$request->status] : 'Failed',
+                'Status'
+            );
 
             $this->saveDataFromRequest();
 
@@ -235,18 +262,29 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             ) {
                 $base = $request->merchant_id
                     . $request->transaction_id
-                    . $this->getSetting('secret_word')
+                    . strtoupper(md5($this->getSetting('secret_word')))
                     . $request->mb_amount
                     . $request->mb_currency
-                    . $request->status; 
+                    . $request->status;
+
                 if (strtoupper(md5($base)) != strtoupper($request->md5sig)) {
                     $this->setDetail(
                         'signature_error',
-                        'Payment transaction\'s secure signature is corrupted',
+                        'Payment transaction\'s secure signature is corrupted' . PHP_EOL
+                        . 'Signature from request: ' . strtoupper($request->md5sig) . PHP_EOL
+                        . 'Calculated signature: ' . strtoupper(md5($base)),
                         'Hacking attempt'
                     );
                     $status = $transaction::STATUS_FAILED;
                 }
+            }
+
+            if ($request->payment_type && isset($this->paymentTypes[$request->payment_type])) {
+                $this->setDetail(
+                    'payment_type',
+                    $this->paymentTypes[$request->payment_type] . ' (' . $request->payment_type . ')',
+                    'Payment type'
+                );
             }
 
             $this->transaction->setStatus($status); 
@@ -335,7 +373,6 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
 
         $data['mb_transaction_id']  = 'Moneybookers\' transaction ID';
         $data['failed_reason_code'] = 'Failed reson code';
-        $data['payment_type']       = 'Payment type';
 
         return $data;
     }
