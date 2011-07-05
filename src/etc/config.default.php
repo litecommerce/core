@@ -171,6 +171,7 @@ page = "public/error.html"
 [marketplace]
 url = "http://www.litecommerce.com/?q=api/"
 log_data = Off
+upgrade_step_time_limit = 240
 
 ;
 ; Other options

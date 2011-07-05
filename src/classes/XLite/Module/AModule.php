@@ -91,7 +91,19 @@ abstract class AModule
      */
     public static function getIconURL()
     {
-        return '';
+        list($author, $name) = explode(
+            '\\',
+            \Includes\Utils\ModulesManager::getModuleNameByClassName(get_called_class())
+        );
+
+        $path = \Includes\Utils\ModulesManager::getModuleIconFile($author, $name);
+        $url  = '';
+
+        if (\Includes\Utils\FileManager::isFileReadable($path)) {
+            $url = \XLite\Core\Converter::buildURL('module', null, compact('author', 'name'), 'image.php');
+        }
+
+        return $url;
     }
 
     /**

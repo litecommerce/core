@@ -72,4 +72,18 @@ class Log extends \XLite\View\Upgrade\Step\Completed\ACompleted
     {
         return $this->buildURL('upgrade', 'view_log_file');
     }
+
+    /**
+     * Called after the includeCompiledFile()
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function closeView()
+    {
+        parent::closeView();
+
+        \XLite\Upgrade\Cell::getInstance()->setUpgraded(false);
+    }
 }

@@ -52,6 +52,9 @@ define('LC_PHP_MEMORY_LIMIT_MIN', '64M');
 // Minimum MySQL version supported
 define('LC_MYSQL_VERSION_MIN', '5.0.3');
 
+// Default config file name
+define('LC_DEFAULT_CONFIG_FILE', 'config.default.php');
+
 // Config file name
 define('LC_CONFIG_FILE', 'config.php');
 
@@ -103,9 +106,12 @@ $lcSettings = array(
     // The list of modules that must be enabled by installation script
     'enable_modules' => array(
         'CDev' => array(
-            'DrupalConnector', // Allows to use Drupal CMS as a storefront
             'Bestsellers',
             'FeaturedProducts',
         ),
     ),
 );
+
+if (defined('DRUPAL_CMS_INSTALL_MODE')) {
+    $lcSettings['enable_modules']['CDev'][] = 'DrupalConnector';
+}

@@ -10,6 +10,7 @@
  * @since     1.0.0
  *}
 
+<li class="address-book">
 <div class="address-box">
 
   <table width="100%" IF="{address.getAddressId()}">
@@ -56,3 +57,4 @@
   </div>
 
 </div>
+</li>

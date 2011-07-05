@@ -48,4 +48,17 @@ class SimpleForm extends \XLite\View\Form\Product\Search\Customer\Main
         return 'true';
     }
 
+    /**
+     * getDefaultParams
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultParams()
+    {
+        return parent::getDefaultParams() + array(
+            \XLite\View\ItemsList\Product\Customer\Search::PARAM_INCLUDING => \XLite\Model\Repo\Product::INCLUDING_ANY,
+        );
+    }
 }

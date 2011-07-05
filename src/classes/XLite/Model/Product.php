@@ -350,7 +350,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
 
         if (!\XLite::isAdminZone()) {
             $result = $this->getEnabled()
-                && (!$this->getArrivalDate() || time() < $this->getArrivalDate())
+                && (!$this->getArrivalDate() || time() > $this->getArrivalDate())
                 && !$this->getInventory()->isOutOfStock();
         }
 
