@@ -562,7 +562,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     public function submitUserProfileForm(array &$form, array &$formState)
     {
         if (isset($formState['input']) && isset($formState['input']['pass']['pass1'])) {
-            LCConnector_Handler::saveVariable('passwd', $formState['input']['pass']['pass1'], true);
+            \LCConnector_Handler::saveVariable('passwd', $formState['input']['pass']['pass1'], true);
         }
     }
 
