@@ -41,6 +41,14 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     const TEST_MODE = 'test';
 
     /**
+     * IPN statuses
+     */
+    const IPN_VERIFIED = 'verify';
+    const IPN_DECLINED = 'decline';
+    const IPN_REQUEST_ERROR = 'request_error';
+
+
+    /**
      * Get settings widget or template
      *
      * @return string Widget class name or template path
@@ -66,27 +74,60 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
         parent::processCallback($transaction);
 
         $request = \XLite\Core\Request::getInstance();
+        
+        $status = $transaction::STATUS_FAILED;
 
-        if ($request->isPost() && isset($request->status)) {
-            $message = isset($this->statuses[$request->status]) ? $this->statuses[$request->status] : 'Failed';
+        switch ($this->getIPNVerification()) {
 
-            $this->saveDataFromRequest();
+            case self::IPN_DECLINED:
+                $status = $transaction::STATUS_FAILED;
+                $this->markCallbackRequestAsInvalid(static::t('IPN verification failed'));
 
-            switch ($request->status) {
-                case 0:
-                    $status = $transaction::STATUS_PENDING;
-                    break;
+                break;
 
-                case 2:
-                    $status = $transaction::STATUS_SUCCESS;
-                    break;
+            case self::IPN_REQUEST_ERROR:
+                $status = $transaction::STATUS_PENDING;
+                $this->markCallbackRequestAsInvalid(static::t('IPN HTTP error'));
 
-                default:
-                    $status = $transaction::STATUS_FAILED;
-            }
+                break;
 
-            $this->transaction->setStatus($status);
+            case self::IPN_VERIFIED:
+
+                switch ($request->payment_status) {
+                    case 'Completed':
+
+                        if ($transaction->getValue() == $request->mc_gross) {
+
+                            $status = $transaction::STATUS_SUCCESS;
+
+                        } else {
+
+                            $status = $transaction::STATUS_FAILED;
+
+                            $this->setDetail(
+                                'amount_error',
+                                'Payment transaction\'s amount is corrupted' . PHP_EOL
+                                . 'Amount from request: ' . $request->mc_gross . PHP_EOL
+                                . 'Amount from transaction: ' . $transaction->getValue(),
+                                'Hacking attempt'
+                            );
+
+                            $this->markCallbackRequestAsInvalid(static::t('Transaction amount mismatch'));
+                        }
+
+                        break;
+
+                    case 'Pending':
+                        $status = $transaction::STATUS_PENDING;
+                        break;
+
+                }
+
         }
+
+        $this->saveDataFromRequest();
+
+        $this->transaction->setStatus($status);
     }
 
     /**
@@ -103,13 +144,16 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
         parent::processReturn($transaction);
 
         if (\XLite\Core\Request::getInstance()->cancel) {
+
             $this->setDetail(
                 'cancel',
                 'Payment transaction is cancelled'
             );
+
             $this->transaction->setStatus($transaction::STATUS_FAILED);
 
         } elseif ($transaction::STATUS_INPROGRESS == $this->transaction->getStatus()) {
+
             $this->transaction->setStatus($transaction::STATUS_PENDING);
         }
    }
@@ -129,6 +173,49 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             && $method->getSetting('account');
     }
 
+
+    /**
+     * Return URL for IPN verification transaction
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function getIPNURL()
+    {
+        return $this->getFormURL() . '?cmd=_notify-validate';
+    }
+
+    /**
+     * Get IPN verification status
+     *
+     * @return boolean TRUE if verification status is recieved
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function getIPNVerification()
+    {
+        $ipnRequest = new \XLite\Core\HTTP\Request($this->getIPNURL());
+        $ipnRequest->body = \XLite\Core\Request::getInstance()->getData();
+
+        $ipnResult = $ipnRequest->sendRequest();
+
+        if ($ipnResult) {
+
+            $result =  (0 < preg_match('/VERIFIED/i', $ipnResult->body))
+                    ? self::IPN_VERIFIED
+                    : self::IPN_DECLINED;
+        } else {
+            $result = self::IPN_REQUEST_ERROR;
+
+            $this->setDetail(
+                'ipn_http_error',
+                'IPN HTTP error:'
+            );
+        }
+
+        return $result;
+    }
 
     /**
      * Get redirect form URL
@@ -267,13 +354,20 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     protected function defineSavedData()
     {
         return array(
-            'transID'        => 'Transaction id',
-            'authCode'       => 'Auth. code',
-            'decline_reason' => 'Decline reason',
-            'errorcode'      => 'Error code',
-            'avs_result'     => 'AVS result',
-            'cvv2_result'    => 'CVV2 result',
-            'max_score'      => 'MaxMind score',
+            'secureid'          => 'Transaction id',
+            'mc_gross'          => 'Payment amount',
+            'payment_type'      => 'Payment type',
+            'payment_status'    => 'Payment status',
+            'pending_reason'    => 'Pending reason',
+            'reason_code'       => 'Reason code',
+            'mc_currency'       => 'Payment currency',
+            'auth_id'           => 'Authorization identification number',
+            'auth_status'       => 'Status of authorization',
+            'auth_exp'          => 'Authorization expiration date and time',
+            'auth_amount'       => 'Authorization amount',
+            'payer_id'          => 'Unique customer ID',
+            'payer_email'       => 'Customer\'s primary email address',
+            'txn_id'            => 'Original transaction identification number',
         );
     }
 
