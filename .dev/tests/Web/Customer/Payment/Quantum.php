@@ -40,6 +40,15 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 
     public function testPay()
     {
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
+            array(
+                'category' => 'Security',
+                'name'     => 'customer_security',
+                'value'    => true,
+            )
+        );
+        \XLite\Core\Database::getCacheDriver()->deleteAll();
+
         $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => 'QuantumGateway'));
         $pid = $pmethod->getMethodId();
         if (!$pmethod) {
@@ -82,7 +91,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         );
 
         // Checkout
-        $this->openAndWait('store/checkout');
+        $this->clickAndWait('//div[@class="cart-checkout"]/button');
 
         if (0 < intval($this->getJSExpression('jQuery(".current.shipping-step").length'))) {
 

@@ -84,6 +84,7 @@ class Log extends \XLite\View\Upgrade\Step\Completed\ACompleted
     {
         parent::closeView();
 
+        \XLite\Upgrade\Cell::getInstance()->clear(true, true, false);
         \XLite\Upgrade\Cell::getInstance()->setUpgraded(false);
     }
 }

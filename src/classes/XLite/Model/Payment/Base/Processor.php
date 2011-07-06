@@ -147,6 +147,19 @@ abstract class Processor extends \XLite\Base
         return true;
     }
 
+    /**
+     * Check - payment processor is applicable for specified order or not
+     * 
+     * @param \XLite\Model\Order $order Order
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isApplicable(\XLite\Model\Order $order)
+    {
+        return true;
+    }
 
     /**
      * Get current transaction order

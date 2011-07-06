@@ -167,7 +167,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         $this->registerPortal('user/%/orders', '\XLite\Controller\Customer\OrderList', 'Orders');
         $this->registerPortal('user/%/orders/%', '\XLite\Controller\Customer\Order');
         $this->registerPortal('user/%/orders/%/invoice', '\XLite\Controller\Customer\Invoice');
-
         $this->registerPortal('user/%/address-book', '\XLite\Controller\Customer\AddressBook', 'Address book');
 
         // So called "landing link"
@@ -221,7 +220,8 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function invokeHookInit()
     {
-        include_once LC_DIR_MODULES . 'CDev/DrupalConnector/Drupal/Include/Callbacks.php';
+        include_once \Includes\Utils\ModulesManager::getAbsoluteDir('CDev', 'DrupalConnector') 
+            . 'Drupal' . LC_DS . 'Include' . LC_DS . 'Callbacks.php';
     }
 
     /**

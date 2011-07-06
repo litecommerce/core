@@ -72,6 +72,9 @@ class Callback extends \XLite\Controller\Customer\ACustomer
      */
     protected function doActionCallback()
     {
+        $txn = null;
+        $txnIdName = 'txnId';
+
         if (isset(\XLite\Core\Request::getInstance()->txn_id_name)) {
             /**
              * some of gateways can't accept return url on run-time and
@@ -79,17 +82,12 @@ class Callback extends \XLite\Controller\Customer\ACustomer
              * 'order_id' in run-time, instead pass the order id parameter name
              */
             $txnIdName = \XLite\Core\Request::getInstance()->txn_id_name;
-
-        } else {
-            $txnIdName = 'txn_id';
         }
 
-        if (!isset(\XLite\Core\Request::getInstance()->$txnIdName)) {
-            $this->doDie('The transaction ID variable \'' . $txnIdName . '\' is not found in request');
+        if (isset(\XLite\Core\Request::getInstance()->$txnIdName)) {
+            $txn = \XLite\Core\Database::getRepo('XLite\Model\Payment\Transaction')
+                ->find(\XLite\Core\Request::getInstance()->$txnIdName);
         }
-
-        $txn = \XLite\Core\Database::getRepo('XLite\Model\Payment\Transaction')
-            ->find(\XLite\Core\Request::getInstance()->$txnIdName);
 
         if (!$txn) {
 
@@ -106,15 +104,16 @@ class Callback extends \XLite\Controller\Customer\ACustomer
                     }
                 }
             }
-
         }
 
         if ($txn) {
             $txn->getPaymentMethod()->getProcessor()->processCallback($txn);
 
         } else {
-            // TODO - add error logging
+            \XLite\Logger::getInstance()->log('Request callback with undefined payment transaction', LOG_ERR);
         }
+
+        \XLite\Core\Database::getEM()->flush();
 
         $this->set('silent', true);
     }
