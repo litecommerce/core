@@ -1,4 +1,4 @@
-#!/usr/local/bin/zsh
+#!/bin/sh
 #
 # GIT: $Id$
 #
