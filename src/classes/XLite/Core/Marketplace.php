@@ -586,7 +586,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function validateResponseForGetAddonInfoAction(array $data)
     {
-        return $this->validateAgainstSchema($data, $this->getResponseSchemaForGetAddonInfoAction());
+        return $this->validateAgainstSchema($data, $this->getSchemaResponseForGetAddonInfoAction());
     }
 
     /**
@@ -596,7 +596,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getResponseSchemaForGetAddonInfoAction()
+    protected function getSchemaResponseForGetAddonInfoAction()
     {
         return array(
             self::FIELD_VERSION => array(
@@ -752,7 +752,8 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function validateResponseForCheckAddonKeyAction(array $data)
     {
-        return $this->validateAgainstSchema($data, $this->getResponseSchemaForCheckAddonKeyAction());
+
+        return $this->validateAgainstSchema($data, $this->getSchemaResponseForCheckAddonKeyAction());
     }
 
     /**
@@ -1182,12 +1183,12 @@ class Marketplace extends \XLite\Base\Singleton
 
     /**
      * Log error
-     * 
+     *
      * @param string $action  Current request action
      * @param string $message Message to log
      * @param array  $args    Message args OPTIONAL
      * @param array  $data    Data sent/recieved OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
