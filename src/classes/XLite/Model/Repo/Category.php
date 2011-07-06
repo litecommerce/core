@@ -714,7 +714,11 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
     {
-        if (isset($data['enabled']) && ($entity->getEnabled() xor ((bool) $data['enabled']))) {
+        if (
+            isset($data['enabled'])
+            && $entity->getParent()
+            && ($entity->getEnabled() xor ((bool) $data['enabled']))
+        ) {
             $this->updateQuickFlags($entity->getParent(), $this->prepareQuickFlags(0, $entity->getEnabled() ? -1 : 1));
         }
 
