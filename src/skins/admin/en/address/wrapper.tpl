@@ -21,8 +21,7 @@
       </td>
 
       <td valign="top" align="center">
-        <img src="images/icon_billing.png" title="Billing address" class="address-type-icon" IF="{address.getIsBilling()}" alt="" />
-        <img src="images/icon_shipping.png" title="Shipping address" class="address-type-icon" IF="{address.getIsBilling()}" alt="" />
+        <widget class="\XLite\View\Button\DeleteAddress"  addressId="{address.getAddressId()}" />
       </td>
 
     </tr>
@@ -38,7 +37,8 @@
       </td>
 
       <td align="center">
-        <widget class="\XLite\View\Button\DeleteAddress"  addressId="{address.getAddressId()}" />
+        <img src="images/icon_billing.png" title="Billing address" class="address-type-icon" IF="{address.getIsBilling()}" alt="" />
+        <img src="images/icon_shipping.png" title="Shipping address" class="address-type-icon" IF="{address.getIsBilling()}" alt="" />
       </td>
 
     </tr>
