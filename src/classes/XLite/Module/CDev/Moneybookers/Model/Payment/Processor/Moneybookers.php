@@ -77,6 +77,82 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     );
 
     /**
+     * Failed reason codes and messages
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $failedReasons = array(
+        '01' => 'Referred',
+        '02' => 'Invalid Merchant Number',
+        '03' => 'Pick-up card',
+        '04' => 'Authorisation Declined',
+        '05' => 'Other Error',
+        '06' => 'CVV is mandatory, but not set or invalid',
+        '07' => 'Approved authorisation, honour with identification',
+        '08' => 'Delayed Processing',
+        '09' => 'Invalid Transaction',
+        '10' => 'Invalid Currency',
+        '11' => 'Invalid Amount/Available Limit Exceeded/Amount too high',
+        '12' => 'Invalid credit card or bank account',
+        '13' => 'Invalid Card Issuer',
+        '14' => 'Annulation by client',
+        '15' => 'Duplicate transaction',
+        '16' => 'Acquirer Error',
+        '17' => 'Reversal not processed, matching authorisation not found',
+        '18' => 'File Transfer not available/unsuccessful',
+        '19' => 'Reference number error',
+        '20' => 'Access Denied',
+        '21' => 'File Transfer failed',
+        '22' => 'Format Error',
+        '23' => 'Unknown Acquirer',
+        '24' => 'Card expired',
+        '25' => 'Fraud Suspicion',
+        '26' => 'Security code expired',
+        '27' => 'Requested function not available',
+        '28' => 'Lost/Stolen card',
+        '29' => 'Stolen card, Pick up',
+        '30' => 'Duplicate Authorisation',
+        '31' => 'Limit Exceeded',
+        '32' => 'Invalid Security Code',
+        '33' => 'Unknown or Invalid Card/Bank account',
+        '34' => 'Illegal Transaction',
+        '35' => 'Transaction Not Permitted',
+        '36' => 'Card blocked in local blacklist',
+        '37' => 'Restricted card/bank account',
+        '38' => 'Security Rules Violation',
+        '39' => 'The transaction amount of the referencing transaction is higher than the transaction amount of the original transaction',
+        '40' => 'Transaction frequency limit exceeded, override is possible',
+        '41' => 'Incorrect usage count in the Authorisation System exceeded',
+        '42' => 'Card blocked',
+        '43' => 'Rejected by Credit Card Issuer',
+        '44' => 'Card Issuing Bank or Network is not available',
+        '45' => 'The card type is not processed by the authorisation centre / Authorisation System has determined incorrect Routing',
+        '47' => 'Processing temporarily not possible',
+        '48' => 'Security Breach',
+        '49' => 'Date / time not plausible, trace-no. not increasing',
+        '50' => 'Error in PAC encryption detected',
+        '51' => 'System Error',
+        '52' => 'MB Denied - potential fraud',
+        '53' => 'Mobile verification failed',
+        '54' => 'Failed due to internal security restrictions',
+        '55' => 'Communication or verification problem',
+        '56' => '3D verification failed',
+        '57' => 'AVS check failed',
+        '58' => 'Invalid bank code',
+        '59' => 'Invalid account code',
+        '60' => 'Card not authorised',
+        '61' => 'No credit worthiness',
+        '62' => 'Communication error',
+        '63' => 'Transaction not allowed for cardholder',
+        '64' => 'Invalid Data in Request',
+        '65' => 'Blocked bank code',
+        '66' => 'CVV2/CVC2 Failure',
+        '99' => 'General error',
+    );
+
+    /**
      * Payment types 
      * 
      * @var   array
@@ -316,6 +392,14 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
                 );
             }
 
+            if ($request->failed_reason_code && isset($this->failedReasons[$request->failed_reason_code])) {
+                $this->setDetail(
+                    'failed_reason',
+                    $this->failedReasons[$request->failed_reason_code],
+                    'Failed reason'
+                );
+            }
+
             $this->transaction->setStatus($status); 
         }
     }
@@ -416,7 +500,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
         $data = parent::defineSavedData();
 
         $data['mb_transaction_id']  = 'Moneybookers\' transaction ID';
-        $data['failed_reason_code'] = 'Failed reson code';
+        $data['failed_reason_code'] = 'Failed reason code';
 
         return $data;
     }
