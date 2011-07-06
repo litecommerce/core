@@ -222,7 +222,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
     cartTray.droppable(
     {
-      tolerance: 'intersect',
+      tolerance: 'touch',
 
       over: function(event, ui)
       {
