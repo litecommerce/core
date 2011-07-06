@@ -226,6 +226,8 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             $data['logo_url'] = $this->getSetting('logo_url');
         }
 
+        $this->transaction->setPublicId($data['transaction_id']);
+
         $request = new \XLite\Core\HTTP\Request($this->getPostURL());
         $request->body = $data;
         $response = $request->sendRequest();
@@ -299,6 +301,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
                 'Payment transaction is cancelled',
                 'Status'
             );
+            $this->transaction->setNote('Payment transaction is cancelled');
             $this->transaction->setStatus($transaction::STATUS_FAILED);
 
         } elseif ($transaction::STATUS_INPROGRESS == $this->transaction->getStatus()) {

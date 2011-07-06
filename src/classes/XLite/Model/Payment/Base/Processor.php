@@ -229,26 +229,13 @@ abstract class Processor extends \XLite\Base
      * @param string $value Value
      * @param string $label Label OPTIONAL
      *
-     * @return \XLite\Model\Payment\TransactionData
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function setDetail($name, $value, $label = null)
     {
-        $record = new \XLite\Model\Payment\TransactionData;
-
-        $record->setName($name);
-        $record->setValue($value);
-        if (isset($label)) {
-            $record->setLabel($label);
-        }
-
-        $this->transaction->getData()->add($record);
-        $record->setTransaction($this->transaction);
-
-        \XLite\Core\Database::getEM()->persist($record);
-
-        return $record;
+        $this->transaction->setDataCell($name, $value, $label);
     }
 
     /**

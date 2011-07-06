@@ -145,6 +145,17 @@ class Transaction extends \XLite\Model\AEntity
     protected $type = 'sale';
 
     /**
+     * Public transaction ID
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="string")
+     */
+    protected $public_id = '';
+
+    /**
      * Order
      *
      * @var   \XLite\Model\Order
@@ -178,6 +189,21 @@ class Transaction extends \XLite\Model\AEntity
      * @OneToMany (targetEntity="XLite\Model\Payment\TransactionData", mappedBy="transaction", cascade={"all"})
      */
     protected $data;
+
+    /**
+     * Readable statuses 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $readableStatuses = array(
+        self::STATUS_INITIALIZED => 'Initialized',
+        self::STATUS_INPROGRESS  => 'In progress',
+        self::STATUS_SUCCESS     => 'Completed',
+        self::STATUS_PENDING     => 'Pending',
+        self::STATUS_FAILED      => 'Failed',
+    );
 
     /**
      * Process checkout action
@@ -284,4 +310,58 @@ class Transaction extends \XLite\Model\AEntity
 
         parent::__construct($data);
     }
+
+    /**
+     * Get human-readable status 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getReadableStatus()
+    {
+        return isset($this->readableStatuses[$this->getStatus()])
+            ? $this->readableStatuses[$this->getStatus()]
+            : 'Unknown';
+    }
+
+    // {{{ Data operations
+
+    /**
+     * Set data cell 
+     * 
+     * @param string $name  Data cell name
+     * @param string $value Value
+     * @param string $label Public name OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setDataCell($name, $value, $label = null)
+    {
+        $data = null;
+
+        foreach ($this->getData() as $cell) {
+            if ($cell->getName() == $name) {
+                $data = $cell;
+                break;
+            }
+        }
+
+        if (!$data) {
+            $data = new \XLite\Model\Payment\TransactionData;
+            $data->setName($name);
+            $this->addData($data);
+            $data->setTransaction($this);
+        }
+
+        if (!$data->getLabel() && $label) {
+            $data->setLabel($label);
+        }
+
+        $data->setValue($value);
+    }
+
+    // }}}
 }
