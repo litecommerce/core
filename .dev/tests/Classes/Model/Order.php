@@ -619,13 +619,22 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
     {
         $order = $this->getTestOrder();
 
+        $etalon = array(
+            'PurchaseOrder',
+            'PhoneOrdering',
+            'FaxOrdering',
+            'MoneyOrdering',
+            'Echeck',
+            'COD',
+        );
+
         $list = array();
         foreach ($order->getPaymentMethods() as $p) {
-            $list[] = $p->getMethodId();
+            $list[] = $p->getServiceName();
         }
-        $etalon = array(7, 8, 1, 2, 3, 4, 5, 6);
 
-        $this->assertEquals($etalon, $list, 'check method id\'s list');
+        $this->assertEquals(array(), array_diff($etalon, $list), 'check extra methods');
+        $this->assertEquals(array(), array_diff($list, $etalon), 'check missing methods');
     }
 
     public function testRenewPaymentMethod()
