@@ -70,10 +70,10 @@ class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XL
         $sid = \XLite\Core\Session::getInstance()->getID();
         $amount = $t->getValue();
 
-        $urla = \XLite::getInstance()->getShopURL('admin.php?target=payment_return&amp;txn_id_name=ID', true);
+        $urla = \XLite::getInstance()->getShopURL('admin.php?target=payment_return&amp;txn_id_name=ID', \XLite\Core\Config::getInstance()->Security->customer_security);
         $urla = str_replace('ID&xid', 'ID&amp;xid', $urla);
 
-        $urld = \XLite::getInstance()->getShopURL('admin.php?target=payment_return&amp;txn_id_name=ID', true);
+        $urld = \XLite::getInstance()->getShopURL('admin.php?target=payment_return&amp;txn_id_name=ID', \XLite\Core\Config::getInstance()->Security->customer_security);
         $urld = str_replace('ID&xid', 'ID&amp;xid', $urld);
 
         $etalon = <<<HTML
