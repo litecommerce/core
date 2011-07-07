@@ -424,7 +424,9 @@ class Marketplace extends \XLite\Base\Singleton
         $result = true;
 
         foreach ($data as $module) {
-            $result = $result && $this->validateAgainstSchema($module, $this->getSchemaResponseForGetAddonInfoAction());
+            $result = $result 
+                && is_array($module) 
+                && $this->validateAgainstSchema($module, $this->getSchemaResponseForGetAddonInfoAction());
         }
 
         return $result;
@@ -812,7 +814,7 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * Validate response for certian action
      *
-     * :FIXME: use a schema
+     * FIXME: use a schema
      *
      * @param array $data Response data
      *
@@ -1101,13 +1103,13 @@ class Marketplace extends \XLite\Base\Singleton
             uniqid() . '.' . \Includes\Utils\PHARManager::getExtension() ?: 'tar'
         );
 
-        return isset($response->body) && \Includes\Utils\FileManager::write($path, $response->body) ? $path : null;
+        return (isset($response->body) && \Includes\Utils\FileManager::write($path, $response->body)) ? $path : null;
     }
 
     /**
      * Common method to validate response
      *
-     * :FIXME: must ignore unknown fields in data from marketplace
+     * FIXME: must ignore unknown fields in data from marketplace
      *
      * @param array $data   Data to validate
      * @param array $schema Validation schema
