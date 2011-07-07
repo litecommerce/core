@@ -425,11 +425,17 @@ ul.subcategory-icons a
 
 .products-grid .product-cell,
   .products-grid .product-cell .ui-draggable-dragging,
-  .product-cell.ui-draggable-dragging
+  .product-cell.ui-draggable-dragging,
+  .products-sidebar .product-cell .product,
+  .products-sidebar .product-cell .product.ui-draggable-dragging
 {
   border-color: #eee;
   border-style: solid;
   border-width: 1px;
+}
+
+.products-sidebar .product-cell .product {
+  border-color: #fff;
 }
 
 .products-list .product-cell td.product-photo
@@ -450,6 +456,8 @@ ul.subcategory-icons a
 .products-grid .product-cell .ui-draggable-dragging,
 .products-list .product-cell:hover td.product-photo,
 .products-list .product-cell:hover td.product-info,
+.products-sidebar .product-cell:hover .product,
+.products-sidebar .product-cell .product.ui-draggable-dragging,
 .products-list .ui-draggable-dragging td.product-photo,
 .products-list .ui-draggable-dragging td.product-info
 {
@@ -492,12 +500,14 @@ ul.subcategory-icons a
 /* Drag'n'drop */
 
 .products-grid li,
+.products-sidebar .product-cell .ui-draggable-dragging,
 .products-grid .product-cell .ui-draggable-dragging,
 .products-list .ui-draggable-dragging
 {
   background-color: white;
   opacity: 0.9;
 }
+
 .products .products-table
 {
   border-collapse: separate;
@@ -589,7 +599,6 @@ ul.subcategory-icons a
   width: 25px;
   padding: 0px 3px 1px;
 }
-
 
 .cart-tray
 {
