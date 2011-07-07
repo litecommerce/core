@@ -183,7 +183,7 @@ abstract class Processor extends \XLite\Base
      */
     public function getModule()
     {
-        return preg_match('/XLite\\Module\\(\w+)\\(\s+)\\/Ss', get_called_class(), $match)
+        return preg_match('/XLite\\\Module\\\(\w+)\\\(\w+)\\\/Ss', get_called_class(), $match)
             ? \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneBy(array('author' => $match[1], 'name' => $match[2]))
             : null;
     }

@@ -95,6 +95,6 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function showSettingsForm()
     {
-//        return true;
+        return true;
     }
 }
