@@ -12,7 +12,7 @@
 
 ul.breadcrumb li.location-node.expandable {
   padding-right: 0.8em;
-  background: url(images/down_arrow.png) no-repeat right 0.8em;
+  background: url(images/down_arrow.png) no-repeat right 0.9em;
 }
 
 ul.location-subnodes {
