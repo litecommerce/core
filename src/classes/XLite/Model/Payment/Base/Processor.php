@@ -134,6 +134,18 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Payment method has settings into Module settings section
+     * 
+     * @return boolan
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function hasModuleSettings()
+    {
+        return false;
+    }
+
+    /**
      * Check - payment method is configured or not
      *
      * @param \XLite\Model\Payment\Method $method Payment method
@@ -150,15 +162,30 @@ abstract class Processor extends \XLite\Base
     /**
      * Check - payment processor is applicable for specified order or not
      * 
-     * @param \XLite\Model\Order $order Order
+     * @param \XLite\Model\Order          $order  Order
+     * @param \XLite\Model\Payment\Method $method Payment method
      *  
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isApplicable(\XLite\Model\Order $order)
+    public function isApplicable(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
     {
         return true;
+    }
+
+    /**
+     * Get processor module
+     *
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getModule()
+    {
+        return preg_match('/XLite\\Module\\(\w+)\\(\s+)\\/Ss', get_called_class(), $match)
+            ? \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneBy(array('author' => $match[1], 'name' => $match[2]))
+            : null;
     }
 
     /**

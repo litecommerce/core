@@ -166,16 +166,68 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     );
 
     /**
-     * Get settings widget or template
+     * Payment type countries 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $paymentTypeCountries = array(
+        'WLT'   => true,
+        'ACC'   => true,
+        'VSA'   => true,
+        'MSC'   => true,
+        'VSD'   => array('GBR'),
+        'VSE'   => true,
+        'MAE'   => array('GBR', 'ESP', 'AUT'),
+        'SLO'   => array('GBR'),
+        'AMX'   => true,
+        'DIN'   => true,
+        'JCB'   => true,
+        'LSR'   => array('IRL'),
+        'GCB'   => array('FRA'),
+        'DNK'   => array('DNK'),
+        'PSP'   => array('ITA'),
+        'CSI'   => array('ITA'),
+        'OBT'   => array('DEU', 'GBR', 'DNK', 'FIN', 'SWE', 'POL', 'EST', 'LVA', 'LTU'),
+        'GIR'   => array('DEU'),
+        'DID'   => array('DEU'),
+        'SFT'   => array('DEU', 'AUT', 'BEL', 'NLD', 'CHE', 'GBR'),
+        'ENT'   => array('SGP'),
+        'EBT'   => array('SWE'),
+        'SO2'   => array('FIN'),
+        'IDL'   => array('NLD'),
+        'NPY'   => array('AUT'),
+        'PLI'   => array('AUS'),
+        'PWY'   => array('POL'),
+        'PWY5'  => array('POL'),
+        'PWY6'  => array('POL'),
+        'PWY7'  => array('POL'),
+        'PWY14' => array('POL'),
+        'PWY15' => array('POL'),
+        'PWY17' => array('POL'),
+        'PWY18' => array('POL'),
+        'PWY19' => array('POL'),
+        'PWY20' => array('POL'),
+        'PWY21' => array('POL'),
+        'PWY22' => array('POL'),
+        'PWY25' => array('POL'),
+        'PWY26' => array('POL'),
+        'PWY28' => array('POL'),
+        'PWY32' => array('POL'),
+        'PWY33' => array('POL'),
+    );
+
+    /**
+     * Payment method has settings into Module settings section
      *
-     * @return string Widget class name or template path
-     * @access public
+     * @return boolan
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getSettingsWidget()
+    public function hasModuleSettings()
     {
-        return 'modules/CDev/Moneybookers/config.tpl';
+        return true;
     }
 
     /**
@@ -202,10 +254,10 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     protected function getSessionId()
     {
         $data = array(
-            'pay_to_email'          => $this->getSetting('email'),
+            'pay_to_email'          => \XLite\Core\Config::getInstance()->CDev->Moneybookers->email,
             'language'              => $this->getLanguageCode(),
             'recipient_description' => substr(\XLite\Core\Config::getInstance()->Company->company_name, 0, 30),
-            'transaction_id'        => $this->getSetting('prefix') . $this->transaction->getTransactionId(),
+            'transaction_id'        => \XLite\Core\Config::getInstance()->CDev->Moneybookers->prefix . $this->transaction->getTransactionId(),
             'pay_from_email'        => $this->getProfile()->getLogin(),
             'firstname'             => $this->getProfile()->getBillingAddress()->getFirstname(),
             'lastname'              => $this->getProfile()->getBillingAddress()->getLastname(),
@@ -222,8 +274,8 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             'prepare_only'          => 1,
         );
 
-        if ($this->getSetting('logo_url')) {
-            $data['logo_url'] = $this->getSetting('logo_url');
+        if (\XLite\Core\Config::getInstance()->CDev->Moneybookers->logo_url) {
+            $data['logo_url'] = \XLite\Core\Config::getInstance()->CDev->Moneybookers->logo_url;
         }
 
         $this->transaction->setPublicId($data['transaction_id']);
@@ -366,11 +418,11 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             if (
                 $status == $transaction::STATUS_SUCCESS
                 && $request->md5sig
-                && $this->getSetting('secret_word')
+                && \XLite\Core\Config::getInstance()->CDev->Moneybookers->secret_word
             ) {
                 $base = $request->merchant_id
                     . $request->transaction_id
-                    . strtoupper(md5($this->getSetting('secret_word')))
+                    . strtoupper(md5(\XLite\Core\Config::getInstance()->CDev->Moneybookers->secret_word))
                     . $request->mb_amount
                     . $request->mb_currency
                     . $request->status;
@@ -420,21 +472,23 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
         return parent::isConfigured($method)
-            && $method->getSetting('email');
+            && \XLite\Core\Config::getInstance()->CDev->Moneybookers->email;
     }
 
     /**
      * Check - payment processor is applicable for specified order or not
      *
-     * @param \XLite\Model\Order $order Order
+     * @param \XLite\Model\Order          $order  Order
+     * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isApplicable(\XLite\Model\Order $order)
+    public function isApplicable(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
     {
-        return parent::isApplicable($order)
+        return parent::isApplicable($order, $method)
+            && $this->isPaymentTypeAllowed($this->convertServiceNameToType($method->getServiceName()), $order)
             && in_array(strtoupper($order->getCurrency()->getCode()), $this->allowedCurrencies);
     }
 
@@ -486,7 +540,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      */
     protected function getPostURL()
     {
-        return '1' == $this->getSetting('test')
+        return \XLite\Core\Config::getInstance()->CDev->Moneybookers->test
             ? 'http://www.moneybookers.com/app/test_payment.pl'
             : 'https://www.moneybookers.com/app/payment.pl';
     }
@@ -506,5 +560,45 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
         $data['failed_reason_code'] = 'Failed reason code';
 
         return $data;
+    }
+
+    /**
+     * Convert service name to type 
+     * 
+     * @param string $serviceName Payment method service name
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function convertServiceNameToType($serviceName)
+    {
+        return substr($serviceName, 13);
+    }
+
+    /**
+     * Check - payment type is allowed for specified order or not
+     * 
+     * @param string           $type  Payment type
+     * @param \EMM\Model\Order $order Order
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isPaymentTypeAllowed($type, \EMM\Model\Order $order)
+    {
+        $result = isset($this->paymentTypeCountries[$type])
+            && $order->getProfile()->getBillingAddress()
+            && $order->getProfile()->getBillingAddress()->getCountry();
+
+        if ($result && true !== $this->paymentTypeCountries[$type]) {
+            $result = in_array(
+                $order->getProfile()->getBillingAddress()->getCountry()->getCode3(),
+                $this->paymentTypeCountries[$type]
+            );
+        }
+
+        return $result;
     }
 }

@@ -120,6 +120,36 @@ class Methods extends \XLite\View\Dialog
         return (bool) $method->getProcessor()->getSettingsWidget();
     }
 
+    /**
+     * Check - method has module settings 
+     *
+     * @param \XLite\Model\Payment\Method $method Method
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isModuleConfigurable(\XLite\Model\Payment\Method $method)
+    {
+        return $method->getProcessor()->hasModuleSettings()
+            && $this->getModuleURL($method);
+    }
+
+    /**
+     * Get module settings URL 
+     * 
+     * @param \XLite\Model\Payment\Method $method Method
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleURL(\XLite\Model\Payment\Method $method)
+    {
+        return $method->getProcessor()->getModule()
+            ? $method->getProcessor()->getModule()->getSettingsForm()
+            : null;
+    }
 
     /**
      * Get current language code
