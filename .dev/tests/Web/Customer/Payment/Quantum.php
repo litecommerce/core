@@ -47,7 +47,10 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
                 'value'    => true,
             )
         );
+
+        // Reset cache - DO NOT CHANGE!
         \XLite\Core\Database::getCacheDriver()->deleteAll();
+        \XLite\Core\Config::getInstance()->Security->customer_security;
 
         $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => 'QuantumGateway'));
         $pid = $pmethod->getMethodId();
