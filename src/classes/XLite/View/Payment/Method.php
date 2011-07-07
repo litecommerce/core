@@ -47,6 +47,7 @@ class Method extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
+
         $result[] = 'payment_method';
 
         return $result;
@@ -63,6 +64,7 @@ class Method extends \XLite\View\Dialog
     {
         return parent::isVisible()
             && $this->getPaymentMethod()
+            && $this->getPaymentMethod()->getProcessor()
             && $this->getPaymentMethod()->getProcessor()->getSettingsWidget();
     }
 

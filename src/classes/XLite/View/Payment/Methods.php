@@ -61,7 +61,15 @@ class Methods extends \XLite\View\Dialog
      */
     public function getPaymentMethods()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findAllMethods();
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findAllMethods();
+
+        foreach ($list as $i => $method) {
+            if (!$method->getProcessor()) {
+                unset($list[$i]);
+            }
+        }
+
+        return $list;
     }
 
     /**
@@ -117,7 +125,7 @@ class Methods extends \XLite\View\Dialog
      */
     public function isMethodConfigurable(\XLite\Model\Payment\Method $method)
     {
-        return (bool) $method->getProcessor()->getSettingsWidget();
+        return $method->getProcessor() && $method->getProcessor()->getSettingsWidget();
     }
 
 

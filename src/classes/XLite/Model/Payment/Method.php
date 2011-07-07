@@ -134,7 +134,7 @@ class Method extends \XLite\Model\Base\I18n
     {
         $class = '\XLite\\' . $this->getClass();
 
-        return $class::getInstance();
+        return \XLite\Core\Operator::isClassExists($class) ? $class::getInstance() : null;
     }
 
     /**
@@ -155,6 +155,7 @@ class Method extends \XLite\Model\Base\I18n
 
         return $this->getEnabled()
             && !$disabledModule
+            && $this->getProcessor()
             && $this->getProcessor()->isConfigured($this);
     }
 
