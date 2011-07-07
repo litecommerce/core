@@ -424,7 +424,7 @@ class Marketplace extends \XLite\Base\Singleton
         $result = true;
 
         foreach ($data as $module) {
-            $result = $result && $this->validateAgainstSchema($module, $this->getResponseSchemaForGetAddonInfoAction());
+            $result = $result && $this->validateAgainstSchema($module, $this->getSchemaResponseForGetAddonInfoAction());
         }
 
         return $result;
