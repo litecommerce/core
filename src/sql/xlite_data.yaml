@@ -458,6 +458,8 @@ XLite\Model\LanguageLabel:
   - { name: 'X products found', translations: [{ code: en, label: '{{count}} products found' }] }
   - { name: 'Thank you for registering a customer account, your profile has been created successfully', translations: [{ code: en, label: 'Thank you for registering a customer account, your profile has been created successfully.<br />As a registered customer you can enjoy simplified checkout process and review your order history.<br /><br />Registration confirmation with your account details has been sent to your e-mail <b>{profile.login}</b> address.<br />Please use your e-mail address and the specified password every time you place orders at our store.<br /><br />You are now logged in and are welcome to continue shopping.' }] }
   - { name: 'BEGIN - END of TOTAL', translations: [{ code: en, label: '<span class="begin-record-number">{{begin}}</span>&ndash;<span class="end-record-number">{{end}}</span> of <span class="records-count">{{total}}</span>' }] }
+  - { name: 'added by X', translations: [{ code: en, label: 'added by {{name}}' }] }
+  - { name: 'added by _X_', translations: [{ code: en, label: 'added by <a href="{{url}}">{{name}}</a>' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

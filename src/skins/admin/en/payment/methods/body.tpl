@@ -17,24 +17,35 @@
   <input type="hidden" name="target" value="payment_methods" />
   <input type="hidden" name="action" value="update" />
 
-  <table cellspacing="1" class="data-table payment-methods">
+  <table cellspacing="2" class="data-table payment-methods">
 
     <tr>
-      <th>{t(#Name#)}</th>
-      <th class="extender">{t(#Special instructions#)}</th>
+      <th class="switch"><img src="images/spacer.gif" alt="" /></th>
       <th>{t(#Pos.#)}</th>
-      <th>{t(#Enabled#)}</th>
+      <th>{t(#Name#)}</th>
+      <th>{t(#Description#)}</th>
       <th>&nbsp;</th>
     </tr>
 
     <tr FOREACH="getPaymentMethods(),i,method" class="{getRowClass(i,##,#highlight#)}">
-      <td><input type="text" name="data[{method.getMethodId()}][name]" value="{getMethodName(method)}" class="field-required" size="30" /></td>
-      <td><textarea cols="100" rows="6" name="data[{method.getMethodId()}][description]">{getMethodDescription(method)}</textarea></td>
-      <td><input type="text" name="data[{method.getMethodId()}][orderby]" value="{method.orderby}" class="field-integer" size="5" /></td>
-      <td><input type="checkbox" name="data[{method.getMethodId()}][enabled]" value="1" checked="{isMethodEnabled(method)}" /></td>
+      <td class="switch"><input type="checkbox" name="data[{method.getMethodId()}][enabled]" value="1" checked="{isMethodEnabled(method)}" /></td>
+      <td class="pos"><input type="text" name="data[{method.getMethodId()}][orderby]" value="{method.orderby}" class="field-integer" /></td>
+      <td class="name">
+        <input type="text" name="data[{method.getMethodId()}][name]" value="{getMethodName(method)}" class="field-required" />
+        <div IF="getModuleName(method)">
+          {if:isModuleConfigurable(method)}
+            {t(#added by _X_#,_ARRAY_(#name#^getModuleName(method),#url#^getModuleURL(method))):h}
+          {else:}
+            {t(#added by X#,_ARRAY_(#name#^getModuleName(method)))}
+          {end:}
+        </div>
+      </td>
+      <td class="description">
+        <textarea name="data[{method.getMethodId()}][description]">{getMethodDescription(method)}</textarea>
+        <widget class="\XLite\View\Button\SwitchButton" first="makeSmallHeightPMT" second="makeLargeHeightPMT" />
+      </td>
       <td>
-        <a IF="isMethodConfigurable(method)" href="{buildURL(#payment_method#,##,_ARRAY_(#method_id#^method.getMethodId()))}">{t(#Configure#)}</a>
-        <a IF="isModuleConfigurable(method)" href="{getModuleURL(method)}">{t(#Module configure#)}</a>
+        <a IF="isMethodConfigurable(method)" href="{buildURL(#payment_method#,##,_ARRAY_(#method_id#^method.getMethodId()))}">{t(#Settings#)}</a>
       </td>
     </tr>
 

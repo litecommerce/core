@@ -272,7 +272,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             'cancel_url'            => $this->getReturnURL(null, true, true),
             'hide_login'            => 1,
             'prepare_only'          => 1,
-            'payment_methods'       => $this->convertServiceNameToType($this->transaction->gtePaymentMethod()->getSecureName()),
+            'payment_methods'       => $this->convertServiceNameToType($this->transaction->getPaymentMethod()->getServiceName()),
         );
 
         if (\XLite\Core\Config::getInstance()->CDev->Moneybookers->logo_url) {
