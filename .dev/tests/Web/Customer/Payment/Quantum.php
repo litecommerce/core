@@ -237,7 +237,9 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         // Go to shop
         $this->waitForLocalCondition('location.href.search(/checkoutSuccess/) != -1');
 
-        $ordeid = null;
+        $this->waitForPageToLoad();
+
+        $ordeid = 0;
 
         if (preg_match('/order_id-(\d+)/Ss', $this->getLocation(), $m)) {
             $ordeid = intval($m[1]);
