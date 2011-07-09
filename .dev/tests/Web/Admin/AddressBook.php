@@ -49,12 +49,34 @@ class XLite_Web_Admin_AddressBook extends XLite_Web_Admin_AAdmin
      */
     public function testAddressBookAdd()
     {
-        $this->markTestSkipped('Awaiting for new Selenuim version. Problems with JS confirmation dialogs');
+        // $this->markTestSkipped('Awaiting for new Selenuim version. Problems with JS confirmation dialogs');
 
-/*
         $this->logIn();
 
         $this->open('admin.php?target=address_book');
+
+        $cnt = 10;
+        while ($this->isElementPresent(self::DELETE_BUTTON)) {
+
+            // Preventing infinite loop if something wrong with deleting
+            if (0 > $cnt--) {
+                break;
+            }
+
+            // Set next confirmation action to 'Ok'
+            $this->chooseOkOnNextConfirmation();
+
+            // Click 'Delete address' button
+            $this->click(self::DELETE_BUTTON); 
+
+            // Check for confirmation presented
+            $this->assertConfirmation('Delete this address?');
+
+            $this->waitForPageToLoad();
+        }
+
+        $this->assertTrue(0 < $cnt, 'Counter of default address deleteion iterations is less than zero');
+
 
         $this->assertElementPresent(self::ADD_BUTTON, 'No add to address book button');
 
@@ -70,9 +92,29 @@ class XLite_Web_Admin_AddressBook extends XLite_Web_Admin_AAdmin
 
         $this->clickAndWait(self::SAVE_BUTTON);
 
-        $this->clickAndWait(self::DELETE_BUTTON); 
+        // Check if new address is presented in the addresses list
+        $this->assertElementPresent("//div[@class='address-box']/descendant::td[@class='address-text']/ul[@class='address-entry']/li[@class='address-text-street']/ul[@class='address-text']/li[@class='address-text-value' and contains(text(), 'test1')]", 'New address is not presented (test1)');
 
-        $this->assertElementNotPresent("//li[@class='address-text-cell address-text-street']/ul[@class='address-text']/li[@class='address-text-value']");
+        // Set next confirmation action to 'Ok'
+        $this->chooseOkOnNextConfirmation();
+
+        // Click 'Delete address' button
+        $this->click(self::DELETE_BUTTON); 
+
+        // Check for confirmation presented
+        $this->assertConfirmation('Delete this address?');
+
+        $this->waitForPageToLoad();
+
+        $this->waitForCondition(
+            "!selenium.isElementPresent(\"//li[@class='address-text-value' and contains(text(), 'test1')]\")",
+            10000,
+            'New address is still presented (test1)'
+        );
+
+        // Check if new address was deleted from the addresses list
+        //$this->assertElementNotPresent("//div[@class='address-box']/descendant::td[@class='address-text']/ul[@class='address-entry']/li[@class='address-text-street']/ul[@class='address-text']/li[@class='address-text-value' and contains(text(), 'test1')]", 'New address is still presented (test1)');
+
 
         $this->click(self::ADD_BUTTON);
 
@@ -85,6 +127,9 @@ class XLite_Web_Admin_AddressBook extends XLite_Web_Admin_AAdmin
         $this->enterAddress('', 'test3');
 
         $this->clickAndWait(self::SAVE_BUTTON);
+
+        // Check if new address is presented in the addresses list
+        $this->assertElementPresent("//div[@class='address-box']/descendant::td[@class='address-text']/ul[@class='address-entry']/li[@class='address-text-street']/ul[@class='address-text']/li[@class='address-text-value' and contains(text(), 'test3')]", 'New address is not presented (test3)');
 
         $this->click(self::CHANGE_BUTTON);
 
@@ -100,9 +145,9 @@ class XLite_Web_Admin_AddressBook extends XLite_Web_Admin_AAdmin
 
         $this->clickAndWait(self::SAVE_BUTTON);
 
-        $this->assertTrue('street-test5' == $this->getJSExpression("jQuery('.address-text-street .address-text-value').eq(0).text().trim()"), 'No update');
+        // Check if new address is presented in the addresses list
+        $this->assertElementPresent("//div[@class='address-box']/descendant::td[@class='address-text']/ul[@class='address-entry']/li[@class='address-text-street']/ul[@class='address-text']/li[@class='address-text-value' and contains(text(), 'test5')]", 'New address is not presented (test5)');
 
-    */
     }
 
     private function enterAddress($id, $value = 'test', $number = '11111') 

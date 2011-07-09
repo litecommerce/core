@@ -49,19 +49,34 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
      */
     public function testAddressBookAdd()
     {
-        $this->markTestSkipped('Awaiting for new Selenuim version. Problems with JS confirmation dialogs');
+        // $this->markTestSkipped('Awaiting for new Selenuim version. Problems with JS confirmation dialogs');
 
-/*
         $this->logIn();
 
         $this->open('user/1/address-book');
 
+        $cnt = 10;
         while ($this->isElementPresent(self::DELETE_BUTTON)) {
 
-            $this->click(self::DELETE_BUTTON);
+            // Preventing infinite loop if something wrong with deleting
+            if (0 > $cnt--) {
+                break;
+            }
 
-            $this->confirm();
+            // Set next confirmation action to 'Ok'
+            $this->chooseOkOnNextConfirmation();
+
+            // Click 'Delete address' button
+            $this->click(self::DELETE_BUTTON); 
+
+            // Check for confirmation presented
+            $this->assertConfirmation('Delete this address?');
+
+            $this->waitForPageToLoad();
         }
+
+        $this->assertTrue(0 < $cnt, 'Counter of default address deleteion iterations is less than zero');
+
 
         $this->assertElementPresent(self::ADD_BUTTON, 'No add to address book button');
 
@@ -77,7 +92,17 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
 
         $this->clickAndWait(self::SAVE_BUTTON);
 
-        $this->clickAndWait(self::DELETE_BUTTON); 
+        // Set next confirmation action to 'Ok'
+        $this->chooseOkOnNextConfirmation();
+
+        // Click 'Delete address' button
+        $this->click(self::DELETE_BUTTON); 
+
+        // Check for confirmation presented
+        $this->assertConfirmation('Delete this address?');
+
+        $this->waitForPageToLoad();
+
 
         $this->assertElementNotPresent("//li[@class='address-text-cell address-text-street']/ul[@class='address-text']/li[@class='address-text-value' and text()='street-test1']", 'address was not removed');
 
@@ -110,8 +135,6 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
         $street = $this->getJSExpression("jQuery('.address-text-street .address-text-value').eq(0).text().trim()");
 
         $this->assertTrue('street-test5' == $street, 'No update: ' . $street);
-
-*/
     }
 
     private function enterAddress($id, $value = 'test', $number = '11111') 
