@@ -72,7 +72,7 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      */
     protected function getItemsPerPageDefault()
     {
-        return 5;
+        return 15;
     }
 
     /**
