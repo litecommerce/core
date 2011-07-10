@@ -15,5 +15,4 @@
 
 <div IF="!isEnabled(module)" class="addon-icon addon-disabled-note">
   <span IF="isInstalled(module)">{t(#Disabled#)}</span>
-  <span IF="!isInstalled(module)">{t(#Not installed#)}</span>
 </div>

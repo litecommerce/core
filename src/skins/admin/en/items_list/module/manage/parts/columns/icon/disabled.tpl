@@ -14,5 +14,4 @@
 
 <div IF="!isEnabled(module)" class="addon-disabled">
   <img IF="isInstalled(module)" src="images/spacer.gif" class="disabled" alt="{t(#Disabled#)}" />
-  <img IF="!isInstalled(module)" src="images/spacer.gif" class="disabled" alt="{t(#Not installed#)}" />
 </div>
