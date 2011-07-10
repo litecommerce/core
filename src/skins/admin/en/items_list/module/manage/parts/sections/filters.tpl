@@ -16,7 +16,8 @@
 
   <ul class="activity">
     <li FOREACH="getFilters(),filterId,description" class="{getFilterClasses(filterId)}">
-      <a IF="filterId" href="{buildURL(#addons_list_installed#,##,_ARRAY_(#filter#^filterId,#tag#^getTag()))}">{t(description)}</a>
+      <a IF="filterId&getModulesCount(filterId)" href="{buildURL(#addons_list_installed#,##,_ARRAY_(#filter#^filterId,#tag#^getTag()))}">{t(description)}</a>
+      <span IF="filterId&!getModulesCount(filterId)">{t(description)}</span>
       <a IF="!filterId" href="{buildURL(#addons_list_installed#)}">{t(description)}</a>
       <span>({getModulesCount(filterId)})</span>
     </li>
