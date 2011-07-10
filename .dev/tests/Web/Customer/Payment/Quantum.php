@@ -216,7 +216,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         }
 
         // Fail test if form element not found
-        $this->assertElementPresent('//form/descendant::input[@name="ccnum"]');
+        $this->assertElementPresent('//form/descendant::input[@name="ccnum"]', 'ccnum input field not found');
 
         // Type test credit card data
         $this->type('//input[@name="ccnum"]', '4111111111111111');

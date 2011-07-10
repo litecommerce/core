@@ -144,6 +144,13 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
             'Category with ID ' . $categoryId . ' must not exist'
         );
 
+        $categoryId = -10;
+
+        $this->assertNull(
+            $this->getRepo()->getCategory($categoryId),
+            'Category with ID ' . $categoryId . ' must not exist'
+        );
+
         $categoryId = 14015;
 
         $this->assertNotNull(
@@ -275,6 +282,20 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
                 . $categoryId . ')  must be "' . $categoryId . '"'
             );
         }
+
+        $path = $this->getRepo()->getCategoryPath(9999999999); // Non-existing category
+
+        $this->assertInternalType(
+           'array',
+            $path,
+           'Category path must be of the "array" type'
+        );
+
+        $this->assertEquals(
+            0,
+            count($path),
+            'Number of nodes in the path of non-existing category must be "0" (9999999999)'
+        );
     }
 
     /**
@@ -293,6 +314,14 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
             1,
             $this->getRepo()->getCategoryDepth($categoryId),
             'Depth of the "Fruit" category subtree (ID ' . $categoryId . ')  must be "1"'
+        );
+
+        $categoryId = 9999999; // Non-existing category
+
+        $this->assertEquals(
+            0,
+            $this->getRepo()->getCategoryDepth($categoryId),
+            'Depth of non-existing category subtree (ID ' . $categoryId . ')  must be "0"'
         );
     }
 

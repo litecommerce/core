@@ -165,7 +165,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getSubtree($categoryId)
     {
-        return $this->defineSubtreeQuery($categoryId)->getResult();
+        return $category = $this->getCategory($categoryId)
+            ? $this->defineSubtreeQuery($categoryId)->getResult()
+            : array();
     }
 
     /**
@@ -179,7 +181,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategoryPath($categoryId)
     {
-        return $this->defineCategoryPathQuery($categoryId)->getResult();
+        return $category = $this->getCategory($categoryId)
+            ? $this->defineCategoryPathQuery($categoryId)->getResult()
+            : array();
     }
 
     /**
@@ -193,7 +197,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategoryDepth($categoryId)
     {
-        return $this->defineCategoryDepthQuery($categoryId)->getSingleScalarResult();
+        return $category = $this->getCategory($categoryId)
+            ? $this->defineCategoryDepthQuery($categoryId)->getSingleScalarResult()
+            : 0;
     }
 
     /**
@@ -626,7 +632,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function prepareCategoryId($categoryId)
     {
-        return (0 < ($categoryId = intval($categoryId))) ? $categoryId : null;
+        return abs(intval($categoryId)) ?: null;
     }
 
     /**

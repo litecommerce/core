@@ -53,7 +53,7 @@ class Category extends \XLite\Controller\Customer\Catalog
      */
     public function isTitleVisible()
     {
-        return ($this->getModelObject()->getShowTitle() == 1);
+        return !is_null($this->getModelObject()) && $this->getModelObject()->getShowTitle();
     }
 
     /**
