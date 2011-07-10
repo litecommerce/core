@@ -110,9 +110,7 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
         $result = array();
 
         foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules() as $module) {
-
             if ($this->isModuleToDisable($module) || $this->isModuleCustom($module)) {
-
                 $result[] = $module;
             }
         }

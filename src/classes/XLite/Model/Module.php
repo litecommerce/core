@@ -486,7 +486,9 @@ class Module extends \XLite\Model\AEntity
      */
     public function isCustom()
     {
-        return $this->getRepository()->getModuleFromMarketplace($this)->getModuleID() === $this->getModuleID();
+        $module = $this->getRepository()->getModuleFromMarketplace($this);
+
+        return !isset($module) || $module->getModuleID() === $this->getModuleID();
     }
 
     /**
