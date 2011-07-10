@@ -142,7 +142,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function getMessage()
     {
-        return 'Re-building cache [step ' . static::$step . '], please wait...';
+        return 'Re-building cache [step ' . static::$step . ' of ' . static::LAST_STEP . '], please wait...';
     }
 
     /**
@@ -154,7 +154,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function getPlainMessage()
     {
-        return static::getMessage() . "\n";
+        return "\n" . static::getMessage() . "\n";
     }
 
     /**
