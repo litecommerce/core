@@ -614,6 +614,9 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		else
 			rm -rf images
 			find ./public/ -mindepth 1 -maxdepth 1 -type f -not -name "error*" -delete
+
+			# Remove install.php file as it may be renamed after installation
+			rm -f install.php
 		fi
 	fi
 	
