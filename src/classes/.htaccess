@@ -1,0 +1,12 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Classes-specified Apache options
+#
+
+Options -Indexes
+
+<IfModule mod_access.c>
+  <Files "*.*">
+    Deny from all
+  </Files>
+</IfModule>

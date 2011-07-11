@@ -82,15 +82,21 @@ class XLite_Web_Admin_AddressBook extends XLite_Web_Admin_AAdmin
 
         $this->click(self::ADD_BUTTON);
 
-        $this->waitForLocalCondition(
-            "jQuery('.ui-dialog-title').length > 0",
-            10000,
-            "No add address popup"
-        );  
+        // Wait for address popup
+        $this->waitForCondition(
+            "selenium.isElementPresent(\"//span[@class='ui-dialog-title' and contains(text(), 'Address details')]\")",
+            30000,
+            'No add address popup (1)'
+        );
 
+        $this->assertElementPresent('//span[@class="ui-dialog-title" and contains(text(), "Address details")]', 'No popup with address details form (1)');
+
+        // Enter address and submit form
         $this->enterAddress('', 'test1');
 
-        $this->clickAndWait(self::SAVE_BUTTON);
+        $this->click(self::SAVE_BUTTON);
+
+        $this->waitForPageToLoad();
 
         // Check if new address is presented in the addresses list
         $this->assertElementPresent("//div[@class='address-box']/descendant::td[@class='address-text']/ul[@class='address-entry']/li[@class='address-text-street']/ul[@class='address-text']/li[@class='address-text-value' and contains(text(), 'test1')]", 'New address is not presented (test1)');
@@ -108,46 +114,55 @@ class XLite_Web_Admin_AddressBook extends XLite_Web_Admin_AAdmin
 
         $this->waitForCondition(
             "!selenium.isElementPresent(\"//li[@class='address-text-value' and contains(text(), 'test1')]\")",
-            10000,
-            'New address is still presented (test1)'
+            30000,
+            'Waiting for new address removing (test1) failed'
         );
 
-        // Check if new address was deleted from the addresses list
-        //$this->assertElementNotPresent("//div[@class='address-box']/descendant::td[@class='address-text']/ul[@class='address-entry']/li[@class='address-text-street']/ul[@class='address-text']/li[@class='address-text-value' and contains(text(), 'test1')]", 'New address is still presented (test1)');
-
+        $this->assertElementNotPresent('//li[@class="address-text-value" and contains(text(), "test1")]', 'New address is still presented (test1)');
 
         $this->click(self::ADD_BUTTON);
 
-        $this->waitForLocalCondition(
-            "jQuery('.ui-dialog-title').length > 0",
-            10000,
-            "No add address popup"
-        );  
+        // Wait for address details popup
+        $this->waitForCondition(
+            "selenium.isElementPresent(\"//span[@class='ui-dialog-title' and contains(text(), 'Address details')]\")",
+            30000,
+            'No add address popup (2)'
+        );
 
+        $this->assertElementPresent('//span[@class="ui-dialog-title" and contains(text(), "Address details")]', 'No popup with address details form (2)');
+
+        // Enter address and submit form
         $this->enterAddress('', 'test3');
 
-        $this->clickAndWait(self::SAVE_BUTTON);
+        $this->click(self::SAVE_BUTTON);
+
+        $this->waitForPageToLoad();
 
         // Check if new address is presented in the addresses list
         $this->assertElementPresent("//div[@class='address-box']/descendant::td[@class='address-text']/ul[@class='address-entry']/li[@class='address-text-street']/ul[@class='address-text']/li[@class='address-text-value' and contains(text(), 'test3')]", 'New address is not presented (test3)');
 
         $this->click(self::CHANGE_BUTTON);
 
-        $this->waitForLocalCondition(
-            "jQuery('.ui-dialog-title').length > 0",
-            10000,
-            "No change address popup"
+        // Wait for address details popup
+        $this->waitForCondition(
+            "selenium.isElementPresent(\"//span[@class='ui-dialog-title' and contains(text(), 'Address details')]\")",
+            30000,
+            'No add address popup (3)'
         );
+
+        $this->assertElementPresent('//span[@class="ui-dialog-title" and contains(text(), "Address details")]', 'No popup with address details form (3)');
 
         $id = $this->getJSExpression("jQuery('form.address-form input[name=\"address_id\"]').val()");
 
         $this->enterAddress($id, 'test5');
 
-        $this->clickAndWait(self::SAVE_BUTTON);
+        $this->click(self::SAVE_BUTTON);
+
+        $this->waitForPageToLoad();
+
 
         // Check if new address is presented in the addresses list
-        $this->assertElementPresent("//div[@class='address-box']/descendant::td[@class='address-text']/ul[@class='address-entry']/li[@class='address-text-street']/ul[@class='address-text']/li[@class='address-text-value' and contains(text(), 'test5')]", 'New address is not presented (test5)');
-
+        $this->assertElementPresent("//div[@class='address-box']/descendant::td[@class='address-text']/ul[@class='address-entry']/li[@class='address-text-street']/ul[@class='address-text']/li[@class='address-text-value' and contains(text(), 'test5')]", 'Address is not updated (test5)');
     }
 
     private function enterAddress($id, $value = 'test', $number = '11111') 

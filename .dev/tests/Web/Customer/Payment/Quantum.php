@@ -53,10 +53,9 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         \XLite\Core\Config::getInstance()->Security->customer_security;
 
         $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => 'QuantumGateway'));
+        $this->assertNotNull($pmethod, 'Quantum payment method is not found');
+
         $pid = $pmethod->getMethodId();
-        if (!$pmethod) {
-            $this->fail('Quantum payment method is not found');
-        }
 
         $s = $pmethod->getSettingEntity('login');
         if (!$s) {
@@ -151,14 +150,14 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
             $this->toggleByJquery('ul.shipping-rates li input:eq(0)', true);
             $this->waitForLocalCondition(
                 'jQuery(".current .button-row button.disabled").length == 0',
-                3000,
+                10000,
                 'check enabled main button'
             );
 
             $this->click('css=.current .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".shipping-step").hasClass("current") == false',
-                20000,
+                30000,
                 'check swicth to next step'
             );
         }
@@ -167,22 +166,32 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
             $this->click('css=.payment-step .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".payment-step").hasClass("current") == true',
-                10000,
+                30000,
                 'check swicth to prev step'
             );
         }
 
         if (0 < intval($this->getJSExpression('jQuery(".current.payment-step").length'))) {
+            
+            $this->waitForCondition(
+                "selenium.isElementPresent('pmethod{$pid}') && selenium.isElementPresent(\"//label[@for='pmethod{$pid}' and contains(text(), 'QuantumGateway')]\")",
+                30000,
+                'Waiting for payment method Quantum appears was failed'
+            );
+
+            $this->assertElementPresent('pmethod' . $pid, 'Radio-button of QuantumGateway payment method not found');
+            $this->assertElementPresent("//label[@for='pmethod{$pid}' and contains(text(), 'QuantumGateway')]", 'Label element for QuantumGateway payment method not found');
+
             $this->toggleByJquery('#pmethod' . $pid, true);
             $this->waitForLocalCondition(
                 'jQuery(".current .button-row button.disabled").length == 0',
-                3000,
+                10000,
                 'check enabled main button #2'
             );
             $this->click('css=.current .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".review-step").hasClass("current") == true',
-                10000,
+                30000,
                 'check swicth to next step #2'
             );
         }
@@ -190,7 +199,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         $this->click('//input[@id="place_order_agree"]');
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
-            3000,
+            10000,
             'check enabled main button #3'
         );
 
@@ -202,6 +211,8 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
             30000,
             'Redirect to payment gateway failed'
         );
+
+        $this->assertTrue(false !== stristr($this->getLocation(), 'https://secure.quantumgateway.com/cgi/qgwdbe.php'), 'Redirect to payment gateway failed (2)');
 
         // Wait when payment form will appear
         $this->waitForCondition(
@@ -237,18 +248,26 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         // Go to shop
         $this->waitForLocalCondition('location.href.search(/checkoutSuccess/) != -1');
 
-        $this->waitForPageToLoad();
+        $this->waitForCondition(
+            'selenium.getLocation().search(/checkoutSuccess/) != -1',
+            30000,
+            'Waiting for redirecting to order confirmation page failed'
+        );
 
-        $ordeid = 0;
+        $location = $this->getLocation();
 
-        if (preg_match('/order_id-(\d+)/Ss', $this->getLocation(), $m)) {
-            $ordeid = intval($m[1]);
-        }
+        $this->assertTrue(false !== stripos($location, '/checkoutSuccess/0/order_id'), 'Redirect to order confirmation page failed (' . $location . ')');
 
-        $this->assertTrue(0 < $ordeid, 'check order id');
+        $this->assertElementPresent('//div[@class="order-success-box"]/div[@class="invoice-box"]/h2[@class="invoice" and contains(text(), "Invoice")]');
+
+        $invoiceHeader = $this->getText('//div[@class="order-success-box"]/div[@class="invoice-box"]/h2[@class="invoice" and contains(text(), "Invoice")]');
+
+        $orderid = intval(preg_replace('/.+(\d+)/', '\\1', $invoiceHeader));
+
+        $this->assertTrue(0 < $orderid, 'Wrong order ID (invoice header is "' . $invoiceHeader . '")');
 
         // Check order
-        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($ordeid);
+        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($orderid);
 
         $this->assertNotNull($order, 'check order');
 
