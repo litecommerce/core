@@ -281,6 +281,18 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     );
 
     /**
+     * Get iframe size
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIframeSize()
+    {
+        return array(600, 500);
+    }
+
+    /**
      * Payment method has settings into Module settings section
      *
      * @return boolan
@@ -691,6 +703,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     protected function isPaymentTypeAllowed($type, \EMM\Model\Order $order)
     {
         $result = isset($this->paymentTypeCountries[$type])
+            && $order->getProfile()
             && $order->getProfile()->getBillingAddress()
             && $order->getProfile()->getBillingAddress()->getCountry();
 
