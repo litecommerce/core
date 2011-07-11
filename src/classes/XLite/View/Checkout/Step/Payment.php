@@ -164,4 +164,18 @@ class Payment extends \XLite\View\Checkout\Step\AStep
             && $this->getCart()->getProfile()
             && 0 < count($this->getCart()->getProfile()->getAddresses());
     }
+
+    /**
+     * Prepare payment method icon 
+     * 
+     * @param string $icon Icon local path
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function preparePaymentMethodIcon($icon)
+    {
+        return \XLite\Core\Layout::getInstance()->getResourceWebPath($icon, \XLite\Core\Layout::WEB_PATH_OUTPUT_URL);
+    }
 }

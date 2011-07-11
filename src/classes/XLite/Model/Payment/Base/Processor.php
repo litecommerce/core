@@ -175,6 +175,35 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Get payemnt method icon path 
+     * 
+     * @param \XLite\Model\Order          $order  Order
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getIconPath(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Get payment method row checkout template 
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCheckoutTemplate(\XLite\Model\Payment\Method $method)
+    {
+        return 'checkout/steps/payment/method.tpl';
+    }
+
+    /**
      * Get processor module
      *
      * @return \XLite\Model\Module

@@ -219,6 +219,68 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     );
 
     /**
+     * Payment type icons 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $paymentTypeIcons = array(
+        'WLT'   => 'by_ewallet_90x45.gif',
+        'ACC'   => false,
+        'VSA'   => 'powered-btn-visa-90x45.png',
+        'MSC'   => 'powered-btn-mc-90x45.png',
+        'VSD'   => 'powered-btn-visadebit-90x45.png',
+        'VSE'   => 'powered-btn-visacredit-90x45.png',
+        'MAE'   => 'powered-btn-maestro-90x45.png',
+        'SLO'   => 'powered-btn-solo-90x45.png',
+        'AMX'   => 'powered-btn-amex-90x45.png',
+        'DIN'   => 'powered-btn-diners-90x45.png',
+        'JCB'   => 'powered-btn-jcb-90x45.png',
+        'LSR'   => 'powered-btn-laser-90x45.png',
+        'GCB'   => 'cartebleue.gif',
+        'DNK'   => 'powered-btn-dankort-90x45.png',
+        'PSP'   => 'powered-btn-postepay-90x45.png',
+        'CSI'   => 'powered-btn-cartasi-90x45.png',
+        'OBT'   => array(
+            'DEU' => 'powered-btn-obt-german-90x45.png',
+            'GBR' => 'powered-btn-obt-english-90x45.png',
+            'DNK' => 'powered-btn-obt-danish-90x45.png',
+            'FIN' => 'powered-btn-obt-finnish-90x45.png',
+            'SWE' => 'powered-btn-obt-swedish-90x45.png',
+            'POL' => 'powered-btn-obt-polish-90x45.png',
+            'EST' => 'powered-btn-obt-estonian-90x45.png',
+            'LVA' => 'powered-btn-obt-latvian-90x45.png',
+        ),
+        'GIR'   => 'powered-btn-giropay-90x45.png',
+        'DID'   => false,
+        'SFT'   => 'powered-btn-sofort-90x45.png',
+        'ENT'   => 'powered-btn-enets-90x45.png',
+        'EBT'   => 'powered-btn-nordea-90x45.png',
+        'SO2'   => 'powered-btn-nordea-90x45.png',
+        'IDL'   => 'powered-btn-ideal-90x45.png',
+        'NPY'   => 'powered-btn-eps-90x45.png',
+        'PLI'   => 'powered-btn-poli-90x45.png',
+        'PWY'   => false,
+        'PWY5'  => false,
+        'PWY6'  => 'powered-btn-inteligo-90x45.png',
+        'PWY7'  => 'powered-btn-multitransfer-90x45.png',
+        'PWY14' => false,
+        'PWY15' => false,
+        'PWY17' => 'powered-btn-investbank-90x45.png',
+        'PWY18' => false,
+        'PWY19' => false,
+        'PWY20' => 'powered-btn-wbk-90x45.png',
+        'PWY21' => false,
+        'PWY22' => false,
+        'PWY25' => 'powered-btn-mtransfer-90x45.png',
+        'PWY26' => 'powered-btn-inteligo-90x45.png',
+        'PWY28' => false,
+        'PWY32' => 'powered-btn-nordea-90x45.png',
+        'PWY33' => false,
+    );
+
+    /**
      * Payment method has settings into Module settings section
      *
      * @return boolan
@@ -228,6 +290,45 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     public function hasModuleSettings()
     {
         return true;
+    }
+
+    /**
+     * Get payemnt method icon path
+     *
+     * @param \XLite\Model\Order          $order  Order
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getIconPath(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
+    {
+        $type = $this->convertServiceNameToType($method->getServiceName());
+        $icon = isset($this->paymentTypeIcons[$type]) ? $this->paymentTypeIcons[$type] : null;
+
+        if (is_array($icon)) {
+            $code3 = $order->getProfile() && $order->getProfile()->getBillingAddress()
+                ? $order->getProfile()->getBillingAddress()->getCountry()->getCode3()
+                : null;
+            $icon = $code3 && isset($icon[$code3]) ? $icon[$code3] : null;
+        }
+
+        return $icon ? 'modules/CDev/Moneybookers/icons/' . $icon : parent::getIconPath($order, $method);
+    }
+
+    /**
+     * Get payment method row checkout template
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCheckoutTemplate(\XLite\Model\Payment\Method $method)
+    {
+        return 'modules/CDev/Moneybookers/method.tpl';
     }
 
     /**

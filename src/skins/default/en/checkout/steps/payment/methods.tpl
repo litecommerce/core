@@ -14,7 +14,7 @@
   <ul class="payments">
     <li FOREACH="getPaymentMethods(),method">
       <input type="radio" id="pmethod{method.method_id}" name="methodId" value="{method.method_id}" {if:isPaymentSelected(method)} checked="{isPaymentSelected(method)}"{end:} {if:disabled} disabled="disabled"{end:} />
-      <label for="pmethod{method.method_id}">{if:method.getDescription()}{method.getDescription()}{else:}{method.getName()}{end:}</label>
+      <label for="pmethod{method.method_id}"><widget template="{method.processor.getCheckoutTemplate(method)}" order="{order}" method="{method}" /></label>
     </li>
   </ul>
 
