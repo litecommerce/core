@@ -239,6 +239,12 @@ class Cell extends \XLite\Base\Singleton
     public function setUpgraded($value)
     {
         $this->isUpgraded = (bool) $value;
+
+        if ($this->isUpgraded) {
+            foreach ($this->getEntries() as $entry) {
+                $entry->setUpgraded();
+            }
+        }
     }
 
     /**
@@ -690,7 +696,6 @@ class Cell extends \XLite\Base\Singleton
     protected function manageEntryPackages($isUnpack)
     {
         foreach ($this->getEntries() as $entry) {
-
             $result = $isUnpack ? $entry->unpack() : $entry->download();
 
             if (!$result) {
@@ -698,9 +703,7 @@ class Cell extends \XLite\Base\Singleton
             }
         }
 
-        return $isUnpack
-            ? $this->isUnpacked()
-            : $this->isDownloaded();
+        return $isUnpack ? $this->isUnpacked() : $this->isDownloaded();
     }
 
     // }}}
@@ -735,6 +738,24 @@ class Cell extends \XLite\Base\Singleton
         }
 
         return $result;
+    }
+
+    // }}}
+
+    // {{{ So called upgrade helpers
+
+    /**
+     * Execute some methods
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function runHelpers($type)
+    {
+        foreach ($this->getEntries() as $entry) {
+            $entry->runHelpers($type);
+        }
     }
 
     // }}}

@@ -45,6 +45,21 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
     abstract protected function updateDBRecords();
 
     /**
+     * Set entry status
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setUpgraded()
+    {
+        $this->setRepositoryPath(
+            \Includes\Utils\ModulesManager::getAbsoluteDir($this->getAuthor(), $this->getName()),
+            true
+        );
+    }
+
+    /**
      * Perform upgrade
      *
      * @param boolean    $isTestMode       Flag OPTIONAL

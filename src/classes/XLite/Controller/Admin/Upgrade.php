@@ -56,6 +56,10 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         }
 
         if (\XLite\Upgrade\Cell::getInstance()->isUpgraded()) {
+            foreach (\XLite\Upgrade\Cell::getInstance()->getEntries() as $entry) {
+                $entry->runHelpers('post_rebuild');
+            }
+
             \XLite\Core\Marketplace::getInstance()->checkForUpdates(0);
             \XLite\Core\Marketplace::getInstance()->getCores(0);
             \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
