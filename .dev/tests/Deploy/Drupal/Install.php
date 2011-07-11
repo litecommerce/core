@@ -40,9 +40,16 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     const TESTER_EMAIL = 'rnd_tester@cdev.ru';
 
     /**
+     * Admin account login and password
+     */
+    const ADMIN_USERNAME = 'master';
+    const ADMIN_PASSWORD = 'master';
+
+    /**
      * Product name (must equals to the name defined in litecommerce.profile)
      */
     const PRODUCT_NAME = 'Ecommerce CMS';
+
 
     /**
      * buildDir
@@ -527,10 +534,10 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         // Fill the form fields
         $this->type('css=#edit-site-name', 'Test ' . self::PRODUCT_NAME);
         $this->type('css=#edit-site-mail', self::TESTER_EMAIL);
-        $this->type('css=#edit-account-name', 'master');
+        $this->type('css=#edit-account-name', self::ADMIN_USERNAME);
         $this->type('css=#edit-account-mail', self::TESTER_EMAIL);
-        $this->type('css=#edit-account-pass-pass1', 'master');
-        $this->type('css=#edit-account-pass-pass2', 'master');
+        $this->type('css=#edit-account-pass-pass1', self::ADMIN_PASSWORD);
+        $this->type('css=#edit-account-pass-pass2', self::ADMIN_PASSWORD);
 
         // Select to install all states
         $this->select('css=#edit-site-default-country', 'value=US');
@@ -579,6 +586,14 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             '//div[@id="content"]/p/a[text()="Visit your new site"]',
             'Check that "your new site" text is presented'
         );
+
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLogin(self::TESTER_EMAIL);
+
+        $this->assertInstanceOf('\XLite\Model\Profile', $profile, 'Admin account not found');
+
+        $this->assertEquals(\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName(), $profile->getCmsName(), 'Admin profile has wrong cms_name property');
+        $this->assertEquals(1, $profile->getCmsProfileId(), 'Admin profile has wrong cms_profile_id property');
+        $this->assertEquals(md5(self::ADMIN_PASSWORD), $profile->getPassword(), 'Admin profile has wrong password');
 
         // Click link to the frontend
         $this->clickAndWait('//a[text()="Visit your new site"]');
