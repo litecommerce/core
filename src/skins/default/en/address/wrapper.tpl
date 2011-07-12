@@ -41,7 +41,7 @@
 
         <div class="address-icons">
           <img src="images/icon_billing.png" title="This address was used as a billing address during the recent purchase" class="address-type-icon" IF="{address.getIsBilling()}" alt="" />
-          <img src="images/icon_shipping.png" title="This address was used as a shipping address during the recent purchase" class="address-type-icon" IF="{address.getIsBilling()}" alt="" />
+          <img src="images/icon_shipping.png" title="This address was used as a shipping address during the recent purchase" class="address-type-icon" IF="{address.getIsShipping()}" alt="" />
         </div>
 
         <div class="clear"></div>

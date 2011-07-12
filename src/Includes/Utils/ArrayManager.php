@@ -318,4 +318,60 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
 
         return $result;
     }
+
+    /**
+     * Rearrange $array by moving elements from $filterArray before or after the rest elements of $array
+     * 
+     * @param array   $array         Array to rearrange
+     * @param array   $filterArray   Array containing elements which should be rearrannged
+     * @param boolean $moveDirection Direction: true - before, false - after OPTIONAL
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function rearrangeArray(array $array, array $filterArray, $moveDirection = false)
+    {
+        $movingElements = array();
+        $restElements = array();
+
+        reset($array);
+
+        while (list($key, $element) = each($array)) {
+
+            $found = false;
+
+            if (!is_array($element)) {
+                $found = in_array($element, $filterArray);
+
+            } else {
+
+                foreach ($filterArray as $k => $v) {
+
+                    $diff = array_diff_assoc($element, $v);
+
+                    if (empty($diff)) {
+                        $found = true;
+                        break;
+                    }
+                }
+            }
+
+            if ($found) {
+                $movingElements[$key] = $element;
+
+            } else {
+                $restElements[$key] = $element;
+            }
+        }
+
+        if ($moveDirection) {
+            $result = $movingElements + $restElements;
+        
+        } else {
+            $result = $restElements + $movingElements;
+        }
+
+        return $result;
+    }
 }

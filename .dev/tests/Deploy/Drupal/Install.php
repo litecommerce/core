@@ -40,15 +40,21 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     const TESTER_EMAIL = 'rnd_tester@cdev.ru';
 
     /**
+     * Admin account login and password
+     */
+    const ADMIN_USERNAME = 'master';
+    const ADMIN_PASSWORD = 'master';
+
+    /**
      * Product name (must equals to the name defined in litecommerce.profile)
      */
     const PRODUCT_NAME = 'Ecommerce CMS';
+
 
     /**
      * buildDir
      *
      * @var    mixed
-     * @access protected
      * @see    ____var_see____
      * @since  1.0.0
      */
@@ -58,7 +64,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * testInstall
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -104,7 +109,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * stepOne: License agreement page
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -169,7 +173,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * stepTwo: check requirements
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -208,7 +211,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * stepThree: database configuration
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -314,7 +316,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * stepFour: Set up LiteCommerce
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -352,7 +353,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * stepFive: installing LiteCommerce
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -397,7 +397,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * step Six: installing Drupal modules
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -443,7 +442,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * stepSeven: Configure site
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -527,10 +525,10 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         // Fill the form fields
         $this->type('css=#edit-site-name', 'Test ' . self::PRODUCT_NAME);
         $this->type('css=#edit-site-mail', self::TESTER_EMAIL);
-        $this->type('css=#edit-account-name', 'master');
+        $this->type('css=#edit-account-name', self::ADMIN_USERNAME);
         $this->type('css=#edit-account-mail', self::TESTER_EMAIL);
-        $this->type('css=#edit-account-pass-pass1', 'master');
-        $this->type('css=#edit-account-pass-pass2', 'master');
+        $this->type('css=#edit-account-pass-pass1', self::ADMIN_PASSWORD);
+        $this->type('css=#edit-account-pass-pass2', self::ADMIN_PASSWORD);
 
         // Select to install all states
         $this->select('css=#edit-site-default-country', 'value=US');
@@ -553,7 +551,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * stepEight: Confirmation page
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -580,6 +577,8 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             'Check that "your new site" text is presented'
         );
 
+        $this->checkAdminProfile();
+
         // Click link to the frontend
         $this->clickAndWait('//a[text()="Visit your new site"]');
     }
@@ -588,7 +587,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * stepNine: Checking the frontend page
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -614,7 +612,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * getBuildDir
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -633,7 +630,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * getConfigOptions
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -660,10 +656,9 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     }
 
     /**
-     * emptyDatabase
+     * Re-create database
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -671,19 +666,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     {
         $options = $this->getConfigOptions();
 
-        // Prepare db host
-        $dbhost = $options['database_details']['hostspec']
-            . (!empty($options['database_details']['socket']) ? ':' . $options['database_details']['socket']
-                : (!empty($options['database_details']['port']) ? ':' . $options['database_details']['port'] : '')
-            );
-
-        $connect = @mysql_connect(
-            $dbhost,
-            $options['database_details']['username'],
-            $options['database_details']['password']
-        );
-
-        $this->assertTrue(is_resource($connect), 'Wrong database connection parameters!');
+        $this->connectDb($options);
 
         // Drop / create database
         @mysql_query(sprintf('DROP DATABASE %s', $options['database_details']['database']));
@@ -703,10 +686,82 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     }
 
     /**
+     * Check an administrator profile 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkAdminProfile()
+    {
+        $options = $this->getConfigOptions();
+
+        $this->connectDb($options);
+
+        // Try to select database
+        $dbSelected = @mysql_select_db($options['database_details']['database']);
+
+        $this->assertTrue($dbSelected, sprintf('Cannot select database %s', $options['database_details']['database']));
+
+        // Check that database is empty
+        $res = @mysql_query('SELECT * FROM xlite_profiles');
+
+        $this->assertInternalType('resource', $res, 'Error of mysql_query');
+
+        $checkFields = array(
+            'login'          => self::TESTER_EMAIL,
+            'password'       => md5(self::ADMIN_PASSWORD),
+            'access_level'   => 100,
+            'cms_name'       => '____DRUPAL____',
+            'cms_profile_id' => 1,
+        );
+
+        $index = 1;
+
+        while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
+
+            $this->assertEquals(1, $index, 'More than one profile found in the database');
+
+            foreach ($checkFields as $k => $v) {
+                $this->assertEquals($v, $row[$k], 'Profile property checking failed (' . $k . ')');
+            }
+
+            $index ++;
+        }
+
+        $this->assertEquals(2, $index, 'Admin profile not found in database');
+    }
+
+    /**
+     * Connect database 
+     * 
+     * @param array $options Connection options
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function connectDb($options)
+    {
+        // Prepare db host
+        $dbhost = $options['database_details']['hostspec']
+            . (!empty($options['database_details']['socket']) ? ':' . $options['database_details']['socket']
+                : (!empty($options['database_details']['port']) ? ':' . $options['database_details']['port'] : '')
+            );
+
+        $connect = @mysql_connect(
+            $dbhost,
+            $options['database_details']['username'],
+            $options['database_details']['password']
+        );
+
+        $this->assertTrue(is_resource($connect), 'Wrong database connection parameters!');
+    }
+
+    /**
      * prepareHtaccess: add RewriteBase value for clean URL feature
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */

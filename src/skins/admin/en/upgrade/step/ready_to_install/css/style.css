@@ -102,30 +102,53 @@ div.service-message {
   display: none;
 }
 
-.modified-files-section {
+.modified-files-section,
+  .create-backup-section
+{
   border: solid #e9e9e9 1px;
   width: 707px;
-  margin: 0px 0px 10px 0px;
+  margin: 0px 0px 40px 0px;
 }
 
-.modified-files-section-frame {
+.modified-files-section-frame,
+  .create-backup-section-frame
+{
   border: solid #f7f7f7 6px;
-  background: transparent url(../images/warning_circle.png) 20px 15px no-repeat;
   padding: 10px 10px 50px 85px;
   width: 600px;
   position: relative;
 }
 
-.modified-files-section .header {
-  color: #9e3b00;
+.create-backup-section-frame {
+  background: transparent url(../images/warning_backup.png) 20px 15px no-repeat;
+  padding-bottom: 20px;
+}
+
+.modified-files-section-frame {
+  background: transparent url(../images/warning_circle.png) 20px 15px no-repeat;
+}
+
+.modified-files-section .header,
+  .create-backup-section .header
+{
   font-size: 18px;
   margin: 8px 0px 10px 0px;
 }
 
-.modified-files-section .description {
+.modified-files-section .header {
+  color: #9e3b00;
+}
+
+.modified-files-section .description,
+  .create-backup-section .description
+{
   font-size: 14px;
   line-height: 19px;
   margin: 0px 0px 10px 0px;
+}
+
+.create-backup-section .last-message {
+  color: #53769d;
 }
 
 .modified-files-section label {
@@ -253,4 +276,33 @@ ul.select-actions li {
   color: #cc2802;
   font-weight: normal;
   margin: 9px 5px;
+}
+
+.upgrade-note {
+  padding: 0px 0px 0px 40px;
+  margin: 0px 0px 12px 4px;
+  font-size: 16px;
+  color: #333333;
+  line-height: 30px;
+}
+
+.upgrade-note a {
+  text-decoration: underline;
+}
+
+.upgrade-note .small-note {
+  color: #a5a5a5;
+  font-size: 16px;
+}
+
+.upgrade-note.soft-reset {
+  background: transparent url(../images/soft-reset.png) left top no-repeat;
+}
+
+.upgrade-note.hard-reset {
+  background: transparent url(../images/hard-reset.png) left top no-repeat;
+}
+
+.upgrade-note.restore-backup {
+  background: transparent url(../images/restore-backup.png) left top no-repeat;
 }

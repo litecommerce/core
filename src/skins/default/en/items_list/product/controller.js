@@ -126,7 +126,9 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
             only_center: 1
           }),
           'product-quicklook',
-          false,
+          function () {
+            jQuery('.formError').hide();
+          },
           50000
         );
       }

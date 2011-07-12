@@ -243,20 +243,18 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
             10000
         );
         $this->setTimeout(SELENIUM_TTL);
-        $this->clickAndWait('//input[@type="SUBMIT"]');
+        $this->click('//input[@type="SUBMIT"]');
 
-        // Go to shop
-        $this->waitForLocalCondition('location.href.search(/checkoutSuccess/) != -1');
+        $this->waitForPageToLoad();
 
+        // Redirect to order confirmation page
         $this->waitForCondition(
-            'selenium.getLocation().search(/checkoutSuccess/) != -1',
-            30000,
+            "selenium.isElementPresent(\"//div[@class='thank-you' and contains(text(), 'Thank you for your order')]\")",
+            60000,
             'Waiting for redirecting to order confirmation page failed'
         );
 
-        $location = $this->getLocation();
-
-        $this->assertTrue(false !== stripos($location, '/checkoutSuccess/0/order_id'), 'Redirect to order confirmation page failed (' . $location . ')');
+        $this->assertElementPresent("//div[@class='thank-you' and contains(text(), 'Thank you for your order')]", '"Thank you for your order" text noot found');
 
         $this->assertElementPresent('//div[@class="order-success-box"]/div[@class="invoice-box"]/h2[@class="invoice" and contains(text(), "Invoice")]');
 

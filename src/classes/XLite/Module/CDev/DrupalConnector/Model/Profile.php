@@ -103,9 +103,27 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
         }
     }
 
+    /**
+     * Set CMS name property before profile updating
+     *
+     * @param boolean $cloneMode Flag which means that update is launched in clone mode OPTIONAL
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    public function update($cloneMode = false)
+    {
+        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+            $this->setCmsName(\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName());
+        }
+
+        return parent::update($cloneMode);
+    }
+ 
 
     /**
-     * prepareCreate
+     * Set CMS name property before profile creation
      *
      * @return void
      * @see    ____func_see____
@@ -119,7 +137,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
             $this->setCmsName(\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName());
         }
     }
-    
+
     /**
      * Allow to suppress 'email already exists...' message in some cases (e.g. in user sync process)
      * 

@@ -108,6 +108,7 @@ ul.address-entry,
 
 ul.address-entry li {
   clear: left;
+  line-height: 1.6em;
 }
 
 ul.address-text li {

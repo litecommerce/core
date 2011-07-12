@@ -10,6 +10,7 @@
  * @since     1.0.0
  *
  * @ListChild (list="upgrade.step.completed.backup.actions", weight="100")
+ * @ListChild (list="upgrade.step.ready_to_install.create_backup.actions", weight="100")
  *}
 
 <div class="upgrade-note soft-reset">

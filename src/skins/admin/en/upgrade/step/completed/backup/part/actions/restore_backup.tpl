@@ -10,6 +10,7 @@
  * @since     1.0.0
  *
  * @ListChild (list="upgrade.step.completed.backup.actions", weight="300")
+ * @ListChild (list="upgrade.step.ready_to_install.create_backup.actions", weight="300")
  *}
 
 <div class="upgrade-note restore-backup">
