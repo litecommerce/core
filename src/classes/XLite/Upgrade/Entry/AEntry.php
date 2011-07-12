@@ -69,6 +69,15 @@ abstract class AEntry
     protected $customFiles = array();
 
     /**
+     * List of post rebuild helpers
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $postRebuildHelpers;
+
+    /**
      * Return entry readable name
      *
      * @return string
@@ -183,7 +192,7 @@ abstract class AEntry
      * @see    ____func_see____
      * @since  1.0.0
      */
-    abstract public function setUpgraded();
+    abstract protected function setUpgradedPath();
 
     /**
      * Get hashes for current version
@@ -309,6 +318,22 @@ abstract class AEntry
     }
 
     /**
+     * Perform some action after upgrade 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setUpgraded()
+    {
+        $this->setUpgradedPath();
+
+        if (!isset($this->postRebuildHelpers)) {
+            $this->postRebuildHelpers = $this->getHelpers('post_rebuild');
+        }
+    }
+
+    /**
      * Download package
      *
      * @return boolean
@@ -382,7 +407,7 @@ abstract class AEntry
      */
     public function __sleep()
     {
-        return array('repositoryPath', 'errorMessages');
+        return array('repositoryPath', 'errorMessages', 'postRebuildHelpers');
     }
 
     // {{{ Error handling
@@ -441,11 +466,6 @@ abstract class AEntry
     {
         $this->errorMessages = array();
 
-        // Execute some methods before upgrade
-        if (!$isTestMode) {
-            $this->runHelpers('pre_upgrade');
-        }
-
         $hashesInstalled  = $this->getHashesForInstalledFiles($isTestMode);
         $hashesForUpgrade = $this->getHashes($isTestMode);
 
@@ -491,11 +511,6 @@ abstract class AEntry
         // Add new files
         foreach ($hashesForUpgrade as $path => $hash) {
             $this->addFile($path, $isTestMode, /*$this->manageFile($path, 'isFile')*/false);
-        }
-
-        // Execute some methods after upgrade
-        if (!$isTestMode) {
-            $this->runHelpers('post_upgrade');
         }
     }
 
@@ -849,15 +864,39 @@ abstract class AEntry
      */
     public function runHelpers($type)
     {
+        if ($this->isInstalled()) {
+            $helpers = ('post_rebuild' === $type) ? $this->postRebuildHelpers : $this->getHelpers($type);
+
+            foreach ((array) $helpers as $file) {
+                $function = require_once $file;
+                $function();
+            }
+        }
+    }
+
+    /**
+     * Get upgrade helpers list
+     *
+     * @param string $type Helper type
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getHelpers($type)
+    {
+        $helpers = array();
+
         foreach ($this->getUpgradeHelperMajorVersions() as $majorVersion) {
             foreach ($this->getUpgradeHelperMinorVersions($majorVersion) as $minorVersion) {
 
                 if ($file = $this->getUpgradeHelperFile($type, $majorVersion, $minorVersion)) {
-                    $function = require_once $file;
-                    $function();
+                    $helpers[] = $file;
                 }
             }
         }
+
+        return $helpers;
     }
 
     /**

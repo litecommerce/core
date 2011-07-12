@@ -222,7 +222,7 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function setUpgraded()
+    protected function setUpgradedPath()
     {
         $this->setRepositoryPath(LC_DIR_ROOT, true);
     }

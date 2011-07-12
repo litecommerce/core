@@ -730,10 +730,13 @@ class Cell extends \XLite\Base\Singleton
             );
 
         } else {
+            $this->runHelpers('pre_upgrade', $isTestMode);
+
             foreach ($this->getEntries() as $entry) {
                 $entry->upgrade($isTestMode, $filesToOverwrite);
             }
 
+            $this->runHelpers('post_upgrade', $isTestMode);
             $result = $this->isValid();
         }
 
@@ -747,14 +750,19 @@ class Cell extends \XLite\Base\Singleton
     /**
      * Execute some methods
      * 
+     * @param string  $type       Helper type
+     * @param boolean $isTestMode Flag OPTIONAL
+     *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function runHelpers($type)
+    public function runHelpers($type, $isTestMode = false)
     {
-        foreach ($this->getEntries() as $entry) {
-            $entry->runHelpers($type);
+        if (!$isTestMode) {
+            foreach ($this->getEntries() as $entry) {
+                $entry->runHelpers($type);
+            }
         }
     }
 
