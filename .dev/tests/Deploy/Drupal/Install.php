@@ -388,7 +388,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $this->assertEquals('100%', $percentage, 'Percentage of batch process does not achived the value of 100%');
 
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title") != "undefined" && selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Installing ' . self::PRODUCT_NAME . '/) != -1',
+            'selenium.isElementPresent("//title[contains(text(), \'Installing ' . self::PRODUCT_NAME . '\')]")',
             20000
         );
     }
@@ -433,7 +433,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $this->assertEquals('100%', $percentage, 'Percentage of batch process does not achived the value of 100%');
 
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title") != "undefined" && selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Configure site/) != -1',
+            'selenium.isElementPresent("//title[contains(text(), \'Configure site\')]")',
             20000
         );
     }
