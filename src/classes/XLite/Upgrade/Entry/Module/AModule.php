@@ -68,11 +68,27 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
             $this->updateDBRecords();
 
             // Load fixtures
-            $yaml = \Includes\Utils\ModulesManager::getModuleYAMLFile($author, $name);
+            if (!$this->isInstalled()) {
+                $yaml = \Includes\Utils\ModulesManager::getModuleYAMLFile($author, $name);
 
-            if (\Includes\Utils\FileManager::isFileReadable($yaml)) {
-                \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yaml);
+                if (\Includes\Utils\FileManager::isFileReadable($yaml)) {
+                    \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yaml);
+                }
             }
         }
+    }
+
+    /**
+     * Set entry status
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function setUpgradedPath()
+    {
+        list($author, $name) = explode('\\', $this->getActualName());
+
+        $this->setRepositoryPath(\Includes\Utils\ModulesManager::getAbsoluteDir($author, $name), true);
     }
 }
