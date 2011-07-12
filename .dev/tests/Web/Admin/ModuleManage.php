@@ -38,15 +38,16 @@ class XLite_Web_Admin_ModuleManage extends XLite_Web_Admin_AAdmin
     const SAVE_CHANGES = '//div[@class="buttons modules-buttons"]/button[@class="action" and @type="submit"]';
 
 
+    /**
+     * testModulesManage 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function testModulesManage()
     {
-
-
-    $this->markTestSkipped('Awaiting for new Selenuim version. Problems with JS confirmation dialogs');
-
-/*
-    Whole test does not work in Firefox 4.0 (known issue)
-    Must be fixed in the next Selenuim version
+        $this->markTestSkipped('Awaiting for new Selenuim version. Problems with JS confirmation dialogs');
 
         $this->logIn();
 
@@ -68,6 +69,5 @@ class XLite_Web_Admin_ModuleManage extends XLite_Web_Admin_AAdmin
         $this->clickAndWait(self::SAVE_CHANGES);
 
         $this->assertEquals($confirm, 'Are you sure you want to uninstall this add-on?', 'Wrong confirmation dialog');
-*/
     }
 }
