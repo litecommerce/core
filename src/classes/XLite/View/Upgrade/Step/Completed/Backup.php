@@ -84,28 +84,4 @@ class Backup extends \XLite\View\Upgrade\Step\Completed\ACompleted
     {
         return \Includes\Utils\URLManager::getShopURL();
     }
-
-    /**
-     * Get an action URL
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getSoftResetURL()
-    {
-        return \Includes\SafeMode::getResetURL(true);
-    }
-
-    /**
-     * Get an action URL
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHardResetURL()
-    {
-        return \Includes\SafeMode::getResetURL(false);
-    }
 }

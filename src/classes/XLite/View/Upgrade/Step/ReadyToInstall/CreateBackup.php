@@ -25,16 +25,17 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Upgrade\Step;
+namespace XLite\View\Upgrade\Step\ReadyToInstall;
 
 /**
- * AStep
+ * CreateBackup
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.2
  */
-abstract class AStep extends \XLite\View\Upgrade\AUpgrade
+class CreateBackup extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInstall
 {
+
     /**
      * Get directory where template is located (body.tpl)
      *
@@ -44,7 +45,7 @@ abstract class AStep extends \XLite\View\Upgrade\AUpgrade
      */
     protected function getDir()
     {
-        return parent::getDir() . '/step';
+        return parent::getDir() . '/create_backup';
     }
 
     /**
@@ -56,42 +57,6 @@ abstract class AStep extends \XLite\View\Upgrade\AUpgrade
      */
     protected function getListName()
     {
-        return parent::getListName() . '.step';
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && !isset(\XLite\Core\Request::getInstance()->mode);
-    }
-
-    /**
-     * Get an action URL
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getSoftResetURL()
-    {
-        return \Includes\SafeMode::getResetURL(true);
-    }
-
-    /**
-     * Get an action URL
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHardResetURL()
-    {
-        return \Includes\SafeMode::getResetURL(false);
+        return parent::getListName() . '.create_backup';
     }
 }
