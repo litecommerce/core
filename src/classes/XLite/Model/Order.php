@@ -923,7 +923,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             ->findAllActive();
 
         foreach ($list as $i => $method) {
-            if (!$method->getProcessor()->isApplicable($this)) {
+            if (!$method->getProcessor()->isApplicable($this, $method)) {
                 unset($list[$i]);
             }
         }

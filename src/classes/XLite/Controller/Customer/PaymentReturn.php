@@ -110,8 +110,15 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
         if ($txn) {
             $txn->getPaymentMethod()->getProcessor()->processReturn($txn);
 
-            \XLite\Core\Database::getEM()->persist($txn);
-            \XLite\Core\Database::getEM()->flush();
+            if ($txn->getNote()) {
+                \XLite\Core\TopMessage::getInstance()->add(
+                    $txn->getNote(),
+                    array(),
+                    null,
+                    $txn->isFailed() ? \XLite\Core\TopMessage::ERROR : \XLite\Core\TopMessage::INFO,
+                    true
+                );
+            }
 
             $url = \XLite::getShopURL(
                 $this->buildURL('checkout', 'return', array('order_id' => $txn->getOrder()->getOrderId())),

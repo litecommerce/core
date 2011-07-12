@@ -1388,10 +1388,6 @@ ul.summary-table .table-value,
   padding: 0px 0px 0px 56px;
 }
 
-table.payment-methods {
-  width: 600px;
-}
-
 table.settings-table td {
   white-space: nowrap;
 }
@@ -1418,4 +1414,56 @@ table.settings-table td input[type=checkbox] {
   width: 23px;
   height: 23px;
   background: transparent url(../images/icon_help.png) no-repeat left top;
+}
+
+/**
+ * Payment methods
+ */
+table.payment-methods {
+  width: auto;
+}
+
+table.payment-methods th {
+  padding: 5px 18px;
+  vertical-align: middle;
+}
+
+table.payment-methods th.switch img {
+  background: transparent url(../images/switch.png) no-repeat left top;
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
+}
+
+table.payment-methods td {
+  padding: 8px 18px;
+}
+
+table.payment-methods td.switch {
+  text-align: center;
+}
+
+table.payment-methods td.switch input {
+  margin-top: 8px;
+}
+
+table.payment-methods td.pos input {
+  width: 28px;
+}
+
+table.payment-methods td.name input {
+  width: 297px;
+}
+
+table.payment-methods td.name div {
+  color: #8f8f8f;
+}
+
+table.payment-methods td.description textarea {
+  width: 322px;
+  height: 42px;
+}
+
+table.payment-methods td.description button {
+  vertical-align: bottom;
 }
