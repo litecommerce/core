@@ -85,7 +85,7 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
         // Wait for address details popup
         $this->waitForCondition(
             "selenium.isElementPresent(\"//span[@class='ui-dialog-title' and contains(text(), 'Address details')]\")",
-            30000,
+            60000,
             'No add address popup (1)'
         );
 
@@ -116,7 +116,7 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
 
         $this->waitForCondition(
             "!selenium.isElementPresent(\"//li[@class='address-text-value' and contains(text(), 'test1')]\")",
-            30000,
+            60000,
             'Waiting for new address removing (test1) failed'
         );
 
@@ -128,7 +128,7 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
         // Wait for address details popup
         $this->waitForCondition(
             "selenium.isElementPresent(\"//span[@class='ui-dialog-title' and contains(text(), 'Address details')]\")",
-            30000,
+            60000,
             'No add address popup (2)'
         );
 
@@ -149,7 +149,7 @@ class XLite_Web_Customer_AddressBook extends XLite_Web_Customer_ACustomer
         // Wait for address details popup
         $this->waitForCondition(
             "selenium.isElementPresent(\"//span[@class='ui-dialog-title' and contains(text(), 'Address details')]\")",
-            30000,
+            60000,
             'No add address popup (3)'
         );
 
