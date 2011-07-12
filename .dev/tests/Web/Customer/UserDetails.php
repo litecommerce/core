@@ -371,17 +371,12 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         // Assign role Id
         $roleId = 4;
 
-        $this->assertElementPresent('//table[@id="user-roles"]//descendant::td[contains(text(), "' . $this->roleName. '")]//following-sibling::td/a[contains(text(), "edit role")]');
+        $this->assertElementPresent('//a[contains(@href, "people/permissions/roles/edit/' . $roleId . '") and contains(text(), "edit role")]');
 
-        $linkHref = $this->getJSExpression("jQuery('#user-roles td').filter(function() { return -1 != this.innerHTML.search(/" . $this->roleName . "/); } ).parents('tr').eq(0).find('td').eq(2).find('a').eq(0).attr('href')");
+        $linkHref = $this->getAttribute('//a[contains(@href, "people/permissions/roles/edit/' . $roleId . '") and contains(text(), "edit role")]@href');
 
         $this->assertNotNull($linkHref, 'Check that href of link to the role is not null');
 
-        if (preg_match('/people\/permissions\/roles\/edit\/(\d+)/', $linkHref, $match)) {
-            $roleId = $match[1];
-        }
-
-        $this->assertTrue(intval($roleId) == $roleId, 'Check that $roleId value is integer (' . $roleId . ')');
 
         // Create test users
 

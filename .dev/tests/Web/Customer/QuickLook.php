@@ -336,8 +336,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
         $this->typeKeys($quantitySelector, 50);
         $this->getJSExpression($qtyBlurOperation);
-        $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error');
-        $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity');
+        $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error (1)');
+        $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity (1)');
         $this->assertJqueryNotPresent('button.bright.add2cart.disabled.add2cart-disabled', 'check enabled add to cart button');
 
         $this->typeKeys($quantitySelector, 51);
@@ -370,7 +370,11 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         // <BUG E:0039432> --------------------
         $this->popupQuicklook($id);
 
-        $this->click($cartButtonSelector);
+        $this->assertElementPresent($buyButtonSelector, 'Buy more button not found');
+ 
+        $sleep = $this->setSleep(0);
+       
+        $this->click($buyButtonSelector);
 
         $this->closeQuicklook();
 
@@ -380,7 +384,11 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             "Add-to-cart button doesn't close Quicklook popups 2"
         );
 
+        $this->setSleep($sleep);
+
         // </ BUG E:0039432> --------------------
+
+        sleep(2);
 
         $this->popupQuicklook($id);
 
@@ -396,10 +404,10 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $this->assertJqueryPresent($errorQtySelector, 'check minimal allowed quantity');
         $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (min qty)');
 
-        $this->typeKeys($quantitySelector, 49);
+        $this->typeKeys($quantitySelector, 48);
         $this->getJSExpression($qtyBlurOperation);
-        $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error');
-        $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity');
+        $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error (2)');
+        $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity (2)');
         $this->assertJqueryNotPresent('button.action.buy-more.disabled.add2cart-disabled', 'check enabled buy now button');
 
         $this->typeKeys($quantitySelector, 50);
@@ -605,7 +613,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $selector = $this->getListSelector() . " .productid-$productId a.quicklook-link-$productId";
 
         $this->click("css=$selector");
-        $this->waitForLocalCondition("jQuery('.BlockMsg-product-quicklook:visible').length > 0", 300000);
+        $this->waitForLocalCondition("jQuery('.BlockMsg-product-quicklook:visible').length > 0", 30000);
 
     }
 

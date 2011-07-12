@@ -29,6 +29,21 @@ require_once __DIR__ . '/ACustomer.php';
 
 class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
 {
+    protected $sleep = 0;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->sleep = $this->setSleep(0);
+    }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+        $this->setSleep($this->sleep);
+    }
+
+
     public function testStructure()
     {
         $product = $this->openCategoryPage();
@@ -70,7 +85,7 @@ class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             "jQuery('.cart-tray.cart-tray-adding').length == 1",
-            3000
+            10000
         );
 
         $this->waitForLocalCondition(
@@ -80,7 +95,7 @@ class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             "jQuery('.cart-tray.cart-tray-added').length == 0",
-            6000
+            10000
         );
 
         $this->waitForLocalCondition(
@@ -113,7 +128,7 @@ class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             "jQuery('.cart-tray.cart-tray-adding').length == 1",
-            3000
+            10000
         );
 
         $this->waitForLocalCondition(
@@ -123,7 +138,7 @@ class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             "jQuery('.cart-tray.cart-tray-added').length == 0",
-            6000
+            10000
         );
 
         $this->waitForLocalCondition(
@@ -151,7 +166,7 @@ class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             "jQuery('.cart-tray.cart-tray-adding').length == 1",
-            3000
+            10000
         );
 
         $this->waitForLocalCondition(
@@ -166,7 +181,7 @@ class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             "jQuery('.cart-tray.cart-tray-adding').length == 1",
-            3000
+            10000
         );
 
         $this->waitForLocalCondition(
@@ -176,7 +191,7 @@ class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             "jQuery('.cart-tray.cart-tray-added').length == 0",
-            6000
+            10000
         );
 
         $this->waitForLocalCondition(

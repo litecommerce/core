@@ -44,7 +44,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
             array(
                 'category' => 'Security',
                 'name'     => 'customer_security',
-                'value'    => true,
+                'value'    => 'Y',
             )
         );
 
@@ -240,10 +240,15 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'document.getElementsByTagName("form")[0].ccnum.value == "1111"',
-            10000
+            60000
         );
         $this->setTimeout(SELENIUM_TTL);
-        $this->click('//input[@type="SUBMIT"]');
+
+        $this->assertElementPresent('//input[@type="SUBMIT" and @value="Finish Processing Order"]', '"Finish Processing Order" button not found');
+
+        // Here the security warning is possible about redirecting from https (Quantum server) to http (store) if Security->customer_security option disabled
+
+        $this->click('//input[@type="SUBMIT" and @value="Finish Processing Order"]');
 
         $this->waitForPageToLoad();
 
