@@ -29,8 +29,86 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase/Driver.php';
 
 class XLite_Extensions_SeleniumTestCase_Driver extends PHPUnit_Extensions_SeleniumTestCase_Driver
 {
+    /**
+     * Get current sessionId 
+     * 
+     * @return string
+     * @access public
+     */
 	public function getSessionId()
 	{
 		return $this->sessionId;
-	}
+    }
+
+    /**
+     * Get current value of 'sleep' property 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getSleep()
+    {
+        return $this->sleep;
+    }
+
+
+    /**
+     * Send a command to the Selenium RC server (via curl).
+     *
+     * @param  string $command
+     * @param  array  $arguments
+     * @return string
+     * @author Seth Casana <totallymeat@gmail.org>
+     */
+    protected function doCommand($command, array $arguments = array())
+    {
+        $url = sprintf(
+          'http://%s:%s/selenium-server/driver/?cmd=%s',
+          $this->host,
+          $this->port,
+          urlencode($command)
+        );
+
+        $numArguments = count($arguments);
+
+        for ($i = 0; $i < $numArguments; $i++) {
+            $argNum = strval($i + 1);
+            $url   .= sprintf(
+                        '&%s=%s',
+                        $argNum,
+                        urlencode(trim($arguments[$i]))
+                      );
+        }
+
+        if (isset($this->sessionId)) {
+            $url .= sprintf('&%s=%s', 'sessionId', $this->sessionId);
+        }
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 60);
+
+        $response = curl_exec($curl);
+        $info     = curl_getinfo($curl);
+
+        if (!$response) {
+            throw new RuntimeException(curl_error($curl));
+        }
+
+        curl_close($curl);
+
+        if ($info['http_code'] != 200 || !preg_match('/^OK/', $response)) {
+            $this->stop();
+
+            throw new RuntimeException(
+              'The response from the Selenium RC server is invalid: ' .
+              $response
+            );
+		}
+
+        return $response;
+    }
 }
