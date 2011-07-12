@@ -109,6 +109,7 @@ $availableBrowsersList = array(
             'host'    => SELENIUM_SERVER,
             'port'    => 4444,
             'timeout' => SELENIUM_TTL,
+            'sleep'   => 1,
         ),
 /*
         array(
