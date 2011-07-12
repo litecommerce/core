@@ -321,7 +321,7 @@ abstract class AView extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getResources()
+    protected function getResources()
     {
         $common = $this->getCommonFiles();
 
@@ -332,7 +332,8 @@ abstract class AView extends \XLite\Core\Handler
             ),
             array_merge(
                 static::prepareResources($common['css'], true),
-                static::prepareResources($this->getCSSFiles())
+                static::prepareResources($this->getCSSFiles()),
+                static::prepareResources($this->getThemeCSSFiles())
             )
         );
     }
@@ -426,18 +427,32 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function getCSSFiles()
     {
+        $list = array();
+
+        return $list;
+    }
+
+    /**
+     * Register theme CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getThemeCSSFiles()
+    {
         $list = array(
-            'css/style.css',
-            'css/ajax.css',
+            array(
+                'file' => 'css/style.css',
+            ),
+            array(
+                'file' => 'css/ajax.css',
+            ),
             array(
                 'file'  => 'css/print.css',
                 'media' => 'print',
             ),
         );
-
-        if (\XLite\Logger::isMarkTemplates()) {
-            $list[] = 'css/template_debuger.css';
-        }
 
         return $list;
     }
@@ -487,6 +502,7 @@ abstract class AView extends \XLite\Core\Handler
 
         if (\XLite\Logger::isMarkTemplates()) {
             $list['js'][] = 'js/template_debuger.js';
+            $list['css'][] = 'css/template_debuger.css';
         }
 
         return $list;
@@ -645,6 +661,25 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         self::$resources[$type] = array_merge(self::$resources[$type], $list);
+
+        if ('css' == $type) {
+            $this->rearrangeCSSResources();
+        }
+    }
+
+    /**
+     * Rearrange CSS resources: move theme CSS resources before of the widget CSS resources
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function rearrangeCSSResources()
+    {
+        self::$resources['css'] = \Includes\Utils\ArrayManager::rearrangeArray(
+            self::$resources['css'],
+            static::prepareResources($this->getThemeCSSFiles())
+        );
     }
 
     /**
