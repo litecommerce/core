@@ -38,30 +38,38 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
     /**
      * Defines bestsellers products collection
      *
-     * @param integer $count Number of products to get OPTIONAL
-     * @param integer $cat   Category identificator OPTIONAL
+     * @param \XLite\Core\CommonCell $cnd   Search condition
+     * @param integer                $count Number of products to get OPTIONAL
+     * @param integer                $cat   Category identificator OPTIONAL
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function findBestsellers($count = 0, $cat = 0)
+    public function findBestsellers(\XLite\Core\CommonCell $cnd, $count = 0, $cat = 0)
     {
-        return $this->getObjectOnlyResult($this->defineBestsellersQuery($count, $cat));
+        list($sort, $order) = $cnd->{self::P_ORDER_BY};
+
+        return $this->getObjectOnlyResult(
+            $this->defineBestsellersQuery($cnd, $count, $cat)
+        );
     }
 
     /**
      * Prepares query builder object to get bestsell products
      *
-     * @param integer $count Number of products to get
-     * @param integer $cat   Category identificator
+     * @param \XLite\Core\CommonCell $cnd   Search condition
+     * @param integer                $count Number of products to get
+     * @param integer                $cat   Category identificator
      *
      * @return \Doctrine\ORM\QueryBuilder Query builder object
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function defineBestsellersQuery($count, $cat)
+    protected function defineBestsellersQuery(\XLite\Core\CommonCell $cnd, $count, $cat)
     {
+        list($sort, $order) = $cnd->{self::P_ORDER_BY};
+
         $qb = $this->createQueryBuilder()
             ->innerJoin('p.order_items', 'o')
             ->innerJoin('o.order', 'ord')
@@ -69,6 +77,7 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
             ->andWhere('ord.status IN (:complete_status, :processed_status)')
             ->groupBy('o.object')
             ->orderBy('product_amount', 'DESC')
+            ->orderBy($sort, $order)
             ->setParameter('complete_status', \XLite\Model\Order::STATUS_COMPLETED)
             ->setParameter('processed_status', \XLite\Model\Order::STATUS_PROCESSED);
 
