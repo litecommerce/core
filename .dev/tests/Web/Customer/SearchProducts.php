@@ -109,11 +109,16 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
         $this->type(self::SUBSTRING, 'mom');
 
         $this->assertElementPresent(self::SUBMIT_BUTTON, 'No search products button');
+
+        $sleep = $this->setSleep(0);
+
         $this->click(self::SUBMIT_BUTTON);
 
         $this->waitForAjaxProgress();
 
         $this->checkCounter(5);
+
+        $this->setSleep($sleep);
 
         // Check Advanced box hide/show
         $this->click(self::MORE_SEARCH_OPTIONS);
@@ -168,11 +173,10 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
 
     protected function checkCounter($count)
     {
-        $this->assertElementPresent(
-//            "//div[@class='items-list products-search-result']/h2[@class='items-list-title' and text()='$count products found']",
-            "//h2[text()='$count products found']",
-            '"Search found" string is wrong. must be ' . $count
-        );
+        if ($this->isElementPresent('//h2[@class="items-list-title"]')) {
+            $text = $this->getText('//h2[@class="items-list-title"]');
+            $this->assertEquals(sprintf('%s products found', $count), $text, 'Wrong number of products found');
+        }
 
 return;
 
