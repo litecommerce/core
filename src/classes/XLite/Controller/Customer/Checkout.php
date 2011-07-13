@@ -357,7 +357,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         } elseif ($cart->isOpen()) {
 
             \XLite\Core\TopMessage::addInfo(
-                'Order is paid in part. Please complete payment of order.'
+                'Payment for orders not over. Please complete payment of order.'
             );
 
             $this->redirect($this->buildURL('checkout'));

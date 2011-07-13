@@ -694,13 +694,13 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      * Check - payment type is allowed for specified order or not
      * 
      * @param string           $type  Payment type
-     * @param \EMM\Model\Order $order Order
+     * @param \XLite\Model\Order $order Order
      *  
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isPaymentTypeAllowed($type, \EMM\Model\Order $order)
+    protected function isPaymentTypeAllowed($type, \XLite\Model\Order $order)
     {
         $result = isset($this->paymentTypeCountries[$type])
             && $order->getProfile()

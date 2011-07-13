@@ -14,6 +14,7 @@
   <input type="hidden" name="action" value="update" />
   <input type="hidden" name="page" value="{page}" />
   <input type="hidden" name="moduleId" value="{moduleId}" IF="moduleId" />
+  <input type="hidden" name="return" value="{return}" IF="return" />
 
   <table cellspacing="1" cellpadding="5" class="settings-table">
     {foreach:getOptions(),option}

@@ -192,6 +192,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
             );
         }
 
-        $this->setReturnUrl($this->buildUrl('addons_list_installed'));
+        $this->setReturnUrl(\XLite\Core\Request::getInstance()->return ?: $this->buildUrl('addons_list_installed'));
     }
 }

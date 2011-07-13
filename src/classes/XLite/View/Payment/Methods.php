@@ -170,9 +170,16 @@ class Methods extends \XLite\View\Dialog
      */
     protected function getModuleURL(\XLite\Model\Payment\Method $method)
     {
-        return $method->getProcessor()->getModule()
+        $url = $method->getProcessor()->getModule()
             ? $method->getProcessor()->getModule()->getSettingsForm()
             : null;
+
+        if ($url) {
+            $url .= (false === strpos($url, '?') ? '?' : '&')
+                . 'return=' . urlencode(\XLite\Core\Converter::buildURL('payment_methods'));
+        }
+
+        return $url;
     }
 
     /**
