@@ -55,7 +55,7 @@ class Methods extends \XLite\View\Dialog
     /**
      * Get payment methods list
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -128,6 +128,68 @@ class Methods extends \XLite\View\Dialog
         return $method->getProcessor() && $method->getProcessor()->getSettingsWidget();
     }
 
+    /**
+     * Check - method has module settings 
+     *
+     * @param \XLite\Model\Payment\Method $method Method
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isModuleConfigurable(\XLite\Model\Payment\Method $method)
+    {
+        return $method->getProcessor()->hasModuleSettings()
+            && $this->getModuleURL($method);
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = $this->getDir() . '/controller.js';
+
+        return $list;
+    }
+
+    /**
+     * Get module settings URL 
+     * 
+     * @param \XLite\Model\Payment\Method $method Method
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleURL(\XLite\Model\Payment\Method $method)
+    {
+        return $method->getProcessor()->getModule()
+            ? $method->getProcessor()->getModule()->getSettingsForm()
+            : null;
+    }
+
+    /**
+     * Get module name 
+     *
+     * @param \XLite\Model\Payment\Method $method Method
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleName(\XLite\Model\Payment\Method $method)
+    {
+        return $method->getProcessor()->getModule()
+            ? $method->getProcessor()->getModule()->getModuleName()
+            : null;
+    }
 
     /**
      * Get current language code

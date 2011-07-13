@@ -141,6 +141,7 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
                 'Payment processor \'' . get_called_class() . '\' did not assemble service data successfull.'
             );
             $status = self::FAILED;
+            $this->transaction->setNote('Payment is failed');
         }
 
         return $status;

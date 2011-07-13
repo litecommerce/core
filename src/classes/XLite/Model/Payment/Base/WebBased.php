@@ -112,7 +112,9 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 
         $this->logRedirect($this->getFormFields());
 
-        $page = <<<HTML
+        if ($body) {
+
+            $page = <<<HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
@@ -131,9 +133,22 @@ $body
 </html>
 HTML;
 
-        print ($page);
+            print ($page);
 
-        return self::PROLONGATION;
+            $status = self::PROLONGATION;
+
+        } else {
+
+            $this->setDetail(
+                'webbased_data_error',
+                'Payment processor \'' . get_called_class() . '\' did not assemble form data successfull.'
+            );
+            $status = self::FAILED;
+            $this->transaction->setNote('Payment is failed');
+
+        }
+
+        return $status;
     }
 
     /**

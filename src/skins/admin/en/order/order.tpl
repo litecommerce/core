@@ -12,42 +12,39 @@
 <widget template="order/invoice/page.tpl" />
 
 <div class="invoice-service">
-<a href="admin.php?target=order&mode=invoice&order_id={order.order_id}" target="_blank"><input type="image" src="images/go.gif" width="13" height="13" align="absmiddle" /> Print invoice</a></b>
-<br />
-<br />
-<widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/show_container_details.tpl">
+  <div>
+    <a href="{buildUrl(#order#,_ARRAY_(#mode#^#invoice#,#order_id#^order.order_id))}" target="_blank">{t(#Print invoice#)}</a>
+  </div>
 
-<P>
-<form action="admin.php" method="post">
-<input type="hidden" name="target" value="order" />
-<input type="hidden" name="action" value="update" />
-<input type="hidden" name="order_id" value="{order.order_id}" />
-<input type="hidden" name="returnURL" value="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}" />
-<table>
-<tr>
-	<td>Status:</td>
-	<td>
-    <widget class="\XLite\View\FormField\Select\OrderStatus" fieldOnly="true" fieldName="status" value="{order.getStatus()}" orderId="{order.getOrderId()}" />
-  </td>
-</tr>
+  <form action="admin.php" method="post">
+    <input type="hidden" name="target" value="order" />
+    <input type="hidden" name="action" value="update" />
+    <input type="hidden" name="order_id" value="{order.order_id}" />
+    <input type="hidden" name="returnURL" value="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}" />
 
-<tr FOREACH="order.getMeaningDetails(),d" valign="top">
-	<td>{d.getLabel()}:</td>
-	<td><input type="text" name="details[{d.getDetailId()}]" size="40" value="{d.getValue():r}" /></td>
-</tr>
+    <table>
+      <tr>
+      	<td>{t(#Status#)}:</td>
+      	<td><widget class="\XLite\View\FormField\Select\OrderStatus" fieldOnly="true" fieldName="status" value="{order.getStatus()}" orderId="{order.getOrderId()}" /></td>
+      </tr>
 
-<tr valign="top">
-	<td>Notes:</td>
-	<td><textarea name="notes" cols="60" rows="7">{order.notes:h}</textarea></td>
-</tr>
+      <tr FOREACH="order.getMeaningDetails(),d" valign="top">
+      	<td>{d.getLabel()}:</td>
+	      <td><input type="text" name="details[{d.getDetailId()}]" size="40" value="{d.getValue():r}" /></td>
+      </tr>
 
-{displayViewListContent(#order.details#)}
+      <tr valign="top">
+	      <td>{t(#Notes#)}:</td>
+	      <td><textarea name="notes" cols="60" rows="7">{order.notes:h}</textarea></td>
+      </tr>
 
-<tr valign="top">
-	<td></td>
-	<td><widget class="\XLite\View\Button\Submit" label=" Submit" /></td>
-</tr>
-</table>
-</form>
+      {displayViewListContent(#order.details#,_ARRAY_(#order#^order))}
+
+      <tr valign="top">
+	      <td>&nbsp;</td>
+  	    <td><widget class="\XLite\View\Button\Submit" label="Submit" /></td>
+      </tr>
+    </table>
+  </form>
 
 </div>

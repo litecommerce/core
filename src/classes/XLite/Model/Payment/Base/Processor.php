@@ -134,6 +134,18 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Payment method has settings into Module settings section
+     * 
+     * @return boolan
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function hasModuleSettings()
+    {
+        return false;
+    }
+
+    /**
      * Check - payment method is configured or not
      *
      * @param \XLite\Model\Payment\Method $method Payment method
@@ -150,15 +162,59 @@ abstract class Processor extends \XLite\Base
     /**
      * Check - payment processor is applicable for specified order or not
      * 
-     * @param \XLite\Model\Order $order Order
+     * @param \XLite\Model\Order          $order  Order
+     * @param \XLite\Model\Payment\Method $method Payment method
      *  
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isApplicable(\XLite\Model\Order $order)
+    public function isApplicable(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
     {
         return true;
+    }
+
+    /**
+     * Get payemnt method icon path 
+     * 
+     * @param \XLite\Model\Order          $order  Order
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getIconPath(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
+    {
+        return null;
+    }
+
+    /**
+     * Get payment method row checkout template 
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCheckoutTemplate(\XLite\Model\Payment\Method $method)
+    {
+        return 'checkout/steps/payment/method.tpl';
+    }
+
+    /**
+     * Get processor module
+     *
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getModule()
+    {
+        return preg_match('/XLite\\\Module\\\(\w+)\\\(\w+)\\\/Ss', get_called_class(), $match)
+            ? \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneBy(array('author' => $match[1], 'name' => $match[2]))
+            : null;
     }
 
     /**
@@ -229,26 +285,13 @@ abstract class Processor extends \XLite\Base
      * @param string $value Value
      * @param string $label Label OPTIONAL
      *
-     * @return \XLite\Model\Payment\TransactionData
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function setDetail($name, $value, $label = null)
     {
-        $record = new \XLite\Model\Payment\TransactionData;
-
-        $record->setName($name);
-        $record->setValue($value);
-        if (isset($label)) {
-            $record->setLabel($label);
-        }
-
-        $this->transaction->getData()->add($record);
-        $record->setTransaction($this->transaction);
-
-        \XLite\Core\Database::getEM()->persist($record);
-
-        return $record;
+        $this->transaction->setDataCell($name, $value, $label);
     }
 
     /**

@@ -17,6 +17,6 @@
 
   {else:}
     <h3>{t(#Payment methods#)}</h3>
-    <widget template="checkout/steps/payment/methods.tpl" disabled="true" />
+    <widget template="checkout/steps/payment/methods.tpl" disabledSelector="true" />
   {end:}
 </div>

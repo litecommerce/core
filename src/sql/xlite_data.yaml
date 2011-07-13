@@ -75,7 +75,6 @@ XLite\Model\Config:
   - { name: recent_orders, category: General, type: text, orderby: 440, value: '10', translations: [{ code: en, option_name: 'Amount of orders in the recent orders list', option_comment: '' }] }
   - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product', option_comment: '' }] }
   - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to temporary close the shop', option_comment: '' }] }
-  - { name: show_cc_info, category: Email, type: checkbox, orderby: 40, value: N, translations: [{ code: en, option_name: 'Include order details (credit card or eCheck information) into admin order notification message', option_comment: '' }] }
   - { name: show_thumbnails, category: General, type: checkbox, orderby: 230, value: Y, translations: [{ code: en, option_name: 'Show thumbnails in product list', option_comment: '' }] }
   - { name: site_administrator, category: Company, type: text, orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail', option_comment: '' }] }
   - { name: smtp_password, category: Email, type: text, orderby: 160, translations: [{ code: en, option_name: Password, option_comment: '' }] }
@@ -458,6 +457,8 @@ XLite\Model\LanguageLabel:
   - { name: 'X products found', translations: [{ code: en, label: '{{count}} products found' }] }
   - { name: 'Thank you for registering a customer account, your profile has been created successfully', translations: [{ code: en, label: 'Thank you for registering a customer account, your profile has been created successfully.<br />As a registered customer you can enjoy simplified checkout process and review your order history.<br /><br />Registration confirmation with your account details has been sent to your e-mail <b>{profile.login}</b> address.<br />Please use your e-mail address and the specified password every time you place orders at our store.<br /><br />You are now logged in and are welcome to continue shopping.' }] }
   - { name: 'BEGIN - END of TOTAL', translations: [{ code: en, label: '<span class="begin-record-number">{{begin}}</span>&ndash;<span class="end-record-number">{{end}}</span> of <span class="records-count">{{total}}</span>' }] }
+  - { name: 'added by X', translations: [{ code: en, label: 'added by {{name}}' }] }
+  - { name: 'added by _X_', translations: [{ code: en, label: 'added by <a href="{{url}}">{{name}}</a>' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
