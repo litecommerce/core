@@ -1380,13 +1380,6 @@ ul.summary-table li,
   padding: 0px 0px 13px 0px;
 }
 
-ul.summary-table .table-value,
-  ul.main-table .table-value,
-  ul.access-table .table-value
-{
-  padding: 0px 0px 0px 56px;
-}
-
 table.payment-methods {
   width: 600px;
 }
