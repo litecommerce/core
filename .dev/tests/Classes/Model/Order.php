@@ -961,16 +961,6 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
         \XLite\Core\Database::getEM()->flush();
     }
 
-    public function testIsShowCCInfo()
-    {
-        $this->markTestSkipped('CreditCard payment method is not registered');
-    }
-
-    public function testIsShowEcheckInfo()
-    {
-        $this->markTestSkipped('Echeck payment method is not registered');
-    }
-
     public function testRefreshItems()
     {
         $order = $this->getTestOrder();

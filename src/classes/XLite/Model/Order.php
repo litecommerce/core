@@ -854,32 +854,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Check - CC info showing available or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isShowCCInfo()
-    {
-        return 'CreditCard' == $this->getPaymentMethod()->get('payment_method')
-            && \XLite\Core\Config::getInstance()->Email->show_cc_info;
-    }
-
-    /**
-     * Check - e-card info showing available or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isShowEcheckInfo()
-    {
-        return 'Echeck' == $this->getPaymentMethod()
-            && \XLite\Core\Config::getInstance()->Email->show_cc_info;
-    }
-
-    /**
      * Refresh order items
      * TODO - rework after tax subsystem rework
      *
