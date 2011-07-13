@@ -386,6 +386,8 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             'hide_login'            => 1,
             'prepare_only'          => 1,
             'payment_methods'       => $this->convertServiceNameToType($this->transaction->getPaymentMethod()->getServiceName()),
+            'merchant_fields'       => 'platform',
+            'platform'              => '21889079',
         );
 
         if (\XLite\Core\Config::getInstance()->CDev->Moneybookers->logo_url) {
