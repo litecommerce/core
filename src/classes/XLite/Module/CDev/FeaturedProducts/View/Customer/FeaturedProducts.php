@@ -129,8 +129,8 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
 
-        $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
-        $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
+        unset($this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]);
+        unset($this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]);
     }
 
     /**

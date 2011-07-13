@@ -207,6 +207,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         // To prevent some unpredictable errors related to backslashes in element IDs
         $key = $this->getBlockName($class);
+        
         if ($formInput && $block && isset($formInput['lc_widget']) && isset($formInput['lc_widget'][$key])) {
             $widget->setWidgetParams($formInput['lc_widget'][$key]);
         }
@@ -235,10 +236,19 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                     $form[$key][$name]['#options'] = $param->options;
 
                 } else {
-                    if ($extendedItemsList && in_array($name, array(\XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_WIDTH, \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_HEIGHT))) {
+                    if (
+                        $extendedItemsList
+                        && in_array(
+                            $name,
+                            array(
+                                \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_WIDTH,
+                                \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_HEIGHT
+                            )
+                        )
+                    ) {
                         $form[$key][$name]['#description'] = t('recommended: !size', array('!size' => 110));
                     }
-                    
+
                 }
             }
 
@@ -254,6 +264,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                     'modules/CDev/DrupalConnector/blocks.js',
                     \XLite::CUSTOMER_INTERFACE
                 );
+
                 $form['#attached']['js'][] = \XLite\View\AView::modifyResourcePath($path);
 
                 // Display modes data
@@ -261,6 +272,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                     \XLite\View\ItemsList\Product\Customer\ACustomer::WIDGET_TYPE_SIDEBAR => \XLite\View\ItemsList\Product\Customer\ACustomer::getSidebarDisplayModes(),
                     \XLite\View\ItemsList\Product\Customer\ACustomer::WIDGET_TYPE_CENTER  => \XLite\View\ItemsList\Product\Customer\ACustomer::getCenterDisplayModes(),
                 );
+
                 drupal_add_js('lcConnectorBlocks.' . $key . ' = ' . json_encode($jsData) . ';', 'inline');
 
                 // Recommended icons sizes
