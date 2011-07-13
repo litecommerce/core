@@ -156,8 +156,9 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
 
-        $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
-        $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
+        unset($this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]);
+        unset($this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]);
+
         $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
         $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
     }
@@ -235,7 +236,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $template = parent::getTemplate();
 
         if (
-            $template == $this->getDefaultTemplate() 
+            $template == $this->getDefaultTemplate()
             && self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
         ) {
             $template = 'common/sidebar_box.tpl';

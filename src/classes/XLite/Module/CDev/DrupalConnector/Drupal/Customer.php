@@ -65,6 +65,7 @@ class Customer extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     public function getOrderHistoryPage(\stdClass $account)
     {
         $this->getHandler()->mapRequest(array('target' => 'order_list'));
+        
         drupal_set_title(t('Orders list'));
 
         return \XLite\Module\CDev\DrupalConnector\Drupal\Controller::getInstance()->getContent();
