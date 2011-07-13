@@ -69,6 +69,15 @@ abstract class AEntry
     protected $customFiles = array();
 
     /**
+     * List of post rebuild helpers
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $postRebuildHelpers;
+
+    /**
      * Return entry readable name
      *
      * @return string
@@ -177,6 +186,15 @@ abstract class AEntry
     abstract public function getActualName();
 
     /**
+     * Set entry status
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract protected function setUpgradedPath();
+
+    /**
      * Get hashes for current version
      *
      * @return array
@@ -184,6 +202,7 @@ abstract class AEntry
      * @since  1.0.0
      */
     abstract protected function loadHashesForInstalledFiles();
+
 
     /**
      * Constructor
@@ -238,13 +257,14 @@ abstract class AEntry
     /**
      * Set repository path
      *
-     * @param string $path Path to set
+     * @param string  $path            Path to set
+     * @param boolean $preventDeletion Flag OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function setRepositoryPath($path)
+    public function setRepositoryPath($path, $preventDeletion = false)
     {
         if (!empty($path)) {
             $path = \Includes\Utils\FileManager::getRealPath($path);
@@ -254,7 +274,7 @@ abstract class AEntry
             }
         }
 
-        if ($path !== $this->repositoryPath) {
+        if (!$preventDeletion && !empty($this->repositoryPath) && $path !== $this->repositoryPath) {
 
             if ($this->isDownloaded()) {
                 \Includes\Utils\FileManager::deleteFile($this->repositoryPath);
@@ -295,6 +315,22 @@ abstract class AEntry
         }
 
         return $path . '.php';
+    }
+
+    /**
+     * Perform some action after upgrade 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setUpgraded()
+    {
+        $this->setUpgradedPath();
+
+        if (!isset($this->postRebuildHelpers)) {
+            $this->postRebuildHelpers = $this->getHelpers('post_rebuild');
+        }
     }
 
     /**
@@ -371,7 +407,7 @@ abstract class AEntry
      */
     public function __sleep()
     {
-        return array('repositoryPath', 'errorMessages');
+        return array('repositoryPath', 'errorMessages', 'postRebuildHelpers');
     }
 
     // {{{ Error handling
@@ -811,6 +847,171 @@ abstract class AEntry
         return \Includes\Utils\FileManager::read(
             \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath()) . $relativePath
         );
+    }
+
+    // }}}
+
+    // {{{ So called upgrade helpers
+
+    /**
+     * Execute some methods
+     *
+     * @param string $type Helper type
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function runHelpers($type)
+    {
+        if ($this->isInstalled()) {
+            $helpers = ('post_rebuild' === $type) ? $this->postRebuildHelpers : $this->getHelpers($type);
+
+            foreach ((array) $helpers as $file) {
+                $function = require_once $file;
+                $function();
+            }
+        }
+    }
+
+    /**
+     * Get upgrade helpers list
+     *
+     * @param string $type Helper type
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getHelpers($type)
+    {
+        $helpers = array();
+
+        foreach ($this->getUpgradeHelperMajorVersions() as $majorVersion) {
+            foreach ($this->getUpgradeHelperMinorVersions($majorVersion) as $minorVersion) {
+
+                if ($file = $this->getUpgradeHelperFile($type, $majorVersion, $minorVersion)) {
+                    $helpers[] = $file;
+                }
+            }
+        }
+
+        return $helpers;
+    }
+
+    /**
+     * Get file with an upgrade helper function
+     * 
+     * @param string $type         Helper type
+     * @param string $majorVersion Major version to upgrade to
+     * @param string $minorVersion Minor version to upgrade to
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getUpgradeHelperFile($type, $majorVersion, $minorVersion)
+    {
+        $file = null;
+
+        if ($path = $this->getUpgradeHelperPath()) {
+            $path .= $majorVersion . LC_DS . $minorVersion . LC_DS . $type . '.php';
+
+            if (\Includes\Utils\FileManager::isFile($path)) {
+                $file = $path;
+            }
+        }
+
+        return $file;
+    }
+
+    /**
+     * Return path where the upgrade helper scripts are placed
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getUpgradeHelperPath()
+    {
+        $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath());
+
+        if (!empty($path) && !\Includes\Utils\FileManager::isDir($path .= 'upgrade' . LC_DS)) {
+            $path = null;
+        }
+
+        return $path;
+    }
+
+    /**
+     * Get list of available major versions for the helpers 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getUpgradeHelperMajorVersions()
+    {
+        $old = $this->getMajorVersionOld();
+        $new = $this->getMajorVersionNew();
+
+        return array_filter(
+            $this->getUpgradeHelperVersions(),
+            function ($var) use ($old, $new) {
+                return version_compare($old, $var, '<=') && version_compare($new, $var, '>=');
+            }
+        );
+    }
+
+    /**
+     * Get list of available minor versions for the helpers
+     *
+     * @param string $majorVersion Current major version
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getUpgradeHelperMinorVersions($majorVersion)
+    {
+        $old = $this->getMinorVersionOld();
+        $new = $this->getMinorVersionNew();
+
+        return array_filter(
+            $this->getUpgradeHelperVersions($majorVersion . LC_DS),
+            function ($var) use ($old, $new) {
+                return version_compare($old, $var, '<') && version_compare($new, $var, '>=');
+            }
+        );
+    }
+
+    /**
+     * Get list of available versions for the helpers
+     * 
+     * @param string $path Path to scan OPTIONAL
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getUpgradeHelperVersions($path = null)
+    {
+        $result = array();
+
+        if (\Includes\Utils\FileManager::isDir($path = $this->getUpgradeHelperPath() . $path)) {
+
+            foreach (new \DirectoryIterator($path) as $fileinfo) {
+                if ($fileinfo->isDir() && !$fileinfo->isDot()) {
+                    $result[] = $fileinfo->getFilename();
+                }
+            }
+
+            if (!usort($result, 'version_compare')) {
+                $result = array();
+            }
+        }
+
+        return $result;
     }
 
     // }}}

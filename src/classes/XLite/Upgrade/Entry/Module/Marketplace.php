@@ -54,6 +54,30 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     protected $moduleIDForUpgrade;
 
     /**
+     * Old major version (cache)
+     *
+     * :WARNING: do not remove this variable:
+     * it's required for the proper upgrade process
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $majorVersionOld;
+
+    /**
+     * Old minor version (cache)
+     *
+     * :WARNING: do not remove this variable:
+     * it's required for the proper upgrade process
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $minorVersionOld;
+
+    /**
      * Return module actual name
      *
      * @return string
@@ -98,7 +122,11 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function getMajorVersionOld()
     {
-        return $this->getModuleInstalled()->getMajorVersion();
+        if (!isset($this->majorVersionOld)) {
+            $this->majorVersionOld = $this->getModuleInstalled()->getMajorVersion();
+        }
+
+        return $this->majorVersionOld;
     }
 
     /**
@@ -110,7 +138,11 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function getMinorVersionOld()
     {
-        return $this->getModuleInstalled()->getMinorVersion();
+        if (!isset($this->minorVersionOld)) {
+            $this->minorVersionOld = $this->getModuleInstalled()->getMinorVersion();
+        }
+
+        return $this->minorVersionOld;
     }
 
     /**

@@ -106,11 +106,13 @@ class XLite_Web_Customer_AddedMark extends XLite_Web_Customer_ACustomer
 
         $this->windowMaximize();
 
+        $sleep = $this->setSleep(0);
+
         $this->dragAndDropDelay("css=.productid-$id1", "css=.productid-$id2", "css=.cart-tray");
 
         $this->waitForLocalCondition(
             "jQuery('.cart-tray.cart-tray-adding').length == 1",
-            3000
+            10000
         );
 
         $this->waitForLocalCondition(
@@ -120,13 +122,15 @@ class XLite_Web_Customer_AddedMark extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             "jQuery('.cart-tray.cart-tray-added').length == 0",
-            6000
+            10000
         );
 
         $this->waitForLocalCondition(
             "jQuery('.minicart-items-number').html() == '1'",
             20000
         );
+
+        $this->setSleep($sleep);
     }
 
     /**

@@ -408,7 +408,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                 throw new InvalidArgumentException;
             }
         } else {
-            $browser['sleep'] = 1;
+            $browser['sleep'] = 0;
         }
 
         $driver = new XLite_Extensions_SeleniumTestCase_Driver;
@@ -1206,4 +1206,24 @@ JS;
         return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => $sku));
     }
 
+    /**
+     * Set new value to the 'sleep' property of the browser driver and return previous value
+     * 
+     * @param integer $sleep Seconds to sleep
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function setSleep($sleep)
+    {
+        $oldSleep = null;
+        
+        if (isset($this->drivers[0])) {
+            $oldSleep = $this->drivers[0]->getSleep();
+            $this->drivers[0]->setSleep($sleep);
+        }
+
+        return $oldSleep;
+    }
 }
