@@ -496,23 +496,27 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->check('id=edit-user-cancel-method--2'); // Select 'Disable' option
 
+        $sleep = $this->setSleep(0);
+
         $this->clickAndWait('id=edit-submit'); // And submit confirmation form
 
         // Batch process 'Cancelling mode'
 
         $this->waitForCondition(
             'selenium.isElementPresent(\'//div[@class="percentage"]\') && selenium.getText(\'//div[@class="percentage"]\') == \'100%\'',
-            10000,
+            60000,
             'Percentage of batch process does not achived the value of 100% (cancel users)'
         );
 
-        $this->waitForPageToLoad(10000, 'Page is not reloaded after batch process finished (cancel users)');
+        $this->waitForPageToLoad(60000, 'Page is not reloaded after batch process finished (cancel users)');
 
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
             $this->assertNull($message, 'Check for error messages #4');
         }
+
+        $this->setSleep($sleep);
 
         // Check that LC profiles are disabled now
 
@@ -550,23 +554,27 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->check('id=edit-user-cancel-method--5'); // Select 'Delete' option
 
+        $sleep = $this->setSleep(0);
+
         $this->clickAndWait('id=edit-submit'); // And submit confirmation form
 
         // Batch process 'Deleting mode'
 
         $this->waitForCondition(
             'selenium.isElementPresent(\'//div[@class="percentage"]\') && selenium.getText(\'//div[@class="percentage"]\') == \'100%\'',
-            10000,
+            60000,
             'Percentage of batch process does not achived the value of 100% (delete users)'
         );
 
-        $this->waitForPageToLoad(10000, 'Page is not reloaded after batch process finished (delete users)');
+        $this->waitForPageToLoad(60000, 'Page is not reloaded after batch process finished (delete users)');
 
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
             $this->assertNull($message, 'Check for error messages #5');
         }
+
+        $this->setSleep($sleep);
 
         // Check that LC profiles are not exists now
 
