@@ -227,7 +227,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
      */
     protected $paymentTypeIcons = array(
         'WLT'   => 'by_ewallet_90x45.gif',
-        'ACC'   => false,
+        'ACC'   => 'All_CCs_225x45.gif',
         'VSA'   => 'powered-btn-visa-90x45.png',
         'MSC'   => 'powered-btn-mc-90x45.png',
         'VSD'   => 'powered-btn-visadebit-90x45.png',
