@@ -1090,7 +1090,7 @@ return;
         // wait until the progress bar is hidden
         $this->waitForLocalCondition(
             'jQuery("' . $listSelector . ' .blockUI.block-wait:visible").length <= 0',
-            300000
+            60000
         );
 
     }

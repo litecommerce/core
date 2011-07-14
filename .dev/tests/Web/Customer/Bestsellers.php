@@ -123,7 +123,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
     protected function findBestsellers($count = 0, $cat = 0)
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Product')
-            ->findBestsellers($count, $cat);
+            ->findBestsellers(new \XLite\Core\CommonCell(array('orderBy' => array('translations.name', 'asc'))), $count, $cat);
     }
 
 }
