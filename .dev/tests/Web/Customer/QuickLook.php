@@ -634,8 +634,13 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             $selector,
             'A selector for \'' . $mode . '\' display mode is missing (' . $selector . ') on ' . $this->getLocation() . '!'
         );
+
+        $sleep = $this->setSleep(0);
+
         $this->click($selector);
         $this->waitForAjaxProgress();
+
+        $this->setSleep($sleep);
     }
 
     /**
