@@ -279,4 +279,18 @@ abstract class Converter extends \Includes\Utils\AUtils
 
         return isset($separator) ? implode($separator, $result) : $result;
     }
+
+    /**
+     * Remove \r and \n chars from string (e.g to prevent CRLF injections)
+     * 
+     * @param string $value Input value
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function removeCRLF($value)
+    {
+        return trim(preg_replace('/[\r\n]+/', '', ((string)$value)));
+    }
 }

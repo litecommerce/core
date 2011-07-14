@@ -341,7 +341,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
             }
         }
 
-        return $url;
+        return \Includes\Utils\Converter::removeCRLF($url);
     }
 
     /**
