@@ -76,8 +76,8 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
             ->addSelect('sum(o.amount) as product_amount')
             ->andWhere('ord.status IN (:complete_status, :processed_status)')
             ->groupBy('o.object')
-            ->orderBy('product_amount', 'DESC')
             ->orderBy($sort, $order)
+            ->orderBy('product_amount', 'DESC')
             ->setParameter('complete_status', \XLite\Model\Order::STATUS_COMPLETED)
             ->setParameter('processed_status', \XLite\Model\Order::STATUS_PROCESSED);
 
