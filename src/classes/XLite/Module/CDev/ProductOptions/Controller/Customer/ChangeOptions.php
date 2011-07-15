@@ -44,6 +44,15 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      */
     protected $item = null;
 
+    /**
+     * Internal error flag
+     *
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.2
+     */
+    protected $internalError = false;
+
 
     /**
      * Get page title
@@ -162,7 +171,20 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
     protected function assembleReturnURL()
     {
         $this->setReturnURL($this->buildURL(\XLite::TARGET_DEFAULT));
-        if (\XLite\Core\Request::getInstance()->source == 'cart') {
+
+        if ($this->internalError) {
+            $this->setReturnURL(
+                $this->buildURL(
+                    'change_options',
+                    '',
+                    array(
+                        'source' => \XLite\Core\Request::getInstance()->source,
+                        'storage_id' => \XLite\Core\Request::getInstance()->storage_id,
+                        'item_id' => \XLite\Core\Request::getInstance()->item_id,
+                    )
+                )
+            );
+        } elseif (\XLite\Core\Request::getInstance()->source == 'cart') {
             $this->setReturnURL($this->buildURL('cart'));
         }
     }
@@ -176,13 +198,20 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      */
     protected function doActionChange()
     {
+        $this->internalError = false;
+
         if ('cart' == \XLite\Core\Request::getInstance()->source) {
+
             $options = $this->getItem()
                 ->getProduct()
                 ->prepareOptions(\XLite\Core\Request::getInstance()->product_options);
 
-            if (is_array($options) && $this->getItem()->getProduct()->checkOptionsException($options)) {
+            if (
+                is_array($options)
+                && $this->getItem()->getProduct()->checkOptionsException($options)
+            ) {
                 $this->getItem()->setProductOptions($options);
+
                 $this->updateCart();
 
                 \XLite\Core\TopMessage::addInfo('Options has been successfully changed');
@@ -198,17 +227,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
 
                 $this->setInternalRedirect();
 
-                $this->setReturnURL(
-                    $this->buildURL(
-                        'change_options',
-                        '',
-                        array(
-                            'source'     => \XLite\Core\Request::getInstance()->source,
-                            'storage_id' => \XLite\Core\Request::getInstance()->storage_id,
-                            'item_id'    => \XLite\Core\Request::getInstance()->item_id,
-                        )
-                    )
-                );
+                $this->internalError = true;
             }
         }
     }

@@ -316,28 +316,6 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
-     * Format price value
-     *
-     * @param mixed $price Price
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function formatPrice($price)
-    {
-        if (isset($price)) {
-            $config = \XLite\Core\Config::getInstance();
-            $price = sprintf(
-                $config->General->price_format,
-                number_format(doubleval($price), 2, $config->General->decimal_delim, $config->General->thousand_delim)
-            );
-        }
-
-        return $price;
-    }
-
-    /**
      * Convert value from one to other weight units
      *
      * @param float  $value   Weight value
@@ -487,9 +465,9 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Convert user time to server time
-     * 
+     *
      * @param integer $time User time
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -511,9 +489,9 @@ class Converter extends \XLite\Base\Singleton
 
     /**
      * Convert server time to user time
-     * 
+     *
      * @param integer $time Server time
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0

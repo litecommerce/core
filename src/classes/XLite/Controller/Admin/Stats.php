@@ -173,6 +173,18 @@ class Stats extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Get currencies
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCurrencies()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Currency')->findUsed();
+    }
+
+    /**
      * Initialize table matrix
      *
      * @return array

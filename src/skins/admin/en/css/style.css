@@ -1118,6 +1118,7 @@ td.star
  */
 table.order-statistics {
   width: 80%;
+  margin: 0px 0px 30px 0px;
 }
 
 table.order-statistics th {

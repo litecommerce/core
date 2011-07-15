@@ -87,7 +87,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
             }
         }
 
-        return $item;
+        return $this->optionInvalid ? null : $item;
     }
 
     /**
@@ -110,20 +110,6 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
             \XLite\Core\Session::getInstance()->saved_invalid_options = array(
                 $request->product_id => $request->product_options,
             );
-
-            // Delete item from cart and switch back to product details
-            $key = $this->getCurrentItem()->getKey();
-
-            foreach ($this->getCart()->getItems() as $i) {
-
-                if ($i->getKey() == $key) {
-
-                    $this->getCart()->getItems()->removeElement($i);
-
-                    break;
-                }
-            }
-            $this->updateCart();
 
             \XLite\Core\TopMessage::getInstance()->clear();
 

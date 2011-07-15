@@ -14,17 +14,19 @@
 <br /><br />
 
 <table class="data-table order-statistics">
+
   <tr class="TableHead">
     <th class="title"><widget class="XLite\View\Order\Statistics\CurrencySelector" /></th>
     <th FOREACH="getStatsColumns(),c">{getColumnTitle(c)}</th>
   </tr>
+
   <tr FOREACH="getStats(),idx,row" class="dialog-box{if:isTotalsRow(idx)} totals{end:}">
     <td class="title">{getRowTitle(idx)}</td>
     <td FOREACH="row,idx1,val">
-      {if:isTotalsRow(idx)}{price_format(val)}{else:}{val}{end:}
+      {if:isTotalsRow(idx)}{formatPrice(val,getCurrency())}{else:}{val}{end:}
     </td>
   </tr>
+
 </table>
 
-<br /><br />
 <widget class="\XLite\View\Button\Regular" label="Perform order search" jsCode="self.location='admin.php?target=order_list';" />

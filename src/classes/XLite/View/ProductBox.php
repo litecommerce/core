@@ -41,7 +41,6 @@ class ProductBox extends \XLite\View\SideBarBox
     const PARAM_PRODUCT_ID      = 'product_id';
     const PARAM_ICON_MAX_WIDTH  = 'iconWidth';
     const PARAM_ICON_MAX_HEIGHT = 'iconHeight';
-    const PARAM_SHOW_BUY_NOW    = 'showBuyNow';
 
 
     /**

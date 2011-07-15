@@ -115,7 +115,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Check - amount is set into request data or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -235,7 +235,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         } else {
             $amount = 1;
         }
-        
+
         if (!$this->checkAmountToAdd($product, $amount)) {
             $amount = $this->getProductAvailableAmount($product);
             $this->processInvalidAmountError($product, $this->getProductAvailableAmount($product));
@@ -272,7 +272,10 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     protected function addCurrentItem()
     {
-        return ($product = $this->getProduct()) && $this->getCart()->addItem($this->getCurrentItem($product));
+        $product = $this->getProduct();
+        $item = $this->getCurrentItem($product);
+
+        return $product && $item && $this->getCart()->addItem($item);
     }
 
     /**
