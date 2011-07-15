@@ -67,7 +67,6 @@ XLite\Model\Config:
   - { name: params, category: XCartImport, type: serialized, value: 'a:0:{}' }
   - { name: partner_product_banner, category: Miscellaneous, type: serialized, value: 'a:11:{s:11:"link_target";s:4:"_top";s:5:"image";s:9:"thumbnail";s:6:"border";i:1;s:12:"product_name";i:1;s:11:"description";s:0:"";s:7:"message";s:8:"Buy new!";s:16:"background_color";s:6:"ffffff";s:10:"text_color";s:6:"000000";s:10:"link_color";s:6:"6633ff";s:5:"width";i:120;s:6:"height";i:240;}' }
   - { name: partner_profile, category: Miscellaneous, type: serialized, value: 'a:8:{s:17:"billing_firstname";s:2:"on";s:16:"billing_lastname";s:2:"on";s:13:"billing_phone";s:2:"on";s:15:"billing_address";s:2:"on";s:12:"billing_city";s:2:"on";s:13:"billing_state";s:2:"on";s:15:"billing_country";s:2:"on";s:15:"billing_zipcode";s:2:"on";}' }
-  - { name: price_format, category: General, type: text, orderby: 630, value: '$ %s', translations: [{ code: en, option_name: 'Currency format', option_comment: '' }] }
   - { name: products_per_page, category: General, type: text, orderby: 250, value: '10', translations: [{ code: en, option_name: 'Products per category listing page', option_comment: '' }] }
   - { name: products_per_page_admin, category: General, type: text, orderby: 410, value: '10', translations: [{ code: en, option_name: 'Products per page', option_comment: '' }] }
   - { name: product_layout, category: ImportExport, type: UL, value: sk }
@@ -98,6 +97,7 @@ XLite\Model\Config:
   - { name: version, category: Version, value: xlite_3_0_x }
   - { name: weight_symbol, category: General, type: text, orderby: 620, value: lbs, translations: [{ code: en, option_name: 'Weight symbol', option_comment: '' }] }
   - { name: weight_unit, category: General, type: select, orderby: 610, value: lbs, translations: [{ code: en, option_name: 'Weight unit', option_comment: '' }] }
+  - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency', option_comment: '' }] }
   - { name: you_save, category: General, type: select, orderby: 296, value: Y, translations: [{ code: en, option_name: 'Enable "save" label (for Market Price)', option_comment: '' }] }
   - { name: default_language, category: General, orderby: 330, value: en }
   - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address', option_comment: '' }] }

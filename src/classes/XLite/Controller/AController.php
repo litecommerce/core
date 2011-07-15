@@ -699,19 +699,6 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Get current currency
-     * TODO - rework
-     *
-     * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCurrentCurrency()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840);
-    }
-
-    /**
      * Return the reserved ID of root category
      *
      * @return integer
@@ -1365,7 +1352,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Check - need use secure protocol or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -1380,7 +1367,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Redirect to secure protocol
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

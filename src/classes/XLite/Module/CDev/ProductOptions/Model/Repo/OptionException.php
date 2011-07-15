@@ -53,6 +53,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
             try {
                 $count = $this->defineCheckExceptionQuery($ids)
                     ->getSingleScalarResult();
+                
                 $count = intval($count);
 
             } catch (\Doctrine\ORM\NoResultException $exception) {

@@ -147,7 +147,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
     /**
      * Columns' character sets definitions
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -433,7 +433,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * Finds an entity by its primary key / identifier and resturn entity detached
+     * Finds an entity by its primary key / identifier and return entity detached
      *
      * @param mixed $id The identifier.
      *

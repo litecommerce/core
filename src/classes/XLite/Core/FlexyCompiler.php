@@ -974,7 +974,10 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 break;
 
             case ':p':
-                $expr = '\XLite\Core\Converter::formatPrice(' . $expr . ')';
+                // :TODO: refactor.
+                // \XLite\Core\Converter::formatPrice has been removed.
+                // Right now use formatPrice() common viewer method instead
+                //$expr = '\XLite\Core\Converter::formatPrice(' . $expr . ')';
                 break;
 
             default:

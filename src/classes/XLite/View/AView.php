@@ -109,8 +109,8 @@ abstract class AView extends \XLite\Core\Handler
     );
 
     /**
-     * Templates tail 
-     * 
+     * Templates tail
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -191,8 +191,8 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Get templates tail 
-     * 
+     * Get templates tail
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -669,7 +669,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Rearrange CSS resources: move theme CSS resources before of the widget CSS resources
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -1103,49 +1103,6 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         return \XLite\Core\Converter::formatTime($base, $format);
-    }
-
-    /**
-     * Format price
-     * FIXME - to revise
-     *
-     * @param mixed  $base          String or object instance to get field value from
-     * @param string $field         Field to get value OPTIONAL
-     * @param mixed  $thousandDelim Thousands separator OPTIONAL
-     * @param mixed  $decimalDelim  Separator for the decimal point OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function price_format($base, $field = '', $thousandDelim = null, $decimalDelim = null)
-    {
-        if (!isset($thousandDelim)) {
-            $thousandDelim = \XLite\Core\Config::getInstance()->General->thousand_delim;
-        }
-
-        if (!isset($decimalDelim)) {
-            $decimalDelim = \XLite\Core\Config::getInstance()->General->decimal_delim;
-        }
-
-        $result = null;
-
-        if (!is_null($base)) {
-            if (is_object($base)) {
-                if ($base instanceof \XLite\Model\AEntity) {
-                    $base = $base->{'get' . \XLite\Core\Converter::convertToCamelCase($field)}();
-                } else {
-                    $base = $base->get($field);
-                }
-            }
-
-            $result = sprintf(
-                \XLite\Core\Config::getInstance()->General->price_format,
-                number_format($base, 2, $decimalDelim, $thousandDelim)
-            );
-        }
-
-        return $result;
     }
 
     /**

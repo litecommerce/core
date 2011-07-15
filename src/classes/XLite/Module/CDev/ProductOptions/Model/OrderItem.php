@@ -87,25 +87,30 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 
         // Check options
         if ($this->getProduct()->checkOptionsException($options)) {
+
             $itemId = $this->getItemId();
 
             // Erase cached options
             foreach ($this->getOptions() as $option) {
                 \XLite\Core\Database::getEM()->remove($option);
             }
+
             $this->getOptions()->clear();
 
             // Save new options
             foreach ($options as $groupId => $data) {
+
                 $group = \XLite\Core\Database::getRepo('\XLite\Module\CDev\ProductOptions\Model\OptionGroup')
                     ->find($groupId);
 
                 if ($group) {
                     $o = new \XLite\Module\CDev\ProductOptions\Model\OrderItemOption();
+
                     $o->setOrderItem($this);
                     $o->setGroup($group);
                     $o->setOrderby($group->getOrderby());
                     $o->setName($group->getName());
+
                     if (isset($data['option'])) {
                         $o->setOption($data['option']);
                         $o->setValue($data['option']->getName());
@@ -217,6 +222,32 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
         }
 
         return $cell;
+    }
+
+    /**
+     * Check if item is valid
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isValid()
+    {
+        $options = array();
+
+        $isValidOptions = true;
+
+        if ($this->getProduct()->hasOptions()) {
+
+            foreach ($this->getOptions() as $option) {
+                $options[] = $option->getOptionId();
+            }
+
+            $isValidOptions = !empty($options) && \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException')
+                ->checkOptions($options);
+        }
+
+        return parent::isValid() && $isValidOptions;
     }
 
     /**

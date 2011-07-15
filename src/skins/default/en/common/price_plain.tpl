@@ -11,14 +11,18 @@
  *}
 {if:isDisplayOnlyPrice()}
 
-  <span class="price product-price">{price_format(getProduct(),#listPrice#):h}</span>
+  <span class="price product-price">{formatPrice(getListPrice()):h}</span>
 
 {else:}
 
-  <div class="price product-price">{price_format(getProduct(),#listPrice#):h}</div>
+  <div class="price product-price">{formatPrice(getListPrice()):h}</div>
 
   <div IF="{isSalePriceEnabled()}" class="product-market-price">
-    List price: <span class="price">{price_format(getProduct(),#sale_price#):h}</span><span IF="{isSaveEnabled()}">, you save: <span class="save">{getSaveValueAbsolute()} ({getSaveValuePercent()}%)</span></span>
+    {t(#List price#)}:
+    <span class="price">{formatPrice(getSalePrice()):h}</span>
+    <span IF="{isSaveEnabled()}">, {t(#you save#)}:
+      <span class="save">{getSaveValueAbsolute()} ({getSaveValuePercent()}%)</span>
+    </span>
   </div>
 
 {end:}

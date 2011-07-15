@@ -64,8 +64,10 @@ class Cart extends \XLite\Model\Order
 
             if ($orderId) {
                 $cart = \XLite\Core\Database::getRepo('XLite\Model\Cart')->find($orderId);
+
                 if ($cart && self::STATUS_TEMPORARY != $cart->getStatus()) {
                     \XLite\Core\Session::getInstance()->order_id = 0;
+
                     $cart = null;
                 }
             }
@@ -75,8 +77,8 @@ class Cart extends \XLite\Model\Order
                 $cart->setStatus(self::STATUS_TEMPORARY);
 
                 \XLite\Core\Database::getEM()->persist($cart);
-                // TODO - rework
-                $cart->setCurrency(\XLite::getController()->getCurrentCurrency());
+
+                $cart->setCurrency(\XLite::getInstance()->getCurrency());
             }
 
             static::$instances[$className] = $cart;
@@ -138,7 +140,6 @@ class Cart extends \XLite\Model\Order
         parent::prepareBeforeSave();
 
         $this->setDate(time());
-
     }
 
     /**
@@ -153,6 +154,9 @@ class Cart extends \XLite\Model\Order
         foreach ($this->getItems() as $item) {
             \XLite\Core\Database::getEM()->remove($item);
         }
+
+        $this->setCurrency(\XLite::getInstance()->getCurrency());
+
         $this->getItems()->clear();
 
         \XLite\Core\Database::getEM()->persist($this);
@@ -175,6 +179,7 @@ class Cart extends \XLite\Model\Order
 
         foreach ($this->getItems() as $item) {
             $product = $item->getProduct();
+
             if ($product && $product->getProductId() == $productId) {
                 $result = true;
                 break;

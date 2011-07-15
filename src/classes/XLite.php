@@ -379,8 +379,7 @@ class XLite extends \XLite\Base
     }
 
     /**
-     * Get curent currency
-     * TODO - rework this to config ... or not?
+     * Get current currency
      *
      * @return \XLite\Model\Currency
      * @see    ____func_see____
@@ -389,7 +388,8 @@ class XLite extends \XLite\Base
     public function getCurrency()
     {
         if (!isset($this->currentCurrency)) {
-            $this->currentCurrency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->findDetached(840);
+            $this->currentCurrency = \XLite\Core\Database::getRepo('XLite\Model\Currency')
+                ->find(\XLite\Core\Config::getInstance()->General->shop_currency);
         }
 
         return $this->currentCurrency;

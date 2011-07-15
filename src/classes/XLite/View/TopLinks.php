@@ -72,7 +72,7 @@ class TopLinks extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . LC_DS . 'top_links.tpl';
+        return $this->getDir() . '/top_links.tpl';
     }
 
     /**
