@@ -634,8 +634,15 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             $selector,
             'A selector for \'' . $mode . '\' display mode is missing (' . $selector . ') on ' . $this->getLocation() . '!'
         );
+
+        $sleep = $this->setSleep(0);
+
+        $this->assertElementNotPresent('css=.blockUI.block-wait', 'Awaiting progress bar unexpectedly displayed');
+
         $this->click($selector);
         $this->waitForAjaxProgress();
+
+        $this->setSleep($sleep);
     }
 
     /**
@@ -647,7 +654,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      */
     protected function waitForAjaxProgress()
     {
-        $this->waitForLocalCondition("jQuery('.blockUI.block-wait:visible').length <= 0", 300000);
+        $this->waitForCondition('selenium.isElementPresent("css=.blockUI.block-wait")', 30000, 'Awaiting for progess bar displaying failed');
+        $this->waitForCondition('!selenium.isElementPresent("css=.blockUI.block-wait")', 30000, 'Awaiting for progess bar hiding failed');
     }
 
     /**

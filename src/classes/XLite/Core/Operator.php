@@ -164,6 +164,8 @@ class Operator extends \XLite\Base\Singleton
      */
     protected static function setHeaderLocation($location, $code = 302)
     {
+        $location = \Includes\Utils\Converter::removeCRLF($location);
+
         if (headers_sent()) {
 
             // HTML meta tags-based redirect

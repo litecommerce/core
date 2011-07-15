@@ -132,7 +132,7 @@ function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = tr
         }
 
     } else {
-        echo ('failed' . PHP_EOL);
+        echo ('ignored (sql-dump file not found)' . PHP_EOL);
         $result = false;
     }
 
