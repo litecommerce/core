@@ -250,9 +250,7 @@ abstract class AController extends \XLite\Core\Handler
     public function getReturnURL()
     {
         if (!isset($this->returnURL)) {
-            $this->returnURL = \Includes\Utils\Converter::removeCRLF(
-                \XLite\Core\Request::getInstance()->{self::RETURN_URL}
-            );
+            $this->returnURL = \XLite\Core\Request::getInstance()->{self::RETURN_URL};
         }
 
         return $this->returnURL;
@@ -269,7 +267,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function setReturnURL($url)
     {
-        $this->returnURL = \Includes\Utils\Converter::removeCRLF($url);
+        $this->returnURL = $url;
     }
 
     /**
