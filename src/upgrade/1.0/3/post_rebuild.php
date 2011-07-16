@@ -35,14 +35,14 @@ return function()
     }
 
     // Removing obsolete option
-    $option = \XLite\Core\Database::getRepo('XLite\Repo\Config')->findOneBy(
+    $option = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneBy(
         array(
             'name' => 'show_cc_info', 
             'category' => 'Email',
         )
     );
 
-    if (!is_null($option)) {
-        $option->delete();
+    if (isset($option)) {
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->delete($option);
     }
 };
