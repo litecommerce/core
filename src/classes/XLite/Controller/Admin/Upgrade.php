@@ -51,10 +51,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \XLite\Upgrade\Cell::getInstance()->clear();
         }
 
-        if ($this->isIntegrityCheckNeeded()) {
-            \XLite\Core\Request::getInstance()->action = 'check_integrity';
-        }
-
         if (\XLite\Upgrade\Cell::getInstance()->isUpgraded()) {
             \XLite\Upgrade\Cell::getInstance()->runHelpers('post_rebuild');
 
@@ -64,21 +60,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         }
 
         parent::run();
-    }
-
-    /**
-     * Condition for integrity check
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isIntegrityCheckNeeded()
-    {
-        $request = \XLite\Core\Request::getInstance();
-        $cell    = \XLite\Upgrade\Cell::getInstance();
-
-        return $request->isGet() && !isset($request->action) && $cell->isUnpacked();
     }
 
     // }}}
@@ -315,6 +296,8 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDownload()
     {
+        $this->setReturnURL($this->buildURL('upgrade'));
+
         if ($this->isNextStepAvailable()) {
 
             // :DEVCODE: to remove
@@ -357,9 +340,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                 $this->showError(__FUNCTION__, 'not all archives were unpacked');
 
             } elseif ($this->isNextStepAvailable()) {
-                if ($this->isForce()) {
-                    $this->setReturnURL($this->buildURL('upgrade', 'check_integrity', $this->getActionParamsCommon()));
-                }
+                $this->setReturnURL($this->buildURL('upgrade', 'check_integrity', $this->getActionParamsCommon()));
 
             } else {
                 $this->showError(__FUNCTION__);
@@ -379,8 +360,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionCheckIntegrity()
     {
-        // To prevent infinite redirect
-        $this->setReturnURL(null);
+        $this->setReturnURL($this->buildURL('upgrade'));
 
         if (\XLite\Upgrade\Cell::getInstance()->isUnpacked()) {
 
@@ -408,6 +388,8 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionInstallUpgrades()
     {
+        $this->setReturnURL($this->buildURL('upgrade'));
+
         // :DEVCODE: to remove
         \Includes\Utils\Operator::showMessage('Installing updates, please wait...');
 
