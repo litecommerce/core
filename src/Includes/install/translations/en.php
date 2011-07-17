@@ -282,4 +282,6 @@ LiteCommerce Installation Wizard
   'Preparing data for cache generation...' => 'Preparing data for generating cache...',
   'Config file' => 'Config file',
   'lc_config_file_description' => 'Config file does not exist and cannot be copied from the default config file. It is required to proceed an installation.<br /><br />Please, follow these steps: <br /><br />1. Go to directory :dir<br />2. Copy <i>:file1</i> to <i>:file2</i><br />3. Set writeable permissions on <i>:file2</i><br /><br />Then try again.',
+  'PHP option magic_quotes_runtime that must be disabled' => 'PHP option magic_quotes_runtime that must be disabled',
+  'lc_php_magic_quotes_runtime_description' => 'PHP option "magic_quotes_runtime" is deprecated in PHP 5.3 and if presented in php.ini file it should be disabled for LiteCommerce correct operation. Please correct this parameter in your php.ini file and try again.',
 );

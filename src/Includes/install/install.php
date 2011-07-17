@@ -264,6 +264,11 @@ function doCheckRequirements()
         'critical' => true,
     );
 
+    $checkRequirements['lc_php_magic_quotes_runtime'] = array(
+        'title'    => xtr('PHP.magic_quotes_runtime'),
+        'critical' => true,
+    );
+
     $checkRequirements['lc_php_memory_limit'] = array(
         'title'    => xtr('Memory limit'),
         'critical' => true,
@@ -589,6 +594,30 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
 
     } else {
         $value = 'none';
+    }
+
+    return $result;
+}
+
+/**
+ * Check if option magic_quotes_runtime is exist and enabled
+ *
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  1.0.0
+ */
+function checkPhpMagicQuotesRuntime(&$errorMsg, &$value)
+{
+    $value = @ini_get('magic_quotes_runtime');
+
+    $result = (in_array(strtolower($value), array('off', '0', '', false)));
+
+    if (!$result) {
+        $errorMsg = xtr('PHP option magic_quotes_runtime that must be disabled');
     }
 
     return $result;
@@ -2890,6 +2919,7 @@ function module_check_cfg()
             'requirements' => array(
                 'lc_php_version',
                 'lc_php_disable_functions',
+                'lc_php_magic_quotes_runtime',
                 'lc_php_memory_limit',
                 'lc_docblocks_support',
                 'lc_php_mysql_support',
