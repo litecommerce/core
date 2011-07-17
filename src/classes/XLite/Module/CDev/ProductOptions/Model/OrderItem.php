@@ -243,8 +243,10 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
                 $options[] = $option->getOptionId();
             }
 
-            $isValidOptions = !empty($options) && \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException')
-                ->checkOptions($options);
+            if (!empty($options)) {
+                $isValidOptions = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException')
+                    ->checkOptions($options);
+            }
         }
 
         return parent::isValid() && $isValidOptions;
