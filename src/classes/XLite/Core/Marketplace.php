@@ -1094,8 +1094,12 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function writeDataToFile(\PEAR2\HTTP\Request\Response $response)
     {
-        if (!\Includes\Utils\FileManager::isExists(LC_DIR_TMP)) {
+        if (!\Includes\Utils\FileManager::isDir(LC_DIR_TMP)) {
             \Includes\Utils\FileManager::mkdir(LC_DIR_TMP);
+        }
+
+        if (!\Includes\Utils\FileManager::isDirWriteable(LC_DIR_TMP)) {
+            \Includes\ErrorHandler::fireError('Directory "' . LC_DIR_TMP . '" is not writeable');
         }
 
         $path = \Includes\Utils\FileManager::getUniquePath(

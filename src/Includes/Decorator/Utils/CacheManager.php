@@ -208,10 +208,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     public static function cleanupCacheIndicators()
     {
+        static::checkPermissions(LC_DIR_VAR);
+
         // "Step is completed" indicators
-        foreach (static::getCacheStateFiles() as $file) {
-            \Includes\Utils\FileManager::deleteFile($file);
-        }
+        array_map(array('\Includes\Utils\FileManager', 'deleteFile'), static::getCacheStateFiles());
 
         // "Step is running" indicator
         static::cleanupRebuildIndicator();
@@ -604,6 +604,74 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
     // }}}
 
+    // {{{ Check permissions
+
+    /**
+     * Check directory permissions and try to correct them
+     * 
+     * @param string $dir Path to check
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function checkPermissions($dir)
+    {
+        \Includes\Utils\FileManager::mkdirRecursive($dir);
+
+        if (!\Includes\Utils\FileManager::isDirWriteable($dir)) {
+            @\Includes\Utils\FileManager::chmod($dir, static::getDirDefaultPermissions($dir));
+
+            if (!\Includes\Utils\FileManager::isDirWriteable($dir)) {
+                static::fireDirPermissionsError($dir);
+            }
+        }
+    }
+
+    /**
+     * Fire the error them unable to set directory permissions 
+     * 
+     * @param string $dir Path to check
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function fireDirPermissionsError($dir)
+    {
+        \Includes\ErrorHandler::fireError(static::getDirPermissionsErrorMessage($dir));
+    }
+
+    /**
+     * Return permissions error message
+     * 
+     * @param string $dir Path to check
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getDirPermissionsErrorMessage($dir)
+    {
+        return 'The "' . $dir . '" directory is not writeable. Please correct the permissions';
+    }
+
+    /**
+     * Return default directory permissions
+     * 
+     * @param string $dir Path to check
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getDirDefaultPermissions($dir)
+    {
+        return 0755;
+    }
+
+    // }}}
+
     // {{{ Top-level methods
 
     /**
@@ -615,6 +683,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     public static function rebuildCache()
     {
+        static::checkPermissions(LC_DIR_VAR);
+
         foreach (static::$steps as $step) {
             if (static::runStepConditionally($step) && static::isDoOneStepOnly()) {
                 // Break after first performed step if isDoOneStepOnly() returned true
@@ -663,9 +733,12 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function cleanupCache()
+    public static function cleanupCache()
     {
-        array_walk(static::$cacheDirs, array('\Includes\Utils\FileManager', 'unlinkRecursive'));
+        foreach (static::$cacheDirs as $dir) {
+            \Includes\Utils\FileManager::unlinkRecursive($dir);
+            static::checkPermissions($dir);
+        }
     }
 
     // }}}

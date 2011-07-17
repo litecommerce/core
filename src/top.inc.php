@@ -35,6 +35,9 @@ define('LC_DS', DIRECTORY_SEPARATOR);
 // Modes
 define('LC_IS_CLI_MODE', 'cli' === PHP_SAPI);
 
+// Common end-of-line
+define('LC_EOL', LC_IS_CLI_MODE ? "\n" : '<br />');
+
 // Define error handling functions and check PHP version (if needed)
 require_once (dirname(__FILE__) . LC_DS . 'error_handler.php');
 require_once (dirname(__FILE__) . LC_DS . 'top.inc.PHP53.php');

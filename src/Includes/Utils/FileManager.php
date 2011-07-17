@@ -162,6 +162,20 @@ abstract class FileManager extends \Includes\Utils\AUtils
     }
 
     /**
+     * Check if file or dir can be created/deleted
+     * 
+     * @param string $path File or path to check
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function isOperateable($path)
+    {
+        return static::isDirWriteable(static::getDir($path));
+    }
+
+    /**
      * Return directory where a file is located
      *
      * @param string $file File path
@@ -234,7 +248,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function mkdir($dir, $mode = 0755)
     {
-        return mkdir($dir, $mode);
+        return static::isOperateable($dir) ? mkdir($dir, $mode) : false;
     }
 
     /**
@@ -265,18 +279,11 @@ abstract class FileManager extends \Includes\Utils\AUtils
     public static function unlinkRecursive($dir)
     {
         if (static::isDir($dir)) {
-
             $filter = new \Includes\Utils\FileFilter($dir, null, \RecursiveIteratorIterator::CHILD_FIRST);
 
             // :KLUDGE: fix for some stupid FSs
             foreach (iterator_to_array($filter->getIterator(), false) as $file) {
-
-                if ($file->isDir()) {
-                    static::deleteDir($file->getRealPath(), true);
-
-                } else {
-                    static::deleteFile($file->getRealPath(), true);
-                }
+                $file->isDir() ? static::deleteDir($file->getRealPath()) : static::deleteFile($file->getRealPath());
             }
 
             // Unset is required to release directory
@@ -402,7 +409,9 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function write($path, $data, $flags = 0, $mode = 0644)
     {
-        return static::mkdirRecursive(static::getDir($path)) && false !== file_put_contents($path, $data, $flags);
+        return static::mkdirRecursive(static::getDir($path))
+            && (static::isFileWriteable($path) || static::isOperateable($path))
+            && false !== file_put_contents($path, $data, $flags);
     }
 
     /**
@@ -435,7 +444,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function deleteFile($path, $skipCheck = false)
     {
-        return ($skipCheck || static::isFile($path)) ? unlink($path) : true;
+        return ($skipCheck || (static::isFile($path) && static::isOperateable($path))) ? unlink($path) : false;
     }
 
     /**
@@ -450,7 +459,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function deleteDir($dir, $skipCheck = false)
     {
-        return ($skipCheck || static::isDir($dir)) ? rmdir($dir) : true;
+        return ($skipCheck || (static::isDir($dir) && static::isOperateable($dir))) ? @rmdir($dir) : false;
     }
 
     /**

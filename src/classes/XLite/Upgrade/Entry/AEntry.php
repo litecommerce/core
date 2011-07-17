@@ -407,7 +407,7 @@ abstract class AEntry
      */
     public function __sleep()
     {
-        return array('repositoryPath', 'errorMessages', 'postRebuildHelpers');
+        return array('repositoryPath', 'errorMessages', 'customFiles', 'postRebuildHelpers');
     }
 
     // {{{ Error handling
@@ -511,6 +511,11 @@ abstract class AEntry
         // Add new files
         foreach ($hashesForUpgrade as $path => $hash) {
             $this->addFile($path, $isTestMode, $this->manageFile($path, 'isFile'));
+        }
+
+        // Clear some data
+        if (!$isTestMode) {
+            $this->customFiles = array();
         }
     }
 
