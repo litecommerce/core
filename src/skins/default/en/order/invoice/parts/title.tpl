@@ -13,5 +13,5 @@
 <h2 class="invoice">{t(#Invoice X#,_ARRAY_(#id#^order.getOrderId()))}</h2>
 <div class="subhead">
   {formatTime(order.getDate())}
-  <span>{t(#Grand total#)}: {order.getTotal():p}</span>
+  <span>{t(#Grand total#)}: {formatPrice(order.getTotal(),order.getCurrency()):h}</span>
 </div>

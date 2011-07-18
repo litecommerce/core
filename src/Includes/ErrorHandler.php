@@ -63,51 +63,27 @@ abstract class ErrorHandler
     /**
      * Add info to a log file
      *
-     * :FIXME: must be completely revised
-     *
-     * @param string  $message Error message
-     * @param integer $code    Error code
+     * @param string  $message   Error message
+     * @param integer $code      Error code
+     * @param string  $backtrace Stack trace OPTIONAL
      *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function logInfo($message, $code, array $backtrace = array())
+    protected static function logInfo($message, $code, $backtrace = null)
     {
-        $backtrace = $backtrace ?: array_slice(debug_backtrace(false), 2);
-        $trace = array();
-
-        foreach ($backtrace as $l) {
-            $part = null;
-
-            if (isset($l['file'])) {
-
-                $part = $l['file'];
-
-            } elseif (isset($l['class']) && isset($l['function'])) {
-
-                $part = $l['class'] . $l['type'] . $l['function'] . '()';
-
-            } elseif (isset($l['function'])) {
-
-                $part = 'function ' . $l['function'] . '()';
-
-            }
-
-            if ($part) {
-                if (isset($l['line'])) {
-                    $part .= ' : ' . $l['line'];
-                }
-
-                $trace[] = $part;
-            }
+        if (!isset($backtrace)) {
+            ob_start();
+            debug_print_backtrace();
+            $backtrace = ob_get_contents();
+            ob_end_clean();
         }
 
         $message = date('[d-M-Y H:i:s]') . ' Error (code: ' . $code . '): ' . $message . PHP_EOL;
 
         // Add additional info
-
         $parts = array(
             'Server API: ' . PHP_SAPI,
         );
@@ -123,17 +99,21 @@ abstract class ErrorHandler
         }
 
         $message .= implode(';' . PHP_EOL, $parts) . ';' . PHP_EOL;
+        $message .= 'Backtrace: ' . PHP_EOL . $backtrace . PHP_EOL . PHP_EOL;
 
-        if ($trace) {
-            $message .= 'Backtrace: ' . PHP_EOL
-                . "\t" . implode(PHP_EOL . "\t", $trace) . PHP_EOL;
-        }
+        \Includes\Utils\FileManager::write(static::getLogFile(), $message, FILE_APPEND);
+    }
 
-        file_put_contents(
-            LC_DIR_VAR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php',
-            $message . PHP_EOL,
-            FILE_APPEND
-        );
+    /**
+     * Return path to the log file
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getLogFile()
+    {
+        return LC_DIR_VAR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
     }
 
     /**
@@ -215,7 +195,7 @@ abstract class ErrorHandler
      */
     protected static function showErrorPage($code, $message, $page = null)
     {
-        showErrorPage($code, $message, $page ?: static::getErrorPage());
+        showErrorPage($code, $message, $page ?: (LC_IS_CLI_MODE ? LC_ERROR_PAGE_MESSAGE : static::getErrorPage()));
     }
 
 
@@ -264,7 +244,7 @@ abstract class ErrorHandler
      */
     public static function handleException(\Exception $exception)
     {
-        static::logInfo($exception->getMessage(), $exception->getCode(), $exception->getTrace());
+        static::logInfo($exception->getMessage(), $exception->getCode(), $exception->getTraceAsString());
         static::showErrorPage($exception->getCode(), $exception->getMessage());
     }
 
@@ -281,7 +261,6 @@ abstract class ErrorHandler
      */
     public static function fireError($message, $code = self::ERROR_UNKNOWN)
     {
-        static::logInfo($message, $code);
         static::throwException($message, $code);
     }
 

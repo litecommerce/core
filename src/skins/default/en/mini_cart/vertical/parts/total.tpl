@@ -11,5 +11,5 @@
  * @ListChild (list="#minicart.vertical.children", weight="20")
  *}
 <div class="cart-totals" IF="!cart.isEmpty()">
-  <p class="cart-total"><span>{t(#Total#)}: </span>{price_format(cart,#total#):h}</p>
+  <p class="cart-total"><span>{t(#Total#)}: </span>{formatPrice(cart.getTotal(),cart.getCurrency()):h}</p>
 </div>

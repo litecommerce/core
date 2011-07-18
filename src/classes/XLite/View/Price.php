@@ -79,7 +79,7 @@ class Price extends \XLite\View\AView
     {
         $product = $this->getProduct();
 
-        return $this->price_format($product->getSalePrice() - $product->getListPrice());
+        return $this->formatPrice($product->getSalePrice() - $product->getListPrice());
     }
 
     /**
@@ -119,6 +119,31 @@ class Price extends \XLite\View\AView
     protected function getDefaultTemplate()
     {
         return 'common/price_plain.tpl';
+    }
+
+
+    /**
+     * Return list price of product
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.2
+     */
+    protected function getListPrice()
+    {
+        return $this->getProduct()->getListPrice();
+    }
+
+    /**
+     * Return sale price of product
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.2
+     */
+    protected function getSalePrice()
+    {
+        return $this->getProduct()->getSalePrice();
     }
 
     /**

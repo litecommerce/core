@@ -93,6 +93,8 @@ abstract class Operator extends \Includes\Utils\AUtils
      */
     public static function redirect($location, $code = 302)
     {
+        $location = \Includes\Utils\Converter::removeCRLF($location);
+
         if ('cli' !== PHP_SAPI) {
 
             if (headers_sent()) {

@@ -13,5 +13,5 @@
 <h2 class="invoice">Invoice #{order.getOrderId()}</h2>
 <div class="invoice-title">
   {formatTime(order.getDate())}
-  <span>{t(#Grand total#)}: {order.getTotal():p}</span>
+  <span>{t(#Grand total#)}: {formatPrice(order.getTotal(),order.getCurrency()):h}</span>
 </div>

@@ -103,7 +103,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
 
             $this->assertTrue(isset($best[$index]), 'Not set #' . $index . ' product in bestsellers (1)');
 
-            $this->assertEquals($best[$index]->getSku(), $id, 'Wrong #' . $index . ' product in bestsellers (1)');
+            $this->assertEquals($best[$index]->getSku(), $id, 'Wrong #' . $index . ' product in bestsellers (1)' . $best[$index]->getSku() . ' ' . $id);
 
         }
 
@@ -221,7 +221,8 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
      */
     protected function findBestsellers($count = 0, $cat = 0)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findBestsellers($count, $cat);
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')
+            ->findBestsellers(new \XLite\Core\CommonCell(array('orderBy' => array('translations.name', 'asc'))), $count, $cat);
     }
 
 

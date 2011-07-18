@@ -60,7 +60,7 @@ if [ "x${ROOT_DIR}" = "x" ]; then
 fi
 
 
-echo -e "Thr modules changed from $REVISION_FROM to HEAD:\n"
+echo -e "The modules changed from $REVISION_FROM to HEAD:\n"
 
 # Generate module names list
 cd $ROOT_DIR/classes/XLite/Module/CDev
@@ -82,4 +82,27 @@ for i in $MODULE_NAMES; do
 	fi
 
 done
+
+
+echo -e "SQL changes from $REVISION_FROM to HEAD:\n"
+
+# Generate module names list
+cd $ROOT_DIR
+YAML_FILES='sql/xlite_data.yaml sql/xlite_demo.yaml'
+YAML_FILES=${YAML_FILES}" "`find ./classes/XLite/Module/CDev -type f -name "install.yaml"`
+
+for i in $YAML_FILES; do
+	
+	# Find changes
+	RESULT=`git diff ${REVISION_FROM}..HEAD $i`
+
+	# Output module name if it was changed
+	if [ "$RESULT" ]; then
+		echo "$i"
+	fi
+
+done
+
+cd $ROOT_DIR
+
 

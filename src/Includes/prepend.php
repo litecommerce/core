@@ -46,9 +46,6 @@ define('LC_OS_IS_WIN', LC_OS_CODE === 'win');
 // Session type
 define('LC_SESSION_TYPE', 'Sql');
 
-// Common end-of-line
-define('LC_EOL', LC_IS_CLI_MODE ? "\n" : '<br />');
-
 set_include_path(
     get_include_path()
     . PATH_SEPARATOR . LC_DIR_LIB

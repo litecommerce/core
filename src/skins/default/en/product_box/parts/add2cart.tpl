@@ -11,6 +11,11 @@
  *
  * @ListChild (list="productBlock.info", weight="400")
  *}
-<widget IF="product.isAvailable()" class="\XLite\View\Form\Product\AddToCart" name="add_to_cart_{product.product_id}" product="{product}" className="add-to-cart" />
+<widget
+  IF="product.isAvailable()"
+  class="\XLite\View\Form\Product\AddToCart"
+  name="add_to_cart_{product.product_id}"
+  product="{product}"
+  className="add-to-cart" />
   <widget class="\XLite\View\Button\Submit" style="product-add2cart" label="Add to cart" />
 <widget name="add_to_cart_{product.product_id}" end />

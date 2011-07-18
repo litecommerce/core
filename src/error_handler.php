@@ -29,7 +29,7 @@ define('LC_ERR_TAG_MSG',   '@MSG@');
 define('LC_ERR_TAG_ERROR', '@ERROR@');
 define('LC_ERR_TAG_CODE',  '@CODE@');
 
-define('LC_ERROR_PAGE_MESSAGE', 'ERROR: "' . LC_ERR_TAG_ERROR . '" (' . LC_ERR_TAG_CODE . ') - ' . LC_ERR_TAG_MSG);
+define('LC_ERROR_PAGE_MESSAGE', 'ERROR: "' . LC_ERR_TAG_ERROR . '" (' . LC_ERR_TAG_CODE . ') - ' . LC_ERR_TAG_MSG . LC_EOL);
 
 /**
  * Display error message

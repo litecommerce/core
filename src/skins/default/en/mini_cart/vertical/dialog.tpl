@@ -29,7 +29,7 @@
               {cart.getItemsCount()}
               <br />
               <strong>{t(#Total#)}:</strong>
-              {price_format(cart,#total#):h}
+              {formatPrice(cart.getTotal(),cart.getCurrency()):h}
             </td>
           </tr>
 

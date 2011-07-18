@@ -407,7 +407,7 @@ abstract class AEntry
      */
     public function __sleep()
     {
-        return array('repositoryPath', 'errorMessages', 'postRebuildHelpers');
+        return array('repositoryPath', 'errorMessages', 'customFiles', 'postRebuildHelpers');
     }
 
     // {{{ Error handling
@@ -484,13 +484,13 @@ abstract class AEntry
                 if (isset($fileHash)) {
 
                     if (isset($hashesForUpgrade[$path])) {
-                        // File has been modified (by user, or by LC Team, see the second param)
+                        // File has been modified (by user, or by LC Team, see the third param)
                         if ($fileHash !== $hash || $hashesForUpgrade[$path] !== $hash) {
                             $this->updateFile($path, $isTestMode, $fileHash !== $hash);
                         }
 
                     } else {
-                        // File has been removed (by user, or by LC Team, see the second param)
+                        // File has been removed (by user, or by LC Team, see the third param)
                         $this->deleteFile($path, $isTestMode, $fileHash !== $hash);
                     }
 
@@ -499,7 +499,7 @@ abstract class AEntry
                     $this->addFileErrorMessage('File is not readable', $path, !$isTestMode);
                 }
 
-            } else {
+            } elseif (isset($hashesForUpgrade[$path])) {
                 // File has been removed from installation (by user)
                 $this->addFile($path, $isTestMode, true);
             }
@@ -510,7 +510,12 @@ abstract class AEntry
 
         // Add new files
         foreach ($hashesForUpgrade as $path => $hash) {
-            $this->addFile($path, $isTestMode, /*$this->manageFile($path, 'isFile')*/false);
+            $this->addFile($path, $isTestMode, $this->manageFile($path, 'isFile'));
+        }
+
+        // Clear some data
+        if (!$isTestMode) {
+            $this->customFiles = array();
         }
     }
 
@@ -595,11 +600,16 @@ abstract class AEntry
                 $this->addFileErrorMessage('File\'s directory is not writable', $path, false);
             }
 
-        } elseif ($this->manageFile($path, 'write', array($this->getFileSource($path)))) {
-            $this->addFileInfoMessage('File is added', $path, true);
+        } elseif ($source = $this->getFileSource($path)) {
+            if ($this->manageFile($path, 'write', array($source))) {
+                $this->addFileInfoMessage('File is added', $path, true);
+
+            } else {
+                $this->addFileErrorMessage('Unable to add file', $path, true);
+            }
 
         } else {
-            $this->addFileErrorMessage('Unable to add file', $path, true);
+            $this->addFileErrorMessage('Unable to read file while adding', $path, true);
         }
     }
 
@@ -620,11 +630,16 @@ abstract class AEntry
                 $this->addFileErrorMessage('File is not writeable', $path, false);
             }
 
-        } elseif ($this->manageFile($path, 'write', array($this->getFileSource($path)))) {
-            $this->addFileInfoMessage('File is updated', $path, true);
+        } elseif ($source = $this->getFileSource($path)) {
+            if ($this->manageFile($path, 'write', array($source))) {
+                $this->addFileInfoMessage('File is updated', $path, true);
+
+            } else {
+                $this->addFileErrorMessage('Unable to update file', $path, true);
+            }
 
         } else {
-            $this->addFileErrorMessage('Unable to update file', $path, true);
+            $this->addFileErrorMessage('Unable to read file while updating', $path, true);
         }
     }
 
