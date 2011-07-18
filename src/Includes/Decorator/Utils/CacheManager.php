@@ -208,10 +208,13 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     public static function cleanupCacheIndicators()
     {
-        static::checkPermissions(LC_DIR_VAR);
-
-        // "Step is completed" indicators
-        array_map(array('\Includes\Utils\FileManager', 'deleteFile'), static::getCacheStateFiles());
+        foreach (static::getCacheStateFiles() as $file) {
+            if (\Includes\Utils\FileManager::isFile($file) && !\Includes\Utils\FileManager::deleteFile($file)) {
+                \Includes\ErrorHandler::fireError(
+                    'Unable to delete "' . $file . '" file. Please correct the permissions'
+                );
+            }
+        }
 
         // "Step is running" indicator
         static::cleanupRebuildIndicator();
