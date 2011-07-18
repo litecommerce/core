@@ -35,6 +35,8 @@ namespace XLite\Model\QueryBuilder;
  */
 abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
 {
+    // {{{ Result helpers
+
     /**
      * Get result
      *
@@ -126,4 +128,29 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
     {
         return $this->getQuery()->execute();
     }
+
+    /**
+     * Get only entities 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getOnlyEntities()
+    {
+        $result = array();
+
+        foreach ($this->getResult() as $entity) {
+
+            if (is_array($entity)) {
+                $entity = $entity[0];
+            }
+
+            $result[] = $entity;
+        }
+
+        return $result;
+    }
+
+    // }}}
 }
