@@ -106,13 +106,13 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
         );
 
         $this->assertEquals(
-            '$ 141.87',
+            '$141.87',
             $this->getJSExpression('jQuery("table.data-table tr:eq(5) td:eq(5)").text().trim()'),
             "Check All time, total"
         );
 
         $this->assertEquals(
-            '$ 141.87',
+            '$141.87',
             $this->getJSExpression('jQuery("table.data-table tr:eq(6) td:eq(5)").text().trim()'),
             "Check All time, paid"
         );
