@@ -220,6 +220,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             array('url' => 'store/category/0/category_id-' . $c2->getCategoryId(), 'id' => '00022'),
         );
 
+        $sleep = $this->setSleep(2);
+
         foreach ($products as $p) {
 
             list($product, $selector) = $this->popupTestProduct($p['url'], $_id = $p['id']);
@@ -291,6 +293,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
                 }
             }
         }
+
+        $this->setSleep($sleep);
     }
 
 
@@ -309,6 +313,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         list($product, $selector) = $this->popupTestProduct('store/category/0/category_id-' . $c2->getCategoryId(), '00022');
 
         $id = $product->getProductId();
+
+        $sleep = $this->setSleep(3);
 
         // This assertion requires the minicart widget to be visible on the page
         $qty = intval($this->getJSExpression("jQuery('.minicart-items-number').html()"));
@@ -346,8 +352,6 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');
         $this->assertJqueryPresent('button.bright.add2cart.disabled.add2cart-disabled', 'check disabled add to cart button (max qty)');
 
-
-
         // Add to cart
         $this->typeKeys($quantitySelector, 1);
         $this->getJSExpression($qtyBlurOperation);
@@ -372,19 +376,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
         $this->assertElementPresent($buyButtonSelector, 'Buy more button not found');
  
-        $sleep = $this->setSleep(0);
-       
         $this->click($buyButtonSelector);
-
-        $this->closeQuicklook();
-
-        $this->waitForLocalCondition(
-            "jQuery('.BlockMsg-product-quicklook:visible').length <= 0",
-            10000,
-            "Add-to-cart button doesn't close Quicklook popups 2"
-        );
-
-        $this->setSleep($sleep);
 
         // </ BUG E:0039432> --------------------
 
@@ -434,6 +426,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             10000,
             "Minicart widget displays a wrong qty (#1)"
         );
+
+        $this->setSleep($sleep);
     }
 
     /**
