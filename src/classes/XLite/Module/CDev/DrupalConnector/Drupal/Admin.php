@@ -208,7 +208,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         // To prevent some unpredictable errors related to backslashes in element IDs
         $key = $this->getBlockName($class);
         
-        if ($formInput && $block && isset($formInput['lc_widget']) && isset($formInput['lc_widget'][$key])) {
+        if ($formInput && isset($formInput['lc_widget']) && isset($formInput['lc_widget'][$key])) {
             $widget->setWidgetParams($formInput['lc_widget'][$key]);
         }
 

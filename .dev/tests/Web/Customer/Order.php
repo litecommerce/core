@@ -205,7 +205,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent(
             "//div[@class='invoice-box']"
             . "/div[@class='subhead']"
-            . "/span[text()='Grand total: $ " . $order->getTotal() . "']"
+            . "/span[text()='Grand total: $" . $order->getTotal() . "']"
         );
 
         // Items

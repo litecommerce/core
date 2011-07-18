@@ -85,7 +85,7 @@ class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecor
     public function getLogoffURL()
     {
         return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
-            ? url('logout')
+            ? url('user/logout')
             : parent::getLogoffURL();
     }
 }

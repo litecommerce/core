@@ -137,7 +137,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent(
             "//form[@class='product-details validationEngine']"
             . "/div[@class='product-details-info']"
-            . "/div[@class='price product-price' and text()='$ " . $product->getPrice() . "']",
+            . "/div[@class='price product-price' and text()='$" . $product->getPrice() . "']",
             'check price'
         );
         $this->assertElementPresent(
@@ -371,6 +371,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         // Check 'next' navigation
         $length = intval($this->getJSExpression('jQuery(".product-image-gallery ul li a").length'));
 
+        $sleep = $this->setSleep(3);
+
         for ($i = 1; $i < $length; $i++) {
 
             $this->click(
@@ -392,7 +394,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
                 . "/div[@id='cboxContent']"
                 . "/div[@id='cboxLoadedContent']"
                 . "/img[@id='cboxPhoto' and @src='" . $src . "']",
-                'check image src [' . $i . ' iteration]'
+                'check image src [' . $i . ' iteration] ' . $src
             );
         }
 
@@ -411,7 +413,10 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             . "/div[@id='colorbox']",
             'check hidden colorbox'
         );
+
         $this->assertJqueryNotPresent('#colorbox:visible', 'check closed colorbox');
+
+        $this->setSleep($sleep);
     }
 
     public function testAdd2Cart()
@@ -481,6 +486,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             'check quantity'
         );
 
+        $sleep = $this->setSleep(2);
+
         // Reload page (selenium does not process below steps properly w/o reload)
         // FIXME: try to avoid reloading page here
         $this->openAndWait('store/product//product_id-' . $product->getProductId());
@@ -507,6 +514,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $this->assertJqueryPresent($errorDivSelector, 'check maximum allowed quantity error');
         $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');
         $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (max qty)');
+
+        $this->setSleep($sleep);
     }
 
     protected function getActiveProduct()
