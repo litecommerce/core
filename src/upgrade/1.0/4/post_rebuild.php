@@ -49,7 +49,7 @@ return function()
     foreach ($options as $opt) {
     
         // Removing obsolete option show_cc_info
-        $option = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneBy($opt));
+        $option = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneBy($opt);
 
         if (isset($option)) {
             \XLite\Core\Database::getRepo('XLite\Model\Config')->delete($option);
