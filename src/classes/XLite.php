@@ -60,6 +60,10 @@ class XLite extends \XLite\Base
     const MAIL_INTERFACE     = 'mail';
     const COMMON_INTERFACE   = 'common';
 
+    /**
+     * Default shop currency code (840 - US Dollar)
+     */
+    const SHOP_CURRENCY_DEFAULT = 840;
 
     /**
      * Current area flag
@@ -389,7 +393,7 @@ class XLite extends \XLite\Base
     {
         if (!isset($this->currentCurrency)) {
             $this->currentCurrency = \XLite\Core\Database::getRepo('XLite\Model\Currency')
-                ->find(\XLite\Core\Config::getInstance()->General->shop_currency);
+                ->find(\XLite\Core\Config::getInstance()->General->shop_currency ?: self::SHOP_CURRENCY_DEFAULT);
         }
 
         return $this->currentCurrency;
@@ -456,7 +460,7 @@ class XLite extends \XLite\Base
      */
     final public function getMinorVersion()
     {
-        return '3';
+        return '4';
     }
 
     /**
