@@ -281,15 +281,51 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     );
 
     /**
-     * Get iframe size
+     * Get platform name
      *
-     * @return array
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getIframeSize()
+    static public function getPlatformName()
     {
-        return array(600, 500);
+        return 'LiteCommerce';
+    }
+
+    /**
+     * Get platform secret word 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    static public function getPlatformSecretWord()
+    {
+        return 'lcsword';
+    }
+
+    /**
+     * Get platform email
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    static public function getPlatformEmail()
+    {
+        return 'rnd-dev@qtmsoft.com';
+    }
+
+    /**
+     * Get platform customer id
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    static public function getPlatformCustomerID()
+    {
+        return 22784076;
     }
 
     /**
@@ -341,6 +377,18 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     public function getCheckoutTemplate(\XLite\Model\Payment\Method $method)
     {
         return 'modules/CDev/Moneybookers/method.tpl';
+    }
+
+    /**
+     * Get iframe size
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIframeSize()
+    {
+        return array(600, 550);
     }
 
     /**
