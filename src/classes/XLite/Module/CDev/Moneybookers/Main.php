@@ -87,6 +87,18 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
+     * Return link to settings form
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getSettingsForm()
+    {
+        return 'admin.php?target=moneybookers_settings';
+    }
+
+    /**
      * Determines if we need to show settings form link
      *
      * @return boolean
