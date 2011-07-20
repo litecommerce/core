@@ -25,46 +25,26 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button;
-
+namespace XLite\View\Form\Profiles;
 
 /**
- * Delete profile button. Admin area.
+ * Profiles abstract form
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.4
  */
-class DeleteProfile extends \XLite\View\Button\Regular
+abstract class AProfiles extends \XLite\View\Form\AForm
 {
 
     /**
-     * getDefaultAction
+     * getDefaultClassName
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.4
      */
-    protected function getDefaultAction()
+    protected function getDefaultClassName()
     {
-        return 'delete';
-    }
-
-    /**
-     * Return specified JS code
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
-     */
-    protected function getJSCode()
-    {
-        // We got the default JS code.
-        $jsCode = $this->getDefaultJSCode();
-
-        // Message to show admin user. the profile will be removed.
-        $message = static::t('Are you sure you want to delete the selected user?');
-
-        // We show confirmation message and remove user profile after admin confirmation only
-        return 'if(confirm(\'' . $message . '\')){' . $jsCode . '}';
+        return 'profiles-form';
     }
 }

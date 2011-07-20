@@ -29,7 +29,7 @@ namespace XLite\View\Button;
 
 
 /**
- * Delete user button widget
+ * Delete user button widget. Customer area.
  *
  * @see   ____class_see____
  * @since 1.0.0
