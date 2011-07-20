@@ -92,7 +92,7 @@ class MoneybookersSettings extends \XLite\View\Dialog
      */
     protected function getRegisterURL()
     {
-        return 'https://www.moneybookers.com/app/register.pl';
+        return 'http://www.moneybookers.com/partners/?p=LiteCommerce';
     }
 
     // }}}

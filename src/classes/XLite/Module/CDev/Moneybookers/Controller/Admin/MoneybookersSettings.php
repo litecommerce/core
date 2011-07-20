@@ -81,7 +81,15 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
         );
         $response = $request->sendRequest();
 
-        if (200 == $response->code && 'OK' == $response->body) {
+        $codes = explode(',', $response->body, 2);
+
+        if (
+            200 == $response->code
+            && 'OK' == $codes[0]
+            && isset($codes[1])
+            && is_numeric($codes[1])
+            && 0 < intval($codes[1])
+        ) {
 
             // Save settings
             \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
@@ -95,7 +103,7 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
                 array(
                     'category' => 'CDev\Moneybookers',
                     'name'     => 'id',
-                    'value'    => $id,
+                    'value'    => $codes[1],
                 )
             );
 
