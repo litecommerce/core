@@ -17,7 +17,7 @@ function setFormAttribute(form, name, value)
 
 function setFormAction(form, action)
 {
-    setFormAttribute('action', action);
+  setFormAttribute('action', action);
 }
 
 function submitForm(form, attrs)
@@ -37,10 +37,11 @@ function submitForm(form, attrs)
 
 function submitFormDefault(form, action)
 {
-	var attrs = {};
+  var attrs = {};
+
   if (action !== null) {
   	attrs['action'] = action;
   }
 
-	submitForm(form, attrs);
+  submitForm(form, attrs);
 }

@@ -35,6 +35,7 @@ namespace XLite\View\Form\Profile;
  */
 class Main extends \XLite\View\Form\Profile\AProfile
 {
+
     /**
      * isRegisterMode
      *
@@ -86,7 +87,7 @@ class Main extends \XLite\View\Form\Profile\AProfile
             // Do not pass the profile ID for new profiles
             unset($result['profile_id']);
             // Set the appropriate mode
-            //$result[self::PARAM_MODE] = $this->getCurrentForm()->getRegisterMode();
+            $result['mode'] = $this->getCurrentForm()->getRegisterMode();
         }
 
         return $result;
