@@ -32,15 +32,16 @@
   </ul>
 
   <div class="buttons">
-    <button type="submit">{t(#Activate Moneybookers Quick Checkout#)}</button>
+    <button type="submit" class="action">{t(#Activate Moneybookers Quick Checkout#)}</button>
   </div>
 
   <p class="mb-activation-note">{t(#Moneybookers Quick Checkout enables you to take direct payment from credit cards, debit cards and over 60 other local payment options in over 200 countries as well as the Moneybookers eWallet.#):h}</p>
 
 </form>
 
+<hr class="mb-line" />
+
 {if:config.CDev.Moneybookers.email}
-<hr />
 
 <form action="admin.php" method="post" class="mb-secret-word">
   <input type="hidden" name="target" value="{target}" />
@@ -61,10 +62,31 @@
 </form>
 {end:}
 
-<hr />
+<form action="admin.php" method="post" class="mb-order-prefix">
+  <input type="hidden" name="target" value="{target}" />
+  <input type="hidden" name="action" value="setOrderPrefix" />
+
+  <p class="mb-order-prefix-note">{t(#You can deine an order id prefix, which would precede each order number in your shop, to make it unique (each transaction id must be unique for a Moneybookers account)#)}</p>
+  <p class="mb-order-prefix-option">{t(#This options is relevant only if you share your Moneybookers account with other online shops.#)}</p>
+
+
+  <ul>
+
+    <li>
+      <label for="mb_order_prefix">{t(#Order id prefix#)}:</label>
+      <input type="text" id="mb_order_prefix" name="prefix" value="{config.CDev.Moneybookers.prefix}" />
+      <button type="submit">{t(#Submit#)}</button>
+      <div>{t(#(optional)#)}</div>
+    </li>
+
+  </ul>
+
+</form>
+
+<hr class="mb-line" />
 
 <p class="mb-support-note">
-  <div>{t(#Support#)}:</div>
-  <div>{t(#Do you have questions?#)}</div>
-  <div>{t(#Contact Moneybookers on ecommerce@moneybookers.com or by phone +44 (0) 870 383 0762#):h}</div>
+  {t(#Support#)}:<br />
+  {t(#Do you have questions?#)}<br />
+  {t(#Contact Moneybookers on ecommerce@moneybookers.com or by phone +44 (0) 870 383 0762#):h}
 </p>

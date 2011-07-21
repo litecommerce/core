@@ -198,5 +198,22 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
         }
     }
 
+    /**
+     * Set order id prefix
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionSetOrderPrefix()
+    {
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
+            array(
+                'category' => 'CDev\Moneybookers',
+                'name'     => 'prefix',
+                'value'    => \XLite\Core\Request::getInstance()->prefix,
+            )
+        );
+    }
 }
 

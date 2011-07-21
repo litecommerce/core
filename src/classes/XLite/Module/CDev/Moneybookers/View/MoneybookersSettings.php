@@ -70,6 +70,22 @@ class MoneybookersSettings extends \XLite\View\Dialog
     }
 
     /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'modules/CDev/Moneybookers/settings/style.css';
+
+        return $list;
+    }
+
+    /**
      * Return templates directory name
      *
      * @return string
