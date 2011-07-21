@@ -32,7 +32,7 @@
     <li>
       <label>
         <input type="radio" name="radio-selector" id="radio-unselect" />
-         {t(#Replace only selected files and keep the files which are not selected#)}
+         {t(#Do not replace selected files and ignore their newer versions#)}
       </label>
       <div class="warning">({t(#your web site may crash#)})</div>
     </li>
@@ -52,7 +52,7 @@
       <div class="modified-files-group" FOREACH="getCustomFiles(),entry,files">
         <div class="modified-file" FOREACH="files,file,status">
           <label>
-            <input type="checkbox" value="{#1#}" checked="{status}" name="toOverwrite[{file}]" />
+            <input type="checkbox" value="{#1#}" checked="{status}" name="toRemain[{file}]" />
             {file}
           </label>
         </div>

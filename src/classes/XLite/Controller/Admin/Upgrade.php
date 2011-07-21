@@ -133,7 +133,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Check if next step of upgrade id available
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -393,10 +393,8 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         // :DEVCODE: to remove
         \Includes\Utils\Operator::showMessage('Installing updates, please wait...');
 
-        $toOverwrite = (array) \XLite\Core\Request::getInstance()->toOverwrite;
-
         // Perform upgrade
-        $this->runStep('upgrade', array(false, $toOverwrite));
+        $this->runStep('upgrade', array(false, $this->getOverwrittenFiles()));
 
         // Disable selected modules
         foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
@@ -475,10 +473,10 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Run an upgrade step
-     * 
+     *
      * @param string $method Upgrade cell method to call
      * @param array  $params Call params OPTIONAL
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
@@ -493,4 +491,33 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
     }
 
     // }}}
+
+
+    /**
+     * Retrive list of files that must be overwritten by request for install upgrades
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.4
+     */
+    protected function getOverwrittenFiles()
+    {
+        $allFilesPlain = array();
+
+        foreach(\XLite\Upgrade\Cell::getInstance()->getCustomFiles() as $files) {
+            $allFilesPlain = array_merge($allFilesPlain, $files);
+        }
+
+        // We get list of files that must be remained from request
+        $toRemain = array_keys((array) \XLite\Core\Request::getInstance()->toRemain);
+
+        // And subtract this list from the custom files set (all files that are custom in the upgrade)
+        return array_keys(
+            \Includes\Utils\ArrayManager::filterByKeys(
+                $allFilesPlain,
+                $toRemain,
+                true
+            )
+        );
+    }
 }

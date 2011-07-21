@@ -47,8 +47,6 @@ class XLite_Web_Admin_ModuleManage extends XLite_Web_Admin_AAdmin
      */
     public function testModulesManage()
     {
-        $this->markTestSkipped('Awaiting for new Selenuim version. Problems with JS confirmation dialogs');
-
         $this->logIn();
 
         $this->open('admin.php?target=addons_list_installed');
@@ -62,12 +60,10 @@ class XLite_Web_Admin_ModuleManage extends XLite_Web_Admin_AAdmin
         // Try to uninstall
         $this->click(self::UNINSTALL_BUTTON);
 
-        $confirm = $this->getConfirmation();
+        $this->assertConfirmation('Are you sure you want to uninstall this add-on?');
 
         $this->click(self::DISABLE_CHECKBOX);
 
         $this->clickAndWait(self::SAVE_CHANGES);
-
-        $this->assertEquals($confirm, 'Are you sure you want to uninstall this add-on?', 'Wrong confirmation dialog');
     }
 }
