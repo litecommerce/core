@@ -321,11 +321,11 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
 
     /**
      * Rearrange $array by moving elements from $filterArray before or after the rest elements of $array
-     * 
+     *
      * @param array   $array         Array to rearrange
      * @param array   $filterArray   Array containing elements which should be rearrannged
      * @param boolean $moveDirection Direction: true - before, false - after OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -367,7 +367,7 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
 
         if ($moveDirection) {
             $result = $movingElements + $restElements;
-        
+
         } else {
             $result = $restElements + $movingElements;
         }

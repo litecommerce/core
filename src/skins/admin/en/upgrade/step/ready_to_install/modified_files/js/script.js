@@ -56,7 +56,7 @@ core.bind(
   function () {
     jQuery('#radio-select-all').click(function () {
       jQuery('.modified-file input[type=checkbox]')
-      .attr('checked', 'checked')
+      .attr('checked', '')
       .attr('readonly', 'readonly')
       .addClass('readonly');
 
