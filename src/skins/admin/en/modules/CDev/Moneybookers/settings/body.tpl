@@ -21,7 +21,7 @@
     <li class="mb-email">
       <label for="mb_email">{t(#Email address of your Moneybookers account#)}:</label>
       <input type="text" id="mb_email" name="email" value="{config.CDev.Moneybookers.email}"/>
-      <button type="submit">{t(#Validate Email#)}</button>
+      <widget class="\XLite\View\Button\Submit" label="Validate Email" />
     </li>
 
     <li class="mb-id">
@@ -32,7 +32,7 @@
   </ul>
 
   <div class="buttons">
-    <button type="submit" class="action">{t(#Activate Moneybookers Quick Checkout#)}</button>
+    <widget class="\XLite\View\Button\Submit" label="Activate Moneybookers Quick Checkout" style="action" />
   </div>
 
   <p class="mb-activation-note">{t(#Moneybookers Quick Checkout enables you to take direct payment from credit cards, debit cards and over 60 other local payment options in over 200 countries as well as the Moneybookers eWallet.#):h}</p>
@@ -54,7 +54,7 @@
     <li>
       <label for="mb_word">{t(#Secret Word#)}:</label>
       <input type="password" id="mb_word" name="secret_word" value="{config.CDev.Moneybookers.secret_word}" />
-      <button type="submit">{t(#Validate Secret Word#)}</button>
+      <widget class="\XLite\View\Button\Submit" label="Validate Secret Word" />
     </li>
 
   </ul>
@@ -75,7 +75,7 @@
     <li>
       <label for="mb_order_prefix">{t(#Order id prefix#)}:</label>
       <input type="text" id="mb_order_prefix" name="prefix" value="{config.CDev.Moneybookers.prefix}" />
-      <button type="submit">{t(#Submit#)}</button>
+      <widget class="\XLite\View\Button\Submit" label="Submit" />
       <div>{t(#(optional)#)}</div>
     </li>
 

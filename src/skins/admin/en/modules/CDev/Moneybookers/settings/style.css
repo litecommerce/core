@@ -24,6 +24,13 @@
   line-height: 20px;
 }
 
+.mb-register-note a,
+.mb-activation-note a,
+.mb-support-note a
+{
+  text-decoration: underline;
+}
+
 .mb-activation label,
 .mb-secret-word label,
 .mb-order-prefix label
@@ -82,6 +89,7 @@ hr.mb-line {
 #mb_id {
   margin-left: 8px;
   vertical-align: middle;
+  width: 92px;
 }
 
 .mb-activation ul {
@@ -140,7 +148,7 @@ hr.mb-line {
 }
 
 .mb-order-prefix li div {
-  padding-left: 100px;
+  padding-left: 109px;
   color: #8f8f8f; 
   margin-top: -4px;
 }
