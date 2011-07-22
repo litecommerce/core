@@ -22,7 +22,7 @@
   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
 <widget class="\XLite\View\Header" />
-<body>
+<body class="{getBodyClass()}">
   <widget class="\XLite\View\Content" />
 </body>
 </html>

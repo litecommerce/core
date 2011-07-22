@@ -10,6 +10,10 @@
  * @since     1.0.0
  */
 
+.moneybookers-settings #main {
+  max-width: 1000px;
+}
+
 .mb-register-note,
 .mb-activation label,
 .mb-activation-note,
