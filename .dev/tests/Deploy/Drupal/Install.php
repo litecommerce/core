@@ -50,6 +50,11 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      */
     const PRODUCT_NAME = 'Ecommerce CMS';
 
+    /**
+     * Default selections on the last step (Configure site)
+     */
+    const DEFAULT_COUNTRY = 'DK';
+    const DEFAULT_TIMEZONE = 'Europe/Copenhagen';
 
     /**
      * buildDir
@@ -530,8 +535,11 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $this->type('css=#edit-account-pass-pass1', self::ADMIN_PASSWORD);
         $this->type('css=#edit-account-pass-pass2', self::ADMIN_PASSWORD);
 
-        // Select to install all states
-        $this->select('css=#edit-site-default-country', 'value=US');
+        // Select default country
+        $this->select('css=#edit-site-default-country', 'value=' . self::DEFAULT_COUNTRY);
+
+        // Select default timezone
+        $this->select('css=#edit-date-default-timezone', 'value=' . self::DEFAULT_TIMEZONE);
 
         // Mark checkboxes
         $this->uncheck('css=#edit-update-status-module-2');
@@ -578,6 +586,8 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         );
 
         $this->checkAdminProfile();
+
+        $this->checkDbOptions();
 
         // Click link to the frontend
         $this->clickAndWait('//a[text()="Visit your new site"]');
@@ -703,10 +713,10 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         $this->assertTrue($dbSelected, sprintf('Cannot select database %s', $options['database_details']['database']));
 
-        // Check that database is empty
+        // Find profile
         $res = @mysql_query('SELECT * FROM xlite_profiles');
 
-        $this->assertInternalType('resource', $res, 'Error of mysql_query');
+        $this->assertInternalType('resource', $res, 'Error of mysql_query (checkAdminProfile)');
 
         $checkFields = array(
             'login'          => self::TESTER_EMAIL,
@@ -730,6 +740,61 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         }
 
         $this->assertEquals(2, $index, 'Admin profile not found in database');
+    }
+
+    protected function checkDbOptions()
+    {
+        $options = $this->getConfigOptions();
+
+        $this->connectDb($options);
+
+        // Try to select database
+        $dbSelected = @mysql_select_db($options['database_details']['database']);
+
+        $this->assertTrue($dbSelected, sprintf('Cannot select database %s', $options['database_details']['database']));
+
+        $siteEmail = self::TESTER_EMAIL;
+        $defaultCountry = self::DEFAULT_COUNTRY;
+        $defaultTimezone = self::DEFAULT_TIMEZONE;
+
+        $options = array(
+            'Company::orders_department'  => $siteEmail,
+            'Company::site_administrator' => $siteEmail,
+            'Company::support_department' => $siteEmail,
+            'Company::users_department'   => $siteEmail,
+            'Company::location_country'   => $defaultCountry,
+            'General::default_country'    => $defaultCountry,
+            'Shipping::anonymous_country' => $defaultCountry,
+            'General::time_zone'          => $defaultTimezone,
+            'Company::start_year'         => date('Y'),
+        );
+
+        $option_names = $option_cats = array();
+
+        foreach ($options as $k => $v) {
+            list($cat, $name) = explode('::', $k);
+
+            $option_names[] = $name;
+            $option_cats[] = $cat; 
+        }
+
+        $option_names = sprintf("'%s'", implode("','", array_unique($option_names)));
+        $option_cats = sprintf("'%s'", implode("','", array_unique($option_cats)));
+
+        // Check that database is empty
+        $res = @mysql_query("SELECT category, name, value FROM xlite_config WHERE name IN ($option_names) AND category IN ($option_cats)");
+
+        $this->assertInternalType('resource', $res, 'Error of mysql_query (checkDbOptions)');
+
+        while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
+
+            foreach ($options as $k => $v) {
+                list($cat, $name) = explode('::', $k);
+                if ($row['category'] == $cat && $row['name'] == $name) {
+                    $this->assertEquals($v, $row['value'], sprintf('Config option value checking failed (%s::%s)', $cat, $name));
+                }
+            }
+        }
     }
 
     /**

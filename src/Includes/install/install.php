@@ -1582,6 +1582,9 @@ function doFinishInstallation(&$params, $silentMode = false)
 
     $result = true;
 
+    // Update config settings
+    update_config_settings($params);
+
     // Save authcode for the further install runs
     $authcode = save_authcode($params);
 
@@ -2726,6 +2729,46 @@ function parse_config()
     }
 
     return $result;
+}
+
+/**
+ * Update configuration settings in the database
+ * 
+ * @param array $params Database access data and other parameters
+ *  
+ * @return void
+ * @see    ____func_see____
+ * @since  1.0.0
+ */
+function update_config_settings($params)
+{
+    $siteEmail = (!empty($params['site_mail']) ? $params['site_mail'] : $params['login']);
+    $defaultCountry = (!empty($params['site_default_country']) ? $params['site_default_country'] : 'US');
+    $defaultTimezone = (!empty($params['date_default_timezone']) ? $params['date_default_timezone'] : @date_default_timezone_get());
+
+    $options = array(
+        'Company::orders_department'  => $siteEmail,
+        'Company::site_administrator' => $siteEmail,
+        'Company::support_department' => $siteEmail,
+        'Company::users_department'   => $siteEmail,
+        'Company::location_country'   => $defaultCountry,
+        'General::default_country'    => $defaultCountry,
+        'Shipping::anonymous_country' => $defaultCountry,
+        'General::time_zone'          => $defaultTimezone,
+        'Company::start_year'         => date('Y'),
+    );
+
+    foreach ($options as $key => $value) {
+
+        list($cat, $name) = explode('::', $key);
+
+        $configOption = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneBy(array('category' => $cat, 'name' => $name));
+
+        if (isset($configOption)) {
+            $configOption->setValue($value);
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->update($configOption);
+        }
+    }
 }
 
 /**
