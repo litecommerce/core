@@ -11,10 +11,8 @@ XLite\Model\Config:
   directives: { insert: true }
   - { name: add_on_mode, category: General, type: checkbox, orderby: 120, value: N, translations: [{ code: en, option_name: 'Checkout desk operation mode', option_comment: '' }] }
   - { name: add_on_mode_page, category: General, type: select, orderby: 125, value: 'cart.php?target=cart', translations: [{ code: en, option_name: 'Checkout desk operation mode main page', option_comment: '' }] }
-  - { name: admin_ip_protection, category: Security, type: checkbox, orderby: 100, value: N, translations: [{ code: en, option_name: 'Enable admin IP protection system', option_comment: '' }] }
   - { name: admin_presentation, category: General, type: separator, orderby: 400, translations: [{ code: en, option_name: 'Administrator Zone settings', option_comment: '' }] }
   - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone', option_comment: '' }] }
-  - { name: allow_admin_ip, category: SecurityIP, orderby: 40, translations: [{ code: en, option_name: 'Allow admin IP', option_comment: '' }] }
   - { name: clear_cc_info, category: General, type: select, orderby: 500, value: N, translations: [{ code: en, option_name: 'Clear credit cards info from the database on order status change', option_comment: '' }] }
   - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address, option_comment: '' }] }
   - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts, option_comment: '' }] }
@@ -44,7 +42,6 @@ XLite\Model\Config:
   - { name: enable_sale_price, category: General, type: checkbox, orderby: 295, value: Y, translations: [{ code: en, option_name: 'Enable "Market price" feature', option_comment: '' }] }
   - { name: form_id_protection, category: Security, type: checkbox, orderby: 90, value: Y, translations: [{ code: en, option_name: 'Enable admin forms protection system', option_comment: '' }] }
   - { name: full_customer_security, category: Security, type: checkbox, orderby: 5, value: N, translations: [{ code: en, option_name: 'Customer Zone fully on HTTPS', option_comment: '' }] }
-  - { name: htaccess_protection, category: Security, type: checkbox, orderby: 110, value: Y, translations: [{ code: en, option_name: 'Enable .htaccess verification system', option_comment: '' }] }
   - { name: last_date, category: Htaccess, value: '0' }
   - { name: license, category: License, type: text }
   - { name: location_address, category: Company, type: text, orderby: 390, value: '*Your company address*', translations: [{ code: en, option_name: 'Street address', option_comment: '' }] }
