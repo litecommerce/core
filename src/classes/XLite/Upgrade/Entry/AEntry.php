@@ -582,14 +582,14 @@ abstract class AEntry
         if ($isTestMode) {
 
             // Short names
-            $topDir  = \Includes\Utils\FileManager::getRealPath($this->manageFile($path, 'getDir'));
-            $lsRoot  = \Includes\Utils\FileManager::getRealPath(LC_DIR_ROOT);
+            $topDir  = $this->manageFile($path, 'getDir');
+            $lcRoot  = \Includes\Utils\FileManager::getRealPath(LC_DIR_ROOT);
             $sysRoot = \Includes\Utils\FileManager::getRealPath('/');
 
             // Search for writable directory
             while (
                 !($flag = \Includes\Utils\FileManager::isDirWriteable($topDir))
-                && $topDir !== $lsRoot
+                && $topDir !== $lcRoot
                 && $topDir !== $sysRoot
             ) {
                 $topDir = \Includes\Utils\FileManager::getRealPath(\Includes\Utils\FileManager::getDir($topDir));
@@ -597,7 +597,7 @@ abstract class AEntry
 
             // Permissions are invalid
             if (!$flag) {
-                $this->addFileErrorMessage('File\'s directory is not writable', $path, false);
+                $this->addFileErrorMessage('Directory is not writable: {{dir}}', $path, false, array('dir' => $topDir));
             }
 
         } elseif ($source = $this->getFileSource($path)) {
