@@ -597,7 +597,12 @@ abstract class AEntry
 
             // Permissions are invalid
             if (!$flag) {
-                $this->addFileErrorMessage('Directory is not writable: {{dir}}', $path, false, array('dir' => $topDir));
+                $this->addFileErrorMessage(
+                    'Directory is not writable: "{{dir}}"',
+                    $path,
+                    false,
+                    array('dir' => $topDir)
+                );
             }
 
         } elseif ($source = $this->getFileSource($path)) {
