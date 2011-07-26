@@ -38,18 +38,17 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Repository paths
      */
-
-    const PATH_SKIN    = 'skins';
-    const PATH_COMMON  = 'common';
-    const PATH_ADMIN   = 'admin';
-    const PATH_CONSOLE = 'console';
-    const PATH_MAIL    = 'mail';
+    const PATH_SKIN     = 'skins';
+    const PATH_CUSTOMER = 'default';
+    const PATH_COMMON   = 'common';
+    const PATH_ADMIN    = 'admin';
+    const PATH_CONSOLE  = 'console';
+    const PATH_MAIL     = 'mail';
 
 
     /**
      * Web URL output types
      */
-
     const WEB_PATH_OUTPUT_SHORT = 'sort';
     const WEB_PATH_OUTPUT_FULL  = 'full';
     const WEB_PATH_OUTPUT_URL   = 'url';
@@ -174,10 +173,11 @@ class Layout extends \XLite\Base\Singleton
     public function getSkinsAll()
     {
         return array(
-            \XLite::COMMON_INTERFACE  => self::PATH_COMMON,
-            \XLite::ADMIN_INTERFACE   => self::PATH_ADMIN,
-            \XLite::CONSOLE_INTERFACE => self::PATH_CONSOLE,
-            \XLite::MAIL_INTERFACE    => self::PATH_MAIL,
+            \XLite::CUSTOMER_INTERFACE => self::PATH_CUSTOMER,
+            \XLite::COMMON_INTERFACE   => self::PATH_COMMON,
+            \XLite::ADMIN_INTERFACE    => self::PATH_ADMIN,
+            \XLite::CONSOLE_INTERFACE  => self::PATH_CONSOLE,
+            \XLite::MAIL_INTERFACE     => self::PATH_MAIL,
         );
     }
 

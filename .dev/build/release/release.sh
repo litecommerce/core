@@ -493,10 +493,9 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 	MODULE_DIRS="
 		classes/XLite/Module
 		skins/admin/en/modules
-		skins/admin/en/images/modules
 		skins/default/en/modules
-		skins/default/en/images/modules
 		skins/mail/en/modules
+		skins/common/en/modules
 	"
 
 	if [ ! "${GENERATE_CORE}" -a ! "${XLITE_SEPARATE_MODULES}" = "" ]; then
