@@ -587,16 +587,12 @@ abstract class AEntry
             $sysRoot = \Includes\Utils\FileManager::getRealPath('/');
 
             // Search for writable directory
-            while (
-                !($flag = \Includes\Utils\FileManager::isDirWriteable($topDir))
-                && $topDir !== $lcRoot
-                && $topDir !== $sysRoot
-            ) {
-                $topDir = \Includes\Utils\FileManager::getRealPath(\Includes\Utils\FileManager::getDir($topDir));
+            while (!\Includes\Utils\FileManager::isDir($topDir) && $topDir !== $lcRoot && $topDir !== $sysRoot) {
+                $topDir = \Includes\Utils\FileManager::getDir($topDir);
             }
 
             // Permissions are invalid
-            if (!$flag) {
+            if (!\Includes\Utils\FileManager::isDirWriteable($topDir)) {
                 $this->addFileErrorMessage(
                     'Directory is not writable: "{{dir}}"',
                     $path,
