@@ -2,15 +2,15 @@
 
 {**
  * Moneybookers settings
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
 
-<p class="mb-register-note">{t(#To have access to the International payment network of Moneybookers please register here for a free account if you dont't have one yet.#,_ARRAY_(#url#^getRegisterURL())):h}</p>
+<p class="mb-register-note">{t(#To have access to the International payment network of Moneybookers please register here for a free account if you don't have one yet.#,_ARRAY_(#url#^getRegisterURL())):h}</p>
 
 <form action="admin.php" method="post" class="mb-activation">
   <input type="hidden" name="target" value="{target}" />
@@ -66,7 +66,7 @@
   <input type="hidden" name="target" value="{target}" />
   <input type="hidden" name="action" value="setOrderPrefix" />
 
-  <p class="mb-order-prefix-note">{t(#You can deine an order id prefix, which would precede each order number in your shop, to make it unique (each transaction id must be unique for a Moneybookers account)#)}</p>
+  <p class="mb-order-prefix-note">{t(#You can define an order id prefix, which would precede each order number in your shop, to make it unique (each transaction id must be unique for a Moneybookers account)#)}</p>
   <p class="mb-order-prefix-option">{t(#This options is relevant only if you share your Moneybookers account with other online shops.#)}</p>
 
 
