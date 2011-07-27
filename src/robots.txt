@@ -1,0 +1,30 @@
+#
+# robots.txt
+#
+
+User-agent: *
+Crawl-delay: 10
+# Directories
+Disallow: /Includes/
+Disallow: /classes/
+Disallow: /etc/
+Disallow: /files/
+Disallow: /lib/
+Disallow: /skins/
+Disallow: /sql/
+Disallow: /upgrade/
+Disallow: /var/
+
+# Files
+Disallow: /admin.php
+Disallow: /console.php
+Disallow: /error_handler.php
+Disallow: /https_check.php
+Disallow: /install.php
+Disallow: /LICENSE.txt
+Disallow: /probe.php
+Disallow: /public/error.css
+Disallow: /public/error.html
+Disallow: /public/error_image.png
+Disallow: /top.inc.PHP53.php
+Disallow: /top.inc.php
