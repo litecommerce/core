@@ -139,6 +139,7 @@
 
 </form>
 
+{*
 {if:category.category_id&!getRootCategoryId()=category.getCategoryId()}
 <br /><br /><br />
 
@@ -149,7 +150,7 @@
 
 Not available right now
 
-{*<form name="move_form" action="admin.php" method="post">
+<form name="move_form" action="admin.php" method="post">
 
   <input type="hidden" name="target" value="categories" />
   <input type="hidden" name="action" value="move_after" />
@@ -178,5 +179,6 @@ Not available right now
 
   </table>
 
-</form>*}
+</form>
 {end:}
+*}
