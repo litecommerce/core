@@ -45,8 +45,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
     protected $requestData;
 
     /**
-     * Payment widget data 
-     * 
+     * Payment widget data
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -135,8 +135,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Get payment widget data 
-     * 
+     * Get payment widget data
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -568,7 +568,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function doActionUpdateProfile()
     {
-        $form = new \XLite\View\Form\Checkout\UpdateProfile;
+        $form = new \XLite\View\Form\Checkout\UpdateProfile();
 
         $this->requestData = $form->getRequestData();
 
@@ -665,9 +665,12 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 $address->setIsShipping(true);
                 $address->setIsBilling($andAsBilling);
 
-                $profile->addAddresses($address);
+                if (!(bool)\XLite\Core\Request::getInstance()->only_calculate) {
 
-                \XLite\Core\Database::getEM()->persist($address);
+                    $profile->addAddresses($address);
+
+                    \XLite\Core\Database::getEM()->persist($address);
+                }
             }
 
             $address->map($this->prepareAddressData($data));
@@ -755,9 +758,11 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 $address->setIsBilling(true);
                 $address->setIsShipping($andAsShipping);
 
-                $profile->addAddresses($address);
+                if (!(bool)\XLite\Core\Request::getInstance()->only_calculate) {
+                    $profile->addAddresses($address);
 
-                \XLite\Core\Database::getEM()->persist($address);
+                    \XLite\Core\Database::getEM()->persist($address);
+                }
             }
 
             $address->map($this->prepareAddressData($data));
