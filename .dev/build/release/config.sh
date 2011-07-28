@@ -26,6 +26,7 @@ XLITE_MODULES="
 CDev/Bestsellers
 CDev/DrupalConnector
 CDev/FeaturedProducts
+CDev/ProductOptions
 "
 
 # LiteCommerce modules which should be packed as separate distributives
