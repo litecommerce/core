@@ -13,9 +13,9 @@
 <td class="address">
   <strong>{config.Company.company_name}</strong>
   <p>
-    {config.Company.location_address}<br />
-    {config.Company.location_city}, {config.Company.locationState.state}, {config.Company.location_zipcode}<br />
-    {config.Company.locationCountry.getCountry()}
+    {if:config.Company.location_address}{config.Company.location_address}<br />{end:}
+    {if:config.Company.location_city}{config.Company.location_city}, {end:}{if:config.Company.locationState.state}{config.Company.locationState.state}, {end:}{if:config.Company.location_zipcode}{config.Company.location_zipcode}{end:}<br />
+    {if:config.Company.locationCountry}{config.Company.locationCountry.getCountry()}{end:}
   </p>
   <p IF="config.Company.company_phone|config.Company.company_fax">
     {if:config.Company.company_phone}{t(#Phone#)}: {config.Company.company_phone}<br />{end:}
