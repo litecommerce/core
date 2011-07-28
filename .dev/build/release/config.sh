@@ -36,6 +36,7 @@ CDev/Bestsellers
 CDev/DrupalConnector
 CDev/FeaturedProducts
 CDev/GoogleAnalytics
+CDev/Moneybookers
 CDev/PaypalWPS
 CDev/ProductOptions
 CDev/Quantum
