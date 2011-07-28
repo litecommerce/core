@@ -587,7 +587,7 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
     $result = true;
 
     list($list, $allowed) = getDisabledFunctions();
-    
+
     if (!empty($list)) {
         $result = false;
         $value = substr(@ini_get('disable_functions'), 0, 45) . '...';
@@ -741,7 +741,10 @@ function getDisabledFunctions()
         'xml_parser_free',
     );
 
-    $functions = array();
+    $functions = array(
+        'allowed'   => array(),
+        'unallowed' => array(),
+    );
 
     foreach ($usedFunctions as $function) {
         $functions[function_exists($function) ? 'allowed' : 'unallowed'][] = $function;
