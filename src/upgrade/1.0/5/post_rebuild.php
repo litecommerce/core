@@ -42,7 +42,7 @@ return function()
 
     $options[] = array(
         'name' => 'htaccess_protection', 
-        'category' => 'Security',
+        'category' => 'SecurityIP',
     );
 
     foreach ($options as $opt) {
