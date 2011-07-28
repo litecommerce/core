@@ -460,7 +460,7 @@ function checkInstallScript(&$errorMsg, $value = null)
 }
 
 /**
- * Check if config file exists 
+ * Check if config file exists
  *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
@@ -476,14 +476,14 @@ function checkConfigFile(&$errorMsg, $value = null)
     if (!$result) {
 
         if (!@copy(LC_DIR_CONFIG . constant('LC_DEFAULT_CONFIG_FILE'), LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
-            
+
             $result = false;
-            
+
             $errorMsg = xtr(
                 'lc_config_file_description',
                 array(
                     ':dir'   => LC_DIR_CONFIG,
-                    ':file1' => constant('LC_DEFAULT_CONFIG_FILE'), 
+                    ':file1' => constant('LC_DEFAULT_CONFIG_FILE'),
                     ':file2' => constant('LC_CONFIG_FILE')
                 )
             );
@@ -587,6 +587,7 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
     $result = true;
 
     list($list, $allowed) = getDisabledFunctions();
+    
     if (!empty($list)) {
         $result = false;
         $value = substr(@ini_get('disable_functions'), 0, 45) . '...';
@@ -670,8 +671,7 @@ function getDisabledFunctions()
         'json_decode', 'mysql_query', 'mysql_error', 'mysql_get_client_info',
         'mysql_get_server_info', 'spl_autoload_register', 'spl_autoload_unregister', 'spl_autoload_functions',
         'class_parents', 'class_implements', 'spl_object_hash', 'iterator_to_array',
-        'posix_isatty', 'simplexml_load_file', 'sqlite_close', 'sqlite_query',
-        'sqlite_num_rows', 'sqlite_escape_string', 'sqlite_unbuffered_query', 'constant',
+        'posix_isatty', 'simplexml_load_file', 'constant',
         'sleep', 'flush', 'htmlspecialchars', 'htmlentities',
         'html_entity_decode', 'get_html_translation_table', 'sha1', 'md5',
         'md5_file', 'crc32', 'getimagesize', 'phpinfo',
@@ -738,22 +738,16 @@ function getDisabledFunctions()
         'array_chunk', 'array_combine', 'array_key_exists', 'version_compare',
         'stream_get_filters', 'sys_get_temp_dir', 'token_get_all', 'xml_parser_create',
         'xml_parse_into_struct', 'xml_get_error_code', 'xml_error_string', 'xml_get_current_byte_index',
-        'xml_parser_free', 'xdebug_start_trace', 'xdebug_stop_trace', 'xdebug_stop_code_coverage',
+        'xml_parser_free',
     );
 
-    $value = @ini_get('disable_functions');
+    $functions = array();
 
-    $intersect = array();
-    $allowed = array();
-
-    if (!empty($value)) {
-        $list = array_map('trim', explode(',', $value));
-        $list = array_unique($list);
-        $intersect = array_intersect($list, $usedFunctions);
-        $allowed = array_diff($list, $usedFunctions);
+    foreach ($usedFunctions as $function) {
+        $functions[function_exists($function) ? 'allowed' : 'unallowed'][] = $function;
     }
 
-    return array($intersect, $allowed);
+    return array($functions['unallowed'], $functions['allowed']);
 }
 
 /**
@@ -2721,7 +2715,7 @@ function parse_config()
         if (file_exists(LC_DIR_CONFIG . $configFile)) {
 
             $data = @parse_ini_file(LC_DIR_CONFIG . $configFile);
-            
+
             if (!empty($data) && is_array($data)) {
                 $result = array_replace_recursive($result, $data);
             }
@@ -2733,9 +2727,9 @@ function parse_config()
 
 /**
  * Update configuration settings in the database
- * 
+ *
  * @param array $params Database access data and other parameters
- *  
+ *
  * @return void
  * @see    ____func_see____
  * @since  1.0.0
@@ -3372,7 +3366,7 @@ function module_install_cache(&$params)
     $result = doPrepareFixtures($params);
 
     if ($result) {
-        
+
         doRemoveCache(null);
 
 ?>
