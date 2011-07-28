@@ -167,10 +167,12 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
     protected function getPaymentMethodIdByName($name)
     {
         $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => $name));
-        $pid = $pmethod->getmethodId();
+        
         if (!$pmethod) {
             $this->fail($name . ' payment method is not found');
         }
+
+        $pid = $pmethod->getMethodId();
 
         return $pid;
     }
