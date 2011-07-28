@@ -659,7 +659,6 @@ function getDisabledFunctions()
         'debug_print_backtrace', 'strtotime', 'date', 'gmdate',
         'mktime', 'strftime', 'time', 'getdate',
         'date_create', 'date_default_timezone_set', 'date_default_timezone_get', 'split',
-        'openssl_pkey_get_private', 'openssl_sign', 'openssl_pkcs7_sign', 'openssl_error_string',
         'preg_match', 'preg_match_all', 'preg_replace', 'preg_replace_callback',
         'preg_split', 'preg_quote', 'preg_grep', 'preg_last_error',
         'gzinflate', 'ctype_alpha', 'ctype_digit', 'curl_init',
