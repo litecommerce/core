@@ -12,6 +12,6 @@
 
  <div class="box-frame marketplace-not-connected">
    <div class="box">
-   {t(#Can't connect to the Module Marketplace server#)}
+     {getWarningMessage()}
    </div>
  </div>
