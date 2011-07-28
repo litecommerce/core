@@ -314,4 +314,20 @@ class Controller extends \XLite\View\AView
     {
         func_refresh_end();
     }
+
+    /**
+     * Get body class 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getBodyClass()
+    {
+        $classes = array(
+            str_replace('_', '-', \XLite\Core\Request::getInstance()->target),
+        );
+
+        return implode(' ', $classes);
+    }
 }

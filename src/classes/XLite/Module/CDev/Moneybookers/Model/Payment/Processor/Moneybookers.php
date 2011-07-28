@@ -281,15 +281,51 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     );
 
     /**
-     * Get iframe size
+     * Get platform name
      *
-     * @return array
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getIframeSize()
+    static public function getPlatformName()
     {
-        return array(600, 500);
+        return 'LiteCommerce';
+    }
+
+    /**
+     * Get platform secret word 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    static public function getPlatformSecretWord()
+    {
+        return 'lcsword';
+    }
+
+    /**
+     * Get platform email
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    static public function getPlatformEmail()
+    {
+        return 'rnd-dev@qtmsoft.com';
+    }
+
+    /**
+     * Get platform customer id
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    static public function getPlatformCustomerID()
+    {
+        return 22784076;
     }
 
     /**
@@ -344,6 +380,18 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
     }
 
     /**
+     * Get iframe size
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIframeSize()
+    {
+        return array(600, 550);
+    }
+
+    /**
      * Get iframe data
      *
      * @return string|array URL or POST data
@@ -386,6 +434,8 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
             'hide_login'            => 1,
             'prepare_only'          => 1,
             'payment_methods'       => $this->convertServiceNameToType($this->transaction->getPaymentMethod()->getServiceName()),
+            'merchant_fields'       => 'platform',
+            'platform'              => '21889079',
         );
 
         if (\XLite\Core\Config::getInstance()->CDev->Moneybookers->logo_url) {

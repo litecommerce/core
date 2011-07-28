@@ -77,17 +77,18 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             $this->waitForLocalCondition(
                 'jQuery(".payment-step").hasClass("current") == true',
                 10000,
-                'check swicth to payment step'
+                'check switching to payment step'
             );
         }
 
         if (0 < intval($this->getJSExpression('jQuery(".current.payment-step").length'))) {
-            $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
+            $this->toggleByJquery($this->getPaymentSelector(), true);
+            sleep(2);
             $this->click('css=.current .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".review-step").hasClass("current") == true',
                 10000,
-                'check swicth to review step'
+                'check switching to review step'
             );
         }
 
@@ -98,12 +99,14 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
                 10000,
                 'check return to payment step'
             );
-            $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
+
+            $this->toggleByJquery($this->getPaymentSelector(), true);
+            sleep(2);
             $this->click('css=.current .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".review-step").hasClass("current") == true',
                 10000,
-                'check swicth to next step #3'
+                'check switching to next step #3'
             );
         }
 
@@ -448,14 +451,14 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         $this->waitForLocalCondition(
             'jQuery(".payment-step.current").length == 1',
             10000,
-            'check swicth to next step'
+            'check switching to next step (shipping->payment)'
         );
 
     }
 
     protected function fillPaymentStep()
     {
-        $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
+        $this->toggleByJquery($this->getPaymentSelector(), true);
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
@@ -469,9 +472,16 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         $this->waitForLocalCondition(
             'jQuery(".review-step.current").length == 1',
             10000,
-            'check swicth to next step'
+            'check switching to next step (payment->review)'
         );
 
     }
 
+    protected function getPaymentSelector()
+    {
+        $selector = '#pmethod' . $this->getPaymentMethodIdByName('PhoneOrdering');
+        $this->assertElementPresent("css=$selector", "Payment method selector not found: $selector (Phone)");
+
+        return $selector;
+    }
 }

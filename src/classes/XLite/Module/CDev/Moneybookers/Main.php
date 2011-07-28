@@ -83,7 +83,19 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Moneybookers payment gateway integration (iframe)';
+        return 'Enables taking payments for your online shop via Moneybookers payment gateway (iframe integration method)';
+    }
+
+    /**
+     * Return link to settings form
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getSettingsForm()
+    {
+        return 'admin.php?target=moneybookers_settings';
     }
 
     /**

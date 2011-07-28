@@ -608,5 +608,27 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         return \XLite\Module\CDev\DrupalConnector\Drupal\Profile::getInstance()->performActionUpdateRoles(user_roles());
     }
 
+    /**
+     * Change block definition before saving to the database
+     * 
+     * @param array  $blocks     A multidimensional array of blocks keyed by the defining module and delta
+     * @param string $theme      The theme these blocks belong to
+     * @param array  $codeBlocks The blocks as defined in hook_block_info()
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.4
+     */
+    public function alterBlockInfo(array &$blocks, $theme, array $codeBlocks)
+    {
+        foreach ($blocks['block'] as $delta => $data) {
+            $settings = block_custom_block_get($delta);
+
+            if (!empty($settings['lc_class'])) {
+                $blocks['block'][$delta]['cache'] = DRUPAL_NO_CACHE;
+            }
+        }
+    }
+
     // }}}
 }

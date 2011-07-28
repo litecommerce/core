@@ -47,6 +47,7 @@ class Methods extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
+
         $result[] = 'payment_methods';
 
         return $result;

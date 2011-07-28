@@ -460,7 +460,7 @@ function checkInstallScript(&$errorMsg, $value = null)
 }
 
 /**
- * Check if config file exists 
+ * Check if config file exists
  *
  * @param string $errorMsg Error message if checking failed
  * @param string $value    Actual value of the checked parameter
@@ -476,14 +476,14 @@ function checkConfigFile(&$errorMsg, $value = null)
     if (!$result) {
 
         if (!@copy(LC_DIR_CONFIG . constant('LC_DEFAULT_CONFIG_FILE'), LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
-            
+
             $result = false;
-            
+
             $errorMsg = xtr(
                 'lc_config_file_description',
                 array(
                     ':dir'   => LC_DIR_CONFIG,
-                    ':file1' => constant('LC_DEFAULT_CONFIG_FILE'), 
+                    ':file1' => constant('LC_DEFAULT_CONFIG_FILE'),
                     ':file2' => constant('LC_CONFIG_FILE')
                 )
             );
@@ -587,6 +587,7 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
     $result = true;
 
     list($list, $allowed) = getDisabledFunctions();
+
     if (!empty($list)) {
         $result = false;
         $value = substr(@ini_get('disable_functions'), 0, 45) . '...';
@@ -647,65 +648,108 @@ function getAllowedDisableFunctionsValue()
 function getDisabledFunctions()
 {
     static $usedFunctions = array(
-        'call_user_func', 'is_null', 'doubleval', 'define', 'explode', 'join', 'time', 'addslashes', 'array_keys', 'ceil',
-        'preg_match', 'preg_replace', 'serialize', 'unserialize', 'is_array', 'error_reporting', 'parse_url', 'strpos', 'setcookie', 'in_array',
-        'is_object', 'is_string', 'dirname', 'fopen', 'fwrite', 'fclose', 'file_get_contents', 'opendir', 'readdir', 'is_file',
-        'substr', 'closedir', 'str_replace', 'array_merge', 'count', 'strcasecmp', 'urldecode', 'memory_get_usage', 'printf', 'file_exists',
-        'function_exists', 'gettype', 'htmlspecialchars', 'is_readable', 'pathinfo', 'basename', 'strlen', 'strtr', 'header', 'array_unique',
-        'array_values', 'is_scalar', 'stristr', 'is_writable', 'ini_get', 'ini_set', 'strtolower', 'strcspn', 'parse_ini_file', 'realpath',
-        'chmod', 'current', 'implode', 'array_map', 'intval', 'filesize', 'fread', 'md5', 'is_integer', 'urlencode',
-        'curl_version', 'curl_init', 'curl_setopt', 'curl_exec', 'curl_errno', 'curl_error', 'curl_close', 'exec', 'unlink', 'proc_open',
-        'is_resource', 'fputs', 'feof', 'proc_close', 'trim', 'sys_get_temp_dir', 'tempnam', 'xml_get_error_code', 'xml_error_string', 'xml_get_current_byte_index',
-        'xml_parser_create', 'xml_parse_into_struct', 'xml_parser_free', 'substr_count', 'str_repeat', 'preg_grep', 'is_writeable', 'strtoupper', 'array_key_exists', 'array_search',
-        'fgets', 'getimagesize', 'max', 'next', 'array_shift', 'min', 'mysql_insert_id', 'print_r', 'is_numeric', 'sprintf',
-        'round', 'func_get_args', 'get_class', 'split', 'umask', 'uasort', 'strcmp', 'array_multisort', 'method_exists', 'var_dump',
-        'call_user_func_array', 'file', 'log', 'microtime', 'get_included_files', 'usort', 'array_sum', 'number_format', 'debug_backtrace', 'array_slice',
-        'readfile', 'file_put_contents', 'glob', 'is_uploaded_file', 'rawurlencode', 'move_uploaded_file', 'copy', 'rand', 'imagecreatetruecolor', 'imagealphablending',
-        'imagesavealpha', 'imagecopyresampled', 'imagedestroy', 'uniqid', 'each', 'reset', 'ip2long', 'srand', 'system', 'stripslashes',
-        'array_intersect', 'preg_split', 'mysql_real_escape_string', 'array_combine', 'is_int', 'key', 'get_object_vars', 'property_exists', 'mysql_select_db', 'mysql_fetch_row',
-        'mysql_free_result', 'mysql_fetch_assoc', 'mysql_query', 'mysql_errno', 'mysql_error', 'flush', 'mysql_list_fields', 'mysql_num_fields', 'mysql_field_table', 'mysql_field_name',
-        'mysql_field_type', 'mysql_field_len', 'mysql_field_flags', 'strncmp', 'array_flip', 'ob_start', 'ob_end_clean', 'extension_loaded', 'ord', 'array_splice',
-        'mt_rand', 'imagecolorallocate', 'imagefilledrectangle', 'imagesx', 'imagesy', 'sin', 'imagecolorat', 'floor', 'imagesetpixel', 'imagedashedline',
-        'imagecreatefrompng', 'imagecopymerge', 'chr', 'is_dir', 'array_reverse', 'base64_encode', 'strval', 'class_exists', 'ucfirst', 'strrpos',
-        'mkdir', 'rename', 'rtrim', 'array_unshift', 'array_push', 'hash', 'imagepng', 'mktime', 'strtotime', 'date',
-        'iconv', 'set_time_limit', 'getdate', 'strftime', 'ob_get_contents', 'strip_tags', 'sort', 'array_chunk', 'mysql_get_server_info', 'mysql_get_client_info',
-        'getcwd', 'phpinfo', 'gd_info', 'fileperms', 'base_convert', 'asort', 'array_diff', 'array_pop', 'strstr', 'mt_srand',
-        'hash_hmac', 'pack', 'str_pad', 'version_compare', 'get_class_methods', 'defined', 'getenv', 'parse_str', 'popen', 'pclose',
-        'ksort', 'floatval', 'abs', 'var_export', 'base64_decode', 'strspn', 'bin2hex', 'ltrim', 'preg_match_all',
-        'sizeof', 'range', 'array_filter', 'array_fill', 'imagecreate', 'imagerectangle', 'imagestring', 'imagejpeg', 'strrev', 'htmlentities',
-        'chdir', 'openssl_pkey_get_public', 'str_split', 'openssl_public_encrypt', 'openssl_get_privatekey', 'openssl_private_decrypt', 'openssl_free_key', 'mysql_connect', 'nl2br', 'escapeshellarg',
-        'get_parent_class', 'ob_flush', 'ob_get_length', 'ob_end_flush', 'get_magic_quotes_gpc', 'ob_clean', 'ftp_connect', 'ftp_login', 'ftp_fput', 'ftp_quit',
-        'get_html_translation_table', 'ucwords', 'is_executable', 'arsort', 'krsort', 'is_callable', 'end', 'http_build_query', 'array_intersect_key', 'array_fill_keys',
-        'array_intersect_assoc', 'filemtime', 'touch', 'date_format', 'array_pad', 'gmdate', 'preg_quote', 'set_error_handler', 'constant', 'is_bool',
-        'is_float', 'curl_getinfo', 'curl_setopt_array', 'stream_get_transports', 'stream_context_create', 'stream_context_set_option', 'stream_socket_client', 'stream_socket_enable_crypto', 'stream_set_timeout', 'stream_get_meta_data',
-        'hexdec', 'rewind', 'gzinflate', 'unpack', 'crc32', 'gzuncompress', 'fstat', 'phpversion', 'rawurldecode', 'extract',
-        'gzopen', 'bzopen', 'gzclose', 'bzclose', 'gzputs', 'bzwrite', 'gzread', 'bzread', 'gzseek', 'gztell',
-        'fseek', 'ftell', 'stat', 'clearstatcache', 'gzeof', 'error_log', 'mail', 'register_shutdown_function', 'headers_sent', 'sqlite_close',
-        'sqlite_escape_string', 'sqlite_unbuffered_query', 'sqlite_query', 'sqlite_num_rows', 'is_a', 'fflush', 'fsockopen', 'flock', 'octdec', 'openlog',
-        'syslog', 'closelog', 'filter_var', 'escapeshellcmd', 'openssl_pkcs7_sign', 'openssl_error_string', 'get_magic_quotes_runtime', 'set_magic_quotes_runtime', 'chunk_split', 'addcslashes',
-        'stream_get_filters', 'stream_filter_append', 'stream_get_contents', 'stream_filter_remove', 'html_entity_decode', 'openssl_pkey_get_private', 'openssl_sign', 'sha1', 'restore_error_handler', 'socket_set_timeout',
-        'socket_get_status', 'getservbyname', 'gethostbyname', 'socket_set_blocking', 'stream_set_write_buffer', 'stream_select', 'trigger_error', 'imagecopy', 'imageconvolution',
-        'natcasesort', 'ctype_xdigit', 'ob_get_clean', 'ctype_digit', 'is_infinite', 'str_ireplace', 'array_reduce', 'create_function', 'preg_last_error', 'json_encode',
-        'json_decode', 'simplexml_load_string', 'strtok', 'class_parents', 'posix_isatty', 'get_defined_vars', 'getmypid', 'stripos', 'array_change_key_case', 'spliti',
-        'checkdate', 'checkdnsrr', 'soundex', 'acos', 'pi', 'cos', 'func_num_args', 'func_get_arg', 'is_subclass_of', 'localeconv',
-        'get_declared_classes', 'array_udiff', 'get_declared_interfaces', 'php_strip_whitespace', 'class_implements', 'interface_exists', 'rsort', 'preg_replace_callback', 'scandir', 'rmdir',
-        'dir', 'array_diff_key', 'gzcompress', 'link', 'mysql_fetch_array', 'substr_replace', 'mysql_list_tables', 'mysql_close', 'php_sapi_name', 'date_default_timezone_set',
-        'date_default_timezone_get', 'set_include_path', 'get_include_path', 'spl_autoload_register', 'chop', 'sleep',
+        'func_num_args', 'func_get_arg', 'func_get_args', 'strlen',
+        'strcmp', 'strncmp', 'strcasecmp', 'strncasecmp',
+        'each', 'error_reporting', 'define', 'defined',
+        'get_class', 'get_called_class', 'get_parent_class', 'method_exists',
+        'property_exists', 'class_exists', 'interface_exists', 'function_exists',
+        'get_included_files', 'is_subclass_of', 'is_a', 'get_class_vars',
+        'get_object_vars', 'set_error_handler', 'restore_error_handler', 'set_exception_handler',
+        'get_declared_classes', 'get_resource_type', 'extension_loaded', 'debug_backtrace',
+        'debug_print_backtrace', 'strtotime', 'date', 'gmdate',
+        'mktime', 'strftime', 'time', 'getdate',
+        'date_create', 'date_default_timezone_set', 'date_default_timezone_get', 'split',
+        'preg_match', 'preg_match_all', 'preg_replace', 'preg_replace_callback',
+        'preg_split', 'preg_quote', 'preg_grep', 'preg_last_error',
+        'gzinflate', 'ctype_alpha', 'ctype_digit', 'curl_init',
+        'curl_version', 'curl_setopt', 'curl_exec', 'curl_getinfo',
+        'filter_var', 'filter_var_array', 'gd_info', 'imagecreatetruecolor',
+        'imagealphablending', 'imagesavealpha', 'imagecopyresampled', 'imagedestroy',
+        'imagesx', 'imagesy', 'imageconvolution', 'dgettext',
+        'bindtextdomain', 'bind_textdomain_codeset', 'hash_hmac', 'json_encode',
+        'json_decode', 'mysql_query', 'mysql_error', 'mysql_get_client_info',
+        'mysql_get_server_info', 'spl_autoload_register', 'spl_autoload_unregister', 'spl_autoload_functions',
+        'class_parents', 'class_implements', 'spl_object_hash', 'iterator_to_array',
+        'posix_isatty', 'simplexml_load_file', 'constant',
+        'sleep', 'flush', 'htmlspecialchars', 'htmlentities',
+        'html_entity_decode', 'get_html_translation_table', 'sha1', 'md5',
+        'md5_file', 'crc32', 'getimagesize', 'phpinfo',
+        'phpversion', 'substr_count', 'strspn', 'strcspn',
+        'strtok', 'strtoupper', 'strtolower', 'strpos',
+        'stripos', 'strrpos', 'strrev', 'nl2br',
+        'basename', 'dirname', 'pathinfo', 'stripslashes',
+        'stripcslashes', 'strstr', 'stristr', 'str_split',
+        'substr', 'substr_replace', 'ucfirst', 'lcfirst',
+        'ucwords', 'strtr', 'addslashes', 'addcslashes',
+        'rtrim', 'str_replace', 'str_ireplace', 'str_repeat',
+        'chunk_split', 'trim', 'ltrim', 'strip_tags',
+        'explode', 'implode', 'join', 'setlocale',
+        'chr', 'ord', 'parse_str', 'str_pad',
+        'chop', 'sprintf', 'printf', 'sscanf',
+        'parse_url', 'urlencode', 'urldecode', 'http_build_query',
+        'unlink', 'exec', 'escapeshellcmd', 'escapeshellarg',
+        'rand', 'srand', 'mt_rand', 'mt_srand',
+        'getmypid', 'base64_encode', 'abs', 'ceil',
+        'floor', 'round', 'is_infinite', 'pow',
+        'log', 'sqrt', 'hexdec', 'octdec',
+        'dechex', 'base_convert', 'number_format', 'getenv',
+        'putenv', 'microtime', 'uniqid', 'quoted_printable_encode',
+        'set_time_limit', 'set_magic_quotes_runtime', 'get_magic_quotes_gpc', 'get_magic_quotes_runtime',
+        'error_log', 'error_get_last', 'call_user_func', 'call_user_func_array',
+        'serialize', 'unserialize', 'var_dump', 'var_export',
+        'print_r', 'memory_get_usage', 'memory_get_peak_usage', 'register_shutdown_function',
+        'ini_get', 'ini_set', 'get_include_path', 'setcookie',
+        'header', 'headers_sent', 'parse_ini_file', 'is_uploaded_file',
+        'move_uploaded_file', 'intval', 'floatval', 'doubleval',
+        'strval', 'gettype', 'is_null', 'is_resource',
+        'is_bool', 'is_float', 'is_int', 'is_integer',
+        'is_numeric', 'is_string', 'is_array', 'is_object',
+        'is_scalar', 'is_callable', 'pclose', 'popen',
+        'readfile', 'rewind', 'rmdir', 'umask',
+        'fclose', 'feof', 'fgets', 'fread',
+        'fopen', 'fstat', 'fflush', 'fwrite',
+        'fputs', 'mkdir', 'rename', 'copy',
+        'tempnam', 'file', 'file_get_contents', 'file_put_contents',
+        'stream_context_create', 'stream_context_set_params', 'stream_filter_append', 'stream_filter_remove',
+        'stream_socket_enable_crypto', 'stream_get_contents', 'flock', 'stream_get_meta_data',
+        'stream_set_timeout', 'socket_set_timeout', 'socket_get_status', 'realpath',
+        'fsockopen', 'pack', 'unpack', 'opendir',
+        'closedir', 'chdir', 'getcwd', 'readdir',
+        'glob', 'filemtime', 'fileperms', 'filesize',
+        'file_exists', 'is_writable', 'is_readable', 'is_executable',
+        'is_file', 'is_dir', 'is_link', 'chmod',
+        'touch', 'clearstatcache', 'disk_free_space', 'mail',
+        'openlog', 'syslog', 'closelog', 'ob_start',
+        'ob_flush', 'ob_clean', 'ob_end_clean', 'ob_get_clean',
+        'ob_get_contents', 'ksort', 'krsort', 'asort',
+        'sort', 'usort', 'uasort', 'uksort',
+        'array_walk', 'array_walk_recursive', 'count', 'end',
+        'next', 'reset', 'current', 'key',
+        'min', 'max', 'in_array', 'array_search',
+        'compact', 'array_fill', 'array_fill_keys', 'range',
+        'array_multisort', 'array_push', 'array_pop', 'array_shift',
+        'array_unshift', 'array_splice', 'array_slice', 'array_merge',
+        'array_merge_recursive', 'array_replace_recursive', 'array_keys', 'array_values',
+        'array_count_values', 'array_reverse', 'array_reduce', 'array_pad',
+        'array_flip', 'array_change_key_case', 'array_unique', 'array_intersect',
+        'array_intersect_key', 'array_diff', 'array_diff_key', 'array_diff_assoc',
+        'array_udiff_assoc', 'array_sum', 'array_filter', 'array_map',
+        'array_chunk', 'array_combine', 'array_key_exists', 'version_compare',
+        'stream_get_filters', 'sys_get_temp_dir', 'token_get_all', 'xml_parser_create',
+        'xml_parse_into_struct', 'xml_get_error_code', 'xml_error_string', 'xml_get_current_byte_index',
+        'xml_parser_free',
     );
 
-    $value = @ini_get('disable_functions');
+    $functions = array(
+        'allowed'   => array(),
+        'unallowed' => array(),
+    );
 
-    $intersect = array();
-    $allowed = array();
-
-    if (!empty($value)) {
-        $list = array_map('trim', explode(',', $value));
-        $list = array_unique($list);
-        $intersect = array_intersect($list, $usedFunctions);
-        $allowed = array_diff($list, $usedFunctions);
+    foreach ($usedFunctions as $function) {
+        $functions[function_exists($function) ? 'allowed' : 'unallowed'][] = $function;
     }
 
-    return array($intersect, $allowed);
+    return array($functions['unallowed'], $functions['allowed']);
 }
 
 /**
@@ -1533,6 +1577,9 @@ function doFinishInstallation(&$params, $silentMode = false)
     global $lcSettings, $error;
 
     $result = true;
+
+    // Update config settings
+    update_config_settings($params);
 
     // Save authcode for the further install runs
     $authcode = save_authcode($params);
@@ -2670,7 +2717,7 @@ function parse_config()
         if (file_exists(LC_DIR_CONFIG . $configFile)) {
 
             $data = @parse_ini_file(LC_DIR_CONFIG . $configFile);
-            
+
             if (!empty($data) && is_array($data)) {
                 $result = array_replace_recursive($result, $data);
             }
@@ -2678,6 +2725,46 @@ function parse_config()
     }
 
     return $result;
+}
+
+/**
+ * Update configuration settings in the database
+ *
+ * @param array $params Database access data and other parameters
+ *
+ * @return void
+ * @see    ____func_see____
+ * @since  1.0.0
+ */
+function update_config_settings($params)
+{
+    $siteEmail = (!empty($params['site_mail']) ? $params['site_mail'] : $params['login']);
+    $defaultCountry = (!empty($params['site_default_country']) ? $params['site_default_country'] : 'US');
+    $defaultTimezone = (!empty($params['date_default_timezone']) ? $params['date_default_timezone'] : @date_default_timezone_get());
+
+    $options = array(
+        'Company::orders_department'  => $siteEmail,
+        'Company::site_administrator' => $siteEmail,
+        'Company::support_department' => $siteEmail,
+        'Company::users_department'   => $siteEmail,
+        'Company::location_country'   => $defaultCountry,
+        'General::default_country'    => $defaultCountry,
+        'Shipping::anonymous_country' => $defaultCountry,
+        'General::time_zone'          => $defaultTimezone,
+        'Company::start_year'         => date('Y'),
+    );
+
+    foreach ($options as $key => $value) {
+
+        list($cat, $name) = explode('::', $key);
+
+        $configOption = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneBy(array('category' => $cat, 'name' => $name));
+
+        if (isset($configOption)) {
+            $configOption->setValue($value);
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->update($configOption);
+        }
+    }
 }
 
 /**
@@ -3281,7 +3368,7 @@ function module_install_cache(&$params)
     $result = doPrepareFixtures($params);
 
     if ($result) {
-        
+
         doRemoveCache(null);
 
 ?>

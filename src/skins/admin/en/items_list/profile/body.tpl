@@ -10,6 +10,8 @@
  * @since     1.0.0
  *}
 
+<widget class="\XLite\View\Form\Profiles\ProfilesList" name="profile_list" />
+
 <table class="profile-list data-table items-list">
 
   <tr>
@@ -27,3 +29,5 @@
 </table>
 
 {displayInheritedViewListContent(#footer#)}
+
+<widget name="profile_list" end />

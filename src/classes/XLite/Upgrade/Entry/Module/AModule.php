@@ -65,8 +65,6 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
                 \Includes\SafeMode::markModuleAsUnsafe($author, $name);
             }
 
-            $this->updateDBRecords();
-
             // Load fixtures
             if (!$this->isInstalled()) {
                 $yaml = \Includes\Utils\ModulesManager::getModuleYAMLFile($author, $name);
@@ -75,6 +73,8 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
                     \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yaml);
                 }
             }
+
+            $this->updateDBRecords();
         }
     }
 

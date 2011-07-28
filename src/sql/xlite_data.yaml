@@ -11,17 +11,15 @@ XLite\Model\Config:
   directives: { insert: true }
   - { name: add_on_mode, category: General, type: checkbox, orderby: 120, value: N, translations: [{ code: en, option_name: 'Checkout desk operation mode', option_comment: '' }] }
   - { name: add_on_mode_page, category: General, type: select, orderby: 125, value: 'cart.php?target=cart', translations: [{ code: en, option_name: 'Checkout desk operation mode main page', option_comment: '' }] }
-  - { name: admin_ip_protection, category: Security, type: checkbox, orderby: 100, value: N, translations: [{ code: en, option_name: 'Enable admin IP protection system', option_comment: '' }] }
   - { name: admin_presentation, category: General, type: separator, orderby: 400, translations: [{ code: en, option_name: 'Administrator Zone settings', option_comment: '' }] }
   - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone', option_comment: '' }] }
-  - { name: allow_admin_ip, category: SecurityIP, orderby: 40, translations: [{ code: en, option_name: 'Allow admin IP', option_comment: '' }] }
   - { name: clear_cc_info, category: General, type: select, orderby: 500, value: N, translations: [{ code: en, option_name: 'Clear credit cards info from the database on order status change', option_comment: '' }] }
   - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address, option_comment: '' }] }
   - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts, option_comment: '' }] }
-  - { name: company_fax, category: Company, type: text, orderby: 420, value: '(555) 555-5555', translations: [{ code: en, option_name: Fax, option_comment: '' }] }
+  - { name: company_fax, category: Company, type: text, orderby: 420, translations: [{ code: en, option_name: Fax, option_comment: '' }] }
   - { name: company_identity, category: Company, type: separator, orderby: 350, translations: [{ code: en, option_name: Identity, option_comment: '' }] }
-  - { name: company_name, category: Company, type: text, orderby: 360, value: '*Your company name*', translations: [{ code: en, option_name: 'Company name', option_comment: '' }] }
-  - { name: company_website, category: Company, type: text, orderby: 370, value: '', translations: [{ code: en, option_name: 'Company website', option_comment: '' }] }
+  - { name: company_name, category: Company, type: text, orderby: 360, translations: [{ code: en, option_name: 'Company name', option_comment: '' }] }
+  - { name: company_website, category: Company, type: text, orderby: 370, translations: [{ code: en, option_name: 'Company website', option_comment: '' }] }
   - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings', option_comment: '' }] }
   - { name: customer_security, category: Security, type: checkbox, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Customer Zone (for login, Checkout and profile pages)' }] }
   - { name: date_format, category: General, type: select, orderby: 660, value: '%b %e, %Y', translations: [{ code: en, option_name: 'Date format', option_comment: '' }] }
@@ -31,7 +29,7 @@ XLite\Model\Config:
   - { name: default_offline_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Payment method to be assumed in case of zero order totals', option_comment: '' }] }
   - { name: default_purchase_limit, category: General, type: text, orderby: 293, value: '9999', translations: [{ code: en, option_name: 'Default purchase limit', option_comment: '' }] }
   - { name: default_select_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Default payment method', option_comment: '' }] }
-  - { name: default_zipcode, category: General, type: text, orderby: 320, value: '10000', translations: [{ code: en, option_name: 'Default zip/postal code in the registration form', option_comment: '' }] }
+  - { name: default_zipcode, category: General, type: text, orderby: 320, translations: [{ code: en, option_name: 'Default zip/postal code in the registration form', option_comment: '' }] }
   # - { name: inventory_change_order_status, category: General, type: select, orderby: 330, value: 'Q', translations: [{ code: en, option_name: 'Decrease product inventory amount when order is', option_comment: '' }] }
   - { name: direct_product_url, category: General, type: checkbox, orderby: 255, value: N, translations: [{ code: en, option_name: 'Allow direct URL access to products from disabled categories', option_comment: '' }] }
   - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method', option_comment: '' }] }
@@ -44,16 +42,15 @@ XLite\Model\Config:
   - { name: enable_sale_price, category: General, type: checkbox, orderby: 295, value: Y, translations: [{ code: en, option_name: 'Enable "Market price" feature', option_comment: '' }] }
   - { name: form_id_protection, category: Security, type: checkbox, orderby: 90, value: Y, translations: [{ code: en, option_name: 'Enable admin forms protection system', option_comment: '' }] }
   - { name: full_customer_security, category: Security, type: checkbox, orderby: 5, value: N, translations: [{ code: en, option_name: 'Customer Zone fully on HTTPS', option_comment: '' }] }
-  - { name: htaccess_protection, category: Security, type: checkbox, orderby: 110, value: Y, translations: [{ code: en, option_name: 'Enable .htaccess verification system', option_comment: '' }] }
   - { name: last_date, category: Htaccess, value: '0' }
   - { name: license, category: License, type: text }
-  - { name: location_address, category: Company, type: text, orderby: 390, value: '*Your company address*', translations: [{ code: en, option_name: 'Street address', option_comment: '' }] }
+  - { name: location_address, category: Company, type: text, orderby: 390, translations: [{ code: en, option_name: 'Street address', option_comment: '' }] }
   - { name: location_country, category: Company, type: country, orderby: 400, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
-  - { name: location_state, category: Company, type: state, orderby: 410, value: '181', translations: [{ code: en, option_name: State, option_comment: '' }] }
+  - { name: location_state, category: Company, type: state, orderby: 410, translations: [{ code: en, option_name: State, option_comment: '' }] }
   - { name: location_custom_state, category: Company, type: text, orderby: 415, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
-  - { name: location_city, category: Company, type: text, orderby: 420, value: 'New York', translations: [{ code: en, option_name: City, option_comment: '' }] }
-  - { name: location_zipcode, category: Company, type: text, orderby: 430, value: '50001', translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
-  - { name: company_phone, category: Company, type: text, orderby: 440, value: '(555) 555-5555', translations: [{ code: en, option_name: Phone, option_comment: '' }] }
+  - { name: location_city, category: Company, type: text, orderby: 420, translations: [{ code: en, option_name: City, option_comment: '' }] }
+  - { name: location_zipcode, category: Company, type: text, orderby: 430, translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
+  - { name: company_phone, category: Company, type: text, orderby: 440, translations: [{ code: en, option_name: Phone, option_comment: '' }] }
   - { name: login_lifetime, category: General, type: text, orderby: 450, value: '3', translations: [{ code: en, option_name: 'Days to store last login data', option_comment: '' }] }
   - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Clear cart on customer logoff', option_comment: '' }] }
   - { name: maximal_order_amount, category: General, type: text, orderby: 290, value: '99999', translations: [{ code: en, option_name: 'Maximum allowed order total', option_comment: '' }] }
@@ -103,10 +100,10 @@ XLite\Model\Config:
   - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address', option_comment: '' }] }
   - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line', option_comment: '' }] }
   - { name: anonymous_country, category: Shipping, type: country, orderby: 50, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
-  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State, option_comment: '' }] }
+  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, translations: [{ code: en, option_name: State, option_comment: '' }] }
   - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
   - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City, option_comment: '' }] }
-  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, value: '10001', translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
+  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
   - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime', option_comment: '' }] }
   - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key', option_comment: '' }] }
 XLite\Model\Category:
