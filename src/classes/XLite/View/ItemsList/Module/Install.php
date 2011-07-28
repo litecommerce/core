@@ -56,6 +56,11 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     const PARAM_TAG          = 'tag';
     const PARAM_PRICE_FILTER = 'priceFilter';
 
+    /**
+     * No Marketplace warning messages
+     */
+    const NO_CONNECTION_MESSAGE = 'Can\'t connect to the Module Marketplace server';
+    const NO_PHAR_MESSAGE = 'You need Phar extension for PHP on your server to download modules from Module Marketplace';
 
     /**
      * Return list of targets allowed for this widget
@@ -180,14 +185,27 @@ class Install extends \XLite\View\ItemsList\Module\AModule
 
     /**
      * Check if marketplace is accessible
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function isMarketplaceAccessible()
     {
-        return !is_null(\XLite\Core\Marketplace::getInstance()->checkForUpdates());
+        return $this->isPHARAvailable()
+            && !is_null(\XLite\Core\Marketplace::getInstance()->checkForUpdates());
+    }
+
+    /**
+     * Check if phar extension is loaded
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.5
+     */
+    protected function isPHARAvailable()
+    {
+        return extension_loaded('phar');
     }
 
     /**
@@ -362,6 +380,22 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         $cnd->{\XLite\Model\Repo\Module::P_FROM_MARKETPLACE} = true;
 
         return $cnd;
+    }
+
+    /**
+     * Return warning message. Description of Marketplace unavailability
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.5
+     */
+    protected function getWarningMessage()
+    {
+        return static::t(
+            !$this->isPHARAvailable()
+                ? self::NO_PHAR_MESSAGE
+                : self::NO_CONNECTION_MESSAGE
+        );
     }
 
     // {{{ Helpers to use in templates
