@@ -392,7 +392,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Zone details have been updated successfully', translations: [{ code: en, label: 'Zone details have been updated successfully' }] }
   - { name: 'New zone has been created successfully', translations: [{ code: en, label: 'New zone has been created successfully' }] }
   - { name: 'This product has been added to your bag', translations: [{ code: en, label: 'This product has been added to <a href="{{href}}">your bag</a>' }] }
-  - { name: 'Your shopping bag - X items', translations: [{ code: en, label: 'Your shopping bag — {{count}} items' }] }
+  - { name: 'Your shopping bag - X items', translations: [{ code: en, label: 'Your shopping bag - {{count}} items' }] }
   - { name: 'Greetings, X', translations: [{ code: en, label: 'Greetings, {{name}}' }] }
   - { name: 'X items', translations: [{ code: en, label: '{{count}} items' }] }
   - { name: '_X items_ in bag', translations: [{ code: en, label: '<a href="#">{{count}} items</a> in bag' }] }
