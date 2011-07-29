@@ -100,7 +100,7 @@ XLite\Model\Config:
   - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address', option_comment: '' }] }
   - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line', option_comment: '' }] }
   - { name: anonymous_country, category: Shipping, type: country, orderby: 50, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
-  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, translations: [{ code: en, option_name: State, option_comment: '' }] }
+  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State, option_comment: '' }] }
   - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
   - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City, option_comment: '' }] }
   - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
