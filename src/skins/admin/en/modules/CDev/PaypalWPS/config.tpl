@@ -12,7 +12,7 @@
 <ul class="form">
 
   <li>
-    <label for="settings_account">{t(#Account#)}</label>
+    <label for="settings_account">{t(#Email address of your PayPal account#)}</label>
     <input type="text" id="settings_account" name="settings[account]" value="{paymentMethod.getSetting(#account#)}" class="field-required" />
   </li>
 
