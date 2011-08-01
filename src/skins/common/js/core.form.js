@@ -646,6 +646,7 @@ CommonElement.prototype.markAsColumnSwitcher = function()
 CommonElement.prototype.markAsWheelControlled = function()
 {
   var o = this;
+
   this.$element.mousewheel(
     function(event, delta) {
       return o.$element.hasClass('focused') && o.updateByMouseWheel(event, delta);
@@ -661,16 +662,10 @@ CommonElement.prototype.markAsWheelControlled = function()
   }
 
   jQuery(document.createElement('span'))
-    .addClass('wheel-mark')
-    .append(
-      jQuery(document.createElement('img'))
-        .attr({
-          'src': commonSkinPath + 'images/spacer.gif',
-          'width': 15,
-          'height': 16
-        })
-    )
+    .addClass('wheel-mark').html('&nbsp;&nbsp;&nbsp;&nbsp;')
     .insertAfter(this.$element);
+
+  this.$element.addClass('wheel-mark-input');
 
   this.$element.focus(
     function() {

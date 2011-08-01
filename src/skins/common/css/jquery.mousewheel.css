@@ -9,8 +9,13 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
+
+.wheel-mark-input {
+}
+
 span.wheel-mark {
   margin: 0 10px 0 5px;
+  height: 16px;
 }
 
 input.focused + span.wheel-mark {
