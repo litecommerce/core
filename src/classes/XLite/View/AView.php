@@ -831,8 +831,8 @@ abstract class AView extends \XLite\Core\Handler
         return \XLite\Core\Request::getInstance()->$name;
     }
 
-
-    // {{{ Routines for templates
+    
+// {{{ Routines for templates
 
 
     /**
