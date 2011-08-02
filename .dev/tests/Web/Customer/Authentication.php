@@ -184,7 +184,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
         $sleep = $this->setSleep(0);
 
         $this->click('id=edit-submit');
-        $this->waitForPageToLoad(20000);
+        $this->waitForPageToLoad();
         
         $this->assertElementPresent(
             "css=form#user-login",
@@ -209,7 +209,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
         $sleep = $this->setSleep(0);
 
         $this->click('id=edit-submit');
-        $this->waitForPageToLoad(20000);
+        $this->waitForPageToLoad();
         $this->assertElementNotPresent(
             "css=.blockUI form#user-login",
             "Login form is shown for a signed-in user"
