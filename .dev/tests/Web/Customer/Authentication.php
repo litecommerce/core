@@ -180,7 +180,12 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
         // Submit wrong credentials
         $this->type("css=.blockUI form#user-login input[name='name']", "wrong");
         $this->type("css=.blockUI form#user-login input[name='pass']", "master");
-        $this->clickAndWait('id=edit-submit', 6000, 'Submit login form (1)');
+
+        $sleep = $this->setSleep(0);
+
+        $this->click('id=edit-submit');
+        $this->waitForPageToLoad(20000);
+        
         $this->assertElementPresent(
             "css=form#user-login",
             "Login form is not shown after submitting a wrong username"
@@ -191,6 +196,8 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
             "Error message is not shown after submitting a wrong username"
         );
 
+        $this->setSleep($sleep);
+
          // Reopen the popup login form
         $this->open('');
         $this->click("link=Log in");
@@ -198,7 +205,11 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
         // Submit correct credentials (make sure there is master/master user in the database!)
         $this->type("css=.blockUI form#user-login input[name='name']", "master");
         $this->type("css=.blockUI form#user-login input[name='pass']", "master");
-        $this->clickAndWait('id=edit-submit', 6000, 'Submit login form (2)');
+
+        $sleep = $this->setSleep(0);
+
+        $this->click('id=edit-submit');
+        $this->waitForPageToLoad(20000);
         $this->assertElementNotPresent(
             "css=.blockUI form#user-login",
             "Login form is shown for a signed-in user"
@@ -224,6 +235,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
             "'My Account' link opens a page that doesn't show a user name in its title"
         );
 
+        $this->setSleep($sleep);
     }
 
     /**

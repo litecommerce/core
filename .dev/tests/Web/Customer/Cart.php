@@ -76,9 +76,8 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
     {
         $product = $this->addToCart();
 
-        $mdash = html_entity_decode('&#8212;', ENT_NOQUOTES, 'UTF-8');
         $this->assertElementPresent(
-            "//h1[@id='page-title' and text()='Your shopping bag " . $mdash . " 1 items']",
+            "//h1[@id='page-title' and contains(text(), 'Your shopping bag') and contains(text(), '1 items')]",
             'check page title'
         );
 
