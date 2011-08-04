@@ -2742,7 +2742,6 @@ ul.location-subnodes li a.current {
 }
 
 .invoice-box .items th {
-  background-image: url(../images/invoice_items_head_bg.png);
   font-weight: normal;
   padding: 6px 10px 5px;
   white-space: nowrap;
