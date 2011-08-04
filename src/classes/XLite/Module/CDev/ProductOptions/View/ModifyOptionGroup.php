@@ -264,6 +264,41 @@ class ModifyOptionGroup extends \XLite\View\AView
         return $this->group;
     }
 
+    /**
+     * Return JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.5
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = 'modules/CDev/ProductOptions/option_group.js';
+
+        return $list;
+    }
+
+    /**
+     * Return JS view type option array
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.5
+     */
+    protected function getJSViewTypeOptions()
+    {
+        $jsCode = '';
+
+        $optionGroupTypes = \XLite\Core\Database::getRepo('\XLite\Module\CDev\ProductOptions\Model\OptionGroup')
+            ->getOptionGroupTypes();
+
+        foreach ($optionGroupTypes as $dataType => $view) {
+            $jsCode .= 'lcViewTypeOption.' . $dataType . ' = ' . json_encode($view['views']) . ';' . PHP_EOL;
+        }
+
+        return $jsCode;
+    }
 
     /**
      * Return widget default template
