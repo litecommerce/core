@@ -54,7 +54,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
     public function testPopupForms()
     {
         // Open the home page
-        $this->open('');
+        $this->open('store/main');
 
         // By default popup forms should be hidden
         $this->assertJqueryNotPresent(
@@ -166,7 +166,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
     public function testPopupLogin()
     {
         // Popup the login form
-        $this->open('');
+        $this->open('store/main');
         $this->assertElementPresent(
             "link=Log in",
             "Login link is missing on the home page"
@@ -198,8 +198,11 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
 
         $this->setSleep($sleep);
 
+        // Pause for 4 seconds before opening a new page
+        sleep(4);
+
          // Reopen the popup login form
-        $this->open('');
+        $this->open('store/main');
         $this->click("link=Log in");
 
         // Submit correct credentials (make sure there is master/master user in the database!)
@@ -209,7 +212,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
         $sleep = $this->setSleep(0);
 
         $this->click('id=edit-submit');
-        $this->waitForPageToLoad();
+        $this->waitForPageToLoad(120000);
         $this->assertElementNotPresent(
             "css=.blockUI form#user-login",
             "Login form is shown for a signed-in user"
@@ -249,7 +252,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
     public function testPopupRecoveryPassword()
     {
         // Popup the password form
-        $this->open('');
+        $this->open('store/main');
         $this->assertElementPresent(
             "link=Log in",
             "Login link is missing on the home page"
@@ -283,7 +286,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
         );
 
         // Reopen the form
-        $this->open('');
+        $this->open('store/main');
         $this->click("link=Log in");
         $this->click("link=Forgot password?");
 
