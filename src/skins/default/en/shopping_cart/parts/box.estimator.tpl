@@ -25,7 +25,7 @@
     </ul>
 
     <div class="link">
-      <a href="{buildURL(#shipping_estimate#)}" class="estimate">{t(#Change method#)}</a>
+      <a href="{buildURL(#shipping_estimate#,##,_ARRAY_(#widget#^#\XLite\View\ShippingEstimate#))}" class="estimate">{t(#Change method#)}</a>
     </div>
 
   {else:}

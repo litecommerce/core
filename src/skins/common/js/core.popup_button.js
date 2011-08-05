@@ -17,24 +17,7 @@ function PopupButton()
 
   jQuery(this.pattern).each(
     function () {
-      var button;
-      var callback;
-
-      button = this;
-      callback = obj.callback;
-
-      jQuery(this).click(
-        function () {
-          var urlParams;
-          urlParams = core.getCommentedData(button, 'url_params');
-          return loadDialogByLink(
-            button,
-            URLHandler.buildURL(urlParams),
-            obj.options,
-            callback
-          );
-        }
-      );
+      obj.eachCallback(this);
     }
   );
 }
@@ -45,4 +28,27 @@ PopupButton.prototype.options = {'width' : 'auto'};
 
 PopupButton.prototype.callback = function (selector)
 {
+}
+
+PopupButton.prototype.eachCallback = function (elem)
+{
+    var button;
+    var callback;
+    var obj = this;
+
+    button = elem;
+    callback = obj.callback;
+
+    jQuery(elem).click(
+      function () {
+        var urlParams;
+        urlParams = core.getCommentedData(button, 'url_params');
+        return loadDialogByLink(
+          button,
+          URLHandler.buildURL(urlParams),
+          obj.options,
+          callback
+        );
+      }
+    );
 }
