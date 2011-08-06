@@ -98,19 +98,18 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
 
     public function testSearchSubstring()
     {
-        // TODO Correct it ASAP
-        //$this->markTestSkipped("Strange behaviour in Cormorant stand in Firefox 3.6.15. Could not debug with Firebug");
-
         $this->configurePager($this->countAllTestProducts());
 
         $this->openTestPage();
+
+        sleep(4);
+
+        $sleep = $this->setSleep(0);
 
         $this->assertElementPresent(self::SUBSTRING, 'No substring field');
         $this->type(self::SUBSTRING, 'mom');
 
         $this->assertElementPresent(self::SUBMIT_BUTTON, 'No search products button');
-
-        $sleep = $this->setSleep(0);
 
         $this->click(self::SUBMIT_BUTTON);
 
