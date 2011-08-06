@@ -155,7 +155,7 @@ function x_install_log($message = null)
 
     $currentDate = date(DATE_RFC822);
 
-    list($host, $p) = explode(':', $_SERVER['HTTP_HOST']);
+    $host = x_install_get_host($_SERVER['HTTP_HOST']);
 
     $port = $_SERVER['SERVER_PORT'] ? ':' . $_SERVER['SERVER_PORT'] : '';
 
@@ -1691,6 +1691,27 @@ function doFinishInstallation(&$params, $silentMode = false)
 
 
 /**
+ * Sanitize host value (remove port as some servers include it to HTTP_HOST variable)
+ * 
+ * @param string $host Host value
+ *  
+ * @return string
+ * @see    ____func_see____
+ * @since  1.0.6
+ */
+function x_install_get_host($host)
+{
+    if (false !== strstr($host, ':')) {
+        list($result) = explode(':', $host);
+
+    } else {
+        $result = $host;
+    }
+
+    return $result;
+}
+
+/**
  * Create directories
  *
  * @param array $dirs Array of directory names
@@ -1989,8 +2010,7 @@ function change_config(&$params)
         return false;
     }
 
-    list($_host, $_port) = explode(':', $params['xlite_http_host']);
-    $params['xlite_http_host'] = $_host;
+    $params['xlite_http_host'] = x_install_get_host($params['xlite_http_host']);
 
     // fixing the empty xlite_https_host value
     if (!isset($params['xlite_https_host']) || $params['xlite_https_host'] == '') {
