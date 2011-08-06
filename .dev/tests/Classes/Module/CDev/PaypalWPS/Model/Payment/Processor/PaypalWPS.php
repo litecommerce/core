@@ -43,9 +43,7 @@ class XLite_Tests_Module_CDev_PaypalWPS_Model_Payment_Processor_PaypalWPS extend
         $t = $order->getPaymentTransactions()->get(0);
         $method = $order->getPaymentMethod();
 
-        $this->assertTrue(isset($this->testConfig['paypal_wps']), 'paypal_wps configuration cell is not found');
-        $this->assertTrue(is_array($this->testConfig['paypal_wps']), 'paypal_wps configuration cell is not array');
-        $this->assertTrue(isset($this->testConfig['paypal_wps']['account']), 'paypal_wps.account configuration cell is not found');
+        $this->checkPaypalConfigOptions();
 
         $this->query(
             'UPDATE xlite_payment_method_settings SET value = "' . $this->testConfig['paypal_wps']['account'] . '" WHERE method_id = ' . $method->getMethodId() . ' AND name = "account"',
@@ -157,9 +155,7 @@ HTML;
         $order = $this->getTestOrder();
         $method = $order->getPaymentMethod();
 
-        $this->assertTrue(isset($this->testConfig['paypal_wps']), 'paypal_wps configuration cell is not found');
-        $this->assertTrue(is_array($this->testConfig['paypal_wps']), 'paypal_wps configuration cell is not array');
-        $this->assertTrue(isset($this->testConfig['paypal_wps']['account']), 'paypal_wps.account configuration cell is not found');
+        $this->checkPaypalConfigOptions();
 
         $this->query(
             'UPDATE xlite_payment_method_settings SET value = "' . $this->testConfig['paypal_wps']['account'] . '" WHERE method_id = ' . $method->getMethodId() . ' AND name = "account"',
@@ -301,5 +297,12 @@ HTML;
         \XLite\Core\Database::getEM()->flush();
 
         return $order;
+    }
+
+    protected function checkPaypalConfigOptions()
+    {
+        if (empty($this->testConfig['paypal_wps']['account'])) {
+            $this->markTestSkipped('Account for testing Paypal WPS module is not specified');
+        }
     }
 }
