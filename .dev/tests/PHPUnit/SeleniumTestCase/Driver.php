@@ -100,7 +100,7 @@ class XLite_Extensions_SeleniumTestCase_Driver extends PHPUnit_Extensions_Seleni
 
         curl_close($curl);
 
-        if ($info['http_code'] != 200 || !preg_match('/^OK/', $response)) {
+        if ($info['http_code'] != 200) {
             $this->stop();
 
             throw new RuntimeException(
@@ -108,6 +108,20 @@ class XLite_Extensions_SeleniumTestCase_Driver extends PHPUnit_Extensions_Seleni
               $response
             );
 		}
+
+        if (!preg_match('/^OK/', $response)) {
+
+            throw new PHPUnit_Framework_ExpectationFailedException(
+                'Non-Ok response from Selenium RC server was received',
+                PHPUnit_Framework_ComparisonFailure::diffEqual('OK', $response),
+                sprintf(
+                    "Response from Selenium RC server for %s(%s).\n%s.\n",
+                    $command,
+                    implode(', ', $arguments),
+                    $response
+                )
+            );
+        }
 
         return $response;
     }
