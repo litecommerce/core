@@ -92,6 +92,12 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
             'check content reloading'
         );
 
+        $this->waitForLocalCondition(
+            'jQuery(".cart-checkout button.action").length > 0',
+            20000,
+            'Wait for Checkout button availability'
+        );
+
         // Checkout
         $this->clickAndWait('//div[@class="cart-checkout"]/button');
 
@@ -162,13 +168,17 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
             );
         }
 
+        sleep(4);
+
         if (0 == intval($this->getJSExpression('jQuery(".current.payment-step").length'))) {
             $this->click('css=.payment-step .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".payment-step").hasClass("current") == true',
                 30000,
-                'check swicth to prev step'
+                'check switching to prev step'
             );
+
+            sleep(4);
         }
 
         if (0 < intval($this->getJSExpression('jQuery(".current.payment-step").length'))) {
@@ -188,11 +198,14 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
                 10000,
                 'check enabled main button #2'
             );
+
+            sleep(3);
+
             $this->click('css=.current .button-row button');
             $this->waitForLocalCondition(
-                'jQuery(".review-step").hasClass("current") == true',
+                'jQuery(".review-step.current").length == 1',
                 30000,
-                'check swicth to next step #2'
+                'check switching to next step #2'
             );
         }
 
