@@ -103,11 +103,10 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionAdd()
     {
-        $data = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert(
-            array(
-                'name' => \XLite\Core\Request::getInstance()->name,
-            )
-        );
+        $data = new \XLite\Model\ProductClass();
+        $data->setName(\XLite\Core\Request::getInstance()->name);
+
+        $data = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert($data);
 
         $this->data['data'] = array(
             'id'   => $data->getId(),
@@ -134,5 +133,4 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
 
         exit (0);
     }
-
 }

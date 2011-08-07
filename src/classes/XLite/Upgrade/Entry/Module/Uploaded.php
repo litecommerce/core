@@ -358,7 +358,14 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function updateDBRecords()
     {
-        $module = $this->getModuleInstalled() ?: new \XLite\Model\Module($this->getModuleData());
+        $module = $this->getModuleInstalled();
+
+        if ($module) {
+            $module->setEnabled(true);
+
+        } else {
+            $module = new \XLite\Model\Module($this->getModuleData());
+        }
 
         $module->setDate(time());
         $module->setRevisionDate($this->getRevisionDate());
@@ -368,11 +375,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         $module->setIconURL($this->getIconURL());
         $module->setDependencies($this->getDependencies());
 
-        if (!$module->getModuleID()) {
-            $module->setEnabled(true);
-        }
-
         // Save changes in DB
-        \XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->{$module->getModuleID() ? 'update' : 'insert'}($module);
     }
 }

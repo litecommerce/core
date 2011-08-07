@@ -119,8 +119,10 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
             foreach (call_user_func(array($class = $node->getClass(), 'getPatches')) as $patch) {
 
                 // Prepare model class properties
-                $data[] = $this->getCommonData($patch, $class)
-                    + $this->{'get' . ucfirst($patch[$class::PATCHER_CELL_TYPE]) . 'Data'}($patch, $class);
+                $data[] = new \XLite\Model\TemplatePatch(
+                    $this->getCommonData($patch, $class) 
+                    + $this->{'get' . ucfirst($patch[$class::PATCHER_CELL_TYPE]) . 'Data'}($patch, $class)
+                );
             }
         }
 

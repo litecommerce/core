@@ -1416,20 +1416,23 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Insert single entity
      *
-     * @param array $data Data to save OPTIONAL
+     * @param \XLite\Model\AEntity|array $entity Data to insert OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function performInsert(array $data = array())
+    protected function performInsert($entity = null)
     {
-        $entity = new $this->_entityName($data);
-        $this->getEntityManager()->persist($entity);
+        if (!($entity instanceof \XLite\Model\AEntity)) {
+            $entity = new $this->_entityName((array) $entity);
+        }
 
         // Since Doctrine lifecycle callbacks do not allow
         // to modify associations, we've added this method
         $entity->prepareEntityBeforeCommit();
+
+        $this->getEntityManager()->persist($entity);
 
         return $entity;
     }

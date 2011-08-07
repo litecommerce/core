@@ -573,33 +573,30 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Prepare data for a new category node
      *
-     * @param array                 $data   Category properties
+     * @param \XLite\Model\Category $entity Category object
      * @param \XLite\Model\Category $parent Parent category object OPTIONAL
      *
-     * @return array
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareNewCategoryData(array $data, \XLite\Model\Category $parent = null)
+    protected function prepareNewCategoryData(\XLite\Model\Category $entity, \XLite\Model\Category $parent = null)
     {
-        if (!isset($parent) && !empty($data['parent_id'])) {
-            $parent = $this->getCategory($data['parent_id']);
+        if (!isset($parent)) {
+            $parent = $this->getCategory($entity->getParentId());
         }
 
         if (isset($parent)) {
-            $data['lpos']   = $parent->getLpos() + 1;
-            $data['rpos']   = $parent->getLpos() + 2;
-            $data['parent'] = $parent;
+            $entity->setLpos($parent->getLpos() + 1);
+            $entity->setRpos($parent->getLpos() + 2);
+            $entity->setParent($parent);
 
         } else {
             // :TODO: - rework - add support last root category
-            $data['lpos']   = 1;
-            $data['rpos']   = 2;
-            $data['parent'] = null;
+            $entity->setLpos(1);
+            $entity->setRpos(2);
+            $entity->setParent(null);
         }
-
-
-        return $data;
     }
 
     /**
@@ -661,47 +658,43 @@ class Category extends \XLite\Model\Repo\Base\I18n
         parent::performUpdate($entity);
     }
 
-
     /**
      * Insert single entity
      *
-     * @param array $data Data to save OPTIONAL
+     * @param \XLite\Model\AEntity|array $entity Data to insert OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function performInsert(array $data = array())
+    protected function performInsert($entity = null)
     {
-        $entity = null;
-        $parent = null;
+        $entity   = parent::performInsert($entity);
+        $parentID = $entity->getParentId();
 
-        if (empty($data['parent_id'])) {
-
+        if (empty($parentID)) {
             // Insert root category
-            $entity = parent::performInsert($this->prepareNewCategoryData($data));
+            $this->prepareNewCategoryData($entity);
 
         } else {
-
             // Get parent for non-root category
-            $parent = $this->getCategory($data['parent_id']);
+            $parent = $this->getCategory($parentID);
 
             if ($parent) {
-
                 // Update indexes in the nested set
                 $this->defineUpdateIndexQuery('lpos', $parent->getLpos())->execute();
                 $this->defineUpdateIndexQuery('rpos', $parent->getLpos())->execute();
 
                 // Create record in DB
-                $entity = parent::performInsert($this->prepareNewCategoryData($data, $parent));
+                $this->prepareNewCategoryData($entity, $parent);
 
             } else {
-                // TODO - throw excception
+                \Includes\ErrorHandler::fireError(__METHOD__ . ': category #' . $parentID . 'not found');
             }
         }
 
         // Update quick flags
-        if ($entity && $parent) {
+        if (isset($entity) && isset($parent)) {
             $this->updateQuickFlags($parent, $this->prepareQuickFlags(1, $entity->getEnabled() ? 1 : -1));
         }
 
