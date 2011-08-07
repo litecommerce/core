@@ -1414,6 +1414,24 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * Common method to create entity
+     * 
+     * @param \XLite\Model\AEntity|array $data Data to use
+     *  
+     * @return \XLite\Model\AEntity
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function createEntityFromData($data)
+    {
+        if (!isset($data) || !($data instanceof \XLite\Model\AEntity)) {
+            $data = new $this->_entityName((array) $data);
+        }
+
+        return $data;
+    }
+
+    /**
      * Insert single entity
      *
      * @param \XLite\Model\AEntity|array $entity Data to insert OPTIONAL
@@ -1424,9 +1442,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function performInsert($entity = null)
     {
-        if (!($entity instanceof \XLite\Model\AEntity)) {
-            $entity = new $this->_entityName((array) $entity);
-        }
+        $entity = $this->createEntityFromData($entity);
 
         // Since Doctrine lifecycle callbacks do not allow
         // to modify associations, we've added this method

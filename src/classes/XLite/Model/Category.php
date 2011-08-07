@@ -303,6 +303,32 @@ class Category extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Return parent category ID
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.5
+     */
+    public function getParentId()
+    {
+        return $this->getParent() ? $this->getParent()->getCategoryId() : 0;
+    }
+
+    /**
+     * Set parent category ID
+     *
+     * @param integer $parentID Value to set
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.5
+     */
+    public function setParentId($parentID)
+    {
+        $this->parent = $this->getRepository()->find($parentID);
+    }
+
+    /**
      * Return number of products associated with the category
      *
      * TODO: check if result of "getProducts()" is cached by Doctrine

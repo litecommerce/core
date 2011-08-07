@@ -382,8 +382,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function defineSiblingsQuery(\XLite\Model\Category $category, $hasSelf = false)
     {
-        $parentId = $category->getParent() ? $category->getParent()->getCategoryId() : 0;
-        $result   = $this->defineSubcategoriesQuery($parentId);
+        $result = $this->defineSubcategoriesQuery($category->getParentId());
 
         if (!$hasSelf) {
             $result
@@ -694,7 +693,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
         }
 
         // Update quick flags
-        if (isset($entity) && isset($parent)) {
+        if (isset($parent)) {
             $this->updateQuickFlags($parent, $this->prepareQuickFlags(1, $entity->getEnabled() ? 1 : -1));
         }
 
@@ -713,11 +712,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
     {
-        if (
-            isset($data['enabled'])
-            && $entity->getParent()
-            && ($entity->getEnabled() xor ((bool) $data['enabled']))
-        ) {
+        if (isset($data['enabled']) && $entity->getParent() && ($entity->getEnabled() xor ((bool) $data['enabled']))) {
             $this->updateQuickFlags($entity->getParent(), $this->prepareQuickFlags(0, $entity->getEnabled() ? -1 : 1));
         }
 
