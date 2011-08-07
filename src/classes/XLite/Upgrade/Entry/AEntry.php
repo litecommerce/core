@@ -723,15 +723,16 @@ abstract class AEntry
     /**
      * Compose file full path
      *
-     * @param string $path File short path
-     *
-     * @return string
+     * @param string $path    File short path
+     * @param string $baseDir Bae dir OPTIONAL
+     *  
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getFullPath($path)
+    protected function getFullPath($path, $baseDir = LC_DIR_ROOT)
     {
-        return LC_DIR_ROOT . $path;
+        return $baseDir . $path;
     }
 
     /**
@@ -788,7 +789,16 @@ abstract class AEntry
             } else {
                 $data = json_decode($data, true);
 
-                if (!is_array($data)) {
+                if (is_array($data)) {
+                    foreach ($data as $path => $hash) {
+
+                        // :TRICKY: "str_replace()" call is the hack for modules,
+                        // which are packed on Windows servers, but installing on *NIX
+                        unset($data[$path]);
+                        $data[str_replace('\\', LC_DS, $path)] = $hash;
+                    }
+
+                } else {
                     $message = 'Hash file for new entry "{{entry}}" has a wrong format';
                 }
             }
@@ -860,9 +870,18 @@ abstract class AEntry
      */
     protected function getFileSource($relativePath)
     {
-        return \Includes\Utils\FileManager::read(
-            \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath()) . $relativePath
-        );
+        $source = null;
+        $path   = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath());
+
+        if (!empty($path)) {
+            $path = \Includes\Utils\FileManager::getRealPath($this->getFullPath($relativePath, $path));
+        }
+
+        if (!empty($path)) {
+            $source = \Includes\Utils\FileManager::read($path);
+        }
+
+        return $source;
     }
 
     // }}}
