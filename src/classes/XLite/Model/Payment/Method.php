@@ -75,7 +75,7 @@ class Method extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length="255")
      */
     protected $class;
 
