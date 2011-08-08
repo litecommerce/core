@@ -83,6 +83,18 @@ class Session extends \XLite\Base\Singleton
 
 
     /**
+     * Get session TTL (seconds)
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getTTL()
+    {
+        return 0;
+    }
+
+    /**
      * Getter
      *
      * @param string $name Session cell name
@@ -370,7 +382,6 @@ class Session extends \XLite\Base\Singleton
         }
     }
 
-
     /**
      * Constructor
      *
@@ -504,11 +515,12 @@ class Session extends \XLite\Base\Singleton
 
             $httpDomain = $this->getCookieDomain();
             $httpsDomain = $this->getCookieDomain(true);
+            $ttl = static::getTTL();
 
             setcookie(
                 $arg,
                 $this->session->getSid(),
-                $this->getCookieTTL(),
+                $ttl,
                 $this->getCookiePath(),
                 $httpDomain,
                 false,
@@ -519,7 +531,7 @@ class Session extends \XLite\Base\Singleton
                 setcookie(
                     $arg,
                     $this->session->getSid(),
-                    $this->getCookieTTL(),
+                    $ttl,
                     $this->getCookiePath(true),
                     $httpsDomain,
                     false,
@@ -608,18 +620,6 @@ class Session extends \XLite\Base\Singleton
         $url = $this->getCookieURL($secure);
 
         return $url['path'];
-    }
-
-    /**
-     * Get cookie TTL (seconds)
-     * 
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCookieTTL()
-    {
-        return 0;
     }
 
     /**

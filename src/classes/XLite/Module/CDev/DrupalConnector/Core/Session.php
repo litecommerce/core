@@ -36,6 +36,20 @@ namespace XLite\Module\CDev\DrupalConnector\Core;
 abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecorator
 {
     /**
+     * Get session TTL (seconds)
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getTTL()
+    {
+        $ttl = intval(ini_get('session.cookie_lifetime'));
+
+        return 0 < $ttl ? time() + $ttl : 0;
+    }
+
+    /**
      * Get URL path for Set-Cookie
      *
      * @param boolean $secure Secure protocol or not OPTIONAL
@@ -72,20 +86,6 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
         }
 
         return $url;
-    }
-
-    /**
-     * Get cookie TTL (seconds)
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCookieTTL()
-    {
-        $ttl = intval(ini_get('session.cookie_lifetime'));
-
-        return 0 < $ttl ? time() + $ttl : 0;
     }
 
     /**

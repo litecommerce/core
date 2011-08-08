@@ -68,7 +68,7 @@ class Session extends \XLite\Model\Repo\ARepo
     );
 
 
-    // {{{ removeExpired
+    // {{{ Remove expired sessions
 
     /**
      * Find cell by session id and name
