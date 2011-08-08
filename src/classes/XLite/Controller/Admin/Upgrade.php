@@ -52,7 +52,14 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         }
 
         if (\XLite\Upgrade\Cell::getInstance()->isUpgraded()) {
-            \XLite\Upgrade\Cell::getInstance()->runHelpers('post_rebuild');
+            if ($this->isForce()) {
+                $this->setReturnURL(
+                    $this->buildURL(\XLite\Core\Request::getInstance()->redirect ?: 'addons_list_installed')
+                );
+
+            } else {
+                \XLite\Upgrade\Cell::getInstance()->runHelpers('post_rebuild');
+            }
 
             \XLite\Core\Marketplace::getInstance()->checkForUpdates(0);
             \XLite\Core\Marketplace::getInstance()->getCores(0);
@@ -411,7 +418,12 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                 $this->showError(__FUNCTION__);
             }
 
-            $this->setReturnURL($this->buildURL('addons_list_' . $target));
+            $this->setReturnURL(
+                $this->buildURL(
+                    'upgrade',
+                    '',
+                    $this->getActionParamsCommon() + array('redirect' => 'addons_list_' . $target))
+            );
         }
 
         // Set cell status
