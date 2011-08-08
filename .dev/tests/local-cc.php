@@ -120,10 +120,18 @@ $availableBrowsersList = array(
             'port'    => 4444,
             'timeout' => SELENIUM_TTL,
         ),
- */
         array(
             'name'    => 'FireFox 4 (Windows)',
             'browser' => '*firefox C:\Program Files\Mozilla Firefox 4\firefox.exe',
+            'host'    => SELENIUM_SERVER,
+            'port'    => 4444,
+            'timeout' => SELENIUM_TTL,
+            'sleep'   => 1,
+        ),
+ */
+        array(
+            'name'    => 'FireFox 5 (Windows)',
+            'browser' => '*firefox C:\Program Files\Firefox_5\firefox.exe',
             'host'    => SELENIUM_SERVER,
             'port'    => 4444,
             'timeout' => SELENIUM_TTL,
