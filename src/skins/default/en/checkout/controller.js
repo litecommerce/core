@@ -418,7 +418,7 @@ CheckoutView.prototype.openAddressBook = function(event, elm)
   );
 }
 
-// Clse Shipping estimator popup handler
+// Close Shipping estimator popup handler
 CheckoutView.prototype.closeAddressBookHandler = function()
 {
   if (this.cartUpdated) {
@@ -648,7 +648,18 @@ ShippingMethodsView.prototype.postprocess = function(isSuccess, initial)
       );
 
     if (!initial) {
-      this.parentWidget.refreshState();
+      var box = jQuery('form.shipping-address ul.form', this.parentWidget.base).get(0);
+      if (box && box.loadable.isLoading) {
+
+        // Deffer refresh parent widget state if shippoing address form is loading
+        // Otherwise, refresh state mechanism will has obsolete data
+        box.loadable.postloadHandler = function() {
+          o.parentWidget.refreshState();
+        }
+
+      } else {
+        this.parentWidget.refreshState();
+      }
     }
   }
 }
