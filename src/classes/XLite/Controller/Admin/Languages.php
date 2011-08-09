@@ -321,8 +321,9 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
         if (!$translateFail) {
             \XLite\Core\TopMessage::addInfo('Text labels have been updated successfully');
-            \XLite\Core\Translation::getInstance()->reset();
         }
+
+        \XLite\Core\Translation::getInstance()->reset();
     }
 
     /**

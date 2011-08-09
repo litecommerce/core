@@ -25,44 +25,45 @@
  * @since     1.0.0
  */
 
-namespace XLite\Model;
+namespace XLite\Core\ColumnType;
 
 /**
- * Language label
+ * Binary (varbinary) type with variable length
  *
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @Entity (repositoryClass="\XLite\Model\Repo\LanguageLabel")
- * @Table (name="language_labels",
- *      indexes={
- *          @Index (name="name", columns={"name"})
- *      }
- * )
  */
-class LanguageLabel extends \XLite\Model\Base\I18n
+class VarBinary extends \Doctrine\DBAL\Types\StringType
 {
     /**
-     * Unique id
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer")
+     * Type name
      */
-    protected $label_id;
+    const VARBINARY = 'varbinary';
 
     /**
-     * Label name
+     * Get SQL declaration
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @param array                                     $fieldDeclaration Field declaration
+     * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform         Platform
      *
-     * @Column (type="varbinary", length="255")
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    protected $name;
+    public function getSQLDeclaration(array $fieldDeclaration, \Doctrine\DBAL\Platforms\AbstractPlatform $platform)
+    {
+        return $platform->getBinaryTypeDeclarationSQL($fieldDeclaration);
+    }
+
+    /**
+     * Get type name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getName()
+    {
+        return self::VARBINARY;
+    }
 }
