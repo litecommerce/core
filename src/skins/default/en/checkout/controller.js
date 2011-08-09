@@ -218,27 +218,8 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
           }
         );
 
-      new ShippingAddressView(form.find('ul.form'));
-
-      form.get(0).getElements().change(
-        function() {
-          o.refreshState();
-        }
-      );
-
-      // Set watchers for shipping address
-      form.get(0).getElements().each(
-        function() {
-          var t = jQuery(this);
-          if (t.hasClass('field-zipcode') || t.hasClass('field-country') || t.hasClass('field-state')) {
-            this.markAsWatcher(
-              function(element) {
-                o.refreshSignificantShippingFields(element);
-              }
-            );
-          }
-        }
-      );
+      var sav = new ShippingAddressView(form.find('ul.form'));
+      sav.parentWidget = this;
 
       jQuery('.shipping-step.current .button-row button', this.base)
         .click(
@@ -690,6 +671,42 @@ ShippingAddressView.prototype.widgetClass = '\\XLite\\View\\Checkout\\ShippingAd
 
 ShippingAddressView.prototype.parentWidget = null;
 
+ShippingAddressView.prototype.postprocess = function(isSuccess, initial)
+{
+  ShippingAddressView.superclass.postprocess.apply(this, arguments);
+
+  if (isSuccess) {
+    var form = this.base.parents('form').get(0);
+    var o = this;
+
+    form.getElements()
+      .filter(
+        function() {
+          return typeof(this.changedHandlerAssigned) != 'boolean';
+        }
+      )
+      .change(
+        function() {
+          o.parentWidget.refreshState();
+          this.changedHandlerAssigned = true;
+        }
+      );
+
+    // Set watchers for shipping address
+    form.getElements().each(
+      function() {
+        var t = jQuery(this);
+        if (t.hasClass('field-zipcode') || t.hasClass('field-country') || t.hasClass('field-state')) {
+          this.markAsWatcher(
+            function(element) {
+              o.refreshSignificantShippingFields(element);
+            }
+          );
+        }
+      }
+    );
+  }
+}
 
 /**
  * Billing address widget
