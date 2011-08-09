@@ -699,7 +699,7 @@ ShippingAddressView.prototype.postprocess = function(isSuccess, initial)
         if (t.hasClass('field-zipcode') || t.hasClass('field-country') || t.hasClass('field-state')) {
           this.markAsWatcher(
             function(element) {
-              o.refreshSignificantShippingFields(element);
+              o.parentWidget.refreshSignificantShippingFields(element);
             }
           );
         }
