@@ -341,14 +341,11 @@ class Product extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\TopMessage::addError($form->getValidationMessage());
 
         } else {
-
             // Insert record into main table
             $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert($this->getPostedData());
 
             if ($product) {
-
                 $inventory = new \XLite\Model\Inventory();
-
                 $inventory->setProduct($product);
 
                 // Create associations (categories and images)

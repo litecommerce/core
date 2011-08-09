@@ -116,11 +116,6 @@ var URLHandler = {
   }
 }
 
-// Path to common skin
-var s = document.getElementsByTagName('script');
-var commonSkinPath = s[s.length-1].getAttribute('src')
-  .replace(/js\/common\.js.*/, '');
-
 /**
  * Columns selector
  */

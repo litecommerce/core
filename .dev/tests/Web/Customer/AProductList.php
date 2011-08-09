@@ -25,9 +25,6 @@
  * @since      1.0.0
  */
 
-// Disable the time limit, otherwise some tests may fail due to PHP breaking the script
-set_time_limit(1200); // 20 minutes
-
 require_once __DIR__ . '/ACustomer.php';
 
 abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACustomer

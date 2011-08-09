@@ -47,12 +47,6 @@ namespace XLite\Model;
 class Session extends \XLite\Model\AEntity
 {
     /**
-     * Session TTL (in seconds)
-     */
-    const TTL = 7200;
-
-
-    /**
      * Session increment id
      *
      * @var   integer
@@ -133,7 +127,7 @@ class Session extends \XLite\Model\AEntity
      */
     public function updateExpiry()
     {
-        $this->setExpiry(time() + self::TTL);
+        $this->setExpiry(\XLite\Core\Session::getTTL());
     }
 
     /**

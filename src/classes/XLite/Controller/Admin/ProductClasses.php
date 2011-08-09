@@ -35,7 +35,6 @@ namespace XLite\Controller\Admin;
  */
 class ProductClasses extends \XLite\Controller\Admin\AAdmin
 {
-
     /**
      * Field name for new 'name' value
      */
@@ -59,17 +58,14 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
         $data = $this->getPostedData();
 
         if (!empty($data[static::NEW_NAME])) {
-
             $this->addClass($data[static::NEW_NAME]);
         }
 
         if (isset($data[static::NEW_NAME])) {
-
             unset($data[static::NEW_NAME]);
         }
 
         if (!empty($data)) {
-
             \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->updateInBatchById($data);
         }
     }
@@ -85,10 +81,6 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
      */
     protected function addClass($name)
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert(
-            array(static::NAME => strval($name))
-        );
+        \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert(array(static::NAME => strval($name)));
     }
-
-
 }

@@ -339,9 +339,11 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function getModuleData()
     {
+        list($author, $name) = explode('\\', $this->getActualName());
+
         return array(
-            'name'            => $this->getName(),
-            'author'          => $this->getAuthor(),
+            'name'            => $name,
+            'author'          => $author,
             'majorVersion'    => $this->getMajorVersionNew(),
             'minorVersion'    => $this->getMinorVersionNew(),
             'fromMarketplace' => false,
@@ -358,7 +360,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function updateDBRecords()
     {
-        $module = $this->getModuleInstalled() ?: new \XLite\Model\Module($this->getModuleData());
+        $module = $this->getModuleInstalled() ?: new \XLite\Model\Module($this->getModuleData());;
 
         $module->setDate(time());
         $module->setRevisionDate($this->getRevisionDate());
@@ -368,11 +370,15 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         $module->setIconURL($this->getIconURL());
         $module->setDependencies($this->getDependencies());
 
-        if (!$module->getModuleID()) {
-            $module->setEnabled(true);
-        }
-
         // Save changes in DB
-        \XLite\Core\Database::getEM()->flush();
+        if ($module->getModuleID()) {
+            $module->setMajorVersion($this->getMajorVersionNew());
+            $module->setMinorVersion($this->getMinorVersionNew());
+            \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($module);
+
+        } else {
+            $module->setEnabled(true);
+            \XLite\Core\Database::getRepo('\XLite\Model\Module')->insert($module);
+        }
     }
 }

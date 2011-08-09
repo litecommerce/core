@@ -169,8 +169,9 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     {
         if ($properties = $this->validateCategoryData(true)) {
 
-            $category = \XLite\Core\Database::getRepo('XLite\Model\Category')
-                ->insert(array('parent_id' => $this->getCategoryId()) + $properties);
+            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->insert(
+                array('parent_id' => $this->getCategoryId()) + $properties
+            );
 
             $this->saveImage($category->getCategoryId());
 
@@ -188,10 +189,9 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     protected function doActionModify()
     {
         if ($properties = $this->validateCategoryData()) {
-
             $this->saveImage();
 
-            \XLite\Core\Database::getRepo('XLite\Model\Category')
+            \XLite\Core\Database::getRepo('\XLite\Model\Category')
                 ->updateById($properties['category_id'], $properties);
 
             $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $properties['category_id'])));

@@ -272,7 +272,8 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * useDefaultDisplayMode
+     * Return TRUE  if widget must be displayed inside CMS content.
+     * Return FALSE if standalone display mode of LC is used.
      *
      * @return boolean
      * @see    ____func_see____
@@ -293,10 +294,14 @@ class Controller extends \XLite\View\AView
     protected function displayPage()
     {
         if ($this->useDefaultDisplayMode()) {
+            // Display widget content inside some CMS content
             $this->getContentWidget()->display();
 
         } else {
+            // Display widget in standalone display mode
             $this->prepareContent();
+
+            // Send page headers first
             $this->startPage();
 
             parent::display();
@@ -316,8 +321,8 @@ class Controller extends \XLite\View\AView
     }
 
     /**
-     * Get body class 
-     * 
+     * Get body class
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

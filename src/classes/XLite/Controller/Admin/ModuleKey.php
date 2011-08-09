@@ -69,8 +69,7 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
             $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($info);
 
             if ($module) {
-
-                $repo = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey');
+                $repo   = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey');
                 $entity = $repo->findKey($info['author'], $info['name']);
 
                 if ($entity) {

@@ -251,7 +251,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
         $this->waitForLocalCondition(
             'jQuery(".product-classes-list tr").length == ' . $count,
-            3000,
+            20000,
             'check add new product class entry "' . $name . '"'
         );
     }

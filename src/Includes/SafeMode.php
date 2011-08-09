@@ -276,42 +276,15 @@ abstract class SafeMode
     }
 
     /**
-     * Save modules to file
-     *
-     * @param array $modules Modules array
-     *
-     * @return integer|boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function saveUnsafeModulesToFile(array $modules)
-    {
-        $path = static::getUnsafeModulesFilePath();
-
-        $string = '; <' . '?php /*' . PHP_EOL;
-
-        $i = 0;
-        foreach ($modules as $author => $names) {
-            $string .= '[' . $author . ']' . PHP_EOL;
-            foreach ($names as $name => $enabled) {
-                $string .= $name . ' = ' . $enabled . PHP_EOL;
-                $i++;
-            }
-        }
-
-        $string .= '; */ ?' . '>';
-
-        return $i ? \Includes\Utils\FileManager::write($path, $string) : false;
-    }
-
-    /**
      * Get unsafe modules list
      *
+     * @param boolean $asPlainList Flag OPTIONAL
+     *  
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getUnsafeModulesList()
+    public static function getUnsafeModulesList($asPlainList = true)
     {
         $list = array();
         $path = static::getUnsafeModulesFilePath();
@@ -319,7 +292,17 @@ abstract class SafeMode
         if (\Includes\Utils\FileManager::isFileReadable($path)) {
             foreach (parse_ini_file($path, true) as $author => $names) {
                 foreach (array_filter($names) as $name => $flag) {
-                    $list[] = $author . '\\' . $name;
+
+                    if ($asPlainList) {
+                        $list[] = $author . '\\' . $name;
+
+                    } else {
+                        if (!isset($list[$author])) {
+                            $list[$author] = array();
+                        }
+
+                        $list[$author][$name] = 1;
+                    }
                 }
             }
         }
@@ -353,7 +336,7 @@ abstract class SafeMode
      */
     public static function markModulesAsUnsafe(array $modules)
     {
-        $list = static::getUnsafeModulesList();
+        $list = static::getUnsafeModulesList(false);
 
         foreach ($modules as $author => $names) {
             foreach ($names as $name => $key) {
@@ -379,6 +362,35 @@ abstract class SafeMode
     protected static function getUnsafeModulesFilePath()
     {
         return LC_DIR_VAR . self::UNSAFE_MODULES_FILE_NAME;
+    }
+
+    /**
+     * Save modules to file
+     *
+     * @param array $modules Modules array
+     *
+     * @return integer|boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function saveUnsafeModulesToFile(array $modules)
+    {
+        $path = static::getUnsafeModulesFilePath();
+
+        $string = '; <' . '?php /*' . PHP_EOL;
+
+        $i = 0;
+        foreach ($modules as $author => $names) {
+            $string .= '[' . $author . ']' . PHP_EOL;
+            foreach ($names as $name => $enabled) {
+                $string .= $name . ' = ' . $enabled . PHP_EOL;
+                $i++;
+            }
+        }
+
+        $string .= '; */ ?' . '>';
+
+        return $i ? \Includes\Utils\FileManager::write($path, $string) : false;
     }
 
     // }}}

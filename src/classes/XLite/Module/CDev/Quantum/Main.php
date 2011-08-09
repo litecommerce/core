@@ -28,14 +28,13 @@
 namespace XLite\Module\CDev\Quantum;
 
 /**
- * QuantumGatewaya payment gateway integration (QGWdatabase Engine API)
+ * Quantum payment gateway integration (QGWdatabase Engine API)
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
 abstract class Main extends \XLite\Module\AModule
 {
-
     /**
      * Author name
      *
@@ -69,7 +68,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '2';
+        return '3';
     }
 
     /**

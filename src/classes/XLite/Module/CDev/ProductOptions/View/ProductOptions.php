@@ -28,7 +28,7 @@
 namespace XLite\Module\CDev\ProductOptions\View;
 
 /**
- * Product options lsit
+ * Product options list
  *
  * @see   ____class_see____
  * @since 1.0.0

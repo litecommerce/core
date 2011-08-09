@@ -50,6 +50,7 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
         'XLite\Controller\Admin\CacheManagement',
         'XLite\Controller\Admin\DbBackup',
         'XLite\Controller\Admin\DbRestore',
+        'XLite\Controller\Admin\Languages',
         'XLite\Controller\Admin\Measure',
         'XLite\Controller\Admin\Memberships',
         'XLite\Controller\Admin\Module',
@@ -61,6 +62,28 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
         'XLite\Controller\Admin\Upgrade',
         'XLite\Controller\Admin\Aupost',
     );
+
+    /**
+     * Actions permitted in demo mode
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $demoPermittedActions = array(
+        'XLite\Controller\Admin\Languages' => array(
+            'search',
+        ),
+    );
+
+    /**
+     * Actions forbidden in demo mode
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $demoForbiddenActions = array();
 
 
     /**
@@ -114,7 +137,35 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
      */
     protected function checkForDemoController()
     {
-        return in_array(\Includes\Utils\Converter::trimLeadingChars(get_class($this), '\\'), $this->demoControllers);
+        return in_array($class = \Includes\Utils\Converter::trimLeadingChars(get_class($this), '\\'), $this->demoControllers)
+            ? !$this->isDemoActionPermitted($class)
+            : $this->isDemoActionForbidden($class);
+    }
+
+    /**
+     * Check if specific action is permitted
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isDemoActionPermitted($class)
+    {
+        return isset($this->demoPermittedActions[$class])
+            && in_array(\XLite\Core\Request::getInstance()->action, $this->demoPermittedActions[$class]);
+    }
+
+    /**
+     * Check if specific action is forbidden
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isDemoActionForbidden($class)
+    {
+        return isset($this->demoForbiddenActions[$class])
+            && in_array(\XLite\Core\Request::getInstance()->action, $this->demoForbiddenActions[$class]);
     }
 
     /**

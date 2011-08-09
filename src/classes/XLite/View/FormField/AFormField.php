@@ -362,7 +362,7 @@ abstract class AFormField extends \XLite\View\AView
         $result = '';
 
         foreach ($this->getAttributes() as $name => $value) {
-            $result .= ' ' . $name . '="' . $value . '"';
+            $result .= ' ' . $name . '="' . func_htmlspecialchars($value) . '"';
         }
 
         return $result;

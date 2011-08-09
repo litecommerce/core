@@ -13,9 +13,14 @@ show_usage ()
 {
 	cat <<EOT
 Usage: $0 [options]
-  -r   revision name for comparison
-  -h   this help
-  
+  -r <revision>  revision name for comparison
+  -d <module>    show diff for specified module (short name)
+  -h             this help
+
+Examples:
+	$0 -r 1.0.5
+	$0 -r 1.0.5 -d Bestsellers
+
 EOT
 	exit 2
 }
@@ -32,9 +37,10 @@ die ()
 
 
 # Read options
-while getopts "r:h" option; do
+while getopts "r:d:h" option; do
 	case $option in
 		r) REVISION_FROM=$OPTARG ;;
+		d) DISPLAY_MODULE=$OPTARG ;;
 		h) show_usage $0 ;;
 	esac
 done
@@ -84,7 +90,28 @@ for i in $MODULE_NAMES; do
 done
 
 
-echo -e "SQL changes from $REVISION_FROM to HEAD:\n"
+if [ ! "x${DISPLAY_MODULE}" = "x" ]; then
+	echo -e "\nDiff for module ${DISPLAY_MODULE}:\n";
+
+	# Generate list of module directories
+	MODULE_PATHS=`find . -type d -name "$DISPLAY_MODULE" -and ! -path "*/var/run/*"`
+
+	# Find changes
+	RESULT=`git diff ${REVISION_FROM}..HEAD $MODULE_PATHS`
+
+	# Output module name if it was changed
+	if [ "$RESULT" ]; then
+		echo "$RESULT"
+
+	else
+		echo "No diff"
+	fi
+fi
+
+
+
+
+echo -e "\nSQL changes from $REVISION_FROM to HEAD:\n"
 
 # Generate module names list
 cd $ROOT_DIR

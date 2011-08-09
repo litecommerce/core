@@ -179,11 +179,15 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
     protected function doActionUpdateOptionGroup()
     {
         if ('0' === \XLite\Core\Request::getInstance()->groupId) {
+
             $group = new \XLite\Module\CDev\ProductOptions\Model\OptionGroup;
+
             $group->setProduct($this->getProduct());
+
             $this->getProduct()->addOptionGroups($group);
 
         } else {
+
             $group = \XLite\Core\Database::getRepo('\XLite\Module\CDev\ProductOptions\Model\OptionGroup')
                 ->find(\XLite\Core\Request::getInstance()->groupId);
         }
@@ -217,7 +221,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
         } elseif (!$group->setViewType($data['view_type'])) {
             \XLite\Core\TopMessage::addError(
-                'The option must have a name'
+                'The display type is not allowed with this type of option'
             );
 
         } else {

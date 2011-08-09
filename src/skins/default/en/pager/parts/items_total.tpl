@@ -13,6 +13,6 @@
 
 <div IF="isItemsPerPageVisible()" class="pager-items-total">
   {t(#Items#)}:
-  {t(#BEGIN - END of TOTAL#,_ARRAY_(#begin#^getBeginRecordNumber(),#end#^getEndRecordNumber(),#total#^getItemsTotal())):r}
-  <span IF="isItemsPerPageSelectorVisible()">, <input type="text" value="{getItemsPerPage()}" class="page-length" title="{t(#Items per page#)}" />{t(#per page#)}</span>
+  {t(#BEGIN - END of TOTAL#,_ARRAY_(#begin#^getBeginRecordNumber(),#end#^getEndRecordNumber(),#total#^getItemsTotal())):r}<span IF="isItemsPerPageSelectorVisible()">,
+    <input type="text" value="{getItemsPerPage()}" class="page-length" title="{t(#Items per page#)}" />{t(#per page#)}</span>
 </div>

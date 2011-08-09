@@ -246,7 +246,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->assertJqueryNotPresent('ul.payments li input:checked', 'payment is not selected');
 
-        $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
+        $this->toggleByJquery($this->getPaymentSelector(), true);
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
@@ -541,7 +541,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             'John Smith bbb'
         );
 
-        $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
+        $this->toggleByJquery($this->getPaymentSelector(), true);
 
         $this->click('css=.current .button-row button');
         $this->waitForLocalCondition(
@@ -693,7 +693,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
-            3000,
+            10000,
             'check enabled main button'
         );
 
@@ -702,19 +702,22 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".payment-step.current").length == 1',
-            10000,
+            30000,
             'check switch to next step'
         );
-
     }
 
     protected function fillPaymentStep()
     {
-        $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
+        $selector = $this->getPaymentSelector();
+
+        $this->toggleByJquery($selector, true);
+
+        $this->assertChecked('css=' . $selector, 'Payment method is not selected: ' . $selector);
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
-            3000,
+            10000,
             'check enabled main button'
         );
 
@@ -723,10 +726,17 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".review-step.current").length == 1',
-            10000,
-            'check swicth to next step'
+            30000,
+            'check switching to next step (payment->review)'
         );
+    }
 
+    protected function getPaymentSelector()
+    {
+        $selector = '#pmethod' . $this->getPaymentMethodIdByName('PhoneOrdering');
+        $this->assertElementPresent("css=$selector", "Payment method selector not found: $selector (Phone)");
+
+        return $selector;
     }
 
 }

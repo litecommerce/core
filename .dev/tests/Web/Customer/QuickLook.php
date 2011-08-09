@@ -314,8 +314,6 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
         $id = $product->getProductId();
 
-        $sleep = $this->setSleep(3);
-
         // This assertion requires the minicart widget to be visible on the page
         $qty = intval($this->getJSExpression("jQuery('.minicart-items-number').html()"));
 
@@ -426,8 +424,6 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             10000,
             "Minicart widget displays a wrong qty (#1)"
         );
-
-        $this->setSleep($sleep);
     }
 
     /**

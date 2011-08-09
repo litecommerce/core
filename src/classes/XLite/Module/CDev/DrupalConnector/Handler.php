@@ -140,7 +140,7 @@ class Handler extends \XLite\Core\CMSConnector
         $url = null;
         if (0 === strpos($path, \XLite\Core\Converter::DRUPAL_ROOT_NODE . '/')) {
             $args = explode('/', substr($path, strlen(\XLite\Core\Converter::DRUPAL_ROOT_NODE) + 1));
-            $url = $this->getCleanURL($this->getControllerArgs($args));
+            $url = $this->getCleanURL($this->getControllerArgs($args, false));
         }
 
         return $url;
@@ -222,13 +222,14 @@ class Handler extends \XLite\Core\CMSConnector
     /**
      * Return controller arguments
      *
-     * @param array $args Drupal URL arguments
-     *
+     * @param array   $args            Drupal URL arguments
+     * @param boolean $includePOSTVars Flag OPTIONAL
+     *  
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getControllerArgs(array $args)
+    protected function getControllerArgs(array $args, $includePOSTVars = true)
     {
         $result = array();
 
@@ -236,7 +237,11 @@ class Handler extends \XLite\Core\CMSConnector
             $result[$param] = empty($args) ? '' : array_shift($args);
         }
 
-        return array_merge($result, \Includes\Utils\Converter::parseArgs($args, '-'), $_POST);
+        return array_merge(
+            $result,
+            \Includes\Utils\Converter::parseArgs($args, '-'),
+            $includePOSTVars ? $_POST : array()
+        );
     }
 
     /**

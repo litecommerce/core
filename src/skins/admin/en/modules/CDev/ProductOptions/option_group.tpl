@@ -119,3 +119,10 @@
   </div>
 
 </form>
+
+<script type="text/javascript">
+//<![CDATA[
+var lcViewTypeOptions = {};
+{getJSViewTypeOptions():h}
+//]]>
+</script>

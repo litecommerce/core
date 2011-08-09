@@ -155,6 +155,8 @@ function x_install_log($message = null)
 
     $currentDate = date(DATE_RFC822);
 
+    $host = x_install_get_host($_SERVER['HTTP_HOST']);
+
     $port = $_SERVER['SERVER_PORT'] ? ':' . $_SERVER['SERVER_PORT'] : '';
 
     $protocol = (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') ? 'https' : 'http';
@@ -164,7 +166,7 @@ function x_install_log($message = null)
 
 --------------------------------------------------------------------
 [$currentDate]
-[{$_SERVER['REQUEST_METHOD']}, {$_SERVER['SERVER_PROTOCOL']}] {$protocol}://{$_SERVER['HTTP_HOST']}{$port}{$_SERVER['REQUEST_URI']}
+[{$_SERVER['REQUEST_METHOD']}, {$_SERVER['SERVER_PROTOCOL']}] {$protocol}://{$host}{$port}{$_SERVER['REQUEST_URI']}
 [{$_SERVER['SERVER_SOFTWARE']}]
 $message
 
@@ -1689,6 +1691,27 @@ function doFinishInstallation(&$params, $silentMode = false)
 
 
 /**
+ * Sanitize host value (remove port as some servers include it to HTTP_HOST variable)
+ * 
+ * @param string $host Host value
+ *  
+ * @return string
+ * @see    ____func_see____
+ * @since  1.0.6
+ */
+function x_install_get_host($host)
+{
+    if (false !== strstr($host, ':')) {
+        list($result) = explode(':', $host);
+
+    } else {
+        $result = $host;
+    }
+
+    return $result;
+}
+
+/**
  * Create directories
  *
  * @param array $dirs Array of directory names
@@ -1987,6 +2010,8 @@ function change_config(&$params)
         return false;
     }
 
+    $params['xlite_http_host'] = x_install_get_host($params['xlite_http_host']);
+
     // fixing the empty xlite_https_host value
     if (!isset($params['xlite_https_host']) || $params['xlite_https_host'] == '') {
         $params['xlite_https_host'] = $params['xlite_http_host'];
@@ -2170,7 +2195,7 @@ function inst_http_request_install($action_str, $url = null)
 function getLiteCommerceURL()
 {
     $host = 'http://' . $_SERVER['HTTP_HOST'];
-    $host = '/' == substr($host, -1) ? substr($host, 0, -1) : $host;
+    $host = ('/' == substr($host, -1) ? substr($host, 0, -1) : $host);
 
     $uri = defined('LC_URI') ? constant('LC_URI') : $_SERVER['REQUEST_URI'];
 

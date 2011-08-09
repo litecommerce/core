@@ -8,13 +8,8 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="admin.invoice.item")
+ * @ListChild (list="invoice.item.name", weight="20")
  *}
-{if:item.getProductOptions()}
-<tr>
-  <td colspan="2">Selected options:</td>
-</tr>
-<tr FOREACH="item.getProductOptions(),option">
-  <td colspan="2" style="padding-left: 20px;">{option.getName():h}: {option.getValue():h}</td>
-</tr>
-{end:}
+<ul IF="item.countProductOptions()" class="item-options-list">
+  <li FOREACH="item.getProductOptions(),option">{option.getName()}: {option.getValue()}</li>
+</ul>

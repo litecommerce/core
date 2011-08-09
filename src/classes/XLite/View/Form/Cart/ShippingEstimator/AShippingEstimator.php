@@ -46,4 +46,18 @@ abstract class AShippingEstimator extends \XLite\View\Form\AForm
     {
         return 'shipping_estimate';
     }
+
+    /**
+     * Required form parameters
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.5
+     */
+    protected function getCommonFormParams()
+    {
+        return parent::getCommonFormParams() + array(
+            'widget' => '\XLite\View\ShippingEstimate',
+        );
+    }
 }
