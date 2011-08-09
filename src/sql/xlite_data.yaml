@@ -426,6 +426,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Cart is empty', translations: [{ code: en, label: 'Cart is empty' }] }
   - { name: 'X item(s)', translations: [{ code: en, label: '{{count}} items(s)' }] }
   - { name: 'Items', translations: [{ code: en, label: 'Items' }] }
+  - { name: 'items', translations: [{ code: en, label: 'items' }] }
   - { name: 'Checkout', translations: [{ code: en, label: 'Checkout' }] }
   - { name: 'View cart', translations: [{ code: en, label: 'View cart' }] }
   - { name: 'Email address', translations: [{ code: en, label: 'Email address' }] }

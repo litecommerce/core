@@ -218,27 +218,8 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
           }
         );
 
-      new ShippingAddressView(form.find('ul.form'));
-
-      form.get(0).getElements().change(
-        function() {
-          o.refreshState();
-        }
-      );
-
-      // Set watchers for shipping address
-      form.get(0).getElements().each(
-        function() {
-          var t = jQuery(this);
-          if (t.hasClass('field-zipcode') || t.hasClass('field-country') || t.hasClass('field-state')) {
-            this.markAsWatcher(
-              function(element) {
-                o.refreshSignificantShippingFields(element);
-              }
-            );
-          }
-        }
-      );
+      var sav = new ShippingAddressView(form.find('ul.form'));
+      sav.parentWidget = this;
 
       jQuery('.shipping-step.current .button-row button', this.base)
         .click(
@@ -418,7 +399,7 @@ CheckoutView.prototype.openAddressBook = function(event, elm)
   );
 }
 
-// Clse Shipping estimator popup handler
+// Close Shipping estimator popup handler
 CheckoutView.prototype.closeAddressBookHandler = function()
 {
   if (this.cartUpdated) {
@@ -648,7 +629,18 @@ ShippingMethodsView.prototype.postprocess = function(isSuccess, initial)
       );
 
     if (!initial) {
-      this.parentWidget.refreshState();
+      var box = jQuery('form.shipping-address ul.form', this.parentWidget.base).get(0);
+      if (box && box.loadable.isLoading) {
+
+        // Deffer refresh parent widget state if shippoing address form is loading
+        // Otherwise, refresh state mechanism will has obsolete data
+        box.loadable.postloadHandler = function() {
+          o.parentWidget.refreshState();
+        }
+
+      } else {
+        this.parentWidget.refreshState();
+      }
     }
   }
 }
@@ -679,6 +671,42 @@ ShippingAddressView.prototype.widgetClass = '\\XLite\\View\\Checkout\\ShippingAd
 
 ShippingAddressView.prototype.parentWidget = null;
 
+ShippingAddressView.prototype.postprocess = function(isSuccess, initial)
+{
+  ShippingAddressView.superclass.postprocess.apply(this, arguments);
+
+  if (isSuccess) {
+    var form = this.base.parents('form').get(0);
+    var o = this;
+
+    form.getElements()
+      .filter(
+        function() {
+          return typeof(this.changedHandlerAssigned) != 'boolean';
+        }
+      )
+      .change(
+        function() {
+          o.parentWidget.refreshState();
+          this.changedHandlerAssigned = true;
+        }
+      );
+
+    // Set watchers for shipping address
+    form.getElements().each(
+      function() {
+        var t = jQuery(this);
+        if (t.hasClass('field-zipcode') || t.hasClass('field-country') || t.hasClass('field-state')) {
+          this.markAsWatcher(
+            function(element) {
+              o.refreshSignificantShippingFields(element);
+            }
+          );
+        }
+      }
+    );
+  }
+}
 
 /**
  * Billing address widget

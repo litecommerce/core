@@ -275,6 +275,13 @@ class Database extends \XLite\Base\Singleton
             ->getDatabasePlatform()
             ->registerDoctrineTypeMapping('int', 'uinteger');
 
+        // Varbinary
+        if (!\Doctrine\DBAL\Types\Type::hasType('varbinary')) {
+            \Doctrine\DBAL\Types\Type::addType('varbinary', 'XLite\Core\ColumnType\VarBinary');
+        }
+        $em->getConnection()
+            ->getDatabasePlatform()
+            ->registerDoctrineTypeMapping('varbinary', 'varbinary');
     }
 
     /**

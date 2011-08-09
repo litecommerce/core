@@ -47,6 +47,12 @@ namespace XLite\Model;
 class Session extends \XLite\Model\AEntity
 {
     /**
+     * Maximum TTL (1 year) 
+     */
+    const MAX_TTL = 31536000;
+
+
+    /**
      * Session increment id
      *
      * @var   integer
@@ -127,7 +133,8 @@ class Session extends \XLite\Model\AEntity
      */
     public function updateExpiry()
     {
-        $this->setExpiry(\XLite\Core\Session::getTTL());
+        $ttl = \XLite\Core\Session::getTTL();
+        $this->setExpiry(0 < $ttl ? $ttl : time() + self::MAX_TTL);
     }
 
     /**

@@ -48,4 +48,42 @@ class MySqlPlatform extends \Doctrine\DBAL\Platforms\MySqlPlatform
     {
         return 'TINYINT(1) UNSIGNED';
     }
+
+    /**
+     * Get binary type declaratio nSQL 
+     * 
+     * @param array $field Field declaration
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getBinaryTypeDeclarationSQL(array $field)
+    {
+        if (!isset($field['length'])) {
+            $field['length'] = $this->getVarcharDefaultLength();
+        }
+
+        $fixed = (isset($field['fixed'])) ? $field['fixed'] : false;
+
+        return $field['length'] > $this->getVarcharMaxLength()
+            ? $this->getClobTypeDeclarationSQL($field)
+            : $this->getBinaryTypeDeclarationSQLSnippet($field['length'], $fixed);
+    }
+
+    /**
+     * Get binary type declaration SQL snippet 
+     * 
+     * @param integer $length Field length
+     * @param boolean $fixed  Fixed type flag
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getBinaryTypeDeclarationSQLSnippet($length, $fixed)
+    {
+        return ($fixed ? '' : 'VAR') . 'BINARY(' . ($length ?: 255) . ')';
+    }
+
 }

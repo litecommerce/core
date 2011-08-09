@@ -39,6 +39,12 @@ ALoadable.prototype.isLoading = false;
 // Widget has deferred load operation
 ALoadable.prototype.deferredLoad = false;
 
+// Preload event custom handler
+ALoadable.prototype.preloadHandler = null;
+
+// Postload event custom handler
+ALoadable.prototype.postloadHandler = null;
+
 // Options
 
 // Use shade
@@ -108,6 +114,11 @@ ALoadable.prototype.load = function(params)
   var url = this.buildWidgetRequestURL(params);
 
   this.base.trigger('preload', [this, url]);
+  if (typeof(this.preloadHandler) == 'function') {
+
+    // Call preload event handler
+    this.preloadHandler.call(this.base);
+  }
 
   this.saveState();
 
@@ -176,6 +187,11 @@ ALoadable.prototype.loadHandler = function(xhr, s, data)
   if (!this.isLoading && this.deferredLoad) {
     this.deferredLoad = false;
     this.load();
+
+  } else if (processed && typeof(this.postloadHandler) == 'function') {
+
+    // Call postload event handler
+    this.postloadHandler.call(this.base, xhr);
   }
 
   return processed;
