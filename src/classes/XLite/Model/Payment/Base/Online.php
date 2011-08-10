@@ -223,10 +223,10 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     }
 
     /**
-     * Mark callback request as invalid 
-     * 
+     * Mark callback request as invalid
+     *
      * @param string $message Message
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -236,7 +236,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
         \XLite\Logger::getInstance()->log(
             'Callback request is invalid: ' . $message . PHP_EOL
             . 'Payment gateway: ' . $this->transaction->getPaymentMethod()->getServiceName() . PHP_EOL
-            . 'order #' . $transaction->getOrder()->getOrderId() . ' / transaction #' . $transaction->getTransactionId() . PHP_EOL,
+            . 'order #' . $this->transaction->getOrder()->getOrderId() . ' / transaction #' . $this->transaction->getTransactionId() . PHP_EOL,
             LOG_WARNING
         );
     }
@@ -265,7 +265,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
         if ($asCancel) {
             $query['cancel'] = 1;
         }
-        
+
         return \XLite::getInstance()->getShopURL(
             \XLite\Core\Converter::buildURL('payment_return', '', $query),
             \XLite\Core\Config::getInstance()->Security->customer_security

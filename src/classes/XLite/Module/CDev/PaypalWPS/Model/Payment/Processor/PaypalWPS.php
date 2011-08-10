@@ -74,7 +74,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
         parent::processCallback($transaction);
 
         $request = \XLite\Core\Request::getInstance();
-        
+
         $status = $transaction::STATUS_FAILED;
 
         switch ($this->getIPNVerification()) {
@@ -291,12 +291,9 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             'shopping_url'  => $this->getReturnURL(null, true, true),
             'notify_url'    => $this->getCallbackURL(null, true),
 
-            'country'       => $this->getProfile()->getBillingAddress()->getCountry()
-                ? $this->getProfile()->getBillingAddress()->getCountry()->getCode()
-                : '',
-
-            'state'         => $this->getProfile()->getShippingAddress()->getState()->getState(),
-            'address1'      => $this->getProfile()->getShippingAddress()->getStreet(),
+            'country'       => $this->getCountryFieldValue(),
+            'state'         => $this->getStateFieldValue(),
+            'address1'      => $this->getProfile()->getBillingAddress()->getStreet(),
             'address2'      => 'n/a',
             'city'          => $this->getProfile()->getBillingAddress()->getCity(),
             'zip'           => $this->getProfile()->getBillingAddress()->getZipcode(),
@@ -315,6 +312,34 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
+     * Return Country field value. if no country defined we should use '' value
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.5
+     */
+    protected function getCountryFieldValue()
+    {
+        return $this->getProfile()->getBillingAddress()->getCountry()
+            ? $this->getProfile()->getBillingAddress()->getCountry()->getCode()
+            : '';
+    }
+
+    /**
+     * Return State field value. If country is US then state code must be used.
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.5
+     */
+    protected function getStateFieldValue()
+    {
+        return 'US' === $this->getCountryFieldValue()
+            ? $this->getProfile()->getBillingAddress()->getState()->getCode()
+            : $this->getProfile()->getBillingAddress()->getState();
+    }
+
+    /**
      * Return Phone structure. specific for Paypal
      *
      * @return array
@@ -324,7 +349,10 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     protected function getPhone()
     {
         $result = array();
+
         $phone = $this->getProfile()->getBillingAddress()->getPhone();
+
+        $phone = preg_replace('![^\d]+!', '', $phone);
 
         if ($phone) {
             if (
