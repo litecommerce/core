@@ -1,7 +1,6 @@
 # vim: set ts=2 sw=2 sts=2 et:
 #
-# Data for core upgrading 1.0.3 -> 1.0.4
-# Contains some excessive data for upgrading from previous core version (1.0.2)
+# Data for core upgrading 1.0.5 -> 1.0.6
 #
 
 XLite\Model\LanguageLabel:
