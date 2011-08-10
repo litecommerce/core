@@ -112,7 +112,7 @@ class XLite_Tests_Module_CDev_PaypalWPS_Model_Payment_Processor_PaypalWPS extend
       <input type="hidden" name="shopping_url" value="$urld" />
       <input type="hidden" name="notify_url" value="$urlc" />
       <input type="hidden" name="country" value="US" />
-      <input type="hidden" name="state" value="Oklahoma" />
+      <input type="hidden" name="state" value="OK" />
       <input type="hidden" name="address1" value="51 apt, 87 street" />
       <input type="hidden" name="address2" value="n/a" />
       <input type="hidden" name="city" value="Edmond" />
