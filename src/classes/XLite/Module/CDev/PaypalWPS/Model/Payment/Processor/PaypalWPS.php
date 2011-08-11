@@ -243,7 +243,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
         return \XLite\View\FormField\Select\TestLiveMode::TEST === $this->getSetting('mode');
     }
 
-
+    
     /**
      * Return ITEM NAME for request
      *
@@ -253,7 +253,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
      */
     protected function getItemName()
     {
-        return $this->getSetting('innerItemName') . '(Order #' . $this->getOrder()->getOrderId() . ')';
+        return $this->getSetting('description') . '(Order #' . $this->getOrder()->getOrderId() . ')';
     }
 
     /**
@@ -271,7 +271,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             'charset'       => 'UTF-8',
             'cmd'           => '_ext-enter',
             'custom'        => $orderId,
-            'invoice'       => $orderId,
+            'invoice'       => $this->getSetting('prefix') . $orderId,
             'redirect_cmd'  => '_xclick',
             'item_name'     => $this->getItemName(),
             'rm'            => '2',

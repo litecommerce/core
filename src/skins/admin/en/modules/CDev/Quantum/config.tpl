@@ -9,21 +9,33 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<ul class="form">
+<table cellspacing="1" cellpadding="5" class="settings-table">
 
-  <li>
+  <tr>
+    <td class="setting-name">
     <label for="settings_login">{t(#Login#)}</label>
+    </td>
+    <td>
     <input type="text" id="settings_login" name="settings[login]" value="{paymentMethod.getSetting(#login#)}" class="field-required" />
-  </li>
+    </td>
+  </tr>
 
-  <li>
+  <tr>
+    <td class="setting-name">
     <label for="settings_hash">{t(#MD5 hash value#)}</label>
+    </td>
+    <td>
     <input type="text" id="settings_hash" name="settings[hash]" value="{paymentMethod.getSetting(#hash#)}" />
-  </li>
+    </td>
+  </tr>
 
-  <li>
+  <tr>
+    <td class="setting-name">
     <label for="settings_prefix">{t(#Invoice number prefix#)}</label>
+    </td>
+    <td>
     <input type="text" id="settings_prefix" value="{paymentMethod.getSetting(#prefix#)}" name="settings[prefix]" />
-  </li>
+    </td>
+  </tr>
 
-</ul>
+</table>

@@ -20,9 +20,7 @@
     {foreach:getOptions(),option}
       <tr>
         {if:!option.type=#separator#}
-          {if:!option.type=#serialized#}
-            <td class="setting-name" width="30%">{option.option_name:h}: </td>
-          {end:}
+          <td IF="!option.type=#serialized#" class="setting-name" width="30%">{option.option_name:h}: </td>
           <td>
 
             {if:option.type=#checkbox#}
