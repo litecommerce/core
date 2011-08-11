@@ -4,6 +4,8 @@ LiteCommerce is a free PHP/MySQL-driven open-source e-commerce solution that all
 
 LiteCommerce is object-oriented, has a modular MVC architecture, uses ORM ({Doctrine 2.0}[https://github.com/doctrine]) for database access. Having that the upgrades are painless and you can easily make various modules and customizations without changing the core code. Moreover, since LiteCommerce avoids speed bottlenecks in the architecture, uses ORM library and supports Memcached it is fast and shows good perfomance.
 
+We plan to release LiteCommerce updates every 2-4 weeks. Please see the [[LiteCommerce 3 changelog]] for information on new features and bug fixes.
+
 Learn more information at {our website}[http://www.litecommerce.com] or {find us on Facebook}[http://facebook.com/litecommerce].
 
 == Contributions
