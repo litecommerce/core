@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Taxes\Model\Tax;
+namespace XLite\Module\CDev\SimpleTaxes\Model\Tax;
 
 /**
  * Rate
@@ -81,13 +81,24 @@ class Rate extends \XLite\Model\AEntity
     protected $type = self::TYPE_PERCENT;
 
     /**
-     * Tax (relation)
+     * Position
      *
-     * @var   \XLite\Module\CDev\Taxes\Model\Tax
+     * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Module\CDev\Taxes\Model\Tax", inversedBy="rates")
+     * @Column (type="integer")
+     */
+    protected $position = 0;
+
+    /**
+     * Tax (relation)
+     *
+     * @var   \XLite\Module\CDev\SimpleTaxes\Model\Tax
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @ManyToOne  (targetEntity="XLite\Module\CDev\SimpleTaxes\Model\Tax", inversedBy="rates")
      * @JoinColumn (name="tax_id", referencedColumnName="id")
      */
     protected $tax;
@@ -114,7 +125,7 @@ class Rate extends \XLite\Model\AEntity
      * @ManyToOne  (targetEntity="XLite\Model\ProductClass", inversedBy="tax_rates")
      * @JoinColumn (name="product_class_id", referencedColumnName="id")
      */
-    protected $product_class;
+    protected $productClass;
 
     /**
      * Membership (relation)

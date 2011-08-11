@@ -25,15 +25,15 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Taxes\Model;
+namespace XLite\Module\CDev\SimpleTaxes\Model;
 
 /**
- * Zone
+ * Product class
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Zone extends \XLite\Model\Zone implements \XLite\Base\IDecorator
+abstract class ProductClass extends \XLite\Model\ProductClass implements \XLite\Base\IDecorator
 {
     /**
      * Tax rates (relation)
@@ -42,9 +42,10 @@ abstract class Zone extends \XLite\Model\Zone implements \XLite\Base\IDecorator
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @OneToMany (targetEntity="XLite\Module\CDev\Taxes\Model\Tax\Rate", mappedBy="zone", cascade={"all"})
+     * @OneToMany (targetEntity="XLite\Module\CDev\SimpleTaxes\Model\Tax\Rate", mappedBy="product_class", cascade={"all"})
      */
     protected $tax_rates;
+
 
     /**
      * Constructor

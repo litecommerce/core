@@ -25,61 +25,37 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Taxes;
+namespace XLite\Module\CDev\SimpleTaxes\View\Form;
 
 /**
- * Main
+ * Edit tax form
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Main extends \XLite\Module\AModule
+class EditTax extends \XLite\View\Form\AForm
 {
     /**
-     * Author name
+     * getDefaultTarget
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAuthorName()
+    protected function getDefaultTarget()
     {
-        return 'Creative Development LLC';
+        return 'taxes';
     }
 
     /**
-     * Module version
+     * getDefaultAction
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getMinorVersion()
+    protected function getDefaultAction()
     {
-        return '0';
-    }
-
-    /**
-     * Module name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getModuleName()
-    {
-        return 'Taxes';
-    }
-
-    /**
-     * Module description
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getDescription()
-    {
-        return 'This module enables taxes';
+        return 'update';
     }
 }

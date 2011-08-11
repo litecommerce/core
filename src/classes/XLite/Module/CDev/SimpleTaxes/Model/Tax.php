@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Taxes\Model;
+namespace XLite\Module\CDev\SimpleTaxes\Model;
 
 /**
  * Tax
@@ -80,10 +80,33 @@ class Tax extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @OneToMany (targetEntity="XLite\Module\CDev\Taxes\Model\Tax\Rate", mappedBy="tax", cascade={"all"})
+     * @OneToMany (targetEntity="XLite\Module\CDev\SimpleTaxes\Model\Tax\Rate", mappedBy="tax", cascade={"all"})
      */
     protected $rates;
 
+    /**
+     * VAT base membership
+     *
+     * @var   \XLite\Model\Membership
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Membership")
+     * @JoinColumn (name="vat_membership_id", referencedColumnName="membership_id")
+     */
+    protected $vatMembership;
+
+    /**
+     * VAT base Zone
+     *
+     * @var   \XLite\Model\Zone
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Zone")
+     * @JoinColumn (name="vat_zone_id", referencedColumnName="zone_id")
+     */
+    protected $vatZone;
 
     /**
      * Constructor
@@ -123,4 +146,33 @@ class Tax extends \XLite\Model\Base\I18n
 
         return $rates;
     }
+
+    /**
+     * Set VAT base membership 
+     * 
+     * @param \XLite\Model\Membership $membership Membership OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setVATMembership(\XLite\Model\Membership $membership = null)
+    {
+        $this->vatMembership = $membership;
+    }
+
+    /**
+     * Set VAT base zone 
+     * 
+     * @param \XLite\Model\Zone $zone Zone
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setVATZone(\XLite\Model\Zone $zone = null)
+    {
+        $this->vatZone = $zone;
+    }
+
 }

@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Taxes\Model\Repo;
+namespace XLite\Module\CDev\SimpleTaxes\Model\Repo;
 
 /**
  * Tax repository

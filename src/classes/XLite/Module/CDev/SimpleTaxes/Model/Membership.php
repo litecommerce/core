@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Taxes\Model;
+namespace XLite\Module\CDev\SimpleTaxes\Model;
 
 /**
  * Membership
@@ -42,7 +42,7 @@ abstract class Membership extends \XLite\Model\Membership implements \XLite\Base
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @OneToMany (targetEntity="XLite\Module\CDev\Taxes\Model\Tax\Rate", mappedBy="membership", cascade={"all"})
+     * @OneToMany (targetEntity="XLite\Module\CDev\SimpleTaxes\Model\Tax\Rate", mappedBy="membership", cascade={"all"})
      */
     protected $tax_rates;
 

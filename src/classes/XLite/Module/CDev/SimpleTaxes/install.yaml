@@ -7,7 +7,7 @@
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
 # @since     1.0.0
-XLite\Module\CDev\Taxes\Model\Tax:
+XLite\Module\CDev\SimpleTaxes\Model\Tax:
   - included: true
     enabled: true
     translations:
@@ -18,3 +18,6 @@ XLite\Module\CDev\Taxes\Model\Tax:
     translations:
       - code: en
         name: Sales tax
+XLite\Model\LanguageLabel:
+  - { name: "After you enabled this tax it will be included in product prices", translations: [{ code: en, label: "After you enabled this tax it will be included in product prices. This means that it will not be shown as separate surcharge during checkout." }] }
+

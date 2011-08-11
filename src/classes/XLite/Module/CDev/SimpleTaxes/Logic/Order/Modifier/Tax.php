@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Taxes\Logic\Order\Modifier;
+namespace XLite\Module\CDev\SimpleTaxes\Logic\Order\Modifier;
 
 /**
  * Tax  business logic
@@ -42,7 +42,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $code = 'CDEV.TAXES';
+    protected $code = 'CDEV.STAXES';
 
 
     /**
@@ -54,7 +54,8 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      */
     public function canApply()
     {
-        return parent::canApply();
+        return parent::canApply()
+            && $this->getTaxes();
     }
 
     // {{{ Calculation
@@ -67,48 +68,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * @since  1.0.0
      */
     public function calculate()
-    {
-        if ($this->isEnabled()) {
-            if ($this->isAvailable()) {
-                $this->calculateAsAvailable();
-
-            } else {
-                $this->calculateAsNotAvailable();
-            }
-        }
-    }
-
-    /**
-     * isEnabled 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isEnabled()
-    {
-        return (bool)$this->getTaxes();
-    }
-
-    /**
-     * isAvailable 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isAvailable()
-    {
-    }
-
-    /**
-     * calculateAsAvailable 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function calculateAsAvailable()
     {
         $zones = $this->getZonesList();
         $memebrship = $this->getMembership();
@@ -137,7 +96,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
                                 }
                             }
                         }
-
                     }
 
                     $previousClasses[] = $productClass;
@@ -164,40 +122,21 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     }
 
     /**
-     * calculateAsNotAvailable 
+     * Get taxes 
      * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function calculateAsNotAvailable()
-    {
-        foreach ($this->getTaxes() as $tax) {
-            $this->addOrderSurcharge(
-                $this->code . '.' . $tax->getId(),
-                0,
-                $tax->getIncluded(),
-                false
-            );
-        }
-    }
-
-    /**
-     * getTaxes 
-     * 
-     * @return void
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getTaxes()
     {
-        return \XLite\Core\Database::getRepo('XLite\Module\CDev\Taxes\Model\Tax')->findActive();
+        return \XLite\Core\Database::getRepo('XLite\Module\CDev\SimpleTaxes\Model\Tax')->findActive();
     }
 
     /**
-     * getZonesList 
+     * Get zones list 
      * 
-     * @return void
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -215,9 +154,9 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     }
 
     /**
-     * getMembership 
+     * Get membership 
      * 
-     * @return void
+     * @return \XLite\Model\Membership
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -229,12 +168,12 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     }
 
     /**
-     * getTaxableItems 
+     * Get taxable items 
      * 
-     * @param \XLite\Model\ProductClass $class         ____param_comment____
-     * @param array                     $previousItems ____param_comment____
+     * @param \XLite\Model\ProductClass $class         Product class
+     * @param array                     $previousItems Previous selected items
      *  
-     * @return void
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -255,9 +194,9 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     }
 
     /**
-     * getAddress 
+     * Get address for zone calculator
      * 
-     * @return void
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -265,7 +204,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     {
         $address = null;
 
-        $addressObj = $this->getOrderAddress();;
+        $addressObj = $this->getOrderAddress();
 
         if ($addressObj) {
 
@@ -283,9 +222,9 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     }
 
     /**
-     * getOrderAddress 
+     * Get order-based address 
      * 
-     * @return void
+     * @return \XLite\Model\Address
      * @see    ____func_see____
      * @since  1.0.0
      */

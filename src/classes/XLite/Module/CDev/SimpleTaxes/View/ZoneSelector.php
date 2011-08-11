@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -25,37 +25,33 @@
  * @since     1.0.0
  */
 
-namespace XLite\View;
+namespace XLite\Module\CDev\SimpleTaxes\View;
 
 /**
- * Membership selection widget
- *
+ * Zone selector 
+ * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class MembershipSelect extends \XLite\View\FormField
+class ZoneSelector extends \XLite\View\AView
 {
     /**
      * Widget parameters names
      */
     const PARAM_FIELD_NAME = 'field';
     const PARAM_VALUE      = 'value';
-    const PARAM_ALL_OPTION = 'allOption';
-    const PARAM_PENDING_OPTION = 'pendingOption';
-
 
     /**
-     * Get active memberships
+     * Get all zones
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getMemberships()
+    public function getZones()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findActiveMemberships();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')->findAllZones();
     }
-
 
     /**
      * Return widget default template
@@ -66,7 +62,7 @@ class MembershipSelect extends \XLite\View\FormField
      */
     protected function getDefaultTemplate()
     {
-        return 'common/select_membership.tpl';
+        return 'modules/CDev/SimpleTaxes/zone_selector.tpl';
     }
 
     /**
@@ -81,10 +77,24 @@ class MembershipSelect extends \XLite\View\FormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FIELD_NAME     => new \XLite\Model\WidgetParam\String('Field', 'membership', false),
-            self::PARAM_VALUE          => new \XLite\Model\WidgetParam\String('Value', '%', false),
-            self::PARAM_ALL_OPTION     => new \XLite\Model\WidgetParam\Bool('Display All option', false, false),
-            self::PARAM_PENDING_OPTION => new \XLite\Model\WidgetParam\Bool('Display Pending option', false, false)
+            self::PARAM_FIELD_NAME => new \XLite\Model\WidgetParam\String('Field', 'membership', false),
+            self::PARAM_VALUE      => new \XLite\Model\WidgetParam\Object('Value', null, false, '\XLite\Model\Zone'),
         );
     }
+
+    /**
+     * Check - specified zone is selected or not
+     * 
+     * @param \XLite\Model\Zone $current Zone
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isSelectedZone(\XLite\Model\Zone $current)
+    {
+        return $this->getParam(self::PARAM_VALUE)
+            && $current->getZoneId() == $this->getParam(self::PARAM_VALUE)->getZoneId();
+    }
 }
+

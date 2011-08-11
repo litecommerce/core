@@ -199,7 +199,7 @@ if (R_INSTALL_SITE || R_INSTALL_SITEADMIN) {
     $enabledModules['CDev'][] = 'AuthorizeNet';
     $enabledModules['CDev'][] = 'Quantum';
     $enabledModules['CDev'][] = 'PaypalWPS';
-    $enabledModules['CDev'][] = 'Taxes';
+    $enabledModules['CDev'][] = 'SimpleTaxes';
     $enabledModules['CDev'][] = 'Moneybookers';
 }
 
