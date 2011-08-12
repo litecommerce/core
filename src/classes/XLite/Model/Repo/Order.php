@@ -72,7 +72,7 @@ class Order extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function findAllExipredTemporaryOrders()
+    public function findAllExpiredTemporaryOrders()
     {
         return $this->defineAllExpiredTemporaryOrdersQuery()->getResult();
     }
@@ -108,7 +108,7 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     public function collectGarbage()
     {
-        $list = $this->findAllExipredTemporaryOrders();
+        $list = $this->findAllExpiredTemporaryOrders();
         if (count($list)) {
             foreach ($list as $order) {
                 \XLite\Core\Database::getEM()->remove($order);
@@ -339,7 +339,7 @@ class Order extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define query for findAllExipredTemporaryOrders() method
+     * Define query for findAllExpiredTemporaryOrders() method
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____

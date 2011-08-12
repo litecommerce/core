@@ -28,17 +28,17 @@
 class XLite_Tests_Model_Repo_Order extends XLite_Tests_Model_OrderAbstract
 {
 
-    public function testFindAllExipredTemporaryOrders()
+    public function testFindAllExpiredTemporaryOrders()
     {
         $order = $this->getTestOrder();
 
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAllExipredTemporaryOrders();
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAllExpiredTemporaryOrders();
         foreach ($list as $o) {
             \XLite\Core\Database::getEM()->remove($o);
         }
         \XLite\Core\Database::getEM()->flush();
 
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAllExipredTemporaryOrders();
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAllExpiredTemporaryOrders();
 
         $this->assertEquals(0, count($list), 'empty list');
 
@@ -48,7 +48,7 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_Model_OrderAbstract
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAllExipredTemporaryOrders();
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAllExpiredTemporaryOrders();
 
         $this->assertEquals(1, count($list), 'not empty list');
         $this->assertEquals($order->getOrderId(), $list[0]->getOrderId(), 'check order id');
@@ -94,13 +94,13 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_Model_OrderAbstract
 
         \XLite\Core\Database::getEM()->flush();
 
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAllExipredTemporaryOrders();
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAllExpiredTemporaryOrders();
 
         $this->assertTrue(0 < count($list), 'not empty list');
 
         \XLite\Core\Database::getRepo('XLite\Model\Order')->collectGarbage();
 
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAllExipredTemporaryOrders();
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAllExpiredTemporaryOrders();
 
         $this->assertEquals(0, count($list), 'empty list');
     }
