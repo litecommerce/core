@@ -428,7 +428,7 @@ div.page-tabs
 
 div.tab-content
 {
-  margin: 15px;
+  margin: 30px 0px 15px 0px;
 }
 
 div.page-tabs ul
@@ -655,6 +655,36 @@ ul.form li .note
 {
   display: block;
   font-size: 10px;
+}
+
+/**
+ * Table-based form
+ */
+table.form {
+}
+
+table.form td.star {
+  color: #47b2cf;
+  width: auto;
+  padding-left: 11px;
+  padding-right: 6px;
+  padding-bottom: 6px;
+  line-height: normal;
+}
+
+table.form td.label label {
+  font-size: 16px;
+  line-height: 22px;
+  color: #456583;
+}
+
+table.form input[type="text"],
+table.form input[type="password"],
+table.form input[type="text"]
+{
+  border-width: 1px;
+  font-size: 16px;
+  padding: 6px;
 }
 
 /* Settings pages */

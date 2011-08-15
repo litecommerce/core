@@ -141,5 +141,125 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
     }
 
     // }}}
+
+    // {{{ Actions
+
+    /**
+     * Update tax rate
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionUpdate()
+    {
+        $tax = $this->getTax();
+
+        // Set VAT base properties
+        if ($this->isVAT()) {
+
+            $vatMembership = \XLite\Core\Request::getInstance()->vatMembership;
+            $vatMembership = $vatMembership
+                ? \XLite\Core\Database::getRepo('XLite\Model\Membership')->find($vatMembership)
+                : null;
+            $tax->setVATMembership($vatMembership);
+
+            $vatZone = \XLite\Core\Request::getInstance()->vatZone;
+            $vatZone = $vatZone
+                ? \XLite\Core\Database::getRepo('XLite\Model\Zone')->find($vatZone)
+                : null;
+            $tax->setVATZone($vatZone);
+        }
+
+        $rates = \XLite\Core\Request::getInstance()->rates;
+        if (is_array($rates)) {
+            foreach ($rates as $rateId => $data) {
+
+                if ('%' == $rateId) {
+                    $rate = null;
+
+                } elseif (0 < $rateId) {
+
+                    $rate = null;
+                    foreach ($tax->getRates() as $r) {
+                        if ($r->getId() == $rateId) {
+                            $rate = $r;
+                            break;
+                        }
+                    }
+
+                } else {
+                    $rate = new \XLite\Module\CDev\SimpleTaxes\Model\Tax\Rate;
+                    $tax->addRates($rate);
+                    $rate->setTax($tax);
+                    \XLite\Core\Database::getEM()->persist($rate);
+                }
+
+                if ($rate && 0 < strlen(trim($data['value']))) {
+
+                    $productClass = $data['productClass']
+                        ? \XLite\Core\Database::getRepo('XLite\Model\ProductClass')->find($data['productClass'])
+                        : null;
+                    $rate->setProductClass($productClass);
+                    unset($data['productClass']);
+
+                    $membership = $data['membership']
+                        ? \XLite\Core\Database::getRepo('XLite\Model\Membership')->find($data['membership'])
+                        : null;
+                    $rate->setMembership($membership);
+                    unset($data['membership']);
+
+                    $zone = $data['zone']
+                        ? \XLite\Core\Database::getRepo('XLite\Model\Zone')->find($data['zone'])
+                        : null;
+                    $rate->setZone($zone);
+                    unset($data['zone']);
+
+                    $data['position'] = intval($data['position']);
+                    $data['value'] = doubleval($data['value']);
+
+                    $rate->map($data);
+                }
+            }
+        }
+
+        \XLite\Core\TopMessage::addInfo('Tax rates has been updated successfully');
+        \Xlite\Core\Database::getEM()->flush();
+    }
+
+    /**
+     * Remove tax rate 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionRemoveRate()
+    {
+        $rate = null;
+        $rateId = \XLite\Core\Request::getInstance()->id;
+
+        foreach ($this->getTax()->getRates() as $r) {
+            if ($r->getId() == $rateId) {
+                $rate = $r;
+                break;
+            }
+        }
+
+        if ($rate) {
+            $this->getTax()->getRates()->removeElement($rate);
+            \XLite\Core\Database::getEM()->remove($rate);
+            \XLite\Core\TopMessage::addInfo('Tax rate has been deleted successfully');
+            $this->setPureAction(true);
+
+        } else {
+            $this->valid = false;
+            \XLite\Core\TopMessage::addError('Tax rate has not been deleted successfully');
+        }
+
+        \Xlite\Core\Database::getEM()->flush();
+    }
+
+    // }}}
 }
 

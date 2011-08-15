@@ -81,6 +81,7 @@ class Tax extends \XLite\Model\Base\I18n
      * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\SimpleTaxes\Model\Tax\Rate", mappedBy="tax", cascade={"all"})
+     * @OrderBy ({"position" = "ASC"})
      */
     protected $rates;
 

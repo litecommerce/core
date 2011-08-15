@@ -25,54 +25,25 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\SimpleTaxes\View\Form;
+namespace XLite\Module\CDev\SimpleTaxes\View\Button;
 
 /**
- * Edit tax form
+ * Swict tax button
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class EditTax extends \XLite\View\Form\AForm
+class SwitchTax extends \XLite\View\Button\AButton
 {
     /**
-     * getDefaultTarget
+     * Return widget default template
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultTarget()
+    protected function getDefaultTemplate()
     {
-        return 'taxes';
+        return 'modules/CDev/SimpleTaxes/button/switch_tax.tpl';
     }
-
-    /**
-     * getDefaultAction
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultAction()
-    {
-        return 'update';
-    }
-
-    /**
-     * Required form parameters
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCommonFormParams()
-    {
-        $list = parent::getCommonFormParams();
-
-        $list['page'] = \XLite\Core\Request::getInstance()->page;
-
-        return $list;
-    }
-
 }
