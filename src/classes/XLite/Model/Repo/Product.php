@@ -409,7 +409,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
     /**
      * Returns array of allowed values for 'includes' input variable
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.1

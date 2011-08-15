@@ -43,7 +43,7 @@ abstract class AItemsList extends \XLite\View\Container
     const PARAM_SORT_ORDER   = 'sortOrder';
 
     /**
-     * SQL orederby directions
+     * SQL orderby directions
      */
 
     const SORT_ORDER_ASC  = 'asc';
