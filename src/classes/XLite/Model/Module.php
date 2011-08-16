@@ -529,6 +529,23 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
+     * Return some data to identify module
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.6
+     */
+    public function getIdentityData()
+    {
+        return array(
+            'author'       => $this->getAuthor(),
+            'name'         => $this->getName(),
+            'majorVersion' => $this->getMajorVersion(),
+            'minorVersion' => $this->getMinorVersion(),
+        );
+    }
+
+    /**
      * Generate marketplace ID
      * 
      * @return string
@@ -538,9 +555,7 @@ class Module extends \XLite\Model\AEntity
     public function getMarketplaceID()
     {
         if (!isset($this->marketplaceID)) {
-            $this->marketplaceID = md5(
-                $this->getAuthor() . $this->getName() . $this->getMajorVersion() . $this->getMinorVersion()
-            );
+            $this->marketplaceID = md5(implode('', $this->getIdentityData()));
         }
 
         return $this->marketplaceID;
