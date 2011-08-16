@@ -25,16 +25,21 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\SimpleTaxes\View\Button;
+namespace XLite\View\Button;
 
 /**
- * Swict tax button
+ * Switch state button
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class SwitchTax extends \XLite\View\Button\AButton
+class SwitchState extends \XLite\View\Button\Regular
 {
+    /**
+     * Widget parameter names
+     */
+    const PARAM_ENABLED = 'enabled';
+
     /**
      * Return widget default template
      *
@@ -44,6 +49,36 @@ class SwitchTax extends \XLite\View\Button\AButton
      */
     protected function getDefaultTemplate()
     {
-        return 'modules/CDev/SimpleTaxes/button/switch_tax.tpl';
+        return 'button/switch-state.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_ENABLED => new \XLite\Model\WidgetParam\Bool('Enabled', true),
+        );
+    }
+
+    /**
+     * Get style 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function  getStyle()
+    {
+        return 'switch-state '
+            . ($this->getParam(self::PARAM_ENABLED) ? 'enabled-state' : 'disabled-state')
+            . ($this->getParam(self::PARAM_STYLE) ? ' ' . $this->getParam(self::PARAM_STYLE) : '');
     }
 }

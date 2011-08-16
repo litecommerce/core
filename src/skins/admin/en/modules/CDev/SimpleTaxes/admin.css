@@ -48,41 +48,6 @@ body.taxes #main {
   padding-left: 12px;
 }
 
-.edit-tax td.button button {
-  border: none;
-  background: transparent url(images/tri_button.png) no-repeat left top;
-  padding: 0px;
-  padding-left: 10px;
-  height: auto;
-}
-
-.edit-tax td.button button div {
-  -moz-top-right-border-radius: 3px;
-  -moz-bottom-right-border-radius: 3px;
-  -webkit-top-right-border-radius: 3px;
-  -webkit-bottom-right-border-radius: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-  background: url(../../../images/button.png) repeat-x center top #eff8fe;
-  border: 1px solid #cadce8;
-  height: 17px;
-  padding: 5px 12px 2px 7px;
-  border-left: none;
-}
-
-.edit-tax .tax-switcher img {
-  background: transparent url(../../../images/switch.png) no-repeat left top;
-  height: 16px;
-  width: 16px;
-  vertical-align: middle;
-  margin-right: 7px;
-  margin-top: -5px;
-}
-
-.edit-tax td.button .disabled img {
-  background-position: left 16px;
-}
-
 .edit-tax .vat-base {
   padding-left: 2px;
   padding-top: 23px;
@@ -226,4 +191,30 @@ body.taxes #main {
   text-align: center;
   width: 800px;
   margin-top: 0px;
+}
+
+table.data tr.no-data-note {
+  display: none;
+}
+
+table.data.empty-data {
+  padding-bottom: 8px;
+}
+
+table.data.empty-data tr.no-data-note {
+  display: table-row;
+}
+
+table.data.empty-data tr.head {
+  display: none;
+}
+
+.edit-tax table.data .no-data-note td {
+  text-align: left;
+  padding-top: 12px;
+  padding-bottom: 11px;
+  background-color: #f5f5f5;
+  padding-left: 20px;
+  font-size: 16px;
+  border-bottom: none;
 }

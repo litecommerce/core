@@ -155,6 +155,14 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
     {
         $tax = $this->getTax();
 
+        $name = trim(\XLite\Core\Request::getInstance()->name);
+        if (0 < strlen($name)) {
+            $tax->setName($name);
+
+        } else {
+            \XLite\Core\TopMessage::addError('The name of the tax has not been preserved, because that is not filled');
+        }
+
         // Set VAT base properties
         if ($this->isVAT()) {
 
@@ -176,10 +184,13 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
             foreach ($rates as $rateId => $data) {
 
                 if ('%' == $rateId) {
+
+                    // Temporary (fake) rate
                     $rate = null;
 
                 } elseif (0 < $rateId) {
 
+                    // Find rate by rateId
                     $rate = null;
                     foreach ($tax->getRates() as $r) {
                         if ($r->getId() == $rateId) {
@@ -188,14 +199,16 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
                         }
                     }
 
-                } else {
+                } elseif (0 < strlen(trim($data['value']))) {
+
+                    // Create new rate if value not empty
                     $rate = new \XLite\Module\CDev\SimpleTaxes\Model\Tax\Rate;
                     $tax->addRates($rate);
                     $rate->setTax($tax);
                     \XLite\Core\Database::getEM()->persist($rate);
                 }
 
-                if ($rate && 0 < strlen(trim($data['value']))) {
+                if ($rate) {
 
                     $productClass = $data['productClass']
                         ? \XLite\Core\Database::getRepo('XLite\Model\ProductClass')->find($data['productClass'])
@@ -215,8 +228,8 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
                     $rate->setZone($zone);
                     unset($data['zone']);
 
-                    $data['position'] = intval($data['position']);
-                    $data['value'] = doubleval($data['value']);
+                    $data['position'] = intval(trim($data['position']));
+                    $data['value'] = doubleval(trim($data['value']));
 
                     $rate->map($data);
                 }
@@ -258,6 +271,27 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
         }
 
         \Xlite\Core\Database::getEM()->flush();
+    }
+
+    /**
+     * Switch tax state
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionSwitch()
+    {
+        $tax = $this->getTax();
+        $tax->setEnabled(!$tax->getEnabled());
+        \XLite\Core\Database::getEM()->flush();
+
+        if ($tax->getEnabled()) {
+            \XLite\Core\TopMessage::addInfo('Tax has been enabled successfully');
+
+        } else {
+            \XLite\Core\TopMessage::addInfo('Tax has been disabled successfully');
+        }
     }
 
     // }}}

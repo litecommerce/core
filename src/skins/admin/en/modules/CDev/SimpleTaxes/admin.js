@@ -13,6 +13,16 @@
 jQuery().ready(
   function() {
 
+    var checkTaxRatesState = function()
+    {
+      if (3 < jQuery('.edit-tax table.data tr').length) {
+        jQuery('.edit-tax table.data').removeClass('empty-data');
+
+      } else {
+        jQuery('.edit-tax table.data').addClass('empty-data');
+      }
+    }
+
     var lastNewRowId = -1;
 
     jQuery('.edit-tax button.new-rate').click(
@@ -28,6 +38,8 @@ jQuery().ready(
         );
         lastNewRowId--;
         row.show();
+
+        checkTaxRatesState();
 
         return false;
       }
@@ -47,11 +59,13 @@ jQuery().ready(
               URLHandler.buildURL({target: 'taxes', action: 'removeRate', page: page, id: id}),
               function() {
                 row.remove();
+                checkTaxRatesState();
               }
             );
 
           } else {
             jQuery(this).parents('tr').eq(0).remove();
+            checkTaxRatesState();
           }
         }
 

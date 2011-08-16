@@ -26,12 +26,12 @@
     <tr>
       <td class="label"><label for="tax-title">{t(#Tax title#)}:</label></td>
       <td class="star">*</td>
-      <td><input type="text" name="name" value="{tax.getName()}" /></td>
+      <td><input type="text" name="name" value="{tax.getName()}" class="field-required" /></td>
       <td class="button">
         {if:tax.getEnabled()}
-          <widget class="\XLite\Module\CDev\SimpleTaxes\View\Button\SwitchTax" label="{t(#Tax enabled#)}" style="tax-switcher enabled" />
+          <widget class="\XLite\View\Button\SwitchState" label="{t(#Tax enabled#)}" enabled="true" action="switch" />
         {else:}
-          <widget class="\XLite\Module\CDev\SimpleTaxes\View\Button\SwitchTax" label="{t(#Tax disabled#)}" style="tax-switcher disabled" />
+          <widget class="\XLite\View\Button\SwitchState" label="{t(#Tax disabled#)}" enabled="false" action="switch" />
         {end:}
       </td>
     </tr>
@@ -58,9 +58,9 @@
 
   <p class="rates-note">{t(#If the product is assigned to multiple classes only the first tax rate with highest priority will be applied on it.#)}</p>
 
-  <table class="data">
+  <table class="data{if:tax.rates.count()=0} empty-data{end:}">
 
-    <tr>
+    <tr class="head">
       <th class="position">{t(#Priority#)}</th>
       <th>{t(#Product class#)}</th>
       <th>{t(#User membership#)}</th>
@@ -94,9 +94,15 @@
       </td>
     </tr>
 
+    <tr class="no-data-note">
+      <td colspan="5">{t(#Not tax rate defined#)}</td>
+    </tr>
+
   </table>
 
-  <widget class="\XLite\View\Button\Regular" label="{t(#New rate#)}" style="new-rate" jsCode="return false;" />
+  <div>
+    <widget class="\XLite\View\Button\Regular" label="{t(#New rate#)}" style="new-rate" jsCode="return false;" />
+  </div>
 
   <div class="buttons">
     <widget class="\XLite\View\Button\Submit" label="{t(#Save#)}" style="action" />
