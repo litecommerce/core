@@ -13,6 +13,35 @@
 jQuery().ready(
   function() {
 
+    jQuery('.edit-tax table.form button.switch-state')
+      .removeAttr('onclick')
+      .click(
+      function() {
+        var o = this;
+        o.disabled = true;
+        var page = jQuery(this).parents('form').get(0).elements.namedItem('page').value;
+        core.post(
+          URLHandler.buildURL({target: 'taxes', action: 'switch', page: page}),
+          function(XMLHttpRequest, textStatus, data, valid) {
+            o.disabled = false;
+            if (valid) {
+              var td = jQuery('.edit-tax table.form td.button');
+              if (td.hasClass('enabled')) {
+                td.removeClass('enabled');
+                td.addClass('disabled');
+              
+              } else {
+                td.removeClass('disabled');
+                td.addClass('enabled');
+              }
+            }
+          }
+        );
+
+        return false;
+      }
+    );
+
     var checkTaxRatesState = function()
     {
       if (3 < jQuery('.edit-tax table.data tr').length) {
@@ -57,9 +86,12 @@ jQuery().ready(
             var page = jQuery(this).parents('form').get(0).elements.namedItem('page').value;
             core.post(
               URLHandler.buildURL({target: 'taxes', action: 'removeRate', page: page, id: id}),
-              function() {
-                row.remove();
-                checkTaxRatesState();
+              function(XMLHttpRequest, textStatus, data, valid) {
+                jQuery('input,select,button', row).removeAttr('disabled');
+                if (valid) {
+                  row.remove();
+                  checkTaxRatesState();
+                }
               }
             );
 

@@ -48,6 +48,15 @@ body.taxes #main {
   padding-left: 12px;
 }
 
+.edit-tax table.form td.button.enabled button.disabled-state {
+  display: none;
+}
+
+.edit-tax table.form td.button.disabled button.enabled-state {
+  display: none;
+}
+
+
 .edit-tax .vat-base {
   padding-left: 2px;
   padding-top: 23px;

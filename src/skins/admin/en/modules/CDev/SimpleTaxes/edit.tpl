@@ -27,12 +27,9 @@
       <td class="label"><label for="tax-title">{t(#Tax title#)}:</label></td>
       <td class="star">*</td>
       <td><input type="text" name="name" value="{tax.getName()}" class="field-required" /></td>
-      <td class="button">
-        {if:tax.getEnabled()}
+      <td class="button {if:tax.getEnabled()}enabled{else:}disabled{end:}">
           <widget class="\XLite\View\Button\SwitchState" label="{t(#Tax enabled#)}" enabled="true" action="switch" />
-        {else:}
           <widget class="\XLite\View\Button\SwitchState" label="{t(#Tax disabled#)}" enabled="false" action="switch" />
-        {end:}
       </td>
     </tr>
 

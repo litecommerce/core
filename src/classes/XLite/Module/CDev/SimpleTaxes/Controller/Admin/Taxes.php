@@ -285,6 +285,7 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
         $tax = $this->getTax();
         $tax->setEnabled(!$tax->getEnabled());
         \XLite\Core\Database::getEM()->flush();
+        $this->setPureAction(true);
 
         if ($tax->getEnabled()) {
             \XLite\Core\TopMessage::addInfo('Tax has been enabled successfully');
