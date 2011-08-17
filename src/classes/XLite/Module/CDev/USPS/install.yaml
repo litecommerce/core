@@ -1,0 +1,147 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Fixtures
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+# @since     1.0.0
+XLite\Model\Config:
+  - name: userid
+    category: CDev\USPS
+    translations:
+      - code: en
+        option_name: User ID
+  - name: length
+    category: CDev\USPS
+    value: 10
+    translations:
+      - code: en
+        option_name: Package length (mm)
+  - name: width
+    category: CDev\USPS
+    value: 7
+    translations:
+      - code: en
+        option_name: Package width (mm)
+  - name: height
+    category: CDev\USPS
+    value: 9
+    translations:
+      - code: en
+        option_name: Package height (mm)
+  - name: girth
+    category: CDev\USPS
+    value: 0
+    translations:
+      - code: en
+        option_name: Girth
+  - name: currency_rate
+    category: CDev\USPS
+    value: 1
+    translations:
+      - code: en
+        option_name: Currency rate
+        option_comment: (specify rate X, where 1 USD = X in shop currency)
+  - name: container
+    category: CDev\USPS
+    value: VARIABLE
+    translations:
+      - code: en
+        option_name: Container
+  - name: package_size
+    category: CDev\USPS
+    value: REGULAR
+    translations:
+      - code: en
+        option_name: Package size
+  - name: machinable
+    category: CDev\USPS
+    type: checkbox
+    value: Y
+    translations:
+      - code: en
+        option_name: Machinable
+  - name: mail_type
+    category: CDev\USPS
+    value: Package
+    translations:
+      - code: en
+        option_name: Mail type
+  - name: container_intl
+    category: CDev\USPS
+    value: RECTANGULAR
+    translations:
+      - code: en
+        option_name: Container (Intl)
+  - name: commercial
+    category: CDev\USPS
+    type: checkbox
+    value: N
+    translations:
+      - code: en
+        option_name: Commercial
+  - name: gxg
+    category: CDev\USPS
+    type: checkbox
+    value: N
+    translations:
+      - code: en
+        option_name: GXG enabled
+  - name: gxg_pobox
+    category: CDev\USPS
+    type: checkbox
+    value: N
+    translations:
+      - code: en
+        option_name: GXG destination is a post office box
+  - name: gxg_gift
+    category: CDev\USPS
+    type: checkbox
+    value: N
+    translations:
+      - code: en
+        option_name: GXG package contains a gift
+XLite\Model\Shipping\Method:
+  - processor: usps
+    carrier: usps
+    code: D-0
+    enabled: 1
+    position: 10
+    translations:
+      - code: en
+        name: First-Class Mail
+  - processor: usps
+    carrier: usps
+    code: D-1
+    enabled: 1
+    position: 10
+    translations:
+      - code: en
+        name: "Priority Mail<sup>&reg;</sup>"
+  - processor: usps
+    carrier: usps
+    code: D-2
+    enabled: 1
+    position: 10
+    translations:
+      - code: en
+        name: "Express Mail<sup>&reg;</sup> Hold For Pickup"
+  - processor: usps
+    carrier: usps
+    code: D-3
+    enabled: 1
+    position: 10
+    translations:
+      - code: en
+        name: "Express Mail<sup>&reg;</sup>"
+  - processor: usps
+    carrier: usps
+    code: D-4
+    enabled: 1
+    position: 10
+    translations:
+      - code: en
+        name: "Parcel Post<sup>&reg;</sup>"
+
