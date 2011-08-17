@@ -12,5 +12,5 @@
  *}
 <td class="shipping" IF="getShippingModifier()&shippingModifier.getMethod()">
   <strong>{t(#Shipping method#)}:</strong>
-  {shippingModifier.method.getName()}
+  {shippingModifier.method.getName():h}
 </td>
