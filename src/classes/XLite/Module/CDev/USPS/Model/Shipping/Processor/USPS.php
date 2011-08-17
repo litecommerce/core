@@ -445,25 +445,25 @@ OUT;
 
         $xml = \XLite\Core\XML::getInstance();
 
-        $xmlParsed = $xml->func_xml_parse($stringData, $err);
+        $xmlParsed = $xml->parse($stringData, $err);
 
-        $error = $xml->func_array_path($xmlParsed, $this->getApiName() . 'Response/Package/Error');
+        $error = $xml->getArrayByPath($xmlParsed, $this->getApiName() . 'Response/Package/Error');
 
         if ($error) {
-            $result['err_msg'] = $xml->func_array_path($error, 'Description/0/#');
+            $result['err_msg'] = $xml->getArrayByPath($error, 'Description/0/#');
 
         } else {
 
             $result['err_msg'] = 'OK';
 
-            $postage = $xml->func_array_path($xmlParsed, $this->getApiName() . 'Response/Package/Postage');
+            $postage = $xml->getArrayByPath($xmlParsed, $this->getApiName() . 'Response/Package/Postage');
 
             if ($postage) {
                 foreach ($postage as $k => $v) {
                     $result['postage'][] = array(
-                        'CLASSID' => 'D-' . $xml->func_array_path($v, '@/CLASSID'),
-                        'MailService' => html_entity_decode($xml->func_array_path($v, '#/MailService/0/#')),
-                        'Rate' => $xml->func_array_path($v, '#/Rate/0/#'),
+                        'CLASSID' => 'D-' . $xml->getArrayByPath($v, '@/CLASSID'),
+                        'MailService' => html_entity_decode($xml->getArrayByPath($v, '#/MailService/0/#')),
+                        'Rate' => $xml->getArrayByPath($v, '#/Rate/0/#'),
                     );
                 }
             }
@@ -590,25 +590,25 @@ OUT;
 
         $xml = \XLite\Core\XML::getInstance();
 
-        $xmlParsed = $xml->func_xml_parse($stringData, $err);
+        $xmlParsed = $xml->parse($stringData, $err);
 
-        $error = $xml->func_array_path($xmlParsed, $this->getApiName() . 'Response/Package/Error');
+        $error = $xml->getArrayByPath($xmlParsed, $this->getApiName() . 'Response/Package/Error');
 
         if ($error) {
-            $result['err_msg'] = $xml->func_array_path($error, 'Description/0/#');
+            $result['err_msg'] = $xml->getArrayByPath($error, 'Description/0/#');
 
         } else {
 
             $result['err_msg'] = 'OK';
 
-            $postage = $xml->func_array_path($xmlParsed, $this->getApiName() . 'Response/Package/Service');
+            $postage = $xml->getArrayByPath($xmlParsed, $this->getApiName() . 'Response/Package/Service');
 
             if ($postage) {
                 foreach ($postage as $k => $v) {
                     $result['postage'][] = array(
-                        'CLASSID' => 'I-' . $xml->func_array_path($v, '@/ID'),
-                        'MailService' => html_entity_decode($xml->func_array_path($v, '#/SvcDescription/0/#')),
-                        'Rate' => $xml->func_array_path($v, '#/Postage/0/#'),
+                        'CLASSID' => 'I-' . $xml->getArrayByPath($v, '@/ID'),
+                        'MailService' => html_entity_decode($xml->getArrayByPath($v, '#/SvcDescription/0/#')),
+                        'Rate' => $xml->getArrayByPath($v, '#/Postage/0/#'),
                     );
                 }
             }
