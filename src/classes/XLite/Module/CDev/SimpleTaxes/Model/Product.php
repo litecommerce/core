@@ -58,19 +58,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     }
 
     /**
-     * Return product sale price
-     *
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getSalePrice()
-    {
-        return \XLite\Module\CDev\SimpleTaxes\Logic\Product\Tax::getInstance()
-            ->calculateProductPrice($this, parent::getSalePrice());
-    }
-
-    /**
      * Get included tax list 
      * 
      * @return array

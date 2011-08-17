@@ -39,7 +39,6 @@ XLite\Model\Config:
   - { name: enable_extra_fields_inherit, category: General, type: checkbox, orderby: 480, value: Y, translations: [{ code: en, option_name: 'Enable products to inherit extra fields from disabled categories', option_comment: '' }] }
   - { name: enable_init_order_notif, category: Email, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'E-mail order details to the sales department after order placement', option_comment: '' }] }
   - { name: enable_init_order_notif_customer, category: Email, type: checkbox, value: N, translations: [{ code: en, option_name: 'E-mail order details to customers after order placement', option_comment: '' }] }
-  - { name: enable_sale_price, category: General, type: checkbox, orderby: 295, value: Y, translations: [{ code: en, option_name: 'Enable "Market price" feature', option_comment: '' }] }
   - { name: form_id_protection, category: Security, type: checkbox, orderby: 90, value: Y, translations: [{ code: en, option_name: 'Enable admin forms protection system', option_comment: '' }] }
   - { name: full_customer_security, category: Security, type: checkbox, orderby: 5, value: N, translations: [{ code: en, option_name: 'Customer Zone fully on HTTPS', option_comment: '' }] }
   - { name: last_date, category: Htaccess, value: '0' }
@@ -95,7 +94,6 @@ XLite\Model\Config:
   - { name: weight_symbol, category: General, type: text, orderby: 620, value: lbs, translations: [{ code: en, option_name: 'Weight symbol', option_comment: '' }] }
   - { name: weight_unit, category: General, type: select, orderby: 610, value: lbs, translations: [{ code: en, option_name: 'Weight unit', option_comment: '' }] }
   - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency', option_comment: '' }] }
-  - { name: you_save, category: General, type: select, orderby: 296, value: Y, translations: [{ code: en, option_name: 'Enable "save" label (for Market Price)', option_comment: '' }] }
   - { name: default_language, category: General, orderby: 330, value: en }
   - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address', option_comment: '' }] }
   - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line', option_comment: '' }] }

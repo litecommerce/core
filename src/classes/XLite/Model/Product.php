@@ -73,17 +73,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     protected $price = 0.0000;
 
     /**
-     * Product sale price
-     *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="decimal", precision=14, scale=4)
-     */
-    protected $sale_price = 0.0000;
-
-    /**
      * Product SKU
      *
      * @var   string
@@ -367,18 +356,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     public function getListPrice()
     {
         return $this->getPrice();
-    }
-
-    /**
-     * Return product sale price (market price)
-     *
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getSalePrice()
-    {
-        return $this->sale_price;
     }
 
     /**
