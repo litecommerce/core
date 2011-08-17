@@ -52,8 +52,11 @@ class Price extends \XLite\View\AView
      */
     public function isSalePriceEnabled()
     {
+        $product = $this->getProduct();
+        $currency = \XLite::getInstance()->getCurrency();
+
         return \XLite\Core\Config::getInstance()->General->enable_sale_price
-            && $this->getProduct()->getSalePrice() > $this->getProduct()->getListPrice();
+            && $currency->formatValue($product->getSalePrice()) > $currency->formatValue($product->getListPrice());
     }
 
     /**

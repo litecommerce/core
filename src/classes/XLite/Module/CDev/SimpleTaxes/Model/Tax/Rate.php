@@ -142,27 +142,32 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Check - rate is applyed by specified zones and membership or nopt
      *
-     * @param array                   $zones      Zones id list
-     * @param \XLite\Model\Membership $membership Membership
+     * @param array                                        $zones          Zone id list
+     * @param \XLite\Model\Membership                      $membership     Membership
+     * @param \Doctrine\Common\Collections\ArrayCollection $productClasses Product classes OPTIONAL
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isApplyed(array $zones, \XLite\Model\Membership $membership)
-    {
+    public function isApplyed(
+        array $zones,
+        \XLite\Model\Membership $membership,
+        \Doctrine\Common\Collections\ArrayCollection $productClasses = null
+    ) {
         return (!$this->getZone() || in_array($this->getZone()->getZoneId(), $zones))
-            && (!$this->getMembership() || ($membership && $this->getMembership()->getMembershipId() == $membership->getMembershipId()));
+            && (!$this->getMembership() || ($membership && $this->getMembership()->getMembershipId() == $membership->getMembershipId()))
+            && (!$this->getProductClass() || ($productClasses && $productClasses->contains($this->getProductClass())));
     }
 
     // {{{ Calculation
 
     /**
-     * calculate 
+     * Calculate 
      * 
-     * @param array $items ____param_comment____
+     * @param array $items Items
      *  
-     * @return void
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -188,6 +193,51 @@ class Rate extends \XLite\Model\AEntity
     }
 
     /**
+     * Calculate product price
+     *
+     * @param \XLite\Model\Product $product Product
+     * @param float                $price   Price
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function calculateProductPrice(\XLite\Model\Product $product, $price)
+    {
+        $cost = 0;
+        if ($this->getProductBasis($product) && $this->getTax()->getIncluded()) {
+            $cost = $this->getType() == static::TYPE_PERCENT
+                ? $this->calculatePriceIncludePercent($price)
+                : $this->calculatePriceIncludeAbsolute($price);
+        }
+
+        return $cost;
+    }
+
+    /**
+     * Calculate VAT cost by product 
+     * 
+     * @param \XLite\Model\Product $product Product
+     *  
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function calculateProduct(\XLite\Model\Product $product)
+    {
+        $cost = 0;
+        $base = $this->getProductBasis($product);
+
+        if ($base && $this->getTax()->getIncluded()) {
+            $cost = $this->getType() == static::TYPE_PERCENT
+                ? $this->calculatePriceIncludePercent($base)
+                : $this->calculatePriceIncludeAbsolute($base);
+        }
+
+        return $cost;
+    }
+
+    /**
      * getBasis 
      * 
      * @param array $items ____param_comment____
@@ -205,6 +255,20 @@ class Rate extends \XLite\Model\AEntity
         }
 
         return $basis;
+    }
+
+    /**
+     * Get product taxable basis 
+     * 
+     * @param \XLite\Model\Product $product Product
+     *  
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getProductBasis(\XLite\Model\Product $product)
+    {
+        return $product->getTaxableBasis();
     }
 
     /**
@@ -293,6 +357,34 @@ class Rate extends \XLite\Model\AEntity
     protected function calculateIncludeAbsolute(array $items)
     {
         $cost = $this->getValue() * $this->getQuantity();
+    }
+
+    /**
+     * Calculate VAT for single product price (percent value)
+     *
+     * @param float $price Price
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function calculatePriceIncludePercent($price)
+    {
+        return $price - $price / (100 + $this->getValue()) * 100;
+    }
+
+    /**
+     * Calculate VAT for single product price (absolute value)
+     * 
+     * @param float $price Price
+     *  
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function calculatePriceIncludeAbsolute($price)
+    {
+        return $this->getValue();
     }
 
     // }}}

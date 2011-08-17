@@ -358,7 +358,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Return product list price
+     * Return product list price (price for customer interface)
      *
      * @return float
      * @see    ____func_see____
@@ -367,6 +367,18 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     public function getListPrice()
     {
         return $this->getPrice();
+    }
+
+    /**
+     * Return product sale price (market price)
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getSalePrice()
+    {
+        return $this->sale_price;
     }
 
     /**
