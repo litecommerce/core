@@ -220,7 +220,7 @@ class Usps extends \XLite\Controller\Admin\ShippingSettings
 
             $startTime = microtime(true);
 
-            $rates = $usps->getRatesByArray($data, true);
+            $rates = $usps->getRates($data, true);
 
             $proceedTime = microtime(true) - $startTime;
 

@@ -32,7 +32,9 @@ extends XLite_Tests_Model_OrderAbstract
     {
         parent::setUp();
 
-        $this->doRestoreDb(__DIR__ . '/sql/shipping/setup.sql', false);
+        if ($this->checkTestName()) {
+            $this->doRestoreDb(__DIR__ . '/sql/shipping/setup.sql', false);
+        }
     }
 
     /**
@@ -47,7 +49,9 @@ extends XLite_Tests_Model_OrderAbstract
     {
         parent::tearDown();
 
-        $this->doRestoreDb();
+        if ($this->checkTestName()) {
+            $this->doRestoreDb();
+        }
     }
 
     /**
@@ -107,7 +111,7 @@ extends XLite_Tests_Model_OrderAbstract
     {
         $processor = new XLite\Module\CDev\AustraliaPost\Model\Shipping\Processor\AustraliaPost();
 
-        $this->assertTrue($processor->isMethodNamesAdjustable());
+        $this->assertFalse($processor->isMethodNamesAdjustable());
     }
 
     /**
@@ -185,7 +189,7 @@ extends XLite_Tests_Model_OrderAbstract
             )
         );
 
-        $rates = $processor->getRatesByArray($data);
+        $rates = $processor->getRates($data, true);
 
         $this->assertTrue(is_array($rates), 'getRates() must return an array (#2)');
 
@@ -250,4 +254,20 @@ extends XLite_Tests_Model_OrderAbstract
         return $order;
     }
 
+    /**
+     * Return true for specific methods (methods which require database adjustments) 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkTestName()
+    {
+        return in_array(
+            $this->getName(),
+            array(
+                'testGetRates',
+            )
+        );
+    }
 }

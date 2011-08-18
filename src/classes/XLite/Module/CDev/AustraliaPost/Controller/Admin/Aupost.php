@@ -133,7 +133,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
 
             $startTime = microtime(true);
 
-            $rates = $aupost->getRatesByArray($data, true);
+            $rates = $aupost->getRates($data, true);
 
             $proceedTime = microtime(true) - $startTime;
 

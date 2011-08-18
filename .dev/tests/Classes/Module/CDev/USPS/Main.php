@@ -25,46 +25,35 @@
  * @since      1.0.0
  */
 
-namespace XLite\Model;
-
-class FakeShippingProcessor extends \XLite\Model\Shipping\Processor\AProcessor
+class XLite_Tests_Module_CDev_USPS_Main extends XLite_Tests_TestCase
 {
-    /**
-     * processorId
-     *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
-     */
-    protected $processorId = 'test';
-
-    /**
-     * getProcessorName
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getProcessorName()
+    public function testGetModuleName()
     {
-        return 'test';
+        $main = $this->getMain();
+        $this->assertEquals('U.S.P.S.', $main::getModuleName(), 'Wrong module name');
     }
 
-    /**
-     * getRates
-     *
-     * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
-     * @param bool                                 $ignoreCache Ignore cache flag
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getRates($modifier, $ignoreCache = false)
+    public function testGetDescription()
     {
-        return array();
+        $main = $this->getMain();
+        $this->assertEquals('Gets shipping quotes for U.S.P.S. delivery methods.', $main::getDescription(), 'Wrong description');
     }
+
+    public function testGetVersion()
+    {
+        $main = $this->getMain();
+        $this->assertEquals('1.0.0', $main::getVersion(), 'Wrong version');
+    }
+
+    public function testShowSettingsForm()
+    {
+        $main = $this->getMain();
+        $this->assertTrue($main::showSettingsForm(), 'Wrong flag to show settings form');
+    }
+
+    protected function getMain()
+    {
+        return 'XLite\Module\CDev\USPS\Main';
+    }
+
 }

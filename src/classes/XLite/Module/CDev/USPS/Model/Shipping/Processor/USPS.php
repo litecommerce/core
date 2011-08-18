@@ -34,7 +34,7 @@ namespace XLite\Module\CDev\USPS\Model\Shipping\Processor;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class USPS extends \XLite\Model\Shipping\Processor\AProcessor implements \XLite\Base\IDecorator
+class USPS extends \XLite\Model\Shipping\Processor\AProcessor
 {
     /**
      * Types of available API
@@ -102,43 +102,27 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor implements \XLite\
     /**
      * Returns shipping rates by shipping order modifier (used on checkout)
      *
-     * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
-     * @param boolean                              $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
+     * @param array|\XLite\Logic\Order\Modifier\Shipping $inputData   Shipping order modifier or array of data for request
+     * @param boolean                                    $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
+    public function getRates($inputData, $ignoreCache = false)
     {
         $rates = array();
 
         if ($this->isConfigured() && 'US' == \XLite\Core\Config::getInstance()->Company->location_country) {
 
-            $data = $this->prepareRequestData($modifier);
+            $data = $this->prepareRequestData($inputData);
 
             if (isset($data)) {
                 $rates = $this->doQuery($data, $ignoreCache);
             }
         }
 
-        // Return shipping rates list
         return $rates;
-    }
-
-    /**
-     * Returns shipping rates by array of input parameters (used when tesing rates in admin area)
-     *
-     * @param array   $inputData   Array with data for shipping calculation
-     * @param boolean $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getRatesByArray(array $inputData, $ignoreCache = false)
-    {
-        return $this->doQuery($this->prepareRequestData($inputData), true); // $ignoreCache);
     }
 
     /**
@@ -378,34 +362,13 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor implements \XLite\
 
             $packIdStr = sprintf('%02d', $packId);
 
-            if (!empty($pack['Container'])) {
+            if (!empty($pack['Girth']) && in_array($pack['Container'], array('NONRECTANGULAR', 'VARIABLE'))) {
 
-                if (in_array($pack['Container'], array('NONRECTANGULAR', 'VARIABLE'))) {
-                    $girth = <<<OUT
+                $girth = <<<OUT
         <Girth>{$pack['Girth']}</Girth>
 OUT;
-                }
-
-                $container = <<<OUT
-        <Container>{$pack['Container']}</Container>
-        <Size>{$pack['Size']}</Size>
-        <Width>{$pack['Width']}</Width>
-        <Length>{$pack['Length']}</Length>
-        <Height>{$pack['Height']}</Height>
-$girth
-        <Value>{$pack['Value']}</Value>
-OUT;
             } else {
-                $container = <<<OUT
-        <Container/>
-        <Size>REGULAR</Size>
-OUT;
-            }
-
-            if (!empty($pack['ShipDate'])) {
-                $shipDate = <<<OUT
-        <ShipDate>{$pack['ShipDate']}</ShipDate>
-OUT;
+                $girth = '';
             }
 
             $packages = <<<OUT
@@ -415,9 +378,14 @@ OUT;
         <ZipDestination>{$pack['ZipDestination']}</ZipDestination>
         <Pounds>{$pack['Pounds']}</Pounds>
         <Ounces>{$pack['Ounces']}</Ounces>
-$container
+        <Container>{$pack['Container']}</Container>
+        <Size>{$pack['Size']}</Size>
+        <Width>{$pack['Width']}</Width>
+        <Length>{$pack['Length']}</Length>
+        <Height>{$pack['Height']}</Height>
+$girth
+        <Value>{$pack['Value']}</Value>
         <Machinable>{$pack['Machinable']}</Machinable>
-$shipDate
     </Package>
 OUT;
         }
@@ -633,6 +601,45 @@ OUT;
         return $this->apiURL;
     }
 
+    /**
+     * Returns array(pounds, ounces) from a weight value in specific weight units
+     * 
+     * @param float $weight Weight value
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPoundsOunces($weight)
+    {
+        $pounds = $ounces = 0;
+
+        switch (\XLite\Core\Config::getInstance()->General->weight_unit) {
+
+            case 'lbs':
+                $pounds = $weight;
+                break;
+
+            case 'oz':
+                $ounces = $weight;
+                break;
+
+            default:
+                $ounces = \XLite\Core\Converter::convertWeightUnits(
+                    $weight,
+                    \XLite\Core\Config::getInstance()->General->weight_unit,
+                    'oz'
+                );
+        }
+
+        if (intval($pounds) < $pounds) {
+            $ounces = ($pounds - intval($pounds)) * 16;
+            $pounds = intval($pounds);
+        }
+
+        return array($pounds, round($ounces, 1));
+    }
+
 
     /**
      * Returns a type of API 
@@ -687,45 +694,6 @@ OUT;
     protected function isConfigured()
     {
         return !empty(\XLite\Core\Config::getInstance()->CDev->USPS->userid);
-    }
-
-    /**
-     * Returns array(pounds, ounces) from a weight value in specific weight units
-     * 
-     * @param float $weight Weight value
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getPoundsOunces($weight)
-    {
-        $pounds = $ounces = 0;
-
-        switch (\XLite\Core\Config::getInstance()->General->weight_unit) {
-
-            case 'lbs':
-                $pounds = $weight;
-                break;
-
-            case 'oz':
-                $ounces = $weight;
-                break;
-
-            default:
-                $ounces = \XLite\Core\Converter::convertWeightUnits(
-                    $weight,
-                    \XLite\Core\Config::getInstance()->General->weight_unit,
-                    'oz'
-                );
-        }
-
-        if (intval($pounds) < $pounds) {
-            $ounces = round(($pounds - intval($pounds)) * 16, 1);
-            $pounds = intval($pounds);
-        }
-
-        return array($pounds, $ounces);
     }
 
     /**
