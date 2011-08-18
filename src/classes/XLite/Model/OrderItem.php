@@ -196,12 +196,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function getProduct()
     {
-        $product = null;
-        if ('XLite\Model\OrderItem' == get_called_class()) {
-            $product = $this->getObject() ?: $this->getDeletedProduct();
-        }
-
-        return $product;
+        return ('XLite\Model\OrderItem' == get_called_class() && $this->getObject())
+            ? $this->getObject()
+            : $this->getDeletedProduct();
     }
 
     /**
