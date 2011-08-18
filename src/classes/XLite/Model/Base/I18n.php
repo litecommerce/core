@@ -129,7 +129,7 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     public function getTranslation($code = null)
     {
-        if (is_null($code)) {
+        if (!isset($code)) {
             $code = $this->getDefaultLanguageCode();
         }
 
@@ -166,7 +166,7 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     public function getSoftTranslation($code = null)
     {
-        if (is_null($code)) {
+        if (!isset($code)) {
             $code = $this->getDefaultLanguageCode();
         }
 

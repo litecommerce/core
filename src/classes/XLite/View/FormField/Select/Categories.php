@@ -50,48 +50,26 @@ class Categories extends \XLite\View\FormField\Select\Multiple
     /**
      * Return default options list
      *
+     * :NOTE: categories will be fetched in "\XLite\View\CategorySelect" widget (see template)
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategories();
+        return array();
     }
 
     /**
-     * isCategorySelected
+     * Return IDs of the selected categories
      *
-     * @param integer $categoryId Cateory ID to check
-     *
-     * @return boolean
+     * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.6
      */
-    protected function isCategorySelected($categoryId)
+    protected function getSelectedIDs()
     {
-        return (bool) \Includes\Utils\ArrayManager::searchInObjectsArray(
-            $this->getValue(),
-            'category_id',
-            $categoryId,
-            false
-        );
-    }
-
-    /**
-     * getIndentation
-     *
-     * @param \XLite\Model\Category $category   Category model object
-     * @param integer               $multiplier Level's multiplier
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getIndentation(\XLite\Model\Category $category, $multiplier)
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryDepth(
-            $category->getCategoryId()
-        ) * $multiplier - 1;
+        return \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($this->getValue(), 'getCategoryId');
     }
 }

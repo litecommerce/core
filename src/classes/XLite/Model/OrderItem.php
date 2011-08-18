@@ -196,12 +196,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function getProduct()
     {
-        $product = null;
-        if ('XLite\Model\OrderItem' == get_called_class()) {
-            $product = $this->getObject() ?: $this->getDeletedProduct();
-        }
-
-        return $product;
+        return ('XLite\Model\OrderItem' == get_called_class() && $this->getObject())
+            ? $this->getObject()
+            : $this->getDeletedProduct();
     }
 
     /**
@@ -321,7 +318,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function getDescription()
     {
-        return $this->getObject()->getName() . ' (' . $this->getAmount() . ')';
+        return $this->getProduct()->getName() . ' (' . $this->getAmount() . ')';
     }
 
     /**
@@ -333,7 +330,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function getURL()
     {
-        return $this->getObject()->getURL();
+        return $this->getProduct()->getURL();
     }
 
     /**
@@ -345,7 +342,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function isShippable()
     {
-        return !$this->getObject()->getFreeShipping();
+        return !$this->getProduct()->getFreeShipping();
     }
 
     /**
@@ -357,7 +354,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function getKey()
     {
-        return self::PRODUCT_TYPE . '.' . $this->getObject()->getId();
+        return self::PRODUCT_TYPE . '.' . $this->getProduct()->getId();
     }
 
     /**
@@ -428,7 +425,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
             'item_id'     => $this->getItemId(),
             'key'         => $this->getKey(),
             'object_type' => self::PRODUCT_TYPE,
-            'object_id'   => $this->getObject()->getId(),
+            'object_id'   => $this->getProduct()->getId(),
         );
     }
 

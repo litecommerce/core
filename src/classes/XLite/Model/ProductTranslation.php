@@ -38,7 +38,8 @@ namespace XLite\Model;
  * @Table (name="product_translations",
  *         indexes={
  *              @Index (name="ci", columns={"code","id"}),
- *              @Index (name="id", columns={"id"})
+ *              @Index (name="id", columns={"id"}),
+ *              @index (name="name", columns={"name"})
  *         }
  * )
  */

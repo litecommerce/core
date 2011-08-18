@@ -88,7 +88,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return $result;
     }
 
-
     /**
      * Return target to retrive this widget from AJAX
      *
@@ -100,7 +99,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         return self::WIDGET_TARGET;
     }
-
 
     /**
      * Returns CSS classes for the container element
@@ -324,15 +322,11 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $result = parent::getSearchCondition();
 
         foreach (\XLite\View\ItemsList\Product\Customer\Search::getSearchParams() as $modelParam => $requestParam) {
-
             $paramValue = $this->getParam($requestParam);
 
             if ('' !== $paramValue && 0 !== $paramValue) {
-
                 $result->$modelParam = $paramValue;
-
             }
-
         }
 
         return $result;

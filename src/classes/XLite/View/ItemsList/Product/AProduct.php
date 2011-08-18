@@ -148,6 +148,19 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
+     * Return 'Order by' array.
+     * array(<Field to order>, <Sort direction>)
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.6
+     */
+    protected function getOrderBy()
+    {
+        return array($this->getSortBy(), $this->getSortOrder());
+    }
+
+    /**
      * getSortByModeDefault
      *
      * @return string
@@ -169,7 +182,9 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     protected function getSearchCondition()
     {
         $result = parent::getSearchCondition();
-        $result->{\XLite\Model\Repo\Product::P_ORDER_BY} = array($this->getSortBy(), $this->getSortOrder());
+
+        // We initialize structure to define order (field and sort direction) in search query.
+        $result->{\XLite\Model\Repo\Product::P_ORDER_BY} = $this->getOrderBy();
 
         return $result;
     }

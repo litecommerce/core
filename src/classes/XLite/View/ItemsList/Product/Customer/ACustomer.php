@@ -387,18 +387,23 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
-     * Return params list to use for search
+     * Return 'OrderBy' parameter
      *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.6
      */
-    protected function getSearchCondition()
+    protected function getOrderBy()
     {
-        $result = parent::getSearchCondition();
-        $result->{\XLite\Model\Repo\Product::P_ORDER_BY} = explode(' ', $this->getSortBy());
+        $orderBy = parent::getOrderBy();
 
-        return $result;
+        $sortOrder = explode(' ', $orderBy[0]);
+
+        if (count($sortOrder) > 1) {
+            $orderBy = $sortOrder;
+        }
+
+        return $orderBy;
     }
 
     /**
@@ -455,7 +460,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
     /**
      * Check - current widget type is sidebar
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0

@@ -306,8 +306,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         $this->setReturnURL($this->buildURL('upgrade'));
 
         if ($this->isNextStepAvailable()) {
-
-            // :DEVCODE: to remove
             \Includes\Utils\Operator::showMessage('Downloading updates, please wait...');
 
             // Disable some modules (if needed)
@@ -323,7 +321,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             }
 
         } else {
-            $this->showError(__FUNCTION__, 'not ready to download packs');
+            $this->showWarning(__FUNCTION__, 'not ready to download packs. Please, try again');
         }
     }
 
@@ -339,8 +337,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         $this->setReturnURL($this->buildURL('upgrade'));
 
         if (\XLite\Upgrade\Cell::getInstance()->isDownloaded()) {
-
-            // :DEVCODE: to remove
             \Includes\Utils\Operator::showMessage('Unpacking archives, please wait...');
 
             if (!$this->runStep('unpackAll')) {
@@ -370,8 +366,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         $this->setReturnURL($this->buildURL('upgrade'));
 
         if (\XLite\Upgrade\Cell::getInstance()->isUnpacked()) {
-
-            // :DEVCODE: to remove
             \Includes\Utils\Operator::showMessage('Checking integrity, please wait...');
 
             // Perform upgrade in test mode
@@ -397,41 +391,45 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
     {
         $this->setReturnURL($this->buildURL('upgrade'));
 
-        // :DEVCODE: to remove
-        \Includes\Utils\Operator::showMessage('Installing updates, please wait...');
+        if (\XLite\Upgrade\Cell::getInstance()->isUnpacked()) {
+            \Includes\Utils\Operator::showMessage('Installing updates, please wait...');
 
-        // Perform upgrade
-        $this->runStep('upgrade', array(false, $this->getOverwrittenFiles()));
+            // Perform upgrade
+            $this->runStep('upgrade', array(false, $this->getOverwrittenFiles()));
 
-        // Disable selected modules
-        foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
-            \Includes\Utils\ModulesManager::disableModule($module->getActualName());
-        }
-
-        if ($this->isForce()) {
-            if ($this->isNextStepAvailable()) {
-                $target = 'installed';
-                $this->showInfo(null, 'Module has been successfully installed');
-
-            } else {
-                $target = 'marketplace';
-                $this->showError(__FUNCTION__);
+            // Disable selected modules
+            foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
+                \Includes\Utils\ModulesManager::disableModule($module->getActualName());
             }
 
-            $this->setReturnURL(
-                $this->buildURL(
-                    'upgrade',
-                    '',
-                    $this->getActionParamsCommon() + array('redirect' => 'addons_list_' . $target))
-            );
+            if ($this->isForce()) {
+                if ($this->isNextStepAvailable()) {
+                    $target = 'installed';
+                    $this->showInfo(null, 'Module has been successfully installed');
+
+                } else {
+                    $target = 'marketplace';
+                    $this->showError(__FUNCTION__);
+                }
+
+                $this->setReturnURL(
+                    $this->buildURL(
+                        'upgrade',
+                        '',
+                        $this->getActionParamsCommon() + array('redirect' => 'addons_list_' . $target))
+                );
+            }
+
+            // Set cell status
+            \XLite\Upgrade\Cell::getInstance()->clear(true, false, false);
+            \XLite\Upgrade\Cell::getInstance()->setUpgraded(true);
+
+            // Rebuild cache
+            \XLite::setCleanUpCacheFlag(true);
+
+        } else {
+            $this->showWarning(__FUNCTION__, 'unable to install: not all archives were unpacked. Please, try again');
         }
-
-        // Set cell status
-        \XLite\Upgrade\Cell::getInstance()->clear(true, false, false);
-        \XLite\Upgrade\Cell::getInstance()->setUpgraded(true);
-
-        // Rebuild cache
-        \XLite::setCleanUpCacheFlag(true);
     }
 
     /**
