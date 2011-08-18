@@ -15,9 +15,12 @@
     <span {getAttributesCode():h}>{getParam(#caption#)}</span>
   {end:}
   <div class="help-text staxes-vat-tooltip-box">
-    <ul>
-      <li FOREACH="getVATTaxes(),name,value"><span class="name">{name}:</span><span class="value">{formatPrice(value)}</span></li>
-    </ul>
+    <table cellspacing="0">
+      <tr FOREACH="getVATTaxes(),name,value">
+        <td class="name">{name}:</td>
+        <td class="value">{formatPrice(value)}</td>
+      </tr>
+    </table>
   </div>
 </div>
 <div class="clear"></div>

@@ -18,27 +18,40 @@
   color: #2c5fa6;
   border-bottom: 1px dotted #2c5fa6;
   font-size: 16px;
+  cursor: help;
 }
 
-.staxes-vat-tooltip-box ul,
-.staxes-vat-tooltip-box ul li,
-.vat-detailsformError ul,
-.vat-detailsformError ul li
+.vat-detailsformError {
+  overflow: visible;
+}
+
+.vat-detailsformError table {
+  margin: 2px 0px;
+  border: none;
+}
+
+.vat-detailsformError table tr,
+.vat-detailsformError table tbody
 {
+  border: none;
+}
+
+.vat-detailsformError table tr td {
   padding: 0px;
-  margin: 0px;
-  list-style: none;
-  background: transparent none;
-}
-
-.vat-detailsformError ul {
-  padding: 6px 8px;
-}
-
-.vat-detailsformError ul li span {
   font-size: 14px;
+  border: none;
+  padding: 2px 4px;
 }
 
-.vat-detailsformError ul li .value {
-  float: right;
+.vat-detailsformError table td.name {
+  padding-right: 6px;
+}
+
+.vat-detailsformError .formErrorContent {
+  width: auto;
+  margin-top: -5px;
+}
+
+.vat-detailsformError table td.value {
+  text-align: right;
 }
