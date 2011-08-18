@@ -153,6 +153,34 @@ class Tax extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Get filtered rate by zones and membership
+     *
+     * @param array                                        $zones          Zone id list
+     * @param \XLite\Model\Membership                      $membership     Membership
+     * @param \Doctrine\Common\Collections\ArrayCollection $productClasses Product classes OPTIONAL
+     *
+     * @return \XLite\Module\CDev\SimpleTaxes\Model\Tax\Rate
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getFilteredRate(
+        array $zones,
+        \XLite\Model\Membership $membership,
+        \Doctrine\Common\Collections\ArrayCollection $productClasses = null
+    ) {
+        $found = null;
+
+        foreach ($this->getRates() as $rate) {
+            if ($rate->isApplyed($zones, $membership, $productClasses)) {
+                $found = $rate;
+                break;
+            }
+        }
+
+        return $found;
+    }
+
+    /**
      * Set VAT base membership 
      * 
      * @param \XLite\Model\Membership $membership Membership OPTIONAL

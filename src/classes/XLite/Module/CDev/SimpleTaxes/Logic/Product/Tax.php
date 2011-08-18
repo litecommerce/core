@@ -53,9 +53,13 @@ class Tax extends \XLite\Logic\ALogic
         $memebrship = $this->getMembership();
 
         foreach ($this->getTaxes() as $tax) {
-            foreach ($tax->getFilteredRates($zones, $memebrship, $product->getClasses()) as $rate) {
-                $price -= $rate->calculateProductPrice($product, $price);
-                break;
+            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
+            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
+            $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
+
+            if ($included != $rate) {
+                $price -= $included->calculateProductPrice($product, $price);
+                $price += $rate->calculateProductPrice($product, $price);
             }
         }
 

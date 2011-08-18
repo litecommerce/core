@@ -1,0 +1,44 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Product widget styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.0
+ */
+.staxes-vat-tooltip {
+  display: inline;
+  padding-left: 5px;
+}
+
+.staxes-vat-tooltip .tooltip-caption {
+  color: #2c5fa6;
+  border-bottom: 1px dotted #2c5fa6;
+  font-size: 16px;
+}
+
+.staxes-vat-tooltip-box ul,
+.staxes-vat-tooltip-box ul li,
+.vat-detailsformError ul,
+.vat-detailsformError ul li
+{
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+  background: transparent none;
+}
+
+.vat-detailsformError ul {
+  padding: 6px 8px;
+}
+
+.vat-detailsformError ul li span {
+  font-size: 14px;
+}
+
+.vat-detailsformError ul li .value {
+  float: right;
+}
