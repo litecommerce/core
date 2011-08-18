@@ -25,15 +25,15 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\AustraliaPost\Controller\Admin;
+namespace XLite\Module\CDev\USPS\Controller\Admin;
 
 /**
- * ____description____
+ * USPS module settings page controller
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Aupost extends \XLite\Controller\Admin\ShippingSettings
+class Usps extends \XLite\Controller\Admin\ShippingSettings
 {
     /**
      * Return the current page title (for the content area)
@@ -44,7 +44,83 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      */
     public function getTitle()
     {
-        return 'AustraliaPost settings';
+        return 'U.S.P.S. settings';
+    }
+
+    /**
+     * Returns options for PackageSize selector 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPackageSizeOptions()
+    {
+        return array(
+            'REGULAR'  => 'Regular (package dimensions are 12" or less)',
+            'LARGE'    => 'Large (any package dimension is larger than 12")',
+        );
+    }
+
+    /**
+     * Returns options for MailType selector 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMailTypeOptions()
+    {
+        return array(
+            'Package'                  => 'Package',
+            'Postcards or aerogrammes' => 'Postcards or aerogrammes',
+            'Envelope'                 => 'Envelope',
+            'LargeEnvelope'            => 'Large envelope',
+            'FlatRate'                 => 'Flat rate',
+        );
+    }
+
+    /**
+     * Returns options for Container selector (domestic API)
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getContainerOptions()
+    {
+        return array(
+            'VARIABLE'       => 'Variable',
+            'FLAT RATE ENVELOPE' => 'Flat rate envelope',
+            'PADDED FLAT RATE ENVELOPE' => 'Padded flat rate envelope',
+            'LEGAL FLAT RATE ENVELOPE' => 'Legal flat rate envelope',
+            'SM FLAT RATE ENVELOPE' => 'SM flat rate envelope',
+            'WINDOW FLAT RATE ENVELOPE' => 'Window flat rate envelope',
+            'GIFT CARD FLAT RATE ENVELOPE' => 'Gift card flat rate envelope',
+            'FLAT RATE BOX' => ' Flat rate box',
+            'SM FLAT RATE BOX' => 'SM flat rate box',
+            'MD FLAT RATE BOX' => 'MD flat rate box',
+            'LG FLAT RATE BOX' => 'LG flat rate box',
+            'REGIONALRATEBOXA' => 'Regional rate boxA',
+            'REGIONALRATEBOXB' => 'Regional rate boxB',
+            'RECTANGULAR'    => 'Rectangular',
+            'NONRECTANGULAR' => 'Non-rectangular',
+        );
+    }
+
+    /**
+     * Returns options for Container selector (international API) 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getContainerIntlOptions()
+    {
+        return array(
+            'RECTANGULAR'    => 'Rectangular',
+            'NONRECTANGULAR' => 'Non-rectangular',
+        );
     }
 
 
@@ -57,7 +133,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      */
     protected function getLocation()
     {
-        return 'AustraliaPost settings';
+        return 'U.S.P.S. settings';
     }
 
     /**
@@ -69,7 +145,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      */
     protected function getOptionsCategory()
     {
-        return 'CDev\AustraliaPost';
+        return 'CDev\USPS';
     }
 
     /**
@@ -87,13 +163,6 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
 
         $data = array();
         $errorFields = array();
-
-        if (isset($postedData['weight']) && 0 < doubleval($postedData['weight'])) {
-            $data['weight'] = doubleval($postedData['weight']);
-
-        } else {
-            $data['weight'] = 1;
-        }
 
         if (isset($postedData['sourceZipcode']) && !empty($postedData['sourceZipcode'])) {
             $data['srcAddress']['zipcode'] = $postedData['sourceZipcode'];
@@ -116,6 +185,24 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
             $errorFields[] = 'destinationCountry';
         }
 
+        $package = array();
+
+        if (isset($postedData['weight']) && 0 < doubleval($postedData['weight'])) {
+            $package['weight'] = doubleval($postedData['weight']);
+
+        } else {
+            $package['weight'] = 1;
+        }
+
+        if (isset($postedData['subtotal']) && 0 < doubleval($postedData['subtotal'])) {
+            $package['subtotal'] = doubleval($postedData['subtotal']);
+
+        } else {
+            $package['subtotal'] = 1;
+        }
+
+        $data['packages'] = array($package);
+
         echo ('<h2>Input data</h2>');
 
         ob_start();
@@ -129,11 +216,11 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
 
             // Get rates
 
-            $aupost = new \XLite\Module\CDev\AustraliaPost\Model\Shipping\Processor\AustraliaPost();
+            $usps = new \XLite\Module\CDev\USPS\Model\Shipping\Processor\USPS();
 
             $startTime = microtime(true);
 
-            $rates = $aupost->getRates($data, true);
+            $rates = $usps->getRates($data, true);
 
             $proceedTime = microtime(true) - $startTime;
 
@@ -164,8 +251,8 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
             echo ('<h3>$errorMsg</h3>');
         }
 
-        if (isset($aupost)) {
-            $cmLog = $aupost->getApiCommunicationLog();
+        if (isset($usps)) {
+            $cmLog = $usps->getApiCommunicationLog();
         }
 
         if (isset($cmLog)) {
@@ -174,7 +261,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
 
             ob_start();
 
-            echo ('API URL: ' . $aupost->getApiURL() . PHP_EOL . PHP_EOL);
+            echo ('API URL: ' . $usps->getApiURL() . PHP_EOL . PHP_EOL);
 
             foreach ($cmLog as $log) {
                 print_r($log);
@@ -189,5 +276,4 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
 
         die ();
     }
-
 }

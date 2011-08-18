@@ -71,24 +71,27 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
+    public function getRates($modifier, $ignoreCache = false)
     {
         $rates = array();
 
-        // Find markups for all enabled offline shipping methods
-        $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')
-            ->findMarkupsByProcessor($this->getProcessorId(), $modifier);
+        if ($modifier instanceOf \XLite\Logic\Order\Modifier\Shipping) {
 
-        if (!empty($markups)) {
+            // Find markups for all enabled offline shipping methods
+            $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')
+                ->findMarkupsByProcessor($this->getProcessorId(), $modifier);
 
-            // Create shipping rates list
-            foreach ($markups as $markup) {
-                $rate = new \XLite\Model\Shipping\Rate();
-                $rate->setMethod($markup->getShippingMethod());
-                $rate->setBaseRate(self::PROCESSOR_DEFAULT_BASE_RATE);
-                $rate->setMarkup($markup);
-                $rate->setMarkupRate($markup->getMarkupValue());
-                $rates[] = $rate;
+            if (!empty($markups)) {
+
+                // Create shipping rates list
+                foreach ($markups as $markup) {
+                    $rate = new \XLite\Model\Shipping\Rate();
+                    $rate->setMethod($markup->getShippingMethod());
+                    $rate->setBaseRate(self::PROCESSOR_DEFAULT_BASE_RATE);
+                    $rate->setMarkup($markup);
+                    $rate->setMarkupRate($markup->getMarkupValue());
+                    $rates[] = $rate;
+                }
             }
         }
 

@@ -75,14 +75,14 @@ abstract class AProcessor extends \XLite\Base\SuperClass
     /**
      * Returns processor's shipping methods rates
      *
-     * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
-     * @param boolean                              $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
+     * @param array|\XLite\Logic\Order\Modifier\Shipping $inputData   Shipping order modifier or array of data
+     * @param boolean                                    $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    abstract public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false);
+    abstract public function getRates($inputData, $ignoreCache = false);
 
 
     /**

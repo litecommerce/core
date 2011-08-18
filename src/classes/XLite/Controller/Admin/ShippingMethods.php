@@ -97,7 +97,10 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 
                 $method->setPosition(intval($data['position']));
                 $method->setEnabled(isset($data['enabled']) ? 1 : 0);
-                $method->getTranslation($code)->name = $data['name'];
+                
+                if (isset($data['name'])) {
+                    $method->getTranslation($code)->name = $data['name'];
+                }
 
                 $method->getClasses()->clear();
                 $method->setClasses($this->getClasses($method));
