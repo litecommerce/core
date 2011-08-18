@@ -10,6 +10,4 @@
  * @since     1.0.0
  *}
 
-<select id="{getFieldId()}" name="{getName()}"{getAttributesCode():h} />
-  <option FOREACH="getOptions(),category" value="{category.getCategoryId()}" style="padding-left: {getIndentation(category,15)}px;" selected="{isCategorySelected(category.getCategoryId())}">{category.getName()}</option>
-</select>
+<widget class="\XLite\View\CategorySelect" isMultiple="{#1#}" fieldName="{getName()}" selectedCategoryIds="{getSelectedIDs()}" />

@@ -41,7 +41,8 @@ namespace XLite\Model;
  *          @Index (name="enabled", columns={"enabled"}),
  *          @Index (name="weight", columns={"weight"}),
  *          @Index (name="free_shipping", columns={"free_shipping"}),
- *          @Index (name="clean_url", columns={"clean_url"})
+ *          @Index (name="clean_url", columns={"clean_url"}),
+ *          @Index (name="arrivalDate", columns={"arrivalDate"})
  *      }
  * )
  * @HasLifecycleCallbacks

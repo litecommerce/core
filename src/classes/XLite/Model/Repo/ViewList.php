@@ -86,6 +86,7 @@ class ViewList extends \XLite\Model\Repo\ARepo
     public function findClassList($list, $zone = \XLite\Model\ViewList::INTERFACE_CUSTOMER)
     {
         $data = $this->getFromCache('class_list', array('list' => $list, 'zone' => $zone));
+
         if (!isset($data)) {
             $data = $this->defineClassListQuery($list, $zone)->getResult();
             $this->saveToCache($data, 'class_list', array('list' => $list, 'zone' => $zone));
