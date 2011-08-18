@@ -41,6 +41,15 @@ class Category extends \XLite\Model\Repo\Base\I18n
     const CATEGORY_ID_ROOT = 1;
 
     /**
+     * Maximum value of the "rpos" field in all records
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.6
+     */
+    protected $maxRightPos;
+
+    /**
      * Flush unit-of-work changes after every record loading
      *
      * @var   boolean
@@ -123,6 +132,20 @@ class Category extends \XLite\Model\Repo\Base\I18n
     public function getCategories($rootId = null)
     {
         return $this->defineFullTreeQuery($rootId)->getResult();
+    }
+
+     /**
+     * Return full list of categories
+     *
+     * @param integer $rootId ID of the subtree root OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCategoriesPlainList($rootId = null)
+    {
+        return $this->defineFullTreeQuery($rootId)->getArrayResult();
     }
 
     /**
@@ -566,7 +589,11 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function getMaxRightPos()
     {
-        return $this->defineMaxRightPosQuery()->getSingleScalarResult();
+        if (!isset($this->maxRightPos)) {
+            $this->maxRightPos = $this->defineMaxRightPosQuery()->getSingleScalarResult();
+        }
+
+        return $this->maxRightPos;
     }
 
     /**
@@ -588,14 +615,15 @@ class Category extends \XLite\Model\Repo\Base\I18n
         if (isset($parent)) {
             $entity->setLpos($parent->getLpos() + 1);
             $entity->setRpos($parent->getLpos() + 2);
-            $entity->setParent($parent);
+            $entity->setDepth($parent->getDepth() + 1);
 
         } else {
             // :TODO: - rework - add support last root category
             $entity->setLpos(1);
             $entity->setRpos(2);
-            $entity->setParent(null);
         }
+
+        $entity->setParent($parent);
     }
 
     /**
@@ -688,7 +716,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $this->prepareNewCategoryData($entity, $parent);
 
             } else {
-                \Includes\ErrorHandler::fireError(__METHOD__ . ': category #' . $parentID . 'not found');
+                \Includes\ErrorHandler::fireError(__METHOD__ . ': category #' . $parentID . ' not found');
             }
         }
 

@@ -10,16 +10,16 @@
  * @since     1.0.0
  *}
 
-<select name="{getParam(#fieldName#)}" size="1" {if:nonFixed} style="width:200px" {else:}  class="fixed-select" {end:}  >
-   <option value="" IF="getParam(#allOption#)">All</option>
-   <option value="" IF="getParam(#noneOption#)">None</option>
-   <option value="" IF="getParam(#rootOption#)" class="CenterBorder">[Root Level]</option>
-	{foreach:getCategories(),key,category}
+<select name="{getParam(#fieldName#)}"{if:getParam(#isMultiple#)} multiple="multiple"{end:}{if:nonFixed} style="width:200pt"{else:} class="FixedSelect"{end:}>
+  <option value="" IF="getParam(#allOption#)">{t(#All#)}</option>
+  <option value="" IF="getParam(#noneOption#)">{t(#None#)}</option>
+  <option value="" IF="getParam(#rootOption#)" class="CenterBorder">{t(#Root level#)}</option>
+  {foreach:getCategories(),key,category}
     <option
-      IF="!category.category_id=getParam(#currentCategoryId#)"
-      value="{category.category_id:r}"
+      IF="!getArrayField(category,#category_id#)=getParam(#currentCategoryId#)"
+      value="{getArrayField(category,#category_id#)}"
       selected="{isCategorySelected(category)}"
       style="padding-left: {getIndentation(category,15)}px;">{getCategoryPath(category):h}</option>
-	{end:}
-  <option value="" IF="isDisplayNoCategories()">-- No categories --</option>
+  {end:}
+  <option value="" IF="isDisplayNoCategories()">{t(#-- No categories --#)}</option>
 </select>

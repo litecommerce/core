@@ -319,7 +319,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
         $list = parent::defineCacheCells();
 
         $list['all'] = array();
-
         $list['category'] = array(
             self::ATTRS_CACHE_CELL => array('category')
         );

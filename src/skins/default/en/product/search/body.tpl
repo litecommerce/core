@@ -98,7 +98,7 @@
           {t(#Category#)}:
         </td>
         <td>
-          <widget class="\XLite\View\CategorySelect" fieldName="categoryId" selectedCategoryId="{getCondition(#categoryId#):r}" allOption />
+          <widget class="\XLite\View\CategorySelect" fieldName="categoryId" selectedCategoryIds="{_ARRAY_(getCondition(#categoryId#))}" allOption />
         </td>
       </tr>
 

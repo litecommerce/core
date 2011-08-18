@@ -80,7 +80,7 @@ class QuickFlags extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @OneToOne  (targetEntity="XLite\Model\Category", inversedBy="quickFlags")
+     * @OneToOne   (targetEntity="XLite\Model\Category", inversedBy="quickFlags")
      * @JoinColumn (name="category_id", referencedColumnName="category_id")
      */
     protected $category;
