@@ -352,7 +352,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 'Order not found'
             );
 
-            $this->redirect($this->buildURL('cart'));
+            $this->setReturnURL($this->buildURL('cart'));
 
         } elseif ($cart->isOpen()) {
 
@@ -360,7 +360,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 'Payment for orders not over. Please complete payment of order.'
             );
 
-            $this->redirect($this->buildURL('checkout'));
+            $this->setReturnURL($this->buildURL('checkout'));
 
         } else {
 
@@ -370,7 +370,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->processSucceed();
 
-            $this->redirect($this->buildURL('checkoutSuccess', '', array('order_id' => $orderId)));
+            $this->setReturnURL($this->buildURL('checkoutSuccess', '', array('order_id' => $orderId)));
         }
     }
 
