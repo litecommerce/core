@@ -92,7 +92,21 @@ extends XLite_Tests_Model_OrderAbstract
     {
         $processor = new XLite\Module\CDev\USPS\Model\Shipping\Processor\USPS();
 
-        $this->assertEquals('http://production.shippingapis.com/ShippingAPI.dll', $processor->getApiURL());
+        $defaultHost = 'testing.shippingapis.com';
+
+        $tmpServerName = \XLite\Core\Config::getInstance()->CDev->USPS->server_name;
+        $tmpServerPath = \XLite\Core\Config::getInstance()->CDev->USPS->server_path;
+
+        \XLite\Core\Config::getInstance()->CDev->USPS->server_path = 'path';
+
+        \XLite\Core\Config::getInstance()->CDev->USPS->server_name = 'host';
+        $this->assertEquals('http://host/path', $processor->getApiURL());
+
+        \XLite\Core\Config::getInstance()->CDev->USPS->server_name = 'http://host';
+        $this->assertEquals('http://' . $defaultHost . '/path', $processor->getApiURL());
+
+        \XLite\Core\Config::getInstance()->CDev->USPS->server_name = $tmpServerName;
+        \XLite\Core\Config::getInstance()->CDev->USPS->server_path = $tmpServerPath;
     }
 
     /**
@@ -180,7 +194,7 @@ extends XLite_Tests_Model_OrderAbstract
         \XLite\Base::getInstance()->config->Company->location_zipcode = '10001';
 
         $m = $this->getTestOrder(false)->getModifier('shipping', 'SHIPPING')->getModifier();
-        $rates = $processor->getRates($m);
+        $rates = $processor->getRates($m, true);
         $ratesCached = $processor->getRates($m);
 
         \XLite\Base::getInstance()->config->Company = $tmpConfig;
@@ -188,7 +202,7 @@ extends XLite_Tests_Model_OrderAbstract
         $this->assertTrue(is_array($rates), 'getRates() must return an array (#1)');
 
         // Actually USPS returns 22 methods in the response. We check just >15 to avoid failure if USPS will return other number of methods
-        $this->assertGreaterThan(15, count($rates), 'Count of rates checking failed (#1)');
+        $this->assertGreaterThan(15, count($rates), 'Count of rates checking failed (#1) - ' . $processor->getErrorMsg());
 
         $this->assertEquals($rates, $ratesCached, 'Cached rates does not match an original rates (#1)');
 
@@ -223,7 +237,7 @@ extends XLite_Tests_Model_OrderAbstract
 
         $this->assertTrue(is_array($rates), 'getRates() must return an array (#2)');
 
-        $this->assertGreaterThan(15, count($rates), 'Count of rates checking failed (#2)');
+        $this->assertGreaterThan(15, count($rates), 'Count of rates checking failed (#2) - ' . $processor->getErrorMsg());
 
         foreach ($rates as $rate) {
             $this->assertTrue($rate instanceof \XLite\Model\Shipping\Rate, 'getRates() must return an array of \XLite\Model\Shipping\Rate instances (#2)');
@@ -254,13 +268,15 @@ extends XLite_Tests_Model_OrderAbstract
         \XLite\Base::getInstance()->config->Company->location_country = 'AU';
 
         $m = $this->getTestOrder(false)->getModifier('shipping', 'SHIPPING')->getModifier();
-        $rates = $processor->getRates($m);
+        $rates = $processor->getRates($m, true);
 
         \XLite\Base::getInstance()->config->Company = $tmpConfig;
 
         $this->assertTrue(is_array($rates), 'getRates() must return an array (#3)');
 
-        $this->assertEquals(0, count($rates), 'Count of rates is not match with an expected value (#3)');
+        $this->assertEquals(0, count($rates), 'Count of rates is not match with an expected value (#3) - ' . $processor->getErrorMsg());
+
+        unset($rates);
 
         // Test International API
 
@@ -316,7 +332,7 @@ extends XLite_Tests_Model_OrderAbstract
 
         $this->assertTrue(is_array($rates), 'getRates() must return an array (#4)');
 
-        $this->assertGreaterThan(1, count($rates), 'Count of rates checking failed (#4)');
+        $this->assertGreaterThan(1, count($rates), 'Count of rates checking failed (#4) - ' . $processor->getErrorMsg());
 
         foreach ($rates as $rate) {
             $this->assertTrue($rate instanceof \XLite\Model\Shipping\Rate, 'getRates() must return an array of \XLite\Model\Shipping\Rate instances (#4)');

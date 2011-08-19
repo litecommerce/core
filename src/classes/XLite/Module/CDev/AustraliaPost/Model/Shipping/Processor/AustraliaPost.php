@@ -79,6 +79,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
      */
     public function getRates($inputData, $ignoreCache = false)
     {
+        $this->errorMsg = null;
         $rates = array();
 
         if ($inputData instanceOf \XLite\Logic\Order\Modifier\Shipping) {
@@ -90,6 +91,9 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
 
         if (isset($data)) {
             $rates = $this->doQuery($data, $ignoreCache);
+        
+        } else {
+            $this->errorMsg = 'Wrong input data';
         }
 
         // Return shipping rates list
@@ -167,8 +171,6 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
         $currencyRate = doubleval(\XLite\Core\Config::getInstance()->CDev->AustraliaPost->currency_rate);
         $currencyRate = 0 < $currencyRate ?: 1;
 
-        $errorMsg = null;
-
         foreach ($availableMethods as $method) {
 
             $rate = null;
@@ -213,7 +215,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
                         $this->saveDataInCache($postURL, $result);
                     
                     } else {
-                        $errorMsg = 'Bouncer error';
+                        $this->errorMsg = sprintf('Error while connecting to the USPS host (%s)', $this->apiURL);
                         break;
                     }
                 }
@@ -234,10 +236,13 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
                     $extraData->deliveryDays = $response['days'];
 
                     $rate->setExtraData($extraData);
+                
+                } else {
+                    $this->errorMsg = $response['err_msg'];
                 }
 
             } catch (\Exception $e) {
-                $errorMsg = $e->getMessage();
+                $this->errorMsg = $e->getMessage();
                 break;
             }
 

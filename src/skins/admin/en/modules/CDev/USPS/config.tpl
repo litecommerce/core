@@ -31,6 +31,28 @@
     </tr>
 
     <tr>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;U.S.P.S. API server:</td>
+      <td>
+        <table cellspacing="1" cellpadding="0" border="0">
+          <tr>
+            <td>http://</td>
+            <td><input type="text" name="server_name" value="{config.CDev.USPS.server_name:r}" size="30" /></td>
+            <td>/</td>
+            <td>
+              <select name="server_path">
+              {foreach:getServerPathOptions(),opkey,opval}
+                <option value="{opkey}" selected="selected" IF="config.CDev.USPS.server_path=opkey">{opval}</option>
+                <option value="{opkey}" IF="!config.CDev.USPS.server_path=opkey">{opval}</option>
+              {end:}
+              </select>
+            </td>
+            <td>?API=...</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
       <td colspan="2"><br /><b>Common options</b></td>
     </tr>
 

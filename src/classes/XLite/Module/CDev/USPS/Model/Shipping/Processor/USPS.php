@@ -53,16 +53,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
     protected $processorId = 'usps';
 
     /**
-     * USPS WebTools API URL
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    // protected $apiURL = 'http://testing.shippingapis.com/ShippingAPITest.dll';
-    protected $apiURL = 'http://production.shippingapis.com/ShippingAPI.dll';
-
-    /**
      * Type of API (Domestic | International)
      * 
      * @var   string
@@ -73,7 +63,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
 
 
     // {{{
-
 
     /**
      * Returns processor name (displayed name)
@@ -111,6 +100,7 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      */
     public function getRates($inputData, $ignoreCache = false)
     {
+        $this->errorMsg = null;
         $rates = array();
 
         if ($this->isConfigured() && 'US' == \XLite\Core\Config::getInstance()->Company->location_country) {
@@ -119,7 +109,13 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
 
             if (isset($data)) {
                 $rates = $this->doQuery($data, $ignoreCache);
+            
+            } else {
+                $this->errorMsg = 'Wrong input data';
             }
+        
+        } else {
+            $this->errorMsg = 'U.S.P.S. module is not configured or origin country is not United States';
         }
 
         return $rates;
@@ -197,8 +193,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
             $currencyRate = doubleval(\XLite\Core\Config::getInstance()->CDev->AustraliaPost->currency_rate);
             $currencyRate = 0 < $currencyRate ?: 1;
 
-            $errorMsg = null;
-
             $postURL = $this->getApiURL() . '?API=' . $this->getApiName() . '&XML=' . urlencode($xmlData);
 
             try {
@@ -221,11 +215,16 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
                         $this->saveDataInCache($postURL, $result);
                     
                     } else {
-                        $errorMsg = 'Bouncer error';
+                        $this->errorMsg = sprintf('Error while connecting to the USPS host (%s)', $this->getApiURL());
                     }
                 }
 
-                $response = $this->parseResponse($result);
+                if (!isset($this->errorMsg)) {
+                    $response = $this->parseResponse($result);
+                
+                } else {
+                    $response = array();
+                }
 
                 $this->apiCommunicationLog[] = array(
                     'request'  => $postURL,
@@ -233,7 +232,7 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
                     'response' => htmlentities(\XLite\Core\XML::getInstance()->getFormattedXML($result))
                 );
 
-                if ('OK' == $response['err_msg'] && !empty($response['postage'])) {
+                if (!isset($this->errorMsg) && 'OK' == $response['err_msg'] && !empty($response['postage'])) {
 
                     foreach ($response['postage'] as $postage) {
                         
@@ -263,12 +262,12 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
                         }
                     }
 
-                } else {
-                    $errorMsg = $response['err_msg'];
+                } elseif (!isset($this->errorMsg)) {
+                    $this->errorMsg = $response['err_msg'];
                 }
 
             } catch (\Exception $e) {
-                $errorMsg = $e->getMessage();
+                $this->errorMsg = 'Exception: ' . $e->getMessage();
             }
         }
 
@@ -430,7 +429,7 @@ OUT;
                 foreach ($postage as $k => $v) {
                     $result['postage'][] = array(
                         'CLASSID' => 'D-' . $xml->getArrayByPath($v, '@/CLASSID'),
-                        'MailService' => html_entity_decode($xml->getArrayByPath($v, '#/MailService/0/#')),
+                        'MailService' => $this->getUSPSNamePrefix() . html_entity_decode($xml->getArrayByPath($v, '#/MailService/0/#')),
                         'Rate' => $xml->getArrayByPath($v, '#/Rate/0/#'),
                     );
                 }
@@ -575,7 +574,7 @@ OUT;
                 foreach ($postage as $k => $v) {
                     $result['postage'][] = array(
                         'CLASSID' => 'I-' . $xml->getArrayByPath($v, '@/ID'),
-                        'MailService' => html_entity_decode($xml->getArrayByPath($v, '#/SvcDescription/0/#')),
+                        'MailService' => $this->getUSPSNamePrefix() . html_entity_decode($xml->getArrayByPath($v, '#/SvcDescription/0/#')),
                         'Rate' => $xml->getArrayByPath($v, '#/Postage/0/#'),
                     );
                 }
@@ -598,7 +597,15 @@ OUT;
      */
     public function getApiURL()
     {
-        return $this->apiURL;
+        $protocol = 'http://';
+
+        $host = \Includes\Utils\URLManager::isValidURLHost(\XLite\Core\Config::getInstance()->CDev->USPS->server_name) 
+            ? \XLite\Core\Config::getInstance()->CDev->USPS->server_name 
+            : 'testing.shippingapis.com';
+
+        $path = \XLite\Core\Config::getInstance()->CDev->USPS->server_path;
+
+        return $protocol . $host . '/' . $path;
     }
 
     /**
@@ -683,6 +690,19 @@ OUT;
 
         return $apiName[$this->getApiType()];
     }
+
+    /**
+     * Returns shipping method name prefix
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getUSPSNamePrefix()
+    {
+        return $this->getProcessorName() . ' ';
+    }
+
 
     /**
      * Returns true if USPS module is configured 

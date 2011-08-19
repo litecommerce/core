@@ -48,6 +48,21 @@ class Usps extends \XLite\Controller\Admin\ShippingSettings
     }
 
     /**
+     * Returns options for Server path selector 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getServerPathOptions()
+    {
+        return array(
+            'ShippingAPI.dll'     => 'ShippingAPI.dll',
+            'ShippingAPITest.dll' => 'ShippingAPITest.dll',
+        );
+    }
+
+    /**
      * Returns options for PackageSize selector 
      * 
      * @return array
@@ -224,21 +239,26 @@ class Usps extends \XLite\Controller\Admin\ShippingSettings
 
             $proceedTime = microtime(true) - $startTime;
 
-            if (!empty($rates)) {
+            $errorMsg = $usps->getErrorMsg();
 
-                // Rates have been successfully calculated, display them
-                echo ('<h2>Rates:</h2>');
+            if (!isset($errorMsg)) {
 
-                foreach ($rates as $rate) {
-                    echo (sprintf('%s (%0.2f)<br>', $rate->getMethodName(), $rate->getBaseRate()));
+                if (!empty($rates)) {
+
+                    // Rates have been successfully calculated, display them
+                    echo ('<h2>Rates:</h2>');
+
+                    foreach ($rates as $rate) {
+                        echo (sprintf('%s (%0.2f)<br>', $rate->getMethodName(), $rate->getBaseRate()));
+                    }
+
+                    echo (sprintf('<br /><i>Time elapsed: %0.3f seconds</i>', $proceedTime));
+
+                } else {
+                    $errorMsg = static::t(
+                        'There are no rates available for specified source/destination and/or package measurements/weight.'
+                    );
                 }
-
-                echo (sprintf('<br /><i>Time elapsed: %0.3f seconds</i>', $proceedTime));
-
-            } else {
-                $errorMsg = static::t(
-                    'There are no rates available for specified source/destination and/or package measurements/weight.'
-                );
             }
 
         } else {
@@ -248,7 +268,7 @@ class Usps extends \XLite\Controller\Admin\ShippingSettings
         }
 
         if (!empty($errorMsg)) {
-            echo ('<h3>$errorMsg</h3>');
+            echo ('<h3>' . $errorMsg . '</h3>');
         }
 
         if (isset($usps)) {

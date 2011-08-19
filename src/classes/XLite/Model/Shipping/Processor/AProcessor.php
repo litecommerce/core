@@ -62,6 +62,15 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      */
     protected $apiCommunicationLog = null;
 
+    /**
+     * Error message
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $errorMsg = null;
+
 
     /**
      * Returns processor name
@@ -156,6 +165,19 @@ abstract class AProcessor extends \XLite\Base\SuperClass
     {
         return $this->apiCommunicationLog;
     }
+
+    /**
+     * Returns $errorMsg 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    public function getErrorMsg()
+    {
+        return $this->errorMsg;
+    }
+
 
     /**
      * getDataFromCache
