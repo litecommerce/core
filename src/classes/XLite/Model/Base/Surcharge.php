@@ -193,6 +193,6 @@ abstract class Surcharge extends \XLite\Model\AEntity
     {
         $info = $this->getInfo();
 
-        return $info ? $info->name : $this->getName();
+        return $info ? $info->name : $this->name;
     }
 }
