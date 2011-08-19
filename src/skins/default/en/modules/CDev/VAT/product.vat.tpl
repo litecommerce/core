@@ -12,4 +12,4 @@
  * @ListChild (list="product.details.page.info", weight="45")
  * @ListChild (list="product.details.quicklook.info", weight="45")
  *}
-<widget class="\XLite\Module\CDev\SimpleTaxes\View\VATTooltip" id="vat-details" caption="{t(#Including tax#)}" isImageTag="false" className="" product="{product}" />
+<widget class="\XLite\Module\CDev\VAT\View\VATTooltip" id="vat-details" caption="{t(#Including tax#)}" isImageTag="false" className="" product="{product}" />

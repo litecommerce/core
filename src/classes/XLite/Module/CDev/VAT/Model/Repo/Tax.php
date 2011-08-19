@@ -25,32 +25,41 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\SalesTax\Model;
+namespace XLite\Module\CDev\VAT\Model\Repo;
 
 /**
- * Tax multilingual data
+ * Tax repository
  *
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @Entity
- * @Table (name="sales_tax_translations",
- *         indexes={
- *              @Index (name="ci", columns={"code","id"}),
- *              @Index (name="id", columns={"id"})
- *         }
- * )
  */
-class TaxTranslation extends \XLite\Model\Base\Translation
+class Tax extends \XLite\Model\Repo\ARepo
 {
     /**
-     * Name
+     * Find active taxes
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="255")
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    protected $name;
+    public function findActive()
+    {
+        return $this->defineFindActiveQuery()->getResult();
+    }
+
+    /**
+     * Define query for findActive() method
+     *
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineFindActiveQuery()
+    {
+        return $this->createQueryBuilder()
+            ->addSelect('tr')
+            ->leftJoin('t.rates', 'tr')
+            ->andWhere('t.enabled = :true AND tr IS NOT NULL')
+            ->setParameter('true', true);
+    }
 }

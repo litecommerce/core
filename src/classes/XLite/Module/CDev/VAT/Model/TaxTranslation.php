@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\SalesTax\Model;
+namespace XLite\Module\CDev\VAT\Model;
 
 /**
  * Tax multilingual data
@@ -34,7 +34,7 @@ namespace XLite\Module\CDev\SalesTax\Model;
  * @since 1.0.0
  *
  * @Entity
- * @Table (name="sales_tax_translations",
+ * @Table (name="vat_tax_translations",
  *         indexes={
  *              @Index (name="ci", columns={"code","id"}),
  *              @Index (name="id", columns={"id"})

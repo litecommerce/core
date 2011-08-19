@@ -25,32 +25,61 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\SalesTax\Model;
+namespace XLite\Module\CDev\VAT;
 
 /**
- * Tax multilingual data
+ * Main
  *
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @Entity
- * @Table (name="sales_tax_translations",
- *         indexes={
- *              @Index (name="ci", columns={"code","id"}),
- *              @Index (name="id", columns={"id"})
- *         }
- * )
  */
-class TaxTranslation extends \XLite\Model\Base\Translation
+abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Name
+     * Author name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="255")
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    protected $name;
+    public static function getAuthorName()
+    {
+        return 'Creative Development LLC';
+    }
+
+    /**
+     * Module version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getMinorVersion()
+    {
+        return '0';
+    }
+
+    /**
+     * Module name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getModuleName()
+    {
+        return 'VAT';
+    }
+
+    /**
+     * Module description
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getDescription()
+    {
+        return 'This module enables taxes';
+    }
 }

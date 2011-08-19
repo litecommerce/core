@@ -25,32 +25,40 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\SalesTax\Model;
+namespace XLite\Module\CDev\VAT\Model;
 
 /**
- * Tax multilingual data
+ * Zone
  *
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @Entity
- * @Table (name="sales_tax_translations",
- *         indexes={
- *              @Index (name="ci", columns={"code","id"}),
- *              @Index (name="id", columns={"id"})
- *         }
- * )
  */
-class TaxTranslation extends \XLite\Model\Base\Translation
+abstract class Zone extends \XLite\Model\Zone implements \XLite\Base\IDecorator
 {
     /**
-     * Name
+     * Tax rates (relation)
      *
-     * @var   string
+     * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @OneToMany (targetEntity="XLite\Module\CDev\VAT\Model\Tax\Rate", mappedBy="zone", cascade={"all"})
      */
-    protected $name;
+    protected $tax_rates;
+
+    /**
+     * Constructor
+     *
+     * @param array $data Entity properties OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->tax_rates = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 }

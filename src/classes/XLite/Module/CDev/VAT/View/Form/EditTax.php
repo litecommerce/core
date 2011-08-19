@@ -25,32 +25,54 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\SalesTax\Model;
+namespace XLite\Module\CDev\VAT\View\Form;
 
 /**
- * Tax multilingual data
+ * Edit tax form
  *
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @Entity
- * @Table (name="sales_tax_translations",
- *         indexes={
- *              @Index (name="ci", columns={"code","id"}),
- *              @Index (name="id", columns={"id"})
- *         }
- * )
  */
-class TaxTranslation extends \XLite\Model\Base\Translation
+class EditTax extends \XLite\View\Form\AForm
 {
     /**
-     * Name
+     * getDefaultTarget
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="255")
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    protected $name;
+    protected function getDefaultTarget()
+    {
+        return 'taxes';
+    }
+
+    /**
+     * getDefaultAction
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'VATTaxUpdate';
+    }
+
+    /**
+     * Required form parameters
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCommonFormParams()
+    {
+        $list = parent::getCommonFormParams();
+
+        $list['page'] = \XLite\Core\Request::getInstance()->page;
+
+        return $list;
+    }
+
 }
