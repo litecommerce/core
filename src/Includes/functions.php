@@ -1288,3 +1288,24 @@ function get_xlite_tables_prefix()
 {
     return \Includes\Utils\ConfigParser::getOptions(array('database_details', 'table_prefix'));
 }
+
+// Emulation
+if (!function_exists('mb_stripos')) {
+
+/**
+ * Find position of first occurrence of a case-insensitive string
+ *
+ * @param string  $haystack The string to search in 
+ * @param string  $needle   The string to find in haystack
+ * @param integer $offset   The position in haystack  to start searching OPTIONAL
+ *
+ * @return integer
+ * @see    ____func_see____
+ * @since  1.0.6
+ */
+function mb_stripos($haystack, $needle, $offset = 0)
+{
+    return stripos($haystack, $needle, $offset);
+}
+
+}
