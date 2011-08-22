@@ -465,7 +465,7 @@ class Database extends \XLite\Base\Singleton
         $this->configuration->setMetadataDriverImpl($chain);
 
         // Set proxy settings
-        $this->configuration->setProxyDir(LC_DIR_CACHE_PROXY);
+        $this->configuration->setProxyDir(rtrim(LC_DIR_CACHE_PROXY, LC_DS));
         $this->configuration->setProxyNamespace(LC_MODEL_PROXY_NS);
         $this->configuration->setAutoGenerateProxyClasses(false);
 
