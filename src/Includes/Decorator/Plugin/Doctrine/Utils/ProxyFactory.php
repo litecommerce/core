@@ -155,7 +155,7 @@ class <proxyClassName> extends \<className> implements \Doctrine\ORM\Proxy\Proxy
      * @see    ____func_see____
      * @since  1.0.0
      */
-    private function _load()
+    private function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
