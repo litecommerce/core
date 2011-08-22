@@ -45,9 +45,7 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
             foreach ($this->orderProducts as $sku) {
                 $product = $this->getProductBySku($sku);
 
-                if (!$product) {
-                    $this->fail('Product woth SKU ' . $sku . ' not found!');
-                }
+                $this->assertNotNull($product, 'Product with SKU ' . $sku . ' not found!');
 
                 $item = new \XLite\Model\OrderItem();
                 $item->setProduct($product);
