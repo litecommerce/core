@@ -122,7 +122,7 @@ class Category extends \XLite\Model\Base\I18n
      *
      * @Column (type="integer")
      */
-    protected $depth = 0;
+    protected $depth = -1;
 
     /**
      * Some cached flags
