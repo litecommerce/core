@@ -110,9 +110,10 @@ class Tax extends \XLite\Model\Base\I18n
 
         foreach ($this->getRates() as $rate) {
             if ($rate->isApplyed($zones, $membership, $productClasses)) {
-                $rates[] = $rate;
+                $rates[$rate->getPosition()] = $rate;
             }
         }
+        ksort($rates);
 
         return $rates;
     }
@@ -133,16 +134,9 @@ class Tax extends \XLite\Model\Base\I18n
         \XLite\Model\Membership $membership,
         \Doctrine\Common\Collections\ArrayCollection $productClasses = null
     ) {
-        $found = null;
+        $rates = $this->getFilteredRates($zones, $membership, $productClasses);
 
-        foreach ($this->getRates() as $rate) {
-            if ($rate->isApplyed($zones, $membership, $productClasses)) {
-                $found = $rate;
-                break;
-            }
-        }
-
-        return $found;
+        return array_shift($rates);
     }
 
 }

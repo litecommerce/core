@@ -144,7 +144,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     {
         $address = $this->getAddress();
 
-        $zones = $address ? \XLite\Core\Database::getRepo()->findApplicableZones($address) : array();
+        $zones = $address ? \XLite\Core\Database::getRepo('XLite\Model\Zone')->findApplicableZones($address) : array();
 
         foreach ($zones as $i => $zone) {
             $zones[$i] = $zone->getZoneId();
