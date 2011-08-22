@@ -42,6 +42,7 @@ CDev/PaypalWPS
 CDev/ProductOptions
 CDev/Quantum
 CDev/TinyMCE
+CDev/USPS
 "
 
 # LiteCommerce files that must be removed from all distributives

@@ -545,7 +545,7 @@ class Session extends \XLite\Base\Singleton
 
     /**
      * Set referer cookie (this is stored when user register new profile)
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.1
@@ -555,7 +555,7 @@ class Session extends \XLite\Base\Singleton
         if (!isset($_COOKIE[self::LC_REFERER_COOKIE_NAME]) && isset($_SERVER['HTTP_REFERER'])) {
 
             $referer = parse_url($_SERVER['HTTP_REFERER']);
-            
+
             if (isset($referer['host']) && $referer['host'] != $_SERVER['HTTP_HOST']) {
                 setcookie(
                     self::LC_REFERER_COOKIE_NAME,
@@ -624,7 +624,7 @@ class Session extends \XLite\Base\Singleton
 
     /**
      * Get referer cookie TTL (seconds)
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.1

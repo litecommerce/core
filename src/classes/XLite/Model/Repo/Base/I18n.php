@@ -47,7 +47,6 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
     public function createQueryBuilder($alias = null)
     {
         return $this->addTranslationsSubquery(parent::createQueryBuilder($alias), $alias);
-
     }
 
 

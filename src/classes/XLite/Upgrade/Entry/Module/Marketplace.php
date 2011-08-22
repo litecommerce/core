@@ -36,22 +36,22 @@ namespace XLite\Upgrade\Entry\Module;
 class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
 {
     /**
-     * Module ID in database
+     * Identifier for installed module
      *
-     * @var   integer
+     * @var   array
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $moduleIDInstalled;
+    protected $moduleInfoInstalled;
 
     /**
-     * Module ID in database
+     * Identifier for upgrade module
      *
-     * @var   integer
+     * @var   array
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $moduleIDForUpgrade;
+    protected $moduleInfoForUpgrade;
 
     /**
      * Old major version (cache)
@@ -258,18 +258,19 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function __construct(\XLite\Model\Module $moduleInstalled, \XLite\Model\Module $moduleForUpgrade)
     {
-        $this->moduleIDInstalled  = $moduleInstalled->getModuleID();
-        $this->moduleIDForUpgrade = $moduleForUpgrade->getModuleID();
+        $this->moduleInfoInstalled  = $this->getPreparedModuleInfo($moduleInstalled, false);
+        $this->moduleInfoForUpgrade = $this->getPreparedModuleInfo($moduleForUpgrade, true);
 
         if (is_null($this->getModuleInstalled())) {
             \Includes\ErrorHandler::fireError(
-                'Module with ID "' . $this->moduleIDInstalled . '" is not found in DB'
+                'Module ["' . implode('", "', $this->moduleInfoInstalled) . '"] is not found in DB'
             );
         }
 
-        if (is_null($this->getModuleForUpgrade()) || !$this->getModuleForUpgrade()->getFromMarketplace()) {
+        if (is_null($this->getModuleForUpgrade())) {
             \Includes\ErrorHandler::fireError(
-                'Module with ID "' . $this->moduleIDInstalled . '" is not found in DB or is not a marketplace module'
+                'Module ["' . implode('", "', $this->moduleInfoForUpgrade) . '"] is not found in DB'
+                . ' or is not a marketplace module'
             );
         }
 
@@ -286,8 +287,8 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     public function __sleep()
     {
         $list = parent::__sleep();
-        $list[] = 'moduleIDInstalled';
-        $list[] = 'moduleIDForUpgrade';
+        $list[] = 'moduleInfoInstalled';
+        $list[] = 'moduleInfoForUpgrade';
 
         return $list;
     }
@@ -326,21 +327,40 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Prepare and return module identity data
+     *
+     * @param \XLite\Model\Module $module          Module to get info
+     * @param boolean             $fromMarketplace Flag
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.6
+     */
+    protected function getPreparedModuleInfo(\XLite\Model\Module $module, $fromMarketplace)
+    {
+        // :WARNING: do not change the summands order:
+        // it's important for the "updateDBRecords()" method
+        return array('fromMarketplace' => $fromMarketplace) + $module->getIdentityData();
+    }
+
+    /**
      * Search for module in DB
      *
-     * @param integer $moduleID ID to search by
+     * @param array $moduleInfo Info to search by
      *
      * @return \XLite\Model\Module
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getModule($moduleID)
+    protected function getModule(array $moduleInfo)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($moduleID);
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($moduleInfo);
     }
 
     /**
      * Alias
+     *
+     * :WARNING: do not cache this object: identity info may be changed
      *
      * @return \XLite\Model\Module
      * @see    ____func_see____
@@ -348,11 +368,13 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function getModuleInstalled()
     {
-        return $this->getModule($this->moduleIDInstalled);
+        return $this->getModule($this->moduleInfoInstalled) ?: $this->getModuleForUpgrade();
     }
 
     /**
      * Alias
+     *
+     * :WARNING: do not cache this object: identity info may be changed
      *
      * @return \XLite\Model\Module
      * @see    ____func_see____
@@ -360,7 +382,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function getModuleForUpgrade()
     {
-        return $this->getModule($this->moduleIDForUpgrade);
+        return $this->getModule($this->moduleInfoForUpgrade);
     }
 
     /**
@@ -375,12 +397,12 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
         $forUpgrade = $this->getModuleForUpgrade();
         $installed  = $this->getModuleInstalled();
 
-        if ($forUpgrade->getModuleID() !== $installed->getModuleID()) {
+        if ($forUpgrade->getIdentityData() !== $installed->getIdentityData()) {
             $forUpgrade->setEnabled($installed->getEnabled());
 
             \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($installed);
 
-            $this->moduleIDInstalled = $forUpgrade->getModuleID();
+            $this->moduleInfoInstalled = $this->getPreparedModuleInfo($forUpgrade, false);
 
         } else {
             $forUpgrade->setEnabled(true);
@@ -388,6 +410,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
 
         $forUpgrade->setInstalled(true);
         $forUpgrade->setFromMarketplace(false);
+        $this->moduleInfoForUpgrade['fromMarketplace'] = false;
 
         \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($forUpgrade);
     }

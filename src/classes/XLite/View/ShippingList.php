@@ -108,9 +108,9 @@ class ShippingList extends \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getMarkup(\XLite\Model\Shipping\Rate $rate)
+    public function getTotalRate(\XLite\Model\Shipping\Rate $rate)
     {
-        return $rate->getMarkup()->getMarkupValue();
+        return $rate->getTotalRate();
     }
 
 

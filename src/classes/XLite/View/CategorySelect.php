@@ -39,51 +39,41 @@ class CategorySelect extends \XLite\View\AView
     /**
      * Category selector options constants
      */
-    const PARAM_ALL_OPTION           = 'allOption';
-    const PARAM_NONE_OPTION          = 'noneOption';
-    const PARAM_ROOT_OPTION          = 'rootOption';
-    const PARAM_FIELD_NAME           = 'fieldName';
-    const PARAM_SELECTED_CATEGORY_ID = 'selectedCategoryId';
-    const PARAM_CURRENT_CATEGORY_ID  = 'currentCategoryId';
-    const PARAM_IGNORE_CURRENT_PATH  = 'ignoreCurrentPath';
-
-
-    /**
-     * categories
-     *
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $categories = null;
+    const PARAM_ALL_OPTION            = 'allOption';
+    const PARAM_NONE_OPTION           = 'noneOption';
+    const PARAM_ROOT_OPTION           = 'rootOption';
+    const PARAM_FIELD_NAME            = 'fieldName';
+    const PARAM_SELECTED_CATEGORY_IDS = 'selectedCategoryIds';
+    const PARAM_CURRENT_CATEGORY_ID   = 'currentCategoryId';
+    const PARAM_IGNORE_CURRENT_PATH   = 'ignoreCurrentPath';
+    const PARAM_IS_MULTIPLE           = 'isMultiple';
 
     /**
-     * field
+     * Current category ID
      *
-     * @var   mixed
+     * @var   integer
      * @see   ____var_see____
-     * @since 1.0.0
+     * @since 1.0.6
      */
-    public $field;
+    protected $currentCategoryID;
 
     /**
-     * formName
+     * List of the nodes in current path
      *
-     * @var   mixed
+     * @var   array
      * @see   ____var_see____
-     * @since 1.0.0
+     * @since 1.0.6
      */
-    public $formName;
+    protected $currentPath = array();
 
     /**
-     * selectedCategory
+     * Base multiplier of current intendation
      *
-     * @var   mixed
+     * @var   integer
      * @see   ____var_see____
-     * @since 1.0.0
+     * @since 1.0.6
      */
-    public $selectedCategory = null;
-
+    protected $currentIndent = 0;
 
     /**
      * Get categories list
@@ -94,35 +84,7 @@ class CategorySelect extends \XLite\View\AView
      */
     public function getCategories()
     {
-        $this->categories = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategories();
-
-        $categoryId = $this->getParam(self::PARAM_CURRENT_CATEGORY_ID);
-
-        if (
-            !empty($this->categories)
-            && 0 < $categoryId
-            && $this->getParam(self::PARAM_IGNORE_CURRENT_PATH)
-        ) {
-
-            $currentCategory = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategory($categoryId);
-
-            $categories = array();
-
-            if (isset($currentCategory)) {
-                foreach ($this->categories as $id => $category) {
-                    if (!($category->lpos >= $currentCategory->lpos && $category->rpos <= $currentCategory->rpos)) {
-
-                        $category->categoryPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryPath($category->getCategoryId());
-
-                        $categories[] = $category;
-                    }
-                }
-            }
-
-            $this->categories = $categories;
-        }
-
-        return $this->categories;
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoriesPlainList();
     }
 
     /**
@@ -138,24 +100,39 @@ class CategorySelect extends \XLite\View\AView
     }
 
     /**
+     * Return translated category name
+     *
+     * :KLUDGE: it's the hack to prevent execution of superflous queries
+     *
+     * @param array $category Category data
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.6
+     */
+    protected function getCategoryName(array $category)
+    {
+        $data = \Includes\Utils\ArrayManager::searchInArraysArray(
+            $category['translations'],
+            'code',
+            \XLite\Core\Session::getInstance()->getLanguage()->getCode()
+        );
+
+        return empty($data) ? 'N/A' : $data['name'];
+    }
+
+    /**
      * Return category path
      *
-     * @param \XLite\Model\Category $category
+     * @param array $category Category data
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.1
      */
-    protected function getCategoryPath(\XLite\Model\Category $category)
+    protected function getCategoryPath(array $category)
     {
-        $path = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryPath($category->getCategoryId());
-        $categoryPath = array();
-
-        foreach ($path as $category) {
-            $categoryPath[] = $category->getName();
-        }
-
-        return implode('/', $categoryPath);
+        return implode('/', $this->currentPath);
     }
 
     /**
@@ -182,98 +159,57 @@ class CategorySelect extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ALL_OPTION           => new \XLite\Model\WidgetParam\Bool('Display All option', false),
-            self::PARAM_NONE_OPTION          => new \XLite\Model\WidgetParam\Bool('Display None option', false),
-            self::PARAM_ROOT_OPTION          => new \XLite\Model\WidgetParam\Bool('Display [Root level] option', false),
-            self::PARAM_FIELD_NAME           => new \XLite\Model\WidgetParam\String('Field name', ''),
-            self::PARAM_SELECTED_CATEGORY_ID => new \XLite\Model\WidgetParam\Int('Selected category id', 0),
-            self::PARAM_CURRENT_CATEGORY_ID  => new \XLite\Model\WidgetParam\Int('Current category id', 0),
-            self::PARAM_IGNORE_CURRENT_PATH  => new \XLite\Model\WidgetParam\Bool('Ignore current path', false),
+            self::PARAM_ALL_OPTION            => new \XLite\Model\WidgetParam\Bool('Display All option', false),
+            self::PARAM_NONE_OPTION           => new \XLite\Model\WidgetParam\Bool('Display None option', false),
+            self::PARAM_ROOT_OPTION           => new \XLite\Model\WidgetParam\Bool('Display [Root level] option', false),
+            self::PARAM_FIELD_NAME            => new \XLite\Model\WidgetParam\String('Field name', ''),
+            self::PARAM_SELECTED_CATEGORY_IDS => new \XLite\Model\WidgetParam\Collection('Selected category ids', array()),
+            self::PARAM_CURRENT_CATEGORY_ID   => new \XLite\Model\WidgetParam\Int('Current category id', 0),
+            self::PARAM_IGNORE_CURRENT_PATH   => new \XLite\Model\WidgetParam\Bool('Ignore current path', false),
+            self::PARAM_IS_MULTIPLE           => new \XLite\Model\WidgetParam\Bool('Is multiple', false),
         );
     }
 
     /**
-     * Get categories condition
+     * Check if specified category is selected
      *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCategoriesCondition()
-    {
-        return array(null, null, null, null);
-    }
-
-    /**
-     * Check - specified category selected or not
-     *
-     * @param \XLite\Model\Category $category Category
+     * @param array $category Category
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isCategorySelected(\XLite\Model\Category $category)
+    protected function isCategorySelected(array $category)
     {
-        $categoryId = $this->getParam(self::PARAM_SELECTED_CATEGORY_ID);
-
-        if (!is_numeric($categoryId) || 1 > $categoryId) {
-            $categoryId = 0;
-        }
-
-        return $category->category_id == $categoryId;
-    }
-
-    /**
-     * getSelectedCategory
-     * TODO: check if we need this function
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getSelectedCategory()
-    {
-        if (is_null($this->selectedCategory) && !is_null($this->field)) {
-            $this->selectedCategory = $this->get('component.' . $this->field);
-        }
-
-        return $this->selectedCategory;
-    }
-
-    /**
-     * setFieldName
-     * TODO: check if we need this function
-     *
-     * @param string $name Field name
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function setFieldName($name)
-    {
-        $this->formField = $name;
-
-        $pos = strpos($name, '[');
-
-        $this->field = (false === $pos) ? $name : substr($name, $pos + 1, -1);
+        return in_array($category['category_id'], (array) $this->getParam(self::PARAM_SELECTED_CATEGORY_IDS));
     }
 
     /**
      * getIndentation
      *
-     * @param \XLite\Model\Category $category   Category model object
-     * @param integer               $multiplier Level's multiplier
+     * @param array   $category   Category data
+     * @param integer $multiplier Level's multiplier
      *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getIndentation(\XLite\Model\Category $category, $multiplier)
+    protected function getIndentation(array $category, $multiplier)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryDepth(
-            $category->getCategoryId()
-        ) * $multiplier - 1;
+        $result = $category['depth'];
+
+        if ($this->currentCategoryID != $category['category_id']) {
+
+            if ($this->currentIndent >= $result) {
+                array_pop($this->currentPath);
+            }
+
+            $this->currentPath[] = $this->getCategoryName($category);
+
+            $this->currentCategoryID = $category['category_id'];
+            $this->currentIndent     = $result;
+        }
+
+        return ($result - 1) * $multiplier + 3;
     }
 }

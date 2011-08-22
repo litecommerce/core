@@ -18,9 +18,9 @@ DELETE FROM xlite_products;
 DELETE FROM xlite_product_translations;
 DELETE FROM xlite_product_images;
 
-INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (1,null,1,6,null,1,'',1);
-INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14015,1,2,3,null,1,'fruit',1);
-INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14009,1,4,5,null,1,'vegetables',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, depth, membership_id, enabled, cleanUrl, show_title) VALUES (1,null,1,6,-1,null,1,'',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, depth, membership_id, enabled, cleanUrl, show_title) VALUES (14015,1,2,3,0,null,1,'fruit',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, depth, membership_id, enabled, cleanUrl, show_title) VALUES (14009,1,4,5,0,null,1,'vegetables',1);
 
 INSERT INTO xlite_category_quick_flags VALUES (1,1,2,2);
 INSERT INTO xlite_category_quick_flags VALUES (2,14015,0,0);

@@ -3,9 +3,9 @@
 
 	<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
 
-	<target name="build" depends="set-properties,clean,prepare,phpunit-deployment,php-documentor,analysis,create-build,tests" />
+	<target name="build" depends="set-properties,clean,prepare,phpunit-deployment,tests,php-documentor,analysis,create-build" />
 
-	<target name="cc" depends="set-properties-cc,clean,prepare,phpunit-deployment-cc,php-documentor,analysis,comparison,create-build,tests-cc" />
+	<target name="cc" depends="set-properties-cc,clean,prepare,phpunit-deployment-cc,tests-cc,php-documentor,analysis,comparison,create-build" />
 
 	<target name="pure-build" depends="set-properties,clean,prepare,php-documentor,create-build" />
 
@@ -94,7 +94,7 @@
 	<target name="tests" depends="prepare-db,phpunit" />
 	<target name="xtests" depends="prepare-db,plint,php-codesniffer,phpunit,jmeter" />
 
-	<target name="tests-cc" depends="prepare-db,plint,php-codesniffer-cc,phpunit-cc,jmeter" />
+	<target name="tests-cc" depends="prepare-db,plint,phpunit-cc,php-codesniffer-cc,jmeter" />
 
 	<!-- Install Drupal+LC (local) -->
 	<target name="phpunit-deployment">

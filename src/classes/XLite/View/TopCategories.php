@@ -164,11 +164,9 @@ class TopCategories extends \XLite\View\SideBarBox
      */
     protected function getCategories($categoryId = null)
     {
-        $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategory(
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getSubCategories(
             $categoryId ?: $this->getParam(self::PARAM_ROOT_ID)
         );
-
-        return $category ? $category->getSubcategories() : array();
     }
 
     /**

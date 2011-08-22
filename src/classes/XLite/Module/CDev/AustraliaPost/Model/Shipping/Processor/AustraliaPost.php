@@ -34,7 +34,7 @@ namespace XLite\Module\CDev\AustraliaPost\Model\Shipping\Processor;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implements \XLite\Base\IDecorator
+class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor
 {
     /**
      * Unique processor Id
@@ -70,21 +70,30 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     /**
      * Returns shipping rates
      *
-     * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
-     * @param boolean                              $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
+     * @param array|\XLite\Logic\Order\Modifier\Shipping $inputData   Shipping order modifier or array of data for request
+     * @param boolean                                    $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
+    public function getRates($inputData, $ignoreCache = false)
     {
+        $this->errorMsg = null;
         $rates = array();
 
-        $inputData = $this->prepareInputData($modifier);
+        if ($inputData instanceOf \XLite\Logic\Order\Modifier\Shipping) {
+            $data = $this->prepareInputData($inputData);
+        
+        } elseif (is_array($inputData)) {
+            $data = $inputData;
+        }
 
-        if (isset($inputData)) {
-            $rates = $this->doQuery($inputData, $ignoreCache);
+        if (isset($data)) {
+            $rates = $this->doQuery($data, $ignoreCache);
+        
+        } else {
+            $this->errorMsg = 'Wrong input data';
         }
 
         // Return shipping rates list
@@ -92,18 +101,15 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     }
 
     /**
-     * Returns shipping rates
+     * Disable the possibility to edit the names of shipping methods in the interface of administrator
      *
-     * @param array   $inputData   Array with data for shipping calculation
-     * @param boolean $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
-     *
-     * @return array
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getRatesByArray(array $inputData, $ignoreCache = false)
+    public function isMethodNamesAdjustable()
     {
-        return $this->doQuery($inputData, $ignoreCache);
+        return false;
     }
 
 
@@ -165,8 +171,6 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
         $currencyRate = doubleval(\XLite\Core\Config::getInstance()->CDev->AustraliaPost->currency_rate);
         $currencyRate = 0 < $currencyRate ?: 1;
 
-        $errorMsg = null;
-
         foreach ($availableMethods as $method) {
 
             $rate = null;
@@ -211,7 +215,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                         $this->saveDataInCache($postURL, $result);
                     
                     } else {
-                        $errorMsg = 'Bouncer error';
+                        $this->errorMsg = sprintf('Error while connecting to the USPS host (%s)', $this->apiURL);
                         break;
                     }
                 }
@@ -232,10 +236,13 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                     $extraData->deliveryDays = $response['days'];
 
                     $rate->setExtraData($extraData);
+                
+                } else {
+                    $this->errorMsg = $response['err_msg'];
                 }
 
             } catch (\Exception $e) {
-                $errorMsg = $e->getMessage();
+                $this->errorMsg = $e->getMessage();
                 break;
             }
 

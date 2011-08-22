@@ -1002,6 +1002,21 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * Helper to get array field values
+     *
+     * @param array  $array Array to get field value
+     * @param string $field Field name
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.6
+     */
+    protected function getArrayField(array $array, $field)
+    {
+        return \Includes\Utils\ArrayManager::getIndex($array, $field, true);
+    }
+
+    /**
      * Helper to get object field values
      *
      * @param object  $object   Object to get field value
