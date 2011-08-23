@@ -158,6 +158,7 @@ substitutional_skins_cache = off
 [decorator]
 time_limit = 240
 use_tokenizer = Off
+disable_software_reset = Off
 
 ;
 ; Error handling options

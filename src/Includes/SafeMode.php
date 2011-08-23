@@ -56,6 +56,18 @@ abstract class SafeMode
 
 
     /**
+     * Return true if software reset is enabled in config file
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    public static function isSoftwareResetEnabled()
+    {
+        return !(bool) \Includes\Utils\ConfigParser::getOptions(array('decorator', 'disable_software_reset'));
+    }
+
+    /**
      * Check request parameters
      *
      * @return void
@@ -188,11 +200,14 @@ abstract class SafeMode
     {
         if (static::isSafeModeRequested() && !static::isSafeModeStarted()) {
 
-            // Put safe mode indicator
-            \Includes\Utils\FileManager::write(static::getIndicatorFileName(), static::getIndicatorFileContent());
+            if (static::isSoftwareResetEnabled()) {
 
-            // Clean cache indicators to force cache generation
-            \Includes\Decorator\Utils\CacheManager::cleanupCacheIndicators();
+                // Put safe mode indicator
+                \Includes\Utils\FileManager::write(static::getIndicatorFileName(), static::getIndicatorFileContent());
+
+                // Clean cache indicators to force cache generation
+                \Includes\Decorator\Utils\CacheManager::cleanupCacheIndicators();
+            }
 
             // Redirect to avoid loop
             \Includes\Utils\Operator::redirect('admin.php?target=main');
