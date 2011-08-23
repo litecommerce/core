@@ -30,6 +30,10 @@ return function()
     // Move the 'depth' property of categories to the database
     $repo = \XLite\Core\Database::getRepo('XLite\Model\Category');
 
+    // Set depth = -1 for root category
+    $rootCategory = $repo->find(1);
+    $rootCategory->setDepth(-1);
+
     foreach ($repo->getCategories() as $category) {
         $category->setDepth($repo->getCategoryDepth($category->getCategoryId()));
     }
