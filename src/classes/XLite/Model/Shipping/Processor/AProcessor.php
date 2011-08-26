@@ -178,6 +178,17 @@ abstract class AProcessor extends \XLite\Base\SuperClass
         return $this->errorMsg;
     }
 
+    /**
+     * Write transaction log
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function logTransaction()
+    {
+        \XLite\Logger::getInstance()->log($this->getLogMessage());
+    }
 
     /**
      * getDataFromCache
@@ -220,4 +231,11 @@ abstract class AProcessor extends \XLite\Base\SuperClass
         $cacheDriver->save(md5($key), $data);
     }
 
+    protected function getLogMessage()
+    {
+        return sprintf('[%s] Error: %s',
+            $this->getProcessorName(),
+            $this->getErrorMsg()
+        );
+    }
 }

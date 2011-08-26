@@ -148,6 +148,10 @@ class Shipping extends \XLite\Base\Singleton
         foreach (self::$registeredProcessors as $processor) {
             // Get rates from processors
             $rates = array_merge($rates, $processor->getRates($modifier));
+
+            if ($processor->getErrorMsg()) {
+                $processor->logTransaction();
+            }
         }
 
         if (!empty($rates)) {
