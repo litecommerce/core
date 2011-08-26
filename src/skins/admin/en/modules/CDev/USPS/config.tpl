@@ -89,12 +89,16 @@
     </tr>
 
     <tr>
-      <td>&nbsp;&nbsp;&nbsp;&nbsp;Currency rate:</td>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;Currency conversion rate:</td>
       <td><input type="text" name="currency_rate" value="{config.CDev.USPS.currency_rate:r}" size="8" /></td>
     </tr>
 
     <tr>
-      <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;(specify rate X, where 1 USD = X in shop currency)</td>
+      <td colspan="2">
+        &nbsp;&nbsp;&nbsp;&nbsp;(specify rate X, where 1 USD = X in shop currency)<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;The shipping cost is always returned in US Dollars. So if the store use other currency for payments you need to specify<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;the conversion rate to convert the shipping cost returned by shipping service into the necessary currency. Otherwise leave 1.
+      </td>
     </tr>
 
     <tr>
