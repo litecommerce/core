@@ -246,15 +246,7 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
                             $this->addShippingMethod($postage);
 
                         } elseif ($method->getEnabled()) {
-                            // Method is registered enabled
-
-                            $code = \XLite\Core\Config::getInstance()->General->defaultLanguage->getCode();
-                            
-                            if ($method->getTranslation($code)->name != $postage['MailService']) {
-                                $method->getTranslation($code)->name = $postage['MailService'];
-                                \XLite\Core\Database::getEM()->persist($method);
-                                \XLite\Core\Database::getEM()->flush();
-                            }
+                            // Method is registered and enabled
 
                             $rate->setMethod($method);
                             $rate->setBaseRate($postage['Rate'] * $currencyRate);
@@ -437,9 +429,10 @@ OUT;
 
             if ($postage) {
                 foreach ($postage as $k => $v) {
+                    $serviceName = $xml->getArrayByPath($v, '#/MailService/0/#');
                     $result['postage'][] = array(
-                        'CLASSID' => 'D-' . $xml->getArrayByPath($v, '@/CLASSID'),
-                        'MailService' => $this->getUSPSNamePrefix() . html_entity_decode($xml->getArrayByPath($v, '#/MailService/0/#')),
+                        'CLASSID' => 'D-' . $xml->getArrayByPath($v, '@/CLASSID') . '-' . md5($serviceName),
+                        'MailService' => $this->getUSPSNamePrefix() . html_entity_decode($serviceName),
                         'Rate' => $xml->getArrayByPath($v, '#/Rate/0/#'),
                     );
                 }
@@ -587,9 +580,10 @@ OUT;
 
             if ($postage) {
                 foreach ($postage as $k => $v) {
+                    $serviceName = $xml->getArrayByPath($v, '#/SvcDescription/0/#');
                     $result['postage'][] = array(
-                        'CLASSID' => 'I-' . $xml->getArrayByPath($v, '@/ID'),
-                        'MailService' => $this->getUSPSNamePrefix() . html_entity_decode($xml->getArrayByPath($v, '#/SvcDescription/0/#')),
+                        'CLASSID' => 'I-' . $xml->getArrayByPath($v, '@/ID') . '-' . md5($serviceName),
+                        'MailService' => $this->getUSPSNamePrefix() . html_entity_decode($serviceName),
                         'Rate' => $xml->getArrayByPath($v, '#/Postage/0/#'),
                     );
                 }
