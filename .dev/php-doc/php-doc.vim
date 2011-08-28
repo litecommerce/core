@@ -493,13 +493,13 @@ func! PhpDocType(typeString)
         let l:type = "float"
     endif
     if a:typeString =~ g:pdv_re_int 
-        let l:type = "int"
+        let l:type = "integer"
     endif
     if a:typeString =~ g:pdv_re_string
         let l:type = "string"
     endif
     if a:typeString =~ g:pdv_re_bool
-        let l:type = "bool"
+        let l:type = "boolean"
     endif
 	if l:type == ""
 		let l:type = g:pdv_cfg_Type

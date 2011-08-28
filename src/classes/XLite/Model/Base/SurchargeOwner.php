@@ -33,7 +33,7 @@ namespace XLite\Model\Base;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * MappedSuperclass
+ * @MappedSuperclass
  */
 abstract class SurchargeOwner extends \XLite\Model\AEntity
 {
