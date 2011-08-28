@@ -301,16 +301,17 @@ abstract class AEntity
      */
     public function cloneEntity()
     {
-        $class  = $this instanceof \Doctrine\ORM\Proxy\Proxy ? $this->_entityClass : get_called_class();
+        $class = get_class($this);
+
+        if ($this instanceof \Doctrine\ORM\Proxy\Proxy) {
+            $class = get_parent_class($class);
+        }
 
         $entity = new $class();
-
         $fields = array_keys(\XLite\Core\Database::getEM()->getClassMetadata($class)->fieldMappings);
-
-        $map = array();
+        $map    = array();
 
         foreach ($fields as $field) {
-
             $map[$field] = $this->$field;
         }
 
