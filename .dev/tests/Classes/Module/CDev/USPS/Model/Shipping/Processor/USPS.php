@@ -282,35 +282,19 @@ extends XLite_Tests_Model_OrderAbstract
 
         \XLite\Base::getInstance()->config->Company->location_country = 'US';
         \XLite\Base::getInstance()->config->CDev->USPS->gxg = true;
+        
+        $methodToDelete = 'I-1-735bf98ee9fbdf9dbb374920def99049';
 
-        $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findOneByCode('I-1');
+        $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findOneByCode($methodToDelete);
 
-        $this->assertNotNull($method, 'Method with code I-1 not found in the database');
+        $this->assertNotNull($method, 'Method with code ' . $methodToDelete . ' not found in the database');
 
         \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->delete($method);
         $method->detach();
 
-        $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findOneByCode('I-1');
+        $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findOneByCode($methodToDelete);
 
-        $this->assertNull($method, 'Method with code I-1 found in the database');
-
-        $method2 = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findOneByCode('I-2');
-
-        $this->assertNotNull($method2, 'Method with code I-2 not found in the database');
-
-        $savedName = $method2->getTranslation('en')->name;
-        $newName = 'Test for changing method name';
-
-        $method2->getTranslation('en')->name = $newName;
-        \XLite\Core\Database::getEM()->persist($method2);
-        \XLite\Core\Database::getEM()->flush();
-        $method2->detach();
-
-        $method2 = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findOneByCode('I-2');
-
-        $this->assertNotNull($method2, 'Method with code I-2 not found in the database after updating its name');
-        $this->assertEquals($newName, $method2->getTranslation('en')->name, 'Method with code I-2 has wrong name after update');
-        $method2->detach();
+        $this->assertNull($method, 'Method with code ' . $methodToDelete . ' found in the database');
 
         $data = array(
             'srcAddress' => array(
@@ -344,14 +328,10 @@ extends XLite_Tests_Model_OrderAbstract
         }
 
         // Check that method I-1 returned to the database 
-        $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findOneByCode('I-1');
+        $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findOneByCode($methodToDelete);
 
-        $this->assertNotNull($method, 'Method with code I-1 not restored in the database after request to USPS');
-        $this->assertFalse($method->getEnabled(), 'Method with code I-1 restored with enabled status');
-
-        $method2 = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findOneByCode('I-2');
-        $this->assertNotNull($method2, 'Method with code I-2 not found in the database');
-        $this->assertEquals($savedName, $method2->getTranslation('en')->name, 'Name of method with code I-2 was not restored restored');
+        $this->assertNotNull($method, 'Method with code ' . $methodToDelete . ' not restored in the database after request to USPS');
+        $this->assertFalse($method->getEnabled(), 'Method with code ' . $methodToDelete . ' restored with enabled status');
 
         // Test International API error
 
