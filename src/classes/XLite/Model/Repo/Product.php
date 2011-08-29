@@ -102,22 +102,21 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         $queryBuilder = $this->createQueryBuilder();
-
         $this->currentSearchCnd = $cnd;
 
         foreach ($this->currentSearchCnd as $key => $value) {
-
             $this->callSearchConditionHandler($value, $key, $queryBuilder);
         }
 
         if ($countOnly) {
-
             $queryBuilder->select('COUNT(p.product_id)');
+            $result = intval($queryBuilder->getSingleScalarResult());
+
+        } else {
+            $result = $queryBuilder->getResult();
         }
 
-        $result = $queryBuilder->getResult();
-
-        return $countOnly ? count($result) : $result;
+        return $result;
     }
 
     /**
@@ -136,7 +135,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         $alias = $alias ?: $queryBuilder->getRootAlias();
         $this->addEnabledCondition($queryBuilder, $alias);
 
-        return $queryBuilder->groupBy($alias . '.product_id');
+        return $queryBuilder;
     }
 
     /**
@@ -245,22 +244,17 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     protected function getSubstringSearchFields()
     {
         $conditionsBy = $this->getConditionBy();
-
         $allEmpty = true;
 
         foreach ($conditionsBy as $conditionBy) {
-
             if ('Y' === $this->currentSearchCnd->{$conditionBy}) {
-
                 $allEmpty = false;
             }
         }
 
         // if ALL parameters is FALSE then we search by ALL parameters
         if ($allEmpty) {
-
             foreach ($conditionsBy as $conditionBy) {
-
                 $this->currentSearchCnd->{$conditionBy} = 'Y';
             }
         }
@@ -395,9 +389,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     protected function prepareCndSubstring(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
-
             $including = $this->currentSearchCnd->{self::P_INCLUDING};
-
             $including = in_array($including, $this->getAllowedIncludingValues()) ? $including : self::INCLUDING_PHRASE;
 
             $cnd = $this->{'getCndSubstring' . ucfirst($including)} ($queryBuilder, $value);
@@ -409,7 +401,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
     /**
      * Returns array of allowed values for 'includes' input variable
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.1
@@ -456,11 +448,9 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     protected function getCndSubstringAll(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         $searchWords = $this->getSearchWords($value);
-
         $cnd = new \Doctrine\ORM\Query\Expr\Orx();
 
         foreach ($this->getSubstringSearchFields() as $field) {
-
             $fieldCnd = new \Doctrine\ORM\Query\Expr\Andx();
 
             foreach ($searchWords as $index => $word) {
@@ -469,7 +459,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
                 $fieldCnd->add($field . ' LIKE :word' . $index);
 
                 $queryBuilder->setParameter('word' . $index, '%' . $word . '%');
-
             }
 
             // Add AND expression into OR main expression
@@ -497,18 +486,15 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     protected function getCndSubstringAny(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         $searchWords = $this->getSearchWords($value);
-
         $cnd = new \Doctrine\ORM\Query\Expr\Orx();
 
         foreach ($this->getSubstringSearchFields() as $field) {
-
             foreach ($searchWords as $index => $word) {
 
                 // Collect OR expressions
                 $cnd->add($field . ' LIKE :word' . $index);
 
                 $queryBuilder->setParameter('word' . $index, '%' . $word . '%');
-
             }
         }
 
@@ -526,25 +512,16 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function getSearchWords($value)
     {
-        $value = trim($value);
-
+        $value  = trim($value);
         $result = array();
 
         if (preg_match_all('/"([^"]+)"/', $value, $match)) {
-
             $result = $match[1];
-
-            $value = str_replace($match[0], '', $value);
+            $value  = str_replace($match[0], '', $value);
 
         }
 
-        return array_merge(
-            (array)$result,
-            array_map(
-                'trim',
-                explode(' ', $value)
-            )
-        );
+        return array_merge((array)$result, array_map('trim', explode(' ', $value)));
     }
 
     /**
@@ -630,6 +607,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     {
         if ($this->isSearchParamHasHandler($key)) {
             $this->{'prepareCnd' . ucfirst($key)}($queryBuilder, $value);
+
         } else {
             // TODO - add logging here
         }

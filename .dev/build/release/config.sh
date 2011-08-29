@@ -11,6 +11,12 @@ XLITE_REPO="https://github.com/litecommerce/core/tarball/master-dev"
 # Drupal repository URL
 DRUPAL_REPO="https://github.com/litecommerce/drupal/tarball/7.x-master-dev"
 
+# LC Connector module repository URL
+LC_CONNECTOR_REPO="https://github.com/litecommerce/lc_connector/tarball/7.x-1.x"
+
+# LC3 Clean theme repository URL
+LC3_CLEAN_REPO="https://github.com/litecommerce/lc3_clean/tarball/7.x-1.x"
+
 # Output directory name
 OUTPUT_DIR="output"
 
@@ -42,6 +48,7 @@ CDev/PaypalWPS
 CDev/ProductOptions
 CDev/Quantum
 CDev/TinyMCE
+CDev/USPS
 "
 
 # LiteCommerce files that must be removed from all distributives

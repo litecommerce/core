@@ -107,9 +107,20 @@ class Callback extends \XLite\Controller\Customer\ACustomer
         }
 
         if ($txn) {
+
             $txn->getPaymentMethod()->getProcessor()->processCallback($txn);
 
+            $cart = $txn->getOrder();
+
+            if (!$cart->isOpen()) {
+                // TODO: move it to \XLite\Controller\ACustomer
+                $cart->setStatus(
+                    $cart->isPayed() ? \XLite\Model\Order::STATUS_PROCESSED : \XLite\Model\Order::STATUS_QUEUED
+                );
+            }
+
         } else {
+
             \XLite\Logger::getInstance()->log('Request callback with undefined payment transaction', LOG_ERR);
         }
 

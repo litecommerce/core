@@ -63,6 +63,10 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     const STATUS_FAILED     = 'F';
     const STATUS_DECLINED   = 'D';
 
+    /**
+     * Order total that is financially declared as zero (null)
+     */
+    const ORDER_ZERO = 0.00001;
 
     /**
      * Add item error codes
@@ -1147,7 +1151,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function isOpen()
     {
-        return $this->getFirstOpenPaymentTransaction() || 0 < $this->getOpenTotal();
+        return $this->getFirstOpenPaymentTransaction() || self::ORDER_ZERO < abs($this->getOpenTotal());
     }
 
     /**

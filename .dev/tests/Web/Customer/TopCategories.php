@@ -86,6 +86,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
         $this->testRootCategories($mode);
 
         $child = $this->getRandomCategory(1);
+
         $root = is_object($child)
             ? $this->getParentCategory($child->getCategoryId())
             : $this->getRandomCategory(0);
@@ -96,7 +97,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
         );
 
         $rootName = $root->getName();
-        $rootDepth = $this->getRepo()->getCategoryDepth($root->getCategoryId());
+        $rootDepth = $root->getDepth();
         $rootId = $root->getCategoryId();
 
         // Check whether the random root category is not in the active trail
@@ -108,7 +109,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
         $childId = false;
         if (is_object($child)) {
             $childName = $child->getName();
-            $childDepth = $this->getRepo()->getCategoryDepth($child->getCategoryId());
+            $childDepth = $child->getDepth();
             $childId = $child->getCategoryId();
 
             if ($mode!='tree') {
@@ -224,7 +225,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
         foreach ($categories as $category) {
             $name = $category->getName();
-            $depth = $this->getRepo()->getCategoryDepth($category->getCategoryId());
+            $depth = $category->getDepth();
 
             $selector = $this->getLinkSelector($name, $depth);
 
@@ -252,7 +253,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
     {
         $category = $this->getCategory($categoryId);
         $name = $category->getName();
-        $depth = $this->getRepo()->getCategoryDepth($category->getCategoryId());
+        $depth = $category->getDepth();
         $selector = $this->getLinkSelector($name, $depth);
         $this->assertJqueryPresent($selector, $message);
     }
@@ -272,7 +273,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
     {
         $category = $this->getCategory($categoryId);
         $name = $category->getName();
-        $depth = $this->getRepo()->getCategoryDepth($category->getCategoryId());
+        $depth = $category->getDepth();
         $selector = $this->getLinkSelector($name, $depth);
         $this->assertJqueryNotPresent($selector, $message);
     }
@@ -292,7 +293,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
     {
         $category = $this->getCategory($categoryId);
         $name = $category->getName();
-        $depth = $this->getRepo()->getCategoryDepth($category->getCategoryId());
+        $depth = $category->getDepth();
         $selector = str_replace('li', 'li.active-trail', $this->getLinkSelector($name, $depth));
         $this->assertJqueryPresent($selector, $message);
     }
@@ -312,7 +313,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
     {
         $category = $this->getCategory($categoryId);
         $name = $category->getName();
-        $depth = $this->getRepo()->getCategoryDepth($category->getCategoryId());
+        $depth = $category->getDepth();
         $selector = str_replace('li', 'li.active-trail', $this->getLinkSelector($name, $depth));
         $this->assertJqueryNotPresent($selector, $message);
     }
@@ -401,14 +402,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      */
     protected function getRandomCategory($depth = 1)
     {
-        $result = null;
-
-        foreach ($this->getRepo()->findAll() as $c) {
-            if ($this->getRepo()->getCategoryDepth($c->getCategoryId()) == $depth) {
-                $result = $c;
-                break;
-            }
-        }
+        $result = $this->getRepo()->findOneByDepth($depth);
 
         $this->assertTrue(
             !is_null($result),
@@ -431,6 +425,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
     protected function getParentCategory($id = 0)
     {
         $parent = $this->getRepo()->getCategory($id)->getParent();
+
         return ($parent->getCategoryId() > 1) ? $parent : null;
     }
 

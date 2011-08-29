@@ -133,25 +133,30 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
 
             $startTime = microtime(true);
 
-            $rates = $aupost->getRatesByArray($data, true);
+            $rates = $aupost->getRates($data, true);
 
             $proceedTime = microtime(true) - $startTime;
 
-            if (!empty($rates)) {
+            $errorMsg = $aupost->getErrorMsg();
 
-                // Rates have been successfully calculated, display them
-                echo ('<h2>Rates:</h2>');
+            if (!isset($errorMsg)) {
+                
+                if (!empty($rates)) {
 
-                foreach ($rates as $rate) {
-                    echo (sprintf('%s (%0.2f)<br>', $rate->getMethodName(), $rate->getBaseRate()));
+                    // Rates have been successfully calculated, display them
+                    echo ('<h2>Rates:</h2>');
+
+                    foreach ($rates as $rate) {
+                        echo (sprintf('%s (%0.2f)<br>', $rate->getMethodName(), $rate->getBaseRate()));
+                    }
+
+                    echo (sprintf('<br /><i>Time elapsed: %0.3f seconds</i>', $proceedTime));
+
+                } else {
+                    $errorMsg = static::t(
+                        'There are no rates available for specified source/destination and/or package measurements/weight.'
+                    );
                 }
-
-                echo (sprintf('<br /><i>Time elapsed: %0.3f seconds</i>', $proceedTime));
-
-            } else {
-                $errorMsg = static::t(
-                    'There are no rates available for specified source/destination and/or package measurements/weight.'
-                );
             }
 
         } else {
@@ -161,7 +166,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
         }
 
         if (!empty($errorMsg)) {
-            echo ('<h3>$errorMsg</h3>');
+            echo ('<h3>' . $errorMsg . '</h3>');
         }
 
         if (isset($aupost)) {

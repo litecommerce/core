@@ -17,13 +17,13 @@ UPDATE xlite_option_groups SET product_id = null;
 DELETE FROM xlite_products;
 DELETE FROM xlite_product_translations;
 
-INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (1,null,1,14,null,1,'',1);
-INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14015,1,2,9,null,1,'fruit',1);
-INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14009,1,10,13,null,0,'vegetables',1);
-INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14016,14015,3,4,null,1,'fruit_1',1);
-INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14017,14015,5,6,null,0,'fruit_2',1);
-INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14018,14015,7,8,null,1,'fruit_3',1);
-INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14019,14009,11,12,null,1,'vegetables_1',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, depth, membership_id, enabled, cleanUrl, show_title) VALUES (1,null,1,14,-1,null,1,'',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, depth, membership_id, enabled, cleanUrl, show_title) VALUES (14015,1,2,9,0,null,1,'fruit',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, depth, membership_id, enabled, cleanUrl, show_title) VALUES (14009,1,10,13,0,null,0,'vegetables',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, depth, membership_id, enabled, cleanUrl, show_title) VALUES (14016,14015,3,4,1,null,1,'fruit_1',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, depth, membership_id, enabled, cleanUrl, show_title) VALUES (14017,14015,5,6,1,null,0,'fruit_2',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, depth, membership_id, enabled, cleanUrl, show_title) VALUES (14018,14015,7,8,1,null,1,'fruit_3',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, depth, membership_id, enabled, cleanUrl, show_title) VALUES (14019,14009,11,12,1,null,1,'vegetables_1',1);
 
 INSERT INTO xlite_category_quick_flags VALUES (1,1,2,2);
 INSERT INTO xlite_category_quick_flags VALUES (2,14015,3,2);

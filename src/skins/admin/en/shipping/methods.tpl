@@ -80,7 +80,7 @@ Use this section to define your store's shipping methods.
 
             <td>
               <input type="text" name="methods[{method.getMethodId()}][name]" size="50" value="{method.getName()}" IF="processor.isMethodNamesAdjustable()" />
-              <span IF="!processor.isMethodNamesAdjustable()">{method.getName()}</span>
+              <span IF="!processor.isMethodNamesAdjustable()">{method.getName():h}</span>
             </td>
 
             <td><input type="text" name="methods[{method.getMethodId()}][position]" size="4" value="{method.getPosition()}" /></td>
@@ -94,7 +94,7 @@ Use this section to define your store's shipping methods.
             </td>
 
             <td>
-              <widget class="\XLite\View\Button\Regular" name="delete" label="Delete" jsCode="onDeleteButton('{method.getMethodId()}');" />
+              <widget IF="processor.isMethodDeleteEnabled()" class="\XLite\View\Button\Regular" name="delete" label="Delete" jsCode="onDeleteButton('{method.getMethodId()}');" />
             </td>
           </tr>
 

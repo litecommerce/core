@@ -713,6 +713,10 @@ table.settings-table tr td h2
   margin: 30px 0 10px 0;
 }
 
+table.settings-table td.note {
+  font-size: 10px;
+}
+
 /* Buttons */
 
 div.buttons

@@ -223,11 +223,18 @@ ul.products-sidebar li .product {
   background-color: white;
 }
 
-.cart-tray .tray-area
+.cart-tray .tray-area,
+  .preload-cart-tray
 {
   background-image: url(images/bag/tray.png);
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+.preload-cart-tray {
+  position: absolute;
+  left: 0px;
+  top: 0px;
 }
 
 .cart-tray,

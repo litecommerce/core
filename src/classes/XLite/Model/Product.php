@@ -38,10 +38,10 @@ namespace XLite\Model;
  *      indexes={
  *          @Index (name="price", columns={"price"}),
  *          @Index (name="sku", columns={"sku"}),
- *          @Index (name="enabled", columns={"enabled"}),
  *          @Index (name="weight", columns={"weight"}),
  *          @Index (name="free_shipping", columns={"free_shipping"}),
- *          @Index (name="clean_url", columns={"clean_url"})
+ *          @Index (name="clean_url", columns={"clean_url"}),
+ *          @Index (name="customerArea", columns={"enabled","arrivalDate"})
  *      }
  * )
  * @HasLifecycleCallbacks

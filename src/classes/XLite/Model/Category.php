@@ -105,13 +105,24 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Whether to display the category title, or not
      *
-     * @var   integer
+     * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
      *
      * @Column (type="boolean")
      */
     protected $show_title = true;
+
+    /**
+     * Category "depth" in the tree
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.6
+     *
+     * @Column (type="integer")
+     */
+    protected $depth = -1;
 
     /**
      * Some cached flags

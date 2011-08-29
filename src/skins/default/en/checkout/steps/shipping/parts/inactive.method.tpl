@@ -12,6 +12,6 @@
  *}
 <div class="secondary" IF="isShippingAvailable()">
   <div class="label">{t(#Shipping method#)}:</div>
-  {modifier.method.name}
-  <span class="price">{formatPrice(getMarkup(modifier.selectedRate),cart.getCurrency())}</span>
+  {modifier.method.name:h}
+  <span class="price">{formatPrice(getTotalRate(modifier.selectedRate),cart.getCurrency())}</span>
 </div>

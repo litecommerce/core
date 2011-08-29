@@ -1,0 +1,72 @@
+U.S.P.S. module
+================
+
+This module gets real-time shipping quotes for USPS shipping methods via the
+USPS WebTools API.
+
+Configuring
+------------
+
+When the module is installed, click on the 'Settings' link by the module name
+on the Addons page or select "Shipping & Settings" -> "Shipping" -> "U.S.P.S.
+settings" on the menu.
+
+Be sure to specify a value in the "User ID" field. You can get a User ID
+directly on the USPS website at https://secure.shippingapis.com/registration/
+Specify the "U.S.P.S. API server" value using the the link provided in the
+e-mail notification received from USPS.
+
+After a User ID is supplied, the 'Test U.S.P.S. rates calculation' form appears
+under the 'U.S.P.S. settings' form, where you can specify source and
+destination country, ZIP code, package weight and order subtotal and test how
+the rates work. Clicking the 'Calculate rates' button opens a new browser
+window (tab) with transaction details, such as input data array, list of
+shipping methods with rates returned by the USPS server (or error message) and
+communication log (XML request and response and request URL).
+
+You can modify the USPS module settings to get the module work the way you
+need.
+
+Also, you can make certain shipping methods returned by USPS hidden or
+available to customers at checkout - adjust this in the Shipping methods
+section.
+
+Note: The company location country must be United States, a ZIP code must be
+specified (menu: Settings -> General settings -> Company options); otherwise,
+the module will not show any rates at the storefront.
+
+Note: If USPS returns an error like 'API Authorization failure. RateV4 is not a
+valid API name for this protocol.', there may be 2 reasons for it. First, you
+may have specified wrong credentials in the "User ID" and/or "U.S.P.S. API
+server" fields. Or, your account might not support API RateV4 and IntlRateV2.
+If it.s the second case, contact the USPS support team and ask them to give
+your account the production status (test accounts may not support these APIs).
+
+Special notes
+--------------
+
+1. USPS rates are very sensitive to the module settings. Be sure you know what
+you are doing when adjusting those settings. Test them carefully in the
+administrator interface before letting customers use it.
+
+2. If USPS rates do not appear at the checkout or estimate shipping popup,
+enable the debug option (set the 'level' option under the [log_details] section
+to PEAR_LOG_DEBUG value in <litecommerce-dir>/etc/config.php file) and see the
+log in <litecommerce-dir>/var/log/xlite.log.YYYY-MM-DD.php
+
+3. If the USPS API returns a rate for methods that are not in the LiteCommerce
+database (e.g. if USPS has added a new method), those methods will be inserted
+to the database with the disabled status. You can enable them, and the methods
+will be available to your customers at the checkout.
+
+
+Contacts
+---------
+
+We would appreciate your feedback on the module!
+
+Please report issues and bugs at http://bt.litecommerce.com/
+Please suggest imrpovements at http://ideas.litecommerce.com/
+
+Thank you for using the module!
+

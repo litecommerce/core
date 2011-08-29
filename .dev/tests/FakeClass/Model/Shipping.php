@@ -63,7 +63,7 @@ class FakeShippingProcessor extends \XLite\Model\Shipping\Processor\AProcessor
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
+    public function getRates($modifier, $ignoreCache = false)
     {
         return array();
     }

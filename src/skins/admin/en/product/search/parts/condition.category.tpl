@@ -16,6 +16,6 @@
   <td class="table-label">{t(#In category#)}</td>
   <td style="width:10px;height:10px;"><span class="error-message">*</span></td>
   <td class="table-input">
-    <widget class="\XLite\View\CategorySelect" fieldName="categoryId" selectedCategoryId="{getCondition(#categoryId#):r}" allOption />
+    <widget class="\XLite\View\CategorySelect" fieldName="categoryId" selectedCategoryIds="{_ARRAY_(getCondition(#categoryId#))}" allOption />
   </td>
 </tr>

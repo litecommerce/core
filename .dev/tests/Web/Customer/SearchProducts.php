@@ -111,9 +111,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
 
         $this->assertElementPresent(self::SUBMIT_BUTTON, 'No search products button');
 
-        $this->click(self::SUBMIT_BUTTON);
-
-        $this->waitForAjaxProgress();
+        $this->clickAndWaitForAjaxProgress(self::SUBMIT_BUTTON);
 
         $this->checkCounter(5);
 
@@ -143,18 +141,14 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
 
         $this->select(self::SELECT_CATEGORY, self::OPTION_CATEGORY_TOYS);
 
-        $this->click(self::SUBMIT_BUTTON);
-
-        $this->waitForAjaxProgress();
+        $this->clickAndWaitForAjaxProgress(self::SUBMIT_BUTTON);
 
         $this->checkCounter(2);
 
         // Check 'iGoods' category search
         $this->select(self::SELECT_CATEGORY, self::OPTION_CATEGORY_IGOODS);
 
-        $this->click(self::SUBMIT_BUTTON);
-
-        $this->waitForAjaxProgress();
+        $this->clickAndWaitForAjaxProgress(self::SUBMIT_BUTTON);
 
         $this->checkCounter(3);
     }
@@ -163,9 +157,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
     {
         $this->click("//input[@id='including-$type' and @type='radio' and @name='including' and @value='$type']");
 
-        $this->click(self::SUBMIT_BUTTON);
-
-        $this->waitForAjaxProgress();
+        $this->clickAndWaitForAjaxProgress(self::SUBMIT_BUTTON);
 
         $this->checkCounter($count);
     }
@@ -221,9 +213,7 @@ return;
 
         $this->currentMode = $mode;
 
-        $this->click('//a[@class="' . $mode . '"]');
-
-        $this->waitForAjaxProgress();
+        $this->clickAndWaitForAjaxProgress('//a[@class="' . $mode . '"]');
     }
 
     protected function setVisible($part)
@@ -263,10 +253,12 @@ return;
 
         $this->type($patternItemsPerPage, (int)$itemsPerPage);
 
+        $sleep = $this->setSleep(0);
+
         $this->keyPress($patternItemsPerPage, '\\13');
 
         $this->waitForAjaxProgress();
+
+        $this->setSleep($sleep);
     }
-
-
 }

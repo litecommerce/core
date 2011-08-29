@@ -130,4 +130,22 @@ abstract class URLManager extends \Includes\Utils\AUtils
         return (\XLite\Core\Request::getInstance()->isHTTPS() ? 'https' : 'http')
             . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
+
+    /**
+     * Check if provided string is a valid host part of URL 
+     * 
+     * @param string $str Host string
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    public static function isValidURLHost($str)
+    {
+        $urlData = parse_url('http://' . $str . '/path');
+
+        $host = $urlData['host'] . (isset($urlData['port']) ? ':' . $urlData['port'] : '');
+        
+        return ($host == $str);
+    }
 }

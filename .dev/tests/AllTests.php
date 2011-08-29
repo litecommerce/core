@@ -55,7 +55,7 @@ function xlite_make_sql_backup($path = null)
             $cmd .= ' -P' . $config['port'];
         }
 
-        $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
+        $cmd .= ' -u' . $config['username'] . ('' == $config['password'] ? '' : (' -p' . $config['password']));
 
         if ($config['socket']) {
             $cmd .= ' -S' . $config['socket'];
@@ -101,7 +101,8 @@ function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = tr
             $cmd .= ' -P' . $config['port'];
         }
 
-        $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
+        $cmd .= ' -u' . $config['username'] . ('' == $config['password'] ? '' : (' -p' . $config['password']));
+
         if ($config['socket']) {
             $cmd .= ' -S' . $config['socket'];
         }

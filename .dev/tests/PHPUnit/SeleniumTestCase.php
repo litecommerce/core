@@ -346,7 +346,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     protected function getTestConfigOptions()
     {
-        $configFile = XLITE_DEV_CONFIG_DIR . '/xlite-test.config.php';
+        $configFile = XLITE_DEV_CONFIG_DIR . LC_DS . 'xlite-test.config.php';
 
         if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {
             return $config;
@@ -1210,9 +1210,9 @@ JS;
 
     /**
      * Set new value to the 'sleep' property of the browser driver and return previous value
-     * 
+     *
      * @param integer $sleep Seconds to sleep
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -1220,7 +1220,7 @@ JS;
     protected function setSleep($sleep)
     {
         $oldSleep = null;
-        
+
         if (isset($this->drivers[0])) {
             $oldSleep = $this->drivers[0]->getSleep();
             $this->drivers[0]->setSleep($sleep);
