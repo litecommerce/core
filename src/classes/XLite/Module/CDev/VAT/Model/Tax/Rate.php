@@ -140,6 +140,48 @@ class Rate extends \XLite\Model\AEntity
     protected $membership;
 
     /**
+     * Set zone 
+     * 
+     * @param \XLite\Model\Zone $zone Zone OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setZone(\XLite\Model\Zone $zone = null)
+    {
+        $this->zone = $zone;
+    }
+
+    /**
+     * Set product class 
+     * 
+     * @param \XLite\Model\ProductClass $class Product class OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setProductClass(\XLite\Model\ProductClass $class = null)
+    {
+        $this->productClass = $class;
+    }
+
+    /**
+     * Set membership 
+     * 
+     * @param \XLite\Model\Membership $membership Membership OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setMembership(\XLite\Model\Membership $membership = null)
+    {
+        $this->membership = $membership;
+    }
+
+    /**
      * Check - rate is applyed by specified zones and membership or nopt
      *
      * @param array                                        $zones          Zone id list
@@ -183,51 +225,6 @@ class Rate extends \XLite\Model\AEntity
         }
 
         return array($cost, $list);
-    }
-
-    /**
-     * Calculate product price
-     *
-     * @param \XLite\Model\Product $product Product
-     * @param float                $price   Price
-     *
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function calculateProductPrice(\XLite\Model\Product $product, $price)
-    {
-        $cost = 0;
-        if ($this->getProductBasis($product)) {
-            $cost = $this->getType() == static::TYPE_PERCENT
-                ? $this->calculatePriceIncludePercent($price)
-                : $this->calculatePriceIncludeAbsolute($price);
-        }
-
-        return $cost;
-    }
-
-    /**
-     * Calculate VAT cost by product 
-     * 
-     * @param \XLite\Model\Product $product Product
-     *  
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function calculateProduct(\XLite\Model\Product $product)
-    {
-        $cost = 0;
-        $base = $this->getProductBasis($product);
-
-        if ($base) {
-            $cost = $this->getType() == static::TYPE_PERCENT
-                ? $this->calculatePriceIncludePercent($base)
-                : $this->calculatePriceIncludeAbsolute($base);
-        }
-
-        return $cost;
     }
 
     /**
@@ -336,6 +333,54 @@ class Rate extends \XLite\Model\AEntity
         return array($cost, $list);
     }
 
+    // }}}
+
+    // {{{ Product price calculation
+
+    /**
+     * Calculate pure product price (excluding tax)
+     *
+     * @param \XLite\Model\Product $product Product
+     * @param float                $price   Price
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function calculateProductPriceExcludingTax(\XLite\Model\Product $product, $price)
+    {
+        $cost = 0;
+        if ($this->getProductBasis($product)) {
+            $cost = $this->getType() == static::TYPE_PERCENT
+                ? $this->calculatePriceIncludePercent($price)
+                : $this->calculatePriceIncludeAbsolute($price);
+        }
+
+        return $cost;
+    }
+
+    /**
+     * Calculate product price including tax
+     *
+     * @param \XLite\Model\Product $product Product
+     * @param float                $price   Pure price, without including tax
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function calculateProductPriceIncludingTax(\XLite\Model\Product $product, $price)
+    {
+        $cost = 0;
+        if ($this->getProductBasis($product)) {
+            $cost = $this->getType() == static::TYPE_PERCENT
+                ? $this->calculatePriceExcludePercent($price)
+                : $this->calculatePriceExcludeAbsolute($price);
+        }
+
+        return $cost;
+    }
+
     /**
      * Calculate VAT for single product price (percent value)
      *
@@ -360,6 +405,34 @@ class Rate extends \XLite\Model\AEntity
      * @since  1.0.0
      */
     protected function calculatePriceIncludeAbsolute($price)
+    {
+        return $this->getValue();
+    }
+
+    /**
+     * Calculate product price's excluded tax (as percent)
+     * 
+     * @param float $price Product price
+     *  
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function calculatePriceExcludePercent($price)
+    {
+        return $price * $this->getValue() / 100;
+    }
+
+    /**
+     * Calculate product price's excluded tax (as absolute)
+     * 
+     * @param float $price Price
+     *  
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function calculatePriceExcludeAbsolute($price)
     {
         return $this->getValue();
     }

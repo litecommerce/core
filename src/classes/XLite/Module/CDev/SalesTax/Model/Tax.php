@@ -103,7 +103,7 @@ class Tax extends \XLite\Model\Base\I18n
      */
     public function getFilteredRates(
         array $zones,
-        \XLite\Model\Membership $membership,
+        \XLite\Model\Membership $membership = null,
         \Doctrine\Common\Collections\ArrayCollection $productClasses = null
     ) {
         $rates = array();
@@ -131,7 +131,7 @@ class Tax extends \XLite\Model\Base\I18n
      */
     public function getFilteredRate(
         array $zones,
-        \XLite\Model\Membership $membership,
+        \XLite\Model\Membership $membership = null,
         \Doctrine\Common\Collections\ArrayCollection $productClasses = null
     ) {
         $rates = $this->getFilteredRates($zones, $membership, $productClasses);

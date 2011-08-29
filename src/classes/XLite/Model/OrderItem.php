@@ -109,6 +109,17 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     protected $price;
 
     /**
+     * Net price
+     *
+     * @var   float
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="decimal", precision="14", scale="4")
+     */
+    protected $netPrice;
+
+    /**
      * Item quantity
      *
      * @var   integer
@@ -183,6 +194,30 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         }
 
         $this->getSurcharges()->clear();
+    }
+
+    /**
+     * Get through exclude surcharges 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getThroughExcludeSurcharges()
+    {
+        $list = $this->getOrder()->getItemsExcludeSurcharges();
+
+        foreach ($list as $key => $value) {
+            $list[$key] = null;
+            foreach ($this->getExcludeSurcharges() as $surcharge) {
+                if ($surcharge->getKey() == $key) {
+                    $list[$key] = $surcharge;
+                    break;
+                }
+            }
+        }
+
+        return $list;
     }
 
     /**
@@ -381,7 +416,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function calculate()
     {
-        $subtotal = $this->getOrder()->getCurrency()->roundValue($this->getPrice() * $this->getAmount());
+        $subtotal = $this->calculateNetSubtotal();
 
         $this->setSubtotal($subtotal);
         $this->setTotal($subtotal);
@@ -432,6 +467,49 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         );
     }
 
+    /**
+     * Calculate item total
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function calculateTotal()
+    {
+        $total = $this->getSubtotal();
+
+        foreach ($this->getExcludeSurcharges() as $surcharge) {
+            $total += $surcharge->getValue();
+        }
+
+        return $total;
+    }
+
+    /**
+     * Calculate net subtotal 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function calculateNetSubtotal()
+    {
+        $this->setNetPrice($this->defineNetPrice());
+
+        return $this->getOrder()->getCurrency()->roundValue($this->getNetPrice() * $this->getAmount());
+    }
+
+    /**
+     * Define net price 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineNetPrice()
+    {
+        return $this->getPrice();
+    }
 
     /**
      * Get deleted product

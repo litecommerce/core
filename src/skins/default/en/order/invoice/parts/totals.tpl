@@ -17,9 +17,17 @@
     <td class="value">{formatPrice(order.getSubtotal(),order.getCurrency())}</td>
   </tr>
 
-  <tr FOREACH="order.getSurcharges(),surcharge" class="{surcharge.getType()}">
-    <td class="title">{surcharge.getName()}:</td>
-    <td class="value">{if:surcharge.getAvailable()}{formatPrice(surcharge.getValue(),order.getCurrency()):h}{else:}{t(#n/a#)}{end:}</td>
+  <tr FOREACH="order.getSurchargeTotals(),type,surcharge" class="{type}-modifier">
+    {if:surcharge.count=#1#}
+      <td class="title">{surcharge.lastName}:</td>
+    {else:}
+      <td class="title list-owner">{surcharge.name}:</td>
+    {end:}
+    {if:surcharge.available}
+      <td class="value">{formatPrice(surcharge.cost,order.getCurrency()):h}</td>
+    {else:}
+      <td class="value">{t(#n/a#)}</td>
+    {end:}
   </tr>
 
   <tr class="total">

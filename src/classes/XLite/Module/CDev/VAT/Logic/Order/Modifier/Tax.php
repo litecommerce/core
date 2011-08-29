@@ -44,6 +44,15 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      */
     protected $code = 'CDEV.VAT';
 
+    /**
+     * Surcharge identification pattern
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $identificationPattern = '/^CDEV\.VAT\.\d+$/Ss';
+
 
     /**
      * Check - can apply this modifier or not
@@ -71,52 +80,47 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     {
         $zones = $this->getZonesList();
         $memebrship = $this->getMembership();
+        $prices = array();
 
         foreach ($this->getTaxes() as $tax) {
-            $previousItems = array();
-            $previousClasses = array();
-            $cost = 0;
-            $list = array();
+            
+            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
+            $sum = 0;
 
-            foreach ($tax->getFilteredRates($zones, $memebrship) as $rate) {
-                $productClass = $rate->getProductClass() ?: null;
-                if (!in_array($productClass, $previousClasses)) {
+            foreach ($this->getTaxableItems() as $item) {
+                $product = $item->getProduct();
+                $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
+                if (!isset($prices[$item->getItemId()])) {
+                    $prices[$item->getItemId()] = $item->calculateNetSubtotal();
+                }
 
-                    $items = $this->getTaxableItems($productClass, $previousItems);
-                    $previousItems = array_merge($previousItems, $items);
+                $price = $prices[$item->getItemId()];
+                $cost = 0;
 
-                    if ($items) {
-                        list($rateCost, $rateList) = $rate->calculate($items);
+                if ($rate) {
+                    $cost = $rate->calculateProductPriceIncludingTax($product, $price);
+                    $price += $cost;
+                }
 
-                        $cost += $rateCost;
-                        foreach ($rateList as $rateItem) {
-                            foreach ($list as $i => $item) {
-                                if ($rateItem['item'] == $item['item']) {
-                                    $list[$i]['cost'] += $item['cost'];
-                                }
-                            }
-                        }
-                    }
+                $prices[$item->getItemId()] = $price;
 
-                    $previousClasses[] = $productClass;
+                if ($cost) {
+                    $this->addOrderItemSurcharge(
+                        $item,
+                        $this->code . '.' . $tax->getId(),
+                        $cost,
+                        false
+                    );
+                    $sum += $cost;
                 }
             }
 
-            if ($cost) {
+            if ($sum) {
                 $this->addOrderSurcharge(
                     $this->code . '.' . $tax->getId(),
-                    doubleval($cost),
+                    doubleval($sum),
                     true
                 );
-
-                foreach ($list as $item) {
-                    $this->addOrderItemSurcharge(
-                        $item['item'],
-                        $this->code . '.' . $tax->getId(),
-                        doubleval($item['cost']),
-                        true
-                    );
-                }
             }
         }
     }
@@ -131,6 +135,27 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     protected function getTaxes()
     {
         return \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->findActive();
+    }
+
+    /**
+     * Get taxable order items 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTaxableItems()
+    {
+        $list = array();
+
+        foreach ($this->getOrder()->getItems() as $item) {
+            $product = $item->getProduct();
+            if ($product) {
+                $list[] = $item;
+            }
+        }
+
+        return $list;
     }
 
     /**
@@ -165,32 +190,6 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
         return $this->getOrder()->getProfile()
             ? $this->getOrder()->getProfile()->getMembership()
             : null;
-    }
-
-    /**
-     * Get taxable items 
-     * 
-     * @param \XLite\Model\ProductClass $class         Product class
-     * @param array                     $previousItems Previous selected items
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getTaxableItems(\XLite\Model\ProductClass $class, array $previousItems)
-    {
-        $list = array();
-
-        foreach ($this->getOrder()->getItems() as $item) {
-            if (
-                !in_array($item, $previousItems)
-                && (($class && $item->getProductClasses()->contains($class)) || (!$class && !count($item->getProductClasses())))
-            ) {
-                $list[] = $item;
-            }
-        }
-
-        return $list;
     }
 
     /**
@@ -252,7 +251,17 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     {
         $info = new \XLite\DataSet\Transport\Order\Surcharge;
 
-        $info->name = \XLite\Core\Translation::lbl('Tax cost');
+        if (0 === strpos($surcharge->getCode(), $this->code . '.')) {
+            $id = intval(substr($surcharge->getCode(), strlen($this->code) + 1));
+            $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->find($id);
+            $info->name = $tax
+                ? $tax->getName()
+                : \XLite\Core\Translation::lbl('VAT');
+
+        } else {
+            $info->name = \XLite\Core\Translation::lbl('VAT');
+        }
+
         $info->notAvailableReason = \XLite\Core\Translation::lbl('Billing address is not defined');
 
         return $info;

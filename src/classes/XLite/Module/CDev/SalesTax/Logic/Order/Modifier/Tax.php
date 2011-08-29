@@ -44,6 +44,15 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      */
     protected $code = 'CDEV.STAX';
 
+    /**
+     * Surcharge identification pattern
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $identificationPattern = '/^CDEV\.STAX\.\d+$/Ss';
+
 
     /**
      * Check - can apply this modifier or not
@@ -235,7 +244,17 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     {
         $info = new \XLite\DataSet\Transport\Order\Surcharge;
 
-        $info->name = \XLite\Core\Translation::lbl('Tax cost');
+        if (0 === strpos($surcharge->getCode(), $this->code . '.')) {
+            $id = intval(substr($surcharge->getCode(), strlen($this->code) + 1));
+            $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->find($id);
+            $info->name = $tax
+                ? $tax->getName()
+                : \XLite\Core\Translation::lbl('Sales tax');
+
+        } else {
+            $info->name = \XLite\Core\Translation::lbl('Sales tax');
+        }
+
         $info->notAvailableReason = \XLite\Core\Translation::lbl('Billing address is not defined');
 
         return $info;

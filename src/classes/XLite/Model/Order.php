@@ -1412,6 +1412,28 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Get items exclude surcharges info
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getItemsExcludeSurcharges()
+    {
+        $list = array();
+
+        foreach ($this->getItems() as $item) {
+            foreach ($item->getExcludeSurcharges() as $surcharge) {
+                if (!isset($list[$surcharge->getKey()])) {
+                    $list[$surcharge->getKey()] = $surcharge->getName();
+                }
+            }
+        }
+
+        return $list;
+    }
+
+    /**
      * Calculate order
      *
      * @return void
@@ -1430,6 +1452,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
                 $modifier->calculate();
             }
         }
+
+        $this->finalizeItemsCalculation();
 
         $this->setTotal($this->getSurchargesTotal());
     }
@@ -1472,6 +1496,26 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         }
 
         $subtotal = $this->getCurrency()->roundValue($subtotal);
+
+        $this->setSubtotal($subtotal);
+        $this->setTotal($subtotal);
+    }
+
+    /**
+     * Finalize items calculation 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function finalizeItemsCalculation()
+    {
+        $subtotal = 0;
+        foreach ($this->getItems() as $item) {
+            $itemTotal = $item->calculateTotal();
+            $subtotal += $itemTotal;
+            $item->setTotal($itemTotal);
+        }
 
         $this->setSubtotal($subtotal);
         $this->setTotal($subtotal);

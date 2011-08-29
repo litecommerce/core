@@ -13,5 +13,13 @@
  *}
 <li class="subtotal">
   <strong>{t(#Subtotal#)}:</strong>
-  {formatPrice(cart.getSubtotal(),cart.getCurrency())}
+  <span class="cart-subtotal{if:cart.getIncludeSurcharges()} modified-subtotal{end:}">{formatPrice(cart.getSubtotal(),cart.getCurrency())}</span>
+  <div IF="cart.getIncludeSurcharges()" class="including-modifiers" style="display: none;">
+    <table class="including-modifiers" cellspacing="0">
+      <tr FOREACH="cart.getIncludeSurcharges(),surcharge">
+        <td class="name">{t(#Including X#,_ARRAY_(#name#^surcharge.getName()))}:</td>
+        <td class="value">{formatPrice(surcharge.getValue(),cart.getCurrency())}</td>
+      </tr>
+    </table>
+  </div>
 </li>

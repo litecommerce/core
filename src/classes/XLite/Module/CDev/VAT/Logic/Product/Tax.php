@@ -58,8 +58,40 @@ class Tax extends \XLite\Logic\ALogic
             $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
 
             if ($included != $rate) {
-                $price -= $included->calculateProductPrice($product, $price);
-                $price += $rate->calculateProductPrice($product, $price);
+                if ($included) {
+                    $price -= $included->calculateProductPriceExcludingTax($product, $price);
+                }
+                if ($rate) {
+                    $price += $rate->calculateProductPriceIncludingTax($product, $price);
+                }
+            }
+        }
+
+        return $price;
+    }
+
+    /**
+     * Calculate product net price
+     * 
+     * @param \XLite\Model\Product $product Product
+     * @param float                $price   Price
+     *  
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function calculateProductNetPrice(\XLite\Model\Product $product, $price)
+    {
+        $zones = $this->getZonesList();
+        $memebrship = $this->getMembership();
+
+        foreach ($this->getTaxes() as $tax) {
+            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
+            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
+            $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
+
+            if ($included != $rate && $included) {
+                $price -= $included->calculateProductPriceExcludingTax($product, $price);
             }
         }
 
@@ -81,10 +113,19 @@ class Tax extends \XLite\Logic\ALogic
         $memebrship = $this->getMembership();
 
         $taxes = array();
+        $price = $product->getTaxableBasis();
         foreach ($this->getTaxes() as $tax) {
-            foreach ($tax->getFilteredRates($zones, $memebrship, $product->getClasses()) as $rate) {
-                $taxes[$tax->getName()] = $rate->calculateProduct($product);
-                break;
+            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
+            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
+            $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
+
+            if ($included != $rate) {
+                if ($included) {
+                    $price -= $included->calculateProductPriceExcludingTax($product, $price);
+                }
+                if ($rate) {
+                    $taxes[$tax->getName()] = $rate->calculateProductPriceIncludingTax($product, $price);
+                }
             }
         }
 
@@ -114,7 +155,7 @@ class Tax extends \XLite\Logic\ALogic
     {
         $address = $this->getAddress();
 
-        $zones = $address ? \XLite\Core\Database::getRepo()->findApplicableZones($address) : array();
+        $zones = $address ? \XLite\Core\Database::getRepo('XLite\Model\Zone')->findApplicableZones($address) : array();
 
         foreach ($zones as $i => $zone) {
             $zones[$i] = $zone->getZoneId();

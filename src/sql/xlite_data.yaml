@@ -455,6 +455,7 @@ XLite\Model\LanguageLabel:
   - { name: 'BEGIN - END of TOTAL', translations: [{ code: en, label: '<span class="begin-record-number">{{begin}}</span>&ndash;<span class="end-record-number">{{end}}</span> of <span class="records-count">{{total}}</span>' }] }
   - { name: 'added by X', translations: [{ code: en, label: 'added by {{name}}' }] }
   - { name: 'added by _X_', translations: [{ code: en, label: 'added by <a href="{{url}}">{{name}}</a>' }] }
+  - { name: 'Including X', translations: [{ code: en, label: 'Including {{name}}' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
