@@ -68,13 +68,13 @@ class Tax extends \XLite\Logic\ALogic
             }
 
             foreach ($rates as $id => $data) {
-                $cnd .= ' + IF(' . $classesAlias . '.id IN (' . implode(', ', $data['classes']) . '), '
-                    . $data['rate']->getIncludeTaxFormula($purePrice) . ', 0)';
+                $cnd .= ' + IF(' . $classesAlias . '.id IN (' . implode(', ', $data['classes']) . '), 1, 0) * '
+                    . $data['rate']->getIncludeTaxFormula($purePrice);
             }
 
             $rate = $tax->getFilteredRate($zones, $memebrship);
             if ($rate) {
-                $cnd .= ' + IF(' . $classesAlias . '.id IS NULL, ' . $rate->getIncludeTaxFormula($purePrice) . ', 0)';
+                $cnd .= ' + IF(' . $classesAlias . '.id IS NULL, 1, 0) * ' . $rate->getIncludeTaxFormula($purePrice);
             }
 
         }

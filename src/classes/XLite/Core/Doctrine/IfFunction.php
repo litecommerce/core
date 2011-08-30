@@ -49,7 +49,7 @@ class IfFunction extends \Doctrine\ORM\Query\AST\Functions\FunctionNode
         $parser->match(\Doctrine\ORM\Query\Lexer::T_IDENTIFIER);
         $parser->match(\Doctrine\ORM\Query\Lexer::T_OPEN_PARENTHESIS);
 
-        $this->ifCondition = $parser->SimpleConditionalExpression();
+        $this->ifCondition = $parser->ConditionalExpression();
         $parser->match(\Doctrine\ORM\Query\Lexer::T_COMMA);
 
         $this->ifThen = $parser->ScalarExpression();
@@ -71,7 +71,10 @@ class IfFunction extends \Doctrine\ORM\Query\AST\Functions\FunctionNode
      */
     public function getSql(\Doctrine\ORM\Query\SqlWalker $sqlWalker)
     {
-        return 'IF(' . $this->ifCondition . ', ' . $this->ifThen . ', ' . $this->ifElse . ')';
+        return 'IF('
+            . $sqlWalker->walkConditionalExpression($this->ifCondition) . ', '
+            . $sqlWalker->walkSimpleArithmeticExpression($this->ifThen) . ', '
+            . $sqlWalker->walkSimpleArithmeticExpression($this->ifElse) . ')';
     }
 
 }
