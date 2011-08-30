@@ -151,7 +151,7 @@ class Rate extends \XLite\Model\AEntity
      */
     public function isApplyed(
         array $zones,
-        \XLite\Model\Membership $membership
+        \XLite\Model\Membership $membership = null
     ) {
         return (!$this->getZone() || in_array($this->getZone()->getZoneId(), $zones))
             && (!$this->getMembership() || ($membership && $this->getMembership()->getMembershipId() == $membership->getMembershipId()));

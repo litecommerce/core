@@ -61,6 +61,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Repo_Product extends XLite_Tests_Model_A
         $memberships = \XLite\Core\Database::getRepo('XLite\Model\Membership')->findAll();
         $membership = array_shift($memberships);
         $rate->setMembership($membership);
+        $tax->setVATMembership($membership);
         \XLite\Core\Database::getEM()->persist($rate);
         $tax->addRates($rate);
         $rate->setTax($tax);

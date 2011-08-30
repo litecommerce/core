@@ -122,7 +122,7 @@ class Tax extends \XLite\Model\Base\I18n
      * Get filtered rate by zones and membership
      *
      * @param array                                        $zones          Zone id list
-     * @param \XLite\Model\Membership                      $membership     Membership
+     * @param \XLite\Model\Membership                      $membership     Membership OPTIONAL
      * @param \Doctrine\Common\Collections\ArrayCollection $productClasses Product classes OPTIONAL
      *
      * @return \XLite\Module\CDev\SalesTax\Model\Tax\Rate

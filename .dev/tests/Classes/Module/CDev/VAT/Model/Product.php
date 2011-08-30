@@ -75,6 +75,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_TestCase
         $memberships = \XLite\Core\Database::getRepo('XLite\Model\Membership')->findAll();
         $membership = array_shift($memberships);
         $rate->setMembership($membership);
+        $tax->setVATMembership($membership);
         \XLite\Core\Database::getEM()->flush();
 
         $this->assertEquals(
