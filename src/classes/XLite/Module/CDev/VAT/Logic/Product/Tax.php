@@ -35,6 +35,54 @@ namespace XLite\Module\CDev\VAT\Logic\Product;
  */
 class Tax extends \XLite\Logic\ALogic
 {
+    public function getSeaexhPriceConbdition($priceField, $classesAlias)
+    {
+        $zones = $this->getZonesList();
+        $memebrship = $this->getMembership();
+
+        $cnd = $priceField;
+
+        foreach ($this->getTaxes() as $tax) {
+            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
+            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership());
+
+            if ($included) {
+                $cnd .= ' - (' . $included->getExcludeTaxFormula($priceField) . ')';
+                $purePrice = '(' . $cnd . ')';
+
+            } else {
+                $purePrice = $cnd;
+            }
+
+            $rates = array();
+            foreach (\XLite\Core\Database::getRepo('XLite\Model\ProductClass')->findAll() as $class) {
+                $classes = new \Doctrine\Common\Collections\ArrayCollection(array($class));
+                $rate = $tax->getFilteredRate($zones, $memebrship, $classes);
+
+                if ($rate) {
+                    if (!isset($rates[$rate->getId()])) {
+                        $rates[$rate->getId()] = array('rate' => $rate, 'classes' => array());
+                    }
+                    $rates[$rate->getId()]['classes'][] = $class->getId();
+                }
+            }
+
+            foreach ($rates as $id => $data) {
+                $cnd .= ' + IF(' . $classesAlias . '.id IN (' . implode(', ', $data['classes']) . '), '
+                    . $data['rate']->getIncludeTaxFormula($purePrice) . ', 0)';
+            }
+
+            $rate = $tax->getFilteredRate($zones, $memebrship);
+            if ($rate) {
+                $cnd .= ' + IF(' . $classesAlias . '.id IS NULL, ' . $rate->getIncludeTaxFormula($purePrice) . ', 0)';
+            }
+
+        }
+
+        return $cnd;
+    }
+
+
     // {{{ Calculation
 
     /**
@@ -119,13 +167,11 @@ class Tax extends \XLite\Logic\ALogic
             $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
             $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
 
-            if ($included != $rate) {
-                if ($included) {
-                    $price -= $included->calculateProductPriceExcludingTax($product, $price);
-                }
-                if ($rate) {
-                    $taxes[$tax->getName()] = $rate->calculateProductPriceIncludingTax($product, $price);
-                }
+            if ($included) {
+                $price -= $included->calculateProductPriceExcludingTax($product, $price);
+            }
+            if ($rate) {
+                $taxes[$tax->getName()] = $rate->calculateProductPriceIncludingTax($product, $price);
             }
         }
 

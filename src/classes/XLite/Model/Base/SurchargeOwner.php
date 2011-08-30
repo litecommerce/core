@@ -166,10 +166,8 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
     {
         $total = 0;
 
-        foreach ($this->getSurcharges() as $s) {
-            if ($s->getType() == $type && !$s->getInclude()) {
-                $total += $s->getValue();
-            }
+        foreach ($this->getExcludeSurchargesByType($type) as $s) {
+            $total += $s->getValue();
         }
 
         return $total;

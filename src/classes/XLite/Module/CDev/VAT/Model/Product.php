@@ -58,15 +58,17 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     }
 
     /**
-     * Get included tax list 
+     * Get included tax list
+     *
+     * @param boolean $override Override calculation flag OPTIONAL
      * 
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getIncludedTaxList()
+    public function getIncludedTaxList($override = false)
     {
-        if (!isset($this->includedTaxList)) {
+        if (!isset($this->includedTaxList) || $override) {
             $this->includedTaxList = \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()
                 ->calculateProduct($this);
         }

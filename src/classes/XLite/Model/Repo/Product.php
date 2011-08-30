@@ -45,6 +45,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     const P_SKU               = 'SKU';
     const P_CATEGORY_ID       = 'categoryId';
     const P_SUBSTRING         = 'substring';
+    const P_PRICE             = 'price';
     const P_SEARCH_IN_SUBCATS = 'searchInSubcats';
     const P_INVENTORY         = 'inventory';
     const P_ORDER_BY          = 'orderBy';
@@ -214,6 +215,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
             self::P_SKU,
             self::P_CATEGORY_ID,
             self::P_SUBSTRING,
+            self::P_PRICE,
             self::P_INVENTORY,
             self::P_ORDER_BY,
             self::P_LIMIT,
@@ -396,6 +398,53 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
             $queryBuilder->andWhere($cnd);
 
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareCndPrice(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        if (is_array($value) && 2 == count($value)) {
+            $min = trim(array_shift($value));
+            $max = trim(array_shift($value));
+
+            $min = (0 == strlen($min) || !is_numeric($min)) ? null : doubleval($min);
+            $max = (0 == strlen($max) || !is_numeric($max)) ? null : doubleval($max);
+
+            $this->assignPriceRangeCondition($queryBuilder, $min, $max);
+        }
+    }
+
+    /**
+     * Assign prica range-based search condition 
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder
+     * @param float                      $min          Minimum
+     * @param float                      $max          Maximum
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    protected function assignPriceRangeCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $min, $max)
+    {
+        if (isset($min)) {
+            $queryBuilder->andWhere('p.price > :minPrice')
+                ->setParameter('minPrice', doubleval($min));
+        }
+
+        if (isset($max)) {
+            $queryBuilder->andWhere('p.price < :maxPrice')
+                ->setParameter('maxPrice', doubleval($max));
         }
     }
 

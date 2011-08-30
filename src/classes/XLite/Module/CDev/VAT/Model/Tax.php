@@ -117,9 +117,9 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * Get filtered rates by zones and membership
      *
-     * @param array                                        $zones          Zone id list
-     * @param \XLite\Model\Membership                      $membership     Membership
-     * @param \Doctrine\Common\Collections\ArrayCollection $productClasses Product classes OPTIONAL
+     * @param array                                   $zones          Zone id list
+     * @param \XLite\Model\Membership                 $membership     Membership OPTIONAL
+     * @param \Doctrine\Common\Collections\Collection $productClasses Product classes OPTIONAL
      *
      * @return array
      * @see    ____func_see____
@@ -127,16 +127,17 @@ class Tax extends \XLite\Model\Base\I18n
      */
     public function getFilteredRates(
         array $zones,
-        \XLite\Model\Membership $membership,
-        \Doctrine\Common\Collections\ArrayCollection $productClasses = null
+        \XLite\Model\Membership $membership = null,
+        \Doctrine\Common\Collections\Collection $productClasses = null
     ) {
         $rates = array();
 
         foreach ($this->getRates() as $rate) {
             if ($rate->isApplyed($zones, $membership, $productClasses)) {
-                $rates[] = $rate;
+                $rates[$rate->getPosition()] = $rate;
             }
         }
+        ksort($rates);
 
         return $rates;
     }
@@ -144,9 +145,9 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * Get filtered rate by zones and membership
      *
-     * @param array                                        $zones          Zone id list
-     * @param \XLite\Model\Membership                      $membership     Membership
-     * @param \Doctrine\Common\Collections\ArrayCollection $productClasses Product classes OPTIONAL
+     * @param array                                   $zones          Zone id list
+     * @param \XLite\Model\Membership                 $membership     Membership OPTIONAL
+     * @param \Doctrine\Common\Collections\Collection $productClasses Product classes OPTIONAL
      *
      * @return \XLite\Module\CDev\VAT\Model\Tax\Rate
      * @see    ____func_see____
@@ -154,19 +155,12 @@ class Tax extends \XLite\Model\Base\I18n
      */
     public function getFilteredRate(
         array $zones,
-        \XLite\Model\Membership $membership,
-        \Doctrine\Common\Collections\ArrayCollection $productClasses = null
+        \XLite\Model\Membership $membership = null,
+        \Doctrine\Common\Collections\Collection $productClasses = null
     ) {
-        $found = null;
+        $rates = $this->getFilteredRates($zones, $membership, $productClasses);
 
-        foreach ($this->getRates() as $rate) {
-            if ($rate->isApplyed($zones, $membership, $productClasses)) {
-                $found = $rate;
-                break;
-            }
-        }
-
-        return $found;
+        return array_shift($rates);
     }
 
     /**

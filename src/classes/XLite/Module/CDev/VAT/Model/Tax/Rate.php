@@ -184,9 +184,9 @@ class Rate extends \XLite\Model\AEntity
     /**
      * Check - rate is applyed by specified zones and membership or nopt
      *
-     * @param array                                        $zones          Zone id list
-     * @param \XLite\Model\Membership                      $membership     Membership
-     * @param \Doctrine\Common\Collections\ArrayCollection $productClasses Product classes OPTIONAL
+     * @param array                                   $zones          Zone id list
+     * @param \XLite\Model\Membership                 $membership     Membership OPTIONAL
+     * @param \Doctrine\Common\Collections\Collection $productClasses Product classes OPTIONAL
      *
      * @return boolean
      * @see    ____func_see____
@@ -194,8 +194,8 @@ class Rate extends \XLite\Model\AEntity
      */
     public function isApplyed(
         array $zones,
-        \XLite\Model\Membership $membership,
-        \Doctrine\Common\Collections\ArrayCollection $productClasses = null
+        \XLite\Model\Membership $membership = null,
+        \Doctrine\Common\Collections\Collection $productClasses = null
     ) {
         return (!$this->getZone() || in_array($this->getZone()->getZoneId(), $zones))
             && (!$this->getMembership() || ($membership && $this->getMembership()->getMembershipId() == $membership->getMembershipId()))
@@ -435,6 +435,42 @@ class Rate extends \XLite\Model\AEntity
     protected function calculatePriceExcludeAbsolute($price)
     {
         return $this->getValue();
+    }
+
+    // }}}
+
+    // {{{ Search conditions
+
+    /**
+     * Get exclude tax formula 
+     * 
+     * @param string $priceField Product price field
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function getExcludeTaxFormula($priceField)
+    {
+        return $this->getType() == self::TYPE_PERCENT
+            ? $priceField . ' - ' . $priceField . ' / ' . ((100 + $this->getValue()) / 100)
+            : $this->getValue();
+    }
+
+    /**
+     * Get include tax formula 
+     * 
+     * @param string $priceField Product price field
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function getIncludeTaxFormula($priceField)
+    {
+        return $this->getType() == self::TYPE_PERCENT
+            ? $priceField . ' * ' . ($this->getValue() / 100)
+            : $this->getValue();
     }
 
     // }}}
