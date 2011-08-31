@@ -58,6 +58,13 @@
   cursor: pointer;
 }
 
+.file-system-entries li.not-file-entry,
+  .file-system-entries li.not-file-entry a.up-level
+{
+  color: #8f8f8f;
+  cursor: auto;
+}
+
 .file-system-entries li.empty-catalog {
   color: #8f8f8f;
   background: transparent none;

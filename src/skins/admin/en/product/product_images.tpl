@@ -58,36 +58,11 @@
 </form>
 
 <br />
-<br />
-<br />
 
-<form action="admin.php" method="post" name="imageForm" enctype="multipart/form-data">
-
-  <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}" />
-  <input type="hidden" name="action" value="add_image" />
-
-  <table cellspacing="3" cellpadding="0">
-
-    <tr>
-      <td colspan="2" valign="top" class="admin-title">{t(#Add Image#)}</td>
-    </tr>
-
-    <tr>
-      <td colspan=2>&nbsp;</td>
-    </tr>
-
-    <tr>
-    	<td>{t(#Image file#)}:</td>
-    	<td>
-          <widget
-            class="\XLite\View\Button\FileSelector"
-            label="Image upload"
-            object="product"
-            objectId="{product.getProductId()}"
-            fileObject="images" />
-	    </td>
-    </tr>
-
-  </table>
-
-</form>
+<widget
+  class="\XLite\View\Button\FileSelector"
+  style="main-button"
+  label="Add image"
+  object="product"
+  objectId="{product.getProductId()}"
+  fileObject="images" />

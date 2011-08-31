@@ -78,18 +78,22 @@ decorate(
     // Double click event on UP LEVEL element.
     jQuery('a.up-level').each(
       function () {
-        jQuery(this).parent().bind(
-          'dblclick',
-          function () {
+        if (fileInfo.current_catalog != "") {
+          jQuery(this).parent().bind(
+            'dblclick',
+            function () {
 
-            // Close the previous popup window
-            link.linkedDialog = undefined;
-            jQuery(selector).dialog('close').remove();
+              // Close the previous popup window
+              link.linkedDialog = undefined;
+              jQuery(selector).dialog('close').remove();
 
-            // Open new popup window. "Catalog" parameter is taken from "UP CATALOG" value
-            return PopupButtonBrowseServer.prototype.loadDialog.call(this, browseServerObject, link, fileInfo.up_catalog);
-          }
-        );
+              // Open new popup window. "Catalog" parameter is taken from "UP CATALOG" value
+              return PopupButtonBrowseServer.prototype.loadDialog.call(this, browseServerObject, link, fileInfo.up_catalog);
+            }
+          );
+        } else {
+          jQuery(this).parent().addClass('not-file-entry');
+        }
       }
     );
 
