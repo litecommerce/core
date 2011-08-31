@@ -41,6 +41,8 @@
   background-color: #ffffff;
   padding: 10px;
   min-height: 350px;
+  max-height: 500px;
+  overflow-y: scroll;
 }
 
 .file-system-entries li a {
@@ -67,7 +69,7 @@
   background: transparent url(images/high-back.png) repeat-x left top;
 }
 
-.file-system-entries li.selected a {
+.file-system-entries li.selected a span {
   color: #ffffff;
 }
 
@@ -88,11 +90,11 @@
 }
 
 .file-system-entries li a.type-file.extension-unknown img {
-  background-position: left -17px;
+  background-position: left -16px;
 }
 
 .file-system-entries li a.type-file.extension-pdf img {
-  background-position: left -33px;
+  background-position: left -32px;
 }
 
 .file-system-entries li a.type-file.extension-doc img,
@@ -108,7 +110,7 @@
   .file-system-entries li a.type-file.extension-utf8 img,
   .file-system-entries li a.type-file.extension-yml img
 {
-  background-position: left -49px;
+  background-position: left -48px;
 }
 
 .file-system-entries li a.type-file.extension-mp3 img,
@@ -142,7 +144,7 @@
   .file-system-entries li a.type-file.extension-ogx img,
   .file-system-entries li a.type-file.extension-wmv img
 {
-  background-position: left -97px;
+  background-position: left -96px;
 }
 
 .file-system-entries li a.type-file.extension-zip img,
@@ -181,7 +183,7 @@
   .file-system-entries li a.type-file.extension-uha img,
   .file-system-entries li a.type-file.extension-z img
 {
-  background-position: left -65px;
+  background-position: left -64px;
 }
 
 .file-system-entries li a.type-file.extension-jpg img,
@@ -191,12 +193,12 @@
   .file-system-entries li a.type-file.extension-bmp img,
   .file-system-entries li a.type-file.extension-psd img
 {
-  background-position: left -81px;
+  background-position: left -80px;
 }
 
 .file-system-entries li a.type-file.extension-exe img,
   .file-system-entries li a.type-file.extension-msi img,
   .file-system-entries li a.type-file.extension-com img
 {
-  background-position: left -113px;
+  background-position: left -112px;
 }
