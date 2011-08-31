@@ -89,6 +89,20 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     }
 
     /**
+     * Return TRUE if category can have image
+     * Return FALSE if category cannot have image (new or root one)
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    public function hasImage()
+    {
+        return 'add_child' !== \XLite\Core\Request::getInstance()->mode
+            && $this->getRootCategoryId() !== $this->getCategoryId();
+    }
+
+    /**
      * Return the current page title (for the content area)
      *
      * @return string
@@ -125,40 +139,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     }
 
     /**
-     * Create/update image
-     *
-     * @param integer $categoryId Image category ID OPTIONAL
-     *
-     * @return \XLite\Model\Image\Category\Image
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function saveImage($categoryId = null)
-    {
-        if (empty($categoryId)) {
-            $categoryId = $this->getCategoryId();
-        }
-
-        $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->find($categoryId);
-
-        $img = $category->getImage();
-
-        if (!$img) {
-            $img = new \XLite\Model\Image\Category\Image();
-        }
-
-        if ($img->loadFromRequest('postedData', 'image')) {
-            if (!$img->getCategory()) {
-                $img->setCategory($category);
-                $category->setImage($img);
-                \XLite\Core\Database::getEM()->persist($img);
-            }
-        }
-
-        return $img;
-    }
-
-    /**
      * doActionAddChild
      *
      * @return void
@@ -172,8 +152,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
             $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->insert(
                 array('parent_id' => $this->getCategoryId()) + $properties
             );
-
-            $this->saveImage($category->getCategoryId());
 
             $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $category->getCategoryId())));
         }
@@ -189,7 +167,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     protected function doActionModify()
     {
         if ($properties = $this->validateCategoryData()) {
-            $this->saveImage();
 
             \XLite\Core\Database::getRepo('\XLite\Model\Category')
                 ->updateById($properties['category_id'], $properties);

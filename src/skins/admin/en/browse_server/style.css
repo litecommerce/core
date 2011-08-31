@@ -1,0 +1,202 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.6
+ */
+
+.fs-entry {
+  background-color: #ffffff;
+}
+
+.fs-entry.selected {
+  background-color: #aaaaaa;
+}
+
+.browse-selector
+{
+  width: 660px;
+  background-color: #F5F5F5;
+  padding: 40px 90px 10px 10px;
+}
+
+.browse-selector-actions {
+  padding: 10px 0px 0px 10px;
+}
+
+.browse-selector-actions button.choose-file-button {
+  margin-left: 150px;
+}
+
+.file-system-entries {
+  border: solid 1px #e1e1e1;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 10px;
+  min-height: 350px;
+}
+
+.file-system-entries li a {
+  font-size: 14px;
+  line-height: 30px;
+}
+
+.file-system-entries li {
+  padding-right: 200px;
+  height: 34px;
+  background: transparent url(images/normal-back.png) repeat-x left bottom;
+  display: block;
+  cursor: pointer;
+}
+
+.file-system-entries li.empty-catalog {
+  color: #8f8f8f;
+  background: transparent none;
+  padding: 4px 0px 0px 250px;
+  font-size: 14px;
+}
+
+.file-system-entries li.selected {
+  background: transparent url(images/high-back.png) repeat-x left top;
+}
+
+.file-system-entries li.selected a {
+  color: #ffffff;
+}
+
+.file-system-entries li a.up-level {
+  color: #2c5fa6;
+}
+
+.file-system-entries li a img {
+  width: 16px;
+  height: 16px;
+  background: transparent url(images/file_icons.png) no-repeat 0px 17px;
+  margin: 7px 6px 0 20px;
+  float: left;
+}
+
+.file-system-entries li a.type-catalog img {
+  background-position: left 0px;
+}
+
+.file-system-entries li a.type-file.extension-unknown img {
+  background-position: left -17px;
+}
+
+.file-system-entries li a.type-file.extension-pdf img {
+  background-position: left -33px;
+}
+
+.file-system-entries li a.type-file.extension-doc img,
+  .file-system-entries li a.type-file.extension-xls img,
+  .file-system-entries li a.type-file.extension-txt img,
+  .file-system-entries li a.type-file.extension-rtf img,
+  .file-system-entries li a.type-file.extension-asc img,
+  .file-system-entries li a.type-file.extension-docx img,
+  .file-system-entries li a.type-file.extension-readme img,
+  .file-system-entries li a.type-file.extension-sdw img,
+  .file-system-entries li a.type-file.extension-sxg img,
+  .file-system-entries li a.type-file.extension-sxw img,
+  .file-system-entries li a.type-file.extension-utf8 img,
+  .file-system-entries li a.type-file.extension-yml img
+{
+  background-position: left -49px;
+}
+
+.file-system-entries li a.type-file.extension-mp3 img,
+  .file-system-entries li a.type-file.extension-mpeg img,
+  .file-system-entries li a.type-file.extension-avi img,
+  .file-system-entries li a.type-file.extension-aiff img,
+  .file-system-entries li a.type-file.extension-cda img,
+  .file-system-entries li a.type-file.extension-m3u img,
+  .file-system-entries li a.type-file.extension-m1a img,
+  .file-system-entries li a.type-file.extension-m4a img,
+  .file-system-entries li a.type-file.extension-midi img,
+  .file-system-entries li a.type-file.extension-mp2 img,
+  .file-system-entries li a.type-file.extension-oga img,
+  .file-system-entries li a.type-file.extension-ogg img,
+  .file-system-entries li a.type-file.extension-pls img,
+  .file-system-entries li a.type-file.extension-rm img,
+  .file-system-entries li a.type-file.extension-3gp img,
+  .file-system-entries li a.type-file.extension-m2v img,
+  .file-system-entries li a.type-file.extension-mkv img,
+  .file-system-entries li a.type-file.extension-mjpg img,
+  .file-system-entries li a.type-file.extension-m4u img,
+  .file-system-entries li a.type-file.extension-m4v img,
+  .file-system-entries li a.type-file.extension-mov img,
+  .file-system-entries li a.type-file.extension-mp2v img,
+  .file-system-entries li a.type-file.extension-mp4 img,
+  .file-system-entries li a.type-file.extension-mp4v img,
+  .file-system-entries li a.type-file.extension-mpg img,
+  .file-system-entries li a.type-file.extension-mtv img,
+  .file-system-entries li a.type-file.extension-mts img,
+  .file-system-entries li a.type-file.extension-ogv img,
+  .file-system-entries li a.type-file.extension-ogx img,
+  .file-system-entries li a.type-file.extension-wmv img
+{
+  background-position: left -97px;
+}
+
+.file-system-entries li a.type-file.extension-zip img,
+  .file-system-entries li a.type-file.extension-rar img,
+  .file-system-entries li a.type-file.extension-7z img,
+  .file-system-entries li a.type-file.extension-tar img,
+  .file-system-entries li a.type-file.extension-tgz img,
+  .file-system-entries li a.type-file.extension-gz img,
+  .file-system-entries li a.type-file.extension-bz2 img,
+  .file-system-entries li a.type-file.extension-lz img,
+  .file-system-entries li a.type-file.extension-lzma img,
+  .file-system-entries li a.type-file.extension-lzo img,
+  .file-system-entries li a.type-file.extension-iso img,
+  .file-system-entries li a.type-file.extension-s7z img,
+  .file-system-entries li a.type-file.extension-ace img,
+  .file-system-entries li a.type-file.extension-arc img,
+  .file-system-entries li a.type-file.extension-arj img,
+  .file-system-entries li a.type-file.extension-ba img,
+  .file-system-entries li a.type-file.extension-cab img,
+  .file-system-entries li a.type-file.extension-cfs img,
+  .file-system-entries li a.type-file.extension-cpt img,
+  .file-system-entries li a.type-file.extension-dar img,
+  .file-system-entries li a.type-file.extension-dgc img,
+  .file-system-entries li a.type-file.extension-ha img,
+  .file-system-entries li a.type-file.extension-kgb img,
+  .file-system-entries li a.type-file.extension-lzh img,
+  .file-system-entries li a.type-file.extension-lzx img,
+  .file-system-entries li a.type-file.extension-sfx img,
+  .file-system-entries li a.type-file.extension-Z img,
+  .file-system-entries li a.type-file.extension-tbz2 img,
+  .file-system-entries li a.type-file.extension-zoo img,
+  .file-system-entries li a.type-file.extension-zz img,
+  .file-system-entries li a.type-file.extension-yz1 img,
+  .file-system-entries li a.type-file.extension-tlz img,
+  .file-system-entries li a.type-file.extension-uca img,
+  .file-system-entries li a.type-file.extension-uha img,
+  .file-system-entries li a.type-file.extension-z img
+{
+  background-position: left -65px;
+}
+
+.file-system-entries li a.type-file.extension-jpg img,
+  .file-system-entries li a.type-file.extension-png img,
+  .file-system-entries li a.type-file.extension-jpeg img,
+  .file-system-entries li a.type-file.extension-gif img,
+  .file-system-entries li a.type-file.extension-bmp img,
+  .file-system-entries li a.type-file.extension-psd img
+{
+  background-position: left -81px;
+}
+
+.file-system-entries li a.type-file.extension-exe img,
+  .file-system-entries li a.type-file.extension-msi img,
+  .file-system-entries li a.type-file.extension-com img
+{
+  background-position: left -113px;
+}

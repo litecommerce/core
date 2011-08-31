@@ -124,7 +124,7 @@ abstract class Image extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="32")
+     * @Column (type="fixedstring", length="32", nullable=true)
      */
     protected $hash = '';
 
@@ -285,15 +285,20 @@ abstract class Image extends \XLite\Model\AEntity
         $result = false;
 
         $cell = isset($_FILES[$key]) ? $_FILES[$key] : null;
+
         if ($cell && (!$subkey || isset($cell['name'][$subkey]))) {
+
             $error = $subkey ? $cell['error'][$subkey] : $cell['error'];
+
             if (UPLOAD_ERR_OK == $error) {
+
                 $tmp = $subkey ? $cell['tmp_name'][$subkey] : $cell['tmp_name'];
                 $basename = $subkey ? $cell['name'][$subkey] : $cell['name'];
 
                 $root = $this->getRepository()->getFileSystemRoot();
 
                 $path = \Includes\Utils\FileManager::getUniquePath($root, $basename);
+
                 if (move_uploaded_file($tmp, $path)) {
                     chmod($path, 0644);
 
@@ -326,6 +331,7 @@ abstract class Image extends \XLite\Model\AEntity
         $result = true;
 
         $root = $this->getRepository()->getFileSystemRoot();
+
         if (0 === strncmp($root, $path, strlen($root))) {
 
             // File already in image storage
@@ -335,9 +341,11 @@ abstract class Image extends \XLite\Model\AEntity
 
             // Move file
             $newPath = \Includes\Utils\FileManager::getUniquePath($root, $basename ?: basename($path));
+
             if (!copy($path, $newPath)) {
                 $result = false;
             }
+
             $path = $newPath;
         }
 
@@ -363,8 +371,11 @@ abstract class Image extends \XLite\Model\AEntity
         $result = true;
 
         if ($copy2fs) {
+
             $fn = tempnam(LC_DIR_TMP, 'load_image');
+
             $image = \XLite\Core\Operator::getURLContent($url);
+
             $result = ($image && file_put_contents($fn, $image))
                 ? $this->loadFromLocalFile($fn)
                 : false;
@@ -389,11 +400,11 @@ abstract class Image extends \XLite\Model\AEntity
     {
         if (!$this->isURL()) {
             $path = $this->getRepository()->getFileSystemRoot() . $this->path;
+
             if (file_exists($path)) {
                 @unlink($path);
             }
         }
-
     }
 
     /**
@@ -470,6 +481,7 @@ abstract class Image extends \XLite\Model\AEntity
     {
         // Remove old image
         if ($this->path && $this->path != basename($path)) {
+
             $this->removeFile();
         }
 
@@ -523,12 +535,17 @@ abstract class Image extends \XLite\Model\AEntity
         $isTempFile = false;
 
         if ($this->isURL()) {
+
             if (ini_get('allow_url_fopen')) {
+
                 $path = $this->path;
 
             } else {
+
                 $path = tempnam(LC_DIR_TMP, 'analyse_image');
+
                 file_put_contents($path, $this->getBody());
+
                 $isTempFile = true;
             }
 

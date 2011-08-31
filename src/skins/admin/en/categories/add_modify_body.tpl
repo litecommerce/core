@@ -10,6 +10,8 @@
  * @since     1.0.0
  *}
 
+{*TODO: refactor it.*}
+
 <div class="right-panel">
   <widget class="\XLite\View\EditorLanguageSelector" />
 </div>
@@ -30,7 +32,7 @@
 
 <p>
 
-<form name="add_modify_form" action="admin.php" method="post" enctype="multipart/form-data">
+<form name="add_modify_form" action="admin.php" method="post">
 
   <input type="hidden" name="target" value="category" />
   <input type="hidden" name="action" value="{getRequestParamValue(#mode#)}" />
@@ -40,46 +42,56 @@
   <table width="100%">
 
     <tr>
-      <td style="width:15%;">Category&nbsp;name</td>
+      <td>{t(#Category name#)}</td>
       <td class="star">*</td>
-      <td style="width:85%;">
+      <td>
         <input type="text" name="name" value="{category.name}" size="50" maxlength="255" />
-        &nbsp;<span IF="!valid" class="validate-error-message">&lt;&lt; Required field</span>
+        &nbsp;<span IF="!valid" class="validate-error-message">&lt;&lt; {t(#Required field#)}</span>
       </td>
     </tr>
 
     <tr>
-      <td valign="top">Category page title</td>
+      <td valign="top">{t(#Category page title#)}</td>
       <td>&nbsp;</td>
       <td>
         <select name="show_title">
-          <option value="1" selected="{category.show_title=#1#}">Use the category name</option>
-          <option value="0" selected="{category.show_title=#0#}">Hide</option>
+          <option value="1" selected="{category.show_title=#1#}">{t(#Use the category name#)}</option>
+          <option value="0" selected="{category.show_title=#0#}">{t(#Hide#)}</option>
         </select>
     </tr>
 
 
     <tr>
-      <td valign="top">Description</td>
+      <td valign="top">{t(#Description#)}</td>
       <td>&nbsp;</td>
       <td><widget class="\XLite\View\FormField\Textarea\Advanced" fieldName="description" cols="50" rows="10" value="{category.description}" /></td>
     </tr>
 
-    <tr IF="!getRootCategoryId()=category.getCategoryId()">
-      <td>{if:category.hasImage()}<img src="{category.image.getURL()}" alt="" />{else:}<img src="images/no_image.png" alt="" />{end:}</td>
+    <tr IF="hasImage()">
+      <td>
+        <img IF="category.hasImage()" src="{category.image.getURL()}" alt="" />
+        <img IF="!category.hasImage()" src="images/no_image.png" alt="" />
+      </td>
       <td>&nbsp;</td>
-      <td valign="bottom" rowspan=2>
-      <widget class="\XLite\View\ImageUpload" field="image" actionName="icon" formName="add_modify_form" object="{category.image}" />
+      <td valign="bottom" rowspan="2">
+
+        <widget
+          class="\XLite\View\Button\FileSelector"
+          label="Image upload"
+          object="category"
+          objectId="{category.getCategoryId()}"
+          fileObject="image" />
+
       </td>
     </tr>
 
-    <tr IF="!getRootCategoryId()=category.getCategoryId()">
-      <td valign="top">Image</td>
+    <tr IF="hasImage()">
+      <td valign="top">{t(#Image#)}</td>
       <td>&nbsp;</td>
     </tr>
 
     <tr IF="!getRootCategoryId()=category.getCategoryId()">
-      <td>Membership</td>
+      <td>{t(#Membership#)}</td>
       <td class="star">*</td>
       <td>
         <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership_id" value="{category.membership}" />
@@ -87,36 +99,36 @@
     </tr>
 
     <tr IF="!getRootCategoryId()=category.getCategoryId()">
-      <td>Availability</td>
+      <td>{t(#Availability#)}</td>
       <td class="star">*</td>
       <td>
         <select name="enabled">
-          <option value="1" selected="{category.enabled=#1#}">Enabled</option>
-          <option value="0" selected="{category.enabled=#0#}">Disabled</option>
+          <option value="1" selected="{category.enabled=#1#}">{t(#Enabled#)}</option>
+          <option value="0" selected="{category.enabled=#0#}">{t(#Disabled#)}</option>
         </select>
       </td>
     </tr>
 
     <tr>
-      <td>HTML title ('title' tag)</td>
+      <td>{t(#HTML title ('title' tag)#)}</td>
       <td>&nbsp;</td>
       <td><input type="text" name="meta_title" value="{category.meta_title}" size="50" /></td>
     </tr>
 
     <tr>
-      <td>Meta keywords</td>
+      <td>{t(#Meta keywords#)}</td>
       <td>&nbsp;</td>
       <td><input type="text" name="meta_tags" value="{category.meta_tags}" size="50" /></td>
     </tr>
 
     <tr>
-      <td>Meta description</td>
+      <td>{t(#Meta description#)}</td>
       <td>&nbsp;</td>
       <td><input type="text" name="meta_desc" value="{category.meta_desc}" size="50" /></td>
     </tr>
 
     <tr IF="!getRootCategoryId()=category.getCategoryId()">
-      <td>Clean URL </td>
+      <td>{t(#Clean URL#)}</td>
       <td>&nbsp;</td>
       <td><input type="text" name="clean_url" value="{category.clean_url}" size="50" /></td>
     </tr>
@@ -127,11 +139,8 @@
 
     <tr>
       <td colspan="3">
-        {if:category.getCategoryId()}
-          <widget class="\XLite\View\Button\Submit" label="Update" />
-        {else:}
-          <widget class="\XLite\View\Button\Submit" label="Create category" />
-        {end:}
+        <widget IF="category.getCategoryId()" class="\XLite\View\Button\Submit" label="Update" />
+        <widget IF="!category.getCategoryId()" class="\XLite\View\Button\Submit" label="Create category" />
       </td>
     </tr>
 
@@ -139,7 +148,8 @@
 
 </form>
 
-{*
+{* TODO: restore it
+
 {if:category.category_id&!getRootCategoryId()=category.getCategoryId()}
 <br /><br /><br />
 

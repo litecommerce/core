@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<p class="error-message" IF="!product.getImages()">There are no images loaded for this product</p>
+<p class="error-message" IF="!product.getImages()">{t(#There are no images loaded for this product#)}</p>
 
 <br />
 
@@ -22,8 +22,8 @@
 
   <div FOREACH="product.getImages(),id,image">
     <p>
-      <span class="admin-head">Image #{inc(id)}</span><br />
-      <strong>Note:</strong> Image border will not be displayed in customer's frontend
+      <span class="admin-head">{t(#Image#)} #{inc(id)}</span><br />
+      <strong>{t(#Note#)}:</strong> {t(#Image border will not be displayed in customer's frontend#)}
     </p>
     <img src="{image.getURL()}" style="border: 1px solid #b2b2b3;" alt="" />
     <br />
@@ -32,21 +32,21 @@
       <table>
 
         <tr>
-        	<td align="right">Alternative text:</td>
+        	<td align="right">{t(#Alternative text#)}:</td>
 	        <td><input type="text" name="alt[{image.getImageId()}]" value="{image.getAlt():r}" size="55" /></td>
         </tr>
 
         <tr>
-	        <td align="right">Position:</td>
+	        <td align="right">{t(#Position#)}:</td>
 	        <td><input type="text" name="orderby[{image.getImageId()}]" value="{image.getOrderby():r}" class="orderby field-integer" /></td>
         </tr>
 
         <tr>
 	        <td>&nbsp;</td>
         	<td>
-            <widget class="\XLite\View\Button\Submit" label="Update" />
-            &nbsp;
-		        <widget class="\XLite\View\Button\Regular" label="Delete the image" jsCode="images_form.image_id.value='{image.getImageId()}'; images_form.action.value='delete_image'; images_form.submit()" />
+              <widget class="\XLite\View\Button\Submit" label="Update" />
+              &nbsp;
+              <widget class="\XLite\View\Button\Regular" label="Delete the image" jsCode="images_form.image_id.value='{image.getImageId()}'; images_form.action.value='delete_image'; images_form.submit()" />
 	        </td>
         </tr>
 
@@ -69,7 +69,7 @@
   <table cellspacing="3" cellpadding="0">
 
     <tr>
-      <td colspan="2" valign="top" class="admin-title">Add Image</td>
+      <td colspan="2" valign="top" class="admin-title">{t(#Add Image#)}</td>
     </tr>
 
     <tr>
@@ -77,25 +77,32 @@
     </tr>
 
     <tr>
-    	<td>Alternative text:</td>
+    	<td>{t(#Alternative text#)}:</td>
 	    <td><input type="text" name="alt" size="55" /></td>
     </tr>
 
     <tr>
-    	<td>Position:</td>
+    	<td>{t(#Position#)}:</td>
     	<td><input type="text" name="orderby" class="orderby field-integer" /></td>
     </tr>
 
-    <tr>	
-    	<td valign="top">Image file:</td>
+    <tr>
+    	<td valign="top">{t(#Image file#)}:</td>
     	<td valign="middle">
-        <widget class="\XLite\View\ImageUpload" field="image" actionName="add_image" formName="imageForm" object="{product}" />
+          <widget
+            class="\XLite\View\Button\FileSelector"
+            label="Image upload"
+            object="product"
+            objectId="{product.getProductId()}"
+            fileObject="images" />
 	    </td>
     </tr>
 
     <tr>
-    	<td colspan="2"><widget class="\XLite\View\Button\Submit" label="Add" /></td>
-    </tr>	
+    	<td colspan="2">
+          <widget class="\XLite\View\Button\Submit" label="Add" />
+        </td>
+    </tr>
 
   </table>
 
