@@ -399,18 +399,19 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Remove image file
      *
+     * @param string $path Path to image OPTIONAL
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function removeFile()
+    public function removeFile($path = null)
     {
-        if (!$this->isURL()) {
-            $path = $this->getRepository()->getFileSystemRoot() . $this->path;
+        if (!$this->isURL($path)) {
 
-            if (file_exists($path)) {
-                \Includes\Utils\FileManager::deleteFile($path);
-            }
+            $path = $this->getRepository()->getFileSystemRoot() . (is_null($path) ? $this->path : $path);
+
+            \Includes\Utils\FileManager::deleteFile($path);
         }
     }
 
@@ -437,13 +438,15 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Check image is URL-based or not
      *
+     * @param string $path Path to image OPTIONAL
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isURL()
+    public function isURL($path = null)
     {
-        return (bool) preg_match('/^https?:\/\//Ss', $this->path);
+        return (bool) preg_match('/^https?:\/\//Ss', is_null($path) ? $this->path : $path);
     }
 
     /**
@@ -475,6 +478,7 @@ abstract class Image extends \XLite\Model\AEntity
         }
     }
 
+
     /**
      * Save path into entity
      *
@@ -487,14 +491,19 @@ abstract class Image extends \XLite\Model\AEntity
     protected function savePath($path)
     {
         // Remove old image
-        if ($this->path && $this->path != basename($path)) {
+        $toRemove = $this->path && $this->path != basename($path);
 
-            $this->removeFile();
-        }
-
+        $pathToRemove = $this->path;
         $this->path = basename($path);
 
-        return $this->renewImageParameters();
+        $result = $this->renewImageParameters();
+
+        if ($result && $toRemove) {
+
+            $this->removeFile($pathToRemove);
+        }
+
+        return $result;
     }
 
     /**
