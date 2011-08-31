@@ -68,13 +68,15 @@
     </tr>
 
     <tr IF="hasImage()">
-      <td>
-        <img IF="category.hasImage()" src="{category.image.getURL()}" alt="" />
-        <img IF="!category.hasImage()" src="images/no_image.png" alt="" />
+      <td valign="top">
+        {t(#Image#)}
       </td>
       <td>&nbsp;</td>
-      <td valign="bottom" rowspan="2">
+      <td>
 
+        <img IF="category.hasImage()" src="{category.image.getURL()}" alt="" />
+        <img IF="!category.hasImage()" src="images/no_image.png" alt="" />
+        <br />
         <widget
           class="\XLite\View\Button\FileSelector"
           label="Image upload"
@@ -83,11 +85,6 @@
           fileObject="image" />
 
       </td>
-    </tr>
-
-    <tr IF="hasImage()">
-      <td valign="top">{t(#Image#)}</td>
-      <td>&nbsp;</td>
     </tr>
 
     <tr IF="!getRootCategoryId()=category.getCategoryId()">

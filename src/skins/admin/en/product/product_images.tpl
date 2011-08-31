@@ -77,18 +77,8 @@
     </tr>
 
     <tr>
-    	<td>{t(#Alternative text#)}:</td>
-	    <td><input type="text" name="alt" size="55" /></td>
-    </tr>
-
-    <tr>
-    	<td>{t(#Position#)}:</td>
-    	<td><input type="text" name="orderby" class="orderby field-integer" /></td>
-    </tr>
-
-    <tr>
-    	<td valign="top">{t(#Image file#)}:</td>
-    	<td valign="middle">
+    	<td>{t(#Image file#)}:</td>
+    	<td>
           <widget
             class="\XLite\View\Button\FileSelector"
             label="Image upload"
@@ -96,12 +86,6 @@
             objectId="{product.getProductId()}"
             fileObject="images" />
 	    </td>
-    </tr>
-
-    <tr>
-    	<td colspan="2">
-          <widget class="\XLite\View\Button\Submit" label="Add" />
-        </td>
     </tr>
 
   </table>
