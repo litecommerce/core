@@ -19,7 +19,7 @@
     <li FOREACH="getFSEntries(),idx,entry" class="fs-entry">
       <a class="type-{entry.type} extension-unknown extension-{entry.extension}"><img src="images/spacer.gif" alt="" /><span>{entry.name}</span></a>
     </li>
-    <li IF="isEmpty()" class="empty-catalog">{t(#Directory is empty#)}</li>
+    <li IF="isEmptyCatalog()" class="empty-catalog">{t(#Directory is empty#)}</li>
   </ul>
 </div>
 <div class="browse-selector-actions">

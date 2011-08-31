@@ -74,6 +74,27 @@ class BrowseServer extends \XLite\View\SimpleDialog
         return LC_DIR_ROOT . 'files';
     }
 
+    /**
+     * Check path to be inside the files catalog repository. {lc_catalog}/files
+     * Return full path that inside the repository.
+     * If path is out the one then returns the catalog repository path.
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    public static function getNormalizedPath($path)
+    {
+        $filesCatalog = \XLite\View\BrowseServer::getFilesCatalog();
+
+        $path = \Includes\Utils\FileManager::getRealPath(
+            $filesCatalog . LC_DS . $path
+        );
+
+        return ($filesCatalog !== substr($path, 0, strlen($filesCatalog)))
+            ? $filesCatalog
+            : $path;
+    }
 
     /**
      * Return title. "Browse server"
@@ -108,16 +129,7 @@ class BrowseServer extends \XLite\View\SimpleDialog
      */
     protected function getCurrentCatalog()
     {
-        $filesCatalog = $this->getFilesCatalog();
-
-        $currentCatalog = \Includes\Utils\FileManager::getRealPath($filesCatalog . LC_DS . \XLite\Core\Request::getInstance()->catalog);
-
-        // catalog must be inside "Files" catalog
-        if ($filesCatalog !== substr($currentCatalog, 0, strlen($filesCatalog))) {
-            $currentCatalog = $filesCatalog;
-        }
-
-        return $currentCatalog;
+        return \XLite\View\BrowseServer::getNormalizedPath(\XLite\Core\Request::getInstance()->catalog);
     }
 
     /**
@@ -183,7 +195,7 @@ class BrowseServer extends \XLite\View\SimpleDialog
      * @see    ____func_see____
      * @since  1.0.7
      */
-    protected function isEmpty()
+    protected function isEmptyCatalog()
     {
         return count($this->fsEntries['catalog'] + $this->fsEntries['file']) == 0;
     }

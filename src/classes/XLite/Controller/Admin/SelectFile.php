@@ -171,7 +171,7 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
 
         } else {
             \XLite\Core\TopMessage::addError(
-                'The image has not been successfully updated'
+                'Failed to update category image'
             );
         }
     }
@@ -215,11 +215,11 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionSelectLocalCategoryImage()
     {
+        $file = \XLite\View\BrowseServer::getNormalizedPath(\XLite\Core\Request::getInstance()->local_server_file);
+
         $this->doActionSelectCategoryImage(
             'loadFromLocalFile',
-            array(
-                \XLite\View\BrowseServer::getFilesCatalog() . \XLite\Core\Request::getInstance()->local_server_file
-            )
+            array($file)
         );
     }
 
@@ -261,7 +261,7 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
 
         } else {
             \XLite\Core\TopMessage::addError(
-                'The detailed image has not been successfully added'
+                'Failed to add detailed image'
             );
         }
     }
@@ -305,11 +305,11 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionSelectLocalProductImages()
     {
+        $file = \XLite\View\BrowseServer::getNormalizedPath(\XLite\Core\Request::getInstance()->local_server_file);
+
         $this->doActionSelectProductImages(
             'loadFromLocalFile',
-            array(
-                \XLite\View\BrowseServer::getFilesCatalog() . \XLite\Core\Request::getInstance()->local_server_file
-            )
+            array($file)
         );
     }
 

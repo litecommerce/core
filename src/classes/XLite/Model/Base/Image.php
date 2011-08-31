@@ -300,13 +300,15 @@ abstract class Image extends \XLite\Model\AEntity
                 $path = \Includes\Utils\FileManager::getUniquePath($root, $basename);
 
                 if (move_uploaded_file($tmp, $path)) {
+
                     chmod($path, 0644);
 
                     if ($this->savePath($path)) {
+
                         $result = true;
 
                     } else {
-                        unlink($path);
+                        \Includes\Utils\FileManager::deleteFile($path);
                     }
                 }
             }
@@ -342,7 +344,7 @@ abstract class Image extends \XLite\Model\AEntity
             // Move file
             $newPath = \Includes\Utils\FileManager::getUniquePath($root, $basename ?: basename($path));
 
-            if (!copy($path, $newPath)) {
+            if (!\Includes\Utils\FileManager::copy($path, $newPath)) {
                 $result = false;
             }
 
@@ -380,9 +382,14 @@ abstract class Image extends \XLite\Model\AEntity
                 ? $this->loadFromLocalFile($fn)
                 : false;
 
+            if (!$result) {
+                \Includes\Utils\FileManager::deleteFile($fn);
+            }
+
         } else {
 
             $this->path = $url;
+
             $result = $this->renewImageParameters();
         }
 
@@ -402,7 +409,7 @@ abstract class Image extends \XLite\Model\AEntity
             $path = $this->getRepository()->getFileSystemRoot() . $this->path;
 
             if (file_exists($path)) {
-                @unlink($path);
+                \Includes\Utils\FileManager::deleteFile($path);
             }
         }
     }
@@ -506,18 +513,19 @@ abstract class Image extends \XLite\Model\AEntity
         $data = @getimagesize($path);
 
         if (is_array($data)) {
-            $this->width = $data[0];
-            $this->height = $data[1];
-            $this->mime = $data['mime'];
-            $this->hash = \Includes\Utils\FileManager::getHash($path);
-            $this->size = intval(filesize($path));
-            $this->date = time();
+
+            $this->width    = $data[0];
+            $this->height   = $data[1];
+            $this->mime     = $data['mime'];
+            $this->hash     = \Includes\Utils\FileManager::getHash($path);
+            $this->size     = intval(filesize($path));
+            $this->date     = time();
 
             $result = true;
         }
 
-        if ($isTempFile) {
-            unlink($path);
+        if ($isTempFile || !$result) {
+            \Includes\Utils\FileManager::deleteFile($path);
         }
 
         return $result;
