@@ -25,105 +25,46 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\VAT\Logic\Product;
+namespace XLite\Module\CDev\VAT\Logic\Shipping;
 
 /**
- * Tax business logic
+ * Tax business logic for shipping cost
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Tax extends \XLite\Logic\ALogic
 {
-    // {{{ Product search
-
-    /**
-     * Get search price condition 
-     * 
-     * @param string $priceField   Price field name (ex. 'p.price')
-     * @param string $classesAlias Produyct classes table alias (ex. 'classes')
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.8
-     */
-    public function getSearchPriceConbdition($priceField, $classesAlias)
-    {
-        $zones = $this->getZonesList();
-        $memebrship = $this->getMembership();
-
-        $cnd = $priceField;
-
-        foreach ($this->getTaxes() as $tax) {
-            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
-            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership());
-
-            if ($included) {
-                $cnd .= ' - (' . $included->getExcludeTaxFormula($priceField) . ')';
-                $purePrice = '(' . $cnd . ')';
-
-            } else {
-                $purePrice = $cnd;
-            }
-
-            $rates = array();
-            foreach (\XLite\Core\Database::getRepo('XLite\Model\ProductClass')->findAll() as $class) {
-                $classes = new \Doctrine\Common\Collections\ArrayCollection(array($class));
-                $rate = $tax->getFilteredRate($zones, $memebrship, $classes);
-
-                if ($rate) {
-                    if (!isset($rates[$rate->getId()])) {
-                        $rates[$rate->getId()] = array('rate' => $rate, 'classes' => array());
-                    }
-                    $rates[$rate->getId()]['classes'][] = $class->getId();
-                }
-            }
-
-            foreach ($rates as $id => $data) {
-                $cnd .= ' + IF(' . $classesAlias . '.id IN (' . implode(', ', $data['classes']) . '), 1, 0) * '
-                    . $data['rate']->getIncludeTaxFormula($purePrice);
-            }
-
-            $rate = $tax->getFilteredRate($zones, $memebrship);
-            if ($rate) {
-                $cnd .= ' + IF(' . $classesAlias . '.id IS NULL, 1, 0) * ' . $rate->getIncludeTaxFormula($purePrice);
-            }
-
-        }
-
-        return $cnd;
-    }
-
-    // }}}
 
     // {{{ Calculation
 
     /**
-     * Calculate product price
+     * Calculate rate cost
      * 
-     * @param \XLite\Model\Product $product Product
-     * @param float                $price   Price
+     * @param \XLite\Model\Shipping\Rate $rate Rate
+     * @param float                      $price   Price
      *  
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function calculateProductPrice(\XLite\Model\Product $product, $price)
+    public function calculatRateCost(\XLite\Model\Shipping\Rate $rate, $price)
     {
         $zones = $this->getZonesList();
         $memebrship = $this->getMembership();
+        $method = $rate->getMethod();
 
         foreach ($this->getTaxes() as $tax) {
             $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
-            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
-            $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
+            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $method->getClasses());
+            $r = $tax->getFilteredRate($zones, $memebrship, $method->getClasses());
 
-            if ($included != $rate) {
+            if ($included != $r) {
                 if ($included) {
-                    $price -= $included->calculateProductPriceExcludingTax($product, $price);
+                    $price -= $included->calculateValueExcludingTax($price);
                 }
-                if ($rate) {
-                    $price += $rate->calculateProductPriceIncludingTax($product, $price);
+                if ($r) {
+                    $price += $r->calculateValueIncludingTax($price);
                 }
             }
         }
@@ -132,27 +73,28 @@ class Tax extends \XLite\Logic\ALogic
     }
 
     /**
-     * Calculate product net price
+     * Calculate rate net cost
      * 
-     * @param \XLite\Model\Product $product Product
-     * @param float                $price   Price
+     * @param \XLite\Model\Shipping\Rate $rate Rate
+     * @param float                      $price   Price
      *  
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function calculateProductNetPrice(\XLite\Model\Product $product, $price)
+    public function calculateRateNetCost(\XLite\Model\Shipping\Rate $rate, $price)
     {
         $zones = $this->getZonesList();
         $memebrship = $this->getMembership();
+        $method = $rate->getMethod();
 
         foreach ($this->getTaxes() as $tax) {
             $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
-            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
-            $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
+            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $method->getClasses());
+            $r = $tax->getFilteredRate($zones, $memebrship, $method->getClasses());
 
-            if ($included != $rate && $included) {
-                $price -= $included->calculateProductPriceExcludingTax($product, $price);
+            if ($included != $r && $included) {
+                $price -= $included->calculateValueExcludingTax($price);
             }
         }
 
@@ -160,31 +102,35 @@ class Tax extends \XLite\Logic\ALogic
     }
 
     /**
-     * Calculate product-based included taxes
+     * Calculate rate-based included taxes
      * 
-     * @param \XLite\Model\Product $product Product
+     * @param \XLite\Model\Shipping\Rate $rate Rate
      *  
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function calculateProduct(\XLite\Model\Product $product)
+    public function calculateRateTaxes(\XLite\Model\Shipping\Rate $rate)
     {
         $zones = $this->getZonesList();
         $memebrship = $this->getMembership();
+        $method = $rate->getMethod();
 
         $taxes = array();
-        $price = $product->getTaxableBasis();
+        $price = $rate->getTaxableBasis();
         foreach ($this->getTaxes() as $tax) {
             $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
-            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
-            $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
+            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $method->getClasses());
+            $r = $tax->getFilteredRate($zones, $memebrship, $method->getClasses());
 
             if ($included) {
-                $price -= $included->calculateProductPriceExcludingTax($product, $price);
+                $price -= $included->calculateValueExcludingTax($price);
             }
-            if ($rate) {
-                $taxes[$tax->getName()] = $rate->calculateProductPriceIncludingTax($product, $price);
+            if ($r) {
+                $taxes[] = array(
+                    'rate' => $r,
+                    'cost' => $r->calculateValueIncludingTax($price),
+                );
             }
         }
 
@@ -244,7 +190,13 @@ class Tax extends \XLite\Logic\ALogic
      */
     protected function getProfile()
     {
-        return \XLite\Core\Auth::getInstance()->getProfile() ?: $this->getDefaultProfile();
+        $controller = \XLite::getController();
+
+        $profile = $controller instanceOf \XLite\Controller\Customer\ACustomer
+            ? $controller->getCart()->getProfile()
+            : \XLite\Core\Auth::getInstance()->getProfile();
+
+        return $profile ?: $this->getDefaultProfile();
     }
 
     /**

@@ -53,7 +53,7 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
 
         } else {
             $queryBuilder->leftJoin('p.classes', 'classes', 'WITH');
-            $cnd = \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->getSeaexhPriceConbdition('p.price', 'classes');
+            $cnd = \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->getSearchPriceConbdition('p.price', 'classes');
 
             if (isset($min)) {
                 $queryBuilder->andWhere($cnd . ' > :minPrice')

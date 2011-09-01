@@ -51,7 +51,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $identificationPattern = '/^CDEV\.VAT\.\d+$/Ss';
+    protected $identificationPattern = '/^CDEV\.VAT\.(\d+)(?:\.(A-Z))?$/Ss';
 
 
     /**
@@ -115,12 +115,20 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
                 }
             }
 
-            if ($sum) {
-                $this->addOrderSurcharge(
-                    $this->code . '.' . $tax->getId(),
-                    doubleval($sum),
-                    true
-                );
+            // Shipping cost VAT
+            $modifier = $this->order->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+            if ($modifier && $modifier->getSelectedRate() && $modifier->getSelectedRate()->getMethod()) {
+                $taxes = \XLite\Module\CDev\VAT\Logic\Shipping\Tax::getInstance()
+                    ->calculateRateTaxes($modifier->getSelectedRate());
+                foreach ($taxes as $tax) {
+                    if ($tax['cost']) {
+                        $this->addOrderSurcharge(
+                            $this->code . '.' . $tax['rate']->getTax()->getId() . '.SHIPPING',
+                            doubleval($tax['cost']),
+                            true
+                        );
+                    }
+                }
             }
         }
     }
@@ -251,8 +259,9 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     {
         $info = new \XLite\DataSet\Transport\Order\Surcharge;
 
-        if (0 === strpos($surcharge->getCode(), $this->code . '.')) {
-            $id = intval(substr($surcharge->getCode(), strlen($this->code) + 1));
+        if (preg_match($this->identificationPattern, $surcharge->getCode(), $match)) {
+            $id = intval($match[1]);
+            $code = (isset($match[2]) && $match[2]) ? $match[2] : null;
             $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->find($id);
             $info->name = $tax
                 ? $tax->getName()

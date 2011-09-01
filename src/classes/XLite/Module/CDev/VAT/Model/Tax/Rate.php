@@ -349,14 +349,25 @@ class Rate extends \XLite\Model\AEntity
      */
     public function calculateProductPriceExcludingTax(\XLite\Model\Product $product, $price)
     {
-        $cost = 0;
-        if ($this->getProductBasis($product)) {
-            $cost = $this->getType() == static::TYPE_PERCENT
-                ? $this->calculatePriceIncludePercent($price)
-                : $this->calculatePriceIncludeAbsolute($price);
-        }
+        return $this->getProductBasis($product)
+            ? $this->calculateValueExcludingTax($price)
+            : 0;
+    }
 
-        return $cost;
+    /**
+     * Calculate value excluding tax 
+     * 
+     * @param float $base Base
+     *  
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function calculateValueExcludingTax($base)
+    {
+        return $this->getType() == static::TYPE_PERCENT
+            ? $this->calculatePriceIncludePercent($base)
+            : $this->calculatePriceIncludeAbsolute($base);
     }
 
     /**
@@ -371,14 +382,25 @@ class Rate extends \XLite\Model\AEntity
      */
     public function calculateProductPriceIncludingTax(\XLite\Model\Product $product, $price)
     {
-        $cost = 0;
-        if ($this->getProductBasis($product)) {
-            $cost = $this->getType() == static::TYPE_PERCENT
-                ? $this->calculatePriceExcludePercent($price)
-                : $this->calculatePriceExcludeAbsolute($price);
-        }
+        return $this->getProductBasis($product)
+            ? $this->calculateValueIncludingTax($price)
+            : 0;
+    }
 
-        return $cost;
+    /**
+     * Calculate value including tax
+     *
+     * @param float $base Base
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function calculateValueIncludingTax($base)
+    {
+        return $this->getType() == static::TYPE_PERCENT
+            ? $this->calculatePriceExcludePercent($base)
+            : $this->calculatePriceExcludeAbsolute($base);
     }
 
     /**

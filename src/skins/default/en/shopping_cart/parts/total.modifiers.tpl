@@ -17,16 +17,20 @@
     <strong class="list-owner">{surcharge.name}:</strong>
   {end:}
   {if:surcharge.available}
-    {formatPrice(surcharge.cost,cart.getCurrency()):h}
+    <span class="value">{formatPrice(surcharge.cost,cart.getCurrency()):h}</span>
   {else:}
-    {t(#n/a#)}
+    <span>{t(#n/a#)}</span>
   {end:}
-  <div IF="surcharge.count=#1#" style="display: none;" class="order-modifier-details">
-    <ul>
-      <li FOREACH="cart.getExcludeSurchargesByType(type),row">
-        <span class="name">{row.getName()}:</span>
-        <span class="value">{formatPrice(row.getValue(),cart.getCurrency()):h}</span>
-      </li>
-    </ul>
-  </div>
+  {if:surcharge.count=#1#}
+    {displayNestedViewListContent(#modifier#,_ARRAY_(#surcharge#^surcharge,#type#^type,#cart#^cart))}
+  {else:}
+    <div style="display: none;" class="order-modifier-details">
+      <ul>
+        <li FOREACH="cart.getExcludeSurchargesByType(type),row">
+          <span class="name">{row.getName()}:</span>
+          <span class="value">{formatPrice(row.getValue(),cart.getCurrency()):h}</span>
+        </li>
+      </ul>
+    </div>
+  {end:}
 </li>
