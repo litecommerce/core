@@ -124,7 +124,7 @@ abstract class Image extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="32")
+     * @Column (type="fixedstring", length="32", nullable=true)
      */
     protected $hash = '';
 
@@ -285,23 +285,30 @@ abstract class Image extends \XLite\Model\AEntity
         $result = false;
 
         $cell = isset($_FILES[$key]) ? $_FILES[$key] : null;
+
         if ($cell && (!$subkey || isset($cell['name'][$subkey]))) {
+
             $error = $subkey ? $cell['error'][$subkey] : $cell['error'];
+
             if (UPLOAD_ERR_OK == $error) {
+
                 $tmp = $subkey ? $cell['tmp_name'][$subkey] : $cell['tmp_name'];
                 $basename = $subkey ? $cell['name'][$subkey] : $cell['name'];
 
                 $root = $this->getRepository()->getFileSystemRoot();
 
                 $path = \Includes\Utils\FileManager::getUniquePath($root, $basename);
+
                 if (move_uploaded_file($tmp, $path)) {
+
                     chmod($path, 0644);
 
                     if ($this->savePath($path)) {
+
                         $result = true;
 
                     } else {
-                        unlink($path);
+                        \Includes\Utils\FileManager::deleteFile($path);
                     }
                 }
             }
@@ -326,6 +333,7 @@ abstract class Image extends \XLite\Model\AEntity
         $result = true;
 
         $root = $this->getRepository()->getFileSystemRoot();
+
         if (0 === strncmp($root, $path, strlen($root))) {
 
             // File already in image storage
@@ -335,9 +343,11 @@ abstract class Image extends \XLite\Model\AEntity
 
             // Move file
             $newPath = \Includes\Utils\FileManager::getUniquePath($root, $basename ?: basename($path));
-            if (!copy($path, $newPath)) {
+
+            if (!\Includes\Utils\FileManager::copy($path, $newPath)) {
                 $result = false;
             }
+
             $path = $newPath;
         }
 
@@ -363,15 +373,23 @@ abstract class Image extends \XLite\Model\AEntity
         $result = true;
 
         if ($copy2fs) {
+
             $fn = tempnam(LC_DIR_TMP, 'load_image');
+
             $image = \XLite\Core\Operator::getURLContent($url);
+
             $result = ($image && file_put_contents($fn, $image))
                 ? $this->loadFromLocalFile($fn)
                 : false;
 
+            if (!$result) {
+                \Includes\Utils\FileManager::deleteFile($fn);
+            }
+
         } else {
 
             $this->path = $url;
+
             $result = $this->renewImageParameters();
         }
 
@@ -381,19 +399,20 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Remove image file
      *
+     * @param string $path Path to image OPTIONAL
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function removeFile()
+    public function removeFile($path = null)
     {
-        if (!$this->isURL()) {
-            $path = $this->getRepository()->getFileSystemRoot() . $this->path;
-            if (file_exists($path)) {
-                @unlink($path);
-            }
-        }
+        if (!$this->isURL($path)) {
 
+            $path = $this->getRepository()->getFileSystemRoot() . (is_null($path) ? $this->path : $path);
+
+            \Includes\Utils\FileManager::deleteFile($path);
+        }
     }
 
     /**
@@ -419,13 +438,15 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Check image is URL-based or not
      *
+     * @param string $path Path to image OPTIONAL
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isURL()
+    public function isURL($path = null)
     {
-        return (bool) preg_match('/^https?:\/\//Ss', $this->path);
+        return (bool) preg_match('/^https?:\/\//Ss', is_null($path) ? $this->path : $path);
     }
 
     /**
@@ -457,6 +478,7 @@ abstract class Image extends \XLite\Model\AEntity
         }
     }
 
+
     /**
      * Save path into entity
      *
@@ -469,13 +491,19 @@ abstract class Image extends \XLite\Model\AEntity
     protected function savePath($path)
     {
         // Remove old image
-        if ($this->path && $this->path != basename($path)) {
-            $this->removeFile();
-        }
+        $toRemove = $this->path && $this->path != basename($path);
 
+        $pathToRemove = $this->path;
         $this->path = basename($path);
 
-        return $this->renewImageParameters();
+        $result = $this->renewImageParameters();
+
+        if ($result && $toRemove) {
+
+            $this->removeFile($pathToRemove);
+        }
+
+        return $result;
     }
 
     /**
@@ -494,18 +522,19 @@ abstract class Image extends \XLite\Model\AEntity
         $data = @getimagesize($path);
 
         if (is_array($data)) {
-            $this->width = $data[0];
-            $this->height = $data[1];
-            $this->mime = $data['mime'];
-            $this->hash = \Includes\Utils\FileManager::getHash($path);
-            $this->size = intval(filesize($path));
-            $this->date = time();
+
+            $this->width    = $data[0];
+            $this->height   = $data[1];
+            $this->mime     = $data['mime'];
+            $this->hash     = \Includes\Utils\FileManager::getHash($path);
+            $this->size     = intval(filesize($path));
+            $this->date     = time();
 
             $result = true;
         }
 
-        if ($isTempFile) {
-            unlink($path);
+        if ($isTempFile || !$result) {
+            \Includes\Utils\FileManager::deleteFile($path);
         }
 
         return $result;
@@ -523,12 +552,17 @@ abstract class Image extends \XLite\Model\AEntity
         $isTempFile = false;
 
         if ($this->isURL()) {
+
             if (ini_get('allow_url_fopen')) {
+
                 $path = $this->path;
 
             } else {
+
                 $path = tempnam(LC_DIR_TMP, 'analyse_image');
+
                 file_put_contents($path, $this->getBody());
+
                 $isTempFile = true;
             }
 

@@ -12,48 +12,46 @@
 
 {* TODO full refactoring *}
 
-<table width="100%" IF="category&!getRootCategoryId()=category.getCategoryId()">
+<table IF="category&!getRootCategoryId()=category.getCategoryId()">
 
   <tr>
 
-    <td valign="top" IF="category.hasImage()">
- 		  <img src="{category.image.getURL()}" width="{category.image.width}" height="{category.image.height}" alt="" />
+    <td IF="category.hasImage()">
+      <img src="{category.image.getURL()}" width="{category.image.width}" height="{category.image.height}" alt="" />
     </td>
 
-    <td style="width:100%;" valign="top">
+    <td>
 
-      <table cellpadding="3" cellspacing="1" valign="top">
+      <table>
 
         <tr>
-          <td class="table-label">Category name:</td>
+          <td class="table-label">{t(#Category name#)}:</td>
           <td>&nbsp;</td>
           <td>{category.name}</td>
         </tr>
 
         <tr>
-          <td class="table-label">Description:</td>
+          <td class="table-label">{t(#Description#)}:</td>
           <td>&nbsp;</td>
           <td>{category.description}</td>
         </tr>
 
         <tr>
-          <td class="table-label">Availability:</td>
+          <td class="table-label">{t(#Availability#)}:</td>
           <td>&nbsp;</td>
-          <td>{if:category.enabled}Enabled{else:}Disabled{end:}</td>
+          <td>{if:category.enabled}{t(#Enabled3#)}{else:}{t(#Disabled#)}{end:}</td>
         </tr>
 
         <tr>
-          <td class="table-label">Membership access:</td>
+          <td class="table-label">{t(#Membership access#)}:</td>
           <td>&nbsp;</td>
           <td>
-
-            {if:isSelected(#0#,category.membership)}No membership
+            {if:isSelected(#0#,category.membership)}{t(#No membership#)}
             {else:}
               {foreach:getMemberships(),membership}
                 {if:category.membership=membership.membership_id}{category.membership.name}{end:}
               {end:}
             {end:}
-
           </td>
         </tr>
 
@@ -68,7 +66,6 @@
           <td IF="getRootCategoryId()=category.parent.getCategoryId()">
             <a href="admin.php?target=categories">[{t(#Root Level#)}]</a>
           </td>
-
         </tr>
 
         {displayViewListContent(#category.modify.children#)}
@@ -148,11 +145,11 @@
 
       <td>
         <widget class="\XLite\View\Button\Regular" id="add" label="Add subcategory" jsCode="onAddChildClick({getCategoryId()})" />
-      </td>		
+      </td>
 
       <td align="right" IF="category&category.getSubCategoriesCount()">
         <widget class="\XLite\View\Button\DeleteCategory" id="delete_all_button" label="Delete all" />
-      </td>		
+      </td>
 
     </tr>
 
@@ -167,11 +164,11 @@
 function onAddChildClick(category_id)
 {
 	document.location = "admin.php?target=category&category_id=" + category_id + "&mode=add_child";
-}	
+}
 
 function onModifyClick(category_id)
 {
     document.location = "admin.php?target=category&category_id=" + category_id + "&mode=modify";
-}	
+}
 
 </script>
