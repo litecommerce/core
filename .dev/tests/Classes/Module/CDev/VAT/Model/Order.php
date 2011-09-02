@@ -27,6 +27,24 @@
 
 class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbstract
 {
+    /**
+     * Return data needed to start application.
+     * Derived class can redefine this method.
+     * It's possible to detect current test using the $this->name variable
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getRequest()
+    {
+        $request = parent::getRequest();
+
+        $request['controller'] = false;
+
+        return $request;
+    }
+
     public function testCalculation()
     {
         $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->find(1);
@@ -133,21 +151,22 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $rate->setProductClass(null);
         \XLite\Core\Database::getEM()->remove($pc);
         \XLite\Core\Database::getEM()->flush();
-
+ 
         // Zone (order)
-        foreach (\XLite\Core\Database::getRepo('XLite\Model\Zone')->findAll() as $z) {
-            \XLite\Core\Database::getEM()->remove($z);
+        $z = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findOneBy(array('is_default' => 0));
+        foreach ($z->getZoneElements() as $e) {
+            \XLite\Core\Database::getEM()->remove($e);
         }
-        $z = new \XLite\Model\Zone;
-        $z->setZoneName('Test zone');
+        $z->getZoneElements()->clear();
         $e = new \XLite\Model\ZoneElement;
         $e->setElementValue('AF');
-        $e->setElementType('C');
+        $e->setElementType(\XLite\Model\ZoneElement::ZONE_ELEMENT_COUNTRY);
         $z->addZoneElements($e);
-        \XLite\Core\Database::getEM()->persist($z);
-
+        $e->setZone($z);
         $rate->setZone($z);
         \XLite\Core\Database::getEM()->flush();
+
+        \XLite\Core\Database::getRepo('XLite\Model\Zone')->deleteCache('all');
 
         $order->calculate();
         $cost = $this->getVATByOrder($order);
@@ -157,22 +176,106 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         // Zone (order and rate)
         $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->findOneBy(array('code' => 'AF'));
         $order->getProfile()->getBillingAddress()->setCountry($country);
+        $order->getProfile()->getShippingAddress()->setCountry($country);
         \XLite\Core\Database::getEM()->flush();
 
         $order->calculate();
         $cost = $this->getVATByOrder($order);
         $etalon = $this->getVATEtalonByOrder($order, 0.2);
         $this->assertEquals($etalon, $cost, 'check tax cost 20% (zone)');
-    }
 
+        // Check shipping cost
+        $memberships = \XLite\Core\Database::getRepo('XLite\Model\Membership')->findAll();
+        $membership = array_shift($memberships);
+        $rate->setZone(null);
+        $rate->setProductClass(null);
+        $rate->setMembership($membership);
+        $tax->setVATmembership($membership);
+        $order->getProfile()->setMembership(null);
+        \XLite\Core\Database::getEM()->flush();
+
+        $order->calculate();
+
+        $currency = $order->getCurrency();
+
+        // 10 - (10 - 10 / (1 + 0.2)) = 8.33333333 = 8.33 
+        $this->assertEquals(8.33, $order->getItems()->get(0)->getNetPrice(), 'check item net price');
+        // Initial price
+        $this->assertEquals(10, $order->getItems()->get(0)->getPrice(), 'check item price');
+        // 8.33 * 99 = 824.67 
+        $this->assertEquals(824.67, $order->getItems()->get(0)->getSubtotal(), 'check item subtotal');
+
+        // Surcharge - only one - VAT
+        $this->assertEquals(1, $order->getItems()->get(0)->getSurcharges()->count(), 'check item surcharges count');
+        // Surcharge code - CDEV.VAT. + rate id
+        $this->assertEquals('CDEV.VAT.1', $order->getItems()->get(0)->getSurcharges()->get(0)->getCode(), 'check item surcharge code');
+
+        // 824.67 * 0.1 = 82.46700 = 82.47
+        $this->assertEquals(
+            82.47,
+            $currency->formatValue($order->getItems()->get(0)->getSurcharges()->get(0)->getValue()),
+            'check item surcharge value'
+        );
+
+        // 824.67 + 82.47 = 907.14 
+        $this->assertEquals(907.14, $currency->formatValue($order->getItems()->get(0)->getTotal()), 'check item total');
+
+        // Surcharges - 2 - shipping + shipping VAT
+        $this->assertEquals(2, $order->getSurcharges()->count(), 'check order surcharges count');
+
+        // Shipping code - SHIPPING
+        $this->assertEquals('SHIPPING', $order->getSurcharges()->get(0)->getCode(), 'check order shipping surcharge');
+        // (10 - (10 - 10 / (1 + 0.2))) * 1.1 = 9.16666667 = 9.17
+        $this->assertEquals(9.17, $order->getSurcharges()->get(0)->getValue(), 'check order shipping cost');
+
+        // Shipping VAT code equal CDEV.VAT. + rate id + .SHIPPING
+        $this->assertEquals('CDEV.VAT.1.SHIPPING', $order->getSurcharges()->get(1)->getCode(), 'check order shipping VAT surcharge');
+        // (10 - (10 - 10 / (1 + 0.2))) * 0.1 = 0.833333333 = 0.83
+        $this->assertEquals(0.83, $currency->formatValue($order->getSurcharges()->get(1)->getValue()), 'check order shipping VAT value');
+
+        // Equals item subtotal (because order has only one item)
+        $this->assertEquals(907.14, $currency->formatValue($order->getSubtotal()), 'check order subtotal');
+
+        // 907.14 + 9.17 = 916.31
+        $this->assertEquals(916.31, $currency->formatValue($order->getTotal()), 'check order total');
+    }
 
     protected function getTestOrder()
     {
         $order = parent::getTestOrder();
 
+        $order->getItems()->get(0)->setPrice(10);
+        $order->getItems()->get(0)->setNetPrice(10);
+        $order->getItems()->get(0)->getProduct()->setPrice(10);
+        $order->getItems()->get(0)->setAmount(99);
+
         $method = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
             ->findOneBy(array('service_name' => 'PurchaseOrder'));
         $order->setPaymentMethod($method);
+
+        $method = null;
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findAll() as $m) {
+            if ($m->getName() == 'Courier') {
+                $method = $m;
+                break;
+            }
+        }
+        foreach ($method->getShippingMarkups() as $m) {
+            \XLite\Core\Database::getEM()->remove($m);
+        }
+        $method->getShippingMarkups()->clear();
+
+        $markup = new \XLite\Model\Shipping\Markup;
+        $markup->setMarkupFlat(10);
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findOneBy(array('is_default' => 1));
+        $markup->setZone($zone);
+        $method->addShippingMarkups($markup);
+        $markup->setShippingMethod($method);
+
+        \XLite\Core\Database::getEM()->flush();
+
+        $order->setShippingId($method->getMethodId());
+ 
         $order->calculate();
 
         \XLite\Core\Database::getEM()->flush();
@@ -184,9 +287,9 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
     {
         $total = 0;
 
-        foreach ($order->getIncludeSurcharges() as $surcharge) {
-            if ($surcharge->getType() == 'tax') {
-                $total += $surcharge->getValue();
+        foreach ($order->getItemsIncludeSurchargesTotals() as $surcharge) {
+            if ($surcharge['surcharge']->getType() == 'tax') {
+                $total += $surcharge['cost'];
             }
         }
 
