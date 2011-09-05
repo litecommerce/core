@@ -8,6 +8,9 @@
 /build
 /coverage
 /var
+/src/classes/XLite/Module/Joy
+/src/skins/admin/en/modules/Joy
+/src/skins/default/en/modules/Joy
 /src/etc/config.php
 /src/etc/config.demo.php
 /src/etc/config.local*.php

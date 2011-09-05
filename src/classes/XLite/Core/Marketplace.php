@@ -56,11 +56,13 @@ class Marketplace extends \XLite\Base\Singleton
     const FIELD_VERSION               = 'version';
     const FIELD_VERSION_MAJOR         = 'major';
     const FIELD_VERSION_MINOR         = 'minor';
+    const FIELD_REVISION              = 'revision';
     const FIELD_REVISION_DATE         = 'revisionDate';
     const FIELD_LENGTH                = 'length';
     const FIELD_GZIPPED               = 'gzipped';
     const FIELD_NAME                  = 'name';
     const FIELD_MODULE                = 'module';
+    const FIELD_MODULES               = 'modules';
     const FIELD_AUTHOR                = 'author';
     const FIELD_KEY                   = 'key';
     const FIELD_IS_UPGRADE_AVAILABLE  = 'isUpgardeAvailable';
@@ -80,6 +82,8 @@ class Marketplace extends \XLite\Base\Singleton
     const FIELD_RATING_VOTES_COUNT    = 'votesCount';
     const FIELD_DOWNLOADS_COUNT       = 'downloadCount';
     const FIELD_LICENSE               = 'license';
+    const FIELD_SHOP_ID               = 'shopID';
+    const FIELD_SHOP_DOMAIN           = 'shopDomain';
 
     /**
      * Some predefined TTLs
@@ -115,7 +119,60 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function checkForUpdates($ttl = self::TTL_LONG)
     {
-        return $this->performActionWithTTL($ttl, self::ACTION_CHECK_FOR_UPDATES);
+        return $this->performActionWithTTL(
+            $ttl,
+            self::ACTION_CHECK_FOR_UPDATES,
+            $this->getCheckForUpdatesData()
+        );
+    }
+
+    /**
+     * Return specific data array for "Check for updates" request 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    protected function getCheckForUpdatesData()
+    {
+        $data = array();
+
+        if ($this->isSendShopDomain()) {
+            $data[self::FIELD_SHOP_DOMAIN]
+                = \Includes\Utils\ConfigParser::getOptions(array('host_details', 'http_host'));
+        }
+
+        $modules = \XLite\Core\Database::getRepo('XLite\Model\Module')->search($this->getCheckForUpdatesDataCnd());
+
+        if ($modules) {
+            $data[self::FIELD_MODULES] = array();
+            foreach ($modules as $module) {
+                $data[self::FIELD_MODULES][] = array(
+                    self::FIELD_NAME   => $module->getName(),
+                    self::FIELD_AUTHOR => $module->getAuthor(),
+                    self::FIELD_VERSION_MAJOR  => $module->getMajorVersion(),
+                    self::FIELD_VERSION_MINOR  => $module->getMinorVersion(),
+                );
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Return conditions for search modules for "Check for updates" request
+     * 
+     * @return \XLite\Core\CommonCell
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    protected function getCheckForUpdatesDataCnd()
+    {
+        $cnd = new \XLite\Core\CommonCell();
+
+        $cnd->{\XLite\Model\Repo\Module::P_INSTALLED} = true;
+
+        return $cnd;
     }
 
     /**
@@ -904,6 +961,7 @@ class Marketplace extends \XLite\Base\Singleton
     protected function getRequestCommonData()
     {
         return array(
+            self::FIELD_SHOP_ID => md5(\Includes\Utils\ConfigParser::getOptions(array('host_details', 'http_host'))),
             self::FIELD_VERSION_CORE_CURRENT => $this->getVersionField(
                 \XLite::getInstance()->getMajorVersion(),
                 \XLite::getInstance()->getMinorVersion()
@@ -1143,6 +1201,18 @@ class Marketplace extends \XLite\Base\Singleton
     public function getMarketplaceURL()
     {
         return \Includes\Utils\ConfigParser::getOptions(array('marketplace', 'url'));
+    }
+
+    /**
+     * Return true if store should send its domain name to marketplace
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isSendShopDomain()
+    {
+        return \Includes\Utils\ConfigParser::getOptions(array('marketplace', 'send_shop_domain'));
     }
 
     /**

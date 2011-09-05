@@ -192,7 +192,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/table[@class='selected-products']"
             . "/tbody"
             . "/tr"
-            . "/td[@class='item-price' and text()='$" . $product->getPrice() . "']",
+            . "/td[@class='item-price' and text()='$" . number_format(round($product->getPrice(), 2), 2) . "']",
             'check item price'
         );
 
@@ -237,7 +237,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/table[@class='selected-products']"
             . "/tbody"
             . "/tr"
-            . "/td[@class='item-subtotal' and contains(text(),'$" . $product->getPrice() . "')]",
+            . "/td[@class='item-subtotal' and contains(text(),'$" . number_format(round($product->getPrice(), 2), 2) . "')]",
             'check item subtotal'
         );
 
