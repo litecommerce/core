@@ -36,6 +36,22 @@ namespace XLite\Module\CDev\VAT\View\Product\Details\Customer\Page;
 abstract class APage extends \XLite\View\Product\Details\Customer\Page\APage implements \XLite\Base\IDecorator
 {
     /**
+     * Get a list of JavaScript files required to display the widget properly
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'modules/CDev/VAT/product.js';
+
+        return $list;
+    }
+
+    /**
      * Register CSS files
      *
      * @return array

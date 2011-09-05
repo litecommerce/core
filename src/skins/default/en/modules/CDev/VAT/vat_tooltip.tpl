@@ -7,14 +7,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-
 <div class="tooltip-main staxes-vat-tooltip">
-  {if:isImageTag()}
-    <img {getAttributesCode():h} src="images/spacer.gif" alt="Help" />
-  {else:}
-    <span {getAttributesCode():h}>{getParam(#caption#)}</span>
-  {end:}
-  <div class="help-text staxes-vat-tooltip-box">
+  <span id="vat-details" class="tooltip-caption">{#Including tax#}</span>
+  <div class="help-text staxes-vat-tooltip-box" style="display: none;">
     <table cellspacing="0">
       <tr FOREACH="getVATTaxes(),name,value">
         <td class="name">{name}:</td>

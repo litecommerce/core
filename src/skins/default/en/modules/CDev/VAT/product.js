@@ -9,22 +9,19 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.8
  */
-core.decorates(
-  [
-    ['CartView', 'postprocess'],
-    ['CheckoutView', 'postprocess']
-  ],
+core.decorate(
+  'ProductDetailsView',
+  'postprocess', 
   function(isSuccess, initial)
   {
     arguments.callee.previousMethod.apply(this, arguments);
 
     if (isSuccess) {
 
-      jQuery('.cart-including-modifiers', this.base).each(
+      jQuery('.tooltip-main', this.base).each(
         function() {
-          var link = jQuery(this).parents('li:eq(0)').find('span.value');
-          link.addClass('including-owner').attr('id', 'vat-including');
-          attachTooltip(link, jQuery(this).html());
+          var link = jQuery(this).find('.tooltip-caption');
+          attachTooltip(link, jQuery(this).find('.help-text').html());
         }
       );
     }

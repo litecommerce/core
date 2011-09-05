@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\VAT\View;
  * @see   ____class_see____
  * @since 1.0.1
  */
-class VATTooltip extends \XLite\View\Tooltip
+class VATTooltip extends \XLite\View\AView
 {
     /**
      * Common widget parameter names
