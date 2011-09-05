@@ -195,7 +195,10 @@ class Rate extends \XLite\Model\AEntity
         $basis = 0;
 
         foreach ($items as $item) {
-            $basis += $item->getTaxableBasis() * $item->getAmount();
+            $basis += $item->getTotal();
+            foreach ($item->getExcludeSurcharges() as $surcharge) {
+                $basis += $surcharge->getValue();
+            }
         }
 
         return $basis;

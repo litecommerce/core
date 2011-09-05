@@ -16,4 +16,4 @@ XLite\Model\LanguageLabel:
   - { name: "After you enabled this tax it will be included in product prices", translations: [{ code: en, label: "After you enabled this tax it will be included in product prices. This means that it will not be shown as separate surcharge during checkout." }] }
   - { name: 'Incl. X', translations: [{ code: en, label: 'Incl. {{name}}' }] }
 XLite\Model\Order\Modifier:
-  - { class: '\XLite\Module\CDev\VAT\Logic\Order\Modifier\Tax' }
+  - { class: '\XLite\Module\CDev\VAT\Logic\Order\Modifier\Tax', weight: 200 }

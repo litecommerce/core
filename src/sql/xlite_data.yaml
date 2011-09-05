@@ -1102,7 +1102,7 @@ XLite\Model\Country:
   - { country: Zambia, code3: ZMB, code: ZM }
   - { country: Zimbabwe, code3: ZWE, code: ZW }
 XLite\Model\Order\Modifier:
-  - { class: '\XLite\Logic\Order\Modifier\Shipping' }
+  - { class: '\XLite\Logic\Order\Modifier\Shipping', weight: 100 }
 XLite\Model\Shipping\Method:
   - { processor: offline, enabled: true, position: 0, translations: [{ code: en, name: Delivery }], shipping_markups: [{ zone: { zone_name: 'Default zone (all addresses)' }, min_weight: 0, max_weight: 999999, min_total: 0, max_total: 999999, min_items: 0, max_items: 999999, markup_flat: 0, markup_percent: 0, markup_per_item: 0, markup_per_weight: 0 }] }
 XLite\Model\Zone:

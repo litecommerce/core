@@ -13,4 +13,4 @@ XLite\Module\CDev\SalesTax\Model\Tax:
       - code: en
         name: Sales tax
 XLite\Model\Order\Modifier:
-  - { class: '\XLite\Module\CDev\SalesTax\Logic\Order\Modifier\Tax' }
+  - { class: '\XLite\Module\CDev\SalesTax\Logic\Order\Modifier\Tax', weight: 300 }

@@ -53,6 +53,14 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         }
         $tax->getRates()->clear();
 
+        $tax->setEnabled(true);
+
+        $rate = new \XLite\Module\CDev\SalesTax\Model\Tax\Rate;
+        $rate->setValue(10);
+        \XLite\Core\Database::getEM()->persist($rate);
+        $tax->addRates($rate);
+        $rate->setTax($tax);
+
         $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->find(1);
         foreach ($tax->getRates() as $rate) {
             \XLite\Core\Database::getEM()->remove($rate);
@@ -220,24 +228,35 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         // 824.67 + 82.47 = 907.14 
         $this->assertEquals(907.14, $currency->formatValue($order->getItems()->get(0)->getTotal()), 'check item total');
 
-        // Surcharges - 2 - shipping + shipping VAT
-        $this->assertEquals(2, $order->getSurcharges()->count(), 'check order surcharges count');
+        // Surcharges - 3 - shipping + shipping VAT + sales tax
+        $this->assertEquals(3, $order->getSurcharges()->count(), 'check order surcharges count');
+
+        $i = 0;
 
         // Shipping code - SHIPPING
-        $this->assertEquals('SHIPPING', $order->getSurcharges()->get(0)->getCode(), 'check order shipping surcharge');
+        $this->assertEquals('SHIPPING', $order->getSurcharges()->get($i)->getCode(), 'check order shipping surcharge');
         // (10 - (10 - 10 / (1 + 0.2))) * 1.1 = 9.16666667 = 9.17
-        $this->assertEquals(9.17, $order->getSurcharges()->get(0)->getValue(), 'check order shipping cost');
+        $this->assertEquals(9.17, $order->getSurcharges()->get($i)->getValue(), 'check order shipping cost');
+
+        $i++;
 
         // Shipping VAT code equal CDEV.VAT. + rate id + .SHIPPING
-        $this->assertEquals('CDEV.VAT.1.SHIPPING', $order->getSurcharges()->get(1)->getCode(), 'check order shipping VAT surcharge');
+        $this->assertEquals('CDEV.VAT.1.SHIPPING', $order->getSurcharges()->get($i)->getCode(), 'check order shipping VAT surcharge');
         // (10 - (10 - 10 / (1 + 0.2))) * 0.1 = 0.833333333 = 0.83
-        $this->assertEquals(0.83, $currency->formatValue($order->getSurcharges()->get(1)->getValue()), 'check order shipping VAT value');
+        $this->assertEquals(0.83, $currency->formatValue($order->getSurcharges()->get($i)->getValue()), 'check order shipping VAT value');
+
+        $i++;
+
+        // Sales tax code - CDEV.STAX.1
+        $this->assertEquals('CDEV.STAX.1', $order->getSurcharges()->get($i)->getCode(), 'check order sales tax surcharge');
+        // 907.14 * 0.1 = 90.71400 = 90.71
+        $this->assertEquals(90.71, $currency->formatValue($order->getSurcharges()->get($i)->getValue()), 'check order sales tax cost');
 
         // Equals item subtotal (because order has only one item)
         $this->assertEquals(907.14, $currency->formatValue($order->getSubtotal()), 'check order subtotal');
 
-        // 907.14 + 9.17 = 916.31
-        $this->assertEquals(916.31, $currency->formatValue($order->getTotal()), 'check order total');
+        // 907.14 + 9.17 + 90.71 = 1007.02
+        $this->assertEquals(1007.02, $currency->formatValue($order->getTotal()), 'check order total');
     }
 
     protected function getTestOrder()
