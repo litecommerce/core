@@ -135,10 +135,12 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function getCheckForUpdatesData()
     {
-        $data = array(
-            self::FIELD_SHOP_ID     => md5(\Includes\Utils\ConfigParser::getOptions(array('host_details', 'http_host'))),
-            self::FIELD_SHOP_DOMAIN => \Includes\Utils\ConfigParser::getOptions(array('host_details', 'http_host')),
-        );
+        $data = array();
+
+        if ($this->isSendShopDomain()) {
+            $data[self::FIELD_SHOP_DOMAIN]
+                = \Includes\Utils\ConfigParser::getOptions(array('host_details', 'http_host'));
+        }
 
         $modules = \XLite\Core\Database::getRepo('XLite\Model\Module')->search($this->getCheckForUpdatesDataCnd());
 
@@ -959,6 +961,7 @@ class Marketplace extends \XLite\Base\Singleton
     protected function getRequestCommonData()
     {
         return array(
+            self::FIELD_SHOP_ID => md5(\Includes\Utils\ConfigParser::getOptions(array('host_details', 'http_host'))),
             self::FIELD_VERSION_CORE_CURRENT => $this->getVersionField(
                 \XLite::getInstance()->getMajorVersion(),
                 \XLite::getInstance()->getMinorVersion()

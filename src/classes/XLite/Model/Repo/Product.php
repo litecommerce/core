@@ -110,7 +110,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         }
 
         if ($countOnly) {
-            $queryBuilder->select('COUNT(p.product_id)');
+            $queryBuilder->select('COUNT(DISTINCT p.product_id)');
             $result = intval($queryBuilder->getSingleScalarResult());
 
         } else {
