@@ -162,14 +162,14 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     /**
      * Get taxable items 
      * 
-     * @param \XLite\Model\ProductClass $class         Product class
-     * @param array                     $previousItems Previous selected items
+     * @param \XLite\Model\ProductClass $class         Product class OPTIONAL
+     * @param array                     $previousItems Previous selected items OPTIONAL
      *  
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getTaxableItems(\XLite\Model\ProductClass $class, array $previousItems)
+    protected function getTaxableItems(\XLite\Model\ProductClass $class = null, array $previousItems = array())
     {
         $list = array();
 
