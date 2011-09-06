@@ -51,7 +51,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $identificationPattern = '/^CDEV\.VAT\.(\d+)(?:\.(A-Z))?$/Ss';
+    protected $identificationPattern = '/^CDEV\.VAT\.(\d+)(?:\.[A-Z]+)?$/Ss';
 
 
     /**

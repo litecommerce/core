@@ -103,7 +103,7 @@ class CartShippingCostVAT extends \XLite\View\AView
         $list = array();
 
         foreach ($this->getParam(self::PARAM_CART)->getIncludeSurcharges() as $surcharge) {
-            if (preg_match('/^CDEV\.VAT\.(\d+).SHIPPING$/Ss', $surcharge->getCode())) {
+            if (preg_match('/^CDEV\.VAT\.(\d+)\.SHIPPING$/Ss', $surcharge->getCode())) {
                 $list[] = $surcharge;
             }
         }
