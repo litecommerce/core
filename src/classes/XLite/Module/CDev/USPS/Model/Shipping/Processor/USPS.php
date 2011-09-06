@@ -191,8 +191,8 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
 
             $xmlData = $this->getXMLData($data);
 
-            $currencyRate = doubleval(\XLite\Core\Config::getInstance()->CDev->AustraliaPost->currency_rate);
-            $currencyRate = 0 < $currencyRate ?: 1;
+            $currencyRate = doubleval(\XLite\Core\Config::getInstance()->CDev->USPS->currency_rate);
+            $currencyRate = (0 < $currencyRate ? $currencyRate : 1);
 
             $postURL = $this->getApiURL() . '?API=' . $this->getApiName() . '&XML=' . urlencode($xmlData);
 
