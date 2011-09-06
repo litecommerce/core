@@ -44,7 +44,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $list = $this->getListSelector();
 
         $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'toys'));
-        $this->assertNotNull($c2);
+        $this->assertNotNull($c2, "No such category: toys");
         $this->open('store/category/0/category_id-' . $c2->getCategoryId());
 
         // Make sure there are no QuickLook buttons in the table mode
@@ -101,9 +101,9 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
     public function testProductOptions()
     {
         $cat = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'apparel'));
-        $this->assertNotNull($cat);
+        $this->assertNotNull($cat, "No such category: apparel");
         list($product, $selector) = $this->popupTestProduct('store/category/0/category_id-' . $cat->getCategoryId(), '00000');
-        $this->assertNotNull($product);
+        $this->assertNotNull($product, "No such product: 00000");
         $id = $product->getProductId();
 
         $this->assertTrue(method_exists($product, 'hasOptions'), "ProductOptions module is not enabled");
@@ -217,8 +217,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
     {
         $c1 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'apparel'));
         $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'toys'));
-        $this->assertNotNull($c1);
-        $this->assertNotNull($c2);
+        $this->assertNotNull($c1, "No such category: apparel");
+        $this->assertNotNull($c2, "No such category: toys");
         $products = array(
             array('url' => 'store/category/0/category_id-' . $c1->getCategoryId(), 'id' => '00002'),
             array('url' => 'store/category/0/category_id-' . $c2->getCategoryId(), 'id' => '00022'),
@@ -227,7 +227,6 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $sleep = $this->setSleep(2);
 
         foreach ($products as $p) {
-            $this->assertNotNull($p);
             list($product, $selector) = $this->popupTestProduct($p['url'], $_id = $p['id']);
 
             // Base use case
@@ -313,9 +312,9 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
     public function testAdd2Cart()
     {
         $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'toys'));
-        $this->assertNotNull($c2);
+        $this->assertNotNull($c2, "No such category: yoys");
         list($product, $selector) = $this->popupTestProduct('store/category/0/category_id-' . $c2->getCategoryId(), '00022');
-        $this->assertNotNull($product);
+        $this->assertNotNull($product, "No such product: 00022");
         $id = $product->getProductId();
 
         // This assertion requires the minicart widget to be visible on the page
