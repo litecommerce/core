@@ -293,7 +293,6 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
         // Submit correct credentials
         $this->type("css=.blockUI form#user-pass input[name='name']", "master");
         $this->clickAndWait('id=edit-submit--2', 6000, 'Submit password recovery form (2)');
-        $this->assertTrue(false, "test assertion");
         $this->assertTextPresent(
             "instructions*sent*to*mail",
             "Confirmation message is not shown after submitting Password form"
