@@ -63,7 +63,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
         );
 
         foreach ($this->findBestsellers(102) as $product) {
-
+            $this->assertNotNull($product);
             $id = $product->getProductId();
 
             $this->assertElementPresent(
@@ -79,7 +79,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
     public function testCatPage()
     {
         $cat = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'apparel'));
-
+        $this->assertNotNull($cat);
         $this->open('store/category/0/category_id-' . $cat->getCategoryId());
 
         $this->assertElementPresent(
@@ -96,7 +96,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'apparel'));
         foreach ($this->findBestsellers(0, $c->getCategoryId()) as $product) {
-
+            $this->assertNotNull($product);
             $id = $product->getProductId();
 
             $this->assertElementPresent(
