@@ -38,20 +38,48 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 {
     const ACCOUNT_EXPIRED_MESSAGE = 'Sorry but this account is not currently active';
 
-    public function testPay()
+    protected $storedCustomerSecurity = null;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->storedCustomerSecurity = \XLite\Core\Config::getInstance()->Security->customer_security;
+
+        if (!$this->storedCustomerSecurity) {
+            // Enable customer_security if it is disabled
+            $this->setUpCheckoutViaHTTPS(true);
+        }
+    }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+        
+        if (!$this->storedCustomerSecurity) {
+            // Disable customer_security if it was disabled before test run
+            $this->setUpCheckoutViaHTTPS(false);
+        }
+    }
+
+    protected function setUpCheckoutViaHTTPS($value)
     {
         \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'Security',
                 'name'     => 'customer_security',
-                'value'    => 'Y',
+                'value'    => $value ? 'Y' : 'N',
             )
         );
 
         // Reset cache - DO NOT CHANGE!
         \XLite\Core\Database::getCacheDriver()->deleteAll();
         \XLite\Core\Config::getInstance()->Security->customer_security;
+    }
 
+
+    public function testPay()
+    {
         $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => 'QuantumGateway'));
         $this->assertNotNull($pmethod, 'Quantum payment method is not found');
 
