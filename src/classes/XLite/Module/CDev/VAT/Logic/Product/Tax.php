@@ -149,9 +149,8 @@ class Tax extends \XLite\Logic\ALogic
         foreach ($this->getTaxes() as $tax) {
             $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
             $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
-            $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
 
-            if ($included != $rate && $included) {
+            if ($included) {
                 $price -= $included->calculateProductPriceExcludingTax($product, $price);
             }
         }

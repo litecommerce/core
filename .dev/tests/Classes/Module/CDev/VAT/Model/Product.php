@@ -111,13 +111,33 @@ class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_TestCase
         $products = \XLite\Core\Database::getRepo('XLite\Model\Product')->findAll();
         $product = array_shift($products);
 
-        $price = $product->getPrice();
+        $product->setPrice(10);
 
+        // 10 - 10 / (1 + 0.1) = 0.91
         $this->assertEquals(
-            array('VAT' => $this->getTax($price, 0.1, 0.1)),
+            array('VAT' => 0.91),
             $this->processTaxes($product->getIncludedTaxList(true)),
             'check list 10%'
         );
+
+        $rate->setValue(100);
+        \XLite\Core\Database::getEM()->flush();
+
+        // 10 - 10 / (1 + 1) = 5
+        $this->assertEquals(
+            array('VAT' => 5),
+            $this->processTaxes($product->getIncludedTaxList(true)),
+            'check list 10%'
+        );
+
+        $rate->setValue(10);
+        \XLite\Core\Database::getEM()->flush();
+
+
+
+
+
+        $price = $product->getPrice();
 
         // 20%
         $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;

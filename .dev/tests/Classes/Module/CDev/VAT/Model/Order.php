@@ -83,6 +83,13 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $cost = $this->getVATByOrder($order);
         $etalon = $this->getVATEtalonByOrder($order, 0.1);
         $this->assertEquals($etalon, $cost, 'check tax cost 10%');
+        $base = $order->getItems()->get(0)->getPrice();
+        $this->assertEquals(
+            $order->getCurrency()->formatValue($base / (1 + 0.1)),
+            $order->getItems()->get(0)->getNetPrice(),
+            'check item net price'
+        );
+        
 
         /// 10%
         $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
