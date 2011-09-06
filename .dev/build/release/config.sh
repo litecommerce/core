@@ -47,7 +47,9 @@ CDev/Moneybookers
 CDev/PaypalWPS
 CDev/ProductOptions
 CDev/Quantum
+CDev/SalesTax
 CDev/TinyMCE
+CDev/VAT
 CDev/USPS
 "
 
