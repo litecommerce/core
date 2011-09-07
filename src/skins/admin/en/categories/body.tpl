@@ -39,7 +39,7 @@
         <tr>
           <td class="table-label">{t(#Availability#)}:</td>
           <td>&nbsp;</td>
-          <td>{if:category.enabled}{t(#Enabled3#)}{else:}{t(#Disabled#)}{end:}</td>
+          <td>{if:category.enabled}{t(#Enabled#)}{else:}{t(#Disabled#)}{end:}</td>
         </tr>
 
         <tr>
