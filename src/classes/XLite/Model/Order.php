@@ -156,6 +156,17 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     protected $date;
 
     /**
+     * Last order renew date
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $lastRenewDate;
+
+    /**
      * Status code
      *
      * @var   string
@@ -1488,6 +1499,26 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $this->finalizeItemsCalculation();
 
         $this->setTotal($this->getSurchargesTotal());
+    }
+
+    /**
+     * Renew order
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function renew()
+    {
+        foreach ($this->getItems() as $item) {
+            if (!$item->renew()) {
+                $this->getItems()->removeElement($item);
+            }
+        }
+
+        $this->calculate();
+
+        $this->setLastRenewDate(time());
     }
 
     /**

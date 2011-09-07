@@ -188,6 +188,12 @@ class Auth extends \XLite\Base
             // Return profile object if it's ok
             if (isset($profile) && $this->loginProfile($profile)) {
                 $result = $profile;
+
+                $orderId = $orderId ?: \XLite\Core\Session::getInstance()->order_id;
+                $order = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($orderId);
+                if ($order) {
+                    $order->renew();
+                }
             }
         }
 

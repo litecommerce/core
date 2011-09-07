@@ -559,4 +559,64 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
         $this->assertRegExp('/product_id-' . $product->getProductId() . '/Ss', $this->getLocation(), 'check product id');
     }
 
+    public function testRenewByLogoff()
+    {
+        $this->open('user');
+
+        $this->type('css=#edit-name', 'master');
+        $this->type('css=#edit-pass', 'master');
+
+        $this->submitAndWait('css=#user-login');
+
+        $product = $this->addToCart();
+        $price = $product->getPrice() + 1;
+
+        $this->openAndWait('user/logout');
+
+        $product->setPrice($price);
+        \XLite\Core\Database::getEM()->flush();
+
+        $this->open('user');
+
+        $this->type('css=#edit-name', 'master');
+        $this->type('css=#edit-pass', 'master');
+
+        $this->submitAndWait('css=#user-login');
+
+        $this->openAndWait('store/cart');
+
+        $this->assertElementPresent(
+            "//div[@id='cart']"
+            . "/div[@id='shopping-cart']"
+            . "/table[@class='selected-products']"
+            . "/tbody"
+            . "/tr"
+            . "/td[@class='item-price' and text()='$" . number_format(round($price, 2), 2) . "']",
+            'check new item price'
+        );
+    }
+
+    public function testRenewByTTL()
+    {
+        $product = $this->addToCart();
+        $price = $product->getPrice() + 1;
+
+        $product->setPrice($price);
+
+        $carts = \XLite\Core\Database::getRepo('XLite\Model\Cart')->findAll();
+        $cart = array_pop($carts);
+        $cart->setLastRenewDate(time() - 3600 * 90);
+
+        \XLite\Core\Database::getEM()->flush();
+
+        $this->assertElementPresent(
+            "//div[@id='cart']"
+            . "/div[@id='shopping-cart']"
+            . "/table[@class='selected-products']"
+            . "/tbody"
+            . "/tr"
+            . "/td[@class='item-price' and text()='$" . number_format(round($price, 2), 2) . "']",
+            'check new item price'
+        );
+    }
 }

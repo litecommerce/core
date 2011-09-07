@@ -438,6 +438,32 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Renew order item
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function renew()
+    {
+        $available = true;
+
+        $product = $this->getProduct();
+        if ($product) {
+            if (!$product->getId() || !$this->checkAmount()) {
+                $available = false;
+
+            } else {
+                $this->setPrice($product->getPrice());
+                $this->setName($product->getName());
+                $this->setSKU($product->getSKU());
+            }
+        }
+
+        return $available;
+    }
+
+    /**
      * Get item taxable basis
      *
      * @return float
@@ -543,6 +569,26 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         }
 
         return $this->dumpProduct;
+    }
+
+    /**
+     * Check item amount 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    protected function checkAmount()
+    {
+        $result = true;
+
+        $product = $this->getProduct();
+        if ($product && $product->getId()) {
+            $result = !$product->getInventory()->getEnabled()
+            || $product->getInventory()->getAvailableAmount() >= $this->getAmount();
+        }
+
+        return $result;
     }
 
     /**
