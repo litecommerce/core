@@ -101,8 +101,8 @@
     <tr>
       <th colspan="2" align="left" IF="category">
 
-        <span IF="category.parent=0">{t(#Categories#)}</span>
-        <span IF="!category.parent=0">{t(#Subcategories#)}</span>
+        <span IF="category.getParentId()=0">{t(#Categories#)}</span>
+        <span IF="!category.getParentId()=0">{t(#Subcategories#)}</span>
 
         <hr />
 
