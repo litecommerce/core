@@ -294,7 +294,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     {
         return parent::isConfigured($method)
             && $method->getSetting('login')
-            && $method->getSetting('type');
+            && $method->getSetting('key');
     }
 
     /**
