@@ -34,7 +34,11 @@ namespace XLite\Model;
  * @since 1.0.0
  *
  * @Entity
- * @Table (name="currencies")
+ * @Table (name="currencies",
+ *      indexes = {
+ *          @Index (name="code", columns={"code"})
+ *      }
+ * )
  */
 class Currency extends \XLite\Model\Base\I18n
 {

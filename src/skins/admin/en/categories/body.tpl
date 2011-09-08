@@ -39,7 +39,7 @@
         <tr>
           <td class="table-label">{t(#Availability#)}:</td>
           <td>&nbsp;</td>
-          <td>{if:category.enabled}{t(#Enabled3#)}{else:}{t(#Disabled#)}{end:}</td>
+          <td>{if:category.enabled}{t(#Enabled#)}{else:}{t(#Disabled#)}{end:}</td>
         </tr>
 
         <tr>
@@ -101,8 +101,8 @@
     <tr>
       <th colspan="2" align="left" IF="category">
 
-        <span IF="category.parent=0">{t(#Categories#)}</span>
-        <span IF="!category.parent=0">{t(#Subcategories#)}</span>
+        <span IF="category.getParentId()=0">{t(#Categories#)}</span>
+        <span IF="!category.getParentId()=0">{t(#Subcategories#)}</span>
 
         <hr />
 

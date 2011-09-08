@@ -648,11 +648,13 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $address = $profile->getShippingAddress();
 
+            $noAddress = !isset($address);
+
             $andAsBilling = false;
 
-            if (!$address || $data['save_as_new']) {
+            if ($noAddress || $data['save_as_new']) {
 
-                if ($address) {
+                if (!$noAddress) {
 
                     $andAsBilling = $address->getIsBilling();
                     $address->setIsBilling(false);
@@ -665,7 +667,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 $address->setIsShipping(true);
                 $address->setIsBilling($andAsBilling);
 
-                if (!(bool)\XLite\Core\Request::getInstance()->only_calculate) {
+                if ($noAddress || !(bool)\XLite\Core\Request::getInstance()->only_calculate) {
 
                     $profile->addAddresses($address);
 

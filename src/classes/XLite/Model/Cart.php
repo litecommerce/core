@@ -83,8 +83,6 @@ class Cart extends \XLite\Model\Order
                 $cart->setStatus(self::STATUS_TEMPORARY);
 
                 \XLite\Core\Database::getEM()->persist($cart);
-
-                $cart->setCurrency(\XLite::getInstance()->getCurrency());
             }
 
             static::$instances[$className] = $cart;
@@ -179,8 +177,6 @@ class Cart extends \XLite\Model\Order
         foreach ($this->getItems() as $item) {
             \XLite\Core\Database::getEM()->remove($item);
         }
-
-        $this->setCurrency(\XLite::getInstance()->getCurrency());
 
         $this->getItems()->clear();
 

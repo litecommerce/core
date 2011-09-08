@@ -623,6 +623,18 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Get order currency 
+     * 
+     * @return \XLite\Model\Currency
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function getCurrency()
+    {
+        return isset($this->currency) ? $this->currency : \XLite::getInstance()->getCurrency();
+    }
+
+    /**
      * Get original profile
      *
      * @return \XLite\Model\Profile
@@ -841,6 +853,9 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function processSucceed()
     {
+        // Fix the currency in the order
+        $this->setCurrency(\XLite::getInstance()->getCurrency());
+
         // send email notification about initially placed order
         $status = $this->getStatus();
 
