@@ -1670,6 +1670,10 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         if (!is_numeric($this->date)) {
             $this->setDate(time());
         }
+
+        if (!is_numeric($this->lastRenewDate)) {
+            $this->setLastRenewDate(time());
+        }
     }
 
     /**

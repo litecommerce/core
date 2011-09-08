@@ -85,9 +85,9 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $this->assertEquals($etalon, $cost, 'check tax cost 10%');
         $base = $order->getItems()->get(0)->getPrice();
         $this->assertEquals(
-            $order->getCurrency()->formatValue($base / (1 + 0.1)),
+            round($base / (1 + 0.1), 4),
             $order->getItems()->get(0)->getNetPrice(),
-            'check item net price'
+            'check order item net price'
         );
         
 
@@ -98,6 +98,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         \XLite\Core\Database::getEM()->persist($rate);
         $tax->addRates($rate);
         $rate->setTax($tax);
+        $r10 = $rate;
         \XLite\Core\Database::getEM()->flush();
 
         $order->calculate();
@@ -213,8 +214,8 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
         $currency = $order->getCurrency();
 
-        // 10 - (10 - 10 / (1 + 0.2)) = 8.33333333 = 8.33 
-        $this->assertEquals(8.33, $order->getItems()->get(0)->getNetPrice(), 'check item net price');
+        // 10 - (10 - 10 / (1 + 0.2)) = 8.33333333 = 8.3333
+        $this->assertEquals(8.3333, $order->getItems()->get(0)->getNetPrice(), 'check item net price');
         // Initial price
         $this->assertEquals(10, $order->getItems()->get(0)->getPrice(), 'check item price');
         // 8.33 * 99 = 824.67 
@@ -227,8 +228,8 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
         // 824.67 * 0.1 = 82.46700 = 82.47
         $this->assertEquals(
-            82.47,
-            $currency->formatValue($order->getItems()->get(0)->getSurcharges()->get(0)->getValue()),
+            82.4670,
+            $order->getItems()->get(0)->getSurcharges()->get(0)->getValue(),
             'check item surcharge value'
         );
 
@@ -264,12 +265,47 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
         // 907.14 + 9.17 + 90.71 = 1007.02
         $this->assertEquals(1007.02, $currency->formatValue($order->getTotal()), 'check order total');
+
+        // Test small values
+        $order->getItems()->get(0)->getProduct()->setPrice(2.49);
+        $order->getItems()->get(0)->setPrice(2.49);
+        $order->getItems()->get(0)->setAmount(1);
+
+        $tax->getRates()->removeElement($rate);
+        $rate->setTax(null);
+        \XLite\Core\Database::getEM()->remove($rate);
+        $tax->getRates()->get(0)->setValue(35);
+        $tax->setVATMembership(null);
+        $tax->getRates()->get(0)->setMembership(null);
+
+        \XLite\Core\Database::getEM()->flush();
+
+        $order->calculate();
+
+        // Initial price
+        $this->assertEquals(2.49, $order->getItems()->get(0)->getPrice(), 'check item price #2');
+        // 2.49 - (2.49 - 2.49 / (1 + 0.35)) = 1.8444 = 1.8444
+        $this->assertEquals(1.8444, $order->getItems()->get(0)->getNetPrice(), 'check item net price #2');
+        // 1.84 * 1 = 1.84
+        $this->assertEquals(1.84, $order->getItems()->get(0)->getSubtotal(), 'check item subtotal #2');
+
+        // 1.84 * 0.35 = 0.644
+        $this->assertEquals(
+            0.644,
+            $order->getItems()->get(0)->getSurcharges()->get(0)->getValue(),
+            'check item surcharge value #2'
+        );
+
+        // Subtotal must equla price from DB
+        $this->assertEquals(2.49, $currency->formatValue($order->getItems()->get(0)->getTotal()), 'check item total #2');
+
     }
 
     protected function getTestOrder()
     {
         $order = parent::getTestOrder();
 
+        $order->getItems()->get(0)->getProduct()->setPrice(10);
         $order->getItems()->get(0)->setPrice(10);
         $order->getItems()->get(0)->setNetPrice(10);
         $order->getItems()->get(0)->getProduct()->setPrice(10);

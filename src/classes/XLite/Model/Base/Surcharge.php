@@ -235,4 +235,18 @@ abstract class Surcharge extends \XLite\Model\AEntity
             ? \XLite\Core\Translation::getInstance()->translate(static::$typeNames[$this->getName()])
             : null;
     }
+
+    /**
+     * Set value 
+     * 
+     * @param float $value Value
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function setValue($value)
+    {
+        $this->value = round($value, \XLite\Logic\Math::STORE_PRECISION);
+    }
 }

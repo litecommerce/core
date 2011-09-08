@@ -537,7 +537,21 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     {
         $this->setNetPrice($this->defineNetPrice());
 
-        return $this->getOrder()->getCurrency()->roundValue($this->getNetPrice() * $this->getAmount());
+        return $this->getOrder()->getCurrency()->roundValue($this->getNetPrice()) * $this->getAmount();
+    }
+
+    /**
+     * Get net subtotal without round net price
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function getNetSubtotal()
+    {
+        $this->calculateNetSubtotal();
+
+        return $this->getNetPrice() * $this->getAmount();
     }
 
     /**

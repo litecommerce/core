@@ -49,7 +49,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
         if ($this->getProduct()) {
             $price = \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()
                 ->calculateProductNetPrice($this->getProduct(), $price);
-            $price = $this->getOrder()->getCurrency()->roundValue($price);
+            $price = round($price, \XLite\Logic\Math::STORE_PRECISION);
         }
 
         return $price;
