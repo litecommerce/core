@@ -71,7 +71,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Return the ctegory enabled condition
+     * Return the category enabled condition
      *
      * @return boolean
      * @see    ____func_see____

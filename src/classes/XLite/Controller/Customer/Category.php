@@ -79,7 +79,32 @@ class Category extends \XLite\Controller\Customer\Catalog
     {
         return parent::isVisible()
             && !is_null($this->getCategory())
-            && \XLite\Model\Repo\Category::CATEGORY_ID_ROOT != $this->getCategory()->getCategoryId();
+            && \XLite\Model\Repo\Category::CATEGORY_ID_ROOT != $this->getCategory()->getCategoryId()
+            && !$this->hasDisabledParent();
+    }
+
+    /**
+     * Check every parent of category to be enabled.
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    protected function hasDisabledParent()
+    {
+        $current = $this->getCategory();
+        $result = false;
+
+        while (\XLite\Model\Repo\Category::CATEGORY_ID_ROOT != $current->getCategoryId()) {
+            if (!$current->getEnabled()) {
+                $result = true;
+                break;
+            }
+
+            $current = $current->getParent();
+        }
+
+        return $result;
     }
 
     /**
