@@ -142,6 +142,7 @@ class Cart extends \XLite\Model\Order
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
+     *
      * @PrePersist
      * @PreUpdate
      */
@@ -150,6 +151,19 @@ class Cart extends \XLite\Model\Order
         parent::prepareBeforeSave();
 
         $this->setDate(time());
+    }
+
+    /**
+     * Prepare order before create entity
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     *
+     * @PrePersist
+     */
+    public function prepareBeforeCreate()
+    {
         $this->setLastRenewDate(time());
     }
 

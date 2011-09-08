@@ -605,9 +605,13 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
 
         $carts = \XLite\Core\Database::getRepo('XLite\Model\Cart')->findAll();
         $cart = array_pop($carts);
-        $cart->setLastRenewDate(time() - 3600 * 90);
 
+        $this->assertEquals($product->getId(), $cart->getItems()->get(0)->getProduct()->getId(), 'check product id');
+        $cart->setLastRenewDate($cart->getLastRenewDate() - 86400);
+ 
         \XLite\Core\Database::getEM()->flush();
+
+        $this->openAndWait('store/cart');
 
         $this->assertElementPresent(
             "//div[@id='cart']"

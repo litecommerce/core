@@ -190,7 +190,7 @@ class Auth extends \XLite\Base
                 $result = $profile;
 
                 $orderId = $orderId ?: \XLite\Core\Session::getInstance()->order_id;
-                $order = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($orderId);
+                $order = \XLite\Core\Database::getRepo('XLite\Model\Cart')->find($orderId);
                 if ($order) {
                     $order->renew();
                 }
