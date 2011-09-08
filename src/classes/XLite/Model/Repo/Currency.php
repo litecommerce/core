@@ -55,6 +55,19 @@ class Currency extends \XLite\Model\Repo\ARepo
         array('code'),
     );
 
+
+    /**
+     * Find all used into orders currency
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function findAllSortedByName()
+    {
+        return $this->defineAllSortedByNameQuery()->getResult();
+    }
+
     /**
      * Find all used into orders currency
      *
@@ -65,6 +78,21 @@ class Currency extends \XLite\Model\Repo\ARepo
     public function findUsed()
     {
         return $this->defineFindUsedQuery()->getResult();
+    }
+
+
+    /**
+     * Define query for findAllSortedByName() method
+     *
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineAllSortedByNameQuery()
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.translations', 't')
+            ->orderBy('t.name');
     }
 
     /**
