@@ -44,7 +44,7 @@
       <widget
         class="\XLite\View\Tooltip"
         id="vat-help-text"
-        text="{t(#!!!#):h}"
+        text="{t(#Select the membership level and the area which product prices, including VAT, are defined for by the shop administrator#):h}"
         caption=""
         isImageTag="true"
         className="help" />
