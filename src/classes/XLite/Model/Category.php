@@ -193,6 +193,19 @@ class Category extends \XLite\Model\Base\I18n
      */
     protected $parent;
 
+
+    /**
+     * "Enabled category" filter closure
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    public static function isEnabledFilter(Category $category)
+    {
+        return $category->getEnabled();
+    }
+
     /**
      * Set parent
      *
@@ -277,19 +290,11 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getSubcategories()
     {
-        return $this->getChildren()->filter(array($this, 'isEnabledFilter'));
-    }
+        $object = $this;
 
-    /**
-     * "Enabled category" filter closure
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.7
-     */
-    public function isEnabledFilter(Category $category)
-    {
-        return $category->getEnabled();
+        return $this->getChildren()->filter(
+            function ($category) {return \XLite\Model\Category::isEnabledFilter($category);}
+        );
     }
 
     /**
