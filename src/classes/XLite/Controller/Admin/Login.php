@@ -110,7 +110,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
 
             \XLite\Core\TopMessage::addError('Invalid login or password');
 
-            $returnUrl = $this->buildUrl('login');
+            $returnURL = $this->buildUrl('login');
 
         } elseif (isset(\XLite\Core\Session::getInstance()->lastWorkingURL)) {
 

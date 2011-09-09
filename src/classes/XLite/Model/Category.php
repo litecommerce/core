@@ -193,6 +193,14 @@ class Category extends \XLite\Model\Base\I18n
      */
     protected $parent;
 
+    /**
+     * Caching flag to check if the category is visible in the parents branch.
+     *
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.7
+     */
+    protected $flagVisible = null;
 
     /**
      * "Enabled category" filter closure
@@ -244,6 +252,35 @@ class Category extends \XLite\Model\Base\I18n
     public function hasImage()
     {
         return !is_null($this->getImage());
+    }
+
+    /**
+     * Check every parent of category to be enabled.
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    public function isVisible()
+    {
+        if (is_null($this->flagVisible)) {
+
+            $current = $this;
+            $hidden = \XLite\Model\Repo\Category::CATEGORY_ID_ROOT == $current->getCategoryId();
+
+            while (!$hidden && \XLite\Model\Repo\Category::CATEGORY_ID_ROOT != $current->getCategoryId()) {
+
+                if (!$current->getEnabled()) {
+                    $hidden = true;
+                }
+
+                $current = $current->getParent();
+            }
+
+            $this->flagVisible = !$hidden;
+        }
+
+        return $this->flagVisible;
     }
 
     /**

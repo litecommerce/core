@@ -210,4 +210,9 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
         return $list;
     }
+
+    protected function isVisible()
+    {
+        return parent::isVisible() && $this->getCategory()->isVisible();
+    }
 }

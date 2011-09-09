@@ -141,7 +141,7 @@ class Subcategories extends \XLite\View\Dialog
      */
     protected function isVisible()
     {
-        return parent::isVisible() && $this->hasSubcategories();
+        return parent::isVisible() && $this->isCategoryVisible() && $this->hasSubcategories();
     }
 
     /**
@@ -242,5 +242,17 @@ class Subcategories extends \XLite\View\Dialog
     protected function getSubcategories()
     {
         return $this->getCategory() ? $this->getCategory()->getSubcategories() : array();
+    }
+
+    /**
+     * Check if the category is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    protected function isCategoryVisible()
+    {
+        return $this->getCategory() ? $this->getCategory()->isVisible() : false;
     }
 }
