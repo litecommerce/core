@@ -122,7 +122,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
             $products = array();
 
             $fp = \XLite\Core\Database::getRepo('XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct')
-                ->getFeaturedProducts($this->category_id);
+                ->getFeaturedProducts($this->getRequestParamValue(self::PARAM_CATEGORY_ID));
 
             foreach ($fp as $product) {
                 $products[] = $product->getProduct();

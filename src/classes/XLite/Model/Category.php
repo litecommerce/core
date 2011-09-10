@@ -266,12 +266,13 @@ class Category extends \XLite\Model\Base\I18n
         if (is_null($this->flagVisible)) {
 
             $current = $this;
-            $hidden = \XLite\Model\Repo\Category::CATEGORY_ID_ROOT == $current->getCategoryId();
+            $hidden = false;
 
-            while (!$hidden && \XLite\Model\Repo\Category::CATEGORY_ID_ROOT != $current->getCategoryId()) {
+            while (\XLite\Model\Repo\Category::CATEGORY_ID_ROOT != $current->getCategoryId()) {
 
                 if (!$current->getEnabled()) {
                     $hidden = true;
+                    break;
                 }
 
                 $current = $current->getParent();
