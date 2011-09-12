@@ -43,6 +43,18 @@ To obtain the transaction key from the Merchant Interface, do the following:<br 
 
   <tr>
     <td class="setting-name">
+    <label for="settings_type">{t(#Transaction type#)}</label>
+    </td>
+    <td>
+    <select id="settings_type" name="settings[type]">
+      <option value="sale" selected="{isSelected(paymentMethod.getSetting(#type#),#sale#)}">Auth and Capture</option>
+      <option value="auth" selected="{isSelected(paymentMethod.getSetting(#type#),#auth#)}">Auth only</option>
+    </select>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="setting-name">
     <label for="settings_test">{t(#Processing mode#)}</label>
     </td>
     <td>

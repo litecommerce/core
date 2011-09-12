@@ -16,6 +16,8 @@ XLite\Model\Payment\Method:
     settings:
       - name: login
       - name: key
+      - name: type
+        value: sale
       - name: test
         value: 1
       - name: prefix
