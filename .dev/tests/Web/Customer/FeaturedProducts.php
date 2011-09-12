@@ -43,7 +43,7 @@ class XLite_Web_Customer_FeaturedProducts extends XLite_Web_Customer_ACustomer
 
         $this->assertElementPresent(
             "//h2[text()='Featured products']",
-            'check bestsellers title'
+            'check featured products title'
         );
 
         $this->assertElementPresent(
