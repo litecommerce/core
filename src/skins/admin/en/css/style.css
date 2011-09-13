@@ -1397,6 +1397,10 @@ table.settings-table td * {
   vertical-align: middle;
 }
 
+table.settings-table td.note * {
+  float: none;
+}
+
 table.settings-table td input[type=checkbox] {
   margin: 5px 0px 0px 0px;
 }
