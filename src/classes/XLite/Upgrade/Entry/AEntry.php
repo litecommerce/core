@@ -905,6 +905,7 @@ abstract class AEntry
             foreach ((array) $helpers as $file) {
                 $function = require_once $file;
                 $function();
+                $this->addInfoMessage(sprintf('Update hook is run: %s (%s)', $function, $file), true);
             }
         }
     }
