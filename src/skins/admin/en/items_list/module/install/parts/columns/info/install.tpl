@@ -18,7 +18,7 @@
 
   <form action="admin.php" method="post" >
     <input type="hidden" name="target" value="addon_install" />
-    <input type="hidden" name="action" value="get_license" />
+    <input type="hidden" name="action" value="view_license" />
     <input type="hidden" name="moduleId" value="{module.getModuleId()}" />
 
     <div class="install">
