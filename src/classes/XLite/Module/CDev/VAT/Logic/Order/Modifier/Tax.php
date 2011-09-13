@@ -84,35 +84,24 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
 
         foreach ($this->getTaxes() as $tax) {
             
-            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
             $sum = 0;
+            $rates = array();
 
             foreach ($this->getTaxableItems() as $item) {
                 $product = $item->getProduct();
                 $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
-                if (!isset($prices[$item->getItemId()])) {
-                    $prices[$item->getItemId()] = $item->calculateNetSubtotal();
-                }
-
-                $price = $prices[$item->getItemId()];
-                $cost = 0;
-
-                if ($rate) {
-                    $cost = $rate->calculateProductPriceIncludingTax($product, $price);
-                    $price += $cost;
-                }
-
-                $prices[$item->getItemId()] = $price;
-
-                if ($cost) {
-                    $this->addOrderItemSurcharge(
-                        $item,
-                        $this->code . '.' . $tax->getId(),
-                        $cost,
-                        false
+                if (!isset($rates[$rate->getId()])) {
+                    $rates[$rate->getId()] = array(
+                        'rate' => $rate,
+                        'base' => 0,
                     );
-                    $sum += $cost;
                 }
+
+                $rates[$rate->getId()]['base'] += $item->getSubtotal();
+            }
+
+            foreach ($rates as $rate) {
+                $sum += $rate['rate']->calculateValueIncludingTax($rate['base']);
             }
 
             // Shipping cost VAT
@@ -122,13 +111,17 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
                     ->calculateRateTaxes($modifier->getSelectedRate());
                 foreach ($taxes as $tax) {
                     if ($tax['cost']) {
-                        $this->addOrderSurcharge(
-                            $this->code . '.' . $tax['rate']->getTax()->getId() . '.SHIPPING',
-                            doubleval($tax['cost']),
-                            true
-                        );
+                        $sum += $tax['cost'];
                     }
                 }
+            }
+
+            if ($sum) {
+                $this->addOrderSurcharge(
+                    $this->code . '.' . $tax['rate']->getTax()->getId(),
+                    $sum,
+                    false
+                );
             }
         }
     }

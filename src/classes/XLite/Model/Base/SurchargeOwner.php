@@ -154,6 +154,24 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
     }
 
     /**
+     * Get surcharge sum
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getSurchargeSum()
+    {
+        $total = 0;
+
+        foreach ($this->getExcludeSurcharges() as $s) {
+            $total += $s->getValue();
+        }
+
+        return $total;
+    }
+
+    /**
      * Get surcharge sum by type
      *
      * @param string $type Surcharge type
