@@ -79,16 +79,19 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
-     * Set entry status
+     * Return path where the upgrade helper scripts are placed
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
-     */
-    protected function setUpgradedPath()
+     */            
+    protected function getUpgradeHelperPath()
     {
         list($author, $name) = explode('\\', $this->getActualName());
 
-        $this->setRepositoryPath(\Includes\Utils\ModulesManager::getAbsoluteDir($author, $name), true);
+        return \Includes\Utils\FileManager::getRelativePath(
+            \Includes\Utils\ModulesManager::getAbsoluteDir($author, $name),
+            LC_DIR_ROOT
+        ) . LC_DS;
     }
 }
