@@ -196,7 +196,7 @@ function loadDialog(url, dialogOptions, callback, link)
 {
   openWaitBar();
 
-  var selector = 'tmp-dialog-' + (new Date()).getTime() + '-' + jQuery(link).attr('class').toString().replace(/ /, '-', 'g');
+  var selector = 'tmp-dialog-' + (new Date()).getTime() + '-' + jQuery(link).attr('class').toString().replace(/ /g, '-');
 
   jQuery.get(
     url,

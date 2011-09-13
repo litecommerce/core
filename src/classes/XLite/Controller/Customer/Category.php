@@ -79,7 +79,7 @@ class Category extends \XLite\Controller\Customer\Catalog
     {
         return parent::isVisible()
             && !is_null($this->getCategory())
-            && \XLite\Model\Repo\Category::CATEGORY_ID_ROOT != $this->getCategory()->getCategoryId();
+            && $this->getCategory()->isVisible();
     }
 
     /**

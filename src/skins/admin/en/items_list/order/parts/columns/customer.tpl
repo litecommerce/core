@@ -12,9 +12,12 @@
  *}
 
 <td class="customer">
-  <a
+  <a IF="!order.orig_profile.getProfileId()=order.profile.getProfileId()"
     class="customer"
     href="{buildURL(#profile#,##,_ARRAY_(#profile_id#^order.orig_profile.getProfileId()))}">
     {order.profile.billing_address.title:h} {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}
   </a>
+  <span IF="order.orig_profile.getProfileId()=order.profile.getProfileId()" class="customer">
+    {order.profile.billing_address.title:h} {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}
+  </span>
 </td>

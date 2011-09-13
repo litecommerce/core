@@ -243,7 +243,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
         return \XLite\View\FormField\Select\TestLiveMode::TEST === $this->getSetting('mode');
     }
 
-    
+
     /**
      * Return ITEM NAME for request
      *
@@ -336,7 +336,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     {
         return 'US' === $this->getCountryFieldValue()
             ? $this->getProfile()->getBillingAddress()->getState()->getCode()
-            : $this->getProfile()->getBillingAddress()->getState();
+            : $this->getProfile()->getBillingAddress()->getState()->getState();
     }
 
     /**

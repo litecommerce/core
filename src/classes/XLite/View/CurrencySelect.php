@@ -101,6 +101,6 @@ class CurrencySelect extends \XLite\View\FormField
     {
         return $this->usedOnly()
             ? \XLite\Core\Database::getRepo('XLite\Model\Currency')->findUsed()
-            : \XLite\Core\Database::getRepo('XLite\Model\Currency')->findAll();
+            : \XLite\Core\Database::getRepo('XLite\Model\Currency')->findAllSortedByName();
     }
 }

@@ -198,6 +198,10 @@ class CategorySelect extends \XLite\View\AView
     {
         $result = $category['depth'];
 
+        if ($result == 0) {
+            $this->currentPath = array();
+        }
+
         if ($this->currentCategoryID != $category['category_id']) {
 
             if ($this->currentIndent >= $result) {

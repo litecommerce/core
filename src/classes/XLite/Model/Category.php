@@ -194,6 +194,27 @@ class Category extends \XLite\Model\Base\I18n
     protected $parent;
 
     /**
+     * Caching flag to check if the category is visible in the parents branch.
+     *
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.7
+     */
+    protected $flagVisible = null;
+
+    /**
+     * "Enabled category" filter closure
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    public static function isEnabledFilter(Category $category)
+    {
+        return $category->getEnabled();
+    }
+
+    /**
      * Set parent
      *
      * @param \XLite\Model\Category $parent Parent category OPTIONAL
@@ -231,6 +252,36 @@ class Category extends \XLite\Model\Base\I18n
     public function hasImage()
     {
         return !is_null($this->getImage());
+    }
+
+    /**
+     * Check every parent of category to be enabled.
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    public function isVisible()
+    {
+        if (is_null($this->flagVisible)) {
+
+            $current = $this;
+            $hidden = false;
+
+            while (\XLite\Model\Repo\Category::CATEGORY_ID_ROOT != $current->getCategoryId()) {
+
+                if (!$current->getEnabled()) {
+                    $hidden = true;
+                    break;
+                }
+
+                $current = $current->getParent();
+            }
+
+            $this->flagVisible = !$hidden;
+        }
+
+        return $this->flagVisible;
     }
 
     /**
@@ -277,7 +328,11 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getSubcategories()
     {
-        return $this->getChildren();
+        $object = $this;
+
+        return $this->getChildren()->filter(
+            function ($category) {return \XLite\Model\Category::isEnabledFilter($category);}
+        );
     }
 
     /**
@@ -315,7 +370,7 @@ class Category extends \XLite\Model\Base\I18n
 
     /**
      * Return parent category ID
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.5
@@ -329,7 +384,7 @@ class Category extends \XLite\Model\Base\I18n
      * Set parent category ID
      *
      * @param integer $parentID Value to set
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.5

@@ -356,8 +356,8 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
             ? $this->getOrder()->getProfile()->getShippingAddress()->getState()->getCode()
             : 'n/a';
 
-        switch ($this->transaction->getType()) {
-            case self::TRANSACTION_AUTH:
+        switch ($this->getSetting('type')) {
+            case self::OPERATION_AUTH:
                 $type = 'AUTH_ONLY';
                 break;
 
