@@ -32,12 +32,14 @@
 
   <tr>
     <td colspan="2" class="note">
-To obtain the transaction key from the Merchant Interface, do the following:<br />
-1. Log into the Merchant Interface<br />
-2. Select Settings from the Main Menu<br />
-3. Click on Obtain Transaction Key in the Security section<br />
-4. Type in the answer to the secret question configured on setup<br />
-5. Click Submit
+To obtain the transaction key from the Merchant Interface, do the following:
+<ol>
+  <li>Log into the Merchant Interface</li>
+  <li>Select Settings from the Main Menu</li>
+  <li>Click on Obtain Transaction Key in the Security section</li>
+  <li>Type in the answer to the secret question configured on setup</li>
+  <li>Click Submit</li>
+</ol>
     </td>
   </tr>
 
