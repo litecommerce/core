@@ -497,7 +497,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         }
 
         \XLite\Core\TopMessage::addInfo('Item has been deleted from cart');
-        $this->setReturnUrl($this->buildURL('cart'));
+        $this->setReturnURL($this->buildURL('cart'));
     }
 
 }
