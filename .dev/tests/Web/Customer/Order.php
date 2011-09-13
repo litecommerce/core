@@ -208,7 +208,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent(
             "//div[@class='invoice-box']"
             . "/div[@class='subhead']"
-            . "/span[text()='Grand total: $" . $order->getTotal() . "']"
+            . "/span[text()='Grand total: $" . number_format(round($order->getTotal(), 2), 2) . "']"
         );
 
         // Items
@@ -282,7 +282,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             . "/table[@class='items']"
             . "/tbody"
             . "/tr[position()=2]"
-            . "/td[position()=3 and text()='$" . $item->getPrice() . "']"
+            . "/td[position()=3 and text()='$" . number_format(round($item->getPrice(), 2), 2) . "']"
         );
 
         $this->assertElementPresent(

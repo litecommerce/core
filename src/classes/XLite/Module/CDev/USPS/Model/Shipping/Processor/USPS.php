@@ -121,6 +121,7 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
         return $rates;
     }
 
+
     /**
      * Returns array of data for request
      * 
@@ -190,8 +191,8 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
 
             $xmlData = $this->getXMLData($data);
 
-            $currencyRate = doubleval(\XLite\Core\Config::getInstance()->CDev->AustraliaPost->currency_rate);
-            $currencyRate = 0 < $currencyRate ?: 1;
+            $currencyRate = doubleval(\XLite\Core\Config::getInstance()->CDev->USPS->currency_rate);
+            $currencyRate = (0 < $currencyRate ? $currencyRate : 1);
 
             $postURL = $this->getApiURL() . '?API=' . $this->getApiName() . '&XML=' . urlencode($xmlData);
 
@@ -232,7 +233,7 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
                     'response' => htmlentities(\XLite\Core\XML::getInstance()->getFormattedXML($result))
                 );
 
-                if (!isset($this->errorMsg) && 'OK' == $response['err_msg'] && !empty($response['postage'])) {
+                if (!isset($this->errorMsg) && !isset($response['err_msg']) && !empty($response['postage'])) {
 
                     foreach ($response['postage'] as $postage) {
                         
@@ -245,15 +246,7 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
                             $this->addShippingMethod($postage);
 
                         } elseif ($method->getEnabled()) {
-                            // Method is registered enabled
-
-                            $code = \XLite\Core\Config::getInstance()->General->defaultLanguage->getCode();
-                            
-                            if ($method->getTranslation($code)->name != $postage['MailService']) {
-                                $method->getTranslation($code)->name = $postage['MailService'];
-                                \XLite\Core\Database::getEM()->persist($method);
-                                \XLite\Core\Database::getEM()->flush();
-                            }
+                            // Method is registered and enabled
 
                             $rate->setMethod($method);
                             $rate->setBaseRate($postage['Rate'] * $currencyRate);
@@ -263,7 +256,7 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
                     }
 
                 } elseif (!isset($this->errorMsg)) {
-                    $this->errorMsg = $response['err_msg'];
+                    $this->errorMsg = (isset($response['err_msg']) ? $response['err_msg'] : 'Unknown error');
                 }
 
             } catch (\Exception $e) {
@@ -324,17 +317,17 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
 
         $result = array(
             'Service' => 'ALL',
-            'ZipOrigination' => $data['srcAddress']['zipcode'], // lenght=5, pattern=/\d{5}/ 
-            'ZipDestination' => $data['dstAddress']['zipcode'], // lenght=5, pattern=/\d{5}/
-            'Pounds' => $pounds, // integer, range=0-70
+            'ZipOrigination' => $this->sanitizeZipcode($data['srcAddress']['zipcode']), // lenght=5, pattern=/\d{5}/ 
+            'ZipDestination' => $this->sanitizeZipcode($data['dstAddress']['zipcode']), // lenght=5, pattern=/\d{5}/
+            'Pounds' => intval($pounds), // integer, range=0-70
             'Ounces' => sprintf('%.1f', $ounces), // decimal, range=0.0-1120.0, totalDigits=10
             'Container' => $config->container,  // RECTANGULAR | NONRECTANGULAR | ...
             'Size' => $config->package_size,  // REGULAR | LARGE
-            'Width' => $config->width, // Units=inches, decimal, min=0.0, totalDigits=10. Required for LARGE
-            'Length' => $config->length, // Units=inches, decimal, min=0.0, totalDigits=10. Required for LARGE
-            'Height' => $config->height, // Units=inches, decimal, min=0.0, totalDigits=10. Required for LARGE
-            'Girth' => $config->girth, // Units=inches, decimal, min=0.0, totalDigits=10. Required for size=LARGE and container=NONRECTANGULAR | VARIABLE/NULL
-            'Value' => $data['packages'][$packKey]['subtotal'], // decimal, min=0.00, totalDigits=10
+            'Width' => sprintf('%.1f', $config->width), // Units=inches, decimal, min=0.0, totalDigits=10. Required for LARGE
+            'Length' => sprintf('%.1f', $config->length), // Units=inches, decimal, min=0.0, totalDigits=10. Required for LARGE
+            'Height' => sprintf('%.1f', $config->height), // Units=inches, decimal, min=0.0, totalDigits=10. Required for LARGE
+            'Girth' => sprintf('%.1f', $config->girth), // Units=inches, decimal, min=0.0, totalDigits=10. Required for size=LARGE and container=NONRECTANGULAR | VARIABLE/NULL
+            'Value' => sprintf('%.2f', $data['packages'][$packKey]['subtotal']), // decimal, min=0.00, totalDigits=10
             'SortBy' => 'PACKAGE', // CONTAINER | LETTER | LARGEENVELOPE | PACKAGE | FLATRATE
             'Machinable' => $config->machinable ? 'true' : 'false',
         );
@@ -361,7 +354,11 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
 
             $packIdStr = sprintf('%02d', $packId);
 
-            if (!empty($pack['Girth']) && in_array($pack['Container'], array('NONRECTANGULAR', 'VARIABLE'))) {
+            if (
+                !empty($pack['Girth']) 
+                && 0 < doubleval($pack['Girth']) 
+                && in_array($pack['Container'], array('NONRECTANGULAR', 'VARIABLE'))
+            ) {
 
                 $girth = <<<OUT
         <Girth>{$pack['Girth']}</Girth>
@@ -414,22 +411,28 @@ OUT;
 
         $xmlParsed = $xml->parse($stringData, $err);
 
-        $error = $xml->getArrayByPath($xmlParsed, $this->getApiName() . 'Response/Package/Error');
-
-        if ($error) {
-            $result['err_msg'] = $xml->getArrayByPath($error, 'Description/0/#');
-
+        if (isset($xmlParsed['Error'])) {
+            $result['err_msg'] = $xml->getArrayByPath($xmlParsed, 'Error/Description/0/#');
+        
         } else {
 
-            $result['err_msg'] = 'OK';
+            $error = $xml->getArrayByPath($xmlParsed, $this->getApiName() . 'Response/Package/Error');
+
+            if ($error) {
+                $result['err_msg'] = $xml->getArrayByPath($error, 'Description/0/#');
+            }
+        } 
+        
+        if (!isset($result['error_msg'])) {
 
             $postage = $xml->getArrayByPath($xmlParsed, $this->getApiName() . 'Response/Package/Postage');
 
             if ($postage) {
                 foreach ($postage as $k => $v) {
+                    $serviceName = $xml->getArrayByPath($v, '#/MailService/0/#');
                     $result['postage'][] = array(
-                        'CLASSID' => 'D-' . $xml->getArrayByPath($v, '@/CLASSID'),
-                        'MailService' => $this->getUSPSNamePrefix() . html_entity_decode($xml->getArrayByPath($v, '#/MailService/0/#')),
+                        'CLASSID' => 'D-' . $xml->getArrayByPath($v, '@/CLASSID') . '-' . md5($serviceName),
+                        'MailService' => $this->getUSPSNamePrefix() . html_entity_decode($serviceName),
                         'Rate' => $xml->getArrayByPath($v, '#/Rate/0/#'),
                     );
                 }
@@ -460,22 +463,22 @@ OUT;
         $config = \XLite\Core\Config::getInstance()->CDev->USPS;
 
         $result = array(
-            'Pounds' => $pounds, // integer, range=0-70
+            'Pounds' => intval($pounds), // integer, range=0-70
             'Ounces' => sprintf('%.1f', $ounces), // decimal, range=0.0-1120.0, totalDigits=10
             'Machinable' => $config->machinable ? 'true' : 'false',
             'MailType' => $config->mail_type,  // Package | Postcards or aerogrammes | Envelope | LargeEnvelope | FlatRate
-            'ValueOfContents' => $data['packages'][$packKey]['subtotal'], // decimal
+            'ValueOfContents' => sprintf('%.2f', $data['packages'][$packKey]['subtotal']), // decimal
             'Country' => $this->getUSPSCountryByCode($data['dstAddress']['country']), // lenght=5, pattern=/\d{5}/
             'Container' => $config->container_intl,  // RECTANGULAR | NONRECTANGULAR
             'Size' => $config->package_size,  // REGULAR | LARGE
-            'Width' => $config->width, // Units=inches, decimal, min=0.0, totalDigits=10. Required for LARGE
-            'Length' => $config->length, // Units=inches, decimal, min=0.0, totalDigits=10. Required for LARGE
-            'Height' => $config->height, // Units=inches, decimal, min=0.0, totalDigits=10. Required for LARGE
-            'Girth' => $config->girth, // Units=inches, decimal, min=0.0, totalDigits=10. Required for size=LARGE and container=NONRECTANGULAR | VARIABLE/NULL
+            'Width' => sprintf('%.1f', $config->width), // Units=inches, decimal, min=0.0, totalDigits=10. Required for LARGE
+            'Length' => sprintf('%.1f', $config->length), // Units=inches, decimal, min=0.0, totalDigits=10. Required for LARGE
+            'Height' => sprintf('%.1f', $config->height), // Units=inches, decimal, min=0.0, totalDigits=10. Required for LARGE
+            'Girth' => sprintf('%.1f', $config->girth), // Units=inches, decimal, min=0.0, totalDigits=10. Required for size=LARGE and container=NONRECTANGULAR | VARIABLE/NULL
             'GXG' => $config->gxg,
             'GXGPOBoxFlag' => $config->gxg_pobox ? 'Y' : 'N',
             'GXGGiftFlag' => $config->gxg_gift ? 'Y' : 'N',
-            'OriginZip' => $data['srcAddress']['zipcode'], // lenght=5, pattern=/\d{5}/ 
+            'OriginZip' => $this->sanitizeZipcode($data['srcAddress']['zipcode']), // lenght=5, pattern=/\d{5}/ 
             'CommercialFlag' => $config->commercial ? 'Y' : 'N', // Y | N
             'ExtraServices' => array(),
         );
@@ -559,22 +562,28 @@ OUT;
 
         $xmlParsed = $xml->parse($stringData, $err);
 
-        $error = $xml->getArrayByPath($xmlParsed, $this->getApiName() . 'Response/Package/Error');
-
-        if ($error) {
-            $result['err_msg'] = $xml->getArrayByPath($error, 'Description/0/#');
-
+        if (isset($xmlParsed['Error'])) {
+            $result['err_msg'] = $xml->getArrayByPath($xmlParsed, 'Error/Description/0/#');
+        
         } else {
 
-            $result['err_msg'] = 'OK';
+            $error = $xml->getArrayByPath($xmlParsed, $this->getApiName() . 'Response/Package/Error');
+
+            if ($error) {
+                $result['err_msg'] = $xml->getArrayByPath($error, 'Description/0/#');
+            }
+        } 
+
+        if (!isset($result['err_msg'])) {
 
             $postage = $xml->getArrayByPath($xmlParsed, $this->getApiName() . 'Response/Package/Service');
 
             if ($postage) {
                 foreach ($postage as $k => $v) {
+                    $serviceName = $xml->getArrayByPath($v, '#/SvcDescription/0/#');
                     $result['postage'][] = array(
-                        'CLASSID' => 'I-' . $xml->getArrayByPath($v, '@/ID'),
-                        'MailService' => $this->getUSPSNamePrefix() . html_entity_decode($xml->getArrayByPath($v, '#/SvcDescription/0/#')),
+                        'CLASSID' => 'I-' . $xml->getArrayByPath($v, '@/ID') . '-' . md5($serviceName),
+                        'MailService' => $this->getUSPSNamePrefix() . html_entity_decode($serviceName),
                         'Rate' => $xml->getArrayByPath($v, '#/Postage/0/#'),
                     );
                 }
@@ -647,6 +656,18 @@ OUT;
         return array($pounds, round($ounces, 1));
     }
 
+    /**
+     * Returns shipping method name prefix
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getUSPSNamePrefix()
+    {
+        return $this->getProcessorName() . ' ';
+    }
+
 
     /**
      * Returns a type of API 
@@ -690,19 +711,6 @@ OUT;
 
         return $apiName[$this->getApiType()];
     }
-
-    /**
-     * Returns shipping method name prefix
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getUSPSNamePrefix()
-    {
-        return $this->getProcessorName() . ' ';
-    }
-
 
     /**
      * Returns true if USPS module is configured 
@@ -1012,6 +1020,20 @@ OUT;
         );
 
         return (isset($uspsCountries[$code]) ? $uspsCountries[$code] : null);
+    }
+
+    /**
+     * Sanitize zipcode value according to USPS requirements, pattern: /\d{5}/
+     * 
+     * @param string $zipcode Zipcode value
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function sanitizeZipcode($zipcode)
+    {
+        return preg_replace('/\D/', '', substr($zipcode, 0, 5));
     }
 
     // }}}

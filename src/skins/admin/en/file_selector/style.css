@@ -1,0 +1,66 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.7
+ */
+
+
+.file-selector {
+  width: 450px;
+}
+
+.selections-list li {
+  padding: 0px 0px 0px 20px;
+}
+
+.selections-list li.label-field {
+  padding-left: 20px;
+  font-size: 16px;
+  color: #456583;
+}
+
+.selections-list li.label-field input {
+  margin-right: 10px;
+}
+
+.selections-list li.input-field {
+  padding-left: 40px;
+  margin: 5px 0px 23px;
+}
+
+.selections-list input[type="text"]
+{
+  width: 260px;
+}
+
+.selections-list .browse-server-button {
+  float: right;
+  clear: right;
+  font-size: 14px;
+  color: #2c5fa6;
+  margin-top: -20px;
+  margin-right: 40px;
+  text-decoration: underline;
+}
+
+.selections-list li.url-input {
+  margin-bottom: 5px;
+}
+
+.selections-list .url-copy-to-local span.label {
+  margin-top: -20px;
+  margin-left: 20px;
+  float: left;
+  clear: left;
+}
+
+div.upload-file {
+  padding-left: 180px;
+  margin-top: -10px;
+}

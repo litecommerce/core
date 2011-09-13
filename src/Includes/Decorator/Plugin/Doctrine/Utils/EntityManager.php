@@ -74,7 +74,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
             static::$metadata = array();
 
             // Create hash array to quick access its elements
-            foreach (static::getMetadataFactory()->getAllMetadata() as $data) {
+            foreach (static::getHandler()->getMetadataFactory()->getAllMetadata() as $data) {
                 static::$metadata[$data->name] = $data;
             }
         }
@@ -105,7 +105,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      */
     public static function generateProxies()
     {
-        static::getProxyFactory()->generateProxyClasses(static::getAllMetadata(), LC_DIR_CACHE_PROXY);
+        static::getHandler()->getProxyFactory()->generateProxyClasses(static::getAllMetadata(), LC_DIR_CACHE_PROXY);
     }
 
     /**
@@ -183,7 +183,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
         static::setMetadataDriver($config);
 
         // Set proxy settings
-        $config->setProxyDir(LC_DIR_CACHE_PROXY);
+        $config->setProxyDir(rtrim(LC_DIR_CACHE_PROXY, LC_DS));
         $config->setProxyNamespace(LC_MODEL_PROXY_NS);
 
         $cache = new \Doctrine\Common\Cache\ArrayCache();
@@ -212,37 +212,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     }
 
     /**
-     * Return instance of the proxy factory
-     *
-     * @return Doctrine\ORM\Proxy\ProxyFactory
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getProxyFactory()
-    {
-        // NOTE: it's the hack
-        \Includes\Decorator\Plugin\Doctrine\Utils\ProxyFactory::modifyCodeTemplate(
-            $factory = static::getHandler()->getProxyFactory()
-        );
-
-        return $factory;
-    }
-
-    /**
-     * Return instance of the metadata factory
-     *
-     * @return Doctrine\ORM\Mapping\ClassMetadataFactory
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getMetadataFactory()
-    {
-        return static::getHandler()->getMetadataFactory();
-    }
-
-    /**
      * Return the Doctrine tools
      *
      * @return \Doctrine\ORM\Tools\EntityGenerator
@@ -252,16 +221,13 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      */
     protected static function getEntityGenerator()
     {
-        $generator = new \Doctrine\ORM\Tools\EntityGenerator();
+        $generator = new \Includes\Decorator\Plugin\Doctrine\Utils\ModelGenerator();
         $generator->setGenerateAnnotations(true);
         $generator->setRegenerateEntityIfExists(false);
         $generator->setUpdateEntityIfExists(true);
         $generator->setGenerateStubMethods(true);
         $generator->setNumSpaces(4);
         $generator->setClassToExtend('\XLite\Model\AEntity');
-
-        // :TODO: Uncomment after the Doctrine upgrade to 2.0.3 will be completed
-        // $generator->setBackupExisting(false);
 
         return $generator;
     }

@@ -59,6 +59,19 @@ class Profile extends \XLite\Controller\Admin\AAdmin
         return 'Edit profile';
     }
 
+
+    /**
+     * Check if current page is accessible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkAccess()
+    {
+        return parent::checkAccess() && $this->isOrigProfile();
+    }
+
     /**
      * The "mode" parameter used to determine if we create new or modify existing profile
      *
@@ -82,6 +95,19 @@ class Profile extends \XLite\Controller\Admin\AAdmin
     protected function getProfile()
     {
         return $this->getModelForm()->getModelObject() ?: new \XLite\Model\Profile();
+    }
+
+
+    /**
+     * Return true if profile is not related with any order (i.e. it's an original profile)
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isOrigProfile()
+    {
+        return !($this->getProfile()->getOrder());
     }
 
     /**

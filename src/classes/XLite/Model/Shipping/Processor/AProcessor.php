@@ -131,7 +131,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
     }
 
     /**
-     * Returns true if shipping methods named may be modified by admin
+     * Returns true if shipping methods names may be modified by admin
      *
      * @return boolean
      * @see    ____func_see____
@@ -140,6 +140,18 @@ abstract class AProcessor extends \XLite\Base\SuperClass
     public function isMethodNamesAdjustable()
     {
         return true;
+    }
+
+    /**
+     * Returns true if shipping methods can be removed by admin
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isMethodDeleteEnabled()
+    {
+        return false;
     }
 
     /**
@@ -178,6 +190,17 @@ abstract class AProcessor extends \XLite\Base\SuperClass
         return $this->errorMsg;
     }
 
+    /**
+     * Write transaction log
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function logTransaction()
+    {
+        \XLite\Logger::getInstance()->log($this->getLogMessage());
+    }
 
     /**
      * getDataFromCache
@@ -220,4 +243,11 @@ abstract class AProcessor extends \XLite\Base\SuperClass
         $cacheDriver->save(md5($key), $data);
     }
 
+    protected function getLogMessage()
+    {
+        return sprintf('[%s] Error: %s',
+            $this->getProcessorName(),
+            $this->getErrorMsg()
+        );
+    }
 }

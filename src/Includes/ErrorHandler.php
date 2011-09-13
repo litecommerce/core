@@ -106,7 +106,7 @@ abstract class ErrorHandler
 
     /**
      * Return path to the log file
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -284,7 +284,7 @@ abstract class ErrorHandler
                 $url = '<a href="' . $link . '">' . $url . '</a>';
             }
 
-            static::showErrorPage('ERROR_LC_NOT_INTSTALLED', $message . $url, LC_ERROR_PAGE_MESSAGE);
+            static::showErrorPage('ERROR_LC_NOT_INSTALLED', $message . $url, LC_ERROR_PAGE_MESSAGE);
         }
     }
 }

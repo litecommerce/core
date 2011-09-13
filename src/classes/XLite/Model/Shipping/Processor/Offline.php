@@ -62,6 +62,18 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
     }
 
     /**
+     * Enable admin to remove offline shipping methods
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isMethodDeleteEnabled()
+    {
+        return true;
+    }
+
+    /**
      * Returns offline shipping rates
      *
      * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier

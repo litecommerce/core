@@ -59,6 +59,7 @@ class XLite_Web_Customer_Breadcrumbs extends XLite_Web_Customer_ACustomer
     {
         $this->skipCoverage();
         $p = $this->getProductBySku('00043');
+        $this->assertNotNull($p, "No such product");
         $this->open(
             'store/product/0/product_id-' . $p->getProductId() . '/category_id-' . $p->getCategory()->getCategoryId()
         );
@@ -115,6 +116,7 @@ class XLite_Web_Customer_Breadcrumbs extends XLite_Web_Customer_ACustomer
     {
         $this->skipCoverage();
         $p = $this->getProductBySku('00043');
+        $this->assertNotNull($p, "No such product");
         $this->open(
             'store/product/0/product_id-' . $p->getProductId() . '/category_id-' . $p->getCategory()->getCategoryId()
         );

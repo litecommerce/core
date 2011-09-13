@@ -192,11 +192,11 @@ function openDialog(selector, additionalOptions)
 }
 
 // Loadable dialog
-function loadDialog(url, dialogOptions, callback)
+function loadDialog(url, dialogOptions, callback, link)
 {
   openWaitBar();
 
-  var selector = 'tmp-dialog-' + (new Date()).getTime();
+  var selector = 'tmp-dialog-' + (new Date()).getTime() + '-' + jQuery(link).attr('class').toString().replace(/ /g, '-');
 
   jQuery.get(
     url,
@@ -223,7 +223,7 @@ function loadDialog(url, dialogOptions, callback)
         closeWaitBar();
 
         if (callback) {
-          callback('.' + selector);
+          callback('.' + selector, link);
         }
       }
     }
@@ -239,7 +239,7 @@ function loadDialogByLink(link, url, options, callback)
   jQuery('.popup-window-entry').dialog('close');
 
   if (!link.linkedDialog) {
-    link.linkedDialog = loadDialog(url, options, callback);
+    link.linkedDialog = loadDialog(url, options, callback, link);
 
   } else {
     openDialog(link.linkedDialog, options, callback);

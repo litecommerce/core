@@ -399,40 +399,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Add detailed image
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionAddImage()
-    {
-        $img = new \XLite\Model\Image\Product\Image();
-
-        if ($img->loadFromRequest('postedData', 'image')) {
-
-            $data = \XLite\Core\Request::getInstance()->getData();
-
-            $img->map($data);
-
-            $img->setProduct($this->getProduct());
-            $this->getProduct()->getImages()->add($img);
-
-            \XLite\Core\Database::getEM()->persist($img);
-            \XLite\Core\Database::getEM()->flush();
-
-            \XLite\Core\TopMessage::addInfo(
-                'The detailed image has been successfully added'
-            );
-
-        } else {
-            \XLite\Core\TopMessage::addError(
-                'The detailed image has not been successfully added'
-            );
-        }
-    }
-
-    /**
      * Delete detailed image
      *
      * @return void

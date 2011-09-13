@@ -315,16 +315,18 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         $this->assertTrue($zone->hasZoneElements(), 'zone #20 (New York zone) is empty');
 
         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findOneBy(array('zone_name' => 'Atlantida'));
+        $this->assertNotNull($zone, 'check zone');
         $this->assertFalse($zone->hasZoneElements(), 'zone #50 (Atlantida) is not empty');
 
         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(1);
+        $this->assertNotNull($zone, 'check zone');
         $this->assertFalse($zone->hasZoneElements(), 'zone #1 (Default zone) is not empty');
     }
 
     public function testgetZoneElements()
     {
         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findOneBy(array('zone_name' => 'New York area'));
-
+        $this->assertNotNull($zone, 'check zone');
         foreach ($zone->getZoneElements() as $e) {
             $this->assertTrue(0 < $e->getElementId(), 'check element id');
             $this->assertEquals($zone, $e->getZone(), 'check zone owner');

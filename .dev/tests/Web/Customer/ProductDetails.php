@@ -137,7 +137,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent(
             "//form[@class='product-details validationEngine']"
             . "/div[@class='product-details-info']"
-            . "/div[@class='price product-price' and text()='$" . $product->getPrice() . "']",
+            . "/div[@class='price product-price' and text()='$" . number_format(round($product->getPrice(), 2), 2) . "']",
             'check price'
         );
         $this->assertElementPresent(

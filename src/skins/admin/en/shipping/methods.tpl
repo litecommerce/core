@@ -94,7 +94,7 @@ Use this section to define your store's shipping methods.
             </td>
 
             <td>
-              <widget class="\XLite\View\Button\Regular" name="delete" label="Delete" jsCode="onDeleteButton('{method.getMethodId()}');" />
+              <widget IF="processor.isMethodDeleteEnabled()" class="\XLite\View\Button\Regular" name="delete" label="Delete" jsCode="onDeleteButton('{method.getMethodId()}');" />
             </td>
           </tr>
 

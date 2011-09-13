@@ -105,6 +105,7 @@ get_elapsed_time()
 #
 # @param $1 The name of temporary directory where to deploy archive
 # @param $2 URL of an archive to download (remote repo mode) or directory path (local repo mode)
+# @param $3 Flag: passed for Drupal deploying only
 #
 prepare_directory()
 {
@@ -122,12 +123,28 @@ prepare_directory()
 			curl -L $2 -o $1.tgz >>LOG 2>>LOG
 			#cp ${BASE_DIR}/$1.tgz .
 
+			if [ "$3" ]; then
+				# If it is a Drupal then need to download also archives for lc_connector and lc3_clean
+				curl -L $LC_CONNECTOR_REPO -o $1_lc_connector.tgz >>LOG 2>>LOG
+				curl -L $LC3_CLEAN_REPO -o $1_lc3_clean.tgz >>LOG 2>>LOG
+			fi
+
 		else
 
 			if [ -d $2 ]; then
 				_curdir=`pwd`
 				cd $2
 				git archive --format=tar --prefix=git-prj/ HEAD | gzip > ${OUTPUT_DIR}/$1.tgz
+				
+				if [ "$3" ]; then
+					# If it is a Drupal then need to get also archives for lc_connector and lc3_clean
+					cd $2/modules/lc_connector
+					git archive --format=tar --prefix=git-prj/ HEAD | gzip > ${OUTPUT_DIR}/$1_lc_connector.tgz
+
+					cd $2/sites/all/themes/lc3_clean
+					git archive --format=tar --prefix=git-prj/ HEAD | gzip > ${OUTPUT_DIR}/$1_lc3_clean.tgz
+				fi
+
 				cd $_curdir
 			else
 				die "Local repo directory not found ($2)"
@@ -139,19 +156,51 @@ prepare_directory()
 		tar -tzf $1.tgz >>TAR_LOG 2>>TAR_LOG
 		_ERR=`grep "^tar: Error " TAR_LOG`
 
+	    if [ "x${_ERR}" = "x" -a "$3" ]; then
+			# Check the downloaded archive
+			tar -tzf $1_lc_connector.tgz >>TAR_LOG 2>>TAR_LOG
+			_ERR=`grep "^tar: Error " TAR_LOG`
+
+			if [ "x${_ERR}" = "x" ]; then
+				tar -tzf $1_lc3_clean.tgz >>TAR_LOG 2>>TAR_LOG
+				_ERR=`grep "^tar: Error " TAR_LOG`
+			fi
+		fi
+
 		if [ "x${_ERR}" = "x" ]; then
 
 			rm -f TAR_LOG LOG
 
-			# Unpack archive and move it to the specified temporary directory ($1)
-			mkdir _xxx
-			cd _xxx
-			tar -xzf ../$1.tgz
-			_tmp_dir=`ls`
-			mv $_tmp_dir ../$1
-			cd ..
-			rm -rf _xxx
-			rm -f $1.tgz
+			if [ "$3" ]; then
+				# Upack Drupal components and move it to the specified temporary directory ($1)
+				mkdir _xxx
+				cd _xxx
+				tar -xzf ../$1.tgz
+				_tmp_dir=`ls`
+				mv $_tmp_dir ../$1
+				tar -xzf ../$1_lc_connector.tgz
+				_tmp_dir=`ls`
+				rm -rf ../$1/modules/lc_connector
+				mv $_tmp_dir ../$1/modules/lc_connector
+				tar -xzf ../$1_lc3_clean.tgz
+				_tmp_dir=`ls`
+				rm -rf ../$1/sites/all/themes/lc3_clean
+				mv $_tmp_dir ../$1/sites/all/themes/lc3_clean
+				cd ..
+				rm -rf _xxx
+				rm -f $1.tgz $1_lc_connector.tgz $1_lc3_clean.tgz
+
+			else
+				# Unpack archive and move it to the specified temporary directory ($1)
+				mkdir _xxx
+				cd _xxx
+				tar -xzf ../$1.tgz
+				_tmp_dir=`ls`
+				mv $_tmp_dir ../$1
+				cd ..
+				rm -rf _xxx
+				rm -f $1.tgz
+			fi
 
 		else
 			_ERR_MSG='Error: Archive is corrupted';
@@ -253,6 +302,16 @@ if [ "x${LOCAL_REPO}" = "x" ]; then
 		exit 2
 	fi
 
+	if [ "x${LC_CONNECTOR_REPO}" = "x" ]; then
+		echo "Failed: LC Connector repository is not specified";
+		exit 2
+	fi
+
+	if [ "x${LC3_CLEAN_REPO}" = "x" ]; then
+		echo "Failed: LC3 Clean repository is not specified";
+		exit 2
+	fi
+
 else
 
 	if [ ! "${GENERATE_CORE}" -a "x${DRUPAL_LOCAL_REPO}" = "x" ]; then
@@ -296,6 +355,9 @@ fi
 
 VERSION=${XLITE_VERSION}${BUILD_SUFFIX}
 
+[ ! "$LC_CONNECTOR_VERSION" ] && LC_CONNECTOR_VERSION=$VERSION
+[ ! "$LC3_CLEAN_VERSION" ] && LC3_CLEAN_VERSION=$VERSION
+
 # Display input parameters
 echo "Input data:"
 echo "*** CONFIG: ${CONFIG}"
@@ -308,7 +370,13 @@ fi
 if [ "x${LOCAL_REPO}" = "x" ]; then
 	echo "*** MODE: REMOTE REPO"
 	echo "*** LC REPOSITORY: $XLITE_REPO"
-	[ ! "${GENERATE_CORE}" ] && echo "*** DRUPAL REPOSITORY: $DRUPAL_REPO"
+
+	if [ ! "${GENERATE_CORE}" ]; then
+		echo "*** DRUPAL REPOSITORY: $DRUPAL_REPO"
+		echo "*** LC_CONNECTOR REPOSITORY: $LC_CONNECTOR_REPO"
+		echo "*** LC3_CLEAN REPOSITORY: $LC3_CLEAN_REPO"
+	fi
+
 else
 	echo "*** MODE: LOCAL REPO"
 	[ ! "${GENERATE_CORE}" ] && echo "*** DRUPAL LOCAL REPOSITORY: $DRUPAL_LOCAL_REPO"
@@ -379,10 +447,10 @@ if [ ! $SAFE_MODE ]; then
 
 		if [ "x${LOCAL_REPO}" = "x" ]; then
 			echo -n "Getting Drupal from GitHub..."
-			prepare_directory $TMP_DRUPAL_REPO $DRUPAL_REPO
+			prepare_directory $TMP_DRUPAL_REPO $DRUPAL_REPO 1
 		else
 			echo -n "Getting Drupal from local git repository..."
-			prepare_directory $TMP_DRUPAL_REPO $DRUPAL_LOCAL_REPO
+			prepare_directory $TMP_DRUPAL_REPO $DRUPAL_LOCAL_REPO 1
 		fi
 
 
@@ -720,8 +788,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 			# Pack LC Connector module distributive
 			cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/modules
-			tar -czf ${OUTPUT_DIR}/lc_connector-${VERSION}.tgz lc_connector
-			zip -rq ${OUTPUT_DIR}/lc_connector-${VERSION}.zip lc_connector
+			tar -czf ${OUTPUT_DIR}/lc_connector-${LC_CONNECTOR_VERSION}.tgz lc_connector
+			zip -rq ${OUTPUT_DIR}/lc_connector-${LC_CONNECTOR_VERSION}.zip lc_connector
 
 
 			echo "  + LC Connector v.$VERSION module for Drupal is completed"
@@ -734,8 +802,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 			# Pack LCCMS theme
 			cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes
-			tar -czf ${OUTPUT_DIR}/lc3_clean_theme-${VERSION}.tgz lc3_clean
-			zip -rq ${OUTPUT_DIR}/lc3_clean_theme-${VERSION}.zip lc3_clean
+			tar -czf ${OUTPUT_DIR}/lc3_clean_theme-${LC3_CLEAN_VERSION}.tgz lc3_clean
+			zip -rq ${OUTPUT_DIR}/lc3_clean_theme-${LC3_CLEAN_VERSION}.zip lc3_clean
 
 
 			echo "  + LC3 v.$VERSION theme for Drupal is completed"

@@ -84,7 +84,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
             . "/div[@class='internal-popup items-list']"
             . "/ul"
             . "/li"
-            . "/div[@class='item-price' and text()='$" . $product->getPrice() . " x 1']"
+            . "/div[@class='item-price' and text()='$" . number_format(round($product->getPrice(), 2), 2) . " x 1']"
         );
 
         $this->assertElementPresent(
@@ -144,7 +144,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
             . "/div[@class='internal-popup items-list']"
             . "/ul"
             . "/li"
-            . "/div[@class='item-price' and text()='$" . $product->getPrice() . " x 2']"
+            . "/div[@class='item-price' and text()='$" . number_format(round($product->getPrice(), 2), 2) . " x 2']"
         );
     }
 
@@ -211,7 +211,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
             . "/div[@class='internal-popup items-list']"
             . "/ul"
             . "/li"
-            . "/div[@class='item-price' and text()='$" . $product->getPrice() . " x 1']"
+            . "/div[@class='item-price' and text()='$" . number_format(round($product->getPrice(), 2), 2) . " x 1']"
         );
     }
 

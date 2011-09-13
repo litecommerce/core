@@ -26,8 +26,10 @@ XLITE_SEPARATE_MODULES=""
 XLITE_EXCLUDE_MODULES="
 CDev/AustraliaPost
 CDev/AuthorizeNet
+CDev/Moneybookers
 CDev/Quantum
 CDev/PaypalWPS
+CDev/USPS
 "
 
 TMP_XLITE_MODULES=""

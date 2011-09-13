@@ -41,8 +41,7 @@
             <td>
               <select name="server_path">
               {foreach:getServerPathOptions(),opkey,opval}
-                <option value="{opkey}" selected="selected" IF="config.CDev.USPS.server_path=opkey">{opval}</option>
-                <option value="{opkey}" IF="!config.CDev.USPS.server_path=opkey">{opval}</option>
+                <option value="{opkey}" selected="{isSelected(config.CDev.USPS.server_path,opkey)}">{opval}</option>
               {end:}
               </select>
             </td>
@@ -90,12 +89,16 @@
     </tr>
 
     <tr>
-      <td>&nbsp;&nbsp;&nbsp;&nbsp;Currency rate:</td>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;Currency conversion rate:</td>
       <td><input type="text" name="currency_rate" value="{config.CDev.USPS.currency_rate:r}" size="8" /></td>
     </tr>
 
     <tr>
-      <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;(specify rate X, where 1 USD = X in shop currency)</td>
+      <td colspan="2">
+        &nbsp;&nbsp;&nbsp;&nbsp;(specify rate X, where 1 USD = X in shop currency)<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;The shipping cost is always returned in US Dollars. So if the store use other currency for payments you need to specify<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;the conversion rate to convert the shipping cost returned by shipping service into the necessary currency. Otherwise leave 1.
+      </td>
     </tr>
 
     <tr>
@@ -107,8 +110,7 @@
       <td>
         <select name="container">
         {foreach:getContainerOptions(),opkey,opval}          
-          <option value="{opkey}" selected="selected" IF="config.CDev.USPS.container=opkey">{opval}</option>
-          <option value="{opkey}" IF="!config.CDev.USPS.container=opkey">{opval}</option>
+          <option value="{opkey}" selected="{isSelected(config.CDev.USPS.container,opkey)}">{opval}</option>
         {end:}
         </select>
     </tr>
@@ -118,8 +120,7 @@
       <td>
         <select name="package_size">
         {foreach:getPackageSizeOptions(),opkey,opval}          
-          <option value="{opkey}" selected="selected" IF="config.CDev.USPS.package_size=opkey">{opval}</option>
-          <option value="{opkey}" IF="!config.CDev.USPS.package_size=opkey">{opval}</option>
+          <option value="{opkey}" selected="{isSelected(config.CDev.USPS.package_size,opkey)}">{opval}</option>
         {end:}
         </select>
     </tr>
@@ -138,8 +139,7 @@
       <td>
         <select name="mail_type">
         {foreach:getMailTypeOptions(),opkey,opval}          
-          <option value="{opkey}" selected="selected" IF="config.CDev.USPS.mail_type=opkey">{opval}</option>
-          <option value="{opkey}" IF="!config.CDev.USPS.mail_type=opkey">{opval}</option>
+          <option value="{opkey}" selected="{isSelected(config.CDev.USPS.mail_type,opkey)}">{opval}</option>
         {end:}
         </select>
     </tr>
@@ -149,8 +149,7 @@
       <td>
         <select name="container_intl">
         {foreach:getContainerIntlOptions(),opkey,opval}          
-          <option value="{opkey}" selected="selected" IF="config.CDev.USPS.container_intl=opkey">{opval}</option>
-          <option value="{opkey}" IF="!config.CDev.USPS.container_intl=opkey">{opval}</option>
+          <option value="{opkey}" selected="{isSelected(config.CDev.USPS.container_intl,opkey)}">{opval}</option>
         {end:}
         </select>
     </tr>

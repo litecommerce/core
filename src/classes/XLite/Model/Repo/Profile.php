@@ -971,7 +971,6 @@ class Profile extends \XLite\Model\Repo\ARepo
         $list[] = array(
             'fields'        => array('order_id'),
             'referenceRepo' => 'XLite\Model\Order',
-            'delete'        => 'SET NULL',
         );
 
         return $list;
