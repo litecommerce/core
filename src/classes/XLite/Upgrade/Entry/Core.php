@@ -216,18 +216,6 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
-     * Set entry status
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function setUpgradedPath()
-    {
-        $this->setRepositoryPath(LC_DIR_ROOT, true);
-    }
-
-    /**
      * Download hashes for current version
      *
      * @return array
@@ -321,6 +309,18 @@ class Core extends \XLite\Upgrade\Entry\AEntry
         }
 
         return $result;
+    }
+
+    /**
+     * Return path where the upgrade helper scripts are placed
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getUpgradeHelperPath()
+    {
+        return '';
     }
 
     /**

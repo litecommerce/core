@@ -17,7 +17,7 @@
     <label for="settings_login">{t(#Merchant account username#)}</label>
     </td>
     <td>
-    <input type="text" id="settings_login" name="settings[login]" value="{paymentMethod.getSetting(#login#)}" />
+    <input type="text" id="settings_login" name="settings[login]" value="{paymentMethod.getSetting(#login#)}" class="field-required" />
     </td>
   </tr>
 
@@ -26,7 +26,7 @@
     <label for="settings_key">{t(#Transaction key#)}</label>
     </td>
     <td>
-    <input type="text" id="settings_key" name="settings[key]" value="{paymentMethod.getSetting(#key#)}" />
+    <input type="text" id="settings_key" name="settings[key]" value="{paymentMethod.getSetting(#key#)}" class="field-required" />
     </td>
   </tr>
 

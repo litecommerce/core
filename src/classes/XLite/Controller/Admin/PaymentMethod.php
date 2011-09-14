@@ -88,11 +88,15 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
 
         if (!is_array($settings)) {
 
-            // TODO - add top message
+            \XLite\Core\TopMessage::addError(
+                static::t('Wrong input data!')
+            );
 
         } elseif (!$m) {
 
-            // TODO - add top message
+            \XLite\Core\TopMessage::addError(
+                static::t('An attempt to update settings of unknown payment method')
+            );
 
         } else {
 
@@ -101,6 +105,10 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
             }
 
             \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->update($m);
+
+            \XLite\Core\TopMessage::addInfo(
+                static::t('The settings of payment method successfully updated')
+            );
 
             $this->setReturnURL($this->buildURL('payment_methods'));
         }

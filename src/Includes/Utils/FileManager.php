@@ -215,11 +215,14 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function getRelativePath($path, $compareTo)
     {
-        return preg_replace(
-            '|^' . preg_quote(static::getCanonicalDir($compareTo), '|') . '|USsi',
-            '',
-            static::getRealPath($path)
-        );
+        $path      = static::getRealPath($path);
+        $compareTo = static::getCanonicalDir($compareTo);
+
+        if ($path && $compareTo) {
+            $path = preg_replace('|^' . preg_quote($compareTo, '|') . '|USsi', '', $path);
+        }
+
+        return $path ?: null;
     }
 
     /**
@@ -233,7 +236,13 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function getCanonicalDir($dir)
     {
-        return \Includes\Utils\Converter::trimTrailingChars(static::getRealPath($dir), LC_DS) . LC_DS;
+        $path = null;
+
+        if (static::isDir($dir) && ($path = static::getRealPath($dir))) {
+            $path = \Includes\Utils\Converter::trimTrailingChars($path,  LC_DS) . LC_DS;
+        }
+
+        return $path ?: null;
     }
 
     /**
