@@ -46,7 +46,9 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return (($module = $this->getModule()) && 'view_license' === $this->getAction())
+        $module = $this->getModule();
+
+        return ($module && 'view_license' === $this->getAction())
                 ? ($module->getModuleName() . ' license agreement')
                 : 'Updates available';
     }

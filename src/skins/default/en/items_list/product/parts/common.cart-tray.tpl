@@ -18,4 +18,4 @@
     <div class="progress-bar"><div class="block-wait"><div></div></div></div>
   </div>
 </div>
- <img src="images/spacer.gif" class="preload-cart-tray" width="0" height="0" alt="" />
+<div class="preload-cart-tray"></div>
