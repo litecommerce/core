@@ -294,7 +294,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     {
         return parent::isConfigured($method)
             && $method->getSetting('login')
-            && $method->getSetting('type');
+            && $method->getSetting('key');
     }
 
     /**
@@ -307,6 +307,24 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
     public function getReturnType()
     {
         return self::RETURN_TYPE_HTML_REDIRECT;
+    }
+
+    /**
+     * Returns the list of settings available for this payment processor
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.5
+     */
+    public function getAvailableSettings()
+    {
+        return array(
+            'login',
+            'key',
+            'type',
+            'test',
+            'prefix',
+        );
     }
 
 
