@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="invoice.items.subhead", weight="30")
  *}
-<th class="price">{t(#Pre-tax unit price#)}</th>
+<th class="price">{t(#Price#)}</th>

@@ -73,25 +73,25 @@ class XLite_Tests_Module_CDev_VAT_Model_Repo_Product extends XLite_Tests_Model_A
             )
         );
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd);
-        $this->assertEquals(4, count($result), 'check count');
+        $this->assertEquals(2, count($result), 'check count');
 
         $result[0]->setPrice(1.01);
         \XLite\Core\Database::getEM()->flush();
 
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd);
-        $this->assertEquals(3, count($result), 'check count #2');
+        $this->assertEquals(1, count($result), 'check count #2');
 
         $rate->setPosition(2);
         \XLite\Core\Database::getEM()->flush();
 
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd);
-        $this->assertEquals(4, count($result), 'check count #3');
+        $this->assertEquals(3, count($result), 'check count #3');
 
         $result[0]->setPrice(1);
         \XLite\Core\Database::getEM()->flush();
 
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd);
-        $this->assertEquals(3, count($result), 'check count #4');
+        $this->assertEquals(2, count($result), 'check count #4');
     }
 }
 

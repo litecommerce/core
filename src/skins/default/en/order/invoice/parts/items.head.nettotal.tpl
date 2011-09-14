@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="invoice.items.head", weight="20")
  *}
-<th class="net-total" rowspan="2">{t(#Pre-tax total#)}</th>
+<th IF="order.getItemsExcludeSurcharges()" class="net-total" rowspan="2">{t(#Subtotal#)}</th>

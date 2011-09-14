@@ -51,7 +51,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_TestCase
         $price = $product->getPrice();
         $this->assertEquals(
             $this->getVAT($price, 0.1, 0.1),
-            \XLite::getInstance()->getCurrency()->formatValue($product->getListPrice()),
+            \XLite::getInstance()->getCurrency()->roundValue($product->getListPrice()),
             'check tax cost 10%'
         );
 
@@ -66,7 +66,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_TestCase
 
         $this->assertEquals(
             $this->getVAT($price, 0.1, 0.1),
-            \XLite::getInstance()->getCurrency()->formatValue($product->getListPrice()),
+            \XLite::getInstance()->getCurrency()->roundValue($product->getListPrice()),
             'check tax cost 10% #2'
         );
 
@@ -80,7 +80,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_TestCase
 
         $this->assertEquals(
             $this->getVAT($price, 0.2, 0.1),
-            \XLite::getInstance()->getCurrency()->formatValue($product->getListPrice()),
+            \XLite::getInstance()->getCurrency()->roundValue($product->getListPrice()),
             'check tax cost 20%'
         );
 
@@ -90,102 +90,24 @@ class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_TestCase
         $this->assertEquals($price, $product->getListPrice(), 'check no-tax cost');
     }
 
-    public function testGetIncludedTaxList()
-    {
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->find(1);
-        foreach ($tax->getRates() as $rate) {
-            \XLite\Core\Database::getEM()->remove($rate);
-        }
-        $tax->getRates()->clear();
-
-        $tax->setEnabled(true);
-
-        $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
-        $rate->setValue(10);
-        $rate->setPosition(1);
-        \XLite\Core\Database::getEM()->persist($rate);
-        $tax->addRates($rate);
-        $rate->setTax($tax);
-        \XLite\Core\Database::getEM()->flush();
-
-        $products = \XLite\Core\Database::getRepo('XLite\Model\Product')->findAll();
-        $product = array_shift($products);
-
-        $product->setPrice(10);
-
-        // 10 - 10 / (1 + 0.1) = 0.91
-        $this->assertEquals(
-            array('VAT' => 0.91),
-            $this->processTaxes($product->getIncludedTaxList(true)),
-            'check list 10%'
-        );
-
-        $rate->setValue(100);
-        \XLite\Core\Database::getEM()->flush();
-
-        // 10 - 10 / (1 + 1) = 5
-        $this->assertEquals(
-            array('VAT' => 5),
-            $this->processTaxes($product->getIncludedTaxList(true)),
-            'check list 10%'
-        );
-
-        $rate->setValue(10);
-        \XLite\Core\Database::getEM()->flush();
-
-
-
-
-
-        $price = $product->getPrice();
-
-        // 20%
-        $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
-        $rate->setValue(20);
-        $rate->setPosition(0);
-        \XLite\Core\Database::getEM()->persist($rate);
-        $tax->addRates($rate);
-        $rate->setTax($tax);
-        \XLite\Core\Database::getEM()->flush();
-
-        $this->assertEquals(
-            array('VAT' => $this->getTax($price, 0.2, 0.2)),
-            $this->processTaxes($product->getIncludedTaxList(true)),
-            'check list 20%'
-        );
-
-        // Diff rates
-        $memberships = \XLite\Core\Database::getRepo('XLite\Model\Membership')->findAll();
-        $membership = array_shift($memberships);
-        $rate->setMembership($membership);
-        \XLite\Core\Database::getEM()->flush();
-
-        $this->assertEquals(
-            array('VAT' => $this->getTax($price, 0.2, 0.1)),
-            $this->processTaxes($product->getIncludedTaxList(true)),
-            'check list 20% #2'
-        );
-
-    }
-
     protected function getVAT($value, $percent, $tax)
     {
         $value -= ($value - $value / ( 1 + $percent));
 
-        return \XLite::getInstance()->getCurrency()->formatValue($value * (1 + $tax));
+        return \XLite::getInstance()->getCurrency()->roundValue($value);
     }
 
     protected function getTax($value, $percent, $tax)
     {
         $value -= ($value - $value / ( 1 + $percent));
 
-        return \XLite::getInstance()->getCurrency()->formatValue($value * $tax);
+        return \XLite::getInstance()->getCurrency()->roundValue($value * $tax);
     }
 
     protected function processTaxes(array $taxes)
     {
         foreach ($taxes as $k => $v) {
-            $taxes[$k] = \XLite::getInstance()->getCurrency()->formatValue($v);
+            $taxes[$k] = \XLite::getInstance()->getCurrency()->roundValue($v);
         }
 
         return $taxes;

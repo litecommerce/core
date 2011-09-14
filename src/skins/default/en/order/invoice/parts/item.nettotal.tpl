@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="invoice.item", weight="20")
  *}
-<td class="net-total" rowspan="2">{formatPrice(item.getSubtotal(),order.getCurrency())}</td>
+<td IF="order.getItemsExcludeSurcharges()" class="net-total" rowspan="2">{formatPrice(item.getSubtotal(),order.getCurrency())}</td>

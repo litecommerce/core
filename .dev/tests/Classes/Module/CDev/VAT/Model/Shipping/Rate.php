@@ -84,7 +84,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Shipping_Rate extends XLite_Tests_TestCa
         $rate->setMarkupRate(10);
         $rate->setMethod($method);
 
-        $this->assertEquals(18.33, \XLite::getInstance()->getCurrency()->formatValue($rate->getTotalRate()), 'check cost');
+        $this->assertEquals(16.67, \XLite::getInstance()->getCurrency()->formatValue($rate->getTotalRate()), 'check cost');
     }
 
     protected function getMethodByName($name)

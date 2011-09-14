@@ -80,7 +80,13 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     {
         $zones = $this->getZonesList();
         $memebrship = $this->getMembership();
-        $prices = array();
+
+        // Shipping cost VAT
+        $modifier = $this->order->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+        $taxes = array();
+        if ($modifier && $modifier->getSelectedRate() && $modifier->getSelectedRate()->getMethod()) {
+            $taxes = $this->getShippingTaxRates($modifier->getSelectedRate(), $zones, $memebrship);
+        }
 
         foreach ($this->getTaxes() as $tax) {
             
@@ -101,29 +107,63 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
             }
 
             foreach ($rates as $rate) {
+                if (isset($taxes[$tax->getId()]) && $taxes[$tax->getId()]['rate']->getId() == $rate['rate']->getId()) {
+                    $rate['base'] += $taxes[$tax->getId()]['base'];
+                    unset($taxes[$tax->getId()]);
+                }
+
                 $sum += $rate['rate']->calculateValueIncludingTax($rate['base']);
             }
 
-            // Shipping cost VAT
-            $modifier = $this->order->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
-            if ($modifier && $modifier->getSelectedRate() && $modifier->getSelectedRate()->getMethod()) {
-                $taxes = \XLite\Module\CDev\VAT\Logic\Shipping\Tax::getInstance()
-                    ->calculateRateTaxes($modifier->getSelectedRate());
-                foreach ($taxes as $tax) {
-                    if ($tax['cost']) {
-                        $sum += $tax['cost'];
-                    }
-                }
+            // Add shipping cost VAT
+            if (isset($taxes[$tax->getId()])) {
+                $sum += $taxes[$tax->getId()]['rate']->calculateValueIncludingTax($taxes[$tax->getId()]['base']);
             }
 
             if ($sum) {
                 $this->addOrderSurcharge(
-                    $this->code . '.' . $tax['rate']->getTax()->getId(),
+                    $this->code . '.' . $tax->getId(),
                     $sum,
                     false
                 );
             }
         }
+    }
+
+    /**
+     * Get shipping tax rates 
+     * 
+     * @param \XLite\Model\Shipping\Rate $rate       Shipping rate
+     * @param array                      $zones      Zones list
+     * @param \XLite\Model\Membership    $memebrship Membership OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    protected function getShippingTaxRates(\XLite\Model\Shipping\Rate $rate, array $zones, \XLite\Model\Membership $memebrship = null)
+    {
+        $method = $rate->getMethod();
+
+        $taxes = array();
+        $price = $rate->getTaxableBasis();
+        foreach ($this->getTaxes() as $tax) {
+            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
+            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $method->getClasses());
+            $r = $tax->getFilteredRate($zones, $memebrship, $method->getClasses());
+
+            if ($included) {
+                $price -= $included->calculateValueExcludingTax($price);
+            }
+            if ($r) {
+                $taxes[$tax->getId()] = array(
+                    'rate' => $r,
+                    'base' => $price,
+                );
+            }
+        }
+
+        return $taxes;
     }
 
     /**

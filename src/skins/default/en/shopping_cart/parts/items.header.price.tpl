@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="cart.items.header", weight="20")
  *}
-<th colspan="2">{t(#Pre-tax price#)}</th>
+<th colspan="2">{t(#Price#)}</th>
