@@ -46,8 +46,8 @@ class Module extends \XLite\Controller\Admin\AAdmin
 
 
     /**
-     * handleRequest 
-     * 
+     * handleRequest
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -192,6 +192,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
             );
         }
 
-        $this->setReturnUrl(\XLite\Core\Request::getInstance()->return ?: $this->buildUrl('addons_list_installed'));
+        $this->setReturnURL(\XLite\Core\Request::getInstance()->return ?: $this->buildURL('addons_list_installed'));
     }
 }

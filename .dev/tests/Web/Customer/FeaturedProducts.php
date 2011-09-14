@@ -43,13 +43,13 @@ class XLite_Web_Customer_FeaturedProducts extends XLite_Web_Customer_ACustomer
 
         $this->assertElementPresent(
             "//h2[text()='Featured products']",
-            'check bestsellers title'
+            'check featured products title'
         );
 
         $this->assertElementPresent(
             "//h2[text()='Featured products']"
             . "/following-sibling::div[@class='content']"
-            . "/div[@class='items-list']"
+            . "/div[@class='items-list category-products']"
             . "/div[@class='products']",
             'check featured products block'
         );
@@ -57,7 +57,7 @@ class XLite_Web_Customer_FeaturedProducts extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent(
             "//h2[text()='Featured products']"
             . "/following-sibling::div[@class='content']"
-            . "/div[@class='items-list']"
+            . "/div[@class='items-list category-products']"
             . "/div[@class='products']"
             . "/table[@class='products-grid grid-3-columns']",
             'Check table'

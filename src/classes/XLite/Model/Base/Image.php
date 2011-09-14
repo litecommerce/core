@@ -496,11 +496,35 @@ abstract class Image extends \XLite\Model\AEntity
         $pathToRemove = $this->path;
         $this->path = basename($path);
 
-        $result = $this->renewImageParameters();
+        $result = $this->renewImageParameters() && $this->updatePathByMIME();
 
         if ($result && $toRemove) {
 
             $this->removeFile($pathToRemove);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Update file path - change file extension taken from MIME information.
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    protected function updatePathByMIME()
+    {
+        list($path, $isTempFile) = $this->getImagePath();
+        
+        $newExtension = $this->getExtensionByMIME();
+        $pathinfo = pathinfo($path);
+        $newPath = $pathinfo['dirname'] . LC_DS . $pathinfo['filename'] . '.' . $newExtension;
+
+        $result = rename($path, $newPath);
+
+        if ($result) {
+            $this->path = basename($newPath);
         }
 
         return $result;

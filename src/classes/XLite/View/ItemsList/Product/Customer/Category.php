@@ -63,7 +63,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = self::WIDGET_TARGET;
+        $result[] = 'main';
 
         return $result;
     }
@@ -149,7 +149,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', 0),
+            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', \XLite\Model\Repo\Category::CATEGORY_ID_ROOT),
         );
     }
 
@@ -209,5 +209,17 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $list['category_id'] = \XLite\Core\Request::getInstance()->category_id;
 
         return $list;
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && $this->getCategory()->isVisible();
     }
 }

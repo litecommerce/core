@@ -53,6 +53,31 @@ class XLite_Web_Customer_CategoryPage extends XLite_Web_Customer_ACustomer
     }
 
     /**
+     * Check if the disabled category is shown as usual category page.
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.7
+     */
+    public function testDisabledCategory()
+    {
+        $categories = \XLite\Core\Database::getRepo('XLite\Model\Category')->findByEnabled(true);
+
+        $category = $categories[3];
+
+        $category->setEnabled(false);
+
+        \XLite\Core\Database::getEM()->persist($category);
+        \XLite\Core\Database::getEM()->flush();
+
+        $url = $this->getCategoryURL($category->getCategoryId());
+
+        $this->openAndWait($url);
+
+        $this->assertElementPresent('//h2[@class="page-not-found"]', 'Category ' . $category->getCategoryId() . ' must be disabled');
+    }
+
+    /**
      * Match the opened page to a category
      *
      * @param \XLite\Model\Category $category Category

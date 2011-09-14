@@ -299,7 +299,7 @@ class Mailer extends \XLite\Base\Singleton
             static::compose(
                 \XLite\Core\Config::getInstance()->Company->site_administrator,
                 \XLite\Core\Config::getInstance()->Company->orders_department,
-                'order_created'
+                'order_created_admin'
             );
         }
     }

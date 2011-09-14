@@ -186,15 +186,6 @@ abstract class AEntry
     abstract public function getActualName();
 
     /**
-     * Set entry status
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    abstract protected function setUpgradedPath();
-
-    /**
      * Get hashes for current version
      *
      * @return array
@@ -202,6 +193,15 @@ abstract class AEntry
      * @since  1.0.0
      */
     abstract protected function loadHashesForInstalledFiles();
+
+    /**
+     * Return path where the upgrade helper scripts are placed
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.9
+     */
+    abstract protected function getUpgradeHelperPath();
 
 
     /**
@@ -326,7 +326,7 @@ abstract class AEntry
      */
     public function setUpgraded()
     {
-        $this->setUpgradedPath();
+        $this->setRepositoryPath(LC_DIR_ROOT, true);
 
         if (!isset($this->postRebuildHelpers)) {
             $this->postRebuildHelpers = $this->getHelpers('post_rebuild');
@@ -899,12 +899,20 @@ abstract class AEntry
      */
     public function runHelpers($type)
     {
-        if ($this->isInstalled()) {
+        $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath());
+
+        if ($this->isInstalled() && $path) {
             $helpers = ('post_rebuild' === $type) ? $this->postRebuildHelpers : $this->getHelpers($type);
 
             foreach ((array) $helpers as $file) {
-                $function = require_once $file;
+                $function = require_once $path . $file;
                 $function();
+
+                $this->addInfoMessage(
+                    'Update hook is run: {{type}}:{{file}}',
+                    true,
+                    array('type' => $this->getActualName(), 'file' => $file)
+                );
             }
         }
     }
@@ -935,6 +943,26 @@ abstract class AEntry
     }
 
     /**
+     * Wrapper for the abstract method
+     *
+     * @param mixed $getFullPath Flag OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.9
+     */
+    protected function getUpgradeHelpersDir($getFullPath = true)
+    {
+        $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath());
+
+        if (!empty($path)) {
+            $dir = $this->getUpgradeHelperPath() . 'upgrade' . LC_DS;
+        }
+
+        return \Includes\Utils\FileManager::isDir($path . $dir) ? ($getFullPath ? $path : '') . $dir : null;
+    }
+
+    /**
      * Get file with an upgrade helper function
      * 
      * @param string $type         Helper type
@@ -949,33 +977,18 @@ abstract class AEntry
     {
         $file = null;
 
-        if ($path = $this->getUpgradeHelperPath()) {
-            $path .= $majorVersion . LC_DS . $minorVersion . LC_DS . $type . '.php';
+        if ($path = $this->getUpgradeHelpersDir()) {
+            $file = $majorVersion . LC_DS . $minorVersion . LC_DS . $type . '.php';
 
-            if (\Includes\Utils\FileManager::isFile($path)) {
-                $file = $path;
+            if (\Includes\Utils\FileManager::isFile($path . $file)) {
+                $file = $this->getUpgradeHelpersDir(false) . $file;
+
+            } else {
+                $file = null;
             }
         }
 
         return $file;
-    }
-
-    /**
-     * Return path where the upgrade helper scripts are placed
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getUpgradeHelperPath()
-    {
-        $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath());
-
-        if (!empty($path) && !\Includes\Utils\FileManager::isDir($path .= 'upgrade' . LC_DS)) {
-            $path = null;
-        }
-
-        return $path;
     }
 
     /**
@@ -1033,9 +1046,9 @@ abstract class AEntry
     {
         $result = array();
 
-        if (\Includes\Utils\FileManager::isDir($path = $this->getUpgradeHelperPath() . $path)) {
+        if ($dir = $this->getUpgradeHelpersDir()) {
 
-            foreach (new \DirectoryIterator($path) as $fileinfo) {
+            foreach (new \DirectoryIterator($dir . $path) as $fileinfo) {
                 if ($fileinfo->isDir() && !$fileinfo->isDot()) {
                     $result[] = $fileinfo->getFilename();
                 }

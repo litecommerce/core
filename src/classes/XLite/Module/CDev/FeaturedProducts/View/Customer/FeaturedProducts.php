@@ -35,12 +35,8 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Customer;
  *
  * @ListChild (list="center.bottom", zone="customer", weight="300")
  */
-class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
+class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
 {
-    /**
-     *  Widget parameter names
-     */
-    const PARAM_CATEGORY_ID = 'category_id';
 
     /**
      * Featured products
@@ -50,23 +46,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @since 1.0.0
      */
     protected $featuredProducts = null;
-
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-
-        $result[] = 'main';
-        $result[] = 'category';
-
-        return $result;
-    }
 
     /**
      * Initialize widget (set attributes)
@@ -120,10 +99,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams += array(
-            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', 0, false),
-        );
-
         $this->widgetParams[self::PARAM_DISPLAY_MODE]
             ->setValue(\XLite\Core\Config::getInstance()->CDev->FeaturedProducts->featured_products_look);
 
@@ -131,20 +106,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
         unset($this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]);
         unset($this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]);
-    }
-
-    /**
-     * Define so called "request" parameters
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineRequestParams()
-    {
-        parent::defineRequestParams();
-
-        $this->requestParams[] = self::PARAM_CATEGORY_ID;
     }
 
     /**
@@ -161,7 +122,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
             $products = array();
 
             $fp = \XLite\Core\Database::getRepo('XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct')
-                ->getFeaturedProducts($this->category_id);
+                ->getFeaturedProducts($this->getRequestParamValue(self::PARAM_CATEGORY_ID));
 
             foreach ($fp as $product) {
                 $products[] = $product->getProduct();
@@ -175,15 +136,4 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
             : $this->featuredProducts;
     }
 
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible();
-    }
 }
