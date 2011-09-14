@@ -452,6 +452,8 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      */
     protected function stepSeven($pass = 1)
     {
+        sleep(3);
+
         // Check page title
         $this->assertTitle('Configure site | Drupal');
 
