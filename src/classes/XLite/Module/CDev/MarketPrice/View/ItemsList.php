@@ -28,12 +28,12 @@
 namespace XLite\Module\CDev\MarketPrice\View;
 
 /**
- * Details 
+ * ItemsList 
  *
  * @see   ____class_see____
  * @since 1.0.9
  */
-abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage implements \XLite\Base\IDecorator
+abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustomer implements \XLite\Base\IDecorator
 {
     /**
      * Determine if we need to display product market price
@@ -50,30 +50,22 @@ abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage i
     }
 
     /**
-     * Get the "You save" value
+     * Return list of product labels
      *
-     * @param XLite\Model\Product $product Current product
-     *
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.9
-     */
-    protected function getSaveDifference(XLite\Model\Product $product)
-    {
-        return \XLite\Module\CDev\MarketPrice\Main::getSaveDifferenceAbsolute($product);
-    }
-
-    /**
-     * Return the "x% label" element
-     *
-     * @param XLite\Model\Product $product Current product
+     * @param \XLite\Model\Product $product The product to look for
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.9
      */
-    protected function getLabels(XLite\Model\Product $product)
+    protected function getLabels(\XLite\Model\Product $product)
     {
-        return \XLite\Module\CDev\MarketPrice\Main::getLabels($product);
+        $labels = parent::getLabels($product);
+
+        if ($this->isShowMarketPrice($product)) {
+            $labels += \XLite\Module\CDev\MarketPrice\Main::getLabels($product);
+        }
+
+        return $labels;
     }
 }

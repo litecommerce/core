@@ -96,4 +96,49 @@ abstract class Main extends \XLite\Module\AModule
     {
         return $product->getPrice() < $product->getMarketPrice();
     }
+
+    /**
+     * Get the "You save" value
+     *
+     * @param XLite\Model\Product $product Current product
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.9
+     */
+    public static function getSaveDifferenceAbsolute(\XLite\Model\Product $product)
+    {
+        return $product->getMarketPrice() - $product->getPrice();
+    }
+
+    /**
+     * Get the "You save" value in percents
+     *
+     * @param XLite\Model\Product $product Current product
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.9
+     */
+    public static function getSaveDifferenceInPercents(\XLite\Model\Product $product)
+    {
+        return round((static::getSaveDifferenceAbsolute($product) / $product->getMarketPrice()) * 100);
+    }
+
+    /**
+     * Get the "X% less" label
+     *
+     * @param XLite\Model\Product $product Current product
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.9
+     */
+    public static function getLabels(\XLite\Model\Product $product)
+    {
+        return array(
+            'orange' => static::getSaveDifferenceInPercents($product) 
+                . '% ' . \XLite\Core\Translation::getInstance()->translate('less')
+        );
+    }
 }

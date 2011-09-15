@@ -13,4 +13,9 @@
  * @ListChild (list="product.details.quicklook.info", weight="45")
  *}
 
-<widget class="\XLite\View\Price" product="{product}" />
+<p />
+<div IF="isShowMarketPrice(product)" class="product-details-market-price">
+  {t(#Market price#)}: <span class="value">{formatPrice(product.getMarketPrice()):h}</span>,
+  {t(#you save#)} <span class="you-save">{formatPrice(getSaveDifference(product)):h}</span>
+  <widget class="\XLite\View\Labels" labels="{getLabels(product)}" />
+</div>
