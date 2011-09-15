@@ -197,7 +197,12 @@ abstract class Image extends \XLite\Model\AEntity
      */
     public function getURL()
     {
-        return $this->isURL() ? $this->getPath() : ($this->getRepository()->getWebRoot() . $this->getPath());
+        return $this->isURL()
+            ? $this->getPath()
+            : \XLite::getInstance()->getShopURL(
+                $this->getRepository()->getWebRoot() . $this->getPath(),
+                \XLite\Core\Request::getInstance()->isHTTPS()
+            );
     }
 
     /**
@@ -225,6 +230,7 @@ abstract class Image extends \XLite\Model\AEntity
     public function getResizedURL($width = null, $height = null)
     {
         $sizeName = ($width ? $width : 'x') . '.' . ($height ? $height : 'x');
+
         $path = $this->getRepository()->getFileSystemCacheRoot($sizeName);
 
         if (!file_exists($path)) {
@@ -238,7 +244,7 @@ abstract class Image extends \XLite\Model\AEntity
             && filesize($path . $fn) > 0
         ) {
 
-            // File is exists
+            // File exists
             list($newWidth, $newHeight) = \XLite\Core\ImageOperator::getCroppedDimensions(
                 $this->width,
                 $this->height,
@@ -246,17 +252,24 @@ abstract class Image extends \XLite\Model\AEntity
                 $height
             );
 
-            $url = $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn;
+            $url = \XLite::getInstance()->getShopURL(
+                $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn,
+                \XLite\Core\Request::getInstance()->isHTTPS()
+            );
 
         } else {
 
-            // File is not exists
+            // File does not exist
             $operator = new \XLite\Core\ImageOperator($this);
+
             list($newWidth, $newHeight, $result) = $operator->resizeDown($width, $height);
 
             $url = (false === $result || !file_put_contents($path . $fn, $operator->getImage()))
                 ? $this->getURL()
-                : $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn;
+                : \XLite::getInstance()->getShopURL(
+                    $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn,
+                    \XLite\Core\Request::getInstance()->isHTTPS()
+                );
 
             if (file_exists($path . $fn)) {
                 chmod($path . $fn, 0644);
@@ -516,7 +529,7 @@ abstract class Image extends \XLite\Model\AEntity
     protected function updatePathByMIME()
     {
         list($path, $isTempFile) = $this->getImagePath();
-        
+
         $newExtension = $this->getExtensionByMIME();
         $pathinfo = pathinfo($path);
         $newPath = $pathinfo['dirname'] . LC_DS . $pathinfo['filename'] . '.' . $newExtension;

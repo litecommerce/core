@@ -136,7 +136,7 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
 
         $this->baseURL = rtrim(SELENIUM_SOURCE_URL_ADMIN, '/') . '/';
 
-        $this->setBrowserUrl($this->baseURL);
+        $this->setBrowserURL($this->baseURL);
     }
 
     protected function waitForAJAXProgress()

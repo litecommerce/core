@@ -395,7 +395,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             \Includes\Utils\Operator::showMessage('Installing updates, please wait...');
 
             // Perform upgrade
-            $this->runStep('upgrade', array(false, $this->getOverwrittenFiles()));
+            $this->runStep('upgrade', array(false, $this->getFilesToOverWrite()));
 
             // Disable selected modules
             foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
@@ -416,7 +416,8 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                     $this->buildURL(
                         'upgrade',
                         '',
-                        $this->getActionParamsCommon() + array('redirect' => 'addons_list_' . $target))
+                        $this->getActionParamsCommon() + array('redirect' => 'addons_list_' . $target)
+                    )
                 );
             }
 
@@ -502,6 +503,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
 
     // }}}
 
+    // {{{ Some auxiliary methods
 
     /**
      * Retrive list of files that must be overwritten by request for install upgrades
@@ -510,7 +512,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.4
      */
-    protected function getOverwrittenFiles()
+    protected function getFilesToOverWrite()
     {
         $allFilesPlain = array();
 
@@ -518,16 +520,12 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             $allFilesPlain = array_merge($allFilesPlain, $files);
         }
 
-        // We get list of files that must be remained from request
-        $toRemain = array_keys((array) \XLite\Core\Request::getInstance()->toRemain);
-
-        // And subtract this list from the custom files set (all files that are custom in the upgrade)
-        return array_keys(
-            \Includes\Utils\ArrayManager::filterByKeys(
-                $allFilesPlain,
-                $toRemain,
-                true
-            )
+        return \Includes\Utils\ArrayManager::filterByKeys(
+            $allFilesPlain,
+            array_keys((array) \XLite\Core\Request::getInstance()->toRemain),
+            true
         );
     }
+
+    // }}}
 }

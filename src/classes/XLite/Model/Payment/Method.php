@@ -224,11 +224,32 @@ class Method extends \XLite\Model\Base\I18n
     {
         $result = false;
 
+        // Update settings which is already stored in database
         foreach ($this->getSettings() as $setting) {
             if ($setting->getName() == $name) {
                 $setting->setValue(strval($value));
                 $result = true;
                 break;
+            }
+        }
+
+        if (!$result) {
+
+            // Create setting which is not in database but specified in the processor class
+
+            $processor = $this->getProcessor();
+
+            if ($processor && method_exists($processor, 'getAvailableSettings')) {
+                $availableSettings = $processor->getAvailableSettings();
+
+                if (in_array($name, $availableSettings)) {
+                    $setting = new \XLite\Model\Payment\MethodSetting();
+                    $setting->setName($name);
+                    $setting->setValue($value);
+                    $setting->setPaymentMethod($this);
+
+                    \XLite\Core\Database::getEM()->persist($setting);
+                }
             }
         }
 
