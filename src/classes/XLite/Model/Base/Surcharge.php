@@ -231,7 +231,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      */
     public function getTypeName()
     {
-        return isset(static::$typeNames[$this->getName()])
+        return isset(static::$typeNames[$this->getType()])
             ? \XLite\Core\Translation::getInstance()->translate(static::$typeNames[$this->getName()])
             : null;
     }
