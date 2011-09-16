@@ -158,20 +158,17 @@ $modules = array();
 \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::removeFixtures();
 
 // modules
-$enabledModules = array();
+$disabledModules = array();
 
-// Common modules which must be enabled always
-$enabledModules['CDev'] = array(
-    'Bestsellers',
-    'FeaturedProducts',
-    'ProductOptions',
-    'TinyMCE',
-    'GoogleAnalytics',
+// Common modules which must be disabled always
+$disabledModules['CDev'] = array(
+    'JoomlaConnector',
+    'Taxes',
 );
 
 if (!R_INSTALL_SITE && !R_INSTALL_SITEADMIN) {
     # Test modules - exclude from website data
-    $enabledModules['Test'] = $enabledModules['Test1'] = array(
+    $disabledModules['Test'] = $disabledModules['Test1'] = array(
         'Module1',
         'Module2',
         'Module3',
@@ -184,39 +181,40 @@ if (!R_INSTALL_SITE && !R_INSTALL_SITEADMIN) {
     );
 }
 
-if (!R_INSTALL_STANDALONE) {
-    // Enable DrupalConnector module if 'standalone' option is not passed
-    $enabledModules['CDev'][] = 'DrupalConnector';
+if (R_INSTALL_STANDALONE) {
+    // Disable DrupalConnector module in a standalone mode
+    $disabledModules['CDev'][] = 'DrupalConnector';
 }
 
-if (R_INSTALL_SITE || R_INSTALL_SITEADMIN) {
-    // Enable Demo module for website
-    $enabledModules['CDev'][] = 'Demo';
+if (!R_INSTALL_SITE && !R_INSTALL_SITEADMIN) {
+    // Disable Demo module in all modes excepting a website one
+    $disabledModules['CDev'][] = 'Demo';
 
 } else {
-    // Enable modules always except the website
-    $enabledModules['CDev'][] = 'AustraliaPost';
-    $enabledModules['CDev'][] = 'AuthorizeNet';
-    $enabledModules['CDev'][] = 'Quantum';
-    $enabledModules['CDev'][] = 'PaypalWPS';
-    $enabledModules['CDev'][] = 'SalesTax';
-    $enabledModules['CDev'][] = 'VAT';
-    $enabledModules['CDev'][] = 'Moneybookers';
-    $enabledModules['CDev'][] = 'USPS';
+    // Disable modules in a website mode
+    $disabledModules['CDev'][] = 'AustraliaPost';
+    $disabledModules['CDev'][] = 'AuthorizeNet';
+    $disabledModules['CDev'][] = 'Quantum';
+    $disabledModules['CDev'][] = 'PaypalWPS';
+    $disabledModules['CDev'][] = 'SalesTax';
+    $disabledModules['CDev'][] = 'VAT';
+    $disabledModules['CDev'][] = 'Moneybookers';
+    $disabledModules['CDev'][] = 'USPS';
 }
 
 
 $additionalModules = array();
 $moduleFiles = array();
 
-foreach (array('CDev', 'Test', 'Test1') as $author) {
+foreach ((array) glob('classes/XLite/Module/*', GLOB_ONLYDIR) as $authorDir) {
+
+    $author = basename($authorDir);
 
     foreach ((array) glob('classes/XLite/Module/' . $author . '/*/Main.php') as $f) {
 
         $name = basename(dirname($f));
 
-        // Load install.sql only for enabled modules
-        if (preg_match('/.' . $author . '.(?:' . implode('|', $enabledModules[$author]) . ')./Ss', $f)) {
+        if (!isset($disabledModules[$author]) || !in_array($name, $disabledModules[$author])) {
 
             $yamlFile = dirname($f) . '/install.yaml';
 

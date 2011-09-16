@@ -16,8 +16,7 @@
  *}
 <a
   href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"
-  class="product-thumbnail"
-  title="{t(#Thumbnail#)}">
+  class="product-thumbnail">
   <widget
     class="\XLite\View\Image"
     image="{product.getImage()}"

@@ -1433,7 +1433,7 @@ abstract class AController extends \XLite\Core\Handler
     {
         $request = \XLite\Core\Request::getInstance();
 
-        return $this->redirect($this->getShopUrl($this->getURL(), true));
+        return $this->redirect($this->getShopURL($this->getURL(), true));
     }
 
 }

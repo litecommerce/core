@@ -65,7 +65,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
      */
     public function getWebRoot()
     {
-        return \XLite::getInstance()->getShopURL(LC_IMAGES_URL . '/' . $this->getStorageName()) . '/';
+        return LC_IMAGES_URL . '/' . $this->getStorageName() . '/';
     }
 
     /**
@@ -93,7 +93,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
      */
     public function getWebCacheRoot($sizeName)
     {
-        return \XLite::getInstance()->getShopURL(LC_IMAGES_CACHE_URL . '/' . $this->getStorageName() . '/' . $sizeName);
+        return LC_IMAGES_CACHE_URL . '/' . $this->getStorageName() . '/' . $sizeName;
     }
 
     /**

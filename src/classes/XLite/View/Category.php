@@ -40,7 +40,7 @@ class Category extends \XLite\View\AView
     /**
      * WEB LC root postprocessing constant
      */
-    const WEB_LC_ROOT       = '{{WEB_LC_ROOT}}';
+    const WEB_LC_ROOT = '/{{{{WEB_LC_ROOT}}(.*)}}/';
 
 
     /**
@@ -59,6 +59,22 @@ class Category extends \XLite\View\AView
         return $result;
     }
 
+    /**
+     * Return description with postprocessing WEB LC root constant
+     *
+     * @param string $url URL part to change to full URL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public static function callbackURLChange($url)
+    {
+        return \XLite::getInstance()->getShopURL(
+            $url,
+            \XLite\Core\Request::getInstance()->isHTTPS()
+        );
+    }
 
     /**
      * Return widget default template
@@ -93,9 +109,11 @@ class Category extends \XLite\View\AView
      */
     protected function getDescription()
     {
-        return str_replace(
-            $this->getWebPreprocessingTags(),
-            $this->getWebPreprocessingURL(),
+        return preg_replace_callback(
+            self::WEB_LC_ROOT,
+            function ($matches) {
+                return \XLite\View\Category::callbackURLChange($matches[1]);
+            },
             $this->getCategory()->getDescription()
         );
     }

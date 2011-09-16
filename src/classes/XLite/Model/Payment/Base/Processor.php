@@ -171,7 +171,9 @@ abstract class Processor extends \XLite\Base
      */
     public function isApplicable(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
     {
-        return true;
+        $currencies = $this->getAllowedCurrencies();
+
+        return !$currencies || in_array($order->getCurrency()->getCode(), $currencies);
     }
 
     /**
@@ -314,6 +316,18 @@ abstract class Processor extends \XLite\Base
      * @since  1.0.0
      */
     protected function getInputDataAccessLevels()
+    {
+        return array();
+    }
+
+    /**
+     * Get allowed currencies 
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.9
+     */
+    protected function getAllowedCurrencies()
     {
         return array();
     }

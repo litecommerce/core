@@ -243,6 +243,9 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
                 // To restore previous state
                 \XLite\Core\Marketplace::getInstance()->saveAddonsList(0);
 
+                // Flag to rebuild cache
+                \XLite::setCleanUpCacheFlag(true);
+
             } else {
                 $message = 'Unable to delete module "{{name}}" files: some dirs have no writable permissions: {{dirs}}';
                 $this->showError(__FUNCTION__, $message, $params + array('dirs' => implode(', ', $nonWritableDirs)));
