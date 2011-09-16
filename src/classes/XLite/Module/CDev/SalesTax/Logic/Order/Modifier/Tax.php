@@ -176,7 +176,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
         foreach ($this->getOrder()->getItems() as $item) {
             if (
                 !in_array($item, $previousItems)
-                && (($class && $item->getProductClasses()->contains($class)) || (!$class && !count($item->getProductClasses())))
+                && (!$class || ($class && $item->getProductClasses()->contains($class)))
             ) {
                 $list[] = $item;
             }

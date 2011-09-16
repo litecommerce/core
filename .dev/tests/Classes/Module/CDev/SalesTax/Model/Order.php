@@ -126,9 +126,17 @@ class XLite_Tests_Module_CDev_SalesTax_Model_Order extends XLite_Tests_Model_Ord
         $etalon = $order->getCurrency()->formatValue($order->getSubtotal() * 0.2);
         $this->assertEquals($etalon, $cost, 'check tax cost 20% (pc)');
 
+        // Limit by product class (only item)
+        $rate->setProductClass(null);
+        \XLite\Core\Database::getEM()->flush();
+
+        $order->calculate();
+        $cost = $order->getCurrency()->formatValue($order->getSurchargeSumByType('tax'));
+        $etalon = $order->getCurrency()->formatValue($order->getSubtotal() * 0.2);
+        $this->assertEquals($etalon, $cost, 'check tax cost 20% (pc)');
+
         // Remove test product class
         $order->getItems()->get(0)->getProduct()->getClasses()->removeElement($pc);
-        $rate->setProductClass(null);
         \XLite\Core\Database::getEM()->remove($pc);
         \XLite\Core\Database::getEM()->flush();
 
