@@ -766,4 +766,29 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
 
         return $result;
     }
+
+    /**
+     * Get allowed currencies
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.9
+     */
+    protected function getAllowedCurrencies()
+    {
+        return array_merge(
+            parent::getAllowedCurrencies(),
+            array(
+                'EUR', 'TWD', 'USD', 'THB', 'GBP',
+                'CZK', 'HKD', 'HUF', 'SGD', 'SKK',
+                'JPY', 'EEK', 'CAD', 'BGN', 'AUD',
+                'PLN', 'CHF', 'ISK', 'DKK', 'INR',
+                'SEK', 'LVL', 'NOK', 'KRW', 'ILS',
+                'ZAR', 'MYR', 'RON', 'NZD', 'HRK',
+                'TRY', 'LTL', 'AED', 'JOD', 'MAD',
+                'OMR', 'QAR', 'RSD', 'SAR', 'TND',
+            )
+        );
+    }
+
 }

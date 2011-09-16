@@ -299,7 +299,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             'zip'           => $this->getProfile()->getBillingAddress()->getZipcode(),
             'upload'        => 1,
             'bn'            => 'LiteCommerce',
-
         );
 
         if ('Y' === $this->getSetting('address_override')) {
@@ -413,5 +412,26 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
         $list = $this->maskCell($list, 'account');
 
         parent::logRedirect($list);
+    }
+
+    /**
+     * Get allowed currencies
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.9
+     */
+    protected function getAllowedCurrencies()
+    {
+        return array_merge(
+            parent::getAllowedCurrencies(),
+            array(
+                'USD', 'CAD', 'EUR', 'GBP', 'AUD',
+                'CHF', 'JPY', 'NOK', 'NZD', 'PLN',
+                'SEK', 'SGD', 'HKD', 'DKK', 'HUF',
+                'CZK', 'BRL', 'ILS', 'MYR', 'MXN',
+                'PHP', 'TWD', 'THB',
+            )
+        );
     }
 }
