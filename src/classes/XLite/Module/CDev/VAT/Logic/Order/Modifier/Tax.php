@@ -96,14 +96,16 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
             foreach ($this->getTaxableItems() as $item) {
                 $product = $item->getProduct();
                 $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
-                if (!isset($rates[$rate->getId()])) {
-                    $rates[$rate->getId()] = array(
-                        'rate' => $rate,
-                        'base' => 0,
-                    );
-                }
+                if ($rate) {
+                    if (!isset($rates[$rate->getId()])) {
+                        $rates[$rate->getId()] = array(
+                            'rate' => $rate,
+                            'base' => 0,
+                        );
+                    }
 
-                $rates[$rate->getId()]['base'] += $item->getSubtotal();
+                    $rates[$rate->getId()]['base'] += $item->getSubtotal();
+                }
             }
 
             foreach ($rates as $rate) {

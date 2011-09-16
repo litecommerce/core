@@ -38,9 +38,9 @@
   <div class="vat-base">
     <p>{t(#Product prices are defined including this tax calculated for#)}:</p>
     <div>
-      <widget class="\XLite\View\Taxes\MembershipSelector" field="vatMembership" value="{tax.getVATMembership()}" />
+      <widget class="\XLite\Module\CDev\VAT\View\Taxes\MembershipSelector" field="vatMembership" value="{tax.getVATMembership()}" />
       <span>{t(#and#)}</span>
-      <widget class="\XLite\View\Taxes\ZoneSelector" field="vatZone" value="{tax.getVATZone()}" />
+      <widget class="\XLite\Module\CDev\VAT\View\Taxes\ZoneSelector" field="vatZone" value="{tax.getVATZone()}" />
       <widget
         class="\XLite\View\Tooltip"
         id="vat-help-text"
