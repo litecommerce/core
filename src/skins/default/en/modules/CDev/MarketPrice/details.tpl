@@ -13,9 +13,9 @@
  * @ListChild (list="product.details.quicklook.info", weight="45")
  *}
 
-<p />
 <div IF="isShowMarketPrice(product)" class="product-details-market-price">
-  {t(#Market price#)}: <span class="value">{formatPrice(product.getMarketPrice()):h}</span>,
-  {t(#you save#)} <span class="you-save">{formatPrice(getSaveDifference(product)):h}</span>
-  <widget class="\XLite\View\Labels" labels="{getLabels(product)}" />
+  <div class="text">
+    {displayNestedViewListContent(#market_price.text#)}
+  </div>
+  {displayNestedViewListContent(#market_price.label#)}
 </div>

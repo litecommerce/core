@@ -36,6 +36,21 @@ namespace XLite\Module\CDev\MarketPrice\View;
 abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage implements \XLite\Base\IDecorator
 {
     /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = 'modules/CDev/MarketPrice/style.css';
+
+        return $list;
+    }
+
+    /**
      * Determine if we need to display product market price
      *
      * @param \XLite\Model\Product $product Current product

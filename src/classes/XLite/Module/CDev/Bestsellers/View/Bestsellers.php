@@ -200,8 +200,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        if (is_null($this->bestsellProducts)) {
-
+        if (!isset($this->bestsellProducts)) {
             $limit = \XLite\Core\Config::getInstance()->CDev->Bestsellers->number_of_bestsellers;
 
             $this->bestsellProducts = \XLite\Core\Database::getRepo('XLite\Model\Product')
@@ -228,8 +227,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getRootId()
     {
-        if (is_null($this->rootCategoryId)) {
-
+        if (!isset($this->rootCategoryId)) {
             $this->rootCategoryId = $this->getParam(self::PARAM_USE_NODE)
                 ? intval(\XLite\Core\Request::getInstance()->category_id)
                 : $this->getParam(self::PARAM_ROOT_ID);

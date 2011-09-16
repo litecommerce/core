@@ -50,7 +50,7 @@ class Labels extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . 'style.css';
+        $list[] = $this->getDir() . '/style.css';
 
         return $list;
     }
@@ -64,7 +64,7 @@ class Labels extends \XLite\View\AView
      */
     protected function getDir()
     {
-        return 'labels/';
+        return 'labels';
     }
 
     /**
@@ -76,7 +76,7 @@ class Labels extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . 'body.tpl';
+        return $this->getDir() . '/body.tpl';
     }
 
     /**

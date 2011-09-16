@@ -12,10 +12,9 @@
  * @ListChild (list="itemsList.product.grid.customer.info", weight="25")
  * @ListChild (list="itemsList.product.small_thumbnails.customer.details", weight="25")
  * @ListChild (list="itemsList.product.list.customer.info", weight="35")
- * @ListChild (list="itemsList.product.table.customer.columns", weight="35")
  * @ListChild (list="productBlock.info", weight="250")
  *}
 
-<span IF="isShowMarketPrice(product)" class="product-list-market-price">
+<div IF="isShowMarketPrice(product)" class="product-list-market-price">
   {formatPrice(product.getMarketPrice()):h}
-</span>
+</div>

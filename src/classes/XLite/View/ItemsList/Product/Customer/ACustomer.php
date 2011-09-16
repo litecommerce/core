@@ -273,9 +273,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     public function getJSFiles()
     {
-        $list = parent::getJSFiles();
-
-        return array_merge($list, $this->getPopupJS());
+        return array_merge(parent::getJSFiles(), $this->getPopupJS());
     }
 
     /**

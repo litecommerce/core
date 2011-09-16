@@ -782,39 +782,6 @@ ul.products-sidebar-text-links li .product {
   font-family: Helvetica, Arial;
 }
 
-.products-grid .labels li,
-.products-list .labels li,
-.products-table .labels li,
-.products-sidebar-big-thumbnails .labels li
-{
-  background-image: url(../images/label_grey_left.png);
-  background-position: left top;
-  background-repeat: no-repeat;
-  padding-left: 12px;
-  height: 25px;
-  opacity: 0.9;
-}
-
-.products .labels li div {
-  font-style: italic;
-  font-size: 12px;
-  color: #615656;
-}
-
-.products-grid .labels li div,
-.products-list .labels li div,
-.products-table .labels li div,
-.products-sidebar-big-thumbnails .labels li div
-{
-  background-image: url(../images/label_grey_right.png);
-  background-position: right top;
-  background-repeat: no-repeat;
-  line-height: 25px;
-  color: #fff;
-  padding-left: 3px;
-  padding-right: 9px;
-}
-
 /**
  * Product block
  */
