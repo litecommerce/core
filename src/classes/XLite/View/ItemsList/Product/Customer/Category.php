@@ -126,7 +126,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * getCategory
+     * Get requested category object
      *
      * @return \XLite\Model\Category
      * @see    ____func_see____
@@ -134,7 +134,20 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getCategory()
     {
-        return $this->getWidgetParams(self::PARAM_CATEGORY_ID)->getObject();
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->find($this->getCategoryId());
+    }
+
+    /**
+     * Get requested category ID 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.9
+     */
+    protected function getCategoryId()
+    {
+        return \XLite\Core\Request::getInstance()->{self::PARAM_CATEGORY_ID}
+            ?: \XLite\Model\Repo\Category::CATEGORY_ID_ROOT;
     }
 
     /**
@@ -220,6 +233,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function isVisible()
     {
-        return parent::isVisible() && $this->getCategory()->isVisible();
+        return parent::isVisible() && $this->getCategory() && $this->getCategory()->isVisible();
     }
 }

@@ -187,7 +187,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
                     'category' => $this->getModule()->getActualName(),
                     'name'     => $name,
                     'value'    => $value,
-                    'type'     => $type
+                    'type'     => $option->type
                 )
             );
         }

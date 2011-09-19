@@ -165,7 +165,7 @@ ul.products-sidebar li .product {
   background: transparent;
 }
 
-.products .product .quicklook a.quicklook-link
+.quicklook a.quicklook-link
 {
   display: block;
   width: 53px;
@@ -174,7 +174,8 @@ ul.products-sidebar li .product {
   padding: 0px;
 }
 
-.products .product .quicklook a.quicklook-link img {
+.quicklook a.quicklook-link div.quicklook-view {
+  display: block;
   width: 53px;
   height: 53px;
   background: transparent url(images/icon_quick_look.png) no-repeat top left;
