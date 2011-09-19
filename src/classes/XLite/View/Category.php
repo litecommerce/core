@@ -119,32 +119,4 @@ class Category extends \XLite\View\AView
             $this->getCategory()->getDescription()
         );
     }
-
-    /**
-     * getWebPreprocessingTags
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getWebPreprocessingTags()
-    {
-        return array(
-            self::WEB_LC_ROOT,
-        );
-    }
-
-    /**
-     * getWebPreprocessingUrls
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getWebPreprocessingURL()
-    {
-        return array(
-            \Xlite::getInstance()->getShopURL(''),
-        );
-    }
 }
