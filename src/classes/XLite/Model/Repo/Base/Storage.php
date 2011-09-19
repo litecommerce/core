@@ -28,73 +28,48 @@
 namespace XLite\Model\Repo\Base;
 
 /**
- * Image abstract repository
+ * Storage abstract repository
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Image extends \XLite\Model\Repo\Base\Storage
+abstract class Storage extends \XLite\Model\Repo\ARepo
 {
+    /**
+     * Get storage name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    abstract public function getStorageName();
+
     /**
      * Get file system images storage root path
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.10
      */
-    public function getFileSystemRoot()
-    {
-        return LC_DIR_IMAGES . $this->getStorageName() . LC_DS;
-    }
+    abstract public function getFileSystemRoot();
 
     /**
      * Get web images storage root path
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.10
      */
-    public function getWebRoot()
-    {
-        return LC_IMAGES_URL . '/' . $this->getStorageName() . '/';
-    }
+    abstract public function getWebRoot();
 
     /**
-     * Get file system images cache storage root path
-     *
-     * @param string $sizeName Image size cell name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getFileSystemCacheRoot($sizeName)
-    {
-        return LC_DIR_CACHE_IMAGES . $this->getStorageName() . LC_DS . $sizeName . LC_DS;
-    }
-
-    /**
-     * Get web images cache storage root path
-     *
-     * @param string $sizeName Image size cell name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getWebCacheRoot($sizeName)
-    {
-        return LC_IMAGES_CACHE_URL . '/' . $this->getStorageName() . '/' . $sizeName;
-    }
-
-    /**
-     * Check - check image hash in Custoemr front-end or not
+     * Check - store remote image into local file system or not
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.10
      */
-    public function isCheckImage()
+    public function isStoreRemote()
     {
         return false;
     }

@@ -902,6 +902,34 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * Format file size 
+     * 
+     * @param integer $size Size in bytes
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function formatSize($size)
+    {
+        if (1024 > $size) {
+            $result = $this->t('X bytes', array('value' => $size));
+
+        } elseif (1048576 > $size) {
+            $result = $this->t('X kB', array('value' => round($size / 1024, 1)));
+
+        } elseif (1073741824 > $size) {
+            $result = $this->t('X MB', array('value' => round($size / 1048576, 1)));
+
+        } else {
+            $result = $this->t('X GB', array('value' => round($size / 1073741824, 1)));
+
+        }
+
+        return $result;
+    }
+
+    /**
      * Check - view list is visible or not
      *
      * @param string $list      List name

@@ -134,6 +134,8 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
         );
     }
 
+    // {{{ Category image
+
     /**
      * Common handler for category images.
      *
@@ -222,6 +224,10 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
             array($file)
         );
     }
+
+    // }}}
+
+    // {{{ Product images
 
     /**
      * Common handler for product images.
@@ -313,4 +319,5 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
         );
     }
 
+    // }}} 
 }

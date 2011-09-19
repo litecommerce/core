@@ -25,77 +25,61 @@
  * @since     1.0.0
  */
 
-namespace XLite\Model\Repo\Base;
+namespace XLite\Module\CDev\FileAttachments;
 
 /**
- * Image abstract repository
+ * File atachments module main class
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Image extends \XLite\Model\Repo\Base\Storage
+abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Get file system images storage root path
+     * Author name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getFileSystemRoot()
+    public static function getAuthorName()
     {
-        return LC_DIR_IMAGES . $this->getStorageName() . LC_DS;
+        return 'Creative Development LLC';
     }
 
     /**
-     * Get web images storage root path
+     * Module version
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getWebRoot()
+    public static function getMinorVersion()
     {
-        return LC_IMAGES_URL . '/' . $this->getStorageName() . '/';
+        return '3';
     }
 
     /**
-     * Get file system images cache storage root path
-     *
-     * @param string $sizeName Image size cell name
+     * Module name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getFileSystemCacheRoot($sizeName)
+    public static function getModuleName()
     {
-        return LC_DIR_CACHE_IMAGES . $this->getStorageName() . LC_DS . $sizeName . LC_DS;
+        return 'File attachments';
     }
 
     /**
-     * Get web images cache storage root path
-     *
-     * @param string $sizeName Image size cell name
+     * Module description
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getWebCacheRoot($sizeName)
+    public static function getDescription()
     {
-        return LC_IMAGES_CACHE_URL . '/' . $this->getStorageName() . '/' . $sizeName;
-    }
-
-    /**
-     * Check - check image hash in Custoemr front-end or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isCheckImage()
-    {
-        return false;
+        return 'Allows you to attach files to goods that can be downloaded from the detailed pages of this product by visitors.';
     }
 }
