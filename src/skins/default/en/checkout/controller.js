@@ -326,6 +326,16 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       }
     );
 
+    // Subtotal including scharges
+    jQuery('.review-step .items-row div.including-modifiers', this.base).each(
+      function() {
+        attachTooltip(
+          jQuery(this).parents('.items-row').find('.modified-subtotal'),
+          jQuery(this).html()
+        );
+      }
+    );
+
     jQuery('form.place .terms a', this.base).click(
       function(event) {
         event.stopPropagation();

@@ -469,6 +469,9 @@ class Database extends \XLite\Base\Singleton
         $this->configuration->setProxyNamespace(LC_MODEL_PROXY_NS);
         $this->configuration->setAutoGenerateProxyClasses(false);
 
+        // Register custom functions
+        $this->configuration->addCustomStringFunction('if', '\\XLite\\Core\\Doctrine\\IfFunction');
+
         $this->tablePrefix = \XLite::getInstance()->getOptions(array('database_details', 'table_prefix'));
 
         // Initialize DB connection and entity manager

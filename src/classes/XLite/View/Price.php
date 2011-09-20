@@ -38,75 +38,7 @@ class Price extends \XLite\View\AView
     /**
      * Widget parameter names
      */
-
-    const PARAM_PRODUCT            = 'product';
-    const PARAM_DISPLAY_ONLY_PRICE = 'displayOnlyPrice';
-
-
-    /**
-     * Check - sale price is enabled or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isSalePriceEnabled()
-    {
-        return \XLite\Core\Config::getInstance()->General->enable_sale_price
-            && $this->getProduct()->getSalePrice() > $this->getProduct()->getListPrice();
-    }
-
-    /**
-     * Check - is save block is enabeld or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isSaveEnabled()
-    {
-        return ('N' !== \XLite\Core\Config::getInstance()->General->you_save) && (0 < $this->getSaveValuePercent());
-    }
-
-    /**
-     * Get save value (absolute)
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getSaveValueAbsolute()
-    {
-        $product = $this->getProduct();
-
-        return $this->formatPrice($product->getSalePrice() - $product->getListPrice());
-    }
-
-    /**
-     * Get save value (absolute)
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getSaveValuePercent()
-    {
-        $product = $this->getProduct();
-
-        return round(($product->getSalePrice() - $product->getListPrice()) / $product->getSalePrice() * 100, 0);
-    }
-
-    /**
-     * Check - display only price or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isDisplayOnlyPrice()
-    {
-        return $this->getParam(self::PARAM_DISPLAY_ONLY_PRICE);
-    }
+    const PARAM_PRODUCT = 'product';
 
 
     /**
@@ -121,7 +53,6 @@ class Price extends \XLite\View\AView
         return 'common/price_plain.tpl';
     }
 
-
     /**
      * Return list price of product
      *
@@ -132,18 +63,6 @@ class Price extends \XLite\View\AView
     protected function getListPrice()
     {
         return $this->getProduct()->getListPrice();
-    }
-
-    /**
-     * Return sale price of product
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.2
-     */
-    protected function getSalePrice()
-    {
-        return $this->getProduct()->getSalePrice();
     }
 
     /**
@@ -158,17 +77,12 @@ class Price extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
-                'Product', null, false, '\XLite\Model\Product'
-            ),
-            self::PARAM_DISPLAY_ONLY_PRICE => new \XLite\Model\WidgetParam\Bool(
-                'Only price', false
-            ),
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', null, false, '\XLite\Model\Product'),
         );
     }
 
     /**
-     * getProduct
+     * Get product
      *
      * @return \XLite\Model\Product
      * @see    ____func_see____

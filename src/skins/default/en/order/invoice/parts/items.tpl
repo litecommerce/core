@@ -15,10 +15,18 @@
   <tr>
     {displayViewListContent(#invoice.items.head#)}
   </tr>
-
-  <tr FOREACH="order.getItems(),item">
-    {displayViewListContent(#invoice.item#,_ARRAY_(#item#^item))}
+  <tr class="last-row">
+    {displayViewListContent(#invoice.items.subhead#)}
   </tr>
+
+  {foreach:order.getItems(),index,item}
+    <tr {if:!itemArrayPointer=itemArraySize}class="separator-row"{end:}>
+      {displayViewListContent(#invoice.item#,_ARRAY_(#item#^item))}
+    </tr>
+    <tr {if:!itemArrayPointer=itemArraySize}class="separator-row"{end:}>
+      {displayViewListContent(#invoice.subitem#,_ARRAY_(#item#^item))}
+    </tr>
+  {end:}
 
   <tr FOREACH="getViewList(#invoice.items#),w">
     {w.display()}

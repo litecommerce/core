@@ -78,6 +78,26 @@ CartView.prototype.postprocess = function(isSuccess, initial)
 
     var o = this;
 
+    // Item subtotal including scharges
+    jQuery('td.item-subtotal div.including-modifiers', this.base).each(
+      function() {
+        attachTooltip(
+          jQuery(this).parents('td.item-subtotal').find('.subtotal'),
+          jQuery(this).html()
+        );
+      }
+    );
+
+    // Cart subtotal including scharges
+    jQuery('.totals li.subtotal div.including-modifiers', this.base).each(
+      function() {
+        attachTooltip(
+          jQuery(this).parents('li.subtotal').find('.cart-subtotal'),
+          jQuery(this).html()
+        );
+      }
+    );
+
     // Remove item
     jQuery('.selected-product form input.remove', this.base).parents('form')
       .commonController(

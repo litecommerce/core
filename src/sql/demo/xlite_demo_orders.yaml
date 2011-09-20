@@ -22,6 +22,7 @@ XLite\Model\Order:
         name: 'Binary Mom'
         sku: '00000'
         price: 17.99
+        netPrice: 17.99
         amount: 1
         subtotal: 17.99
         total: 17.99
@@ -46,6 +47,7 @@ XLite\Model\Order:
         name: 'Paint Shop Pro Web Graphics [PDF]'
         sku: '00057'
         price: 39.95
+        netPrice: 39.95
         amount: 1
         subtotal: 39.95
         total: 39.95
@@ -53,6 +55,7 @@ XLite\Model\Order:
         name: 'Planet Express Babydoll'
         sku: '00001'
         price: 19.99
+        netPrice: 19.99
         amount: 1
         subtotal: 19.99
         total: 19.99
@@ -61,6 +64,7 @@ XLite\Model\Order:
         name: 'Planet Express'
         sku: '00006'
         price: 18.99
+        netPrice: 18.99
         amount: 1
         subtotal: 18.99
         total: 18.99
@@ -69,6 +73,7 @@ XLite\Model\Order:
         name: 'Wi-Fi Detector Shirt'
         sku: '00008'
         price: 19.99
+        netPrice: 19.99
         amount: 1
         subtotal: 19.99
         total: 19.99
@@ -77,6 +82,7 @@ XLite\Model\Order:
         name: 'Binary Mom'
         sku: '00000'
         price: 17.99
+        netPrice: 17.99
         amount: 1
         subtotal: 17.99
         total: 17.99

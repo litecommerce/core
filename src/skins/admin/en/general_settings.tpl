@@ -113,14 +113,6 @@ function setUnitSymbol(symbol) {
               </select>
             {end:}
 
-            {if:option.name=#you_save#}
-              <select name="{option.name}">
-                <option value="N" selected="{option.value=#N#}">No</option>
-                <option value="YP" selected="{option.value=#YP#}">Yes (percents)</option>
-                <option value="YD" selected="{option.value=#YD#}">Yes (difference)</option>
-              </select>
-            {end:}
-
             {if:option.name=#add_on_mode_page#}
               <select name="{option.name}">
                 <option value="cart.php?target=cart" selected="{option.value=#cart.php?target=cart#}">Shopping cart</option>

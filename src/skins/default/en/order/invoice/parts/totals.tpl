@@ -11,20 +11,5 @@
  * @ListChild (list="invoice.base", weight="40")
  *}
 <table cellspacing="0" class="totals">
-
-  <tr>
-    <td class="title">{t(#Subtotal#)}:</td>
-    <td class="value">{formatPrice(order.getSubtotal(),order.getCurrency())}</td>
-  </tr>
-
-  <tr FOREACH="order.getSurcharges(),surcharge" class="{surcharge.getType()}">
-    <td class="title">{surcharge.getName()}:</td>
-    <td class="value">{if:surcharge.getAvailable()}{formatPrice(surcharge.getValue(),order.getCurrency()):h}{else:}{t(#n/a#)}{end:}</td>
-  </tr>
-
-  <tr class="total">
-    <td class="title">{t(#Grand total#)}:</td>
-    <td class="value">{formatPrice(order.getTotal(),order.getCurrency())}</td>
-  </tr>
-
+  {displayViewListContent(#invoice.base.totals#)}
 </table>

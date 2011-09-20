@@ -10,8 +10,15 @@
  * @since     1.0.0
  * @ListChild (list="cart.item", weight="60")
  *}
-<td class="item-equal">=</td>
 <td class="item-subtotal">
-  {formatPrice(item.getTotal(),cart.getCurrency())}
+  <span class="subtotal{if:item.getExcludeSurcharges()} modified-subtotal{end:}">{formatPrice(item.getTotal(),cart.getCurrency())}</span>
+  <div IF="item.getExcludeSurcharges()" class="including-modifiers" style="display: none;">
+    <table class="including-modifiers" cellspacing="0">
+      <tr FOREACH="item.getExcludeSurcharges(),surcharge">
+        <td class="name">{t(#Including X#,_ARRAY_(#name#^surcharge.getName()))}:</td>
+        <td class="value">{formatPrice(surcharge.getValue(),cart.getCurrency())}</td>
+      </tr>
+    </table>
+  </div>
   {displayViewListContent(#cart.item.actions#,_ARRAY_(#item#^item))}
 </td>

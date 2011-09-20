@@ -12,46 +12,6 @@
  *}
 <div class="box">
 
-  <div class="items-row">
-    {t(#_X items_ in bag#,_ARRAY_(#count#^cart.countQuantity())):h}
-    <span class="price">{formatPrice(cart.getSubtotal(),cart.getCurrency())}</span>
-  </div>
-
-  <div class="list" style="display: none;">
-
-    <ul>
-      <li FOREACH="cart.getItems(),item">
-        <a href="{item.getURL()}">{item.getName()}<img src="images/spacer.gif" alt="" class="fade" /></a>
-        <div>
-          <span class="price">{formatPrice(item.getPrice(),cart.getCurrency())}</span>
-          &times;
-          <span class="qty">{item.getAmount()}</span>
-        </div>
-      </li>
-    </ul>
-
-  </div>
-
-  <ul class="modifiers">
-
-    <li FOREACH="cart.getSurcharges(),surcharge" class="{surcharge.getType()}-modifier">
-      {surcharge.getName()}
-      <span>
-        {if:surcharge.getAvailable()}
-          {formatPrice(surcharge.getValue(),cart.getCurrency()):h}
-        {else:}
-          {t(#n/a#)}
-        {end:}
-      </span>
-    </li>
-
-  </ul>
-
-  <hr />
-
-  <div class="total">
-    {t(#Total#)}:
-    <span>{formatPrice(cart.getTotal(),cart.getCurrency())}</span>
-  </div>
+  {displayViewListContent(#checkout.review.inactive.items#)}
 
 </div>

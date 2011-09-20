@@ -156,6 +156,17 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     protected $date;
 
     /**
+     * Last order renew date
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $lastRenewDate;
+
+    /**
      * Status code
      *
      * @var   string
@@ -1431,6 +1442,56 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Get items exclude surcharges info
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getItemsExcludeSurcharges()
+    {
+        $list = array();
+
+        foreach ($this->getItems() as $item) {
+            foreach ($item->getExcludeSurcharges() as $surcharge) {
+                if (!isset($list[$surcharge->getKey()])) {
+                    $list[$surcharge->getKey()] = $surcharge->getName();
+                }
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get items included surcharges totals 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function getItemsIncludeSurchargesTotals()
+    {
+        $list = array();
+
+        foreach ($this->getItems() as $item) {
+            foreach ($item->getExcludeSurcharges() as $surcharge) {
+                if (!isset($list[$surcharge->getKey()])) {
+                    $list[$surcharge->getKey()] = array(
+                        'surcharge' => $surcharge,
+                        'cost'      => 0,
+                    );
+                }
+
+                $list[$surcharge->getKey()]['cost'] += $surcharge->getValue();
+            }
+        }
+
+        return $list;
+
+    }
+
+    /**
      * Calculate order
      *
      * @return void
@@ -1450,7 +1511,29 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             }
         }
 
+        $this->finalizeItemsCalculation();
+
         $this->setTotal($this->getSurchargesTotal());
+    }
+
+    /**
+     * Renew order
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function renew()
+    {
+        foreach ($this->getItems() as $item) {
+            if (!$item->renew()) {
+                $this->getItems()->removeElement($item);
+            }
+        }
+
+        $this->calculate();
+
+        $this->setLastRenewDate(time());
     }
 
     /**
@@ -1491,6 +1574,26 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         }
 
         $subtotal = $this->getCurrency()->roundValue($subtotal);
+
+        $this->setSubtotal($subtotal);
+        $this->setTotal($subtotal);
+    }
+
+    /**
+     * Finalize items calculation 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function finalizeItemsCalculation()
+    {
+        $subtotal = 0;
+        foreach ($this->getItems() as $item) {
+            $itemTotal = $item->calculateTotal();
+            $subtotal += $itemTotal;
+            $item->setTotal($itemTotal);
+        }
 
         $this->setSubtotal($subtotal);
         $this->setTotal($subtotal);
@@ -1581,6 +1684,10 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     {
         if (!is_numeric($this->date)) {
             $this->setDate(time());
+        }
+
+        if (!is_numeric($this->lastRenewDate)) {
+            $this->setLastRenewDate(time());
         }
     }
 
