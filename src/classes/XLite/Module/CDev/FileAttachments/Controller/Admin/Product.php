@@ -80,6 +80,21 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      */
     protected function doActionRemoveAttachment()
     {
+        $attachment = \XLite\Core\Database::getRepo('XLite\Module\CDev\FileAttachments\Model\Product\Attachment')
+            ->find(\XLite\Core\Request::getInstance()->id);
+
+        if ($attachment) {
+            $attachment->getProduct()->getAttachments()->removeElement($attachment);
+            \XLite\Core\Database::getEM()->remove($attachment);
+            \XLite\Core\TopMessage::addInfo('Attachment has been deleted successfully');
+            $this->setPureAction(true);
+
+        } else {
+            $this->valid = false;
+            \XLite\Core\TopMessage::addError('Attachment has not been deleted successfully');
+        }
+
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -91,8 +106,27 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      */
     protected function doActionUpdateAttachments()
     {
-    }
+        $changed = false;
 
+        $data = \XLite\COre\Request::getInstance()->data;
+        if ($data && is_array($data)) {
+            foreach ($data as $id => $row) {
+                $attachment = \XLite\Core\Database::getRepo('XLite\Module\CDev\FileAttachments\Model\Product\Attachment')
+                    ->find($id);
+
+                if ($attachment) {
+                    $attachment->map($row);
+                    $changed = true;
+                }
+            }
+        }
+
+        if ($changed) {
+            \XLite\Core\TopMessage::addInfo('Attachments has been updated successfully');
+        }
+
+        \XLite\Core\Database::getEM()->flush();
+    }
 
 }
 
