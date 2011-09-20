@@ -65,14 +65,17 @@ jQuery().ready(
     );
 
     // Drag-and-drop-based sorting
-    jQuery('.product-attachments ul .move').sortable(
+    jQuery('.product-attachments ul .move').click(
+      function (event) {
+        event.stopPropagation();
+        return false;
+      }
+    );
+    jQuery('.product-attachments ul').sortable(
       {
         axis: 'y',
-        helper: function()
-        {
-          return jQuery(this).parents('li').eq(0);
-        },
-        update: function ()
+        handle: '.move',
+        update: function()
         {
           var i = 0;
           jQuery('.product-attachments form input.orderby').each(

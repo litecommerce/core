@@ -23,7 +23,7 @@
   <widget class="XLite\Module\CDev\FileAttachments\View\Form\Attachments" product="{getProduct()}" name="product_attachments" />
 
     <ul class="files" IF="product.getAttachments()">
-      <li FOREACH="product.getAttachments(),index,attachment">
+      <li FOREACH="product.getAttachments(),index,attachment" class="attachment">
 
         <div class="row">
           <a href="#" class="move" title="{t(#Move#)}"><img src="images/spacer.gif" alt="" /></a>
@@ -48,20 +48,20 @@
         </div>
 
         <div class="info" style="display: none;">
-          <table cellspacing="0">
+          <table cellspacing="0" class="form">
             <tr class="title">
-              <td><label for="attachmentName{attachment.getId()}">{t(#File title#)}</label></td>
+              <td class="label"><label for="attachmentName{attachment.getId()}">{t(#File title#)}</label></td>
               <td><input type="text" id="attachmentName{attachment.getId()}" name="data[{attachment.getId()}][title]" value="{attachment.getTitle()}" /></td>
             </tr>
             <tr class="description">
-              <td><label for="attachmentDesc{attachment.getId()}">{t(#Description#)}</label></td>
+              <td class="label"><label for="attachmentDesc{attachment.getId()}">{t(#Description#)}</label></td>
               <td><textarea id="attachmentDesc{attachment.getId()}" name="data[{attachment.getId()}][description]">{attachment.getDescription()}</textarea></td>
             </tr>
           </table>
           <div class="reupload-file">
             <widget
               class="XLite\View\Button\FileSelector"
-              style="main-button reupload"
+              style="reupload"
               label="Re-upload file"
               object="attachment"
               objectId="{attachment.getId()}"
