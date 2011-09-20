@@ -1079,6 +1079,16 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
             if (version_compare($version, constant('LC_MYSQL_VERSION_MIN')) < 0) {
                 $result = false;
                 $errorMsg = xtr('MySQL version must be :minver as a minimum.', array(':minver' => constant('LC_MYSQL_VERSION_MIN')));
+
+            } else {
+
+                // Check for InnoDb support
+                $res = dbFetchAll('SELECT engine FROM information_schema.engines WHERE engine = \'InnoDB\'');
+
+                if (!$res) {
+                    $result = false;
+                    $errorMsg = xtr('MySQL server doesn\'t support InnoDB engine. It is required for LiteCommerce operation');
+                }
             }
 
         } else {
