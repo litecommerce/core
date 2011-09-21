@@ -110,7 +110,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
 
             foreach ($rates as $rate) {
                 if (isset($taxes[$tax->getId()]) && $taxes[$tax->getId()]['rate']->getId() == $rate['rate']->getId()) {
-                    $rate['base'] += $taxes[$tax->getId()]['base'];
+                    $rate['base'] += $this->order->getCurrency()->roundValue($taxes[$tax->getId()]['base']);
                     unset($taxes[$tax->getId()]);
                 }
 

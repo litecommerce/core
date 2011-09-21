@@ -287,6 +287,31 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         // Shipping cost = 10 / 1.35 = 7.40740741 = 7.41
         // (1.84 + 7.41) * 0.35 + 1.84 * 0.1 + (1.84 + 7.41) = 12.6715
         $this->assertEquals(12.67, $currency->formatValue($order->getTotal()), 'check item total #2');
+
+        // Test some quantity
+        $order->getItems()->get(0)->getProduct()->setPrice(39.01);
+        $order->getItems()->get(0)->setPrice(39.01);
+        $order->getItems()->get(0)->setAmount(10);
+
+        $tax->getRates()->get(0)->setValue(50);
+
+        \XLite\Core\Database::getEM()->flush();
+
+        $order->calculate();
+
+        // 39.01 - (39.01 - 39.01 / (1 + 0.5)) = 26.0067 = 26.01
+        $this->assertEquals(26.0067, $order->getItems()->get(0)->getNetPrice(), 'check item net price #3');
+        // 26.01 * 10 = 260.1
+        $this->assertEquals(260.1, $order->getItems()->get(0)->getSubtotal(), 'check item subtotal #3');
+
+        // Shipping cost = 10 / 1.5 = 6.67
+        $this->assertEquals(6.67, $order->getSurcharges()->get(0)->getValue(), 'check shipping cost');
+        // VAT = (260.1 + 6.67) * 0.5 = 133.38500 = 133.39
+        $this->assertEquals(133.385, $order->getSurcharges()->get(1)->getValue(), 'check VAT');
+        // Sales tax = 260.1 * 0.1 = 26.01
+        $this->assertEquals(26.01, $order->getSurcharges()->get(2)->getValue(), 'check Sales tax');
+        // (260.1 + 6.67) + 133.39 + 260.1 * 0.1 = 426.165
+        $this->assertEquals(426.165, round($order->getTotal(), 3), 'check order total #3');
     }
 
     protected function getTestOrder()
