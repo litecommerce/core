@@ -1083,19 +1083,7 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
             } else {
 
                 // Check for InnoDb support
-                $res = dbFetchAll('SHOW ENGINES');
-
-                $innodbFound = false;
-                if ($res && is_array($res)) { 
-                    foreach ($res as $row) {
-                        if (0 === strcasecmp('InnoDB', $row['Engine'])) {
-                            $innodbFound = true;
-                            break;
-                        }
-                    }
-                }
-                    
-                if (!$innodbFound) {
+                if (!\Includes\Utils\Database::isInnoDBSupported()) {
                     $result = false;
                     $errorMsg = xtr('MySQL server doesn\'t support InnoDB engine. It is required for LiteCommerce operation');
                 }

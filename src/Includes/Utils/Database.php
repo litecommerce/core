@@ -337,7 +337,7 @@ abstract class Database extends \Includes\Utils\AUtils
     
         $result = static::getHandler()->query('SHOW ENGINES');
 
-        if ($result && is_array($result)) {
+        if ($result) {
 
             foreach ($result as $row) {
 
