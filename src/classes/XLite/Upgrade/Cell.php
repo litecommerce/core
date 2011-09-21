@@ -143,12 +143,17 @@ class Cell extends \XLite\Base\Singleton
      */
     public function getIncompatibleModules($onlySelected = false)
     {
-        return array_filter(
-            array_map(
-                array(\XLite\Core\Database::getRepo('\XLite\Model\Module'), 'find'),
-                array_keys($onlySelected ? array_filter($this->incompatibleModules) : $this->incompatibleModules)
-            )
-        );
+        $result = array();
+
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\Module')->findByEnabled(true) as $module) {
+            $key = $module->getMarketplaceID();
+
+            if (isset($this->incompatibleModules[$key]) && (!$onlySelected || $this->incompatibleModules[$key]))  {
+                $result[$key] = $module;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -278,7 +283,7 @@ class Cell extends \XLite\Base\Singleton
             return $this->addEntry($hash, 'Module\Marketplace', array($module, $toUpgrade));
 
         } elseif ($module->getEnabled()) {
-            $this->incompatibleModules[$module->getModuleID()] = false;
+            $this->incompatibleModules[$module->getMarketplaceID()] = false;
         }
     }
 
