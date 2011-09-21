@@ -439,7 +439,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     protected function getDeletedProduct()
     {
-        if (!isset($this->dumpProduct) && $this->getPrice() && $this->getName()) {
+        if (!isset($this->dumpProduct) && $this->getName()) {
             $this->dumpProduct = new \XLite\Model\Product();
             $this->dumpProduct->setPrice($this->getPrice());
             $this->dumpProduct->setName($this->getName());

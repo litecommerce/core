@@ -14,7 +14,7 @@
 
 <td class="disable">
   {* :FIXME: see the FlexyCompiler *}
-  <input IF="isModuleToDisable(entry)" id="toDisable{entry.getModuleID()}" type="checkbox" name="toDisable[{entry.getModuleID()}]" value="1" disabled="disabled" checked="1" />
-  <input IF="!isModuleToDisable(entry)" id="toDisable{entry.getModuleID()}" type="checkbox" name="toDisable[{entry.getModuleID()}]" value="1" />
-  <label for="toDisable{entry.getModuleID()}">{t(#Disable#)}</label>
+  <input IF="isModuleToDisable(entry)" id="toDisable{entry.getMarketplaceID()}" type="checkbox" name="toDisable[{entry.getMarketplaceID()}]" value="1" disabled="disabled" checked="1" />
+  <input IF="!isModuleToDisable(entry)" id="toDisable{entry.getMarketplaceID()}" type="checkbox" name="toDisable[{entry.getMarketplaceID()}]" value="1" />
+  <label for="toDisable{entry.getMarketplaceID()}">{t(#Disable#)}</label>
 </td>

@@ -665,8 +665,8 @@ function getDisabledFunctions()
         'preg_split', 'preg_quote', 'preg_grep', 'preg_last_error',
         'ctype_alpha', 'ctype_digit',
         'filter_var', 'filter_var_array', 'hash_hmac', 'json_encode',
-        'json_decode', 'mysql_query', 'mysql_error', 'mysql_get_client_info',
-        'mysql_get_server_info', 'spl_autoload_register', 'spl_autoload_unregister', 'spl_autoload_functions',
+        'json_decode', 'mysql_query', 'mysql_error',
+        'spl_autoload_register', 'spl_autoload_unregister', 'spl_autoload_functions',
         'class_parents', 'class_implements', 'spl_object_hash', 'iterator_to_array',
         'simplexml_load_file', 'constant',
         'sleep', 'flush', 'htmlspecialchars', 'htmlentities',
@@ -1079,6 +1079,14 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
             if (version_compare($version, constant('LC_MYSQL_VERSION_MIN')) < 0) {
                 $result = false;
                 $errorMsg = xtr('MySQL version must be :minver as a minimum.', array(':minver' => constant('LC_MYSQL_VERSION_MIN')));
+
+            } else {
+
+                // Check for InnoDb support
+                if (!\Includes\Utils\Database::isInnoDBSupported()) {
+                    $result = false;
+                    $errorMsg = xtr('MySQL server doesn\'t support InnoDB engine. It is required for LiteCommerce operation');
+                }
             }
 
         } else {
@@ -3240,11 +3248,11 @@ function module_cfg_install_db(&$params)
                 }
 
                 // Check if config.php file is writeable
-                if (!@is_writable(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
+                if (!$checkError && !@is_writable(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
                     fatal_error(xtr('Cannot open file \':filename\' for writing. To install the software, please correct the problem and start the installation again...', array(':filename' => constant('LC_CONFIG_FILE'))));
                     $checkError = true;
 
-                } else {
+                } elseif (!$checkError) {
                     // Check if LiteCommerce tables is already exists
 
                     $mystring = '';
