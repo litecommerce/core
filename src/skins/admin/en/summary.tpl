@@ -55,12 +55,11 @@ function setVisible(element_id)
 
 <tr>
   <td class="setting-name">MySQL server:</td>
-  <td>{mysql_server:h}</td>
-</tr>
-
-<tr>
-  <td class="setting-name">MySQL client:</td>
-  <td>{mysql_client:h}</td>
+  <td>
+    <span>{mysql_server:h}&nbsp;</span>
+    <span IF="innodb_support">(InnoDB engine support enabled)</span>
+    <span IF="!innodb_support" class="error-message">Warning! InnoDB engine is not supported. It is required for LiteCommerce operation</span>
+  </td>
 </tr>
 
 <tr>

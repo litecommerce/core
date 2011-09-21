@@ -21,7 +21,13 @@
   <tr FOREACH="getStats(),idx,row" class="dialog-box">
     <td class="title">{inc(idx)}.</td>
     <td FOREACH="row,idx1,val">
-      <a IF="val" href="{buildURL(#product#,##,_ARRAY_(#product_id#^val.product.product_id))}">{val.name}</a>
+      {if:val}
+        {if:val.product.product_id}
+          <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^val.product.product_id))}">{val.name}</a>
+        {else:}
+          <span>{val.name} ({t(#deleted#)})</span>
+        {end:}
+      {end:}
       <span IF="!val">&mdash;</span>
     </td>
   </tr>
