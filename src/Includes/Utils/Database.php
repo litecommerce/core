@@ -325,6 +325,33 @@ abstract class Database extends \Includes\Utils\AUtils
     }
 
     /**
+     * Checks InnoDB support
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    public static function isInnoDBSupported()
+    {
+        $innodbFound = false;
+    
+        $result = static::getHandler()->query('SHOW ENGINES');
+
+        if ($result && is_array($result)) {
+
+            foreach ($result as $row) {
+
+                if (0 === strcasecmp('InnoDB', $row['Engine'])) {
+                    $innodbFound = true;
+                    break;
+                }
+            }
+        }
+
+        return $innodbFound;
+    }
+
+    /**
      * Execute a set of SQL queries from file
      *
      * :FIXME: must be completely revised

@@ -161,11 +161,11 @@ class Settings extends \XLite\Controller\Admin\AAdmin
                 break;
 
             case 'mysql_server':
-                $return = mysql_get_server_info();
+                $return = \Includes\Utils\Database::getDbVersion();
                 break;
 
-            case 'mysql_client':
-                $return = mysql_get_client_info();
+            case 'innodb_support':
+                $return = \Includes\Utils\Database::isInnoDBSupported();
                 break;
 
             case 'root_folder':
