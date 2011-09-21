@@ -3260,11 +3260,11 @@ function module_cfg_install_db(&$params)
                 }
 
                 // Check if config.php file is writeable
-                if (!@is_writable(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
+                if (!$checkError && !@is_writable(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
                     fatal_error(xtr('Cannot open file \':filename\' for writing. To install the software, please correct the problem and start the installation again...', array(':filename' => constant('LC_CONFIG_FILE'))));
                     $checkError = true;
 
-                } else {
+                } elseif (!$checkError) {
                     // Check if LiteCommerce tables is already exists
 
                     $mystring = '';
