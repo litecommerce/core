@@ -1645,7 +1645,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
         foreach ($surcharges as $surcharge) {
             if ($surcharge->getAvailable() && (!isset($include) || $surcharge->getInclude() == $include)) {
-                $subtotal += $surcharge->getValue();
+                $subtotal += $this->getCurrency()->roundValue($surcharge->getValue());
             }
         }
 
