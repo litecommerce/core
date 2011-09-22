@@ -69,6 +69,7 @@ class Admin extends \XLite\View\AView
         $list = parent::getCSSFiles();
 
         $list[] = 'modules/CDev/FileAttachments/admin.css';
+        $list[] = 'browse_server/icons.css';
 
         return $list;
     }

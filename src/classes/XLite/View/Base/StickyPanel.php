@@ -25,56 +25,69 @@
  * @since     1.0.10
  */
 
-namespace XLite\Module\CDev\FileAttachments\Model\Repo\Product\Attachment;
+namespace XLite\View\Base;
 
 /**
- * Product sttachment's storages repository
+ * Sticky panel 
  * 
  * @see   ____class_see____
  * @since 1.0.10
  */
-class Storage extends \XLite\Model\Repo\Base\Storage
+abstract class StickyPanel extends \XLite\View\Container
 {
     /**
-     * Subdirectory name 
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    const SUBDIRECTORY = 'files';
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'js/stickyPanel.js';
+
+        return $list;
+    }
 
     /**
-     * Get storage name
+     * Register CSS files
      *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'css/stickyPanel.css';
+
+        return $list;
+    }
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/sticky_panel.tpl';
+    }
+
+    /**
+     * Get class 
+     * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.10
      */
-    public function getStorageName()
+    protected function getClass()
     {
-        return 'attachments';
+        return 'sticky-panel';
     }
-
-    /**
-     * Get file system images storage root path
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getFileSystemRoot()
-    {
-        return LC_DIR_VAR . static::SUBDIRECTORY . LC_DS . $this->getStorageName() . LC_DS;
-    }
-
-    /**
-     * Get web images storage root path
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getWebRoot()
-    {
-        return LC_VAR_URL . '/' . static::SUBDIRECTORY . '/' . $this->getStorageName() . '/';
-    }
-
 }
-

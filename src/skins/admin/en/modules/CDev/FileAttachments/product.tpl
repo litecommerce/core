@@ -20,6 +20,7 @@
       fileObject="attachments" />
   </div>
 
+  {if:product.attachments.count()}
   <widget class="XLite\Module\CDev\FileAttachments\View\Form\Attachments" product="{getProduct()}" name="product_attachments" />
 
     <ul class="files" IF="product.getAttachments()">
@@ -31,7 +32,7 @@
 
           <img src="images/spacer.gif" alt="" class="separator first-separator" />
 
-          <img src="{attachment.storage.getMimeIconURL()}" alt="{t(attachment.storage.mimeName)}" class="mime-icon" />
+          <img src="images/spacer.gif" alt="{t(attachment.storage.mimeName)}" class="mime-icon {attachment.storage.getMimeClass()}" />
 
           <a class="name" href="{attachment.storage.getURL()}">{attachment.storage.getFileName()}</a>
           <span IF="attachment.storage.getSize()" class="size">({formatSize(attachment.storage.getSize())})</span>
@@ -71,4 +72,8 @@
       </li>
     </ul>
 
+    <widget class="XLite\Module\CDev\FileAttachments\View\Panel\Product" />
+
   <widget name="product_attachments" end />
+  {end:}
+</div>

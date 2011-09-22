@@ -19,7 +19,7 @@
 
       <ul>
         <li FOREACH="getTabberPages(),tabPage" class="tab{if:tabPage.selected}-current{end:}">
-          <a href="{tabPage.url:h}">{tabPage.title}</a>
+          <a href="{tabPage.url}">{tabPage.title}</a>
         </li>
       </ul>
 

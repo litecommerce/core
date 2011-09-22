@@ -71,5 +71,32 @@ class Storage extends \XLite\Model\Base\Storage
 
     // }}}
 
+    // {{{ Service operations
+
+    /**
+     * Get valid file system storage root
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function getValidFileSystemRoot()
+    {
+        $path = parent::getValidFileSystemRoot();
+
+        if (!file_exists($path . LC_DS . '.htaccess')) {
+            file_put_contents(
+                $path . LC_DS . '.htaccess',
+                'Options -Indexes' . PHP_EOL
+                . '<IfModule mod_access.c>' . PHP_EOL
+                . '    Allow from all' . PHP_EOL
+                . '</IfModule>' . PHP_EOL
+            );
+        }
+
+        return $path;
+    }
+
+    // }}}
 }
 

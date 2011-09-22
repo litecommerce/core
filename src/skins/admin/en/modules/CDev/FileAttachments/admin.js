@@ -14,7 +14,7 @@ jQuery().ready(
   function () {
 
     jQuery('.product-attachments ul .name').click(
-      function () {
+      function (event) {
         event.stopPropagation();
         self.location = this.href;
 
@@ -69,6 +69,12 @@ jQuery().ready(
       function (event) {
         event.stopPropagation();
         return false;
+      }
+    );
+    jQuery('.product-attachments ul .move').mousedown(
+      function () {
+        jQuery(this).parents('li').removeClass('expanded');
+        jQuery(this).parents('li').find('.info').hide();
       }
     );
     jQuery('.product-attachments ul').sortable(

@@ -10,11 +10,14 @@
  * @since     1.0.10
  */
 
+.product-attachments {
+  width: 748px;
+}
+
 li.attachment {
   border: 1px solid #d7e1e8;
   cursor: pointer;
   margin: 10px 0px;
-  width: 748px;
 }
 
 li.attachment .row {
@@ -47,13 +50,11 @@ li.attachment .separator {
 }
 
 li.attachment .first-separator {
-  margin-left: 3px;
-  margin-right: 12px;
+  margin-left: 2px;
+  margin-right: 7px;
 }
 li.attachment .mime-icon {
-  width: 13px;
-  height: 16px;
-  margin-right: 6px;
+  margin-right: 4px;
 }
 
 li.attachment .name {
@@ -80,7 +81,7 @@ li.attachment .switcher img {
   cursor: pointer;
 }
 
-li.attachment li.expanded .switcher img {
+li.attachment.expanded .switcher img {
   background-position: left -19px;
 }
 
@@ -103,8 +104,52 @@ li.attachment .remove img {
 
 li.attachment .info {
   clear: both;
-  padding: 17px;
+  padding: 13px 18px;
+}
+
+li.attachment .info table.form td {
+  padding-top: 7px;
+  padding-bottom: 8px;
+}
+
+li.attachment .info table.form td * {
+  font-size: 14px;
+}
+
+li.attachment .info table.form input[type="text"] {
+  padding: 4px;
+}
+
+li.attachment .info table.form td.label {
+  padding-right: 12px;
+  vertical-align: top;
+}
+
+li.attachment .info table.form tr.title input {
+  width: 430px;
+}
+
+li.attachment .info table.form tr.description textarea {
+  width: 492px;
+  height: 55px;
+}
+
+li.attachment .info .reupload-file {
+  padding-left: 83px;
+  padding-top: 4px;
 }
 
 li.attachment .info button.reupload {
+  padding-left: 2px;
+}
+
+li.attachment .info button.reupload span {
+  background: transparent url(images/upload_icon.png) no-repeat left 1px;
+  padding-left: 23px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.product-attachments .sticky-panel {
+  margin-top: 50px;
 }

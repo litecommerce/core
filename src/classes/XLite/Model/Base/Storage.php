@@ -204,7 +204,7 @@ abstract class Storage extends \XLite\Model\AEntity
                 $tmp = $subkey ? $cell['tmp_name'][$subkey] : $cell['tmp_name'];
                 $basename = $subkey ? $cell['name'][$subkey] : $cell['name'];
 
-                $root = $this->getRepository()->getFileSystemRoot();
+                $root = $this->getValidFileSystemRoot();
 
                 $path = \Includes\Utils\FileManager::getUniquePath($root, $basename);
 
@@ -245,7 +245,7 @@ abstract class Storage extends \XLite\Model\AEntity
     {
         $result = true;
 
-        $root = $this->getRepository()->getFileSystemRoot();
+        $root = $this->getValidFileSystemRoot();
 
         if (0 === strncmp($root, $path, strlen($root))) {
 
@@ -349,9 +349,9 @@ abstract class Storage extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.10
      */
-    public function getMimeIconURL()
+    public function getMimeClass()
     {
-        return 'images/spacer.gif';
+        return 'mime-icon-' . ($this->getExtension() ?: 'unknown');
     }
 
     /**
@@ -363,7 +363,9 @@ abstract class Storage extends \XLite\Model\AEntity
      */
     public function getMimeName()
     {
-        return 'Unknown';
+        $ext = $this->getExtension();
+
+        return $ext ? ($ext . ' file type') : '';
     }
 
     /**
@@ -435,7 +437,7 @@ abstract class Storage extends \XLite\Model\AEntity
 
         list($path, $isTempFile) = $this->getLocalPath();
 
-        $result = $this->renewByPath($path);
+        $result = file_exists($path) && $this->renewByPath($path);
 
         if ($isTempFile || !$result) {
             \Includes\Utils\FileManager::deleteFile($path);
@@ -493,5 +495,20 @@ abstract class Storage extends \XLite\Model\AEntity
         }
 
         return array($path, $isTempFile);
+    }
+
+    /**
+     * Get valid file system storage root 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function getValidFileSystemRoot()
+    {
+        $path = $this->getRepository()->getFileSystemRoot();
+        \Includes\Utils\FileManager::mkdirRecursive($path);
+
+        return $path;
     }
 }

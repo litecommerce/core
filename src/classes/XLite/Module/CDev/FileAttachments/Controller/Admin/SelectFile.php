@@ -144,6 +144,7 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
         $attachment = $this->getAttachment();
 
         return array(
+            'target'     => 'product',
             'page'       => \XLite\Core\Request::getInstance()->fileObject,
             'product_id' => $attachment->getProduct()->getProductId(),
         );
@@ -152,13 +153,13 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
     /**
      * Get attachment 
      * 
-     * @return \XLite\Module\CDev\FileAttachments\Model\Product\Arttachment
+     * @return \XLite\Module\CDev\FileAttachments\Model\Product\Attachment
      * @see    ____func_see____
      * @since  1.0.10
      */
     protected function getAttachment()
     {
-        return \XLite\Core\Database::getRepo('XLite\Module\CDev\FileAttachments\Model\Product\Arttachment')
+        return \XLite\Core\Database::getRepo('XLite\Module\CDev\FileAttachments\Model\Product\Attachment')
             ->find(\XLite\Core\Request::getInstance()->objectId);
     }
 
@@ -241,6 +242,24 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
                 'Failed to re-upload attachment'
             );
         }
+    }
+
+    /**
+     * Get redirect target
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function getRedirectTarget()
+    {
+        $target = parent::getRedirectTarget();
+
+        if ('attachment' == $target) {
+            $target = 'product';
+        }
+
+        return $target;
     }
 
     // }}}

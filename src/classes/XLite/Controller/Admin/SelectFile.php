@@ -127,11 +127,23 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
 
         $this->setReturnURL(
             $this->buildURL(
-                $this->getObjectTarget(),
+                $this->getRedirectTarget(),
                 '',
                 $this->getParamsObject()
             )
         );
+    }
+
+    /**
+     * Get redirect target 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function getRedirectTarget()
+    {
+        return $this->getObjectTarget();
     }
 
     // {{{ Category image

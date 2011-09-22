@@ -25,56 +25,25 @@
  * @since     1.0.10
  */
 
-namespace XLite\Module\CDev\FileAttachments\Model\Repo\Product\Attachment;
+namespace XLite\Module\CDev\FileAttachments\View\Panel;
 
 /**
- * Product sttachment's storages repository
+ * Product attachments panel
  * 
  * @see   ____class_see____
  * @since 1.0.10
  */
-class Storage extends \XLite\Model\Repo\Base\Storage
+class Product extends \XLite\View\Base\StickyPanel
 {
     /**
-     * Subdirectory name 
-     */
-    const SUBDIRECTORY = 'files';
-
-    /**
-     * Get storage name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
-     */
-    public function getStorageName()
-    {
-        return 'attachments';
-    }
-
-    /**
-     * Get file system images storage root path
+     * Return templates directory name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getFileSystemRoot()
+    protected function getDir()
     {
-        return LC_DIR_VAR . static::SUBDIRECTORY . LC_DS . $this->getStorageName() . LC_DS;
+        return 'modules/CDev/FileAttachments/panel';
     }
-
-    /**
-     * Get web images storage root path
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getWebRoot()
-    {
-        return LC_VAR_URL . '/' . static::SUBDIRECTORY . '/' . $this->getStorageName() . '/';
-    }
-
 }
-
