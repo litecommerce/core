@@ -12,13 +12,33 @@
  * @ListChild (list="product.details.page", weight="40")
  *}
 
-<div class="tabs">
-  <ul class="tabs primary">
-    <li class="active"><a href="#description" class="active">{t(#Description#)}</a></li>
-    <!--li><a href="#taf">{t(#Tell a friend#)}</a></li>
-    <li><a href="#cr">{t(#Customer reviews#)}</a></li>
-    <li><a href="#rp">{t(#Related products#)}</a></li-->
-  </ul>
-</div>
+<div IF="getTabs()" class="product-details-tabs">
 
-{displayViewListContent(#product.details.page.tabs#)}
+  <div class="tabs">
+    <ul class="tabs primary">
+      <li FOREACH="getTabs(),tab"><a href="#{tab.id:h}">{t(tab.name)}</a></li>
+    </ul>
+  </div>
+
+  <div FOREACH="getTabs(),tab" id="{tab.id:h}">
+    {if:tab.template}
+      <widget template="{tab.template}" />
+
+    {else:}
+      {if:tab.widget}
+        <widget class="{tab.widget}" product="{product}"/>
+
+      {else:}
+        {if:tab.list}
+          {displayViewListContent(tab.list,_ARRAY_(#product#^product))}
+        {end:}
+      {end:}
+    {end:}
+  </div>
+
+<script type="text/javascript">
+<!--
+jQuery('.product-details-tabs"').tabs();
+-->
+</script>
+</div>

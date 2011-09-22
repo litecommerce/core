@@ -116,6 +116,18 @@ class Attachment extends \XLite\Model\Base\I18n
         return $this->storage;
     }
 
+    /**
+     * Get public title 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    public function getPublicTitle()
+    {
+        return $this->getTitle() ?: $this->getStorage()->getFileName();
+    }
+
     // }}}
 }
 

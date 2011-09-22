@@ -36,6 +36,15 @@ namespace XLite\View\Product\Details\Customer\Page;
 abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
 {
     /**
+     * Tabs (cache)
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.10
+     */
+    protected $tabs;
+
+    /**
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
@@ -60,8 +69,88 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
+
         $list['js'][] = 'js/jquery.blockUI.js';
 
         return $list;
     }
+
+    // {{{ Tabs
+
+    /**
+     * Get tabs 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function getTabs()
+    {
+        if (!isset($this->tabs)) {
+            $list = $this->defineTabs();
+            $i = 0;
+            foreach ($list as $k => $data) {
+                $list[$k] = array(
+                    'id'      => 'product-details-tab-' . $i,
+                    'name'    => $k,
+                );
+
+                if (is_string($data)) {
+                    $list[$k]['template'] = $data;
+
+                } elseif (is_array($data) && isset($data['template'])) {
+                    $list[$k]['template'] = $data['template'];
+
+                } elseif (is_array($data) && isset($data['list'])) {
+                    $list[$k]['list'] = $data['list'];
+
+                } elseif (is_array($data) && isset($data['widget'])) {
+                    $list[$k]['widget'] = $data['widget'];
+
+                } else {
+                    unset($list[$k]);
+                }
+
+                $i++;
+            }
+
+            $this->tabs = $list;
+        }
+
+        return $this->tabs;
+    }
+
+    /**
+     * Define tabs 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function defineTabs()
+    {
+        $list = array();
+
+        if ($this->hasDescription()) {
+            $list['Description'] = array(
+                'list' => 'product.details.page.tab.description'
+            );
+        }
+
+        return $list;
+    }
+
+    /**
+     * Check - product has Description tab or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function hasDescription()
+    {
+        return 0 < strlen($this->getProduct()->getDescription());
+    }
+
+    // }}}
 }

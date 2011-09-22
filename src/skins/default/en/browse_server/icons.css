@@ -1,0 +1,130 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * MIME-type icons styles
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.10
+ */
+img.mime-icon {
+  width: 16px;
+  height: 16px;
+  background: transparent url(images/file_icons.png) no-repeat top left;
+}
+
+img.mime-icon-unknown {
+  background-position: left -16px;
+}
+
+img.mime-icon-pdf {
+  background-position: left -32px;
+}
+
+img.mime-icon-doc,
+  img.mime-icon-xls,
+  img.mime-icon-txt,
+  img.mime-icon-rtf,
+  img.mime-icon-asc,
+  img.mime-icon-docx,
+  img.mime-icon-readme,
+  img.mime-icon-sdw,
+  img.mime-icon-sxg,
+  img.mime-icon-sxw,
+  img.mime-icon-utf8,
+  img.mime-icon-yml
+{
+  background-position: left -48px;
+}
+
+img.mime-icon-mp3,
+  img.mime-icon-mpeg,
+  img.mime-icon-avi,
+  img.mime-icon-aiff,
+  img.mime-icon-cda,
+  img.mime-icon-m3u,
+  img.mime-icon-m1a,
+  img.mime-icon-m4a,
+  img.mime-icon-midi,
+  img.mime-icon-mp2,
+  img.mime-icon-oga,
+  img.mime-icon-ogg,
+  img.mime-icon-pls,
+  img.mime-icon-rm,
+  img.mime-icon-3gp,
+  img.mime-icon-m2v,
+  img.mime-icon-mkv,
+  img.mime-icon-mjpg,
+  img.mime-icon-m4u,
+  img.mime-icon-m4v,
+  img.mime-icon-mov,
+  img.mime-icon-mp2v,
+  img.mime-icon-mp4,
+  img.mime-icon-mp4v,
+  img.mime-icon-mpg,
+  img.mime-icon-mtv,
+  img.mime-icon-mts,
+  img.mime-icon-ogv,
+  img.mime-icon-ogx,
+  img.mime-icon-wmv
+{
+  background-position: left -96px;
+}
+
+img.mime-icon-zip,
+  img.mime-icon-rar,
+  img.mime-icon-7z,
+  img.mime-icon-tar,
+  img.mime-icon-tgz,
+  img.mime-icon-gz,
+  img.mime-icon-bz2,
+  img.mime-icon-lz,
+  img.mime-icon-lzma,
+  img.mime-icon-lzo,
+  img.mime-icon-iso,
+  img.mime-icon-s7z,
+  img.mime-icon-ace,
+  img.mime-icon-arc,
+  img.mime-icon-arj,
+  img.mime-icon-ba,
+  img.mime-icon-cab,
+  img.mime-icon-cfs,
+  img.mime-icon-cpt,
+  img.mime-icon-dar,
+  img.mime-icon-dgc,
+  img.mime-icon-ha,
+  img.mime-icon-kgb,
+  img.mime-icon-lzh,
+  img.mime-icon-lzx,
+  img.mime-icon-sfx,
+  img.mime-icon-Z,
+  img.mime-icon-tbz2,
+  img.mime-icon-zoo,
+  img.mime-icon-zz,
+  img.mime-icon-yz1,
+  img.mime-icon-tlz,
+  img.mime-icon-uca,
+  img.mime-icon-uha,
+  img.mime-icon-z
+{
+  background-position: left -64px;
+}
+
+img.mime-icon-jpg,
+  img.mime-icon-png,
+  img.mime-icon-jpeg,
+  img.mime-icon-gif,
+  img.mime-icon-bmp,
+  img.mime-icon-psd
+{
+  background-position: left -80px;
+}
+
+img.mime-icon-exe,
+  img.mime-icon-msi,
+  img.mime-icon-com
+{
+  background-position: left -112px;
+}

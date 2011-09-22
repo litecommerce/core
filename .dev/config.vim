@@ -27,7 +27,7 @@ endfunction
 
 function LC_PHPSettings()
     nnoremap <C-a> :call LC_PhpDocFile()<CR>
-    inoremap <C-a> <C-R>=ClassName()<CR>
+    inoremap <C-a> <C-R>=NamespaceName()<CR>
     set foldenable
     set foldmethod=marker
     set foldmarker={{{,}}}
@@ -79,8 +79,9 @@ let g:pdv_cfg_vimOpts    = "// vim: set ts=4 sw=4 sts=4 et:"
 let g:pdv_cfg_php4always = 1
 let g:pdv_cfg_php4guess  = 0
 
-func! ClassName()
-    return substitute(substitute(substitute(expand("%:p"), '.\+test/classes/', '', 'g'), '/', '_', 'g'), '.php', '', '')
+
+func! NamespaceName()
+    return substitute(substitute(substitute(expand("%:p"), '.\+classes/', '', 'g'), '/', '\\', 'g'), '\\[a-zA-Z0-9]\+.php', '', '')
 endfunc
 
 func! CheckCS()
