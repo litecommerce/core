@@ -385,6 +385,21 @@ abstract class Storage extends \XLite\Model\AEntity
     }
 
     /**
+     * Prepare order before save data operation
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     * @PreRemove
+     */
+    public function prepareRemove()
+    {
+        if (!$this->isURL()) {
+            \Includes\Utils\FileManager::deleteFile($this->getRepository()->getFileSystemRoot() . $this->getPath());
+        }
+    }
+
+    /**
      * Save path into entity
      *
      * @param string $path Full path
