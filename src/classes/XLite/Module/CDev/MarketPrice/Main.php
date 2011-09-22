@@ -122,7 +122,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getSaveDifferenceInPercents(\XLite\Model\Product $product)
     {
-        return floor((static::getSaveDifferenceAbsolute($product) / $product->getMarketPrice()) * 100);
+        return min(99, round((static::getSaveDifferenceAbsolute($product) / $product->getMarketPrice()) * 100));
     }
 
     /**
@@ -136,9 +136,14 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getLabels(\XLite\Model\Product $product)
     {
-        return array(
-            'orange market-price' => static::getSaveDifferenceInPercents($product)
-                . '% ' . \XLite\Core\Translation::getInstance()->translate('less')
-        );
+        $result  = array();
+        $percent = static::getSaveDifferenceInPercents($product);
+
+        if (0 < $percent) {
+            $result['orange market-price'] = $percent . '% ' 
+                . \XLite\Core\Translation::getInstance()->translate('less');
+        }
+
+        return $result;
     }
 }
