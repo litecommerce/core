@@ -73,7 +73,7 @@ abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage i
      * @see    ____func_see____
      * @since  1.0.9
      */
-    protected function getSaveDifference(XLite\Model\Product $product)
+    protected function getSaveDifference(\XLite\Model\Product $product)
     {
         return \XLite\Module\CDev\MarketPrice\Main::getSaveDifferenceAbsolute($product);
     }
@@ -87,7 +87,7 @@ abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage i
      * @see    ____func_see____
      * @since  1.0.9
      */
-    protected function getLabels(XLite\Model\Product $product)
+    protected function getLabels(\XLite\Model\Product $product)
     {
         return \XLite\Module\CDev\MarketPrice\Main::getLabels($product);
     }
