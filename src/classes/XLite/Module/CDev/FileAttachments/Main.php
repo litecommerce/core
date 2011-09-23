@@ -40,7 +40,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.10
      */
     public static function getAuthorName()
     {
@@ -52,11 +52,11 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.10
      */
     public static function getMinorVersion()
     {
-        return '3';
+        return '1';
     }
 
     /**
@@ -64,7 +64,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.10
      */
     public static function getModuleName()
     {
@@ -76,7 +76,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.10
      */
     public static function getDescription()
     {

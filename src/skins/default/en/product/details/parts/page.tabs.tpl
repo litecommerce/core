@@ -16,11 +16,11 @@
 
   <div class="tabs">
     <ul class="tabs primary">
-      <li FOREACH="getTabs(),tab"><a href="#{tab.id:h}">{t(tab.name)}</a></li>
+      <li FOREACH="getTabs(),index,tab" class="{getTabClass(index,tab)}"><a href="#{tab.id:h}">{t(tab.name)}</a></li>
     </ul>
   </div>
 
-  <div FOREACH="getTabs(),tab" id="{tab.id:h}">
+  <div FOREACH="getTabs(),tab" id="{tab.id:h}" class="tab-container">
     {if:tab.template}
       <widget template="{tab.template}" />
 
@@ -36,9 +36,4 @@
     {end:}
   </div>
 
-<script type="text/javascript">
-<!--
-jQuery('.product-details-tabs"').tabs();
--->
-</script>
 </div>

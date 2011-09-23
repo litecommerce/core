@@ -141,6 +141,21 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
     }
 
     /**
+     * Get tab class 
+     * 
+     * @param integer $index Tab index
+     * @param array   $tab   Tab
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function getTabClass($index, array $tab)
+    {
+        return 0 == $index ? 'active' : '';
+    }
+
+    /**
      * Check - product has Description tab or not
      * 
      * @return boolean
