@@ -94,7 +94,8 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function isShowMarketPrice(\XLite\Model\Product $product)
     {
-        return $product->getPrice() < $product->getMarketPrice();
+        return 0 < static::getProductPrice($product) 
+            && static::getProductMarketPrice($product) > static::getProductPrice($product);
     }
 
     /**
@@ -108,7 +109,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getSaveDifferenceAbsolute(\XLite\Model\Product $product)
     {
-        return $product->getMarketPrice() - $product->getPrice();
+        return static::getProductMarketPrice($product) - static::getProductPrice($product);
     }
 
     /**
@@ -145,5 +146,33 @@ abstract class Main extends \XLite\Module\AModule
         }
 
         return $result;
+    }
+
+    /**
+     * Wrapper to get product price
+     *
+     * @param \XLite\Model\Product $product Current product
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected static function getProductPrice(\XLite\Model\Product $product)
+    {
+        return $product->getListPrice();
+    }
+
+    /**
+     * Wrapper to get product list price
+     *
+     * @param \XLite\Model\Product $product Current product
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected static function getProductMarketPrice(\XLite\Model\Product $product)
+    {
+        return $product->getMarketPrice();
     }
 }
