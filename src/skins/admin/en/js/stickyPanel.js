@@ -32,7 +32,10 @@ jQuery().ready(
         var panelHeight = box.height();
         var parentContainerTop = box.parent().offset().top;
 
-        box.find('.centered-box').width(panel.width());
+        var centeredBox = box.find('.centered-box').eq(0);
+        if (centeredBox.length) {
+          centeredBox.width(panel.outerWidth());
+        }
 
         // Check scroll stste - run reposition or not
         function checkRepositionEvent()

@@ -12,7 +12,6 @@
 
 .sticky-panel {
   position: relative;
-  text-align: center;
   margin: 0px;
   padding: 0px;
 }
@@ -20,6 +19,7 @@
 .centered-box {
   margin: 0px auto;
   padding: 0px;
+  height: 100%
 }
 
 .sticky-panel .box {
