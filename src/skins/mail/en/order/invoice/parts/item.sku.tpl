@@ -8,6 +8,6 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="invoice.item", weight="20")
+ * @ListChild (list="invoice.subitem", weight="10")
  *}
-<td class="sku">{item.getSku()}</td>
+<td class="sku">{t(#SKU#)} {item.getSku()}</td>
