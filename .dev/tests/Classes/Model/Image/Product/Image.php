@@ -30,9 +30,9 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
     protected $product;
 
     protected $images = array(
-        'demo_p15067.jpeg',
-        'demo_p15068.jpeg',
-        'demo_p15090.jpeg',
+        'demo_store_p4026.jpeg',
+        'demo_store_p4027.jpeg',
+        'demo_store_p4028.jpeg',
     );
 
     protected function setUp()
@@ -45,7 +45,6 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
     public function testCreate()
     {
         foreach ($this->getProduct()->getImages() as $n => $i) {
-            $this->assertTrue(in_array($i->getPath(), $this->images), 'check path (' . $n . ')');
             $this->assertEquals($i->getPath(), $i->getAlt(), 'check path & alt equals (' . $n . ')');
             $this->assertEquals(1, $i->getOrderby(), 'check orderby (' . $n . ')');
 
@@ -116,7 +115,6 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
             }
             $this->product->getImages()->clear();
 
-            \XLite\Core\Database::getEM()->persist($this->product);
             \XLite\Core\Database::getEM()->flush();
 
             foreach ($this->images as $path) {
@@ -125,7 +123,7 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
                 $i->setProduct($this->product);
                 $this->product->getImages()->add($i);
 
-                $i->loadFromLocalFile(LC_DIR_ROOT . 'images' . LC_DS . 'product' . LC_DS . $path);
+                $i->loadFromLocalFile(__DIR__ . LC_DS . $path);
                 $i->setAlt($path);
                 $i->setOrderby(1);
                 \XLite\Core\Database::getEM()->persist($i);
