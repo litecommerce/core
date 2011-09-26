@@ -124,7 +124,7 @@ abstract class Storage extends \XLite\Model\AEntity
     {
         return $this->isURL()
             ? \XLite\Core\Operator::getURLContent($this->getPath())
-            : \Includes\Utils\FileManager::read($this->getRepository()->getFileSystemRoot() . $this->getPath());
+            : \Includes\Utils\FileManager::read($this->getFileSystemRoot() . $this->getPath());
     }
 
     /**
@@ -139,7 +139,7 @@ abstract class Storage extends \XLite\Model\AEntity
         return $this->isURL()
             ? $this->getPath()
             : \XLite::getInstance()->getShopURL(
-                $this->getRepository()->getWebRoot() . $this->getPath(),
+                $this->getWebRoot() . $this->getPath(),
                 \XLite\Core\Request::getInstance()->isHTTPS()
             );
     }
@@ -395,7 +395,7 @@ abstract class Storage extends \XLite\Model\AEntity
     {
         if (!$this->isURL($path)) {
 
-            $path = $this->getRepository()->getFileSystemRoot() . (is_null($path) ? $this->getPath() : $path);
+            $path = $this->getFileSystemRoot() . (is_null($path) ? $this->getPath() : $path);
 
             \Includes\Utils\FileManager::deleteFile($path);
         }
@@ -428,7 +428,7 @@ abstract class Storage extends \XLite\Model\AEntity
     public function prepareRemove()
     {
         if (!$this->isURL()) {
-            \Includes\Utils\FileManager::deleteFile($this->getRepository()->getFileSystemRoot() . $this->getPath());
+            \Includes\Utils\FileManager::deleteFile($this->getFileSystemRoot() . $this->getPath());
         }
     }
 
@@ -586,7 +586,7 @@ abstract class Storage extends \XLite\Model\AEntity
 
         } else {
 
-            $path = $this->getRepository()->getFileSystemRoot() . $this->getPath();
+            $path = $this->getFileSystemRoot() . $this->getPath();
         }
 
         return array($path, $isTempFile);
@@ -601,10 +601,34 @@ abstract class Storage extends \XLite\Model\AEntity
      */
     protected function getValidFileSystemRoot()
     {
-        $path = $this->getRepository()->getFileSystemRoot();
+        $path = $this->getFileSystemRoot();
         \Includes\Utils\FileManager::mkdirRecursive($path);
 
         return $path;
+    }
+
+    /**
+     * Get file system images storage root path
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function getFileSystemRoot()
+    {
+        return $this->getRepository()->getFileSystemRoot();
+    }
+
+    /**
+     * Get web images storage root path
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function getWebRoot()
+    {
+        return $this->getRepository()->getWebRoot();
     }
 
     // }}}

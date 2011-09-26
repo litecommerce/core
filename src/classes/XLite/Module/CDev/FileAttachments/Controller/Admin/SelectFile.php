@@ -102,10 +102,10 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
 
         if (isset($product)) {
             $attachment = new \XLite\Module\CDev\FileAttachments\Model\Product\Attachment();
+            $attachment->setProduct($product);
 
             if (call_user_func_array(array($attachment->getStorage(), $methodToLoad), $paramsToLoad)) {
 
-                $attachment->setProduct($product);
                 $product->addAttachments($attachment);
 
                 \XLite\Core\Database::getEM()->persist($attachment);

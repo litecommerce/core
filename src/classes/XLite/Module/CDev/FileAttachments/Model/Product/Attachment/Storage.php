@@ -97,6 +97,31 @@ class Storage extends \XLite\Model\Base\Storage
         return $path;
     }
 
+    /**
+     * Get file system images storage root path
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function getFileSystemRoot()
+    {
+        return parent::getFileSystemRoot() . $this->getAttachment()->getProduct()->getProductId() . LC_DS;
+    }
+
+    /**
+     * Get web images storage root path
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function getWebRoot()
+    {
+        return parent::getWebRoot() . $this->getAttachment()->getProduct()->getProductId() . '/';
+
+    }
+
     // }}}
 }
 
