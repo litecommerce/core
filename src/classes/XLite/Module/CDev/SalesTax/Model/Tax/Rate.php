@@ -140,7 +140,7 @@ class Rate extends \XLite\Model\AEntity
     protected $membership;
 
     /**
-     * Check - rate is applyed by specified zones and membership or nopt
+     * Check if rate is applied for specified zones and membership
      *
      * @param array                   $zones      Zone id list
      * @param \XLite\Model\Membership $membership Membership
@@ -149,12 +149,12 @@ class Rate extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isApplyed(
-        array $zones,
-        \XLite\Model\Membership $membership = null
-    ) {
+    public function isApplied(array $zones, \XLite\Model\Membership $membership = null) {
         return (!$this->getZone() || in_array($this->getZone()->getZoneId(), $zones))
-            && (!$this->getMembership() || ($membership && $this->getMembership()->getMembershipId() == $membership->getMembershipId()));
+            && (
+                !$this->getMembership() 
+                || ($membership && $this->getMembership()->getMembershipId() == $membership->getMembershipId())
+            );
     }
 
     // {{{ Calculation

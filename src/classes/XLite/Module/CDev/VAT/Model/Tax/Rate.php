@@ -182,7 +182,7 @@ class Rate extends \XLite\Model\AEntity
     }
 
     /**
-     * Check - rate is applyed by specified zones and membership or nopt
+     * Check if rate is applied by specified zones and membership
      *
      * @param array                                   $zones          Zone id list
      * @param \XLite\Model\Membership                 $membership     Membership OPTIONAL
@@ -192,7 +192,7 @@ class Rate extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isApplyed(
+    public function isApplied(
         array $zones,
         \XLite\Model\Membership $membership = null,
         \Doctrine\Common\Collections\Collection $productClasses = null

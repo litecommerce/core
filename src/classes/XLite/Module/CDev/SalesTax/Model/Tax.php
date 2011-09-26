@@ -109,7 +109,7 @@ class Tax extends \XLite\Model\Base\I18n
         $rates = array();
 
         foreach ($this->getRates() as $rate) {
-            if ($rate->isApplyed($zones, $membership, $productClasses) && !isset($rates[$rate->getPosition()])) {
+            if ($rate->isApplied($zones, $membership, $productClasses) && !isset($rates[$rate->getPosition()])) {
                 $rates[$rate->getPosition()] = $rate;
             }
         }
@@ -138,5 +138,4 @@ class Tax extends \XLite\Model\Base\I18n
 
         return array_shift($rates);
     }
-
 }
