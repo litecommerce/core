@@ -103,6 +103,17 @@ abstract class Storage extends \XLite\Model\AEntity
     protected $date = 0;
 
     /**
+     * Load error code
+     * 
+     * @var   mstring
+     * @see   ____var_see____
+     * @since 1.0.10
+     */
+    protected $loadError;
+
+    // {{{ Getters / setters
+
+    /**
      * Get body
      *
      * @return string
@@ -178,6 +189,62 @@ abstract class Storage extends \XLite\Model\AEntity
 
         return $result;
     }
+
+    /**
+     * Check file is URL-based or not
+     *
+     * @param string $path Path OPTIONAL
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isURL($path = null)
+    {
+        return (bool) preg_match('/^https?:\/\//Ss', is_null($path) ? $this->path : $path);
+    }
+
+    /**
+     * Get MIME type icon URL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    public function getMimeClass()
+    {
+        return 'mime-icon-' . ($this->getExtension() ?: 'unknown');
+    }
+
+    /**
+     * Get MIME type name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    public function getMimeName()
+    {
+        $ext = $this->getExtension();
+
+        return $ext ? ($ext . ' file type') : '';
+    }
+
+    /**
+     * Get load error code
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    public function getLoadError()
+    {
+        return $this->loadError;
+    }
+
+    // }}}
+
+    // {{{ Loading
 
     /**
      * Load from request
@@ -309,6 +376,10 @@ abstract class Storage extends \XLite\Model\AEntity
         return $result;
     }
 
+    // }}}
+
+    // {{{ Service operations
+
     /**
      * Remove file
      *
@@ -326,46 +397,6 @@ abstract class Storage extends \XLite\Model\AEntity
 
             \Includes\Utils\FileManager::deleteFile($path);
         }
-    }
-
-    /**
-     * Check file is URL-based or not
-     *
-     * @param string $path Path OPTIONAL
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isURL($path = null)
-    {
-        return (bool) preg_match('/^https?:\/\//Ss', is_null($path) ? $this->path : $path);
-    }
-
-    /**
-     * Get MIME type icon URL 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
-     */
-    public function getMimeClass()
-    {
-        return 'mime-icon-' . ($this->getExtension() ?: 'unknown');
-    }
-
-    /**
-     * Get MIME type name 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.10
-     */
-    public function getMimeName()
-    {
-        $ext = $this->getExtension();
-
-        return $ext ? ($ext . ' file type') : '';
     }
 
     /**
@@ -410,6 +441,8 @@ abstract class Storage extends \XLite\Model\AEntity
      */
     protected function savePath($path)
     {
+        $this->loadError = null;
+
         // Remove old file
         $toRemove = $this->path && $this->path != basename($path);
 
@@ -418,6 +451,8 @@ abstract class Storage extends \XLite\Model\AEntity
         $this->setFileName($this->path);
 
         $result = $this->renew() && $this->updatePathByMIME();
+
+        $result = $result && $this->checkSecurity();
 
         if ($result && $toRemove) {
 
@@ -479,6 +514,37 @@ abstract class Storage extends \XLite\Model\AEntity
     }
 
     /**
+     * Check storage security 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function checkSecurity()
+    {
+        return $this->checkPathExtension();
+    }
+
+    /**
+     * Check path extension 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function checkPathExtension()
+    {
+        $result = true;
+
+        if (preg_match('/\.(?:php3?|pl|cgi|py)$/Ss', $this->getPath())) {
+            $this->loadError = 'extension';
+            $result = false;
+        }
+
+        return $result;
+    }
+
+    /**
      * Get local path for file-based PHP functions
      *
      * @return string
@@ -526,4 +592,6 @@ abstract class Storage extends \XLite\Model\AEntity
 
         return $path;
     }
+
+    // }}}
 }

@@ -61,6 +61,11 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
         // Duplicate
         $this->assertTrue($storage->loadFromLocalFile(__DIR__ . '/../max_ava.png'), 'check loading (dup)');
         $this->assertRegExp('/^max_ava_\d+\.png$/Ss', $storage->getFileName(), 'check file name (rename)');
+
+        // Forbid extension
+        $this->assertFalse($storage->loadFromLocalFile(__FILE__), 'check loading (forbid ext)');
+        $this->assertEquals('extension', $storage->getLoadError(), 'check load error code');
+
     }
 
     public function testRemove()

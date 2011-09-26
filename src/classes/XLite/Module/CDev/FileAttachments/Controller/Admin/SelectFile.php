@@ -115,6 +115,13 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
                     'The attachment has been successfully added'
                 );
 
+            } elseif ('extension' == $attachment->getStorage()->getLoadError()) {
+
+                // Forbid extension
+                \XLite\Core\TopMessage::addError(
+                    'Failed to add attachment. File is forbidden to download'
+                );
+
             } else {
                 \XLite\Core\TopMessage::addError(
                     'Failed to add attachment'
