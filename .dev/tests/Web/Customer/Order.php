@@ -213,7 +213,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
         // Items
         $countTR = intval($this->getJSExpression('jQuery(".invoice-box .items tr").length'));
-        $this->assertEquals(count($order->getItems()) + 1, $countTR, 'TR count checking');
+        $this->assertEquals(count($order->getItems()) * 2 + 2, $countTR, 'TR count checking');
 
         $countTH = intval($this->getJSExpression('jQuery(".invoice-box .items th").length'));
         $this->assertEquals(5, $countTH, 'TH count checking');
