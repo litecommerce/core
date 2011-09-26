@@ -62,6 +62,116 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
     // {{{ Saved surcharges
 
     /**
+     * Get exclude surcharges (non-included)
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getExcludeSurcharges()
+    {
+        $list = array();
+
+        foreach ($this->getSurcharges() as $surcharge) {
+            if (!$surcharge->getInclude()) {
+                $list[] = $surcharge;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get included surcharges
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getIncludeSurcharges()
+    {
+        $list = array();
+
+        foreach ($this->getSurcharges() as $surcharge) {
+            if ($surcharge->getInclude()) {
+                $list[] = $surcharge;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get exclude surcharges (non-included) by type
+     * 
+     * @param string $type Type
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getExcludeSurchargesByType($type)
+    {
+        $list = array();
+
+        foreach ($this->getSurcharges() as $surcharge) {
+            if (!$surcharge->getInclude() && $surcharge->getType() == $type) {
+                $list[] = $surcharge;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get surcharge totals 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getSurchargeTotals()
+    {
+        $surcharges = array();
+
+        foreach ($this->getExcludeSurcharges() as $surcharge) {
+            if (!isset($surcharges[$surcharge->getType()])) {
+                $surcharges[$surcharge->getType()] = array(
+                    'name'      => $surcharge->getTypeName(),
+                    'cost'      => 0,
+                    'available' => $surcharge->getAvailable(),
+                    'count'     => 0,
+                    'lastName'  => null,
+                );
+            }
+
+            $surcharges[$surcharge->getType()]['cost'] += $surcharge->getValue();
+            $surcharges[$surcharge->getType()]['count']++;
+            $surcharges[$surcharge->getType()]['lastName'] = $surcharge->getName();
+        }
+
+        return $surcharges;
+    }
+
+    /**
+     * Get surcharge sum
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getSurchargeSum()
+    {
+        $total = 0;
+
+        foreach ($this->getExcludeSurcharges() as $s) {
+            $total += $s->getValue();
+        }
+
+        return $total;
+    }
+
+    /**
      * Get surcharge sum by type
      *
      * @param string $type Surcharge type
@@ -74,10 +184,8 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
     {
         $total = 0;
 
-        foreach ($this->getSurcharges() as $s) {
-            if ($s->getType() == $type) {
-                $total += $s->getValue();
-            }
+        foreach ($this->getExcludeSurchargesByType($type) as $s) {
+            $total += $s->getValue();
         }
 
         return $total;

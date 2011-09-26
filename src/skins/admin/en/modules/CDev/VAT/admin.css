@@ -1,0 +1,233 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Admin interface styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.0
+ */
+
+/**
+ * Edit tax page
+ */
+body.taxes #main {
+  max-width: 1000px;
+}
+
+.edit-vat-tax {
+  width: 692px;
+}
+
+.edit-vat-tax .top-note {
+  border: 1px solid #eeeeee;
+  padding: 0px;
+  margin-bottom: 21px;
+}
+
+.edit-vat-tax .top-note div {
+  border: 6px solid #f9f9f9;
+  margin: 0px;
+  line-height: 20px
+  font-size: 14px;
+  padding: 16px 22px;
+}
+
+.edit-vat-tax table.form {
+  padding-left: 4px;
+  padding-top: 3px;
+} 
+
+.edit-vat-tax table.form input {
+  width: 286px;
+}
+
+.edit-vat-tax table.form td.button {
+  padding-left: 12px;
+}
+
+.edit-vat-tax table.form td.button.enabled button.disabled-state {
+  display: none;
+}
+
+.edit-vat-tax table.form td.button.disabled button.enabled-state {
+  display: none;
+}
+
+
+.edit-vat-tax .vat-base {
+  padding-left: 2px;
+  padding-top: 23px;
+}
+
+.edit-vat-tax .vat-base p {
+  color: #456583;
+  font-size: 16px;
+  padding-left: 2px;
+  padding-bottom: 12px;
+}
+
+.edit-vat-tax .vat-base span {
+  color: #8f8f8f;
+  font-size: 16px;
+  padding: 0px 7px;
+}
+
+.edit-vat-tax .vat-base .tooltip-main {
+  display: inline-block;
+  float: none;
+  vertical-align: middle;
+  margin-top: -3px;
+  margin-left: 8px;
+}
+
+.edit-vat-tax .vat-base .tooltip-main img {
+  background: transparent url(../../../images/icon_help.png) no-repeat left top;
+  width: 23px;
+  height: 23px;
+}
+
+.edit-vat-tax h2 {
+  margin-top: 49px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+}
+
+.edit-vat-tax .rates-note {
+  font-size: 14px;
+  padding-left: 16px;
+}
+
+.edit-vat-tax table.data {
+  padding-top: 18px;
+  padding-left: 14px;
+  border-spacing: 0px;
+  padding-bottom: 1px;
+}
+
+.edit-vat-tax table.data th {
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e3e3e3;
+  font-weight: normal;
+  font-size: 16px;
+  padding: 12px 8px 8px;
+  color: #456583;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.edit-vat-tax table.data th.position {
+  padding-left: 15px;
+}
+
+.edit-vat-tax table.data td {
+  white-space: nowrap;
+  padding-left: 4px;
+  padding-right: 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid #e3e3e3;
+  padding-bottom: 2px;
+}
+
+.edit-vat-tax table.data tr:nth-child(2n+1) {
+  background-color: #f7f7f7;
+}
+
+.edit-vat-tax table.data tr:first-child {
+  background-color: transparent;
+}
+
+.edit-vat-tax table.data td.position {
+  padding-left: 13px;
+}
+
+.edit-vat-tax table.data td.position input {
+  width: 35px;
+}
+
+.edit-vat-tax table.data td.class select,
+.edit-vat-tax table.data td.membership select,
+.edit-vat-tax table.data td.zone select
+{
+  width: 180px;
+}
+
+.edit-vat-tax table.data td.rate {
+  padding-right: 4px;
+}
+
+.edit-vat-tax table.data td.rate * {
+  vertical-align: middle;
+}
+
+.edit-vat-tax table.data td.rate input {
+  width: 42px;
+}
+
+.edit-vat-tax table.data .percent {
+  font-size: 14px;
+  padding-left: 5px;
+  padding-right: 11px;
+}
+
+.edit-vat-tax table.data .separator {
+  background-color: #e3e3e3;
+  width: 1px;
+  height: 15px;
+  margin-top: 3px;
+}
+
+.edit-vat-tax table.data .rate-remove {
+  background: transparent url(../../../images/garbage.png) no-repeat left top;
+  border: none;
+  width: 18px;
+  height: 18px;
+  margin: 12px 7px 10px 10px;
+}
+
+.edit-vat-tax table.data .rate-remove span {
+  display: none;
+}
+
+.edit-vat-tax .new-rate {
+  margin-left: 16px;
+  margin-bottom: 5px;
+}
+
+.edit-vat-tax .buttons {
+  text-align: center;
+  width: 800px;
+  margin-top: 0px;
+}
+
+table.data tr.no-data-note {
+  display: none;
+}
+
+table.data.empty-data {
+  padding-bottom: 8px;
+}
+
+table.data.empty-data tr.no-data-note {
+  display: table-row;
+}
+
+table.data.empty-data tr.head {
+  display: none;
+}
+
+.edit-vat-tax table.data .no-data-note td {
+  text-align: left;
+  padding-top: 12px;
+  padding-bottom: 11px;
+  background-color: #f5f5f5;
+  padding-left: 20px;
+  font-size: 16px;
+  border-bottom: none;
+}
+
+.vat-help-textformError .formErrorContent {
+  width: 450px;
+}

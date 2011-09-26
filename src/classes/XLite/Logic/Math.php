@@ -35,6 +35,11 @@ namespace XLite\Logic;
  */
 class Math extends \XLite\Logic\ALogic
 {
+    /**
+     * Storage precision 
+     */
+    const STORE_PRECISION = 4;
+
     // {{{ Round
 
     /**

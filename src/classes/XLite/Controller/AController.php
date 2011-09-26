@@ -104,6 +104,42 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected $valid = true;
 
+    /**
+     * Hard (main page redict) redirect in AJAX request
+     * 
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $hardRedirect = false;
+
+    /**
+     * Internal (into popup ) redirect in AJAX request
+     * 
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $internalRedirect = false;
+
+    /**
+     * Popup silence close in AJAX request
+     * 
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $silenceClose = false;
+
+    /**
+     * Pure action flag in AJAX request
+     * Set to true if the client does not require any action
+     * 
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $pureAction = false;
 
     /**
      * Get target by controller class name
@@ -1087,6 +1123,11 @@ abstract class AController extends \XLite\Core\Handler
             // Popup silence close
             header('ajax-response-status: 277');
 
+        } elseif ($this->pureAction) {
+
+            // Pure action
+            header('ajax-response-status: 276');
+
         } else {
             header('ajax-response-status: 270');
         }
@@ -1173,6 +1214,22 @@ abstract class AController extends \XLite\Core\Handler
     {
         if ($this->isAJAX()) {
             $this->silenceClose = (bool) $flag;
+        }
+    }
+
+    /**
+     * Set pure action flag
+     * 
+     * @param boolean $flag Flag
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function setPureAction($flag = false)
+    {
+        if ($this->isAJAX()) {
+            $this->pureAction = (bool) $flag;
         }
     }
 

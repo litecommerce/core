@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="invoice.items.head", weight="10")
  *}
-<th class="name">{t(#Product#)}</th>
+<th class="name" colspan="{getItemDescriptionCount()}">{t(#Item description#)}</th>

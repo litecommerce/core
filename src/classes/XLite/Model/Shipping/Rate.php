@@ -235,6 +235,18 @@ class Rate extends \XLite\Base\SuperClass
     }
 
     /**
+     * Get taxable basis 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function getTaxableBasis()
+    {
+        return $this->getBaseRate() + $this->getMarkupRate();
+    }
+
+    /**
      * getMethodId
      *
      * @return integer

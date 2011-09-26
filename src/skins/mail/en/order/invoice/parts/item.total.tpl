@@ -8,6 +8,6 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="invoice.item", weight="50")
+ * @ListChild (list="invoice.item", weight="40")
  *}
-<td class="total">{item.getTotal()}</td>
+<td class="total" rowspan="2">{formatPrice(item.getTotal(),order.getCurrency())}</td>

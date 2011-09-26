@@ -49,7 +49,6 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 	{
 		return array(
 			'price'         => array(4.99, null),
-			'sale_price'    => array(3.54, null),
 			'sku'           => array('test_sku', null),
 			'enabled'       => array(true, null),
 			'weight'        => array(2.88, null),

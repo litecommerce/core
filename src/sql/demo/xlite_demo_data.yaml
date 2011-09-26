@@ -11,8 +11,6 @@
 XLite\Model\Config:
   - { name: shop_closed, category: General, translations: [{ code: en, option_name: 'Check this to temporary close the shop (not available in Demo store)' }] }
   - { name: customer_security, category: Security, value: N }
-  - { name: enable_sale_price, category: General, value: Y }
-  - { name: you_save, category: General, value: Y }
   - { name: membershipsCollection, category: Memberships, value: 'a:3:{i:1;a:3:{s:7:"orderby";s:2:"10";s:10:"membership";s:4:"Gold";s:13:"membership_id";i:1;}i:2;a:3:{s:7:"orderby";s:2:"20";s:10:"membership";s:8:"Platinum";s:13:"membership_id";i:2;}i:3;a:3:{s:7:"orderby";s:2:"30";s:10:"membership";s:10:"Wholesaler";s:13:"membership_id";i:3;}}' }
   - { name: location_address, category: Company, type: text, orderby: 390, value: '*Your company address*', translations: [{ code: en, option_name: 'Street address', option_comment: '' }] }
   - { name: location_state, category: Company, type: state, orderby: 410, value: '181', translations: [{ code: en, option_name: State, option_comment: '' }] }

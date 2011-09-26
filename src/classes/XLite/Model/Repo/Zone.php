@@ -226,7 +226,10 @@ class Zone extends \XLite\Model\Repo\ARepo
         }
 
         // Add default zone with zero weight
-        $applicableZones[0] = $this->findOneBy(array('is_default' => 1));
+        $defaultZone = $this->findOneBy(array('is_default' => 1));
+        if ($defaultZone) {
+            $applicableZones[0] = $defaultZone;
+        }
 
         // Sort zones list by weight in reverse order
         krsort($applicableZones);

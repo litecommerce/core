@@ -10,4 +10,9 @@
  * @since     1.0.0
  * @ListChild (list="invoice.item", weight="10")
  *}
-<td class="name">{displayViewListContent(#invoice.item.name#,_ARRAY_(#item#^item))}</td>
+<td class="name" colspan="{getItemDescriptionCount()}">
+  <a href="{item.getURL()}">{item.getName()}</a>
+  <div IF="isViewListVisible(#invoice.item.name#,_ARRAY_(#item#^item))" class="additional">
+    {displayViewListContent(#invoice.item.name#,_ARRAY_(#item#^item))}
+  </div>
+</td>

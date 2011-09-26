@@ -47,6 +47,20 @@ abstract class Surcharge extends \XLite\Model\AEntity
 
 
     /**
+     * Type names 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected static $typeNames = array(
+        self::TYPE_TAX      => 'Tax cost',
+        self::TYPE_DISCOUNT => 'Discount',
+        self::TYPE_SHIPPING => 'Shipping cost',
+        self::TYPE_HANDLING => 'Handling cost',
+    );
+
+    /**
      * ID
      *
      * @var   integer
@@ -146,6 +160,18 @@ abstract class Surcharge extends \XLite\Model\AEntity
     abstract public function getOrder();
 
     /**
+     * Get unque surcharge key 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getKey()
+    {
+        return $this->getType() . $this->getClass() . $this->name;
+    }
+
+    /**
      * Get modifier
      *
      * @return \XLite\Model\Order\Modifier
@@ -156,7 +182,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
     {
         $found = null;
 
-        foreach ($this->getOwner()->getModifiers() as $modifier) {
+        foreach ($this->getOrder()->getModifiers() as $modifier) {
             if ($modifier->isSurchargeOwner($this)) {
                 $found = $modifier;
                 break;
@@ -193,6 +219,34 @@ abstract class Surcharge extends \XLite\Model\AEntity
     {
         $info = $this->getInfo();
 
-        return $info ? $info->name : $this->getName();
+        return $info ? $info->name : $this->name;
+    }
+
+    /**
+     * Get type name 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getTypeName()
+    {
+        return isset(static::$typeNames[$this->getType()])
+            ? \XLite\Core\Translation::getInstance()->translate(static::$typeNames[$this->getType()])
+            : null;
+    }
+
+    /**
+     * Set value 
+     * 
+     * @param float $value Value
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function setValue($value)
+    {
+        $this->value = round($value, \XLite\Logic\Math::STORE_PRECISION);
     }
 }

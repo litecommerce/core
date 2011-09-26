@@ -13,9 +13,7 @@
 
 function Tooltip()
 {
-  var obj;
-
-  obj = this;
+  var obj = this;
 
   jQuery(this.pattern).each(
     function () {
