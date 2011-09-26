@@ -201,7 +201,7 @@ abstract class Storage extends \XLite\Model\AEntity
      */
     public function isURL($path = null)
     {
-        return (bool) preg_match('/^https?:\/\//Ss', is_null($path) ? $this->path : $path);
+        return (bool) preg_match('/^(https?|ftp):\/\//Ss', !isset($path) ? $this->getPath() : $path);
     }
 
     /**
@@ -352,9 +352,11 @@ abstract class Storage extends \XLite\Model\AEntity
 
         $result = true;
 
+        $name = basename(parse_url($url, PHP_URL_PATH));
+
         if ($copy2fs) {
 
-            $fn = tempnam(LC_DIR_TMP, 'load_file');
+            $fn = LC_DIR_TMP . $name;
 
             $file = \XLite\Core\Operator::getURLContent($url);
 
@@ -362,13 +364,13 @@ abstract class Storage extends \XLite\Model\AEntity
                 ? $this->loadFromLocalFile($fn)
                 : false;
 
-            if (!$result) {
-                \Includes\Utils\FileManager::deleteFile($fn);
-            }
+            \Includes\Utils\FileManager::deleteFile($fn);
 
         } else {
 
-            $this->path = $url;
+            $this->setPath($url);
+
+            $this->setFileName($name);
 
             $result = $this->renew();
         }
@@ -393,7 +395,7 @@ abstract class Storage extends \XLite\Model\AEntity
     {
         if (!$this->isURL($path)) {
 
-            $path = $this->getRepository()->getFileSystemRoot() . (is_null($path) ? $this->path : $path);
+            $path = $this->getRepository()->getFileSystemRoot() . (is_null($path) ? $this->getPath() : $path);
 
             \Includes\Utils\FileManager::deleteFile($path);
         }
@@ -444,11 +446,11 @@ abstract class Storage extends \XLite\Model\AEntity
         $this->loadError = null;
 
         // Remove old file
-        $toRemove = $this->path && $this->path != basename($path);
+        $toRemove = $this->getPath() && $this->getPath() != basename($path);
 
-        $pathToRemove = $this->path;
-        $this->path = basename($path);
-        $this->setFileName($this->path);
+        $pathToRemove = $this->getPath();
+        $this->setPath(basename($path));
+        $this->setFileName($this->getPath());
 
         $result = $this->renew() && $this->updatePathByMIME();
 
@@ -487,9 +489,21 @@ abstract class Storage extends \XLite\Model\AEntity
 
         list($path, $isTempFile) = $this->getLocalPath();
 
-        $result = file_exists($path) && $this->renewByPath($path);
+        if (!$isTempFile && $this->isURL($path)) {
+            $request = new \PEAR2\HTTP\Request($path);
+            $request->verb = 'HEAD';
+            $response = $request->sendRequest();
+            $exists = 200 == $response->code
+                && isset($response->headers->ContentLength)
+                && 0 < $response->headers->ContentLength;
 
-        if ($isTempFile || !$result) {
+        } else {
+            $exists = file_exists($path);
+        }
+
+        $result = $exists && $this->renewByPath($path);
+
+        if ($isTempFile || (!$result && !$this->isURL($path))) {
             \Includes\Utils\FileManager::deleteFile($path);
         }
 
@@ -559,7 +573,7 @@ abstract class Storage extends \XLite\Model\AEntity
 
             if (ini_get('allow_url_fopen')) {
 
-                $path = $this->path;
+                $path = $this->getPath();
 
             } else {
 
@@ -572,7 +586,7 @@ abstract class Storage extends \XLite\Model\AEntity
 
         } else {
 
-            $path = $this->getRepository()->getFileSystemRoot() . $this->path;
+            $path = $this->getRepository()->getFileSystemRoot() . $this->getPath();
         }
 
         return array($path, $isTempFile);
