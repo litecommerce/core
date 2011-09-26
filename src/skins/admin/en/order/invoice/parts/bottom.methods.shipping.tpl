@@ -10,7 +10,7 @@
  * @since     1.0.0
  * @ListChild (list="invoice.bottom.methods", weight="10")
  *}
-<td class="shipping" IF="shippingModifier.method">
+<td class="shipping" IF="getShippingModifier()&shippingModifier.getMethod()">
   <strong>{t(#Shipping method#)}:</strong>
-  {shippingModifier.method.name}
+  {shippingModifier.method.getName():h}
 </td>

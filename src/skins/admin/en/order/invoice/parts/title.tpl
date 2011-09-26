@@ -10,7 +10,7 @@
  * @since     1.0.0
  * @ListChild (list="invoice.base", weight="20")
  *}
-<h2 class="invoice">Invoice #{order.getOrderId()}</h2>
+<h2 class="invoice">{t(#Invoice X#,_ARRAY_(#id#^order.getOrderId()))}</h2>
 <div class="subhead">
   {formatTime(order.getDate())}
   <span>{t(#Grand total#)}: {formatPrice(order.getTotal(),order.getCurrency()):h}</span>
