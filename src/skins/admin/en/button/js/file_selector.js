@@ -10,6 +10,8 @@
  * @since     1.0.6
  */
 
+var lastFileSelectorButton;
+
 function PopupButtonFileSelector()
 {
   PopupButtonFileSelector.superclass.constructor.apply(this, arguments);
@@ -90,6 +92,7 @@ decorate(
       }
     );
 
+    lastFileSelectorButton = lastPopupButton;
   }
 );
 

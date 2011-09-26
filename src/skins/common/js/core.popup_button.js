@@ -10,6 +10,7 @@
  * @since     1.0.0
  */
 
+var lastPopupButton;
 
 function PopupButton()
 {
@@ -43,6 +44,8 @@ PopupButton.prototype.eachCallback = function (elem)
       function () {
         var urlParams;
         urlParams = core.getCommentedData(button, 'url_params');
+        lastPopupButton = jQuery(this);
+
         return loadDialogByLink(
           button,
           URLHandler.buildURL(urlParams),
