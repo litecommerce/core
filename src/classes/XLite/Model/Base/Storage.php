@@ -350,29 +350,28 @@ abstract class Storage extends \XLite\Model\AEntity
             $copy2fs = $this->getRepository()->isStoreRemote();
         }
 
-        $result = true;
+        $result = $this->isURL($url);
 
-        $name = basename(parse_url($url, PHP_URL_PATH));
+        if ($result) {
 
-        if ($copy2fs) {
+            $name = basename(parse_url($url, PHP_URL_PATH));
 
-            $fn = LC_DIR_TMP . $name;
+            if ($copy2fs) {
 
-            $file = \XLite\Core\Operator::getURLContent($url);
+                $fn = LC_DIR_TMP . $name;
+                $file = \XLite\Core\Operator::getURLContent($url);
+                $result = ($file && file_put_contents($fn, $file))
+                    ? $this->loadFromLocalFile($fn)
+                    : false;
 
-            $result = ($file && file_put_contents($fn, $file))
-                ? $this->loadFromLocalFile($fn)
-                : false;
+                \Includes\Utils\FileManager::deleteFile($fn);
 
-            \Includes\Utils\FileManager::deleteFile($fn);
+            } else {
 
-        } else {
-
-            $this->setPath($url);
-
-            $this->setFileName($name);
-
-            $result = $this->renew();
+                $this->setPath($url);
+                $this->setFileName($name);
+                $result = $this->renew();
+            }
         }
 
         return $result;
