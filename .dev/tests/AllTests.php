@@ -237,6 +237,30 @@ foreach (glob(LC_DIR_ROOT . 'var/log/selenium.*.html') as $f) {
     @unlink($f);
 }
 
+
+/**
+ * Class to sort out files gathered by RecursiveIteratorIterator
+ *
+ * @package    X-Lite_Tests
+ * @subpackage Main
+ * @see        ____class_see____
+ * @since      1.0.10
+ */
+class XLite_Tests_SortedIterator extends SplHeap
+{
+    public function __construct(Iterator $iterator)
+    {
+        foreach ($iterator as $item) {
+            $this->insert($item);
+        }
+    }
+
+    public function compare($a, $b)
+    {
+        return strcmp($b->getRealpath(), $a->getRealpath());
+    }
+};
+
 /**
  * Class to run all the tests
  *
@@ -251,7 +275,6 @@ class XLite_Tests_AllTests
      * Test suite main method
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -346,6 +369,7 @@ class XLite_Tests_AllTests
             }
         }
 
+
         if (isset($deploy) && !defined('DEPLOYMENT_TEST')) {
             define('DEPLOYMENT_TEST', true);
         }
@@ -390,8 +414,9 @@ class XLite_Tests_AllTests
 
             $dirIterator = new RecursiveDirectoryIterator($classesDir);
             $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+            $siterator   = new XLite_Tests_SortedIterator($iterator);
 
-            foreach ($iterator as $filePath => $fileObject) {
+            foreach ($siterator as $filePath) {
 
                 if (
                     preg_match($pattern, $filePath, $matches)
@@ -403,8 +428,8 @@ class XLite_Tests_AllTests
                     $matched = str_replace(LC_DS, '/', $matches[1]);
 
                     if (
-                        (!$includes || in_array($matched, $includes))
-                        && (!$excludes || !in_array($matched, $excludes))
+                        (!$includes || static::isPatternInArray($matched, $includes))
+                        && (!$excludes || !static::isPatternInArray($matched, $excludes))
                     ) {
 
                         $class = XLite_Tests_TestCase::CLASS_PREFIX
@@ -436,8 +461,9 @@ class XLite_Tests_AllTests
 
             $dirIterator = new RecursiveDirectoryIterator($classesDir);
             $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+            $siterator   = new XLite_Tests_SortedIterator($iterator);
 
-            foreach ($iterator as $filePath => $fileObject) {
+            foreach ($siterator as $filePath) {
 
                 if (
                     preg_match($pattern, $filePath, $matches)
@@ -449,8 +475,8 @@ class XLite_Tests_AllTests
                     $matched = str_replace(LC_DS, '/', $matches[1]);
 
                     if (
-                        (!$includes || in_array($matched, $includes))
-                        && (!$excludes || !in_array($matched, $excludes))
+                        (!$includes || static::isPatternInArray($matched, $includes))
+                        && (!$excludes || !static::isPatternInArray($matched, $excludes))
                     ) {
 
                         $classPrefix = !isset($deploy)
@@ -478,6 +504,38 @@ class XLite_Tests_AllTests
         error_reporting(E_ALL);
 
         return $suite;
+    }
+
+
+    /**
+     * Return regexp-pattern from array values
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getIncludesPattern(array $array)
+    {
+        array_walk(
+            $array,
+            create_function('&$v', '$v = preg_quote($v, "/");')
+        );
+
+        return '/(' . implode(')|(', $array) . ')/';
+    }
+
+    /**
+     * Returns true if $search matches to the patterns in the $subject array
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function isPatternInArray($search, $subject)
+    {
+        $result = preg_match(static::getIncludesPattern($subject), $search);
+
+        return $result;
     }
 }
 
