@@ -157,6 +157,48 @@ class Rate extends \XLite\Model\AEntity
             );
     }
 
+    /**
+     * Set zone
+     *
+     * @param \XLite\Model\Zone $zone Zone OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setZone(\XLite\Model\Zone $zone = null)
+    {
+        $this->zone = $zone;
+    }
+
+    /**
+     * Set product class
+     *
+     * @param \XLite\Model\ProductClass $class Product class OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setProductClass(\XLite\Model\ProductClass $class = null)
+    {
+        $this->productClass = $class;
+    }
+
+    /**
+     * Set membership
+     *
+     * @param \XLite\Model\Membership $membership Membership OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setMembership(\XLite\Model\Membership $membership = null)
+    {
+        $this->membership = $membership;
+    }
+
     // {{{ Calculation
 
     /**
