@@ -223,7 +223,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             . "/table[@class='items']"
             . "/tbody"
             . "/tr"
-            . "/th[position()=1 and text()='Product']"
+            . "/th[position()=1 and text()='Item description']"
         );
 
         $this->assertElementPresent(
@@ -231,31 +231,31 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             . "/table[@class='items']"
             . "/tbody"
             . "/tr"
-            . "/th[position()=2 and text()='SKU']"
+            . "/th[position()=2 and text()='Total']"
         );
 
         $this->assertElementPresent(
             "//div[@class='invoice-box']"
             . "/table[@class='items']"
             . "/tbody"
-            . "/tr"
+            . "/tr[position()=2]"
+            . "/th[position()=1 and text()='SKU']"
+        );
+
+        $this->assertElementPresent(
+            "//div[@class='invoice-box']"
+            . "/table[@class='items']"
+            . "/tbody"
+            . "/tr[position()=2]"
+            . "/th[position()=2 and text()='Qty']"
+        );
+
+        $this->assertElementPresent(
+            "//div[@class='invoice-box']"
+            . "/table[@class='items']"
+            . "/tbody"
+            . "/tr[position()=2]"
             . "/th[position()=3 and text()='Price']"
-        );
-
-        $this->assertElementPresent(
-            "//div[@class='invoice-box']"
-            . "/table[@class='items']"
-            . "/tbody"
-            . "/tr"
-            . "/th[position()=4 and text()='Qty']"
-        );
-
-        $this->assertElementPresent(
-            "//div[@class='invoice-box']"
-            . "/table[@class='items']"
-            . "/tbody"
-            . "/tr"
-            . "/th[position()=5 and text()='Total']"
         );
 
         // First product
@@ -264,7 +264,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             "//div[@class='invoice-box']"
             . "/table[@class='items']"
             . "/tbody"
-            . "/tr[position()=2]"
+            . "/tr[position()=3]"
             . "/td[position()=1]"
             . "/a[text()='" . $item->getName(). "']"
         );
@@ -273,15 +273,15 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             "//div[@class='invoice-box']"
             . "/table[@class='items']"
             . "/tbody"
-            . "/tr[position()=2]"
-            . "/td[position()=2 and text()='" . $item->getSku() . "']"
+            . "/tr[position()=4]"
+            . "/td[position()=1 and text()='SKU " . $item->getSku() . "']"
         );
 
         $this->assertElementPresent(
             "//div[@class='invoice-box']"
             . "/table[@class='items']"
             . "/tbody"
-            . "/tr[position()=2]"
+            . "/tr[position()=4]"
             . "/td[position()=3 and text()='$" . number_format(round($item->getPrice(), 2), 2) . "']"
         );
 
@@ -289,16 +289,16 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             "//div[@class='invoice-box']"
             . "/table[@class='items']"
             . "/tbody"
-            . "/tr[position()=2]"
-            . "/td[position()=4 and text()='" . $item->getAmount() . "']"
+            . "/tr[position()=4]"
+            . "/td[position()=2 and text()='" . $item->getAmount() . "']"
         );
 
         $this->assertElementPresent(
             "//div[@class='invoice-box']"
             . "/table[@class='items']"
             . "/tbody"
-            . "/tr[position()=2]"
-            . "/td[position()=5 and text()='$" . number_format(round($item->getTotal(), 2), 2) . "']"
+            . "/tr[position()=3]"
+            . "/td[position()=2 and text()='$" . number_format(round($item->getTotal(), 2), 2) . "']"
         );
 
         // Totals
@@ -321,20 +321,20 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         );
 
         $i = 2;
-        foreach ($order->getSurcharges() as $m) {
+        foreach ($order->getSurchargeTotals() as $type => $m) {
+            $name = 1 == $m['count'] ? $m['lastName'] : $m['name'];
+            
             $this->assertElementPresent(
                 "//div[@class='invoice-box']"
                 . "/table[@class='totals']"
                 . "/tbody"
-                . "/tr[position()=$i]"
-                . "/td[position()=1 and text()='" . $m->getName() . ":']"
+                . "/tr[position()=$i and @class='" . $type . "-modifier']"
+                . "/td[position()=1 and text()='" . $name . ":']"
             );
-            $this->assertElementPresent(
-                "//div[@class='invoice-box']"
-                . "/table[@class='totals']"
-                . "/tbody"
-                . "/tr[position()=$i]"
-                . "/td[position()=2 and text()='$" . number_format($m->getValue(), 2) . "']"
+            $this->assertEquals(
+                '$' . number_format($m['cost'], 2),
+                trim($this->getJSExpression('jQuery(".invoice-box .totals tr:eq(1) td:eq(1)").html()')),
+                'check total modifier #' . $i
             );
             $i++;
         }
