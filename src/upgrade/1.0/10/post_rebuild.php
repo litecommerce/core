@@ -22,27 +22,38 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.10
  */
 
-namespace XLite\Module\CDev\MarketPrice\Model;
-
-/**
- * Product 
- *
- * @see   ____class_see____
- * @since 1.0.0
- */
-class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
+return function()
 {
-    /**
-     * Product market price
-     *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="decimal", precision=14, scale=4)
-     */
-    protected $marketPrice = 0.0000;
-}
+    // Loading data to the database from yaml file
+    $yamlFile = __DIR__ . LC_DS . 'post_rebuild.yaml';
+
+    if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
+        \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
+    }
+
+    // Removing obsolete options
+
+    $options = array();
+
+    $options[] = array(
+        'name' => 'enable_sale_price', 
+        'category' => 'General',
+    );
+
+    $options[] = array(
+        'name' => 'you_save', 
+        'category' => 'General',
+    );
+
+    foreach ($options as $opt) {
+    
+        $option = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneBy($opt);
+
+        if (isset($option)) {
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->delete($option);
+        }
+    }
+};

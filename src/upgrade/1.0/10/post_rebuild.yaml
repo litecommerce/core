@@ -1,0 +1,11 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Data for core upgrading 1.0.9 -> 1.0.10
+#
+
+XLite\Model\LanguageLabel:
+  - { name: 'Including X', translations: [{ code: en, label: 'Including {{name}}' }] }
+
+XLite\Model\Order\Modifier:
+  - { class: '\XLite\Logic\Order\Modifier\Shipping', weight: 100 }
+

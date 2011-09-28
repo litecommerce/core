@@ -22,7 +22,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.9
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\MarketPrice\View;
@@ -31,7 +31,7 @@ namespace XLite\Module\CDev\MarketPrice\View;
  * Details 
  *
  * @see   ____class_see____
- * @since 1.0.9
+ * @since 1.0.0
  */
 abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage implements \XLite\Base\IDecorator
 {
@@ -57,7 +57,7 @@ abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage i
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     protected function isShowMarketPrice(\XLite\Model\Product $product)
     {
@@ -67,11 +67,11 @@ abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage i
     /**
      * Get the "You save" value
      *
-     * @param XLite\Model\Product $product Current product
+     * @param \XLite\Model\Product $product Current product
      *
      * @return float
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     protected function getSaveDifference(\XLite\Model\Product $product)
     {
@@ -81,11 +81,11 @@ abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage i
     /**
      * Return the "x% label" element
      *
-     * @param XLite\Model\Product $product Current product
+     * @param \XLite\Model\Product $product Current product
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     protected function getLabels(\XLite\Model\Product $product)
     {
