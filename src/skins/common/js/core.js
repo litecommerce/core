@@ -435,6 +435,30 @@ window.core = {
     }
     jQuery(link).html(jQuery(link).html() === text ? link.prevValue : text);
     jQuery(obj).toggle();
+  },
+
+  // Decorate class after page loading
+  decorate: function(className, methodName, func)
+  {
+    core.bind(
+      'load',
+      function() {
+        decorate(className, methodName, func);
+      }
+    );
+  },
+
+  // Decorate some class after page loading
+  decorates: function(list, func)
+  {
+    core.bind(
+      'load',
+      function() {
+        for (var i = 0; i < list.length; i++) {
+          decorate(list[i][0], list[i][1], func);
+        }
+      }
+    );
   }
 
 };

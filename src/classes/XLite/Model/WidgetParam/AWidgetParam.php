@@ -38,11 +38,9 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
     /**
      * Indexes in the "conditions" array
      */
-
     const ATTR_CONDITION = 'condition';
     const ATTR_MESSAGE   = 'text';
     const ATTR_CONTINUE  = 'continue';
-
 
     /**
      * Param type
@@ -80,7 +78,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      */
     protected $isSetting = false;
 
-
     /**
      * Return list of conditions to check
      *
@@ -91,7 +88,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @since  1.0.0
      */
     abstract protected function getValidaionSchema($value);
-
 
     /**
      * Constructor
@@ -201,6 +197,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
         foreach ($conditions as $condition) {
             if (true === $condition[self::ATTR_CONDITION]) {
                 $messages[] = $condition[self::ATTR_MESSAGE];
+
                 if (!isset($condition[self::ATTR_CONTINUE])) {
                      break;
                 }

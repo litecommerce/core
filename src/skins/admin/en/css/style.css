@@ -428,7 +428,7 @@ div.page-tabs
 
 div.tab-content
 {
-  margin: 15px;
+  margin: 30px 0px 15px 0px;
 }
 
 div.page-tabs ul
@@ -587,6 +587,19 @@ div.clear
   font-weight: bold;
 }
 
+/* Validation subsystem styles */
+input.validation-error,
+textarea.validation-error,
+select.validation-error
+{
+  border-color: #ff0000;
+}
+
+.inline-error {
+  line-height: normal;
+  font-size: 12px;
+}
+
 /* Plain table */
 
 table.plain-table
@@ -655,6 +668,36 @@ ul.form li .note
 {
   display: block;
   font-size: 10px;
+}
+
+/**
+ * Table-based form
+ */
+table.form {
+}
+
+table.form td.star {
+  color: #47b2cf;
+  width: auto;
+  padding-left: 11px;
+  padding-right: 6px;
+  padding-bottom: 6px;
+  line-height: normal;
+}
+
+table.form td.label label {
+  font-size: 16px;
+  line-height: 22px;
+  color: #456583;
+}
+
+table.form input[type="text"],
+table.form input[type="password"],
+table.form input[type="text"]
+{
+  border-width: 1px;
+  font-size: 16px;
+  padding: 6px;
 }
 
 /* Settings pages */
@@ -812,6 +855,41 @@ button.bright:hover
 button.bright:active
 {
   background-position: center -72px;
+}
+
+button.switch-state {
+  border: none;
+  background: transparent url(../images/tri_button.png) no-repeat left top;
+  padding: 0px;
+  padding-left: 10px;
+  height: auto;
+}
+
+button.switch-state div {
+  -moz-top-right-border-radius: 3px;
+  -moz-bottom-right-border-radius: 3px;
+  -webkit-top-right-border-radius: 3px;
+  -webkit-bottom-right-border-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  background: url(../images/button.png) repeat-x center top #eff8fe;
+  border: 1px solid #cadce8;
+  height: 17px;
+  padding: 5px 12px 2px 7px;
+  border-left: none;
+}
+
+button.switch-state div img {
+  background: transparent url(../images/switch.png) no-repeat left top;
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
+  margin-right: 7px;
+  margin-top: -5px;
+}
+
+button.switch-state.disabled-state div img {
+  background-position: left -16px;
 }
 
 /* Fade */
@@ -1479,3 +1557,22 @@ table.payment-methods td.description textarea {
 table.payment-methods td.description button {
   vertical-align: bottom;
 }
+
+/**
+ * No taxes page
+ */
+.no-tax-modules {
+  border: 1px solid #eee;
+  padding: 0px;
+  margin: 0px 3px;
+  background: transparent none;
+  width: 690px;
+}
+.no-tax-modules div {
+  border: 6px solid #f9f9f9;
+  margin: 0px;
+  padding: 16px 21px;
+  font-size: 20px;
+  color: #69a4c9;
+}
+

@@ -109,6 +109,17 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     protected $price;
 
     /**
+     * Net price
+     *
+     * @var   float
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="decimal", precision="14", scale="4")
+     */
+    protected $netPrice;
+
+    /**
      * Item quantity
      *
      * @var   integer
@@ -183,6 +194,30 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         }
 
         $this->getSurcharges()->clear();
+    }
+
+    /**
+     * Get through exclude surcharges 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getThroughExcludeSurcharges()
+    {
+        $list = $this->getOrder()->getItemsExcludeSurcharges();
+
+        foreach ($list as $key => $value) {
+            $list[$key] = null;
+            foreach ($this->getExcludeSurcharges() as $surcharge) {
+                if ($surcharge->getKey() == $key) {
+                    $list[$key] = $surcharge;
+                    break;
+                }
+            }
+        }
+
+        return $list;
     }
 
     /**
@@ -370,6 +405,24 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Set price 
+     * 
+     * @param float $price Price
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        if (!isset($this->netPrice)) {
+            $this->setNetPrice($price);
+        }
+    }
+
+    /**
      * Initial calculate order item
      *
      * @return void
@@ -378,10 +431,36 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function calculate()
     {
-        $subtotal = $this->getOrder()->getCurrency()->roundValue($this->getPrice() * $this->getAmount());
+        $subtotal = $this->calculateNetSubtotal();
 
         $this->setSubtotal($subtotal);
         $this->setTotal($subtotal);
+    }
+
+    /**
+     * Renew order item
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function renew()
+    {
+        $available = true;
+
+        $product = $this->getProduct();
+        if ($product) {
+            if (!$product->getId() || !$this->checkAmount()) {
+                $available = false;
+
+            } else {
+                $this->setPrice($product->getPrice());
+                $this->setName($product->getName());
+                $this->setSKU($product->getSKU());
+            }
+        }
+
+        return $available;
     }
 
     /**
@@ -429,6 +508,63 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         );
     }
 
+    /**
+     * Calculate item total
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function calculateTotal()
+    {
+        $total = $this->getSubtotal();
+
+        foreach ($this->getExcludeSurcharges() as $surcharge) {
+            $total += $surcharge->getValue();
+        }
+
+        return $total;
+    }
+
+    /**
+     * Calculate net subtotal 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function calculateNetSubtotal()
+    {
+        $this->setNetPrice($this->defineNetPrice());
+
+        return $this->getOrder()->getCurrency()->roundValue($this->getNetPrice()) * $this->getAmount();
+    }
+
+    /**
+     * Get net subtotal without round net price
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    public function getNetSubtotal()
+    {
+        $this->calculateNetSubtotal();
+
+        return $this->getNetPrice() * $this->getAmount();
+    }
+
+    /**
+     * Define net price 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineNetPrice()
+    {
+        return $this->getPrice();
+    }
 
     /**
      * Get deleted product
@@ -439,7 +575,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     protected function getDeletedProduct()
     {
-        if (!isset($this->dumpProduct) && $this->getPrice() && $this->getName()) {
+        if (!isset($this->dumpProduct) && $this->getName()) {
             $this->dumpProduct = new \XLite\Model\Product();
             $this->dumpProduct->setPrice($this->getPrice());
             $this->dumpProduct->setName($this->getName());
@@ -447,6 +583,26 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         }
 
         return $this->dumpProduct;
+    }
+
+    /**
+     * Check item amount 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.8
+     */
+    protected function checkAmount()
+    {
+        $result = true;
+
+        $product = $this->getProduct();
+        if ($product && $product->getId()) {
+            $result = !$product->getInventory()->getEnabled()
+            || $product->getInventory()->getAvailableAmount() >= $this->getAmount();
+        }
+
+        return $result;
     }
 
     /**

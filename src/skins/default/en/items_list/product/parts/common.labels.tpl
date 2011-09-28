@@ -16,6 +16,5 @@
  * @ListChild (list="itemsList.product.small_thumbnails.customer.details", weight="25")
  * @ListChild (list="productBlock.info.photo", weight="998")
  *}
-<ul class="labels" IF="product.getLabels()">
-  <li FOREACH="product.getLabels(),key,name" class="label-{key:h}"><div>{name}</div></li>
-</ul>
+
+<widget class="\XLite\View\Labels" labels="{getLabels(product)}" />

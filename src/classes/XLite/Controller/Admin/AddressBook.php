@@ -121,6 +121,31 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Check if current page is accessible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    public function checkAccess()
+    {
+        return parent::checkAccess() && $this->isOrigProfile();
+    }
+
+
+    /**
+     * Return true if profile is not related with any order (i.e. it's an original profile)
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function isOrigProfile()
+    {
+        return !($this->getProfile()->getOrder());
+    }
+
+    /**
      * Alias
      *
      * @return \XLite\Model\Profile

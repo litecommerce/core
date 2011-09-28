@@ -39,6 +39,12 @@ namespace XLite\Model;
 class Cart extends \XLite\Model\Order
 {
     /**
+     * Cart renew period 
+     */
+    const RENEW_PERIOD = 3600;
+
+
+    /**
      * Array of instances for all derived classes
      *
      * @var   array
@@ -101,6 +107,10 @@ class Cart extends \XLite\Model\Order
 
             \XLite\Core\Database::getEM()->flush();
 
+            if (time() - static::RENEW_PERIOD > $cart->getLastRenewDate()) {
+                $cart->renew();
+            }
+
             \XLite\Core\Session::getInstance()->order_id = $cart->getOrderId();
 
         }
@@ -130,6 +140,7 @@ class Cart extends \XLite\Model\Order
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
+     *
      * @PrePersist
      * @PreUpdate
      */
@@ -138,6 +149,20 @@ class Cart extends \XLite\Model\Order
         parent::prepareBeforeSave();
 
         $this->setDate(time());
+    }
+
+    /**
+     * Prepare order before create entity
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     *
+     * @PrePersist
+     */
+    public function prepareBeforeCreate()
+    {
+        $this->setLastRenewDate(time());
     }
 
     /**

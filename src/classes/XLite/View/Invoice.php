@@ -141,4 +141,16 @@ class Invoice extends \XLite\View\AView
 
         return $this->shippingModifier;
     }
+
+    /**
+     * Get item fescription block columns count 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getItemDescriptionCount()
+    {
+        return 3;
+    }
 }

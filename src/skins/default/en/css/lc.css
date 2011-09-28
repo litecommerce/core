@@ -782,39 +782,6 @@ ul.products-sidebar-text-links li .product {
   font-family: Helvetica, Arial;
 }
 
-.products-grid .labels li,
-.products-list .labels li,
-.products-table .labels li,
-.products-sidebar-big-thumbnails .labels li
-{
-  background-image: url(../images/label_grey_left.png);
-  background-position: left top;
-  background-repeat: no-repeat;
-  padding-left: 12px;
-  height: 25px;
-  opacity: 0.9;
-}
-
-.products .labels li div {
-  font-style: italic;
-  font-size: 12px;
-  color: #615656;
-}
-
-.products-grid .labels li div,
-.products-list .labels li div,
-.products-table .labels li div,
-.products-sidebar-big-thumbnails .labels li div
-{
-  background-image: url(../images/label_grey_right.png);
-  background-position: right top;
-  background-repeat: no-repeat;
-  line-height: 25px;
-  color: #fff;
-  padding-left: 3px;
-  padding-right: 9px;
-}
-
 /**
  * Product block
  */
@@ -1087,7 +1054,8 @@ div.product-details .product-image-gallery
   color: #ff6c00;
   font-size: 36px;
   line-height: 33px;
-  margin-top: 15px;
+  margin-top: 18px;
+  display: inline-block;
 }
 
 
@@ -1132,6 +1100,7 @@ div.product-details .product-image-gallery
 .product-quicklook .product-in-stock
 {
   color: #019026;
+  display: block;
 }
 
 .product-details .product-items-available
@@ -1605,6 +1574,34 @@ body.store-cart #main h1 {
 
 #shopping-cart td.item-subtotal {
   width: 65px;
+  text-align: right;
+}
+
+#shopping-cart td.item-subtotal .modified-subtotal,
+#cart .totals .subtotal .modified-subtotal,
+.checkout-block .review-step .items-row .modified-subtotal,
+#cart li.order-modifier .including-owner,
+.checkout-block .review-step .including-owner
+{
+  border-bottom: 1px dotted #c2c2c2;
+  cursor: help;
+}
+
+table.including-modifiers,
+table.including-modifiers tbody,
+table.including-modifiers tr,
+table.including-modifiers td
+{
+  border: 0px none;
+  margin: 0px;
+}
+
+table.including-modifiers td {
+  white-space: nowrap;
+  padding: 6px;
+}
+
+table.including-modifiers td.value {
   text-align: right;
 }
 
@@ -2406,9 +2403,9 @@ form.estimator .main,
   padding-bottom: 4px;
 }
 
-.checkout-block .review-step .items-row span,
+.checkout-block .review-step .items-row span.price,
 .checkout-block .review-step .list li div,
-.checkout-block .review-step .modifiers span,
+.checkout-block .review-step .modifiers span.value,
 .checkout-block .review-step .total span
 {
   float: right;
@@ -2670,8 +2667,7 @@ ul.location-subnodes li a.current {
 }
 
 .invoice-box .header,
-.invoice-box .header td
-{
+.invoice-box .header td {
   border: 1px none;
   vertical-align: top;
 }
@@ -2729,7 +2725,7 @@ ul.location-subnodes li a.current {
 
 .invoice-box .items {
   margin-top: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .invoice-box .items,
@@ -2742,10 +2738,12 @@ ul.location-subnodes li a.current {
 }
 
 .invoice-box .items th {
+  background: #f5f5f5 none;
   font-weight: normal;
-  padding: 6px 10px 5px;
+  padding: 6px 11px 7px;
   white-space: nowrap;
   text-align: center;
+  color: #4b7797;
 }
 
 .invoice-box .items th.name {
@@ -2753,32 +2751,32 @@ ul.location-subnodes li a.current {
 }
 
 .invoice-box .items th.sku {
-  width: 74px;
+  text-align: left;
 }
 
-.invoice-box .items th.price {
-  width: 44px;
-}
-
-.invoice-box .items th.qty {
-  width: 21px;
-}
-
-.invoice-box .items th.total {
-  width: 57px;
+.invoice-box .items th.net-total,
+.invoice-box .items th.modifier,
+.invoice-box .items th.total
+{
+  padding-left: 16px;
+  padding-right: 16px;
+  text-align: right;
 }
 
 .invoice-box .items td,
-.invoice-box .totals td
-{
-  padding: 6px 9px;
-}
-
-.invoice-box .items td.qty {
-  text-align: center;
+.invoice-box .totals td {
+  padding: 6px 11px;
 }
 
 .invoice-box .items td.sku,
+.invoice-box .items td.qty,
+.invoice-box .items td.price
+{
+  padding-bottom: 7px;
+}
+
+.invoice-box .items td.net-total,
+.invoice-box .items td.modifier,
 .invoice-box .items td.price,
 .invoice-box .items td.total
 {
@@ -2789,6 +2787,32 @@ ul.location-subnodes li a.current {
   text-decoration: none;
 }
 
+.invoice-box .items td.total {
+  padding-right: 17px;
+  width: 112px;
+}
+
+.invoice-box .items td.name .additional {
+  background-color: #eff8fe;
+  margin-top: 4px;
+  margin-bottom: 2px;
+  padding: 9px 13px;
+}
+
+.invoice-box tr.separator-row td.sku,
+.invoice-box tr.separator-row td.qty,
+.invoice-box tr.separator-row td.price,
+.invoice-box tr.separator-row td.net-total,
+.invoice-box tr.separator-row td.modifier,
+.invoice-box tr.separator-row td.total,
+.invoice-box tr.last-row th,
+.invoice-box th.net-total,
+.invoice-box th.total,
+.invoice-box th.modifier
+{
+  border-bottom-width: 2px;
+}
+
 .invoice-box .totals {
   margin-bottom: 35px;
 }
@@ -2796,19 +2820,36 @@ ul.location-subnodes li a.current {
 .invoice-box .totals td {
   white-space: nowrap;
   text-align: right;
+  padding-top: 7px;
 }
 
 .invoice-box .totals .value {
-  width: 59px;
+  width: 112px;
+  padding-right: 17px;
 }
 
-.invoice-box .totals .total td {
+.invoice-box .totals .title {
+  vertical-align: top;
   color: #4b7797;
 }
 
-.invoice-box .addresses,
-.invoice-box .addresses td
+.invoice-box .totals .modifier-subvalues,
+.invoice-box .totals .modifier-subvalues li
 {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+  background: transparent none;
+}
+
+.invoice-box .totals .modifier-subvalues li {
+  text-align: right;
+  white-space: nowrap;
+  color: #8f8f8f;
+}
+
+.invoice-box .addresses,
+.invoice-box .addresses td {
   border: 0px none;
   padding: 0px;
 }
@@ -2828,8 +2869,7 @@ ul.location-subnodes li a.current {
 }
 
 .invoice-box .addresses .payment strong,
-.invoice-box .addresses .shipping strong
-{
+.invoice-box .addresses .shipping strong {
   color: #53769d;
   font-size: 15px;
   font-weight: normal;
@@ -2843,8 +2883,7 @@ ul.location-subnodes li a.current {
 }
 
 .invoice-box .addresses .payment,
-.invoice-box .addresses .shipping
-{
+.invoice-box .addresses .shipping {
   padding-top: 21px;
 }
 

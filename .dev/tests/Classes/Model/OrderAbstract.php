@@ -62,6 +62,8 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
             $order->addItem($item);
         }
 
+        $order->calculate();
+
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 

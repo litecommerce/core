@@ -112,7 +112,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/tr[@class='selected-product']"
             . "/td"
         );
-        $this->assertEquals(8, $cnt, 'check cells count');
+        $this->assertEquals(7, $cnt, 'check cells count');
 
         $cnt = $this->getXpathCount(
             "//div[@id='cart']"
@@ -227,17 +227,8 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/table[@class='selected-products']"
             . "/tbody"
             . "/tr"
-            . "/td[@class='item-equal' and text()='=']",
-            'check item equal symbol'
-        );
-
-        $this->assertElementPresent(
-            "//div[@id='cart']"
-            . "/div[@id='shopping-cart']"
-            . "/table[@class='selected-products']"
-            . "/tbody"
-            . "/tr"
-            . "/td[@class='item-subtotal' and contains(text(),'$" . number_format(round($product->getPrice(), 2), 2) . "')]",
+            . "/td[@class='item-subtotal']"
+            . "/span[@class='subtotal' and text()='" . $this->formatPrice($product->getPrice()) . "']",
             'check item subtotal'
         );
 
@@ -290,7 +281,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             "//div[@id='cart']"
             . "/div[@id='cart-right']"
             . "/ul[@class='totals']"
-            . "/li[@class='shipping-modifier']"
+            . "/li[@class='order-modifier shipping-modifier']"
             . "/strong[text()='Shipping cost:']",
             'check Shipping cost'
         );
@@ -559,4 +550,68 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
         $this->assertRegExp('/product_id-' . $product->getProductId() . '/Ss', $this->getLocation(), 'check product id');
     }
 
+    public function testRenewByLogoff()
+    {
+        $this->open('user');
+
+        $this->type('css=#edit-name', 'master');
+        $this->type('css=#edit-pass', 'master');
+
+        $this->submitAndWait('css=#user-login');
+
+        $product = $this->addToCart();
+        $price = $product->getPrice() + 1;
+
+        $this->openAndWait('user/logout');
+
+        $product->setPrice($price);
+        \XLite\Core\Database::getEM()->flush();
+
+        $this->open('user');
+
+        $this->type('css=#edit-name', 'master');
+        $this->type('css=#edit-pass', 'master');
+
+        $this->submitAndWait('css=#user-login');
+
+        $this->openAndWait('store/cart');
+
+        $this->assertElementPresent(
+            "//div[@id='cart']"
+            . "/div[@id='shopping-cart']"
+            . "/table[@class='selected-products']"
+            . "/tbody"
+            . "/tr"
+            . "/td[@class='item-price' and text()='$" . number_format(round($price, 2), 2) . "']",
+            'check new item price'
+        );
+    }
+
+    public function testRenewByTTL()
+    {
+        $product = $this->addToCart();
+        $price = $product->getPrice() + 1;
+
+        $product->setPrice($price);
+
+        $carts = \XLite\Core\Database::getRepo('XLite\Model\Cart')->findAll();
+        $cart = array_pop($carts);
+
+        $this->assertEquals($product->getId(), $cart->getItems()->get(0)->getProduct()->getId(), 'check product id');
+        $cart->setLastRenewDate($cart->getLastRenewDate() - 86400);
+ 
+        \XLite\Core\Database::getEM()->flush();
+
+        $this->openAndWait('store/cart');
+
+        $this->assertElementPresent(
+            "//div[@id='cart']"
+            . "/div[@id='shopping-cart']"
+            . "/table[@class='selected-products']"
+            . "/tbody"
+            . "/tr"
+            . "/td[@class='item-price' and text()='$" . number_format(round($price, 2), 2) . "']",
+            'check new item price'
+        );
+    }
 }

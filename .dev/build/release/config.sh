@@ -43,11 +43,14 @@ CDev/Bestsellers
 CDev/DrupalConnector
 CDev/FeaturedProducts
 CDev/GoogleAnalytics
+CDev/MarketPrice
 CDev/Moneybookers
 CDev/PaypalWPS
 CDev/ProductOptions
 CDev/Quantum
+CDev/SalesTax
 CDev/TinyMCE
+CDev/VAT
 CDev/USPS
 "
 

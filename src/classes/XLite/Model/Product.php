@@ -73,17 +73,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     protected $price = 0.0000;
 
     /**
-     * Product sale price
-     *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="decimal", precision=14, scale=4)
-     */
-    protected $sale_price = 0.0000;
-
-    /**
      * Product SKU
      *
      * @var   string
@@ -358,7 +347,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Return product list price
+     * Return product list price (price for customer interface)
      *
      * @return float
      * @see    ____func_see____
@@ -579,18 +568,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
         $this->arrivalDate = \XLite\Core\Converter::convertTimeToServer(
             mktime(0, 0, 0, date('m', $date), date('d', $date), date('Y', $date))
         );
-    }
-
-    /**
-     * Get labels 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getLabels()
-    {
-        return array();
     }
 
     /**

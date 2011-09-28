@@ -35,7 +35,7 @@ namespace XLite\View;
  */
 class MembershipSelect extends \XLite\View\FormField
 {
-     /*
+    /**
      * Widget parameters names
      */
     const PARAM_FIELD_NAME = 'field';

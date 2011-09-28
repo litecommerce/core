@@ -1,0 +1,58 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Labels
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.9
+ */
+
+ul.labels {
+}
+
+ul.labels li {
+  background-image: url(images/label_grey_left.png);
+  background-position: left top;
+  background-repeat: no-repeat;
+  padding-left: 12px;
+  height: 25px;
+  opacity: 0.9;
+}
+
+ul.labels li div {
+  font-style: italic;
+  font-size: 12px;
+  background-image: url(images/label_grey_right.png);
+  background-position: right top;
+  background-repeat: no-repeat;
+  line-height: 25px;
+  color: #fff;
+  padding-left: 3px;
+  padding-right: 9px;
+}
+
+
+
+ul.labels li.label-orange {
+  background-image: url(images/label_orange_left.png);
+}
+
+ul.labels li.label-orange div {
+  background-image: url(images/label_orange_right.png);
+}
+
+ul.products-sidebar ul.labels li,
+ul.products-sidebar ul.labels li div {
+  background-image: none;
+  color: #615656;
+}
+
+ul.products-sidebar ul.labels li.label-orange,
+ul.products-sidebar ul.labels li.label-orange div {
+  color: #ff9000;
+  padding: 0;
+  margin: 0;
+}

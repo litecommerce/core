@@ -138,6 +138,20 @@ if (!$__connection || !mysql_select_db($config['database'], $__connection)) {
     die(1);
 }
 
+// Check for InnoDB support
+$res = mysql_query('SHOW ENGINES');
+$innodbFound = false;
+while ($row = mysql_fetch_assoc($res)) {
+    if (0 === strcasecmp('InnoDB', $row['Engine'])) {
+        $innodbFound = true;
+    }
+}
+mysql_free_result($res);
+
+if (!$innodbFound) {
+    die('InnoDB support disabled. It is required to LiteCommerce operation' . PHP_EOL);
+}
+
 // Drop all tables
 echo '+++ Drop all tables';
 mysql_query('SET foreign_key_checks=0');
@@ -196,6 +210,8 @@ if (!R_INSTALL_SITE && !R_INSTALL_SITEADMIN) {
     $disabledModules['CDev'][] = 'AuthorizeNet';
     $disabledModules['CDev'][] = 'Quantum';
     $disabledModules['CDev'][] = 'PaypalWPS';
+    $disabledModules['CDev'][] = 'SalesTax';
+    $disabledModules['CDev'][] = 'VAT';
     $disabledModules['CDev'][] = 'Moneybookers';
     $disabledModules['CDev'][] = 'USPS';
 }

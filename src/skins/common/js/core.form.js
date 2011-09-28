@@ -172,7 +172,7 @@ CommonForm.prototype.bindElements = function()
 // Vaidate form
 CommonForm.prototype.validate = function(silent)
 {
-  return 0 == this.getElements().filter(
+  return 0 == this.getElements().filter('input,select,textarea').filter(
     function() {
       return !this.validate(silent);
     }
