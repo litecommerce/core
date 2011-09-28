@@ -36,18 +36,24 @@ namespace XLite\Module\CDev\VAT\Model\Repo;
 class Tax extends \XLite\Model\Repo\ARepo
 {
     /**
-     * Find one active tax
+     * Get tax
      *
      * @return \XLite\Module\CDev\VAT\Model\Tax
      * @see    ____func_see____
      * @since  1.0.11
      */
-    public function findOneActive()
+    public function getTax()
     {
-        $list = $this->findActive();
+        $tax = $this->createQueryBuilder()
+            ->setMaxResults(1)
+            ->getSingleResult();
 
-        return 0 == count($list) ? null : $list[0];
-     }
+        if (!$tax) {
+            $tax = $this->createTax();
+        }
+
+        return $tax;
+    }
 
     /**
      * Find active taxes
@@ -60,12 +66,8 @@ class Tax extends \XLite\Model\Repo\ARepo
     {
         $list = $this->defineFindActiveQuery()->getResult();
         if (0 == count($list) && 0 == count($this->findAll())) {
-            $tax = new \XLite\Module\CDev\VAT\Model\Tax;
-            $tax->setName('VAT');
-            $tax->setEnabled(true);
-            \XLite\Core\Database::getEM()->persist($tax);
-            $list = array($tax);
-            \XLite\Core\Database::getEM()->flush();
+            $this->createTax();
+            $list = $this->defineFindActiveQuery()->getResult();
         }
 
         return $list;
@@ -85,5 +87,22 @@ class Tax extends \XLite\Model\Repo\ARepo
             ->leftJoin('t.rates', 'tr')
             ->andWhere('t.enabled = :true AND tr IS NOT NULL')
             ->setParameter('true', true);
+    }
+
+    /**
+     * Create tax 
+     * 
+     * @return \XLite\Module\CDev\VAT\Model\Tax
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function createTax()
+    {
+        $tax = new \XLite\Module\CDev\VAT\Model\Tax;
+        $tax->setName('VAT');
+        $tax->setEnabled(true);
+        \XLite\Core\Database::getEM()->persist($tax);
+
+        return $tax;
     }
 }
