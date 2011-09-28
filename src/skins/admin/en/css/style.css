@@ -1557,3 +1557,22 @@ table.payment-methods td.description textarea {
 table.payment-methods td.description button {
   vertical-align: bottom;
 }
+
+/**
+ * No taxes page
+ */
+.no-tax-modules {
+  border: 1px solid #eee;
+  padding: 0px;
+  margin: 0px 3px;
+  background: transparent none;
+  width: 690px;
+}
+.no-tax-modules div {
+  border: 6px solid #f9f9f9;
+  margin: 0px;
+  padding: 16px 21px;
+  font-size: 20px;
+  color: #69a4c9;
+}
+

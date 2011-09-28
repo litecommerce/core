@@ -1,16 +1,12 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Taxes page
+ * Taxes empty page
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
+ * @since     1.0.10
  *}
-{if:getPages()}
-  <widget target="taxes" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
-{else:}
-  <widget template="taxes/empty.tpl" />
-{end:}
+<div class="no-tax-modules"><div>{t(#Your store is currently unable to calculate taxes#)}</div></div>
