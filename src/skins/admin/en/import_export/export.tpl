@@ -12,8 +12,8 @@
 <div class="export">
   <div class="note">{t(#Your products will be exported as a CSV file.#)}</div>
 
-  <widget class="\XLite\View]Form\Export" name="export" />
-    <widget class="\XLite\View\Button\Submit" label="{t(#Export products#)}" />
+  <widget class="\XLite\View\Form\Export" name="export" />
+    <widget class="\XLite\View\Button\Submit" label="{t(#Export products#)}" style="action" />
   <widget name="export" end />
 
   <div class="bottom-note">{t(#When the exporting is complete, you will be prompted to download the product data file.#)}</div>

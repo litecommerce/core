@@ -1,0 +1,71 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Import / export styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.11
+ */
+
+.import-export div.tab-content {
+  margin-top: 20px;
+  width: 711px;
+}
+
+.import-export form {
+  display: block;
+  text-align: center;
+  padding-top: 21px;
+}
+
+.import-export .bottom-note {
+  text-align: center;
+  color: #456583;
+  padding: 13px;
+  width: 340px;
+  margin: 0px auto;
+}
+
+/**
+ * Import
+ */
+.import-export .import .warning {
+  border: 1px solid #eee;
+  background: transparent none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.import-export .import .warning div {
+  border: 7px solid #f9f9f9;
+  padding: 17px 19px 19px;
+  margin: 0px;
+  font-size: 16px;
+  color: #456583;
+}
+
+.import-export .import .note {
+  font-size: 14px;
+  line-height: 26px;
+  margin-top: 9px;
+}
+
+.import-export .import .note a {
+  text-decoration: underline;
+}
+
+/**
+ * Export
+ */
+.import-export .export {
+}
+
+.import-export .export .note {
+  font-size: 16px;
+  padding-top: 4px;
+  padding-bottom: 3px;
+  text-align: center;
+}

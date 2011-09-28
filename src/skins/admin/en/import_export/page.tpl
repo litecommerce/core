@@ -8,8 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- *
- * @ListChild (list="admin.center", zone="admin")
  *}
-<widget target="import_export" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
-
+<div class="import-export">
+  <widget target="import_export" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
+</div>

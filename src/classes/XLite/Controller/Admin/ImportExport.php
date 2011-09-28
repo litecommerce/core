@@ -209,7 +209,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             'images'           => 'images',
             'inventoryEnabled' => 'inventory',
             'lowLimitEnabled'  => 'inventory',
-            'lowLimit'         => 'inventory',
+            'lowLimitAmount'   => 'inventory',
             'amount'           => 'inventory',
             'classes'          => 'classes',
         );
@@ -233,6 +233,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         $this->exportHeader();
 
         foreach (\XLite\Core\Database::getRepo('XLite\Model\Product')->getImportIterator() as $product) {
+            $product = $product[0];
             $this->exportProduct($product);
             \XLite\Core\Database::getEM()->detach($product);
         }
@@ -376,6 +377,10 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      */
     protected function exportInventory(\XLite\Model\Product $product, $name)
     {
+        if ('inventoryEnabled' == $name) {
+            $name = 'enabled';
+        }
+
         $inventory = $product->getInventory();
         $method = 'get' . ucfirst($name);
 

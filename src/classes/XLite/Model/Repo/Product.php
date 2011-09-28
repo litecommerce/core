@@ -222,7 +222,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function defineImportQuery()
     {
-        return $this->createQueryBuilder('p');
+        return $this->createPureQueryBuilder('p');
     }
 
     /**
