@@ -456,6 +456,9 @@ XLite\Model\LanguageLabel:
   - { name: 'added by X', translations: [{ code: en, label: 'added by {{name}}' }] }
   - { name: 'added by _X_', translations: [{ code: en, label: 'added by <a href="{{url}}">{{name}}</a>' }] }
   - { name: 'Including X', translations: [{ code: en, label: 'Including {{name}}' }] }
+  - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: en, label: 'Importing will overwrite the existing product information. This operation connot be undone.' }] }
+  - { name: 'To get the format of the import data, ya can export your products to a file.', translations: [{ code: en, label: 'To get the format of the import data, ya can <a href="{{url}}">export your products</a> to a file and them review the format of that file.' }] }
+  - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: en, label: 'Depending on the size of your data file, importing may take some time.' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
