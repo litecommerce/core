@@ -22,7 +22,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.9
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\MarketPrice;
@@ -31,7 +31,7 @@ namespace XLite\Module\CDev\MarketPrice;
  * Main
  *
  * @see   ____class_see____
- * @since 1.0.9
+ * @since 1.0.0
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -40,7 +40,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     public static function getAuthorName()
     {
@@ -52,7 +52,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     public static function getModuleName()
     {
@@ -64,7 +64,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     public static function getMinorVersion()
     {
@@ -76,7 +76,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     public static function getDescription()
     {
@@ -90,7 +90,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     public static function isShowMarketPrice(\XLite\Model\Product $product)
     {
@@ -101,11 +101,11 @@ abstract class Main extends \XLite\Module\AModule
     /**
      * Get the "You save" value
      *
-     * @param XLite\Model\Product $product Current product
+     * @param \XLite\Model\Product $product Current product
      *
      * @return float
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     public static function getSaveDifferenceAbsolute(\XLite\Model\Product $product)
     {
@@ -115,11 +115,11 @@ abstract class Main extends \XLite\Module\AModule
     /**
      * Get the "You save" value in percents
      *
-     * @param XLite\Model\Product $product Current product
+     * @param \XLite\Model\Product $product Current product
      *
      * @return float
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     public static function getSaveDifferenceInPercents(\XLite\Model\Product $product)
     {
@@ -129,11 +129,11 @@ abstract class Main extends \XLite\Module\AModule
     /**
      * Get the "X% less" label
      *
-     * @param XLite\Model\Product $product Current product
+     * @param \XLite\Model\Product $product Current product
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     public static function getLabels(\XLite\Model\Product $product)
     {
@@ -155,7 +155,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return void
      * @see    ____func_see____
-     * @since  1.0.10
+     * @since  1.0.0
      */
     protected static function getProductPrice(\XLite\Model\Product $product)
     {
@@ -169,7 +169,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return void
      * @see    ____func_see____
-     * @since  1.0.10
+     * @since  1.0.0
      */
     protected static function getProductMarketPrice(\XLite\Model\Product $product)
     {

@@ -22,7 +22,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.9
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\MarketPrice\View;
@@ -31,7 +31,7 @@ namespace XLite\Module\CDev\MarketPrice\View;
  * ItemsList 
  *
  * @see   ____class_see____
- * @since 1.0.9
+ * @since 1.0.0
  */
 abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustomer implements \XLite\Base\IDecorator
 {
@@ -42,7 +42,7 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     protected function isShowMarketPrice(\XLite\Model\Product $product)
     {
@@ -56,7 +56,7 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.9
+     * @since  1.0.0
      */
     protected function getLabels(\XLite\Model\Product $product)
     {
