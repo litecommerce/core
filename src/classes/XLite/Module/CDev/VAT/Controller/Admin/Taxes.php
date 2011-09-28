@@ -87,7 +87,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
         $tax = parent::getTax();
 
         if (!$tax && $this->getPage() == self::PAGE_VAT_TAX) {
-             $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->find(1);
+             $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->findOneActive();
         }
 
         return $tax;

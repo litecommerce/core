@@ -350,6 +350,9 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
     protected function getTestOrder()
     {
+        \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->findOneActive();
+        \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->findOneActive();
+
         $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->find(1);
         foreach ($tax->getRates() as $rate) {
             \XLite\Core\Database::getEM()->remove($rate);

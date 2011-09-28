@@ -36,6 +36,20 @@ namespace XLite\Module\CDev\VAT\Model\Repo;
 class Tax extends \XLite\Model\Repo\ARepo
 {
     /**
+     * Find one active tax
+     *
+     * @return \XLite\Module\CDev\VAT\Model\Tax
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function findOneActive()
+    {
+        $list = $this->findActive();
+
+        return 0 == count($list) ? null : $list[0];
+     }
+
+    /**
      * Find active taxes
      *
      * @return array
@@ -44,7 +58,17 @@ class Tax extends \XLite\Model\Repo\ARepo
      */
     public function findActive()
     {
-        return $this->defineFindActiveQuery()->getResult();
+        $list = $this->defineFindActiveQuery()->getResult();
+        if (0 == count($list) && 0 == count($this->findAll())) {
+            $tax = new \XLite\Module\CDev\VAT\Model\Tax;
+            $tax->setName('VAT');
+            $tax->setEnabled(true);
+            \XLite\Core\Database::getEM()->persist($tax);
+            $list = array($tax);
+            \XLite\Core\Database::getEM()->flush();
+        }
+
+        return $list;
     }
 
     /**
