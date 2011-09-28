@@ -54,6 +54,22 @@ class ImportExport extends \XLite\View\AView
     }
 
     /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'import_export/controller.js';
+
+        return $list;
+    }
+
+    /**
      * Return widget default template
      *
      * @return string

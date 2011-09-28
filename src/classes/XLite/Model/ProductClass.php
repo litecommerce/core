@@ -87,6 +87,7 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     public function __construct(array $data = array())
     {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
         $this->shipping_methods = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);

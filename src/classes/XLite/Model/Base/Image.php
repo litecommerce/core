@@ -445,7 +445,7 @@ abstract class Image extends \XLite\Model\AEntity
             \Includes\Utils\FileManager::deleteFile($path);
         }
 
-        return $this->hash === $hash;
+        return $this->getHash() === $hash;
     }
 
     /**

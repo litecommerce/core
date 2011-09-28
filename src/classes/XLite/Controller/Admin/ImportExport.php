@@ -186,6 +186,12 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         return array(
             'productId',
             'SKU',
+            'name',
+            'description',
+            'briefDescription',
+            'metaTags',
+            'metaDesc',
+            'metaTitle',
             'price',
             'enabled',
             'weight',
@@ -412,6 +418,18 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     // {{{ Import
 
     /**
+     * Ge loaded status
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isImportFileLoaded()
+    {
+        return \XLite\Core\Request::getInstance()->loaded && $this->getImportCell();
+    }
+
+    /**
      * Import step
      * 
      * @return void
@@ -432,7 +450,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             } else {
                 $this->valid = false;
                 $this->hardRedirect = true;
-                \XLite\Core\TopMessage::addError('Import The name of the tax has not been preserved, because that is not filled');
+                \XLite\Core\TopMessage::addError('Interior storage for the import has been lost');
                 $this->setReturnURL($this->buildURL($this->getTarget()));
             }
         }
@@ -488,8 +506,8 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             $cell['position'] = 0;
         }
 
-        $counter = static::IMPORT_STEP_LENGTH;
-        while (0 < $counter) {
+        $counter = 0;
+        while ($counter < static::IMPORT_STEP_LENGTH) {
 
             $row = fgetcsv($fp, 8192, static::DELIMIER);
 
@@ -513,15 +531,18 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                 }
             }
             
-            $counter--;
+            $counter++;
             $cell['position']++;
+            \XLite\Core\Database::getEM()->flush();
         }
 
         \XLite\Core\Session::getInstance()->importCell = $cell;
 
         if (feof($this->filePointer)) {
             \XLite\Core\Session::getInstance()->importCell = null;
-            \XLite\Core\Event::importFinish();
+            $position = ftell($this->filePointer);
+            fseek($this->filePointer, 0, SEEK_END);
+            \XLite\Core\Event::importFinish(array('position' => $position, 'length' => ftell($this->filePointer)));
 
         } else {
             \XLite\Core\Event::importAfterStep();
@@ -563,8 +584,200 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         return $product;
     }
 
+    /**
+     * Import categories 
+     * 
+     * @param \XLite\Model\Product $product Product
+     * @param string               $data    Data
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
     protected function importCategories(\XLite\Model\Product $product, $data)
     {
+        $oldLinks = array();
+        foreach ($product->getCategoryProducts() as $link) {
+            $oldLinks[] = $link->getId();
+        }
+
+        $root = \XLite\Core\Database::getRepo('XLite\Model\Category')->find(
+            \XLite\Core\Database::getRepo('XLite\Model\Category')->getRootCategoryId()
+        );
+
+        foreach (explode(';', $data) as $path) {
+            $path = trim($path);
+
+            // Detect category
+            $parent = $root;
+            foreach (explode('/', $path) as $name) {
+                $name = trim($name);
+                $category = null;
+                foreach ($parent->getChildren() as $cat) {
+                    if ($cat->getName() == $name) {
+                        $category = $cat;
+                        break;
+                    }
+                }
+
+                if (!$category) {
+                    $category = new \XLite\Model\Category();
+                    $category->setName($name);
+                    $parent->addChildren($category);
+                    $category->setParent($parent);
+                    \XLite\Core\Database::getEM()->persist($category);
+                }
+
+                $parent = $category;
+            }
+
+            if ($category) {
+
+                // Add link to category
+                $link = null;
+                foreach ($product->getCategoryProducts() as $cp) {
+                    if ($link->getCategbory()->getCategoryId() == $category->getCategoryId()) {
+                        $link = $cp;
+                        $key = array_search($link->geId(), $oldLinks);
+                        unset($oldLinks[$key]);
+                        break;
+                    }
+                }
+
+                if (!$link) {
+                    $link = new \XLite\Model\CategoryProducts;
+                    $link->setProduct($product);
+                    $link->setCategory($category);
+                    $product->addCategoryProducts($link);
+                    \XLite\Core\Database::getEM()->persist($link);
+                }
+            }    
+        }
+
+        foreach ($product->getCategoryProducts() as $link) {
+            if (in_array($link->getId(), $oldLinks)) {
+                $product->getCategoryProducts()->removeElement($link);
+                \XLite\Core\Database::getEM()->remove($link);
+            }
+        }
+    }
+
+    /**
+     * Import images
+     *
+     * @param \XLite\Model\Product $product Product
+     * @param string               $data    Data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function importImages(\XLite\Model\Product $product, $data)
+    {
+        // Save old images ids' list
+        $oldImageIds = array();
+        foreach ($product->getImages() as $image) {
+            $oldImageIds[] = $image->getImageId();
+        }
+
+        // Load images
+        foreach (explode(';', $data) as $url) {
+            $url = trim($url);
+
+            $hash = \Includes\Utils\FileManager::getHash($url);
+
+            $image = null;
+
+            foreach ($product->getImages() as $i) {
+                if ($i->getHash() == $hash) {
+                    $image = $i;
+                    $key = array_search($i->getImageId(), $oldImageIds);
+                    unset($oldImageIds[$key]);
+                    break;
+                }
+            }
+
+            if (!$image) {
+                $image = new \XLite\Model\Image\Product\Image();
+                $image->setProduct($product);
+
+                if ($image->loadFromURL($url)) {
+                    $product->addImages($image);
+                    \XLite\Core\Database::getEM()->persist($image);
+                }
+            }
+        }
+
+        // Remove old images
+        foreach ($product->geImages() as $image) {
+            if (in_array($image->getImageId(), $oldImageIds)) {
+                $product->geImages()->removeElement($image);
+                \XLite\Core\Database::getEM()->remove($image);
+            }
+        }
+    }
+
+    /**
+     * Import images
+     *
+     * @param \XLite\Model\Product $product Product
+     * @param string               $data    Data
+     * @param string               $name    Cell name
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function importInventory(\XLite\Model\Product $product, $data, $name)
+    {
+        if ('inventoryEnabled' == $name) {
+            $name = 'enabled';
+        }
+
+        $method = 'set' . ucfirst($name);
+        $product->getInventory()->$method($data);
+        if (!$product->getInventory()->getInventoryId()) {
+            $product->setInventory($product->getInventory());
+            $product->getInventory()->setProduct($product);
+        }
+    }
+
+    /**
+     * Import classes
+     *
+     * @param \XLite\Model\Product $product Product
+     * @param string               $data    Data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function importClasses(\XLite\Model\Product $product, $data)
+    {
+        // Remove old classes
+        foreach ($product->getClasses() as $class) {
+            $class->getProducts()->removeElement($product);
+        }
+        $product->getClasses()->clear();
+
+        // Add classes links
+        foreach (explode(';', $data) as $name) {
+            $name = trim($name);
+
+            $translation = \XLite\Core\Database::getRepo('XLite\Model\ProductClassTranslation')->findOneBy(array('name' => $name));
+            if ($translation) {
+                $class = $translation->getOwner();
+
+            } else {
+                $class = new \XLite\Model\ProductClass;
+                $class->setName($name);
+                
+                \XLite\Core\Database::getEM()->persist($class);
+            }
+
+            $class->addProducts($product);
+            $product->addClasses($class);
+        }
     }
 
     // }}}

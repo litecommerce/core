@@ -16,13 +16,21 @@
     {t(#Depending on the size of your data file, importing may take some time.#)}
   </div>
 
-  <widget class="\XLite\View\Form\Import" name="import" />
-    <widget
-      class="\XLite\View\Button\FileSelector"
-      style="action"
-      label="Import from file"
-      object="import" />
-  <widget name="import" end />
+  {if:isImportFileLoaded()}
+
+    <div id="importprogressbar"></div>
+
+  {else:}
+
+    <widget class="\XLite\View\Form\Import" name="import" />
+      <widget
+        class="\XLite\View\Button\FileSelector"
+        style="action"
+        label="Import from file"
+        object="import" />
+    <widget name="import" end />
+
+  {end:}
 
   <div class="bottom-note">{t(#The importing starts immediately upon selecting the data file. No additional confirmation prompts will appear.#)}</div>
 </div>
