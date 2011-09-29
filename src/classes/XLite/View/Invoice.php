@@ -153,4 +153,16 @@ class Invoice extends \XLite\View\AView
     {
         return 3;
     }
+
+    /**
+     * Get columns span 
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function getColumnsSpan()
+    {
+        return 4 + count($this->getOrder()->getItemsExcludeSurcharges());
+    }
 }
