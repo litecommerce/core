@@ -765,11 +765,14 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             $event['quantity'] = $item->getAmount();
 
             // Inventory tracking
-            if (
-                $item->getObject()->getInventory()->getEnabled()
-                && $item->getObject()->getInventory()->getAmount() <= $item->getAmount()
-            ) {
-                $event['is_limit'] = 1;
+            $object = $item->getObject();
+
+            if ($object) {
+                $inventory = $object->getInventory();
+
+                if ($inventory->getEnabled() && $inventory->getAmount() <= $item->getAmount()) {
+                    $event['is_limit'] = 1;
+                }
             }
 
             $hash['items'][] = $event;
@@ -1489,6 +1492,25 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
         return $list;
 
+    }
+
+    /**
+     * Common method to update cart/order
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function updateOrder()
+    {
+        $total = $this->getTotal();
+
+        $this->normalizeItems();
+        $this->calculate();
+
+        if ($this->getTotal() !== $total) {
+            $this->renewPaymentMethod();
+        }
     }
 
     /**
