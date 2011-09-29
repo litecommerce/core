@@ -45,6 +45,17 @@ class Modifier extends \XLite\Model\Repo\ARepo
     protected $defaultOrderBy = 'weight';
 
     /**
+     * Alternative record identifiers
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $alternativeIdentifier = array(
+        array('class'),
+    );
+
+    /**
      * Find all active modifiers
      *
      * @return array
