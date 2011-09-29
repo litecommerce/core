@@ -70,6 +70,22 @@ class ImportExport extends \XLite\View\AView
     }
 
     /**
+     * Register files from common repository
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCommonFiles()
+    {
+        $list = parent::getCommonFiles();
+
+        $list['js'][] = 'js/jquery.blockUI.js';
+
+        return $list;
+    }
+
+    /**
      * Return widget default template
      *
      * @return string

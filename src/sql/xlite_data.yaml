@@ -459,6 +459,9 @@ XLite\Model\LanguageLabel:
   - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: en, label: 'Importing will overwrite the existing product information. This operation connot be undone.' }] }
   - { name: 'To get the format of the import data, you can export your products to a file.', translations: [{ code: en, label: 'To get the format of the import data, you can <a href="{{url}}">export your products</a> to a file and them review the format of that file.' }] }
   - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: en, label: 'Depending on the size of your data file, importing may take some time.' }] }
+  - { name: 'Successfully imported X new products and upgraded Y old products', translations: [{ code: en, label: 'Successfully imported {{new}} new products and upgraded {{old}} old products' }] }
+  - { name: 'Successfully imported X new products', translations: [{ code: en, label: 'Successfully imported {{new}} new products' }] }
+  - { name: 'Successfully upgraded Y old products', translations: [{ code: en, label: 'Successfully upgraded {{old}} old products' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

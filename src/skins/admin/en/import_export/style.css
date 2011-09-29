@@ -10,18 +10,18 @@
  * @since     1.0.11
  */
 
-.import-export div.tab-content {
+.import-export-box div.tab-content {
   margin-top: 20px;
   width: 711px;
 }
 
-.import-export form {
+.import-export-box form {
   display: block;
   text-align: center;
   padding-top: 21px;
 }
 
-.import-export .bottom-note {
+.import-export-box .bottom-note {
   text-align: center;
   color: #456583;
   padding: 13px;
@@ -32,14 +32,14 @@
 /**
  * Import
  */
-.import-export .import .warning {
+.import-export-box .import .warning {
   border: 1px solid #eee;
   background: transparent none;
   padding: 0px;
   margin: 0px;
 }
 
-.import-export .import .warning div {
+.import-export-box .import .warning div {
   border: 7px solid #f9f9f9;
   padding: 17px 19px 19px;
   margin: 0px;
@@ -47,23 +47,32 @@
   color: #456583;
 }
 
-.import-export .import .note {
+.import-export-box .import .note {
   font-size: 14px;
   line-height: 26px;
   margin-top: 9px;
 }
 
-.import-export .import .note a {
+.import-export-box .import .note a {
   text-decoration: underline;
+}
+
+.import-popup .ui-dialog-titlebar {
+  display: none;
+}
+
+.import-popup .title {
+  font-size: 16px;
+  padding-bottom: 10px;
 }
 
 /**
  * Export
  */
-.import-export .export {
+.import-export-box .export {
 }
 
-.import-export .export .note {
+.import-export-box .export .note {
   font-size: 16px;
   padding-top: 4px;
   padding-bottom: 3px;

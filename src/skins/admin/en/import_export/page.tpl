@@ -9,6 +9,6 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<div class="import-export">
+<div class="import-export-box">
   <widget target="import_export" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
 </div>

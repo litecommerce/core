@@ -12,13 +12,15 @@
 
 jQuery().ready(
   function() {
-    jQuery('#importprogressbar').eq(0).each(
+    jQuery('.import-export-box .import-box').eq(0).each(
       function() {
+
+        var bar = jQuery('.bar', this);
 
         function initializeNextStep(event, data)
         {
-          if (event && data && 'undefined' != typeof(data.position) && 'undefined' != typeof(data.length)) {
-            jQuery(this).progressbar('value', Math.round(100 * data.position / data.length));
+          if (event && data && 'undefined' != typeof(data.position) && 'undefined' != typeof(data.length) && data.length) {
+            bar.progressbar('value', Math.round(100 * data.position / data.length));
           }
 
           core.post(
@@ -28,13 +30,16 @@ jQuery().ready(
 
         function finishImport()
         {
+          bar.progressbar('value', 100);
+          self.location = URLHandler.buildURL({target: 'import_export'});
         }
 
         core.bind('importAfterStep', initializeNextStep);
         core.bind('importFinish', finishImport);
 
-        jQuery(this).progressbar({ value: 0});
-
+        openDialog('.import-export-box .import-box', { closeOnEscape: false });
+        jQuery('.ui-dialog.popup').addClass('import-popup');
+        bar.progressbar({ value: 1 });
         initializeNextStep();
       }
     );

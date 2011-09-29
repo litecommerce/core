@@ -38,7 +38,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     /**
      * Import ste length 
      */
-    const IMPORT_STEP_LENGTH = 50;
+    const IMPORT_STEP_LENGTH = 20;
 
     /**
      * Delimiter 
@@ -185,7 +185,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     {
         return array(
             'productId',
-            'SKU',
+            'sku',
             'name',
             'description',
             'briefDescription',
@@ -467,9 +467,23 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     {
         $cell = \XLite\Core\Session::getInstance()->importCell;
 
+        // Validation
         if (is_array($cell)) {
             if (!isset($cell['path']) || !file_exists($cell['path'])) {
                 $cell = null;
+            }
+        }
+
+        // Sanitize
+        if (is_array($cell)) {
+            if (!isset($cell['position'])) {
+                $cell['position'] = 0;
+            }
+            if (!isset($cell['new'])) {
+                $cell['new'] = 0;
+            }
+            if (!isset($cell['old'])) {
+                $cell['old'] = 0;
             }
         }
 
@@ -487,30 +501,30 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      */
     protected function processImportStep(array $cell)
     {
-        $fp = fopen($cell['path'], 'rb');
+        $this->filePointer = fopen($cell['path'], 'rb');
 
         $columns = $this->getColumns();
 
         if ($cell['position']) {
-            $counter = $cell['position'];
+            $counter = $cell['position'] + 1;
             while (0 < $counter) {
-                fgetcsv($fp, 8192, static::DELIMIER);
+                fgetcsv($this->filePointer, 8192, static::DELIMIER);
                 $counter--;
             }
 
             $headers = $cell['headers'];
 
         } else {
-            $headers = fgetcsv($fp, 8192, static::DELIMIER);
+            $headers = fgetcsv($this->filePointer, 8192, static::DELIMIER);
             $cell['headers'] = $headers;
-            $cell['position'] = 0;
         }
 
         $counter = 0;
-        while ($counter < static::IMPORT_STEP_LENGTH) {
+        while ($counter < static::IMPORT_STEP_LENGTH && !feof($this->filePointer)) {
 
-            $row = fgetcsv($fp, 8192, static::DELIMIER);
+            $row = fgetcsv($this->filePointer, 8192, static::DELIMIER);
 
+            // Assemble associated list
             $list = array();
             foreach ($headers as $index => $name) {
                 if (isset($columns[$name])) {
@@ -518,34 +532,68 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                 }
             }
 
+            // Detect and get product
             $product = $this->getProduct($list);
     
-            foreach ($list as $index => $cell) {
+            // Import row data
+            foreach ($list as $index => $data) {
                 $info = $columns[$name];
 
                 if ('calculated' == $info['type']) {
-                    $this->{'import' . $info['method']}($product, $cell, $name);
+                    $this->{'import' . $info['method']}($product, $data, $name);
 
                 } elseif ('product' == $info['type']) {
-                    $cell = $product->{'set' . $info['method']}($cell);
+                    $product->{'set' . $info['method']}($data);
                 }
             }
             
             $counter++;
             $cell['position']++;
+
+            if ($product->getId()) {
+                $cell['old']++;
+
+            } else {
+                $cell['new']++;
+            }
+
             \XLite\Core\Database::getEM()->flush();
         }
 
-        \XLite\Core\Session::getInstance()->importCell = $cell;
-
         if (feof($this->filePointer)) {
             \XLite\Core\Session::getInstance()->importCell = null;
-            $position = ftell($this->filePointer);
-            fseek($this->filePointer, 0, SEEK_END);
-            \XLite\Core\Event::importFinish(array('position' => $position, 'length' => ftell($this->filePointer)));
+            \XLite\Core\Event::importFinish();
+            $label = null;
+            if ($cell['new'] && $cell['old']) {
+                $label = 'Successfully imported X new products and upgraded Y old products';
+
+            } elseif ($cell['new']) {
+                $label = 'Successfully imported X new products';
+
+            } elseif ($cell['old']) {
+                $label = 'Successfully upgraded Y old products';
+
+            }
+
+            if ($label) {
+                \XLite\Core\TopMessage::getInstance()->add(
+                    $label,
+                    array(
+                        'new' => $cell['new'],
+                        'old' => $cell['old'],
+                    ),
+                    null,
+                    \XLite\Core\TopMessage::INFO,
+                    false,
+                    false
+                );
+            }
 
         } else {
-            \XLite\Core\Event::importAfterStep();
+            \XLite\Core\Session::getInstance()->importCell = $cell;
+            $position = ftell($this->filePointer);
+            fseek($this->filePointer, 0, SEEK_END);
+            \XLite\Core\Event::importAfterStep(array('position' => $position, 'length' => ftell($this->filePointer)));
         }
 
         fclose($this->filePointer);
@@ -569,16 +617,22 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             unset($list['productId']);
         }
 
-        if (!$product && isset($list['SKU'])) {
-            $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('SKU' => $list['SKU']));
+        if (!$product && isset($list['sku'])) {
+            $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => $list['sku']));
             if ($product) {
-                unset($list['SKU']);
+                unset($list['sku']);
             }
         }
 
         if (!$product) {
+
+            // Create product
             $product = new \XLite\Model\Product;
             \XLite\Core\Database::getEM()->persist($product);
+
+            // Initialize required fields
+            $product->setSku('');
+            $product->setName('');
         }
 
         return $product;

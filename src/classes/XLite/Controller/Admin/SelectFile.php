@@ -112,7 +112,7 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.7
      */
-    protected function getParamsObjectImport()
+    protected function getParamsObjectImportExport()
     {
         return array(
             'page'   => 'import',
@@ -345,7 +345,7 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
         \XLite\Core\Session::getInstance()->importCell = null;
         $methodToLoad .= 'Import';
 
-        $path = $this->$methodToLoad($paramsToLoad);
+        $path = call_user_func_array(array($this, $methodToLoad), $paramsToLoad);
         if ($path) {
             chmod($path, 0644);
             \XLite\Core\Session::getInstance()->importCell = array(
@@ -362,7 +362,7 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.7
      */
-    protected function doActionSelectUploadImport()
+    protected function doActionSelectUploadImportExport()
     {
         $this->doActionSelectImport('loadFromRequest', array('uploaded_file'));
     }
@@ -374,7 +374,7 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.7
      */
-    protected function doActionSelectUrlImport()
+    protected function doActionSelectUrlImportExport()
     {
         $this->doActionSelectImport(
             'loadFromURL',
@@ -391,7 +391,7 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.7
      */
-    protected function doActionSelectLocalImport()
+    protected function doActionSelectLocalImportExport()
     {
         $file = \XLite\View\BrowseServer::getNormalizedPath(\XLite\Core\Request::getInstance()->local_server_file);
 
