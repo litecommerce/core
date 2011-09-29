@@ -273,9 +273,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     public function getJSFiles()
     {
-        $list = parent::getJSFiles();
-
-        return array_merge($list, $this->getPopupJS());
+        return array_merge(parent::getJSFiles(), $this->getPopupJS());
     }
 
     /**
@@ -831,5 +829,19 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     protected function isProductAdded(\XLite\Model\Product $product)
     {
         return $this->getCart()->isProductAdded($product->getProductId());
+    }
+
+    /**
+     * Return list of product labels
+     *
+     * @param \XLite\Model\Product $product The product to look for
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.9
+     */
+    protected function getLabels(\XLite\Model\Product $product)
+    {
+        return array();
     }
 }

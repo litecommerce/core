@@ -112,7 +112,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/tr[@class='selected-product']"
             . "/td"
         );
-        $this->assertEquals(8, $cnt, 'check cells count');
+        $this->assertEquals(7, $cnt, 'check cells count');
 
         $cnt = $this->getXpathCount(
             "//div[@id='cart']"
@@ -227,17 +227,8 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/table[@class='selected-products']"
             . "/tbody"
             . "/tr"
-            . "/td[@class='item-equal' and text()='=']",
-            'check item equal symbol'
-        );
-
-        $this->assertElementPresent(
-            "//div[@id='cart']"
-            . "/div[@id='shopping-cart']"
-            . "/table[@class='selected-products']"
-            . "/tbody"
-            . "/tr"
-            . "/td[@class='item-subtotal' and contains(text(),'$" . number_format(round($product->getPrice(), 2), 2) . "')]",
+            . "/td[@class='item-subtotal']"
+            . "/span[@class='subtotal' and text()='" . $this->formatPrice($product->getPrice()) . "']",
             'check item subtotal'
         );
 
@@ -290,7 +281,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             "//div[@id='cart']"
             . "/div[@id='cart-right']"
             . "/ul[@class='totals']"
-            . "/li[@class='shipping-modifier']"
+            . "/li[@class='order-modifier shipping-modifier']"
             . "/strong[text()='Shipping cost:']",
             'check Shipping cost'
         );

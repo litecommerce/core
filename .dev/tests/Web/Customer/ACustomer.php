@@ -27,9 +27,24 @@
 
 require_once __DIR__ . '/../AWeb.php';
 
+/**
+ * XLite_Web_Customer_ACustomer 
+ *
+ * @see   ____class_see____
+ * @since 1.0.10
+ */
 abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
 {
-
+    /**
+     * logIn
+     *
+     * @param string $username ____param_comment____
+     * @param string $password ____param_comment____
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
     protected function logIn($username = 'master', $password = 'master')
     {
         $this->open('user');
@@ -46,6 +61,15 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
         $this->assertTrue($this->isLoggedIn(), 'Check that user is logged in successfully');
     }
 
+    /**
+     * logOut
+     *
+     * @param mixed $pageIsOpened ____param_comment____
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
     protected function logOut($pageIsOpened = false)
     {
         $this->open('user/logout');
@@ -53,11 +77,25 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
         $this->assertFalse($this->isLoggedIn(), 'Check that user is logged out');
     }
 
+    /**
+     * isLoggedIn
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
     protected function isLoggedIn()
     {
         return $this->isElementPresent('//a[@class="log-in" and contains(@href,"user/logout")]');
     }
 
+    /**
+     * getActiveProduct
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
     protected function getActiveProduct()
     {
         $result = \XLite\Core\Database::getRepo('XLite\Model\Product')
@@ -68,6 +106,13 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
         return $result;
     }
 
+    /**
+     * getActiveProducts
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
     protected function getActiveProducts()
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Product')
@@ -175,5 +220,19 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
         $pid = $pmethod->getMethodId();
 
         return $pid;
+    }
+
+    /**
+     * formatPrice
+     *
+     * @param mixed $value ____param_comment____
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function formatPrice($value)
+    {
+        return '$' . number_format($value, 2, '.', '');
     }
 }

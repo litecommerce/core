@@ -427,9 +427,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function getCSSFiles()
     {
-        $list = array();
-
-        return $list;
+        return array();
     }
 
     /**

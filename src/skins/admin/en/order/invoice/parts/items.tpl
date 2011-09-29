@@ -15,10 +15,24 @@
   <tr>
     {displayViewListContent(#invoice.items.head#)}
   </tr>
-
-  <tr FOREACH="order.getItems(),item">
-    {displayViewListContent(#invoice.item#,_ARRAY_(#item#^item))}
+  <tr class="last-row">
+    {displayViewListContent(#invoice.items.subhead#)}
   </tr>
+  <tr class="separator">
+    <td colspan="{getColumnsSpan()}"><img src="images/spacer.gif" alt="" /></td>
+  </tr>
+
+  {foreach:order.getItems(),index,item}
+    <tr>
+      {displayViewListContent(#invoice.item#,_ARRAY_(#item#^item))}
+    </tr>
+    <tr>
+      {displayViewListContent(#invoice.subitem#,_ARRAY_(#item#^item))}
+    </tr>
+    <tr IF="!itemArrayPointer=itemArraySize" class="separator">
+      <td colspan="{getColumnsSpan()}"><img src="images/spacer.gif" alt="" /></td>
+    </tr>
+  {end:}
 
   <tr FOREACH="getViewList(#invoice.items#),w">
     {w.display()}

@@ -30,9 +30,8 @@ require_once __DIR__ . '/ACustomer.php';
 /**
  * XLite_Web_Customer_ProductDetails
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 {
@@ -40,15 +39,12 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
      * testStructure
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-
     public function testStructure()
     {
-        $product = $this->getActiveProduct();
-
+        $product   = $this->getActiveProduct();
         $productId = $product->getProductId();
 
         $this->openAndWait('store/product//product_id-' . $product->getProductId());
@@ -137,7 +133,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent(
             "//form[@class='product-details validationEngine']"
             . "/div[@class='product-details-info']"
-            . "/div[@class='price product-price' and text()='$" . number_format(round($product->getPrice(), 2), 2) . "']",
+            . "/span[@class='price product-price' and text()='" . $this->formatPrice($product->getPrice()) . "']",
             'check price'
         );
         $this->assertElementPresent(

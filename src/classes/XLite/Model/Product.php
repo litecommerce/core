@@ -571,18 +571,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Get labels 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getLabels()
-    {
-        return array();
-    }
-
-    /**
      * Prepare creation date 
      * 
      * @return void

@@ -54,7 +54,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * @since 1.0.0
      */
     protected static $typeNames = array(
-        self::TYPE_TAX => 'Tax cost',
+        self::TYPE_TAX      => 'Tax cost',
         self::TYPE_DISCOUNT => 'Discount',
         self::TYPE_SHIPPING => 'Shipping cost',
         self::TYPE_HANDLING => 'Handling cost',
@@ -232,7 +232,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
     public function getTypeName()
     {
         return isset(static::$typeNames[$this->getType()])
-            ? \XLite\Core\Translation::getInstance()->translate(static::$typeNames[$this->getName()])
+            ? \XLite\Core\Translation::getInstance()->translate(static::$typeNames[$this->getType()])
             : null;
     }
 

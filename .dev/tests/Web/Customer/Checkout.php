@@ -348,15 +348,15 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         // Check place button
         $this->assertElementNotPresent('css=.current .button-row button.disabled', 'main button is enabled always');
-        $this->assertElementNotPresent('css=.current .non-agree', 'non-agree style is NOT applyed');
+        $this->assertElementNotPresent('css=.current .non-agree', 'non-agree style is NOT applied');
 
         $this->click('css=.current .button-row button');
 
-        $this->assertElementPresent('css=.current .non-agree', 'non-agree style is applyed');
+        $this->assertElementPresent('css=.current .non-agree', 'non-agree style is applied');
 
         $this->click('//input[@id="place_order_agree"]');
 
-        $this->assertElementPresent('css=.current .non-agree', 'non-agree style is applyed always');
+        $this->assertElementPresent('css=.current .non-agree', 'non-agree style is applied always');
 
         // Checkout with Check payment method
         $this->click('css=.current .button-row button');

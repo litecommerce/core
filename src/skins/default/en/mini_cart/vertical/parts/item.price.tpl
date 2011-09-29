@@ -10,6 +10,6 @@
  * @since     1.0.0
  * @ListChild (list="minicart.vertical.item", weight="10")
  *}
-<span class="item-price">{formatPrice(item.getPrice(),cart.getCurrency()):h}</span>
+<span class="item-price">{formatPrice(item.getNetPrice(),cart.getCurrency()):h}</span>
 <span class="delimiter">&times;</span>
 <span class="item-qty">{item.getAmount()}</span>

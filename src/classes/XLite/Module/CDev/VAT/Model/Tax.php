@@ -81,7 +81,7 @@ class Tax extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Membership")
+     * @ManyToOne  (targetEntity="XLite\Model\Membership", cascade={"detach", "merge"})
      * @JoinColumn (name="vat_membership_id", referencedColumnName="membership_id")
      */
     protected $vatMembership;
@@ -93,7 +93,7 @@ class Tax extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Zone")
+     * @ManyToOne  (targetEntity="XLite\Model\Zone", cascade={"detach", "merge"})
      * @JoinColumn (name="vat_zone_id", referencedColumnName="zone_id")
      */
     protected $vatZone;
@@ -133,7 +133,7 @@ class Tax extends \XLite\Model\Base\I18n
         $rates = array();
 
         foreach ($this->getRates() as $rate) {
-            if ($rate->isApplyed($zones, $membership, $productClasses)) {
+            if ($rate->isApplied($zones, $membership, $productClasses) && !isset($rates[$rate->getPosition()])) {
                 $rates[$rate->getPosition()] = $rate;
             }
         }

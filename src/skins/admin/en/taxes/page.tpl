@@ -9,4 +9,8 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<widget target="taxes" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
+{if:getPages()}
+  <widget target="taxes" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
+{else:}
+  <widget template="taxes/empty.tpl" />
+{end:}

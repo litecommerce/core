@@ -47,13 +47,9 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
     public function testCalculation()
     {
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->find(1);
-        foreach ($tax->getRates() as $rate) {
-            \XLite\Core\Database::getEM()->remove($rate);
-        }
-        $tax->getRates()->clear();
+        $order = $this->getTestOrder();
 
-        $tax->setEnabled(true);
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->getTax();
 
         $rate = new \XLite\Module\CDev\SalesTax\Model\Tax\Rate;
         $rate->setValue(10);
@@ -61,13 +57,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $tax->addRates($rate);
         $rate->setTax($tax);
 
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->find(1);
-        foreach ($tax->getRates() as $rate) {
-            \XLite\Core\Database::getEM()->remove($rate);
-        }
-        $tax->getRates()->clear();
-
-        $tax->setEnabled(true);
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
 
         $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
         $rate->setValue(10);
@@ -76,8 +66,6 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $tax->addRates($rate);
         $rate->setTax($tax);
         \XLite\Core\Database::getEM()->flush();
-
-        $order = $this->getTestOrder();
 
         $order->calculate();
         $this->assertEquals(
@@ -156,7 +144,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
         // Limit by product class (item and rate)
         $order->getItems()->get(0)->getProduct()->addClasses($pc);
-        $m = $order->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING')->getSelectedRate()->getMethod();;
+        $m = $order->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING')->getSelectedRate()->getMethod();
         $m->addClasses($pc);
         \XLite\Core\Database::getEM()->flush();
 
@@ -260,37 +248,124 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
         // 824.67 + 8.33 + 83.3 + 82.47 = 998.77
         $this->assertEquals(998.77, $currency->formatValue($order->getTotal()), 'check order total');
+    }
 
-        // Test small values
+    public function testSmallPriceCases()
+    {
+        $order = $this->getTestOrder();
+
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
+
+        $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
+        $rate->setValue(35);
+        \XLite\Core\Database::getEM()->persist($rate);
+        $tax->addRates($rate);
+        $rate->setTax($tax);
+
         $order->getItems()->get(0)->getProduct()->setPrice(2.49);
         $order->getItems()->get(0)->setPrice(2.49);
         $order->getItems()->get(0)->setAmount(1);
-
-        $tax->getRates()->removeElement($rate);
-        $rate->setTax(null);
-        \XLite\Core\Database::getEM()->remove($rate);
-        $tax->getRates()->get(0)->setValue(35);
-        $tax->setVATMembership(null);
-        $tax->getRates()->get(0)->setMembership(null);
 
         \XLite\Core\Database::getEM()->flush();
 
         $order->calculate();
 
         // Initial price
-        $this->assertEquals(2.49, $order->getItems()->get(0)->getPrice(), 'check item price #2');
+        $this->assertEquals(2.49, $order->getItems()->get(0)->getPrice(), 'check item price');
         // 2.49 - (2.49 - 2.49 / (1 + 0.35)) = 1.8444 = 1.8444
-        $this->assertEquals(1.8444, $order->getItems()->get(0)->getNetPrice(), 'check item net price #2');
+        $this->assertEquals(1.8444, $order->getItems()->get(0)->getNetPrice(), 'check item net price');
         // 1.84 * 1 = 1.84
-        $this->assertEquals(1.84, $order->getItems()->get(0)->getSubtotal(), 'check item subtotal #2');
+        $this->assertEquals(1.84, $order->getItems()->get(0)->getSubtotal(), 'check item subtotal');
 
         // Shipping cost = 10 / 1.35 = 7.40740741 = 7.41
-        // (1.84 + 7.41) * 0.35 + 1.84 * 0.1 + (1.84 + 7.41) = 12.6715
-        $this->assertEquals(12.67, $currency->formatValue($order->getTotal()), 'check item total #2');
+        // (1.84 + 7.41) * 0.35 + (1.84 + 7.41) = 12.4875 = 12.49
+        $this->assertEquals(12.49, $order->getTotal(), 'check order total');
+    }
+
+    public function testDifferMembershipCases()
+    {
+        $order = $this->getTestOrder();
+
+        $pc = new \XLite\Model\ProductClass;
+        $pc->setName('Test PC');
+        \XLite\Core\Database::getEM()->persist($pc);
+
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
+
+        $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
+        $rate->setValue(35);
+        \XLite\Core\Database::getEM()->persist($rate);
+        $tax->addRates($rate);
+        $rate->setTax($tax);
+
+        $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
+        $rate->setValue(100);
+        $rate->setProductClass($pc);
+        \XLite\Core\Database::getEM()->persist($rate);
+        $tax->addRates($rate);
+        $rate->setTax($tax);
+
+        $order->getItems()->get(0)->getProduct()->setPrice(39.01);
+        $order->getItems()->get(0)->setPrice(39.01);
+        $order->getItems()->get(0)->setAmount(10);
+
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\Product')->findBy(array('enabled' => true)) as $product) {
+            if ($order->getItems()->get(0)->getProduct()->getProductId() != $product->getProductId()) {
+                break;
+            }
+        }
+
+        $item = new \XLite\Model\OrderItem();
+        $item->setProduct($product);
+        $item->setAmount(10);
+        $order->addItem($item);
+        $order->getItems()->get(1)->getProduct()->setPrice(29.01);
+        $order->getItems()->get(1)->setPrice(29.01);
+        $product->addClasses($pc);
+
+        \XLite\Core\Database::getEM()->flush();
+
+        $order->calculate();
+
+        // 39.01 - (39.01 - 39.01 / (1 + 0.35)) = 28.8962963 = 28.8963
+        $this->assertEquals(28.8963, $order->getItems()->get(0)->getNetPrice(), 'check item #1 net price');
+        // 29.01 - (29.01 - 29.01 / (1 + 0.35)) = 21.4888889 = 21.4889
+        $this->assertEquals(21.4889, $order->getItems()->get(1)->getNetPrice(), 'check item #2 net price');
+
+        // 28.90 * 10 = 289
+        $this->assertEquals(289, $order->getItems()->get(0)->getSubtotal(), 'check item #1 subtotal');
+        // 21.49 * 10 = 214.9
+        $this->assertEquals(214.9, round($order->getItems()->get(1)->getSubtotal(), 1), 'check item #2 subtotal');
+
+        // 289 + 214.9 = 475
+        $this->assertEquals(503.9, $order->getSubtotal(), 'check order subtotal');
+
+        // Shipping cost = 10 / 1.35 = 7.40740741 = 7.41
+        $this->assertEquals(7.41, $order->getSurcharges()->get(0)->getValue(), 'check shipping cost');
+        // VAT = (503.9 + 7.41) * 0.35 = 178.9585
+        $this->assertEquals(178.9585, $order->getSurcharges()->get(1)->getValue(), 'check VAT');
+        // 503.9 + 7.41 + 178.96 = 690.27
+        $this->assertEquals(690.27, $order->getTotal(), 'check order total');
     }
 
     protected function getTestOrder()
     {
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->getTax();
+        foreach ($tax->getRates() as $rate) {
+            \XLite\Core\Database::getEM()->remove($rate);
+        }
+        $tax->getRates()->clear();
+        $tax->setEnabled(true);
+
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
+        foreach ($tax->getRates() as $rate) {
+            \XLite\Core\Database::getEM()->remove($rate);
+        }
+        $tax->getRates()->clear();
+        $tax->setEnabled(true);
+        $tax->setVATMembership(null);
+        $tax->setVATZone(null);
+
         $order = parent::getTestOrder();
 
         $order->getItems()->get(0)->getProduct()->setPrice(10);

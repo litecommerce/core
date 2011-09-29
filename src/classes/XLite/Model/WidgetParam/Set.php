@@ -33,7 +33,7 @@ namespace XLite\Model\WidgetParam;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Set extends \XLite\Model\WidgetParam\String
+class Set extends \XLite\Model\WidgetParam\AWidgetParam
 {
     /**
      * Param type
@@ -113,9 +113,9 @@ class Set extends \XLite\Model\WidgetParam\String
      */
     protected function getValidaionSchema($value)
     {
-        return parent::getValidaionSchema($value) + array(
+        return array(
             array(
-                self::ATTR_CONDITION => isset($this->options[$value]),
+                self::ATTR_CONDITION => !isset($this->options[$value]),
                 self::ATTR_MESSAGE   => ' unallowed param value - "' . $value . '"',
             ),
         );

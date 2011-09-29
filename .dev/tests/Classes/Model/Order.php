@@ -929,36 +929,23 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
     public function testProcessSucceed()
     {
-        $order = $this->getTestOrder();
-
-        $order->setStatus($order::STATUS_QUEUED);
-
         $c = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneByName('enable_init_order_notif');
         $old = $c->getValue();
-
-        $c->setValue(true);
-        \XLite\Core\Database::getEM()->flush();
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneByName('enable_init_order_notif_customer');
         $old2 = $c->getValue();
 
-        $c->setValue(true);
-        \XLite\Core\Database::getEM()->flush();
-
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->getAllOptions(true);
-
+        $order = $this->getTestOrder();
+        $order->setStatus($order::STATUS_QUEUED);
         $order->processSucceed();
 
-        // TODo - check email send
+        // TODO - check email send
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneByName('enable_init_order_notif');
         $c->setValue($old);
-        \XLite\Core\Database::getEM()->flush();
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneByName('enable_init_order_notif_customer');
         $c->setValue($old2);
-        \XLite\Core\Database::getEM()->persist($c);
-        \XLite\Core\Database::getEM()->flush();
     }
 
     public function testRefreshItems()

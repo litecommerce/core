@@ -45,6 +45,17 @@ class Modifier extends \XLite\Model\Repo\ARepo
     protected $defaultOrderBy = 'weight';
 
     /**
+     * Alternative record identifiers
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $alternativeIdentifier = array(
+        array('class'),
+    );
+
+    /**
      * Find all active modifiers
      *
      * @return array
@@ -55,7 +66,17 @@ class Modifier extends \XLite\Model\Repo\ARepo
     {
         $list = $this->createQueryBuilder()->getResult();
 
-        return is_array($list) ? new \XLite\DataSet\Collection\OrderModifier($list) : null;
+        $list = is_array($list) ? new \XLite\DataSet\Collection\OrderModifier($list) : null;
+
+        if ($list) {
+            foreach ($list as $i => $item) {
+                if (!\XLite\Core\Operator::isClassExists($item->getClass())) {
+                    unset($list[$i]);
+                }
+            }
+        }
+
+        return $list;
     }
 
     /**

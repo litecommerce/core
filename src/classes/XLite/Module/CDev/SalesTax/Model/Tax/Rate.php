@@ -140,7 +140,7 @@ class Rate extends \XLite\Model\AEntity
     protected $membership;
 
     /**
-     * Check - rate is applyed by specified zones and membership or nopt
+     * Check if rate is applied for specified zones and membership
      *
      * @param array                   $zones      Zone id list
      * @param \XLite\Model\Membership $membership Membership
@@ -149,12 +149,54 @@ class Rate extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isApplyed(
-        array $zones,
-        \XLite\Model\Membership $membership = null
-    ) {
+    public function isApplied(array $zones, \XLite\Model\Membership $membership = null) {
         return (!$this->getZone() || in_array($this->getZone()->getZoneId(), $zones))
-            && (!$this->getMembership() || ($membership && $this->getMembership()->getMembershipId() == $membership->getMembershipId()));
+            && (
+                !$this->getMembership() 
+                || ($membership && $this->getMembership()->getMembershipId() == $membership->getMembershipId())
+            );
+    }
+
+    /**
+     * Set zone
+     *
+     * @param \XLite\Model\Zone $zone Zone OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setZone(\XLite\Model\Zone $zone = null)
+    {
+        $this->zone = $zone;
+    }
+
+    /**
+     * Set product class
+     *
+     * @param \XLite\Model\ProductClass $class Product class OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setProductClass(\XLite\Model\ProductClass $class = null)
+    {
+        $this->productClass = $class;
+    }
+
+    /**
+     * Set membership
+     *
+     * @param \XLite\Model\Membership $membership Membership OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setMembership(\XLite\Model\Membership $membership = null)
+    {
+        $this->membership = $membership;
     }
 
     // {{{ Calculation

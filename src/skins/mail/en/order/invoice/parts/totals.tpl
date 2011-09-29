@@ -10,21 +10,6 @@
  * @since     1.0.0
  * @ListChild (list="invoice.base", weight="40")
  *}
-<ul class="invoice-totals">
-
-  <li>
-    <em>{t(#Subtotal#)}:</em>
-    {formatPrice(cart.getSubtotal(),cart.getCurrency()):h}
-  </li>
-
-  <li FOREACH="cart.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
-    <em>{t(modifier.getName())}:</em>
-    {if:modifier.isAvailable(modifier.getSubcode())}{formatPrice(modifier.getSurcharge(),cart.getCurrency()):h}{else:}{t(#n/a#)}{end:}
-  </li>
-
-  <li class="grand-total">
-    <em>{t(#Grand total#)}:</em>
-    {formatPrice(cart.getTotal(),cart.getCurrency()):h}
-  </li>
-
-</ul>
+<table cellspacing="0" class="totals">
+  {displayViewListContent(#invoice.base.totals#)}
+</table>

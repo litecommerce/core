@@ -101,6 +101,10 @@ ul.products-sidebar li .product {
   padding: 2px 8px 8px;
 }
 
+ul.products-sidebar li h3.product-name {
+  display: inline;
+}
+
 .products div.product,
 .products div.product-info,
 .products div.product-photo
@@ -182,7 +186,6 @@ ul.products-sidebar li .product {
   margin: 0px;
   padding: 0px;
 }
-
 
 .products-grid .product-name,
 .products-grid .product-thumbnail,
@@ -299,9 +302,6 @@ ul.products-sidebar li .product {
 
 .products .labels li {
   background-color: transparent;
-  background-image: none;
-  margin: 0px;
-  padding: 0px;
 }
 
 
