@@ -2726,6 +2726,7 @@ ul.location-subnodes li a.current {
 .invoice-box .items {
   margin-top: 10px;
   margin-bottom: 10px;
+  border: 0px none;
 }
 
 .invoice-box .items,
@@ -2799,18 +2800,14 @@ ul.location-subnodes li a.current {
   padding: 9px 13px;
 }
 
-.invoice-box tr.separator-row td.sku,
-.invoice-box tr.separator-row td.qty,
-.invoice-box tr.separator-row td.price,
-.invoice-box tr.separator-row td.net-total,
-.invoice-box tr.separator-row td.modifier,
-.invoice-box tr.separator-row td.total,
-.invoice-box tr.last-row th,
-.invoice-box th.net-total,
-.invoice-box th.total,
-.invoice-box th.modifier
-{
-  border-bottom-width: 2px;
+.invoice-box .items .separator img {
+  height: 5px;
+}
+
+.invoice-box .items .separator td {
+  border: 0px none;
+  font-size: 0px;
+  padding: 0px;
 }
 
 .invoice-box .totals {

@@ -29,13 +29,14 @@ class XLite_Tests_Module_CDev_SalesTax_Model_Order extends XLite_Tests_Model_Ord
 {
     public function testCalculation()
     {
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->find(1);
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
         foreach ($tax->getRates() as $rate) {
+            $rate->setTax(null);
             \XLite\Core\Database::getEM()->remove($rate);
         }
         $tax->getRates()->clear();
 
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->find(1);
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->getTax();
         foreach ($tax->getRates() as $rate) {
             \XLite\Core\Database::getEM()->remove($rate);
         }
