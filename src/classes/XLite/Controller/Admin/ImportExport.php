@@ -895,7 +895,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      */
     protected function decodeByFloat($data, array $info)
     {
-        return doubleval($data);
+        return round(doubleval($data), 4);
     }
 
     /**
