@@ -172,17 +172,8 @@ abstract class ACustomer extends \XLite\Controller\AController
      */
     protected function updateCart()
     {
-        $cart  = $this->getCart();
-        $total = $cart->getTotal();
-
-        $cart->normalizeItems();
-        $cart->calculate();
-
-        if ($total != $cart->getTotal()) {
-            $cart->renewPaymentMethod();
-        }
-
-        \XLite\Core\Database::getRepo('\XLite\Model\Order')->update($cart);
+        $this->getCart()->updateOrder();
+        \XLite\Core\Database::getRepo('XLite\Model\Cart')->update($this->getCart());
 
         $this->assembleEvent();
 
