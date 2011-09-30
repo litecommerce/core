@@ -462,6 +462,10 @@ XLite\Model\LanguageLabel:
   - { name: 'Successfully imported X new products and upgraded Y old products', translations: [{ code: en, label: 'Successfully imported {{new}} new products and upgraded {{old}} old products' }] }
   - { name: 'Successfully imported X new products', translations: [{ code: en, label: 'Successfully imported {{new}} new products' }] }
   - { name: 'Successfully upgraded Y old products', translations: [{ code: en, label: 'Successfully upgraded {{old}} old products' }] }
+  - { name: 'Import mechanism does not know the field of X and it can not be imported', translations: [{ code: en, label: 'Import mechanism does not know the field of {{name}} and it can not be imported' }] }
+  - { name: 'The string is different from that of the title number of columns - X instead of Y', translations: [{ code: en, label: 'The string is different from that of the title number of columns - {{wrong}} instead of {{right}}' }] }
+  - { name: 'Required field X is not defined or empty', translations: [{ code: en, label: 'Required field {{name}} is not defined or empty. The product was created with an empty value for this field' }] }
+  - { name: 'X image unable to load', translations: [{ code: en, label: '{{url}} image unable to load' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

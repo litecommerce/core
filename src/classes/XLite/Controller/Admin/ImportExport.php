@@ -36,14 +36,23 @@ namespace XLite\Controller\Admin;
 class ImportExport extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Import ste length 
-     */
-    const IMPORT_STEP_LENGTH = 20;
-
-    /**
      * Delimiter 
      */
     const DELIMIER = ',';
+
+    /**
+     * IMport step TTL (seconds) 
+     */
+    const IMPORT_TTL = 10;
+
+    /**
+     * COlumn type codes 
+     */
+    const TYPE_STRING  = 'string';
+    const TYPE_FLOAT   = 'float';
+    const TYPE_INTEGER = 'integer';
+    const TYPE_BOOLEAN = 'boolean';
+    const TYPE_DATE    = 'date';
 
     /**
      * FIXME- backward compatibility
@@ -156,17 +165,23 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         if (!isset($this->columns)) {
             $this->columns = array();
 
-            foreach ($this->defineProductColumns() as $name) {
+            foreach ($this->defineProductColumns() as $name => $col) {
                 $this->columns[$name] = array(
-                    'type'   => 'product',
-                    'method' => ucfirst($name),
+                    'type'       => 'product',
+                    'method'     => ucfirst($name),
+                    'typeMethod' => isset($col['type']) ? ('By' . ucfirst($col['type'])) : null,
+                    'length'     => isset($col['length']) ? $col['length'] : null,
+                    'required'   => isset($col['requried']) && $col['requried'],
                 );
             }
 
-            foreach ($this->defineCalculatedColumns() as $name => $method) {
+            foreach ($this->defineCalculatedColumns() as $name => $col) {
                 $this->columns[$name] = array(
-                    'type'   => 'calculated',
-                    'method' => ucfirst($method),
+                    'type'       => 'calculated',
+                    'method'     => ucfirst($col['method']),
+                    'typeMethod' => isset($col['type']) ? ('By' . ucfirst($col['type'])) : null,
+                    'length'     => isset($col['length']) ? $col['length'] : null,
+                    'required'   => isset($col['requried']) && $col['requried'],
                 );
             }
         }
@@ -184,20 +199,20 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     protected function defineProductColumns()
     {
         return array(
-            'productId',
-            'sku',
-            'name',
-            'description',
-            'briefDescription',
-            'metaTags',
-            'metaDesc',
-            'metaTitle',
-            'price',
-            'enabled',
-            'weight',
-            'freeShipping',
-            'cleanUrl',
-            'arrivalDate',
+            'productId'        => array(),
+            'sku'              => array('type' => static::TYPE_STRING, 'length' => 32, 'required' => true),
+            'name'             => array('type' => static::TYPE_STRING, 'length' => 255, 'required' => true),
+            'description'      => array('type' => static::TYPE_STRING, 'length' => 65536),
+            'briefDescription' => array('type' => static::TYPE_STRING, 'length' => 65536),
+            'metaTags'         => array('type' => static::TYPE_STRING, 'length' => 255),
+            'metaDesc'         => array('type' => static::TYPE_STRING, 'length' => 65536),
+            'metaTitle'        => array('type' => static::TYPE_STRING, 'length' => 255),
+            'price'            => array('type' => static::TYPE_FLOAT),
+            'enabled'          => array('type' => static::TYPE_BOOLEAN),
+            'weight'           => array('type' => static::TYPE_FLOAT),
+            'freeShipping'     => array('type' => static::TYPE_BOOLEAN),
+            'cleanUrl'         => array('type' => static::TYPE_STRING, 'length' => 255),
+            'arrivalDate'      => array('type' => static::TYPE_DATE),
         );
     }
 
@@ -211,13 +226,31 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     protected function defineCalculatedColumns()
     {
         return array(
-            'categories'       => 'categories',
-            'images'           => 'images',
-            'inventoryEnabled' => 'inventory',
-            'lowLimitEnabled'  => 'inventory',
-            'lowLimitAmount'   => 'inventory',
-            'amount'           => 'inventory',
-            'classes'          => 'classes',
+            'categories'       => array(
+                'method' => 'categories',
+            ),
+            'images'           => array(
+                'method' => 'images',
+            ),
+            'inventoryEnabled' => array(
+                'method' => 'inventory',
+                'type'   => static::TYPE_BOOLEAN,
+            ),
+            'lowLimitEnabled'  => array(
+                'method' => 'inventory',
+                'type'   => static::TYPE_BOOLEAN,
+            ),
+            'lowLimitAmount'   => array(
+                'method' => 'inventory',
+                'type'   => static::TYPE_INTEGER,
+            ),
+            'amount'           => array(
+                'method' => 'inventory',
+                'type'   => static::TYPE_INTEGER,
+            ),
+            'classes'          => array(
+                'method' => 'classes',
+            ),
         );
     }
 
@@ -308,7 +341,12 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                 $cell = $this->{'export' . $info['method']}($product, $name);
 
             } elseif ('product' == $info['type']) {
-                $cell = $product->{'get' . $info['method']}();
+                if (isset($info['typeMethod']) && method_exists($this, 'export' . $info['typeMethod'])) {
+                    $cell = $this->{'export' . $info['typeMethod']}($product->{'get' . $info['method']}());
+
+                } else {
+                    $cell = $product->{'get' . $info['method']}();
+                }
             }
 
             $row[$name] = $cell;
@@ -329,6 +367,34 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     protected function assembleExportRow(array $row)
     {
         fputcsv($this->filePointer, $row, static::DELIMIER);
+    }
+
+    /**
+     * Export boolean-type field
+     *
+     * @param mixed $data Data
+     *
+     * @return string Y or N
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function exportByBoolean($data)
+    {
+        return $data ? 'Y' : 'N';
+    }
+
+    /**
+     * Export date-type field
+     * 
+     * @param integer $date Date as UNIX timestamp
+     *  
+     * @return string RFC 2822 formatted date
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function exportByDate($date)
+    {
+        return gmdate('r', $date);
     }
 
     /**
@@ -430,6 +496,22 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Run controller
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function run()
+    {
+        if (\XLite\Core\Request::getInstance()->cancel_import) {
+            $this->clearImportCell();
+        }
+
+        parent::run();
+    }
+
+    /**
      * Import step
      * 
      * @return void
@@ -443,16 +525,35 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
 
             if ($cell) {
 
-                $this->processImportStep($cell);
+                try {
+                    $this->processImportStep($cell);
 
-                $this->setPureAction(true);
+                } catch (\Exception $e) {
+                    $this->valid = false;
+                    \XLite\Core\TopMessage::getInstance()->add(
+                        'The import process failed. For more detailed informations see the log',
+                        array(),
+                        null,
+                        \XLite\Core\TopMessage::ERROR,
+                        false,
+                        false
+                    );
+                    \XLite\Logger::getInstance()->registerException($e);
+                }
 
             } else {
                 $this->valid = false;
-                $this->hardRedirect = true;
-                \XLite\Core\TopMessage::addError('Interior storage for the import has been lost');
-                $this->setReturnURL($this->buildURL($this->getTarget()));
+                \XLite\Core\TopMessage::getInstance()->add(
+                    'Interior storage for the import has been lost',
+                    array(),
+                    null,
+                    \XLite\Core\TopMessage::ERROR,
+                    false,
+                    false
+                );
             }
+
+            $this->setPureAction(true);
         }
     }
 
@@ -470,6 +571,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         // Validation
         if (is_array($cell)) {
             if (!isset($cell['path']) || !file_exists($cell['path'])) {
+                \XLite\Core\Session::getInstance()->importCell = null;
                 $cell = null;
             }
         }
@@ -508,60 +610,91 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         if ($cell['position']) {
             $counter = $cell['position'] + 1;
             while (0 < $counter) {
-                fgetcsv($this->filePointer, 8192, static::DELIMIER);
+                fgetcsv($this->filePointer, 0, static::DELIMIER);
                 $counter--;
             }
 
             $headers = $cell['headers'];
 
         } else {
-            $headers = fgetcsv($this->filePointer, 8192, static::DELIMIER);
+            $headers = fgetcsv($this->filePointer, 0, static::DELIMIER);
             $cell['headers'] = $headers;
+            $cell['row_length'] = count($headers);
+            foreach ($headers as $index => $name) {
+                if (!isset($columns[$name])) {
+                    $this->logImportWarning(
+                        static::t(
+                            'Import mechanism does not know the field of X and it can not be imported',
+                            array('name' => $name)
+                        ),
+                        0
+                    );
+                    $cell['row_length']--;
+                }
+            }
         }
 
-        $counter = 0;
-        while ($counter < static::IMPORT_STEP_LENGTH && !feof($this->filePointer)) {
+        $expire = time() + static::IMPORT_TTL;
+        while (time() < $expire && !feof($this->filePointer)) {
 
-            $row = fgetcsv($this->filePointer, 8192, static::DELIMIER);
+            $row = fgetcsv($this->filePointer, 0, static::DELIMIER);
+            $row = is_array($row) ? array_map('trim', $row) : array();
 
-            // Assemble associated list
-            $list = array();
-            foreach ($headers as $index => $name) {
-                if (isset($columns[$name])) {
-                    $list[$name] = isset($row[$index]) ? $row[$index] : null;
+            if ($row && preg_grep('/^.+$/Ss', $row)) {
+
+                // Assemble associated list
+                $list = array();
+                foreach ($headers as $index => $name) {
+                    if (isset($columns[$name])) {
+                        $list[$name] = isset($row[$index]) ? $row[$index] : null;
+                    }
                 }
-            }
 
-            // Detect and get product
-            $product = $this->getProduct($list);
-    
-            // Import row data
-            foreach ($list as $index => $data) {
-                $info = $columns[$name];
-
-                if ('calculated' == $info['type']) {
-                    $this->{'import' . $info['method']}($product, $data, $name);
-
-                } elseif ('product' == $info['type']) {
-                    $product->{'set' . $info['method']}($data);
+                if (count($list) != $cell['row_length']) {
+                    $this->logImportWarning(
+                        static::t(
+                            'The string is different from that of the title number of columns - X instead of Y',
+                            array('right' => $cell['row_length'], 'wrong' => count($list))
+                        ),
+                        $cell['position']
+                    );
                 }
+
+                // Detect and get product
+                $product = $this->getProduct($list);
+
+                if (!$product->getId()) {
+                    foreach ($columns as $name => $info) {
+                        if (!isset($list[$name]) || !$list[$name]) {
+                            $this->logImportWarning(
+                                static::t(
+                                    'Required field X is not defined or empty',
+                                    array('name' => $name)
+                                ),
+                                $cell['position'],
+                                $name
+                            );
+                        }
+                    }
+                }
+
+                $this->importRow($product, $list, $columns);
+
+                if ($product->getId()) {
+                    $cell['old']++;
+
+                } else {
+                    $cell['new']++;
+                }
+
+                \XLite\Core\Database::getEM()->flush();
             }
             
-            $counter++;
             $cell['position']++;
-
-            if ($product->getId()) {
-                $cell['old']++;
-
-            } else {
-                $cell['new']++;
-            }
-
-            \XLite\Core\Database::getEM()->flush();
         }
 
         if (feof($this->filePointer)) {
-            \XLite\Core\Session::getInstance()->importCell = null;
+            $this->clearImportCell();
             \XLite\Core\Event::importFinish();
             $label = null;
             if ($cell['new'] && $cell['old']) {
@@ -600,6 +733,62 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Import one row 
+     * 
+     * @param \XLite\Model\Product $product Product
+     * @param array                $list    Row data
+     * @param array                $columns Columns info
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function importRow(\XLite\Model\Product $product, array $list, array $columns)
+    {
+        // Import row data
+        foreach ($list as $name => $data) {
+            $info = $columns[$name];
+
+            $method = 'import' . $info['method'];
+
+            if ('calculated' == $info['type']) {
+
+                if (isset($info['typeMethod'])) {
+                    $data = $this->{'decode' . $info['typeMethod']}($data, $info);
+                }
+
+                $this->$method($product, $data, $name);
+
+            } elseif ('product' == $info['type']) {
+                if (method_exists($this, $method)) {
+                    $this->$method($product, $data, $name);
+
+                } elseif (isset($info['typeMethod']) && $info['typeMethod']) {
+                    $data = $this->{'decode' . $info['typeMethod']}($data, $info);
+                    $product->{'set' . $info['method']}($data);
+                }
+            }
+        }
+    }
+
+    /**
+     * Clear import cell 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function clearImportCell()
+    {
+        $cell = \XLite\Core\Session::getInstance()->importCell;
+        if (is_array($cell) && isset($cell['path']) && $cell['path'] && file_exists($cell['path'])) {
+            @unlink($cell['path']);
+        }
+
+        \XLite\Core\Session::getInstance()->importCell = null;
+    }
+
+    /**
      * Get product (olr or new)
      * 
      * @param array $list Row data
@@ -613,15 +802,14 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         $product = null;
 
         if (isset($list['productId'])) {
-            $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(intval($list['productId']));
+            if ($list['productId']) {
+                $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(intval($list['productId']));
+            }
             unset($list['productId']);
         }
 
-        if (!$product && isset($list['sku'])) {
+        if (!$product && isset($list['sku']) && $list['sku']) {
             $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => $list['sku']));
-            if ($product) {
-                unset($list['sku']);
-            }
         }
 
         if (!$product) {
@@ -637,6 +825,136 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
 
         return $product;
     }
+
+    /**
+     * Log import notice 
+     * 
+     * @param string  $message  Message
+     * @param integer $position Row position
+     * @param string  $column   Column name
+     * @param string  $cell     CEll value
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function logImportWarning($message, $position = null, $column = null, $cell = null)
+    {
+        $message = trim($message);
+
+        if (isset($position)) {
+            $message .= PHP_EOL . 'Row number: ' . $position;
+        }
+
+        if (isset($column)) {
+            $message .= PHP_EOL . 'Column: ' . $column;
+        }
+
+        if (isset($cell)) {
+            $message .= PHP_EOL . 'Cell value: ' . var_export($cell, true);
+        }
+
+        \XLite\Logger::getInstance()->log($message . PHP_EOL, LOG_WARNING);
+    }
+
+    // {{{ Import product fields
+
+    /**
+     * Import string-type field
+     *
+     * @param string $data Data
+     * @param array  $info Column info
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function decodeByString($data, array $info)
+    {
+        $data = strval($data);
+
+        if (function_exists('mb_substr')) {
+            $data = mb_substr($data, 0, $info['length']);
+
+        } else {
+            $data = preg_replace('/^(.{' . $info['length'] . '})/Ssu', '$1', $data);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Import float-type field
+     *
+     * @param string $data Data
+     * @param array  $info Column info
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function decodeByFloat($data, array $info)
+    {
+        return doubleval($data);
+    }
+
+    /**
+     * Import integer-type field
+     *
+     * @param string $data Data
+     * @param array  $info Column info
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function decodeByInteger($data, array $info)
+    {
+        return intval($data);
+    }
+
+    /**
+     * Import boolean-type field
+     *
+     * @param string $data Data
+     * @param array  $info Column info
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function decodeByBoolean($data, array $info)
+    {
+        $data = strtolower(strval($data));
+        if (0 < strlen($data)) {
+            $data = in_array($data, array('1', 'y', 'true'));
+
+        } else {
+            $data = false;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Import date-type field
+     *
+     * @param string $data Data
+     * @param array  $info Column info
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function decodeByDate($data, array $info)
+    {
+        $time = strtotime(strval($data));
+        return false !== $time ? $time : time();
+    }
+
+    // }}}
+
+    // {{{ Import complex fields
 
     /**
      * Import categories 
@@ -655,57 +973,57 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             $oldLinks[] = $link->getId();
         }
 
-        $root = \XLite\Core\Database::getRepo('XLite\Model\Category')->find(
-            \XLite\Core\Database::getRepo('XLite\Model\Category')->getRootCategoryId()
-        );
+        if ($data) {
+            $root = \XLite\Core\Database::getRepo('XLite\Model\Category')->find(
+                \XLite\Core\Database::getRepo('XLite\Model\Category')->getRootCategoryId()
+            );
 
-        foreach (explode(';', $data) as $path) {
-            $path = trim($path);
+            foreach (explode(';', $data) as $path) {
+                $path = trim($path);
 
-            // Detect category
-            $parent = $root;
-            foreach (explode('/', $path) as $name) {
-                $name = trim($name);
-                $category = null;
-                foreach ($parent->getChildren() as $cat) {
-                    if ($cat->getName() == $name) {
-                        $category = $cat;
-                        break;
+                // Detect category
+                $parent = $root;
+                foreach (explode('/', $path) as $name) {
+                    $name = trim($name);
+                    $category = null;
+                    foreach ($parent->getChildren() as $cat) {
+                        if ($cat->getName() == $name) {
+                            $category = $cat;
+                            break;
+                        }
                     }
+
+                    if (!$category) {
+                        $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->insert(
+                            array('parent_id' => $parent->getCategoryId(), 'name' => $name)
+                        );
+                    }
+
+                    $parent = $category;
                 }
 
-                if (!$category) {
-                    $category = new \XLite\Model\Category();
-                    $category->setName($name);
-                    $parent->addChildren($category);
-                    $category->setParent($parent);
-                    \XLite\Core\Database::getEM()->persist($category);
-                }
+                if ($category) {
 
-                $parent = $category;
+                    // Add link to category
+                    $link = null;
+                    foreach ($product->getCategoryProducts() as $cp) {
+                        if ($cp->getCategory()->getCategoryId() == $category->getCategoryId()) {
+                            $link = $cp;
+                            $key = array_search($link->getId(), $oldLinks);
+                            unset($oldLinks[$key]);
+                            break;
+                        }
+                    }
+
+                    if (!$link) {
+                        $link = new \XLite\Model\CategoryProducts;
+                        $link->setProduct($product);
+                        $link->setCategory($category);
+                        $product->addCategoryProducts($link);
+                        \XLite\Core\Database::getEM()->persist($link);
+                    }
+                }    
             }
-
-            if ($category) {
-
-                // Add link to category
-                $link = null;
-                foreach ($product->getCategoryProducts() as $cp) {
-                    if ($link->getCategbory()->getCategoryId() == $category->getCategoryId()) {
-                        $link = $cp;
-                        $key = array_search($link->geId(), $oldLinks);
-                        unset($oldLinks[$key]);
-                        break;
-                    }
-                }
-
-                if (!$link) {
-                    $link = new \XLite\Model\CategoryProducts;
-                    $link->setProduct($product);
-                    $link->setCategory($category);
-                    $product->addCategoryProducts($link);
-                    \XLite\Core\Database::getEM()->persist($link);
-                }
-            }    
         }
 
         foreach ($product->getCategoryProducts() as $link) {
@@ -734,45 +1052,58 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             $oldImageIds[] = $image->getImageId();
         }
 
-        // Load images
-        foreach (explode(';', $data) as $url) {
-            $url = trim($url);
+        if ($data) {
 
-            $hash = \Includes\Utils\FileManager::getHash($url);
+            // Load images
+            foreach (explode(';', $data) as $url) {
+                $url = trim($url);
 
-            $image = null;
+                $hash = \Includes\Utils\FileManager::getHash($url);
 
-            foreach ($product->getImages() as $i) {
-                if ($i->getHash() == $hash) {
-                    $image = $i;
-                    $key = array_search($i->getImageId(), $oldImageIds);
-                    unset($oldImageIds[$key]);
-                    break;
+                $image = null;
+
+                if ($hash) {
+                    foreach ($product->getImages() as $i) {
+                        if ($i->getHash() == $hash) {
+                            $image = $i;
+                            $key = array_search($i->getImageId(), $oldImageIds);
+                            unset($oldImageIds[$key]);
+                            break;
+                        }
+                    }
                 }
-            }
 
-            if (!$image) {
-                $image = new \XLite\Model\Image\Product\Image();
-                $image->setProduct($product);
+                if (!$image) {
+                    $image = new \XLite\Model\Image\Product\Image();
+                    $image->setProduct($product);
 
-                if ($image->loadFromURL($url)) {
-                    $product->addImages($image);
-                    \XLite\Core\Database::getEM()->persist($image);
+                    if ($image->loadFromURL($url)) {
+                        $product->addImages($image);
+                        \XLite\Core\Database::getEM()->persist($image);
+
+                    } else {
+                        $this->logImportWarning(
+                            static::t(
+                                'X image unable to load',
+                                array('url' => $url)
+                            )
+                        );
+                    }
                 }
             }
         }
 
         // Remove old images
-        foreach ($product->geImages() as $image) {
+        foreach ($product->getImages() as $image) {
             if (in_array($image->getImageId(), $oldImageIds)) {
-                $product->geImages()->removeElement($image);
+                $product->getImages()->removeElement($image);
                 \XLite\Core\Database::getEM()->remove($image);
             }
         }
     }
 
     /**
-     * Import images
+     * Import inventory data
      *
      * @param \XLite\Model\Product $product Product
      * @param string               $data    Data
@@ -814,25 +1145,30 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         }
         $product->getClasses()->clear();
 
-        // Add classes links
-        foreach (explode(';', $data) as $name) {
-            $name = trim($name);
+        if ($data) {
 
-            $translation = \XLite\Core\Database::getRepo('XLite\Model\ProductClassTranslation')->findOneBy(array('name' => $name));
-            if ($translation) {
-                $class = $translation->getOwner();
+            // Add classes links
+            foreach (explode(';', $data) as $name) {
+                $name = trim($name);
 
-            } else {
-                $class = new \XLite\Model\ProductClass;
-                $class->setName($name);
+                $translation = \XLite\Core\Database::getRepo('XLite\Model\ProductClassTranslation')->findOneBy(array('name' => $name));
+                if ($translation) {
+                    $class = $translation->getOwner();
+
+                } else {
+                    $class = new \XLite\Model\ProductClass;
+                    $class->setName($name);
                 
-                \XLite\Core\Database::getEM()->persist($class);
-            }
+                    \XLite\Core\Database::getEM()->persist($class);
+                }
 
-            $class->addProducts($product);
-            $product->addClasses($class);
+                $class->addProducts($product);
+                $product->addClasses($class);
+            }
         }
     }
+
+    // }}}
 
     // }}}
 }

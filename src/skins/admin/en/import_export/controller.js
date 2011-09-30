@@ -16,6 +16,7 @@ jQuery().ready(
       function() {
 
         var bar = jQuery('.bar', this);
+        var timer;
 
         function initializeNextStep(event, data)
         {
@@ -24,7 +25,13 @@ jQuery().ready(
           }
 
           core.post(
-            URLHandler.buildURL({target: 'import_export', action: 'import'})
+            URLHandler.buildURL({target: 'import_export', action: 'import'}),
+            function(xhr, status, data, valid) {
+              if (xhr.readyState != 4 || xhr.status != 200 || !valid) {
+                core.showError('Import internal error');
+                self.location = URLHandler.buildURL({target: 'import_export', cancel_import: 1});
+              }
+            }
           );
         }
 

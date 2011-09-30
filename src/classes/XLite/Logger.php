@@ -314,7 +314,6 @@ class Logger extends \XLite\Base\Singleton
         }
     }
 
-
     /**
      * Get log type
      *
