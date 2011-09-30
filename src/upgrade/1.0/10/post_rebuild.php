@@ -56,4 +56,15 @@ return function()
             \XLite\Core\Database::getRepo('XLite\Model\Config')->delete($option);
         }
     }
+
+    // Update weight of shipping modifier
+
+    $modifier = \XLite\Core\Database::getRepo('XLite\Model\Order\Modifier')->findOneByClass('\\XLite\\Logic\\Order\\Modifier\\Shipping');
+
+    if (isset($modifier)) {
+        $modifier->setWeight(100);
+        \XLite\Core\Database::getEM()->persist($modifier);
+        \XLite\Core\Database::getEM()->flush();
+    }
+
 };

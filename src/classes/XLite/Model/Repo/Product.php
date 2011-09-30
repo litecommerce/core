@@ -705,4 +705,31 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
                 ->setParameter('now', time());
         }
     }
+
+    /**
+     * Delete single entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity to detach
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function performDelete(\XLite\Model\AEntity $entity)
+    {
+        $carts = (array) \XLite\Core\Database::getRepo('XLite\Model\Cart')->findAll();
+        $items = array();
+
+        foreach ($carts as $cart) {
+            foreach ((array) $cart->getItemsByProductId($entity->getProductId()) as $item) {
+                $cart->getItems()->removeElement($item);
+                $items[] = $item;
+            }
+        }
+
+        \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->deleteInBatch($items);
+        \XLite\Core\Database::getRepo('XLite\Model\Cart')->updateInBatch($carts);
+
+        parent::performDelete($entity);
+    }
 }

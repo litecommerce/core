@@ -49,7 +49,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
     {
         $order = $this->getTestOrder();
 
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->find(1);
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->getTax();
 
         $rate = new \XLite\Module\CDev\SalesTax\Model\Tax\Rate;
         $rate->setValue(10);
@@ -57,7 +57,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $tax->addRates($rate);
         $rate->setTax($tax);
 
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->find(1);
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
 
         $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
         $rate->setValue(10);
@@ -144,7 +144,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
         // Limit by product class (item and rate)
         $order->getItems()->get(0)->getProduct()->addClasses($pc);
-        $m = $order->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING')->getSelectedRate()->getMethod();;
+        $m = $order->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING')->getSelectedRate()->getMethod();
         $m->addClasses($pc);
         \XLite\Core\Database::getEM()->flush();
 
@@ -254,7 +254,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
     {
         $order = $this->getTestOrder();
 
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->find(1);
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
 
         $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
         $rate->setValue(35);
@@ -290,7 +290,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $pc->setName('Test PC');
         \XLite\Core\Database::getEM()->persist($pc);
 
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->find(1);
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
 
         $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
         $rate->setValue(35);
@@ -350,14 +350,14 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
     protected function getTestOrder()
     {
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->find(1);
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->getTax();
         foreach ($tax->getRates() as $rate) {
             \XLite\Core\Database::getEM()->remove($rate);
         }
         $tax->getRates()->clear();
         $tax->setEnabled(true);
 
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->find(1);
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
         foreach ($tax->getRates() as $rate) {
             \XLite\Core\Database::getEM()->remove($rate);
         }

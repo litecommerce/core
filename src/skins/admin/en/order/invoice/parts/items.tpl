@@ -18,13 +18,19 @@
   <tr class="last-row">
     {displayViewListContent(#invoice.items.subhead#)}
   </tr>
+  <tr class="separator">
+    <td colspan="{getColumnsSpan()}"><img src="images/spacer.gif" alt="" /></td>
+  </tr>
 
   {foreach:order.getItems(),index,item}
-    <tr {if:!itemArrayPointer=itemArraySize}class="separator-row"{end:}>
+    <tr>
       {displayViewListContent(#invoice.item#,_ARRAY_(#item#^item))}
     </tr>
-    <tr {if:!itemArrayPointer=itemArraySize}class="separator-row"{end:}>
+    <tr>
       {displayViewListContent(#invoice.subitem#,_ARRAY_(#item#^item))}
+    </tr>
+    <tr IF="!itemArrayPointer=itemArraySize" class="separator">
+      <td colspan="{getColumnsSpan()}"><img src="images/spacer.gif" alt="" /></td>
     </tr>
   {end:}
 

@@ -47,7 +47,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Shipping_Rate extends XLite_Tests_TestCa
 
     public function testGetTotalRate()
     {
-        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->find(1);
+        $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
         foreach ($tax->getRates() as $rate) {
             \XLite\Core\Database::getEM()->remove($rate);
         }

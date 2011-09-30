@@ -13,7 +13,7 @@
 
 <div class="invoice-service">
   <div>
-    <a href="{buildURL(#order#,##,_ARRAY_(#mode#^#invoice#,#order_id#^order.order_id))}" target="_blank">{t(#Print invoice#)}</a>
+    <a href="javascript:void(0);" onclick="javascript: window.print(); return false;">{t(#Print invoice#)}</a>
   </div>
 
   <form action="admin.php" method="post">
