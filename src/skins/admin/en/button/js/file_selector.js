@@ -46,6 +46,18 @@ PopupButtonFileSelector.prototype.connectInputs = function (radioInput, textInpu
         ).attr('checked', 'checked');
     }
   );
+
+  jQuery(textInput).bind(
+    'click',
+    function () {
+      jQuery('input[name="file_select"]').filter(
+        function (index) {
+          return jQuery(this).val() == valueRadioInput
+          }
+        ).attr('checked', 'checked');
+    }
+  );
+
 };
 
 decorate(
