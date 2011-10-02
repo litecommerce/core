@@ -202,10 +202,10 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             'productId'        => array(),
             'sku'              => array('type' => static::TYPE_STRING, 'length' => 32, 'required' => true),
             'name'             => array('type' => static::TYPE_STRING, 'length' => 255, 'required' => true),
-            'description'      => array('type' => static::TYPE_STRING, 'length' => 65536),
-            'briefDescription' => array('type' => static::TYPE_STRING, 'length' => 65536),
+            'description'      => array('type' => static::TYPE_STRING, 'length' => 65535),
+            'briefDescription' => array('type' => static::TYPE_STRING, 'length' => 65535),
             'metaTags'         => array('type' => static::TYPE_STRING, 'length' => 255),
-            'metaDesc'         => array('type' => static::TYPE_STRING, 'length' => 65536),
+            'metaDesc'         => array('type' => static::TYPE_STRING, 'length' => 65535),
             'metaTitle'        => array('type' => static::TYPE_STRING, 'length' => 255),
             'price'            => array('type' => static::TYPE_FLOAT),
             'enabled'          => array('type' => static::TYPE_BOOLEAN),
@@ -880,7 +880,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             $data = preg_replace('/^(.{' . $info['length'] . '})/Ssu', '$1', $data);
         }
 
-        return $data;
+        return strval($data);
     }
 
     /**
