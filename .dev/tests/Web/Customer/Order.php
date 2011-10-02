@@ -213,7 +213,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
         // Items
         $countTR = intval($this->getJSExpression('jQuery(".invoice-box .items tr").length'));
-        $this->assertEquals(count($order->getItems()) * 2 + 2, $countTR, 'TR count checking');
+        $this->assertEquals(count($order->getItems()) * 3 + 2, $countTR, 'TR count checking');
 
         $countTH = intval($this->getJSExpression('jQuery(".invoice-box .items th").length'));
         $this->assertEquals(5, $countTH, 'TH count checking');
@@ -264,7 +264,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             "//div[@class='invoice-box']"
             . "/table[@class='items']"
             . "/tbody"
-            . "/tr[position()=3]"
+            . "/tr[position()=4]"
             . "/td[position()=1]"
             . "/a[text()='" . $item->getName(). "']"
         );
@@ -273,7 +273,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             "//div[@class='invoice-box']"
             . "/table[@class='items']"
             . "/tbody"
-            . "/tr[position()=4]"
+            . "/tr[position()=5]"
             . "/td[position()=1 and text()='SKU " . $item->getSku() . "']"
         );
 
@@ -281,7 +281,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             "//div[@class='invoice-box']"
             . "/table[@class='items']"
             . "/tbody"
-            . "/tr[position()=4]"
+            . "/tr[position()=5]"
             . "/td[position()=3 and text()='$" . number_format(round($item->getPrice(), 2), 2) . "']"
         );
 
@@ -289,7 +289,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             "//div[@class='invoice-box']"
             . "/table[@class='items']"
             . "/tbody"
-            . "/tr[position()=4]"
+            . "/tr[position()=5]"
             . "/td[position()=2 and text()='" . $item->getAmount() . "']"
         );
 
@@ -297,7 +297,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             "//div[@class='invoice-box']"
             . "/table[@class='items']"
             . "/tbody"
-            . "/tr[position()=3]"
+            . "/tr[position()=4]"
             . "/td[position()=2 and text()='$" . number_format(round($item->getTotal(), 2), 2) . "']"
         );
 
