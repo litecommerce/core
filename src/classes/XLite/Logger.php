@@ -36,6 +36,11 @@ namespace XLite;
 class Logger extends \XLite\Base\Singleton
 {
     /**
+     * Log file name regexp pattern 
+     */
+    const LOG_FILE_NAME_PATTERN = '/^[a-zA-Z_]+\.log\.\d{4}-\d{2}-\d{2}\.php$/Ss';
+
+    /**
      * Security file header
      *
      * @var   string
@@ -84,6 +89,15 @@ class Logger extends \XLite\Base\Singleton
         'level' => LOG_WARNING,
         'ident' => 'X-Lite',
     );
+
+    /**
+     * Runtime id 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.11
+     */
+    protected $runtimeId;
 
     /**
      * Mark templates flag
@@ -312,6 +326,107 @@ class Logger extends \XLite\Base\Singleton
                 $this->log($message, PEAR_LOG_ERR, $exception->getTrace());
             }
         }
+    }
+
+    /**
+     * Log custom message
+     * 
+     * @param string  $type         Message type
+     * @param string  $message      Message
+     * @param boolean $useBackTrace User backtrace flag OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function logCustom($type, $message, $useBackTrace = false)
+    {
+        $type = preg_replace('/[^a-zA-Z0-9_-]/Ss', '', strval($type));
+        $path = $this->getCustomLogPath($type);
+        $header = $this->getLogFileHeader();
+        if (!file_exists($path) || strlen($header) > filesize($path)) {
+            @file_put_contents($path, $header);
+        }
+
+        $message = trim('[' . @date('H:i:s') . '] ' . $message) . PHP_EOL
+            . 'Runtime id: ' . $this->getRuntimeId() . PHP_EOL
+            . 'SAPI: ' . PHP_SAPI . '; '
+            . 'IP: ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'n/a') . PHP_EOL
+            . PHP_EOL;
+
+        @file_put_contents($path, $message, FILE_APPEND);
+
+        return $path;
+    }
+
+    /**
+     * Get custom log URL 
+     * 
+     * @param string $type Type
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function getCustomLogURL($type)
+    {
+        return \XLite\Core\Converter::buildURL('log', '', array('log' => $this->getCustomLogFileName($type)));
+    }
+
+    /**
+     * Get custom log file path 
+     * 
+     * @param string $type Type
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function getCustomLogPath($type)
+    {
+        return LC_DIR_VAR . 'log' . LC_DS . $this->getCustomLogFileName($type);
+    }
+
+    /**
+     * Get custom log file name 
+     * 
+     * @param string $type Type
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function getCustomLogFileName($type)
+    {
+        return $type . '.log.' . date('Y-m-d') . '.php';
+    }
+
+    /**
+     * Get log file header 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function getLogFileHeader()
+    {
+        return '<' . '?php die(); ?' . '>' . PHP_EOL;
+    }
+
+    /**
+     * Get runtime id
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getRuntimeId()
+    {
+        if (!isset($this->runtimeId)) {
+            $this->runtimeId = hash('md4', uniqid('runtime', true), false);
+        }
+
+        return $this->runtimeId;
     }
 
     /**

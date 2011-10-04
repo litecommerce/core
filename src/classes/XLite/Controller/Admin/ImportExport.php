@@ -81,6 +81,15 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      */
     protected $filePointer;
 
+    /**
+     * Import cell 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.11
+     */
+    protected $importCell;
+
     // {{{ Tabs
 
     /**
@@ -521,12 +530,12 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     protected function doActionImport()
     {
         if ($this->isAJAX()) {
-            $cell = $this->getImportCell();
+            $this->importCell = $this->getImportCell();
 
-            if ($cell) {
+            if ($this->importCell) {
 
                 try {
-                    $this->processImportStep($cell);
+                    $this->processImportStep();
 
                 } catch (\Exception $e) {
                     $this->valid = false;
@@ -587,6 +596,9 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             if (!isset($cell['old'])) {
                 $cell['old'] = 0;
             }
+            if (!isset($cell['warning_count'])) {
+                $cell['warning_count'] = 0;
+            }
         }
 
         return $cell;
@@ -595,45 +607,15 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     /**
      * Process import step 
      * 
-     * @param array $cell Import cell
-     *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.10
      */
-    protected function processImportStep(array $cell)
+    protected function processImportStep()
     {
-        $this->filePointer = fopen($cell['path'], 'rb');
+        $this->startImportStep();
 
         $columns = $this->getColumns();
-
-        if ($cell['position']) {
-            $counter = $cell['position'] + 1;
-            while (0 < $counter) {
-                fgetcsv($this->filePointer, 0, static::DELIMIER);
-                $counter--;
-            }
-
-            $headers = $cell['headers'];
-
-        } else {
-            $headers = fgetcsv($this->filePointer, 0, static::DELIMIER);
-            $cell['headers'] = $headers;
-            $cell['row_length'] = count($headers);
-            foreach ($headers as $index => $name) {
-                if (!isset($columns[$name])) {
-                    $this->logImportWarning(
-                        static::t(
-                            'Import mechanism does not know the field of X and it can not be imported',
-                            array('name' => $name)
-                        ),
-                        0
-                    );
-                    $cell['row_length']--;
-                }
-            }
-        }
-
         $expire = time() + static::IMPORT_TTL;
         while (time() < $expire && !feof($this->filePointer)) {
 
@@ -643,20 +625,15 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             if ($row && preg_grep('/^.+$/Ss', $row)) {
 
                 // Assemble associated list
-                $list = array();
-                foreach ($headers as $index => $name) {
-                    if (isset($columns[$name])) {
-                        $list[$name] = isset($row[$index]) ? $row[$index] : null;
-                    }
-                }
+                $list = $this->assembleImportRow($row);
 
-                if (count($list) != $cell['row_length']) {
+                if (count($list) != $this->importCell['row_length']) {
                     $this->logImportWarning(
                         static::t(
                             'The string is different from that of the title number of columns - X instead of Y',
-                            array('right' => $cell['row_length'], 'wrong' => count($list))
+                            array('right' => $this->importCell['row_length'], 'wrong' => count($list))
                         ),
-                        $cell['position']
+                        $this->importCell['position']
                     );
                 }
 
@@ -664,46 +641,41 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                 $product = $this->getProduct($list);
 
                 if (!$product->getId()) {
-                    foreach ($columns as $name => $info) {
-                        if (!isset($list[$name]) || !$list[$name]) {
-                            $this->logImportWarning(
-                                static::t(
-                                    'Required field X is not defined or empty',
-                                    array('name' => $name)
-                                ),
-                                $cell['position'],
-                                $name
-                            );
-                        }
+                    if ($this->checkRequiredImportFields($list)) {
+                        \XLite\Core\Database::getEM()->persist($product);
+
+                    } else {
+                       $product = null; 
                     }
                 }
 
-                $this->importRow($product, $list, $columns);
+                if ($product) {
+                    $this->importRow($product, $list, $columns);
 
-                if ($product->getId()) {
-                    $cell['old']++;
+                    if ($product->getId()) {
+                        $this->importCell['old']++;
 
-                } else {
-                    $cell['new']++;
+                    } else {
+                        $this->importCell['new']++;
+                    }
+
+                    \XLite\Core\Database::getEM()->flush();
                 }
-
-                \XLite\Core\Database::getEM()->flush();
             }
             
-            $cell['position']++;
+            $this->importCell['position']++;
         }
 
         if (feof($this->filePointer)) {
-            $this->clearImportCell();
             \XLite\Core\Event::importFinish();
             $label = null;
-            if ($cell['new'] && $cell['old']) {
+            if ($this->importCell['new'] && $this->importCell['old']) {
                 $label = 'Successfully imported X new products and upgraded Y old products';
 
-            } elseif ($cell['new']) {
+            } elseif ($this->importCell['new']) {
                 $label = 'Successfully imported X new products';
 
-            } elseif ($cell['old']) {
+            } elseif ($this->importCell['old']) {
                 $label = 'Successfully upgraded Y old products';
 
             }
@@ -712,8 +684,8 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\TopMessage::getInstance()->add(
                     $label,
                     array(
-                        'new' => $cell['new'],
-                        'old' => $cell['old'],
+                        'new' => $this->importCell['new'],
+                        'old' => $this->importCell['old'],
                     ),
                     null,
                     \XLite\Core\TopMessage::INFO,
@@ -722,8 +694,25 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                 );
             }
 
+            if (0 < $this->importCell['warning_count']) {
+                \XLite\Core\TopMessage::getInstance()->add(
+                    'During the import was recorded X errors. You can get them by downloading the log imports.',
+                    array(
+                        'count' => $this->importCell['warning_count'],
+                        'url'   => \XLite\Logger::getInstance()->getCustomLogURL('import'),
+                    ),
+                    null,
+                    \XLite\Core\TopMessage::WARNING,
+                    false,
+                    false
+                );
+
+            }
+
+            $this->clearImportCell();
+
         } else {
-            \XLite\Core\Session::getInstance()->importCell = $cell;
+            \XLite\Core\Session::getInstance()->importCell = $this->importCell;
             $position = ftell($this->filePointer);
             fseek($this->filePointer, 0, SEEK_END);
             \XLite\Core\Event::importAfterStep(array('position' => $position, 'length' => ftell($this->filePointer)));
@@ -733,18 +722,109 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Start import step 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function startImportStep()
+    {
+        $this->filePointer = fopen($this->importCell['path'], 'rb');
+
+        if ($this->importCell['position']) {
+            $counter = $this->importCell['position'] + 1;
+            while (0 < $counter) {
+                fgetcsv($this->filePointer, 0, static::DELIMIER);
+                $counter--;
+            }
+
+        } else {
+            $this->importCell['headers'] = fgetcsv($this->filePointer, 0, static::DELIMIER);
+            $this->importCell['row_length'] = count($this->importCell['headers']);
+            $columns = $this->getColumns();
+            foreach ($this->importCell['headers'] as $index => $name) {
+                if (!isset($columns[$name])) {
+                    $this->logImportWarning(
+                        static::t(
+                            'Import mechanism does not know the field of X and it can not be imported',
+                            array('name' => $name)
+                        ),
+                        0
+                    );
+                    $this->importCell['row_length']--;
+                }
+            }
+        }
+    }
+
+    /**
+     * Assemble import row 
+     * 
+     * @param array $row Row
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function assembleImportRow(array $row)
+    {
+        $columns = $this->getColumns();
+
+        $list = array();
+        foreach ($this->importCell['headers'] as $index => $name) {
+            if (isset($columns[$name])) {
+                $list[$name] = isset($row[$index]) ? $row[$index] : null;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Check import required fields 
+     * 
+     * @param array $list Row
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function checkRequiredImportFields(array $list)
+    {
+        $valid = true;
+
+        foreach ($this->getColumns() as $name => $info) {
+            if (!isset($list[$name]) || !$list[$name]) {
+                $valid = false;
+                $this->logImportWarning(
+                    static::t(
+                        'Required field X is not defined or empty',
+                        array('name' => $name)
+                    ),
+                    $this->importCell['position'],
+                    $name
+                );
+            }
+        }
+
+        return $valid;
+    }
+
+    /**
      * Import one row 
      * 
      * @param \XLite\Model\Product $product Product
      * @param array                $list    Row data
-     * @param array                $columns Columns info
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.11
      */
-    protected function importRow(\XLite\Model\Product $product, array $list, array $columns)
+    protected function importRow(\XLite\Model\Product $product, array $list)
     {
+        $columns = $this->getColumns();
+
         // Import row data
         foreach ($list as $name => $data) {
             $info = $columns[$name];
@@ -780,12 +860,17 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      */
     protected function clearImportCell()
     {
-        $cell = \XLite\Core\Session::getInstance()->importCell;
-        if (is_array($cell) && isset($cell['path']) && $cell['path'] && file_exists($cell['path'])) {
-            @unlink($cell['path']);
+        if (
+            is_array($this->importCell)
+            && isset($this->importCell['path'])
+            && $this->importCell['path']
+            && file_exists($this->importCell['path'])
+        ) {
+            @unlink($this->importCell['path']);
         }
 
         \XLite\Core\Session::getInstance()->importCell = null;
+        $this->importCell = null;
     }
 
     /**
@@ -816,11 +901,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
 
             // Create product
             $product = new \XLite\Model\Product;
-            \XLite\Core\Database::getEM()->persist($product);
-
-            // Initialize required fields
-            $product->setSku('');
-            $product->setName('');
         }
 
         return $product;
@@ -832,15 +912,17 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @param string  $message  Message
      * @param integer $position Row position
      * @param string  $column   Column name
-     * @param string  $cell     CEll value
+     * @param string  $value    Cell value
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.11
      */
-    protected function logImportWarning($message, $position = null, $column = null, $cell = null)
+    protected function logImportWarning($message, $position = null, $column = null, $value = null)
     {
         $message = trim($message);
+
+        $this->importCell['warning_count']++;
 
         if (isset($position)) {
             $message .= PHP_EOL . 'Row number: ' . $position;
@@ -850,11 +932,11 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             $message .= PHP_EOL . 'Column: ' . $column;
         }
 
-        if (isset($cell)) {
-            $message .= PHP_EOL . 'Cell value: ' . var_export($cell, true);
+        if (isset($value)) {
+            $message .= PHP_EOL . 'Cell value: ' . var_export($value, true);
         }
 
-        \XLite\Logger::getInstance()->log($message . PHP_EOL, LOG_WARNING);
+        \XLite\Logger::getInstance()->logCustom('import', $message);
     }
 
     // {{{ Import product fields
