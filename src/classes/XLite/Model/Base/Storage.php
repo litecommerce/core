@@ -153,9 +153,66 @@ abstract class Storage extends \XLite\Model\AEntity
      */
     public function getBody()
     {
-        return $this->isURL()
-            ? \XLite\Core\Operator::getURLContent($this->getPath())
-            : \Includes\Utils\FileManager::read($this->getFileSystemRoot() . $this->getPath());
+        if ($this->isURL()) {
+            $body = \XLite\Core\Operator::getURLContent($this->getPath());
+
+        } else {
+            $body = \Includes\Utils\FileManager::read($this->getStoragePath());
+        }
+
+        return $body;
+    }
+
+    /**
+     * Read output 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function readOutput()
+    {
+        $result = true;
+
+        if ($this->isURL()) {
+            $body = \XLite\Core\Operator::getURLContent($this->getPath());
+            if ($body) {
+                print $body;
+
+            } else {
+                $result = false;
+            }
+
+        } else {
+            $result = (bool)@readfile($this->getStoragePath());
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check - file exists or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function isFileExists()
+    {
+        if ($this->isURL()) {
+            $request = new \PEAR2\HTTP\Request($this->getPath());
+            $request->verb = 'HEAD';
+            $response = $request->sendRequest();
+            $exists = 200 == $response->code
+                && isset($response->headers->ContentLength)
+                && 0 < $response->headers->ContentLength;
+
+        } else {
+            $path = $this->getStoragePath();
+            $exists = file_exists($path) && is_readable($path);
+        }
+
+        return $exists;
     }
 
     /**
@@ -167,12 +224,34 @@ abstract class Storage extends \XLite\Model\AEntity
      */
     public function getURL()
     {
-        return $this->isURL()
-            ? $this->getPath()
-            : \XLite::getInstance()->getShopURL(
+        $url = null;
+
+        if ($this->isURL()) {
+            $url = $this->getPath();
+
+        } elseif (static::STORAGE_RELATIVE == $this->getStorageType()) {
+            $url = \XLite::getInstance()->getShopURL(
                 $this->getWebRoot() . $this->convertPathToURL($this->getPath()),
                 \XLite\Core\Request::getInstance()->isHTTPS()
             );
+
+        } else {
+
+            $root = $this->getFileSystemRoot();
+            if (0 === strncmp($root, $this->getPath(), strlen($root))) {
+                $path = substr($this->getPath(), strlen($root));
+                $url = \XLite::getInstance()->getShopURL(
+                    $this->getWebRoot() . $this->convertPathToURL($path),
+                    \XLite\Core\Request::getInstance()->isHTTPS()
+                );
+
+            } else {
+                $url = $this->getGetterURL();
+            }
+            
+        }
+
+        return $url;
     }
 
     /**
@@ -185,6 +264,18 @@ abstract class Storage extends \XLite\Model\AEntity
     public function getFrontURL()
     {
         return $this->getURL();
+    }
+
+    /**
+     * Get attachment getter URL 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function getGetterURL()
+    {
+        return \XLite\Core\Converter::buildURL('storage', 'download', array('storage' => get_called_class(), 'id' => $this->getId()));
     }
 
     /**

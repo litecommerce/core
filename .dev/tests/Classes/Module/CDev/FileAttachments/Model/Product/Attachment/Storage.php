@@ -65,6 +65,35 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
         // Forbid extension
         $this->assertFalse($storage->loadFromLocalFile(__FILE__), 'check loading (forbid ext)');
         $this->assertEquals('extension', $storage->getLoadError(), 'check load error code');
+
+        // Duplicate
+        $s1 = $this->getTestStorage();
+        $s2 = $this->getTestStorage();
+        $path = LC_DIR_FILES . 'attachments/' . $s1->getPath();
+        $this->assertTrue($s2->loadFromLocalFile($path), 'check duplicate loading');
+        \XLite\Core\Database::getEM()->flush();
+
+        $pid = $s1->getAttachment()->getProduct()->getProductId();
+        $url = XLite::getInstance()->getShopURL('files/attachments/' . $pid. '/' . basename($path));
+        $this->assertEquals($url, $s1->getFrontURL(), 'check 1 storage URL');
+        $this->assertEquals($url, $s2->getFrontURL(), 'check 2 storage URL');
+
+        $body = file_get_contents($path);
+        $this->assertEquals(md5($body), md5($s1->getBody()), 'check 1 body');
+        $this->assertEquals(md5($body), md5($s2->getBody()), 'check 2 body');
+
+        ob_start();
+        $s1->readOutput();
+        $b1 = ob_get_contents();
+        ob_end_clean();
+
+        ob_start();
+        $s2->readOutput();
+        $b2 = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertEquals($body, $b1, 'check 1 output');
+        $this->assertEquals($body, $b2, 'check 2 output');
     }
 
     public function testRemove()
