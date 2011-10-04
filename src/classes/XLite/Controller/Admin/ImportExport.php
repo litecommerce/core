@@ -43,7 +43,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     /**
      * IMport step TTL (seconds) 
      */
-    const IMPORT_TTL = 10;
+    const IMPORT_TTL = 8;
 
     /**
      * COlumn type codes 
@@ -180,7 +180,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                     'method'     => ucfirst($name),
                     'typeMethod' => isset($col['type']) ? ('By' . ucfirst($col['type'])) : null,
                     'length'     => isset($col['length']) ? $col['length'] : null,
-                    'required'   => isset($col['requried']) && $col['requried'],
+                    'required'   => isset($col['required']) && $col['required'],
                 );
             }
 
@@ -190,7 +190,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                     'method'     => ucfirst($col['method']),
                     'typeMethod' => isset($col['type']) ? ('By' . ucfirst($col['type'])) : null,
                     'length'     => isset($col['length']) ? $col['length'] : null,
-                    'required'   => isset($col['requried']) && $col['requried'],
+                    'required'   => isset($col['required']) && $col['required'],
                 );
             }
         }
@@ -615,7 +615,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     {
         $this->startImportStep();
 
-        $columns = $this->getColumns();
         $expire = time() + static::IMPORT_TTL;
         while (time() < $expire && !feof($this->filePointer)) {
 
@@ -650,7 +649,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                 }
 
                 if ($product) {
-                    $this->importRow($product, $list, $columns);
+                    $this->importRow($product, $list);
 
                     if ($product->getId()) {
                         $this->importCell['old']++;
@@ -795,7 +794,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         $valid = true;
 
         foreach ($this->getColumns() as $name => $info) {
-            if (!isset($list[$name]) || !$list[$name]) {
+            if ($info['required'] && (!isset($list[$name]) || !$list[$name])) {
                 $valid = false;
                 $this->logImportWarning(
                     static::t(
