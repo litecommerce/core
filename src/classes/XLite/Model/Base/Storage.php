@@ -39,6 +39,13 @@ namespace XLite\Model\Base;
 abstract class Storage extends \XLite\Model\AEntity
 {
     /**
+     * Storage type codes 
+     */
+    const STORAGE_RELATIVE = 'r';
+    const STORAGE_ABSOLUTE = 'f';
+    const STORAGE_URL      = 'u';
+
+    /**
      * MIME type to extenstion translation table
      *
      * @var   array
@@ -46,6 +53,19 @@ abstract class Storage extends \XLite\Model\AEntity
      * @since 1.0.10
      */
     protected static $types = array();
+
+    /**
+     * Unique id
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="uinteger")
+     */
+    protected $id;
 
     /**
      * Path (URL or file name in storage directory)
@@ -79,6 +99,17 @@ abstract class Storage extends \XLite\Model\AEntity
      * @Column (type="string", length="64")
      */
     protected $mime = 'application/octet-stream';
+
+    /**
+     * Storage type
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="string", length="1")
+     */
+    protected $storageType = self::STORAGE_RELATIVE;
 
     /**
      * Size
@@ -139,7 +170,7 @@ abstract class Storage extends \XLite\Model\AEntity
         return $this->isURL()
             ? $this->getPath()
             : \XLite::getInstance()->getShopURL(
-                $this->getWebRoot() . $this->getPath(),
+                $this->getWebRoot() . $this->convertPathToURL($this->getPath()),
                 \XLite\Core\Request::getInstance()->isHTTPS()
             );
     }
@@ -242,6 +273,20 @@ abstract class Storage extends \XLite\Model\AEntity
         return $this->loadError;
     }
 
+    /**
+     * Convert saved path to URL part
+     * 
+     * @param string $path Path
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function convertPathToURL($path)
+    {
+        return str_replace(LC_DS, '/', $path);
+    }
+
     // }}}
 
     // {{{ Loading
@@ -271,9 +316,7 @@ abstract class Storage extends \XLite\Model\AEntity
                 $tmp = $subkey ? $cell['tmp_name'][$subkey] : $cell['tmp_name'];
                 $basename = $subkey ? $cell['name'][$subkey] : $cell['name'];
 
-                $root = $this->getValidFileSystemRoot();
-
-                $path = \Includes\Utils\FileManager::getUniquePath($root, $basename);
+                $path = \Includes\Utils\FileManager::getUniquePath($this->getStoreFileSystemRoot(), $basename);
 
                 if (move_uploaded_file($tmp, $path)) {
 
@@ -282,6 +325,8 @@ abstract class Storage extends \XLite\Model\AEntity
                         $this->setMime($mime);
                     }
                     chmod($path, 0644);
+
+                    $this->setStorageType(static::STORAGE_RELATIVE);
 
                     if ($this->savePath($path)) {
 
@@ -312,23 +357,30 @@ abstract class Storage extends \XLite\Model\AEntity
     {
         $result = true;
 
-        $root = $this->getValidFileSystemRoot();
+        $local = false;
+        foreach ($this->getAllowedFileSystemRoots() as $root) {
+            if (0 === strncmp($root, $path, strlen($root))) {
+                $local = true;
+            }
+        }
 
-        if (0 === strncmp($root, $path, strlen($root))) {
-
-            // File already in storage
-            $path = substr($path, strlen($root));
-
-        } else {
+        if (!$local) {
 
             // Move file
-            $newPath = \Includes\Utils\FileManager::getUniquePath($root, $basename ?: basename($path));
+            $newPath = \Includes\Utils\FileManager::getUniquePath(
+                $this->getStoreFileSystemRoot(),
+                $basename ?: basename($path)
+            );
 
             if (!\Includes\Utils\FileManager::copy($path, $newPath)) {
                 $result = false;
             }
 
             $path = $newPath;
+        }
+
+        if ($result) {
+            $this->setStorageType($local ? static::STORAGE_ABSOLUTE : static::STORAGE_RELATIVE);
         }
 
         return $result && $this->savePath($path);
@@ -355,6 +407,8 @@ abstract class Storage extends \XLite\Model\AEntity
         if ($result) {
 
             $name = basename(parse_url($url, PHP_URL_PATH));
+
+            $this->setStorageType(static::STORAGE_URL);
 
             if ($copy2fs) {
 
@@ -392,12 +446,52 @@ abstract class Storage extends \XLite\Model\AEntity
      */
     public function removeFile($path = null)
     {
-        if (!$this->isURL($path)) {
-
-            $path = $this->getFileSystemRoot() . (is_null($path) ? $this->getPath() : $path);
-
+        if (!$this->isURL($path) && ($path || $this->getRepository()->allowRemovePath($this->getStoragePath(), $this))) {
+            $path = $path ?: $this->getStoragePath();
             \Includes\Utils\FileManager::deleteFile($path);
         }
+    }
+
+    /**
+     * Renew storage 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function renewStorage()
+    {
+        $result = $this->renew();
+
+        foreach ($this->getDuplicates() as $storage) {
+            $result = $result && $storage->renewDependentStorage();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Renew dependent storage
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function renewDependentStorage()
+    {
+        return $this->renew();
+    }
+
+    /**
+     * Get duplicates storages
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function getDuplicates()
+    {
+        return $this->getRepository()->findByFullPath($this->getStoragePath() ?: $this->getPath(), $this);
     }
 
     /**
@@ -427,7 +521,7 @@ abstract class Storage extends \XLite\Model\AEntity
     public function prepareRemove()
     {
         if (!$this->isURL()) {
-            \Includes\Utils\FileManager::deleteFile($this->getFileSystemRoot() . $this->getPath());
+            $this->removeFile();
         }
     }
 
@@ -445,11 +539,12 @@ abstract class Storage extends \XLite\Model\AEntity
         $this->loadError = null;
 
         // Remove old file
-        $toRemove = $this->getPath() && $this->getPath() != basename($path);
+        $savePath = static::STORAGE_ABSOLUTE == $this->getStorageType() ? $path : $this->assembleSavePath($path);
+        $toRemove = $this->getPath() && $this->getPath() != $savePath;
 
         $pathToRemove = $this->getPath();
-        $this->setPath(basename($path));
-        $this->setFileName($this->getPath());
+        $this->setPath($savePath);
+        $this->setFileName(basename($this->getPath()));
 
         $result = $this->renew() && $this->updatePathByMIME();
 
@@ -461,6 +556,20 @@ abstract class Storage extends \XLite\Model\AEntity
         }
 
         return $result;
+    }
+
+    /**
+     * Assemble path for save into DB
+     * 
+     * @param string $path Path
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function assembleSavePath($path)
+    {
+        return basename($path);
     }
 
     /**
@@ -583,12 +692,49 @@ abstract class Storage extends \XLite\Model\AEntity
                 $isTempFile = true;
             }
 
-        } else {
+        } elseif (static::STORAGE_RELATIVE == $this->getStorageType()) {
 
             $path = $this->getFileSystemRoot() . $this->getPath();
+
+        } else {
+            $path = $this->getPath();
         }
 
         return array($path, $isTempFile);
+    }
+
+    /**
+     * Get storage path 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function getStoragePath()
+    {
+        $path = null;
+
+        if (static::STORAGE_RELATIVE == $this->getStorageType()) {
+
+            $path = $this->getFileSystemRoot() . $this->getPath();
+
+        } elseif (static::STORAGE_ABSOLUTE == $this->getStorageType()) {
+            $path = $this->getPath();
+        }
+
+        return $path;
+    }
+
+    /**
+     * Get allowed file system root list
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function getAllowedFileSystemRoots()
+    {
+        return $this->getRepository()->getAllowedFileSystemRoots();
     }
 
     /**
@@ -604,6 +750,18 @@ abstract class Storage extends \XLite\Model\AEntity
         \Includes\Utils\FileManager::mkdirRecursive($path);
 
         return $path;
+    }
+
+    /**
+     * Get valid file system storage root
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function getStoreFileSystemRoot()
+    {
+        return $this->getValidFileSystemRoot();
     }
 
     /**

@@ -38,23 +38,6 @@ namespace XLite\Module\CDev\FileAttachments\Model\Product\Attachment;
  */
 class Storage extends \XLite\Model\Base\Storage
 {
-    // {{{ Collumns
-
-    /**
-     * Unique id
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.10
-     *
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="uinteger")
-     */
-    protected $id;
-
-    // }}}
-
     // {{{ Associations
 
     /**
@@ -98,28 +81,32 @@ class Storage extends \XLite\Model\Base\Storage
     }
 
     /**
-     * Get file system images storage root path
+     * Assemble path for save into DB
      *
-     * @return void
+     * @param string $path Path
+     *
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.10
+     * @since  1.0.11
      */
-    protected function getFileSystemRoot()
+    protected function assembleSavePath($path)
     {
-        return parent::getFileSystemRoot() . $this->getAttachment()->getProduct()->getProductId() . LC_DS;
+        return $this->getAttachment()->getProduct()->getProductId() . LC_DS . parent::assembleSavePath($path);
     }
 
     /**
-     * Get web images storage root path
+     * Get valid file system storage root
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.10
      */
-    protected function getWebRoot()
+    protected function getStoreFileSystemRoot()
     {
-        return parent::getWebRoot() . $this->getAttachment()->getProduct()->getProductId() . '/';
+        $path = parent::getStoreFileSystemRoot() . $this->getAttachment()->getProduct()->getProductId() . LC_DS;
+        \Includes\Utils\FileManager::mkdirRecursive($path);
 
+        return $path;
     }
 
     // }}}

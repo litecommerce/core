@@ -37,7 +37,7 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
 
         $storage = $attach->getStorage();
 
-        $path = LC_DIR_VAR . '/files/attachments/max_ava.png';
+        $path = LC_DIR_FILES . 'attachments/max_ava.png';
         if (file_exists($path)) {
             unlink($path);
         }
@@ -45,7 +45,7 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
         // Success    
         $this->assertTrue($storage->loadFromLocalFile(__DIR__ . '/../max_ava.png'), 'check loading');
         $this->assertEquals('application/octet-stream', $storage->getMime(), 'check mime');
-        $this->assertEquals('max_ava.png', $storage->getFileName(), 'check file name');
+        $this->assertRegExp('/^max_ava(_\d+)?\.png$/Ss', $storage->getFileName(), 'check file name');
         $this->assertEquals(12673, $storage->getSize(), 'check size');
         $this->assertEquals(file_get_contents(__DIR__ . '/../max_ava.png'), $storage->getBody(), 'check body');
         $this->assertRegExp('/^http:\/\//Ss', $storage->getURL(), 'check URL');
@@ -65,20 +65,56 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
         // Forbid extension
         $this->assertFalse($storage->loadFromLocalFile(__FILE__), 'check loading (forbid ext)');
         $this->assertEquals('extension', $storage->getLoadError(), 'check load error code');
-
     }
 
     public function testRemove()
     {
         $storage = $this->getTestStorage();
 
+        $path = LC_DIR_FILES . 'attachments/' . $storage->getPath();
+        $this->assertTrue(file_exists($path), 'check exist');
+
         $storage->getAttachment()->getProduct()->getAttachments()->removeElement($storage->getAttachment());
         \XLite\Core\Database::getEM()->remove($storage->getAttachment());
 
         \XLite\Core\Database::getEM()->flush();
 
-        $path = LC_DIR_VAR . '/files/attachments/max_ava.png';
         $this->assertFalse(file_exists($path), 'check remove');
+
+        // Duplicate
+        $s1 = $this->getTestStorage();
+        $s2 = $this->getTestStorage();
+        $this->assertTrue($s2->loadFromLocalFile($path), 'check duplicate loading');
+        \XLite\Core\Database::getEM()->flush();
+
+        \XLite\Core\Database::getEM()->remove($s1->getAttachment());
+        \XLite\Core\Database::getEM()->flush();
+        $this->assertTrue(file_exists($path), 'check remove (duplicate)');
+
+        \XLite\Core\Database::getEM()->remove($s2->getAttachment());
+        \XLite\Core\Database::getEM()->flush();
+        $this->assertFalse(file_exists($path), 'check remove (duplicate) #2');
+    }
+
+    public function testRenewStorage()
+    {
+        $storage = $this->getTestStorage();
+        $size = $storage->getSize();
+
+        $path = LC_DIR_FILES . 'attachments/' . $storage->getPath();
+        $this->assertTrue(file_exists($path), 'check exist');
+
+        $s2 = $this->getTestStorage();
+        $this->assertTrue($s2->loadFromLocalFile($path), 'check duplicate loading');
+        \XLite\Core\Database::getEM()->flush();
+
+        unlink($path);
+        copy(__DIR__ . '/../vertical_dots.png', $path);
+        $this->assertTrue($storage->renewStorage(), 'check renew storage status');
+
+        $this->assertNotEquals($size, $storage->getSize(), 'check old file size');
+        $this->assertEquals(filesize($path), $storage->getSize(), 'check file size');
+        $this->assertEquals(filesize($path), $s2->getSize(), 'check file size #2');
     }
 
     protected function getTestStorage()
@@ -91,7 +127,7 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
 
         $storage = $attach->getStorage();
 
-        $path = LC_DIR_VAR . '/files/attachments/max_ava.png';
+        $path = LC_DIR_FILES . 'attachments/max_ava.png';
         if (file_exists($path)) {
             unlink($path);
         }

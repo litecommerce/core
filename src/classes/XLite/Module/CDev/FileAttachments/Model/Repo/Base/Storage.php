@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,44 +13,41 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.11
  */
 
-namespace XLite\Model\Image\Category;
+namespace XLite\Module\CDev\FileAttachments\Model\Repo\Base;
 
 /**
- * Category
- *
+ * Abstract storage repository
+ * 
  * @see   ____class_see____
- * @since 1.0.0
- *
- * @Entity
- * @Table  (name="category_images",
- *      indexes={
- *          @Index (name="id", columns={"id"})
- *      }
- * )
+ * @since 1.0.11
  */
-class Image extends \XLite\Model\Base\Image
+abstract class Storage extends \XLite\Model\Repo\Base\Storage implements \XLite\Base\IDecorator
 {
     /**
-     * Relation to a category entity
+     * Define all storage-based repositories classes list
      *
-     * @var   \XLite\Model\Category
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @OneToOne   (targetEntity="XLite\Model\Category", inversedBy="image")
-     * @JoinColumn (name="category_id", referencedColumnName="category_id")
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.11
      */
-    protected $category;
+    protected function defineStorageRepositories()
+    {
+        $list = parent::defineStorageRepositories();
+
+        $list[] = 'XLite\Module\CDev\FileAttachments\Model\Product\Attachment\Storage';
+
+        return $list;
+    }
 }

@@ -58,19 +58,6 @@ abstract class Image extends \XLite\Model\Base\Storage
     );
 
     /**
-     * Image unique id
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="uinteger", nullable=false)
-     */
-    protected $image_id;
-
-    /**
      * Width
      *
      * @var   integer
@@ -135,7 +122,7 @@ abstract class Image extends \XLite\Model\Base\Storage
             mkdir($path, 0777, true);
         }
 
-        $fn = $this->image_id . '.' . $this->getExtension();
+        $fn = $this->getId() . '.' . $this->getExtension();
 
         if (
             file_exists($path . $fn)
@@ -211,7 +198,7 @@ abstract class Image extends \XLite\Model\Base\Storage
      */
     public function isExists()
     {
-        return !is_null($this->getImageId());
+        return !is_null($this->getId());
     }
 
     /**

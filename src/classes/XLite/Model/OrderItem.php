@@ -317,7 +317,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function hasImage()
     {
-        return !is_null($this->getImage()) && (bool)$this->getImage()->getImageId();
+        return !is_null($this->getImage()) && (bool)$this->getImage()->getId();
     }
 
     /**

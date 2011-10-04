@@ -46,6 +46,7 @@ define('LC_DIR_VAR',           LC_DIR_ROOT . 'var' . LC_DS);
 define('LC_DIR_LIB',           LC_DIR_ROOT . 'lib' . LC_DS);
 define('LC_DIR_SKINS',         LC_DIR_ROOT . 'skins' . LC_DS);
 define('LC_DIR_IMAGES',        LC_DIR_ROOT . 'images' . LC_DS);
+define('LC_DIR_FILES',         LC_DIR_ROOT . 'files' . LC_DS);
 define('LC_DIR_CONFIG',        LC_DIR_ROOT . 'etc' . LC_DS);
 define('LC_DIR_INCLUDES',      LC_DIR_ROOT . LC_NAMESPACE_INCLUDES . LC_DS);
 define('LC_DIR_MODULES',       LC_DIR_CLASSES . LC_NAMESPACE . LC_DS . 'Module' . LC_DS);

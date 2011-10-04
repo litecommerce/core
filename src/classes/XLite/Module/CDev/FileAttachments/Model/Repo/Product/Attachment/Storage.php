@@ -36,11 +36,6 @@ namespace XLite\Module\CDev\FileAttachments\Model\Repo\Product\Attachment;
 class Storage extends \XLite\Model\Repo\Base\Storage
 {
     /**
-     * Subdirectory name 
-     */
-    const SUBDIRECTORY = 'files';
-
-    /**
      * Get storage name
      *
      * @return string
@@ -53,6 +48,22 @@ class Storage extends \XLite\Model\Repo\Base\Storage
     }
 
     /**
+     * Get allowed file system root list
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function getAllowedFileSystemRoots()
+    {
+        $list = parent::getAllowedFileSystemRoots();
+
+        $list[] = $this->getFileSystemRoot();
+
+        return $list;
+    }
+
+    /**
      * Get file system images storage root path
      *
      * @return string
@@ -61,7 +72,7 @@ class Storage extends \XLite\Model\Repo\Base\Storage
      */
     public function getFileSystemRoot()
     {
-        return LC_DIR_VAR . static::SUBDIRECTORY . LC_DS . $this->getStorageName() . LC_DS;
+        return LC_DIR_FILES . $this->getStorageName() . LC_DS;
     }
 
     /**
@@ -73,7 +84,7 @@ class Storage extends \XLite\Model\Repo\Base\Storage
      */
     public function getWebRoot()
     {
-        return LC_VAR_URL . '/' . static::SUBDIRECTORY . '/' . $this->getStorageName() . '/';
+        return LC_FILES_URL . '/' . $this->getStorageName() . '/';
     }
 
 }
