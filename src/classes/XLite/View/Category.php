@@ -40,7 +40,7 @@ class Category extends \XLite\View\AView
     /**
      * WEB LC root postprocessing constant
      */
-    const WEB_LC_ROOT = '/{{WEB_LC_ROOT}}/';
+    const WEB_LC_ROOT = '{{WEB_LC_ROOT}}';
 
 
     /**
@@ -57,25 +57,6 @@ class Category extends \XLite\View\AView
         $result[] = 'main';
 
         return $result;
-    }
-
-    /**
-     * Return description with postprocessing WEB LC root constant
-     *
-     * @param string $url URL part to change to full URL
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.8
-     */
-    public static function callbackURLChange($url)
-    {
-        $url = \XLite::getInstance()->getShopURL(
-            $url,
-            \XLite\Core\Request::getInstance()->isHTTPS()
-        );
-
-        return preg_replace('/(\?.*)/', '', $url);
     }
 
     /**
@@ -111,12 +92,43 @@ class Category extends \XLite\View\AView
      */
     protected function getDescription()
     {
-        return preg_replace_callback(
-            self::WEB_LC_ROOT,
-            function ($matches) {
-                return \XLite\View\Category::callbackURLChange($matches[1]);
-            },
+        return str_replace(
+            $this->getWebPreprocessingTags(),
+            $this->getWebPreprocessingURL(),
             $this->getCategory()->getDescription()
+        );
+    }
+
+    /**
+     * Register tags to be replaced with some URLs
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getWebPreprocessingTags()
+    {
+        return array(
+            self::WEB_LC_ROOT,
+        );
+    }
+
+    /**
+     * Register URLs that should be given instead of tags
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getWebPreprocessingURL()
+    {
+        // Get URL of shop. If the HTTPS is used then it should be cleaned from ?xid=<xid> construction
+        $url = \Xlite::getInstance()->getShopURL(null, \XLite\Core\Request::getInstance()->isHTTPS());
+        // We are cleaning URL from unnecessary here <xid> construction
+        $url = preg_replace('/(\?.*)/', '', $url);
+
+        return array(
+            $url,
         );
     }
 }
