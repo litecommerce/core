@@ -463,7 +463,7 @@ abstract class Storage extends \XLite\Model\AEntity
                 $basename ?: basename($path)
             );
 
-            if (!\Includes\Utils\FileManager::copy($path, $newPath)) {
+            if (!\Includes\Utils\FileManager::isFile($path) || !\Includes\Utils\FileManager::copy($path, $newPath)) {
                 $result = false;
             }
 

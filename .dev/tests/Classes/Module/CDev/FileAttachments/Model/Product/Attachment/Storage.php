@@ -29,6 +29,7 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
 {
     public function testLoading()
     {
+        \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_FILES . 'attachments');
         $product = $this->getProduct();
 
         $attach = new \XLite\Module\CDev\FileAttachments\Model\Product\Attachment;
@@ -36,11 +37,6 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
         $attach->setProduct($product);
 
         $storage = $attach->getStorage();
-
-        $path = LC_DIR_FILES . 'attachments/max_ava.png';
-        if (file_exists($path)) {
-            unlink($path);
-        }
 
         // Success    
         $this->assertTrue($storage->loadFromLocalFile(__DIR__ . '/../max_ava.png'), 'check loading');
@@ -98,6 +94,7 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
 
     public function testRemove()
     {
+        \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_FILES . 'attachments');
         $storage = $this->getTestStorage();
 
         $path = LC_DIR_FILES . 'attachments/' . $storage->getPath();
@@ -127,6 +124,7 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
 
     public function testRenewStorage()
     {
+        \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_FILES . 'attachments');
         $storage = $this->getTestStorage();
         $size = $storage->getSize();
 

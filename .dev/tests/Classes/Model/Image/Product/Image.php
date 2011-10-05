@@ -40,6 +40,7 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
         parent::setUp();
 
         \XLite\Core\Database::getEM()->clear();
+        \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_IMAGES . 'product');
     }
 
     public function testCreate()
@@ -53,11 +54,11 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
 
         $i = $this->getProduct()->getImages()->get(0);
 
-        $this->assertEquals(319, $i->getWidth(), 'check width');
-        $this->assertEquals(480, $i->getHeight(), 'check height');
-        $this->assertEquals(99541, $i->getSize(), 'check size');
+        $this->assertEquals(400, $i->getWidth(), 'check width');
+        $this->assertEquals(357, $i->getHeight(), 'check height');
+        $this->assertEquals(51846, $i->getSize(), 'check size');
         $this->assertTrue(is_numeric($i->getDate()), 'check date');
-        $this->assertEquals('53b0ffdc354306d7c58c72c027f41d45', $i->getHash(), 'check hash');
+        $this->assertEquals('58bf160b2ac8b46fe6a1ba641ca22d7f', $i->getHash(), 'check hash');
 
         $this->assertEquals(
             $this->getProduct()->getProductId(),
@@ -84,7 +85,7 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
     {
         $i = $this->getProduct()->getImages()->get(0);
 
-        $id = $i->getImageId();
+        $id = $i->getId();
 
         $this->getProduct()->getImages()->removeElement($i);
 

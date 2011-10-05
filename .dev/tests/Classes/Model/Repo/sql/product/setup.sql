@@ -59,6 +59,7 @@ INSERT INTO `xlite_product_images` (`product_id`, `path`, `mime`, `width`, `heig
 INSERT INTO `xlite_product_images` (`product_id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`, `alt`, `orderby`) VALUES (15068,'demo_p15068.jpeg','image/jpeg',480,480,131972,1280314462,'','',0);
 INSERT INTO `xlite_product_images` (`product_id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`, `alt`, `orderby`) VALUES (15091,'demo_p15091.jpeg','image/jpeg',480,480,163746,1280314462,'','',0);
 INSERT INTO `xlite_product_images` (`product_id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`, `alt`, `orderby`) VALUES (15067,'demo_p15067.jpeg','image/jpeg',319,480,99541,1280314462,'','',0);
+UPDATE xlite_product_images SET storageType = 'r';
 
 INSERT INTO `xlite_category_products` SET product_id = '15090', category_id = '14015', orderby = '0';
 INSERT INTO `xlite_category_products` SET product_id = '16281', category_id = '14009', orderby = '10';

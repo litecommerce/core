@@ -29,14 +29,16 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment extends X
 {
     public function testGetStorage()
     {
+        \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_FILES . 'attachments');
         $attach = new \XLite\Module\CDev\FileAttachments\Model\Product\Attachment;
 
         $this->assertInstanceOf('XLite\Module\CDev\FileAttachments\Model\Product\Attachment\Storage', $attach->getStorage(), 'check class');
         $this->assertEquals($attach, $attach->getStorage()->getAttachment(), 'check attachment');
     }
 
-    public function testgetPublicTitle()
+    public function testGetPublicTitle()
     {
+        \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_FILES . 'attachments');
         $attach = $this->getTestAttachment();
 
         $this->assertEquals('max_ava.png', $attach->getPublicTitle(), 'check default title');
@@ -54,11 +56,6 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment extends X
         $attach->setProduct($product);
 
         $storage = $attach->getStorage();
-
-        $path = LC_DIR_VAR . '/files/attachments/max_ava.png';
-        if (file_exists($path)) {
-            unlink($path);
-        }
 
         $this->assertTrue($storage->loadFromLocalFile(__DIR__ . '/max_ava.png'), 'check loading');
 
