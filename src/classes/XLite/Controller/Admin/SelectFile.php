@@ -48,6 +48,18 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * getModelFormClass
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModelFormClass()
+    {
+        return '\XLite\View\Model\FileDialog\Select';
+    }
+
+    /**
      * Return target for redirect URL. Object string should contain the target name
      *
      * @return string
@@ -56,7 +68,7 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      */
     protected function getObjectTarget()
     {
-        return \XLite\Core\Request::getInstance()->object;
+        return $this->getModelForm()->getObject();
     }
 
     /**
