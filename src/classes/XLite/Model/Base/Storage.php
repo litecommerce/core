@@ -275,7 +275,7 @@ abstract class Storage extends \XLite\Model\AEntity
      */
     public function getGetterURL()
     {
-        return \XLite\Core\Converter::buildURL('storage', 'download', array('storage' => get_called_class(), 'id' => $this->getId()));
+        return \XLite\Core\Converter::buildURL('storage', 'download', $this->getGetterParams());
     }
 
     /**
@@ -376,6 +376,21 @@ abstract class Storage extends \XLite\Model\AEntity
     protected function convertPathToURL($path)
     {
         return str_replace(LC_DS, '/', $path);
+    }
+
+    /**
+     * Get getter parameters
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function getGetterParams()
+    {
+        return array(
+            'storage' => get_called_class(),
+            'id'      => $this->getId(),
+        );
     }
 
     // }}}
