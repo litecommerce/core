@@ -37,6 +37,13 @@ jQuery().ready(
           li.addClass('expanded');
         }
 
+        setTimeout(
+          function () {
+            core.trigger('stickyPanelReposition');
+          },
+          200
+        );
+
         return false;
       }
     );

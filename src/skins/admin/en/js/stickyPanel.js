@@ -77,6 +77,8 @@ jQuery().ready(
         }
 
         jQuery(window).scroll(checkRepositionEvent);
+        jQuery(window).resize(checkRepositionEvent);
+        core.bind('stickyPanelReposition', reposition);
         reposition();
       }
     );

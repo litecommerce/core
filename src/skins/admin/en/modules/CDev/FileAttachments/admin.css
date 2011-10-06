@@ -71,6 +71,17 @@ li.attachment .second-separator,
 li.attachment .remove
 {
   float: right;
+  display: none;
+}
+
+li.attachment:hover .switcher,
+li.attachment:hover .second-separator,
+li.attachment:hover .remove,
+li.attachment.expanded .switcher,
+li.attachment.expanded .second-separator,
+li.attachment.expanded .remove
+{
+  display: block;
 }
 
 li.attachment .switcher img {
