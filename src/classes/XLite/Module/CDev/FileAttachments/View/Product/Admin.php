@@ -127,5 +127,19 @@ class Admin extends \XLite\View\AView
     {
         return $this->getParam(self::PARAM_PRODUCT);
     }
+
+    /**
+     * Get item class 
+     * 
+     * @param \XLite\Module\CDev\FileAttachments\Model\Product\Attachment $attachment Attachment
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function getItemClass(\XLite\Module\CDev\FileAttachments\Model\Product\Attachment $attachment)
+    {
+        return 'attachment';
+    }
 }
 
