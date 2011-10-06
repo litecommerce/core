@@ -45,6 +45,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     const PARAM_ITEMS_PER_PAGE               = 'itemsPerPage';
     const PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR = 'showItemsPerPageSelector';
     const PARAM_LIST                         = 'list';
+    const PARAM_MAX_ITEMS_COUNT              = 'maxItemsCount';
 
     /**
      * Page short names
@@ -163,6 +164,16 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
             $count = $this->getItemsPerPage();
         }
 
+        if ($this->getMaxItemsCount()) {
+            $count = max(
+                0,
+                min(
+                    $count,
+                    $this->getMaxItemsCount() - $start
+                )
+            );
+        }
+
         return \XLite\Model\Repo\Base\Searchable::addLimitCondition($start, $count, $cnd);
     }
 
@@ -224,7 +235,22 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function getItemsTotal()
     {
-        return $this->getParam(self::PARAM_ITEMS_COUNT);
+        return min(
+            $this->getParam(self::PARAM_ITEMS_COUNT),
+            $this->getMaxItemsCount() ?: $this->getParam(self::PARAM_ITEMS_COUNT) + 1
+        );
+    }
+
+    /**
+     * Get maximum number of items to display in the list
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function getMaxItemsCount()
+    {
+        return intval($this->getParam(self::PARAM_MAX_ITEMS_COUNT));
     }
 
     /**
@@ -319,6 +345,9 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
             ),
             self::PARAM_LIST => new \XLite\Model\WidgetParam\Object(
                 'List object', null, false, '\XLite\View\ItemsList\AItemsList'
+            ),
+            self::PARAM_MAX_ITEMS_COUNT => new \XLite\Model\WidgetParam\Int(
+                'Maximum number of items to display in the list', 0 
             ),
         );
     }
