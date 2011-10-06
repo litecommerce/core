@@ -27,48 +27,13 @@
       <li FOREACH="product.getAttachments(),index,attachment" class="attachment">
 
         <div class="row">
-          <a href="#" class="move" title="{t(#Move#)}"><img src="images/spacer.gif" alt="" /></a>
-          <input type="hidden" class="orderby" name="data[{attachment.getId()}][orderby]" value="{attachment.getOrderby()}" />
-
-          <img src="images/spacer.gif" alt="" class="separator first-separator" />
-
-          <img src="images/spacer.gif" alt="{t(attachment.storage.mimeName)}" class="mime-icon {attachment.storage.getMimeClass()}" />
-
-          <a class="name" href="{attachment.storage.getURL()}">{attachment.storage.getFileName()}</a>
-          <span IF="attachment.storage.getSize()" class="size">({formatSize(attachment.storage.getSize())})</span>
-
-          <a href="{buildURL(#product#,#removeAttachment#,_ARRAY_(#product_id#^product.getProductId(),#id#^attachment.getId()))}" class="remove" title="{t(#Remove#)}"><img src="images/spacer.gif" alt="" /></a>
-
-          <img src="images/spacer.gif" alt="" class="separator second-separator" />
-
-          <div class="switcher">
-            <img src="images/spacer.gif" alt="" />
-            <a href="#">{t(#Properties#)}</a>
-          </div>
-
+          {displayViewListContent(#product.attachments.row#,_ARRAY_(#attachment#^attachment))}
         </div>
 
         <div class="info" style="display: none;">
-          <table cellspacing="0" class="form">
-            <tr class="title">
-              <td class="label"><label for="attachmentName{attachment.getId()}">{t(#File title#)}</label></td>
-              <td><input type="text" id="attachmentName{attachment.getId()}" name="data[{attachment.getId()}][title]" value="{attachment.getTitle()}" /></td>
-            </tr>
-            <tr class="description">
-              <td class="label"><label for="attachmentDesc{attachment.getId()}">{t(#Description#)}</label></td>
-              <td><textarea id="attachmentDesc{attachment.getId()}" name="data[{attachment.getId()}][description]">{attachment.getDescription()}</textarea></td>
-            </tr>
-          </table>
-          <div class="reupload-file">
-            <widget
-              class="XLite\View\Button\FileSelector"
-              style="reupload"
-              label="Re-upload file"
-              object="attachment"
-              objectId="{attachment.getId()}"
-              fileObject="attachments" />
-          </div>
+          {displayViewListContent(#product.attachments.properties#,_ARRAY_(#attachment#^attachment))}
         </div>
+
       </li>
     </ul>
 
