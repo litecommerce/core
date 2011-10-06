@@ -78,12 +78,16 @@ class Storage extends \XLite\Controller\Customer\ACustomer
      */
     protected function getStorage()
     {
-        if (!isset($this->storage)) {
-            $class = \XLite\Core\Request::GetInstance()->storage;
+        if (
+            !isset($this->storage)
+            || !is_object($this->storage)
+            || !($this->storage instanceof \XLite\Model\Base\Storage)
+        ) {
+            $class = \XLite\Core\Request::getInstance()->storage;
             if (\XLite\Core\Operator::isClassExists($class)) {
-                $id = \XLite\Core\Request::GetInstance()->id;
+                $id = \XLite\Core\Request::getInstance()->id;
                 $this->storage = \XLite\Core\Database::getRepo($class)->find($id);
-                if (!$this->storage->isFile3Exists()) {
+                if (!$this->storage->isFileExists()) {
                     $this->storage = null;
                 }
             }
