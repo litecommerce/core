@@ -42,7 +42,7 @@
 
 <widget target="profile" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl" IF="mode=#delete#" />
 
-<widget class="\XLite\View\Order\Details\Admin\Model" template="order/order.tpl" />
+<widget target="order" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
 
 <widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="Countries">
 

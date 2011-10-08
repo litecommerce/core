@@ -111,4 +111,37 @@ class Order extends \XLite\Controller\Admin\AAdmin
 
         return $result;
     }
+
+    // {{{ Tabs
+
+    /**
+     * Get pages sections
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPages()
+    {
+        return array(
+            'default' => 'General info',
+        );
+    }
+
+    /**
+     * Get pages templates
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPageTemplates()
+    {
+        return array(
+            'default' => 'order/info.tpl',
+        );
+    }
+
+    // }}}
+
 }
