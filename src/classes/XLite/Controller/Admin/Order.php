@@ -36,6 +36,15 @@ namespace XLite\Controller\Admin;
 class Order extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Controller parameters
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.11
+     */
+    protected $params = array('target', 'order_id', 'page');
+
+    /**
      * Common method to determine current location
      *
      * @return string
