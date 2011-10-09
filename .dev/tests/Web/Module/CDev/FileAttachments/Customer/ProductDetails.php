@@ -33,6 +33,8 @@ class XLite_Web_Module_CDev_FileAttachments_Customer_ProductDetails extends XLit
         $productId = $product->getProductId();
 
         $attachment = new \XLite\Module\CDev\FileAttachments\Model\Product\Attachment;
+        $product->addAttachments($attach);
+        $attach->setProduct($product);
         $this->assertTrue($attachment->getStorage()->loadFromLocalFile(__DIR__ . '/spacer.gif'), 'check loading');
         $attachment->setTitle('test1');
         $attachment->setDescription('test2');
@@ -118,6 +120,8 @@ class XLite_Web_Module_CDev_FileAttachments_Customer_ProductDetails extends XLit
 
         // Check position
         $a1 = new \XLite\Module\CDev\FileAttachments\Model\Product\Attachment;
+        $product->addAttachments($attach);
+        $attach->setProduct($product);
         $this->assertTrue($a1->getStorage()->loadFromLocalFile(__DIR__ . '/spacer.gif'), 'check loading');
         $a1->setOrderby(10);
         $a1->setTitle('a1');
@@ -126,6 +130,8 @@ class XLite_Web_Module_CDev_FileAttachments_Customer_ProductDetails extends XLit
         \XLite\Core\Database::getEM()->persist($a1);
 
         $a2 = new \XLite\Module\CDev\FileAttachments\Model\Product\Attachment;
+        $product->addAttachments($attach);
+        $attach->setProduct($product);
         $this->assertTrue($a2->getStorage()->loadFromLocalFile(__DIR__ . '/spacer.gif'), 'check loading');
         $a2->setOrderby(20);
         $a2->setTitle('a2');
