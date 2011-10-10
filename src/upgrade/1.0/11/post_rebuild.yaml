@@ -1,0 +1,16 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Data for core upgrading 1.0.10 -> 1.0.11
+#
+
+XLite\Model\LanguageLabel:
+  - { name: 'X bytes', translations: [{ code: en, label: '{{value}} bytes' }] }
+  - { name: 'X kB', translations: [{ code: en, label: '{{value}} kB' }] }
+  - { name: 'X MB', translations: [{ code: en, label: '{{value}} MB' }] }
+  - { name: 'X GB', translations: [{ code: en, label: '{{value}} GB' }] }
+  - { name: 'X years', translations: [{ code: en, label: '{{years}} year(s)' }] }
+  - { name: 'X months', translations: [{ code: en, label: '{{months}} month(s)' }] }
+  - { name: 'X days', translations: [{ code: en, label: '{{days}} day(s)' }] }
+  - { name: 'X hours', translations: [{ code: en, label: '{{hours}} hour(s)' }] }
+  - { name: 'X minutes', translations: [{ code: en, label: '{{minutes}} minute(s)' }] }
+  - { name: 'X seconds', translations: [{ code: en, label: '{{seconds}} second(s)' }] }
