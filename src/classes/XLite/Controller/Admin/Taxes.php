@@ -92,21 +92,6 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
         return 'Taxes';
     }
 
-    /**
-     * Get page code 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPage()
-    {
-        $page = $this->page;
-        $pages = $this->getPages();
-
-        return $page && isset($pages[$page]) ? $page : key($pages);
-    }
-
     // {{{ Widget-specific getters
 
     /**

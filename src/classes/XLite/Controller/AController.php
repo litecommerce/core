@@ -164,9 +164,10 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getPage()
     {
-        return is_null($this->page) || !in_array($this->page, array_keys($this->getPages()))
-            ? 'default'
-            : $this->page;
+        $page = $this->page;
+        $pages = $this->getPages();
+
+        return $page && isset($pages[$page]) ? $page : key($pages);
     }
 
     /**

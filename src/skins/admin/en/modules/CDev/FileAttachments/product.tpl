@@ -24,7 +24,7 @@
   <widget class="XLite\Module\CDev\FileAttachments\View\Form\Attachments" product="{getProduct()}" name="product_attachments" />
 
     <ul class="files" IF="product.getAttachments()">
-      <li FOREACH="product.getAttachments(),index,attachment" class="attachment">
+      <li FOREACH="product.getAttachments(),index,attachment" class="{getItemClass(attachment)}">
 
         <div class="row">
           {displayViewListContent(#product.attachments.row#,_ARRAY_(#attachment#^attachment))}
