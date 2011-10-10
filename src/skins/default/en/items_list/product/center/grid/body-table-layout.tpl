@@ -30,7 +30,7 @@
 
   </table>
 
-  <div IF="isShowMoreLink()">
+  <div class="products-grid show-more-link" IF="isShowMoreLink()">
     <a class="link" href="{getMoreLinkURL()}">{getMoreLinkText()}</a>
   </div>
 

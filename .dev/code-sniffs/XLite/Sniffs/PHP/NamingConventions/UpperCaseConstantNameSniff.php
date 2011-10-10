@@ -10,7 +10,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   CVS: $Id: 28dd6f0924edd1642e9a0d1e14a8ba6473a2ce0f $
+ * @version   CVS: $Id: a56efe30696942990896a6867b28e38fa76818c1 $
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -56,6 +56,7 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
 		'FILTER_VALIDATE_FLOAT', 'FILTER_SANITIZE_URL', 'HTML_ENTITIES', 'FILTER_VALIDATE_BOOLEAN', 'FILTER_SANITIZE_NUMBER_FLOAT',
         'FILTER_FLAG_ALLOW_FRACTION',
         'PATHINFO_EXTENSION', 'UPLOAD_ERR_OK', 'FILE_APPEND',
+        'SORT_NUMERIC',
         // Defined in Drupal:
         'MENU_VISIBLE_IN_BREADCRUMB',
         'USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL', 'USER_REGISTER_VISITORS', 'CSS_DEFAULT', 'JS_DEFAULT',
