@@ -358,9 +358,8 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
         );
     }
 
-<<<<<<< HEAD
-    // }}} 
-=======
+    // }}}
+
     // {{{ Import
 
     /**
@@ -502,5 +501,4 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
     } 
 
     // }}}
->>>>>>> s149785-import-export
 }
