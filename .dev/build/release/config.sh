@@ -42,6 +42,7 @@ CDev/AuthorizeNet
 CDev/Bestsellers
 CDev/DrupalConnector
 CDev/FeaturedProducts
+CDev/FileAttachments
 CDev/GoogleAnalytics
 CDev/MarketPrice
 CDev/Moneybookers
