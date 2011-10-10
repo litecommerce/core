@@ -86,7 +86,7 @@ abstract class Image extends \XLite\Model\Base\Storage
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="32", nullable=true)
+     * @Column (type="fixedstring", length="32")
      */
     protected $hash = '';
 

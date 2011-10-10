@@ -34,11 +34,7 @@ namespace XLite\Model\Image\Category;
  * @since 1.0.0
  *
  * @Entity
- * @Table  (name="category_images",
- *      indexes={
- *          @Index (name="id", columns={"id"})
- *      }
- * )
+ * @Table  (name="category_images")
  */
 class Image extends \XLite\Model\Base\Image
 {

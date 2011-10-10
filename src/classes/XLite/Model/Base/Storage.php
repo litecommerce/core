@@ -120,7 +120,7 @@ abstract class Storage extends \XLite\Model\AEntity
      *
      * @Column (type="uinteger")
      */
-    protected $size;
+    protected $size = 0;
 
     /**
      * Create / modify date (UNIX timestamp)
