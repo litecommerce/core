@@ -118,6 +118,21 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Return parameters array for "Import" target
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    protected function getParamsObjectImportExport()
+    {
+        return array(
+            'page'   => 'import',
+            'loaded' => 1,
+        );
+    }
+
+    /**
      * Main 'Select' action handler.
      *  - calls "doActionSelect<file_select_action><object><file_object>()" handler
      *  - set return URL which is set by "getParamsObject<object>()" getter
@@ -343,5 +358,149 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
         );
     }
 
+<<<<<<< HEAD
     // }}} 
+=======
+    // {{{ Import
+
+    /**
+     * Common handler for import
+     *
+     * @param string $methodToLoad Method to use for getting file
+     * @param array  $paramsToLoad Parameters to use in getter method
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    protected function doActionSelectImport($methodToLoad, array $paramsToLoad)
+    {
+        \XLite\Core\Session::getInstance()->importCell = null;
+        $methodToLoad .= 'Import';
+
+        $path = call_user_func_array(array($this, $methodToLoad), $paramsToLoad);
+        if ($path) {
+            chmod($path, 0644);
+            \XLite\Core\Session::getInstance()->importCell = array(
+                'path'     => $path,
+                'position' => 0,
+            );
+        }
+    }
+
+    /**
+     * "Upload" handler for import
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    protected function doActionSelectUploadImportExport()
+    {
+        $this->doActionSelectImport('loadFromRequest', array('uploaded_file'));
+    }
+
+    /**
+     * "URL" handler for import
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    protected function doActionSelectUrlImportExport()
+    {
+        $this->doActionSelectImport(
+            'loadFromURL',
+            array(
+                \XLite\Core\Request::getInstance()->url,
+            )
+        );
+    }
+
+    /**
+     * "Local file" handler for import
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.7
+     */
+    protected function doActionSelectLocalImportExport()
+    {
+        $file = \XLite\View\BrowseServer::getNormalizedPath(\XLite\Core\Request::getInstance()->local_server_file);
+
+        $this->doActionSelectImport(
+            'loadFromLocalFile',
+            array($file)
+        );
+    }
+
+    /**
+     * Load import file from request
+     * 
+     * @param string $key Request key
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function loadFromRequestImport($key)
+    {
+        $result = null;
+
+        $cell = isset($_FILES[$key]) ? $_FILES[$key] : null;
+        if ($cell && UPLOAD_ERR_OK == $cell['error']) {
+            $path = \Includes\Utils\FileManager::getUniquePath(LC_DIR_TMP, $cell['name']);
+            if (move_uploaded_file($cell['tmp_name'], $path)) {
+                $result = $path;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Load import file from local file system
+     * 
+     * @param string $path Local path
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function loadFromLocalFileImport($path)
+    {
+        $result = null;
+
+        $tmpPath = \Includes\Utils\FileManager::getUniquePath(LC_DIR_TMP, basename($path));
+        if (copy($path, $tmpPath)) {
+            $result = $tmpPath;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Load import file from URL 
+     * 
+     * @param string $url URL
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function loadFromURLImport($url)
+    {
+        $result = null;
+
+        $content = \XLite\Core\Operator::getURLContent($url);
+        $path = \Includes\Utils\FileManager::getUniquePath(LC_DIR_TMP, basename($path));
+        if ($content && file_put_contents($path, $content)) {
+            $result = $path;
+        }
+
+        return $result;
+    } 
+
+    // }}}
+>>>>>>> s149785-import-export
 }

@@ -281,7 +281,7 @@ popup.openAsWait = function()
 // Open-n-display popup
 popup.open = function(box)
 {
-  if (box && box.contructor == Object && 'undefined' != typeof(box.html)) {
+  if (box && 'undefined' != typeof(box.html)) {
     box = box.html();
   }
 

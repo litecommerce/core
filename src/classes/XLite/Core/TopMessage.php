@@ -47,6 +47,7 @@ class TopMessage extends \XLite\Base\Singleton
      */
     const FIELD_TEXT = 'text';
     const FIELD_TYPE = 'type';
+    const FIELD_AJAX = 'ajax';
 
     /**
      * Types list
@@ -123,12 +124,13 @@ class TopMessage extends \XLite\Base\Singleton
      * @param string  $code      Language code OPTIONAL
      * @param string  $type      Message type OPTIONAL
      * @param boolean $rawText   Preprocessing text flag OPTIONAL
+     * @param boolean $ajax      AJAX message state
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function add($text, array $arguments = array(), $code = null, $type = self::INFO, $rawText = false)
+    public function add($text, array $arguments = array(), $code = null, $type = self::INFO, $rawText = false, $ajax = true)
     {
         $result = false;
 
@@ -147,6 +149,7 @@ class TopMessage extends \XLite\Base\Singleton
             $this->messages[$type . md5($text)] = array(
                 self::FIELD_TEXT => $text,
                 self::FIELD_TYPE => $type,
+                self::FIELD_AJAX => $ajax,
             );
 
             \XLite\Core\Session::getInstance()->topMessages = $this->messages;
@@ -197,6 +200,30 @@ class TopMessage extends \XLite\Base\Singleton
     }
 
     /**
+     * Get messages for AJAX response
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getAJAXMessages()
+    {
+        $messages = \XLite\Core\Session::getInstance()->topMessages;
+
+        if (!is_array($messages)) {
+            $messages = array();
+        }
+
+        foreach ($messages as $i => $message) {
+            if (!$message[self::FIELD_AJAX]) {
+                unset($messages[$i]);
+            }
+        }
+
+        return $messages;
+    }
+
+    /**
      * Get previous messages
      *
      * @return array
@@ -234,6 +261,30 @@ class TopMessage extends \XLite\Base\Singleton
     public function clear()
     {
         \XLite\Core\Session::getInstance()->topMessages = array();
+    }
+
+    /**
+     * Clear only AJAX messages
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function clearAJAX()
+    {
+        $messages = \XLite\Core\Session::getInstance()->topMessages;
+
+        if (!is_array($messages)) {
+            $messages = array();
+        }
+
+        foreach ($messages as $i => $message) {
+            if ($message[self::FIELD_AJAX]) {
+                unset($messages[$i]);
+            }
+        }
+
+        \XLite\Core\Session::getInstance()->topMessages = $messages;
     }
 
     /**

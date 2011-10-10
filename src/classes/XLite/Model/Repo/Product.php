@@ -202,6 +202,29 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         return $data;
     }
 
+    /**
+     * Get import iterator 
+     * 
+     * @return \Doctrine\ORM\Internal\Hydration\IterableResult
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    public function getImportIterator()
+    {
+        return $this->defineImportQuery()->iterate();
+    }
+
+    /**
+     * Define import querty 
+     * 
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function defineImportQuery()
+    {
+        return $this->createPureQueryBuilder('p');
+    }
 
     /**
      * Return list of handling search params
