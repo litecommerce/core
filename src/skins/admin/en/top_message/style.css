@@ -91,3 +91,7 @@
   background-color: #e65e57;
   color: #fff;
 }
+
+#status-messages a {
+  text-decoration: underline;
+}

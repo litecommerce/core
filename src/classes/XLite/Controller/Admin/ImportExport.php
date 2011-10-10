@@ -626,16 +626,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                 // Assemble associated list
                 $list = $this->assembleImportRow($row);
 
-                if (count($list) != $this->importCell['row_length']) {
-                    $this->logImportWarning(
-                        static::t(
-                            'The string is different from that of the title number of columns - X instead of Y',
-                            array('right' => $this->importCell['row_length'], 'wrong' => count($list))
-                        ),
-                        $this->importCell['position']
-                    );
-                }
-
                 // Detect and get product
                 $product = $this->getProduct($list);
 
@@ -649,6 +639,19 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                 }
 
                 if ($product) {
+                    if (count($list) != $this->importCell['row_length']) {
+                        $this->logImportWarning(
+                            static::t(
+                                'The string is different from that of the title number of columns - X instead of Y',
+                                array('right' => $this->importCell['row_length'], 'wrong' => count($list))
+                            ),
+                            $this->importCell['position'],
+                            null,
+                            null,
+                            $product
+                        );
+                    }
+
                     $this->importRow($product, $list);
 
                     if ($product->getId()) {
@@ -705,7 +708,14 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                     false,
                     false
                 );
-
+                \XLite\Core\TopMessage::getInstance()->add(
+                    'Some products could have been imported incorrectly',
+                    array(),
+                    null,
+                    \XLite\Core\TopMessage::WARNING,
+                    false,
+                    false
+                );
             }
 
             $this->clearImportCell();
@@ -749,7 +759,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                             'Import mechanism does not know the field of X and it can not be imported',
                             array('name' => $name)
                         ),
-                        0
+                        -1
                     );
                     $this->importCell['row_length']--;
                 }
@@ -873,7 +883,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Get product (olr or new)
+     * Get product (old or new)
      * 
      * @param array $list Row data
      *  
@@ -881,7 +891,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.10
      */
-    protected function getProduct(array &$list)
+    protected function getProduct(array $list)
     {
         $product = null;
 
@@ -889,7 +899,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             if ($list['productId']) {
                 $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(intval($list['productId']));
             }
-            unset($list['productId']);
         }
 
         if (!$product && isset($list['sku']) && $list['sku']) {
@@ -908,23 +917,29 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     /**
      * Log import notice 
      * 
-     * @param string  $message  Message
-     * @param integer $position Row position
-     * @param string  $column   Column name
-     * @param string  $value    Cell value
+     * @param string               $message  Message
+     * @param integer              $position Row position OPTIONAL
+     * @param string               $column   Column name OPTIONAL
+     * @param string               $value    Cell value OPTIONAL
+     * @param \XLite\Model\Product $product  Product OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.11
      */
-    protected function logImportWarning($message, $position = null, $column = null, $value = null)
-    {
+    protected function logImportWarning(
+        $message,
+        $position = null,
+        $column = null,
+        $value = null,
+        \XLite\Model\Product $product = null
+    ) {
         $message = trim($message);
 
         $this->importCell['warning_count']++;
 
         if (isset($position)) {
-            $message .= PHP_EOL . 'Row number: ' . $position;
+            $message .= PHP_EOL . 'Row number: ' . ($position + 2);
         }
 
         if (isset($column)) {
@@ -933,6 +948,14 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
 
         if (isset($value)) {
             $message .= PHP_EOL . 'Cell value: ' . var_export($value, true);
+        }
+        if (isset($product)) {
+            if ($product->getProductId()) {
+                $message .= PHP_EOL . 'Product id: ' . $product->getProductId();
+
+            } elseif ($product->getSku()) {
+                $message .= PHP_EOL . 'Product SKU: ' . $product->getSku();
+            }
         }
 
         \XLite\Logger::getInstance()->logCustom('import', $message);
@@ -1167,7 +1190,11 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                             static::t(
                                 'X image unable to load',
                                 array('url' => $url)
-                            )
+                            ),
+                            $this->importCell['position'],
+                            'images',
+                            $url,
+                            $product
                         );
                     }
                 }

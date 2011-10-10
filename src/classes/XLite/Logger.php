@@ -335,7 +335,7 @@ class Logger extends \XLite\Base\Singleton
      * @param string  $message      Message
      * @param boolean $useBackTrace User backtrace flag OPTIONAL
      *  
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.11
      */
