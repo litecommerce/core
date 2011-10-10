@@ -279,7 +279,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             'first_name'    => $this->getProfile()->getBillingAddress()->getFirstname(),
             'last_name'     => $this->getProfile()->getBillingAddress()->getLastname(),
             'business'      => $this->getSetting('account'),
-            'amount'        => $this->transaction->getValue(),
+            'amount'        => $this->getAmountValue(),
             'tax_cart'      => 0,
             'shipping'      => 0,
             'handling'      => 0,
@@ -308,6 +308,24 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
         $fields = array_merge($fields, $this->getPhone());
 
         return $fields;
+    }
+
+    /**
+     * Return amount value. Specific for Paypal
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function getAmountValue()
+    {
+        $value = $this->transaction->getValue();
+
+        settype($value, 'float');
+
+        $value = sprintf("%0.2f", $value);
+
+        return $value;
     }
 
     /**
