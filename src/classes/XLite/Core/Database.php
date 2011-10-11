@@ -790,7 +790,7 @@ OUT;
                 if (is_array($schema)) {
                     $schemas = array_merge($schemas, $schema);
 
-                } elseif (isset($schema)) {
+                } elseif (isset($schema) && $schema) {
                     $schemas[] = $schema;
                 }
             }
@@ -800,6 +800,9 @@ OUT;
                     $schemas = static::getRepo($cmd->name)->processSchema($schemas, $mode);
                 }
             }
+
+            $schemas = array_map('trim', $schemas);
+            $schemas = preg_grep('/^.+$/Ss', $schemas);
         }
 
         return $schemas;
@@ -1274,6 +1277,17 @@ OUT;
             '$1 ON DELETE CASCADE',
             $schema
         );
+
+        // Fix AUTO_INCREMENT rename
+        $schema = preg_replace('/^ALTER TABLE `\S+` DROP PRIMARY KEY$/Ss', '', $schema);
+        $schema = preg_replace('/^ALTER TABLE `\S+` ADD PRIMARY KEY \(\S+\)$/Ss', '', $schema);
+        if (preg_match('/^ALTER TABLE (`\S+`).+ADD (`\S+`) ([^,`]+) AUTO_INCREMENT([^,`]*), DROP (`\S+`)/Ss', $schema, $match)) {
+            $schema = array(
+                'ALTER TABLE ' . $match[1] . ' MODIFY ' . $match[5] . ' ' . $match[3],
+                'ALTER TABLE ' . $match[1] . ' DROP PRIMARY KEY',
+                preg_replace('/(ADD `\S+` [^,`]+ AUTO_INCREMENT[^,`]*)(, DROP `\S+`)/Ss', '$1 PRIMARY KEY$2', $schema),
+            );
+        }
 
         return $schema;
     }
