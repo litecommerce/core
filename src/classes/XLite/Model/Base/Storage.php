@@ -152,19 +152,42 @@ abstract class Storage extends \XLite\Model\AEntity
 
     /**
      * Read output 
+     *
+     * @param integer $start  Start popsition
+     * @param integer $length Length
      * 
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.11
      */
-    public function readOutput()
+    public function readOutput($start = null, $length = null)
     {
         $result = true;
 
         if ($this->isURL()) {
             $body = \XLite\Core\Operator::getURLContent($this->getPath());
             if ($body) {
+                if (isset($start)) {
+                    $body = isset($length) ? substr($body, $start, $length) : substr($body, $start);
+                }
                 print $body;
+
+            } else {
+                $result = false;
+            }
+
+        } elseif (isset($start)) {
+
+            $fp = @fopen($this->getStoragePath(), 'rb');
+            if ($fp) {
+                fseek($fp, $start);
+                if (isset($length)) {
+                    print fread($fp, min($length, filesize($this->getStoragePath()) - $start));
+
+                } else {
+                    print fread($fp, filesize($this->getStoragePath()) - $start);
+                }
+                fclose($fp);
 
             } else {
                 $result = false;
