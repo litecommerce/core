@@ -142,6 +142,11 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     );
 
     /**
+     * @var float
+     */
+    protected $startTime;
+
+    /**
      * Constructor
      *
      * @access public
@@ -563,6 +568,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
             \XLite\Core\Session::getInstance()->restart();
         }
+        $this->startTime = microtime(true);
     }
 
     /**
@@ -576,7 +582,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     protected function tearDown()
     {
-        $message = $this->getMessage('', get_called_class(), $this->getName());
+        $time = microtime(true)-$this->startTime;
+        $message = $this->getMessage('..time:' . round($time,2). '..', get_called_class(), $this->getName());
         echo (PHP_EOL . sprintf('%\'.-86s', trim($message)));
     }
 
