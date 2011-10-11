@@ -1289,6 +1289,15 @@ OUT;
             );
         }
 
+        // Fix AUTO_INCREMENT rename into another column namee
+        if (preg_match('/^ALTER TABLE (`\S+`).+DROP (`\S+`), CHANGE (`\S+`) (`\S+`)([^,`]+) AUTO_INCREMENT([^,`]*)(,|$)/Ss', $schema, $match)) {
+            $schema = array(
+                'ALTER TABLE ' . $match[1] . ' MODIFY ' . $match[2] . ' ' . $match[5],
+                'ALTER TABLE ' . $match[1] . ' DROP PRIMARY KEY',
+                preg_replace('/^ALTER (TABLE `\S+`.+DROP `\S+`, CHANGE `\S+` `\S+`[^,`]+ AUTO_INCREMENT[^,`]*)(,|$)/Ss', 'ALTER IGNORE $1 PRIMARY KEY$2', $schema),
+            );
+        }
+
         return $schema;
     }
 
