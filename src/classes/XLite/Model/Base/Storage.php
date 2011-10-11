@@ -463,6 +463,8 @@ abstract class Storage extends \XLite\Model\AEntity
     {
         $result = true;
 
+        $path = \Includes\Utils\FileManager::normalize($path);
+
         $local = false;
         foreach ($this->getAllowedFileSystemRoots() as $root) {
             if (0 === strncmp($root, $path, strlen($root))) {
