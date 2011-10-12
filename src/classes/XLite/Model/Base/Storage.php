@@ -794,7 +794,7 @@ abstract class Storage extends \XLite\Model\AEntity
     {
         $result = true;
 
-        if (preg_match('/\.(?:php3?|pl|cgi|py)$/Ss', $this->getPath())) {
+        if (preg_match('/\.(?:php3?|pl|cgi|py|htaccess)$/Ss', $this->getPath())) {
             $this->loadError = 'extension';
             $result = false;
         }
