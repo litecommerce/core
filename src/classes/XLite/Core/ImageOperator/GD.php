@@ -126,7 +126,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
 
         $func = 'image' . $this->getImageType();
 
-        if (function_exists($func)) {
+        if ($this->image && function_exists($func)) {
 
             ob_start();
            // $func is assembled from 'image' + image type
@@ -150,41 +150,46 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      */
     public function resize($width, $height)
     {
-        $newImage = imagecreatetruecolor($width, $height);
-        imagealphablending($newImage, false);
-        imagesavealpha($newImage, true);
+        $result = false;
 
-        $result = imagecopyresampled(
-            $newImage,
-            $this->image,
-            0,
-            0,
-            0,
-            0,
-            $width,
-            $height,
-            $this->width,
-            $this->height
-        );
-        if ($result) {
+        if ($this->image) {
 
-            imagedestroy($this->image);
-            $this->image = $newImage;
-            $this->width = $width;
-            $this->height = $height;
+            $newImage = imagecreatetruecolor($width, $height);
+            imagealphablending($newImage, false);
+            imagesavealpha($newImage, true);
 
-            if (\XLite::getInstance()->getOptions(array('images', 'unsharp_mask_filter_on_resize'))) {
+            $result = imagecopyresampled(
+                $newImage,
+                $this->image,
+                0,
+                0,
+                0,
+                0,
+                $width,
+                $height,
+                $this->width,
+                $this->height
+            );
+            if ($result) {
 
-                include_once LC_DIR_LIB . 'phpunsharpmask.php';
+                imagedestroy($this->image);
+                $this->image = $newImage;
+                $this->width = $width;
+                $this->height = $height;
 
-                $unsharpImage = UnsharpMask($this->image);
-                if ($unsharpImage) {
-                    $this->image = $unsharpImage;
+                if (\XLite::getInstance()->getOptions(array('images', 'unsharp_mask_filter_on_resize'))) {
+
+                    include_once LC_DIR_LIB . 'phpunsharpmask.php';
+
+                    $unsharpImage = UnsharpMask($this->image);
+                    if ($unsharpImage) {
+                        $this->image = $unsharpImage;
+                    }
                 }
-            }
 
-        } else {
-            $this->image = $old;
+            } else {
+                $this->image = $old;
+            }
         }
 
         return $result;
