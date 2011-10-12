@@ -106,7 +106,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
                 $this->image = $func($fn);
                 unlink($fn);
 
-                $result = true;
+                $result = (bool)$this->image;
             }
         }
 
