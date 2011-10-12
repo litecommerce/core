@@ -151,6 +151,24 @@ abstract class Storage extends \XLite\Model\AEntity
     }
 
     /**
+     * Get storage type 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function getStorageType()
+    {
+        if (!$this->storageType) {
+            $this->storageType = $this->isURL($this->getPath())
+                ? static::STORAGE_URL
+                : static::STORAGE_RELATIVE;
+        }
+
+        return $this->storageType;
+    }
+
+    /**
      * Read output 
      *
      * @param integer $start  Start popsition
