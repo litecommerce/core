@@ -38,19 +38,6 @@ namespace XLite\Module\CDev\FileAttachments\Model\Product\Attachment;
  */
 class Storage extends \XLite\Model\Base\Storage
 {
-    /**
-     * Unique id
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="uinteger")
-     */
-    protected $id;
-
     // {{{ Associations
 
     /**

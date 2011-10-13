@@ -58,19 +58,6 @@ abstract class Image extends \XLite\Model\Base\Storage
     );
 
     /**
-     * Unique id
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="uinteger")
-     */
-    protected $image_id;
-
-    /**
      * Width
      *
      * @var   integer
@@ -102,18 +89,6 @@ abstract class Image extends \XLite\Model\Base\Storage
      * @Column (type="fixedstring", length="32")
      */
     protected $hash = '';
-
-    /**
-     * Get unique id 
-     * 
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.11
-     */
-    public function getId()
-    {
-        return $this->getImageId();
-    }
 
     /**
      * Get image URL for customer front-end

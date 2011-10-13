@@ -68,7 +68,7 @@ class Image extends \XLite\Model\Base\Image
      * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="images")
-     * @JoinColumn (name="id", referencedColumnName="product_id")
+     * @JoinColumn (name="product_id", referencedColumnName="product_id")
      */
     protected $product;
 }

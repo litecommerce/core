@@ -55,6 +55,19 @@ abstract class Storage extends \XLite\Model\AEntity
     protected static $types = array();
 
     /**
+     * Unique id
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="uinteger")
+     */
+    protected $id;
+
+    /**
      * Path (URL or file name in storage directory)
      *
      * @var   string

@@ -197,10 +197,8 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
      */
     protected function defineFindOneByFullPathQuery($path, $absolute, $id = null)
     {
-        $idColumn = $this->_class->identifier[0];
-
         $qb = $this->createQueryBuilder('s')
-            ->select('COUNT(s.' . $idColumn . ')')
+            ->select('COUNT(s.id)')
             ->andWhere('s.path = :path AND s.storageType = :stype')
             ->setParameter('path', $path)
             ->setParameter(
@@ -209,7 +207,7 @@ abstract class Storage extends \XLite\Model\Repo\ARepo
             );
 
         if ($id) {
-            $qb->andWhere('s.' . $idColumn . ' != :id')->setParameter('id', $id);
+            $qb->andWhere('s.id != :id')->setParameter('id', $id);
         }
 
         return $qb;
