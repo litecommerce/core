@@ -119,7 +119,7 @@ class Storage extends \XLite\Controller\Customer\ACustomer
         }
 
         $start = null;
-        $length = $this->getStorage()->getSize();
+        $length = $storage->getSize();
 
         if ($range) {
             $size = $length;
