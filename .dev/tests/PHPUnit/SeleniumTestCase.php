@@ -582,8 +582,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     protected function tearDown()
     {
-        $time = microtime(true)-$this->startTime;
-        $message = $this->getMessage('..time:' . round($time,2). '..', get_called_class(), $this->getName());
+        $time = microtime(true) - $this->startTime;
+        $message = $this->getMessage('...' . round($time, 2) . 's...', get_called_class(), $this->getName());
         echo (PHP_EOL . sprintf('%\'.-86s', trim($message)));
     }
 
