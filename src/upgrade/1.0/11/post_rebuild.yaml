@@ -14,3 +14,16 @@ XLite\Model\LanguageLabel:
   - { name: 'X hours', translations: [{ code: en, label: '{{hours}} hour(s)' }] }
   - { name: 'X minutes', translations: [{ code: en, label: '{{minutes}} minute(s)' }] }
   - { name: 'X seconds', translations: [{ code: en, label: '{{seconds}} second(s)' }] }
+  - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: en, label: 'Importing will overwrite the existing product information. This operation connot be undone.' }] }
+  - { name: 'To get the format of the import data, you can export your products to a file.', translations: [{ code: en, label: 'To get the format of the import data, you can <a href="{{url}}">export your products</a> to a file and them review the format of that file.' }] }
+  - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: en, label: 'Depending on the size of your data file, importing may take some time.' }] }
+  - { name: 'Successfully imported X new products and upgraded Y old products', translations: [{ code: en, label: 'Successfully imported {{new}} new products and upgraded {{old}} old products' }] }
+  - { name: 'Successfully imported X new products', translations: [{ code: en, label: 'Successfully imported {{new}} new products' }] }
+  - { name: 'Successfully upgraded Y old products', translations: [{ code: en, label: 'Successfully upgraded {{old}} old products' }] }
+  - { name: 'Import mechanism does not know the field of X and it can not be imported', translations: [{ code: en, label: "Import mechanism does not know the field of '{{name}}' and it can not be imported" }] }
+  - { name: 'The string is different from that of the title number of columns - X instead of Y', translations: [{ code: en, label: 'The string is different from that of the title number of columns - {{wrong}} instead of {{right}}' }] }
+  - { name: 'Required field X is not defined or empty', translations: [{ code: en, label: "Required field '{{name}}' is not defined or empty. The product was not created" }] }
+  - { name: 'X image unable to load', translations: [{ code: en, label: '{{url}} image unable to load' }] }
+  - { name: 'During the import was recorded X errors. You can get them by downloading the log imports.', translations: [{ code: en, label: 'During the import was recorded {{count}} errors. You can get them by <a href="{{url}}">downloading</a> the log imports.' }] }
+  - { name: 'Some products could have been imported incorrectly', translations: [{ code: en, label: 'Some products could have been imported incorrectly. Please check your catalog. Find the ID of the products that could have been imported incorrectly in the import log file available at the above link.' }] }
+
