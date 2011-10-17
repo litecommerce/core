@@ -164,7 +164,21 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function hasDescription()
     {
-        return 0 < strlen($this->getProduct()->getDescription());
+        return 0 < strlen($this->getProduct()->getDescription())
+            || $this->hasAttributes();
+    }
+
+    /**
+     * Check - product has visible attributes or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function hasAttributes()
+    {
+        return 0 < $this->getProduct()->getWeight()
+            || 0 < strlen($this->getProduct()->getSku());
     }
 
     // }}}

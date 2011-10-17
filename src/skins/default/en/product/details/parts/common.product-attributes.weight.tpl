@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Product details SKU main block
+ * Product details Weight main block
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="product.details.common.product-attributes", weight="200")
+ * @ListChild (list="product.details.common.product-attributes", weight="100")
  *}
-<li IF="product.getSKU()" class="identifier product-sku">
-  <strong class="type">{t(#SKU#)}:</strong>
-  <span class="value">{product.sku}</span>
+<li IF="!product.weight=0">
+  <strong>{t(#Weight#)}:</strong>
+  <span>{product.weight} {config.General.weight_symbol}</span>
 </li>
