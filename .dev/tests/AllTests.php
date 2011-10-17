@@ -34,6 +34,12 @@ function xlite_make_sql_backup($path = null)
     // DB backup
     echo (PHP_EOL . 'DB backup ... ');
 
+    \Includes\Utils\FileManager::unlinkRecursive(__DIR__ . '/images');
+    \Includes\Utils\FileManager::mkdirRecursive(__DIR__ . '/images');
+    \Includes\Utils\FileManager::mkdirRecursive(__DIR__ . '/images/product');
+    \Includes\Utils\FileManager::mkdirRecursive(__DIR__ . '/images/category');
+    \Includes\Utils\FileManager::copyRecursive(LC_DIR_IMAGES, __DIR__ . '/images');
+
     $result = true;
 
     if (!isset($path)) {
@@ -83,6 +89,8 @@ function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = tr
     !$verbose && ob_start();
 
     echo (PHP_EOL . 'DB restore ... ');
+
+    \Includes\Utils\FileManager::copyRecursive(__DIR__ . '/images', LC_DIR_IMAGES);
 
     $result = true;
 
@@ -403,6 +411,9 @@ class XLite_Tests_AllTests
         }
 
         if (!isset($deploy) || !$deploy) {
+            \Includes\Utils\FileManager::unlinkRecursive(__DIR__ . '/images');
+            \Includes\Utils\FileManager::mkdirRecursive(__DIR__ . '/images');
+            \Includes\Utils\FileManager::copyRecursive(LC_DIR_IMAGES, __DIR__ . '/images/');
             xlite_make_sql_backup();
         }
 
