@@ -208,6 +208,24 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
     }
 
     this.hideLightbox();
+
+    // Tabs
+    jQuery('.product-details-tabs .tabs li a', this.base).click(
+      function () {
+        if (!jQuery(this).parent().hasClass('active')) {
+          var id = this.href.substr(1);
+          jQuery(this).parents('ul').eq(0).find('li.active').removeClass('active');
+          jQuery(this).parent().addClass('active');
+
+          var box = jQuery(this).parents('.product-details-tabs');
+          box.find('.tab-container').hide();
+          box.find('#' + id).show();
+        }
+
+        return false;
+      }
+    );
+
   }
 }
 

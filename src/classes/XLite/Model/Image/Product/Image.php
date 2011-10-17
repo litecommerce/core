@@ -34,11 +34,7 @@ namespace XLite\Model\Image\Product;
  * @since 1.0.0
  *
  * @Entity
- * @Table  (name="product_images",
- *          indexes={
- *              @Index (name="id", columns={"id"})
- *          }
- * )
+ * @Table  (name="product_images")
  */
 class Image extends \XLite\Model\Base\Image
 {
@@ -72,7 +68,7 @@ class Image extends \XLite\Model\Base\Image
      * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="images")
-     * @JoinColumn (name="id", referencedColumnName="product_id")
+     * @JoinColumn (name="product_id", referencedColumnName="product_id")
      */
     protected $product;
 }

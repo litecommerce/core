@@ -145,6 +145,18 @@ class Request extends \XLite\Base\Singleton
     }
 
     /**
+     * Check if current request method is "HEAD"
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isHead()
+    {
+        return 'HEAD' === $this->requestMethod;
+    }
+
+    /**
      * Check - is AJAX request or not
      *
      * @return boolean

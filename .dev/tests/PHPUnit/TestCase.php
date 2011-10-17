@@ -232,9 +232,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
                     $path = LC_DIR_ROOT . 'var/log/unit-' . date('Ymd-His') . '-' . $this->getName() . '.sql';
 
                     try {
-                        ob_start();
-                        xlite_make_sql_backup($path);
-                        ob_end_clean();
+                        $this->doMakeBackup($path);
 
                     } catch (\Exception $e) {
                     }
@@ -549,6 +547,24 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     // {{{ Database operations
 
     /**
+     * Make backup 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function doMakeBackup($path)
+    {
+        ob_start();
+        xlite_make_sql_backup($path);
+        ob_end_clean();
+
+        \Includes\Utils\FileManager::unlinkRecursive(LC_DIR . '/../.dev/tests/images');
+        \Includes\Utils\FileManager::mkdirRecursive(LC_DIR . '/../.dev/tests/images');
+        \Includes\Utils\FileManager::copyRecursive(LC_DIR_IMAGES, LC_DIR . '/../.dev/tests/images/');
+    }
+
+    /**
      * Restore database from common backup
      *
      * @return void
@@ -560,6 +576,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     {
         $message = '';
         $this->assertTrue(xlite_restore_sql_from_backup($path, false, $drop, $message), $message);
+        \Includes\Utils\FileManager::copyRecursive(LC_DIR . '/.dev/tests/images', LC_DIR_IMAGES);
     }
 
     // }}}

@@ -39,7 +39,7 @@ namespace XLite\Model;
  *         indexes={
  *              @Index (name="ci", columns={"code","id"}),
  *              @Index (name="id", columns={"id"}),
- *              @index (name="name", columns={"name"})
+ *              @Index (name="name", columns={"name"})
  *         }
  * )
  */

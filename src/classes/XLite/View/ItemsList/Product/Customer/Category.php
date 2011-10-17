@@ -212,7 +212,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Get widget parameters
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */

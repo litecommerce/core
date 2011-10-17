@@ -38,6 +38,10 @@ define('LC_ADMIN_AREA_SKIN', LC_DIR_SKINS . 'admin' . LC_DS . 'en' . LC_DS);
 define('LC_IMAGES_URL', 'images');
 define('LC_IMAGES_CACHE_URL', LC_VAR_URL . '/images');
 
+// Files
+define('LC_FILES_URL', 'files');
+
+
 // OS
 define('LC_OS_NAME', preg_replace('/^([^ ]+)/', '\\1', PHP_OS));
 define('LC_OS_CODE', strtolower(substr(LC_OS_NAME, 0, 3)));

@@ -9,6 +9,6 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="product.details.page.tabs", weight="20")
+ * @ListChild (list="product.details.page.tab.description", weight="100")
  *}
 <div class="description product-description">{product.description:h}</div>

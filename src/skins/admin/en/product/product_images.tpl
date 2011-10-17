@@ -33,12 +33,12 @@
 
         <tr>
         	<td align="right">{t(#Alternative text#)}:</td>
-	        <td><input type="text" name="alt[{image.getImageId()}]" value="{image.getAlt():r}" size="55" /></td>
+	        <td><input type="text" name="alt[{image.getId()}]" value="{image.getAlt():r}" size="55" /></td>
         </tr>
 
         <tr>
 	        <td align="right">{t(#Position#)}:</td>
-	        <td><input type="text" name="orderby[{image.getImageId()}]" value="{image.getOrderby():r}" class="orderby field-integer" /></td>
+	        <td><input type="text" name="orderby[{image.getId()}]" value="{image.getOrderby():r}" class="orderby field-integer" /></td>
         </tr>
 
         <tr>
@@ -46,7 +46,7 @@
         	<td>
               <widget class="\XLite\View\Button\Submit" label="Update" />
               &nbsp;
-              <widget class="\XLite\View\Button\Regular" label="Delete the image" jsCode="images_form.image_id.value='{image.getImageId()}'; images_form.action.value='delete_image'; images_form.submit()" />
+              <widget class="\XLite\View\Button\Regular" label="Delete the image" jsCode="images_form.image_id.value='{image.getId()}'; images_form.action.value='delete_image'; images_form.submit()" />
 	        </td>
         </tr>
 

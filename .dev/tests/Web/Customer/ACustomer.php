@@ -77,6 +77,11 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
         $this->assertFalse($this->isLoggedIn(), 'Check that user is logged out');
     }
 
+    protected function isAdmin()
+    {
+        return $this->isLoggedIn() && $this->isElementPresent('toolbar');
+    }
+
     /**
      * isLoggedIn
      *

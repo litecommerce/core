@@ -46,6 +46,7 @@ define('LC_DIR_VAR',           LC_DIR_ROOT . 'var' . LC_DS);
 define('LC_DIR_LIB',           LC_DIR_ROOT . 'lib' . LC_DS);
 define('LC_DIR_SKINS',         LC_DIR_ROOT . 'skins' . LC_DS);
 define('LC_DIR_IMAGES',        LC_DIR_ROOT . 'images' . LC_DS);
+define('LC_DIR_FILES',         LC_DIR_ROOT . 'files' . LC_DS);
 define('LC_DIR_CONFIG',        LC_DIR_ROOT . 'etc' . LC_DS);
 define('LC_DIR_INCLUDES',      LC_DIR_ROOT . LC_NAMESPACE_INCLUDES . LC_DS);
 define('LC_DIR_MODULES',       LC_DIR_CLASSES . LC_NAMESPACE . LC_DS . 'Module' . LC_DS);
@@ -87,6 +88,8 @@ ini_set('display_errors', LC_DEVELOPER_MODE);
 // Fatal error and exception handlers
 register_shutdown_function(array('\Includes\ErrorHandler', 'shutdown'));
 set_exception_handler(array('\Includes\ErrorHandler', 'handleException'));
+
+@umask(0000);
 
 // :FIXME: to remove
 require_once (LC_DIR_INCLUDES . 'prepend.php');

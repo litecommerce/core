@@ -143,7 +143,9 @@ HTML;
                 'webbased_data_error',
                 'Payment processor \'' . get_called_class() . '\' did not assemble form data successfull.'
             );
+            
             $status = self::FAILED;
+
             $this->transaction->setNote('Payment is failed');
 
         }
@@ -173,14 +175,15 @@ HTML;
     protected function assembleFormBody()
     {
         $inputs = array();
+
         foreach ($this->getFormFields() as $name => $value) {
             $inputs[] = '<input type="hidden" name="' . htmlspecialchars($name)
                 . '" value="' . htmlspecialchars($value) . '" />';
         }
 
-        if ($inputs) {
-            $body = '      ' . implode("\n" . '      ', $inputs);
-        }
+        $body = $inputs
+            ? '      ' . implode("\n" . '      ', $inputs)
+            : '';
 
         return $body;
     }

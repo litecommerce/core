@@ -1,0 +1,166 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Product attachments page styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.10
+ */
+
+.product-attachments {
+  width: 748px;
+}
+
+li.attachment {
+  border: 1px solid #d7e1e8;
+  cursor: pointer;
+  margin: 10px 0px;
+}
+
+li.attachment .row {
+  background-color: #f5f5f5;
+  padding: 11px 10px 10px;
+}
+
+li.attachment .row,
+li.attachment .row *
+{
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+li.attachment .move {
+  cursor: move;
+}
+
+li.attachment .move img {
+  background: transparent url(../../../images/move_cursor.png) no-repeat left top;
+  width: 19px;
+  height: 13px;
+  margin-bottom: 3px;
+}
+
+li.attachment .separator {
+  background: transparent url(../../../images/vertical_dots.png) repeat-y left top;
+  width: 2px;
+  height: 17px;
+}
+
+li.attachment .first-separator {
+  margin-left: 2px;
+  margin-right: 7px;
+}
+li.attachment .mime-icon {
+  margin-right: 4px;
+}
+
+li.attachment .name {
+  text-decoration: underline;
+}
+
+li.attachment .size {
+  color: #8f8f8f;
+  padding-left: 7px;
+}
+
+li.attachment .switcher,
+li.attachment .second-separator,
+li.attachment .remove
+{
+  float: right;
+  display: none;
+}
+
+li.attachment:hover .switcher,
+li.attachment:hover .second-separator,
+li.attachment:hover .remove,
+li.attachment.expanded .switcher,
+li.attachment.expanded .second-separator,
+li.attachment.expanded .remove
+{
+  display: block;
+}
+
+li.attachment .switcher img {
+  background: transparent url(../../../images/rollover_arrow.png) no-repeat left top;
+  width: 19px;
+  height: 19px;
+  margin-right: 3px;
+  cursor: pointer;
+}
+
+li.attachment.expanded .switcher img {
+  background-position: left -19px;
+}
+
+li.attachment .switcher a {
+  text-decoration: underline;
+  padding-bottom: 1px;
+}
+
+li.attachment .second-separator {
+  margin-right: 12px;
+  margin-left: 20px;
+}
+
+li.attachment .remove img {
+  background: transparent url(../../../images/icon_trash.png) no-repeat left top;
+  width: 18px;
+  height: 18px;
+  margin-right: 2px;
+}
+
+li.attachment .info {
+  clear: both;
+  padding: 13px 18px;
+}
+
+li.attachment .info table.form td {
+  padding-top: 7px;
+  padding-bottom: 8px;
+}
+
+li.attachment .info table.form td * {
+  font-size: 14px;
+}
+
+li.attachment .info table.form input[type="text"] {
+  padding: 4px;
+}
+
+li.attachment .info table.form td.label {
+  padding-right: 12px;
+  vertical-align: top;
+}
+
+li.attachment .info table.form tr.title input {
+  width: 430px;
+}
+
+li.attachment .info table.form tr.description textarea {
+  width: 492px;
+  height: 55px;
+}
+
+li.attachment .info .reupload-file {
+  padding-left: 83px;
+  padding-top: 4px;
+}
+
+li.attachment .info button.reupload {
+  padding-left: 2px;
+}
+
+li.attachment .info button.reupload span {
+  background: transparent url(images/upload_icon.png) no-repeat left 1px;
+  padding-left: 23px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.product-attachments .sticky-panel {
+  margin-top: 50px;
+}

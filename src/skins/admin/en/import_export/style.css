@@ -1,0 +1,86 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Import / export styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.11
+ */
+
+.import-export-box div.tab-content {
+  margin-top: 20px;
+  width: 711px;
+}
+
+.import-export-box form {
+  display: block;
+  text-align: center;
+  padding-top: 21px;
+}
+
+.import-export-box .bottom-note {
+  text-align: center;
+  color: #456583;
+  padding: 13px;
+  width: 340px;
+  margin: 0px auto;
+}
+
+/**
+ * Import
+ */
+.import-export-box .import .warning {
+  border: 1px solid #eee;
+  background: transparent none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.import-export-box .import .warning div {
+  border: 7px solid #f9f9f9;
+  padding: 17px 19px 19px;
+  margin: 0px;
+  font-size: 16px;
+  color: #456583;
+}
+
+.import-export-box .import .note {
+  font-size: 14px;
+  line-height: 26px;
+  margin-top: 9px;
+}
+
+.import-export-box .import .note a {
+  text-decoration: underline;
+}
+
+.import-popup .ui-dialog-titlebar {
+  display: none;
+}
+
+.import-popup .title {
+  font-size: 16px;
+  padding-bottom: 10px;
+}
+
+.import-popup .bar {
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+}
+
+/**
+ * Export
+ */
+.import-export-box .export {
+}
+
+.import-export-box .export .note {
+  font-size: 16px;
+  padding-top: 4px;
+  padding-bottom: 3px;
+  text-align: center;
+}

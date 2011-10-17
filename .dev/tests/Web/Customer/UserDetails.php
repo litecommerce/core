@@ -28,38 +28,39 @@
 class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 {
     /**
+     * Admin data for testing
+     *
+     * @var    array
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
+    protected $admin = array(
+            'id' => 1,
+            'login'    => 'master',
+            'password' => 'master', // md5(master) = eb0a191797624dd3a48fa681d3061212
+            'email'    => 'rnd_tester@cdev.ru',
+    );
+
+    /**
      * Users data for testing
      *
      * @var    array
      * @see    ____var_see____
      * @since  1.0.0
      */
-    protected $users = array(
-        // Administrator
-        1 => array(
-            'login'    => 'master',
-            'password' => 'master', // md5(master) = eb0a191797624dd3a48fa681d3061212
-            'email'    => 'rnd_tester@cdev.ru',
-        ),
-        // Customer
-        2 => array(
+    protected static $customers=  array(
+        array(
             'login'    => 'user2011',
             'password' => 'demo', // md5(demo) = fe01ce2a7fbac8fafaed7c982a04e229
             'email'    => 'rnd_tester05@cdev.ru',
         ),
-        // Customer
-        3 => array(
+        array(
             'login'    => 'user2012',
             'password' => 'demo', // md5(demo) = fe01ce2a7fbac8fafaed7c982a04e229
             'email'    => 'rnd_tester05@rrf.ru',
-        ),
-        // Customer
-        4 => array(
-            'login'    => 'user2013',
-            'password' => 'demo', // md5(demo) = fe01ce2a7fbac8fafaed7c982a04e229
-            'email'    => 'rnd_tester04@cdev.ru',
-        ),
-    );
+        )
+        );
+
 
     /**
      * Role name for testing
@@ -77,13 +78,11 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function testUpdate1()
+    public function testEmptyUpdate()
     {
-        $user = $this->getUser(1);
+        $this->loginUser($this->admin);
 
-        $this->loginUser($user);
-
-        $this->open('user/1/edit');
+        $this->open('user/'.$this->admin['id'].'/edit');
 
         $this->assertElementPresent('id=edit-submit', 'Check if Update button presented');
 
@@ -94,7 +93,6 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
             $this->assertNull($message, 'Check for error messages');
         }
     }
-
     /**
      * Test on update own profile by administrator with modification of some data
      *
@@ -102,13 +100,23 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function testUpdate2()
+    public function testUpdate()
     {
-        $user = $this->getUser(1);
+        $this->_testUpdateUser($this->admin, true);
+    }
 
+    /**
+     * Test on update own profile. Fake test %)
+     * @param array $user
+     * @param bool $revert
+     * @return
+     *
+     */
+    private  function _testUpdateUser(array $user, $revert = false)
+    {
         $this->loginUser($user);
 
-        $this->open('user/1/edit');
+        $this->open('user/'.$user['id'].'/edit');
 
         $email = 'rnd_tester' . time() . '@cdev.ru';
 
@@ -135,8 +143,10 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
             $this->getJSExpression('jQuery("#edit-mail").val()'),
             'Checking changed email'
         );
-
+        if (!$revert)
+            return;
         // Revert changes back
+        //TODO: What for? We can revert it on teardown if no restoreDB
 
         // Specify current password
         $this->type('id=edit-current-pass', $user['password']);
@@ -160,8 +170,10 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         );
     }
 
+
+
     /**
-     * Test on user creation, then test on update this user's profile by the administrator and created user
+     * Test on user creation
      *
      * @return void
      * @see    ____func_see____
@@ -169,21 +181,36 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      */
     public function testCreateUser()
     {
-        $user = $this->getUser(1);
 
-        $this->loginUser($user);
+        if (!$this->isAdmin())
+            $this->loginUser($this->admin);
 
-        $user2 = $this->getUser(2);
+        //Create admin and customer
+        self::$customers[0]['id'] = $this->createUser(self::$customers[0],true);
+        self::$customers[1]['id'] = $this->createUser(self::$customers[1],false);
 
-        // Create another user administrator
-        $userId = $this->createUser($user2, true);
+
+        //Test created user activation, login and profile
+        $this->_testCreatedUser(self::$customers[0]);
+
+    }
+
+    /**
+     * Test on update user profile by the administrator and created user
+     * @param array $user
+     * @return void
+     */
+    private function _testCreatedUser(array $user){
+
+
+        $userId = $user['id'];
 
         // Check if user profile has also been on LC side
         $newProfile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findOneBy(array('cms_profile_id' => $userId));
 
         $this->assertNotNull($newProfile, 'Check that new profile is not null');
 
-        $this->assertEquals($user2['email'], $newProfile->getLogin(), 'Check that email/login of new user profile in LC is the same as in Drupal');
+        $this->assertEquals($user['email'], $newProfile->getLogin(), 'Check that email/login of new user profile in LC is the same as in Drupal');
         $this->assertTrue($newProfile->isAdmin(), 'Check that new user is LC administrator');
         $this->assertFalse($newProfile->isEnabled(), 'Check that new user account is disabled in LC');
 
@@ -214,135 +241,16 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->assertNotNull($newProfile, 'Check that new profile is not null');
 
-        $this->assertEquals($user2['email'], $newProfile->getLogin(), 'Check that email/login of new user profile in LC is the same as in Drupal');
+        $this->assertEquals($user['email'], $newProfile->getLogin(), 'Check that email/login of new user profile in LC is the same as in Drupal');
         $this->assertFalse($newProfile->isAdmin(), 'Check that new user is not LC administrator (profile_id = ' . $profileId . ', status = ' . $newProfile->getAccessLevel() . ')');
         $this->assertTrue($newProfile->isEnabled(), 'Check that new user account is enabled in LC (profile_id = ' . $profileId . ')');
 
         // Log in as new user and update profile
-
-        $user = $this->getUser(2);
-
-        $this->loginUser($user);
-
-        $this->open('user/' . $userId . '/edit');
-
-        $email = 'rnd_tester' . time() + 1000 . '@cdev.ru';
-        $newPassword = 'newpassword';
-
-        $this->assertElementPresent('id=edit-current-pass', 'Check if Current password input field is presented');
-        $this->assertElementPresent('id=edit-pass-pass1', 'Check if Password input field is presented');
-        $this->assertElementPresent('id=edit-pass-pass2', 'Check if Confirm password input field is presented');
-        $this->assertElementPresent('id=edit-mail', 'Check if Email input field is presented');
-        $this->assertElementPresent('id=edit-submit', 'Check if Submit button is presented');
-
-        // Specify current password
-        $this->type('id=edit-current-pass', $user['password']);
-
-        // Change password
-        $this->type('id=edit-pass-pass1', $newPassword);
-        $this->type('id=edit-pass-pass2', $newPassword);
-
-        // Change email
-        $this->type('id=edit-mail', $email);
-
-        $this->clickAndWait('id=edit-submit');
-
-        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
-            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
-            $this->assertNull($message, 'Check for error messages');
-        }
-
-        // Check that email is modified successfully
-        $this->assertEquals(
-            $email,
-            $this->getJSExpression('jQuery("#edit-mail").val()'),
-            'Checking changed email'
-        );
+        $this->_testUpdateUser($user);
     }
 
-    /**
-     * Test on password complexity checking
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testPassword()
-    {
-        $user = $this->getUser(1);
 
-        $this->loginUser($user);
 
-        $this->open('user/1/edit');
-
-        // Check password strength
-        $this->typeKeys(
-            'id=edit-pass-pass1',
-            '123'
-        );
-        $this->waitForLocalCondition(
-            'jQuery(".form-item-pass-pass1 .password-strength .password-strength-text").html() == "Weak"',
-            3000,
-            'check Weak label'
-        );
-
-        $this->typeKeys(
-            'id=edit-pass-pass1',
-            '123lakjsdhf'
-        );
-        $this->waitForLocalCondition(
-            'jQuery(".form-item-pass-pass1 .password-strength .password-strength-text").html() == "Good"',
-            3000,
-            'check Good label'
-        );
-
-        $this->typeKeys(
-            'id=edit-pass-pass1',
-            '123lakjsdhf(*&%A'
-        );
-        $this->waitForLocalCondition(
-            'jQuery(".form-item-pass-pass1 .password-strength .password-strength-text").html() == "Strong"',
-            3000,
-            'check Strong label'
-        );
-
-        // Check password confirm
-        $this->typeKeys(
-            'id=edit-pass-pass1',
-            'aaa'
-        );
-        $this->typeKeys(
-            'id=edit-pass-pass2',
-            'bbb'
-        );
-        $this->getJSExpression('jQuery(".form-item-pass-pass2 input").keyup()');
-
-        $this->waitForLocalCondition(
-            'jQuery(".form-item-pass-pass2 .password-confirm .error").html() == "no"',
-            3000,
-            'check "no" label'
-        );
-
-        $this->typeKeys(
-            'id=edit-pass-pass2',
-            'aaa'
-        );
-        $this->getJSExpression('jQuery(".form-item-pass-pass2 input").keyup()');
-
-        $this->waitForLocalCondition(
-            'jQuery(".form-item-pass-pass2 .password-confirm .ok").html() == "yes"',
-            3000,
-            'check "yes" label'
-        );
-
-        // Submit wrong password
-        $this->type('id=edit-pass-pass1', 'master1');
-        $this->type('id=edit-pass-pass2', 'master2');
-
-        $this->clickAndWait('id=edit-submit');
-
-        $this->assertJqueryPresent('.messages.error h2', 'check errors');
-    }
 
     /**
      * Test on user creation, then test on update this user's profile by the administrator and created user
@@ -350,12 +258,15 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
+     *
      */
     public function testRoles()
     {
-        $user = $this->getUser(1);
 
-        $this->loginUser($user);
+        $userIds = array_map(function($customer) { return $customer['id'];}, self::$customers);
+
+        if(!$this->isAdmin())
+            $this->loginUser($this->admin);
 
         // Create new role for testing
 
@@ -377,23 +288,6 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->assertNotNull($linkHref, 'Check that href of link to the role is not null');
 
-
-        // Create test users
-
-        $userIds = array();
-
-        // Create user #2 - customer
-
-        $user2 = $this->getUser(3);
-
-        $userIds[] = $this->createUser($user2);
-
-        // Create user #3 - customer
-
-        $user3 = $this->getUser(4);
-
-        $userIds[] = $this->createUser($user3);
-
         // Assign new role to the users #1 and #2 on users list page
 
         $this->open('admin/people');
@@ -414,7 +308,6 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
             $this->assertNull($message, 'Check for error messages #1');
         }
-
         // Add permission 'lc admin' to the new role
 
         $this->open('admin/people/permissions/' . $roleId);
@@ -427,7 +320,6 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         $this->clickAndWait('id=edit-submit');
 
         $this->assertChecked('id=edit-' . $roleId . '-lc-admin', 'Permission "lc admin" is not updated');
-
         // Check that LC profiles are admins now
 
         foreach ($userIds as $userId) {
@@ -440,7 +332,6 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
             $profile->detach();
         }
-
         // Delete role
 
         $this->open('admin/people/permissions/roles/edit/' . $roleId);
@@ -460,7 +351,6 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
             $this->assertNull($message, 'Check for error messages #2');
         }
-
         // Check that LC profile are customers now
 
         foreach ($userIds as $userId) {
@@ -473,6 +363,20 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
             $profile->detach();
         }
+    }
+
+    /**
+     * Test cancelling user profiles and deleting from LC
+     *
+     * @return void
+     */
+    public function testDeleteCustomers(){
+
+
+        $userIds = array_map(function($customer) { return $customer['id'];}, self::$customers);
+
+        if (!$this->isAdmin())
+            $this->loginUser($this->admin);
 
         // Cancel user accounts
 
@@ -584,20 +488,94 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
             $this->assertNull($profile, sprintf('Check that profile for user #%d is not exists', $userId));
         }
+
+        foreach (self::$customers as $c){
+            unset($c['id']);
+        }
+
     }
 
-    /**
-     * Return specified user data from an array $users
-     *
-     * @param integer $id User index in the $users array
+     /**
+     * Test on password complexity checking
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getUser($id)
+    public function testPassword()
     {
-        return $this->users[$id];
+        if(!$this->isAdmin())
+            $this->loginUser($this->admin);
+
+        $this->open('user/'.$this->admin['id'].'/edit');
+
+        // Check password strength
+        $this->typeKeys(
+            'id=edit-pass-pass1',
+            '123'
+        );
+        $this->waitForLocalCondition(
+            'jQuery(".form-item-pass-pass1 .password-strength .password-strength-text").html() == "Weak"',
+            3000,
+            'check Weak label'
+        );
+
+        $this->typeKeys(
+            'id=edit-pass-pass1',
+            '123lakjsdhf'
+        );
+        $this->waitForLocalCondition(
+            'jQuery(".form-item-pass-pass1 .password-strength .password-strength-text").html() == "Good"',
+            3000,
+            'check Good label'
+        );
+
+        $this->typeKeys(
+            'id=edit-pass-pass1',
+            '123lakjsdhf(*&%A'
+        );
+        $this->waitForLocalCondition(
+            'jQuery(".form-item-pass-pass1 .password-strength .password-strength-text").html() == "Strong"',
+            3000,
+            'check Strong label'
+        );
+
+        // Check password confirm
+        $this->typeKeys(
+            'id=edit-pass-pass1',
+            'aaa'
+        );
+        $this->typeKeys(
+            'id=edit-pass-pass2',
+            'bbb'
+        );
+        $this->getJSExpression('jQuery(".form-item-pass-pass2 input").keyup()');
+
+        $this->waitForLocalCondition(
+            'jQuery(".form-item-pass-pass2 .password-confirm .error").html() == "no"',
+            3000,
+            'check "no" label'
+        );
+
+        $this->typeKeys(
+            'id=edit-pass-pass2',
+            'aaa'
+        );
+        $this->getJSExpression('jQuery(".form-item-pass-pass2 input").keyup()');
+
+        $this->waitForLocalCondition(
+            'jQuery(".form-item-pass-pass2 .password-confirm .ok").html() == "yes"',
+            3000,
+            'check "yes" label'
+        );
+
+        // Submit wrong password
+        $this->type('id=edit-pass-pass1', 'master1');
+        $this->type('id=edit-pass-pass2', 'master2');
+
+        $this->clickAndWait('id=edit-submit');
+
+        $this->assertJqueryPresent('.messages.error h2', 'check errors');
     }
 
     /**
@@ -621,6 +599,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      *
      * @param array $user Cell of $users array
      *
+     * @param bool $isAdmin
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -675,5 +654,4 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         return $userId;
     }
-
 }

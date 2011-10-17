@@ -175,12 +175,12 @@ class BrowseServer extends \XLite\View\SimpleDialog
         foreach ($iterator as $file) {
             $path = $file->getPathname();
 
-            $info = pathinfo($path);
+            $info = pathinfo($path, PATHINFO_EXTENSION);
             $type = $file->isDir() ? 'catalog' : 'file';
 
             $this->fsEntries[$type][$path] = array(
                 'type'      => $type,
-                'extension' => $info['extension'],
+                'extension' => isset($info['extension']) ? $info['extension'] : '',
                 'name'      => $file->getBasename(),
             );
         }

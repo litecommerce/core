@@ -129,22 +129,25 @@ class ImageOperator extends \Xlite\Base\SuperClass
     {
         $this->prepare();
 
-        return call_user_func_array(array(static::getEngine(), $method), $args);
+        return $this->prepare() ? call_user_func_array(array(static::getEngine(), $method), $args) : false;
     }
 
 
     /**
      * Prepare image
      *
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function prepare()
     {
+        $result = true;
         if (!$this->prepared) {
-            static::getEngine()->setImage($this->model);
+            $result = static::getEngine()->setImage($this->model);
             $this->prepared = true;
         }
+
+        return $result;
     }
 }

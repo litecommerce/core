@@ -248,7 +248,6 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                     ) {
                         $form[$key][$name]['#description'] = t('recommended: !size', array('!size' => 110));
                     }
-
                 }
             }
 
@@ -513,6 +512,11 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 $delta,
                 $this->extractWidgetSettings($class, $data['lc_widget'])
             );
+
+            if (method_exists($class, 'getSessionCellName')) {
+                $sessionCell = $class::getSessionCellName();
+                \XLite\Core\Session::getInstance()->{$sessionCell} = null;
+            }
         }
     }
 

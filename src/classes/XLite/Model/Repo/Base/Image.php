@@ -33,16 +33,23 @@ namespace XLite\Model\Repo\Base;
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Image extends \XLite\Model\Repo\ARepo
+abstract class Image extends \XLite\Model\Repo\Base\Storage
 {
     /**
-     * Get storage name
+     * Get allowed file system root list
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.11
      */
-    abstract public function getStorageName();
+    public function getAllowedFileSystemRoots()
+    {
+        $list = parent::getAllowedFileSystemRoots();
+
+        $list[] = LC_DIR_IMAGES;
+
+        return $list;
+    }
 
     /**
      * Get file system images storage root path
@@ -94,18 +101,6 @@ abstract class Image extends \XLite\Model\Repo\ARepo
     public function getWebCacheRoot($sizeName)
     {
         return LC_IMAGES_CACHE_URL . '/' . $this->getStorageName() . '/' . $sizeName;
-    }
-
-    /**
-     * Check - store remote image into local file system or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isStoreRemoteImage()
-    {
-        return false;
     }
 
     /**

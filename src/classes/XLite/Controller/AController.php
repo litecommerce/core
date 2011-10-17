@@ -164,9 +164,10 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getPage()
     {
-        return is_null($this->page) || !in_array($this->page, array_keys($this->getPages()))
-            ? 'default'
-            : $this->page;
+        $page = $this->page;
+        $pages = $this->getPages();
+
+        return $page && isset($pages[$page]) ? $page : key($pages);
     }
 
     /**
@@ -1081,7 +1082,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function translateTopMessagesToHTTPHeaders()
     {
-        foreach (\XLite\Core\TopMessage::getInstance()->getMessages() as $message) {
+        foreach (\XLite\Core\TopMessage::getInstance()->getAJAXMessages() as $message) {
             $encodedMessage = json_encode(
                 array(
                     'type'    => $message[\XLite\Core\TopMessage::FIELD_TYPE],
@@ -1090,7 +1091,7 @@ abstract class AController extends \XLite\Core\Handler
             );
             header('event-message: ' . $encodedMessage);
         }
-        \XLite\Core\TopMessage::getInstance()->clear();
+        \XLite\Core\TopMessage::getInstance()->clearAJAX();
     }
 
     /**

@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="product.details.common.product-attributes", weight="10")
+ * @ListChild (list="product.details.common.product-attributes", weight="200")
  *}
 <li IF="product.getSKU()" class="identifier product-sku">
   <strong class="type">{t(#SKU#)}:</strong>

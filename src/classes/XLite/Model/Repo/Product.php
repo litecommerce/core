@@ -135,6 +135,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
         $alias = $alias ?: $queryBuilder->getRootAlias();
         $this->addEnabledCondition($queryBuilder, $alias);
+        $this->addDateCondition($queryBuilder, $alias);
 
         return $queryBuilder;
     }
@@ -201,6 +202,29 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         return $data;
     }
 
+    /**
+     * Get import iterator 
+     * 
+     * @return \Doctrine\ORM\Internal\Hydration\IterableResult
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    public function getImportIterator()
+    {
+        return $this->defineImportQuery()->iterate();
+    }
+
+    /**
+     * Define import querty 
+     * 
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function defineImportQuery()
+    {
+        return $this->createPureQueryBuilder('p');
+    }
 
     /**
      * Return list of handling search params
@@ -677,9 +701,53 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         if (!\XLite::isAdminZone()) {
             $alias = $alias ?: $queryBuilder->getRootAlias();
             $queryBuilder->andWhere($alias . '.enabled = :enabled')
-                ->andWhere($alias . '.arrivalDate < :now')
-                ->setParameter('enabled', true)
+                ->setParameter('enabled', true);
+        }
+    }
+
+    /**
+     * Adds additional condition to the query for checking if product is up-to-date
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder object
+     * @param string                     $alias        Entity alias OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addDateCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
+    {
+        if (!\XLite::isAdminZone()) {
+            $alias = $alias ?: $queryBuilder->getRootAlias();
+            $queryBuilder->andWhere($alias . '.arrivalDate < :now')
                 ->setParameter('now', time());
         }
+    }
+
+    /**
+     * Delete single entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity to detach
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function performDelete(\XLite\Model\AEntity $entity)
+    {
+        $carts = (array) \XLite\Core\Database::getRepo('XLite\Model\Cart')->findAll();
+        $items = array();
+
+        foreach ($carts as $cart) {
+            foreach ((array) $cart->getItemsByProductId($entity->getProductId()) as $item) {
+                $cart->getItems()->removeElement($item);
+                $items[] = $item;
+            }
+        }
+
+        \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->deleteInBatch($items);
+        \XLite\Core\Database::getRepo('XLite\Model\Cart')->updateInBatch($carts);
+
+        parent::performDelete($entity);
     }
 }

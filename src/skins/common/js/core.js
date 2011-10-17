@@ -256,7 +256,7 @@ window.core = {
   {
     core.trigger(
       'message',
-      [{'type': 'error', 'message': message}]
+      {'type': 'error', 'message': message}
     );
   },
 

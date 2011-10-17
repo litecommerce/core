@@ -78,26 +78,26 @@ class FileSelectorDialog extends \XLite\View\SimpleDialog
 
     /**
      * Return parameters to use in file dialog form
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since 1.0.7
      */
     protected function getFileDialogParams()
     {
-        $request = \XLite\Core\Request::getInstance();
+        $modelForm = $this->getModelForm();
 
         return array(
             // Inner name (inner identification) of object which is joined with file (product, category)
             // It identifies the model to join file with
-            'object'        => $request->object,
+            'object'        => $modelForm->getObject(),
             // Identificator of object joined with file
-            'objectId'      => $request->objectId,
+            'objectId'      => $modelForm->getObjectId(),
             // Inner name (inner identification) of file (image, attachment)
             // It identifies the model to store file in
-            'fileObject'    => $request->fileObject,
+            'fileObject'    => $modelForm->getFileObject(),
             // Identificator of file object (zero for NEW file)
-            'fileObjectId'  => $request->fileObjectId,
+            'fileObjectId'  => $modelForm->getFileObjectId(),
         );
     }
 }

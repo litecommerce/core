@@ -215,9 +215,11 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         parent::setWidgetParams($params);
 
         // Modify display modes and default display mode
-        $options = $this->getDisplayModes();
+        $allOptions = array_merge(static::getSidebarDisplayModes(), static::getCenterDisplayModes());
 
-        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setOptions($options);
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setOptions($allOptions);
+
+        $options = $this->getDisplayModes();
 
         if (!isset($options[$this->getParam(self::PARAM_DISPLAY_MODE)])) {
             $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(

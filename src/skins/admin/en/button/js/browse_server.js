@@ -69,7 +69,7 @@ decorate(
             jQuery(selector).dialog('close').remove();
 
             // Open "File select" dialog
-            jQuery('.file-selector-button').click();
+            lastFileSelectorButton.click();
           }
         );
       }
@@ -125,7 +125,7 @@ decorate(
 
             } else {
               // File entry is sent to "File select" dialog.
-              jQuery('.file-selector-button').click();
+              lastFileSelectorButton.click();
               jQuery('#local-server-file').focus().val(entryName.replace(/\\/g, '/'));
             }
           }
@@ -138,7 +138,7 @@ decorate(
 
             if (jQuery('a.type-file', entry).length > 0) {
               // File entry is sent to "File select" dialog.
-              jQuery('.file-selector-button').click();
+              lastFileSelectorButton.click();
               jQuery('#local-server-file').focus().val(
                 fileInfo.current_catalog + '/' + jQuery('span', entry).html().toString().replace(/\\/g, '/')
               );
