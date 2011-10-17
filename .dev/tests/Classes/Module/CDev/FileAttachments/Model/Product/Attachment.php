@@ -57,7 +57,7 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment extends X
 
         $storage = $attach->getStorage();
 
-        $this->assertTrue($storage->loadFromLocalFile(__DIR__ . '/max_ava.png'), 'check loading');
+        $this->assertTrue($storage->loadFromLocalFile(__DIR__ . LC_DS . 'max_ava.png'), 'check loading');
 
         \XLite\Core\Database::getEM()->flush();
 
