@@ -32,7 +32,6 @@ namespace XLite\View;
  *
  * @see   ____class_see____
  * @since 1.0.0
- *
  */
 class OrderSearch extends \XLite\View\Dialog
 {

@@ -478,6 +478,7 @@ XLite\Model\LanguageLabel:
   - { name: 'X image unable to load', translations: [{ code: en, label: '{{url}} image unable to load' }] }
   - { name: 'During the import was recorded X errors. You can get them by downloading the log imports.', translations: [{ code: en, label: 'During the import was recorded {{count}} errors. You can get them by <a href="{{url}}">downloading</a> the log imports.' }] }
   - { name: 'Some products could have been imported incorrectly', translations: [{ code: en, label: 'Some products could have been imported incorrectly. Please check your catalog. Find the ID of the products that could have been imported incorrectly in the import log file available at the above link.' }] }
+  - { name: 'Order #X, Y', translations: [{ code: en, label: 'Order #{{id}}, {{date}}' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

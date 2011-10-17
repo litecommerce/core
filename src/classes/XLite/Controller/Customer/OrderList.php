@@ -269,4 +269,37 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
 
         $this->setReturnURL($this->buildURL('order_list'));
     }
+
+    // {{{ Tabs
+
+    /**
+     * Get pages sections
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPages()
+    {
+        return array(
+            'default' => 'Order list',
+        );
+    }
+
+    /**
+     * Get pages templates
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPageTemplates()
+    {
+        return array(
+            'default' => 'order/list.tpl',
+        );
+    }
+
+    // }}}
+
 }
