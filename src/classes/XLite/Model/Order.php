@@ -1180,7 +1180,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function isOpen()
     {
-        return $this->getFirstOpenPaymentTransaction() || self::ORDER_ZERO < abs($this->getOpenTotal());
+        return $this->getFirstOpenPaymentTransaction()
+            || $this->getCurrency()->getMinimumValue() < $this->getCurrency()->roundValue(abs($this->getOpenTotal()));
     }
 
     /**

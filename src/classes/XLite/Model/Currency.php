@@ -171,6 +171,18 @@ class Currency extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Get minimum value 
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    public function getMinimumValue()
+    {
+        return $this->convertIntegerToFloat(1);
+    }
+
+    /**
      * Constructor
      *
      * @param array $data Entity properties OPTIONAL
