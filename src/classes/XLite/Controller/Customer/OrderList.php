@@ -42,7 +42,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $params = array('target');
+    protected $params = array('target', 'page');
 
 
     /**
