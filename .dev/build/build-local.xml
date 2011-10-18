@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="xlite" default="build" basedir=".">
+
+    <target name="build" depends="set-properties,clean,prepare,phpunit-deployment,tests,php-documentor,analysis,create-build" />
+
+
+    <target name="set-properties-config">
+        <property name="db_host" value="randy.crtdev.local" />
+        <property name="db_socket" value="" />
+        <property name="db_port" value="3309" />
+        <property name="db_database" value="svowl_xlite_2" />
+        <property name="db_username" value="svowl" />
+        <property name="db_password" value="eM1AeM4V" />
+        <property name="db_persistent" value="Off" />
+        <property name="db_table_prefix" value="xlite_" />
+        <property name="host_http" value="xcart2-530.crtdev.local" />
+        <property name="host_https" value="xcart2-530.crtdev.local" />
+        <property name="host_webdir" value="/~xcart/general/projects/xlite/build/src" />
+        <property name="marketplace_url" value="http://xcart2-530.crtdev.local/~vvs/site/?q=api/" />
+    </target>
+
+    <target name="set-properties-tests">
+       <property name="TEST_DEPLOYMENT_MODE" value="0"/>
+        <!-- Directory where xlite-tests.config.php is located -->
+       <property name="XLITE_DEV_CONFIG_DIR" value="/u/humanoid/zee/lc" />
+       <!-- Directory with external libs (PHPUnit etc)-->
+        <property name="XLITE_DEV_LIB_DIR" value="/u/xcart/lib"/>
+       <!-- URL of LiteCommerce store (path only, w/o script) -->
+        <property name="SELENIUM_SOURCE_URL" value="http://${host_http}${host_vebdir}"/>
+        <property name="SELENIUM_SOURCE_URL_ADMIN" value="${SELENIUM_SOURCE_URL}${lcSuffix}"/>
+        <property name="SELENIUM_SERVER" value="cormorant.crtdev.local"/>
+        <property name="SELENIUM_SCREENSHOTS_DIR" value="selenium-screenshots"/>
+        <property name="SELENIUM_SCREENSHOTS_URL" value="http://${SELENIUM_SERVER}/${SELENIUM_SCREENSHOTS_DIR}"/>
+        <property name="SELENIUM_SCREENSHOTS_PATH" value="C:\\Inetpub\\wwwroot\\${SELENIUM_SCREENSHOTS_DIR}"/>
+    </target>
+
+     <target name="set-properties-common">
+        <property name="version" value="3.x-dev" />
+		<property name="apiUrl" value="http://${host_http}${host_vebdir}" />
+    </target>
+
+    <target name="set-properties" depends="set-properties-common">
+		<property name="mode" value="manual" />
+		<property name="root" location="${basedir}/../.." />
+		<property name="buildDir" location="${root}/build" />
+		<property name="sourceDir" location="${root}" />
+		<property name="jmeterDir" location="${sourceDir}/.dev/lib/jmeter" />
+		<property name="srcDir" location="${sourceDir}/src" />
+		<property name="distrDir" location="${buildDir}/output" />
+		<property name="installDir" location="${buildDir}/src" />
+        <property name="lcSuffix" location="/modules/lc_connector/litecommerce" />
+        <property name="lcDir" location="${installDir}${lcSuffix}" />
+        <property name="buildRepoDir" location="/u/xcart/lc_night_builds" />
+		<property name="label" value="manual" />
+        <property name="lcRoot" location="${installDir}" />
+		<property name="varRunClasses" value="${installDir}/var/run/classes" />
+
+
+
+	</target>
+
+    <target name="clean">
+		<chmod dir="${installDir}/sites/default" perm="a+w" type="both" />
+        <delete dir="${buildDir}" />
+        <mkdir dir="${buildDir}" />
+        <mkdir dir="${buildDir}/logs" />
+		<mkdir dir="${buildDir}/api" />
+		<mkdir dir="${buildDir}/reports" />
+        <mkdir dir="${buildDir}/screenshots" />
+    </target>
+
+	<target name="prepare">
+
+		<echo message="Update current source" />
+		<exec executable="git" dir="${sourceDir}">
+			<arg value="pull" />
+		</exec>
+
+		<echo message="Run release builder" />
+        <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
+			<arg line="-c -b ${label} -d ${distrDir} -t" />
+        </exec>
+
+		<echo message="Deploy built releases" />
+		<exec executable="tar" dir="${buildDir}">
+			<arg line="-xzf ${distrDir}/drupal-lc3-${version}-${label}-test.tgz" />
+		</exec>
+		<move file="${buildDir}/drupal" tofile="${installDir}" />
+
+		<echo message="Copy .dev from source directory" />
+		<mkdir dir="${buildDir}/.dev" />
+        <copy todir="${buildDir}/.dev">
+            <fileset dir="${sourceDir}/.dev" />
+		</copy>
+
+		<echo message="Prepare deployed repositories" />
+		<copy file="${buildDir}/.dev/build/config.local-build.php" tofile="${buildDir}/.dev/build/config.local.php" />
+		<copy file="${buildDir}/.dev/tests/local-cc.php" tofile="${buildDir}/.dev/tests/local.php" />
+		<exec executable="php" dir="${lcDir}">
+            <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
+        </exec>
+	</target>
+
+    <target name="phpunit-deployment">
+		<exec executable="phpunit" dir="${buildDir}" failonerror="on">
+            <arg line="xliteAllTests ${buildDir}/.dev/tests/AllTests.php DEPLOY_DRUPAL" />
+        </exec>
+    </target>
+
+    <target name="php-documentor">
+		<exec executable="php" dir="${lcDir}/classes">
+            <arg line="${buildDir}/.dev/lib/phpdoctor/phpdoc.php ${buildDir}/.dev/build/phpdoctor.cc.ini" />
+		</exec>
+		<move file="${lcDir}/classes/api" tofile="${buildDir}/api" />
+	</target>
+
+	<target name="tests" depends="prepare-db,phpunit" />
+
+    <target name="prepare-db">
+		<!-- Replace SQL data by the demo data (for testing) -->
+		<exec executable="php" dir="${lcRoot}" failonerror="on">
+			<arg value="${lcRoot}/restoredb" />
+			<arg value="demo" />
+			<arg value="admin" />
+		</exec>
+		<!-- Rebuild cache: first pass -->
+		<exec executable="php" dir="${installDir}">
+			<arg value="${lcDir}/cart.php" />
+		</exec>
+		<!-- Rebuild cache: second pass -->
+		<exec executable="php" dir="${installDir}">
+			<arg value="${lcDir}/cart.php" />
+		</exec>
+		<!-- Rebuild cache: third pass -->
+		<exec executable="php" dir="${installDir}">
+			<arg value="${lcDir}/cart.php" />
+		</exec>
+		<!-- Rebuild cache: fourth pass -->
+		<exec executable="php" dir="${installDir}">
+			<arg value="${lcDir}/cart.php" />
+		</exec>
+		<!-- Rebuild cache: fifth pass -->
+		<exec executable="php" dir="${installDir}">
+			<arg value="${lcDir}/cart.php" />
+        </exec>
+	</target>
+
+
+    <target name="phpunit">
+        <copy todir="${buildDir}">
+            <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
+		</copy>
+		<mkdir dir="${buildDir}/logs/coverage" />
+		<exec executable="phpunit" dir="${buildDir}" failonerror="on" output="${buildDir}/reports/phpunit.txt">
+			<arg value="--verbose" />
+			<arg value="--log-junit" />
+			<arg value="${buildDir}/logs/phpunit.xml" />
+			<arg value="--coverage-html" />
+			<arg value="${buildDir}/logs/coverage" />
+			<arg value="xliteAllTests" />
+			<arg value="${buildDir}/.dev/tests/AllTests.php" />
+		</exec>
+        <exec executable="php" dir="${sourceDir}">
+            <arg value=".dev/tests/graph.php" />
+			<arg value="${buildDir}/logs/phpunit.xml.speed" />
+			<arg value="${buildDir}/reports" />
+			<arg value="../../../artifacts/xlite" />
+        </exec>
+	</target>
+    <target name="analysis" depends="phpdepend,phpmd,copy-paste-detect,git-stat" />
+
+	<target name="phpdepend">
+        <echo message="Run PHPDepend" />
+        <exec executable="php" dir="${buildDir}">
+            <arg value="${sourceDir}/.dev/pdepend.php" />
+            <arg value="--jdepend-chart=${buildDir}/reports/pdepend.svg" />
+            <arg value="--overview-pyramid=${buildDir}/reports/pyramid.svg" />
+			<arg value="--coderank-mode=property,inheritance,method" />
+            <arg value="${varRunClasses}" />
+		</exec>
+	</target>
+
+	<target name="phpmd">
+        <echo message="Run PHPMD" />
+        <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html">
+            <arg value="${sourceDir}/.dev/phpmd.php" />
+            <arg value="${sourceDir}/src/classes" />
+			<arg value="html" />
+			<arg value="rulesets/codesize.xml,rulesets/design.xml,rulesets/naming.xml,rulesets/unusedcode.xml" />
+		</exec>
+	</target>
+
+	<target name="copy-paste-detect">
+        <echo message="Run PHP Copy-Paste detecor" />
+        <exec executable="phpcpd" dir="${sourceDir}/src" output="${buildDir}/reports/phpcpd.txt" failonerror="false">
+            <arg value="--exclude" />
+            <arg value="var" />
+            <arg value="--exclude" />
+            <arg value="lib" />
+            <arg value="${sourceDir}/src" />
+        </exec>
+	</target>
+
+	<target name="git-stat">
+        <echo message="Run Git stats" />
+		<mkdir dir="${buildDir}/reports/gitstat" />
+		<chmod file="${buildDir}/.dev/lib/gitstats/gitstats" perm="ugo+rx" />
+        <exec executable="${buildDir}/.dev/lib/gitstats/gitstats" dir="${sourceDir}">
+            <arg line="-c project_name=XLite -c authors_top=10 ${sourceDir} ${buildDir}/reports/gitstat" />
+		</exec>
+	</target>
+    <target name="create-build">
+		<tar destfile="${buildDir}/litecommerce-${version}.${label}-api.tgz" basedir="${buildDir}/api" compression="gzip" />
+        <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
+			<arg line="-c -b ${label} -d ${distrDir}" />
+        </exec>
+		<copy todir="${buildRepoDir}" overwrite="true">
+			<fileset dir="${distrDir}" />
+			<fileset file="${buildDir}/litecommerce-${version}.${label}-api.tgz" />
+		</copy>
+    </target>
+</project>
+
