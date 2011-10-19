@@ -282,7 +282,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
     public function getPages()
     {
         return array(
-            'default' => 'Order list',
+            'default' => 'Orders',
         );
     }
 

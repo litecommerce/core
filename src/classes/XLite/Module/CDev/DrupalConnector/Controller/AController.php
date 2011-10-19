@@ -63,7 +63,10 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {
-        return $path . (empty($args) ? '' : ('/' . \Includes\Utils\Converter::buildQuery($args, '-', '/')));
+        return array(
+            $path,
+            $args
+        );
     }
 
 
