@@ -17,7 +17,7 @@
       <a class="type-catalog up-level"><img src="images/spacer.gif" alt="" />[...]</a>
     </li>
     <li FOREACH="getFSEntries(),idx,entry" class="fs-entry">
-      <a class="type-{entry.type} extension-unknown extension-{entry.extension}"><img src="images/spacer.gif" alt="" /><span>{entry.name}</span></a>
+      <a class="{getItemClass(entry)}"><img src="images/spacer.gif" alt="{entry.type}" /><span>{entry.name}</span></a>
     </li>
     <li IF="isEmptyCatalog()" class="empty-catalog">{t(#Directory is empty#)}</li>
   </ul>
