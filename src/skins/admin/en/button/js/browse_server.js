@@ -113,7 +113,7 @@ decorate(
           // AJAX-browse in file system of local server
           'dblclick',
           function () {
-            var entryName = fileInfo.current_catalog + '/' + jQuery('span', entry).html();
+            var entryName = fileInfo.current_catalog + '/' + entry.title;
 
             // Close previous popup
             link.linkedDialog = undefined;
@@ -140,7 +140,7 @@ decorate(
               // File entry is sent to "File select" dialog.
               lastFileSelectorButton.click();
               jQuery('#local-server-file').focus().val(
-                fileInfo.current_catalog + '/' + jQuery('span', entry).html().toString().replace(/\\/g, '/')
+                fileInfo.current_catalog + '/' + entry.attr('title').replace(/\\/g, '/')
               );
             }
           }

@@ -11,4 +11,4 @@
  *
  * @ListChild (list="browseServer.item", zone="admin", weight="100")
  *}
-<a class="{getItemClass(entry)}"><img src="images/spacer.gif" alt="{entry.type}" /><span>{entry.name}</span></a>
+<a class="{getItemClass(entry)}" title="{entry.fullName}"><img src="images/spacer.gif" alt="{entry.type}" /><span>{entry.name}</span></a>
