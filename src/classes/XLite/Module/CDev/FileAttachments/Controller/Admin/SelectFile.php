@@ -106,14 +106,32 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
 
             if (call_user_func_array(array($attachment->getStorage(), $methodToLoad), $paramsToLoad)) {
 
-                $product->addAttachments($attachment);
+                $found = false;
+                foreach ($attachment->getStorage()->getDuplicates() as $duplicate) {
+                    if (
+                        $duplicate instanceof \XLite\Module\CDev\FileAttachments\Model\Product\Attachment\Storage
+                        && $duplicate->getAttachment()->getProduct()->getProductId() == $product->getProductId()
+                    ) {
+                        $found = true;
+                        break;
+                    }
+                }
 
-                \XLite\Core\Database::getEM()->persist($attachment);
-                \XLite\Core\Database::getEM()->flush();
+                if ($found) {
+                    \XLite\Core\TopMessage::addError(
+                        'The same file can not be assigned to one product'
+                    );
 
-                \XLite\Core\TopMessage::addInfo(
-                    'The attachment has been successfully added'
-                );
+                } else {
+                    $product->addAttachments($attachment);
+
+                    \XLite\Core\Database::getEM()->persist($attachment);
+                    \XLite\Core\Database::getEM()->flush();
+
+                    \XLite\Core\TopMessage::addInfo(
+                        'The attachment has been successfully added'
+                    );
+                }
 
             } elseif ('extension' == $attachment->getStorage()->getLoadError()) {
 
