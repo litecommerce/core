@@ -357,7 +357,7 @@ class WebDriver_WebElement
 
     public function assert_does_not_contain_element($child_locator, $message = null)
     {
-        $this->wait_for_false('contains_element', array($child_locator));
+        //$this->wait_for_false('contains_element', array($child_locator));
         PHPUnit_Framework_Assert::assertFalse($this->contains_element($child_locator), $message ?: "Failed asserting that <{$this->locator}> does not contain <$child_locator>.");
     }
 
