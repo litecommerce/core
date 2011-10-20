@@ -1,28 +1,41 @@
 <?php
 
-require_once '../../lib/WebDriver/WebDriver.php';
-require_once '../../lib/WebDriver/WebDriver/Driver.php';
-require_once '../../lib/WebDriver/WebDriver/MockDriver.php';
-require_once '../../lib/WebDriver/WebDriver/WebElement.php';
-require_once '../../lib/WebDriver/WebDriver/MockElement.php';
+require_once 'WebDriver/WebDriver.php';
+require_once 'WebDriver/WebDriver/Driver.php';
+require_once 'WebDriver/WebDriver/MockDriver.php';
+require_once 'WebDriver/WebDriver/WebElement.php';
+require_once 'WebDriver/WebDriver/MockElement.php';
 
 /**
  * @throws Exception
  * @method void set_implicit_wait()
  * @method unknown load()
  * @method bool is_element_present()
+ * @method bool is_element_not_present()
  * @method WebDriver_WebElement get_element()
  * @method string get_alert_text()
  * @method unknown execute_js_sync()
  * @method string get_text()
  * @method WebDriver_WebElement[] get_all_elements()
  * @method string get_url()
+ * @method void set_cookie()
  *
  */
 class Xlite_WebDriverTestCase extends PHPUnit_Framework_TestCase
 {
     protected $browserUrl;
-
+    /**
+     * @var string
+     */
+    protected $browserName;
+    /**
+     * @var float
+     */
+    protected $startTime;
+    /**
+     * Prefix for all classes with test cases
+     */
+    const CLASS_PREFIX = 'XLite_Web_';
     /**
      * @var WebDriver_Driver
      */
@@ -31,8 +44,11 @@ class Xlite_WebDriverTestCase extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->driver = WebDriver_Driver::InitAtHost(SELENIUM_SERVER, "4444", "firefox");
-        $this->setBrowserUrl(SELENIUM_SOURCE_URL_ADMIN);
-        $this->set_implicit_wait(3000);
+        $this->browserName = 'firefox';
+        $this->setBrowserUrl(SELENIUM_SOURCE_URL);
+        $this->set_implicit_wait(5000);
+        $this->startTime = microtime(true);
+        echo PHP_EOL . $this->getMessage('...', get_called_class(), $this->getName());
     }
 
     /**
@@ -61,12 +77,60 @@ class Xlite_WebDriverTestCase extends PHPUnit_Framework_TestCase
             $this->driver->quit();
         }
         parent::tearDown();
+        $time = microtime(true) - $this->startTime;
+        $message = '...' . round($time, 2) . 's...';
+        echo (sprintf('%\'.-15s', trim($message)));
+    }
+
+    /**
+     * Return message (common method)
+     *
+     * @param string $message custom part of message
+     * @param string $class   called class name
+     * @param string $method  called method name
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getMessage($message, $class = '', $method = '')
+    {
+        // Full debag trace for called method
+        $trace = debug_backtrace();
+        $trace = $trace[1];
+
+        // Retrieve class and method names
+        $class = str_replace(self::CLASS_PREFIX, '', empty($class) ? $trace['class'] : $class);
+        $method = lcfirst(str_replace('test', '', empty($method) ? $trace['function'] : $method));
+
+        return $class
+               . ' : '
+               . str_repeat(' ', 30 - strlen($this->browserName))
+               . $this->browserName
+               . ' [' . $method . '].'
+               . $message;
     }
 
     function setBrowserUrl($url)
     {
         $this->browserUrl = rtrim($url, "/");
     }
+
+    /**
+     * Skip coverage for current Selenium session
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function skipCoverage()
+    {
+        $this->open('');
+        $this->set_cookie('no_xdebug_coverage', '1');
+    }
+
 
     function open($url)
     {
@@ -77,9 +141,10 @@ class Xlite_WebDriverTestCase extends PHPUnit_Framework_TestCase
             $this->load($this->browserUrl . '/' . ltrim($url, "/"));
     }
 
-    public function assert_element_present($element_locator, $message)
+    public function assert_element_present($element_locator, $message = null)
     {
-        PHPUnit_Framework_Assert::assertTrue($this->is_element_present($element_locator), $message);
+        PHPUnit_Framework_Assert::assertTrue($this->is_element_present($element_locator), $message ?
+                                                                                                : "Element <" . $element_locator . "> doesn't present");
     }
 
     public function assert_element_text($element_locator, $text, $message)
@@ -87,19 +152,10 @@ class Xlite_WebDriverTestCase extends PHPUnit_Framework_TestCase
         $this->assertEquals($text, $this->get_element($element_locator)->get_text(), $message);
     }
 
-    public function assert_element_not_present($element_locator, $message)
+    public function assert_element_not_present($element_locator, $message = null)
     {
-        $wait = $this->set_implicit_wait(0);
-        $present = true;
-        for ($i=0;$i<$wait;$i++)
-        {
-            if (!$this->is_element_present($element_locator)){
-                $present = false;
-                break;
-            }
-        }
-        $this->set_implicit_wait($wait);
-        $this->assertFalse($present);
+        $this->assertTrue($this->is_element_not_present($element_locator), $message ?
+                                                                                 : "Element <" . $element_locator . "> present");
     }
 
     public function assert_string_present($expected_string, $message)
@@ -131,13 +187,157 @@ class Xlite_WebDriverTestCase extends PHPUnit_Framework_TestCase
         $element->clear();
         $element->send_keys($val);
     }
-    public function select($locator, $value)
+
+    public function select($locator, $value, $selector = '@value')
     {
         $select = $this->get_element($locator);
         $select->click();
-        $option = $select->get_next_element('xpath=//option[@value="'.$value.'"]');
+        $option = $select->get_next_element('xpath=//option[' . $selector . '="' . $value . '"]');
         $option->click();
 
     }
 
+    /**
+     * Wait inline progress mark
+     *
+     * @param $locator
+     * @param string $message          Fail message
+     *
+     *
+     * @internal param string $jqueryExpression jQuery input locator
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function wait_inline_progress($locator, $message = null)
+    {
+        //$wait = $this->set_implicit_wait(10000);
+        $progress = $this->get_element($locator)->get_parent();
+        $progress->assert_contains_element('css=.single-progress-mark', 'check inline progress mark for ' . $locator . ' (' . $message . ')');
+        //sleep(3);
+        $progress->assert_does_not_contain_element('css=.single-progress-mark', 'check GONE inline progress mark for ' . $locator . ' (' . $message . ')');
+        //$this->set_implicit_wait($wait);
+    }
+
+    /**
+     * Assert input error note present
+     *
+     * @param $locator
+     * @param string $message          Fail message
+     *
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function assert_input_error_present($locator, $message = null)
+    {
+        $this->get_element($locator)->get_parent()->assert_contains_element('css=.error', ($message ?
+                    : 'check error for ' . $locator));
+    }
+
+    /**
+     * Assert input error note NOT present
+     *
+     * @param $locator
+     * @param string $message          Fail message
+     *
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function assert_input_error_not_present($locator, $message = null)
+    {
+        $this->get_element($locator)->get_parent()->assert_does_not_contain_element('css=.error', ($message ?
+                    : 'check no-error for ' . $locator));
+    }
+
+    public function assert_element_visible($locator, $message = null)
+    {
+        $this->assert_element_present($locator, 'Element <' . $locator . '> not present (' . $message . ')');
+        $this->get_element($locator)->assert_visible($message);
+    }
+
+    /**
+     * Asserts that element is hidden by CSS, has zero width or height, or not present on the page at all
+     *
+     * @param $locator
+     * @param $message
+     * @return void
+     */
+    public function assert_element_not_visible($locator, $message = null)
+    {
+        if ($this->is_element_not_present($locator))
+            return;
+        $this->get_element($locator)->assert_hidden($message);
+    }
+
+    public function assert_url_contains($url_substring, $message = null)
+    {
+        $this->assertContains($url_substring, $this->get_url(), $message ?: "Failed asserting that URL contains <$url_substring>.");
+    }
+
+    /**
+     * @param $url_substring
+     * @param null $message
+     * @return array|null
+     */
+    public function assert_url_regexp($url_substring, $message = null)
+    {
+        $this->assertTrue(preg_match($url_substring, $this->get_url(), $m) == 1,$message ?: "Failed asserting that URL matches <$url_substring>.");
+        return $m;
+    }
+
+
+    public function toggle($locator, $enable)
+    {
+        $this->assert_element_present($locator);
+        $element = $this->get_element($locator);
+        if ($element->is_selected() != $enable)
+            $element->click();
+    }
+
+    /**
+     * formatPrice
+     *
+     * @param mixed $value ____param_comment____
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function formatPrice($value)
+    {
+        return '$' . number_format($value, 2, '.', '');
+    }
+
+    /**
+     * Get payment method id by name
+     *
+     * @param string $name Payment method name
+     *
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPaymentMethodIdByName($name)
+    {
+        $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => $name));
+
+        if (!$pmethod) {
+            $this->fail($name . ' payment method is not found');
+        }
+
+        $pid = $pmethod->getMethodId();
+
+        return $pid;
+    }
+    public static function suite($className){
+        return new XLite_Tests_TestSuite($className);
+    }
 }

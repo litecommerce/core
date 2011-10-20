@@ -190,6 +190,7 @@ require_once PATH_TESTS . '/PHPUnit/TestSuite.php';
 require_once PATH_TESTS . '/PHPUnit/TestCase.php';
 require_once PATH_TESTS . '/PHPUnit/MetricWriter.php';
 require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
+require_once PATH_TESTS . '/PHPUnit/WebDriverTestCase.php';
 
 if (!defined('MENU_LOCAL_TASK')) {
     define('MENU_LOCAL_TASK', 0x0080 | 0x0004);
