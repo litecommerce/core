@@ -46,7 +46,7 @@ class Xlite_WebDriverTestCase extends PHPUnit_Framework_TestCase
         $this->driver = WebDriver_Driver::InitAtHost(SELENIUM_SERVER, "4444", "firefox");
         $this->browserName = 'firefox';
         $this->setBrowserUrl(SELENIUM_SOURCE_URL);
-        $this->set_implicit_wait(5000);
+        $this->set_implicit_wait(20000);
         $this->startTime = microtime(true);
         echo PHP_EOL . $this->getMessage('...', get_called_class(), $this->getName());
     }

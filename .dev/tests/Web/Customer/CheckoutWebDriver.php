@@ -505,9 +505,7 @@
         $this->assert_input_error_not_present('css=#create_profile_email', 'email has not inline error');
 
         $this->click('css=#create_profile_chk');
-        $wait = $this->set_implicit_wait(10000);
         $this->assert_element_visible('css=.username', 'check open username box');
-        $this->set_implicit_wait($wait);
 
         $this->type('xpath=//input[@id="create_profile_username"]', $username);
         $this->click('css=#page-title');
