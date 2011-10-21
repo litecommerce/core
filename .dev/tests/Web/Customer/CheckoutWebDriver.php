@@ -1,11 +1,34 @@
 <?php
 
 /**
- * 
- * @resource cart
- * @resource register_user
- * @resource address_book
+ * LiteCommerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * @category   LiteCommerce
+ * @package    Tests
+ * @subpackage Web
+ * @author     Creative Development LLC <info@cdev.ru>
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      1.0.0
+ *
+ * @resource user
+ * @resource admin_address_book
  * @resource order
+ * @resource product_inventory
+ * @use product
+ * @use shipping_method
  */
  class XLite_Web_Customer_CheckoutWebDriver extends Xlite_WebDriverTestCase
  {
