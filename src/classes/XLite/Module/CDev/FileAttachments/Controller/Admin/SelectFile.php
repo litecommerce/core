@@ -62,7 +62,7 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
             'loadFromURL',
             array(
                 \XLite\Core\Request::getInstance()->url,
-                \XLite\Core\Request::getInstance()->url_copy_to_local
+                (bool) \XLite\Core\Request::getInstance()->url_copy_to_local
             )
         );
     }
@@ -213,7 +213,7 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
             'loadFromURL',
             array(
                 \XLite\Core\Request::getInstance()->url,
-                \XLite\Core\Request::getInstance()->url_copy_to_local
+                (bool) \XLite\Core\Request::getInstance()->url_copy_to_local
             )
         );
     }
