@@ -114,58 +114,33 @@ abstract class Image extends \XLite\Model\Base\Storage
      */
     public function getResizedURL($width = null, $height = null)
     {
-        $sizeName = ($width ? $width : 'x') . '.' . ($height ? $height : 'x');
+        $size = ($width ?: 'x') . '.' . ($height ?: 'x');
+        $name = $this->getId() . '.' . $this->getExtension();
+        $path = $this->getRepository()->getFileSystemCacheRoot($size) . $name;
 
-        $path = $this->getRepository()->getFileSystemCacheRoot($sizeName);
+        $url = \XLite::getInstance()->getShopURL(
+            $this->getRepository()->getWebCacheRoot($size) . '/' . $name,
+            \XLite\Core\Request::getInstance()->isHTTPS()
+        );
 
-        if (!file_exists($path)) {
-            mkdir($path, 0777, true);
-        }
-
-        $fn = $this->getId() . '.' . $this->getExtension();
-
-        if (
-            file_exists($path . $fn)
-            && filesize($path . $fn) > 0
-        ) {
-
-            // File exists
+        if (\Includes\Utils\FileManager::isFile($path) && $this->getDate() < filemtime($path)) {
             list($newWidth, $newHeight) = \XLite\Core\ImageOperator::getCroppedDimensions(
-                $this->width,
-                $this->height,
+                $this->getWidth(),
+                $this->getHeight(),
                 $width,
                 $height
             );
 
-            $url = \XLite::getInstance()->getShopURL(
-                $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn,
-                \XLite\Core\Request::getInstance()->isHTTPS()
-            );
-
         } else {
-
-            // File does not exist
             $operator = new \XLite\Core\ImageOperator($this);
-
             list($newWidth, $newHeight, $result) = $operator->resizeDown($width, $height);
 
-            $url = (false === $result || !file_put_contents($path . $fn, $operator->getImage()))
-                ? $this->getURL()
-                : \XLite::getInstance()->getShopURL(
-                    $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn,
-                    \XLite\Core\Request::getInstance()->isHTTPS()
-                );
-
-            if (file_exists($path . $fn)) {
-                chmod($path . $fn, 0644);
+            if (false === $result || !\Includes\Utils\FileManager::write($path, $operator->getImage())) {
+                $url = $this->getURL();
             }
         }
 
-        return array(
-            $newWidth,
-            $newHeight,
-            $url
-        );
+        return array($newWidth, $newHeight, $url);
     }
 
     /**

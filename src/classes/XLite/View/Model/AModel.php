@@ -529,9 +529,11 @@ abstract class AModel extends \XLite\View\Dialog
     {
         parent::defineWidgetParams();
 
+        $object = $this->getDefaultModelObject();
+
         $this->widgetParams += array(
             self::PARAM_MODEL_OBJECT => new \XLite\Model\WidgetParam\Object(
-                'Object', $this->getDefaultModelObject(), false, get_class($this->getDefaultModelObject())
+                'Object', $object, false, $object ? get_class($object) : ''
             ),
             self::PARAM_USE_BODY_TEMPLATE => new \XLite\Model\WidgetParam\Bool(
                 'Use default body template', false
