@@ -44,6 +44,14 @@ function ProductQuantityBoxController(base)
           : o.hideError();
       }
     );
+
+    this.block.bind(
+      'keypress',
+      function (event) {
+        return o.block.closest('form').validationEngine('validate') || (13 !== event.which);
+      }
+    );
+
   }
 }
 

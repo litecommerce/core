@@ -467,6 +467,7 @@ function attachTooltip(elm, content) {
 
       jQuery(this).hover(
         function() {
+          jQuery('.formError').remove();
           jQuery(block).validationEngine('showPrompt', content, 'load', 'bottomLeft');
         },
         function() {

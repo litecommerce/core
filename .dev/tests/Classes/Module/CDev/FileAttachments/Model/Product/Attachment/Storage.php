@@ -25,8 +25,21 @@
  * @since     1.0.10
  */
 
+/**
+ * XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage 
+ *
+ * @see   ____class_see____
+ * @since 1.0.12
+ */
 class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage extends XLite_Tests_TestCase
 {
+    /**
+     * testLoading
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
     public function testLoading()
     {
         \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_FILES . 'attachments');
@@ -92,6 +105,13 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
         $this->assertEquals($body, $b2, 'check 2 output');
     }
 
+    /**
+     * testRemove
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
     public function testRemove()
     {
         \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_FILES . 'attachments');
@@ -127,6 +147,13 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
         $this->assertFalse(file_exists($path), 'check remove (duplicate) #2');
     }
 
+    /**
+     * testRenewStorage
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
     public function testRenewStorage()
     {
         \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_FILES . 'attachments');
@@ -149,6 +176,13 @@ class XLite_Tests_Module_CDev_FileAttachments_Model_Product_Attachment_Storage e
         $this->assertEquals(filesize($path), $s2->getSize(), 'check file size #2');
     }
 
+    /**
+     * getTestStorage
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
     protected function getTestStorage()
     {
         $product = $this->getProduct();

@@ -175,12 +175,11 @@ class BrowseServer extends \XLite\View\SimpleDialog
         foreach ($iterator as $file) {
             $path = $file->getPathname();
 
-            $info = pathinfo($path, PATHINFO_EXTENSION);
             $type = $file->isDir() ? 'catalog' : 'file';
 
             $this->fsEntries[$type][$path] = array(
                 'type'      => $type,
-                'extension' => isset($info['extension']) ? $info['extension'] : '',
+                'extension' => pathinfo($path, PATHINFO_EXTENSION),
                 'name'      => $file->getBasename(),
             );
         }
@@ -198,5 +197,20 @@ class BrowseServer extends \XLite\View\SimpleDialog
     protected function isEmptyCatalog()
     {
         return count($this->fsEntries['catalog'] + $this->fsEntries['file']) == 0;
+    }
+
+    /**
+     * Get file entry class 
+     * 
+     * @param array $entry Entry
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function getItemClass(array $entry)
+    {
+        return 'type-' . $entry['type'] . ' extension-unknown'
+            . ($entry['extension'] ? ' extension-' . $entry['extension'] : '');
     }
 }

@@ -72,7 +72,11 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
         $id = empty($args['profile_id']) ? \XLite\Core\Request::getInstance()->profile_id : $args['profile_id'];
         unset($args['profile_id']);
 
-        return preg_replace('/\%/', static::getDrupalProfileId($id), parent::getPortalDrupalArgs($path, $args), 1);
+        list($path, $args) = parent::getPortalDrupalArgs($path, $args);
+
+        $path = preg_replace('/\%/', static::getDrupalProfileId($id), $path, 1);
+
+        return array($path, $args);
     }
 
     

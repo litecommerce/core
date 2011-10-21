@@ -72,7 +72,8 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
         } elseif ($portal = \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalByTarget($target)) {
 
             // Drupal URL (portal)
-            $result = static::normalizeDrupalURL($portal->getDrupalArgs($target, $action, $params));
+            list($path, $args) = $portal->getDrupalArgs($target, $action, $params);
+            $result = static::normalizeDrupalURL($path, $args);
 
         } else {
 
@@ -131,14 +132,15 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
     /**
      * Normalize Drupal URL to full path
      *
-     * @param string $url Short URL
+     * @param string $url  Short URL
+     * @param array  $args Additional arguments OIPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function normalizeDrupalURL($url)
+    protected static function normalizeDrupalURL($url, array $args = array())
     {
-        return preg_replace('/(\/)\%252F([^\/])/iSs', '\1/\2', url($url));
+        return preg_replace('/(\/)\%252F([^\/])/iSs', '\1/\2', url($url, array('query' => $args)));
     }
 }
