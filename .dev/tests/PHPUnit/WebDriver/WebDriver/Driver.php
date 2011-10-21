@@ -229,19 +229,27 @@ class WebDriver_Driver {
     return $is_element_present;
   }
 
-    public function is_element_not_present($locator) {
+    protected function wait_for($condition, $params = array(), $expected = true){
+        //$time = microtime(true);
         $wait = $this->set_implicit_wait(0);
-        $present = true;
-        for ($i = 0; $i <= $wait; $i += 1000){
-            if (!$this->is_element_present($locator))
-            {
-                $present = false;
+        $result = false;
+        for ($i = 0; $i <= $wait; $i += 100)
+        {
+            $actual = call_user_func_array(array($this, $condition), $params) ;
+            //echo (PHP_EOL . 'Check ' . $i . ' ' . $actual . ' is ' . $expected . PHP_EOL);
+            if ($actual == $expected){
+                $result = true;
                 break;
             }
-            sleep(1);
+            usleep(100);
         }
+        
         $this->set_implicit_wait($wait);
-        return !$present;
+        //echo PHP_EOL . 'wait '.$condition . ' is ' . ($expected ? 'true' : 'false') .' :  time: ' . (microtime(true) - $time) ." ";
+        return $result;
+    }
+    public function is_element_not_present($locator) {
+        return $this->wait_for('is_element_present', array($locator), false);
     }
   
   // See http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/window_handle
@@ -641,7 +649,7 @@ class WebDriver_Driver {
   }
   
   public function assert_element_not_present($element_locator) {
-    PHPUnit_Framework_Assert::assertFalse($this->is_element_present($element_locator), "Failed asserting that <$element_locator> is not present");
+    PHPUnit_Framework_Assert::assertTrue($this->is_element_not_present($element_locator), "Failed asserting that <$element_locator> is not present");
   }
   
   public function assert_string_present($expected_string) {

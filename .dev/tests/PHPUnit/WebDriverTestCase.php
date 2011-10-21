@@ -46,7 +46,7 @@ class Xlite_WebDriverTestCase extends PHPUnit_Framework_TestCase
         $this->driver = WebDriver_Driver::InitAtHost(SELENIUM_SERVER, "4444", "firefox");
         $this->browserName = 'firefox';
         $this->setBrowserUrl(SELENIUM_SOURCE_URL);
-        $this->set_implicit_wait(20000);
+        $this->set_implicit_wait(50000);
         $this->startTime = microtime(true);
         echo PHP_EOL . $this->getMessage('...', get_called_class(), $this->getName());
     }
@@ -271,8 +271,10 @@ class Xlite_WebDriverTestCase extends PHPUnit_Framework_TestCase
      */
     public function assert_element_not_visible($locator, $message = null)
     {
+        $wait = $this->set_implicit_wait(100);
         if ($this->is_element_not_present($locator))
             return;
+        $this->set_implicit_wait($wait);
         $this->get_element($locator)->assert_hidden($message);
     }
 

@@ -288,18 +288,25 @@ class WebDriver_WebElement
 
     public function wait_for($condition, $params = array(), $expected = true)
     {
+        //$time = microtime(true);
         $wait = $this->driver->set_implicit_wait(0);
+        $result = false;
         for ($i = 0; $i <= $wait; $i += 100)
         {
-            if (call_user_func_array(array($this, $condition), $params) == $expected)
+            if (call_user_func_array(array($this, $condition), $params) == $expected){
+                $result = true;
                 break;
+            }
+            usleep(100);
         }
         $this->driver->set_implicit_wait($wait);
+        //echo PHP_EOL . 'wait '.$condition.': ' .$this->locator ." time: " . (microtime(true) - $time) ." ";
+        return $result;
     }
 
     public function wait_for_false($condition, $params = array())
     {
-        $this->wait_for($condition, $params, false);
+        return $this->wait_for($condition, $params, false);
     }
 
     /********************************************************************
@@ -315,8 +322,8 @@ class WebDriver_WebElement
 
     public function assert_hidden($message = null)
     {
-        $this->wait_for_false('is_visible');
-        PHPUnit_Framework_Assert::assertFalse($this->is_visible(), $message ?
+        $hidden = $this->wait_for_false('is_visible');
+        PHPUnit_Framework_Assert::assertTrue($hidden, $message ?
                                                                          : "Failed asserting that <{$this->locator}> is hidden.");
     }
 
@@ -343,22 +350,21 @@ class WebDriver_WebElement
 
     public function assert_not_selected($message = null)
     {
-        $this->wait_for_false('is_selected');
-        PHPUnit_Framework_Assert::assertFalse($this->is_selected(), $message ?
+        $not_selected = $this->wait_for_false('is_selected');
+        PHPUnit_Framework_Assert::assertTrue($not_selected, $message ?
                                                                           : "Failed asserting that <{$this->locator}> is not selected.");
     }
 
     public function assert_contains_element($child_locator, $message = null)
     {
-        $this->wait_for('contains_element', array($child_locator));
-        PHPUnit_Framework_Assert::assertTrue($this->contains_element($child_locator), $message ?
-                                                                                            : "Failed asserting that <{$this->locator}> contains <$child_locator>.");
+        $contains = $this->wait_for('contains_element', array($child_locator));
+        PHPUnit_Framework_Assert::assertTrue($contains, $message ?: "Failed asserting that <{$this->locator}> contains <$child_locator>.");
     }
 
     public function assert_does_not_contain_element($child_locator, $message = null)
     {
-        //$this->wait_for_false('contains_element', array($child_locator));
-        PHPUnit_Framework_Assert::assertFalse($this->contains_element($child_locator), $message ?: "Failed asserting that <{$this->locator}> does not contain <$child_locator>.");
+        $not_contains = $this->wait_for_false('contains_element', array($child_locator));
+        PHPUnit_Framework_Assert::assertTrue($not_contains, $message ?: "Failed asserting that <{$this->locator}> does not contain <$child_locator>.");
     }
 
     public function assert_text($expected_text, $message = null)
