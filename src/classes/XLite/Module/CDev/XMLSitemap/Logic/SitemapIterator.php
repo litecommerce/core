@@ -75,8 +75,8 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
 
         if ($this->position < $this->getCategoriesLength()) {
 
-            $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->findFrame($this->position, 1);
-            $data = $this->assembleCategoryData($data[0]);
+            $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneAsSitemapLink($this->position, 1);
+            $data = $this->assembleCategoryData($data);
 
         } elseif ($this->position < $this->getCategoriesLength() + $this->getProductsLength()) {
 
@@ -174,7 +174,8 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
     protected function getCategoriesLength()
     {
         if (!isset($this->categoriesLength)) {
-            $this->categoriesLength = \XLite\Core\Database::getRepo('XLite\Model\Category')->count();
+            $this->categoriesLength = \XLite\Core\Database::getRepo('XLite\Model\Category')
+                ->countCategoriesAsSitemapsLinks();
         }
 
         return $this->categoriesLength;
@@ -230,7 +231,7 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
             'loc'        => array('target' => 'product', 'product_id' => $product->getProductId()),
             'lastmod'    => time(),
             'changefreq' => 'daily',
-            'priority'   => 0.5,
+            'priority'   => 0.4,
         );
     }
 

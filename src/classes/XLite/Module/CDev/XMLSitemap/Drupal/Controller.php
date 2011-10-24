@@ -48,9 +48,7 @@ abstract class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\Cont
             'lc_connector' => array(
                 'label' => 'LC connector',
                 'xmlsitemap' => array(
-                    'rebuild callback' => function () {
-                        return LCConnector_Handler::callSafely('Controller', 'generateXMLSitemapLinks');
-                    },
+                    'rebuild callback' => 'lc_connector_xmlsitemap_rebuild_callback',
                 ),
             ),
         );
@@ -67,10 +65,19 @@ abstract class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\Cont
     {
         $iterator = new \XLite\Module\CDev\XMLSitemap\Logic\SitemapIterator;
 
+        $i = 0;
+
+        $options = xmlsitemap_get_changefreq_options();
+        $hash = array_flip($options);
+
         $link = array(
-            'type'    => 'lc_connector',
-            'subtype' => '',
-            'loc'     => 'store/catalog',
+            'id'         => $i,
+            'type'       => 'lc_connector',
+            'subtype'    => '',
+            'loc'        => 'store/catalog',
+            'priority'   => 0.8,
+            'lastmod'    => time(),
+            'changefreq' => $hash['daily'],
         );
         xmlsitemap_link_save($link);
 
@@ -79,9 +86,16 @@ abstract class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\Cont
             unset($record['loc']['target']);
             $record['loc'] = \XLite\Core\Converter::buildDrupalPath($target, '', $record['loc']);
 
-            $record['lastmod'] = date('Y-m-dh:m:s', $record['lastmod']);
+            $i++;
             $record['type'] = 'lc_connector';
             $record['subtype'] = '';
+            $record['id'] = $i;
+            if (isset($hash[$record['changefreq']])) {
+                $record['changefreq'] = $hash[$record['changefreq']];
+
+            } else {
+                unset($record['changefreq']);
+            }
 
             xmlsitemap_link_save($record);
         }
