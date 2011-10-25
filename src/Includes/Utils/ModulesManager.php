@@ -404,7 +404,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     /**
      * Set module enabled flag fo "false"
      *
-     * @param string $key module actual name (key)
+     * @param string $key Module actual name (key)
      *
      * @return boolean
      * @see    ____func_see____
@@ -435,6 +435,58 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
             // Remove from local cache
             unset(static::$activeModules[$key]);
         }
+    }
+
+    /**
+     * Get structures to save when module is disabled
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
+    public static function getModuleProtectedStructures($author, $name)
+    {
+        $tables  = array();
+        $columns = array();
+        $filter  = new \Includes\Utils\FileFilter(static::getAbsoluteDir($author, $name) . 'Model', '/.*\.php$/Si');
+
+        foreach ($filter->getIterator() as $path => $data) {
+            $class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
+            
+            if ($class && is_subclass_of($class, '\XLite\Model\AEntity')) {
+                $class = ltrim($class, '\\');
+                $len = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
+
+                if (in_array('XLite\Base\IDecorator', class_implements($class))) {
+                    $parent   = \Includes\Decorator\Utils\Tokenizer::getParentClassName($path);
+                    $metadata = \XLite\Core\Database::getEM()->getClassMetadata($parent);
+                    $table    = substr($metadata->getTableName(), $len);
+
+                    $tool   = new \Doctrine\ORM\Tools\SchemaTool(\XLite\Core\Database::getEM());
+                    $schema = $tool->getCreateSchemaSql(array($metadata));
+
+                    foreach ((array) $metadata->reflFields as $field => $reflection) {
+                        $pattern = '/(?:, |\()(' . $field . ' .+)(?:, [A-Za-z]|\) ENGINE)/USsi';
+
+                        if (
+                            $reflection->class === $class 
+                            && !empty($metadata->fieldMappings[$field])
+                            && preg_match($pattern, $schema[0], $matches)
+                        ) {
+                            $columns[$table][$field] = $matches[1];
+                        }
+                    }
+                    
+                } elseif (\XLite\Core\Database::getRepo($class)->canDisableTable()) {
+                    $tables[] = substr(\XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(), $len);
+                }
+            }
+        }
+
+        return array($tables, $columns);
     }
 
     /**

@@ -526,8 +526,9 @@ abstract class Storage extends \XLite\Model\AEntity
 
             if ($copy2fs) {
                 $file = \XLite\Core\Operator::getURLContent($url);
+                $result = !empty($file);
 
-                if (!empty($file)) {
+                if ($result) {
                     $tmp = LC_DIR_TMP . $name;
                     $result = \Includes\Utils\FileManager::write($tmp, $file) ? $this->loadFromLocalFile($tmp) : false;
 
@@ -537,13 +538,16 @@ abstract class Storage extends \XLite\Model\AEntity
                 }
 
             } else {
-                $this->removeFile();
-
+                $savedPath = $this->getPath();
                 $this->setPath($url);
                 $this->setFileName($name);
 
                 $result = $this->renew();
-                $this->setStorageType(static::STORAGE_URL);
+
+                if ($result) {
+                    $this->removeFile($savedPath);
+                    $this->setStorageType(static::STORAGE_URL);
+                }
             }
         }
 

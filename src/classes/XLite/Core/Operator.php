@@ -303,7 +303,7 @@ class Operator extends \XLite\Base\Singleton
      */
     public function saveServiceYAML($path, array $data)
     {
-        return file_put_contents(
+        return \Includes\Utils\FileManager::write(
             $path,
             $this->getServiceHeader() . \Symfony\Component\Yaml\Yaml::dump($data)
         );
@@ -322,7 +322,7 @@ class Operator extends \XLite\Base\Singleton
     {
         $data = null;
 
-        if (file_exists($path)) {
+        if (\Includes\Utils\FileManager::isFile($path)) {
             $data = \Symfony\Component\Yaml\Yaml::load($path);
         }
 

@@ -262,28 +262,25 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      */
     protected function doActionSwitch()
     {
-        $modules = $this->getModules('switch');
+        $changed = false;
+        $data    = (array) \XLite\Core\Request::getInstance()->switch;
+        $modules = array();
 
-        if ($modules) {
-            $request = \XLite\Core\Request::getInstance();
-            $changed = false;
+        foreach ($this->getModules('switch') as $module) {
+            $old = !empty($data[$module->getModuleId()]['old']);
+            $new = !empty($data[$module->getModuleId()]['new']);
 
-            foreach ($modules as $module) {
-
-                // Update data in DB
-                $old = 1 == $request->switch[$module->getModuleId()]['old'];
-                $new = !empty($request->switch[$module->getModuleId()]['new']);
-                if ($old != $new) {
-                    $module->setEnabled(!$module->getEnabled());
-                    $module->getRepository()->update($module);
-                    $changed = true;
-                }
+            if ($old !== $new) {
+                $module->setEnabled(!$old);
+                $modules[] = $module;
+                $changed = true;
             }
+        }
 
-            // Flag to rebuild cache
-            if ($changed) {
-                \XLite::setCleanUpCacheFlag(true);
-            }
+        // Flag to rebuild cache
+        if ($changed) {
+            \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateInBatch($modules);
+            \XLite::setCleanUpCacheFlag(true);
         }
     }
 
