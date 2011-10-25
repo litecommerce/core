@@ -33,9 +33,10 @@ namespace XLite\Module\CDev\XMLSitemap\Model;
  * @see   ____class_see____
  * @since 1.0.12
  *
+ * @MappedSuperclass
  * @HasLifecycleCallbacks
  */
-abstract class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
+class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
 {
     /**
      * Clear sitemaps 
@@ -44,9 +45,9 @@ abstract class Category extends \XLite\Model\Category implements \XLite\Base\IDe
      * @see    ____func_see____
      * @since  1.0.12
      *
-     * @PostPersist
-     * @PostUpdate
-     * @PostRemove
+     * @PrePersist
+     * @PreUpdate
+     * @PreRemove
      */
     public function clearSitemaps()
     {

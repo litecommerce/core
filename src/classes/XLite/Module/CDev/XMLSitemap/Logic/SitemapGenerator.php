@@ -141,7 +141,7 @@ class SitemapGenerator extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  1.0.12
      */
-    protected function clear()
+    public function clear()
     {
         foreach (glob(LC_DIR_DATA . 'xmlsitemap.*.xml') as $path) {
             unlink($path);
