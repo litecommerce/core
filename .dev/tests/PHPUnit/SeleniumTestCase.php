@@ -241,8 +241,10 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         // Create tests from test methods for multiple browsers.
         if (!empty($staticProperties['browsers'])) {
             foreach ($staticProperties['browsers'] as $browser) {
-				//$browserSuite = new PHPUnit_Framework_TestSuite;
-				$browserSuite = new XLite_Tests_TestSuite;
+				if (defined('NO_RESTORE'))
+                    $browserSuite = new PHPUnit_Framework_TestSuite;
+                else
+				    $browserSuite = new XLite_Tests_TestSuite;
                 $browserSuite->setName($className . ': ' . $browser['name']);
 
                 foreach ($class->getMethods() as $method) {

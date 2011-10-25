@@ -67,6 +67,7 @@ class WebDriver_Driver {
     $capabilities = array_merge(array(
       'javascriptEnabled' => true,
       'browserName' => $browser,
+      //'nativeEvents' => true
     ), $additional_options);
     if (strcasecmp($browser, "iphone") == 0 || strcasecmp($browser, "android") == 0) {
       return new WebDriver_Driver("http://$host:$port/hub", $capabilities);
