@@ -181,6 +181,7 @@ class BrowseServer extends \XLite\View\SimpleDialog
                 'type'      => $type,
                 'extension' => pathinfo($path, PATHINFO_EXTENSION),
                 'name'      => $file->getBasename(),
+                'fullName'  => $file->getBasename(),
             );
         }
 
