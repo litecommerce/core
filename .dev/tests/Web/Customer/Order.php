@@ -23,6 +23,11 @@
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
+ *
+ * @resource order
+ * @resource admin_address_book
+ * @use product
+ * @use shipping_method
  */
 
 require_once __DIR__ . '/ACustomer.php';

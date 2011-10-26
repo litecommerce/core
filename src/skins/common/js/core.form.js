@@ -169,7 +169,7 @@ CommonForm.prototype.bindElements = function()
   );
 }
 
-// Vaidate form
+// Validate form
 CommonForm.prototype.validate = function(silent)
 {
   return 0 == this.getElements().filter('input,select,textarea').filter(

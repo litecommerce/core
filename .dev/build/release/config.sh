@@ -67,6 +67,11 @@ sql/demo
 sql/modules
 "
 
+# LiteCommerce files that are required for night builds
+DRUPAL_FILES_TESTMODE="
+profiles/litecommerce_test
+"
+
 # Drupal files that must be removed from all distributives
 DRUPAL_FILES_TODELETE="
 profiles/default

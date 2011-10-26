@@ -11,7 +11,9 @@
  * @ListChild (list="invoice.item", weight="10")
  *}
 <td class="name" colspan="{getItemDescriptionCount()}">
-  <a href="{item.getURL()}">{item.getName()}</a>
+  <a IF="item.getURL()" href="{item.getURL()}">{item.getName()}</a>
+  <span IF="!item.getURL()">{item.getName()}</span>
+  <span IF="!item.product.isPersistent()" class="deleted-product-note">(deleted)</span>
   <div IF="isViewListVisible(#invoice.item.name#,_ARRAY_(#item#^item))" class="additional">
     {displayViewListContent(#invoice.item.name#,_ARRAY_(#item#^item))}
   </div>

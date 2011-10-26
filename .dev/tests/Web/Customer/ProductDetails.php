@@ -23,6 +23,8 @@
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
+ *
+ * @use product
  */
 
 require_once __DIR__ . '/ACustomer.php';
@@ -149,9 +151,10 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             . "/div[@class='tabs']"
             . "/ul[@class='tabs primary']"
             . "/li[@class='active']"
-            . "/a[text()='Description']",
-            'check first tabs'
+            . "/a[contains(text(), 'Description')]",
+            'check for "Description" tab'
         );
+
         $this->assertEquals(
             1,
             $this->getJSExpression('jQuery(".product-details .tabs ul li a").length'),
@@ -168,6 +171,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             . "/strong[text()='Weight:']",
             'check weight (label)'
         );
+
         $this->assertElementPresent(
             "//form[@class='product-details validationEngine']"
             . "/div[@class='product-details-tabs']"

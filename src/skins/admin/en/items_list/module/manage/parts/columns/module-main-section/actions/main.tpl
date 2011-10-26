@@ -13,6 +13,8 @@
  *}
 <span class="disable" IF="{module.getEnabled()}">
   <input type="hidden" name="switch[{module.getModuleId()}][old]" value="1" />
+  {* To prevent disabling modules with the disabled checkbox *}
+  <input IF="!canDisable(module)" type="hidden" name="switch[{module.getModuleId()}][new]" value="1" />
   <input
     type="checkbox"
     name="switch[{module.getModuleId()}][new]"

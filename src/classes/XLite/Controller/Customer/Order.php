@@ -44,14 +44,20 @@ class Order extends \XLite\Controller\Customer\Base\Order
      */
     public function getTitle()
     {
-        return $this->checkAccess()
-            ? (
-                'Order #'
-                . $this->getOrderId()
-                . ', '
-                . \XLite\Core\Converter::getInstance()->formatTime($this->getOrder()->getDate())
-            )
-            : 'Order not found';
+        if ($this->checkAccess()){
+            $title = static::t(
+                'Order #X, Y',
+                array(
+                    'id'   => $this->getOrderId(),
+                    'date' => \XLite\Core\Converter::getInstance()->formatTime($this->getOrder()->getDate()),
+                )
+            );
+
+        } else {
+            $title = static::t('Order not found');
+        }
+
+        return $title;
     }
 
     /**

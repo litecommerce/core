@@ -76,12 +76,12 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
             unset($args[$param]);
         }
 
-        $result = parent::getPortalDrupalArgs($path, $args);
+        list($path, $args) = parent::getPortalDrupalArgs($path, $args);
 
-        $result = preg_replace('/\%/', static::getDrupalProfileId($profileId), $result, 1);
-        $result = preg_replace('/\%/', $orderId, $result, 1);
+        $path = preg_replace('/\%/', static::getDrupalProfileId($profileId), $path, 1);
+        $path = preg_replace('/\%/', $orderId, $path, 1);
 
-        return $result;
+        return array($path, $args);
     }
 
 

@@ -23,6 +23,10 @@
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
+ *
+ * @resource product
+ * @resource product_class
+ * @resource shipping_method
  */
 
 require_once __DIR__ . '/AAdmin.php';

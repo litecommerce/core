@@ -562,4 +562,31 @@ class Module extends \XLite\Model\AEntity
     }
 
     // }}}
+
+    // {{{ Change module state routines
+
+    /**
+     * Lifecycle callback
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.12
+     *
+     * @PreUpdate
+     */
+    public function prepareBeforeUpdate()
+    {
+        $changeSet = \XLite\Core\Database::getEM()->getUnitOfWork()->getEntityChangeSet($this);
+
+        if (!empty($changeSet['enabled'])) {
+            \XLite\Core\Database::getInstance()->setDisabledStructures(
+                $this->getActualName(),
+                $this->getEnabled() 
+                    ? array() 
+                    : \Includes\Utils\ModulesManager::getModuleProtectedStructures($this->getAuthor(), $this->getName())
+            );
+        }
+    }
+
+    // }}}
 }
