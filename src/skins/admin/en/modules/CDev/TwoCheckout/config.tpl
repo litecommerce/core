@@ -117,6 +117,14 @@
       </select>
     </td>
   </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td class="note">
+      {t(#The "Pricing currency" must be exactly the same as on your #)}
+      <a href="https://www.2checkout.com/va/acct/detail_company_info" target="_blank">{t(#"Site management"#)}</a>
+      {t(#page.#)}
+    </td>
+  </tr>
 
 </table>
 
