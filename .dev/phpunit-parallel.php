@@ -3,7 +3,8 @@
 /*
  * Constants to run tests
  */
-define('SELENIUM_CLIENTS_COUNT', 3);
+if (!defined('SELENIUM_CLIENTS_COUNT'))
+    define('SELENIUM_CLIENTS_COUNT', 3);
 
 /**
  * @param array $array
@@ -250,6 +251,7 @@ class testRunner
             if ($this->isComplete())
                 break;
         }
+        $this->cleanResources();
         print PHP_EOL . " Total time: " . round(microtime(true) - $time, 2) . "sec";
     }
 
