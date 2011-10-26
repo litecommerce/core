@@ -23,6 +23,11 @@
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
+ *
+ * @resource user
+ * @resource admin_pass
+ * @resource admin_email
+ * @resource role
  */
 
 class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer

@@ -757,6 +757,16 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 			done
 
 		fi
+	
+		# Remove redundant files
+		if [ "x${TEST_MODE}" = "x" -a ! "x${DRUPAL_FILES_TESTMODE}" = "x" ]; then
+
+			for fn in $DRUPAL_FILES_TESTMODE; do
+				rm -rf $fn
+			done
+
+		fi
+
 
 		LOGO_IMAGE=${OUTPUT_DIR}/drupal_dev/images/lc_logo-${XLITE_VERSION}.png
 
@@ -771,6 +781,9 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		sed_cmd="$SED_EXT 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info"
 		eval "$sed_cmd"
 
+		if [ "${TEST_MODE}" ]; then
+			mv ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce/litecommerce.profile ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce/litecommerce.profile.php
+		fi
 
 		# Restore original file PoweredBy.php from temporary directory
 		#cp ${OUTPUT_DIR}/tmp/PoweredBy.php ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/classes/XLite/View/
