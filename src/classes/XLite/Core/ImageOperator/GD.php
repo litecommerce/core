@@ -103,7 +103,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
                 unset($data);
 
                 // $func is assembled from 'imagecreatefrom' + image type
-                $this->image = $func($fn);
+                $this->image = @$func($fn);
                 unlink($fn);
 
                 $result = (bool)$this->image;
