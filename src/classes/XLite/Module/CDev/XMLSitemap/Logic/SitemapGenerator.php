@@ -205,7 +205,7 @@ class SitemapGenerator extends \XLite\Base\Singleton
         $target = $record['loc']['target'];
         unset($record['loc']['target']);
 
-        $record['loc'] = method_exists('XLite\Core\Converter', 'buildDrupalPath')
+        $record['loc'] = method_exists('XLite\Core\Converter', 'buildDrupalPath') && defined('DRUPAL_ROOT')
             ? \XLite\Core\Converter::buildDrupalURL($target, '', $record['loc'])
             : \XLite\Core\Converter::buildURL($target, '', $record['loc'], 'cart.php');
         $record['loc'] = \XLite::getInstance()->getShopURL($record['loc']);

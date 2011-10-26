@@ -63,6 +63,18 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
     protected $productsLength;
 
     /**
+     * Constructor
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
      * Get current data
      * 
      * @return array
