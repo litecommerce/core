@@ -215,11 +215,11 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
     ); // jQuery(draggablePattern, this.base).draggable
 
     // Disable out-of-stock product to drag
-    var draggableDisablePattern = '.products-grid .product.out-of-stock, .products-list .product.out-of-stock';
+    var draggableDisablePattern = '.products-grid .product.out-of-stock, .products-list .product.out-of-stock, .products-sidebar .product.out-of-stock';
     jQuery(draggableDisablePattern, this.base).draggable('disable');
 
     // Disable not-available product to drag
-    draggableDisablePattern = '.products-grid .product.not-available, .products-list .product.not-available';
+    draggableDisablePattern = '.products-grid .product.not-available, .products-list .product.not-available, .products-sidebar .product.not-available';
     jQuery(draggableDisablePattern, this.base).draggable('disable');
 
     cartTray.droppable(
