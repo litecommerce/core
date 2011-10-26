@@ -23,6 +23,8 @@
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
+ *
+ * @block_all
  */
 
 require_once __DIR__ . '/../ACustomer.php';

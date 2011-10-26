@@ -23,6 +23,9 @@
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.10
+ *
+ * @resource product
+ * @resource product_attachment
  */
 
 class XLite_Web_Module_CDev_FileAttachments_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
