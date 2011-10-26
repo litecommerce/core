@@ -46,8 +46,7 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
         $this->open('admin.php');
 
         if ($this->isLoggedIn()) {
-            return;
-            //$this->logOut(true);
+            $this->logOut(true);
         }
 
         $this->type("//input[@name='login' and @type='text']", $user);
