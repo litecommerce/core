@@ -174,6 +174,8 @@ OUT;
 
     if (!empty($args)) {
 
+        $args = x_install_log_mask_params($args);
+
         ob_start();
 
         foreach ($args as $value) {
@@ -3700,4 +3702,4 @@ function module_install_done(&$params)
  */
 $_params = ('POST' == $_SERVER['REQUEST_METHOD'] ? $_POST : $_GET);
 
-x_install_log(null, x_install_log_mask_params($_params));
+x_install_log(null, $_params));
