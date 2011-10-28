@@ -25,7 +25,7 @@
  * @since     1.0.12
  */
 
-namespace XLite\Module\CDev\XMLSitemap\Drupal;
+namespace XLite\Module\CDev\XMLSitemapDrupal\Drupal;
 
 /**
  * Controller 
@@ -69,17 +69,6 @@ abstract class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\Cont
 
         $options = xmlsitemap_get_changefreq_options();
         $hash = array_flip($options);
-
-        $link = array(
-            'id'         => $i,
-            'type'       => 'lc_connector',
-            'subtype'    => '',
-            'loc'        => 'store/catalog',
-            'priority'   => 0.8,
-            'lastmod'    => time(),
-            'changefreq' => $hash['daily'],
-        );
-        xmlsitemap_link_save($link);
 
         foreach ($iterator as $record) {
             $target = $record['loc']['target'];

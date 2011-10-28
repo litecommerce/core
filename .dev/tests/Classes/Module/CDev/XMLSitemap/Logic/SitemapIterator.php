@@ -33,13 +33,13 @@ class XLite_Tests_Module_CDev_XMLSitemap_Logic_SitemapIterator extends XLite_Tes
 
         $this->assertEquals(
             $iterator->count(),
-            \XLite\Core\Database::getRepo('XLite\Model\Product')->count() + \XLite\Core\Database::getRepo('XLite\Model\Category')->count() - 1,
+            \XLite\Core\Database::getRepo('XLite\Model\Product')->count() + \XLite\Core\Database::getRepo('XLite\Model\Category')->count(),
             'check count'
         );
 
         $this->assertEquals(
             count($iterator),
-            \XLite\Core\Database::getRepo('XLite\Model\Product')->count() + \XLite\Core\Database::getRepo('XLite\Model\Category')->count() - 1,
+            \XLite\Core\Database::getRepo('XLite\Model\Product')->count() + \XLite\Core\Database::getRepo('XLite\Model\Category')->count(),
             'check count #2'
         );
     }
@@ -55,13 +55,17 @@ class XLite_Tests_Module_CDev_XMLSitemap_Logic_SitemapIterator extends XLite_Tes
             $this->assertTrue(time() >= $data['lastmod'], 'check lastmod #' . $i);
             $this->assertEquals('daily', $data['changefreq'], 'check changefreq #' . $i);
 
-            if ($data['loc']['target'] == 'product') {
+            if ('' == $data['loc']['target']) {
+                $this->assertEquals('', $data['loc']['target'], 'check loc target #' . $i);
+                $this->assertEquals(0.5, $data['priority'], 'check priority #' . $i);
+
+            } elseif ('product' == $data['loc']['target']) {
                 $this->assertEquals('product', $data['loc']['target'], 'check loc target #' . $i);
                 $model = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($data['loc']['product_id']);
                 $this->assertTrue($model instanceof \XLite\Model\Product, 'check model #' . $i);
-                $this->assertEquals(0.4, $data['priority'], 'check priority #' . $i);
+                $this->assertEquals(0.5, $data['priority'], 'check priority #' . $i);
 
-            } else {
+            } elseif ('category' == $data['loc']['target']) {
                 $this->assertEquals('category', $data['loc']['target'], 'check loc target #' . $i);
                 $model = \XLite\Core\Database::getRepo('XLite\Model\Category')->find($data['loc']['category_id']);
                 $this->assertTrue($model instanceof \XLite\Model\Category, 'check model #' . $i);

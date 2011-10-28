@@ -70,10 +70,10 @@ class SitemapGenerator extends \XLite\Base\Singleton
                 \XLite\Core\Converter::buildURL('sitemap', '', array('index' => substr($name, 11, -4)), 'cart.php')
             );
             $string .= '<sitemap>'
-                . '<loc>' . $loc . '</loc>'
-                . '<lastmod>' . date('Y-m-dh:m:s', filemtime($path)) . '</lastmod>'
+                . '<loc>' . htmlentities($loc, ENT_COMPAT, 'UTF-8') . '</loc>'
+                . '<lastmod>' . date('Y-m-dH:m:s', filemtime($path)) . '</lastmod>'
                 . '</sitemap>';
-            unlink($path);
+            \Includes\Utils\FileManager::deleteFile($path);
         }
 
         return $string . '</sitemapindex>';
@@ -92,7 +92,7 @@ class SitemapGenerator extends \XLite\Base\Singleton
     {
         $path = LC_DIR_DATA . 'xmlsitemap.' . $index . '.xml';
 
-        return file_exists($path) ? file_get_contents($path) : null;
+        return \Includes\Utils\FileManager::isExists($path) ? file_get_contents($path) : null;
     }
 
     /**
@@ -144,7 +144,7 @@ class SitemapGenerator extends \XLite\Base\Singleton
     public function clear()
     {
         foreach (glob(LC_DIR_DATA . 'xmlsitemap.*.xml') as $path) {
-            unlink($path);
+            \Includes\Utils\FileManager::deleteFile($path);
         }
     }
 
@@ -202,21 +202,32 @@ class SitemapGenerator extends \XLite\Base\Singleton
      */
     protected function assembleRecord(array $record)
     {
-        $target = $record['loc']['target'];
-        unset($record['loc']['target']);
-
-        $record['loc'] = method_exists('XLite\Core\Converter', 'buildDrupalPath') && defined('DRUPAL_ROOT')
-            ? \XLite\Core\Converter::buildDrupalURL($target, '', $record['loc'])
-            : \XLite\Core\Converter::buildURL($target, '', $record['loc'], 'cart.php');
-        $record['loc'] = \XLite::getInstance()->getShopURL($record['loc']);
-        $record['lastmod'] = date('Y-m-dh:m:s', $record['lastmod']);
+        $record['loc'] = \XLite::getInstance()->getShopURL($this->buildLoc($record['loc']));
+        $record['lastmod'] = date('Y-m-dH:m:s', $record['lastmod']);
 
         $string = '<url>';
         foreach ($record as $name => $value) {
-            $string .= '<' . $name . '>' . $value . '</' . $name . '>';
+            $string .= '<' . $name . '>' . htmlentities($value) . '</' . $name . '>';
         }
 
         return $string . '</url>';
+    }
+
+    /**
+     * Build location URL
+     * 
+     * @param array $loc Locationb as array
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
+    protected function buildLoc(array $loc)
+    {
+        $target = $loc['target'];
+        unset($loc['target']);
+
+        return \XLite\Core\Converter::buildURL($target, '', $loc, 'cart.php');
     }
 
     /**
@@ -240,6 +251,9 @@ class SitemapGenerator extends \XLite\Base\Singleton
      */
     protected function initializeWrite()
     {
+        if (!\Includes\Utils\FileManager::isExists(LC_DIR_DATA)) {
+            \Includes\Utils\FileManager::mkdir(LC_DIR_DATA);
+        }
         $this->fileIndex = null;
         $this->emptyFile = true;
     }
@@ -254,12 +268,12 @@ class SitemapGenerator extends \XLite\Base\Singleton
     protected function finalizeWrite()
     {
         if ($this->emptyFile) {
-            if ($this->fileIndex && file_exists($this->getSitemapPath())) {
-                @unlink($this->getSitemapPath());
+            if ($this->fileIndex) {
+                \Includes\Utils\FileManager::deleteFile($this->getSitemapPath());
             }
 
         } else {
-            file_put_contents($this->getSitemapPath(), $this->getFooter(), FILE_APPEND);
+            \Includes\Utils\FileManager::write($this->getSitemapPath(), $this->getFooter(), FILE_APPEND);
         }
     }
 
@@ -276,16 +290,16 @@ class SitemapGenerator extends \XLite\Base\Singleton
     {
         if (!isset($this->fileIndex)) {
             $this->fileIndex = 1;
-            file_put_contents($this->getSitemapPath(), $this->getHead());
+            \Includes\Utils\FileManager::write($this->getSitemapPath(), $this->getHead());
         }
 
-        file_put_contents($this->getSitemapPath(), $string, FILE_APPEND);
+        \Includes\Utils\FileManager::write($this->getSitemapPath(), $string, FILE_APPEND);
         $this->emptyFile = false;
 
         if ($this->needSwitch()) {
-            file_put_contents($this->getSitemapPath(), $this->getFooter(), FILE_APPEND);
+            \Includes\Utils\FileManager::write($this->getSitemapPath(), $this->getFooter(), FILE_APPEND);
             $this->fileIndex++;
-            file_put_contents($this->getSitemapPath(), $this->getHead(), FILE_APPEND);
+            \Includes\Utils\FileManager::write($this->getSitemapPath(), $this->getHead(), FILE_APPEND);
             $this->emptyFile = true;
         }
     }

@@ -85,14 +85,17 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
     {
         $data = null;
 
-        if ($this->position < $this->getCategoriesLength()) {
+        if (0 == $this->position) {
+            $data = $this->assembleWelcomeData();
 
-            $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneAsSitemapLink($this->position, 1);
+        } elseif ($this->position < $this->getCategoriesLength() + 1) {
+
+            $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneAsSitemapLink($this->position - 1, 1);
             $data = $this->assembleCategoryData($data);
 
-        } elseif ($this->position < $this->getCategoriesLength() + $this->getProductsLength()) {
+        } elseif ($this->position < $this->getCategoriesLength() + $this->getProductsLength() + 1) {
 
-            $data =  \XLite\Core\Database::getRepo('XLite\Model\Product')->findFrame($this->position - $this->getCategoriesLength(), 1);
+            $data =  \XLite\Core\Database::getRepo('XLite\Model\Product')->findFrame($this->position - $this->getCategoriesLength() - 1, 1);
             $data = $this->assembleProductData($data[0]);
 
         }
@@ -173,7 +176,7 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      */
     public function count()
     {
-        return $this->getCategoriesLength() + $this->getProductsLength();
+        return $this->getCategoriesLength() + $this->getProductsLength() + 1;
     }
 
     /**
@@ -210,6 +213,23 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
     }
 
     /**
+     * Assemble welcome page data
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
+    protected function assembleWelcomeData()
+    {
+        return array(
+            'loc'        => array('target' => \XLite::TARGET_DEFAULT),
+            'lastmod'    => time(),
+            'changefreq' => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->welcome_changefreq,
+            'priority'   => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->welcome_priority,
+        );
+    }
+
+    /**
      * Assemble category data 
      * 
      * @param \XLite\Model\Category $category Category
@@ -223,8 +243,8 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
         return array(
             'loc'        => array('target' => 'category', 'category_id' => $category->getCategoryId()),
             'lastmod'    => time(),
-            'changefreq' => 'daily',
-            'priority'   => 0.5,
+            'changefreq' => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->category_changefreq,
+            'priority'   => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->category_priority,
         );
     }
 
@@ -242,8 +262,8 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
         return array(
             'loc'        => array('target' => 'product', 'product_id' => $product->getProductId()),
             'lastmod'    => time(),
-            'changefreq' => 'daily',
-            'priority'   => 0.4,
+            'changefreq' => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->product_changefreq,
+            'priority'   => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->product_priority,
         );
     }
 
