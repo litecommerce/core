@@ -75,7 +75,7 @@ class Request extends \XLite\Base\Singleton
                 }
 
             } else {
-                $data = $_REQUEST;
+                $data = array_merge($_GET, $_POST, $_COOKIE);
             }
         }
 
