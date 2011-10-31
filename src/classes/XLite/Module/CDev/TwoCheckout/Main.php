@@ -25,43 +25,61 @@
  * @since     1.0.0
  */
 
-namespace XLite\Model;
+namespace XLite\Module\CDev\TwoCheckout;
 
 /**
- * Config multilingual data
+ * 2Checkout.com module
  *
  * @see   ____class_see____
- * @since 1.0.0
- *
- * @Entity
- * @Table  (name="config_translations",
- *      indexes={
- *          @Index (name="ci", columns={"code","id"}),
- *          @Index (name="id", columns={"id"})
- *      }
- * )
+ * @since 1.0.11
  */
-class ConfigTranslation extends \XLite\Model\Base\Translation
+abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Human-readable option name
+     * Author name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="255")
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    protected $option_name;
+    public static function getAuthorName()
+    {
+        return 'Creative Development LLC';
+    }
 
     /**
-     * Option comment
+     * Module name
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="text")
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    protected $option_comment = '';
+    public static function getModuleName()
+    {
+        return '2Checkout.com';
+    }
+
+    /**
+     * Module version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getMinorVersion()
+    {
+        return '0';
+    }
+
+    /**
+     * Module description
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getDescription()
+    {
+        return 'Enables taking credit card payments for your online store via 2Checkout.com payment gateway.';
+    }
 }
