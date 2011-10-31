@@ -1477,6 +1477,7 @@ table.settings-table td * {
 
 table.settings-table td.note * {
   float: none;
+  vertical-align: top;
 }
 
 table.settings-table td.note ol {
