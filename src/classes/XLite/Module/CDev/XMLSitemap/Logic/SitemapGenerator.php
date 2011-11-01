@@ -255,6 +255,12 @@ class SitemapGenerator extends \XLite\Base\Singleton
     {
         if (!\Includes\Utils\FileManager::isExists(LC_DIR_DATA)) {
             \Includes\Utils\FileManager::mkdir(LC_DIR_DATA);
+            if (!\Includes\Utils\FileManager::isExists(LC_DIR_DATA)) {
+                \XLite\Logger::getInstance()->log(
+                    'The directory ' . LC_DIR_DATA . ' can not be created. Check the permissions to create directories.',
+                    LOG_ERR
+                );
+            }
         }
         $this->fileIndex = null;
         $this->emptyFile = true;
