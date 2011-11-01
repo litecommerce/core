@@ -69,9 +69,10 @@ class SitemapGenerator extends \XLite\Base\Singleton
             $loc = \XLite::getInstance()->getShopURL(
                 \XLite\Core\Converter::buildURL('sitemap', '', array('index' => substr($name, 11, -4)), 'cart.php')
             );
+            $time = filemtime($path);
             $string .= '<sitemap>'
                 . '<loc>' . htmlentities($loc, ENT_COMPAT, 'UTF-8') . '</loc>'
-                . '<lastmod>' . date('Y-m-dH:m:s', filemtime($path)) . '</lastmod>'
+                . '<lastmod>' . date('Y-m-d', $time) . 'T' . date('H:m:s', $time) . 'Z</lastmod>'
                 . '</sitemap>';
             \Includes\Utils\FileManager::deleteFile($path);
         }
@@ -203,7 +204,8 @@ class SitemapGenerator extends \XLite\Base\Singleton
     protected function assembleRecord(array $record)
     {
         $record['loc'] = \XLite::getInstance()->getShopURL($this->buildLoc($record['loc']));
-        $record['lastmod'] = date('Y-m-dH:m:s', $record['lastmod']);
+        $time = $record['lastmod'];
+        $record['lastmod'] = date('Y-m-d', $time) . 'T' . date('H:m:s', $time) . 'Z';
 
         $string = '<url>';
         foreach ($record as $name => $value) {
