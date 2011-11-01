@@ -1,0 +1,9 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Data for core upgrading 1.0.11 -> 1.0.12
+#
+
+XLite\Model\LanguageLabel:
+  - { name: 'Order #X, Y', translations: [{ code: en, label: 'Order #{{id}}, {{date}}' }] }
+  - { name: 'Order X', translations: [{ code: en, label: 'Order #{{id}}' }] }
+
