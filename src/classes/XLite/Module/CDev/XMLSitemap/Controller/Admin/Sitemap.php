@@ -47,7 +47,7 @@ class Sitemap extends \XLite\Controller\Admin\AAdmin
         return array(
             'Google'  => array(
                 'title' => 'Google',
-                'url'   => 'http://google.com/webmasters/sitemaps/ping?sitemap=%url%',
+                'url'   => 'http://google.com/webmasters/tools/ping?sitemap=%url%',
             ),
             'Yandex'  => array(
                 'title' => 'Yandex',
@@ -77,18 +77,25 @@ class Sitemap extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionLocate()
     {
-        $engines = \XLite\Core\Request::getInstance()->egines;
+        $engines = \XLite\Core\Request::getInstance()->engines;
 
         if ($engines) {
             foreach ($this->getEngines() as $key => $engine) {
                 if (in_array($key, $engines)) {
-                    $url = str_replace(
-                        '%url%',
-                        \XLite\Core\Converter::buildURL('sitemap', '', array(), 'cart.php'),
-                        $engine['url']
+                    $url = urlencode(
+                        \XLite::getInstance()->getShopURL(
+                            \XLite\Core\Converter::buildURL('sitemap', '', array(), 'cart.php')
+                        )
                     );
+                    $url = str_replace('%url%', $url, $engine['url']);
                     $request = new \XLite\Core\HTTP\Request($url);
-                    $request->sendRequest();
+                    $response = $request->sendRequest();
+                    if (200 == $response->code) {
+                        \XLite\Core\TopMessage::addInfo('Site map successfully registred on X', array('engine' => $key));
+
+                    } else {
+                        \XLite\Core\TopMessage::addWarning('Site map has not been registred in X', array('engine' => $key));
+                    }
                 }
             }
         }

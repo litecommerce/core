@@ -18,7 +18,7 @@
 
   <ul class="engines">
     <li FOREACH="getEngines(),key,engine">
-      <input type="checkbox" name="engines[]" value="{key}" />
+      <input type="checkbox" name="engines[]" value="{key}" id="engine{key}" />
       <label for="engine{key}">{t(engine.title)}<label>
     </li>
   </ul>

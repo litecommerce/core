@@ -58,3 +58,5 @@ XLite\Model\Config:
         option_name: Priority for Product page
 XLite\Model\LanguageLabel:
   - { name: 'XML sitemap URL: X', translations: [{ code: en, label: 'XML sitemap URL: <a href="{{url}}">{{url}}</a>' }] }
+  - { name: 'Site map successfully registred on X', translations: [{ code: en, label: 'Site map successfully registred on {{engine}}.' }] }
+  - { name: 'Site map has not been registred in X', translations: [{ code: en, label: 'Site map has not been registred in {{engine}}.' }] }
