@@ -40,6 +40,7 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: Priority for Welcome page
+        option_comment: The value should range from 0 to 1.
   - name: category_priority
     category: CDev\XMLSitemap
     type: text
@@ -48,6 +49,7 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: Priority for Category page
+        option_comment: The value should range from 0 to 1.
   - name: product_priority
     category: CDev\XMLSitemap
     type: text
@@ -56,6 +58,7 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: Priority for Product page
+        option_comment: The value should range from 0 to 1.
 XLite\Model\LanguageLabel:
   - { name: 'XML sitemap URL: X', translations: [{ code: en, label: 'XML sitemap URL: <a href="{{url}}">{{url}}</a>' }] }
   - { name: 'Site map successfully registred on X', translations: [{ code: en, label: 'Site map successfully registred on {{engine}}.' }] }
