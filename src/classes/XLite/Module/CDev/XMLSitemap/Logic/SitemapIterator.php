@@ -36,6 +36,11 @@ namespace XLite\Module\CDev\XMLSitemap\Logic;
 class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countable
 {
     /**
+     * Default priority 
+     */
+    const DEFAULT_PRIORITY = 0.5;
+
+    /**
      * Position 
      * 
      * @var   integer
@@ -278,9 +283,12 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
      */
     protected function processPriority($priority)
     {
-        $priority = round(doubleval($priority), 1);
+        $priority = is_numeric($priority) ? round(doubleval($priority), 1) : self::DEFAULT_PRIORITY;
+        if ($priority > 1 || $priority < 0) {
+            $priority = self::DEFAULT_PRIORITY;
+        }
 
-        return strval(max(0, min(1, $priority)));
+        return strval($priority);
     }
 }
 
