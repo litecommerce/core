@@ -482,26 +482,32 @@ abstract class Storage extends \XLite\Model\AEntity
     {
         $result = true;
 
-        foreach ($this->getAllowedFileSystemRoots() as $root) {
-            if (\Includes\Utils\FileManager::getRelativePath($path, $root)) {
-                $local = true;
-                break;
+        if (\Includes\Utils\FileManager::isExists($path)) {
+
+            foreach ($this->getAllowedFileSystemRoots() as $root) {
+                if (\Includes\Utils\FileManager::getRelativePath($path, $root)) {
+                    $local = true;
+                    break;
+                }
             }
-        }
 
-        if (empty($local)) {
-            $newPath = \Includes\Utils\FileManager::getUniquePath($this->getStoreFileSystemRoot(), basename($path));
+            if (empty($local)) {
+                $newPath = \Includes\Utils\FileManager::getUniquePath($this->getStoreFileSystemRoot(), basename($path));
 
-            if (\Includes\Utils\FileManager::copy($path, $newPath)) {
-                $path = $newPath;
-                $this->setStorageType(static::STORAGE_RELATIVE);
+                if (\Includes\Utils\FileManager::copy($path, $newPath)) {
+                    $path = $newPath;
+                    $this->setStorageType(static::STORAGE_RELATIVE);
+
+                } else {
+                    $result = false;
+                }
 
             } else {
-                $result = false;
+                $this->setStorageType(static::STORAGE_ABSOLUTE);
             }
 
         } else {
-            $this->setStorageType(static::STORAGE_ABSOLUTE);
+            $result = false;
         }
 
         return $result && $this->savePath($path);
