@@ -225,7 +225,7 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
             'loc'        => array('target' => \XLite::TARGET_DEFAULT),
             'lastmod'    => time(),
             'changefreq' => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->welcome_changefreq,
-            'priority'   => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->welcome_priority,
+            'priority'   => $this->processPriority(\XLite\Core\Config::getInstance()->CDev->XMLSitemap->welcome_priority),
         );
     }
 
@@ -244,7 +244,7 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
             'loc'        => array('target' => 'category', 'category_id' => $category->getCategoryId()),
             'lastmod'    => time(),
             'changefreq' => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->category_changefreq,
-            'priority'   => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->category_priority,
+            'priority'   => $this->processPriority(\XLite\Core\Config::getInstance()->CDev->XMLSitemap->category_priority),
         );
     }
 
@@ -263,9 +263,24 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
             'loc'        => array('target' => 'product', 'product_id' => $product->getProductId()),
             'lastmod'    => time(),
             'changefreq' => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->product_changefreq,
-            'priority'   => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->product_priority,
+            'priority'   => $this->processPriority(\XLite\Core\Config::getInstance()->CDev->XMLSitemap->product_priority),
         );
     }
 
+    /**
+     * Process priority 
+     * 
+     * @param mixed $priority Link priority
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function processPriority($priority)
+    {
+        $priority = round(doubleval($priority), 1);
+
+        return strval(max(0, min(1, $priority)));
+    }
 }
 
