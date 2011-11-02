@@ -28,17 +28,17 @@
 abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
 {
     protected $testOrder = array(
-        'tracking'       => 'test t',
-        'notes'          => 'Test note',
+        'tracking' => 'test t',
+        'notes'    => 'Test note',
     );
 
     protected $orderProducts = array();
 
     protected function getTestOrder()
     {
-        $order = new \XLite\Model\Order();
+        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->insert($this->testOrder);
 
-        $order->map($this->testOrder);
+        $order->setDate(time());
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
 
         if ($this->orderProducts) {
@@ -64,8 +64,7 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
 
         $order->calculate();
 
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getRepo('XLite\Model\Order')->update($order);
 
         $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
         $found = false;
@@ -81,7 +80,7 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
 
         $order->calculate();
 
-        \XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getRepo('XLite\Model\Order')->update($order);
 
         return $order;
     }

@@ -309,7 +309,7 @@
             form.find('[class*=validate]').not(':hidden').not(":disabled").each( function() {
                 var field = $(this);
                 errorFound |= methods._validateField(field, options, skipAjaxValidation);
-				field.focus();
+				//field.focus();
                 if (options.doNotShowAllErrosOnSubmit)
                     return false;
 		    if (errorFound && first_err==null) first_err=field;

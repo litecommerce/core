@@ -1153,7 +1153,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         // Save old images ids' list
         $oldImageIds = array();
         foreach ($product->getImages() as $image) {
-            $oldImageIds[] = $image->getImageId();
+            $oldImageIds[] = $image->getId();
         }
 
         if ($data) {
@@ -1170,7 +1170,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                     foreach ($product->getImages() as $i) {
                         if ($i->getHash() == $hash) {
                             $image = $i;
-                            $key = array_search($i->getImageId(), $oldImageIds);
+                            $key = array_search($i->getId(), $oldImageIds);
                             unset($oldImageIds[$key]);
                             break;
                         }
@@ -1203,7 +1203,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
 
         // Remove old images
         foreach ($product->getImages() as $image) {
-            if (in_array($image->getImageId(), $oldImageIds)) {
+            if (in_array($image->getId(), $oldImageIds)) {
                 $product->getImages()->removeElement($image);
                 \XLite\Core\Database::getEM()->remove($image);
             }

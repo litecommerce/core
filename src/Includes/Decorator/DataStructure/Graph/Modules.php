@@ -91,7 +91,7 @@ class Modules extends \Includes\DataStructure\Graph
     // ------------------------------ Getters and setters -
 
     /**
-     * Method to get critical path legth for a node
+     * Method to get critical path length for a node
      *
      * @param string $module Module actual name
      *
@@ -106,7 +106,7 @@ class Modules extends \Includes\DataStructure\Graph
             $this->calculateCriticalPathLengths();
         }
 
-        return $this->criticalPaths[$module];
+        return isset($this->criticalPaths[$module]) ? $this->criticalPaths[$module] : null;
     }
 
     /**
