@@ -82,4 +82,17 @@ abstract class Main extends \XLite\Module\AModule
     {
         return 'Module generates an XML file with information for search engines.';
     }
+
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
+
 }
