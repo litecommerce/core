@@ -582,55 +582,61 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 				[ -d $k/$j ] && module_files_list=$module_files_list" "$k/$j
 			done
 
-			module_file_name=`echo "$j" | sed 's!/!-!'`
+			if [ "$module_files_list" ]; then
 
-			module_main_file="classes/XLite/Module/${j}/Main.php"
+				module_file_name=`echo "$j" | sed 's!/!-!'`
 
-			if [ -f $module_main_file ]; then
-				module_major_version=`cat $module_main_file | grep -A 2 "function getMajorVersion()" | grep -o -E "'.+'" | sed "s!'!!g"`
+				module_main_file="classes/XLite/Module/${j}/Main.php"
 
-				if [ "$module_major_version" = "" ]; then
-					module_major_version=$default_module_major_version
+				if [ -f $module_main_file ]; then
+					module_major_version=`cat $module_main_file | grep -A 2 "function getMajorVersion()" | grep -o -E "'.+'" | sed "s!'!!g"`
+
+					if [ "$module_major_version" = "" ]; then
+						module_major_version=$default_module_major_version
+					fi
+
+					module_minor_version=`cat $module_main_file | grep -A 2 "function getMinorVersion()" | grep -o -E "'.+'" | sed "s!'!!g"`
+
+					module_version=`echo "${module_major_version}.${module_minor_version}" | sed "s!\.!_!g"`
+
+					module_actual_name=`echo "$j" | sed 's!/!\\\\!g'`
+					module_author=`cat $module_main_file | grep -A 2 "function getAuthorName()" | grep -o -E "'.+'" | sed "s!'!!g"`
+					module_name=`cat $module_main_file | grep -A 2 "function getModuleName()" | grep -o -E "'.+'" | sed "s!'!!g"`
+					module_icon=`cat $module_main_file | grep -A 2 "function getIconURL()" | grep -o -E "'.+'" | sed "s!'!!g"`
+					module_descr=`cat $module_main_file | grep -A 2 "function getDescription()" | grep -o -E "'.+'" | sed "s!'!!g"`
+
+				else
+					die "File classes/XLite/Module/${j} not found!"
 				fi
 
-				module_minor_version=`cat $module_main_file | grep -A 2 "function getMinorVersion()" | grep -o -E "'.+'" | sed "s!'!!g"`
+				# Generate module meta data
+				mkdir -p .phar
 
-				module_version=`echo "${module_major_version}.${module_minor_version}" | sed "s!\.!_!g"`
+				_php_code="echo serialize(array('RevisionDate'=>time(),'ActualName'=>'${module_actual_name}','VersionMajor'=>'${module_major_version}','VersionMinor'=>'${module_minor_version}','Name'=>'${module_name}','Author'=>'${module_author}','IconLink'=>'${module_icon}','Description'=>'${module_descr}','Dependencies'=>array()));"
 
-				module_actual_name=`echo "$j" | sed 's!/!\\\\!g'`
-				module_author=`cat $module_main_file | grep -A 2 "function getAuthorName()" | grep -o -E "'.+'" | sed "s!'!!g"`
-				module_name=`cat $module_main_file | grep -A 2 "function getModuleName()" | grep -o -E "'.+'" | sed "s!'!!g"`
-				module_icon=`cat $module_main_file | grep -A 2 "function getIconURL()" | grep -o -E "'.+'" | sed "s!'!!g"`
-				module_descr=`cat $module_main_file | grep -A 2 "function getDescription()" | grep -o -E "'.+'" | sed "s!'!!g"`
+				$PHP -qr "$_php_code" > .phar/.metadata.bin
+
+				module_hash_data='array('
+				for h in $module_files_list; do
+					for hd in `find $h -type f`; do
+						module_hash_data=$module_hash_data"'${hd}'=>'`md5 -q ${hd}`',"
+					done
+				done
+				module_hash_data=$module_hash_data")"
+
+				_php_code="echo json_encode(${module_hash_data});"
+
+				$PHP -qr "$_php_code" > .hash
+
+				tar -cf ${OUTPUT_DIR}/${module_file_name}-v${module_version}.tar .phar $module_files_list .hash
+				rm -rf .phar
+				rm .hash
+
+				echo "  + ${module_name} module package is complete: ${module_file_name}-v${module_version}.tar"
 
 			else
-				die "File classes/XLite/Module/${j} not found!"
+				echo "  - ${module_name} module not found"
 			fi
-
-			# Generate module meta data
-			mkdir -p .phar
-
-			_php_code="echo serialize(array('RevisionDate'=>time(),'ActualName'=>'${module_actual_name}','VersionMajor'=>'${module_major_version}','VersionMinor'=>'${module_minor_version}','Name'=>'${module_name}','Author'=>'${module_author}','IconLink'=>'${module_icon}','Description'=>'${module_descr}','Dependencies'=>array()));"
-
-			$PHP -qr "$_php_code" > .phar/.metadata.bin
-
-			module_hash_data='array('
-			for h in $module_files_list; do
-				for hd in `find $h -type f`; do
-					module_hash_data=$module_hash_data"'${hd}'=>'`md5 -q ${hd}`',"
-				done
-			done
-			module_hash_data=$module_hash_data")"
-
-			_php_code="echo json_encode(${module_hash_data});"
-
-			$PHP -qr "$_php_code" > .hash
-
-			tar -cf ${OUTPUT_DIR}/${module_file_name}-v${module_version}.tar .phar $module_files_list .hash
-			rm -rf .phar
-			rm .hash
-
-			echo "  + ${module_name} module package is complete: ${module_file_name}-v${module_version}.tar"
 
 		done
 

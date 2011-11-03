@@ -435,14 +435,16 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     /**
      * Get allowed currencies
      *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.9
      */
-    protected function getAllowedCurrencies()
+    protected function getAllowedCurrencies(\XLite\Model\Payment\Method $method)
     {
         return array_merge(
-            parent::getAllowedCurrencies(),
+            parent::getAllowedCurrencies($method),
             array(
                 'USD', 'CAD', 'EUR', 'GBP', 'AUD',
                 'CHF', 'JPY', 'NOK', 'NZD', 'PLN',

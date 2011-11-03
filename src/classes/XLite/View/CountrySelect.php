@@ -93,6 +93,26 @@ class CountrySelect extends \XLite\View\FormField
     }
 
     /**
+     * Check - if country code is selected option in "SELECT" tag.
+     *
+     * @param string $countryCode Code of country to check.
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function isSelectedCountry($countryCode)
+    {
+        $country = $this->getParam(self::PARAM_COUNTRY);
+
+        if ('' == $country) {
+            $country = \XLite\Core\Config::getInstance()->General->default_country;
+        }
+
+        return $country === $countryCode;
+    }
+
+    /**
      * Return countries list
      *
      * @return array

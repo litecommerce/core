@@ -135,7 +135,7 @@ abstract class Processor extends \XLite\Base
 
     /**
      * Payment method has settings into Module settings section
-     * 
+     *
      * @return boolan
      * @see    ____func_see____
      * @since  1.0.0
@@ -161,27 +161,27 @@ abstract class Processor extends \XLite\Base
 
     /**
      * Check - payment processor is applicable for specified order or not
-     * 
+     *
      * @param \XLite\Model\Order          $order  Order
      * @param \XLite\Model\Payment\Method $method Payment method
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function isApplicable(\XLite\Model\Order $order, \XLite\Model\Payment\Method $method)
     {
-        $currencies = $this->getAllowedCurrencies();
+        $currencies = $this->getAllowedCurrencies($method);
 
         return !$currencies || in_array($order->getCurrency()->getCode(), $currencies);
     }
 
     /**
-     * Get payemnt method icon path 
-     * 
+     * Get payemnt method icon path
+     *
      * @param \XLite\Model\Order          $order  Order
      * @param \XLite\Model\Payment\Method $method Payment method
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -192,10 +192,10 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
-     * Get payment method row checkout template 
-     * 
+     * Get payment method row checkout template
+     *
      * @param \XLite\Model\Payment\Method $method Payment method
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -321,13 +321,15 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
-     * Get allowed currencies 
+     * Get allowed currencies
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.9
      */
-    protected function getAllowedCurrencies()
+    protected function getAllowedCurrencies(\XLite\Model\Payment\Method $method)
     {
         return array();
     }

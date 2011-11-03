@@ -99,7 +99,7 @@ class Operator extends \XLite\Base\Singleton
             $result = file_get_contents($url);
 
         } else {
-            $request  = new \XLite\Core\HTTP\Request($url);
+            $bouncer = new \XLite\Core\HTTP\Request($url);
             $response = $bouncer->sendRequest();
 
             if (200 == $response->code) {

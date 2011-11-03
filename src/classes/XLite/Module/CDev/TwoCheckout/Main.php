@@ -25,13 +25,13 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\ProductOptions;
+namespace XLite\Module\CDev\TwoCheckout;
 
 /**
- * Module manager
+ * 2Checkout.com module
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.11
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -48,18 +48,6 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
-     * Module version
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getMinorVersion()
-    {
-        return '5';
-    }
-
-    /**
      * Module name
      *
      * @return string
@@ -68,7 +56,19 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getModuleName()
     {
-        return 'Product Options';
+        return '2Checkout.com';
+    }
+
+    /**
+     * Module version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getMinorVersion()
+    {
+        return '0';
     }
 
     /**
@@ -80,18 +80,6 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Enables customers to choose options when buying products.';
-    }
-
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function showSettingsForm()
-    {
-        return false;
+        return 'Enables taking credit card payments for your online store via 2Checkout.com payment gateway.';
     }
 }

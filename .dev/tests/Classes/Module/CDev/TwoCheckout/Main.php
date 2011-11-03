@@ -25,24 +25,24 @@
  * @since      1.0.0
  */
 
-class XLite_Tests_Module_CDev_PaypalWPS_Main extends XLite_Tests_TestCase
+class XLite_Tests_Module_CDev_TwoCheckout_Main extends XLite_Tests_TestCase
 {
     public function testGetModuleName()
     {
         $main = $this->getMain();
-        $this->assertEquals('Paypal Website Payments Standard', $main::getModuleName(), 'Wrong module name');
+        $this->assertEquals('2Checkout.com', $main::getModuleName(), 'Wrong module name');
     }
 
     public function testGetDescription()
     {
         $main = $this->getMain();
-        $this->assertEquals('Enables taking credit card payments for your online store via Paypal (Website Payments Standard).', $main::getDescription(), 'Wrong description');
+        $this->assertEquals('Enables taking credit card payments for your online store via 2Checkout.com payment gateway.', $main::getDescription(), 'Wrong description');
     }
 
     public function testGetVersion()
     {
         $main = $this->getMain();
-        $this->assertEquals('1.0.7', $main::getVersion(), 'Wrong version');
+        $this->assertEquals('1.0.0', $main::getVersion(), 'Wrong version');
     }
 
     public function testShowSettingsForm()
@@ -53,7 +53,8 @@ class XLite_Tests_Module_CDev_PaypalWPS_Main extends XLite_Tests_TestCase
 
     protected function getMain()
     {
-        return 'XLite\Module\CDev\PaypalWPS\Main';
+        return 'XLite\Module\CDev\TwoCheckout\Main';
     }
 
 }
+
