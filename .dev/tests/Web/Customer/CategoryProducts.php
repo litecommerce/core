@@ -24,12 +24,12 @@
  * @see        ____file_see____
  * @since      1.0.0
  *
- * @use category
+ * @resource category
  */
 
 require_once __DIR__ . '/AProductList.php';
 
-class XLite_Web_Customer_CategoryProducts extends XLite_Web_Customer_AProductList
+class XLite_Web_Customer_CategoryProducts extends      XLite_Web_Customer_AProductList
 {
 
     protected $widgetContainerClass = '.items-list.category-products';

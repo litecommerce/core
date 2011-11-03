@@ -24,7 +24,7 @@
  * @see        ____file_see____
  * @since      1.0.0
  *
- * @use product
+ * @resource category
  */
 
 require_once __DIR__ . '/AProductList.php';

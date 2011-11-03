@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 
 /*
@@ -261,7 +262,7 @@ class testRunner
             $this->tests,
             function($test)
             {
-                return $test->status == 'complete' || $test->status == 'error';
+                return $test->status == 'complete' || $test->status == 'error' || $test->status == 'abstract';
             }
         );
     }
@@ -329,7 +330,6 @@ class testRunner
 
     private function cleanResources()
     {
-        // print_r($this->tests);
         xlite_restore_sql_from_backup();
         sleep(1);
         $this->resources = array();
@@ -359,12 +359,12 @@ class TestTask
         $resources = array();
         $uses = array();
         $block_all = false;
-        foreach ($comments as $comment) {
-            if ($comment[0] != T_DOC_COMMENT)
-                continue;
-            $resources = array_merge($resources, self::getResources($comment[1], 'resource'));
-            $uses = array_merge($uses, self::getResources($comment[1], 'use'));
-            $block_all = $block_all || preg_match('/^.*\@block_all\s*$/Sm', $comment[1]) > 0;
+        foreach ($comments as $key => $comment) {
+            if ($comment[0] == T_DOC_COMMENT) {
+                $resources = array_merge($resources, self::getResources($comment[1], 'resource'));
+                $uses = array_merge($uses, self::getResources($comment[1], 'use'));
+                $block_all = $block_all || preg_match('/^.*\@block_all\s*$/Sm', $comment[1]) > 0;
+            }
         }
 
         if ($block_all) {
@@ -392,6 +392,9 @@ class TestTask
             1 => array("file", "/tmp/output-" . $testName . ".txt", "a"),
             2 => array("file", "/tmp/errors-" . $testName . ".txt", "a")
         );
+        //Fake run
+        //$this->process = proc_open("sleep " . rand(2, 4), $descriptorspec, $pipes);
+        //Real run
         $this->process = proc_open('./phpunit_no_restore.sh ' . $this->name, $descriptorspec, $pipes);
         if ($this->process) {
             print PHP_EOL . "Running test: " . $this->name;
@@ -435,9 +438,14 @@ class TestTask
             return false;
         if ($this->status != 'init')
             return false;
-        if (count(array_intersect($this->resources, array_keys($resources))) > 0)
-            return false;
-        if (count(array_intersect($this->uses, array_keys($resources))) > 0)
+        $prime = function($res)
+        {
+            $parts = explode('_', $res);
+            return $parts[0];
+        };
+        $primary_resources = array_map($prime, $resources);
+        $primary_self_resources = array_map($prime, array_merge($this->resources, $this->uses));
+        if (count(array_intersect($primary_self_resources, array_keys($primary_resources))) > 0)
             return false;
         return true;
     }
@@ -454,3 +462,5 @@ class TestTask
 
 $runner = new testRunner();
 $runner->start(SELENIUM_CLIENTS_COUNT);
+
+

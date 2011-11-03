@@ -24,7 +24,6 @@
  * @see        ____file_see____
  * @since      1.0.0
  *
- * @no_resources
  */
 
 require_once __DIR__ . '/ACustomer.php';

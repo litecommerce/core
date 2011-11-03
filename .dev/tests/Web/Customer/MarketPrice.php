@@ -26,6 +26,7 @@
  *
  * @resource product_market_price
  * @use product
+ * @use category
  */
 
 require_once __DIR__ . '/ACustomer.php';
