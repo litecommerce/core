@@ -42,7 +42,10 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected static $registeredResources = array('js' => array(), 'css' => array());
+    protected static $registeredResources = array(
+        \XLite\View\AView::RESOURCE_JS  => array(),
+        \XLite\View\AView::RESOURCE_CSS => array(),
+    );
 
     /**
      * Unique suffix to resource filenames

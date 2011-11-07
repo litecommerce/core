@@ -136,7 +136,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function prepareResources(array $data, $isCommon = false)
+    protected function prepareResources(array $data, $isCommon = false)
     {
         $resources = parent::prepareResources($data, $isCommon);
 

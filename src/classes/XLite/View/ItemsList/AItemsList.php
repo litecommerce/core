@@ -38,14 +38,12 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * Widget param names
      */
-
     const PARAM_SORT_BY      = 'sortBy';
     const PARAM_SORT_ORDER   = 'sortOrder';
 
     /**
      * SQL orderby directions
      */
-
     const SORT_ORDER_ASC  = 'asc';
     const SORT_ORDER_DESC = 'desc';
 

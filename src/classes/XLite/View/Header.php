@@ -103,7 +103,7 @@ class Header extends \XLite\View\AView
      */
     protected function getJSResources()
     {
-        return self::getRegisteredResources(self::RESOURCE_JS);
+        return static::getRegisteredResources(self::RESOURCE_JS);
     }
 
     /**
@@ -117,7 +117,7 @@ class Header extends \XLite\View\AView
     {
         $list = array();
 
-        foreach (self::getRegisteredResources(self::RESOURCE_CSS) as $k => $file) {
+        foreach (static::getRegisteredResources(self::RESOURCE_CSS) as $k => $file) {
             if (!isset($file['media']) || !$file['media']) {
                 $file['media'] = 'all';
             }
