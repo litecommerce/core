@@ -53,9 +53,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected $arePreinitialized = false;
 
-
-    // ------------------------------ Menu callbacks -
-
+    // {{{ Menu callbacks
 
     /**
      * Return page title
@@ -81,7 +79,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function updateTemplateVars(&$variables)
+    public function updateTemplateVars(array &$variables)
     {
         // Get page title for current target
         $title = $this->getPageTitle();
@@ -101,30 +99,21 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function updateMetaTags(&$elements)
+    public function updateMetaTags(array &$elements)
     {
-        $viewer = $this->getViewer();
+        foreach (array('description' => 'getMetaDescription', 'keywords' => 'getKeywords') as $name => $method) {
+            $content = $this->getViewer()->$method();
 
-        if ($viewer->getMetaDescription()) {
-            $elements['lc_connector_meta_description'] = array(
-                '#type' => 'html_tag',
-                '#tag' => 'meta',
-                '#attributes' => array(
-                    'name' => 'description',
-                    'content' => htmlspecialchars($viewer->getMetaDescription(), ENT_QUOTES, 'UTF-8'),
-                ),
-            );
-        }
-
-        if ($viewer->getKeywords()) {
-            $elements['lc_connector_meta_keywords'] = array(
-                '#type' => 'html_tag',
-                '#tag' => 'meta',
-                '#attributes' => array(
-                    'name' => 'keywords',
-                    'content' => htmlspecialchars($viewer->getKeywords(), ENT_QUOTES, 'UTF-8'),
-                ),
-            );
+            if ($content) {
+                $elements['lc_connector_meta_' . $name] = array(
+                    '#type' => 'html_tag',
+                    '#tag'  => 'meta',
+                    '#attributes' => array(
+                        'name'    => $name,
+                        'content' => htmlspecialchars($content, ENT_QUOTES, 'UTF-8'),
+                    ),
+                );
+            }
         }
     }
 
@@ -140,17 +129,13 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         // Perform some common actions
         $this->performCommonActions();
 
-        // Current viewer
-        $viewer = $this->getViewer();
+        $this->registerResources($this->getViewer());
 
-        $content = $viewer->getContent();
-        $this->registerResources($viewer);
+        $title   = $this->getTitle();
+        $trail   = array();
+        $content = $this->getViewer()->getContent();
 
-        $title = $this->getTitle();
-
-        $trail = array();
-
-        if ($viewer->isTitleVisible() && $title) {
+        if ($this->getViewer()->isTitleVisible() && $title) {
             $trail[] = array(
                 'title'             => $title,
                 'link_path'         => '',
@@ -162,7 +147,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         menu_set_active_trail($trail);
 
         // Set value for <title> tag
-        drupal_set_title($viewer->getPageTitle());
+        drupal_set_title($this->getViewer()->getPageTitle());
 
         return $this->isAJAX() ? $this->displayAJAXContent($content) : $content;
     }
@@ -179,9 +164,9 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         return true;
     }
 
+    // }}}
 
-    // ------------------------------ Ancillary methods -
-
+    // {{{ Ancillary methods
 
     /**
      * Return LC viewer for current controller
@@ -208,7 +193,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function isAJAX()
     {
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'];
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' === $_SERVER['HTTP_X_REQUESTED_WITH'];
     }
 
     /**
@@ -246,11 +231,9 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 
         if (\XLite\Core\Request::getInstance()->isHTTPS()) {
-
             header('Cache-Control: private, must-revalidate');
 
         } else {
-
             header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
             header('Pragma: no-cache');
         }
@@ -336,7 +319,9 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         if (!$this->arePreinitialized) {
 
             // Set no-cache headers
-            headers_sent() ?: $this->setNocacheHeaders();
+            if (!headers_sent()) {
+                $this->setNocacheHeaders();
+            }
 
             // Set LC breadcrumbs
             $this->setBreadcrumbs();
@@ -344,4 +329,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             $this->arePreinitialized = true;
         }
     }
+
+    // }}}
 }

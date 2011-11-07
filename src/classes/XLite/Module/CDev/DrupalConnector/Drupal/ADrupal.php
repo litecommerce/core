@@ -36,15 +36,6 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 abstract class ADrupal extends \XLite\Base\Singleton
 {
     /**
-     * Initialized handler instance
-     *
-     * @var   \XLite\Module\CDev\DrupalConnector\Handler
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $handler;
-
-    /**
      * Already registered resources
      *
      * @var   array
@@ -52,6 +43,15 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @since 1.0.0
      */
     protected static $registeredResources = array('js' => array(), 'css' => array());
+
+    /**
+     * Unique suffix to resource filenames
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.13
+     */
+    protected static $resourcesBaseUID;
 
     /**
      * Resources weight counter
@@ -62,7 +62,16 @@ abstract class ADrupal extends \XLite\Base\Singleton
      */
     protected static $resourcesCounter = 0;
 
-    // ------------------------------ Application layer -
+    /**
+     * Initialized handler instance
+     *
+     * @var   \XLite\Module\CDev\DrupalConnector\Handler
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $handler;
+
+    // {{{ Application layer
 
     /**
      * Return instance of current CMS connector
@@ -100,54 +109,47 @@ abstract class ADrupal extends \XLite\Base\Singleton
         $this->getHandler()->runController(md5(serialize($data)));
     }
 
+    // }}}
 
-    // ------------------------------ Resources (CSS and JS) -
+    // {{{ Resources (CSS and JS)
 
     /**
-     * Get resources (from list) which are not already registered
+     * Register LC widget resources
      *
-     * @param string $type  Resource type ("js" or "css")
-     * @param array  $files Resource files
+     * @param \XLite\View\AView $widget LC widget to get resources list
      *
-     * @return array
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getUniqueResources($type, array $files)
+    protected function registerResources(\XLite\View\AView $widget)
     {
-        static::$registeredResources[$type] = array_merge(static::$registeredResources[$type], $files);
+        foreach ($widget->getRegisteredResources() as $type => $files) {
+            $method = 'drupal_add_' . $type;
 
-        return $files;
-    }
+            foreach ($files as $name => $data) {
+                if (empty(static::$registeredResources[$type][$name])) {
+                    $method($data['file'], $this->getResourceInfo($type, $data));
 
-
-
-    /**
-     * Get JS scope
-     *
-     * @param string $file Resource file path
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getJSScope($file)
-    {
-        return preg_match('/.skins.common.js./Ss', $file) ? 'header' : 'footer';
+                    static::$registeredResources[$type][$name] = true;
+                }
+            }
+        }
     }
 
     /**
-     * Get file unique basename
+     * Get resource description in Drupal format
      *
-     * @param string $file Resource file path
+     * @param string $type Resource type ("js" or "css")
+     * @param array  $file Resource file info
      *
-     * @return string
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getResourceBasename($file)
+    protected function getResourceInfo($type, array $file)
     {
-        return preg_replace('/\.(css|js)$/Ss', '.' . uniqid() . '.$1', basename($file));
+        return $this->getResourceInfoCommon($file) + $this->{__FUNCTION__ . strtoupper($type)}($file);
     }
 
     /**
@@ -164,7 +166,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
         return array(
             'type'     => 'file',
             'basename' => $this->getResourceBasename($file['file']),
-            'weight'   => isset($file['weight']) ? $file['weight'] : static::$resourcesCounter++,
+            'weight'   => isset($file['weight']) ? $file['weight'] : static::$resourcesCounter,
         );
     }
 
@@ -205,50 +207,58 @@ abstract class ADrupal extends \XLite\Base\Singleton
     }
 
     /**
-     * Get resource description in Drupal format
+     * Get JS scope
      *
-     * @param string $type Resource type ("js" or "css")
-     * @param array  $file Resource file info
+     * @param string $file Resource file path
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getResourceInfo($type, array $file)
+    protected function getJSScope($file)
     {
-        return $this->getResourceInfoCommon($file) + $this->{__FUNCTION__ . strtoupper($type)}($file);
+        return preg_match('/.skins.common.js./Ss', $file) ? 'header' : 'footer';
     }
 
     /**
-     * Register single resource
+     * Get file unique basename
      *
-     * @param string $type Resource type ("js" or "css")
-     * @param array  $file Resource file info
+     * @param string $file Resource file path
      *
-     * @return mixed
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function registerResource($type, array $file)
+    protected function getResourceBasename($file)
     {
-        return call_user_func_array('drupal_add_' . $type, array($file['file'], $this->getResourceInfo($type, $file)));
+        return preg_replace('/\.(css|js)$/Ss', '.' . $this->getUniqueID() . '.$1', basename($file));
     }
 
     /**
-     * Register LC widget resources
+     * Return unique identifier
      *
-     * @param \XLite\View\AView $widget LC widget to get resources list
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function getUniqueID()
+    {
+        return static::$resourcesBaseUID . ++static::$resourcesCounter;
+    }
+
+    /**
+     * Protected constructor
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function registerResources(\XLite\View\AView $widget)
+    protected function __construct()
     {
-        foreach ($widget->getRegisteredResources() as $type => $files) {
-            foreach ($this->getUniqueResources($type, $files) as $file) {
-                $this->registerResource($type, $file);
-            }
-        }
+        parent::__construct();
+
+        static::$resourcesBaseUID = uniqid();
     }
+
+    // }}}
 }
