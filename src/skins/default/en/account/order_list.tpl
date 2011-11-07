@@ -12,6 +12,6 @@
 
 {displayViewListContent(#customer.order_list.before#)}
 
-<widget class="\XLite\View\OrderSearch" />
+<widget target="order_list" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
 
 {displayViewListContent(#customer.order_list.after#)}

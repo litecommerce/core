@@ -822,7 +822,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             $options['database_details']['password']
         );
 
-        $this->assertTrue(is_resource($connect), 'Wrong database connection parameters!');
+        $this->assertTrue(is_resource($connect), sprintf('Wrong database connection parameters: %s (%s)', $dbhost, $options['database_details']['username']));
     }
 
     /**

@@ -50,7 +50,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         foreach ($this->testOrder as $k => $v) {
             $m = 'get' . \XLite\Core\Converter::convertToCamelCase($k);
-            $this->assertEquals($v, $order->$m(), 'Check ' . $k);
+            $this->assertEquals($v, $order->$m(), 'Check test order: ' . $k);
         }
 
         $this->assertEquals(

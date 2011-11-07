@@ -953,13 +953,13 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * Check - can repository table disabled into DB or not
+     * Check if it's possible to disable model DB table
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function canTableDisabled()
+    public function canDisableTable()
     {
         return true;
     }

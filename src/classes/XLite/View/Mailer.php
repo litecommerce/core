@@ -286,11 +286,13 @@ class Mailer extends \XLite\View\AView
 
             $result = $this->mail->Send();
 
+            $error = ob_get_contents();
+
             ob_end_clean();
 
             if (!$result) {
 
-                \XLite\Logger::getInstance()->log('Mail FAILED: ' . $this->mail->ErrorInfo);
+                \XLite\Logger::getInstance()->log('Mail FAILED: ' . $this->mail->ErrorInfo . ' : [' . $error . ']');
             }
         }
 
@@ -444,6 +446,8 @@ class Mailer extends \XLite\View\AView
                     $this->mail->SMTPSecure = \XLite\Core\Config::getInstance()->Email->smtp_security;
                 }
             }
+
+            $this->mail->SMTPDebug = true;
 
             $this->mail->IsHTML(true);
             $this->mail->Encoding = 'quoted-printable';

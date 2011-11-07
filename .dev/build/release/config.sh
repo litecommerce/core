@@ -51,8 +51,15 @@ CDev/ProductOptions
 CDev/Quantum
 CDev/SalesTax
 CDev/TinyMCE
+CDev/TwoCheckout
 CDev/VAT
 CDev/USPS
+"
+
+# LiteCommerce paid modules which should be packed as separate distributives
+XLITE_SEPARATE_MODULES=$XLITE_SEPARATE_MODULES"
+CDev/Egoods
+CDev/ProductAdvisor
 "
 
 # LiteCommerce files that must be removed from all distributives
@@ -65,6 +72,11 @@ restoredb
 sql/local
 sql/demo
 sql/modules
+"
+
+# LiteCommerce files that are required for night builds
+DRUPAL_FILES_TESTMODE="
+profiles/litecommerce_test
 "
 
 # Drupal files that must be removed from all distributives

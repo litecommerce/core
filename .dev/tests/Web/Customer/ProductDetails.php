@@ -23,6 +23,8 @@
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
+ *
+ * @use product
  */
 
 require_once __DIR__ . '/ACustomer.php';
@@ -100,23 +102,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         // Gallery
         if ($product->countImages() > 1) {
-            $this->assertElementPresent(
-                "//form[@class='product-details']"
-                . "/div[@class='image']"
-                . "/a[@class='loupe']"
-                . "/img",
-                'check loupe'
-            );
-            $this->assertElementPresent(
-                "//form[@class='product-details']"
-                . "/div[@class='image']"
-                . "/div[@class='product-image-gallery']"
-                . "/ul"
-                . "/li"
-                . "/a[@rel='gallery']"
-                . "/img",
-                'check gallery items'
-            );
+            $this->assertElementPresent('css=form.product-details .image a.loupe img', 'check loupe');
+            $this->assertElementPresent('css=form.product-details .image .product-image-gallery ul li a img', 'check gallery items');
             $this->assertEquals(
                 count($product->getImages()),
                 $this->getJSExpression('jQuery("div.product-details .image .product-image-gallery li a").length'),
@@ -160,12 +147,14 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         // Tabs
         $this->assertElementPresent(
             "//form[@class='product-details validationEngine']"
+            . "/div[@class='product-details-tabs']"
             . "/div[@class='tabs']"
             . "/ul[@class='tabs primary']"
             . "/li[@class='active']"
-            . "/a[@class='active' and text()='Description']",
-            'check first tabs'
+            . "/a[contains(text(), 'Description')]",
+            'check for "Description" tab'
         );
+
         $this->assertEquals(
             1,
             $this->getJSExpression('jQuery(".product-details .tabs ul li a").length'),
@@ -175,13 +164,18 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         // Extra fields
         $this->assertElementPresent(
             "//form[@class='product-details validationEngine']"
+            . "/div[@class='product-details-tabs']"
+            . "/div[@class='tab-container']"
             . "/ul[@class='extra-fields']"
             . "/li"
             . "/strong[text()='Weight:']",
             'check weight (label)'
         );
+
         $this->assertElementPresent(
             "//form[@class='product-details validationEngine']"
+            . "/div[@class='product-details-tabs']"
+            . "/div[@class='tab-container']"
             . "/ul[@class='extra-fields']"
             . "/li"
             . "/span[text()='" . $product->getWeight(). " lbs']",
@@ -190,6 +184,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $this->assertElementPresent(
             "//form[@class='product-details validationEngine']"
+            . "/div[@class='product-details-tabs']"
+            . "/div[@class='tab-container']"
             . "/ul[@class='extra-fields']"
             . "/li[@class='identifier product-sku']"
             . "/strong[@class='type' and text()='SKU:']",
@@ -197,6 +193,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
         $this->assertElementPresent(
             "//form[@class='product-details validationEngine']"
+            . "/div[@class='product-details-tabs']"
+            . "/div[@class='tab-container']"
             . "/ul[@class='extra-fields']"
             . "/li"
             . "/span[@class='value' and text()='" . $product->getSKU(). "']",
@@ -205,6 +203,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $this->assertElementPresent(
             "//form[@class='product-details validationEngine']"
+            . "/div[@class='product-details-tabs']"
+            . "/div[@class='tab-container']"
             . "/div[@class='description product-description']",
             'check description'
         );
@@ -418,6 +418,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
     public function testAdd2Cart()
     {
         $product = $this->getActiveProduct();
+        $product->getInventory()->setAmount(100);
+        \XLite\Core\Database::getEM()->flush();
 
         $this->openAndWait('store/product//product_id-' . $product->getProductId());
 
@@ -464,7 +466,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $qty++;
 
         $this->waitForLocalCondition(
-            'jQuery(".minicart-items-number").html() == ' . $qty,
+            'jQuery(".minicart-items-number").html() == "2"',
             10000,
             'check content reloading #2'
         );
@@ -477,7 +479,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $qty += 3;
 
         $this->waitForLocalCondition(
-            'jQuery(".minicart-items-number").html() == ' . $qty,
+            'jQuery(".minicart-items-number").html() == "5"',
             30000,
             'check quantity'
         );

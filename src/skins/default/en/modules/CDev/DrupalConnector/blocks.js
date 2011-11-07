@@ -73,6 +73,7 @@ jQuery().ready(
           if (typeof(lcConnectorBlocks[key]) != 'undefined') {
 
             // Remove old options
+            var selected = this.displayMode.options[this.displayMode.selectedIndex].text;
             while (0 < this.displayMode.options.length) {
               this.displayMode.options[0] = null;
             }
@@ -83,6 +84,10 @@ jQuery().ready(
               lcConnectorBlocks[key][this.options[this.selectedIndex].value],
               function(k, v) {
                 displayMode.options[displayMode.options.length] = new Option(v, k);
+
+                if (selected && selected == v) {
+                  displayMode.selectedIndex = displayMode.options.length - 1;
+                }
               }
             );
 

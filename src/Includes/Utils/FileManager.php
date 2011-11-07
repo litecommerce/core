@@ -218,11 +218,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
         $path      = static::getRealPath($path);
         $compareTo = static::getCanonicalDir($compareTo);
 
-        if ($path && $compareTo) {
-            $path = preg_replace('|^' . preg_quote($compareTo, '|') . '|USsi', '', $path);
-        }
-
-        return $path ?: null;
+        return ($path && $compareTo) ? preg_filter('|^' . preg_quote($compareTo, '|') . '|USsi', '', $path) : null;
     }
 
     /**
@@ -548,8 +544,6 @@ abstract class FileManager extends \Includes\Utils\AUtils
         return disk_free_space($dir);
     }
 
-    // {{{ :TODO: must be refactored
-
     /**
      * Find executable file
      *
@@ -561,20 +555,17 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function findExecutable($filename)
     {
-        $pathSeparator = LC_OS_IS_WIN ? ';' : ':';
+        $result = null;
+        $directories = explode(LC_OS_IS_WIN ? ';' : ':', @getenv('PATH'));
 
-        $directories = explode($pathSeparator, @getenv('PATH'));
-
-        if (!LC_OS_IS_WIN) {
-            array_unshift($directories, '/usr/bin', '/usr/local/bin');
-        } else {
+        if (LC_OS_IS_WIN) {
             $filename .= '.exe';
+
+        } else {
+            array_unshift($directories, '/usr/bin', '/usr/local/bin');
         }
 
-        $result = null;
-
         foreach ($directories as $dir) {
-
             $file = ($dir ? $dir . LC_DS : '') . $filename;
 
             if (is_executable($file)) {
@@ -585,50 +576,4 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
         return $result;
     }
-
-    /**
-     * Normalize path
-     *
-     * @param string $path Path
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function normalize($path)
-    {
-        return array_reduce(explode(LC_DS, $path), array(get_called_class(), 'normalizeCallback'), 0);
-    }
-
-    /**
-     * Path nrmalization procedure callback
-     *
-     * @param string $a Path part 1
-     * @param string $b Path part 2
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function normalizeCallback($a, $b)
-    {
-        if (0 === $a) {
-            $a = ('/' === LC_DS ? LC_DS : '');
-        }
-
-        if ('' === $b || '.' === $b) {
-            $result = $a;
-
-        } elseif ('..' === $b) {
-            $result = dirname($a);
-
-        } else {
-
-            $result = preg_replace('/' . preg_quote(LC_DS, '/') . '+/S', LC_DS, $a . ('' === $a ? '' : LC_DS) . $b);
-        }
-
-        return $result;
-    }
-
-    // }}}
 }

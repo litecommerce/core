@@ -164,7 +164,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      *
      * @Column (type="integer")
      */
-    protected $lastRenewDate;
+    protected $lastRenewDate = 0;
 
     /**
      * Status code

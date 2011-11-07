@@ -28,7 +28,7 @@
 namespace XLite\Controller\Admin;
 
 /**
- * Abstarct admin-zone controller
+ * Abstract admin-zone controller
  *
  * @see   ____class_see____
  * @since 1.0.0

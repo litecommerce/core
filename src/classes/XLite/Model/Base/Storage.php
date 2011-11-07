@@ -232,25 +232,26 @@ abstract class Storage extends \XLite\Model\AEntity
     }
 
     /**
-     * Check - file exists or not
+     * Check if file exists
      * 
+     * @param string  $path      Path to check OPTIONAL
+     * @param boolean $forceFile Flag OPTIONAL
+     *
      * @return boolean
      * @see    ____func_see____
-     * @since  1.0.11
+     * @since  1.0.12
      */
-    public function isFileExists()
+    public function isFileExists($path = null, $forceFile = false)
     {
-        if ($this->isURL()) {
-            $request = new \PEAR2\HTTP\Request($this->getPath());
-            $request->verb = 'HEAD';
+        if ($this->isURL($path) && !$forceFile) {
+            $request = new \XLite\Core\HTTP\Request($path ?: $this->getPath());
             $response = $request->sendRequest();
-            $exists = 200 == $response->code
-                && isset($response->headers->ContentLength)
-                && 0 < $response->headers->ContentLength;
+
+            $exists = 200 == $response->code && !empty($response->headers->ContentLength);
 
         } else {
-            $path = $this->getStoragePath();
-            $exists = file_exists($path) && is_readable($path);
+            $exists = \Includes\Utils\FileManager::isFileReadable($path ?: $this->getStoragePath());
+
         }
 
         return $exists;
@@ -441,53 +442,30 @@ abstract class Storage extends \XLite\Model\AEntity
     /**
      * Load from request
      *
-     * @param string $key    Key in $_FILES service array
-     * @param string $subkey Optional subkey OPTIONAL
+     * @param string $key Key in $_FILES service array
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function loadFromRequest($key, $subkey = null)
+    public function loadFromRequest($key)
     {
-        $result = false;
+        $path = \Includes\Utils\FileManager::moveUploadedFile($key, $this->getStoreFileSystemRoot());
 
-        $cell = isset($_FILES[$key]) ? $_FILES[$key] : null;
+        if ($path) {
+            $this->setStorageType(static::STORAGE_RELATIVE);
 
-        if ($cell && (!$subkey || isset($cell['name'][$subkey]))) {
-
-            $error = $subkey ? $cell['error'][$subkey] : $cell['error'];
-
-            if (UPLOAD_ERR_OK == $error) {
-
-                $tmp = $subkey ? $cell['tmp_name'][$subkey] : $cell['tmp_name'];
-                $basename = $subkey ? $cell['name'][$subkey] : $cell['name'];
-
-                $path = \Includes\Utils\FileManager::getUniquePath($this->getStoreFileSystemRoot(), $basename);
-
-                if (move_uploaded_file($tmp, $path)) {
-
-                    $mime = $subkey ? $cell['type'][$subkey] : $cell['type'];
-                    if ($mime) {
-                        $this->setMime($mime);
-                    }
-                    chmod($path, 0644);
-
-                    $this->setStorageType(static::STORAGE_RELATIVE);
-
-                    if ($this->savePath($path)) {
-
-                        $result = true;
-
-                    } else {
-                        \Includes\Utils\FileManager::deleteFile($path);
-                    }
-                }
+            if (!empty($_FILES[$key]['type'])) {
+                $this->setMime($_FILES[$key]['type']);
             }
 
+            if (!$this->savePath($path)) {
+                \Includes\Utils\FileManager::deleteFile($path);
+                $path = null;
+            }
         }
 
-        return $result;
+        return !empty($path);
     }
 
     /**
@@ -504,32 +482,32 @@ abstract class Storage extends \XLite\Model\AEntity
     {
         $result = true;
 
-        $path = \Includes\Utils\FileManager::normalize($path);
+        if (\Includes\Utils\FileManager::isExists($path)) {
 
-        $local = false;
-        foreach ($this->getAllowedFileSystemRoots() as $root) {
-            if (0 === strncmp($root, $path, strlen($root))) {
-                $local = true;
-            }
-        }
-
-        if (!$local) {
-
-            // Move file
-            $newPath = \Includes\Utils\FileManager::getUniquePath(
-                $this->getStoreFileSystemRoot(),
-                $basename ?: basename($path)
-            );
-
-            if (!\Includes\Utils\FileManager::isFile($path) || !\Includes\Utils\FileManager::copy($path, $newPath)) {
-                $result = false;
+            foreach ($this->getAllowedFileSystemRoots() as $root) {
+                if (\Includes\Utils\FileManager::getRelativePath($path, $root)) {
+                    $local = true;
+                    break;
+                }
             }
 
-            $path = $newPath;
-        }
+            if (empty($local)) {
+                $newPath = \Includes\Utils\FileManager::getUniquePath($this->getStoreFileSystemRoot(), basename($path));
 
-        if ($result) {
-            $this->setStorageType($local ? static::STORAGE_ABSOLUTE : static::STORAGE_RELATIVE);
+                if (\Includes\Utils\FileManager::copy($path, $newPath)) {
+                    $path = $newPath;
+                    $this->setStorageType(static::STORAGE_RELATIVE);
+
+                } else {
+                    $result = false;
+                }
+
+            } else {
+                $this->setStorageType(static::STORAGE_ABSOLUTE);
+            }
+
+        } else {
+            $result = false;
         }
 
         return $result && $this->savePath($path);
@@ -547,33 +525,35 @@ abstract class Storage extends \XLite\Model\AEntity
      */
     public function loadFromURL($url, $copy2fs = false)
     {
-        if (2 > func_num_args()) {
-            $copy2fs = $this->getRepository()->isStoreRemote();
-        }
-
         $result = $this->isURL($url);
 
         if ($result) {
-
             $name = basename(parse_url($url, PHP_URL_PATH));
 
-            $this->setStorageType(static::STORAGE_URL);
-
             if ($copy2fs) {
-
-                $fn = LC_DIR_TMP . $name;
                 $file = \XLite\Core\Operator::getURLContent($url);
-                $result = ($file && file_put_contents($fn, $file))
-                    ? $this->loadFromLocalFile($fn)
-                    : false;
+                $result = !empty($file);
 
-                \Includes\Utils\FileManager::deleteFile($fn);
+                if ($result) {
+                    $tmp = LC_DIR_TMP . $name;
+                    $result = \Includes\Utils\FileManager::write($tmp, $file) ? $this->loadFromLocalFile($tmp) : false;
+
+                    if ($result) {
+                        \Includes\Utils\FileManager::deleteFile($tmp);
+                    }
+                }
 
             } else {
-
+                $savedPath = $this->getPath();
                 $this->setPath($url);
                 $this->setFileName($name);
+
                 $result = $this->renew();
+
+                if ($result) {
+                    $this->removeFile($savedPath);
+                    $this->setStorageType(static::STORAGE_URL);
+                }
             }
         }
 
@@ -595,8 +575,9 @@ abstract class Storage extends \XLite\Model\AEntity
      */
     public function removeFile($path = null)
     {
-        if (!$this->isURL($path) && ($path || $this->getRepository()->allowRemovePath($this->getStoragePath(), $this))) {
-            $path = $path ?: $this->getStoragePath();
+        $path = $this->getStoragePath($path);
+
+        if (!$this->isURL($path) && $this->getRepository()->allowRemovePath($path, $this)) {
             \Includes\Utils\FileManager::deleteFile($path);
         }
     }
@@ -649,6 +630,7 @@ abstract class Storage extends \XLite\Model\AEntity
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
+     *
      * @PrePersist
      * @PreUpdate
      */
@@ -664,7 +646,8 @@ abstract class Storage extends \XLite\Model\AEntity
      *
      * @return void
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.10
+     *
      * @PreRemove
      */
     public function prepareRemove()
@@ -689,18 +672,16 @@ abstract class Storage extends \XLite\Model\AEntity
 
         // Remove old file
         $savePath = static::STORAGE_ABSOLUTE == $this->getStorageType() ? $path : $this->assembleSavePath($path);
-        $toRemove = $this->getPath() && $this->getPath() != $savePath;
+        $toRemove = $this->getPath() && $this->getPath() !== $savePath;
 
         $pathToRemove = $this->getPath();
         $this->setPath($savePath);
         $this->setFileName(basename($this->getPath()));
 
         $result = $this->renew() && $this->updatePathByMIME();
-
         $result = $result && $this->checkSecurity();
 
         if ($result && $toRemove) {
-
             $this->removeFile($pathToRemove);
         }
 
@@ -743,22 +724,9 @@ abstract class Storage extends \XLite\Model\AEntity
     protected function renew()
     {
         $result = false;
-
         list($path, $isTempFile) = $this->getLocalPath();
 
-        if (!$isTempFile && $this->isURL($path)) {
-            $request = new \PEAR2\HTTP\Request($path);
-            $request->verb = 'HEAD';
-            $response = $request->sendRequest();
-            $exists = 200 == $response->code
-                && isset($response->headers->ContentLength)
-                && 0 < $response->headers->ContentLength;
-
-        } else {
-            $exists = file_exists($path);
-        }
-
-        $result = $exists && $this->renewByPath($path);
+        $result = $this->isFileExists($path, $isTempFile) && $this->renewByPath($path);
 
         if ($isTempFile || (!$result && !$this->isURL($path))) {
             \Includes\Utils\FileManager::deleteFile($path);
@@ -778,7 +746,7 @@ abstract class Storage extends \XLite\Model\AEntity
      */
     protected function renewByPath($path)
     {
-        $this->setSize(intval(filesize($path)));
+        $this->setSize(intval(\Includes\Utils\FileManager::getFileSize($path)));
         $this->setDate(time());
 
         return true;
@@ -827,51 +795,42 @@ abstract class Storage extends \XLite\Model\AEntity
         $isTempFile = false;
 
         if ($this->isURL()) {
-
             if (ini_get('allow_url_fopen')) {
-
                 $path = $this->getPath();
 
             } else {
-
-                $path = tempnam(LC_DIR_TMP, 'analyse_file');
-
-                file_put_contents($path, $this->getBody());
-
+                \Includes\Utils\FileManager::write(tempnam(LC_DIR_TMP, 'analyse_file'), $this->getBody());
                 $isTempFile = true;
             }
 
-        } elseif (static::STORAGE_RELATIVE == $this->getStorageType()) {
-
-            $path = $this->getFileSystemRoot() . $this->getPath();
-
         } else {
-            $path = $this->getPath();
+            $path = $this->getStoragePath();
         }
 
         return array($path, $isTempFile);
     }
 
     /**
-     * Get storage path 
-     * 
+     * Get storage path
+     *
+     * @param string $path Path to use OPTIONAL
+     *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.11
+     * @since  1.0.12
      */
-    protected function getStoragePath()
+    protected function getStoragePath($path = null)
     {
-        $path = null;
+        $result = null;
 
         if (static::STORAGE_RELATIVE == $this->getStorageType()) {
-
-            $path = $this->getFileSystemRoot() . $this->getPath();
+            $result = $this->getFileSystemRoot() . ($path ?: $this->getPath());
 
         } elseif (static::STORAGE_ABSOLUTE == $this->getStorageType()) {
-            $path = $this->getPath();
+            $result = ($path ?: $this->getPath());
         }
 
-        return $path;
+        return $result;
     }
 
     /**

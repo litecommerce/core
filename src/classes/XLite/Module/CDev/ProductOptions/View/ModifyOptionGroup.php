@@ -294,7 +294,7 @@ class ModifyOptionGroup extends \XLite\View\AView
             ->getOptionGroupTypes();
 
         foreach ($optionGroupTypes as $dataType => $view) {
-            $jsCode .= 'lcViewTypeOption.' . $dataType . ' = ' . json_encode($view['views']) . ';' . PHP_EOL;
+            $jsCode .= 'lcViewTypeOptions.' . $dataType . ' = ' . json_encode($view['views']) . ';' . PHP_EOL;
         }
 
         return $jsCode;

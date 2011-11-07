@@ -23,6 +23,11 @@
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
+ *
+ * @resource user
+ * @resource admin_pass
+ * @resource admin_email
+ * @resource role
  */
 
 class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
@@ -88,11 +93,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->clickAndWait('id=edit-submit');
 
-        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
-            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
-            $this->assertNull($message, 'Check for error messages');
-        }
+        $this->checkForErrorMessages('Check for error messages');
     }
+
     /**
      * Test on update own profile by administrator with modification of some data
      *
@@ -132,10 +135,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->clickAndWait('id=edit-submit');
 
-        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
-            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
-            $this->assertNull($message, 'Check for error messages #1');
-        }
+        $this->checkForErrorMessages('Check for error messages #1');
 
         // Check that email is modified successfully
         $this->assertEquals(
@@ -157,10 +157,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->clickAndWait('id=edit-submit');
 
-        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
-            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
-            $this->assertNull($message, 'Check for error messages #2');
-        }
+        $this->checkForErrorMessages('Check for error messages #2');
 
         // Check that email is modified successfully
         $this->assertEquals(
@@ -229,10 +226,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->clickAndWait('id=edit-submit');
 
-        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
-            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
-            $this->assertNull($message, 'Check for error messages #2');
-        }
+        $this->checkForErrorMessages('Check for error messages #3');
 
         // Detach object to get this one again from database
         $newProfile->detach();
@@ -304,10 +298,8 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->clickAndWait('id=edit-submit--2');
 
-        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
-            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
-            $this->assertNull($message, 'Check for error messages #1');
-        }
+        $this->checkForErrorMessages('Check for error messages #4');
+
         // Add permission 'lc admin' to the new role
 
         $this->open('admin/people/permissions/' . $roleId);
@@ -346,11 +338,8 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->clickAndWait('id=edit-submit'); // Click 'Submit' button on confirmation page
 
+        $this->checkForErrorMessages('Check for error messages #5');
 
-        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
-            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
-            $this->assertNull($message, 'Check for error messages #2');
-        }
         // Check that LC profile are customers now
 
         foreach ($userIds as $userId) {
@@ -414,11 +403,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->waitForPageToLoad(60000, 'Page is not reloaded after batch process finished (cancel users)');
 
-
-        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
-            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
-            $this->assertNull($message, 'Check for error messages #4');
-        }
+        $this->checkForErrorMessages('Check for error messages #6');
 
         $this->setSleep($sleep);
 
@@ -472,11 +457,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->waitForPageToLoad(60000, 'Page is not reloaded after batch process finished (delete users)');
 
-
-        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
-            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
-            $this->assertNull($message, 'Check for error messages #5');
-        }
+        $this->checkForErrorMessages('Check for error messages #7');
 
         $this->setSleep($sleep);
 
@@ -632,10 +613,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->clickAndWait('id=edit-submit');
 
-        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
-            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
-            $this->assertNull($message, 'Check for error messages #1');
-        }
+        $this->checkForErrorMessages('Check for error messages #8');
 
         $this->assertElementPresent(
             '//div[@id="console"]/div[@class="messages status"]//descendant::a/em[text()="' . $user['login']. '"]',
@@ -653,5 +631,24 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         $this->assertTrue(intval($userId) == $userId, 'Check that $userId value is integer (' . $userId . ')');
 
         return $userId;
+    }
+
+    /**
+     * Check for error messages
+     *
+     * @param string $msg Custom message to display in report if test failed
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
+    protected function checkForErrorMessages($msg)
+    {
+        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
+            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
+            if (!(defined('TESTS_IGNORE_EMAIL_ERRORS') && preg_match('/' . preg_quote('Unable to send e-mail') . '/', $message))) {
+                $this->assertNull($message, $msg);
+            }
+        }
     }
 }

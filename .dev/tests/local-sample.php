@@ -77,6 +77,10 @@ define('SELENIUM_TTL', 60);
 //define('TESTS_LOG_DIR', '');
 
 
+// Prevent tests failure caused by email errors (useful when sendmail not configured)
+//define('TESTS_IGNORE_EMAIL_ERRORS', 1);
+
+
 // Browsers list
 
 $availableBrowsersList = array(
