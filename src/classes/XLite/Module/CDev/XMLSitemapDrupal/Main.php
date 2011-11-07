@@ -25,80 +25,74 @@
  * @since     1.0.0
  */
 
-namespace XLite\Core;
+namespace XLite\Module\CDev\XMLSitemapDrupal;
 
 /**
- * DB-based configuration registry
+ * XML sitemap module main class
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Config extends \XLite\Base\Singleton
+abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Config (cache)
+     * Author name
      *
-     * @var   \XLite\Core\CommonCell
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $config;
-
-
-    /**
-     * Method to access a singleton
-     *
-     * @return \XLite\Core\CommonCell
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getInstance()
+    public static function getAuthorName()
     {
-        return parent::getInstance()->readConfig();
+        return 'Creative Development LLC';
     }
 
     /**
-     * Reset state
+     * Module version
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function updateInstance()
+    public static function getMinorVersion()
     {
-        parent::getInstance()->readConfig(true);
-    }
-
-
-    /**
-     * Read config options
-     *
-     * @param mixed $force ____param_comment____ OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function readConfig($force = false)
-    {
-        if (!isset($this->config) || $force) {
-            $this->config = \XLite\Core\Database::getRepo('XLite\Model\Config')->getAllOptions($force);
-        }
-
-        return $this->config;
+        return '0';
     }
 
     /**
-     * Update and re-read options
+     * Module name
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function update()
+    public static function getModuleName()
     {
-        parent::update();
-
-        $this->readConfig(true);
+        return 'XML sitemap for Drupal';
     }
+
+    /**
+     * Module description
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getDescription()
+    {
+        return 'Module generates an XML file with information for search engines.';
+    }
+
+    /**
+     * Return module dependencies
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getDependencies()
+    {
+        return array('CDev\XMLSitemap', 'CDev\DrupalConnector');
+    }
+
 }
