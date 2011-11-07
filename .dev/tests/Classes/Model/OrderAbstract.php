@@ -36,9 +36,9 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
 
     protected function getTestOrder()
     {
-        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->insert($this->testOrder);
+        $this->testOrder['date'] = time();
 
-        $order->setDate(time());
+        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->insert($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
 
         if ($this->orderProducts) {
