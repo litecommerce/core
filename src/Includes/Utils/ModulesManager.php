@@ -451,37 +451,42 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     {
         $tables  = array();
         $columns = array();
-        $filter  = new \Includes\Utils\FileFilter(static::getAbsoluteDir($author, $name) . 'Model', '/.*\.php$/Si');
 
-        foreach ($filter->getIterator() as $path => $data) {
-            $class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
+        $path = static::getAbsoluteDir($author, $name) . 'Model';
+
+        if (\Includes\Utils\FileManager::isExists($path)) {
+            $filter = new \Includes\Utils\FileFilter($path, '/.*\.php$/Si');
+
+            foreach ($filter->getIterator() as $path => $data) {
+                $class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
             
-            if ($class && is_subclass_of($class, '\XLite\Model\AEntity')) {
-                $class = ltrim($class, '\\');
-                $len = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
+                if ($class && is_subclass_of($class, '\XLite\Model\AEntity')) {
+                    $class = ltrim($class, '\\');
+                    $len = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
 
-                if (in_array('XLite\Base\IDecorator', class_implements($class))) {
-                    $parent   = \Includes\Decorator\Utils\Tokenizer::getParentClassName($path);
-                    $metadata = \XLite\Core\Database::getEM()->getClassMetadata($parent);
-                    $table    = substr($metadata->getTableName(), $len);
+                    if (in_array('XLite\Base\IDecorator', class_implements($class))) {
+                        $parent   = \Includes\Decorator\Utils\Tokenizer::getParentClassName($path);
+                        $metadata = \XLite\Core\Database::getEM()->getClassMetadata($parent);
+                        $table    = substr($metadata->getTableName(), $len);
 
-                    $tool   = new \Doctrine\ORM\Tools\SchemaTool(\XLite\Core\Database::getEM());
-                    $schema = $tool->getCreateSchemaSql(array($metadata));
+                        $tool   = new \Doctrine\ORM\Tools\SchemaTool(\XLite\Core\Database::getEM());
+                        $schema = $tool->getCreateSchemaSql(array($metadata));
 
-                    foreach ((array) $metadata->reflFields as $field => $reflection) {
-                        $pattern = '/(?:, |\()(' . $field . ' .+)(?:, [A-Za-z]|\) ENGINE)/USsi';
+                        foreach ((array) $metadata->reflFields as $field => $reflection) {
+                            $pattern = '/(?:, |\()(' . $field . ' .+)(?:, [A-Za-z]|\) ENGINE)/USsi';
 
-                        if (
-                            $reflection->class === $class 
-                            && !empty($metadata->fieldMappings[$field])
-                            && preg_match($pattern, $schema[0], $matches)
-                        ) {
-                            $columns[$table][$field] = $matches[1];
+                            if (
+                                $reflection->class === $class 
+                                && !empty($metadata->fieldMappings[$field])
+                                && preg_match($pattern, $schema[0], $matches)
+                            ) {
+                                $columns[$table][$field] = $matches[1];
+                            }
                         }
-                    }
                     
-                } elseif (\XLite\Core\Database::getRepo($class)->canDisableTable()) {
-                    $tables[] = substr(\XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(), $len);
+                    } elseif (\XLite\Core\Database::getRepo($class)->canDisableTable()) {
+                        $tables[] = substr(\XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(), $len);
+                    }
                 }
             }
         }
