@@ -11,6 +11,6 @@
  * @ListChild (list="checkout.shipping.address", weight="60")
  *}
 <li class="zipcode">
-  <label for="shipping_address_zipcode">{t(#Zipcode#)}:</label>
+  <label for="shipping_address_zipcode">{t(#Zip code#)}:</label>
   <input type="text" id="shipping_address_zipcode" name="shippingAddress[zipcode]" value="{address.zipcode}" class="field-required field-zipcode" />
 </li>
