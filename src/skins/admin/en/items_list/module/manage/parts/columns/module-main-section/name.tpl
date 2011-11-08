@@ -13,4 +13,4 @@
  * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="10")
  *}
 
-<div class="name">{module.getModuleName()}</div>
+<div class="name"><a class="module-name" name="{module.getName()}">{module.getModuleName()}</a></div>
