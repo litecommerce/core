@@ -54,6 +54,8 @@ CDev/TinyMCE
 CDev/TwoCheckout
 CDev/VAT
 CDev/USPS
+CDev/XMLSitemap
+CDev/XMLSitemapDrupal
 "
 
 # LiteCommerce paid modules which should be packed as separate distributives
