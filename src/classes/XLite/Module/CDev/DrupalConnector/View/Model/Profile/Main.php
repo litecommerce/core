@@ -120,7 +120,11 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
     {
         parent::setModelProperties($data);
 
-        if (isset($data['drupal_roles']) && is_array($data['drupal_roles'])) {
+        if (
+            in_array($this->currentAction, array('update', 'create'))
+            && isset($data['drupal_roles'])
+            && is_array($data['drupal_roles'])
+        ) {
             $this->getModelObject()->updateDrupalRoles($data['drupal_roles']);
         }
     }
