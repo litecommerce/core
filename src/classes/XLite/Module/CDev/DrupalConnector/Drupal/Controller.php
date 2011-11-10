@@ -53,6 +53,24 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected $arePreinitialized = false;
 
+    /**
+     * Unique suffix to resource filenames
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.13
+     */
+    protected $resourcesBaseUID;
+
+    /**
+     * Resources weight counter
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $resourcesCounter = 0;
+
     // {{{ Menu callbacks
 
     /**
@@ -88,6 +106,8 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         if (isset($title)) {
             $variables['title'] = $title;
         }
+
+        $this->registerLCResources();
     }
 
     /**
@@ -128,8 +148,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     {
         // Perform some common actions
         $this->performCommonActions();
-
-        $this->registerResources($this->getViewer());
 
         $title   = $this->getTitle();
         $trail   = array();
@@ -278,10 +296,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         $drupalNodes = array_slice(drupal_get_breadcrumb(), 0, 2);
         drupal_set_breadcrumb(array_merge($drupalNodes, $lcNodes));
-
-        if ($widget->getProtectedWidget()) {
-            $this->registerResources($widget->getProtectedWidget());
-        }
     }
 
     /**
@@ -328,6 +342,151 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
             $this->arePreinitialized = true;
         }
+    }
+
+    // }}}
+
+    // {{{ Resources (CSS and JS)
+
+    /**
+     * Register LC widget resources
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function registerLCResources()
+    {
+        foreach (\XLite\View\AView::getRegisteredResources() as $type => $files) {
+            $method = 'drupal_add_' . $type;
+
+            foreach ($files as $name => $data) {
+                $method($data['file'], $this->getResourceInfo($type, $data));
+            }
+        }
+    }
+
+    /**
+     * Get resource description in Drupal format
+     *
+     * @param string $type Resource type ("js" or "css")
+     * @param array  $file Resource file info
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResourceInfo($type, array $file)
+    {
+        return $this->getResourceInfoCommon($file) + $this->{__FUNCTION__ . strtoupper($type)}($file);
+    }
+
+    /**
+     * Get resource description in Drupal format
+     *
+     * @param array $file Resource file info
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResourceInfoCommon(array $file)
+    {
+        return array(
+            'type'     => 'file',
+            'basename' => $this->getResourceBasename($file['file']),
+            'weight'   => $this->resourcesCounter,
+        );
+    }
+
+    /**
+     * Get resource description in Drupal format
+     *
+     * @param array $file Resource file info
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResourceInfoJS(array $file)
+    {
+        $scope = $this->getJSScope($file['file']);
+
+        return array(
+            'scope' => $scope,
+            'defer' => ('footer' == $scope),
+        );
+    }
+
+    /**
+     * Get resource description in Drupal format
+     *
+     * @param array $file Resource file info
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResourceInfoCSS(array $file)
+    {
+        return array(
+            'group' => CSS_DEFAULT,
+            'media' => $file['media'],
+        );
+    }
+
+    /**
+     * Get JS scope
+     *
+     * @param string $file Resource file path
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getJSScope($file)
+    {
+        return preg_match('/.skins.common.js./Ss', $file) ? 'header' : 'footer';
+    }
+
+    /**
+     * Get file unique basename
+     *
+     * @param string $file Resource file path
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResourceBasename($file)
+    {
+        return preg_replace('/\.(css|js)$/Ss', '.' . $this->getUniqueID() . '.$1', basename($file));
+    }
+
+    /**
+     * Return unique identifier
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function getUniqueID()
+    {
+        return $this->resourcesBaseUID . ++$this->resourcesCounter;
+    }
+
+    /**
+     * Protected constructor
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function __construct()
+    {
+        parent::__construct();
+
+        $this->resourcesBaseUID = uniqid();
     }
 
     // }}}

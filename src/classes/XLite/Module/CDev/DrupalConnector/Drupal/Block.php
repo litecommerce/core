@@ -54,21 +54,7 @@ class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             if ($widget = $this->getHandler()->getWidget($blockInfo['lc_class'], $blockInfo['options'])) {
 
                 // Check if widget is visible and its content is not empty
-                if ($widget->checkVisibility() && ($content = $widget->getContent())) {
-
-                    // Set content recieved from LC
-                    $data['content'] = $content;
-
-                    // Register JS and/or CSS
-                    if ($widget->getProtectedWidget()) {
-                        $this->registerResources($widget->getProtectedWidget());
-                    }
-
-                } else {
-
-                    // Block is not visible
-                    $data['content'] = null;
-                }
+                $data['content'] = ($widget->checkVisibility() && ($content = $widget->getContent())) ? $content : null;
             }
         }
 
