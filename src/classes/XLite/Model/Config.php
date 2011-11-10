@@ -84,12 +84,13 @@ class Config extends \XLite\Model\Base\I18n
     /**
      * Option type
      * Allowed values:'','text','textarea','checkbox','country','state','select','serialized','separator'
+     *     or forrm field class name
      *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length="128")
      */
     protected $type = '';
 
@@ -114,4 +115,16 @@ class Config extends \XLite\Model\Base\I18n
      * @Column (type="text")
      */
     protected $value = '';
+
+    /**
+     * Widget parameters
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.13
+     *
+     * @Column (type="array", nullable=true)
+     */
+    protected $widgetParameters;
+
 }

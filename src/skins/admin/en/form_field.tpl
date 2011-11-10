@@ -11,16 +11,17 @@
  *}
 
 {if:!getParam(#fieldOnly#)}
-<div class="table-label {getFieldId()}-label">
-  <label for="{getFieldId()}">{getParam(#label#)}:</label>
-</div>
-<div IF="getParam(#required#)" class="star">*</div>
-<div IF="!getParam(#required#)" class="star">&nbsp;</div>
+  <div class="table-label {getFieldId()}-label">
+    <label for="{getFieldId()}">{getParam(#label#)}:</label>
+  </div>
+  <div IF="getParam(#required#)" class="star">*</div>
+  <div IF="!getParam(#required#)" class="star">&nbsp;</div>
 {end:}
 
 <div class="table-value {getFieldId()}-value">
   <widget template="{getDir()}/{getFieldTemplate()}" />
   <div class="form-field-comment {getFieldId()}-comment">{getParam(#comment#):r}</div>
+  <widget IF="getParam(#help#)" class="\XLite\View\Tooltip" text="{getParam(#help#)}" isImageTag=true className="help-icon" />
   <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
 </div>
 

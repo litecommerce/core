@@ -56,6 +56,7 @@ abstract class AModel extends \XLite\View\Dialog
     const SCHEMA_NAME       = \XLite\View\FormField\AFormField::PARAM_NAME;
     const SCHEMA_LABEL      = \XLite\View\FormField\AFormField::PARAM_LABEL;
     const SCHEMA_COMMENT    = \XLite\View\FormField\AFormField::PARAM_COMMENT;
+    const SCHEMA_HELP       = \XLite\View\FormField\AFormField::PARAM_HELP;
 
     const SCHEMA_OPTIONS = \XLite\View\FormField\Select\ASelect::PARAM_OPTIONS;
     const SCHEMA_IS_CHECKED = \XLite\View\FormField\Input\Checkbox::PARAM_IS_CHECKED;
@@ -1101,7 +1102,9 @@ abstract class AModel extends \XLite\View\Dialog
     {
         foreach ($data[self::SECTION_PARAM_FIELDS] as $field) {
             list($flag, $message) = $field->validate();
-            $flag ?: $this->addErrorMessage($field->getName(), $message, $data);
+            if (!$flag) {
+                $this->addErrorMessage($field->getName(), $message, $data);
+            }
         }
     }
 

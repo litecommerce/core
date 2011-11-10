@@ -22,7 +22,7 @@
 ***}
 
 <widget target="main" template="common/dialog.tpl" body="menu.tpl" />
-<widget target="module" template="common/dialog.tpl" body="general_settings.tpl" />
+<!--widget target="module" template="common/dialog.tpl" body="general_settings.tpl" /-->
 
 <widget name="categoriesWidget" target="categories" template="common/dialog.tpl" body="categories/body.tpl" IF="!mode=#delete#" />
 <widget module="CDev\FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/CDev/FeaturedProducts/featured_products.tpl" IF="{namedWidgets.categoriesWidget.visible}" />
@@ -31,7 +31,7 @@
 <widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" IF="getCategory()" />
 <widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" IF="!getCategory()" />
 
-<widget target="settings" class="\XLite\View\Tabber" body="general_settings.tpl" switch="page" />
+<widget target="settings" class="\XLite\View\Tabber" body="settings/base.tpl" switch="page" />
 
 <widget target="recent_login" template="common/dialog.tpl" body="recent_login.tpl" />
 

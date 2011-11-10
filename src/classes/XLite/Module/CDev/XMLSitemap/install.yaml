@@ -10,7 +10,7 @@
 XLite\Model\Config:
   - name: welcome_changefreq
     category: CDev\XMLSitemap
-    type: select
+    type: 'XLite\Module\CDev\XMLSitemap\View\FormField\Select\ChangeFrequency'
     orderby: 100
     value: daily
     translations:
@@ -18,7 +18,7 @@ XLite\Model\Config:
         option_name: Change frequency for Welcome page
   - name: category_changefreq
     category: CDev\XMLSitemap
-    type: select
+    type: 'XLite\Module\CDev\XMLSitemap\View\FormField\Select\ChangeFrequency'
     orderby: 200
     value: daily
     translations:
@@ -26,7 +26,7 @@ XLite\Model\Config:
         option_name: Change frequency for Category page
   - name: product_changefreq
     category: CDev\XMLSitemap
-    type: select
+    type: 'XLite\Module\CDev\XMLSitemap\View\FormField\Select\ChangeFrequency'
     orderby: 300
     value: daily
     translations:

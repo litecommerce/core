@@ -10,7 +10,7 @@
 XLite\Model\Config:
   - name: bestsellers_menu
     category: CDev\Bestsellers
-    type: select
+    type: 'XLite\Module\CDev\Bestsellers\View\FormField\Select\Menu'
     orderby: 115
     value: 1
     translations:

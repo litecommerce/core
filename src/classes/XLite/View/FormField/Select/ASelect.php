@@ -118,4 +118,18 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
             ),
         );
     }
+
+    /**
+     * Check - current value is selected or not
+     * 
+     * @param mixed $value Value
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function isOptionSelected($value)
+    {
+        return $value == $this->getValue();
+    }
 }
