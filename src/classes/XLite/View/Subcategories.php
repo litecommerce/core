@@ -89,7 +89,10 @@ class Subcategories extends \XLite\View\Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = 'common/grid-list.css';
+
+        if (!\XLite::isAdminZone()) {
+            $list[] = 'common/grid-list.css';
+        }
 
         return $list;
     }

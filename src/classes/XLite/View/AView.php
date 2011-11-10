@@ -102,15 +102,6 @@ abstract class AView extends \XLite\Core\Handler
     protected static $resources = array();
 
     /**
-     * Flag for resource registration method
-     *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.13
-     */
-    protected static $areCommonResourcesRegistered = false;
-
-    /**
      * Templates tail
      *
      * @var   array
@@ -584,7 +575,43 @@ abstract class AView extends \XLite\Core\Handler
      */
     public static function getRegisteredResources($type = null)
     {
-        return \Includes\Utils\ArrayManager::getIndex(static::$resources, $type);
+        ksort(static::$resources, SORT_NUMERIC);
+
+        return \Includes\Utils\ArrayManager::getIndex(
+            call_user_func_array('array_merge_recursive', static::$resources),
+            $type
+        );
+    }
+
+    /**
+     * Get list of methods, priorities and interfaces for the resources
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected static function getResourcesSchema()
+    {
+        return array(
+            array('getCommonFiles', 10, \XLite::COMMON_INTERFACE),
+            array('getResources', 20, null),
+            array('getThemeFiles', 30, null),
+        );
+    }
+
+    /**
+     * Get common schema for an element in the resources list
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected static function getResourcesTypeSchema()
+    {
+        return array(
+            static::RESOURCE_JS  => array(),
+            static::RESOURCE_CSS => array(),
+        );
     }
 
     /**
@@ -636,9 +663,6 @@ abstract class AView extends \XLite\Core\Handler
                 'js/jquery.validationEngine.js',
             ),
             static::RESOURCE_CSS => array(
-                'css/style.css',
-                'css/ajax.css',
-                array('file' => 'css/print.css', 'media' => 'print'),
                 'ui/jquery-ui.css',
                 'css/jquery.mousewheel.css',
                 'css/validationEngine.jquery.css',
@@ -651,6 +675,24 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         return $list;
+    }
+
+    /**
+     * Return theme common files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function getThemeFiles()
+    {
+        return array(
+            static::RESOURCE_CSS => array(
+                'css/style.css',
+                'css/ajax.css',
+                array('file' => 'css/print.css', 'media' => 'print'),
+            ),
+        );
     }
 
     /**
@@ -677,25 +719,25 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function registerResourcesForCurrentWidget()
     {
-        if (!static::$areCommonResourcesRegistered) {
-            $this->registerResources($this->getCommonFiles(), \XLite::COMMON_INTERFACE);
-            static::$areCommonResourcesRegistered = true;
-        }
+        foreach ($this->getResourcesSchema() as $data) {
+            list($method, $index, $interface) = $data;
 
-        $this->registerResources($this->getResources());
+            $this->registerResources($this->$method(), $index, $interface);
+        }
     }
 
     /**
      * Common method to register resources
      *
-     * @param array  $resources List of resources to register
-     * @param string $interface Interface OPTIONAL
+     * @param array    $resources List of resources to register
+     * @param initeger $index     Position in list
+     * @param string   $interface Interface OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.13
      */
-    protected function registerResources(array $resources, $interface = null)
+    protected function registerResources(array $resources, $index, $interface = null)
     {
         foreach ($resources as $type => $files) {
             foreach ($files as $data) {
@@ -704,8 +746,8 @@ abstract class AView extends \XLite\Core\Handler
                     $data = array('file' => $data);
                 }
 
-                if (!isset(static::$resources[$type][$data['file']])) {
-                    static::$resources[$type][$data['file']] = $this->prepareResource($data, $interface);
+                if (!isset(static::$resources[$index][$type][$data['file']])) {
+                    static::$resources[$index][$type][$data['file']] = $this->prepareResource($data, $interface);
                 }
             }
         }
@@ -752,10 +794,10 @@ abstract class AView extends \XLite\Core\Handler
      */
     public static function __constructStatic()
     {
-        static::$resources = array(
-            static::RESOURCE_JS  => array(),
-            static::RESOURCE_CSS => array(),
-        );
+        foreach (static::getResourcesSchema() as $data) {
+            list(, $index, ) = $data;
+            static::$resources[$index] = static::getResourcesTypeSchema();
+        }
 
         static::$flexy  = \XLite\Core\FlexyCompiler::getInstance();
         static::$layout = \XLite\Core\Layout::getInstance();

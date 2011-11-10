@@ -38,30 +38,28 @@ class Tooltip extends \XLite\View\AView
     /**
      * Widget parameter names
      */
+    const PARAM_ID           = 'id';
+    const PARAM_TEXT         = 'text';
+    const PARAM_CLASS        = 'className';
+    const PARAM_CAPTION      = 'caption';
+    const PARAM_IS_IMAGE_TAG = 'isImageTag';
 
-    const PARAM_ID              = 'id';
-    const PARAM_TEXT            = 'text';
-    const PARAM_CLASS           = 'className';
-    const PARAM_CAPTION         = 'caption';
-    const PARAM_IS_IMAGE_TAG    = 'isImageTag';
-
-    const ATTR_CLASS    = 'class';
-    const ATTR_ID       = 'id';
+    const ATTR_CLASS = 'class';
+    const ATTR_ID    = 'id';
 
     const CAPTION_CSS_CLASS = 'tooltip-caption';
-
 
     /**
      * Register files from common repository
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.1
+     * @since  1.0.0
      */
     public function getCommonFiles()
     {
-        $list = parent::getCommonFiles();
-        $list['js'][] = 'js/tooltip.js';
+        $list = parent::getJSFiles();
+        $list[static::RESOURCE_JS][] = 'js/tooltip.js';
 
         return $list;
     }
@@ -90,11 +88,11 @@ class Tooltip extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_TEXT            => new \XLite\Model\WidgetParam\String('Text to show in tooltip', ''),
-            self::PARAM_ID              => new \XLite\Model\WidgetParam\String('ID of element', ''),
-            self::PARAM_CLASS           => new \XLite\Model\WidgetParam\String('CSS class for caption', ''),
-            self::PARAM_CAPTION         => new \XLite\Model\WidgetParam\String('Caption', ''),
-            self::PARAM_IS_IMAGE_TAG    => new \XLite\Model\WidgetParam\Bool('Is it shown as image?', true),
+            self::PARAM_TEXT         => new \XLite\Model\WidgetParam\String('Text to show in tooltip', ''),
+            self::PARAM_ID           => new \XLite\Model\WidgetParam\String('ID of element', ''),
+            self::PARAM_CLASS        => new \XLite\Model\WidgetParam\String('CSS class for caption', ''),
+            self::PARAM_CAPTION      => new \XLite\Model\WidgetParam\String('Caption', ''),
+            self::PARAM_IS_IMAGE_TAG => new \XLite\Model\WidgetParam\Bool('Is it shown as image?', true),
         );
     }
 
