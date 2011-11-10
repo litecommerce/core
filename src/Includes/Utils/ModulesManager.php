@@ -459,8 +459,13 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
 
             foreach ($filter->getIterator() as $path => $data) {
                 $class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
-            
-                if ($class && is_subclass_of($class, '\XLite\Model\AEntity')) {
+                $reflectionClass = new \ReflectionClass($class);
+
+                if (
+                    $class
+                    && is_subclass_of($class, '\XLite\Model\AEntity')
+                    && !$reflectionClass->isAbstract()
+                ) {
                     $class = ltrim($class, '\\');
                     $len = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
 
@@ -476,14 +481,14 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
                             $pattern = '/(?:, |\()(' . $field . ' .+)(?:, [A-Za-z]|\) ENGINE)/USsi';
 
                             if (
-                                $reflection->class === $class 
+                                $reflection->class === $class
                                 && !empty($metadata->fieldMappings[$field])
                                 && preg_match($pattern, $schema[0], $matches)
                             ) {
                                 $columns[$table][$field] = $matches[1];
                             }
                         }
-                    
+
                     } elseif (\XLite\Core\Database::getRepo($class)->canDisableTable()) {
                         $tables[] = substr(\XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(), $len);
                     }
