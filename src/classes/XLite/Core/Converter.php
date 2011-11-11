@@ -197,21 +197,6 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
-     * Return array schema
-     *
-     * @param array $keys   Keys list OPTIONAL
-     * @param array $values Values list OPTIONAL
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getArraySchema(array $keys = array(), array $values = array())
-    {
-        return array_combine($keys, $values);
-    }
-
-    /**
      * Convert to one-dimensional array
      *
      * @param array  $data    Array to flat

@@ -198,6 +198,7 @@ if (!R_INSTALL_SITE && !R_INSTALL_SITEADMIN) {
 if (R_INSTALL_STANDALONE) {
     // Disable DrupalConnector module in a standalone mode
     $disabledModules['CDev'][] = 'DrupalConnector';
+    $disabledModules['CDev'][] = 'XMLSitemapDrupal';
 }
 
 if (!R_INSTALL_SITE && !R_INSTALL_SITEADMIN) {

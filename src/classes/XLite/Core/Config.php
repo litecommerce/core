@@ -57,6 +57,18 @@ class Config extends \XLite\Base\Singleton
         return parent::getInstance()->readConfig();
     }
 
+    /**
+     * Reset state
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function updateInstance()
+    {
+        parent::getInstance()->readConfig(true);
+    }
+
 
     /**
      * Read config options

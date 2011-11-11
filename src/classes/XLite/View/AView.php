@@ -38,17 +38,14 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Resource types
      */
-
     const RESOURCE_JS  = 'js';
     const RESOURCE_CSS = 'css';
 
     /**
      * Common widget parameter names
      */
-
     const PARAM_TEMPLATE = 'template';
     const PARAM_MODES    = 'modes';
-
 
     /**
      *  View list insertation position
@@ -56,7 +53,6 @@ abstract class AView extends \XLite\Core\Handler
     const INSERT_BEFORE = 'before';
     const INSERT_AFTER  = 'after';
     const REPLACE       = 'replace';
-
 
     /**
      * Object instance cache
@@ -103,10 +99,7 @@ abstract class AView extends \XLite\Core\Handler
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected static $resources = array(
-        self::RESOURCE_JS  => array(),
-        self::RESOURCE_CSS => array(),
-    );
+    protected static $resources = array();
 
     /**
      * Templates tail
@@ -155,30 +148,6 @@ abstract class AView extends \XLite\Core\Handler
 
 
     /**
-     * Return list of all registered resources
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getRegisteredResources($type = null)
-    {
-        return isset($type) ? self::$resources[$type] : self::$resources;
-    }
-
-    /**
-     * Cleanup resources
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function cleanUpResources()
-    {
-        self::$resources = self::getResourcesSchema();
-    }
-
-    /**
      * Return list of allowed targets
      *
      * @return array
@@ -201,67 +170,6 @@ abstract class AView extends \XLite\Core\Handler
     {
         return \XLite\View\AView::$tail;
     }
-
-
-    /**
-     * Prepare resources list
-     *
-     * @param array   $data     Data to prepare
-     * @param boolean $isCommon Flag to determine how to prepare URL OPTIONAL
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function prepareResources(array $data, $isCommon = false)
-    {
-        $list = array();
-
-        foreach ($data as $v) {
-
-            if (is_string($v)) {
-
-                $v = array(
-                    'file' => $v,
-                );
-            }
-
-            $v['url'] = static::$layout->getResourceWebPath(
-                str_replace(LC_DS, '/', $v['file']),
-                \XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
-                $isCommon ? \XLite::COMMON_INTERFACE : null
-            );
-
-            if ($v['url']) {
-
-                $v['file'] = static::$layout->getResourceFullPath(
-                    str_replace('/', LC_DS, $v['file']),
-                    $isCommon ? \XLite::COMMON_INTERFACE : null,
-                    false
-                );
-
-                $list[$v['file']] = $v;
-            }
-        }
-
-        return $list;
-    }
-
-    /**
-     * Common layout for the widget resources
-     *
-     * @param array $jsResources  List of JS resources OPTIONAL
-     * @param array $cssResources List of CSS resources OPTIONAL
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getResourcesSchema(array $jsResources = array(), array $cssResources = array())
-    {
-        return \XLite\Core\Converter::getArraySchema(array_keys(self::$resources), array($jsResources, $cssResources));
-    }
-
 
     /**
      * Use current controller context
@@ -312,30 +220,6 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         $this->isCloned = true;
-    }
-
-    /**
-     * Return list of widget resources
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getResources()
-    {
-        $common = $this->getCommonFiles();
-
-        return self::getResourcesSchema(
-            array_merge(
-                static::prepareResources($common['js'], true), // prepare common JS files
-                static::prepareResources($this->getJSFiles()) // prepare JS files specific for the skin + widget
-            ),
-            array_merge(
-                static::prepareResources($common['css'], true),
-                static::prepareResources($this->getCSSFiles()),
-                static::prepareResources($this->getThemeCSSFiles())
-            )
-        );
     }
 
     /**
@@ -416,94 +300,6 @@ abstract class AView extends \XLite\Core\Handler
         ob_end_clean();
 
         return $content;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        return array();
-    }
-
-    /**
-     * Register theme CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getThemeCSSFiles()
-    {
-        $list = array(
-            array(
-                'file' => 'css/style.css',
-            ),
-            array(
-                'file' => 'css/ajax.css',
-            ),
-            array(
-                'file'  => 'css/print.css',
-                'media' => 'print',
-            ),
-        );
-
-        return $list;
-    }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getJSFiles()
-    {
-        return array();
-    }
-
-    /**
-     * Register files from common repository
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCommonFiles()
-    {
-        $list = array(
-            'js' => array(
-                'js/jquery.min.js',
-                'js/jquery-ui.min.js',
-                'js/common.js',
-                'js/core.js',
-                'js/core.controller.js',
-                'js/core.loadable.js',
-                'js/core.popup.js',
-                'js/core.form.js',
-                'js/php.js',
-                'js/jquery.mousewheel.js',
-                'js/jquery.validationEngine-' . $this->getCurrentLanguage()->getCode() . '.js',
-                'js/jquery.validationEngine.js',
-            ),
-            'css' => array(
-                'ui/jquery-ui.css',
-                'css/jquery.mousewheel.css',
-                'css/validationEngine.jquery.css',
-            ),
-        );
-
-        if (\XLite\Logger::isMarkTemplates()) {
-            $list['js'][] = 'js/template_debuger.js';
-            $list['css'][] = 'css/template_debuger.css';
-        }
-
-        return $list;
     }
 
     /**
@@ -635,67 +431,6 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Register resources of certain type
-     *
-     * @param string $type      Resources type
-     * @param array  $resources Resources to register
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function registerResourcesType($type, array $resources)
-    {
-        $list = array();
-
-        foreach ($resources as $k => $v) {
-            if (is_string($v)) {
-                $v = array(
-                    'file' => $v,
-                );
-            }
-
-            $list[$v['file']] = $v;
-        }
-
-        self::$resources[$type] = array_merge(self::$resources[$type], $list);
-
-        if ('css' == $type) {
-            $this->rearrangeCSSResources();
-        }
-    }
-
-    /**
-     * Rearrange CSS resources: move theme CSS resources before of the widget CSS resources
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function rearrangeCSSResources()
-    {
-        self::$resources['css'] = \Includes\Utils\ArrayManager::rearrangeArray(
-            self::$resources['css'],
-            static::prepareResources($this->getThemeCSSFiles())
-        );
-    }
-
-    /**
-     * Register widget resources
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function registerResources()
-    {
-        foreach ($this->getResources() as $type => $list) {
-
-            $this->registerResourcesType($type, $list);
-        }
-    }
-
-    /**
      * Check visibility according to the current target
      *
      * @return boolean
@@ -733,7 +468,7 @@ abstract class AView extends \XLite\Core\Handler
     protected function initView()
     {
         // Add widget resources to the static array
-        $this->registerResources();
+        $this->registerResourcesForCurrentWidget();
     }
 
     /**
@@ -829,9 +564,225 @@ abstract class AView extends \XLite\Core\Handler
         return \XLite\Core\Request::getInstance()->$name;
     }
 
-    
-// {{{ Routines for templates
+    // {{{ Resources (CSS and JS)
 
+    /**
+     * Return list of all registered resources
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getRegisteredResources($type = null)
+    {
+        ksort(static::$resources, SORT_NUMERIC);
+
+        return \Includes\Utils\ArrayManager::getIndex(
+            call_user_func_array('array_merge_recursive', static::$resources),
+            $type
+        );
+    }
+
+    /**
+     * Get list of methods, priorities and interfaces for the resources
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected static function getResourcesSchema()
+    {
+        return array(
+            array('getCommonFiles', 10, \XLite::COMMON_INTERFACE),
+            array('getResources', 20, null),
+            array('getThemeFiles', 30, null),
+        );
+    }
+
+    /**
+     * Get common schema for an element in the resources list
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected static function getResourcesTypeSchema()
+    {
+        return array(
+            static::RESOURCE_JS  => array(),
+            static::RESOURCE_CSS => array(),
+        );
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        return array();
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        return array();
+    }
+
+    /**
+     * Register files from common repository
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCommonFiles()
+    {
+        $list = array(
+            static::RESOURCE_JS => array(
+                'js/jquery.min.js',
+                'js/jquery-ui.min.js',
+                'js/common.js',
+                'js/core.js',
+                'js/core.controller.js',
+                'js/core.loadable.js',
+                'js/core.popup.js',
+                'js/core.form.js',
+                'js/php.js',
+                'js/jquery.mousewheel.js',
+                'js/jquery.validationEngine-' . $this->getCurrentLanguage()->getCode() . '.js',
+                'js/jquery.validationEngine.js',
+            ),
+            static::RESOURCE_CSS => array(
+                'ui/jquery-ui.css',
+                'css/jquery.mousewheel.css',
+                'css/validationEngine.jquery.css',
+            ),
+        );
+
+        if (\XLite\Logger::isMarkTemplates()) {
+            $list[static::RESOURCE_JS][]  = 'js/template_debuger.js';
+            $list[static::RESOURCE_CSS][] = 'css/template_debuger.css';
+        }
+
+        return $list;
+    }
+
+    /**
+     * Return theme common files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function getThemeFiles()
+    {
+        return array(
+            static::RESOURCE_CSS => array(
+                'css/style.css',
+                'css/ajax.css',
+                array('file' => 'css/print.css', 'media' => 'print'),
+            ),
+        );
+    }
+
+    /**
+     * Return list of widget resources
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResources()
+    {
+        return array(
+            static::RESOURCE_JS  => $this->getJSFiles(),
+            static::RESOURCE_CSS => $this->getCSSFiles(),
+        );
+    }
+
+    /**
+     * Register widget resources
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function registerResourcesForCurrentWidget()
+    {
+        foreach ($this->getResourcesSchema() as $data) {
+            list($method, $index, $interface) = $data;
+
+            $this->registerResources($this->$method(), $index, $interface);
+        }
+    }
+
+    /**
+     * Common method to register resources
+     *
+     * @param array    $resources List of resources to register
+     * @param initeger $index     Position in list
+     * @param string   $interface Interface OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function registerResources(array $resources, $index, $interface = null)
+    {
+        foreach ($resources as $type => $files) {
+            foreach ($files as $data) {
+
+                if (is_string($data)) {
+                    $data = array('file' => $data);
+                }
+
+                if (!isset(static::$resources[$index][$type][$data['file']])) {
+                    static::$resources[$index][$type][$data['file']] = $this->prepareResource($data, $interface);
+                }
+            }
+        }
+    }
+
+    /**
+     * Common method to register resources
+     *
+     * @param array  $data      Resource description
+     * @param string $interface Interface OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function prepareResource(array $data, $interface = null)
+    {
+        $shortURL = str_replace(LC_DS, '/', $data['file']);
+        $fullURL  = static::$layout->getResourceWebPath($shortURL, \XLite\Core\Layout::WEB_PATH_OUTPUT_URL, $interface);
+
+        $data += array(
+            'media' => 'all',
+            'url'   => $fullURL,
+        );
+
+        if (isset($fullURL)) {
+            $data['file'] = static::$layout->getResourceFullPath($shortURL, $interface, false);
+        }
+
+        return $data;
+    }
+
+    // }}}
+    
+    // {{{ Routines for templates
 
     /**
      * So called "static constructor".
@@ -843,10 +794,14 @@ abstract class AView extends \XLite\Core\Handler
      */
     public static function __constructStatic()
     {
+        foreach (static::getResourcesSchema() as $data) {
+            list(, $index, ) = $data;
+            static::$resources[$index] = static::getResourcesTypeSchema();
+        }
+
         static::$flexy  = \XLite\Core\FlexyCompiler::getInstance();
         static::$layout = \XLite\Core\Layout::getInstance();
     }
-
 
     /**
      * Display view list content
