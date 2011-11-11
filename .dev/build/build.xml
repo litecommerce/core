@@ -102,7 +102,7 @@
 
 		<echo message="Create revision tag" />
 		<exec executable="git" dir="${buildDir}">
-			<arg value="tag" line="-a -f ${buildTag} -m 'Night-build tag'" />
+			<arg line="tag -a -f ${buildTag} -m 'Night-build tag'" />
 		</exec>
 
 		<echo message="Run release builder" />
