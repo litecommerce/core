@@ -156,7 +156,13 @@ function xlite_make_sql_backup($path = null)
             $cmd .= ' -S' . $config['socket'];
         }
 
-        exec($cmd .= ' ' . $config['database'] . ' > ' . $path);
+        $cmd .= ' ' . $config['database'];
+
+        exec('echo "SET autocommit=0;
+        SET unique_checks=0;
+        SET foreign_key_checks=0;" > ' . $path . '
+        ' . $cmd  . ' >> ' . $path . '
+        echo "COMMIT;" >> ' . $path);
 
         echo ('done' . PHP_EOL);
 
@@ -182,7 +188,7 @@ class testRunner
      */
     protected $tests;
     /**
-     * @var string[]
+     * @var ResourcePool
      */
     protected $resources;
     /**
@@ -216,6 +222,7 @@ class testRunner
                 preg_match($pattern, $filePath, $matches)
                 && !empty($matches[1])
                 && !preg_match('/' . $ds . '(\w+Abstract|A[A-Z]\w+)\.php/Ss', $filePath)
+                && !preg_match('/' . $ds . '(\w+WebDriver\w+)\.php/Ss', $filePath)
                 && !preg_match('/' . $ds . '(?:scripts|skins)' . $ds . '/Ss', $filePath)
             ) {
 
@@ -229,6 +236,7 @@ class testRunner
     function __construct()
     {
         $this->tests = self::getTests();
+        $this->resources = new ResourcePool();
         array_map(function (TestTask $test)
             {
                 print $test->toString();
@@ -239,8 +247,8 @@ class testRunner
     {
         $time = microtime(true);
         xlite_make_sql_backup();
+        exec("rm /tmp/output*");
         $this->clientsCount = $clientsCount;
-        $this->resources = array();
         while (true)
         {
             $this->run();
@@ -280,14 +288,7 @@ class testRunner
 
     private function isBlocked()
     {
-        return !empty($this->resources) &&
-               array_all(
-                   $this->resources,
-                   function ($used)
-                   {
-                       return !$used;
-                   }
-               );
+        return $this->resources->isBlocked();
     }
 
     private function clean()
@@ -305,8 +306,6 @@ class testRunner
 
     private function run()
     {
-
-
         foreach ($this->tests as $test)
         {
             if ($this->block_all)
@@ -319,6 +318,7 @@ class testRunner
                     $this->cleanResources();
                 else
                     return;
+
             if ($test->isForRun($this->resources)) {
                 $test->run($this->resources);
                 if ($test->block_all)
@@ -332,7 +332,7 @@ class testRunner
     {
         xlite_restore_sql_from_backup();
         sleep(1);
-        $this->resources = array();
+        $this->resources->reset();
     }
 }
 
@@ -379,14 +379,20 @@ class TestTask
     private static function getResources($comment, $res_string)
     {
         preg_match_all('/^.*\@' . $res_string . '\s+([a-zA-Z_-]+)\s*$/Sm', $comment, $result);
-        return $result[1];
+        $resources = $result[1];
+        foreach ($resources as $resource) {
+            if (strpos($resource, '_')) {
+                $parts = explode('_', $resource);
+                $resource = $parts[0];
+            }
+        }
+        return $resources;
     }
 
-    function run(&$resources)
+    function run(ResourcePool $resources)
     {
         $pipes = null;
-        $testName = explode('/', $this->name);
-        $testName = $testName[1];
+        $testName = str_replace('/', '_', $this->name);
         $descriptorspec = array(
             0 => array('pipe', 'r'),
             1 => array("file", "/tmp/output-" . $testName . ".txt", "a"),
@@ -400,7 +406,7 @@ class TestTask
             print PHP_EOL . "Running test: " . $this->name;
             $this->status = 'running';
             foreach ($this->resources as $resource) {
-                $resources[$resource] = true;
+                $resources->addResource($resource);
             }
         }
         else {
@@ -409,13 +415,13 @@ class TestTask
 
     }
 
-    function stop(&$resources)
+    function stop(ResourcePool $resources)
     {
         print PHP_EOL . "Stopping test: " . $this->name;
         $this->status = 'complete';
         proc_close($this->process);
-        foreach ($this->resources as $resource) {
-            $resources[$resource] = false;
+        foreach (array_merge($this->resources, $this->uses) as $resource) {
+            $resources->cleanResource($resource);
         }
     }
 
@@ -432,22 +438,13 @@ class TestTask
         return $this->status == 'running' && !$this->isRunning();
     }
 
-    function isForRun($resources)
+    function isForRun(ResourcePool $resources)
     {
-        if ($this->block_all && !empty($resources))
+        if ($this->block_all && !$resources->isEmpty())
             return false;
         if ($this->status != 'init')
             return false;
-        $prime = function($res)
-        {
-            $parts = explode('_', $res);
-            return $parts[0];
-        };
-        $primary_resources = array_map($prime, $resources);
-        $primary_self_resources = array_map($prime, array_merge($this->resources, $this->uses));
-        if (count(array_intersect($primary_self_resources, array_keys($primary_resources))) > 0)
-            return false;
-        return true;
+        return $resources->checkAccess($this->resources, $this->uses);
     }
 
     function toString()
@@ -457,6 +454,98 @@ class TestTask
                PHP_EOL . " Uses: {" . implode(';', $this->uses) . '}' .
                PHP_EOL . " Blocks all: <" . ($this->block_all ? 'true' : 'false') . "> " .
                PHP_EOL . " Status: <" . $this->status . ">" . PHP_EOL;
+    }
+}
+
+define('RESOURCE_RESERVED', 1);
+define('RESOURCE_USED', 2);
+
+class ResourcePool
+{
+
+    private $resources = array();
+
+    public function isEmpty()
+    {
+        return empty($this->resources);
+    }
+
+    public function checkAccess($resources, $uses)
+    {
+        //        print PHP_EOL . "Reserved resources: ";
+        //        print_r($this->resources);
+        //        print PHP_EOL . "Resources: ";
+        //        print_r($resources);
+        //        print PHP_EOL . "Uses: ";
+        //        print_r($uses);
+
+
+        if (array_intersect(array_keys($this->resources), $resources)) {
+            return false;
+        }
+        foreach ($uses as $use) {
+            if (array_key_exists($use, $this->resources) && $this->resources[$use] != RESOURCE_USED)
+                return false;
+        }
+        return true;
+    }
+
+    public function addUse($use)
+    {
+        if (array_key_exists($use, $this->resources) && $this->resources[$use] != RESOURCE_USED)
+            throw new Exception("Resource " . $use . " is reserved!");
+        $this->resources[$use] = RESOURCE_USED;
+    }
+
+    public function deleteUse($use)
+    {
+        if (array_key_exists($use, $this->resources) && $this->resources[$use] != RESOURCE_USED)
+            throw new Exception("Resource " . $use . " is reserved!");
+        unset($this->resources[$use]);
+    }
+
+    public function addResource($resource)
+    {
+        if (array_key_exists($resource, $this->resources))
+            throw new Exception("Resource " . $resource . " is reserved or used!");
+        $this->resources[$resource] = RESOURCE_RESERVED;
+    }
+
+    public function cleanResource($resource)
+    {
+        if (!array_key_exists($resource, $this->resources))
+            return;
+        //throw new Exception("No such resource: " .$resource);
+        if ($this->resources[$resource] == RESOURCE_USED)
+            unset($this->resources[$resource]);
+        else
+            $this->resources[$resource] = 0;
+    }
+
+    public function isBlocked()
+    {
+        if (!empty($this->resources) && array_all($this->resources, function ($res)
+            {
+                return $res != RESOURCE_RESERVED;
+            })
+        ) {
+            print PHP_EOL . " BLOCKED";
+            return true;
+        }
+        return false;
+    }
+
+    public function reset()
+    {
+        if (array_any($this->resources, function ($res)
+            {
+                $res != 0;
+            })
+        ) {
+            print_r($this->resources);
+            throw new Exception("There is some reserved or used resources");
+        }
+        $this->resources = array();
     }
 }
 

@@ -25,8 +25,8 @@
  * @since     1.0.10
  *
  * @resource product_market_price
+ * @resource category
  * @use product
- * @use category
  */
 
 require_once __DIR__ . '/ACustomer.php';
