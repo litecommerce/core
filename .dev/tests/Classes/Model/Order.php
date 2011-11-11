@@ -232,6 +232,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
+        $order->setDate(time());
 
         $item = new \XLite\Model\OrderItem();
 
