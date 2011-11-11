@@ -70,4 +70,21 @@ class Settings extends \XLite\View\Form\AForm
     {
         return true;
     }
+
+    /**
+     * getDefaultClassName
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultClassName()
+    {
+        $class = parent::getDefaultClassName();
+
+        $class .= ($class ? ' ' : '') . 'validationEngine';
+
+        return $class;
+    }
+
 }

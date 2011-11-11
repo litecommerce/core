@@ -16,7 +16,6 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: 'Web Property ID'
-XLite\Model\Config:
   - name: ga_tracking_type
     category: CDev\GoogleAnalytics
     type: 'XLite\Module\CDev\GoogleAnalytics\View\FormField\Select\TrackingType'

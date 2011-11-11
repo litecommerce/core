@@ -18,7 +18,8 @@ XLite\Model\Config:
         option_name: Display the list of bestsellers in
   - name: number_of_bestsellers
     category: CDev\Bestsellers
-    type: text
+    type: XLite\View\FormField\Input\Text\Integer
+    widgetParameters: { min: 1 }
     orderby: 115
     value: 5
     translations:

@@ -25,40 +25,56 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\FormField\Input;
+namespace XLite\View\FormField\Input\Text;
 
 /**
- * Text
+ * URL
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Text extends \XLite\View\FormField\Input\Base\String
+class URL extends \XLite\View\FormField\Input\Text
 {
     /**
-     * Return field type
+     * Check field validity
      *
-     * @return string
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getFieldType()
+    protected function checkFieldValidity()
     {
-        return self::FIELD_TYPE_TEXT;
+        $result = parent::checkFieldValidity();
+
+        if ($result) {
+            $parts = @parse_url($this->getValue());
+            if (!$parts || !isset($parts['scheme']) || !isset($parts['host'])) {
+                $result = false;
+                $this->errorMessage = \XLite\Core\Translation::lbl(
+                    'The value of X has an incorrect format',
+                    array(
+                        'name' => $this->getLabel(),
+                    )
+                );
+            }
+        }
+
+        return $result;
     }
 
     /**
-     * Get a list of JS files required to display the widget properly
+     * Assemble validation rules
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.13
      */
-    public function getJSFiles()
+    protected function assembleValidationRules()
     {
-        $list = parent::getJSFiles();
-        $list[] = $this->getDir() . '/js/text.js';
+        $rules = parent::assembleValidationRules();
 
-        return $list;
+        $rules[] = 'custom[url]';
+
+        return $rules;
     }
 }

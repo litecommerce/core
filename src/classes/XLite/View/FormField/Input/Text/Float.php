@@ -28,18 +28,19 @@
 namespace XLite\View\FormField\Input\Text;
 
 /**
- * Integer
+ * Float
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Integer extends \XLite\View\FormField\Input\Text
+class Float extends \XLite\View\FormField\Input\Text
 {
     /**
      * Widget param names
      */
     const PARAM_MIN = 'min';
     const PARAM_MAX = 'max';
+    const PARAM_E   = 'e';
 
     /**
      * Define widget params
@@ -55,6 +56,7 @@ class Integer extends \XLite\View\FormField\Input\Text
         $this->widgetParams += array(
             self::PARAM_MIN => new \XLite\Model\WidgetParam\Int('Minimum', null),
             self::PARAM_MAX => new \XLite\Model\WidgetParam\Int('Maximum', null),
+            self::PARAM_E   => new \XLite\Model\WidgetParam\Int('Number of digits after the decimal separator', 2),
         );
     }
 
@@ -123,7 +125,7 @@ class Integer extends \XLite\View\FormField\Input\Text
      */
     protected function sanitize()
     {
-       return intval(parent::sanitize());
+       return round(doubleval(parent::sanitize()), $this->getParam(self::PARAM_E));
     }
 
     /**
@@ -137,7 +139,7 @@ class Integer extends \XLite\View\FormField\Input\Text
     {
         $rules = parent::assembleValidationRules();
 
-        $rules[] = 'custom[integer]';
+        $rules[] = 'custom[number]';
 
         if (!is_null($this->getParam(self::PARAM_MIN))) {
             $rules[] = 'min[' . $this->getParam(self::PARAM_MIN) . ']';

@@ -78,6 +78,11 @@ class Settings extends \XLite\View\Model\AModel
                 self::SCHEMA_HELP     => $option->getOptionComment(),
                 self::SCHEMA_REQUIRED => false,
             );
+
+            if ($this->isOptionRequired($option)) {
+                $cell[self::SCHEMA_REQUIRED] = true;
+            }
+
             $parameters = $option->getWidgetParameters();
             if ($parameters && is_array($parameters)) {
                 $cell += $parameters;
@@ -137,6 +142,20 @@ class Settings extends \XLite\View\Model\AModel
         }
 
         return $class;
+    }
+
+    /**
+     * Check - option is required or not
+     * 
+     * @param \XLite\Model\Config $option Option
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function isOptionRequired(\XLite\Model\Config $option)
+    {
+        return false;
     }
 
     /**
