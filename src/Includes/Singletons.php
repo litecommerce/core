@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\DrupalConnector;
+namespace Includes;
 
 /**
  * Singletons
@@ -33,19 +33,49 @@ namespace XLite\Module\CDev\DrupalConnector;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Singletons extends \XLite\Singleton implements \XLite\Base\IDecorator
+class Singletons
 {
     /**
-     * __construct
+     * handler
      *
-     * @return void
+     * @var   \Includes\Singletons
+     * @see   ____var_see____
+     * @since 1.0.13
+     */
+    public static $handler;
+
+    /**
+     * classNames
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.13
+     */
+    protected static $classNames = array(
+        'xlite'   => '\XLite',
+        'request' => '\XLite\Core\Request',
+        'layout'  => '\XLite\Core\Layout',
+        'session' => '\XLite\Core\Session',
+        'config'  => '\XLite\Core\Config',
+        'flexy'   => '\XLite\Core\FlexyCompiler',
+        'auth'    => '\XLite\Core\Auth',
+    );
+
+    /**
+     * Magic getter
+     *
+     * @param string $name Variable name
+     *
+     * @return \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  1.0.13
      */
-    protected function __construct()
+    public function __get($name)
     {
-        parent::__construct();
+        $this->$name = call_user_func(array(static::$classNames[$name], 'getInstance'));
 
-        static::$classNames['drupal'] = '\XLite\Module\CDev\DrupalConnector\Handler';
+        return $this->$name;
     }
 }
+
+\Includes\Singletons::$handler = new \Includes\Singletons();
