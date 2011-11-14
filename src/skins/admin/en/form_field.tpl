@@ -20,9 +20,9 @@
 
 <div class="table-value {getFieldId()}-value">
   <widget template="{getDir()}/{getFieldTemplate()}" />
-  <div class="form-field-comment {getFieldId()}-comment">{getParam(#comment#):r}</div>
   <widget IF="getParam(#help#)" class="\XLite\View\Tooltip" text="{getParam(#help#)}" isImageTag=true className="help-icon" />
-  <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
+  <div IF="getParam(#comment#)" class="form-field-comment {getFieldId()}-comment">{getParam(#comment#):r}</div>
+   <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
 </div>
 
 <div class="clear"></div>

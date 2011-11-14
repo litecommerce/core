@@ -1361,9 +1361,9 @@ abstract class AModel extends \XLite\View\Dialog
         
         $list = 'crud.' . $class . '.' . $suffix;
 
-        $arguments = $this->assembleViewSubListArguments($arguments);
+        $arguments = $this->assembleViewSubListArguments($suffix, $arguments);
 
-        $this->displayViewList($list, $arguments);
+        $this->displayViewListContent($list, $arguments);
     }
 
     /**
@@ -1379,7 +1379,38 @@ abstract class AModel extends \XLite\View\Dialog
     protected function assembleViewSubListArguments($suffix, array $arguments)
     {
         $arguments['model'] = $this;
+        $arguments['useBodyTemplate'] = false;
 
         return $arguments;
+    }
+
+    /**
+     * Get item class 
+     * 
+     * @param integer                          $index  Item index
+     * @param integer                          $length items list length
+     * @param \XLite\View\FormField\AFormField $field  Current item
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function getItemClass($index, $length, \XLite\View\FormField\AFormField $field)
+    {
+        $classes = preg_grep('/.+/Ss', array_map('trim', explode(' ', $field->getWrapperClass())));
+
+        if (0 === $index % 2) {
+            $classes[] = 'even';
+        }
+
+        if (1 === $index) {
+            $classes[] = 'first';
+        }
+
+        if ($length == $index) {
+            $classes[] = 'last';
+        }
+
+        return implode(' ', $classes);
     }
 }

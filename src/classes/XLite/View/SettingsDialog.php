@@ -28,7 +28,7 @@
 namespace XLite\View;
 
 /**
- * File Selector Dialog widget
+ * Settings Dialog widget
  *
  * @see   ____class_see____
  * @since 1.0.6
@@ -47,6 +47,7 @@ class SettingsDialog extends \XLite\View\SimpleDialog
         $list = parent::getAllowedTargets();
 
         $list[] = 'settings';
+        $list[] = 'module';
 
         return $list;
     }
@@ -73,17 +74,5 @@ class SettingsDialog extends \XLite\View\SimpleDialog
     protected function getBody()
     {
         return 'settings/body.tpl';
-    }
-
-    /**
-     * Return parameters to use in file dialog form
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since 1.0.7
-     */
-    protected function getSettings()
-    {
-        return $this->getModelForm()->getSettings();
     }
 }

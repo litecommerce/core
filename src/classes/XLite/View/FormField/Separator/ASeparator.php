@@ -72,4 +72,16 @@ abstract class ASeparator extends \XLite\View\FormField\AFormField
     {
         return $this->getDir() . '/' . $this->getFieldTemplate();
     }
+
+    /**
+     * Get default wrapper class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function getDefaultWrapperClass()
+    {
+        return 'separator';
+    }
 }

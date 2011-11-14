@@ -44,7 +44,7 @@ class Settings extends \XLite\View\Form\AForm
      */
     protected function getDefaultTarget()
     {
-        return 'settings';
+        return \XLite\Core\Request::getInstance()->target;
     }
 
     /**
@@ -85,6 +85,28 @@ class Settings extends \XLite\View\Form\AForm
         $class .= ($class ? ' ' : '') . 'validationEngine';
 
         return $class;
+    }
+
+    /**
+     * Required form parameters
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCommonFormParams()
+    {
+        $list = parent::getCommonFormParams();
+
+        if ('module' == \XLite\Core\Request::getInstance()->target) {
+            $list['moduleId'] = \XLite\Core\Request::getInstance()->moduleId;
+        }
+
+        if (\XLite\Core\Request::getInstance()->return) {
+            $list['return'] = \XLite\Core\Request::getInstance()->return;
+        }
+
+        return $list;
     }
 
 }

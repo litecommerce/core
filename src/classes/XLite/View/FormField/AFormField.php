@@ -231,6 +231,19 @@ abstract class AFormField extends \XLite\View\AView
         parent::__construct($params);
     }
 
+    /**
+     * Register CSS class to use for wrapper block (SPAN) of input field.
+     * It is usable to make unique changes of the field.
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    public function getWrapperClass()
+    {
+        return $this->getParam(self::PARAM_WRAPPER_CLASS);
+    }
+
 
     /**
      * Return widget default template
@@ -521,7 +534,7 @@ abstract class AFormField extends \XLite\View\AView
             self::PARAM_COMMENT    => new \XLite\Model\WidgetParam\String('Comment', null),
             self::PARAM_HELP       => new \XLite\Model\WidgetParam\String('Help', null),
             self::PARAM_ATTRIBUTES => new \XLite\Model\WidgetParam\Collection('Attributes', $this->getDefaultAttributes()),
-            self::PARAM_WRAPPER_CLASS => new \XLite\Model\WidgetParam\String('Wrapper class', 'input'),
+            self::PARAM_WRAPPER_CLASS => new \XLite\Model\WidgetParam\String('Wrapper class', $this->getDefaultWrapperClass()),
 
             self::PARAM_IS_ALLOWED_FOR_CUSTOMER => new \XLite\Model\WidgetParam\Bool(
                 'Is allowed for customer',
@@ -618,15 +631,14 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
-     * Register CSS class to use for wrapper block (SPAN) of input field.
-     * It is usable to make unique changes of the field.
-     *
+     * Get default wrapper class 
+     * 
      * @return string
      * @see    ____func_see____
-     * @since  1.0.1
+     * @since  1.0.13
      */
-    protected function getWrapperClass()
+    protected function getDefaultWrapperClass()
     {
-        return $this->getParam(self::PARAM_WRAPPER_CLASS);
+        return 'input';
     }
 }

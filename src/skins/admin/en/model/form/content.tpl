@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Form content
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -16,9 +16,9 @@
 <div FOREACH="getFormFieldsForDisplay(),section,data" class="section {section}-section">
   <div class="header {section}-header" IF="{isShowSectionHeader(section)}">{data.sectionParamWidget.display()}</div>
   <ul class="table {section}-table">
-    <li FOREACH="data.sectionParamFields,field" class="{field.getWrapperClass()}">
+    <li FOREACH="data.sectionParamFields,field" class="{getItemClass(fieldArrayPointer,fieldArraySize,field)}">
       {field.display()}
-      {displayViewSubList(#field#,_ARRAY(#section#^section,#field#^field))}
+      {displayViewSubList(#field#,_ARRAY_(#section#^section,#field#^field))}
     </li>
   </ul>
 </div>

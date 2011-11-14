@@ -9,5 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-
-{getLabel()}
+<h2>{getLabel()}</h2>

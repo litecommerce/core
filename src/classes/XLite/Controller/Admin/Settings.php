@@ -98,6 +98,24 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Get pages templates
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPageTemplates()
+    {
+        $list = $this->getPages();
+
+        foreach ($list as $k => $v) {
+            $list[$k] = 'settings/base.tpl';
+        }
+
+        return $list;
+    }
+
+    /**
      * Get options for current tab (category)
      *
      * @return void
