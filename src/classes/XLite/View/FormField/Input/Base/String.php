@@ -78,13 +78,13 @@ abstract class String extends \XLite\View\FormField\Input\AInput
     {
         $result = parent::checkFieldValidity();
 
-        if ($result && strlen($result) > $this->getPrama(self::PARAM_MAX_SIZE)) {
+        if ($result && strlen($result) > $this->getParam(self::PARAM_MAX_SIZE)) {
             $result = false;
             $this->errorMessage = \XLite\Core\Translation::lbl(
                 'The value of X should not be longer than Y',
                 array(
                     'name' => $this->getLabel(),
-                    'max'  => $this->getPrama(self::PARAM_MAX_SIZE),
+                    'max'  => $this->getParam(self::PARAM_MAX_SIZE),
                 )
             );
         }
@@ -103,7 +103,7 @@ abstract class String extends \XLite\View\FormField\Input\AInput
     {
         $rules = parent::assembleValidationRules();
 
-        $rules[] = 'maxSize[' . $this->getPrama(self::PARAM_MAX_SIZE) . ']';
+        $rules[] = 'maxSize[' . $this->getParam(self::PARAM_MAX_SIZE) . ']';
 
         return $rules;
     }

@@ -16,6 +16,9 @@
 <div FOREACH="getFormFieldsForDisplay(),section,data" class="section {section}-section">
   <div class="header {section}-header" IF="{isShowSectionHeader(section)}">{data.sectionParamWidget.display()}</div>
   <ul class="table {section}-table">
-    <li FOREACH="data.sectionParamFields,field" class="{field.getWrapperClass()}">{field.display()}</li>
+    <li FOREACH="data.sectionParamFields,field" class="{field.getWrapperClass()}">
+      {field.display()}
+      {displayViewSubList(#field#,_ARRAY(#section#^section,#field#^field))}
+    </li>
   </ul>
 </div>

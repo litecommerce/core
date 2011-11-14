@@ -11,7 +11,6 @@
  *}
 
 <script IF="getTopInlineJSCode()" type="text/javascript">{getTopInlineJSCode():r}</script>
-
 <widget template="{getDir()}/header.tpl" />
 
   <widget class="{getFormClass()}" name="{getFormName()}" />

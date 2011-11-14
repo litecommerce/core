@@ -1339,4 +1339,47 @@ abstract class AModel extends \XLite\View\Dialog
     {
         return get_class($this);
     }
+
+    /**
+     * Display view sublist
+     * 
+     * @param string $suffix    List usffix
+     * @param array  $arguments List arguments
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function displayViewSubList($suffix, array $arguments = array())
+    {
+        $class = preg_replace('/^.+\\\View\\\Model\\\/Ss', '', get_called_class());
+        $class = str_replace('\\', '.', $class);
+        if (preg_match('/\\\Module\\\(a-z0-9+)\\\(a-z0-9+)\\\View\\\Model\\\/Sis', get_called_class(), $match)) {
+            $class = $match[1] . '.' . $match[2] . '.' . $class;
+        }
+        $class = strtolower($class);
+        
+        $list = 'crud.' . $class . '.' . $suffix;
+
+        $arguments = $this->assembleViewSubListArguments($arguments);
+
+        $this->displayViewList($list, $arguments);
+    }
+
+    /**
+     * Assemble biew sublist arguments 
+     * 
+     * @param string $suffix    List suffix
+     * @param array  $arguments Arguments
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function assembleViewSubListArguments($suffix, array $arguments)
+    {
+        $arguments['model'] = $this;
+
+        return $arguments;
+    }
 }

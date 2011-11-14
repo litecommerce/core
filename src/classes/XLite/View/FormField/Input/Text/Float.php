@@ -151,4 +151,23 @@ class Float extends \XLite\View\FormField\Input\Text
 
         return $rules;
     }
+
+    /**
+     * Assemble classes
+     *
+     * @param array $classes Classes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function assembleClasses(array $classes)
+    {
+        $classes = parent::assembleClasses($classes);
+
+        $classes[] = 'wheel-ctrl';
+
+        return $classes;
+    }
+
 }
