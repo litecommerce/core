@@ -28,19 +28,24 @@
 namespace XLite\Module\CDev\DrupalConnector;
 
 /**
- * Singleton
+ * Singletons
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Singleton extends \XLite\Singleton implements \XLite\Base\IDecorator
+class Singletons extends \XLite\Singleton implements \XLite\Base\IDecorator
 {
     /**
-     * drupalHandler
+     * __construct
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
      */
-    public static $drupalHandler = '\XLite\Module\CDev\DrupalConnector\Handler';
+    protected function __construct()
+    {
+        parent::__construct();
+
+        static::$classNames['drupal'] = '\XLite\Module\CDev\DrupalConnector\Handler';
+    }
 }

@@ -28,87 +28,43 @@
 namespace XLite;
 
 /**
- * Singleton
+ * Singletons
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Singleton
+class Singletons extends \XLite\Base\Singleton
 {
     /**
-     * xlite
+     * classNames
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public static $xlite = '\XLite';
-
-    /**
-     * request
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public static $request = '\XLite\Core\Request';
-
-    /**
-     * layout
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public static $layout = '\XLite\Core\Layout';
-
-    /**
-     * session
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public static $session = '\XLite\Core\Session';
-
-    /**
-     * config
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public static $config = '\XLite\Core\Config';
-
-    /**
-     * flexy
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public static $flexy = '\XLite\Core\FlexyCompiler';
-
-    /**
-     * auth
-     *
-     * @var   string
+     * @var   array
      * @see   ____var_see____
      * @since 1.0.13
      */
-    public static $auth = '\XLite\Core\Auth';
+    protected static $classNames = array(
+        'xlite'   => '\XLite',
+        'request' => '\XLite\Core\Request',
+        'layout'  => '\XLite\Core\Layout',
+        'session' => '\XLite\Core\Session',
+        'config'  => '\XLite\Core\Config',
+        'flexy'   => '\XLite\Core\FlexyCompiler',
+        'auth'    => '\XLite\Core\Auth',
+    );
 
     /**
-     * Initialize variables
+     * Magic getter
      *
-     * @return void
+     * @param string $name Variable name
+     *
+     * @return \XLite\Base\Singleton
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.13
      */
-    public static function __constructStatic()
+    public function __get($name)
     {
-        foreach (get_class_vars(get_called_class()) as $name => $class) {
-            static::$$name = $class::getInstance();
-        }
+        $this->$$name = call_user_func(array(static::$classNames[$name], 'getInstance'));
+
+        return $this->$$name;
     }
 }
