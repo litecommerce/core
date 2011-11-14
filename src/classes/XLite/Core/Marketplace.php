@@ -113,6 +113,26 @@ class Marketplace extends \XLite\Base\Singleton
      */
     const TTL_NOT_EXPIRED = '____TTL_NOT_EXPIRED____';
 
+    /**
+     * Error message
+     *
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 1.0.12
+     */
+    protected $error = null;
+
+    /**
+     * Get last error message from bouncer
+     *
+     * @return mixed
+     * @see    ____var_see____
+     * @since  1.0.12
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
 
     // {{{ "Check for updates" request
 
@@ -969,7 +989,7 @@ class Marketplace extends \XLite\Base\Singleton
 
             if ($error) {
 
-                $this->logError($action, 'Response error: ' . $error);
+                $this->logError($action, $error);
 
             } else {
 
@@ -1391,6 +1411,8 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function logError($action, $message, array $args = array(), array $data = array())
     {
+        $this->error = $message;
+
         $this->logCommon('Error', $action, $message, $args, $data);
     }
 
