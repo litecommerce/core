@@ -112,6 +112,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             $list[$k] = 'settings/base.tpl';
         }
 
+        $list['Environment'] = 'summary.tpl';
+
         return $list;
     }
 

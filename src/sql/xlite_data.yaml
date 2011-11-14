@@ -475,6 +475,8 @@ XLite\Model\LanguageLabel:
   - { name: 'The value of X field must be greater less Y', translations: [{ code: en, label: 'The value of {{name}} field must be less than {{max}}' }] }
   - { name: 'The value of X has an incorrect format', translations: [{ code: en, label: 'The value of {{name}} has an incorrect format' }] }
   - { name: 'The value of X should not be longer than Y', translations: [{ code: en, label: 'The value of {{name}} should not be longer than {{max}}' }] }
+  - { name: 'Trying to access the shop at X', translations: [{ code: en, label: 'Trying to access the shop at <a href="{{url}}">{{url}}</a> ...' }] }
+  - { name: 'To fix this problem, do the following: 3 points', translations: [{ code: en, label: 'To fix this problem, do the following: <ul><li>make sure that your hosting service provider has HTTPS protocol enabled;</li><li>verify your HTTPS settings ("https_host" parameter in the "etc/config.php" file must be valid);</li><li>reload this page.</li></ul>' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

@@ -89,15 +89,10 @@ document.options_form.admin_security.onclick = https_checkbox_click;
 </script>
 
   {* Check if https is available *}
-  Trying to access the shop at <a href="{getShopURL(#cart.php#,#1#)}">{getShopURL(#cart.php#,#1#)}</a> ...
+  {t(#Trying to access the shop at X#,_ARRAY_(#url#^getShopURL(#cart.php#,#1#))):h}
   <span id="httpserror-message" style="visibility:hidden">
-    <p class="error-message"><b>FAILED.</b> Secure connection cannot be established.</p>
-    To fix this problem, do the following:
-    <ul>
-      <li> make sure that your hosting service provider has HTTPS protocol enabled;
-      <li> verify your HTTPS settings ("https_host" parameter in the "etc/config.php" file must be valid);
-      <li> reload this page.
-    </ul>
+    <p class="error-message"><strong>{t(#Failed#)}</strong> {t(##Secure connection cannot be established.)}</p>
+    {t(#To fix this problem, do the following: 3 points#):h}
   </span>
 
   <script type="text/javascript" src="{getShopURL(#https_check.php#,#1#)}"></script>

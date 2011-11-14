@@ -98,6 +98,8 @@ class Settings extends \XLite\View\Form\AForm
     {
         $list = parent::getCommonFormParams();
 
+        $list['page'] = $this->page;
+
         if ('module' == \XLite\Core\Request::getInstance()->target) {
             $list['moduleId'] = \XLite\Core\Request::getInstance()->moduleId;
         }
