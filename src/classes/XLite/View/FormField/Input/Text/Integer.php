@@ -167,4 +167,16 @@ class Integer extends \XLite\View\FormField\Input\Text
 
         return $classes;
     }
+
+    /**
+     * Get default maximum size
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function getDefaultMaxSize()
+    {
+        return 11;
+    }
 }

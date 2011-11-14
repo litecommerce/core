@@ -639,6 +639,9 @@ abstract class AFormField extends \XLite\View\AView
      */
     protected function getDefaultWrapperClass()
     {
-        return 'input';
+        $suffix = preg_replace('/^.+\\\(?:Module\\\([a-zA-Z0-9]+\\\[a-zA-Z0-9]+\\\))?View\\\FormField\\\(.+)$/Ss', '$1$2', get_called_class());
+        $suffix = str_replace('\\', '-', strtolower($suffix));
+
+        return 'input ' . $suffix;
     }
 }

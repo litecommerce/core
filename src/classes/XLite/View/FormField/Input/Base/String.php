@@ -56,6 +56,20 @@ abstract class String extends \XLite\View\FormField\Input\AInput
     }
 
     /**
+     * getCommonAttributes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCommonAttributes()
+    {
+        return parent::getCommonAttributes() + array(
+            'maxlength' => $this->getParam(self::PARAM_MAX_SIZE),
+        );
+    }
+
+    /**
      * Get default maximum size 
      * 
      * @return integer

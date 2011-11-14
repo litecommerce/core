@@ -1495,6 +1495,21 @@ div.table-value {
   float: left;
 }
 
+div.table-value input[type="text"],
+div.table-value input[type="password"],
+div.table-value select
+{
+  width: 250px;
+}
+
+div.table-value .input-text-integer input,
+div.table-value .input-text-float input
+{
+  text-align: right;
+  width: 100px;
+}
+
+
 div.table-label label {
   display: block;
 }
