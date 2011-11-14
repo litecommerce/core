@@ -72,7 +72,7 @@
 
         <tr>
           <td colspan="3">
-            <widget class="\XLite\View\Button\Regular" label="Modify" jsCode="onModifyClick('{category.category_id}')" />
+            <widget class="\XLite\View\Button\Regular" label="{t(#Modify#)}" jsCode="onModifyClick('{category.category_id}')" />
           </td>
         </tr>
 
@@ -84,7 +84,7 @@
 
 </table>
 
-<widget IF="getRootCategoryId()=category.getCategoryId()" class="\XLite\View\Button\Regular" id="modify-root" label="Modify root category (the front shop page)" jsCode="self.location='{buildURL(#category#,##,_ARRAY_(#category_id#^getRootCategoryId(),#mode#^#modify#))}'" />
+<widget IF="getRootCategoryId()=category.getCategoryId()" class="\XLite\View\Button\Regular" id="modify-root" label="{t(#Modify root category (the front shop page)#)}" jsCode="self.location='{buildURL(#category#,##,_ARRAY_(#category_id#^getRootCategoryId(),#mode#^#modify#))}'" />
 
 <br />
 <br />
@@ -115,7 +115,7 @@
 
       <td class="table-label" colspan="2">
 
-        <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onclick="this.blur()">{cat.name:h}</a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<span class="star">(disabled)</span>{end:}
+        <a href="admin.php?target=categories&category_id={cat.category_id}" title="{t(#Click here to access/add subcategories#)}" onclick="this.blur()">{cat.name:h}</a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<span class="star">({t(#disabled#)})</span>{end:}
 
         &nbsp;&nbsp;
 
@@ -127,7 +127,7 @@
 
         &nbsp;&nbsp;
 
-        <widget class="\XLite\View\Button\DeleteCategory" categoryId="{cat.category_id}" style="hidden hidden-{cat.category_id}" IF="cat.hasSubcategories()" label="Delete subcategories" removeSubcategories=true />
+        <widget class="\XLite\View\Button\DeleteCategory" categoryId="{cat.category_id}" style="hidden hidden-{cat.category_id}" IF="cat.hasSubcategories()" label="{t(#Delete subcategories#)}" removeSubcategories=true />
 
       </td>
 
@@ -144,11 +144,11 @@
     <tr>
 
       <td>
-        <widget class="\XLite\View\Button\Regular" id="add" label="Add subcategory" jsCode="onAddChildClick({getCategoryId()})" />
+        <widget class="\XLite\View\Button\Regular" id="add" label="{t(#Add subcategory#)}" jsCode="onAddChildClick({getCategoryId()})" />
       </td>
 
       <td align="right" IF="category&category.getSubCategoriesCount()">
-        <widget class="\XLite\View\Button\DeleteCategory" id="delete_all_button" label="Delete all" />
+        <widget class="\XLite\View\Button\DeleteCategory" id="delete_all_button" label="{t(#Delete all#)}" />
       </td>
 
     </tr>

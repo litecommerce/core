@@ -12,5 +12,5 @@
  *}
 
 <div class="upload-file">
-  <widget class="\XLite\View\Button\Submit" label="Upload" style="main-button" />
+  <widget class="\XLite\View\Button\Submit" label="{t(#Upload#)}" style="main-button" />
 </div>

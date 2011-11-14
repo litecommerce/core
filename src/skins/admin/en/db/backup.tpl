@@ -30,9 +30,10 @@ function ShowNotes()
 		text-align  : justify;
     }
 </style>
-Use this section to backup the database of your online store. Please note
-that database backup procedure can take up to several minutes.
-<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>How to backup your store database &gt;&gt;&gt;</b></a></span>
+
+{t(#Use this section to backup the database of your online store. Please note that database backup procedure can take up to several minutes.#)}
+
+<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>{t(#How to backup your store database#)} &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <p class="adminParagraph">
 <table cellpadding="5" cellspacing="0">
@@ -41,11 +42,8 @@ that database backup procedure can take up to several minutes.
         <td>&nbsp;&nbsp;</td>
         <td>&nbsp;</td>
         <td>
-You can choose to download your database data (SQL dump) directly to your local
-computer by clicking on the 'Download SQL file' button, or save database data to a file on the web server ('var/backup/sqldump.sql.php') by clicking on the
-'Create SQL file' button. If you choose the second option, you can download the
-file from the server later on and delete it from the server by clicking on the
-'Delete SQL file' button.
+  {t(#You can choose to download your database data (SQL dump) directly to your local computer by clicking on the 'Download SQL file' button, or save database data to a file on the web server ('var/backup/sqldump.sql.php') by clicking on the 'Create SQL file' button.#)}
+  {t(#If you choose the second option, you can download the file from the server later on and delete it from the server by clicking on the 'Delete SQL file' button.#)}
         </td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
     </tr>
@@ -54,7 +52,6 @@ file from the server later on and delete it from the server by clicking on the
 </span>
 
 <hr />
-<p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings">General settings</a> page before performing backup procedure!</p>
 
 <form action="admin.php" method="post" name="backup_form">
 <input type="hidden" name="target" value="db_backup" />
@@ -65,32 +62,34 @@ file from the server later on and delete it from the server by clicking on the
         <td colspan='3'>&nbsp;</td>
     </tr>
 	<tr>
-        <td><widget class="\XLite\View\Button\Submit" label="Download SQL file" style="main-button" /></td>
+        <td><widget class="\XLite\View\Button\Submit" label="{t(#Download SQL file#)}" style="main-button" /></td>
 		<td>
-		{if:isFileWritable()}&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" label="Create SQL file" jsCode="document.backup_form.write_to_file.value = '1'; document.backup_form.submit();" />
+		{if:isFileWritable()}&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" label="{t(#Create SQL file#)}" jsCode="document.backup_form.write_to_file.value = '1'; document.backup_form.submit();" />
 		{else:}
 		<table cellpadding="2" cellspacing="2">
 		<tr>
-		<td valign=top>&nbsp;&nbsp;&nbsp;<b>Note:</b></td>
-		<td>
-		You cannot save database data to a file on the web server ('var/backup/sqldump.sql.php').<br />
-		{if:!dirExists}
-		The directory 'var/backup/' does not exist or is not writable.
-		{else:}
-		The file 'var/backup/sqldump.sql.php' is not writable.
+		<td valign=top>&nbsp;&nbsp;&nbsp;<b>{t(#Note#)}:</b></td>
+    <td>
+    {t(#You cannot save database data to a file on the web server ('var/backup/sqldump.sql.php').#)}
+    <br />
+    {if:!dirExists}
+    {t(#The directory 'var/backup/' does not exist or is not writable.#)}
+    {else:}
+    {t(#The file 'var/backup/sqldump.sql.php' is not writable.#)}
 		{end:}
 		</td>
 		</tr>
 		</table>
 		{end:}
 		</td>
-		<td IF="isFileExists()">&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" value="delete" label="Delete SQL file" jsCode="document.backup_form.action.value='delete'; document.backup_form.submit();" /></td>
+		<td IF="isFileExists()">&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" value="delete" label="{t(#Delete SQL file#)}" jsCode="document.backup_form.action.value='delete'; document.backup_form.submit();" /></td>
 	</tr>
 	<tr>
 		<td colspan='3'>&nbsp;</td>
 	</tr>	
 </table>
 <p align="justify">
-	<b>Note:</b> if you store product images in the database, they will be included in the SQL dump file. If product images are located on the file system, they are not included. To backup such images you need to download them directly from the server.
+  <b>{t(#Note#)}:</b>
+  {t(#if you store product images in the database, they will be included in the SQL dump file. If product images are located on the file system, they are not included. To backup such images you need to download them directly from the server.#)}
 </p>
 </form>

@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<span class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;Required field</span>
+<span class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;{t(#Required field#)}</span>

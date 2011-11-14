@@ -23,7 +23,7 @@
 
     <input type="text" name="name" value="{getSearchSubstring()}" class="big" lang="{defaultLanguage.code}" xml:lang="{defaultLanguage.code}" />
 
-    <widget class="\XLite\View\Button\Submit" label="Search" style="main-button" />
+    <widget class="\XLite\View\Button\Submit" label="{t(#Search#)}" style="main-button" />
 
     <a IF="isTranslatedLanguageSelected()" href="admin.php?target=languages&action=search&language={language}">{t(#Show all labels#)}</a>
     <a IF="!isTranslatedLanguageSelected()" href="admin.php?target=languages&action=search">{t(#Show all labels#)}</a>

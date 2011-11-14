@@ -11,4 +11,4 @@
  * @ListChild (list="itemsList.product.modify.brief.admin.header", weight="70")
  *}
 
-<th class="inventory"><widget template="items_list/sort.tpl" title="Qty" sortByColumn="{%static::SORT_BY_MODE_AMOUNT%}" /></th>
+<th class="inventory"><widget template="items_list/sort.tpl" title="{t(#Qty#)}" sortByColumn="{%static::SORT_BY_MODE_AMOUNT%}" /></th>

@@ -32,11 +32,11 @@ function ShowNotes()
 	}
 </style>
 
-Use this section to restore the database of your online store. Please note that database restore procedure can take up to several minutes.
+{t(#Use this section to restore the database of your online store. Please note that database restore procedure can take up to several minutes.#)}
 
 <span id="notes_url" style="display:">
   <a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()">
-    <b>How to restore your LiteCommerce database &gt;&gt;&gt;</b>
+    <b>{t(#How to restore your LiteCommerce database#)} &gt;&gt;&gt;</b>
   </a>
 </span>
 
@@ -50,12 +50,11 @@ Use this section to restore the database of your online store. Please note that 
         <td>&nbsp;&nbsp;</td>
         <td>&nbsp;</td>
         <td>
-You can upload the database data directly from your local computer by clicking on the 'Browse' button, choosing an SQL dump file and clicking on the 'Upload and restore' button.  While this method is more convenient, it has a file size limitation of <b>{getUploadMaxFilesize():h}</b>.
-<br /><br />
-Alternatively, upload the file named 'sqldump.sql.php' to the 'var/backup/' sub-directory of your LiteCommerce installation on the web server and click on the
-'Restore from server' button. After the restore you might want to delete the file from the server by clicking on the 'Delete SQL file' button above.
-<br /><br />
-To restore the images which are stored in the file system, you have to copy them from the archive to LiteCommerce catalog, taking into consideration the catalog structure.
+        {t(#You can upload the database data directly from your local computer#,_ARRAY_(#N#^getUploadMaxFilesize())):h}
+        <br /><br />
+        {t(#Alternatively, upload file sqldump.sql.php to the var/backup/ sub-directory click on the "Restore from server" button#)}
+        <br /><br />
+        {t(#To restore the images which are stored in the file system, you have to copy them from the archive to LiteCommerce catalog#)}
         </td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
     </tr>
@@ -70,10 +69,9 @@ To restore the images which are stored in the file system, you have to copy them
 
 <p class="adminParagraph">
 
-<b class="star">Warning:</b> Restore procedure is irreversible and erases all data tables from your store database. It is highly recommended that you backup your present database data before restoring one of the previous states from a backup.
+<b class="star">{t(#Warning#)}:</b> 
+{t(#Restore procedure is irreversible and erases all data tables from your store database. It is highly recommended that you backup your present database data before restoring one of the previous states from a backup.#)}
 </p>
-
-<p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings">General settings</a> page before performing restore procedure!</p>
 
 <form action="admin.php" method="post" id="dbform" enctype="multipart/form-data">
 
@@ -93,9 +91,9 @@ To restore the images which are stored in the file system, you have to copy them
     <input class="input-file" type="file" name="userfile" onchange="javascript: visibleBox('max_upload_note', true);"><widget IF="invalid_file" template="common/uploaded_file_validator.tpl" />
   </td>
 
-	<td>&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" label="Upload and restore" style="main-button" jsCode="submitFormDefault(this.form, 'restore_from_uploaded_file');" /></td>
+	<td>&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" label="{t(#Upload and restore#)}" style="main-button" jsCode="submitFormDefault(this.form, 'restore_from_uploaded_file');" /></td>
 
-  <td>{if:isFileExists()}&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" label="Restore from server" jsCode="submitFormDefault(this.form, 'restore_from_local_file');" />{end:}</td>
+  <td>{if:isFileExists()}&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" label="{t(#Restore from server#)}" jsCode="submitFormDefault(this.form, 'restore_from_local_file');" />{end:}</td>
 
 </tr>
 
@@ -105,7 +103,7 @@ To restore the images which are stored in the file system, you have to copy them
 
 <br />
 
-<b class="star">Warning:</b> Maximum size of the file to upload is <b>{getUploadMaxFilesize():h}</b>.
+<b class="star">{t(#Warning#)}:</b> {t(#Maximum size of the file to upload is N#,_ARRAY_(#N#^getUploadMaxFilesize())):h}
 
 </span>
 

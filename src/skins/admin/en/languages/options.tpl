@@ -76,7 +76,7 @@
         onclick="javascript: return confirmLanguageDelete(this, {editLanguage.lng_id}, '', '{editLanguage.flagURL}', '{editLanguage.name}');">
         <span>{t(#Delete Language#)}</span>
       </a>
-      <widget class="\XLite\View\Button\Submit" label="Save" style="main invert" />
+      <widget class="\XLite\View\Button\Submit" label="{t(#Save#)}" style="main invert" />
     </div>
   </form>
 </div>

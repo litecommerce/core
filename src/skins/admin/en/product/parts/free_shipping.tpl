@@ -16,8 +16,8 @@
   <td class="star">*</td>
   <td class="value-attribute">
     <select name="{getNamePostedData(#free_shipping#)}">
-      <option value="0" selected="{isSelected(product,#free_shipping#,#0#)}">Yes</option>
-      <option value="1" selected="{isSelected(product,#free_shipping#,#1#)}">No</option>
+      <option value="0" selected="{isSelected(product,#free_shipping#,#0#)}">{t(#Yes#)}</option>
+      <option value="1" selected="{isSelected(product,#free_shipping#,#1#)}">{t(#No#)}</option>
     </select>
   </td>
 </tr>

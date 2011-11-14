@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 <select class="fixed-select" name="{formField}" multiple size="10" style="width:200px">
-   <option value="" IF="allOption">All</option>
+   <option value="" IF="allOption">{t(#All#)}</option>
    <option FOREACH="categories,k,v" value="{v.category_id:r}" selected="{v.isSelected(#category_id#,selectedCategory)}">{v.getStringPath():h}</option>
 </select>

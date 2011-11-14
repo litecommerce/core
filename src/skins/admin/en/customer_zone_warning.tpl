@@ -10,5 +10,5 @@
  * @since     1.0.0
  *}
 <span IF="getCustomerZoneWarning()=#maintenance_mode#" class="error-message">
-    Customer zone is closed for maintenance.
+    {t(#Customer zone is closed for maintenance.#)}
 </span>

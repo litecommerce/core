@@ -11,4 +11,4 @@
  * @ListChild (list="itemsList.order.admin.search.header", weight="50")
  *}
 
-<th class="date"><widget template="items_list/sort.tpl" title="Date" sortByColumn="{%static::SORT_BY_MODE_DATE%}" /></th>
+<th class="date"><widget template="items_list/sort.tpl" title="{t(#Date#)}" sortByColumn="{%static::SORT_BY_MODE_DATE%}" /></th>

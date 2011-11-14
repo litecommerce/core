@@ -12,4 +12,4 @@
  * @ListChild (list="itemsList.profile.search.footer", weight="20")
  *}
 
-<widget class="\XLite\View\Button\AddUser" label="Add user" location="{buildURL(#profile#,##,_ARRAY_(#mode#^#register#))}" />
+<widget class="\XLite\View\Button\AddUser" label="{t(#Add user#)}" location="{buildURL(#profile#,##,_ARRAY_(#mode#^#register#))}" />

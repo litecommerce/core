@@ -28,8 +28,8 @@
       <input type="hidden" name="page" value="{page}" />
 
       <div class="buttons">
-        <widget class="\XLite\View\Button\Submit" label="Delete" style="main-button invert" />
-        <widget class="\XLite\View\Button\Regular" label="Cancel" style="main" jsCode="$(this).parents('.ui-dialog').eq(0).find('.ui-dialog-titlebar-close').click();" />
+        <widget class="\XLite\View\Button\Submit" label={t(#Delete#)}" style="main-button invert" />
+        <widget class="\XLite\View\Button\Regular" label="{t(#Cancel#)}" style="main" jsCode="$(this).parents('.ui-dialog').eq(0).find('.ui-dialog-titlebar-close').click();" />
       </div>
     </form>
 

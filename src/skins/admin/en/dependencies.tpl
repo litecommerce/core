@@ -10,12 +10,12 @@
  * @since     1.0.0
  *}
 <p class="error-message">
-Unable to install module &quot;{mm.moduleName}&quot; because some modules which it depends on, have not been installed or activated yet
+{t(#Unable to install module X because some modules which it depends on, have not been installed or activated yet#,_ARRAY_(#X#^mm.moduleName))}
 </p>
 <table>
 <tr>
-	<td>
-Please, make sure that the following modules are installed and enabled:
+  <td>
+  {t(#Please, make sure that the following modules are installed and enabled:#)}
 	</td>
 	<td>
 	<table>

@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="menus", weight="60")
  *}
-<widget class="\XLite\View\TopMenu\Node" list="maintenance" title="Maintenance" className="hl" linkTarget="db_backup" />
+<widget class="\XLite\View\TopMenu\Node" list="maintenance" title="{t(#Maintenance#)}" className="hl" linkTarget="db_backup" />

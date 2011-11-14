@@ -12,4 +12,4 @@
  * @ListChild (list="itemsList.profile.search.footer", weight="10")
  *}
 
-<widget class="\XLite\View\Button\DeleteProfile" name="Delete" label="Delete selected profile" />
+<widget class="\XLite\View\Button\DeleteProfile" name="{t(#Delete#)}" label="{t(#Delete selected profile#)}" />

@@ -13,5 +13,5 @@
  *}
 
 <tr>
-  <td colspan="3"><widget class="\XLite\View\Button\Submit" label="Search" /></td>
+  <td colspan="3"><widget class="\XLite\View\Button\Submit" label="{t(#Search#)}" /></td>
 </tr>
