@@ -89,6 +89,14 @@ abstract class Singleton
      */
     public static $flexy = '\XLite\Core\FlexyCompiler';
 
+    /**
+     * auth
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.13
+     */
+    public static $auth = '\XLite\Core\Auth';
 
     /**
      * Initialize variables
@@ -97,10 +105,10 @@ abstract class Singleton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function init()
+    public static function __constructStatic()
     {
         foreach (get_class_vars(get_called_class()) as $name => $class) {
-            static::$$name = call_user_func(array($class, 'getInstance'));
+            static::$$name = $class::getInstance();
         }
     }
 }
