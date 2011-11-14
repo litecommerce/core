@@ -35,7 +35,6 @@ namespace XLite\View;
  */
 class Header extends \XLite\View\AView
 {
-
     /**
      * Default meta description
      *
@@ -43,7 +42,7 @@ class Header extends \XLite\View\AView
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $defaultMetaDescription = 'The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP / PHP4 with SQL database with highly configurable implementation based on templates';
+    protected $defaultMetaDescription = 'The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP5 with SQL database with highly configurable implementation based on templates';
 
     /**
      * Default title
@@ -103,7 +102,7 @@ class Header extends \XLite\View\AView
      */
     protected function getJSResources()
     {
-        return self::getRegisteredResources(self::RESOURCE_JS);
+        return static::getRegisteredResources(static::RESOURCE_JS);
     }
 
     /**
@@ -115,17 +114,7 @@ class Header extends \XLite\View\AView
      */
     protected function getCSSResources()
     {
-        $list = array();
-
-        foreach (self::getRegisteredResources(self::RESOURCE_CSS) as $k => $file) {
-            if (!isset($file['media']) || !$file['media']) {
-                $file['media'] = 'all';
-            }
-
-            $list[$k] = $file;
-        }
-
-        return $list;
+        return static::getRegisteredResources(static::RESOURCE_CSS);
     }
 
     /**

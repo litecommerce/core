@@ -126,7 +126,10 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     {
         $list = parent::getCSSFiles();
         $list[] = $this->getDir() . '/pager.css';
-        $list[] = 'common/grid-list.css';
+
+        if (!\XLite::isAdminZone()) {
+            $list[] = 'common/grid-list.css';
+        }
 
         return $list;
     }

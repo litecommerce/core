@@ -635,7 +635,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 				echo "  + ${module_name} module package is complete: ${module_file_name}-v${module_version}.tar"
 
 			else
-				echo "  - ${module_name} module not found"
+				echo "  - ${j} module not found"
 			fi
 
 		done
@@ -781,7 +781,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 			# Copying logo with version number to the theme is temporary disabled
 			# cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes/lc3/logo.png
 		else
-			echo "Warning! Logo image file $LOGO_IMAGE not found"
+			# echo "Warning! Logo image file $LOGO_IMAGE not found"
 		fi
 
 		sed_cmd="$SED_EXT 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info"

@@ -338,6 +338,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $errorDivSelector = 'div.amount' . $product->getProductId() . 'formError:visible';
         $errorQtySelector = 'input.quantity.wrong-amount';
 
+        $sleep = $this->setSleep(1);
         $this->typeKeys($quantitySelector, -3);
         $this->getJSExpression($qtyBlurOperation);
         $this->assertJqueryPresent($errorDivSelector, 'check minimal allowed quantity error');
@@ -430,6 +431,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             10000,
             "Minicart widget displays a wrong qty (#1)"
         );
+        $this->setSleep($sleep);
     }
 
     /**

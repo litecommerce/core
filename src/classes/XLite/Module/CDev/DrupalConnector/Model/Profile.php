@@ -79,9 +79,10 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
         if ($drupalRoles) {
 
             // Remove roles that is not in new roles array
-            foreach ($this->getDrupalRoles() as $drupalRole) {
+            foreach ($this->getDrupalRoles() as $key => $drupalRole) {
 
                 if (!in_array($drupalRole->getDrupalRoleId(), $newDrupalRoles)) {
+                    $this->drupalRoles->remove($key);
                     \XLite\Core\Database::getEM()->remove($drupalRole);
 
                 } else {

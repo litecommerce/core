@@ -498,6 +498,12 @@ table.data-table td a
   text-decoration: underline;
 }
 
+table.data-table td a.module-name
+{
+  text-decoration: none;
+  color: #333333;
+}
+
 table.data-table th,
 table.data-table th a,
 table.data-table th span

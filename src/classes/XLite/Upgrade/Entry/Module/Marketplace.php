@@ -58,7 +58,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      *
      * :WARNING: do not remove this variable:
      * it's required for the proper upgrade process
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -309,6 +309,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
             $this->getModuleForUpgrade()->getMarketplaceID(),
             $licenseKey ? $licenseKey->getKeyValue() : null
         );
+        
         $params = array('name' => $this->getActualName());
 
         if (isset($path)) {
@@ -320,7 +321,12 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
             $result = parent::download();
 
         } else {
-            $this->addFileErrorMessage('Module pack ("{{name}}") is not recieved:', $path, true, $params);
+            $this->addFileErrorMessage(
+                'Module pack ("{{name}}") is not recieved',
+                \XLite\Core\Marketplace::getInstance()->getError(),
+                true,
+                $params
+            );
         }
 
         return $result;

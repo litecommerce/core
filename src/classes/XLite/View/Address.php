@@ -69,12 +69,12 @@ class Address extends \XLite\View\Dialog
         ),
         'firstname' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Firstname',
+            self::SCHEMA_LABEL    => 'First name',
             self::SCHEMA_REQUIRED => true,
         ),
         'lastname' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Lastname',
+            self::SCHEMA_LABEL    => 'Last name',
             self::SCHEMA_REQUIRED => true,
         ),
         'street' => array(

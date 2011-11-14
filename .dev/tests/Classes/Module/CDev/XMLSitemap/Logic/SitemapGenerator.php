@@ -35,11 +35,13 @@ class XLite_Tests_Module_CDev_XMLSitemap_Logic_SitemapGenerator extends XLite_Te
 
         $index = \XLite\Module\CDev\XMLSitemap\Logic\SitemapGenerator::getInstance()->getIndex();
 
-        $this->assertEquals(
-            '<?xml version="1.0" encoding="UTF-8" ?>
+        $indexEtalon = '<?xml version="1.0" encoding="UTF-8" ?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-</sitemapindex>',
-            $index,
+</sitemapindex>';
+
+        $this->assertEquals(
+            preg_replace('/\r|\n/', '', $indexEtalon),
+            preg_replace('/\r|\n/', '', $index),
             'empty index'
         );
 

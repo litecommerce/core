@@ -3,9 +3,9 @@
 
 	<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
 
-	<target name="build" depends="set-properties,clean,prepare,phpunit-deployment,tests,php-documentor,analysis,create-build" />
+	<target name="build" depends="set-properties,clean,prepare-git,prepare-release,prepare,phpunit-deployment,tests,php-documentor,analysis" />
 
-	<target name="cc" depends="set-properties-cc,clean,prepare,phpunit-deployment-cc,tests-cc,php-documentor,analysis,comparison,create-build" />
+	<target name="cc" depends="set-properties-cc,clean,prepare-git-cc,prepare-release-cc,prepare,phpunit-deployment-cc,tests-cc,php-documentor,analysis,comparison,create-build" />
 
 	<target name="pure-build" depends="set-properties,clean,prepare,php-documentor,create-build" />
 
@@ -27,13 +27,17 @@
 		<property name="mode" value="cc" />
 		<property name="root" location="${basedir}" />
         <property name="buildDir" location="${root}/build" />
-        <property name="sourceDir" location="${root}/source" />
+		<property name="sourceDir" location="${root}/source" />
+		<property name="drupalDir" location="${root}/xlite_cms" />
+		<property name="lcConnectorDir" location="${drupalDir}/modules/lc_connector" />
+		<property name="lc3CleanDir" location="${drupalDir}/sites/all/themes/lc3_clean" />
 		<property name="jmeterDir" location="/u/xcart/jakarta-jmeter-2.3.4" />
 		<property name="srcDir" location="${sourceDir}/src" />
 		<property name="distrDir" location="${buildDir}/output" />
 		<property name="installDir" location="${buildDir}/src" />
 		<property name="lcRoot" location="${installDir}/modules/lc_connector/litecommerce" />
 		<property name="varRunClasses" value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
+		<property name="buildTag" value="build-${label}" />
     </target>
 
     <target name="set-properties-common">
@@ -52,17 +56,63 @@
         <mkdir dir="${buildDir}/screenshots" />
     </target>
 
-	<target name="prepare">
+	<target name="prepare-git">
 
-		<echo message="Update current source" />
+		<echo message="Update LiteCommerce source" />
 		<exec executable="git" dir="${sourceDir}">
 			<arg value="pull" />
 		</exec>
+
+	</target>
+
+	<target name="prepare-git-cc">
+
+		<echo message="Update LiteCommerce source" />
+		<exec executable="git" dir="${sourceDir}">
+			<arg value="pull" />
+		</exec>
+
+		<echo message="Update Drupal source" />
+		<exec executable="git" dir="${drupalDir}">
+			<arg value="pull" />
+		</exec>
+
+		<echo message="Update LC Connector source" />
+		<exec executable="git" dir="${lcConnectorDir}">
+			<arg value="pull" />
+		</exec>
+
+		<echo message="Update LC3 Clean source" />
+		<exec executable="git" dir="${lc3CleanDir}">
+			<arg value="pull" />
+		</exec>
+
+	</target>
+
+	<target name="prepare-release">
 
 		<echo message="Run release builder" />
         <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
 			<arg line="-c -b ${label} -d ${distrDir} -t" />
         </exec>
+
+	</target>
+
+	<target name="prepare-release-cc">
+
+		<echo message="Create revision tag" />
+		<exec executable="git" dir="${buildDir}">
+			<arg line="tag -a -f ${buildTag} -m 'Night-build tag'" />
+		</exec>
+
+		<echo message="Run release builder" />
+        <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
+			<arg line="-c -l -b ${label} -d ${distrDir} -t" />
+        </exec>
+
+	</target>
+
+	<target name="prepare">
 
 		<echo message="Deploy built releases" />
 		<exec executable="/usr/bin/tar" dir="${buildDir}">
@@ -278,7 +328,7 @@
 	<target name="create-build">
 		<tar destfile="${buildDir}/litecommerce-${version}.${label}-api.tgz" basedir="${buildDir}/api" compression="gzip" />
         <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
-			<arg line="-c -b ${label} -d ${distrDir}" />
+			<arg line="-c -l -b ${label} -d ${distrDir}" />
         </exec>
 		<copy todir="/u/xcart/lc_night_builds" overwrite="true">
 			<fileset dir="${distrDir}" />

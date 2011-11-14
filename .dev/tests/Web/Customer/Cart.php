@@ -368,7 +368,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
         $errorDivSelector = 'div.amount' . $product->getProductId() . 'formError:visible';
         $errorQtySelector = 'td.item-qty form input.wrong-amount';
         $qtyBlurOperation = 'jQuery("td.item-qty form input[type=text]").blur()';
-
+        $sleep = $this->setSleep(2);
         $this->typeKeys(
             "//td[@class='item-qty']"
             . "/form[@method='post']"
@@ -407,6 +407,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
         $this->getJSExpression($qtyBlurOperation);
         $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error');
         $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity');
+        $this->setSleep($sleep);
     }
 
     public function testEstimator()
