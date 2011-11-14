@@ -721,11 +721,26 @@ table.form input[type="text"]
   float: none;
 }
 
+.settings ul.table li.even
+{
+  background-color: #eee;
+}
+
+.settings ul.table li.separator
+{
+  background-color: transparent;
+}
+
 .settings ul.table .table-label
 {
-  width: 50%;
+  width: 40%;
   padding: 7px 0 7px 10px;
   color: #456583;
+  white-space: normal;
+}
+
+.settings ul.table .table-label label {
+  width: auto;
 }
 
 .settings ul.table li.separator h2
@@ -735,6 +750,7 @@ table.form input[type="text"]
 
 .settings ul.table .table-value {
   width: 40%;
+  padding: 7px 0px;
 }
 
 .settings ul.table li .input-field-wrapper {

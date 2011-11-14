@@ -48,6 +48,7 @@ class Email extends \XLite\View\FormField\Input\Text
 
         if (
             $result
+            && $this->getValue()
             && false === filter_var($this->getValue(), FILTER_VALIDATE_EMAIL)
         ) {
             $result = false;

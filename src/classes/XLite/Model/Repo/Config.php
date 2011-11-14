@@ -477,7 +477,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
      */
     protected function isValidOptionType($optionType)
     {
-        return in_array(
+        $simple = in_array(
             $optionType,
             array(
                 '',
@@ -491,5 +491,11 @@ class Config extends \XLite\Model\Repo\Base\I18n
                 'separator'
             )
         );
+
+        if (!$simple && preg_match('/^XLite\\\(Module\\\.+\\\)?View\\\FormField\\\/Ss', $optionType)) {
+            $simple = true;
+        }
+
+        return $simple;
     }
 }

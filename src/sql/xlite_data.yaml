@@ -15,7 +15,7 @@ XLite\Model\Config:
   - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone', option_comment: '' }] }
   - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address, option_comment: '' }] }
   - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts, option_comment: '' }] }
-  - { name: company_fax, category: Company, type: XLite\View\FormField\Input\Text\Phone, orderby: 420, translations: [{ code: en, option_name: Fax, option_comment: '' }] }
+  - { name: company_fax, category: Company, type: 'XLite\View\FormField\Input\Text\Phone', orderby: 420, translations: [{ code: en, option_name: Fax, option_comment: '' }] }
   - { name: company_identity, category: Company, type: separator, orderby: 350, translations: [{ code: en, option_name: Identity, option_comment: '' }] }
   - { name: company_name, category: Company, type: text, orderby: 360, translations: [{ code: en, option_name: 'Company name', option_comment: '' }] }
   - { name: company_website, category: Company, type: XLite\View\FormField\Input\Text\URL, orderby: 370, translations: [{ code: en, option_name: 'Company website', option_comment: '' }] }

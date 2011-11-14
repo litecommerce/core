@@ -48,6 +48,7 @@ class Phone extends \XLite\View\FormField\Input\Text
 
         if (
             $result
+            && $this->getValue()
             && !preg_match('/^([\+]\d{1,3}[ \.\-])?([\(]{1}\d{2,6}[\)])?([\d \.\-\/]{3,20})((x|ext|extension)[ ]?\d{1,4})?$/Ss', $this->getValue())
         ) {
             $result = false;

@@ -46,7 +46,7 @@ class URL extends \XLite\View\FormField\Input\Text
     {
         $result = parent::checkFieldValidity();
 
-        if ($result) {
+        if ($result && $this->getValue()) {
             $parts = @parse_url($this->getValue());
             if (!$parts || !isset($parts['scheme']) || !isset($parts['host'])) {
                 $result = false;
