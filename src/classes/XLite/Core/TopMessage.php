@@ -296,6 +296,8 @@ class TopMessage extends \XLite\Base\Singleton
      */
     protected function __construct()
     {
+        parent::__construct();
+
         $this->messages = $this->getMessages();
     }
 }
