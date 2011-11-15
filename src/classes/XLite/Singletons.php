@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace Includes;
+namespace XLite;
 
 /**
  * Singletons
@@ -62,6 +62,18 @@ class Singletons
     );
 
     /**
+     * __constructStatic
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    public static function __constructStatic()
+    {
+        static::$handler = new static();
+    }
+
+    /**
      * Magic getter
      *
      * @param string $name Variable name
@@ -77,5 +89,3 @@ class Singletons
         return $this->$name;
     }
 }
-
-\Includes\Singletons::$handler = new \Includes\Singletons();
