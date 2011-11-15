@@ -47,10 +47,8 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Default amounts
      */
-
     const AMOUNT_DEFAULT_INV_TRACK = 1000;
     const AMOUNT_DEFAULT_LOW_LIMIT = 10;
-
 
     /**
      * Inventory unique ID

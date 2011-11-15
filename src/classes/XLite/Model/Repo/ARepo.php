@@ -503,14 +503,17 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             } else {
 
                 // Batch processing: iterate over the first argument.
-                // "*InBatch*()" methods don't pass any other args
+                // For all methods the second argument can be ommited
                 foreach ($commonArg as $id => $data) {
 
-                    // Get entity by ID (if needed: $matches[3] == {''|'ById'})
-                    $entity = empty($matches[3]) ? $data : $this->getById($id);
-
+                    // Get entity by ID (if needed: $matches[3] == {''|'ById'}).
                     // Perform action
-                    $result = $this->$method($entity, $data);
+                    if (empty($matches[3])) {
+                        $result = isset($args[1]) ? $this->$method($data, $args[1]) : $this->$method($data);
+
+                    } else {
+                        $result = $this->$method($this->getById($id), $data);
+                    }
                 }
             }
 

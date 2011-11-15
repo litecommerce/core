@@ -429,6 +429,20 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
+     * Setter
+     *
+     * @param double $value Value to set
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    public function setAmount($value)
+    {
+        $this->getInventory()->setAmount($value);
+    }
+
+    /**
      * Get product Url
      *
      * @return string

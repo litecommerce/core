@@ -73,7 +73,6 @@ class Upload extends \XLite\View\Button\PopupButton
     {
         return array(
             'target' => \XLite\View\ModulesManager\UploadAddons::UPLOAD_ADDONS_TARGET,
-            'action' => 'view',
             'widget' => '\XLite\View\ModulesManager\UploadAddons',
         );
     }
