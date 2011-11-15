@@ -854,11 +854,11 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     protected function rewriteImageURL($url, $length)
     {
-        $newURL = \XLite\Core\Layout::getInstance()->getResourceWebPath($url, $this->imageURLOutputType);
+        $newURL = \XLite\Singletons::$handler->layout->getResourceWebPath($url, $this->imageURLOutputType);
 
         return $newURL
             ? array(0, strlen($url), $newURL)
-            : array(0, $length, \XLite\Core\Layout::getInstance()->prepareSkinURL('images', $this->imageURLOutputType));
+            : array(0, $length, \XLite\Singletons::$handler->layout->prepareSkinURL('images', $this->imageURLOutputType));
     }
 
     function subst($start, $end, $value)
@@ -1259,15 +1259,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @since  1.0.0
      */
     protected $checkTemplateStatus = true;
-
-    /**
-     * Layout
-     *
-     * @var    \XLite\Core\Layout
-     * @see    ____var_see____
-     * @since  1.0.0
-     */
-    protected $layout;
 
     /**
      * Root directory path length
