@@ -1509,6 +1509,9 @@ div.table-value .input-text-float input
   width: 100px;
 }
 
+div.table-value .input-text-integer input {
+  width: 60px;
+}
 
 div.table-label label {
   display: block;
