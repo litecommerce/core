@@ -55,26 +55,6 @@ abstract class AView extends \XLite\Core\Handler
     const REPLACE       = 'replace';
 
     /**
-     * Object instance cache
-     * FIXME[SINGLETONS] - to remove
-     *
-     * @var   \XLite\Core\FlexyCompiler
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $flexy;
-
-    /**
-     * Object instance cache
-     * FIXME[SINGLETONS] - to remove
-     *
-     * @var   \XLite\Core\Layout
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $layout;
-
-    /**
      * Deep count
      *
      * @var   integer
@@ -382,9 +362,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getTemplateFile($template = null)
     {
-        return static::$layout->getTemplateFullPath(
-            $template ?: $this->getTemplate()
-        );
+        return \XLite\Singletons::$handler->layout->getTemplateFullPath($template ?: $this->getTemplate());
     }
 
     /**
@@ -506,7 +484,7 @@ abstract class AView extends \XLite\Core\Handler
     protected function includeCompiledFile($original = null)
     {
         $normalized = $this->getTemplateFile($original);
-        $compiled = static::$flexy->prepare($normalized);
+        $compiled = \XLite\Singletons::$handler->flexy->prepare($normalized);
 
         // Execute PHP code from compiled template
         $cnt = \XLite\View\AView::$countDeep++;
@@ -766,7 +744,11 @@ abstract class AView extends \XLite\Core\Handler
     protected function prepareResource(array $data, $interface = null)
     {
         $shortURL = str_replace(LC_DS, '/', $data['file']);
-        $fullURL  = static::$layout->getResourceWebPath($shortURL, \XLite\Core\Layout::WEB_PATH_OUTPUT_URL, $interface);
+        $fullURL  = \XLite\Singletons::$handler->layout->getResourceWebPath(
+            $shortURL,
+            \XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
+            $interface
+        );
 
         $data += array(
             'media' => 'all',
@@ -774,7 +756,7 @@ abstract class AView extends \XLite\Core\Handler
         );
 
         if (isset($fullURL)) {
-            $data['file'] = static::$layout->getResourceFullPath($shortURL, $interface, false);
+            $data['file'] = \XLite\Singletons::$handler->layout->getResourceFullPath($shortURL, $interface, false);
         }
 
         return $data;
@@ -798,9 +780,6 @@ abstract class AView extends \XLite\Core\Handler
             list(, $index, ) = $data;
             static::$resources[$index] = static::getResourcesTypeSchema();
         }
-
-        static::$flexy  = \XLite\Core\FlexyCompiler::getInstance();
-        static::$layout = \XLite\Core\Layout::getInstance();
     }
 
     /**
@@ -1296,7 +1275,7 @@ abstract class AView extends \XLite\Core\Handler
 
         // Prepare properties
         $properties['tpl']    = substr(
-            static::$layout->getResourceFullPath($properties['tpl']),
+            \XLite\Singletons::$handler->layout->getResourceFullPath($properties['tpl']),
             strlen(LC_DIR_SKINS)
         );
         $properties['weight'] = $weight;
