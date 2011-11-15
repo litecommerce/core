@@ -101,7 +101,7 @@
 	<target name="prepare-release-cc">
 
 		<echo message="Create revision tag" />
-		<exec executable="git" dir="${buildDir}">
+		<exec executable="git" dir="${sourceDir}">
 			<arg line="tag -a -f ${buildTag} -m 'Night-build tag'" />
 		</exec>
 

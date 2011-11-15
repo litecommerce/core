@@ -28,79 +28,64 @@
 namespace XLite;
 
 /**
- * Singleton
+ * Singletons
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Singleton
+class Singletons
 {
     /**
-     * xlite
+     * handler
      *
-     * @var   string
+     * @var   \Includes\Singletons
      * @see   ____var_see____
-     * @since 1.0.0
+     * @since 1.0.13
      */
-    public static $xlite = '\XLite';
+    public static $handler;
 
     /**
-     * request
+     * classNames
      *
-     * @var   string
+     * @var   array
      * @see   ____var_see____
-     * @since 1.0.0
+     * @since 1.0.13
      */
-    public static $request = '\XLite\Core\Request';
+    protected static $classNames = array(
+        'xlite'   => '\XLite',
+        'request' => '\XLite\Core\Request',
+        'layout'  => '\XLite\Core\Layout',
+        'session' => '\XLite\Core\Session',
+        'config'  => '\XLite\Core\Config',
+        'flexy'   => '\XLite\Core\FlexyCompiler',
+        'auth'    => '\XLite\Core\Auth',
+    );
 
     /**
-     * layout
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public static $layout = '\XLite\Core\Layout';
-
-    /**
-     * session
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public static $session = '\XLite\Core\Session';
-
-    /**
-     * config
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public static $config = '\XLite\Core\Config';
-
-    /**
-     * flexy
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public static $flexy = '\XLite\Core\FlexyCompiler';
-
-
-    /**
-     * Initialize variables
+     * __constructStatic
      *
      * @return void
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.13
      */
-    public static function init()
+    public static function __constructStatic()
     {
-        foreach (get_class_vars(get_called_class()) as $name => $class) {
-            static::$$name = call_user_func(array($class, 'getInstance'));
-        }
+        static::$handler = new static();
+    }
+
+    /**
+     * Magic getter
+     *
+     * @param string $name Variable name
+     *
+     * @return \XLite\Base\Singleton
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    public function __get($name)
+    {
+        $this->$name = call_user_func(array(static::$classNames[$name], 'getInstance'));
+
+        return $this->$name;
     }
 }

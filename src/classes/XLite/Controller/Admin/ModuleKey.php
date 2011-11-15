@@ -97,7 +97,17 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
             }
 
         } else {
-            $this->showError(__FUNCTION__, 'Response from marketplace is not recived');
+
+            $error = \XLite\Core\Marketplace::getInstance()->getError();
+
+            if ($error) {
+
+                $this->showError(__FUNCTION__, 'Response from marketplace: ' . $error);
+
+            } else {
+
+                $this->showError(__FUNCTION__, 'Response from marketplace is not received');
+            }
         }
 
         $this->setReturnURL($this->buildURL('addons_list_marketplace'));
