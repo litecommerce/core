@@ -108,7 +108,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
     {
         $changed = false;
 
-        $data = \XLite\COre\Request::getInstance()->data;
+        $data = \XLite\Core\Request::getInstance()->data;
         if ($data && is_array($data)) {
             foreach ($data as $id => $row) {
                 $attachment = \XLite\Core\Database::getRepo('XLite\Module\CDev\FileAttachments\Model\Product\Attachment')

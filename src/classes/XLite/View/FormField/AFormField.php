@@ -38,7 +38,6 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * Widget param names
      */
-
     const PARAM_VALUE      = 'value';
     const PARAM_REQUIRED   = 'required';
     const PARAM_ATTRIBUTES = 'attributes';
@@ -55,7 +54,6 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * Available field types
      */
-
     const FIELD_TYPE_LABEL     = 'label';
     const FIELD_TYPE_TEXT      = 'text';
     const FIELD_TYPE_PASSWORD  = 'password';
@@ -64,7 +62,6 @@ abstract class AFormField extends \XLite\View\AView
     const FIELD_TYPE_RADIO     = 'radio';
     const FIELD_TYPE_TEXTAREA  = 'textarea';
     const FIELD_TYPE_SEPARATOR = 'separator';
-
 
     /**
      * name
@@ -111,7 +108,6 @@ abstract class AFormField extends \XLite\View\AView
      */
     abstract public function getFieldType();
 
-
     /**
      * Return field template
      *
@@ -120,7 +116,6 @@ abstract class AFormField extends \XLite\View\AView
      * @since  1.0.0
      */
     abstract protected function getFieldTemplate();
-
 
     /**
      * Return field name
@@ -588,7 +583,7 @@ abstract class AFormField extends \XLite\View\AView
      */
     protected function getRequiredFieldErrorMessage()
     {
-        return \XLite\COre\Translation::lbl('The X field is empty', array('name' => $this->getLabel()));
+        return \XLite\Core\Translation::lbl('The X field is empty', array('name' => $this->getLabel()));
     }
 
     /**

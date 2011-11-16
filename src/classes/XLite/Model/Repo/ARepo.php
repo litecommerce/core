@@ -40,7 +40,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     const CACHE_DEFAULT_TTL = 2592000;
 
-
     /**
      * Cache cell fields names
      */
@@ -49,7 +48,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     const RELATION_CACHE_CELL = 'relation';
     const CONVERTER_CACHE_CELL = 'converter';
     const GENERATOR_CACHE_CELL = 'generator';
-
 
     /**
      *  Cache key types
@@ -71,7 +69,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     const TYPE_SECONDARY = 'secondary';
     const TYPE_SERVICE   = 'service';
     const TYPE_INTERNAL  = 'internal';
-
 
     /**
      * Cache cells (local cache)
