@@ -150,8 +150,7 @@ return function()
 
     $option = $repo->findOneBy(array('name' => 'start_year'));
     if ($option) {
-        $option->setType('XLite\\View\\FormField\\Input\\Text\\Integer');
-        $option->setWidgeParameters(array('min' => 2009));
+        $option->setType('XLite\\View\\FormField\\Input\\Text\\PastYear');
     }
 
     foreach (array('welcome_priority', 'category_priority', 'product_priority') as $name) {
