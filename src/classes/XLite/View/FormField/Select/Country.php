@@ -103,18 +103,6 @@ class Country extends \XLite\View\FormField\Select\Regular
 
 
     /**
-     * Return field template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFieldTemplate()
-    {
-        return 'select_country.tpl';
-    }
-
-    /**
      * Define widget parameters
      *
      * @return void
@@ -141,9 +129,34 @@ class Country extends \XLite\View\FormField\Select\Regular
      */
     protected function getDefaultOptions()
     {
-        return $this->onlyEnabled
+        $list = $this->onlyEnabled
             ? \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllEnabled()
             : \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
+
+        $options = array();
+        foreach ($list as $country) {
+            $options[$country->getCode()] = $country->getCountry();
+        }
+
+        return $options;
+    }
+
+    /**
+     * getOptions
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getOptions()
+    {
+        $list = parent::getOptions();
+
+        if (!$this->getValue()) {
+            $list = array('' => static::t('Select one...')) + $list;
+        }
+
+        return $list;
     }
 
     /**
@@ -155,7 +168,9 @@ class Country extends \XLite\View\FormField\Select\Regular
      */
     protected function getDefaultValue()
     {
-        return \XLite\Core\Config::getInstance()->General->default_country;
+        return \XLite\Core\Config::getInstance()->General->default_country
+            ? \XLite\Core\Config::getInstance()->General->default_country->getCode()
+            : null;
     }
 
     /**
