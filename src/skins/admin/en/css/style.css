@@ -1506,11 +1506,7 @@ div.table-value .input-text-integer input,
 div.table-value .input-text-float input
 {
   text-align: right;
-  width: 100px;
-}
-
-div.table-value .input-text-integer input {
-  width: 60px;
+  width: 80px;
 }
 
 div.table-label label {
