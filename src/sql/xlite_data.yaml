@@ -31,7 +31,6 @@ XLite\Model\Config:
   - { name: direct_product_url, category: General, type: checkbox, orderby: 255, value: N, translations: [{ code: en, option_name: 'Allow direct URL access to products from disabled categories', option_comment: '' }] }
   - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method', option_comment: '' }] }
   - { name: enable_anon_checkout, category: General, type: checkbox, orderby: 270, value: Y, translations: [{ code: en, option_name: 'Enable anonymous checkout', option_comment: '' }] }
-  - { name: enable_categories_extra_fields, category: General, type: checkbox, orderby: 470, value: Y, translations: [{ code: en, option_name: 'Enable extra fields in the category management dialogue', option_comment: '' }] }
   - { name: enable_init_order_notif, category: Email, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'E-mail order details to the sales department after order placement', option_comment: '' }] }
   - { name: enable_init_order_notif_customer, category: Email, type: checkbox, value: N, translations: [{ code: en, option_name: 'E-mail order details to customers after order placement', option_comment: '' }] }
   - { name: form_id_protection, category: Security, type: checkbox, orderby: 90, value: Y, translations: [{ code: en, option_name: 'Enable admin forms protection system', option_comment: '' }] }
