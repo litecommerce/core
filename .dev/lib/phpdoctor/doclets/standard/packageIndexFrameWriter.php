@@ -109,12 +109,13 @@ class PackageIndexFrameWriter extends HTMLWriter
 	protected function displayTreePackages(array $packages)
 	{
         foreach ($packages as $k => $v) {
-            echo '<li><a href="' . $v['path'] . '/package-frame.html" target="index" title="' . $v['full'] . '">' . $v['name'] . '</a></li>' . "\n";
+            echo '<li><a href="' . $v['path'] . '/package-frame.html" target="index" title="' . $v['full'] . '">' . $v['name'] . '</a>';
             if ($v['childs']) {
-                echo ('<ul>' . "\n");
+                echo ("\n" . '<ul>' . "\n");
                 $this->displayTreePackages($v['childs']);
                 echo ('</ul>' . "\n");
             }
+            echo '</li>' . "\n";
         }
 	}
 }

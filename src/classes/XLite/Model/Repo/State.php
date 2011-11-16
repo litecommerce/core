@@ -196,7 +196,7 @@ class State extends \XLite\Model\Repo\ARepo
      * @param array                $data   Record
      * @param \XLite\Model\AEntity $parent Parent model OPTIONAL
      *
-     * @return \XLite\Model\AEntity|void
+     * @return \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.0
      */
