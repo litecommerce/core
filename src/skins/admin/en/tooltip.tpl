@@ -12,9 +12,9 @@
 
 <div class="tooltip-main">
   {if:isImageTag()}
-  <img {getAttributesCode():h} src="images/spacer.gif" alt="Help" />
+    <img {getAttributesCode():h} src="images/spacer.gif" alt="Help" />
   {else:}
-  <span {getAttributesCode():h}>{getParam(#caption#)}</span>
+    <span {getAttributesCode():h}>{getParam(#caption#)}</span>
   {end:}
   <div class="help-text">{getParam(#text#):h}</div>
 </div>
