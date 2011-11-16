@@ -168,9 +168,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      */
     protected function getDefaultValue()
     {
-        return \XLite\Core\Config::getInstance()->General->default_country
-            ? \XLite\Core\Config::getInstance()->General->default_country->getCode()
-            : null;
+        return \XLite\Core\Config::getInstance()->General->default_country;
     }
 
     /**
