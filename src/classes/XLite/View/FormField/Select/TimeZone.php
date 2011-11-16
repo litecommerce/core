@@ -44,7 +44,9 @@ class TimeZone extends \XLite\View\FormField\Select\Regular
      */
     protected function getDefaultOptions()
     {
-        return \DateTimeZone::listIdentifiers();
+        $list = \DateTimeZone::listIdentifiers();
+
+        return array_combine($list, $list);
     }
 
     /**
@@ -58,7 +60,7 @@ class TimeZone extends \XLite\View\FormField\Select\Regular
      */
     protected function isOptionSelected($value)
     {
-        return $this->getValue() ? parent::isSelected($value) : $value == date_default_timezone_get();
+        return $this->getValue() ? parent::isOptionSelected($value) : $value == date_default_timezone_get();
     }
 
 }
