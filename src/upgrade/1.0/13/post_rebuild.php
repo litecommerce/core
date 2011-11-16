@@ -142,7 +142,7 @@ return function()
         }
     }
 
-    $option = $repo->findOneBy(array('name' => ''smtp_server_port''));
+    $option = $repo->findOneBy(array('name' => 'smtp_server_port'));
     if ($option) {
         $option->setType('XLite\\View\\FormField\\Input\\Text\\Integer');
         $option->setWidgeParameters(array('min' => 0, 'max' => 65535));
