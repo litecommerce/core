@@ -121,18 +121,21 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function updateMetaTags(array &$elements)
     {
-        foreach (array('description' => 'getMetaDescription', 'keywords' => 'getKeywords') as $name => $method) {
-            $content = $this->getViewer()->$method();
+        if (!defined('MAINTENANCE_MODE')) {
+    
+            foreach (array('description' => 'getMetaDescription', 'keywords' => 'getKeywords') as $name => $method) {
+                $content = $this->getViewer()->$method();
 
-            if ($content) {
-                $elements['lc_connector_meta_' . $name] = array(
-                    '#type' => 'html_tag',
-                    '#tag'  => 'meta',
-                    '#attributes' => array(
-                        'name'    => $name,
-                        'content' => htmlspecialchars($content, ENT_QUOTES, 'UTF-8'),
-                    ),
-                );
+                if ($content) {
+                    $elements['lc_connector_meta_' . $name] = array(
+                        '#type' => 'html_tag',
+                        '#tag'  => 'meta',
+                        '#attributes' => array(
+                            'name'    => $name,
+                            'content' => htmlspecialchars($content, ENT_QUOTES, 'UTF-8'),
+                        ),
+                    );
+                }
             }
         }
     }
