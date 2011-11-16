@@ -32,8 +32,6 @@ XLite\Model\Config:
   - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method', option_comment: '' }] }
   - { name: enable_anon_checkout, category: General, type: checkbox, orderby: 270, value: Y, translations: [{ code: en, option_name: 'Enable anonymous checkout', option_comment: '' }] }
   - { name: enable_categories_extra_fields, category: General, type: checkbox, orderby: 470, value: Y, translations: [{ code: en, option_name: 'Enable extra fields in the category management dialogue', option_comment: '' }] }
-  - { name: enable_credit_card_validation, category: General, type: checkbox, orderby: 210, value: Y, translations: [{ code: en, option_name: 'Validate credit cards', option_comment: '' }] }
-  - { name: enable_extra_fields_inherit, category: General, type: checkbox, orderby: 480, value: Y, translations: [{ code: en, option_name: 'Enable products to inherit extra fields from disabled categories', option_comment: '' }] }
   - { name: enable_init_order_notif, category: Email, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'E-mail order details to the sales department after order placement', option_comment: '' }] }
   - { name: enable_init_order_notif_customer, category: Email, type: checkbox, value: N, translations: [{ code: en, option_name: 'E-mail order details to customers after order placement', option_comment: '' }] }
   - { name: form_id_protection, category: Security, type: checkbox, orderby: 90, value: Y, translations: [{ code: en, option_name: 'Enable admin forms protection system', option_comment: '' }] }
@@ -50,7 +48,7 @@ XLite\Model\Config:
   - { name: login_lifetime, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 450, value: 3, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Days to store last login data', option_comment: '' }] }
   - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Clear cart on customer logoff', option_comment: '' }] }
   - { name: maximal_order_amount, category: General, type: XLite\View\FormField\Input\Text\Float, orderby: 290, value: 99999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Maximum allowed order total', option_comment: '' }] }
-  - { name: minimal_order_amount, category: General, type: XLite\View\FormField\Input\Text\Float, orderby: 280, value: '0', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Minimum allowed order total', option_comment: '' }] }
+  - { name: minimal_order_amount, category: General, type: XLite\View\FormField\Input\Text\Float, orderby: 280, value: '0', widgetParameters: { min: 0 }, translations: [{ code: en, option_name: 'Minimum allowed order total', option_comment: '' }] }
   - { name: operation_presentation, category: General, type: separator, orderby: 100, translations: [{ code: en, option_name: 'Maintenance and operation', option_comment: '' }] }
   - { name: orders_department, category: Company, type: XLite\View\FormField\Input\Text\Email, orderby: 480, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Sales department e-mail', option_comment: '' }] }
   - { name: orders_per_page, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 430, value: 30, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Orders per page', option_comment: '' }] }

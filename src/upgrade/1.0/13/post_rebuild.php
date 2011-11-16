@@ -126,11 +126,19 @@ return function()
         }
     }
 
-    foreach (array('maximal_order_amount', 'minimal_order_amount') as $name) {
+    foreach (array('maximal_order_amount') as $name) {
         $option = $repo->findOneBy(array('name' => $name));
         if ($option) {
             $option->setType('XLite\\View\\FormField\\Input\\Text\\Float');
             $option->setWidgeParameters(array('min' => 1));
+        }
+    }
+
+    foreach (array('minimal_order_amount') as $name) {
+        $option = $repo->findOneBy(array('name' => $name));
+        if ($option) {
+            $option->setType('XLite\\View\\FormField\\Input\\Text\\Float');
+            $option->setWidgeParameters(array('min' => 0));
         }
     }
 
@@ -154,7 +162,7 @@ return function()
         }
     }
 
-    foreach (array('clear_cc_info', 'memberships', 'membershipsCollection', 'params', 'partner_product_banner', 'partner_profile', 'defaultSources', 'product_layout', 'user_layout') as $name) {
+    foreach (array('clear_cc_info', 'memberships', 'membershipsCollection', 'params', 'partner_product_banner', 'partner_profile', 'defaultSources', 'product_layout', 'user_layout', 'enable_credit_card_validation', 'enable_extra_fields_inherit') as $name) {
         $option = $repo->findOneBy(array('name' => $name));
         if ($option) {
             \XLite\Core\Database::getEM()->remove($option);
