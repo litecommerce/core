@@ -10,4 +10,4 @@
  * @since     1.0.0
  *}
 
-<th class="pos"><widget template="items_list/sort.tpl" title="Pos." sortByColumn="{*%static::SORT_BY_MODE_DEFAULT%*}" /></th>
+<th class="pos"><widget template="items_list/sort.tpl" title="{t(#Pos.#)}" sortByColumn="{*%static::SORT_BY_MODE_DEFAULT%*}" /></th>

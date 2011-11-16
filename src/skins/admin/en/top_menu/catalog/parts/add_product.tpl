@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="menu.catalog", weight="15")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="Add Product" linkTarget="add_product" />
+<widget class="\XLite\View\TopMenu\Node" title="{t(#Add Product#)}" linkTarget="add_product" />

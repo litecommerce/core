@@ -16,8 +16,8 @@
      <table class="data-table" width="100%">
 
       <tr>
-        <th style="width:30px">Delete</th>
-        <th style="width:30px">Pos.</th>
+        <th style="width:30px">{t(#Delete#)}</th>
+        <th style="width:30px">{t(#Pos.#)}</th>
         <th>Title</th>
       </tr>
 
@@ -34,7 +34,7 @@
 
   <br />
 
-  <widget class="\XLite\View\Button\Submit" label="Update" />
+  <widget class="\XLite\View\Button\Submit" label="{t(#Update#)}" />
 
   <widget name="fpupdate_form" end />
 

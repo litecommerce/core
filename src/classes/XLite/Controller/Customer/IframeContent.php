@@ -85,7 +85,7 @@ HTML;
             exit;
 
         } else {
-            $this->redirect(\XLite\COre\COnverter::buildURL('checkout'));
+            $this->redirect(\XLite\Core\Converter::buildURL('checkout'));
         }
     }
 

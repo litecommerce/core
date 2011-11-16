@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="menus", weight="40")
  *}
-<widget class="\XLite\View\TopMenu\Node" list="shipping_taxes" title="Shipping &amp; Taxes" className="hl" linkTarget="shipping_methods" />
+<widget class="\XLite\View\TopMenu\Node" list="shipping_taxes" title="{t(#Shipping#)} &amp; {t(#Taxes#)}" className="hl" linkTarget="shipping_methods" />

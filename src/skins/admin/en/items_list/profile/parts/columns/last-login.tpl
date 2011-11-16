@@ -12,5 +12,5 @@
  *}
 
 <td class="last-login table-label">
-{if:profile.last_login}{formatTime(profile.last_login):h}{else:}Never{end:}
+{if:profile.last_login}{formatTime(profile.last_login):h}{else:}{t(#Never#)}{end:}
 </td>

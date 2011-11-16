@@ -47,7 +47,7 @@
   </table>
 
   <div class="buttons">
-    <widget class="\XLite\View\Button\Submit" label="Update" />
+    <widget class="\XLite\View\Button\Submit" label="{t(#Update#)}" />
     <widget class="\XLite\View\Button\DeleteSelected" />
   </div>
 </form>
@@ -79,6 +79,6 @@
 
   </ul>
 
-  <widget class="\XLite\View\Button\Submit" label="Add" />
+  <widget class="\XLite\View\Button\Submit" label="{t(#Add#)}" />
 
 </form>

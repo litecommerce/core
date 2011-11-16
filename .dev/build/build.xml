@@ -37,7 +37,7 @@
         <property name="installDir" location="${buildDir}/src" />
         <property name="lcRoot" location="${installDir}/modules/lc_connector/litecommerce" />
         <property name="varRunClasses" value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
-        <property name="buildTag" value="build-${label}" />
+        <property name="buildTag" value="${label}" />
     </target>
 
     <target name="set-properties-common">

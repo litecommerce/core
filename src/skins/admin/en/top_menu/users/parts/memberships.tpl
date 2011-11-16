@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="menu.users", weight="20")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="Membership levels" linkTarget="memberships" />
+<widget class="\XLite\View\TopMenu\Node" title="{t(#Membership levels#)}" linkTarget="memberships" />

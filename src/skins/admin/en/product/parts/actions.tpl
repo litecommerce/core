@@ -14,7 +14,7 @@
 <tr>
 <td colspan="3">
   <br />
-  <widget class="\XLite\View\Button\Submit" label="Add product" style="main-button" IF="isNew()" />
-  <widget class="\XLite\View\Button\Submit" label="Update product" style="main-button" IF="!isNew()" />
+  <widget class="\XLite\View\Button\Submit" label="{t(#Add product#)}" style="main-button" IF="isNew()" />
+  <widget class="\XLite\View\Button\Submit" label="{t(#Update product#)}" style="main-button" IF="!isNew()" />
 </td>
 </tr>

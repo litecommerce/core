@@ -12,5 +12,5 @@
  *}
 
 <div class="action">
-  <widget class="\XLite\View\Button\Submit" label="Upgrade" style="main-button" />
+  <widget class="\XLite\View\Button\Submit" label="{t(#Upgrade#)}" style="main-button" />
 </div>

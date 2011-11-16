@@ -13,9 +13,9 @@
 
 <hr />
 
-<span IF="status=#added#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country added successfully&nbsp;&lt;&lt;<br /><br /></span>
-<span IF="status=#deleted#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country(s) deleted successfully&nbsp;&lt;&lt;<br /><br /></span>
-<span IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country(s) updated successfully&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#added#" class="success-message"><br /><br />&gt;&gt;&nbsp;{t(#Country added successfully#)}&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#deleted#" class="success-message"><br /><br />&gt;&gt;&nbsp;{t(#Country(s) deleted successfully#)}&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;{t(#Country(s) updated successfully#)}&nbsp;&lt;&lt;<br /><br /></span>
 
 <form action="admin.php" method="post" name="countries_form">
 <input type="hidden" name="target" value="countries" />
@@ -34,7 +34,7 @@
 		</tr>
 
 		<tr FOREACH="getCountries(),country_idx,country" class="{getRowClass(country_idx,#dialog-box#,#highlight#)}">
-		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" />{country.code}</a></td>
+		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="{t(#Click here to view states of country#)}" />{country.code}</a></td>
 		    <td>
 		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}" />
 		    </td>
@@ -53,10 +53,10 @@
 		<table width="100%">
 		<tr>
 			<td align="left">
-        <widget class="\XLite\View\Button\Submit" style="main-button" name="submit" label="Update" />
+        <widget class="\XLite\View\Button\Submit" style="main-button" name="submit" label="{t(#Update#)}" />
       </td>
 			<td align="right">
-        <widget class="\XLite\View\Button\Regular" label="Delete selected" name="delete" jsCode="document.countries_form.action.value='delete';document.countries_form.submit()" />
+        <widget class="\XLite\View\Button\Regular" label="{t(#Delete selected#)}" name="delete" jsCode="document.countries_form.action.value='delete';document.countries_form.submit()" />
       </td>
 		</tr>
 		</table>
@@ -77,9 +77,9 @@
 			
       <table class="data-table">
 				<tr>
-					<th>Code</th>
-					<th>Country</th>
-					<th>Active</th>
+					<th>{t(#Code#)}</th>
+					<th>{t(#Country#)}</th>
+					<th>{t(#Active#)}</th>
 				</tr>
 				<tr class="dialog-box">
 					<td><input type="text" size="3" maxlength="2" name="code" value="{code}" /></td>
@@ -89,15 +89,15 @@
 
 {if:!valid}
 	<tr>
-		<td IF="status=#exists#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Specified country code is already in use<br /><br /></span></td>
-		<td IF="status=#code#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Mandatory field "Code" is empty.<br /><br /></span></td>
-		<td IF="status=#country#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Mandatory field "Country" is empty<br /><br /></span></td>
-		<td IF="status=#charset#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Mandatory field "Charset" is empty<br /><br /></span></td>
+		<td IF="status=#exists#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;{t(#Specified country code is already in use#)}<br /><br /></span></td>
+		<td IF="status=#code#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;{t(#Mandatory field "Code" is empty.#)}<br /><br /></span></td>
+		<td IF="status=#country#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;{t(#Mandatory field "Country" is empty#)}<br /><br /></span></td>
+		<td IF="status=#charset#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;{t(#Mandatory field "Charset" is empty#)}<br /><br /></span></td>
 	</tr>
 {end:}
 	<tr>
 		<td colspan="6">
-      <widget class="\XLite\View\Button\Submit" label="Add new" name="country_add" />
+      <widget class="\XLite\View\Button\Submit" label="{t(#Add new#)}" name="country_add" />
     </td>
 	</tr>
 </table>

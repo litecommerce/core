@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="menu.catalog", weight="20")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="Categories" linkTarget="categories" />
+<widget class="\XLite\View\TopMenu\Node" title="{t(#Categories#)}" linkTarget="categories" />

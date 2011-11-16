@@ -44,7 +44,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      */
     protected $type = self::TYPE_SERVICE;
 
-
     /**
      * Insert new cell
      *
@@ -58,12 +57,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      */
     public function insertCell($id, $name, $value)
     {
-        $this->getEntityManager()->getConnection()->replace(
-            $this->_class->getTableName(),
-            $this->prepareDataForNewCell($id, $name, $value)
-        );
-
-        return $this->getEntityManager()->getConnection()->lastInsertId();
+        return $this->insert($this->prepareDataForNewCell($id, $name, $value));
     }
 
     /**
@@ -78,11 +72,9 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      */
     public function updateCell(\XLite\Model\SessionCell $cell, $value)
     {
-        $this->getEntityManager()->getConnection()->update(
-            $this->_class->getTableName(),
-            $this->prepareDataForExistingCell($value, $cell),
-            $this->getCellIdentifier($cell)
-        );
+        $cell->setValue($value);
+
+        return $this->update($cell);
     }
 
     /**
@@ -96,10 +88,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      */
     public function removeCell(\XLite\Model\SessionCell $cell)
     {
-        $this->getEntityManager()->getConnection()->delete(
-            $this->_class->getTableName(),
-            $this->getCellIdentifier($cell)
-        );
+        return $this->delete($cell);
     }
 
     /**
@@ -127,23 +116,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
         }
 
         return $schema;
-    }
-
-
-    /**
-     * Return data to indentify cell in SQL queries
-     *
-     * @param \XLite\Model\SessionCell $cell Cell to use
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCellIdentifier(\XLite\Model\SessionCell $cell)
-    {
-        return array(
-            'cell_id' => $cell->getCellId(),
-        );
     }
 
     /**

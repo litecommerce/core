@@ -12,4 +12,4 @@
  * @ListChild (list="upgrade.step.ready_to_install.buttons.sections", weight="200")
  *}
 
-<widget IF="!isNextStepAvailable()" class="\XLite\View\Button\Link" label="Check again" style="main-button" location="{buildURL(#upgrade#,#check_integrity#)}" />
+<widget IF="!isNextStepAvailable()" class="\XLite\View\Button\Link" label="{t(#Check again#)}" style="main-button" location="{buildURL(#upgrade#,#check_integrity#)}" />

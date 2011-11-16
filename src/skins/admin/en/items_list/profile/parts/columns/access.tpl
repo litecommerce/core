@@ -16,13 +16,13 @@
   {if:profile.access_level=0}
   Customer
   {if:profile.membership}
-  <br /><b>membership:</b> {profile.membership.getName()}
+  <br /><b>{t(#membership#)}:</b> {profile.membership.getName()}
   {end:}
   {if:profile.pending_membership}
-  <br /><b>requested for membership:</b> {profile.pending_membership.getName()}
+  <br /><b>{t(#requested for membership#)}:</b> {profile.pending_membership.getName()}
   {end:}
   {else:}
-  Administrator
+  {t(#Administrator#)}
   {end:}
 
 </td>

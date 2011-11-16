@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<h2 align="center">Administrator Zone</h2>
+<h2 align="center">{t(#Administrator Zone#)}</h2>

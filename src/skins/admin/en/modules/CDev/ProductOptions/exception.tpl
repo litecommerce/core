@@ -13,7 +13,7 @@
   <li FOREACH="getGroups(),group">
     <label for="exception_{eid}_{group.getGroupId()}">{group.getName()}</label>
     <select name="exceptions[{eid}][{group.getGroupId()}]" id="exception_{eid}_{group.getGroupId()}">
-      <option value="" selected="{isNotPartException(exception,group)}">None</option>
+      <option value="" selected="{isNotPartException(exception,group)}">{t(#None#)}</option>
       <option FOREACH="group.getOptions(),option" value="{option.getOptionId()}" selected="isOptionSelected(exception,option)">{option.getName()}</option>
     </select>
   </li>

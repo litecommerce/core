@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="menu.settings", weight="30")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="Payment methods" linkTarget="payment_methods" />
+<widget class="\XLite\View\TopMenu\Node" title="{t(#Payment methods#)}" linkTarget="payment_methods" />

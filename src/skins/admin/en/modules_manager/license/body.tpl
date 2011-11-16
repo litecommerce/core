@@ -54,14 +54,14 @@
               IF="isUpgradeEntryAvailable()"
               class="\XLite\View\Button\Addon\SelectInstallationType"
               moduleId="{getModuleId()}"
-              label="Install add-on"
+              label="{t(#Install add-on#)}"
               style="submit-button main-button"
               disabled=true />
 
             <widget
               IF="!isUpgradeEntryAvailable()"
               class="\XLite\View\Button\Submit"
-              label="Install add-on"
+              label="{t(#Install add-on#)}"
               style="submit-button main-button"
               disabled=true />
         </td>
