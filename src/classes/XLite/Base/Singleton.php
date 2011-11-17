@@ -62,4 +62,23 @@ abstract class Singleton extends \XLite\Base\SuperClass
 
         return static::$instances[$className];
     }
+
+    /**
+     * Destruct and recreate singleton
+     *
+     * @return \XLite\Base
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function resetInstance()
+    {
+        $className = get_called_class();
+
+        // Create new instance of the object (if it is not already created)
+        if (isset(static::$instances[$className])) {
+            unset(static::$instances[$className]);
+        }
+
+        return static::getInstance();
+    }
 }
