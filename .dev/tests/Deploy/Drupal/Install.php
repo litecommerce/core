@@ -83,6 +83,9 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         // Start installation process
         $this->open('install.php?lcdebug');
 
+        // Step zero: Profile selection
+        $this->stepZero();
+
         // First step page: License agreement
         $this->stepOne();
 
@@ -109,6 +112,44 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         $this->stepNine();
     }
+
+    /**
+     * stepZero: Profile selection page
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function stepZero()
+    {
+         // Check page title
+        $this->assertTitle('Select an installation profile | Drupal');
+
+        // Check page header
+        $this->assertElementPresent(
+            '//h1[@class="page-title" and text()="Select an installation profile"]',
+            'Check that page header equals to text "Select an installation profile"'
+        );
+
+        // Check radio-button
+        $this->assertElementPresent(
+            '//div[@id="content"]/form[@id="install-select-profile-form"]/div/div[@class="form-item form-type-radio form-item-profile"]/input[@id="edit-profile--4" and @value="litecommerce"]',
+            'Check if radio button for Ecommerce CMS selection is presented'
+        );
+
+        // Check radio-button
+        $this->assertElementPresent(
+            '//div[@id="content"]/form[@id="install-select-profile-form"]/div/div[@class="form-item form-type-radio form-item-profile"]/label[@for="edit-profile--4" and text()="Ecommerce CMS "]',
+            'Check if radio button for Ecommerce CMS selection is presented'
+        );
+
+
+        $this->check('//div[@id="content"]/form[@id="install-select-profile-form"]/div/div[@class="form-item form-type-radio form-item-profile"]/input[@id="edit-profile--4" and @value="litecommerce"]');
+
+        // Submit
+        $this->clickAndWait('css=#edit-submit');
+    }
+
 
     /**
      * stepOne: License agreement page
