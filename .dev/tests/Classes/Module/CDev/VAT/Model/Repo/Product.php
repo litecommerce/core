@@ -67,6 +67,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Repo_Product extends XLite_Tests_Model_A
         $rate->setTax($tax);
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $cnd = new \XLite\Core\CommonCell(
             array(
                 \XLite\Model\Repo\Product::P_PRICE => array(1, 2),
@@ -84,6 +85,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Repo_Product extends XLite_Tests_Model_A
         $rate->setPosition(2);
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd);
         $this->assertEquals(3, count($result), 'check count #3');
 
