@@ -53,7 +53,6 @@ class State extends \XLite\Model\Repo\ARepo
      */
     protected $defaultOrderBy = 'state';
 
-
     /**
      * Get dump 'Other' state
      *
@@ -97,9 +96,16 @@ class State extends \XLite\Model\Repo\ARepo
      */
     public function getCodeById($stateId)
     {
-        $entity = $this->defineGetCodeByIdQuery($stateId)->getSingleResult();
+        $result = $this->getFromCache('codes', array('state_id' => $stateId));
 
-        return $entity ? $entity->getCode() : null;
+        if (!isset($result)) {
+            $entity = $this->defineGetCodeByIdQuery($stateId)->getSingleResult();
+            $result = $entity ? $entity->getCode() : '';
+
+            $this->saveToCache($result, 'codes', array('state_id' => $stateId));
+        }
+
+        return $result;
     }
 
     /**
@@ -149,6 +155,7 @@ class State extends \XLite\Model\Repo\ARepo
     public function findAllStates()
     {
         $data = $this->getFromCache('all');
+
         if (!isset($data)) {
             $data = $this->defineAllStatesQuery()->getResult();
             $this->saveToCache($data, 'all');
@@ -170,9 +177,7 @@ class State extends \XLite\Model\Repo\ARepo
     {
         $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($countryCode);
 
-        return $country
-            ? $this->defineByCountryQuery($country)->getResult()
-            : array();
+        return $country ? $this->defineByCountryQuery($country)->getResult() : array();
     }
 
     /**
@@ -205,25 +210,6 @@ class State extends \XLite\Model\Repo\ARepo
         return isset($data['country_code']) && isset($data['code'])
             ? $this->findOneByCountryAndCode($data['country_code'], $data['code'])
             : parent::findOneByRecord($data, $parent);
-    }
-
-
-    /**
-     * Define cache cells
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineCacheCells()
-    {
-        $list = parent::defineCacheCells();
-
-        $list['all'] = array(
-            self::RELATION_CACHE_CELL => array('\XLite\Model\Country'),
-        );
-
-        return $list;
     }
 
     /**
@@ -310,4 +296,45 @@ class State extends \XLite\Model\Repo\ARepo
             ->setParameter('country', $countryCode)
             ->setParameter('code', $code);
     }
+
+    // {{{ Cache
+
+    /**
+     * Define cache cells
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineCacheCells()
+    {
+        $list = parent::defineCacheCells();
+
+        $list['all'] = array(
+            self::RELATION_CACHE_CELL => array('\XLite\Model\Country'),
+        );
+
+        $list['codes'] = array(
+            self::ATTRS_CACHE_CELL => array('state_id'),
+        );
+
+        return $list;
+    }
+
+    /**
+     * cleanCache
+     *
+     * @param integer $zoneId Zone Id OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function cleanCache($zoneId = null)
+    {
+        $this->deleteCache('all');
+        $this->deleteCache('codes');
+    }
+
+    // }}}
 }

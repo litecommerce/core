@@ -162,15 +162,12 @@ class Zone extends \XLite\Model\AEntity
     public function getZoneCountries($excluded = false)
     {
         $zoneCountries = array();
-
-        $countryCodes = $this->getElementsByType(\XLite\Model\ZoneElement::ZONE_ELEMENT_COUNTRY);
+        $countryCodes  = $this->getElementsByType(\XLite\Model\ZoneElement::ZONE_ELEMENT_COUNTRY);
 
         if (!empty($countryCodes) || $excluded) {
-
             $allCountries = \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
 
             foreach ($allCountries as $key=>$country) {
-
                 $condition = in_array($country->getCode(), $countryCodes);
 
                 if ($condition && !$excluded || !$condition && $excluded) {
@@ -194,17 +191,13 @@ class Zone extends \XLite\Model\AEntity
     public function getZoneStates($excluded = false)
     {
         $zoneStates = array();
-
         $stateCodes = $this->getElementsByType(\XLite\Model\ZoneElement::ZONE_ELEMENT_STATE);
 
         if (!empty($stateCodes) || $excluded) {
-
             $allStates = \XLite\Core\Database::getRepo('XLite\Model\State')->findAllStates();
-
             usort($allStates, array('\XLite\Model\Zone', 'sortStates'));
 
             foreach ($allStates as $key=>$state) {
-
                 $condition = in_array($state->getCountry()->getCode() . '_' . $state->getCode(), $stateCodes);
 
                 if ($condition && !$excluded || !$condition && $excluded) {

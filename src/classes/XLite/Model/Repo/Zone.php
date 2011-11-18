@@ -72,6 +72,10 @@ class Zone extends \XLite\Model\Repo\ARepo
             self::RELATION_CACHE_CELL => array('\XLite\Model\Zone'),
         );
 
+        $list['default'] = array(
+            self::RELATION_CACHE_CELL => array('\XLite\Model\Zone'),
+        );
+
         $list['zone'] = array(
             self::ATTRS_CACHE_CELL    => array('zone_id'),
             self::RELATION_CACHE_CELL => array('\XLite\Model\Zone'),
@@ -96,6 +100,7 @@ class Zone extends \XLite\Model\Repo\ARepo
     public function cleanCache($zoneId = null)
     {
         $this->deleteCache('all');
+        $this->deleteCache('default');
 
         if (isset($zoneId)) {
             $this->deleteCache('zone.' . sprintf('%d', $zoneId));
@@ -162,7 +167,6 @@ class Zone extends \XLite\Model\Repo\ARepo
         $data = $this->getFromCache('zone', array('zone_id' => $zoneId));
 
         if (!isset($data)) {
-
             $data = $this->defineFindZone($zoneId)->getSingleResult();
 
             if ($data) {
@@ -212,12 +216,10 @@ class Zone extends \XLite\Model\Repo\ARepo
 
         // Get all zones list
         $allZones = $this->findAllZones();
-
         $applicableZones = array();
 
         // Get the list of zones that are applicable for address
         foreach ($allZones as $zone) {
-
             $zoneWeight = $zone->getZoneWeight($address);
 
             if (0 < $zoneWeight) {
@@ -226,7 +228,8 @@ class Zone extends \XLite\Model\Repo\ARepo
         }
 
         // Add default zone with zero weight
-        $defaultZone = $this->findOneBy(array('is_default' => 1));
+        $defaultZone = $this->getDefaultZone();
+
         if ($defaultZone) {
             $applicableZones[0] = $defaultZone;
         }
@@ -235,6 +238,25 @@ class Zone extends \XLite\Model\Repo\ARepo
         krsort($applicableZones);
 
         return $applicableZones;
+    }
+
+    /**
+     * Return default zone
+     *
+     * @return \XLite\Model\Zone
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function getDefaultZone()
+    {
+        $result = $this->getFromCache('default');
+
+        if (!isset($result)) {
+            $result = $this->findOneBy(array('is_default' => 1));
+            $this->saveToCache($result, 'default');
+        }
+
+        return $result;
     }
 
     // }}}
