@@ -135,8 +135,11 @@
     </target>
 
     <target name="php-documentor">
+	<exec executable="git" dir="${buildDir}/.dev/lib" />
+		<arg line="clone https://github.com/apigen/apigen" />
+	</exec>
         <exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce/classes">
-            <arg line="${buildDir}/.dev/lib/phpdoctor/phpdoc.php ${buildDir}/.dev/build/phpdoctor.cc.ini" />
+            <arg line="${buildDir}/.dev/lib/apigen/apigen.php --config ${buildDir}/.dev/build/apigen.neon --template-config ${buildDir}/.dev/lib/apigen/templates/default/config.neon" />
         </exec>
         <move file="${installDir}/modules/lc_connector/litecommerce/classes/api" tofile="${buildDir}/api" />
     </target>
