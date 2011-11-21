@@ -1,12 +1,12 @@
 tinyMCEPopup.requireLangPack();
 
-var defaultFonts = "" +
-	"Arial, Helvetica, sans-serif=Arial, Helvetica, sans-serif;" +
-	"Times New Roman, Times, serif=Times New Roman, Times, serif;" +
-	"Courier New, Courier, mono=Courier New, Courier, mono;" +
-	"Times New Roman, Times, serif=Times New Roman, Times, serif;" +
-	"Georgia, Times New Roman, Times, serif=Georgia, Times New Roman, Times, serif;" +
-	"Verdana, Arial, Helvetica, sans-serif=Verdana, Arial, Helvetica, sans-serif;" +
+var defaultFonts = "" + 
+	"Arial, Helvetica, sans-serif=Arial, Helvetica, sans-serif;" + 
+	"Times New Roman, Times, serif=Times New Roman, Times, serif;" + 
+	"Courier New, Courier, mono=Courier New, Courier, mono;" + 
+	"Times New Roman, Times, serif=Times New Roman, Times, serif;" + 
+	"Georgia, Times New Roman, Times, serif=Georgia, Times New Roman, Times, serif;" + 
+	"Verdana, Arial, Helvetica, sans-serif=Verdana, Arial, Helvetica, sans-serif;" + 
 	"Geneva, Arial, Helvetica, sans-serif=Geneva, Arial, Helvetica, sans-serif";
 
 var defaultSizes = "9;10;12;14;16;18;24;xx-small;x-small;small;medium;large;x-large;xx-large;smaller;larger";
@@ -372,7 +372,7 @@ function applyAction() {
 	generateCSS();
 
 	tinyMCEPopup.restoreSelection();
-	ed.dom.setAttrib(ed.selection.getNode(), 'style', tinyMCEPopup.editor.dom.serializeStyle(tinyMCEPopup.editor.dom.parseStyle(ce.style.cssText)));
+	ed.dom.setAttrib(ed.selection.getSelectedBlocks(), 'style', tinyMCEPopup.editor.dom.serializeStyle(tinyMCEPopup.editor.dom.parseStyle(ce.style.cssText)));
 }
 
 function updateAction() {
