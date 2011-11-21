@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="menu.settings", weight="40")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="Language labels" linkTarget="languages" />
+<widget class="\XLite\View\TopMenu\Node" title="{t(#Language labels#)}" linkTarget="languages" />

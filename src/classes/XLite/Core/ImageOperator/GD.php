@@ -155,8 +155,24 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
         if ($this->image) {
 
             $newImage = imagecreatetruecolor($width, $height);
-            imagealphablending($newImage, false);
-            imagesavealpha($newImage, true);
+
+            $transparentIndex = imagecolortransparent($this->image);
+
+            if ($transparentIndex >= 0) {
+
+                imagepalettecopy($this->image, $newImage);
+                imagefill($newImage, 0, 0, $transparentIndex);
+                imagecolortransparent($newImage, $transparentIndex);
+                imagetruecolortopalette($newImage, true, 256);
+
+            } else {
+
+                imagealphablending($newImage, false);
+                imagesavealpha($newImage,true);
+
+                $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127);
+                imagefilledrectangle($newImage, 0, 0, $width, $height, $transparent);
+            }
 
             $result = imagecopyresampled(
                 $newImage,
@@ -170,9 +186,11 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
                 $this->width,
                 $this->height
             );
+
             if ($result) {
 
                 imagedestroy($this->image);
+
                 $this->image = $newImage;
                 $this->width = $width;
                 $this->height = $height;
@@ -182,12 +200,14 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
                     include_once LC_DIR_LIB . 'phpunsharpmask.php';
 
                     $unsharpImage = UnsharpMask($this->image);
+
                     if ($unsharpImage) {
                         $this->image = $unsharpImage;
                     }
                 }
 
             } else {
+
                 $this->image = $old;
             }
         }

@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<span class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;{if:!shipping_already_exists}Required field{else:}Already exists{end:}</span>
+<span class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;{if:!shipping_already_exists}{t(#Required field#)}{else:}{t(#Already exists#)}{end:}</span>

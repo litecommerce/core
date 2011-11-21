@@ -12,4 +12,4 @@
  * @ListChild (list="upgrade.step.prepare.buttons.sections", weight="200")
  *}
 
-<widget IF="isNextStepAvailable()" class="\XLite\View\Button\Submit" style="main-button" label="Continue" />
+<widget IF="isNextStepAvailable()" class="\XLite\View\Button\Submit" style="main-button" label="{t(#Continue#)}" />

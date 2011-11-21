@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-This page allows to export product options into CSV file.<hr />
+{t(#This page allows to export product options into CSV file.#)}<hr />
 
 <p>
 <form action="admin.php" method=post name=data_form>
@@ -18,7 +18,7 @@ This page allows to export product options into CSV file.<hr />
 
 <table>
 <tr>
-    <td colspan=2><span class=admin-head>Field order:</span></td>
+    <td colspan=2><span class=admin-head>{t(#Field order#)}:</span></td>
 </tr>
 <tr FOREACH="xlite.factory.\XLite\Module\CDev\ProductOptions\Model\ProductOption.getImportFields(#product_options_layout#),id,fields">
     <td style="width:1;">{id}:</td>
@@ -32,6 +32,6 @@ This page allows to export product options into CSV file.<hr />
 <p>
 Field delimiter:<br /><widget template="common/delimiter.tpl"><br />
 <br />
-<widget class="\XLite\View\Button\Submit" label=" Export " />
+<widget class="\XLite\View\Button\Submit" label=" {t(#Export#)} " />
 
 </form>

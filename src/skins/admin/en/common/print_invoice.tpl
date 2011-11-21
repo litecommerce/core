@@ -11,7 +11,7 @@
  *}
 <html>
 <head>
-<title>{config.Company.company_name}: Invoice</title>
+<title>{config.Company.company_name}: {t(#Invoice#)}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <link href="skins/admin/en/style.css" rel="stylesheet" type="text/css">
 </head>

@@ -102,7 +102,6 @@ class SessionCell extends \XLite\Model\AEntity
      */
     protected $type;
 
-
     /**
      * Automatically get variable type
      *
@@ -137,7 +136,6 @@ class SessionCell extends \XLite\Model\AEntity
         $type = $type ?: static::getTypeByValue($value);
 
         switch ($type) {
-
             case 'boolean':
                 $value = (bool) $value;
                 break;
@@ -184,7 +182,6 @@ class SessionCell extends \XLite\Model\AEntity
         $type = $type ?: static::getTypeByValue($value);
 
         switch ($type) {
-
             case 'boolean':
             case 'integer':
             case 'double':
@@ -229,20 +226,5 @@ class SessionCell extends \XLite\Model\AEntity
     {
         $this->type  = static::getTypeByValue($value);
         $this->value = static::prepareValueForSet($value, $this->type);
-    }
-
-    /**
-     * Disallowed method
-     *
-     * @param string $type Type to set
-     *
-     * @return void
-     * @throws \Exception
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function setType($type)
-    {
-        throw new \Exception('It\'s not possible to change value type for the existsing cell.');
     }
 }

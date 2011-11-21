@@ -47,6 +47,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
     public function testCalculation()
     {
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $order = $this->getTestOrder();
 
         $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->getTax();
@@ -66,6 +67,8 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $tax->addRates($rate);
         $rate->setTax($tax);
         \XLite\Core\Database::getEM()->flush();
+
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
 
         $order->calculate();
         $this->assertEquals(
@@ -90,6 +93,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $r10 = $rate;
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $order->calculate();
         $cost = $this->getVATByOrder($order);
         $etalon = $this->getVATEtalonByOrder($order, 0.1);
@@ -99,6 +103,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $rate->setPosition(0);
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $order->calculate();
         $cost = $this->getVATByOrder($order);
         $etalon = $this->getVATEtalonByOrder($order, 0.2);
@@ -112,6 +117,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $rate->setMembership($membership);
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $order->calculate();
         $cost = $this->getVATByOrder($order);
         $etalon = $this->getVATEtalonByOrder($order, 0.2);
@@ -121,6 +127,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $rate->setMembership($membership2);
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $order->calculate();
         $cost = $this->getVATByOrder($order);
         $etalon = $this->getVATEtalonByOrder($order, 0.1);
@@ -137,6 +144,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $rate->setProductClass($pc);
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $order->calculate();
         $cost = $this->getVATByOrder($order);
         $etalon = $this->getVATEtalonByOrder($order, 0.1);
@@ -148,6 +156,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $m->addClasses($pc);
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $order->calculate();
         $cost = $this->getVATByOrder($order);
         $etalon = $this->getVATEtalonByOrder($order, 0.2);
@@ -176,6 +185,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
         \XLite\Core\Database::getRepo('XLite\Model\Zone')->deleteCache('all');
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $order->calculate();
         $cost = $this->getVATByOrder($order);
         $etalon = $this->getVATEtalonByOrder($order, 0.1);
@@ -187,6 +197,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $order->getProfile()->getShippingAddress()->setCountry($country);
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $order->calculate();
         $cost = $this->getVATByOrder($order);
         $etalon = $this->getVATEtalonByOrder($order, 0.2);
@@ -202,6 +213,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $order->getProfile()->setMembership(null);
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $order->calculate();
 
         $currency = $order->getCurrency();
@@ -268,6 +280,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $order->calculate();
 
         // Initial price
@@ -325,6 +338,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
 
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $order->calculate();
 
         // 39.01 - (39.01 - 39.01 / (1 + 0.35)) = 28.8962963 = 28.8963

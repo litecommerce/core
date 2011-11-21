@@ -60,6 +60,15 @@ class Auth extends \XLite\Base
         'anonymous',
     );
 
+    /**
+     * Profile (cache)
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.13
+     */
+    protected $profile;
+
 
     /**
      * Encrypts password (calculates MD5 hash)
@@ -197,6 +206,9 @@ class Auth extends \XLite\Base
             }
         }
 
+        // Invalidate cache
+        $this->resetProfileCache();
+
         return $result;
     }
 
@@ -213,6 +225,9 @@ class Auth extends \XLite\Base
         $session->last_profile_id = $session->profile_id;
 
         $this->clearSessionVars();
+
+        // Invalidate cache
+        $this->resetProfileCache();
     }
 
     /**
@@ -238,25 +253,26 @@ class Auth extends \XLite\Base
      */
     public function getProfile($profileId = null)
     {
-        $result = null;
-        $isCurrent = false;
-
-        if (!isset($profileId)) {
-            $profileId = $this->getStoredProfileId();
-            $isCurrent = true;
-        }
-
         if (isset($profileId)) {
+            $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($profileId);
 
-            $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
-                ->find($profileId);
+            return $this->checkProfile($profile) ? $profile : null;
 
-            if ($isCurrent || $this->checkProfile($profile)) {
-                $result = $profile;
+        } else {
+
+            if (!$this->profile['isInitialized']) {
+                $this->resetProfileCache();
+                $this->profile['isInitialized'] = true;
+
+                $profileId = $this->getStoredProfileId();
+
+                if (isset($profileId)) {
+                    $this->profile['object'] = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($profileId);
+                }
             }
-        }
 
-        return $result;
+            return $this->profile['object'];
+        }
     }
 
     /**
@@ -452,6 +468,17 @@ class Auth extends \XLite\Base
         return $currentLevel >= $resource->getAccessLevel();
     }
 
+    /**
+     * Reset default values for the "profile" property
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function resetProfileCache()
+    {
+        $this->profile = array('isInitialized' => false, 'object' => null);
+    }
 
     /**
      * User can access profile only in two cases:
@@ -539,5 +566,19 @@ class Auth extends \XLite\Base
     protected function getStoredProfileId()
     {
         return \XLite\Core\Session::getInstance()->profile_id;
+    }
+
+    /**
+     * Protected constructor
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function __construct()
+    {
+        parent::__construct();
+
+        $this->resetProfileCache();
     }
 }

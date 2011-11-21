@@ -25,7 +25,7 @@ function onDeleteButton(method_id)
 //]]>
 </script>
 
-Use this section to define your store's shipping methods.
+{t(#Use this section to define your store's shipping methods.#)}
 
 <hr />
 
@@ -64,7 +64,7 @@ Use this section to define your store's shipping methods.
         <table class="data-table">
 
           <tr>
-            <th style="width:90%;">Shipping method</th>
+            <th style="width:90%;">{t(#Shipping method#)}</th>
             <th>{t(#Pos.#)}</th>
             <th>{t(#Assigned classes#)}</th>
             <th class="center">
@@ -106,7 +106,7 @@ Use this section to define your store's shipping methods.
     <tr>
       <td colspan="4">
         <br />
-        <widget class="\XLite\View\Button\Submit" label="Update" style="main-button" />
+        <widget class="\XLite\View\Button\Submit" label="{t(#Update#)}" style="main-button" />
       </td>
     </tr>
 
@@ -128,7 +128,7 @@ Use this section to define your store's shipping methods.
     </tr>
 
     <tr class="dialog-box">
-      <td class="admin-title">Add shipping method</td>
+      <td class="admin-title">{t(#Add shipping method#)}</td>
     </tr>
 
     <tr>
@@ -141,8 +141,8 @@ Use this section to define your store's shipping methods.
         <table class="data-table">
 
           <tr>
-            <th>Shipping method</th>
-            <th>Pos.</th>
+            <th>{t(#Shipping method#)}</th>
+            <th>{t(#Pos.#)}</th>
           </tr>
 
           <tr class="dialog-box">
@@ -160,7 +160,7 @@ Use this section to define your store's shipping methods.
     </tr>
 
     <tr>
-      <td colspan="5"><br /><widget class="\XLite\View\Button\Submit" label="Add" /></td>
+      <td colspan="5"><br /><widget class="\XLite\View\Button\Submit" label="{t(#Add#)}" /></td>
     </tr>
 
     <tr IF="!moduleArrayPointer=moduleArraySize">

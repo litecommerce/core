@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 <SELECT name="delimiter">
-    <OPTION value="comma" selected="{delimiter=#comma#}">Comma</OPTION>
-    <OPTION value="semicolon" selected="{delimiter=#semicolon#}">Semicolon</OPTION>
-	<OPTION value="tab" selected="{delimiter=#tab#}">Tab</OPTION>
+    <OPTION value="comma" selected="{delimiter=#comma#}">{t(#Comma#)}</OPTION>
+    <OPTION value="semicolon" selected="{delimiter=#semicolon#}">{t(#Semicolon#)}</OPTION>
+	<OPTION value="tab" selected="{delimiter=#tab#}">{t(#Tab#)}</OPTION>
 </SELECT>

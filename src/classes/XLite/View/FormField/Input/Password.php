@@ -29,12 +29,12 @@ namespace XLite\View\FormField\Input;
 
 
 /**
- * \XLite\View\FormField\Input\Password
+ * Password
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Password extends \XLite\View\FormField\Input\AInput
+class Password extends \XLite\View\FormField\Input\Base\String
 {
     /**
      * Return field type

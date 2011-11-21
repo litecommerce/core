@@ -302,7 +302,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     {
         $lifeTime = strval(min(0, intval($lifeTime)));
 
-        return 0 < file_put_contents(
+        return \Includes\Utils\FileManager::write(
             $this->getPathById($id),
             $this->header . str_repeat(' ', $this->ttlLength - strlen($lifeTime)) . $lifeTime . serialize($data)
         );

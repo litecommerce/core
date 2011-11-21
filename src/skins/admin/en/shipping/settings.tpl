@@ -49,7 +49,7 @@
     </tbody>
 
     <tr>
-      <td align="right"><br /><widget class="\XLite\View\Button\Submit" label="Submit" /></td>
+      <td align="right"><br /><widget class="\XLite\View\Button\Submit" label="{t(#Submit#)}" /></td>
     <tr>
 
   </table>

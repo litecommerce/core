@@ -18,17 +18,17 @@
 
 <p>
 
-<span IF="getRequestParamValue(#mode#)!=#modify#">Mandatory fields are marked with an asterisk (<span class="star">*</span>).<br /><br /></span>
+<span IF="getRequestParamValue(#mode#)!=#modify#">{t(#Mandatory fields are marked with an asterisk#)} (<span class="star">*</span>).<br /><br /></span>
 
-<b>Note:</b> Use navigation bar above this dialog to navigate through the catalog categories.
+<b>{t(#Note#)}:</b> {t(#Use navigation bar above this dialog to navigate through the catalog categories.#)}
 
 <hr />
 
-<p IF="message=#updated#"><span class="success-message">&gt;&gt;&nbsp;Category has been updated successfully&nbsp;&lt;&lt;</span></p>
+<p IF="message=#updated#"><span class="success-message">&gt;&gt;&nbsp;{t(#Category has been updated successfully#)}&nbsp;&lt;&lt;</span></p>
 
-<p IF="message=#added#"><span class="success-message">&gt;&gt;&nbsp;Category has been added successfully&nbsp;&lt;&lt;</span></p>
+<p IF="message=#added#"><span class="success-message">&gt;&gt;&nbsp;{t(#Category has been added successfully#)}&nbsp;&lt;&lt;</span></p>
 
-<p IF="!valid"><span class="error-message">&gt;&gt;&nbsp;There are errors in the form. Category has not been added&nbsp;&lt;&lt;</span></p>
+<p IF="!valid"><span class="error-message">&gt;&gt;&nbsp;{t(#There are errors in the form. Category has not been added#)}&nbsp;&lt;&lt;</span></p>
 
 <p>
 

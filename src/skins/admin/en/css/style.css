@@ -708,19 +708,64 @@ table.form input[type="text"]
 
 /* Settings pages */
 
-table.settings-table tr td.setting-name
-{
-  padding: 7px 0 7px 10px;
-  color: #456583;
+.settings .section {
+  float: none;
 }
 
-table.settings-table tr td h2
+.settings ul.table {
+  width: 100%;
+}
+
+.settings ul.table li
+{
+  float: none;
+}
+
+.settings ul.table li.even
+{
+  background-color: #eee;
+}
+
+.settings ul.table li.separator
+{
+  background-color: transparent;
+}
+
+.settings ul.table .table-label
+{
+  width: 40%;
+  padding: 7px 0 7px 10px;
+  color: #456583;
+  white-space: normal;
+}
+
+.settings ul.table .table-label label {
+  width: auto;
+}
+
+.settings ul.table li.separator h2
 {
   margin: 30px 0 10px 0;
 }
 
-table.settings-table td.note {
-  font-size: 10px;
+.settings ul.table .table-value {
+  width: 40%;
+  padding: 7px 0px;
+}
+
+.settings ul.table li .input-field-wrapper {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.settings ul.table li .tooltip-main {
+  float: none;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.settings ul.table li .wheel-mark {
+  display: none;
 }
 
 /* Buttons */
@@ -1448,6 +1493,20 @@ div.star {
 
 div.table-value {
   float: left;
+}
+
+div.table-value input[type="text"],
+div.table-value input[type="password"],
+div.table-value select
+{
+  width: 250px;
+}
+
+div.table-value .input-text-integer input,
+div.table-value .input-text-float input
+{
+  text-align: right;
+  width: 80px;
 }
 
 div.table-label label {

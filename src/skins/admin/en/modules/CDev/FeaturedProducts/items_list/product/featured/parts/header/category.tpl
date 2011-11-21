@@ -11,4 +11,4 @@
  * @ListChild (list="itemsList.product.admin.featured.header", weight="40")
  *}
 
-<th class="category">Category</th>
+<th class="category">{t(#Category#)}</th>

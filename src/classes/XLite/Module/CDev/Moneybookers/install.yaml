@@ -61,7 +61,7 @@ XLite\Model\Config:
         option_name: "Merchant's moneybookers.com account"
   - name: logo_url
     category: CDev\Moneybookers
-    type: text
+    type: XLite\View\FormField\Input\Text\URL
     orderby: 200
     translations:
       - code: en

@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="languages.actions", weight="10")
  *}
- <widget class="\XLite\View\Button\Submit" style="main" label="Update" />
+ <widget class="\XLite\View\Button\Submit" style="main" label="{t(#Update#)}" />

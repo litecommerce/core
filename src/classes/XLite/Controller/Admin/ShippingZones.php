@@ -103,7 +103,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
         $postedData = \XLite\Core\Request::getInstance()->getData();
 
         if (isset($postedData['to_delete']) && is_array($postedData['to_delete']) && !empty($postedData['to_delete'])) {
-
             $zoneIds = array();
 
             // Some validation
@@ -115,7 +114,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
             // Remove zones by ids
             \XLite\Core\Database::getRepo('XLite\Model\Zone')->deleteInBatchById($zoneIds);
-
             \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache();
 
             \XLite\Core\TopMessage::addInfo('The selected zones have been deleted successfully');
@@ -132,7 +130,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
     protected function doActionUpdate()
     {
         $postedData = \XLite\Core\Request::getInstance()->getData();
-
         $zoneId = intval($postedData['zoneid']);
 
         if (isset($postedData['zoneid']) && 0 < $zoneId) {
@@ -140,7 +137,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
         }
 
         if (isset($zone)) {
-
             $data = $this->getElementsData($postedData);
 
             if (1 == $zoneId || !empty($data[\XLite\Model\ZoneElement::ZONE_ELEMENT_COUNTRY])) {

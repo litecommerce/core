@@ -394,7 +394,6 @@ class Session extends \XLite\Base\Singleton
         $this->clearGarbage();
 
         if (!$this->restoreSession()) {
-
             $this->createSession();
         }
 
@@ -427,14 +426,10 @@ class Session extends \XLite\Base\Singleton
         list($sid, $source) = $this->detectPublicSessionId();
 
         if ($sid) {
-
-            $this->session = \XLite\Core\Database::getRepo('XLite\Model\Session')
-                ->findOneBySid($sid);
+            $this->session = \XLite\Core\Database::getRepo('XLite\Model\Session')->findOneBySid($sid);
 
             if ($this->session) {
-
                 $this->session->updateExpiry();
-
                 \XLite\Core\Database::getEM()->flush();
             }
         }

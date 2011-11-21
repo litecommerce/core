@@ -12,4 +12,4 @@
  * @ListChild (list="itemsList.module.install.columns.module-description-section.info-element", weight="20")
  *}
 
-<li class="downloads-counter" IF="module.getDownloads()>0">{module.getDownloads()} downloads</li>
+<li class="downloads-counter" IF="module.getDownloads()>0">{module.getDownloads()} {t(#downloads#)}</li>

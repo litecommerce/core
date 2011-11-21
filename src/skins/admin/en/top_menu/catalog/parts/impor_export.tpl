@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="menu.catalog", weight="40")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="Import / Export" linkTarget="import_export" />
+<widget class="\XLite\View\TopMenu\Node" title="{t(#Import#)} / {t(#Export#)}" linkTarget="import_export" />

@@ -13,5 +13,5 @@
 
  <li class="local-server-input input-field">
    <widget class="\XLite\View\FormField\Input\Text" fieldName="local_server_file" fieldOnly="true" value="" />
-   <widget class="\XLite\View\Button\BrowseServer" label="Browse server" name="local_server_file" />
+   <widget class="\XLite\View\Button\BrowseServer" label="{t(#Browse server#)}" name="local_server_file" />
  </li>

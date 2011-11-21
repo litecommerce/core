@@ -11,7 +11,7 @@
 XLite\Model\Config:
   - name: drupal_root_url
     category: CDev\DrupalConnector
-    type: text
+    type: XLite\View\FormField\Input\Text\URL
     orderby: 10
     value: ''
     translations:

@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<span class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;Confirmation does not match</span>
+<span class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;{t(#Confirmation does not match#)}</span>

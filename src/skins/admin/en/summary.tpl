@@ -29,63 +29,63 @@ function setVisible(element_id)
 
 <tr>
 	<td colspan="2">
-    <h2>Environment info</h2>
+    <h2>{t(#Environment info#)}</h2>
   </td>
 </tr>	
 
 <tr>
-  <td class="setting-name">LiteCommerce version:</td>
-  <td>{lite_version:h}{if:answeredVersion}&nbsp;&nbsp;(verified version: {if:answeredVersionError}<span class="star">unknown</span>{else:}{answeredVersion}{end:}){end:}</td>
+  <td class="setting-name">{t(#LiteCommerce version#)}:</td>
+  <td>{lite_version:h}{if:answeredVersion}&nbsp;&nbsp;({t(#verified version#)}: {if:answeredVersionError}<span class="star">{t(#unknown#)}</span>{else:}{answeredVersion}{end:}){end:}</td>
 </tr>
 
 <tr IF="answeredVersionError">
-  <td class="setting-name">Loopback test:</td>
+  <td class="setting-name">{t(#Loopback test#)}:</td>
   <td><textarea name="answered_version" cols=80 rows=5 style="FONT-SIZE: 10px;" readonly>{answeredVersion}</textarea></td>
 </tr>
 
 <tr>
-  <td class="setting-name">Installation directory:</td>
+  <td class="setting-name">{t(#Installation directory#)}:</td>
   <td>{root_folder:h}</td>
 </tr>
 
 <tr>
   <td class="setting-name">PHP:</td>
-  <td>{phpversion:h}<a href='{getShopURL(#admin.php#)}?target=settings&action=phpinfo' target='blank_' class="navigation-path"> <b>details</b></a> &gt;&gt;</td>
+  <td>{phpversion:h}<a href='{getShopURL(#admin.php#)}?target=settings&action=phpinfo' target='blank_' class="navigation-path"> <b>{t(#details#)}</b></a> &gt;&gt;</td>
 </tr>
 
 <tr>
-  <td class="setting-name">MySQL server:</td>
+  <td class="setting-name">{t(#MySQL server#)}:</td>
   <td>
     <span>{mysql_server:h}&nbsp;</span>
-    <span IF="innodb_support">(InnoDB engine support enabled)</span>
-    <span IF="!innodb_support" class="error-message">Warning! InnoDB engine is not supported. It is required for LiteCommerce operation</span>
+    <span IF="innodb_support">({t(#InnoDB engine support enabled#)})</span>
+    <span IF="!innodb_support" class="error-message">{t(#Warning! InnoDB engine is not supported. It is required for LiteCommerce operation#)}</span>
   </td>
 </tr>
 
 <tr>
-  <td class="setting-name">Web server:</td>
+  <td class="setting-name">{t(#Web server#)}:</td>
   <td>{web_server:h}</td>
 </tr>
 
 <tr>
-  <td class="setting-name">Operating system:</td>
+  <td class="setting-name">{t(#Operating system#)}:</td>
   <td>{os_type:h}</td>
 </tr>
 
 <tr>
-  <td class="setting-name">XML parser:</td>
+  <td class="setting-name">{t(#XML parser#)}:</td>
   <td>{xml_parser:h}</td>
 </tr>
 
 <tr>
   <td class="setting-name">GDLib:</td>
-  <td>{if:gdlib}{gdlib}{else:}<span class="error-message">Not detected</span><br /><b>Warning:</b> PHP 'gd' extension is not installed.{end:}</td>
+  <td>{if:gdlib}{gdlib}{else:}<span class="error-message">{t(#Not detected#)}</span><br /><b>{t(#Warning!#)}</b> {t(#PHP 'gd' extension is not installed.#)}{end:}</td>
 </tr>
 
 {if:!isWin()}
 <tr>
 	<td colspan="2">
-    <h2>Directories and files permissions</h2>
+    <h2>{t(#Directories and files permissions#)}</h2>
   </td>
 </tr>
 
@@ -94,15 +94,15 @@ function setVisible(element_id)
 	<td>{v.dir}</td>
 	<td>
 		{if:v.error=##}<span class="success-message">OK</span>{end:}
-		{if:v.error=#cannot_create#}<span class="error-message">cannot create directory</span>{end:}
-		{if:v.error=#cannot_chmod#}<span class="error-message">cannot set {getDirPermissionStr(v.dir)} permissions</span>{end:}
-        {if:v.error=#wrong_owner#}<span class="error-message">incorrect owner for {v.dir} directory</span>{end:}
-        {if:v.error=#cannot_chmod_subdirs#}<span class="error-message">subdirectories problems</span>&nbsp;&nbsp;<a href="javascript: setVisible('details_{k}')" class="navigation-path"><b>details</b>&nbsp;&gt;&gt</a>{end:}
+		{if:v.error=#cannot_create#}<span class="error-message">{t(#cannot create directory#)}</span>{end:}
+		{if:v.error=#cannot_chmod#}<span class="error-message">{t(#cannot set X permissions#,_ARRAY_(#X#^getDirPermissionStr(v.dir)))}</span>{end:}
+        {if:v.error=#wrong_owner#}<span class="error-message">{t(#incorrect owner for X directory#,_ARRAY_(#X#^v.dir))}</span>{end:}
+        {if:v.error=#cannot_chmod_subdirs#}<span class="error-message">{t(#subdirectories problems#)}</span>&nbsp;&nbsp;<a href="javascript: setVisible('details_{k}')" class="navigation-path"><b>{t(#details#)}</b>&nbsp;&gt;&gt</a>{end:}
 	</td>
 </tr>
 <tr class="{getRowClass(k,#dialog-box#,#highlight#)}" style="display : none" id="details_{k}" IF="v.error=#cannot_chmod_subdirs#">
     <td colspan="4">
-        &nbsp;Cannot set {dirPermissionStr} permissions for subdirectories:<br />
+        &nbsp;{t(#Cannot set X permissions for subdirectories:#,_ARRAY_(#X#^dirPermissionStr))}<br />
         {foreach:v.subdirs,sid,subdir}
             &nbsp;&nbsp;&nbsp;{subdir}<br />
         {end:}
@@ -115,9 +115,9 @@ function setVisible(element_id)
   <td>{v.file}</td>
   <td>
  		{if:v.error=##}<span class="success-message">OK</span>{end:}
-		{if:v.error=#does_not_exist#}<span class="error-message">file does not exist</span>{end:}
-		{if:v.error=#cannot_chmod#}<span class="error-message">cannot set {getDirPermissionStr(v.file)} permissions</span>{end:}
-    {if:v.error=#wrong_owner#}<span class="error-message">incorrect owner for {v.file} file</span>{end:}
+		{if:v.error=#does_not_exist#}<span class="error-message">{t(#file does not exist#)}</span>{end:}
+		{if:v.error=#cannot_chmod#}<span class="error-message">{t(#cannot set X permissions#,_ARRAY_(#X#^getDirPermissionStr(v.file)))}</span>{end:}
+    {if:v.error=#wrong_owner#}<span class="error-message">{t(#incorrect owner for X file#,_ARRAY_(#X#^v.file))}</span>{end:}
 	</td>
 </tr>
 {end:}

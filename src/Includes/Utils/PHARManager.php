@@ -241,7 +241,6 @@ abstract class PHARManager extends \Includes\Utils\AUtils
     protected static function compress(\PharData $phar, &$name)
     {
         if (static::canCompress()) {
-
             \Includes\Utils\FileManager::deleteFile($name);
 
             if ($extension = static::getExtension()) {

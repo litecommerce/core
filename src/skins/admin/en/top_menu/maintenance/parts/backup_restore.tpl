@@ -11,4 +11,4 @@
  * @ListChild (list="menu.maintenance", weight="100")
  *}
 
-<widget class="\XLite\View\TopMenu\Node" title="Backup/Restore" linkTarget="db_backup" />
+<widget class="\XLite\View\TopMenu\Node" title="{t(#Backup#)}/{t(#Restore#)}" linkTarget="db_backup" />

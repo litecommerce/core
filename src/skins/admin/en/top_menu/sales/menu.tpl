@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="menus", weight="10")
  *}
-<widget class="\XLite\View\TopMenu\Node" list="sales" title="Sales" linkTarget="recent_orders" />
+<widget class="\XLite\View\TopMenu\Node" list="sales" title="{t(#Sales#)}" linkTarget="recent_orders" />

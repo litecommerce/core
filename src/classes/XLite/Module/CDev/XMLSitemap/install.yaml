@@ -10,7 +10,7 @@
 XLite\Model\Config:
   - name: welcome_changefreq
     category: CDev\XMLSitemap
-    type: select
+    type: 'XLite\Module\CDev\XMLSitemap\View\FormField\Select\ChangeFrequency'
     orderby: 100
     value: daily
     translations:
@@ -18,7 +18,7 @@ XLite\Model\Config:
         option_name: Change frequency for Welcome page
   - name: category_changefreq
     category: CDev\XMLSitemap
-    type: select
+    type: 'XLite\Module\CDev\XMLSitemap\View\FormField\Select\ChangeFrequency'
     orderby: 200
     value: daily
     translations:
@@ -26,7 +26,7 @@ XLite\Model\Config:
         option_name: Change frequency for Category page
   - name: product_changefreq
     category: CDev\XMLSitemap
-    type: select
+    type: 'XLite\Module\CDev\XMLSitemap\View\FormField\Select\ChangeFrequency'
     orderby: 300
     value: daily
     translations:
@@ -34,7 +34,8 @@ XLite\Model\Config:
         option_name: Change frequency for Product page
   - name: welcome_priority
     category: CDev\XMLSitemap
-    type: text
+    type: XLite\View\FormField\Input\Text\Float
+    widgetParameters: { min: 0, max: 1, e: 1}
     orderby: 400
     value: 0.5
     translations:
@@ -43,7 +44,8 @@ XLite\Model\Config:
         option_comment: The value should range from 0 to 1.
   - name: category_priority
     category: CDev\XMLSitemap
-    type: text
+    type: XLite\View\FormField\Input\Text\Float
+    widgetParameters: { min: 0, max: 1, e: 1}
     orderby: 500
     value: 0.5
     translations:
@@ -52,7 +54,8 @@ XLite\Model\Config:
         option_comment: The value should range from 0 to 1.
   - name: product_priority
     category: CDev\XMLSitemap
-    type: text
+    type: XLite\View\FormField\Input\Text\Float
+    widgetParameters: { min: 0, max: 1, e: 1}
     orderby: 600
     value: 0.5
     translations:

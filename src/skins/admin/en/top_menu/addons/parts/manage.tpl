@@ -12,4 +12,4 @@
  * @ListChild (list="menu.addons", weight="10")
  *}
 
-<widget class="\XLite\View\TopMenu\Node" title="Manage add-ons" linkTarget="addons_list_installed" />
+<widget class="\XLite\View\TopMenu\Node" title="{t(#Manage add-ons#)}" linkTarget="addons_list_installed" />
