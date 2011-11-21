@@ -9,7 +9,7 @@
 
 
 // Define test mode: 1 - deployment test; 0 - web tests
-define('TEST_DEPLOYMENT_MODE', @TEST_DEPLOYMENT_MODE@);
+define('TEST_DEPLOYMENT_MODE', 0);
 
 
 // MySQL executables
@@ -18,10 +18,10 @@ define('TEST_DEPLOYMENT_MODE', @TEST_DEPLOYMENT_MODE@);
 
 
 // Directory where xlite-tests.config.php is located
-define('XLITE_DEV_CONFIG_DIR', '@XLITE_DEV_CONFIG_DIR@');
+define('XLITE_DEV_CONFIG_DIR', '/home/bitnami/etc');
 
 // Directory with external libs (PHPUnit etc)
-define('XLITE_DEV_LIB_DIR', '@XLITE_DEV_LIB_DIR@');
+define('XLITE_DEV_LIB_DIR', '/home/bitnami/phpunit');
 
 /**
  * List of directories PHPUnit cloned from GitHub: http://www.phpunit.de/
@@ -41,31 +41,31 @@ $__include_paths = array(
 
 
 // URL of LiteCommerce store (path only, w/o script)
-define('SELENIUM_SOURCE_URL_ADMIN', '@SELENIUM_SOURCE_URL_ADMIN@');
+define('SELENIUM_SOURCE_URL_ADMIN', 'http://_hostname_/xlite/src');
 
 if (1 === TEST_DEPLOYMENT_MODE) {
 
     // URL of Drupal+LC store
-    define('SELENIUM_SOURCE_URL', '@SELENIUM_SOURCE_URL@');
+    define('SELENIUM_SOURCE_URL', 'http://_hostname_/xlite_cms');
 
     // Directory where Drupal installed
-    define('DRUPAL_SITE_PATH', '@DRUPAL_SITE_PATH@');
+    define('DRUPAL_SITE_PATH', '/opt/bitnami/apache2/htdocs/xlite_cms');
 
 } else {
 
     // URL of Drupal+LC store
-    define('SELENIUM_SOURCE_URL', '@SELENIUM_SOURCE_URL@');
+    define('SELENIUM_SOURCE_URL', 'http://_hostname_/xlite_cms');
 
     // Directory where Drupal installed
-    define('DRUPAL_SITE_PATH', '@DRUPAL_SITE_PATH@');
+    define('DRUPAL_SITE_PATH', '/opt/bitnami/apache2/htdocs/xlite_cms');
 }
 
 // Settings for screenshots capturing (on failed tests)
-define('SELENIUM_SCREENSHOTS_PATH', '@SELENIUM_SCREENSHOTS_PATH@');
-define('SELENIUM_SCREENSHOTS_URL', '@SELENIUM_SCREENSHOTS_URL@');
+define('SELENIUM_SCREENSHOTS_PATH', '/var/www/localhost/htdocs/selenium-screenshots');
+define('SELENIUM_SCREENSHOTS_URL', 'http://_grid_hub_/selenium-screenshots');
 
 // Selenium server host
-define('SELENIUM_SERVER', '@SELENIUM_SERVER@');
+define('SELENIUM_SERVER', '_grid_hub_');
 
 // Selenium TTL (sec)
 define('SELENIUM_TTL', 60);
@@ -128,10 +128,18 @@ $availableBrowsersList = array(
             'timeout' => SELENIUM_TTL,
             'sleep'   => 1,
         ),
- */
+ 
         array(
-            'name'    => 'FireFox 5 (Windows)',
+            'name'    => 'FireFox 6 (Windows)',
             'browser' => '*firefox C:\Program Files\Firefox_5\firefox.exe',
+            'host'    => SELENIUM_SERVER,
+            'port'    => 4444,
+            'timeout' => SELENIUM_TTL,
+            'sleep'   => 1,
+        ),*/
+        array(
+            'name'    => 'FireFox 7 (Linux)',
+            'browser' => '*firefox',
             'host'    => SELENIUM_SERVER,
             'port'    => 4444,
             'timeout' => SELENIUM_TTL,
@@ -176,3 +184,4 @@ if (defined('XLITE_DEV_LIB_DIR')) {
 
 // Define constant for include_path
 define('XLITE_DEV_PHPUNIT_PATH', implode(PATH_SEPARATOR, $__include_paths));
+
