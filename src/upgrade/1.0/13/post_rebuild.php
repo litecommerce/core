@@ -27,6 +27,13 @@
 
 return function()
 {
+    // Loading data to the database from yaml file
+    $yamlFile = __DIR__ . LC_DS . 'post_rebuild.yaml';
+
+    if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
+        \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
+    }
+
     // Apply config changes
     $repo = \XLite\Core\Database::getRepo('XLite\Model\Config');
 
