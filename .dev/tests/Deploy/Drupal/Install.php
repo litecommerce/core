@@ -133,11 +133,11 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         // Check radio-button
         $this->assertElementPresent(
-            '//div[@id="content"]/form[@id="install-select-profile-form"]/div/div[@class="form-item form-type-radio form-item-profile"]/input[@value="litecommerce"]',
+            '//div[@id="content"]/form[@id="install-select-profile-form"]/div/div[@class="form-item form-type-radio form-item-profile"]/input[contains(@value, "litecommerce")]',
             'Check if radio button for Ecommerce CMS selection is presented'
         );
 
-        $this->check('//div[@id="content"]/form[@id="install-select-profile-form"]/div/div[@class="form-item form-type-radio form-item-profile"]/input[@value="litecommerce"]');
+        $this->check('//div[@id="content"]/form[@id="install-select-profile-form"]/div/div[@class="form-item form-type-radio form-item-profile"]/input[contains(@value, "litecommerce")]');
 
         // Submit
         $this->clickAndWait('css=#edit-submit');
