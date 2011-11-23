@@ -36,6 +36,8 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
 
     protected function getTestOrder()
     {
+        \XLite\Core\Auth::getInstance()->logoff();
+
         $this->testOrder['date'] = time();
 
         $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->insert($this->testOrder);
