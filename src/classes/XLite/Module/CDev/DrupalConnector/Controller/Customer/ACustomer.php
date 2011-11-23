@@ -44,8 +44,10 @@ class ACustomer extends \XLite\Controller\Customer\ACustomer implements \XLite\B
      */
     protected function checkStorefrontAccessability()
     {
-        return parent::checkStorefrontAccessability() &&
-            \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS();
+        // Run parent method to make some "parent" changes.
+        parent::checkStorefrontAccessability();
+
+        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS();
     }
 
     /**
