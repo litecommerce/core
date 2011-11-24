@@ -11,4 +11,4 @@
  * @ListChild (list="menu.maintenance", weight="300")
  *}
 
-<widget class="\XLite\View\TopMenu\Node" title="{t(#View logs#)}" linkTarget="upgrade" extra="{_ARRAY_(#action#^#view_log_file#)}" />
+<widget class="\XLite\View\TopMenu\Node" title="{#View logs#}" linkTarget="upgrade" extra="{_ARRAY_(#action#^#view_log_file#)}" />

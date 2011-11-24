@@ -9,4 +9,5 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.10
  *}
-<widget class="XLite\View\Button\Submit" label="{t(#Save changes#)}" style="action" />
+
+<widget class="XLite\View\Button\Submit" label="{#Save changes#}" style="action" />

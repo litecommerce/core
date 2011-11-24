@@ -38,7 +38,6 @@ class Admin extends \XLite\View\AView
     /**
      * Common widget parameter names
      */
-
     const PARAM_PRODUCT = 'product';
 
     /**
@@ -51,7 +50,6 @@ class Admin extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'modules/CDev/FileAttachments/admin.js';
 
         return $list;
@@ -67,7 +65,6 @@ class Admin extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules/CDev/FileAttachments/admin.css';
         $list[] = 'browse_server/icons.css';
 
@@ -111,9 +108,7 @@ class Admin extends \XLite\View\AView
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && $this->getProduct()
-            && $this->getProduct()->getProductId();
+        return parent::isVisible() && $this->getProduct() && $this->getProduct()->getProductId();
     }
 
     /**
@@ -142,4 +137,3 @@ class Admin extends \XLite\View\AView
         return 'attachment';
     }
 }
-

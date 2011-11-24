@@ -9,12 +9,11 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <div id="topMenu">
   <ul id="menuOuter">
     <li class="root">
-      <ul>
-        {displayViewListContent(#menus#)}
-      </ul>
+      <ul>{displayViewListContent(#menus#)}</ul>
     </li>
   </ul>
 </div>
@@ -28,18 +27,11 @@ jQuery(document).ready(function(){
   var activeItem = jQuery('li.active', menuObj);
   var selectedTab;
 
-//  var homeTab = jQuery('li.menu-item:first').addClass('current');
-
   if (activeItem.length) {
-
     selectedTab = activeItem.parents('li.menu-item:first').get(0);
 
     if (selectedTab) {
-
-//      homeTab.removeClass('current');
-
       jQuery(selectedTab).addClass('current');
-
       jQuery('div', selectedTab).clone().attr('id','topMenuLine').appendTo('#header');
 
       var paddingTop = parseInt(jQuery('#content').css('padding-top'));
@@ -49,9 +41,7 @@ jQuery(document).ready(function(){
         .css('padding-top', paddingTop + menuHeight)
         .css('background-position', 'left ' + (paddingTop + menuHeight - 10) + 'px');
     }
-
   }
-
 });
 //]]>
 </script>

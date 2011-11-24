@@ -8,6 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="menu.sales", weight="30")
+ * @ListChild (list="menu.sales", weight="300")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="{t(#Statistics#)}" linkTarget="orders_stats" />
+
+<widget class="\XLite\View\TopMenu\Node" title="{#Statistics#}" linkTarget="orders_stats" />

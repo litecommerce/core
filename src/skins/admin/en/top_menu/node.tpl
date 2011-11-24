@@ -11,10 +11,8 @@
  *}
 
 <li class="menu-item {getCSSClass()}">
-  <a href="{getLink()}">{getParam(%static::PARAM_TITLE%):h}</a>
+  <a href="{getLink()}">{t(getParam(%static::PARAM_TITLE%)):h}</a>
   <div IF="hasChildren()">
-    <ul>
-      {displayViewListContent(getListName())}
-    </ul>
+    <ul>{displayViewListContent(getListName())}</ul>
   </div>
 </li>

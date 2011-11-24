@@ -8,8 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- *
- * @ListChild (list="menu.addons", weight="20")
+ * @ListChild (list="menu.addons", weight="200")
  *}
 
-<widget class="\XLite\View\TopMenu\Node" title="{t(#Module Marketplace#)}" linkTarget="addons_list_marketplace" />
+<widget class="\XLite\View\TopMenu\Node" title="{#Module Marketplace#}" linkTarget="addons_list_marketplace" />
