@@ -110,14 +110,11 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     {
         $model = $this->getModelObject();
 
-        if ($model) {
-            $description = $model->getMetaDesc() ? $model->getMetaDesc() : $this->getDescription();
-
-        } else {
-            $description = parent::getMetaDescription();
-        }
-
-        return $description;
+        return strip_tags(
+            $model
+                ? ($model->getMetaDesc() ? $model->getMetaDesc() : $this->getDescription())
+                : parent::getMetaDescription()
+        );
     }
 
     /**
