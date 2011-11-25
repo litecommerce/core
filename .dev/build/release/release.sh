@@ -628,6 +628,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 				$PHP -qr "$_php_code" > .hash
 
+				# Backup DrupalConnector module to insert it later into Ecommerce CMS package
 				if [ "$j" = "CDev/DrupalConnector" ]; then
 					tar -cf ${OUTPUT_DIR}/_drupal-connector-tmp.tar $module_files_list
 				fi
