@@ -122,6 +122,11 @@
       onmouseout="javascript:jQuery('.hidden-{cat.getCategoryId()}').hide()">
 
       <td class="table-label" colspan="2">
+
+        <input type="text" name="{getNamePostedData(#pos#,cat.getCategoryId())}" value="{cat.getPos()}" size="4" />
+
+        &nbsp;&nbsp;
+
         <a
           href="{buildURL(#categories#,##,_ARRAY_(#category_id#^cat.getCategoryId()))}"
           title="{t(#Click here to access/add subcategories#)}"
