@@ -38,10 +38,9 @@ return function()
     $option = $repo->findOneBy(array('name' => 'number_of_bestsellers'));
     if ($option) {
         $option->setType('XLite\\View\\FormField\\Input\\Text\\Integer');
-        $option->setWidgeParameters(array('min' => 1));
+        $option->setWidgetParameters(array('min' => 1));
     }
 
     \XLite\Core\Database::getEM()->flush();
-    \XLite\Core\Database::getCacheDriver()->clear();
-
+    \XLite\Core\Database::getCacheDriver()->deleteAll();
 };
