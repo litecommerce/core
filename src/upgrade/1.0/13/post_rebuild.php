@@ -129,7 +129,7 @@ return function()
         $option = $repo->findOneBy(array('name' => $name));
         if ($option) {
             $option->setType('XLite\\View\\FormField\\Input\\Text\\Integer');
-            $option->setWidgeParameters(array('min' => 1));
+            $option->setWidgetParameters(array('min' => 1));
         }
     }
 
@@ -137,7 +137,7 @@ return function()
         $option = $repo->findOneBy(array('name' => $name));
         if ($option) {
             $option->setType('XLite\\View\\FormField\\Input\\Text\\Float');
-            $option->setWidgeParameters(array('min' => 1));
+            $option->setWidgetParameters(array('min' => 1));
         }
     }
 
@@ -145,14 +145,14 @@ return function()
         $option = $repo->findOneBy(array('name' => $name));
         if ($option) {
             $option->setType('XLite\\View\\FormField\\Input\\Text\\Float');
-            $option->setWidgeParameters(array('min' => 0));
+            $option->setWidgetParameters(array('min' => 0));
         }
     }
 
     $option = $repo->findOneBy(array('name' => 'smtp_server_port'));
     if ($option) {
         $option->setType('XLite\\View\\FormField\\Input\\Text\\Integer');
-        $option->setWidgeParameters(array('min' => 0, 'max' => 65535));
+        $option->setWidgetParameters(array('min' => 0, 'max' => 65535));
     }
 
     $option = $repo->findOneBy(array('name' => 'start_year'));
@@ -164,7 +164,7 @@ return function()
         $option = $repo->findOneBy(array('name' => $name));
         if ($option) {
             $option->setType('XLite\\View\\FormField\\Input\\Text\\Float');
-            $option->setWidgeParameters(array('min' => 0, 'max' => 1, 'e' => 1));
+            $option->setWidgetParameters(array('min' => 0, 'max' => 1, 'e' => 1));
         }
     }
 
@@ -176,6 +176,5 @@ return function()
     }
 
     \XLite\Core\Database::getEM()->flush();
-    \XLite\Core\Database::getCacheDriver()->clear();
-
+    \XLite\Core\Database::getCacheDriver()->deleteAll();
 };
