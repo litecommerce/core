@@ -459,7 +459,7 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
         } elseif (200 != $response->code) {
             $this->setDetail(
                 'moneybookers_session_error',
-                'Moneybookers payment processor did not recieve session ID successfull (HTTP error: ' . $response->code . ').',
+                'Moneybookers payment processor did not receive session ID successfull (HTTP error: ' . $response->code . ').',
                 'Session initialization error'
             );
 
@@ -467,14 +467,14 @@ class Moneybookers extends \XLite\Model\Payment\Base\Iframe
 
             $this->setDetail(
                 'moneybookers_session_error',
-                'Moneybookers payment processor did not recieve session ID successfull (page body has not session ID).',
+                'Moneybookers payment processor did not receive session ID successfull (page body has not session ID).',
                 'Session initialization error'
             );
 
         } else {
             $this->setDetail(
                 'moneybookers_session_error',
-                'Moneybookers payment processor did not recieve session ID successfull.',
+                'Moneybookers payment processor did not receive session ID successfull.',
                 'Session initialization error'
             );
         }

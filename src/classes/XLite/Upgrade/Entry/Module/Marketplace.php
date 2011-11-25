@@ -309,11 +309,11 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
             $this->getModuleForUpgrade()->getMarketplaceID(),
             $licenseKey ? $licenseKey->getKeyValue() : null
         );
-        
+
         $params = array('name' => $this->getActualName());
 
         if (isset($path)) {
-            $this->addFileInfoMessage('Module pack ("{{name}}") is recieved', $path, true, $params);
+            $this->addFileInfoMessage('Module pack ("{{name}}") is received', $path, true, $params);
 
             $this->setRepositoryPath($path);
             $this->saveHashesForInstalledFiles();
@@ -322,7 +322,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
 
         } else {
             $this->addFileErrorMessage(
-                'Module pack ("{{name}}") is not recieved',
+                'Module pack ("{{name}}") is not received',
                 \XLite\Core\Marketplace::getInstance()->getError(),
                 true,
                 $params
