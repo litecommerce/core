@@ -17,7 +17,7 @@
   <tr>
 
     <td IF="category.hasImage()">
-      <img src="{category.image.getURL()}" width="{category.image.width}" height="{category.image.height}" alt="" />
+      <widget template="categories/parts/image.tpl" image="{category.getImage()}" />
     </td>
 
     <td>
@@ -27,31 +27,30 @@
         <tr>
           <td class="table-label">{t(#Category name#)}:</td>
           <td>&nbsp;</td>
-          <td>{category.name}</td>
+          <td>{category.getName()}</td>
         </tr>
 
         <tr>
           <td class="table-label">{t(#Description#)}:</td>
           <td>&nbsp;</td>
-          <td>{category.description}</td>
+          <td class="category-description">{category.getDescription():h}</td>
         </tr>
 
         <tr>
           <td class="table-label">{t(#Availability#)}:</td>
           <td>&nbsp;</td>
-          <td>{if:category.enabled}{t(#Enabled#)}{else:}{t(#Disabled#)}{end:}</td>
+          <td IF="category.getEnabled()">{t(#Enabled#)}</td>
+          <td IF="!category.getEnabled()">{t(#Disabled#)}</td>
         </tr>
 
         <tr>
           <td class="table-label">{t(#Membership access#)}:</td>
           <td>&nbsp;</td>
-          <td>
-            {if:isSelected(#0#,category.membership)}{t(#No membership#)}
-            {else:}
-              {foreach:getMemberships(),membership}
-                {if:category.membership=membership.membership_id}{category.membership.name}{end:}
-              {end:}
-            {end:}
+          <td IF="isSelected(#0#,category.getMembership())">{t(#No membership#)}</td>
+          <td IF="!isSelected(#0#,category.getMembership())">
+          {foreach:getMemberships(),membership}
+            {if:category.getMembership()=membership.getMembershipId()}{category.membership.getName()}{end:}
+          {end:}
           </td>
         </tr>
 
@@ -60,11 +59,11 @@
           <td>&nbsp;</td>
 
           <td IF="!getRootCategoryId()=category.parent.getCategoryId()">
-            <a href="admin.php?target=categories&category_id={category.parent.getCategoryId()}">{category.parent.getName()}</a>
+            <a href="{buildURL(#categories#,##,_ARRAY_(#category_id#^category.parent.getCategoryId()))}">{category.parent.getName()}</a>
           </td>
 
           <td IF="getRootCategoryId()=category.parent.getCategoryId()">
-            <a href="admin.php?target=categories">[{t(#Root Level#)}]</a>
+            <a href="{buildURL(#categories#)}">[{t(#Root Level#)}]</a>
           </td>
         </tr>
 
@@ -72,7 +71,7 @@
 
         <tr>
           <td colspan="3">
-            <widget class="\XLite\View\Button\Regular" label="{t(#Modify#)}" jsCode="onModifyClick('{category.category_id}')" />
+            <widget class="\XLite\View\Button\Regular" label="{t(#Modify#)}" jsCode="onModifyClick('{category.getCategoryId()}')" />
           </td>
         </tr>
 
@@ -84,16 +83,21 @@
 
 </table>
 
-<widget IF="getRootCategoryId()=category.getCategoryId()" class="\XLite\View\Button\Regular" id="modify-root" label="{t(#Modify root category (the front shop page)#)}" jsCode="self.location='{buildURL(#category#,##,_ARRAY_(#category_id#^getRootCategoryId(),#mode#^#modify#))}'" />
+<widget
+  IF="getRootCategoryId()=category.getCategoryId()"
+  class="\XLite\View\Button\Regular"
+  id="modify-root"
+  label="{t(#Modify root category (the front shop page)#)}"
+  jsCode="self.location='{buildURL(#category#,##,_ARRAY_(#category_id#^getRootCategoryId(),#mode#^#modify#))}'" />
 
 <br />
 <br />
 
-<form name="CategoryForm" method="post" action="admin.php">
+<form method="post" action="admin.php">
 
   <input type="hidden" name="target" value="categories" />
-  <input type="hidden" name="category_id" value="{category.category_id}" />
-  <input type="hidden" name="action" />
+  <input type="hidden" name="category_id" value="{category.getCategoryId()}" />
+  <input type="hidden" name="action" value="update" />
   <input type="hidden" name="mode" />
 
   <table class="category-data">
@@ -111,23 +115,39 @@
 
     <tbody IF="category&category.hasSubcategories()">
 
-    <tr FOREACH="getSubcategories(getCategoryId()),id,cat" class="{getRowClass(id,##,#highlight#)}" onmouseover="javascript:jQuery('.hidden-{cat.category_id}').show()" onmouseout="javascript:jQuery('.hidden-{cat.category_id}').hide()">
+    <tr
+      FOREACH="getSubcategories(getCategoryId()),id,cat"
+      class="{getRowClass(id,##,#highlight#)}"
+      onmouseover="javascript:jQuery('.hidden-{cat.getCategoryId()}').show()"
+      onmouseout="javascript:jQuery('.hidden-{cat.getCategoryId()}').hide()">
 
       <td class="table-label" colspan="2">
+        <a
+          href="{buildURL(#categories#,##,_ARRAY_(#category_id#^cat.getCategoryId()))}"
+          title="{t(#Click here to access/add subcategories#)}"
+          onclick="this.blur()">{cat.getName():h}</a>
 
-        <a href="admin.php?target=categories&category_id={cat.category_id}" title="{t(#Click here to access/add subcategories#)}" onclick="this.blur()">{cat.name:h}</a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<span class="star">({t(#disabled#)})</span>{end:}
-
-        &nbsp;&nbsp;
-
-        <a class="hidden hidden-{cat.category_id}" href="javascript:void(0);" onclick="onAddChildClick('{cat.category_id}')">{t(#Add child#)}</a>
-
-        &nbsp;&nbsp;
-
-        <widget class="\XLite\View\Button\DeleteCategory" categoryId="{cat.category_id}" style="hidden hidden-{cat.category_id}" />
+        ({cat.getProductsCount()} products){if:!cat.getEnabled()}&nbsp;&nbsp;<span class="star">({t(#disabled#)})</span>{end:}
 
         &nbsp;&nbsp;
 
-        <widget class="\XLite\View\Button\DeleteCategory" categoryId="{cat.category_id}" style="hidden hidden-{cat.category_id}" IF="cat.hasSubcategories()" label="{t(#Delete subcategories#)}" removeSubcategories=true />
+        <a class="hidden hidden-{cat.getCategoryId()}" href="javascript:void(0);" onclick="onAddChildClick('{cat.getCategoryId()}')">{t(#Add child#)}</a>
+
+        &nbsp;&nbsp;
+
+        <widget
+          class="\XLite\View\Button\DeleteCategory"
+          categoryId="{cat.getCategoryId()}"
+          style="hidden hidden-{cat.getCategoryId()}" />
+
+        &nbsp;&nbsp;
+
+        <widget
+          IF="cat.hasSubcategories()"
+          class="\XLite\View\Button\DeleteCategory"
+          categoryId="{cat.getCategoryId()}"
+          style="hidden hidden-{cat.getCategoryId()}"
+          removeSubcategories="true" />
 
       </td>
 
@@ -144,10 +164,11 @@
     <tr>
 
       <td>
+        <widget IF="category&category.hasSubcategories()" class="\XLite\View\Button\Submit" label="{t(#Update#)}" />
         <widget class="\XLite\View\Button\Regular" id="add" label="{t(#Add subcategory#)}" jsCode="onAddChildClick({getCategoryId()})" />
       </td>
 
-      <td align="right" IF="category&category.getSubCategoriesCount()">
+      <td IF="category&category.getSubCategoriesCount()" align="right">
         <widget class="\XLite\View\Button\DeleteCategory" id="delete_all_button" label="{t(#Delete all#)}" />
       </td>
 

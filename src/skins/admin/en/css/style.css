@@ -1217,6 +1217,10 @@ table.data-table td.table-id-column
   text-decoration: underline;
 }
 
+.category-description {
+  border: solid 1px #e5e5e5;
+}
+
 /* Product modify form */
 
 td.name-attribute
