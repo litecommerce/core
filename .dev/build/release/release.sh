@@ -628,6 +628,10 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 				$PHP -qr "$_php_code" > .hash
 
+				if [ "$j" = "CDev/DrupalConnector" ]; then
+					tar -cf ${OUTPUT_DIR}/_drupal-connector-tmp.tar $module_files_list
+				fi
+
 				tar -cf ${OUTPUT_DIR}/${module_file_name}-v${module_version}.tar .phar $module_files_list .hash
 				rm -rf .phar
 				rm .hash
@@ -773,7 +777,6 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 		fi
 
-
 		LOGO_IMAGE=${OUTPUT_DIR}/drupal_dev/images/lc_logo-${XLITE_VERSION}.png
 
 		if [ -f $LOGO_IMAGE ]; then
@@ -859,6 +862,10 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} modules/lc_connector/
 
 		cd modules/lc_connector/${LITECOMMERCE_DIRNAME}
+
+		# Add DrupalConnector module
+		tar -xf ${OUTPUT_DIR}/_drupal-connector-tmp.tar
+		rm ${OUTPUT_DIR}/_drupal-connector-tmp.tar
 
 		cd $OUTPUT_DIR
 
