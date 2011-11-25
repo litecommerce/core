@@ -123,7 +123,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      */
     protected function checkStorefrontAccessability()
     {
-        return \XLite\Core\Config::getInstance()->General->shop_closed;
+        return !\XLite\Core\Config::getInstance()->General->shop_closed;
     }
 
     /**
