@@ -31,6 +31,7 @@ DRUPAL_DIRNAME="drupal"
 XLITE_MODULES="
 CDev/Bestsellers
 CDev/FeaturedProducts
+CDev/FileAttachments
 CDev/ProductOptions
 "
 
