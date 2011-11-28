@@ -148,15 +148,6 @@
           categoryId="{cat.getCategoryId()}"
           style="hidden hidden-{cat.getCategoryId()}" />
 
-        &nbsp;&nbsp;
-
-        <widget
-          IF="cat.hasSubcategories()"
-          class="\XLite\View\Button\DeleteCategory"
-          categoryId="{cat.getCategoryId()}"
-          style="hidden hidden-{cat.getCategoryId()}"
-          removeSubcategories="true" />
-
       </td>
 
     </tr>
