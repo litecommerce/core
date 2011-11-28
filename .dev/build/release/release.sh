@@ -864,9 +864,11 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 		cd modules/lc_connector/${LITECOMMERCE_DIRNAME}
 
-		# Add DrupalConnector module
-		tar -xf ${OUTPUT_DIR}/_drupal-connector-tmp.tar
-		rm ${OUTPUT_DIR}/_drupal-connector-tmp.tar
+		if [ "$TEST_MODE" = "" ]; then
+			# Add DrupalConnector module
+			tar -xf ${OUTPUT_DIR}/_drupal-connector-tmp.tar
+			rm ${OUTPUT_DIR}/_drupal-connector-tmp.tar
+		fi
 
 		cd $OUTPUT_DIR
 
