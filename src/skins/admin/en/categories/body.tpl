@@ -123,7 +123,10 @@
 
       <td class="table-label" colspan="2">
 
-        <input type="text" name="{getNamePostedData(#pos#,cat.getCategoryId())}" value="{cat.getPos()}" size="4" />
+        <span class="category-position">
+          <input type="text" name="{getNamePostedData(#pos#,cat.getCategoryId())}" value="{cat.getPos()}" size="4" />
+          <span class="category-position-text">{t(#Pos.:#)}</span>
+        </span>
 
         &nbsp;&nbsp;
 
