@@ -30,8 +30,8 @@ DRUPAL_DIRNAME="drupal"
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES="
 CDev/Bestsellers
-CDev/DrupalConnector
 CDev/FeaturedProducts
+CDev/FileAttachments
 CDev/ProductOptions
 "
 

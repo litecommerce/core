@@ -206,7 +206,7 @@ class Module extends \XLite\Model\AEntity
     protected $revisionDate = 0;
 
     /**
-     * Module pack size (recieved from marketplace)
+     * Module pack size (received from marketplace)
      *
      * @var   integer
      * @see   ____var_see____
@@ -547,7 +547,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Generate marketplace ID
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -581,8 +581,8 @@ class Module extends \XLite\Model\AEntity
         if (!empty($changeSet['enabled'])) {
             \XLite\Core\Database::getInstance()->setDisabledStructures(
                 $this->getActualName(),
-                $this->getEnabled() 
-                    ? array() 
+                $this->getEnabled()
+                    ? array()
                     : \Includes\Utils\ModulesManager::getModuleProtectedStructures($this->getAuthor(), $this->getName())
             );
         }

@@ -520,7 +520,7 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * Prepare data for certain response
      *
-     * @param array $data Data recieved from marketplace
+     * @param array $data Data received from marketplace
      *
      * @return array
      * @see    ____func_see____
@@ -998,7 +998,7 @@ class Marketplace extends \XLite\Base\Singleton
 
         } else {
 
-            $this->logError($action, 'Bouncer general error (response is not recieved)');
+            $this->logError($action, 'Bouncer general error (response is not received)');
         }
 
         return $result;
@@ -1125,7 +1125,7 @@ class Marketplace extends \XLite\Base\Singleton
 
             } else {
 
-                $this->logError($action, 'An empty response recieved');
+                $this->logError($action, 'An empty response received');
             }
 
         } else {
@@ -1142,7 +1142,7 @@ class Marketplace extends \XLite\Base\Singleton
                     $result = $this->{'prepare' . $method}($result);
                 }
 
-                $this->logInfo($action, 'Valid response recieved', array(), $result);
+                $this->logInfo($action, 'Valid response received', array(), $result);
 
             } else {
 
@@ -1403,7 +1403,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action  Current request action
      * @param string $message Message to log
      * @param array  $args    Message args OPTIONAL
-     * @param array  $data    Data sent/recieved OPTIONAL
+     * @param array  $data    Data sent/received OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -1422,7 +1422,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action  Current request action
      * @param string $message Message to log
      * @param array  $args    Message args OPTIONAL
-     * @param array  $data    Data sent/recieved OPTIONAL
+     * @param array  $data    Data sent/received OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -1439,7 +1439,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action  Current request action
      * @param string $message Message to log
      * @param array  $args    Message args OPTIONAL
-     * @param array  $data    Data sent/recieved OPTIONAL
+     * @param array  $data    Data sent/received OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -1457,7 +1457,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action  Current request action
      * @param string $message Message to log
      * @param array  $args    Message args OPTIONAL
-     * @param array  $data    Data sent/recieved OPTIONAL
+     * @param array  $data    Data sent/received OPTIONAL
      *
      * @return void
      * @see    ____func_see____
