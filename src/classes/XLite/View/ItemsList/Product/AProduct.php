@@ -67,10 +67,10 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     public function __construct(array $params = array())
     {
         $this->sortByModes += array(
-            self::SORT_BY_MODE_PRICE  => static::t('Price'),
-            self::SORT_BY_MODE_NAME   => static::t('Name'),
-            self::SORT_BY_MODE_SKU    => static::t('SKU'),
-            self::SORT_BY_MODE_AMOUNT => static::t('Amount'),
+            self::SORT_BY_MODE_PRICE  => 'Price',
+            self::SORT_BY_MODE_NAME   => 'Name',
+            self::SORT_BY_MODE_SKU    => 'SKU',
+            self::SORT_BY_MODE_AMOUNT => 'Amount',
         );
 
         parent::__construct($params);
@@ -86,6 +86,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
+
         // Static call of the non-static function
         $list[] = self::getDir() . '/products_list.css';
 
@@ -102,8 +103,9 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
+
         // Static call of the non-static function
-        $list[] = self::getDir() . '/controller.js';
+        $list[] = self::getDir() . '/products_list.js';
 
         return $list;
     }

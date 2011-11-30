@@ -40,28 +40,23 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     const CACHE_DEFAULT_TTL = 2592000;
 
-
     /**
      * Cache cell fields names
      */
-    const KEY_TYPE_CACHE_CELL = 'keyType';
-    const ATTRS_CACHE_CELL    = 'attrs';
-    const RELATION_CACHE_CELL = 'relation';
+    const KEY_TYPE_CACHE_CELL  = 'keyType';
+    const ATTRS_CACHE_CELL     = 'attrs';
+    const RELATION_CACHE_CELL  = 'relation';
     const CONVERTER_CACHE_CELL = 'converter';
     const GENERATOR_CACHE_CELL = 'generator';
 
-
     /**
-     *  Cache key types
+     * Cache key types
      */
-    const CACHE_ATTR_KEY       = 'attributesKey';
-    const CACHE_HASH_KEY       = 'hashKey';
-    const CACHE_CUSTOM_KEY     = 'customKey';
-
+    const CACHE_ATTR_KEY   = 'attributesKey';
+    const CACHE_HASH_KEY   = 'hashKey';
+    const CACHE_CUSTOM_KEY = 'customKey';
 
     const DEFAULT_KEY_TYPE = self::CACHE_ATTR_KEY;
-
-
     const EMPTY_CACHE_CELL = 'all';
 
     /**
@@ -71,7 +66,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     const TYPE_SECONDARY = 'secondary';
     const TYPE_SERVICE   = 'service';
     const TYPE_INTERNAL  = 'internal';
-
 
     /**
      * Cache cells (local cache)
@@ -503,14 +497,17 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             } else {
 
                 // Batch processing: iterate over the first argument.
-                // "*InBatch*()" methods don't pass any other args
+                // For all methods the second argument can be ommited
                 foreach ($commonArg as $id => $data) {
 
-                    // Get entity by ID (if needed: $matches[3] == {''|'ById'})
-                    $entity = empty($matches[3]) ? $data : $this->getById($id);
-
+                    // Get entity by ID (if needed: $matches[3] == {''|'ById'}).
                     // Perform action
-                    $result = $this->$method($entity, $data);
+                    if (empty($matches[3])) {
+                        $result = isset($args[1]) ? $this->$method($data, $args[1]) : $this->$method($data);
+
+                    } else {
+                        $result = $this->$method($this->getById($id), $data);
+                    }
                 }
             }
 
@@ -1038,7 +1035,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function postprocessCacheCells(array $cacheCells)
     {
-
         $relations = array();
 
         // Normalize cache cells
@@ -1102,16 +1098,15 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected function getFromCache($name, array $params = array())
     {
         $result = null;
-
         $cell = $this->getCacheCells($name);
-        if ($cell) {
 
+        if ($cell) {
             $result = \XLite\Core\Database::getCacheDriver()->fetch(
                 $this->getCellHash($name, $cell, $params)
             );
 
         } else {
-            // TODO - add throw exception
+            // TODO - throw exception
         }
 
         return (isset($result) && false !== $result) ? $result : null;
@@ -1131,8 +1126,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected function saveToCache($data, $name, array $params = array())
     {
         $cell = $this->getCacheCells($name);
-        if ($cell) {
 
+        if ($cell) {
             $hash = $this->getCellHash($name, $cell, $params);
 
             if ($data instanceof \ArrayAccess) {
@@ -1169,15 +1164,12 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         $hash = null;
 
         if (self::CACHE_ATTR_KEY == $cell[self::KEY_TYPE_CACHE_CELL]) {
-
             $hash = implode('.', $params);
 
         } elseif (self::CACHE_HASH_KEY == $cell[self::KEY_TYPE_CACHE_CELL]) {
-
             $hash = md5(implode('.', $params));
 
         } elseif (self::CACHE_CUSTOM_KEY == $cell[self::KEY_TYPE_CACHE_CELL]) {
-
             $hash = $this->{$cell[self::GENERATOR_CACHE_CELL]}($params);
         }
 

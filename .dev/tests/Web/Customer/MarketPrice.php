@@ -25,6 +25,7 @@
  * @since     1.0.10
  *
  * @resource product_market_price
+ * @resource category
  * @use product
  */
 

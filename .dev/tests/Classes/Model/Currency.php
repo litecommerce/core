@@ -25,8 +25,21 @@
  * @since      1.0.0
  */
 
+/**
+ * XLite_Tests_Model_Currency 
+ *
+ * @see   ____class_see____
+ * @since 1.0.13
+ */
 class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
 {
+    /**
+     * testData
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.13
+     */
     protected $testData = array(
         'currency_id' => 999,
         'code'        => 'XXX',
@@ -35,6 +48,13 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
         'name'        => 'Test',
     );
 
+    /**
+     * testCreate
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     public function testCreate()
     {
         $c = $this->getTestCurrency();
@@ -65,6 +85,13 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
         }
     }
 
+    /**
+     * testUpdate
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     public function testUpdate()
     {
         \XLite\Core\Database::getEM()->clear();
@@ -85,6 +112,13 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
         $this->assertEquals('ZZZ', $c->getCode(), 'check new code');
     }
 
+    /**
+     * testDelete
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     public function testDelete()
     {
         $c = $this->getTestCurrency();
@@ -100,6 +134,13 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
         $this->assertNull($c, 'check removed currency');
     }
 
+    /**
+     * testRoundValue
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     public function testRoundValue()
     {
         $c = $this->getTestCurrency();
@@ -116,6 +157,13 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
         $this->assertEquals(3, $c->roundValue(2.5549), 'check round #4');
     }
 
+    /**
+     * testRoundValueAsInteger
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     public function testRoundValueAsInteger()
     {
         $c = $this->getTestCurrency();
@@ -132,6 +180,13 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
         $this->assertEquals(3, $c->roundValueAsInteger(2.5549), 'check round #4');
     }
 
+    /**
+     * testConvertIntegerToFloat
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     public function testConvertIntegerToFloat()
     {
         $c = $this->getTestCurrency();
@@ -148,6 +203,13 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
         $this->assertEquals(3, $c->convertIntegerToFloat(3), 'check round #4');
     }
 
+    /**
+     * testFormatValue
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     public function testFormatValue()
     {
         $c = $this->getTestCurrency();
@@ -195,6 +257,13 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
         \XLite\Core\Database::getEM()->flush();
     }
 
+    /**
+     * getTestCurrency
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     protected function getTestCurrency()
     {
         $c = new \XLite\Model\Currency();

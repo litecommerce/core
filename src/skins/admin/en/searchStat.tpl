@@ -10,11 +10,11 @@
  * @since     1.0.0
  *}
 <p align="justify">
-This section lists search queries performed by customers. Statistics can be ordered by strings searched (query), search count or amount of products found by the search tool.
+{t(#This section lists search queries performed by customers. Statistics can be ordered by strings searched (query), search count or amount of products found by the search tool.#)}
 </p>
 <form name="searchStat" action="admin.php" method="get">
 <input type="hidden" name="target" value="searchStat" />
-Order by: <select name="listOrder" onchange="document.searchStat.submit()">
+{t(#Order by#)}: <select name="listOrder" onchange="document.searchStat.submit()">
 	<option FOREACH="orders,order,name" selected="{order=listOrder}">{order}</option>
 </select>
 </form>
@@ -23,9 +23,9 @@ Order by: <select name="listOrder" onchange="document.searchStat.submit()">
 <tr><td>
 <table cellpadding="3" cellspacing="1">
 <tr >
-	<th>Query</th>
-	<th>Count</th>
-	<th>Products found</th>
+	<th>{t(#Query#)}</th>
+	<th>{t(#Count#)}</th>
+	<th>{t(#Products found#)}</th>
 </tr>
 <tr FOREACH="searchStat,ind,stat" class="{getRowClass(ind,#dialog-box#,#highlight#)}">
 	<td>{stat.query}</td>
@@ -41,10 +41,10 @@ Order by: <select name="listOrder" onchange="document.searchStat.submit()">
 <form action="admin.php" method="post">
 <input type="hidden" name="target" value="searchStat" />
 <input type="hidden" name="action" value="cleanup" />
-<b>Cleanup queries:</b> <select name="maxCount">
-<option value="1">requested only once</option>
-<option value="2">requested once or twice</option>
-<option value="1000000">All</option>
+<b>{t(#Cleanup queries#)}:</b> <select name="maxCount">
+<option value="1">{t(#requested only once#)}</option>
+<option value="2">{t(#requested once or twice#)}</option>
+<option value="1000000">{t(#All#)}</option>
 </select>
-<widget class="\XLite\View\Button\Submit" label="Cleanup" />
+<widget class="\XLite\View\Button\Submit" label="{t(#Cleanup#)}" />
 </form>

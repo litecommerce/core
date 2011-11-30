@@ -44,9 +44,9 @@
         <tr>
 	        <td>&nbsp;</td>
         	<td>
-              <widget class="\XLite\View\Button\Submit" label="Update" />
+              <widget class="\XLite\View\Button\Submit" label="{t(#Update#)}" />
               &nbsp;
-              <widget class="\XLite\View\Button\Regular" label="Delete the image" jsCode="images_form.image_id.value='{image.getId()}'; images_form.action.value='delete_image'; images_form.submit()" />
+              <widget class="\XLite\View\Button\Regular" label="{t(#Delete the image#)}" jsCode="images_form.image_id.value='{image.getId()}'; images_form.action.value='delete_image'; images_form.submit()" />
 	        </td>
         </tr>
 

@@ -628,6 +628,11 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 				$PHP -qr "$_php_code" > .hash
 
+				# Backup DrupalConnector module to insert it later into Ecommerce CMS package
+				if [ "$j" = "CDev/DrupalConnector" ]; then
+					tar -cf ${OUTPUT_DIR}/_drupal-connector-tmp.tar $module_files_list
+				fi
+
 				tar -cf ${OUTPUT_DIR}/${module_file_name}-v${module_version}.tar .phar $module_files_list .hash
 				rm -rf .phar
 				rm .hash
@@ -635,7 +640,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 				echo "  + ${module_name} module package is complete: ${module_file_name}-v${module_version}.tar"
 
 			else
-				echo "  - ${module_name} module not found"
+				echo "  - ${j} module not found"
 			fi
 
 		done
@@ -773,7 +778,6 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 		fi
 
-
 		LOGO_IMAGE=${OUTPUT_DIR}/drupal_dev/images/lc_logo-${XLITE_VERSION}.png
 
 		if [ -f $LOGO_IMAGE ]; then
@@ -781,7 +785,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 			# Copying logo with version number to the theme is temporary disabled
 			# cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes/lc3/logo.png
 		else
-			echo "Warning! Logo image file $LOGO_IMAGE not found"
+			# echo "Warning! Logo image file $LOGO_IMAGE not found"
 		fi
 
 		sed_cmd="$SED_EXT 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info"
@@ -859,6 +863,12 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} modules/lc_connector/
 
 		cd modules/lc_connector/${LITECOMMERCE_DIRNAME}
+
+		if [ "$TEST_MODE" = "" ]; then
+			# Add DrupalConnector module
+			tar -xf ${OUTPUT_DIR}/_drupal-connector-tmp.tar
+			rm ${OUTPUT_DIR}/_drupal-connector-tmp.tar
+		fi
 
 		cd $OUTPUT_DIR
 

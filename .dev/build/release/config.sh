@@ -30,8 +30,8 @@ DRUPAL_DIRNAME="drupal"
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES="
 CDev/Bestsellers
-CDev/DrupalConnector
 CDev/FeaturedProducts
+CDev/FileAttachments
 CDev/ProductOptions
 "
 
@@ -54,6 +54,8 @@ CDev/TinyMCE
 CDev/TwoCheckout
 CDev/VAT
 CDev/USPS
+CDev/XMLSitemap
+CDev/XMLSitemapDrupal
 "
 
 # LiteCommerce paid modules which should be packed as separate distributives
@@ -83,9 +85,6 @@ profiles/litecommerce_test
 DRUPAL_FILES_TODELETE="
 profiles/default
 profiles/litecommerce_site
-profiles/standard
-profiles/minimal
-profiles/testing
 includes/install.pgsql.inc
 sites/all/modules/litecommerce_com
 sites/all/modules/private_download

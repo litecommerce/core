@@ -38,6 +38,22 @@ namespace XLite\View;
 class ImportExport extends \XLite\View\AView
 {
     /**
+     * Return list of allowed targets
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $list = parent::getAllowedTargets();
+
+        $list[] = 'import_export';
+
+        return $list;
+    }
+
+    /**
      * Register CSS files
      *
      * @return array

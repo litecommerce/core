@@ -17,7 +17,7 @@
   {t(#The upgrade is completed. Please, do not close this page until you check your web site and check that everything works properly#)}.
 </div>
 
-<widget class="\XLite\View\Button\Link" style="main-button" label="Open storefront" blank="1" location={getShopURL()} />
+<widget class="\XLite\View\Button\Link" style="main-button" label="{t(#Open storefront#)}" blank="1" location={getShopURL()} />
 
 <div class="upgrade-note upgrade-description">
   {t(#If there are some critical errors occured you can do the following#)}:

@@ -118,11 +118,22 @@
     </td>
   </tr>
   <tr>
-    <td>&nbsp;</td>
-    <td class="note">
-      {t(#The "Pricing currency" must be exactly the same as on your #)}
+    <td colspan="2" class="note">
+      {t(#To set up the integration you should follow #)}
       <a href="https://www.2checkout.com/va/acct/detail_company_info" target="_blank">{t(#"Site management"#)}</a>
-      {t(#page.#)}
+      {t(# page and make sure that:#)}<br /><br />
+      <ol>
+        <li>
+          {t(#The "Pricing currency" value must be exactly the same as on it.#)}
+        </li>
+        <li>
+          {t(#The "Approved URL" value must be exact to "Customer front-end URL" with target = "payment_return". #)}<br />
+          {t(#For example#)}:<br />
+          <strong>"https://www.your-company.com/cms/lc/cart.php?target=payment_return"</strong> in the standalone LC installation.<br />
+          <strong>"https://www.your-company.com/cms/store/payment_return"</strong> in the case of Drupal CMS connections.
+          ("https://www.your-company.com/cms/" - your Drupal installation URL)<br />
+        </li>
+      </ul>
     </td>
   </tr>
 

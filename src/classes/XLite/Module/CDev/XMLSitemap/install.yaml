@@ -1,0 +1,68 @@
+# vim: set ts=2 sw=2 sts=2 et:
+# 
+# Data dump
+#  
+# @author    Creative Development LLC <info@cdev.ru> 
+# @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+# @since     1.0.12
+XLite\Model\Config:
+  - name: welcome_changefreq
+    category: CDev\XMLSitemap
+    type: 'XLite\Module\CDev\XMLSitemap\View\FormField\Select\ChangeFrequency'
+    orderby: 100
+    value: daily
+    translations:
+      - code: en
+        option_name: Change frequency for Welcome page
+  - name: category_changefreq
+    category: CDev\XMLSitemap
+    type: 'XLite\Module\CDev\XMLSitemap\View\FormField\Select\ChangeFrequency'
+    orderby: 200
+    value: daily
+    translations:
+      - code: en
+        option_name: Change frequency for Category page
+  - name: product_changefreq
+    category: CDev\XMLSitemap
+    type: 'XLite\Module\CDev\XMLSitemap\View\FormField\Select\ChangeFrequency'
+    orderby: 300
+    value: daily
+    translations:
+      - code: en
+        option_name: Change frequency for Product page
+  - name: welcome_priority
+    category: CDev\XMLSitemap
+    type: XLite\View\FormField\Input\Text\Float
+    widgetParameters: { min: 0, max: 1, e: 1}
+    orderby: 400
+    value: 0.5
+    translations:
+      - code: en
+        option_name: Priority for Welcome page
+        option_comment: The value should range from 0 to 1.
+  - name: category_priority
+    category: CDev\XMLSitemap
+    type: XLite\View\FormField\Input\Text\Float
+    widgetParameters: { min: 0, max: 1, e: 1}
+    orderby: 500
+    value: 0.5
+    translations:
+      - code: en
+        option_name: Priority for Category page
+        option_comment: The value should range from 0 to 1.
+  - name: product_priority
+    category: CDev\XMLSitemap
+    type: XLite\View\FormField\Input\Text\Float
+    widgetParameters: { min: 0, max: 1, e: 1}
+    orderby: 600
+    value: 0.5
+    translations:
+      - code: en
+        option_name: Priority for Product page
+        option_comment: The value should range from 0 to 1.
+XLite\Model\LanguageLabel:
+  - { name: 'XML sitemap URL: X', translations: [{ code: en, label: 'XML sitemap URL: <a href="{{url}}">{{url}}</a>' }] }
+  - { name: 'Site map successfully registred on X', translations: [{ code: en, label: 'Site map successfully registred on {{engine}}.' }] }
+  - { name: 'Site map has not been registred in X', translations: [{ code: en, label: 'Site map has not been registred in {{engine}}.' }] }

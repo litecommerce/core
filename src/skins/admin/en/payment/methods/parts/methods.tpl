@@ -50,7 +50,7 @@
   </table>
 
   <div class="buttons">
-    <widget class="\XLite\View\Button\Submit" label="Update" />
+    <widget class="\XLite\View\Button\Submit" label="{t(#Update#)}" />
   </div>
 
 </form>

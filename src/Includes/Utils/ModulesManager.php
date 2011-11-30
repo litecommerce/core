@@ -451,37 +451,47 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     {
         $tables  = array();
         $columns = array();
-        $filter  = new \Includes\Utils\FileFilter(static::getAbsoluteDir($author, $name) . 'Model', '/.*\.php$/Si');
 
-        foreach ($filter->getIterator() as $path => $data) {
-            $class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
-            
-            if ($class && is_subclass_of($class, '\XLite\Model\AEntity')) {
-                $class = ltrim($class, '\\');
-                $len = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
+        $path = static::getAbsoluteDir($author, $name) . 'Model';
 
-                if (in_array('XLite\Base\IDecorator', class_implements($class))) {
-                    $parent   = \Includes\Decorator\Utils\Tokenizer::getParentClassName($path);
-                    $metadata = \XLite\Core\Database::getEM()->getClassMetadata($parent);
-                    $table    = substr($metadata->getTableName(), $len);
+        if (\Includes\Utils\FileManager::isExists($path)) {
+            $filter = new \Includes\Utils\FileFilter($path, '/.*\.php$/Si');
 
-                    $tool   = new \Doctrine\ORM\Tools\SchemaTool(\XLite\Core\Database::getEM());
-                    $schema = $tool->getCreateSchemaSql(array($metadata));
+            foreach ($filter->getIterator() as $path => $data) {
+                $class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
+                $reflectionClass = new \ReflectionClass($class);
 
-                    foreach ((array) $metadata->reflFields as $field => $reflection) {
-                        $pattern = '/(?:, |\()(' . $field . ' .+)(?:, [A-Za-z]|\) ENGINE)/USsi';
+                if (
+                    $class
+                    && is_subclass_of($class, '\XLite\Model\AEntity')
+                    && !$reflectionClass->isAbstract()
+                ) {
+                    $class = ltrim($class, '\\');
+                    $len = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
 
-                        if (
-                            $reflection->class === $class 
-                            && !empty($metadata->fieldMappings[$field])
-                            && preg_match($pattern, $schema[0], $matches)
-                        ) {
-                            $columns[$table][$field] = $matches[1];
+                    if (in_array('XLite\Base\IDecorator', class_implements($class))) {
+                        $parent   = \Includes\Decorator\Utils\Tokenizer::getParentClassName($path);
+                        $metadata = \XLite\Core\Database::getEM()->getClassMetadata($parent);
+                        $table    = substr($metadata->getTableName(), $len);
+
+                        $tool   = new \Doctrine\ORM\Tools\SchemaTool(\XLite\Core\Database::getEM());
+                        $schema = $tool->getCreateSchemaSql(array($metadata));
+
+                        foreach ((array) $metadata->reflFields as $field => $reflection) {
+                            $pattern = '/(?:, |\()(' . $field . ' .+)(?:, [A-Za-z]|\) ENGINE)/USsi';
+
+                            if (
+                                $reflection->class === $class
+                                && !empty($metadata->fieldMappings[$field])
+                                && preg_match($pattern, $schema[0], $matches)
+                            ) {
+                                $columns[$table][$field] = $matches[1];
+                            }
                         }
+
+                    } elseif (\XLite\Core\Database::getRepo($class)->canDisableTable()) {
+                        $tables[] = substr(\XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(), $len);
                     }
-                    
-                } elseif (\XLite\Core\Database::getRepo($class)->canDisableTable()) {
-                    $tables[] = substr(\XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(), $len);
                 }
             }
         }

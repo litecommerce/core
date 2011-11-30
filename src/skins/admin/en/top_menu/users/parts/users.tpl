@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="menu.users", weight="10")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="Users" linkTarget="profile_list" />
+<widget class="\XLite\View\TopMenu\Node" title="{t(#Users#)}" linkTarget="profile_list" />

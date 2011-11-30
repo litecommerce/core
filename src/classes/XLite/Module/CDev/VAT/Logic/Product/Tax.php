@@ -35,6 +35,15 @@ namespace XLite\Module\CDev\VAT\Logic\Product;
  */
 class Tax extends \XLite\Logic\ALogic
 {
+    /**
+     * Taxes (cache)
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.13
+     */
+    protected $taxes;
+
     // {{{ Product search
 
     /**
@@ -165,7 +174,11 @@ class Tax extends \XLite\Logic\ALogic
      */
     protected function getTaxes()
     {
-        return \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->findActive();
+        if (!isset($this->taxes)) {
+            $this->taxes = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->findActive();
+        }
+
+        return $this->taxes;
     }
 
     /**

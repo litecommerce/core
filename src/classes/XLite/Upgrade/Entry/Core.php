@@ -297,15 +297,15 @@ class Core extends \XLite\Upgrade\Entry\AEntry
         $params = array('major' => $majorVersion, 'minor' => $minorVersion);
 
         if (isset($path)) {
-            $this->addFileInfoMessage('Core pack (v.{{major}}.{{minor}}) is recieved', $path, true, $params);
-                
+            $this->addFileInfoMessage('Core pack (v.{{major}}.{{minor}}) is received', $path, true, $params);
+
             $this->setRepositoryPath($path);
             $this->saveHashesForInstalledFiles();
 
             $result = parent::download();
 
         } else {
-            $this->addFileErrorMessage('Core pack (v.{{major}}.{{minor}}) is not recieved', $path, true, $params);
+            $this->addFileErrorMessage('Core pack (v.{{major}}.{{minor}}) is not received', $path, true, $params);
         }
 
         return $result;

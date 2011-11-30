@@ -12,4 +12,4 @@
  * @ListChild (list="upgrade.step.prepare.buttons.sections", weight="100")
  *}
 
-<widget class="\XLite\View\Button\Link" label="Cancel" location="{buildURL(#main#)}" />
+<widget class="\XLite\View\Button\Link" label="{t(#Cancel#)}" location="{buildURL(#main#)}" />

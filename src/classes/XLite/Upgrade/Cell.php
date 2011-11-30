@@ -70,7 +70,7 @@ class Cell extends \XLite\Base\Singleton
     protected $coreVersion;
 
     /**
-     * List of cores recieved from marketplace (cache)
+     * List of cores received from marketplace (cache)
      *
      * @var   array
      * @see   ____var_see____
@@ -754,10 +754,10 @@ class Cell extends \XLite\Base\Singleton
 
     /**
      * Execute some methods
-     * 
+     *
      * @param string  $type       Helper type
      * @param boolean $isTestMode Flag OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

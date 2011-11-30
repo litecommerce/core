@@ -189,7 +189,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     /**
      * Get IPN verification status
      *
-     * @return boolean TRUE if verification status is recieved
+     * @return boolean TRUE if verification status is received
      * @see    ____func_see____
      * @since  1.0.1
      */

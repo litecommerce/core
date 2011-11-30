@@ -11,4 +11,4 @@
  * @ListChild (list="menu.maintenance", weight="200")
  *}
 
-<widget class="\XLite\View\TopMenu\Node" title="Re-build cache" linkTarget="cache_management" extra="{_ARRAY_(#action#^#rebuild#)}" />
+<widget class="\XLite\View\TopMenu\Node" title="{t(#Re-build cache#)}" linkTarget="cache_management" extra="{_ARRAY_(#action#^#rebuild#)}" />

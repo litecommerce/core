@@ -25,7 +25,7 @@
  * @since      1.0.0
  *
  * @use product
- * @use category
+ * @resource category
  */
 
 require_once __DIR__ . '/ACustomer.php';
@@ -338,20 +338,24 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $errorDivSelector = 'div.amount' . $product->getProductId() . 'formError:visible';
         $errorQtySelector = 'input.quantity.wrong-amount';
 
+        $sleep = $this->setSleep(1);
         $this->typeKeys($quantitySelector, -3);
         $this->getJSExpression($qtyBlurOperation);
+        sleep(1);
         $this->assertJqueryPresent($errorDivSelector, 'check minimal allowed quantity error');
         $this->assertJqueryPresent($errorQtySelector, 'check minimal allowed quantity');
         $this->assertJqueryPresent('button.bright.add2cart.disabled.add2cart-disabled', 'check disabled add to cart button (min qty)');
 
         $this->typeKeys($quantitySelector, 50);
         $this->getJSExpression($qtyBlurOperation);
+        sleep(1);
         $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error (1)');
         $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity (1)');
         $this->assertJqueryNotPresent('button.bright.add2cart.disabled.add2cart-disabled', 'check enabled add to cart button');
 
         $this->typeKeys($quantitySelector, 51);
         $this->getJSExpression($qtyBlurOperation);
+        sleep(1);
         $this->assertJqueryPresent($errorDivSelector, 'check maximum allowed quantity error');
         $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');
         $this->assertJqueryPresent('button.bright.add2cart.disabled.add2cart-disabled', 'check disabled add to cart button (max qty)');
@@ -359,6 +363,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         // Add to cart
         $this->typeKeys($quantitySelector, 1);
         $this->getJSExpression($qtyBlurOperation);
+        sleep(1);
         $this->click($cartButtonSelector);
 
         $qty++;
@@ -396,18 +401,21 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         // Inventory tracking: check unallowed values (inventory tracking, add to cart button)
         $this->typeKeys($quantitySelector, -3);
         $this->getJSExpression($qtyBlurOperation);
+        sleep(1);
         $this->assertJqueryPresent($errorDivSelector, 'check minimal allowed quantity error');
         $this->assertJqueryPresent($errorQtySelector, 'check minimal allowed quantity');
         $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (min qty)');
 
         $this->typeKeys($quantitySelector, 48);
         $this->getJSExpression($qtyBlurOperation);
+        sleep(1);
         $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error (2)');
         $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity (2)');
         $this->assertJqueryNotPresent('button.action.buy-more.disabled.add2cart-disabled', 'check enabled buy now button');
 
         $this->typeKeys($quantitySelector, 50);
         $this->getJSExpression($qtyBlurOperation);
+        sleep(1);
         $this->assertJqueryPresent($errorDivSelector, 'check maximum allowed quantity error');
         $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');
         $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (max qty)');
@@ -415,6 +423,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         // Buy more
         $this->typeKeys($quantitySelector, 1);
         $this->getJSExpression($qtyBlurOperation);
+        sleep(1);
         $this->click($buyButtonSelector);
 
         $qty++;
@@ -430,6 +439,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             10000,
             "Minicart widget displays a wrong qty (#1)"
         );
+        $this->setSleep($sleep);
     }
 
     /**

@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<h3>Modify option groups exceptions</h3>
+<h3>{t(#Modify option groups exceptions#)}</h3>
 
 <form action="admin.php" method="post" name="update_option_group_form" class="option-groups-exceptions-modify">
   <input type="hidden" name="target" value="product" />
@@ -20,17 +20,17 @@
 
   <div FOREACH="getExceptions(),eid,exception">
     <input type="checkbox" name="mark[]" value="{eid}" id="exception_mark_{eid}" class="mark" />
-    <label for="exception_mark_{eid}" class="mark"><strong>Exception #{eid}</strong></label>
+    <label for="exception_mark_{eid}" class="mark"><strong>{t(#Exception#)} #{eid}</strong></label>
     <widget template="modules/CDev/ProductOptions/exception.tpl" />
   </div>
 
   <div>
-    <strong>Add new exception</strong>
+    <strong>{t(#Add new exception#)}</strong>
     <widget template="modules/CDev/ProductOptions/exception.tpl" eid="0" exception="{getEmptyException()}"/>
   </div>
 
   <div class="buttons">
-    <widget class="\XLite\View\Button\Submit" label="Update exceptions" />
+    <widget class="\XLite\View\Button\Submit" label="{t(#Update exceptions#)}" />
     <widget IF="getExceptions()" class="\XLite\Module\CDev\ProductOptions\View\Button\DeleteSelectedExceptions" />
   </div>
 

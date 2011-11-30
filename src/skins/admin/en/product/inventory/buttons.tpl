@@ -14,6 +14,6 @@
 
 <tr>
   <td colspan="2">
-    <widget class="\XLite\View\Button\Submit" label="Update" />
+    <widget class="\XLite\View\Button\Submit" label="{t(#Update#)}" />
   </td>
 </tr>

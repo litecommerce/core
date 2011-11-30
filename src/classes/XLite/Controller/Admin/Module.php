@@ -163,35 +163,21 @@ class Module extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        foreach ($this->getOptions() as $option) {
-
-            $name  = $option->name;
-            $value = \XLite\Core\Request::getInstance()->$name;
-
-            switch ($option->type) {
-
-                case 'checkbox':
-                    $value = isset($value) ? 'Y' : 'N';
-                    break;
-
-                case 'serialized':
-                    $value = serialize($value);
-                    break;
-
-                default:
-                    $value = trim($value);
-            }
-
-            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
-                array(
-                    'category' => $this->getModule()->getActualName(),
-                    'name'     => $name,
-                    'value'    => $value,
-                    'type'     => $option->type
-                )
-            );
-        }
+        $this->getModelForm()->performAction('update');
 
         $this->setReturnURL(\XLite\Core\Request::getInstance()->return ?: $this->buildURL('addons_list_installed'));
     }
+
+    /**
+     * getModelFormClass
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModelFormClass()
+    {
+        return '\XLite\View\Model\Settings';
+    }
+
 }

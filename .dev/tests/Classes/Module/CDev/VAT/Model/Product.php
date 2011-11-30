@@ -48,6 +48,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_TestCase
         $products = \XLite\Core\Database::getRepo('XLite\Model\Product')->findAll();
         $product = array_shift($products);
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $price = $product->getPrice();
         $this->assertEquals(
             $this->getVAT($price, 0.1, 0.1),
@@ -64,6 +65,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_TestCase
         $rate->setTax($tax);
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $this->assertEquals(
             $this->getVAT($price, 0.1, 0.1),
             \XLite::getInstance()->getCurrency()->roundValue($product->getListPrice()),
@@ -78,6 +80,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_TestCase
         $tax->setVATMembership($membership);
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $this->assertEquals(
             $this->getVAT($price, 0.2, 0.1),
             \XLite::getInstance()->getCurrency()->roundValue($product->getListPrice()),
@@ -87,6 +90,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_TestCase
         // Disabled tax
         $tax->setEnabled(false);
         \XLite\Core\Database::getEM()->flush();
+        \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $this->assertEquals($price, $product->getListPrice(), 'check no-tax cost');
     }
 

@@ -29,4 +29,4 @@
 
 </table>
 
-<widget class="\XLite\View\Button\Regular" label="Perform order search" jsCode="self.location='admin.php?target=order_list';" />
+<widget class="\XLite\View\Button\Regular" label="{t(#Perform order search#)}" jsCode="self.location='admin.php?target=order_list';" />

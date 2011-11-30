@@ -51,7 +51,6 @@ class Session extends \XLite\Model\AEntity
      */
     const MAX_TTL = 31536000;
 
-
     /**
      * Session increment id
      *
@@ -94,8 +93,7 @@ class Session extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $cache = array();
-
+    protected $cache;
 
     /**
      * Return instance of the session cell repository
@@ -108,7 +106,6 @@ class Session extends \XLite\Model\AEntity
     {
         return \XLite\Core\Database::getRepo('XLite\Model\SessionCell');
     }
-
 
     /**
      * Set session id
@@ -196,7 +193,6 @@ class Session extends \XLite\Model\AEntity
         $this->setCellValue($name, null);
     }
 
-
     /**
      * Get session cell by name
      *
@@ -208,31 +204,15 @@ class Session extends \XLite\Model\AEntity
      */
     protected function getCellByName($name)
     {
-        if (!isset($this->cache[$name])) {
+        if (!isset($this->cache)) {
+            $this->cache = array();
 
-            $this->cache[$name] = static::getSessionCellRepo()->findOneBy(
-                array('id' => $this->getId(), 'name' => $name)
-            );
+            foreach ((array) static::getSessionCellRepo()->findById($this->getId()) as $cell) {
+                $this->cache[$cell->getName()] = $cell;
+            }
         }
 
-        return $this->cache[$name];
-    }
-
-    /**
-     * Invalidate cached entity
-     *
-     * @param string $name Cell name
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function invalidateCellCache($name)
-    {
-        if (isset($this->cache[$name])) {
-            $this->cache[$name]->detach();
-            unset($this->cache[$name]);
-        }
+        return \Includes\Utils\ArrayManager::getIndex($this->cache, $name, true);
     }
 
     /**
@@ -249,11 +229,12 @@ class Session extends \XLite\Model\AEntity
     {
         // Check if cell exists (need to perform update or delete)
         $cell = $this->getCellByName($name);
+
         if (!$cell) {
 
             // Cell not found - create new
             if (isset($value)) {
-                static::getSessionCellRepo()->insertCell($this->getId(), $name, $value);
+                $this->cache[$name] = static::getSessionCellRepo()->insertCell($this->getId(), $name, $value);
             }
 
         } elseif (isset($value)) {
@@ -261,14 +242,13 @@ class Session extends \XLite\Model\AEntity
             // Only perform SQL query if cell value is changed
             if ($cell->getValue() !== $value) {
                 static::getSessionCellRepo()->updateCell($cell, $value);
-                $this->invalidateCellCache($name);
             }
 
         } else {
 
             // Set the "null" value to delete current cell
             static::getSessionCellRepo()->removeCell($cell);
-            $this->invalidateCellCache($name);
+            unset($this->cache[$name]);
         }
     }
 }

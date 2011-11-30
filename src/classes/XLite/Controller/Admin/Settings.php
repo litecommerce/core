@@ -79,18 +79,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Check for the GDLib extension
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isGDLibLoaded()
-    {
-        return extension_loaded('gd') && function_exists('gd_info');
-    }
-
-    /**
      * Get tab names
      *
      * @return array
@@ -110,6 +98,26 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Get pages templates
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPageTemplates()
+    {
+        $list = $this->getPages();
+
+        foreach ($list as $k => $v) {
+            $list[$k] = 'settings/base.tpl';
+        }
+
+        $list['Environment'] = 'summary.tpl';
+
+        return $list;
+    }
+
+    /**
      * Get options for current tab (category)
      *
      * @return void
@@ -120,6 +128,44 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\Config')
             ->findByCategoryAndVisible($this->page);
+    }
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLocation()
+    {
+        return 'General settings';
+    }
+
+    /**
+     * getModelFormClass
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModelFormClass()
+    {
+        return '\XLite\View\Model\Settings';
+    }
+
+    // {{{ Additional methods
+
+    /**
+     * Check for the GDLib extension
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isGDLibLoaded()
+    {
+        return extension_loaded('gd') && function_exists('gd_info');
     }
 
     /**
@@ -580,48 +626,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function doActionUpdate()
     {
-        $optionsToUpdate = array();
-        $options = $this->getOptions();
-
-        // Find changed options and store them in $optionsToUpdate
-        foreach ($options as $key => $option) {
-
-            $name  = $option->name;
-            $type  = $option->type;
-            $value = $option->value;
-
-            if ('checkbox' == $type) {
-                $newValue = empty(\XLite\Core\Request::getInstance()->$name) ? 'N' : 'Y';
-
-            } elseif ('serialized' == $type && isset(\XLite\Core\Request::getInstance()->$name) && is_array(\XLite\Core\Request::getInstance()->$name)) {
-                $newValue = serialize(\XLite\Core\Request::getInstance()->$name);
-
-            } elseif ('text' == $type) {
-                $newValue = isset(\XLite\Core\Request::getInstance()->$name) ? trim(\XLite\Core\Request::getInstance()->$name) : '';
-
-            } else {
-                $newValue = isset(\XLite\Core\Request::getInstance()->$name) ? \XLite\Core\Request::getInstance()->$name : '';
-            }
-
-            if ($value != $newValue) {
-                $option->value = $newValue;
-                $optionsToUpdate[] = $option;
-            }
-        }
-
-        // Save changed options to the database
-        if (!empty($optionsToUpdate)) {
-
-            foreach ($optionsToUpdate as $option) {
-                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
-                    array(
-                        'category' => $option->category,
-                        'name'     => $option->name,
-                        'value'    => $option->value
-                    )
-                );
-            }
-        }
+        $this->getModelForm()->performAction('update');
     }
 
     /**
@@ -634,30 +639,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     public function isWin()
     {
         return (LC_OS_CODE === 'win');
-    }
-
-    /**
-     * getTimeZonesList
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getTimeZonesList()
-    {
-        return \DateTimeZone::listIdentifiers();
-    }
-
-    /**
-     * getCurrentTimeZone
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCurrentTimeZone()
-    {
-        return date_default_timezone_get();
     }
 
     /**
@@ -709,16 +690,5 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         return \Includes\SafeMode::getResetURL(true);
     }
 
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'General settings';
-    }
-
+    // }}}
 }

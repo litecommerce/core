@@ -56,6 +56,7 @@ abstract class AModel extends \XLite\View\Dialog
     const SCHEMA_NAME       = \XLite\View\FormField\AFormField::PARAM_NAME;
     const SCHEMA_LABEL      = \XLite\View\FormField\AFormField::PARAM_LABEL;
     const SCHEMA_COMMENT    = \XLite\View\FormField\AFormField::PARAM_COMMENT;
+    const SCHEMA_HELP       = \XLite\View\FormField\AFormField::PARAM_HELP;
 
     const SCHEMA_OPTIONS = \XLite\View\FormField\Select\ASelect::PARAM_OPTIONS;
     const SCHEMA_IS_CHECKED = \XLite\View\FormField\Input\Checkbox::PARAM_IS_CHECKED;
@@ -1101,7 +1102,9 @@ abstract class AModel extends \XLite\View\Dialog
     {
         foreach ($data[self::SECTION_PARAM_FIELDS] as $field) {
             list($flag, $message) = $field->validate();
-            $flag ?: $this->addErrorMessage($field->getName(), $message, $data);
+            if (!$flag) {
+                $this->addErrorMessage($field->getName(), $message, $data);
+            }
         }
     }
 
@@ -1335,5 +1338,79 @@ abstract class AModel extends \XLite\View\Dialog
     protected function getFormName()
     {
         return get_class($this);
+    }
+
+    /**
+     * Display view sublist
+     * 
+     * @param string $suffix    List usffix
+     * @param array  $arguments List arguments
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function displayViewSubList($suffix, array $arguments = array())
+    {
+        $class = preg_replace('/^.+\\\View\\\Model\\\/Ss', '', get_called_class());
+        $class = str_replace('\\', '.', $class);
+        if (preg_match('/\\\Module\\\(a-z0-9+)\\\(a-z0-9+)\\\View\\\Model\\\/Sis', get_called_class(), $match)) {
+            $class = $match[1] . '.' . $match[2] . '.' . $class;
+        }
+        $class = strtolower($class);
+        
+        $list = 'crud.' . $class . '.' . $suffix;
+
+        $arguments = $this->assembleViewSubListArguments($suffix, $arguments);
+
+        $this->displayViewListContent($list, $arguments);
+    }
+
+    /**
+     * Assemble biew sublist arguments 
+     * 
+     * @param string $suffix    List suffix
+     * @param array  $arguments Arguments
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function assembleViewSubListArguments($suffix, array $arguments)
+    {
+        $arguments['model'] = $this;
+        $arguments['useBodyTemplate'] = false;
+
+        return $arguments;
+    }
+
+    /**
+     * Get item class 
+     * 
+     * @param integer                          $index  Item index
+     * @param integer                          $length items list length
+     * @param \XLite\View\FormField\AFormField $field  Current item
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function getItemClass($index, $length, \XLite\View\FormField\AFormField $field)
+    {
+        $classes = preg_grep('/.+/Ss', array_map('trim', explode(' ', $field->getWrapperClass())));
+
+        if (0 === $index % 2) {
+            $classes[] = 'even';
+        }
+
+        if (1 === $index) {
+            $classes[] = 'first';
+        }
+
+        if ($length == $index) {
+            $classes[] = 'last';
+        }
+
+        return implode(' ', $classes);
     }
 }

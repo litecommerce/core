@@ -23,12 +23,12 @@
     <li class="button">
       <widget
         class="\XLite\View\Button\Regular"
-        label="Install anyway"
+        label="{t(#Install anyway#)}"
         action="install_addon_force" />
     </li>
     <li class="or">{t(#or#)}</li>
     <li class="button">
-      <widget class="\XLite\View\Button\Submit" label="Update modules" />
+      <widget class="\XLite\View\Button\Submit" label="{t(#Update modules#)}" />
     </li>
   </ul>
 

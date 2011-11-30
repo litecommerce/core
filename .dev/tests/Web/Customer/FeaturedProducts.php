@@ -26,6 +26,7 @@
  *
  * @use product
  * @use featured_products
+ * @use category
  */
 
 require_once __DIR__ . '/ACustomer.php';

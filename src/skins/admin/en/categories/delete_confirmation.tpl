@@ -59,8 +59,8 @@
       <td colspan="3">
         {t(#Are you sure you want to continue?#)}
         <br />
-        <widget class="\XLite\View\Button\Submit" label="Yes" style="" />&nbsp;&nbsp;
-        <widget class="\XLite\View\Button\Regular" label="No" style="back-button" jsCode="history.go(-1);" />
+        <widget class="\XLite\View\Button\Submit" label="{t(#Yes#)}" style="" />&nbsp;&nbsp;
+        <widget class="\XLite\View\Button\Regular" label="{t(#No#)}" style="back-button" jsCode="history.go(-1);" />
       </td>
     </tr>
 

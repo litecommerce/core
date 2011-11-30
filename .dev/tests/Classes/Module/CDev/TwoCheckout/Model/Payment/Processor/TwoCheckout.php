@@ -72,15 +72,6 @@ class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout ex
         $sid = \XLite\Core\Session::getInstance()->getID();
         $amount = $t->getValue();
 
-        $urla = \XLite::getInstance()->getShopURL('admin.php?target=payment_return&amp;txnId='.$tid.'&amp;txn_id_name=txnId');
-        $urla = str_replace('&xid', '&amp;xid', $urla);
-
-        $urld = \XLite::getInstance()->getShopURL('admin.php?target=payment_return&amp;cancel=1&amp;txn_id_name=txnId&amp;txnId=' . $tid);
-        $urld = str_replace('&xid', '&amp;xid', $urld);
-
-        $urlc = \XLite::getInstance()->getShopURL('admin.php?target=callback&amp;txnId='.$tid.'&amp;txn_id_name=txnId');
-        $urlc = str_replace('&xid', '&amp;xid', $urlc);
-
         $etalon = <<<HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
@@ -92,8 +83,8 @@ class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout ex
     <fieldset style="display: none;">
       <input type="hidden" name="sid" value="260852" />
       <input type="hidden" name="total" value="19.99" />
-      <input type="hidden" name="cart_order_id" value="3" />
-      <input type="hidden" name="merchant_order_id" value="4" />
+      <input type="hidden" name="cart_order_id" value="{$tid}" />
+      <input type="hidden" name="merchant_order_id" value="{$oid}" />
       <input type="hidden" name="pay_method" value="CC" />
       <input type="hidden" name="lang" value="" />
       <input type="hidden" name="skip_landing" value="1" />

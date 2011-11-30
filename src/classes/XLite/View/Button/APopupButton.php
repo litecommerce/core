@@ -83,9 +83,8 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
-        // popup button is using several specific popup JS
-        $list['js'][] = 'js/core.popup.js';
-        $list['js'][] = 'js/core.popup_button.js';
+        $list[static::RESOURCE_JS][] = 'js/core.popup.js';
+        $list[static::RESOURCE_JS][] = 'js/core.popup_button.js';
 
         return $list;
     }

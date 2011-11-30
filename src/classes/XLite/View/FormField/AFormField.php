@@ -38,7 +38,6 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * Widget param names
      */
-
     const PARAM_VALUE      = 'value';
     const PARAM_REQUIRED   = 'required';
     const PARAM_ATTRIBUTES = 'attributes';
@@ -46,6 +45,7 @@ abstract class AFormField extends \XLite\View\AView
     const PARAM_ID         = 'fieldId';
     const PARAM_LABEL      = 'label';
     const PARAM_COMMENT    = 'comment';
+    const PARAM_HELP       = 'help';
     const PARAM_FIELD_ONLY = 'fieldOnly';
     const PARAM_WRAPPER_CLASS = 'wrapperClass';
 
@@ -54,7 +54,6 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * Available field types
      */
-
     const FIELD_TYPE_LABEL     = 'label';
     const FIELD_TYPE_TEXT      = 'text';
     const FIELD_TYPE_PASSWORD  = 'password';
@@ -63,7 +62,6 @@ abstract class AFormField extends \XLite\View\AView
     const FIELD_TYPE_RADIO     = 'radio';
     const FIELD_TYPE_TEXTAREA  = 'textarea';
     const FIELD_TYPE_SEPARATOR = 'separator';
-
 
     /**
      * name
@@ -92,6 +90,14 @@ abstract class AFormField extends \XLite\View\AView
      */
     protected $isAllowedForCustomer = true;
 
+    /**
+     * Error message 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.13
+     */
+    protected $errorMessage;
 
     /**
      * Return field type
@@ -102,7 +108,6 @@ abstract class AFormField extends \XLite\View\AView
      */
     abstract public function getFieldType();
 
-
     /**
      * Return field template
      *
@@ -111,7 +116,6 @@ abstract class AFormField extends \XLite\View\AView
      * @since  1.0.0
      */
     abstract protected function getFieldTemplate();
-
 
     /**
      * Return field name
@@ -138,7 +142,7 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
-     * setValue
+     * Set value
      *
      * @param mixed $value Value to set
      *
@@ -184,7 +188,9 @@ abstract class AFormField extends \XLite\View\AView
      */
     public function validate()
     {
-        return array($this->getValidityFlag(), $this->getValidityFlag() ? null : $this->getRequiredFieldErrorMessage());
+        $this->setValue($this->sanitize());
+
+        return array($this->getValidityFlag(), $this->getValidityFlag() ? null : $this->errorMessage);
     }
 
     /**
@@ -218,6 +224,19 @@ abstract class AFormField extends \XLite\View\AView
         };
 
         parent::__construct($params);
+    }
+
+    /**
+     * Register CSS class to use for wrapper block (SPAN) of input field.
+     * It is usable to make unique changes of the field.
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    public function getWrapperClass()
+    {
+        return $this->getParam(self::PARAM_WRAPPER_CLASS);
     }
 
 
@@ -258,7 +277,7 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
-     * getValidityFlag
+     * Get validity flag (and run field validation procedire)
      *
      * @return boolean
      * @see    ____func_see____
@@ -271,6 +290,18 @@ abstract class AFormField extends \XLite\View\AView
         }
 
         return $this->validityFlag;
+    }
+
+    /**
+     * Sanitize value
+     * 
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function sanitize()
+    {
+       return $this->getValue(); 
     }
 
     /**
@@ -305,7 +336,45 @@ abstract class AFormField extends \XLite\View\AView
             }
         }
 
+        if (!isset($attrs['class'])) {
+            $attrs['class'] = '';
+        }
+        $classes = preg_grep('/.+/S', array_map('trim', explode(' ', $attrs['class'])));
+        $classes = $this->assembleClasses($classes);
+        $attrs['class'] = implode(' ', $classes);
+
         return $attrs;
+    }
+
+    /**
+     * Assemble classes 
+     * 
+     * @param array $classes Classes
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function assembleClasses(array $classes)
+    {
+        $validationRules = $this->assembleValidationRules();
+        if ($validationRules) {
+            $classes[] = 'validate[' . implode(',', $validationRules) . ']';
+        }
+
+        return $classes;
+    }
+
+    /**
+     * Assemble validation rules 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function assembleValidationRules()
+    {
+        return $this->isRequired() ? array('required') : array();
     }
 
     /**
@@ -417,7 +486,7 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
-     * getDefaultAttributes
+     * Get default attributes
      *
      * @return array
      * @see    ____func_see____
@@ -458,8 +527,9 @@ abstract class AFormField extends \XLite\View\AView
             self::PARAM_LABEL      => new \XLite\Model\WidgetParam\String('Label', $this->getDefaultLabel()),
             self::PARAM_REQUIRED   => new \XLite\Model\WidgetParam\Bool('Required', false),
             self::PARAM_COMMENT    => new \XLite\Model\WidgetParam\String('Comment', null),
+            self::PARAM_HELP       => new \XLite\Model\WidgetParam\String('Help', null),
             self::PARAM_ATTRIBUTES => new \XLite\Model\WidgetParam\Collection('Attributes', $this->getDefaultAttributes()),
-            self::PARAM_WRAPPER_CLASS => new \XLite\Model\WidgetParam\String('Wrapper class', 'input'),
+            self::PARAM_WRAPPER_CLASS => new \XLite\Model\WidgetParam\String('Wrapper class', $this->getDefaultWrapperClass()),
 
             self::PARAM_IS_ALLOWED_FOR_CUSTOMER => new \XLite\Model\WidgetParam\Bool(
                 'Is allowed for customer',
@@ -485,7 +555,7 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
-     * checkFieldValidity
+     * Check field validity
      *
      * @return boolean
      * @see    ____func_see____
@@ -493,11 +563,19 @@ abstract class AFormField extends \XLite\View\AView
      */
     protected function checkFieldValidity()
     {
-        return !$this->isRequired() || $this->checkFieldValue();
+        $result = true;
+        $this->errorMessage = null;
+
+        if ($this->isRequired() && !$this->checkFieldValue()) {
+            $this->errorMessage = $this->getRequiredFieldErrorMessage();
+            $result = false;
+        }
+
+        return $result;;
     }
 
     /**
-     * getRequiredFieldErrorMessage
+     * Get required field error message
      *
      * @return string
      * @see    ____func_see____
@@ -505,7 +583,7 @@ abstract class AFormField extends \XLite\View\AView
      */
     protected function getRequiredFieldErrorMessage()
     {
-        return 'The "' . $this->getLabel() . '" field is empty';
+        return \XLite\Core\Translation::lbl('The X field is empty', array('name' => $this->getLabel()));
     }
 
     /**
@@ -548,15 +626,17 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
-     * Register CSS class to use for wrapper block (SPAN) of input field.
-     * It is usable to make unique changes of the field.
-     *
+     * Get default wrapper class 
+     * 
      * @return string
      * @see    ____func_see____
-     * @since  1.0.1
+     * @since  1.0.13
      */
-    protected function getWrapperClass()
+    protected function getDefaultWrapperClass()
     {
-        return $this->getParam(self::PARAM_WRAPPER_CLASS);
+        $suffix = preg_replace('/^.+\\\(?:Module\\\([a-zA-Z0-9]+\\\[a-zA-Z0-9]+\\\))?View\\\FormField\\\(.+)$/Ss', '$1$2', get_called_class());
+        $suffix = str_replace('\\', '-', strtolower($suffix));
+
+        return 'input ' . $suffix;
     }
 }

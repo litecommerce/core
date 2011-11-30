@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<span class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;The value must be in range {min}-{max}.</span>
+<span class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;{t(#The value must be in range#)} {min}-{max}.</span>

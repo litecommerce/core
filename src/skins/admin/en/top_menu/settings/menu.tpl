@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="menus", weight="50")
  *}
-<widget class="\XLite\View\TopMenu\Node" list="settings" title="Settings" className="hl" linkTarget="settings" />
+<widget class="\XLite\View\TopMenu\Node" list="settings" title="{t(#Settings#)}" className="hl" linkTarget="settings" />

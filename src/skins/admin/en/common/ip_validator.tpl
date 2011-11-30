@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<span class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;Please, enter a valid IP address</span>
+<span class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;{t(#Please, enter a valid IP address#)}</span>

@@ -12,5 +12,5 @@
  *}
 
 <td class="created table-label">
-{if:profile.added}{formatTime(profile.added):h}{else:}Unknown{end:}
+{if:profile.added}{formatTime(profile.added):h}{else:}{t(#Unknown#)}{end:}
 </td>

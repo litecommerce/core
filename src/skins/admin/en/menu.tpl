@@ -14,33 +14,33 @@
   <td>
 		<table cellspacing="0" cellpadding="3">
         <tr>
-            <widget template="menu_item.tpl" href="admin.php?target=order_list" icon="menu/icon_orders.gif" text="<span class='main-menu-item-header'>Orders</span><br />Manage orders placed at your store">
+            <widget template="menu_item.tpl" href="admin.php?target=order_list" icon="menu/icon_orders.gif" text="<span class='main-menu-item-header'>{t(#Orders#)}</span><br />{t(#Manage orders placed at your store#)}">
             <td style="width:1%;">&nbsp;&nbsp;</td>
-            <widget template="menu_item.tpl" href="admin.php?target=settings" icon="menu/icon_general.gif" text="<span class='main-menu-item-header'>General Settings</span><br />Configure your store">
+            <widget template="menu_item.tpl" href="admin.php?target=settings" icon="menu/icon_general.gif" text="<span class='main-menu-item-header'>{t(#General Settings#)}</span><br />{t(#Configure your store#)}">
         </tr>
         <tr>
             <td colspan="5">&nbsp;</td>
         </tr>
         <tr>
-            <widget template="menu_item.tpl" href="admin.php?target=categories" icon="menu/icon_categories.gif" text="<span class='main-menu-item-header'>Categories</span><br />Setup your online catalog structure">
+            <widget template="menu_item.tpl" href="admin.php?target=categories" icon="menu/icon_categories.gif" text="<span class='main-menu-item-header'>{t(#Categories#)}</span><br />{t(#Setup your online catalog structure#)}">
             <td style="width:1%;">&nbsp;&nbsp;</td>
-            <widget template="menu_item.tpl" href="admin.php?target=orders_stats" icon="menu/icon_statistics.gif" text="<span class='main-menu-item-header'>Statistics</span><br />Review statistics on various aspects of your store's operation">
+            <widget template="menu_item.tpl" href="admin.php?target=orders_stats" icon="menu/icon_statistics.gif" text="<span class='main-menu-item-header'>{t(#Statistics#)}</span><br />{t(#Review statistics on various aspects of your store's operation#)}">
         </tr>
         <tr>
             <td colspan="5">&nbsp;</td>
         </tr>
         <tr>
-            <widget template="menu_item.tpl" href="admin.php?target=product_list" icon="menu/icon_products.gif" text="<span class='main-menu-item-header'>Products</span><br />Manage your product inventory">
+            <widget template="menu_item.tpl" href="admin.php?target=product_list" icon="menu/icon_products.gif" text="<span class='main-menu-item-header'>{t(#Products#)}</span><br />{t(#Manage your product inventory#)}">
             <td style="width:1%;">&nbsp;&nbsp;</td>
-            <widget template="menu_item.tpl" href="admin.php?target=addons_list_installed" icon="menu/icon_modules.gif" text="<span class='main-menu-item-header'>Add-ons</span><br />Expand the functionality of your store by installing and using add-on modules">
+            <widget template="menu_item.tpl" href="admin.php?target=addons_list_installed" icon="menu/icon_modules.gif" text="<span class='main-menu-item-header'>{t(#Add-ons#)}</span><br />{t(#Expand the functionality of your store by installing and using add-on modules#)}">
         </tr>
         <tr>
             <td colspan="5">&nbsp;</td>
         </tr>
         <tr>
-            <widget template="menu_item.tpl" href="admin.php?target=profile_list" icon="menu/icon_users.gif" text="<span class='main-menu-item-header'>Users</span><br />Manage customer and administrator accounts" />
+            <widget template="menu_item.tpl" href="admin.php?target=profile_list" icon="menu/icon_users.gif" text="<span class='main-menu-item-header'>{t(#Users#)}</span><br />{t(#Manage customer and administrator accounts#)}" />
             <td style="width:1%;">&nbsp;&nbsp;</td>
-            <widget template="menu_item.tpl" href="admin.php?target=db_backup" icon="menu/icon_catalog.gif" text="<span class='main-menu-item-header'>Store Maintenance</span><br>Perform backup of your store database" />
+            <widget template="menu_item.tpl" href="admin.php?target=db_backup" icon="menu/icon_catalog.gif" text="<span class='main-menu-item-header'>{t(#Store Maintenance#)}</span><br />{t(#Perform backup of your store database#)}" />
         </tr>
 		</table>
   </td>

@@ -25,38 +25,44 @@
  * @since      1.0.0
  */
 
+/**
+ * XLite_Tests_Core_Session 
+ *
+ * @see   ____class_see____
+ * @since 1.0.13
+ */
 class XLite_Tests_Core_Session extends XLite_Tests_TestCase
 {
+    /**
+     * testConstruct
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     public function testConstruct()
     {
         $session = \XLite\Core\Session::getInstance();
 
-        \XLite\Core\Database::getEM()->clear();
-
-        $s = \XLite\Core\Database::getRepo('XLite\Model\Session')->findOneBySid($session->getID());
-
-        $this->assertNotNull($s, 'check session');
-
-        $this->assertNull($s->aaa, 'check empty value');
-
         $session->aaa = 123;
-        $this->assertTrue(isset($s->aaa), 'check value exists');
-        $this->assertTrue(isset($session->aaa), 'check value exists #2');
-        $this->assertEquals(123, $s->aaa, 'check value');
+        $this->assertTrue(isset($session->aaa), 'check value exists');
+        $this->assertEquals(123, $session->aaa, 'check value');
 
         unset($session->aaa);
+        $this->assertNull($session->aaa, 'check empty value');
 
-        // Second session read this cell early and use cached value
-        $this->assertNotNull($s->aaa, 'check empty value #2');
-
-        // Current session has not removed cell
-        $this->assertNull($session->aaa, 'check empty value #3');
-
-        // Check DEPRACATED methods
+        // Check DEPRECATED methods
         $session->set('aaa', 123);
         $this->assertEquals(123, $session->get('aaa'), 'check value (deprecated)');
     }
 
+    /**
+     * testRestart
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     public function testRestart()
     {
         $session = \XLite\Core\Session::getInstance();
@@ -72,11 +78,25 @@ class XLite_Tests_Core_Session extends XLite_Tests_TestCase
         $this->assertEquals(123, $session->aaa, 'check value #2');
     }
 
+    /**
+     * testGetName
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     public function testGetName()
     {
         $this->assertEquals('xid', \XLite\Core\Session::getInstance()->getName(), 'check argument name');
     }
 
+    /**
+     * testGetID
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     public function testGetID()
     {
         $this->assertTrue(
@@ -85,6 +105,13 @@ class XLite_Tests_Core_Session extends XLite_Tests_TestCase
         );
     }
 
+    /**
+     * testCreateFormId
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
     public function testCreateFormId()
     {
         $session = \XLite\Core\Session::getInstance();

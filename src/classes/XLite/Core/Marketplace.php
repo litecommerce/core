@@ -84,6 +84,8 @@ class Marketplace extends \XLite\Base\Singleton
     const FIELD_LICENSE               = 'license';
     const FIELD_SHOP_ID               = 'shopID';
     const FIELD_SHOP_DOMAIN           = 'shopDomain';
+    const FIELD_ERROR_CODE            = 'error';
+    const FIELD_ERROR_MESSAGE         = 'message';
 
     /**
      * Some predefined TTLs
@@ -96,15 +98,41 @@ class Marketplace extends \XLite\Base\Singleton
      */
     const REGEXP_VERSION  = '/\d+\.?[\w-\.]*/';
     const REGEXP_WORD     = '/\w+/';
+    const REGEXP_NUMBER   = '/\d+/';
     const REGEXP_HASH     = '/\w{32}/';
     const REGEXP_CURRENCY = '/[A-Z]{1,3}/';
     const REGEXP_CLASS    = '/[\w\\\\]+/';
+
+    /**
+     * Error codes
+     */
+    const ERROR_CODE_REFUND = 1030;
 
     /**
      * Dedicated return code for the "performActionWithTTL" method
      */
     const TTL_NOT_EXPIRED = '____TTL_NOT_EXPIRED____';
 
+    /**
+     * Error message
+     *
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 1.0.12
+     */
+    protected $error = null;
+
+    /**
+     * Get last error message from bouncer
+     *
+     * @return mixed
+     * @see    ____var_see____
+     * @since  1.0.12
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
 
     // {{{ "Check for updates" request
 
@@ -127,8 +155,8 @@ class Marketplace extends \XLite\Base\Singleton
     }
 
     /**
-     * Return specific data array for "Check for updates" request 
-     * 
+     * Return specific data array for "Check for updates" request
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.8
@@ -161,7 +189,7 @@ class Marketplace extends \XLite\Base\Singleton
 
     /**
      * Return conditions for search modules for "Check for updates" request
-     * 
+     *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
      * @since  1.0.8
@@ -481,8 +509,8 @@ class Marketplace extends \XLite\Base\Singleton
         $result = true;
 
         foreach ($data as $module) {
-            $result = $result 
-                && is_array($module) 
+            $result = $result
+                && is_array($module)
                 && $this->validateAgainstSchema($module, $this->getSchemaResponseForGetAddonInfoAction());
         }
 
@@ -492,7 +520,7 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * Prepare data for certain response
      *
-     * @param array $data Data recieved from marketplace
+     * @param array $data Data received from marketplace
      *
      * @return array
      * @see    ____func_see____
@@ -836,7 +864,44 @@ class Marketplace extends \XLite\Base\Singleton
         );
     }
 
+    /**
+     * Validate response for error message
+     *
+     * @param array $data Response data
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
+    protected function validateResponseForErrorAction(array $data)
+    {
+        return $this->validateAgainstSchema($data, $this->getSchemaResponseForError());
+    }
+
+    /**
+     * Return response schema for errors
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
+    protected function getSchemaResponseForError()
+    {
+        return array(
+            self::FIELD_ERROR_CODE => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => self::REGEXP_WORD),
+            ),
+            self::FIELD_ERROR_MESSAGE => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => self::REGEXP_WORD),
+            ),
+        );
+    }
+
     // }}}
+
+
 
     // {{{ "Get hosting score" request
 
@@ -919,10 +984,21 @@ class Marketplace extends \XLite\Base\Singleton
         $response = $this->getRequest($action, $data)->sendRequest();
 
         if ($response) {
-            $result = $this->prepareResponse($response, $action);
+
+            $error = $this->checkForErrors($response, $data);
+
+            if ($error) {
+
+                $this->logError($action, $error);
+
+            } else {
+
+                $result = $this->prepareResponse($response, $action);
+            }
 
         } else {
-            $this->logError($action, 'Bouncer general error (response is not recieved)');
+
+            $this->logError($action, 'Bouncer general error (response is not received)');
         }
 
         return $result;
@@ -970,6 +1046,63 @@ class Marketplace extends \XLite\Base\Singleton
     }
 
     /**
+     * Check for response errors
+     *
+     * @param \PEAR2\HTTP\Request\Response $response Response to prepare
+     * @param array                        $data     Request data
+     *
+     * @return string  Error message
+     * @return boolean False if there are no errors
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
+    protected function checkForErrors(\PEAR2\HTTP\Request\Response $response, array $data)
+    {
+        $result = false;
+        $errorBlock = $this->parseJSON($response);
+
+        if (
+            is_array($errorBlock)
+            && $this->validateResponseForErrorAction($errorBlock)
+        ) {
+            $this->doErrorAction($errorBlock, $data);
+
+            $result = 'Error code ('
+                . $errorBlock[self::FIELD_ERROR_CODE] . '): '
+                . $errorBlock[self::FIELD_ERROR_MESSAGE];
+        }
+
+        return $result;
+    }
+
+    /**
+     * Do some actions concerning errors
+     *
+     * @param array $error Error block
+     * @param array $data  Request data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
+    protected function doErrorAction(array $error, array $data)
+    {
+        if (self::ERROR_CODE_REFUND === $error[self::FIELD_ERROR_CODE]) {
+
+            // Refunded Module license key must be removed from shop
+            $key = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey')
+                ->findOneBy(array('keyValue' => $data[self::FIELD_KEY]));
+
+            if ($key) {
+
+                \XLite\Core\Database::getEM()->remove($key);
+
+                \XLite\Core\Database::getEM()->flush();
+            }
+        }
+    }
+
+    /**
      * Prepare the marketplace response
      *
      * @param \PEAR2\HTTP\Request\Response $response Response to prepare
@@ -987,27 +1120,34 @@ class Marketplace extends \XLite\Base\Singleton
         if (200 == $response->code) {
 
             if (isset($response->body)) {
+
                 $result = $this->{'parse' . $method}($response);
 
             } else {
-                $this->logError($action, 'An empty response recieved');
+
+                $this->logError($action, 'An empty response received');
             }
 
         } else {
+
             $this->logError($action, 'Returned the "{{code}}" code', array('code' => $response->code));
         }
 
         if (is_array($result)) {
+
             if ($this->{'validate' . $method}($result)) {
 
                 if (method_exists($this, 'prepare' . $method)) {
+
                     $result = $this->{'prepare' . $method}($result);
                 }
 
-                $this->logInfo($action, 'Valid response recieved', array(), $result);
+                $this->logInfo($action, 'Valid response received', array(), $result);
 
             } else {
+
                 $this->logError($action, 'Response has an invalid format', array(), $result);
+
                 $result = null;
             }
         }
@@ -1263,7 +1403,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action  Current request action
      * @param string $message Message to log
      * @param array  $args    Message args OPTIONAL
-     * @param array  $data    Data sent/recieved OPTIONAL
+     * @param array  $data    Data sent/received OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -1271,6 +1411,8 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function logError($action, $message, array $args = array(), array $data = array())
     {
+        $this->error = $message;
+
         $this->logCommon('Error', $action, $message, $args, $data);
     }
 
@@ -1280,7 +1422,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action  Current request action
      * @param string $message Message to log
      * @param array  $args    Message args OPTIONAL
-     * @param array  $data    Data sent/recieved OPTIONAL
+     * @param array  $data    Data sent/received OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -1297,7 +1439,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action  Current request action
      * @param string $message Message to log
      * @param array  $args    Message args OPTIONAL
-     * @param array  $data    Data sent/recieved OPTIONAL
+     * @param array  $data    Data sent/received OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -1315,7 +1457,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action  Current request action
      * @param string $message Message to log
      * @param array  $args    Message args OPTIONAL
-     * @param array  $data    Data sent/recieved OPTIONAL
+     * @param array  $data    Data sent/received OPTIONAL
      *
      * @return void
      * @see    ____func_see____

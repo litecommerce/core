@@ -38,14 +38,12 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * Widget param names
      */
-
     const PARAM_SORT_BY      = 'sortBy';
     const PARAM_SORT_ORDER   = 'sortOrder';
 
     /**
      * SQL orderby directions
      */
-
     const SORT_ORDER_ASC  = 'asc';
     const SORT_ORDER_DESC = 'desc';
 
@@ -205,12 +203,7 @@ abstract class AItemsList extends \XLite\View\Container
         $list = parent::getJSFiles();
 
         // Static call of the non-static function
-        $list[] = self::getDir() . '/controller.js';
-
-        // FIXME: implement common controller for this case
-        if (\XLite::isAdminZone()) {
-            $list[] = self::getDir() . '/items_list.js';
-        }
+        $list[] = self::getDir() . '/items_list.js';
 
         return $list;
     }

@@ -32,7 +32,7 @@
 
     <div class="clear"></div>
 
-    <widget class="\XLite\View\Button\Submit" label="Install updates" style="center main-button" />
+    <widget class="\XLite\View\Button\Submit" label="{t(#Install updates#)}" style="center main-button" />
 
   </div>
 

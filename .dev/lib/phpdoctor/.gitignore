@@ -1,7 +1,0 @@
-apidocs
-testdocs
-tests/cases/output
-tests/cases/tmp
-doclets/standard/geshi
-*.komodoproject
-*.komodotools

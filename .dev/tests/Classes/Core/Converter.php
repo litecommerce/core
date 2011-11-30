@@ -15,6 +15,12 @@
  * @since      1.0.3
  */
 
+/**
+ * XLite_Tests_Core_Converter 
+ *
+ * @see   ____class_see____
+ * @since 1.0.13
+ */
 class XLite_Tests_Core_Converter extends XLite_Tests_TestCase
 {
     /**

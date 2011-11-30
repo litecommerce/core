@@ -297,7 +297,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getProfileByCMSId($cmsUserId)
+    protected function getProfileByCMSId($cmsUserId)
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Profile')
             ->findOneByCMSId($this->getProfileDBFields($cmsUserId));

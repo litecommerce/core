@@ -387,7 +387,7 @@ class Module extends \XLite\Model\Repo\ARepo
     /**
      * One time in session we update list of marketplace modules
      *
-     * @param array $data Data recieved from marketplace
+     * @param array $data Data received from marketplace
      *
      * @return void
      * @see    ____func_see____
@@ -399,7 +399,7 @@ class Module extends \XLite\Model\Repo\ARepo
         $this->defineDeleteNotInstalledModulesQuery()->execute();
         $this->flushChanges();
 
-        // Save recieved data
+        // Save received data
         $this->insertInBatch($data);
     }
 
