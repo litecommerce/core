@@ -33,7 +33,7 @@ namespace XLite\Model;
  * @see   ____class_see____
  * @since 1.0.14
  *
- * @Entity
+ * @Entity (repositoryClass="\XLite\Model\Repo\Attribute")
  * @Table  (name="attributes",
  *          uniqueConstraints={
  *              @UniqueConstraint (name="internalName", columns={"name"})

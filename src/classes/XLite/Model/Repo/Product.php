@@ -41,7 +41,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Allowable search params
      */
-
     const P_SKU               = 'SKU';
     const P_CATEGORY_ID       = 'categoryId';
     const P_SUBSTRING         = 'substring';
