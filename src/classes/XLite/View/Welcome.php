@@ -52,7 +52,6 @@ class Welcome extends \XLite\View\AView
         return $result;
     }
 
-
     /**
      * Return widget default template
      *

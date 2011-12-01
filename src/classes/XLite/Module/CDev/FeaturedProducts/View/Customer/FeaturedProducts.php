@@ -49,6 +49,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
 
     /**
      * Initialize widget (set attributes)
+     * :FIXME: move to "defineWidgetParams()"
      *
      * @param array $params Widget params
      *

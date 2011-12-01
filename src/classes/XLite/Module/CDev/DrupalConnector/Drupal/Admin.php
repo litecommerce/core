@@ -201,6 +201,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     {
         // Get settings from LC
         $widget = $this->getHandler()->getWidget($class);
+
         if (isset($block['options']) && is_array($block['options'])) {
             $widget->setWidgetParams($block['options']);
         }
@@ -208,7 +209,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         // To prevent some unpredictable errors related to backslashes in element IDs
         $key = $this->getBlockName($class);
         
-        if ($formInput && isset($formInput['lc_widget']) && isset($formInput['lc_widget'][$key])) {
+        if (isset($formInput['lc_widget'][$key])) {
             $widget->setWidgetParams($formInput['lc_widget'][$key]);
         }
 

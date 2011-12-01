@@ -38,13 +38,11 @@ abstract class Handler extends \XLite\Base
     /**
      * Common handler params
      */
-
     const PARAM_IS_EXPORTED = 'isExported';
 
     /**
      * Controller-specific params
      */
-
     const PARAM_SILENT       = 'silent';
     const PARAM_DUMP_STARTED = 'dumpStarted';
 
@@ -54,7 +52,6 @@ abstract class Handler extends \XLite\Base
     const PARAM_AJAX_TARGET = 'target';
     const PARAM_AJAX_WIDGET = 'widget';
 
-
     /**
      * Widget params
      *
@@ -63,7 +60,6 @@ abstract class Handler extends \XLite\Base
      * @since 1.0.0
      */
     protected $widgetParams;
-
 
     /**
      * Define and set handler attributes; initialize handler
@@ -78,7 +74,9 @@ abstract class Handler extends \XLite\Base
     {
         parent::__construct();
 
-        $this->setWidgetParams($params);
+        if (!empty($params)) {
+            $this->setWidgetParams($params);
+        }
     }
 
     /**

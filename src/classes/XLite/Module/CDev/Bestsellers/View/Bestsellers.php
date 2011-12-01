@@ -101,6 +101,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
     /**
      * Initialize widget (set attributes)
+     * :FIXME: move to "defineWidgetParams()"
      *
      * @param array $params Widget params
      *

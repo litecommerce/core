@@ -63,12 +63,8 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {
-        return array(
-            $path,
-            $args
-        );
+        return array($path, $args);
     }
-
 
     /**
      * Return Viewer object
@@ -80,16 +76,12 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
     public function getViewer()
     {
         $viewer = parent::getViewer();
+        $confId = \XLite\Core\Request::getInstance()->widgetConfId;
 
-        if (
-            $this->isAJAXViewer()
-            && \XLite\Core\Request::getInstance()->widgetConfId
-            && \XLite\Module\CDev\DrupalConnector\Handler::isCMSStarted()
-        ) {
-            $data = \XLite\Module\CDev\DrupalConnector\Drupal\Model::getInstance()
-                ->getBlock(\XLite\Core\Request::getInstance()->widgetConfId);
+        if (\XLite\Module\CDev\DrupalConnector\Handler::isCMSStarted() && $this->isAJAXViewer() && $confId) {
+            $data = \XLite\Module\CDev\DrupalConnector\Drupal\Model::getInstance()->getBlock($confId);
 
-            if ($data && isset($data['options']) && is_array($data['options'])) {
+            if (!empty($data['options'])) {
                 $viewer->setWidgetParams($data['options']);
             }
         }

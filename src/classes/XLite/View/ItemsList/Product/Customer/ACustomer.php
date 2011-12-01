@@ -203,6 +203,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
     /**
      * Initialize widget (set attributes)
+     * :FIXME: move to "defineWidgetParams()"
      *
      * @param array $params Widget params
      *

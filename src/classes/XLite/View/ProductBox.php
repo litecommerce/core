@@ -42,7 +42,6 @@ class ProductBox extends \XLite\View\SideBarBox
     const PARAM_ICON_MAX_WIDTH  = 'iconWidth';
     const PARAM_ICON_MAX_HEIGHT = 'iconHeight';
 
-
     /**
      * Get a list of CSS files required to display the widget properly
      *
@@ -53,7 +52,6 @@ class ProductBox extends \XLite\View\SideBarBox
     public function getCSSFiles()
     {
         $result = parent::getCSSFiles();
-
         $result[] = 'items_list/product/products_list.css';
         $result[] = 'product_box/style.css';
 
@@ -70,7 +68,6 @@ class ProductBox extends \XLite\View\SideBarBox
     public function getJSFiles()
     {
         $result = parent::getJSFiles();
-
         $result[] = 'product_box/controller.js';
 
         return $result;

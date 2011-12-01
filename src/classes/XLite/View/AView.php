@@ -229,7 +229,9 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         // Set param values
-        $widget->setWidgetParams($params);
+        if (!empty($params)) {
+            $widget->setWidgetParams($params);
+        }
 
         // Initialize
         $widget->init();
@@ -1195,7 +1197,7 @@ abstract class AView extends \XLite\Core\Handler
             $this->viewLists[$list] = $this->defineViewList($list);
         }
 
-        if ($arguments) {
+        if (!empty($arguments)) {
             foreach ($this->viewLists[$list] as $widget) {
                 $widget->setWidgetParams($arguments);
             }

@@ -238,6 +238,18 @@ abstract class AEntity
     }
 
     /**
+     * Return primary key
+     *
+     * @return integer|string
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    public function getPrimaryKey()
+    {
+        return $this->{'get' . $this->getMethodName($this->getRepository()->getPrimaryKeyField())}();
+    }
+
+    /**
      * Check if entity is persistent
      *
      * @return boolean
@@ -246,7 +258,7 @@ abstract class AEntity
      */
     public function isPersistent()
     {
-        return (bool) $this->{'get' . $this->getMethodName($this->getRepository()->getPrimaryKeyField())}();
+        return (bool) $this->getPrimaryKey();
     }
 
     /**

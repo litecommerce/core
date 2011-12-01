@@ -119,7 +119,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      */
     public function setWidgetParams(array $params)
     {
-        if ($this->checkRequestParams() && !$this->isCloned) {
+        if (!$this->isCloned && $this->checkRequestParams()) {
             $this->setWidgetRequestParamValues($params);
         }
 
