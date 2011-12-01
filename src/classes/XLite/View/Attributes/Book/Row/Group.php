@@ -125,6 +125,18 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
     /**
      * Alias
      *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function getGroupTitle()
+    {
+        return $this->getGroup()->getTitle();
+    }
+
+    /**
+     * Alias
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.14

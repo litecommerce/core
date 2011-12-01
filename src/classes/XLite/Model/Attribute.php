@@ -34,9 +34,13 @@ namespace XLite\Model;
  * @since 1.0.14
  *
  * @Entity
- * @Table  (name="attributes")
+ * @Table  (name="attributes",
+ *          uniqueConstraints={
+ *              @UniqueConstraint (name="internalName", columns={"name"})
+ *          }
+ * )
  */
-class Attribute extends \XLite\Model\AEntity
+class Attribute extends \XLite\Model\Base\I18n
 {
     /**
      * Attribute unique ID
@@ -52,17 +56,6 @@ class Attribute extends \XLite\Model\AEntity
     protected $id;
 
     /**
-     * Group attribute assigned
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.14
-     *
-     * @Column (type="uinteger")
-     */
-    protected $groupId;
-
-    /**
      * Internal attribute name
      *
      * @var   string
@@ -74,17 +67,6 @@ class Attribute extends \XLite\Model\AEntity
     protected $name;
 
     /**
-     * Attribute name visible to customers
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.14
-     *
-     * @Column (type="string", length="256")
-     */
-    protected $title;
-
-    /**
      * Position in list
      *
      * @var   integer
@@ -94,4 +76,16 @@ class Attribute extends \XLite\Model\AEntity
      * @Column (type="integer")
      */
     protected $pos;
+
+    /**
+     * Relation to a group entity
+     *
+     * @var   \XLite\Model\Attribute\Group
+     * @see   ____var_see____
+     * @since 1.0.14
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Attribute\Group", inversedBy="attributes")
+     * @JoinColumn (name="groupId", referencedColumnName="id")
+     */
+    protected $group;
 }

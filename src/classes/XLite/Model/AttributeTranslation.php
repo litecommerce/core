@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -25,51 +25,32 @@
  * @since     1.0.14
  */
 
-namespace XLite\Model\Attribute;
+namespace XLite\Model;
 
 /**
- * Group
+ * Attribute multilingual data
  *
  * @see   ____class_see____
  * @since 1.0.14
  *
  * @Entity
- * @Table  (name="attribute_groups")
+ * @Table  (name="attribute_translations",
+ *          indexes={
+ *               @Index (name="ci", columns={"code","id"}),
+ *               @Index (name="id", columns={"id"})
+ *          }
+ * )
  */
-class Group extends \XLite\Model\Base\I18n
+class AttributeTranslation extends \XLite\Model\Base\Translation
 {
     /**
-     * Group unique ID
+     * Attribute title
      *
-     * @var   integer
+     * @var   string
      * @see   ____var_see____
      * @since 1.0.14
      *
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="uinteger")
+     * @Column (type="string", length="255")
      */
-    protected $id;
-
-    /**
-     * Position in list
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.14
-     *
-     * @Column (type="integer")
-     */
-    protected $pos;
-
-    /**
-     * Group attribute assigned
-     *
-     * @var   \Doctrine\ORM\PersistentCollection
-     * @see   ____var_see____
-     * @since 1.0.14
-     *
-     * @OneToMany  (targetEntity="XLite\Model\Attribute", mappedBy="group", cascade={"all"})
-     */
-    protected $attributes;
+    protected $title;
 }

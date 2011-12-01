@@ -10,7 +10,7 @@
  * @since     1.0.14
  *}
 
------------Group--------------
+<div class="group-title">{getGroupTitle():h}</div>
 
 <div class="group-attributes">
   <widget class="\XLite\View\DraggableRows" entries="{getAttributeWidgets()}" />

@@ -12,4 +12,4 @@
  * @ListChild (list="draggableRows.row", weight="400")
  *}
 
------------{displayInternalWidget()}-----------
+{displayInternalWidget()}

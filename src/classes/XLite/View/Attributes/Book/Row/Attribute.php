@@ -117,4 +117,16 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     {
         return $this->getParam(static::PARAM_ATTRIBUTE);
     }
+
+    /**
+     * Alias
+     *
+     * @return \XLite\Model\Attribute
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function getAttributeTitle()
+    {
+        return $this->getAttribute()->getTitle();
+    }
 }

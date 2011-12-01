@@ -53,6 +53,36 @@ class Book extends \XLite\View\Dialog
     }
 
     /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/style.css';
+
+        return $list;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = $this->getDir() . '/controller.js';
+
+        return $list;
+    }
+
+    /**
      * Return templates directory name
      *
      * @return string
@@ -61,7 +91,7 @@ class Book extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'attributes';
+        return 'attributes/book';
     }
 
     /**
