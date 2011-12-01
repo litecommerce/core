@@ -143,7 +143,7 @@ $availableBrowsersList = array(
             'host'    => SELENIUM_SERVER,
             'port'    => 4444,
             'timeout' => SELENIUM_TTL,
-            'sleep'   => 1,
+            'sleep'   => 0,
         ),
 /*
         array(
@@ -170,7 +170,7 @@ $availableBrowsersList = array(
 */
 );
 
-
+define('SELENIUM_CLIENTS_COUNT', _clients_count_);
 // Use constant to pass browsers list to the test core as PHPUnit rewrites global variables
 define('XLITE_TEST_BROWSERS_LIST', serialize($availableBrowsersList));
 
