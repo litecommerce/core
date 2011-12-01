@@ -69,7 +69,7 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
             $result = $info[\XLite\Core\Marketplace::FIELD_LICENSE];
 
         } else {
-            $this->showError(__FUNCTION__, 'License is not recieved');
+            $this->showError(__FUNCTION__, 'License is not received');
         }
 
         // Since this action is performed in popup

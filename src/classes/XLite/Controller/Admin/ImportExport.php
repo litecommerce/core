@@ -1087,6 +1087,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
 
                 // Detect category
                 $parent = $root;
+                $category = null;
                 foreach (explode('/', $path) as $name) {
                     $name = trim($name);
                     $category = null;
@@ -1101,6 +1102,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                         $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->insert(
                             array('parent_id' => $parent->getCategoryId(), 'name' => $name)
                         );
+                        $parent->addChildren($category);
                     }
 
                     $parent = $category;

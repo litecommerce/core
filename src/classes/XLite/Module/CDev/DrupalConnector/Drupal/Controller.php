@@ -6,10 +6,10 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the Open Software License (OSL 3.0)
+ * This source file is subject to the GNU General Pubic License (GPL 2.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
+ * http://www.gnu.org/licenses/gpl-2.0.html
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
@@ -19,7 +19,7 @@
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
  * @since     1.0.0
@@ -52,15 +52,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @since 1.0.0
      */
     protected $arePreinitialized = false;
-
-    /**
-     * Unique suffix to resource filenames
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.13
-     */
-    protected $resourcesBaseUID;
 
     /**
      * Resources weight counter
@@ -395,6 +386,8 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function getResourceInfoCommon(array $file)
     {
+        $this->resourcesCounter++;
+
         return array(
             'type'     => 'file',
             'basename' => $this->getResourceBasename($file['file']),
@@ -463,33 +456,21 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function getResourceBasename($file)
     {
-        return preg_replace('/\.(css|js)$/Ss', '.' . $this->getUniqueID() . '.$1', basename($file));
+        return preg_replace('/\.(css|js)$/Ss', '.' . $this->getUniqueID($file) . '.$1', basename($file));
     }
 
     /**
      * Return unique identifier
      *
+     * @param string $file Resource file path
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.13
      */
-    protected function getUniqueID()
+    protected function getUniqueID($file)
     {
-        return $this->resourcesBaseUID . ++$this->resourcesCounter;
-    }
-
-    /**
-     * Protected constructor
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function __construct()
-    {
-        parent::__construct();
-
-        $this->resourcesBaseUID = uniqid();
+        return hash('md4', $file);
     }
 
     // }}}

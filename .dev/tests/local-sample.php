@@ -108,7 +108,7 @@ $availableBrowsersList = array(
         ),
  */
         array(
-            'name'    => 'FireFox 5 (Windows)',
+            'name'    => 'FireFox 8 (Windows)',
             'browser' => '*firefox C:\Program Files\Firefox_5\firefox.exe',
             'host'    => SELENIUM_SERVER,
             'port'    => 4444,

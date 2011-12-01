@@ -36,6 +36,5 @@ return function()
     }
 
     \XLite\Core\Database::getEM()->flush();
-    \XLite\Core\Database::getCacheDriver()->clear();
-
+    \XLite\Core\Database::getCacheDriver()->deleteAll();
 };
