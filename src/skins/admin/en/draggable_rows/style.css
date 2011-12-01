@@ -13,6 +13,7 @@
 ul.draggable-rows
 {
   width: 748px;
+  display: table-cell;
 }
 
 ul.draggable-rows li.row
@@ -23,8 +24,6 @@ ul.draggable-rows li.row
 
 ul.draggable-rows li.row div.container
 {
-  display: table-cell;
-  vertical-align: middle;
   height: 50px;
 }
 
@@ -44,3 +43,13 @@ ul.draggable-rows li.row div.container div.separator
   height: 20px;
   float: left;
 }
+
+ul.draggable-rows li.row div.container div.delete
+{
+  background: transparent url(../images/icon_trash.png) repeat-y center center;
+  width: 15px;
+  height: 20px;
+  float: right;
+  cursor: pointer;
+}
+

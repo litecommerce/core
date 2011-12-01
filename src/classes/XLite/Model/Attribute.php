@@ -43,6 +43,26 @@ namespace XLite\Model;
 class Attribute extends \XLite\Model\Base\I18n
 {
     /**
+     * Possible attribute types
+     */
+    const TYPE_NUMBER   = 1;
+    const TYPE_TEXT     = 2;
+    const TYPE_SELECTOR = 3;
+
+    /**
+     * Readable type names
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.14
+     */
+    protected static $typeNames = array(
+        self::TYPE_NUMBER   => 'Number',
+        self::TYPE_TEXT     => 'Text',
+        self::TYPE_SELECTOR => 'Selector',
+    );
+
+    /**
      * Attribute unique ID
      *
      * @var   integer
@@ -67,7 +87,18 @@ class Attribute extends \XLite\Model\Base\I18n
     protected $name;
 
     /**
-     * Position in list
+     * Attribute type
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.14
+     *
+     * @Column (type="uinteger")
+     */
+    protected $type = self::TYPE_NUMBER;
+
+    /**
+     * Position in the list
      *
      * @var   integer
      * @see   ____var_see____
@@ -88,4 +119,27 @@ class Attribute extends \XLite\Model\Base\I18n
      * @JoinColumn (name="groupId", referencedColumnName="id")
      */
     protected $group;
+
+    /**
+     * Relation to attribute choices (only for "Selector" type)
+     *
+     * @var   \Doctrine\ORM\PersistentCollection
+     * @see   ____var_see____
+     * @since 1.0.14
+     *
+     * @OneToMany (targetEntity="XLite\Model\Attribute\Choice", mappedBy="attribute", fetch="LAZY", cascade={"all"})
+     */
+    protected $choices;
+
+    /**
+     * Return readable name for the attribute type
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    public function getTypeName()
+    {
+        return \Includes\Utils\ArrayManager::getIndex(static::$typeNames, $this->getType(), true) ?: 'N/A';
+    }
 }

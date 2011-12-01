@@ -61,7 +61,7 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     protected function getDefaultTemplate()
     {
-        return 'attributes/book/row/attribute.tpl';
+        return 'attributes/book/row/attribute/body.tpl';
     }
 
     /**
@@ -74,6 +74,21 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     protected function getRowPosFieldName()
     {
         return 'pos';
+    }
+
+    /**
+     * Get name for data field
+     *
+     * @param string  $field Field name
+     * @param integer $id    Model object ID OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function getNamePostedData($field, $id = null)
+    {
+        return parent::getNamePostedData('attributes', $this->getGroupId(), $this->getRowUniqueId(), $field);
     }
 
     /**
@@ -119,14 +134,50 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     }
 
     /**
+     * Return group ID attribute is assigned to
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function getGroupId()
+    {
+        return ($group = $this->getAttribute()->getGroup()) ? $group->getId() : null;
+    }
+
+    /**
      * Alias
      *
-     * @return \XLite\Model\Attribute
+     * @return string
      * @see    ____func_see____
      * @since  1.0.14
      */
     protected function getAttributeTitle()
     {
         return $this->getAttribute()->getTitle();
+    }
+
+    /**
+     * Alias
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function getAttributeTypeName()
+    {
+        return $this->getAttribute()->getTypeName();
+    }
+
+    /**
+     * Alias
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function getAttributeID()
+    {
+        return $this->getAttribute()->getName();
     }
 }

@@ -62,7 +62,7 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
      */
     protected function getDefaultTemplate()
     {
-        return 'attributes/book/row/group.tpl';
+        return 'attributes/book/row/group/body.tpl';
     }
 
     /**
@@ -144,5 +144,17 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
     protected function getAttributeWidgets()
     {
         return $this->getParam(static::PARAM_ATTRIBUTES);
+    }
+
+    /**
+     * Alias
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function getGroupAttributesNumber()
+    {
+        return count($this->getAttributeWidgets());
     }
 }
