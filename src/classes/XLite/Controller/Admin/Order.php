@@ -45,6 +45,20 @@ class Order extends \XLite\Controller\Admin\AAdmin
     protected $params = array('target', 'order_id', 'page');
 
     /**
+     * Check if current page is accessible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkAccess()
+    {
+        return parent::checkAccess()
+            && \XLite\Core\Request::getInstance()->order_id
+            && \XLite\Core\Database::getRepo('XLite\Model\Order')->find(\XLite\Core\Request::getInstance()->order_id);
+    }
+
+    /**
      * Common method to determine current location
      *
      * @return string

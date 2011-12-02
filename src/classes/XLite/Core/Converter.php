@@ -36,6 +36,14 @@ namespace XLite\Core;
 class Converter extends \XLite\Base\Singleton
 {
     /**
+     * Sizes 
+     */
+    const GIGABYTE = 1073741824;
+    const MEGABYTE = 1048576;
+    const KILOBYTE = 1024;
+
+
+    /**
      * Method name translation records
      *
      * @var   array
@@ -454,6 +462,71 @@ class Converter extends \XLite\Base\Singleton
         list($size, $suffix) = \Includes\Utils\Converter::formatFileSize($size);
 
         return $size . ' ' . ($suffix ? static::t($suffix) : '');
+    }
+
+    /**
+     * Convert short size (2M, 8K) to human readable
+     * 
+     * @param string $size Shortsize
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    public static function convertShortSizeToHumanReadable($size)
+    {
+        $size = static::convertShortSize($size);
+
+        if ($size > static::GIGABYTE) {
+            $label = 'X GB';
+            $size = round($size / static::GIGABYTE, 3);
+
+        } elseif ($size > static::MEGABYTE) {
+            $label = 'X MB';
+            $size = round($size / static::MEGABYTE, 3);
+
+        } elseif ($size > static::KILOBYTE) {
+            $label = 'X kB';
+            $size = round($size / static::KILOBYTE, 3);
+
+        } else {
+            $label = 'X bytes';
+        }
+
+        return \XLite\Core\Translation::lbl($label, array('value' => $size));
+    }
+
+    /**
+     * Convert short size (2M, 8K) to normal size (in bytes)
+     * 
+     * @param string $size Short size
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    public static function convertShortSize($size)
+    {
+        if (preg_match('/^(\d+)([a-z])$/Sis', $size, $match)) {
+            $size = intval($match[1]);
+            switch ($match[2]) {
+                case 'G':
+                    $size *= 1024;
+
+                case 'M':
+                    $size *= 1024;
+
+                case 'K':
+                    $size *= 1024;
+
+                default:
+            }
+
+        } else {
+            $size = intval($size);
+        }
+
+        return $size;
     }
 
     // {{{ Time
