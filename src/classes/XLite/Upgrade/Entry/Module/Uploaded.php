@@ -155,6 +155,18 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Return module description
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    public function getDescription()
+    {
+        return $this->getMetadata('Description');
+    }
+
+    /**
      * Check if module is enabled
      *
      * @return boolean
@@ -320,7 +332,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
 
     /**
      * Find installed module
-     * 
+     *
      * @return \XLite\Model\Module
      * @see    ____func_see____
      * @since  1.0.0
@@ -331,8 +343,8 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
-     * Return common module data 
-     * 
+     * Return common module data
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -367,6 +379,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         $module->setPackSize($this->getPackSize());
         $module->setModuleName($this->getName());
         $module->setAuthorName($this->getAuthor());
+        $module->setDescription($this->getDescription());
         $module->setIconURL($this->getIconURL());
         $module->setDependencies($this->getDependencies());
 
