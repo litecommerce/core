@@ -61,7 +61,7 @@ if (1 === TEST_DEPLOYMENT_MODE) {
 }
 
 // Settings for screenshots capturing (on failed tests)
-define('SELENIUM_SCREENSHOTS_PATH', '/var/www/localhost/htdocs/selenium-screenshots');
+define('SELENIUM_SCREENSHOTS_PATH', '/var/www/selenium-screenshots');
 define('SELENIUM_SCREENSHOTS_URL', 'http://_grid_hub_/selenium-screenshots');
 
 // Selenium server host
@@ -170,7 +170,6 @@ $availableBrowsersList = array(
 */
 );
 
-define('SELENIUM_CLIENTS_COUNT', _clients_count_);
 // Use constant to pass browsers list to the test core as PHPUnit rewrites global variables
 define('XLITE_TEST_BROWSERS_LIST', serialize($availableBrowsersList));
 
