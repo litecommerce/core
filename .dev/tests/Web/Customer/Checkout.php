@@ -62,7 +62,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
-            10000,
+            100000,
             'check content reloading'
         );
 
@@ -164,7 +164,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         );
         $this->waitForLocalCondition(
             'jQuery("select#shipping_address_state").length == 1',
-            3000,
+            30000,
             'check state selector'
         );
 
@@ -180,14 +180,14 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery("ul.shipping-rates li input").length > 0',
-            15000,
+            150000,
             'check shipping rates'
         );
         $this->assertJqueryNotPresent('ul.shipping-rates li input:checked');
 
         $this->waitForLocalCondition(
             'jQuery(".current p.address-not-completed:visible").length == 1',
-            3000,
+            30000,
             'check address-not-completed node show'
         );
 
@@ -211,7 +211,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".current p.address-not-completed:visible").length == 0',
-            3000,
+            30000,
             'check address-not-completed note hide'
         );
 
@@ -228,7 +228,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
-            3000,
+            30000,
             'check enabled main button'
         );
         $this->assertJqueryNotPresent('.current p.email-not-defined:visible', 'email-not-defined is invisible');
@@ -237,7 +237,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".payment-step.current").length == 1',
-            10000,
+            100000,
             'check swicth to next step'
         );
     }
@@ -257,7 +257,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
-            3000,
+            30000,
             'check enabled main button'
         );
 
@@ -268,7 +268,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery("#billing_address_name").length > 0',
-            10000,
+            100000,
             'check empty billing address form load'
         );
         $this->assertElementNotPresent('css=.current .button-row button.disabled', 'same address disabled and address form loaded - main button is enabled');
@@ -279,7 +279,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         );
         $this->waitForLocalCondition(
             'jQuery("select#billing_address_state").length == 1',
-            3000,
+            30000,
             'check state selector'
         );
 
@@ -310,7 +310,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
-            3000,
+            30000,
             'check main button enabled after fill billing address'
         );
 
@@ -319,7 +319,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".review-step.current").length == 1',
-            10000,
+            100000,
             'check swicth to next step'
         );
 
