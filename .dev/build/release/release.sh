@@ -784,8 +784,6 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 			[ -d ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce ] && cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce/lc_logo.png
 			# Copying logo with version number to the theme is temporary disabled
 			# cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes/lc3/logo.png
-		else
-			# echo "Warning! Logo image file $LOGO_IMAGE not found"
 		fi
 
 		sed_cmd="$SED_EXT 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info"
@@ -864,7 +862,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 		cd modules/lc_connector/${LITECOMMERCE_DIRNAME}
 
-		if [ "$TEST_MODE" = "" ]; then
+		if [ "${TEST_MODE}" = "" -a "${DEMO_VERSION}" = "" ]; then
 			# Add DrupalConnector module
 			tar -xf ${OUTPUT_DIR}/_drupal-connector-tmp.tar
 			rm ${OUTPUT_DIR}/_drupal-connector-tmp.tar
@@ -874,7 +872,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 		# Pack Drupal+LC distributive
 		tar -czf drupal-lc3-${VERSION}.tgz ${DRUPAL_DIRNAME}
-		zip -rq drupal-lc3-${VERSION}.zip ${DRUPAL_DIRNAME}
+		[ "${DEMO_VERSION}" = "" ] && zip -rq drupal-lc3-${VERSION}.zip ${DRUPAL_DIRNAME}
 
 
 		echo -e "  + Drupal+LiteCommerce v.$VERSION distributive is completed\n"

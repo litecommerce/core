@@ -1221,6 +1221,23 @@ table.data-table td.table-id-column
   border: solid 1px #e5e5e5;
 }
 
+.category-position-text {
+  z-index: 1000;
+  color: #808080;
+  margin-left: -65px;
+}
+
+.category-position {
+  margin-right: 35px;
+}
+
+.category-position input {
+  z-index: 500;
+  width: 30px;
+  text-align: right;
+  padding-left: 35px;
+}
+
 /* Product modify form */
 
 td.name-attribute

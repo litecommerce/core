@@ -69,7 +69,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
-            10000,
+            100000,
             'check content reloading'
         );
 

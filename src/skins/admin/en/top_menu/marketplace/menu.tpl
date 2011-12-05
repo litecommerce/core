@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Rebuild cache link
+ * Marketplace menu
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="menu.addons", weight="20")
+ * @ListChild (list="menus", weight="80")
  *}
 
-<widget class="\XLite\View\TopMenu\Node" title="{t(#Module Marketplace#)}" linkTarget="addons_list_marketplace" />
+<widget class="\XLite\View\TopMenu\Node" title="{t(#Marketplace#)}" className="addons" linkTarget="addons_list_marketplace" />

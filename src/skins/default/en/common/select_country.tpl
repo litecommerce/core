@@ -19,8 +19,7 @@
   <select name="{field}"{if:onchange} onchange="{onchange}"{end:}{if:fieldId} id="{fieldId}"{end:} class="{getParam(#className#)} field-country">
     <option IF="!getSelectedValue()" value="">{t(#Select one...#)}</option>
     {foreach:getCountries(),v}
-      <option IF="{isSelectedCountry(v.code)}" value="{v.code:r}" selected="selected">{v.country}</option>
-      <option IF="{!isSelectedCountry(v.code)}" value="{v.code:r}">{v.country}</option>
+      <option value="{v.code:r}" selected="{isSelectedCountry(v.code)}">{v.country}</option>
     {end:}
   </select>
 
