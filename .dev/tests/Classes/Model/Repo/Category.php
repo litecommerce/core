@@ -121,7 +121,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
 
         $this->assertEquals(
             'SELECT c, translations FROM XLite\Model\Category c LEFT JOIN c.translations'
-            . ' translations WHERE c.category_id <> :rootId ORDER BY c.lpos ASC',
+            . ' translations WHERE c.category_id <> :rootId ORDER BY c.pos ASC, c.lpos ASC',
             $qb->getDQL(),
             'Generated a wrong DQL'
         );
