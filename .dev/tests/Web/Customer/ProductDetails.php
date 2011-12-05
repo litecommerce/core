@@ -442,7 +442,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
-            10000,
+            100000,
             'check content reloading'
         );
         $this->assertElementPresent(
@@ -453,7 +453,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         // This assertion requires the minicart widget to be visible on the page
         $this->waitForLocalCondition(
             'jQuery(".minicart-items-number").html() == "1"',
-            10000,
+            100000,
             'check quantity'
         );
 
@@ -467,7 +467,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".minicart-items-number").html() == "2"',
-            10000,
+            100000,
             'check content reloading #2'
         );
 
@@ -480,7 +480,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".minicart-items-number").html() == "5"',
-            30000,
+            300000,
             'check quantity'
         );
 
