@@ -10,4 +10,5 @@
  * @since     1.0.0
  *}
 
-<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like href="{getCurrentURL():u}" show_faces="true" width="{getWidth()}" font=""></fb:like>
+<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+<fb:like href="{getCurrentURL():u}" show_faces="true" width="{getWidth()}" font=""></fb:like>

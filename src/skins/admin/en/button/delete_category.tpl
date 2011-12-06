@@ -11,5 +11,5 @@
  *}
 <a href="javascript:void(0);" class="{getClass()}">
 {displayCommentedData(getURLParams())}
-{getButtonContent()}
+{t(getButtonContent())}
 </a>

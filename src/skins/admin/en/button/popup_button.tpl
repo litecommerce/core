@@ -12,5 +12,5 @@
 
 <button type="button" class="{getClass()}">
   {displayCommentedData(getURLParams())}
-  <span>{getButtonContent()}</span>
+  <span>{t(getButtonContent())}</span>
 </button>

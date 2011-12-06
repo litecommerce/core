@@ -25,41 +25,47 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\VAT\Model;
+namespace XLite\Controller\Customer;
 
 /**
- * Product class
+ * Terms and conditions page
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.13
  */
-abstract class ProductClass extends \XLite\Model\ProductClass implements \XLite\Base\IDecorator
+class Terms extends \XLite\Controller\Customer\Category
 {
     /**
-     * Tax rates (relation)
+     * Controller parameters list
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @var   array
      * @see   ____var_see____
      * @since 1.0.0
-     *
-     * @OneToMany (targetEntity="XLite\Module\CDev\VAT\Model\Tax\Rate", mappedBy="productClass", cascade={"all"})
      */
-    protected $tax_rates;
+    protected $params = array('target');
 
 
     /**
-     * Constructor
+     * Check whether the title is to be displayed in the content area
      *
-     * @param array $data Entity properties OPTIONAL
-     *
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function __construct(array $data = array())
+    public function isTitleVisible()
     {
-        $this->tax_rates = new \Doctrine\Common\Collections\ArrayCollection();
+        return true;
+    }
 
-        parent::__construct($data);
+    /**
+     * Return title of page
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getTitle()
+    {
+        return static::t('Terms and conditions');
     }
 }

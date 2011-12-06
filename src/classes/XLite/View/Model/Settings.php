@@ -57,10 +57,10 @@ class Settings extends \XLite\View\Model\AModel
     }
 
     /**
-     * Get form field by option 
-     * 
+     * Get form field by option
+     *
      * @param \XLite\Model\Config $option Option
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.13
@@ -93,10 +93,10 @@ class Settings extends \XLite\View\Model\AModel
     }
 
     /**
-     * Detect form field class by option 
-     * 
+     * Detect form field class by option
+     *
      * @param \XLite\Model\Config $option Option
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.13
@@ -108,7 +108,7 @@ class Settings extends \XLite\View\Model\AModel
 
         switch ($type) {
             case 'textarea':
-                $class = '\XLite\View\FormField\Textare\Simple';
+                $class = '\XLite\View\FormField\Textarea\Simple';
                 break;
 
             case 'checkbox':
@@ -146,9 +146,9 @@ class Settings extends \XLite\View\Model\AModel
 
     /**
      * Check - option is required or not
-     * 
+     *
      * @param \XLite\Model\Config $option Option
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.13
@@ -160,7 +160,7 @@ class Settings extends \XLite\View\Model\AModel
 
     /**
      * Get form fields for default section
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.13

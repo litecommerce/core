@@ -46,6 +46,7 @@ class CountrySelect extends \XLite\View\FormField
     const PARAM_COUNTRY    = 'country';
     const PARAM_FIELD_ID   = 'fieldId';
     const PARAM_CLASS_NAME = 'className';
+    const PARAM_ALLOW_LABEL_COUNTRY = 'allowLabelCountry';
 
 
     /**
@@ -76,7 +77,8 @@ class CountrySelect extends \XLite\View\FormField
             self::PARAM_FIELD_NAME => new \XLite\Model\WidgetParam\String('Field name', ''),
             self::PARAM_FIELD_ID   => new \XLite\Model\WidgetParam\String('Field ID', ''),
             self::PARAM_CLASS_NAME => new \XLite\Model\WidgetParam\String('Class name', ''),
-            self::PARAM_COUNTRY    => new \XLite\Model\WidgetParam\String('Value', '')
+            self::PARAM_COUNTRY    => new \XLite\Model\WidgetParam\String('Value', ''),
+            self::PARAM_ALLOW_LABEL_COUNTRY => new \XLite\Model\WidgetParam\Bool('Allow label-based country selector', false),
         );
     }
 
@@ -90,6 +92,18 @@ class CountrySelect extends \XLite\View\FormField
     protected function isEnabledOnly()
     {
         return !$this->getParam(self::PARAM_ALL);
+    }
+
+    /**
+     * Get selected value 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function getSelectedValue()
+    {
+        return $this->getParam(self::PARAM_COUNTRY);
     }
 
     /**
@@ -124,5 +138,32 @@ class CountrySelect extends \XLite\View\FormField
         return $this->isEnabledOnly()
             ? \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllEnabled()
             : \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
+    }
+
+    /**
+     * Check - country selector is label-based
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function isLabelBasedSelector()
+    {
+        return $this->getParam(self::PARAM_ALLOW_LABEL_COUNTRY)
+            && 1 == count($this->getCountries());
+    }
+
+    /**
+     * Get one country 
+     * 
+     * @return \XLite\Model\Country
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function getOneCountry()
+    {
+        $list = $this->getCountries();
+
+        return reset($list);
     }
 }
