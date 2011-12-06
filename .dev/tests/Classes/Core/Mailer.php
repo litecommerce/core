@@ -52,9 +52,6 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
     static $admin_profile;
     static $admin_login;
 
-    public function setUp(){
-        $this->markTestSkipped();
-    }
     public static function setUpBeforeClass(){
         self::$company_email = \XLite\Base::getInstance()->config->Company->users_department;
         self::$admin_email = \XLite\Base::getInstance()->config->Company->site_administrator;
