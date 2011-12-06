@@ -152,7 +152,7 @@ function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = tr
 
 function xlite_clean_up_cache()
 {
-    echo ('Clean up the cache ... ');
+    echo (PHP_EOL.'Clean up the cache ... ');
 
     \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_DATACACHE);
 

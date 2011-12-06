@@ -5,7 +5,7 @@
  * Constants to run tests
  */
 if (!defined('SELENIUM_CLIENTS_COUNT'))
-    define('SELENIUM_CLIENTS_COUNT', 5);
+    define('SELENIUM_CLIENTS_COUNT', _clients_count_);
 
 /**
  * @param array $array

@@ -17,19 +17,6 @@
 
 class XLite_Tests_Model_CategoryProducts extends XLite_Tests_TestCase
 {
-    protected $categoryData = array(
-        'name'        => 'test category',
-        'description' => 'test description',
-        'meta_tags'   => 'test meta tags',
-        'meta_desc'   => 'test meta description',
-        'meta_title'  => 'test meta title',
-        'lpos'        => 100,
-        'rpos'        => 200,
-        'enabled'     => true,
-        'cleanURL'   => 'testCategory',
-        'show_title'  => true,
-    );
-
     /**
      * testCreate
      *
@@ -51,12 +38,15 @@ class XLite_Tests_Model_CategoryProducts extends XLite_Tests_TestCase
         $cp->setProduct($p);
         $cp->setOrderby(100);
 
-        \XLite\Core\Database::getEM()->flush();
+        $em = \XLite\Core\Database::getEM();
+        $em->flush();
 
         $this->assertEquals(14015, $cp->getCategory()->getCategoryId(), 'check category id');
         $this->assertEquals(16281, $cp->getProduct()->getProductId(), 'check product id');
         $this->assertEquals(100, $cp->getOrderby(), 'check order');
 
         $this->assertTrue(0 < $cp->getId(), 'check id');
+        $em->remove($cp);
+        $em->flush();
     }
 }

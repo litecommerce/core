@@ -33,9 +33,16 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
     );
 
     protected $orderProducts = array();
+    /**
+     * @var XLite\Model\Order
+     */
+    protected $order;
+    protected $orders;
 
-    protected function getTestOrder()
+    protected function getTestOrder($new_order = false)
     {
+        if ($this->order && !$new_order)
+            return $this->order;
         \XLite\Core\Auth::getInstance()->logoff();
 
         $this->testOrder['date'] = time();
@@ -83,7 +90,24 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
         $order->calculate();
 
         \XLite\Core\Database::getRepo('XLite\Model\Order')->update($order);
-
+        if (!$this->order || $new_order)
+            $this->orders[] = $order;
+        $this->order = $order;
         return $order;
     }
+
+    protected function tearDown(){
+        if (!empty($this->orders))
+            foreach($this->orders as $order)
+                $this->clearEntity($order);
+        if ($this->order)
+            $this->clearEntity($this->order);
+        $this->order = null;
+        parent::tearDown();
+    }
+
+    static function tearDownAfterClass(){
+        \XLite\Core\Database::getEM()->flush();
+    }
+
 }

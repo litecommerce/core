@@ -44,11 +44,13 @@ class XLite_Tests_Model_Language extends XLite_Tests_TestCase
             $value = $c->$getterMethod();
             $this->assertEquals($testValue, $value, 'Creation checking (' . $field . ')');
         }
-
-        \XLite\Core\Database::getEM()->persist($c);
-        \XLite\Core\Database::getEM()->flush();
+        $em = \XLite\Core\Database::getEM();
+        $em->persist($c);
+        $em->flush();
 
         $this->assertTrue(0 < $c->getLngId(), 'check language id');
+        $em->remove($c);
+        $em->flush($c);
     }
 
     public function testgetAdded()

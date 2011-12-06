@@ -118,11 +118,11 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_Model_OrderAbstract
         $o1->setStatus($o1::STATUS_QUEUED);
         \XLite\Core\Database::getEM()->flush();
 
-        $o2 = $this->getTestOrder();
+        $o2 = $this->getTestOrder(true);
         $o2->setStatus($o1::STATUS_PROCESSED);
         \XLite\Core\Database::getEM()->flush();
 
-        $o3 = $this->getTestOrder();
+        $o3 = $this->getTestOrder(true);
 
         $repo = \XLite\Core\Database::getRepo('XLite\Model\Order');
 

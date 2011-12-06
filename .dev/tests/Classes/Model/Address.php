@@ -13,6 +13,7 @@
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
+ * @resource address_book
  */
 
 class XLite_Tests_Model_Address extends XLite_Tests_TestCase

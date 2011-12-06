@@ -246,10 +246,11 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
         $cp->setCategory($c);
         $cp->setProduct($p);
 
-        \XLite\Core\Database::getEM()->persist($cp);
-        \XLite\Core\Database::getEM()->flush();
+        $em = \XLite\Core\Database::getEM();
+        $em->persist($cp);
+        $em->flush();
 
-        \XLite\Core\Database::getEM()->clear();
+        $em->clear();
 
         $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00007'));
 
@@ -265,6 +266,9 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
         $cp = $p->getCategory();
         $this->assertTrue($cp instanceof \XLite\Model\Category, 'check class #3');
         $this->assertEquals(14015, $cp->getCategoryId(), 'check category id #3');
+        $em->merge($cp);
+        $em->remove($cp);
+        $em->flush();
     }
 
     public function testgetOrderBy()

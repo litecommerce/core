@@ -36,6 +36,7 @@ class XLite_Tests_Model_TmpVar extends XLite_Tests_TestCase
 
         $c->map($this->entityData);
 
+
         \XLite\Core\Database::getEM()->persist($c);
         \XLite\Core\Database::getEM()->flush();
 
@@ -49,6 +50,8 @@ class XLite_Tests_Model_TmpVar extends XLite_Tests_TestCase
 
         $this->assertEquals($c->getName(), $this->entityData['name'], 'check name');
         $this->assertEquals($c->getValue(), $this->entityData['value'], 'check value');
+        \XLite\Core\Database::getEM()->remove($c);
+        \XLite\Core\Database::getEM()->flush();
     }
 
     public function testUpdate()
@@ -76,6 +79,8 @@ class XLite_Tests_Model_TmpVar extends XLite_Tests_TestCase
         $c = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->find($id);
 
         $this->assertEquals('zzz', $c->getName(), 'check name');
+        \XLite\Core\Database::getEM()->remove($c);
+        \XLite\Core\Database::getEM()->flush();
     }
 
     public function testRemove()
@@ -103,6 +108,8 @@ class XLite_Tests_Model_TmpVar extends XLite_Tests_TestCase
         $c = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->find($id);
 
         $this->assertTrue(is_null($c), 'check entity');
+        //\XLite\Core\Database::getEM()->remove($c);
+        \XLite\Core\Database::getEM()->flush();
     }
 
 }

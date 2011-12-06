@@ -25,7 +25,7 @@
  * @since      1.0.0
  */
 
-class XLite_Tests_Model_Payment_Processor_Check extends XLite_Tests_Model_OrderAbstract
+class XLite_Tests_Model_Payment_Processor_Check extends XLite_Tests_Model_Payment_PaymentAbstract
 {
     protected $testMethod = array(
         'service_name' => 'test',
@@ -114,42 +114,5 @@ class XLite_Tests_Model_Payment_Processor_Check extends XLite_Tests_Model_OrderA
         $this->assertEquals(\XLite\Core\Config::getInstance()->General->display_check_number, $p->isDisplayNumber(), 'check result');
     }
 
-    protected function getTestMethod()
-    {
-        $method = new \XLite\Model\Payment\Method();
 
-        $method->map($this->testMethod);
-
-        $s = new \XLite\Model\Payment\MethodSetting();
-
-        $s->setName('t1');
-        $s->setValue('1');
-
-        $method->addSettings($s);
-        $s->setPaymentMethod($method);
-
-        $s = new \XLite\Model\Payment\MethodSetting();
-
-        $s->setName('t2');
-        $s->setValue('2');
-
-        $method->addSettings($s);
-        $s->setPaymentMethod($method);
-
-        \XLite\Core\Database::getEM()->persist($method);
-        \XLite\Core\Database::getEM()->flush();
-
-        return $method;
-    }
-
-    protected function getTestOrder()
-    {
-        $order = parent::getTestOrder();
-
-        $order->setPaymentMethod($this->getTestMethod());
-
-        \XLite\Core\Database::getEM()->flush();
-
-        return $order;
-    }
 }

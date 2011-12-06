@@ -47,6 +47,11 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_TestCase
         $this->doRestoreDb(__DIR__ . '/sql/module/setup.sql', false);
     }
 
+    protected function tearDown(){
+        parent::tearDown();
+        $this->doRestoreDb();
+    }
+
     /**
      * testSearchAll 
      * 

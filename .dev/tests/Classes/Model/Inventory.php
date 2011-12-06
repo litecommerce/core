@@ -21,6 +21,7 @@
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
+ * @resource product
  */
 class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
 {
@@ -38,45 +39,55 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
     const CART_AMOUNT_WITH_INVENTORY    = 11;
     const CART_AMOUNT_WITHOUT_INVENTORY = 24;
 
-
     /**
-     * getProduct2
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @var XLite\Model\Product
      */
-    protected function getProduct2()
-    {
-        foreach (\XLite\Core\Database::getRepo('XLite\Model\Product')->findByEnabled(true) as $product) {
-            if ($product->getProductId() != $this->getProduct()->getProductId()) break;
+    protected  $productWithInventory;
+    /**
+     * @var XLite\Model\Product
+     */
+    protected  $productWithoutInventory;
+
+    function setUp(){
+        $products = \XLite\Core\Database::getRepo('XLite\Model\Product')->findByEnabled(true);
+        $i = 0;
+        $em = \XLite\Core\Database::getEM();
+        while (count($products) < 2){
+            $product = new \XLite\Model\Product(array(
+			    'price'         => 1,
+			    'enabled'       => true,
+                'name'          => 'test name'.$i,
+                'description'   => 'test description'
+		    ));
+            $em->persist($product);
+            $products[] = $product;
+            $i++;
         }
-
-        return $product;
+        $em->flush();
+        $this->productWithInventory = $products[0];
+        $this->productWithoutInventory = $products[1];
     }
 
     /**
-     * getProductWithInventory
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @return XLite\Model\Product
      */
-    protected function getProductWithInventory()
-    {
-        $product = $this->getProduct();
-        $product->getInventory()->setEnabled(true);
-        $product->getInventory()->setAmount(self::DEFAULT_INVENTORY_AMOUNT);
-
-        return $product;
+    protected function getProductWithInventory(){
+        $this->productWithInventory->getInventory()->setEnabled(true);
+        $this->productWithInventory->getInventory()->setAmount(self::DEFAULT_INVENTORY_AMOUNT);
+        return $this->productWithInventory;
     }
-
+    /**
+     * @return XLite\Model\Product
+     */
+    protected function getProductWithoutInventory(){
+        $this->productWithoutInventory->getInventory()->setEnabled(false);
+        $this->productWithoutInventory->getInventory()->setAmount(self::DEFAULT_INVENTORY_AMOUNT);
+        return $this->productWithoutInventory;
+    }
     /**
      * getProductWithInventoryAndLowLimit
      *
-     * @return void
+     * @return XLite\Model\Product
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
@@ -92,26 +103,9 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
     }
 
     /**
-     * getProductWithoutInventory
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getProductWithoutInventory()
-    {
-        $product = $this->getProduct2();
-        $product->getInventory()->setEnabled(false);
-        $product->getInventory()->setAmount(self::DEFAULT_INVENTORY_AMOUNT);
-
-        return $product;
-    }
-
-    /**
      * getProductWithoutInventoryAndLowLimit
      *
-     * @return void
+     * @return XLite\Model\Product
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
@@ -131,7 +125,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      *
      * @param mixed $type ____param_comment____
      *
-     * @return void
+     * @return XLite\Model\Inventory
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0

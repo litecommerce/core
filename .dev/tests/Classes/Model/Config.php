@@ -13,6 +13,8 @@
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
+ *
+ * @resource config
  */
 
 class XLite_Tests_Model_Config extends XLite_Tests_TestCase
@@ -47,9 +49,13 @@ class XLite_Tests_Model_Config extends XLite_Tests_TestCase
             $this->assertEquals($testValue, $value, 'Creation checking (' . $field . ')');
         }
 
-        \XLite\Core\Database::getEM()->persist($c);
-        \XLite\Core\Database::getEM()->flush();
+        $em = \XLite\Core\Database::getEM();
+        $em->persist($c);
+        $em->flush();
 
         $this->assertTrue(0 < $c->getConfigId(), 'check config id');
+        $em->remove($c);
+        $em->flush();
+
     }
 }
