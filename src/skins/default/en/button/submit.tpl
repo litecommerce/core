@@ -10,4 +10,4 @@
  * @since     1.0.0
  *}
 
-<button type="submit" class="{style}"><span>{getButtonLabel()}</span></button>
+<button type="submit" class="{style}"><span>{t(getButtonLabel())}</span></button>

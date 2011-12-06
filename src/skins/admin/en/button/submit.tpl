@@ -14,4 +14,4 @@
 {if:hasValue()} value="{getValue()}"{end:}
 {if:hasClass()} class="{getClass()}"{end:}
 {if:isDisabled()} disabled="disabled"{end:}
-><span>{getButtonLabel()}</span></button>
+><span>{t(getButtonLabel())}</span></button>
