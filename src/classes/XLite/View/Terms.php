@@ -28,14 +28,14 @@
 namespace XLite\View;
 
 /**
- * Cart widget
+ * Terms and conditions widget
  *
  * @see   ____class_see____
  * @since 1.0.0
  *
  * @ListChild (list="center")
  */
-class Cart extends \XLite\View\Dialog
+class Terms extends \XLite\View\Dialog
 {
     /**
      * Return list of targets allowed for this widget
