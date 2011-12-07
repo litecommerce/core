@@ -23,6 +23,8 @@
  * @since      1.0.0
  */
 
+require_once realpath(__DIR__ . "/../OrderAbstract.php");
+
 class XLite_Tests_Model_Payment_PaymentAbstract extends XLite_Tests_Model_OrderAbstract
 {
     protected $testMethod = array(
