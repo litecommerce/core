@@ -560,7 +560,10 @@ OUT;
             $message = 'upgrade cell error';
         }
 
-        if (isset($action)) {
+        if (
+            isset($action)
+            && LC_DEVELOPER_MODE
+        ) {
             $message = 'Action "' . get_class($this) . '::' . $action . '", ' . lcfirst($message);
         }
 
