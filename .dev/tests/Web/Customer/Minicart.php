@@ -108,7 +108,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->click("//button[@type='submit' and @class='bright add2cart']");
         $this->waitForLocalCondition(
             'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
-            10000,
+            100000,
             'wait minicart'
         );
 
@@ -116,7 +116,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->click("//button[@type='submit' and @class='action buy-more']");
         $this->waitForLocalCondition(
             'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "2"',
-            10000,
+            100000,
             'wait minicart'
         );
 
@@ -160,7 +160,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->click("//button[@type='submit' and @class='bright add2cart']");
         $this->waitForLocalCondition(
             'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
-            10000,
+            100000,
             'wait minicart'
         );
 
@@ -168,7 +168,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->click("//button[@type='submit' and @class='action buy-more']");
         $this->waitForLocalCondition(
             'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "2"',
-            10000,
+            100000,
             'wait minicart'
         );
 
@@ -183,7 +183,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->click("//button[@type='submit' and @class='bright add2cart']");
         $this->waitForLocalCondition(
             'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "3"',
-            10000,
+            100000,
             'wait minicart'
         );
 
@@ -227,7 +227,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->click("//button[@type='submit' and @class='bright add2cart']");
         $this->waitForLocalCondition(
             'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
-            10000,
+            100000,
             'wait minicart'
         );
 

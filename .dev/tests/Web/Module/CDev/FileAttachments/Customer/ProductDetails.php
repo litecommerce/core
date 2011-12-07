@@ -110,9 +110,15 @@ class XLite_Web_Module_CDev_FileAttachments_Customer_ProductDetails extends XLit
         );
 
         // Remove attachment
-        \XLite\Core\Database::getEM()->remove($attachment);
+
+        $em = \XLite\Core\Database::getEM();
+        $em->remove($attachment);
+        foreach($product->getAttachments()->toArray() as $att){
+            if ($em->contains($att))
+                $em->remove($att);
+        }
         $product->getAttachments()->clear();
-        \XLite\Core\Database::getEM()->flush();
+        $em->flush();
 
         $this->openAndWait('store/product//product_id-' . $product->getProductId());
 

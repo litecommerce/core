@@ -24,9 +24,8 @@
  * @see        ____file_see____
  * @since      1.0.0
  *
- * @resource product_price
- * @resource product_inventory
- * @use product
+ * @resource product
+ * @use category
  * @use shipping_method
  *
  */

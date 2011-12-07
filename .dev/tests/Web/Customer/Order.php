@@ -69,7 +69,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
-            10000,
+            100000,
             'check content reloading'
         );
 
@@ -81,7 +81,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             $this->click('css=.current .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".payment-step").hasClass("current") == true',
-                10000,
+                100000,
                 'check switching to payment step'
             );
         }
@@ -92,7 +92,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             $this->click('css=.current .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".review-step").hasClass("current") == true',
-                10000,
+                100000,
                 'check switching to review step'
             );
         }
@@ -101,7 +101,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             $this->click('css=.payment-step .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".payment-step").hasClass("current") == true',
-                10000,
+                100000,
                 'check return to payment step'
             );
 
@@ -110,7 +110,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             $this->click('css=.current .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".review-step").hasClass("current") == true',
-                10000,
+                100000,
                 'check switching to next step #3'
             );
         }
@@ -437,7 +437,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery("ul.shipping-rates li input").length > 0',
-            10000,
+            100000,
             'check address-not-completed note hide'
         );
 
@@ -455,7 +455,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".payment-step.current").length == 1',
-            10000,
+            100000,
             'check switching to next step (shipping->payment)'
         );
 
@@ -476,7 +476,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".review-step.current").length == 1',
-            10000,
+            100000,
             'check switching to next step (payment->review)'
         );
 
