@@ -374,7 +374,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     /**
      * Add product to cart
      *
-     * @return boolean
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -389,6 +389,28 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         // Set return URL
         $this->setURLToReturn();
     }
+
+    /**
+     * Add products from the order to cart
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function doActionAddOrder()
+    {
+        $order = \XLite\Core\Database::getRepo('\XLite\Model\Order')
+            ->find(\XLite\Core\Request::getInstance()->order_id);
+
+        $this->getCart()->addItemsFromOrder($order);
+
+        // Update cart
+        $this->updateCart();
+
+        // Set return URL
+        $this->setURLToReturn();
+    }
+
 
 
     // TODO: refactoring
