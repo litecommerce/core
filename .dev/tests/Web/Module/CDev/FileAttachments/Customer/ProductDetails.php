@@ -121,7 +121,7 @@ class XLite_Web_Module_CDev_FileAttachments_Customer_ProductDetails extends XLit
         $em->flush();
 
         $this->openAndWait('store/product//product_id-' . $product->getProductId());
-
+        $this->refresh();
         $this->assertElementNotPresent(
             'css=.product-attachments',
             'check empty attachments box'
