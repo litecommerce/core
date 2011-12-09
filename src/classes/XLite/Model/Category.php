@@ -125,6 +125,17 @@ class Category extends \XLite\Model\Base\I18n
     protected $depth = -1;
 
     /**
+     * Category position parameter. Sort inside the parent category
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.13
+     *
+     * @Column (type="integer")
+     */
+    protected $pos = 0;
+
+    /**
      * Some cached flags
      *
      * @var   \XLite\Model\Category\QuickFlags
@@ -178,9 +189,10 @@ class Category extends \XLite\Model\Base\I18n
      * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Category", mappedBy="parent", cascade={"all"})
+     * @OrderBy({"pos" = "ASC"})
      */
     protected $children;
-
+    
     /**
      * Parent category
      *

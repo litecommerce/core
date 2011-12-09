@@ -169,7 +169,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
         // Memory usage
         $this->start['memory'] = memory_get_usage();
-        $this->end['memory']   = 0;
+        $this->end['memory'] = 0;
 
         // Timing
         $this->start['time'] = microtime(true);
@@ -188,11 +188,11 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         // Timing
         $this->end['time'] = microtime(true);
 
-//        if ($this->needAppInit()) {
-//            \XLite\Core\Converter::getInstance()->__destruct();
-//            \XLite\Core\Database::getInstance()->__destruct();
-//            $this->app->__destruct();
-//        }
+        //        if ($this->needAppInit()) {
+        //            \XLite\Core\Converter::getInstance()->__destruct();
+        //            \XLite\Core\Database::getInstance()->__destruct();
+        //            $this->app->__destruct();
+        //        }
 
         // Memory usage
         $this->end['memory'] += memory_get_usage();
@@ -277,14 +277,14 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      */
     private function getExecTime()
     {
-        $time    = number_format($this->end['time'] - $this->start['time'], 4);
+        $time = number_format($this->end['time'] - $this->start['time'], 4);
         $message = trim($this->getMessage('', get_called_class(), $this->getName()));
 
         if (strlen($message) > self::$messageLength) {
             self::$messageLength = strlen($message) + 1;
         }
 
-        return sprintf('%\'.-' . self::$messageLength. 's', trim($message))
+        return sprintf('%\'.-' . self::$messageLength . 's', trim($message))
             . ' ' . sprintf('%8s', $time) . ' sec .....';
     }
 
@@ -360,14 +360,14 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     {
         // Default request
         $request = array(
-            'init_app'   => true,
-            'method'     => 'GET',
+            'init_app' => true,
+            'method' => 'GET',
             'controller' => true, // true - admin, false - customer
-            'data'       => array(
+            'data' => array(
                 'target' => \XLite::TARGET_DEFAULT,
                 'action' => '',
             ),
-            'cookies'    => array(),
+            'cookies' => array(),
         );
 
         return $request;
@@ -526,11 +526,11 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
             for ($i = $this->lastMessage + 1; $i <= $mc->Nmsgs; $i++) {
 
                 $header = @imap_fetchbody($this->mailBox, $i, '0');
-                $body   = @imap_fetchbody($this->mailBox, $i, '1');
+                $body = @imap_fetchbody($this->mailBox, $i, '1');
 
                 $emails[] = array(
                     'header' => $header,
-                    'body'   => $body,
+                    'body' => $body,
                 );
             }
 
@@ -547,8 +547,8 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     // {{{ Database operations
 
     /**
-     * Make backup 
-     * 
+     * Make backup
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.11
@@ -623,6 +623,31 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => $sku));
     }
 
+    protected function clearEntity($entity)
+    {
+        if ($entity) {
+            $em = \XLite\Core\Database::getEM();
+            $entityState = $em->getUnitOfWork()->getEntityState($entity, \Doctrine\ORM\UnitOfWork::STATE_NEW);
+            switch ($entityState) {
+                case \Doctrine\ORM\UnitOfWork::STATE_DETACHED:
+                    echo "detached";
+                    $entity = $em->merge($entity);
+                case \Doctrine\ORM\UnitOfWork::STATE_MANAGED:
+//                    $id = $em->getClassMetadata(get_class($entity))->getIdentifierValues($entity);
+//                    $entity = Xlite\Core\Database::getRepo(get_class($entity))->find($id);
+//                    if ($entity)
+//                        $em->remove($entity);
+                    $em->refresh($entity);
+                    $em->remove($entity);
+                    break;
+                case \Doctrine\ORM\UnitOfWork::STATE_NEW:
+                case \Doctrine\ORM\UnitOfWork::STATE_REMOVED:
+                default:
+                    $entity = null;
+                    break;
+            }
+        }
+    }
     // }}}
 
 }

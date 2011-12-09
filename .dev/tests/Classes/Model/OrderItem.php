@@ -170,7 +170,7 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
         $this->assertFalse(is_null($item->getProduct()), 'check dump object #2');
     }
 
-    public function testsetObject()
+    public function testSetObject()
     {
         $order = $this->getTestOrder();
         $item = $order->getItems()->get(0);
@@ -184,6 +184,8 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
         $this->assertEquals(0, $item->getPrice(), 'check empty price');
         $this->assertEquals('', $item->getName(), 'check empty name');
         $this->assertEquals('', $item->getSku(), 'check empty sku');
+        $order->getItems()->removeElement($item);
+        Xlite\Core\Database::getEM()->remove($item);
     }
 
     public function testSetAmount()
@@ -232,9 +234,8 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
     public function testGetImageURL()
     {
         $order = $this->getTestOrder();
-
         $item = $order->getItems()->get(0);
-
+        print_r($item->getProduct()->getName());
         $this->assertEquals(
             $this->getProduct()->getImage()->getURL(),
             $item->getImageURL(),
@@ -258,8 +259,8 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
 
     public function testGetDescription()
     {
-        $order = $this->getTestOrder();
 
+        $order = $this->getTestOrder();
         $item = $order->getItems()->get(0);
 
         $this->assertEquals(

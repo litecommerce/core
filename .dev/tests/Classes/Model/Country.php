@@ -13,6 +13,7 @@
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
+ * @resource country
  */
 
 class XLite_Tests_Model_Country extends XLite_Tests_TestCase
@@ -53,9 +54,10 @@ class XLite_Tests_Model_Country extends XLite_Tests_TestCase
         $s->setCode('ttt');
         $c->addStates($s);
 
-        \XLite\Core\Database::getEM()->persist($c);
-        \XLite\Core\Database::getEM()->flush();
-        \XLite\Core\Database::getEM()->clear();
+        $em = \XLite\Core\Database::getEM();
+        $em->persist($c);
+        $em->flush();
+        $em->clear();
 
         $c = \XLite\Core\Database::getEM()->merge($c);
 
@@ -67,6 +69,9 @@ class XLite_Tests_Model_Country extends XLite_Tests_TestCase
         }
 
         $this->assertEquals($s->getStateId(), $c->getStates()->get(0)->getStateId(), 'check state');
+        
+        $em->remove($c);
+        $em->flush();
 
     }
 }

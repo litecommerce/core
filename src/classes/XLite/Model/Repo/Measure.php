@@ -118,6 +118,7 @@ class Measure extends \XLite\Model\Repo\ARepo
     {
         $result = $this->createQueryBuilder('m')
             ->orderBy('m.date', 'desc')
+            ->setMaxResults(1)
             ->getSingleResult();
 
         return $result ? $result->getDate() : null;

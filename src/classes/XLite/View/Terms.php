@@ -25,41 +25,71 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\VAT\Model;
+namespace XLite\View;
 
 /**
- * Product class
+ * Terms and conditions widget
  *
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="center")
  */
-abstract class ProductClass extends \XLite\Model\ProductClass implements \XLite\Base\IDecorator
+class Terms extends \XLite\View\Dialog
 {
     /**
-     * Tax rates (relation)
+     * Return list of targets allowed for this widget
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @OneToMany (targetEntity="XLite\Module\CDev\VAT\Model\Tax\Rate", mappedBy="productClass", cascade={"all"})
-     */
-    protected $tax_rates;
-
-
-    /**
-     * Constructor
-     *
-     * @param array $data Entity properties OPTIONAL
-     *
-     * @return void
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function __construct(array $data = array())
+    public static function getAllowedTargets()
     {
-        $this->tax_rates = new \Doctrine\Common\Collections\ArrayCollection();
+        $result = parent::getAllowedTargets();
+        $result[] = 'terms';
 
-        parent::__construct($data);
+        return $result;
     }
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        return $list;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        return $list;
+    }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDir()
+    {
+        return 'terms_n_conditions';
+    }
+
 }

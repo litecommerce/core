@@ -17,6 +17,10 @@
 
 class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
 {
+    static function setUpBeforeClass(){
+        parent::setUpBeforeClass();
+        xlite_restore_sql_from_backup();
+    }
     protected $entityData = array(
         'zone_name'  => 'test name',
         'is_default' => true,
@@ -38,6 +42,10 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->flush();
 
         $this->assertTrue(0 < $c->getZoneId(), 'check zone id');
+
+
+        \XLite\Core\Database::getEM()->remove($c);
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -126,6 +134,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         foreach ($data as $i => $dt) {
 
             $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findOneBy(array('zone_name' => $dt['zone']));
+
 
             $this->assertNotNull($zone, 'check zone ' . $dt['zone']);
 

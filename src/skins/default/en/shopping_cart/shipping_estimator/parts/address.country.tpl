@@ -12,5 +12,5 @@
  *}
 <li class="country">
   <label for="destination_country">{t(#Country#)}</label>
-  <widget class="\XLite\View\CountrySelect" field="country" fieldId="destination_country" country="{getCountryCode()}" />
+  <widget class="\XLite\View\CountrySelect" field="country" fieldId="destination_country" country="{getCountryCode()}" allowLabelCountry="true" />
 </li>

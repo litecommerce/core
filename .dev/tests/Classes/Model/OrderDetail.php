@@ -86,9 +86,9 @@ class XLite_Tests_Model_OrderDetail extends XLite_Tests_Model_OrderAbstract
         $this->assertEquals('test', $order->getDetails()->get(1)->getDisplayName(), 'check name #2');
     }
 
-    protected function getTestOrder()
+    protected function getTestOrder($new_order = false)
     {
-        $order = parent::getTestOrder();
+        $order = parent::getTestOrder($new_order);
 
         $order->setDetail('t1', '123');
         $order->setDetail('t2', '456', 'test');

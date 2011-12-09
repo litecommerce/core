@@ -184,7 +184,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
     {
         $this->orderProducts = array_keys($items);
 
-        $order = $this->getTestOrder();
+        $order = $this->getTestOrder(true);
 
         if (!is_null($status)) {
             $order->setStatus($status);

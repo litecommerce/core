@@ -376,26 +376,35 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        $product = $this->getProduct();
+        $form = new \XLite\View\Form\Product\Modify\Single;
+        $requestData = $form->getRequestData();
 
-        // Clear all category associates
-        \XLite\Core\Database::getRepo('\XLite\Model\CategoryProducts')->deleteInBatch(
-            $product->getCategoryProducts()
-        );
+        if ($form->getValidationMessage()) {
+            \XLite\Core\TopMessage::addError($form->getValidationMessage());
 
-        $product->getClasses()->clear();
+        } else {
 
-        $data = $this->getCategoryProducts($product) + $this->getClasses($product) + $this->getPostedData();
+            $product = $this->getProduct();
 
-        // Update all data
-        \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
-            $product,
-            $data
-        );
+            // Clear all category associates
+            \XLite\Core\Database::getRepo('\XLite\Model\CategoryProducts')->deleteInBatch(
+                $product->getCategoryProducts()
+            );
 
-        \XLite\Core\TopMessage::addInfo(
-            'Product info has been successfully updated'
-        );
+            $product->getClasses()->clear();
+
+            $data = $this->getCategoryProducts($product) + $this->getClasses($product) + $this->getPostedData();
+
+            // Update all data
+            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
+                $product,
+                $data
+            );
+
+            \XLite\Core\TopMessage::addInfo(
+                'Product info has been successfully updated'
+            );
+        }
     }
 
     /**

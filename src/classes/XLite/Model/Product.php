@@ -160,6 +160,17 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     protected $date = 0;
 
+    /**
+     * Update date (UNIX timestamp)
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="uinteger")
+     */
+    protected $updateDate = 0;
+
 
     /**
      * Relation to a CategoryProducts entities
@@ -602,6 +613,22 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
         if (!$this->getArrivalDate()) {
             $this->setArrivalDate(time());
         }
+
+        $this->prepareUpdateDate();
+    }
+
+    /**
+     * Prepare update date
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     *
+     * @PreUpdate
+     */
+    public function prepareUpdateDate()
+    {
+        $this->setUpdateDate(time());
     }
 
     /**

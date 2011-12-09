@@ -50,9 +50,12 @@ class XLite_Tests_Model_TemplatePatch extends XLite_Tests_TestCase
             $this->assertEquals($testValue, $value, 'Creation checking (' . $field . ')');
         }
 
-        \XLite\Core\Database::getEM()->persist($c);
-        \XLite\Core\Database::getEM()->flush();
+        $em =\XLite\Core\Database::getEM();
+        $em->persist($c);
+        $em->flush();
 
         $this->assertTrue(0 < $c->getPatchId(), 'check patch id');
+        $em->remove($c);
+        $em->flush();
     }
 }

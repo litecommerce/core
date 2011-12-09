@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Popup button
+ * Terms and conditions page
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,5 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<button type="button" class="{getClass()}">
-{displayCommentedData(getURLParams())}
-<span>{t(getButtonContent())}</span>
-</button>
+
+{t(#Terms and conditions text#)}

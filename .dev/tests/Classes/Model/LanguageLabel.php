@@ -46,5 +46,7 @@ class XLite_Tests_Model_LanguageLabel extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->flush();
 
         $this->assertTrue(0 < $c->getLabelId(), 'check language label id');
+        \XLite\Core\Database::getEM()->remove($c);
+        \XLite\Core\Database::getEM()->flush();
     }
 }

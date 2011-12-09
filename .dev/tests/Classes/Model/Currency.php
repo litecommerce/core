@@ -26,10 +26,12 @@
  */
 
 /**
- * XLite_Tests_Model_Currency 
+ * XLite_Tests_Model_Currency
  *
  * @see   ____class_see____
  * @since 1.0.13
+ * @resource order
+ * @resource currency
  */
 class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
 {
@@ -42,11 +44,16 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
      */
     protected $testData = array(
         'currency_id' => 999,
-        'code'        => 'XXX',
-        'symbol'      => 'x',
-        'e'           => 3,
-        'name'        => 'Test',
+        'code' => 'XXX',
+        'symbol' => 'x',
+        'e' => 3,
+        'name' => 'Test',
     );
+
+    /**
+     * @var XLite\Model\Currency
+     */
+    protected $currency;
 
     /**
      * testCreate
@@ -57,7 +64,7 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
      */
     public function testCreate()
     {
-        $c = $this->getTestCurrency();
+        $c = $this->currency;
 
         $this->assertTrue(0 < $c->getCurrencyId(), 'check currency id');
 
@@ -94,9 +101,7 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
      */
     public function testUpdate()
     {
-        \XLite\Core\Database::getEM()->clear();
-
-        $c = $this->getTestCurrency();
+        $c = $this->currency;
 
         $c->setName('Test 2');
         $c->setCode('ZZZ');
@@ -121,7 +126,7 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
      */
     public function testDelete()
     {
-        $c = $this->getTestCurrency();
+        $c = $this->currency;
 
         $id = $c->getCurrencyId();
 
@@ -143,7 +148,7 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
      */
     public function testRoundValue()
     {
-        $c = $this->getTestCurrency();
+        $c = $this->currency;
 
         $this->assertEquals(2.555, $c->roundValue(2.5549), 'check round');
 
@@ -166,7 +171,7 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
      */
     public function testRoundValueAsInteger()
     {
-        $c = $this->getTestCurrency();
+        $c = $this->currency;
 
         $this->assertEquals(2555, $c->roundValueAsInteger(2.5549), 'check round');
 
@@ -189,7 +194,7 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
      */
     public function testConvertIntegerToFloat()
     {
-        $c = $this->getTestCurrency();
+        $c = $this->currency;
 
         $this->assertEquals(2.555, $c->convertIntegerToFloat(2555), 'check round');
 
@@ -212,7 +217,7 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
      */
     public function testFormatValue()
     {
-        $c = $this->getTestCurrency();
+        $c = $this->currency;
 
         $d = \XLite\Core\Config::getInstance()->General->decimal_delim;
         $t = \XLite\Core\Config::getInstance()->General->thousand_delim;
@@ -229,38 +234,28 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
         $this->assertEquals('1' . $t . '003', $c->formatValue(1002.5549), 'check format #4');
     }
 
-    /**
-     * PHPUnit default function.
-     * It's not recommended to redefine this method
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
     protected function setUp()
     {
         parent::setUp();
-
-        $list = \XLite\Core\Database::getEM()->createQueryBuilder()
-            ->select('c')
-            ->from('XLite\Model\Currency', 'c')
-            ->andWhere('c.code IN (:code1, :code2)')
-            ->setParameter('code1', 'XXX')
-            ->setParameter('code2', 'ZZZ')
-            ->getQuery()
-            ->getResult();
-
-        foreach ($list as $c) {
+        $c = \XLite\Core\Database::getRepo("XLite\Model\Currency")->find(999);
+        if ($c) {
             \XLite\Core\Database::getEM()->remove($c);
+            \XLite\Core\Database::getEM()->flush();
         }
-        \XLite\Core\Database::getEM()->flush();
+        $this->currency = $this->getTestCurrency();
+    }
+
+    protected function tearDown()
+    {
+        $this->clearEntity($this->order);
+        $this->clearEntity($this->currency);
+        parent::tearDown();
     }
 
     /**
      * getTestCurrency
      *
-     * @return void
+     * @return XLite\Model|Currency
      * @see    ____func_see____
      * @since  1.0.13
      */

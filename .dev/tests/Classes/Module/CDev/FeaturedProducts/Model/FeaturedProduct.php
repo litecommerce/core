@@ -91,7 +91,6 @@ class XLite_Tests_Module_CDev_FeaturedProducts_Model_FeaturedProduct extends XLi
         $this->assertEquals($fp->getCategory(), $someOtherCategory, 'Check new category');
         $this->assertEquals($fp->getProduct(), $someOtherProduct, 'Check new category');
         $this->assertEquals($fp->getOrderBy(), 10, 'Check new position');
-
     }
 
     public function testDelete()
@@ -152,6 +151,11 @@ class XLite_Tests_Module_CDev_FeaturedProducts_Model_FeaturedProduct extends XLi
         return $this->category;
     }
 
+    /**
+     * @var XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct
+     */
+    protected $fp;
+
     protected function getTestFeaturedProduct()
     {
         $fProduct = new XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct();
@@ -162,7 +166,16 @@ class XLite_Tests_Module_CDev_FeaturedProducts_Model_FeaturedProduct extends XLi
 
         \XLite\Core\Database::getEM()->persist($fProduct);
         \XLite\Core\Database::getEM()->flush();
-
+        $this->fp = $fProduct;
         return $fProduct;
+    }
+    protected function tearDown(){
+        if($this->fp){
+            $em = \XLite\Core\Database::getEM();
+            if(!$em->contains($this->fp))
+                $em->merge($this->fp);
+            $em->remove($this->fp);
+            $em->flush();
+        }
     }
 }

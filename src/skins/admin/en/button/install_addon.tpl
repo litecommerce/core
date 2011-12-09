@@ -14,4 +14,4 @@
 {if:hasValue()} value="{getValue()}"{end:}
 {if:hasClass()} class="{getClass()}"{end:}
 onclick="javascript:document.location='{getURL()}';"
-><span>{getButtonLabel()}</span></button>
+><span>{t(getButtonLabel())}</span></button>

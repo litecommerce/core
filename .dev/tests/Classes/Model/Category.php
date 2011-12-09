@@ -13,6 +13,9 @@
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      1.0.0
+ *
+ * @resource category
+ * @resource product
  */
 
 class XLite_Tests_Model_Category extends XLite_Tests_TestCase
@@ -174,7 +177,8 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
         $c2->map($this->categoryData);
         $p->addChildren($c2);
 
-        \XLite\Core\Database::getEM()->flush();
+        $em = \XLite\Core\Database::getEM();
+        $em->flush();
 
         $found = false;
         foreach ($c1->getSiblings() as $s) {
@@ -184,6 +188,10 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
         }
 
         $this->assertTrue($found, 'sibling category is not found');
+        $em->remove($c1);
+        $em->remove($c2);
+        $em->flush();
+
     }
 
     public function testGetStringPath()

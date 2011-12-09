@@ -604,6 +604,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 					module_name=`cat $module_main_file | grep -A 2 "function getModuleName()" | grep -o -E "'.+'" | sed "s!'!!g"`
 					module_icon=`cat $module_main_file | grep -A 2 "function getIconURL()" | grep -o -E "'.+'" | sed "s!'!!g"`
 					module_descr=`cat $module_main_file | grep -A 2 "function getDescription()" | grep -o -E "'.+'" | sed "s!'!!g"`
+					module_dependencies=`cat $module_main_file | grep -A 2 "function getDependencies()" | grep -o -E "\('.+'\)" | sed 's/(\(.*\))/\1/'`
 
 				else
 					die "File classes/XLite/Module/${j} not found!"
@@ -612,7 +613,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 				# Generate module meta data
 				mkdir -p .phar
 
-				_php_code="echo serialize(array('RevisionDate'=>time(),'ActualName'=>'${module_actual_name}','VersionMajor'=>'${module_major_version}','VersionMinor'=>'${module_minor_version}','Name'=>'${module_name}','Author'=>'${module_author}','IconLink'=>'${module_icon}','Description'=>'${module_descr}','Dependencies'=>array()));"
+				_php_code="echo serialize(array('RevisionDate'=>time(),'ActualName'=>'${module_actual_name}','VersionMajor'=>'${module_major_version}','VersionMinor'=>'${module_minor_version}','Name'=>'${module_name}','Author'=>'${module_author}','IconLink'=>'${module_icon}','Description'=>'${module_descr}','Dependencies'=>array(${module_dependencies})));"
 
 				$PHP -qr "$_php_code" > .phar/.metadata.bin
 
@@ -784,8 +785,6 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 			[ -d ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce ] && cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce/lc_logo.png
 			# Copying logo with version number to the theme is temporary disabled
 			# cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes/lc3/logo.png
-		else
-			# echo "Warning! Logo image file $LOGO_IMAGE not found"
 		fi
 
 		sed_cmd="$SED_EXT 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info"
@@ -864,7 +863,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 		cd modules/lc_connector/${LITECOMMERCE_DIRNAME}
 
-		if [ "$TEST_MODE" = "" ]; then
+		if [ "${TEST_MODE}" = "" -a "${DEMO_VERSION}" = "" ]; then
 			# Add DrupalConnector module
 			tar -xf ${OUTPUT_DIR}/_drupal-connector-tmp.tar
 			rm ${OUTPUT_DIR}/_drupal-connector-tmp.tar
@@ -874,7 +873,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 
 		# Pack Drupal+LC distributive
 		tar -czf drupal-lc3-${VERSION}.tgz ${DRUPAL_DIRNAME}
-		zip -rq drupal-lc3-${VERSION}.zip ${DRUPAL_DIRNAME}
+		[ "${DEMO_VERSION}" = "" ] && zip -rq drupal-lc3-${VERSION}.zip ${DRUPAL_DIRNAME}
 
 
 		echo -e "  + Drupal+LiteCommerce v.$VERSION distributive is completed\n"

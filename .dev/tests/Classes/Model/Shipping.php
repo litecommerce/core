@@ -156,16 +156,16 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
     /**
      * getTestOrder
      *
-     * @param bool $profile Flag: if true, then get real profile from database
+
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getTestOrder($profile = true)
+    protected function getTestOrder($new_order = false)
     {
-        $order = parent::getTestOrder();
+        $order = parent::getTestOrder($new_order);
 
         $args = func_get_args();
 

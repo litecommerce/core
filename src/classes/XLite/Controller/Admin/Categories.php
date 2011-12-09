@@ -105,4 +105,24 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
             )
         );
     }
+
+    /**
+     * Update "position" fields
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionUpdate()
+    {
+        \XLite\Core\Database::getRepo('\XLite\Model\Category')->updateInBatchById($this->getPostedData());
+
+        $this->setReturnURL(
+            $this->buildURL(
+                'categories',
+                '',
+                array('category_id' => \XLite\Core\Request::getInstance()->category_id)
+            )
+        );
+    }
 }

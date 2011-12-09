@@ -173,9 +173,9 @@ class XLite_Tests_Module_CDev_SalesTax_Model_Order extends XLite_Tests_Model_Ord
     }
 
 
-    protected function getTestOrder()
+    protected function getTestOrder($new_order = false)
     {
-        $order = parent::getTestOrder();
+        $order = parent::getTestOrder($new_order);
 
         $method = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
             ->findOneBy(array('service_name' => 'PurchaseOrder'));

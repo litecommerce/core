@@ -110,12 +110,28 @@ class XLite_Web_Module_CDev_FileAttachments_Customer_ProductDetails extends XLit
         );
 
         // Remove attachment
-        \XLite\Core\Database::getEM()->remove($attachment);
+        $product->detach();
+
+        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($productId);
+
+        $attachments = $product->getAttachments();
+
+        foreach($attachments as $att){
+            \XLite\Core\Database::getEM()->remove($att);
+        }
+
         $product->getAttachments()->clear();
+ 
+        \XLite\Core\Database::getEM()->persist($product);
+
         \XLite\Core\Database::getEM()->flush();
 
-        $this->openAndWait('store/product//product_id-' . $product->getProductId());
+        $product->detach();
 
+        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($productId);
+
+        $this->openAndWait('store/product//product_id-' . $product->getProductId());
+        $this->refresh();
         $this->assertElementNotPresent(
             'css=.product-attachments',
             'check empty attachments box'

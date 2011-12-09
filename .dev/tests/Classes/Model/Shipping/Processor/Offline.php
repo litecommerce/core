@@ -123,9 +123,9 @@ class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_Model_Ord
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getTestOrder()
+    protected function getTestOrder($new_order = false)
     {
-        $order = parent::getTestOrder();
+        $order = parent::getTestOrder($new_order);
 
         $args = func_get_args();
 

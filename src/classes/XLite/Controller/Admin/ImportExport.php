@@ -654,10 +654,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
 
                     $this->importRow($product, $list);
 
-                    if ($product->getId()) {
-                        $this->importCell['old']++;
-
-                    } else {
+                    if (!$product->getId()) {
                         $this->importCell['new']++;
                     }
 
@@ -670,15 +667,21 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
 
         if (feof($this->filePointer)) {
             \XLite\Core\Event::importFinish();
+
+            $this->importCell['old'] = \XLite\Core\Database::getRepo('XLite\Model\Product')
+                ->countLastUpdated($this->importCell['start']);
+            $this->importCell['old'] -= $this->importCell['new'];
+            $this->importCell['old'] = max(0, $this->importCell['old']);
+
             $label = null;
             if ($this->importCell['new'] && $this->importCell['old']) {
-                $label = 'Successfully imported X new products and upgraded Y old products';
+                $label = 'Occurred X add product events and Y update product events';
 
             } elseif ($this->importCell['new']) {
-                $label = 'Successfully imported X new products';
+                $label = 'Occurred X add product events';
 
             } elseif ($this->importCell['old']) {
-                $label = 'Successfully upgraded Y old products';
+                $label = 'Occurred Y update product events';
 
             }
 
@@ -751,6 +754,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         } else {
             $this->importCell['headers'] = fgetcsv($this->filePointer, 0, static::DELIMIER);
             $this->importCell['row_length'] = count($this->importCell['headers']);
+            $this->importCell['start'] = time();
             $columns = $this->getColumns();
             foreach ($this->importCell['headers'] as $index => $name) {
                 if (!isset($columns[$name])) {
@@ -858,6 +862,8 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                 }
             }
         }
+
+        $product->setUpdateDate(time());
     }
 
     /**

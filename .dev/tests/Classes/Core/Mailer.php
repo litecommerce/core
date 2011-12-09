@@ -43,6 +43,49 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
     const TESTER_PASSWORD = 'master';
 
 
+    static $company_email;
+    static $admin_email;
+
+    /**
+    * @var XLite\Model\Profile
+    */
+    static $admin_profile;
+    static $admin_login;
+
+    public static function setUpBeforeClass(){
+        self::$company_email = \XLite\Base::getInstance()->config->Company->users_department;
+        self::$admin_email = \XLite\Base::getInstance()->config->Company->site_administrator;
+        \XLite\Base::getInstance()->config->Company->users_department = self::ADMIN_EMAIL;
+        \XLite\Base::getInstance()->config->Company->site_administrator = self::ADMIN_EMAIL;
+
+        self::$admin_profile = self::getTestProfile();
+        self::$admin_login = self::$admin_profile->getLogin();
+        self::$admin_profile->setLogin(self::TESTER_EMAIL);
+
+    }
+
+    public static function tearDownAfterClass(){
+        \XLite\Base::getInstance()->config->Company->users_department = self::$company_email;
+        \XLite\Base::getInstance()->config->Company->site_administrator = self::$admin_email;
+        self::$admin_profile->setLogin(self::$admin_login);
+    }
+
+        /**
+     * Returns profile instance
+     *
+     * @return XLite\Model\Profile
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getTestProfile()
+    {
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find(1);
+
+        return $profile;
+    }
+
+
     /**
      * testSendProfileCreatedUserNotification
      *
@@ -53,7 +96,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      */
     public function testSendProfileCreatedUserNotification()
     {
-        $profile = $this->getTestProfile();
+        $profile = self::$admin_profile;
 
         $this->startCheckingMail();
 
@@ -83,9 +126,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      */
     public function testSendProfileCreatedAdminNotification()
     {
-        $profile = $this->getTestProfile();
-
-        \XLite\Base::getInstance()->config->Company->users_department = self::ADMIN_EMAIL;
+        $profile = self::$admin_profile;
 
         $this->startCheckingMail();
 
@@ -103,6 +144,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
         $this->assertRegexp('/To: ' . preg_quote(self::ADMIN_EMAIL) . '/msS', $email['header'], 'Wrong email recipient' . $email['header']);
         $this->assertRegexp('/New user profile has been registered/msS', $email['body'], '"New user profile has been registered" text not found in the email body');
+
     }
 
     /**
@@ -115,7 +157,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      */
     public function testSendProfileUpdatedUserNotification()
     {
-        $profile = $this->getTestProfile();
+        $profile = self::$admin_profile;
 
         $this->startCheckingMail();
 
@@ -145,9 +187,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      */
     public function testSendProfileUpdatedAdminNotification()
     {
-        $profile = $this->getTestProfile();
-
-        \XLite\Base::getInstance()->config->Company->users_department = self::ADMIN_EMAIL;
+        $profile = self::$admin_profile;
 
         $this->startCheckingMail();
 
@@ -165,6 +205,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
 
         $this->assertRegexp('/To: ' . preg_quote(self::ADMIN_EMAIL) . '/msS', $email['header'], 'Wrong email recipient' . $email['header']);
         $this->assertRegexp('/User profile modified/msS', $email['body'], '"User profile modified" text not found in the email body');
+
     }
 
     /**
@@ -177,9 +218,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      */
     public function testSendProfileDeletedAdminNotification()
     {
-        $profile = $this->getTestProfile();
-
-        \XLite\Base::getInstance()->config->Company->users_department = self::ADMIN_EMAIL;
+        $profile = self::$admin_profile;
 
         $this->startCheckingMail();
 
@@ -209,9 +248,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      */
     public function testSendFailedAdminLoginNotification()
     {
-        $profile = $this->getTestProfile();
-
-        \XLite\Base::getInstance()->config->Company->site_administrator = self::ADMIN_EMAIL;
+        $profile = self::$admin_profile;
 
         $this->startCheckingMail();
 
@@ -244,9 +281,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      */
     public function testSendRecoverPasswordRequest()
     {
-        $profile = $this->getTestProfile();
-
-        \XLite\Base::getInstance()->config->Company->site_administrator = self::ADMIN_EMAIL;
+        $profile = self::$admin_profile;
 
         $this->startCheckingMail();
 
@@ -279,9 +314,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      */
     public function testSendRecoverPasswordConfirmation()
     {
-        $profile = $this->getTestProfile();
-
-        \XLite\Base::getInstance()->config->Company->site_administrator = self::ADMIN_EMAIL;
+        $profile = self::$admin_profile;
 
         $this->startCheckingMail();
 
@@ -302,23 +335,6 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
         $result = (bool)preg_match('/Your new password: ' . self::TESTER_PASSWORD  . '/', $email['body']);
 
         $this->assertTrue($result, 'Check if email contents keywords');
-    }
-
-    /**
-     * Returns profile instance
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getTestProfile()
-    {
-        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find(1);
-
-        $profile->setLogin(self::TESTER_EMAIL);
-
-        return $profile;
     }
 
 }
