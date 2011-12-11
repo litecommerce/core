@@ -39,7 +39,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * Parameters for the tags
      */
-
     const PARAM_TAG_LIST_CHILD_CLASS      = 'class';
     const PARAM_TAG_LIST_CHILD_LIST       = 'list';
     const PARAM_TAG_LIST_CHILD_WEIGHT     = 'weight';
@@ -47,7 +46,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     const PARAM_TAG_LIST_CHILD_FIRST      = 'first';
     const PARAM_TAG_LIST_CHILD_LAST       = 'last';
     const PARAM_TAG_LIST_CHILD_CONTROLLER = 'controller';
-
 
     /**
      * List of PHP classes with the "ListChild" tags
@@ -58,7 +56,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @since  1.0.0
      */
     protected $annotatedPHPCLasses;
-
 
     /**
      * Execute certain hook handler
@@ -325,8 +322,8 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
                     $data[self::PARAM_TAG_LIST_CHILD_WEIGHT] = $modelKey;
                 }
             }
-        } else {
 
+        } else {
             $data[self::PARAM_TAG_LIST_CHILD_WEIGHT] = intval($data[self::PARAM_TAG_LIST_CHILD_WEIGHT]);
         }
 

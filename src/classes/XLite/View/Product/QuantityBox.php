@@ -38,14 +38,12 @@ class QuantityBox extends \XLite\View\Product\AProduct
     /**
      * Widget param names
      */
-
     const PARAM_PRODUCT      = 'product';
     const PARAM_FIELD_NAME   = 'fieldName';
     const PARAM_FIELD_VALUE  = 'fieldValue';
     const PARAM_FIELD_TITLE  = 'fieldTitle';
     const PARAM_STYLE        = 'style';
     const PARAM_IS_CART_PAGE = 'isCartPage';
-
 
     /**
      * Register CSS files

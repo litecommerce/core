@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\Product;
 
 /**
  * Product search widget
@@ -35,7 +35,7 @@ namespace XLite\View;
  *
  * @ListChild (list="center.bottom", zone="customer", weight="100")
  */
-class Search extends \XLite\View\Dialog
+class AdvancedSearch extends \XLite\View\Product\AProduct
 {
     /**
      * Return list of targets allowed for this widget
@@ -46,9 +46,10 @@ class Search extends \XLite\View\Dialog
      */
     public static function getAllowedTargets()
     {
-        return array(
-            'search',
-        );
+        $list = parent::getAllowedTargets();
+        $list[] = 'search';
+
+        return $list;
     }
 
     /**
@@ -72,6 +73,6 @@ class Search extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'product/search';
+        return parent::getDir() . '/search/advanced_search';
     }
 }
