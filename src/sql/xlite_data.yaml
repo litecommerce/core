@@ -456,9 +456,9 @@ XLite\Model\LanguageLabel:
   - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: en, label: 'Importing will overwrite the existing product information. This operation connot be undone.' }] }
   - { name: 'To get the format of the import data, you can export your products to a file.', translations: [{ code: en, label: 'To get the format of the import data, you can <a href="{{url}}">export your products</a> to a file and them review the format of that file.' }] }
   - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: en, label: 'Depending on the size of your data file, importing may take some time.' }] }
-  - { name: 'Successfully imported X new products and upgraded Y old products', translations: [{ code: en, label: 'Successfully imported {{new}} new products and upgraded {{old}} old products' }] }
-  - { name: 'Successfully imported X new products', translations: [{ code: en, label: 'Successfully imported {{new}} new products' }] }
-  - { name: 'Successfully upgraded Y old products', translations: [{ code: en, label: 'Successfully upgraded {{old}} old products' }] }
+  - { name: 'Occurred X add product events and Y update product events', translations: [{ code: en, label: 'Occurred {{new}} add product events and {{old}} update product events.' }] }
+  - { name: 'Occurred X add product events', translations: [{ code: en, label: 'Occurred {{new}} add product events.' }] }
+  - { name: 'Occurred Y update product events', translations: [{ code: en, label: 'Occurred {{old}} update product events.' }] }
   - { name: 'Import mechanism does not know the field of X and it can not be imported', translations: [{ code: en, label: "Import mechanism does not know the field of '{{name}}' and it can not be imported" }] }
   - { name: 'The string is different from that of the title number of columns - X instead of Y', translations: [{ code: en, label: 'The string is different from that of the title number of columns - {{wrong}} instead of {{right}}' }] }
   - { name: 'Required field X is not defined or empty', translations: [{ code: en, label: "Required field '{{name}}' is not defined or empty. The product was not created" }] }

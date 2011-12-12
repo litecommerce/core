@@ -19,8 +19,8 @@
     <ul class="dependencies-list">
       <li class="dependency-element" FOREACH="module.getDependencyModules(),depend">
         <a href="#{depend.getName()}">{depend.getModuleName()}</a>
-        <span IF="depend.getEnabled()" class="module-condition enabled">({t(#enabled#)})</span>
-        <span IF="!depend.getEnabled()" class="module-condition disabled">({t(#disabled#)})</span>
+        <span IF="isInstalled(depend)" class="module-condition disabled">({t(#disabled#)})</span>
+        <span IF="!isInstalled(depend)" class="module-condition not-installed">({t(#not installed#)})</span>
       </li>
     </ul>
   </div>

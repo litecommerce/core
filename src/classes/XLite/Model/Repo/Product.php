@@ -160,6 +160,20 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     }
 
     /**
+     * Count last updated products
+     * 
+     * @param integer $limit Time limit
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    public function countLastUpdated($limit)
+    {
+        return intval($this->defineCountLastUpdatedQuery($limit)->getSingleScalarResult());
+    }
+
+    /**
      * Get REST entity names
      *
      * @return array
@@ -224,6 +238,24 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     protected function defineImportQuery()
     {
         return $this->createPureQueryBuilder('p');
+    }
+
+    /**
+     * Define query for countLastUpdated()
+     * 
+     * @param integer $limit Time limit
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function defineCountLastUpdatedQuery($limit)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p.product_id) cnt')
+            ->andWhere('p.updateDate > :time')
+            ->setParameter('time', $limit)
+            ->setMaxResults(1);
     }
 
     /**
