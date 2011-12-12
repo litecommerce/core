@@ -34,8 +34,10 @@ class Dev_Install extends PHPUnit_Extensions_SeleniumTestCase{
         public function testInstall()
         {
             $this->open("dev_install.php");
+            if ($this->isTextPresent("LiteCommerce software is not installed"))
+                return;
             sleep(30);
-            while (true) {
+            for ($i = 0; $i < 200; $i++) {
                 if ($this->isTextPresent("Congratulations, you installed Ecommerce CMS!"))
                     break;
                 sleep(10);
