@@ -20,7 +20,8 @@ class Dev_Install extends PHPUnit_Extensions_SeleniumTestCase{
         public function testCacheRebuild()
         {
             $this->setBrowserUrl(SELENIUM_SOURCE_URL_ADMIN . "/");
-            $this->restart();
+            $this->stop();
+            $this->start();
             $this->open('admin.php');
 
             sleep(30);
