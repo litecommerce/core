@@ -9,22 +9,38 @@ require_once "PHPUnit/Extensions/SeleniumTestCase/Driver.php";
 
 class Dev_Install extends PHPUnit_Extensions_SeleniumTestCase{
 
-    public function setUp(){
-        $this->setBrowser("*firefox");
-        $this->setBrowserUrl(SELENIUM_SOURCE_URL . "/");
-        $this->setHost(SELENIUM_SERVER);
-        $this->setPort(4444);
-    }
-
-    public function testInstall(){
-        $this->open("dev_install.php");
-        sleep(30);
-        while (true){
-            if($this->isTextPresent("Congratulations, you installed Ecommerce CMS!"))
-                break;
-            sleep(10);
+    public function setUp()
+        {
+            $this->setBrowser("*firefox");
+            $this->setBrowserUrl(SELENIUM_SOURCE_URL . "/");
+            $this->setHost(SELENIUM_SERVER);
+            $this->setPort(4444);
         }
-        //$this->waitForElementPresent("//a[text()='Visit your new site']");
-    }
+
+        public function testCacheRebuild()
+        {
+            $this->setBrowserUrl(SELENIUM_SOURCE_URL_ADMIN . "/");
+            $this->restart();
+            $this->open('admin.php');
+
+            sleep(30);
+            while (true) {
+                if ($this->isTextPresent("Administration Zone"))
+                    break;
+                sleep(10);
+            }
+        }
+
+        public function testInstall()
+        {
+            $this->open("dev_install.php");
+            sleep(30);
+            while (true) {
+                if ($this->isTextPresent("Congratulations, you installed Ecommerce CMS!"))
+                    break;
+                sleep(10);
+            }
+            //$this->waitForElementPresent("//a[text()='Visit your new site']");
+        }
 
 }
