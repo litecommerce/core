@@ -147,6 +147,28 @@ class OrderItemOption extends \XLite\Model\AEntity
     protected $order_item;
 
     /**
+     * Clone
+     *
+     * @return \XLite\Model\AEntity
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function cloneEntity()
+    {
+        $entity = parent::cloneEntity();
+
+        if ($this->getOption()) {
+            $entity->setOption($this->getOption());
+        }
+
+        if ($this->getGroup()) {
+            $entity->setGroup($this->getGroup());
+        }
+
+        return $entity;
+    }
+
+    /**
      * Get actual selected option name
      *
      * @return string

@@ -147,8 +147,14 @@ class Cart extends \XLite\Model\Order
     public function addItemsFromOrder(\XLite\Model\Order $order)
     {
         foreach($order->getItems() as $item) {
-            $this->addItem($item);
+
+            $newItem = $item->cloneEntity();
+            \XLite\Core\Database::getEM()->persist($newItem);
+
+            $this->addItem($newItem);
         }
+
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**

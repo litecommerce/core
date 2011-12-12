@@ -181,6 +181,28 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Clone
+     *
+     * @return \XLite\Model\AEntity
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function cloneEntity()
+    {
+        $newItem = parent::cloneEntity();
+
+        if ($this->getOrder()) {
+            $newItem->setOrder($this->getOrder());
+        }
+
+        if ($this->getObject()) {
+            $newItem->setObject($this->getObject());
+        }
+
+        return $newItem;
+    }
+
+    /**
      * Reset surcharges list
      *
      * @return void
@@ -197,8 +219,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get through exclude surcharges 
-     * 
+     * Get through exclude surcharges
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -405,10 +427,10 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Set price 
-     * 
+     * Set price
+     *
      * @param float $price Price
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.8
@@ -439,7 +461,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Renew order item
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.8
@@ -527,8 +549,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Calculate net subtotal 
-     * 
+     * Calculate net subtotal
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
@@ -542,7 +564,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Get net subtotal without round net price
-     * 
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.8
@@ -555,8 +577,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Define net price 
-     * 
+     * Define net price
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
@@ -586,8 +608,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Check item amount 
-     * 
+     * Check item amount
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.8

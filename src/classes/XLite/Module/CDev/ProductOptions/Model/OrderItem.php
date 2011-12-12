@@ -61,6 +61,37 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
     }
 
     /**
+     * Clone
+     *
+     * @return \XLite\Model\AEntity
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function cloneEntity()
+    {
+        $entity = parent::cloneEntity();
+
+        \XLite\Core\Database::getEM()->persist($entity);
+        \XLite\Core\Database::getEM()->flush();
+
+        if ($this->hasOptions()) {
+
+            foreach ($this->getOptions() as $orderItemOption) {
+
+                $newOrderItemOption = $orderItemOption->cloneEntity();
+
+                \XLite\Core\Database::getEM()->persist($newOrderItemOption);
+                \XLite\Core\Database::getEM()->flush();
+
+                $newOrderItemOption->setOrderItem($entity);
+            }
+        }
+
+        return $entity;
+    }
+
+
+    /**
      * Check - has item product options or not
      *
      * @return boolean
