@@ -24,8 +24,6 @@ class Dev_Install extends PHPUnit_Extensions_SeleniumTestCase{
         public function testCacheRebuild()
         {
 
-            $this->stop();
-            $this->start();
             $this->open('admin.php');
 
             //sleep(30);
