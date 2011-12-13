@@ -9,7 +9,8 @@ require_once "PHPUnit/Extensions/SeleniumTestCase/Driver.php";
 
 class Dev_Install extends PHPUnit_Extensions_SeleniumTestCase{
 
-    static $isCacheRebuilt = false;
+    static $isCacheRebuilt;
+
     public function setUp()
         {
             $this->setBrowser("*firefox");
