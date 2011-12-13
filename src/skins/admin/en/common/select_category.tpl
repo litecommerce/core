@@ -18,8 +18,9 @@
     <option
       IF="!getArrayField(category,#category_id#)=getParam(#currentCategoryId#)"
       value="{getArrayField(category,#category_id#)}"
-      selected="{isCategorySelected(category)}"
-      style="padding-left: {getIndentation(category,15)}px;">{getCategoryPath(category):h}</option>
+      selected="{isCategorySelected(category)}">
+        {getIndentationString(category,3,#-#)} {getCategoryName(category):h}
+    </option>
   {end:}
   <option value="" IF="isDisplayNoCategories()">{t(#-- No categories --#)}</option>
 </select>
