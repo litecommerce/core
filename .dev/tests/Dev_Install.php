@@ -9,33 +9,17 @@ require_once "PHPUnit/Extensions/SeleniumTestCase/Driver.php";
 
 class Dev_Install extends PHPUnit_Extensions_SeleniumTestCase{
 
-    static $isCacheRebuilt;
+
 
     public function setUp()
         {
             $this->setBrowser("*firefox");
-            if (self::$isCacheRebuilt)
-                $this->setBrowserUrl(SELENIUM_SOURCE_URL . "/");
-            else
-                $this->setBrowserUrl(SELENIUM_SOURCE_URL_ADMIN . "/");
+            $this->setBrowserUrl(SELENIUM_SOURCE_URL . "/");
             $this->setHost(SELENIUM_SERVER);
             $this->setPort(4444);
         }
 
-        public function testCacheRebuild()
-        {
 
-            $this->open('admin.php');
-
-            //sleep(30);
-            for($i = 0; $i < 1000; $i++) {
-                if ($this->isTextPresent("Administration Zone"))
-                    break;
-                sleep(10);
-            }
-            self::$isCacheRebuilt = true;
-
-        }
 
         public function testInstall()
         {
