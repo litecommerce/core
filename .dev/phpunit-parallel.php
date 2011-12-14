@@ -5,7 +5,7 @@
  * Constants to run tests
  */
 if (!defined('SELENIUM_CLIENTS_COUNT'))
-    define('SELENIUM_CLIENTS_COUNT', 3);
+    define('SELENIUM_CLIENTS_COUNT', _clients_count_);
 
 /**
  * @param array $array
@@ -418,6 +418,9 @@ class TestTask
     function stop(ResourcePool $resources)
     {
         print PHP_EOL . "Stopping test: " . $this->name;
+        $status = proc_get_status($this->process);
+        if ($status['exitcode'])
+            print "fail";
         $this->status = 'complete';
         proc_close($this->process);
         foreach (array_merge($this->resources, $this->uses) as $resource) {
@@ -524,14 +527,10 @@ class ResourcePool
 
     public function isBlocked()
     {
-        if (!empty($this->resources) && array_all($this->resources, function ($res)
-            {
-                return $res != RESOURCE_RESERVED;
-            })
-        ) {
-            print PHP_EOL . " BLOCKED";
+        if (!empty($this->resources)
+            && array_all($this->resources,
+                         function ($res){ return $res != RESOURCE_RESERVED;}))
             return true;
-        }
         return false;
     }
 

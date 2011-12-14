@@ -80,7 +80,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      */
     public function getTermsURL()
     {
-        return $this->buildURL('main');
+        return $this->buildURL('terms');
     }
 
     /**

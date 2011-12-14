@@ -122,6 +122,14 @@
       onmouseout="javascript:jQuery('.hidden-{cat.getCategoryId()}').hide()">
 
       <td class="table-label" colspan="2">
+
+        <span class="category-position">
+          <input type="text" name="{getNamePostedData(#pos#,cat.getCategoryId())}" value="{cat.getPos()}" size="4" />
+          <span class="category-position-text">{t(#Pos.:#)}</span>
+        </span>
+
+        &nbsp;&nbsp;
+
         <a
           href="{buildURL(#categories#,##,_ARRAY_(#category_id#^cat.getCategoryId()))}"
           title="{t(#Click here to access/add subcategories#)}"
@@ -139,15 +147,6 @@
           class="\XLite\View\Button\DeleteCategory"
           categoryId="{cat.getCategoryId()}"
           style="hidden hidden-{cat.getCategoryId()}" />
-
-        &nbsp;&nbsp;
-
-        <widget
-          IF="cat.hasSubcategories()"
-          class="\XLite\View\Button\DeleteCategory"
-          categoryId="{cat.getCategoryId()}"
-          style="hidden hidden-{cat.getCategoryId()}"
-          removeSubcategories="true" />
 
       </td>
 

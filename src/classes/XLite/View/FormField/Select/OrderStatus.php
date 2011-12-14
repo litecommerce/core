@@ -181,7 +181,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
      */
     protected function isOptionDisabled($option)
     {
-        return \XLite\Model\Order::STATUS_PROCESSED === $option
+        return in_array($option, array(\XLite\Model\Order::STATUS_PROCESSED, \XLite\Model\Order::STATUS_COMPLETED))
             && $this->isInventoryWarning();
     }
 

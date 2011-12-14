@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Maintenance menu
+ * Addons menu
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -12,4 +12,4 @@
  * @ListChild (list="menus", weight="70")
  *}
 
-<widget class="\XLite\View\TopMenu\Node" list="addons" title="{t(#Add-ons#)}" className="addons" linkTarget="addons_list_installed" />
+<widget class="\XLite\View\TopMenu\Node" title="{t(#Add-ons#)}" linkTarget="addons_list_installed" />

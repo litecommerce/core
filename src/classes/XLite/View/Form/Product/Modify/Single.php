@@ -79,7 +79,7 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
         );
         $data->addPair('sku', new \XLite\Core\Validator\String(), null, static::t('SKU'));
         $data->addPair('name', new \XLite\Core\Validator\String(true), null, static::t('Product Name'));
-        $data->addPair('category_ids', new \XLite\Core\Validator\PlainArray(), null, static::t('Category'))
+        $data->addPair('category_ids', new \XLite\Core\Validator\PlainArray(), $soft, static::t('Category'))
             ->setValidator(new \XLite\Core\Validator\Integer());
         $data->addPair('price', new \XLite\Core\Validator\Float(), null, static::t('Price'))
             ->setRange(0);

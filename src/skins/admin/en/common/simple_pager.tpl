@@ -10,10 +10,10 @@
  * @since     1.0.0
  *}
 <form class="simple-pager" action="{getParam(#url#)}" method="get" name="simple_pager_form">
-  t(#Pages#)}:
+  {t(#Pages#)}:
   <a IF="isPrevPage()" href="{getPrevURL()}" class="arrow previous"><img src="images/spacer.gif" alt="" /></a>
   <input type="text" name="page" value="{getParam(#page#)}" />
   <a IF="isNextPage()" href="{getNextURL()}" class="arrow next"><img src="images/spacer.gif" alt="" /></a>
-  t(#of#)}
+  {t(#of#)}
   <a href="{getLastURL()}" class="total">{getParam(#pages#)}</a>
 </form>

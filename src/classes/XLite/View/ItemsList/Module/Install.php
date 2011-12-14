@@ -519,8 +519,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
                 , '/'
             )
         );
-        $apiURL = preg_replace('/^http:\/\//Ss', 'https://', $apiURL);
-
+        
         // Remove 'api' directory
         $apiURL = preg_replace('/\?q=.+/Ss', '', $apiURL);
         $apiURL = preg_replace('/\/api$/Ss', '/', $apiURL);

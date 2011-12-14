@@ -31,6 +31,8 @@ class XLite_Tests_Module_CDev_FeaturedProducts_Model_Repo_FeaturedProduct extend
 
     protected $category;
 
+    protected $featuredProduct;
+
     public function testGetFeaturedProducts($categoryId = 0)
     {
         $p = $this->getProduct();
@@ -103,8 +105,19 @@ class XLite_Tests_Module_CDev_FeaturedProducts_Model_Repo_FeaturedProduct extend
         \XLite\Core\Database::getEM()->flush();
 
         $this->assertNotNull($fProduct, 'getTestFeaturedProduct() returned null, object expected');
-
+        $this->featuredProduct = $fProduct;
         return $fProduct;
+    }
+
+    protected function tearDown()
+    {
+        if ($this->featuredProduct) {
+            $em = \XLite\Core\Database::getEM();
+            if (!$em->contains($this->featuredProduct))
+                $em->merge($this->featuredProduct);
+            $em->remove($this->featuredProduct);
+            $em->flush();
+        }
     }
 
 }

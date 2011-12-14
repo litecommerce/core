@@ -45,6 +45,10 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         return $request;
     }
 
+    static function setUpBeforeClass(){
+        xlite_restore_sql_from_backup();
+    }
+
     public function testCalculation()
     {
         \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
@@ -362,7 +366,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $this->assertEquals(690.27, $order->getTotal(), 'check order total');
     }
 
-    protected function getTestOrder()
+    protected function getTestOrder($new_order = false)
     {
         $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->getTax();
         foreach ($tax->getRates() as $rate) {
@@ -380,7 +384,7 @@ class XLite_Tests_Module_CDev_VAT_Model_Order extends XLite_Tests_Model_OrderAbs
         $tax->setVATMembership(null);
         $tax->setVATZone(null);
 
-        $order = parent::getTestOrder();
+        $order = parent::getTestOrder($new_order);
 
         $order->getItems()->get(0)->getProduct()->setPrice(10);
         $order->getItems()->get(0)->setPrice(10);

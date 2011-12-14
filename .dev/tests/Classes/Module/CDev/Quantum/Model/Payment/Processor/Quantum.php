@@ -25,7 +25,7 @@
  * @since      1.0.0
  */
 
-class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XLite_Tests_Model_OrderAbstract
+class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XLite_Tests_Model_Payment_PaymentAbstract
 {
     protected $testMethod = array(
         'service_name' => 'test',
@@ -294,12 +294,12 @@ HTML;
             'check error value #2'
         );
     }
-
+    /**
+    * @return \XLite\Model\Payment\Method
+    */
     protected function getTestMethod()
     {
-        $method = new \XLite\Model\Payment\Method();
-
-        $method->map($this->testMethod);
+        $method = parent::getTestMethod();
 
         $s = new \XLite\Model\Payment\MethodSetting();
 
@@ -330,14 +330,5 @@ HTML;
         return $method;
     }
 
-    protected function getTestOrder()
-    {
-        $order = parent::getTestOrder();
 
-        $order->setPaymentMethod($this->getTestMethod());
-
-        \XLite\Core\Database::getEM()->flush();
-
-        return $order;
-    }
 }

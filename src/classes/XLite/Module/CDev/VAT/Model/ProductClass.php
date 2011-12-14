@@ -42,7 +42,7 @@ abstract class ProductClass extends \XLite\Model\ProductClass implements \XLite\
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @OneToMany (targetEntity="XLite\Module\CDev\VAT\Model\Tax\Rate", mappedBy="product_class", cascade={"all"})
+     * @OneToMany (targetEntity="XLite\Module\CDev\VAT\Model\Tax\Rate", mappedBy="productClass", cascade={"all"})
      */
     protected $tax_rates;
 

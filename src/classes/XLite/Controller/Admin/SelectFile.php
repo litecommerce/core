@@ -378,6 +378,15 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
         $methodToLoad .= 'Import';
 
         $path = call_user_func_array(array($this, $methodToLoad), $paramsToLoad);
+        if (is_array($path)) {
+
+            if (!$path[0] && $path[1]) {
+                \XLite\Core\TopMessage::addError($path[1]);
+            }
+
+            $path = $path[0];
+        }
+
         if ($path) {
             chmod($path, 0644);
             \XLite\Core\Session::getInstance()->importCell = array(
@@ -438,23 +447,61 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      * 
      * @param string $key Request key
      *  
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.11
      */
     protected function loadFromRequestImport($key)
     {
         $result = null;
+        $error = null;
+        $message = null;
 
         $cell = isset($_FILES[$key]) ? $_FILES[$key] : null;
-        if ($cell && UPLOAD_ERR_OK == $cell['error']) {
-            $path = \Includes\Utils\FileManager::getUniquePath(LC_DIR_TMP, $cell['name']);
-            if (move_uploaded_file($cell['tmp_name'], $path)) {
-                $result = $path;
+        if ($cell) {
+            $size = null;
+            switch ($cell['error']) {
+                case UPLOAD_ERR_OK:
+                    $path = \Includes\Utils\FileManager::getUniquePath(LC_DIR_TMP, $cell['name']);
+                    if (move_uploaded_file($cell['tmp_name'], $path)) {
+                        $result = $path;
+                    }
+                    break;
+
+                case UPLOAD_ERR_INI_SIZE:
+                    $size = ini_get('upload_max_filesize');
+
+                case UPLOAD_ERR_FORM_SIZE:
+                    $size = $size ?: \XLite\Core\Request::getInstance()->MAX_FILE_SIZE;
+                    $error = 'File size exceeds the maximum size (' . $size . ')';
+                    $size = \XLite\Core\Converter::convertShortSizeToHumanReadable($size);
+                    $message = \XLite\Core\Translation::lbl('File size exceeds the maximum size', array('size' => $size));
+                    break;
+
+                case UPLOAD_ERR_PARTIAL:
+                    $error = 'The uploaded file was only partially uploaded';
+
+                case UPLOAD_ERR_NO_FILE:
+                    $error = $error ?: 'No file was uploaded';
+
+                case UPLOAD_ERR_NO_TMP_DIR:
+                    $error = $error ?: 'Missing a temporary folder';
+
+                case UPLOAD_ERR_CANT_WRITE:
+                    $error = $error ?: 'Failed to write file to disk';
+
+                case UPLOAD_ERR_EXTENSION:
+                    $message = \XLite\Core\Translation::lbl('The file was not loaded because of a failure on the server.');
+                    $error = $error ?: 'File upload stopped by extension';
+                    break;
             }
         }
 
-        return $result;
+        if ($result && $message) {
+            \XLite\Logger::getInstance()->log('Upload file error: ' . $error ?: $message, LOG_ERR);
+        }
+
+        return array($result, $message);
     }
 
     /**

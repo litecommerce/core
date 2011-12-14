@@ -25,7 +25,7 @@
  * @since      1.0.0
  */
 
-class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout extends XLite_Tests_Model_OrderAbstract
+class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout extends XLite_Tests_Model_Payment_PaymentAbstract
 {
     protected $testMethod = array(
         'service_name' => 'test',
@@ -223,12 +223,12 @@ HTML;
             );
         }
     }
-
+    /**
+    * @return XLite\Model\Order
+    */
     protected function getTestMethod()
     {
-        $method = new \XLite\Model\Payment\Method();
-
-        $method->map($this->testMethod);
+        $method = parent::getTestMethod();
 
         $s = new \XLite\Model\Payment\MethodSetting();
 
@@ -278,17 +278,6 @@ HTML;
         \XLite\Core\Database::getEM()->flush();
 
         return $method;
-    }
-
-    protected function getTestOrder()
-    {
-        $order = parent::getTestOrder();
-
-        $order->setPaymentMethod($this->getTestMethod());
-
-        \XLite\Core\Database::getEM()->flush();
-
-        return $order;
     }
 
     protected function checkTwoCheckoutConfigOptions()

@@ -32,6 +32,8 @@ class XLite_Tests_Model_FormId extends XLite_Tests_TestCase
         'expiry' => 1602488245, // 2020 year
     );
 
+    protected $formId;
+
     public function testCreate()
     {
         list($formId, $session) = $this->getTestFormId();
@@ -89,8 +91,12 @@ class XLite_Tests_Model_FormId extends XLite_Tests_TestCase
 
         \XLite\Core\Database::getEM()->persist($formId);
         \XLite\Core\Database::getEM()->flush();
-
+        $this->formId = $formId;
 
         return array($formId, $session);
+    }
+    protected function tearDown(){
+        $this->clearEntity($this->formId);
+        parent::tearDown();
     }
 }

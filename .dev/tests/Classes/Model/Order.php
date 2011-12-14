@@ -148,8 +148,9 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         \XLite\Core\Database::getEM()->clear();
 
-        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($order->getOrderId());
+        $this->order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($order->getOrderId());
 
+        $order = $this->order;
         $shippingCost = $order->getSurchargeSumByType('shipping');
 
         $this->assertEquals(2, $order->getItems()->get(0)->getAmount(), 'check quantity');
@@ -187,6 +188,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         \XLite\Core\Database::getEM()->remove($order);
         \XLite\Core\Database::getEM()->flush();
+        $this->order = null;
 
         $order = \XLite\Core\Database::getRepo('XLite\Model\Order')
             ->find($id);
@@ -267,6 +269,8 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $this->assertFalse($order->addItem($item), 'check add item #3');
         $this->assertEquals($order::NOT_VALID_ERROR, $order->getAddItemError(), 'check error text');
+        \XLite\Core\Database::getEM()->remove($order);
+        \XLite\Core\Database::getEM()->flush();
 	}
 
     public function testGetAddItemError()
@@ -317,7 +321,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
 		$order->addItem($item);
 
-        \XLite\Core\Database::getEM()->persist($order);
+       // \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         $this->assertEquals(
@@ -328,7 +332,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $this->assertTrue(is_null($order->getItemByItemId(-1)), 'check not exists item');
 
-		$o2 = $this->getTestOrder();
+		$o2 = $this->getTestOrder(true);
 
 		$id = $o2->getItems()->get(0)->getItemId();
 
@@ -362,7 +366,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $this->assertEquals(1, $order->getItems()->count(), 'check order items count #3');
 
-        \XLite\Core\Database::getEM()->persist($order);
+        //\XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         $list = \XLite\Core\Database::getRepo('XLite\Model\Product')->findByEnabled(true);
@@ -382,7 +386,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $this->assertEquals(2, $order->getItems()->count(), 'check order items count #4');
 
-        \XLite\Core\Database::getEM()->persist($order);
+        //\XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         $order->normalizeItems();
@@ -823,14 +827,15 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
     public function testGetEventFingerprint()
     {
         $order = $this->getTestOrder();
-
+        $product = $this->getProduct();
+        $product->getInventory()->setEnabled(false);
         $etalon = array(
             'items' => array(
                 array(
                     'item_id'     => $order->getItems()->get(0)->getItemId(),
-                    'key'         => 'product.' . $this->getProduct()->getProductId(),
+                    'key'         => 'product.' . $product->getProductId(),
                     'object_type' => 'product',
-                    'object_id'   => $this->getProduct()->getProductId(),
+                    'object_id'   => $product->getProductId(),
                     'options'     => array(),
                     'quantity'    => 1,
                 ),
@@ -841,9 +846,9 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $item = new \XLite\Model\OrderItem();
 
-        $item->setProduct($this->getProduct());
+        $item->setProduct($product);
         $item->setAmount(2);
-        $item->setPrice($this->getProduct()->getPrice());
+        $item->setPrice($product->getPrice());
 
         $this->assertTrue($order->addItem($item), 'check add item');
 
@@ -958,9 +963,9 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
         // TODO - rework test after rework tax subsystem
     }
 
-    protected function getTestOrder()
+    protected function getTestOrder($new_order = false)
     {
-        $order = parent::getTestOrder();
+        $order = parent::getTestOrder($new_order);
 
         $method = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
             ->findOneBy(array('service_name' => 'PurchaseOrder'));

@@ -31,9 +31,13 @@
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
+ * @resource profiles
  */
 class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
 {
+    static $admin = array('email' => 'rnd_tester@cdev.ru', 'password' => 'master');
+    static $guest = array('email' => 'rnd_tester@rrf.ru', 'password' => 'guest');
+
     /**
      * testAddSessionVarToClear
      *
@@ -128,6 +132,10 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
 
         $this->assertTrue($result instanceof \XLite\Model\Profile, 'Test #8');
         $this->assertEquals(2, $result->getProfileId(), 'Test #8: checking profile_id');
+
+        $profile->setPassword(self::$guest['password']);
+        \XLite\Core\Auth::getInstance()->setSecureHash('');
+
    }
 
     /**
@@ -398,6 +406,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
         $result = \XLite\Core\Session::getInstance()->$cell;
 
         $this->assertEquals($hashString, $result, 'Checking setSecureHash() result');
+
+        \XLite\Core\Auth::getInstance()->setSecureHash('');
     }
 
     /**

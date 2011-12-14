@@ -1160,6 +1160,40 @@ class Marketplace extends \XLite\Base\Singleton
     // {{{ Cache-related routines
 
     /**
+     * Clearing the temporary cache for a given marketplace action
+     *
+     * @param string $action Marketplace action
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    public function clearActionCache($action)
+    {
+        list($cellTTL, $cellData) = $this->getActionCacheVars($action);
+
+        \XLite\Core\TmpVars::getInstance()->$cellData = null;
+        \XLite\Core\TmpVars::getInstance()->$cellTTL  = null;
+    }
+
+    /**
+     * Return action cache variables
+     *
+     * @param string $action Marketplace action
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function getActionCacheVars($action)
+    {
+        return array(
+            $action . 'TTL',
+            $action . 'Data'
+        );
+    }
+
+    /**
      * Perform some action if a TTL is expired
      *
      * @param integer $ttl           Time to live
@@ -1175,8 +1209,7 @@ class Marketplace extends \XLite\Base\Singleton
     {
         $result = self::TTL_NOT_EXPIRED;
 
-        $cellTTL  = $action . 'TTL';
-        $cellData = $action . 'Data';
+        list($cellTTL, $cellData) = $this->getActionCacheVars($action);
 
         // Check if expired
         if (!$this->checkTTL($cellTTL, $ttl)) {

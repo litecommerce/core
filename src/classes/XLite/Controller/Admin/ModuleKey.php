@@ -80,6 +80,9 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
                     $entity = $repo->insert($info + array('keyValue' => $key));
                 }
 
+                // Clear cache for proper installation
+                \XLite\Core\Marketplace::getInstance()->clearActionCache(\XLite\Core\Marketplace::ACTION_GET_ADDONS_LIST);
+
                 $this->showInfo(
                     __FUNCTION__,
                     'License key has been successfully verified for "{{name}}" module by "{{author}}" author',

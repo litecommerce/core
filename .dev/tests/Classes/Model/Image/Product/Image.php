@@ -136,4 +136,9 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
 
         return $this->product;
     }
+    protected function tearDown(){
+        $this->product = null;
+        $this->doRestoreDb();
+        parent::tearDown();
+    }
 }
