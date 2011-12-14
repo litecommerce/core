@@ -306,6 +306,9 @@ class testRunner
 
     private function run()
     {
+        if ($this->isBlocked()) {
+            print PHP_EOL . 'Clients left: '. $this->clientsCount . PHP_EOL;
+        }
         foreach ($this->tests as $test)
         {
             if ($this->block_all)
@@ -348,6 +351,8 @@ class TestTask
      * @var Resource
      */
     public $process = null;
+
+    private $exitCode = 0;
 
     function __construct($filePath, $classesDir)
     {
@@ -418,8 +423,7 @@ class TestTask
     function stop(ResourcePool $resources)
     {
         print PHP_EOL . "Stopping test: " . $this->name;
-        $status = proc_get_status($this->process);
-        if ($status['exitcode'])
+        if ($this->exitCode)
             print "fail";
         $this->status = 'complete';
         proc_close($this->process);
@@ -433,6 +437,8 @@ class TestTask
         if ($this->status != 'running' || $this->process == null)
             return false;
         $status = proc_get_status($this->process);
+        if (!$status['running'])
+            $this->exitCode = $status['exitcode'];
         return $status['running'];
     }
 
