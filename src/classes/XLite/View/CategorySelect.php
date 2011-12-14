@@ -186,6 +186,7 @@ class CategorySelect extends \XLite\View\AView
 
     /**
      * getIndentation
+     * TODO: review and remove this if this obsolete metho
      *
      * @param array   $category   Category data
      * @param integer $multiplier Level's multiplier
@@ -215,5 +216,21 @@ class CategorySelect extends \XLite\View\AView
         }
 
         return ($result - 1) * $multiplier + 3;
+    }
+
+    /**
+     * Return indentation string for displaying category depth level
+     *
+     * @param array   $category   Category data
+     * @param integer $multiplier Level's multiplier
+     * @param string  $repeatStr String to be displayed $multiplier times before category name OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function getIndentationString(array $category, $multiplier, $repeatStr = '')
+    {
+        return str_repeat($repeatStr, $category['depth'] * $multiplier);
     }
 }
