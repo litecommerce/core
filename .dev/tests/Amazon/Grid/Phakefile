@@ -1,0 +1,344 @@
+<?php
+
+function wait_for_service($url, $port, $timeout)
+{
+    $time = time() + $timeout;
+    while ($time > time()) {
+        $ch = curl_init($url . ':' . $port);
+        curl_setopt($ch, CURLOPT_HEADER, TRUE);
+        curl_setopt($ch, CURLOPT_NOBODY, TRUE); // remove body
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if ($httpCode == 200)
+            return true;
+    }
+    return false;
+}
+
+function array_reduce_index($array, $callback, $initial = null)
+{
+    foreach ($array as $key => $element) {
+        $initial = call_user_func($callback, $initial, $element, $key);
+    }
+    return $initial;
+}
+
+require_once "lib/Cloud.php";
+task("setup", function ($app)
+{
+    $app['remote_control_port_range'] = array_key_exists('remote_control_port_range', $app) ? $app['remote_control_port_range'] : "5555-5560";
+    $app['launch_timeout'] = array_key_exists('launch_timeout', $app) ? $app['launch_timeout'] : 240;
+    $app['cloud'] = Cloud::getInstance();
+    $app['farms_count'] = 5;
+    $app['hub_ami'] = exec("ec2-describe-images -a | grep lc-test-grid | cut -f2");
+    $app['lc_ami'] = exec("ec2-describe-images -a | grep lc-server | cut -f2");
+    $app['server_instance_type'] = 'c1.medium';
+    $app['grid_instance_type'] = 'c1.medium';
+    //$app['server_instance_type'] = 't1.micro';
+    //$app['grid_instance_type'] = 't1.micro';
+    //$app['server_instance_type'] = "m1.small";
+    //$app['grid_instance_type'] = "m1.small";
+
+    $app['keypair'] = getenv("EC2_KEYPAIR");
+    $app['keypair_name'] = getenv("EC2_KEYPAIR_NAME");
+    $app['selenium_grid_path'] = "/http/selenium/selenium-grid";
+});
+
+
+group("grid", function()
+{
+    desc("Boot EC2 Instances for a Selenium Grid of 1 Hub and <farms_count> Remote Control Farms.");
+    task("boot", "setup", "hub:boot", "rc:boot", "server:boot", function($app)
+    {
+        Ec2Client::authorize_port(22);
+        Ec2Client::authorize_port(4444);
+        Ec2Client::authorize_port(5900);
+        Ec2Client::authorize_port(6000);
+        $boundaries = explode("-", $app['remote_control_port_range']);
+        for ($i = $boundaries[0]; $i < $boundaries[1]; $i++) {
+            Ec2Client::authorize_port($i);
+        }
+    });
+
+    desc("Shutdown EC2 Instance used to run Selenium Hub.");
+    task("shutdown", 'setup', "hub:shutdown", "server:shutdown", "rc:shutdown", function ($app)
+    {
+        $app['cloud'] = Cloud::getInstance();
+        $app['cloud']->save();
+    });
+
+
+    task("start_hub", "boot", "hub:start", "rc:vnc:start", function($app)
+    {
+        wait_for_service($app['cloud']->hub->public_dns, 4444, $app['launch_timeout']);
+    });
+
+    desc("Start Selenium Grid.");
+    task("start", "start_hub", "rc:start", "server:setup");
+
+    desc("Stop Selenium Grid Hub.");
+    task("stop", "rc:stop", "hub:stop");
+
+    desc("Display information about current Selenium Grid");
+    task("info", 'setup', function($app)
+    {
+        print
+            PHP_EOL . "EC2 Selenium Grid:
+        ==================
+
+        Hub:
+        ----"
+                . ($app['cloud']->hub ?
+                "\n      - Public DNS:  " . $app['cloud']->hub->public_url .
+                    "\n      - Private DNS: " . $app['cloud']->hub->private_url .
+                    "\n      - Console:     " . $app['cloud']->hub->console_url : "") .
+                PHP_EOL .
+                "  LC server:
+        ----"
+                . ($app['cloud']->server ?
+                "\n      - Public DNS:  " . $app['cloud']->server->public_dns .
+                    "\n      - Private DNS: " . $app['cloud']->server->private_dns .
+                    "\n      - Admin URL: " . $app['cloud']->server->admin_url .
+                    "\n      - XLite CMS URL: " . $app['cloud']->server->cms_url : "") .
+                PHP_EOL .
+                "  Remote Control Farms:
+        ---------------------"
+                . array_reduce_index($app['cloud']->farms, function($val, $el, $key) use($app)
+            {
+                return $val . PHP_EOL .
+                    "       * Farm #$key
+                    - Public DNS:  " . $el->public_dns . PHP_EOL
+                    . "               - Private DNS: " . $el->private_dns . PHP_EOL
+                    . "               - Port Range: " . $app['remote_control_port_range'] . PHP_EOL;
+
+            });
+    });
+
+    task("refresh_status", function($app)
+    {
+        $app['cloud'] = Cloud::getInstance();
+    });
+});
+
+###### Hub Recipes ######
+group("hub", function()
+{
+    desc("Boot a new EC2 Instance to Run Selenium Grid Hub.");
+    task("boot", function($app)
+    {
+        print PHP_EOL . "Starting a new EC2 Instance...";
+        $app['cloud']->hub = Hub::boot_and_acquire_dns($app['hub_ami'], array('keypair_name' => $app['keypair_name'], 'type' => $app['grid_instance_type']));
+        print PHP_EOL . "Started new Hub at " . $app['cloud']->hub->public_dns;
+        $app['cloud']->save();
+    });
+
+    desc("Shutdown EC2 Instance used to run Selenium Hub.");
+    task("shutdown", function($app)
+    {
+        if ($app['cloud']->hub) {
+            print PHP_EOL . "Shutting down EC2 Instance " . $app['cloud']->hub->public_dns . "...";
+            $app['cloud']->hub->shutdown();
+            $app['cloud']->hub = null;
+            $app['cloud']->save();
+        }
+    });
+
+    desc("(Re)start Selenium Grid Hub.");
+    task("restart", ":stop", ":start");
+
+    desc("Start Selenium Grid Hub.");
+    task("start", function($app)
+    {
+        $app['cloud']->hub->run("nohup rake hub:start BACKGROUND=true", array('pwd' => $app['selenium_grid_path'], 'keypair' => $app['keypair']));
+    });
+
+    desc("Stop Selenium Grid Hub.");
+    task("stop", function($app)
+    {
+        $app['cloud']->hub->run('rake hub:stop', array('pwd' => $app['selenium_grid_path'], 'keypair' => $app['keypair']));
+        $app['cloud']->save();
+    });
+
+    desc("Open Selenium Grid Hub Console in a browser.");
+    task("console", function($app)
+    {
+        exec("firefox " . $app['cloud']->hub->console_url);
+    });
+
+    desc("View Selenium Grid Hub logs.");
+    task('logs', function($app)
+    {
+        $app['cloud']->hub->run("tail -200f " . $app['selenium_grid_path'] . "/log/hub.log", array('keypair' => $app['keypair']));
+    });
+
+});
+
+
+###### Remote Control Recipes ######
+group("rc", function()
+{
+
+    desc("Boot a new EC2 Instance to run a collection of Selenium Grid Remote Controls.");
+    task("boot", function($app)
+    {
+        for ($i = 0; $i < $app['farms_count']; $i++) {
+            print PHP_EOL . "Starting a new EC2 Instance...";
+            try {
+                $farm = Server::boot_and_acquire_dns($app['hub_ami'], array('keypair_name' => $app['keypair_name'], 'type' => $app['grid_instance_type']));
+                $app['cloud']->farms[] = $farm;
+                $app['cloud']->save();
+                print PHP_EOL . "Started new Remote Control farm at " . $farm->public_dns;
+            }
+            catch (Exception $e) {
+                print PHP_EOL . "Failed to boot new Remote Control farm.";
+            }
+        }
+    });
+
+    desc("Shutdown all EC2 Instances used to run Selenium Grid Remote Controls.");
+    task("shutdown", function($app)
+    {
+        foreach ($app['cloud']->farms as $key => $farm) {
+            print PHP_EOL . "Shutting down EC2 Instance " . $farm->public_dns . "...";
+            $farm->shutdown();
+            unset($app['cloud']->farms[$key]);
+        }
+        $app['cloud']->save();
+    });
+
+    desc("(Re)start Remote Controls for all farms.");
+    task('restart', "stop", "start");
+
+    group("vnc", function()
+    {
+        desc("Start VNC server on all Remote Control Farms");
+        task("start", function($app)
+        {
+            foreach ($app['cloud']->farms as $key => $farm) {
+                $farm->run("nohup vncserver :0", array('keypair' => $app['keypair']));
+            }
+            Ec2Client::authorize_port(5900);
+            Ec2Client::authorize_port(6000);
+        });
+    });
+
+    desc("Start Remote Controls for all farms.");
+    task('start', function($app)
+    {
+        foreach ($app['cloud']->farms as $farm) {
+            $farm->run("nohup rake rc:start_all HUB_URL=" . $app['cloud']->hub->private_url . " HOST=" . $farm->private_dns . " PORTS=" . $app['remote_control_port_range'] . " BACKGROUND=true",
+                array('display' => ":0", 'path' => "/usr/lib/firefox-8.0", 'pwd' => $app["selenium_grid_path"], 'keypair' => $app['keypair']));
+
+        }
+    });
+
+    desc("Stop Remote Controls for all farms.");
+    task('stop', function($app)
+    {
+        foreach ($app['cloud']->farms as $farm) {
+            $farm->run("rake rc:stop_all PORTS=" . $app['remote_control_port_range'], array('pwd' => $app['selenium_grid_path'], 'keypair' => $app['keypair']));
+        }
+    });
+
+    desc("Visualize what is happening in Remote Control Farms with VNC");
+    task('view', function($app)
+    {
+        foreach ($app['cloud']->farms as $farm) {
+            exec("vncviewer -passwd " . $app['vnc_passwd'] . " " . $farm->public_dns . " >> /dev/null &");
+        }
+    });
+
+});
+
+###### Settings Recipes ######
+group("ec2", function()
+{
+    desc("Check EC2 related configuration.");
+    task('check_settings', function()
+    {
+        print PHP_EOL . "Validating environment variables...";
+        foreach (array("EC2_HOME", "EC2_PRIVATE_KEY", "EC2_CERT", "EC2_KEYPAIR") as $var) {
+            if (!getenv($var))
+                throw new Exception(PHP_EOL .
+                    "+++++++++++++++++++++++++++++++++++++++++++++++
+                You must set $var.
+
+                Read http://docs.amazonwebservices.com/AWSEC2/2007-08-29/GettingStartedGuide/?ref=get-started
+                for more details.
+
+                ++++++++++++++++++++++++++++++++++++++++++++++++" . PHP_EOL);
+        }
+        foreach (array("EC2_PRIVATE_KEY", "EC2_CERT", "EC2_KEYPAIR") as $var) {
+            if (!file_exists(getenv($var)))
+                throw new Exception("$var environment variable does not point to a valid path: '" . getenv($var) . "'");
+        }
+        print PHP_EOL . "EC2 Version: " . Ec2Client::version();
+        print PHP_EOL . "Validated EC2 settings.";
+    });
+});
+
+group("server", function()
+{
+
+    desc("Boot lc server instance");
+    task('boot', function($app)
+    {
+        print PHP_EOL . "Starting a new EC2 Instance...";
+        $app['cloud']->server = LcServer::boot_and_acquire_dns($app['lc_ami'], array('keypair_name' => $app['keypair_name'], 'type' => $app['server_instance_type']));
+        print PHP_EOL . "Started new lc server at " . $app['cloud']->server->public_dns;
+        $app['cloud']->save();
+    });
+
+    desc("Set up testing environment");
+    task('setup', function($app)
+    {
+        $server = $app['cloud']->server;
+        $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite",
+            'user' => 'bitnami',
+            'keypair' => $app['keypair']);
+        $server->run("sudo sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  src/etc/config.template.php > src/etc/config.php", $options);
+        $server->run("sudo /etc/init.d/lc-startup", $options);
+        $server->run("sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/local.template.php | sed 's/_grid_hub_/" . $app['cloud']->hub->private_dns . "/g' | sed 's/_clients_count_/" . $app['farms_count'] . "/g' > .dev/tests/local.php", $options);
+        $server->run("sed -i 's/_clients_count_/" . $app['farms_count'] . "/g' .dev/phpunit-parallel.php", $options);
+        $options['pwd'] .= '/.dev';
+        $server->run("./phpunit tests/Dev_Install.php", $options);
+    });
+
+    desc("Start tests");
+    task('test_seq', ':setup', function($app)
+    {
+        print PHP_EOL . "Run sequential tests on " . $app['cloud']->server->public_dns . "...";
+        $app['cloud']->server->run("sudo ./phpunit.sh ONLYWEB", array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']));
+    });
+
+    desc("Start parallel tests");
+    task('test_parallel', ':setup', function($app)
+    {
+        $server = $app['cloud']->server;
+        print PHP_EOL . "Run parallel tests on " . $app['cloud']->server->public_dns . "...";
+        $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']);
+        $code = $server->run("sudo php ./phpunit-parallel.php", $options);
+        $server->run("cat /tmp/output*", $options);
+        foreach ($app['cloud']->farms as $farm) {
+            exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $farm->public_dns . ':/var/www/selenium-screenshots/* screenshots');
+        }
+        if ($code != 0)
+            die($code);
+    });
+
+    desc("Shutdown lc server instance");
+    task('shutdown', function($app)
+    {
+        if ($app['cloud']->server) {
+            print PHP_EOL . "Shutting down EC2 Instance " . $app['cloud']->server->public_dns . "...";
+            $app['cloud']->server->shutdown();
+            $app['cloud']->server = null;
+            $app['cloud']->save();
+        }
+    });
+
+});
+
+?>
