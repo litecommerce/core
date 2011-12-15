@@ -146,8 +146,9 @@ class OrderItemOption extends \XLite\Model\AEntity
      */
     protected $order_item;
 
+    
     /**
-     * Clone
+     * Clone order item option object
      *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____

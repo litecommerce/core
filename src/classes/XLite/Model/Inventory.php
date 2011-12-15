@@ -177,8 +177,8 @@ class Inventory extends \XLite\Model\AEntity
     }
 
     /**
-     * Get low available amount 
-     * 
+     * Get low available amount
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -272,8 +272,8 @@ class Inventory extends \XLite\Model\AEntity
     }
 
     /**
-     * Get low defaultA aount 
-     * 
+     * Get a low default amount
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0

@@ -136,28 +136,6 @@ class Cart extends \XLite\Model\Order
     }
 
     /**
-     * Add items that were ordered in
-     *
-     * @param \XLite\Model\Order $order Order to add items from
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.13
-     */
-    public function addItemsFromOrder(\XLite\Model\Order $order)
-    {
-        foreach($order->getItems() as $item) {
-
-            $newItem = $item->cloneEntity();
-            \XLite\Core\Database::getEM()->persist($newItem);
-
-            $this->addItem($newItem);
-        }
-
-        \XLite\Core\Database::getEM()->flush();
-    }
-
-    /**
      * Prepare order before save data operation
      *
      * @return void
