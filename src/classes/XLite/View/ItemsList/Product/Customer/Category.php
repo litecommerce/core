@@ -48,12 +48,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     const SORT_BY_MODE_DEFAULT = 'cp.orderby';
 
     /**
-     * Widget target
-     */
-    const WIDGET_TARGET = 'category';
-
-
-    /**
      * Return list of targets allowed for this widget
      *
      * @return array
@@ -78,9 +72,8 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected static function getWidgetTarget()
     {
-        return self::WIDGET_TARGET;
+        return 'category';
     }
-
 
     /**
      * Define and set widget attributes; initialize widget
@@ -95,9 +88,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         parent::__construct($params);
 
-        $this->sortByModes = array(
-            self::SORT_BY_MODE_DEFAULT => static::t('Default'),
-        ) + $this->sortByModes;
+        $this->sortByModes = array(static::SORT_BY_MODE_DEFAULT => 'Default') + $this->sortByModes;
     }
 
     /**
@@ -111,7 +102,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         return parent::getListCSSClasses() . ' category-products';
     }
-
 
     /**
      * Return class name for the list pager
@@ -146,7 +136,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getCategoryId()
     {
-        return \XLite\Core\Request::getInstance()->{self::PARAM_CATEGORY_ID}
+        return \XLite\Core\Request::getInstance()->{static::PARAM_CATEGORY_ID}
             ?: \XLite\Model\Repo\Category::CATEGORY_ID_ROOT;
     }
 
@@ -162,7 +152,9 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', \XLite\Model\Repo\Category::CATEGORY_ID_ROOT),
+            static::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('
+                Category ID', \XLite\Model\Repo\Category::CATEGORY_ID_ROOT
+            ),
         );
     }
 
@@ -177,7 +169,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         parent::defineRequestParams();
 
-        $this->requestParams[] = self::PARAM_CATEGORY_ID;
+        $this->requestParams[] = static::PARAM_CATEGORY_ID;
     }
 
     /**
@@ -189,7 +181,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getSortByModeDefault()
     {
-        return self::SORT_BY_MODE_DEFAULT;
+        return static::SORT_BY_MODE_DEFAULT;
     }
 
     /**

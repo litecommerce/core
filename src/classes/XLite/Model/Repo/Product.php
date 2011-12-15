@@ -422,14 +422,10 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
             ->addOrderBy('cp.orderby');
 
         if (empty($this->currentSearchCnd->{self::P_SEARCH_IN_SUBCATS})) {
-
-            $queryBuilder->andWhere('c.category_id = :categoryId')
-                ->setParameter('categoryId', $value);
+            $queryBuilder->andWhere('c.category_id = :categoryId')->setParameter('categoryId', $value);
 
         } elseif (!\XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value)) {
-
             // TODO - add throw exception
-
         }
     }
 

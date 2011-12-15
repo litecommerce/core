@@ -771,6 +771,30 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
+     * Return name of the list containing forms (e.g. search form)
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getFormsListName()
+    {
+        return null;
+    }
+
+    /**
+     * Check if the forms above the list are visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function areFormsVisible()
+    {
+        return !$this->isAJAX() && $this->getFormsListName();
+    }
+
+    /**
      * Check if pager is visible
      *
      * @return boolean

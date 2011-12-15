@@ -143,9 +143,12 @@ abstract class I18n extends \XLite\Model\AEntity
         }
 
         if (!$result) {
-            $className = $this instanceof \Doctrine\ORM\Proxy\Proxy
-                ? get_parent_class($this) . 'Translation'
-                : get_called_class() . 'Translation';
+            $className = get_class($this) . 'Translation';
+
+            // :FIXME:
+            if ($this instanceof \Doctrine\ORM\Proxy\Proxy || !\Includes\Utils\Operator::checkIfClassExists($className)) {
+                $className = get_parent_class($this) . 'Translation';
+            }
             $result = new $className();
             $result->setOwner($this);
             $result->setCode($code);

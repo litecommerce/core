@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,66 +13,71 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.15
  */
 
-namespace XLite\View\Product;
+namespace XLite\Module\CDev\SimpleAttributeSearch\View;
 
 /**
- * Product search widget
+ * Search 
  *
  * @see   ____class_see____
- * @since 1.0.0
- *
- * @ListChild (list="center.bottom", zone="customer", weight="100")
+ * @since 1.0.15
  */
-class AdvancedSearch extends \XLite\View\Product\AProduct
+class Search extends \XLite\View\ItemsList\Product\Customer\Search implements \XLite\Base\IDecorator
 {
     /**
-     * Return list of targets allowed for this widget
+     * Widget param names
+     */
+    const PARAM_ATTRIBUTES = 'attributes';
+
+    /**
+     * Return search parameters
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAllowedTargets()
+    static public function getSearchParams()
     {
-        $list = parent::getAllowedTargets();
-        $list[] = 'search';
+        $list = parent::getSearchParams();
+        $list[\XLite\Model\Repo\Product::P_ATTRIBUTES] = static::PARAM_ATTRIBUTES;
 
         return $list;
     }
 
-    /**
-     * Return title
+     /**
+     * Define widget parameters
      *
-     * @return string
+     * @return void
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.15
      */
-    protected function getHead()
+    protected function defineWidgetParams()
     {
-        return 'Products search';
+        parent::defineWidgetParams();
+
+        $this->widgetParams[static::PARAM_ATTRIBUTES] = new \XLite\Model\WidgetParam\Collection('Attributes', array());
     }
 
     /**
-     * Return templates directory name
+     * Return all attribute groups
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.15
      */
-    protected function getDir()
+    protected function getAttributeGroups()
     {
-        return parent::getDir() . '/search/advanced_search';
+        return \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->findAll();
     }
 }

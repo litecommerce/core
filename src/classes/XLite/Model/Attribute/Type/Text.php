@@ -22,31 +22,30 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.14
+ * @since     1.0.15
  */
 
-namespace XLite\Model\Repo;
+namespace XLite\Model\Attribute\Type;
 
 /**
- * Attribute 
+ * Text 
  *
  * @see   ____class_see____
- * @since 1.0.14
+ * @since 1.0.15
+ *
+ * @Entity
+ * @Table  (name="attribute_type_text")
  */
-class Attribute extends \XLite\Model\Repo\Base\I18n
+class Text extends \XLite\Model\Attribute
 {
     /**
-     * testSearch
+     * Atribute value
      *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.15
+     *
+     * @Column (type="text")
      */
-    public function testSearch()
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.value = :value')
-            ->setParameter('value', 3)
-            ->getResult();
-    }
+    protected $value = '';
 }

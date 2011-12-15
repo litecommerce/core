@@ -35,17 +35,4 @@ namespace XLite\View\Pager\Customer\Product;
  */
 class Search extends \XLite\View\Pager\Customer\Product\AProduct
 {
-    /**
-     * Define so called "request" parameters
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineRequestParams()
-    {
-        parent::defineRequestParams();
-
-        $this->requestParams[] = 'substring';
-    }
 }

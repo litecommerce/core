@@ -10,8 +10,9 @@
  * @since     1.0.0
  */
 
-.advanced-search-options {
+.search-form.options {
   display: none;
+  margin-top: -14px;
 }
 
 .search-form-main-part,

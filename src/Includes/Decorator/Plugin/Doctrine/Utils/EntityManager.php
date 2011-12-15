@@ -70,7 +70,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     public static function getAllMetadata($class = null)
     {
         if (!isset(static::$metadata)) {
-
             static::$metadata = array();
 
             // Create hash array to quick access its elements
@@ -146,7 +145,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
         );
 
         foreach ($iterator as $dir) {
-
             if (\Includes\Utils\FileManager::isDir($dir->getPathName())) {
                 $iterator2 = new \RecursiveDirectoryIterator($dir->getPathName(), \FilesystemIterator::SKIP_DOTS);
 

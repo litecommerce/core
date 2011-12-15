@@ -38,7 +38,6 @@ abstract class AForm extends \XLite\View\AView
     /**
      * Widget parameter names
      */
-
     const PARAM_START = 'start';
     const PARAM_END   = 'end';
 
@@ -49,7 +48,6 @@ abstract class AForm extends \XLite\View\AView
     const PARAM_FORM_METHOD = 'formMethod';
     const PARAM_CLASS_NAME  = 'className';
     const PARAM_VALIDATION  = 'validationEngine';
-
 
     /**
      * Form arguments plain list
@@ -92,14 +90,11 @@ abstract class AForm extends \XLite\View\AView
                 \XLite\Logger::getInstance()->log($message, LOG_ERR);
 
             } else {
-                \XLite\Core\Event::invalidElement(
-                    $exception->getPath(),
-                    $message
-                );
+                \XLite\Core\Event::invalidElement($exception->getPath(), $message);
             }
 
-            $this->validationMessage = ($exception->getPublicName() ? $exception->getPublicName() . ': ' : '')
-                . $message;
+            $publicName = $exception->getPublicName();
+            $this->validationMessage = ($publicName ? $publicName . ': ' : '') . $message;
         }
 
         return $data;

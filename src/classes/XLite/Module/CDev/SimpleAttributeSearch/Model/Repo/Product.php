@@ -22,31 +22,50 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.14
+ * @since     1.0.15
  */
 
-namespace XLite\Model\Repo;
+namespace XLite\Module\CDev\SimpleAttributeSearch\Model\Repo;
 
 /**
- * Attribute 
+ * Product 
  *
  * @see   ____class_see____
- * @since 1.0.14
+ * @since 1.0.15
  */
-class Attribute extends \XLite\Model\Repo\Base\I18n
+class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorator
 {
     /**
-     * testSearch
+     * Allowable search params
+     */
+    const P_ATTRIBUTES = 'attributes';
+
+    /**
+     * Return list of handling search params
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getHandlingSearchParams()
+    {
+        $list = parent::getHandlingSearchParams();
+        $list[] = static::P_ATTRIBUTES;
+
+        return $list;
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $attributes   Attributes list
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
      */
-    public function testSearch()
+    protected function prepareCndAttributes(\Doctrine\ORM\QueryBuilder $queryBuilder, array $attributes)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.value = :value')
-            ->setParameter('value', 3)
-            ->getResult();
     }
 }

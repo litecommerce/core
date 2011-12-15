@@ -46,28 +46,4 @@ class Main extends \XLite\View\Form\Product\Search\Customer\ACustomer
     {
         return 'search';
     }
-
-    /**
-     * getDefaultAction
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultAction()
-    {
-        return 'search';
-    }
-
-    /**
-     * getDefaultParams
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultParams()
-    {
-        return parent::getDefaultParams() + array('searchInSubcats' => 'Y');
-    }
 }

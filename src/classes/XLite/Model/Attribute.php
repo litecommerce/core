@@ -36,9 +36,16 @@ namespace XLite\Model;
  * @Entity (repositoryClass="\XLite\Model\Repo\Attribute")
  * @Table  (name="attributes",
  *          uniqueConstraints={
- *              @UniqueConstraint (name="internalName", columns={"name"})
+ *              @UniqueConstraint (name="name", columns={"name"})
  *          }
  * )
+ * @InheritanceType     ("JOINED")
+ * @DiscriminatorColumn (name="type", type="uinteger")
+ * @DiscriminatorMap    ({
+ *      "0" = "XLite\Model\Attribute",
+ *      "1" = "XLite\Model\Attribute\Type\Number",
+ *      "2" = "XLite\Model\Attribute\Type\Text"
+ * })
  */
 class Attribute extends \XLite\Model\Base\I18n
 {
@@ -85,17 +92,6 @@ class Attribute extends \XLite\Model\Base\I18n
      * @Column (type="string", length="64")
      */
     protected $name;
-
-    /**
-     * Attribute type
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.14
-     *
-     * @Column (type="uinteger")
-     */
-    protected $type = self::TYPE_NUMBER;
 
     /**
      * Position in the list

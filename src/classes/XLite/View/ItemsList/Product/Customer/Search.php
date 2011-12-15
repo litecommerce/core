@@ -33,6 +33,7 @@ namespace XLite\View\ItemsList\Product\Customer;
  * @see   ____class_see____
  * @since 1.0.0
  *
+ * @ListChild (list="center.bottom", zone="customer")
  */
 class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
 {
@@ -48,14 +49,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     const PARAM_BY_SKU            = 'by_sku';
 
     /**
-     * Widget target
-     */
-    const WIDGET_TARGET = 'search';
-
-
-    /**
-     * Return search parameters.
-     * :TODO: refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchParams()
+     * Return search parameters
      *
      * @return array
      * @see    ____func_see____
@@ -64,12 +58,13 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     static public function getSearchParams()
     {
         return array(
-            \XLite\Model\Repo\Product::P_SUBSTRING   => self::PARAM_SUBSTRING,
-            \XLite\Model\Repo\Product::P_CATEGORY_ID => self::PARAM_CATEGORY_ID,
-            \XLite\Model\Repo\Product::P_INCLUDING   => self::PARAM_INCLUDING,
-            \XLite\Model\Repo\Product::P_BY_TITLE    => self::PARAM_BY_TITLE,
-            \XLite\Model\Repo\Product::P_BY_DESCR    => self::PARAM_BY_DESCR,
-            \XLite\Model\Repo\Product::P_BY_SKU      => self::PARAM_BY_SKU,
+            \XLite\Model\Repo\Product::P_SUBSTRING         => static::PARAM_SUBSTRING,
+            \XLite\Model\Repo\Product::P_CATEGORY_ID       => static::PARAM_CATEGORY_ID,
+            \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => static::PARAM_SEARCH_IN_SUBCATS,
+            \XLite\Model\Repo\Product::P_INCLUDING         => static::PARAM_INCLUDING,
+            \XLite\Model\Repo\Product::P_BY_TITLE          => static::PARAM_BY_TITLE,
+            \XLite\Model\Repo\Product::P_BY_DESCR          => static::PARAM_BY_DESCR,
+            \XLite\Model\Repo\Product::P_BY_SKU            => static::PARAM_BY_SKU,
         );
     }
 
@@ -83,7 +78,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = self::WIDGET_TARGET;
+        $result[] = 'search';
 
         return $result;
     }
@@ -97,7 +92,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected static function getWidgetTarget()
     {
-        return self::WIDGET_TARGET;
+        return 'search';
     }
 
     /**
@@ -122,9 +117,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
-        // Static call of the non-static function
-        $list[] = parent::getDir() . '/search/search.css';
+        $list[] = $this->getLocalDir() . '/style.css';
 
         return $list;
     }
@@ -139,23 +132,33 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
-        // Static call of the non-static function
-        $list[] = parent::getDir() . '/search/controller.js';
+        $list[] = $this->getLocalDir() . '/controller.js';
 
         return $list;
     }
 
     /**
-     * Return title
+     * We should not redefine getDir() method, so we use this
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.15
      */
-    protected function getHead()
+    protected function getLocalDir()
     {
-        return null;
+        return $this->getDir() . '/search';
+    }
+
+    /**
+     * Return name of the list containing forms (e.g. search form)
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getFormsListName()
+    {
+        return 'search';
     }
 
     /**
@@ -219,18 +222,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * Search widget must be visible always.
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return true;
-    }
-
-    /**
      * Return class name for the list pager
      *
      * @return string
@@ -266,13 +257,13 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_SUBSTRING => new \XLite\Model\WidgetParam\String(
-                'Substring', ''
-            ),
-            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\Int(
-                'Category ID', 0
-            ),
-            self::PARAM_INCLUDING => new \XLite\Model\WidgetParam\Set(
+            static::PARAM_SUBSTRING         => new \XLite\Model\WidgetParam\String('Substring', ''),
+            static::PARAM_CATEGORY_ID       => new \XLite\Model\WidgetParam\Int('Category ID', 0),
+            static::PARAM_SEARCH_IN_SUBCATS => new \XLite\Model\WidgetParam\Bool('Search in subcats', true),
+            static::PARAM_BY_TITLE          => new \XLite\Model\WidgetParam\Checkbox('Search in title', 0),
+            static::PARAM_BY_DESCR          => new \XLite\Model\WidgetParam\Checkbox('Search in description', 0),
+            static::PARAM_BY_SKU            => new \XLite\Model\WidgetParam\String('Search in SKU', 0),
+            static::PARAM_INCLUDING         => new \XLite\Model\WidgetParam\Set(
                 'Including',
                 \XLite\Model\Repo\Product::INCLUDING_ANY,
                 array(
@@ -280,15 +271,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
                     \XLite\Model\Repo\Product::INCLUDING_ANY,
                     \XLite\Model\Repo\Product::INCLUDING_PHRASE,
                 )
-            ),
-            self::PARAM_BY_TITLE => new \XLite\Model\WidgetParam\Checkbox(
-                'Search in title', 0
-            ),
-            self::PARAM_BY_DESCR => new \XLite\Model\WidgetParam\Checkbox(
-                'Search in description', 0
-            ),
-            self::PARAM_BY_SKU => new \XLite\Model\WidgetParam\String(
-                'Search in SKU', 0
             ),
         );
     }
@@ -304,14 +286,11 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         parent::defineRequestParams();
 
-        $this->requestParams = array_merge(
-            $this->requestParams,
-            \XLite\View\ItemsList\Product\Customer\Search::getSearchParams()
-        );
+        $this->requestParams = array_merge($this->requestParams, array_values(static::getSearchParams()));
     }
 
     /**
-     * Return params list to use for search TODO refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchCondition()
+     * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
@@ -321,9 +300,10 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         $result = parent::getSearchCondition();
 
-        foreach (\XLite\View\ItemsList\Product\Customer\Search::getSearchParams() as $modelParam => $requestParam) {
+        foreach (static::getSearchParams() as $modelParam => $requestParam) {
             $paramValue = $this->getParam($requestParam);
 
+            // Do not change this check to the "empty()"
             if ('' !== $paramValue && 0 !== $paramValue) {
                 $result->$modelParam = $paramValue;
             }
@@ -344,26 +324,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->search(
-            $this->prepareCnd($cnd),
-            $countOnly
-        );
-    }
-
-    /**
-     * Prepare search condition before search
-     *
-     * @param \XLite\Core\CommonCell $cnd Search condition
-     *
-     * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function prepareCnd(\XLite\Core\CommonCell $cnd)
-    {
-        // In the Customer zone we search in subcategories always.
-        $cnd->{\XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS} = 'Y';
-
-        return $cnd;
+        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, $countOnly);
     }
 }

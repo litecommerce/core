@@ -10,20 +10,18 @@
  * @since     1.0.0
  *}
 
-<div class="{getListCSSClasses()}">
+<div IF="areFormsVisible()" class="list-forms">{displayInheritedViewListContent(getFormsListName())}</div>
 
+<div class="{getListCSSClasses()}">
   {displayCommentedData(getJSData())}
 
   <h2 IF="isHeadVisible()" class="items-list-title">{getListHead()}</h2>
 
   <div IF="isPagerVisible()" class="list-pager">{pager.display()}</div>
-
   <div IF="isHeaderVisible()" class="list-header">{displayInheritedViewListContent(#header#)}</div>
 
   <widget template="{getPageBodyTemplate()}" />
 
   <div class="list-pager list-pager-bottom" IF="isPagerVisible()&pager.isPagesListVisible()">{pager.display()}</div>
-
   <div IF="isFooterVisible()" class="list-footer">{displayInheritedViewListContent(#footer#)}</div>
-
 </div>
