@@ -312,11 +312,19 @@ class TestRunner
         $tests = 0;
         $assertions = 0;
         $failures = 0;
+        $skipped = 0;
         $errors = 0;
-        if(preg_match_all('/Tests: (\d+), Assertions: (\d+), Failures: (\d+)./Sm', $output, $matches)){
+        if (preg_match_all('/Tests: (\d+)/Sm', $output, $matches)){
             $tests += array_sum($matches[1]);
-            $assertions += array_sum($matches[2]);
-            $failures += array_sum($matches[3]);
+        }
+        if (preg_match_all('/Failures: (\d+)/Sm', $output, $matches)){
+            $failures += array_sum($matches[1]);
+        }
+        if(preg_match_all('/Assertions: (\d+)/Sm', $output, $matches)){
+            $assertions += array_sum($matches[1]);
+        }
+        if(preg_match_all('/Skipped: (\d+)/Sm', $output, $matches)){
+            $skipped += array_sum($matches[1]);
         }
 
         if (preg_match_all('/OK \((\d+) tests, (\d+) assertions\)/Sm', $output, $matches)){
@@ -331,15 +339,12 @@ class TestRunner
             $result .= implode("\n", $matches[1]);
         }
 
-        if ($failures){
-            $fail_message = "There were $failures failures: \n";
-            if (preg_match_all('/There were|was (\d+) (failure:|failures:)\n(.*)FAILURES!/Sm', $output, $matches)){
-                $fail_message = implode(PHP_EOL , $matches[3]);
-            }
-            $result .= $fail_message;
+        if($failures || $skipped || $errors){
+            $result .= "There were $failures failures, $skipped skipped tests and $errors errors: \n";
+            $result .= shell_exec('cat /tmp/output-* | grep -v "^\(Customer\|Admin\|Time\|Module\)" | grep -v "^\(FAILURES\|Tests\|#\|PHPUnit\|OK\)" | cat -s | sed "s/There \(was\|were\) \(.*\) \(failure\|skipped test\|error\)/\3/"');
             $result .= PHP_EOL . "FAILURES!".PHP_EOL;
-            unset($fail_message);
         }
+
         file_put_contents($filename.'.txt', $result);
 
 
@@ -428,7 +433,7 @@ class TestRunner
     private function run()
     {
         if ($this->isBlocked()) {
-            print PHP_EOL . 'Clients left: ' . $this->clientsCount . PHP_EOL;
+          //  print PHP_EOL . 'Clients left: ' . $this->clientsCount . PHP_EOL;
         }
         foreach ($this->tests as $test)
         {
@@ -527,7 +532,7 @@ class TestTask
         //Fake run
         //$this->process = proc_open("sleep " . rand(2, 4), $descriptorspec, $pipes);
         //Real run
-        $options = TestRunner::$log_xml ? ' --log-junit /tmp/phpunit.'.$this->name.".xml " : "";
+        $options = TestRunner::$log_xml ? ' --log-junit /tmp/phpunit.'.$testName.".xml " : "";
         $options .= TestRunner::$verbose ? ' --verbose ' : "";
         $this->process = proc_open('./phpunit_no_restore.sh ' . $this->name . " " . $options, $descriptorspec, $pipes);
         if ($this->process) {
@@ -547,7 +552,7 @@ class TestTask
     {
         print PHP_EOL . "Stopping test: " . $this->name;
         if ($this->exitCode)
-            print "fail";
+            print " - fail";
         $this->status = 'complete';
         proc_close($this->process);
         foreach (array_merge($this->resources, $this->uses) as $resource) {
