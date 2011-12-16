@@ -4,8 +4,45 @@
 /*
  * Constants to run tests
  */
-if (!defined('SELENIUM_CLIENTS_COUNT'))
-    define('SELENIUM_CLIENTS_COUNT', _clients_count_);
+parse_options();
+
+function parse_options()
+{
+    $options = getopt("h", array("clients-count:", "log-junit", "verbose", "build"));
+
+    if (isset($options['h'])) {
+        print_info();
+        die;
+    }
+
+    if (isset($options['build'])) {
+        $options['verbose'] = true;
+        $options['log-junit'] = true;
+    }
+    if (isset($options['clients-count']))
+        define('SELENIUM_CLIENTS_COUNT', $options['clients-count']);
+
+    if (isset($options['log-junit'])){
+        TestRunner::$log_xml = true;
+        shell_exec("rm /tmp/phpunit*.xml");
+    }
+    if (isset($options['verbose']))
+        TestRunner::$verbose = true;
+
+    if (!defined('SELENIUM_CLIENTS_COUNT'))
+        define('SELENIUM_CLIENTS_COUNT', 5);
+
+}
+
+function print_info()
+{
+    print PHP_EOL .
+        " Start parallel webtests.
+    -h - print this info
+    --clients-count - set selenium RC clients count, 5 by default
+    --build - start with standard build configuration (--verbose --log-junit phpunit.xml)
+    --log-junit, --verbose - options for phpunit";
+}
 
 /**
  * @param array $array
@@ -44,9 +81,9 @@ define('PATH_SRC', realpath(PATH_ROOT . '/src'));
 
 set_include_path(
     get_include_path()
-    . PATH_SEPARATOR . PATH_SRC . '/classes'
-    . PATH_SEPARATOR . PATH_SRC . '/var/run/classes'
-    . PATH_SEPARATOR . PATH_SRC
+        . PATH_SEPARATOR . PATH_SRC . '/classes'
+        . PATH_SEPARATOR . PATH_SRC . '/var/run/classes'
+        . PATH_SEPARATOR . PATH_SRC
 );
 
 require_once PATH_SRC . '/top.inc.php';
@@ -161,7 +198,7 @@ function xlite_make_sql_backup($path = null)
         exec('echo "SET autocommit=0;
         SET unique_checks=0;
         SET foreign_key_checks=0;" > ' . $path . '
-        ' . $cmd  . ' >> ' . $path . '
+        ' . $cmd . ' >> ' . $path . '
         echo "COMMIT;" >> ' . $path);
 
         echo ('done' . PHP_EOL);
@@ -180,7 +217,7 @@ function xlite_make_sql_backup($path = null)
 }
 
 
-class testRunner
+class TestRunner
 {
 
     /**
@@ -195,6 +232,9 @@ class testRunner
      * @var int
      */
     protected $clientsCount;
+
+    public static $log_xml = false;
+    public static $verbose = false;
 
     /**
      * @var bool
@@ -238,9 +278,9 @@ class testRunner
         $this->tests = self::getTests();
         $this->resources = new ResourcePool();
         array_map(function (TestTask $test)
-            {
-                print $test->toString();
-            }, $this->tests);
+        {
+            print $test->toString();
+        }, $this->tests);
     }
 
     function start($clientsCount)
@@ -261,7 +301,88 @@ class testRunner
                 break;
         }
         $this->cleanResources();
-        print PHP_EOL . " Total time: " . round(microtime(true) - $time, 2) . "sec";
+        $time = round(microtime(true) - $time, 2);
+        print PHP_EOL . " Total time: " . $time . "sec";
+        $this->collect_output('phpunit', $time);
+    }
+
+    private function collect_output($filename, $time){
+        //Collect console output
+        $output = shell_exec("cat /tmp/output*");
+        $tests = 0;
+        $assertions = 0;
+        $failures = 0;
+        $errors = 0;
+        if(preg_match_all('/Tests: (\d+), Assertions: (\d+), Failures: (\d+)./Sm', $output, $matches)){
+            $tests += array_sum($matches[1]);
+            $assertions += array_sum($matches[2]);
+            $failures += array_sum($matches[3]);
+        }
+
+        if (preg_match_all('/OK \((\d+) tests, (\d+) assertions\)/Sm', $output, $matches)){
+            $tests += array_sum($matches[1]);
+            $assertions += array_sum($matches[2]);
+        }
+
+        $result = "";
+
+
+        if (preg_match_all('/PHPUnit .*\n(.*Time: \d+:\d, Memory: [0-9\.]Mb)/Sm', $output, $matches)){
+            $result .= implode("\n", $matches[1]);
+        }
+
+        if ($failures){
+            $fail_message = "There were $failures failures: \n";
+            if (preg_match_all('/There were|was (\d+) (failure:|failures:)\n(.*)FAILURES!/Sm', $output, $matches)){
+                $fail_message = implode(PHP_EOL , $matches[3]);
+            }
+            $result .= $fail_message;
+            $result .= PHP_EOL . "FAILURES!".PHP_EOL;
+            unset($fail_message);
+        }
+        file_put_contents($filename.'.txt', $result);
+
+
+        //Collect xml output
+        if (self::$log_xml){
+            $writer = new XMLWriter();
+            $uri = $filename. '.xml';
+            touch($uri);
+            $uri = realpath($uri);
+            $writer->openUri($uri);
+
+            $writer->startDocument();
+            $writer->startElement('testsuites');
+
+            $writer->startElement('testsuite');
+            $writer->writeAttribute('name', 'LiteCommerce - AllTests');
+            $writer->writeAttribute('tests', $tests);
+            $writer->writeAttribute('assertions', $assertions);
+            $writer->writeAttribute('failures', $failures);
+            $writer->writeAttribute('errors', $errors);
+            $writer->writeAttribute('time', $time);
+
+            foreach(glob("/tmp/phpunit*.xml") as $filename){
+                $reader = new XMLReader();
+                $reader->open($filename);
+
+                while($reader->read()){
+                    if ($reader->name == 'testsuite'){
+                        if (strpos($reader->getAttribute('name'), 'AllTests')){
+                            $writer->writeRaw($reader->readInnerXml());
+                            break;
+                        }
+                    }
+                }
+                $reader->close();
+            }
+
+            $writer->endElement();
+            $writer->endDocument();
+            $writer->flush();
+
+        }
+
     }
 
     private function isComplete()
@@ -307,7 +428,7 @@ class testRunner
     private function run()
     {
         if ($this->isBlocked()) {
-            print PHP_EOL . 'Clients left: '. $this->clientsCount . PHP_EOL;
+            print PHP_EOL . 'Clients left: ' . $this->clientsCount . PHP_EOL;
         }
         foreach ($this->tests as $test)
         {
@@ -406,7 +527,9 @@ class TestTask
         //Fake run
         //$this->process = proc_open("sleep " . rand(2, 4), $descriptorspec, $pipes);
         //Real run
-        $this->process = proc_open('./phpunit_no_restore.sh ' . $this->name, $descriptorspec, $pipes);
+        $options = TestRunner::$log_xml ? ' --log-junit /tmp/phpunit.'.$this->name.".xml " : "";
+        $options .= TestRunner::$verbose ? ' --verbose ' : "";
+        $this->process = proc_open('./phpunit_no_restore.sh ' . $this->name . " " . $options, $descriptorspec, $pipes);
         if ($this->process) {
             print PHP_EOL . "Running test: " . $this->name;
             $this->status = 'running';
@@ -459,10 +582,10 @@ class TestTask
     function toString()
     {
         return PHP_EOL . "Name: " . $this->name .
-               PHP_EOL . " Resources: {" . implode(';', $this->resources) . '} ' .
-               PHP_EOL . " Uses: {" . implode(';', $this->uses) . '}' .
-               PHP_EOL . " Blocks all: <" . ($this->block_all ? 'true' : 'false') . "> " .
-               PHP_EOL . " Status: <" . $this->status . ">" . PHP_EOL;
+            PHP_EOL . " Resources: {" . implode(';', $this->resources) . '} ' .
+            PHP_EOL . " Uses: {" . implode(';', $this->uses) . '}' .
+            PHP_EOL . " Blocks all: <" . ($this->block_all ? 'true' : 'false') . "> " .
+            PHP_EOL . " Status: <" . $this->status . ">" . PHP_EOL;
     }
 }
 
@@ -535,7 +658,11 @@ class ResourcePool
     {
         if (!empty($this->resources)
             && array_all($this->resources,
-                         function ($res){ return $res != RESOURCE_RESERVED;}))
+                function ($res)
+                {
+                    return $res != RESOURCE_RESERVED;
+                })
+        )
             return true;
         return false;
     }
@@ -543,9 +670,9 @@ class ResourcePool
     public function reset()
     {
         if (array_any($this->resources, function ($res)
-            {
-                $res != 0;
-            })
+        {
+            $res != 0;
+        })
         ) {
             print_r($this->resources);
             throw new Exception("There is some reserved or used resources");
