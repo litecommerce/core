@@ -46,36 +46,50 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
 
 
     /**
-     * Get (and create) current cart item
-     * TODO: simplify
+     * Return product options that are requested to add to cart with a provided product.
      *
-     * @param \XLite\Model\Product $product Product to add
+     * @param \XLite\Model\Product $product Product class that is requested to add to cart
      *
-     * @return void
+     * @return null|array
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function getCurrentProductOptions(\XLite\Model\Product $product)
+    {
+        if (isset(\XLite\Core\Request::getInstance()->product_options)) {
+
+            $options = $product->prepareOptions(\XLite\Core\Request::getInstance()->product_options);
+
+            if (!$product->checkOptionsException($options)) {
+
+                $options = null;
+            }
+
+        } else {
+
+            $options = $product->getDefaultProductOptions();
+        }
+
+        return $options;
+    }
+
+
+    /**
+     * Get (and create) current cart item.
+     * Change order item options from customer request.
+     *
+     * @return \XLite\Model\OrderItem
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getCurrentItem(\XLite\Model\Product $product)
+    protected function getCurrentItem()
     {
-        $item = parent::getCurrentItem($product);
+        $item = parent::getCurrentItem();
 
-        if (
-            $item->getProduct()
-            && $item->getProduct()->hasOptions()
-        ) {
-            if (isset(\XLite\Core\Request::getInstance()->product_options)) {
+        if ($item->getProduct() && $item->getProduct()->hasOptions()) {
 
-                $options = $item->getProduct()->prepareOptions(\XLite\Core\Request::getInstance()->product_options);
-
-                if (!$item->getProduct()->checkOptionsException($options)) {
-
-                    $options = null;
-                }
-
-            } else {
-
-                $options = $item->getProduct()->getDefaultProductOptions();
-            }
+            // We take a product options array from customer request
+            $options = $this->getCurrentProductOptions($item->getProduct());
 
             if (is_array($options)) {
 
@@ -87,7 +101,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
             }
         }
 
-        return $this->optionInvalid ? null : $item;
+        return $item;
     }
 
     /**

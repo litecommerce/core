@@ -161,7 +161,9 @@ ul.order-body-item-spec li.date {
   color: #1862a4;
 }
 
-ul.order-body-item-spec li.details {
+ul.order-body-item-spec li.details,
+  ul.order-body-item-spec li.reorder
+{
   padding: 5px 0px 0px 11px;
 }
 

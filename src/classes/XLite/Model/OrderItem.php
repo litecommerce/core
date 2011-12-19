@@ -181,6 +181,25 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Clone order item object. The product only is set additionally
+     * since the order could be different and should be set manually
+     *
+     * @return \XLite\Model\AEntity
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function cloneEntity()
+    {
+        $newItem = parent::cloneEntity();
+
+        if ($this->getObject()) {
+            $newItem->setObject($this->getObject());
+        }
+
+        return $newItem;
+    }
+
+    /**
      * Reset surcharges list
      *
      * @return void
@@ -190,6 +209,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     public function resetSurcharges()
     {
         foreach ($this->getSurcharges() as $surcharge) {
+            
             \XLite\Core\Database::getEM()->remove($surcharge);
         }
 
@@ -197,8 +217,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get through exclude surcharges 
-     * 
+     * Get through exclude surcharges
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -208,8 +228,11 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         $list = $this->getOrder()->getItemsExcludeSurcharges();
 
         foreach ($list as $key => $value) {
+
             $list[$key] = null;
+
             foreach ($this->getExcludeSurcharges() as $surcharge) {
+
                 if ($surcharge->getKey() == $key) {
                     $list[$key] = $surcharge;
                     break;
@@ -261,8 +284,6 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function setObject(\XLite\Model\Base\IOrderItem $item = null)
     {
-        $old = $this->object;
-
         $this->object = $item;
 
         if ($item) {
@@ -318,6 +339,21 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     public function hasImage()
     {
         return !is_null($this->getImage()) && (bool)$this->getImage()->getId();
+    }
+
+    /**
+     * Check if item has a wrong amount
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function hasWrongAmount()
+    {
+        $inventory = $this->getProduct()->getInventory();
+
+        return $inventory->getEnabled()
+            && ($inventory->getAmount() < $this->getAmount());
     }
 
     /**
@@ -405,10 +441,10 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Set price 
-     * 
+     * Set price
+     *
      * @param float $price Price
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.8
@@ -439,7 +475,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Renew order item
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.8
@@ -527,8 +563,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Calculate net subtotal 
-     * 
+     * Calculate net subtotal
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
@@ -542,7 +578,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Get net subtotal without round net price
-     * 
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.8
@@ -555,8 +591,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Define net price 
-     * 
+     * Define net price
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
@@ -576,7 +612,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     protected function getDeletedProduct()
     {
         if (!isset($this->dumpProduct) && $this->getName()) {
+
             $this->dumpProduct = new \XLite\Model\Product();
+
             $this->dumpProduct->setPrice($this->getPrice());
             $this->dumpProduct->setName($this->getName());
             $this->dumpProduct->setSku($this->getSku());
@@ -586,8 +624,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Check item amount 
-     * 
+     * Check item amount
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.8
@@ -598,8 +636,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
         $product = $this->getProduct();
         if ($product && $product->getId()) {
+
             $result = !$product->getInventory()->getEnabled()
-            || $product->getInventory()->getAvailableAmount() >= $this->getAmount();
+                || $product->getInventory()->getAvailableAmount() >= $this->getAmount();
         }
 
         return $result;

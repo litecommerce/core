@@ -38,7 +38,7 @@ namespace Includes;
 abstract class Autoloader
 {
     /**
-     * List of registerd autoload functions
+     * List of registered autoload functions
      *
      * @var    array
      * @access protected
