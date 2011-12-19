@@ -63,7 +63,7 @@ group("grid", function()
     });
 
     desc("Shutdown EC2 Instance used to run Selenium Hub.");
-    task("shutdown", 'setup', "hub:shutdown", "server:shutdown", "rc:shutdown", function ($app)
+    task("shutdown", 'setup', "hub:shutdown", "server:shutdown", "rc:shutdown", "rc:shutdown_micro", function ($app)
     {
         $app['cloud'] = Cloud::getInstance();
         $app['cloud']->save();
@@ -233,6 +233,33 @@ group("rc", function()
 
         }
     });
+    task('boot_micro', function($app)
+    {
+        print PHP_EOL . "Starting a new EC2 Instance...";
+        try {
+            $farm = Server::boot_and_acquire_dns($app['hub_ami'], array('keypair_name' => $app['keypair_name'], 'type' => 't1.micro'));
+            $app['cloud']->micro_farm = $farm;
+            $app['cloud']->save();
+            print PHP_EOL . "Started new Remote Control farm at " . $farm->public_dns;
+        }
+        catch (Exception $e) {
+            print PHP_EOL . "Failed to boot new Remote Control farm.";
+        }
+    });
+
+    task('start_micro', function($app){
+        $farm = $app['cloud']->micro_farm;
+        $farm->run("nohup rake rc:start_all HUB_URL=" . $app['cloud']->hub->private_url . " HOST=" . $farm->private_dns . " PORTS=" . $app['remote_control_port_range'] . " BACKGROUND=true",
+                                            array('display' => ":0", 'path' => "/usr/lib/firefox-8.0", 'pwd' => $app["selenium_grid_path"], 'keypair' => $app['keypair']));
+    });
+
+    task('shutdown_micro', function($app){
+        if ($app['cloud']->micro_farm){
+            $app['cloud']->micro_farm->shutdown();
+            $app['cloud']->micro_farm = null;
+            $app['cloud']->save();
+        }
+    });
 
     desc("Stop Remote Controls for all farms.");
     task('stop', function($app)
@@ -340,5 +367,17 @@ group("server", function()
     });
 
 });
+
+task('parallel_boot', 'setup', 'hub:boot','server:boot', 'rc:boot_micro' , function($app){
+    Ec2Client::authorize_port(22);
+            Ec2Client::authorize_port(4444);
+            Ec2Client::authorize_port(5900);
+            Ec2Client::authorize_port(6000);
+            $boundaries = explode("-", $app['remote_control_port_range']);
+            for ($i = $boundaries[0]; $i < $boundaries[1]; $i++) {
+                Ec2Client::authorize_port($i);
+            }
+});
+task('parallel', 'parallel_boot', 'hub:start','rc:start_micro' , 'server:setup', 'rc:boot', 'rc:shutdown_micro', 'rc:start', 'server:test_parallel');
 
 ?>

@@ -32,6 +32,12 @@ class Server extends Ec2Client
 //       new launch(ami, options)
 //     end
 //
+/**
+ * @static
+ * @param $ami
+ * @param array $options
+ * @return Server
+ */
     static function boot_and_acquire_dns($ami, $options = array()){
         $server = self::boot($ami,$options);
         $server->wait_for_dns();

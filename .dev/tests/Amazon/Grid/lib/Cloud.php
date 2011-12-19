@@ -30,6 +30,11 @@ class Cloud
      */
     public static $instance;
 
+    /**
+     * @var Server
+     */
+    public $micro_farm;
+
     public static function getInstance(){
         if (self::$instance)
             return self::$instance;

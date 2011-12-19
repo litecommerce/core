@@ -22,7 +22,7 @@ function parse_options()
     if (isset($options['clients-count']))
         define('SELENIUM_CLIENTS_COUNT', $options['clients-count']);
 
-    if (isset($options['log-junit'])){
+    if (isset($options['log-junit'])) {
         TestRunner::$log_xml = true;
         shell_exec("rm /tmp/phpunit*.xml");
     }
@@ -306,52 +306,49 @@ class TestRunner
         $this->collect_output('phpunit', $time);
     }
 
-    private function collect_output($filename, $time){
+    private function collect_output($filename, $time)
+    {
         //Collect console output
-        $output = shell_exec("cat /tmp/output*");
+        $output = shell_exec('cat /tmp/output* | grep "Tests\|Failures\|Assertions\|Skipped\|OK"');
         $tests = 0;
         $assertions = 0;
         $failures = 0;
         $skipped = 0;
         $errors = 0;
-        if (preg_match_all('/Tests: (\d+)/Sm', $output, $matches)){
+        if (preg_match_all('/Tests: (\d+)/Sm', $output, $matches)) {
             $tests += array_sum($matches[1]);
         }
-        if (preg_match_all('/Failures: (\d+)/Sm', $output, $matches)){
+        if (preg_match_all('/Failures: (\d+)/Sm', $output, $matches)) {
             $failures += array_sum($matches[1]);
         }
-        if(preg_match_all('/Assertions: (\d+)/Sm', $output, $matches)){
+        if (preg_match_all('/Assertions: (\d+)/Sm', $output, $matches)) {
             $assertions += array_sum($matches[1]);
         }
-        if(preg_match_all('/Skipped: (\d+)/Sm', $output, $matches)){
+        if (preg_match_all('/Skipped: (\d+)/Sm', $output, $matches)) {
             $skipped += array_sum($matches[1]);
         }
 
-        if (preg_match_all('/OK \((\d+) tests, (\d+) assertions\)/Sm', $output, $matches)){
+        if (preg_match_all('/OK \((\d+) tests, (\d+) assertions\)/Sm', $output, $matches)) {
             $tests += array_sum($matches[1]);
             $assertions += array_sum($matches[2]);
         }
 
-        $result = "";
-
-
-        if (preg_match_all('/PHPUnit .*\n(.*Time: \d+:\d, Memory: [0-9\.]Mb)/Sm', $output, $matches)){
-            $result .= implode("\n", $matches[1]);
-        }
-
-        if($failures || $skipped || $errors){
+        $result = shell_exec('cat /tmp/output-* | grep "^\(Customer\|Admin\|Time\|Module\|^$\)" | cat -s') . PHP_EOL;
+        if ($failures || $skipped || $errors) {
             $result .= "There were $failures failures, $skipped skipped tests and $errors errors: \n";
             $result .= shell_exec('cat /tmp/output-* | grep -v "^\(Customer\|Admin\|Time\|Module\)" | grep -v "^\(FAILURES\|Tests\|#\|PHPUnit\|OK\)" | cat -s | sed "s/There \(was\|were\) \(.*\) \(failure\|skipped test\|error\)/\3/"');
-            $result .= PHP_EOL . "FAILURES!".PHP_EOL;
+            $result .= PHP_EOL . "FAILURES!" . PHP_EOL;
         }
 
-        file_put_contents($filename.'.txt', $result);
+        $result .= "Tests complete. Tests: $tests; Assertions: $assertions; Failures: $failures; Skipped tests: $skipped; Errors: $errors" .PHP_EOL . "Total time: $time" . PHP_EOL;
+
+        file_put_contents($filename . '.txt', $result);
 
 
         //Collect xml output
-        if (self::$log_xml){
+        if (self::$log_xml) {
             $writer = new XMLWriter();
-            $uri = $filename. '.xml';
+            $uri = $filename . '.xml';
             touch($uri);
             $uri = realpath($uri);
             $writer->openUri($uri);
@@ -367,20 +364,10 @@ class TestRunner
             $writer->writeAttribute('errors', $errors);
             $writer->writeAttribute('time', $time);
 
-            foreach(glob("/tmp/phpunit*.xml") as $filename){
-                $reader = new XMLReader();
-                $reader->open($filename);
-
-                while($reader->read()){
-                    if ($reader->name == 'testsuite'){
-                        if (strpos($reader->getAttribute('name'), 'AllTests')){
-                            $writer->writeRaw($reader->readInnerXml());
-                            break;
-                        }
-                    }
-                }
-                $reader->close();
+            foreach (glob("/tmp/phpunit*.xml") as $filename) {
+                self::merge_xml($writer, $filename);
             }
+
 
             $writer->endElement();
             $writer->endDocument();
@@ -388,6 +375,22 @@ class TestRunner
 
         }
 
+    }
+
+    private static function merge_xml($xmlWriter, $fileName)
+    {
+        $reader = new XMLReader();
+        $reader->open($fileName);
+
+        while ($reader->read()) {
+            if ($reader->name == 'testsuite') {
+                if (strpos($reader->getAttribute('name'), 'AllTests')) {
+                    $xmlWriter->writeRaw($reader->readInnerXml());
+                    break;
+                }
+            }
+        }
+        $reader->close();
     }
 
     private function isComplete()
@@ -433,7 +436,7 @@ class TestRunner
     private function run()
     {
         if ($this->isBlocked()) {
-          //  print PHP_EOL . 'Clients left: ' . $this->clientsCount . PHP_EOL;
+            //  print PHP_EOL . 'Clients left: ' . $this->clientsCount . PHP_EOL;
         }
         foreach ($this->tests as $test)
         {
@@ -532,7 +535,7 @@ class TestTask
         //Fake run
         //$this->process = proc_open("sleep " . rand(2, 4), $descriptorspec, $pipes);
         //Real run
-        $options = TestRunner::$log_xml ? ' --log-junit /tmp/phpunit.'.$testName.".xml " : "";
+        $options = TestRunner::$log_xml ? ' --log-junit /tmp/phpunit.' . $testName . ".xml " : "";
         $options .= TestRunner::$verbose ? ' --verbose ' : "";
         $this->process = proc_open('./phpunit_no_restore.sh ' . $this->name . " " . $options, $descriptorspec, $pipes);
         if ($this->process) {
