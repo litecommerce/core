@@ -33,7 +33,7 @@ namespace XLite\View;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Header extends \XLite\View\AView
+class Header extends \XLite\View\Dialog
 {
     /**
      * Default meta description
@@ -82,15 +82,15 @@ class Header extends \XLite\View\AView
     }
 
     /**
-     * Return widget default template
+     * Return templates directory name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultTemplate()
+    protected function getDir()
     {
-        return 'header.tpl';
+        return 'header';
     }
 
     /**
