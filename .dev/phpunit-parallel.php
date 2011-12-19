@@ -332,18 +332,22 @@ class TestRunner
             $tests += array_sum($matches[1]);
             $assertions += array_sum($matches[2]);
         }
-
-        $result = shell_exec('cat /tmp/output-* | grep "^\(Customer\|Admin\|Time\|Module\|^$\)" | cat -s') . PHP_EOL;
+        $out = $filename . '.txt';
+        $command = 'cat /tmp/output-* | grep "^\(Customer\|Admin\|Time\|Module\|^$\)" | cat -s > ' . $out . ';
+                    echo "" >> ' . $out . ';';
         if ($failures || $skipped || $errors) {
-            $result .= "There were $failures failures, $skipped skipped tests and $errors errors: \n";
-            $result .= shell_exec('cat /tmp/output-* | grep -v "^\(Customer\|Admin\|Time\|Module\)" | grep -v "^\(FAILURES\|Tests\|#\|PHPUnit\|OK\)" | cat -s | sed "s/There \(was\|were\) \(.*\) \(failure\|skipped test\|error\)/\3/"');
-            $result .= PHP_EOL . "FAILURES!" . PHP_EOL;
+
+            $command .= 'echo "There were ' . $failures . ' failures, ' . $skipped . ' skipped tests and ' . $errors . ' errors: " >> ' . $out . ';
+                        echo "" >> ' . $out . ';
+                        cat /tmp/output-* | grep -v "^\(Customer\|Admin\|Time\|Module\)" | grep -v "^\(FAILURES\|Tests\|#\|PHPUnit\|OK\)" | cat -s | sed "s/There \(was\|were\) \(.*\) \(failure\|skipped test\|error\)/\3/" >> ' . $out . ';
+                        echo "" >> ' . $out . ';
+                        echo "FAILURES!" >> ' . $out . ';';
         }
+        $command .= 'echo "Tests complete. Tests: ' . $tests . '; Assertions: ' . $assertions . '; Failures: ' . $failures . '; Skipped tests: ' . $skipped . '; Errors: ' . $errors . '"  >> ' . $out . ';
+                    echo "" >> ' . $out . ';
+                    echo "Total time: ' . $time . '" >> ' . $out . ';';
 
-        $result .= "Tests complete. Tests: $tests; Assertions: $assertions; Failures: $failures; Skipped tests: $skipped; Errors: $errors" .PHP_EOL . "Total time: $time" . PHP_EOL;
-
-        file_put_contents($filename . '.txt', $result);
-
+        exec($command);
 
         //Collect xml output
         if (self::$log_xml) {

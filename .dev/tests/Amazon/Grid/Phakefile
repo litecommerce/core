@@ -44,6 +44,9 @@ task("setup", function ($app)
     $app['keypair'] = getenv("EC2_KEYPAIR");
     $app['keypair_name'] = getenv("EC2_KEYPAIR_NAME");
     $app['selenium_grid_path'] = "/http/selenium/selenium-grid";
+    $app['logdir'] = 'logs-'.time();
+    if (!file_exists($app['logdir']))
+                mkdir($app['logdir']);
 });
 
 
@@ -129,7 +132,7 @@ group("hub", function()
     task("boot", function($app)
     {
         print PHP_EOL . "Starting a new EC2 Instance...";
-        $app['cloud']->hub = Hub::boot_and_acquire_dns($app['hub_ami'], array('keypair_name' => $app['keypair_name'], 'type' => $app['grid_instance_type']));
+        $app['cloud']->hub = Hub::boot_and_acquire_dns($app['hub_ami'], array('keypair_name' => $app['keypair_name'], 'type' => 't1.micro' /*$app['grid_instance_type']*/));
         print PHP_EOL . "Started new Hub at " . $app['cloud']->hub->public_dns;
         $app['cloud']->save();
     });
@@ -247,14 +250,16 @@ group("rc", function()
         }
     });
 
-    task('start_micro', function($app){
+    task('start_micro', function($app)
+    {
         $farm = $app['cloud']->micro_farm;
         $farm->run("nohup rake rc:start_all HUB_URL=" . $app['cloud']->hub->private_url . " HOST=" . $farm->private_dns . " PORTS=" . $app['remote_control_port_range'] . " BACKGROUND=true",
-                                            array('display' => ":0", 'path' => "/usr/lib/firefox-8.0", 'pwd' => $app["selenium_grid_path"], 'keypair' => $app['keypair']));
+            array('display' => ":0", 'path' => "/usr/lib/firefox-8.0", 'pwd' => $app["selenium_grid_path"], 'keypair' => $app['keypair']));
     });
 
-    task('shutdown_micro', function($app){
-        if ($app['cloud']->micro_farm){
+    task('shutdown_micro', function($app)
+    {
+        if ($app['cloud']->micro_farm) {
             $app['cloud']->micro_farm->shutdown();
             $app['cloud']->micro_farm = null;
             $app['cloud']->save();
@@ -327,10 +332,11 @@ group("server", function()
             'keypair' => $app['keypair']);
         $server->run("sudo sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  src/etc/config.template.php > src/etc/config.php", $options);
         $server->run("sudo /etc/init.d/lc-startup", $options);
-        $server->run("sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/local.template.php | sed 's/_grid_hub_/" . $app['cloud']->hub->private_dns . "/g' | sed 's/_clients_count_/" . $app['farms_count'] . "/g' > .dev/tests/local.php", $options);
+        $server->run("sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/local.template.php | sed 's/_grid_hub_/" . $hub_dns . "/g' | sed 's/_clients_count_/" . $app['farms_count'] . "/g' > .dev/tests/local.php", $options);
         $server->run("sed -i 's/_clients_count_/" . $app['farms_count'] . "/g' .dev/phpunit-parallel.php", $options);
         $options['pwd'] .= '/.dev';
         $server->run("./phpunit tests/Dev_Install.php", $options);
+
     });
 
     desc("Start tests");
@@ -340,16 +346,33 @@ group("server", function()
         $app['cloud']->server->run("sudo ./phpunit.sh ONLYWEB", array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']));
     });
 
+    desc('Start non-web tests');
+    task('test_noweb', function($app){
+        $server = $app['cloud']->server;
+        $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']);
+        $server->run('sudo rm -rf coverage', $options);
+        $server->run('mkdir coverage', $options);
+        $server->run('sudo ./phpunit --verbose --log-junit phpunit.noweb.xml --coverage-clover phpunit.clover.xml --coverage-html coverage xliteAllTests tests/AllTests.php LOCAL_TESTS,NOWEB > /tmp/output-noweb.txt; cp phpunit.noweb.xml /tmp/phpunit.noweb.xml; cat /tmp/output-noweb.txt', $options);
+
+        exec('scp -r -i '.$app['keypair'].' bitnami@'.$server->public_dns.':/opt/bitnami/apache2/htdocs/xlite/.dev/coverage '.$app['logdir']);
+        exec('scp -i '.$app['keypair'].' bitnami@'.$server->public_dns.':/opt/bitnami/apache2/htdocs/xlite/.dev/phpunit*.xml '.$app['logdir']);
+    });
+
     desc("Start parallel tests");
     task('test_parallel', ':setup', function($app)
     {
         $server = $app['cloud']->server;
         print PHP_EOL . "Run parallel tests on " . $app['cloud']->server->public_dns . "...";
+
         $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']);
-        $code = $server->run("sudo php ./phpunit-parallel.php --build", $options);
-        $server->run("cat /tmp/output*", $options);
+        $code = $server->run("sudo php ./phpunit-parallel.php --build; cat /tmp/output*", $options);
+
+        exec('scp -i '.$app['keypair'].' bitnami@'.$server->public_dns.':/opt/bitnami/apache2/htdocs/xlite/.dev/phpunit*.xml '.$app['logdir']);
+
+        if (!file_exists($app['logdir'].'/screenshots'))
+            mkdir($app['logdir'].'/screenshots');
         foreach ($app['cloud']->farms as $farm) {
-            exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $farm->public_dns . ':/var/www/selenium-screenshots/* screenshots');
+            exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $farm->public_dns . ':/var/www/selenium-screenshots/* ' . $app['logdir']. '/screenshots');
         }
         if ($code != 0)
             die($code);
@@ -368,16 +391,19 @@ group("server", function()
 
 });
 
-task('parallel_boot', 'setup', 'hub:boot','server:boot', 'rc:boot_micro' , function($app){
+task('parallel_boot', 'setup', 'hub:boot', 'server:boot', 'rc:boot_micro', function($app)
+{
     Ec2Client::authorize_port(22);
-            Ec2Client::authorize_port(4444);
-            Ec2Client::authorize_port(5900);
-            Ec2Client::authorize_port(6000);
-            $boundaries = explode("-", $app['remote_control_port_range']);
-            for ($i = $boundaries[0]; $i < $boundaries[1]; $i++) {
-                Ec2Client::authorize_port($i);
-            }
+    Ec2Client::authorize_port(4444);
+    Ec2Client::authorize_port(5900);
+    Ec2Client::authorize_port(6000);
+    $boundaries = explode("-", $app['remote_control_port_range']);
+    for ($i = $boundaries[0]; $i < $boundaries[1]; $i++) {
+        Ec2Client::authorize_port($i);
+    }
 });
-task('parallel', 'parallel_boot', 'hub:start','rc:start_micro' , 'server:setup', 'rc:boot', 'rc:shutdown_micro', 'rc:start', 'server:test_parallel');
+
+task('all_tests', 'parallel_boot', 'hub:start', 'rc:start_micro', 'server:setup', 'server:test_noweb', 'rc:boot', 'rc:shutdown_micro', 'rc:start', 'server:test_parallel');
+task('parallel', 'parallel_boot', 'hub:start', 'rc:start_micro', 'server:setup', 'rc:boot', 'rc:shutdown_micro', 'rc:start', 'server:test_parallel');
 
 ?>
