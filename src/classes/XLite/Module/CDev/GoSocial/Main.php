@@ -25,76 +25,73 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button;
+namespace XLite\Module\CDev\GoSocial;
 
 /**
- * Facebook Like button
+ * Go social module main class
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class FacebookLike extends \XLite\View\AView
+abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Widget parameters
-     */
-    const PARAM_WIDTH  = 'width';
-
-    /**
-     * Get width
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getWidth()
-    {
-        return $this->getParam(self::PARAM_WIDTH);
-    }
-
-
-    /**
-     * Return widget default template
+     * Author name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultTemplate()
+    public static function getAuthorName()
     {
-        return 'button/facebook_like.tpl';
+        return 'Creative Development LLC';
     }
 
     /**
-     * Define widget parameters
+     * Module version
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function defineWidgetParams()
+    public static function getMinorVersion()
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_WIDTH => new \XLite\Model\WidgetParam\Int('Width', 450),
-        );
-
+        return '0';
     }
 
     /**
-     * Get button attributes 
-     * 
-     * @return array
+     * Module name
+     *
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.15
+     * @since  1.0.0
      */
-    protected function getButtonAttributes()
+    public static function getModuleName()
     {
-        return array(
-            'send'       => 'false',
-            'width'      => $this->getWidth(),
-            'show-faces' => 'true',
-        );
+        return 'GoSocial';
+    }
+
+    /**
+     * Module description
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getDescription()
+    {
+        return 'Adds social media sharing functions like Facebook comments, OpenGraph meta tags and share buttons for product pages.';
+    }
+
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
     }
 }

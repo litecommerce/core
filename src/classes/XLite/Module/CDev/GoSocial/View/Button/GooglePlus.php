@@ -25,34 +25,18 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button;
+namespace XLite\Module\CDev\GoSocial\View\Button;
 
 /**
- * Facebook Like button
+ * Google+ button
  *
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="product.details.page.info", weight="130")
  */
-class FacebookLike extends \XLite\View\AView
+class GooglePlus extends \XLite\View\AView
 {
-    /**
-     * Widget parameters
-     */
-    const PARAM_WIDTH  = 'width';
-
-    /**
-     * Get width
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getWidth()
-    {
-        return $this->getParam(self::PARAM_WIDTH);
-    }
-
-
     /**
      * Return widget default template
      *
@@ -62,24 +46,7 @@ class FacebookLike extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'button/facebook_like.tpl';
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_WIDTH => new \XLite\Model\WidgetParam\Int('Width', 450),
-        );
-
+        return 'modules/CDev/GoSocial/button/google_plus.tpl';
     }
 
     /**
@@ -92,9 +59,21 @@ class FacebookLike extends \XLite\View\AView
     protected function getButtonAttributes()
     {
         return array(
-            'send'       => 'false',
-            'width'      => $this->getWidth(),
-            'show-faces' => 'true',
+            'annotation' => 'inline',
         );
     }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && \XLite\Core\Config::getInstance()->CDev->GoSocial->gplus_use;
+    }
+
 }

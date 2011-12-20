@@ -118,6 +118,18 @@ class Header extends \XLite\View\AView
     }
 
     /**
+     * Get collected meta tags
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getMetaResources()
+    {
+        return static::getRegisteredMetas();
+    }
+
+    /**
      * Get script
      *
      * @return string
@@ -127,5 +139,19 @@ class Header extends \XLite\View\AView
     protected function getScript()
     {
         return \XLite::getInstance()->getScript();
+    }
+
+    /**
+     * Get head tag attributes 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getHeadAttributes()
+    {
+        return array(
+            'profile' => 'http://www.w3.org/1999/xhtml/vocab',
+        );
     }
 }

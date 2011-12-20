@@ -354,8 +354,15 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         foreach (\XLite\View\AView::getRegisteredResources() as $type => $files) {
             $method = 'drupal_add_' . $type;
 
-            foreach ($files as $name => $data) {
-                $method($data['file'], $this->getResourceInfo($type, $data));
+            if (function_exists($method)) {
+                foreach ($files as $name => $data) {
+                    $method($data['file'], $this->getResourceInfo($type, $data));
+                }
+
+            } elseif ($type == \XLite\View\AView::RESOURCE_META) {
+                foreach ($files as $html) {
+                    drupal_add_html_head(array('#markup' => $html));
+                }
             }
         }
     }

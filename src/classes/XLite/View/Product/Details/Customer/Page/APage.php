@@ -91,8 +91,9 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
             $i = 0;
             foreach ($list as $k => $data) {
                 $list[$k] = array(
-                    'id'      => 'product-details-tab-' . $i,
-                    'name'    => $k,
+                    'index' => $i,
+                    'id'    => 'product-details-tab-' . $i,
+                    'name'  => $k,
                 );
 
                 if (is_string($data)) {
@@ -143,16 +144,43 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
     /**
      * Get tab class 
      * 
-     * @param integer $index Tab index
-     * @param array   $tab   Tab
+     * @param array $tab Tab
      *  
      * @return string
      * @see    ____func_see____
      * @since  1.0.10
      */
-    protected function getTabClass($index, array $tab)
+    protected function getTabClass(array $tab)
     {
-        return 0 == $index ? 'active' : '';
+        return $this->isTabActive($tab) ? 'active' : '';
+    }
+
+    /**
+     * Get tab container style 
+     * 
+     * @param array $tab Tab
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getTabStyle(array $tab)
+    {
+        return $this->isTabActive($tab) ? '' : 'display: none;';
+    }
+
+    /**
+     * Check tab activity
+     * 
+     * @param array $tab tab
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isTabActive(array $tab)
+    {
+        return 0 === $tab['index'];
     }
 
     /**

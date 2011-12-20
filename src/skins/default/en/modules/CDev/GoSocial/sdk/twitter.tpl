@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Facebook Like button
+ * Twetter SDK loader
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,6 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+<script type="text/javascript">
+<!--
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+-->
+</script>
 
-<widget class="\XLite\View\ExternalSDK\Facebook" />
-<div class="fb-like"{foreach:getButtonAttributes(),k,v} data-{k}="{v}"{end:}></div>

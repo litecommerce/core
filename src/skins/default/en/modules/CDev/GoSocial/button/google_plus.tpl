@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Facebook Like button
+ * Google+ button
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,5 +10,5 @@
  * @since     1.0.0
  *}
 
-<widget class="\XLite\View\ExternalSDK\Facebook" />
-<div class="fb-like"{foreach:getButtonAttributes(),k,v} data-{k}="{v}"{end:}></div>
+<div class="g-plusone"{foreach:getButtonAttributes(),k,v} data-{k}="{v}"{end:}></div>
+<widget class="\XLite\Module\CDev\GoSocial\View\ExternalSDK\GooglePlus" />

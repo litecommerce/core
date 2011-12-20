@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,46 +13,30 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.15
  */
 
-namespace XLite\View\Button;
+namespace XLite\Module\CDev\GoSocial\View;
 
 /**
- * Facebook Like button
- *
+ * Facebook comments
+ * 
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.15
+ *
+ * @ListChild (list="product.details.page.tab.comments")
  */
-class FacebookLike extends \XLite\View\AView
+class FacebookComments extends \XLite\View\AView
 {
-    /**
-     * Widget parameters
-     */
-    const PARAM_WIDTH  = 'width';
-
-    /**
-     * Get width
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getWidth()
-    {
-        return $this->getParam(self::PARAM_WIDTH);
-    }
-
-
     /**
      * Return widget default template
      *
@@ -62,39 +46,23 @@ class FacebookLike extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'button/facebook_like.tpl';
+        return 'modules/CDev/GoSocial/fb.comments.tpl';
     }
 
     /**
-     * Define widget parameters
+     * Get button attributes
      *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_WIDTH => new \XLite\Model\WidgetParam\Int('Width', 450),
-        );
-
-    }
-
-    /**
-     * Get button attributes 
-     * 
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getButtonAttributes()
+    protected function getAttributes()
     {
         return array(
-            'send'       => 'false',
-            'width'      => $this->getWidth(),
-            'show-faces' => 'true',
+            'href'      => \XLite::getInstance()->getShopURL($this->getURL()),
+            'width'     => 500,
+            'num-posts' => \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_comments_num_posts,
         );
     }
+
 }
