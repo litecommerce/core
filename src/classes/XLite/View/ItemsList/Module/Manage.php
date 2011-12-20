@@ -286,5 +286,19 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
         return true;
     }
 
+    /**
+     * Check if there are some errors for the current module
+     *
+     * @param \XLite\Model\Module $module Module to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function hasErrors(\XLite\Model\Module $module)
+    {
+        return !$this->isEnabled($module) && parent::hasErrors($module);
+    }
+
     // }}}
 }
