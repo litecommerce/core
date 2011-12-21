@@ -74,9 +74,7 @@ abstract class Handler extends \XLite\Base
     {
         parent::__construct();
 
-        if (!empty($params)) {
-            $this->setWidgetParams($params);
-        }
+        $this->setWidgetParams($params);
     }
 
     /**

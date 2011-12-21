@@ -229,9 +229,7 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         // Set param values
-        if (!empty($params)) {
-            $widget->setWidgetParams($params);
-        }
+        $widget->setWidgetParams($params);
 
         // Initialize
         $widget->init();
