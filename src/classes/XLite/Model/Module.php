@@ -434,7 +434,7 @@ class Module extends \XLite\Model\AEntity
                 }
             }
 
-            foreach ($classes as $class) {
+            foreach ($classes as $class => $tmp) {
                 list($author, $name) = explode('\\', $class);
 
                 $module = new \XLite\Model\Module();

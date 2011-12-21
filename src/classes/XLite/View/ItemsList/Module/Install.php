@@ -487,7 +487,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function canPurchase(\XLite\Model\Module $module)
     {
-        return $this->canEnable($module) && !$this->canAccess($module);
+        return !$this->isInstalled($module) && !$this->canAccess($module);
     }
 
     /**

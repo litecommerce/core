@@ -402,7 +402,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
                     $result = array('status' => 'disabled', 'class' => 'none');
                 }
 
-                $result['href'] = '#' . $module->getName();
+                $result['href'] = $this->buildURL('addons_list_installed') . '#' . $module->getName();
 
             } else {
                 $url  = $this->buildURL('addons_list_marketplace', '', array('substring' => $module->getModuleName()));

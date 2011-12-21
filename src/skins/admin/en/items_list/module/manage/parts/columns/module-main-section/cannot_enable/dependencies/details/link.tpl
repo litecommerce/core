@@ -13,4 +13,4 @@
  * @ListChild (list="itemsList.module.install.columns.module-main-section.cannot_enable.dependencies.details", weight="100")
  *}
 
-<a href="{getDependencyHRef(depend)}">{depend.getModuleName()} ({t(#by#)} {depend.getAuthorName()})</a>
+<a{if:getDependencyHRef(depend)} href="{getDependencyHRef(depend)}"{end:}>{depend.getModuleName()} ({t(#by#)} {depend.getAuthorName()})</a>
