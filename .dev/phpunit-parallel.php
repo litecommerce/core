@@ -303,99 +303,52 @@ class TestRunner
         $this->cleanResources();
         $time = round(microtime(true) - $time, 2);
         print PHP_EOL . " Total time: " . $time . "sec";
-        $this->collect_output('phpunit', $time);
+        $this->collect_txt_output($time);
     }
 
-    private function collect_output($filename, $time)
+    function collect_txt_output($time)
     {
         //Collect console output
-        $output = shell_exec('cat /tmp/output* | grep "Tests\|Failures\|Assertions\|Skipped\|OK"');
-        $tests = 0;
-        $assertions = 0;
-        $failures = 0;
-        $skipped = 0;
-        $errors = 0;
-        if (preg_match_all('/Tests: (\d+)/Sm', $output, $matches)) {
-            $tests += array_sum($matches[1]);
-        }
-        if (preg_match_all('/Failures: (\d+)/Sm', $output, $matches)) {
-            $failures += array_sum($matches[1]);
-        }
-        if (preg_match_all('/Assertions: (\d+)/Sm', $output, $matches)) {
-            $assertions += array_sum($matches[1]);
-        }
-        if (preg_match_all('/Skipped: (\d+)/Sm', $output, $matches)) {
-            $skipped += array_sum($matches[1]);
-        }
+        $output = shell_exec('cat /tmp/output* | grep "Tests\|Failures\|Assertions\|Skipped\|Time:\|OK"');
+            $tests = $assertions = $failures = $skipped = $errors = 0;
 
-        if (preg_match_all('/OK \((\d+) tests, (\d+) assertions\)/Sm', $output, $matches)) {
-            $tests += array_sum($matches[1]);
-            $assertions += array_sum($matches[2]);
-        }
-        $out = $filename . '.txt';
+            if (preg_match_all('/Time: (\d+)/Sm', $output, $matches))
+                   $tests += array_sum($matches[1]);
+
+            if (preg_match_all('/Tests: (\d+)/Sm', $output, $matches))
+                $tests += array_sum($matches[1]);
+            if (preg_match_all('/Failures: (\d+)/Sm', $output, $matches))
+                $failures += array_sum($matches[1]);
+            if (preg_match_all('/Assertions: (\d+)/Sm', $output, $matches))
+                $assertions += array_sum($matches[1]);
+            if (preg_match_all('/Skipped: (\d+)/Sm', $output, $matches))
+                $skipped += array_sum($matches[1]);
+
+            if (preg_match_all('/OK \((\d+) tests, (\d+) assertions\)/Sm', $output, $matches)) {
+                $tests += array_sum($matches[1]);
+                $assertions += array_sum($matches[2]);
+            }
+        $out = "/tmp/phpunit.txt";
         $command = 'cat /tmp/output-* | grep "^\(Customer\|Admin\|Time\|Module\|^$\)" | cat -s > ' . $out . ';
                     echo "" >> ' . $out . ';';
         if ($failures || $skipped || $errors) {
-
             $command .= 'echo "There were ' . $failures . ' failures, ' . $skipped . ' skipped tests and ' . $errors . ' errors: " >> ' . $out . ';
                         echo "" >> ' . $out . ';
                         cat /tmp/output-* | grep -v "^\(Customer\|Admin\|Time\|Module\)" | grep -v "^\(FAILURES\|Tests\|#\|PHPUnit\|OK\)" | cat -s | sed "s/There \(was\|were\) \(.*\) \(failure\|skipped test\|error\)/\3/" >> ' . $out . ';
                         echo "" >> ' . $out . ';
                         echo "FAILURES!" >> ' . $out . ';';
         }
-        $command .= 'echo "Tests complete. Tests: ' . $tests . '; Assertions: ' . $assertions . '; Failures: ' . $failures . '; Skipped tests: ' . $skipped . '; Errors: ' . $errors . '"  >> ' . $out . ';
+        $command .= 'echo "Tests complete. Tests: ' . $tests .
+                    '; Assertions: ' . $assertions .
+                    '; Failures: ' . $failures .
+                    '; Skipped tests: ' . $skipped .
+                    '; Errors: ' . $errors . '"  >> ' . $out . ';
                     echo "" >> ' . $out . ';
                     echo "Total time: ' . $time . '" >> ' . $out . ';';
-
+        print PHP_EOL . $command . PHP_EOL;
         exec($command);
-
-        //Collect xml output
-        if (self::$log_xml) {
-            $writer = new XMLWriter();
-            $uri = $filename . '.xml';
-            touch($uri);
-            $uri = realpath($uri);
-            $writer->openUri($uri);
-
-            $writer->startDocument();
-            $writer->startElement('testsuites');
-
-            $writer->startElement('testsuite');
-            $writer->writeAttribute('name', 'LiteCommerce - AllTests');
-            $writer->writeAttribute('tests', $tests);
-            $writer->writeAttribute('assertions', $assertions);
-            $writer->writeAttribute('failures', $failures);
-            $writer->writeAttribute('errors', $errors);
-            $writer->writeAttribute('time', $time);
-
-            foreach (glob("/tmp/phpunit*.xml") as $filename) {
-                self::merge_xml($writer, $filename);
-            }
-
-
-            $writer->endElement();
-            $writer->endDocument();
-            $writer->flush();
-
-        }
-
     }
 
-    private static function merge_xml($xmlWriter, $fileName)
-    {
-        $reader = new XMLReader();
-        $reader->open($fileName);
-
-        while ($reader->read()) {
-            if ($reader->name == 'testsuite') {
-                if (strpos($reader->getAttribute('name'), 'AllTests')) {
-                    $xmlWriter->writeRaw($reader->readInnerXml());
-                    break;
-                }
-            }
-        }
-        $reader->close();
-    }
 
     private function isComplete()
     {
