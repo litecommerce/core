@@ -904,7 +904,7 @@ function isLiteCommerceInstalled($dbURL = null, &$message)
                     $checkResult = dbConnect($data, $errorMsg);
 
                     if ($checkResult) {
-                        $res = dbFetchColumn('SELECT login from xlite_profiles LIMIT 1', $errorMsg);
+                        $res = dbFetchColumn('SELECT profile_id from xlite_profiles LIMIT 1', $errorMsg);
 
                         if (empty($res)) {
                             $message = 'There are no profiles found in the database';
