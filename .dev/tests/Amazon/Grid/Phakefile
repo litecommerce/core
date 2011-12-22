@@ -36,6 +36,21 @@ function get_screenshots($app)
         exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $app['cloud']->micro_farm->public_dns . ':/var/www/selenium-screenshots/* ' . $app['logdir'] . '/screenshots');
 }
 
+function server_setup($app)
+{
+    print PHP_EOL . "Setting up LC server..." . PHP_EOL;
+    $server = $app['cloud']->server;
+    $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite",
+        'user' => 'bitnami',
+        'keypair' => $app['keypair']);
+    $server->run("sudo sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  src/etc/config.template.php > src/etc/config.php", $options);
+    $server->run("sudo /etc/init.d/lc-startup", $options);
+    $server->run("sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/local.template.php | sed 's/_grid_hub_/" . $app['cloud']->hub->private_dns . "/g' | sed 's/_clients_count_/" . $app['farms_count'] . "/g' > .dev/tests/local.php", $options);
+    $server->run("sed -i 's/_clients_count_/" . $app['farms_count'] . "/g' .dev/phpunit-parallel.php", $options);
+    $options['pwd'] .= '/.dev';
+    $server->run("./phpunit tests/Dev_Install.php", $options);
+}
+
 require_once "lib/Cloud.php";
 task("setup", function ($app)
 {
@@ -340,17 +355,8 @@ group("server", function()
     desc("Set up testing environment");
     task('setup', function($app)
     {
-        print PHP_EOL . "Setting up LC server..." . PHP_EOL;
-        $server = $app['cloud']->server;
-        $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite",
-            'user' => 'bitnami',
-            'keypair' => $app['keypair']);
-        $server->run("sudo sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  src/etc/config.template.php > src/etc/config.php", $options);
-        $server->run("sudo /etc/init.d/lc-startup > /tmp/startup.log", $options);
-        $server->run("sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/local.template.php | sed 's/_grid_hub_/" . $app['cloud']->hub->private_dns . "/g' | sed 's/_clients_count_/" . $app['farms_count'] . "/g' > .dev/tests/local.php", $options);
-        $server->run("sed -i 's/_clients_count_/" . $app['farms_count'] . "/g' .dev/phpunit-parallel.php", $options);
-        $options['pwd'] .= '/.dev';
-        $server->run("./phpunit tests/Dev_Install.php", $options);
+        server_setup($app);
+
     });
 
     desc("Start tests");
@@ -382,21 +388,22 @@ group("server", function()
         $server = $app['cloud']->server;
         $options = array('pwd' => "/opt/bitnami/apache2/htdocs", 'user' => 'bitnami', 'keypair' => $app['keypair']);
 
-        $server->run('cp xlite/src/etc/config.php xlite/.dev/build/config.local.php;'.
-                     'cp xlite_cms/sites/default/settings.php xlite_cms/sites/default/settings.old.php;
-                     cp xlite_cms/sites/default/default.settings.php xlite_cms/sites/default/settings.php;'.
-                     'mkdir xlite_cms/modules/lc_connector/litecommerce;
+        $server->run('cp xlite/src/etc/config.php xlite/.dev/build/config.local.php;' .
+            'cp xlite_cms/sites/default/settings.php xlite_cms/sites/default/settings.old.php;
+                     cp xlite_cms/sites/default/default.settings.php xlite_cms/sites/default/settings.php;' .
+            'mkdir xlite_cms/modules/lc_connector/litecommerce;
                      cp -r xlite/src/* xlite_cms/modules/lc_connector/litecommerce;
                      rm xlite_cms/modules/lc_connector/litecommerce/etc/config.php;
                      sudo chmod -R 777 .', $options);
 
         $code = $server->run('cd xlite/.dev; sudo ./phpunit.sh DEPLOY_DRUPAL', $options);
         get_screenshots($app);
-        $server->run('sudo rm -rf xlite_cms/modules/lc_connector/litecommerce;'.
-                     'cp xlite_cms/sites/default/settings.old.php xlite_cms/sites/default/settings.php;'.
-                      'sudo chmod -R 777 .', $options);
+        $server->run('sudo rm -rf xlite_cms/modules/lc_connector/litecommerce;' .
+            'cp xlite_cms/sites/default/settings.old.php xlite_cms/sites/default/settings.php;' .
+            'sudo chmod -R 777 .', $options);
         if ($code != 0)
             die($code);
+        server_setup($app);
     });
 
     desc("Shutdown lc server instance");
@@ -423,7 +430,9 @@ task('parallel_boot', 'setup', 'hub:boot', 'server:boot', 'rc:boot_micro', funct
         Ec2Client::authorize_port($i);
     }
 });
-task('parallel', 'parallel_boot', 'hub:start', 'rc:start_micro', 'server:setup', 'server:test_deploy', 'server:setup', 'rc:boot', 'rc:shutdown_micro', "rc:vnc:start", 'rc:start', 'server:test_parallel', 'grid:shutdown');
+
+task('deploy', 'parallel_boot', 'hub:start', 'rc:start_micro', 'server:setup', 'server:test_deploy');
+task('parallel', 'deploy', 'server:setup', 'rc:boot', 'rc:shutdown_micro', "rc:vnc:start", 'rc:start', 'server:test_parallel', 'grid:shutdown');
 
 
 ?>

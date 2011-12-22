@@ -1,4 +1,7 @@
 <?php
+/**
+ * @return Builder
+ */
 function builder() {
     return \Phake\Builder::$global;
 }
@@ -30,5 +33,10 @@ function after($task, $lambda) {
 
 function desc($description) {
     builder()->desc($description);
+}
+
+function invoke($task_name){
+    $application = builder()->get_application();
+    $application->invoke($task_name);
 }
 ?>
