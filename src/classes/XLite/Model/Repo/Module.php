@@ -587,4 +587,62 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     // }}}
+
+    // {{{ Search for dependencies
+
+    /**
+     * Search dependent modules by their class names
+     *
+     * @param array $classes List of class names
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getDependencyModules(array $classes)
+    {
+        $result = $this->getDependencyModulesCommon($classes, false);
+
+        foreach ($result as $module) {
+            unset($classes[$module->getActualName()]);
+        }
+
+        if (!empty($classes)) {
+            $result = array_merge($result, $this->getDependencyModulesCommon($classes, true));
+        }
+
+        return $result;
+    }
+
+    /**
+     * Common method to search modules by list of class names
+     *
+     * @param array   $classes         List of class names
+     * @param boolean $fromMarketplace Flag OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getDependencyModulesCommon(array $classes, $fromMarketplace)
+    {
+        $cnds = array();
+        $queryBuilder = $this->createQueryBuilder('m');
+
+        foreach (array_keys($classes) as $idx => $class) {
+            list($author, $name) = explode('\\', $class);
+
+            $cnds[] = new \Doctrine\ORM\Query\Expr\Andx(array('m.name = :name' . $idx, 'm.author = :author' . $idx));
+            $queryBuilder->setParameters(array('name' . $idx => $name, 'author' . $idx => $author));
+        }
+
+        return $queryBuilder
+            ->andWhere(new \Doctrine\ORM\Query\Expr\Orx($cnds))
+            ->andWhere('m.fromMarketplace = :fromMarketplace')
+            ->setParameter('fromMarketplace', $fromMarketplace)
+            ->addGroupBy('m.author', 'm.name')
+            ->getResult();
+    }
+
+    // }}}
 }

@@ -170,8 +170,22 @@ ul.order-body-item-spec li.details,
 ul.order-body-item-spec li.order-shipping-status {
   float: right;
   padding: 14px 20px 0 0px;
-  color: #257d16;
   font-size: 18px;
+}
+
+.order-status-wrapper {
+  color: #257d16;
+}
+
+.order-status-failed,
+  .order-status-declined
+{
+  color: #8d3021;
+}
+
+.order-status-completed
+{
+  color: #8f8f8f;
 }
 
 ul.order-body-item-spec2 li,
