@@ -36,20 +36,22 @@ namespace XLite\Module\CDev\GoSocial\View;
 abstract class Header extends \XLite\View\Header implements \XLite\Base\IDecorator
 {
     /**
-     * Get head tag attributes
+     * Get head prefixes
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getHeadAttributes()
+    public static function defineHeadPrefixes()
     {
-        $list = parent::getHeadAttributes();
+        $list = parent::defineHeadPrefixes();
 
-        $list['prefix'] = 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#';
+        $list['og'] = 'http://ogp.me/ns#';
+        $list['fb'] = 'http://ogp.me/ns/fb#';
+
         if (\XLite\Core\Config::getInstance()->CDev->GoSocial->fb_app_namespace) {
             $ns = \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_app_namespace;
-            $list['prefix'] .= ' ' . $ns . ': http://ogp.me/ns/' . $ns . '#';
+            $list[$ns] = 'http://ogp.me/ns/' . $ns . '#';
         }
 
         return $list;

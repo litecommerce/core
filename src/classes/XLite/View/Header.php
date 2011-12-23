@@ -54,6 +54,18 @@ class Header extends \XLite\View\AView
     protected $defaultTitle = 'Litecommerce';
 
     /**
+     * Get head prefixes 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public static function defineHeadPrefixes()
+    {
+        return array();
+    }
+
+    /**
      * Get meta description
      *
      * @return string
@@ -150,8 +162,23 @@ class Header extends \XLite\View\AView
      */
     protected function getHeadAttributes()
     {
-        return array(
+        $list = array(
             'profile' => 'http://www.w3.org/1999/xhtml/vocab',
         );
+
+        $prefixes = static::defineHeadPrefixes();
+        if ($prefixes) {
+            $data = array();
+            foreach ($prefixes as $name => $uri) {
+                $data[] = $name . ': ' . $uri;
+            }
+            $prefixes = implode(' ', $data);
+        }
+
+        if ($prefixes) {
+            $list['prefix'] = $prefixes;
+        }
+
+        return $list;
     }
 }

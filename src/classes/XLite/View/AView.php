@@ -91,6 +91,15 @@ abstract class AView extends \XLite\Core\Handler
     protected static $metas = array();
 
     /**
+     * HTML namespaces
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected static $namespaces = array();
+
+    /**
      * Templates tail
      *
      * @var   array
@@ -583,6 +592,18 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * Return list of all registered namespaces
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getRegisteredNamespaces()
+    {
+        return static::$namespaces;
+    }
+
+    /**
      * Get list of methods, priorities and interfaces for the resources
      *
      * @return array
@@ -645,6 +666,18 @@ abstract class AView extends \XLite\Core\Handler
      * @since  1.0.0
      */
     public function getMetaTags()
+    {
+        return array();
+    }
+
+    /**
+     * Register Meta tags
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getNamespaces()
     {
         return array();
     }
@@ -737,6 +770,7 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         $this->registerMetas();
+        $this->registerNamespaces();
     }
 
     /**
@@ -779,6 +813,22 @@ abstract class AView extends \XLite\Core\Handler
 
         if ($meta) {
             static::$metas = array_merge(static::$metas, $meta);
+        }
+    }
+
+    /**
+     * Register meta data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function registerNamespaces()
+    {
+        $data = $this->getNamespaces();
+
+        if ($data) {
+            static::$namespaces = array_merge(static::$namespaces, $data);
         }
     }
 

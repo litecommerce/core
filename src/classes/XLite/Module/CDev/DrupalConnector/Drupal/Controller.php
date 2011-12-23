@@ -62,6 +62,30 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected $resourcesCounter = 0;
 
+    /**
+     * Get RDF namespaces 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getRDFNamespaces()
+    {
+        return \XLite\View\AView::getRegisteredNamespaces();
+    }
+
+    /**
+     * Get head prefixes 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getHeadPrefixes()
+    {
+        return \XLite\View\Header::defineHeadPrefixes();
+    }
+
     // {{{ Menu callbacks
 
     /**

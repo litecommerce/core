@@ -76,7 +76,7 @@ abstract class FacebookLike extends \XLite\View\Button\FacebookLike implements \
      */
     protected function getDefaultWidth()
     {
-        return 48;
+        return 360;
     }
 
 }

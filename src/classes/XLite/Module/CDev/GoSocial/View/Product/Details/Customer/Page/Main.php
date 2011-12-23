@@ -66,5 +66,23 @@ abstract class Main extends \XLite\View\Product\Details\Customer\Page\Main imple
 
         return $list;
     }
+
+    /**
+     * Register Meta tags
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getNamespaces()
+    {
+        $list = parent::getNamespaces();
+
+        $list['og'] = 'http://ogp.me/ns#';
+        $list['fb'] = 'http://www.facebook.com/2008/fbml';
+
+        return $list;
+    }
+
 }
 
