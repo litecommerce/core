@@ -83,7 +83,7 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
         $list = array(
             'og:title'       => $this->getName(),
             'og:type'        => 'product',
-            'og:url'         => $this->getURL(),
+            'og:url'         => $this->getFrontURL(),
             'og:site_name'   => \XLite\Core\Config::getInstance()->Company->company_name,
             'og:description' => $this->getBriefDescription(),
         );
