@@ -68,7 +68,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getModuleName()
     {
-        return 'GoSocial';
+        return 'Go Social';
     }
 
     /**
