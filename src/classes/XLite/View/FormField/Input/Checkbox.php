@@ -115,4 +115,16 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
         return parent::getDefaultValue() ?: '1';
     }
 
+    /**
+     * Return field template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFieldTemplate()
+    {
+        return 'checkbox.tpl';
+    }
+
 }
