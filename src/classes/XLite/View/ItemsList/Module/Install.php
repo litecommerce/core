@@ -57,12 +57,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     const PARAM_PRICE_FILTER = 'priceFilter';
 
     /**
-     * No Marketplace warning messages
-     */
-    const NO_CONNECTION_MESSAGE = 'Can\'t connect to the Module Marketplace server';
-    const NO_PHAR_MESSAGE = 'You need Phar extension for PHP on your server to download modules from Module Marketplace';
-
-    /**
      * Return list of targets allowed for this widget
      *
      * @return array
@@ -391,11 +385,9 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function getWarningMessage()
     {
-        return static::t(
-            !$this->isPHARAvailable()
-                ? self::NO_PHAR_MESSAGE
-                : self::NO_CONNECTION_MESSAGE
-        );
+        return $this->isPHARAvailable() 
+            ? 'Can\'t connect to the Module Marketplace server'
+            : 'You need Phar extension for PHP on your server to download modules from Module Marketplace';
     }
 
     // {{{ Helpers to use in templates
@@ -443,6 +435,34 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
+     * Check if there are some errors for the current module
+     *
+     * @param \XLite\Model\Module $module Module to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function hasErrors(\XLite\Model\Module $module)
+    {
+        return !$this->isInstalled($module) && parent::hasErrors($module);
+    }
+
+    /**
+     * Check if the module can be enabled
+     *
+     * @param \XLite\Model\Module $module Module
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function canEnable(\XLite\Model\Module $module)
+    {
+        return parent::canEnable($module) && !$this->isInstalled($module);
+    }
+
+    /**
      * Check if the module can be installed
      *
      * @param \XLite\Model\Module $module Module
@@ -453,10 +473,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function canInstall(\XLite\Model\Module $module)
     {
-        return !$this->isInstalled($module)
-            && ($this->isPurchased($module) || $this->isFree($module))
-            && $this->canEnable($module)
-            && $module->getFromMarketplace();
+        return $this->canEnable($module) && $this->canAccess($module) && $module->getFromMarketplace();
     }
 
     /**
@@ -470,10 +487,21 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function canPurchase(\XLite\Model\Module $module)
     {
-        return !$this->isInstalled($module)
-            && !$this->isPurchased($module)
-            && !$this->isFree($module)
-            && $this->canEnable($module);
+        return !$this->isInstalled($module) && !$this->canAccess($module);
+    }
+
+    /**
+     * Check if module is accessible
+     *
+     * @param \XLite\Model\Module $module Module
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function canAccess(\XLite\Model\Module $module)
+    {
+        return $this->isPurchased($module) || $this->isFree($module);
     }
 
     // }}}

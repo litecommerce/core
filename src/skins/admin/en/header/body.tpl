@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Page to display when marketplace is not available
+ * Page head
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 
- <div class="box-frame marketplace-not-connected">
-   <div class="box">{t(getWarningMessage())}</div>
- </div>
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+  {displayViewListContent(#head#)}
+</head>

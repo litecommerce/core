@@ -557,13 +557,10 @@ OUT;
     protected function showCommon($method, $action, $message, array $args)
     {
         if (!isset($message)) {
-            $message = 'upgrade cell error';
+            $message = implode('; ', \XLite\Upgrade\Cell::getInstance()->getErrorMessages()) ?: 'unknown error';
         }
 
-        if (
-            isset($action)
-            && LC_DEVELOPER_MODE
-        ) {
+        if (isset($action) && LC_DEVELOPER_MODE) {
             $message = 'Action "' . get_class($this) . '::' . $action . '", ' . lcfirst($message);
         }
 

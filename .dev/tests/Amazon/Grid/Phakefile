@@ -25,6 +25,32 @@ function array_reduce_index($array, $callback, $initial = null)
     return $initial;
 }
 
+function get_screenshots($app)
+{
+    if (!file_exists($app['logdir'] . '/screenshots'))
+        mkdir($app['logdir'] . '/screenshots');
+    foreach ($app['cloud']->farms as $farm) {
+        exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $farm->public_dns . ':/var/www/selenium-screenshots/* ' . $app['logdir'] . '/screenshots');
+    }
+    if ($app['cloud']->micro_farm)
+        exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $app['cloud']->micro_farm->public_dns . ':/var/www/selenium-screenshots/* ' . $app['logdir'] . '/screenshots');
+}
+
+function server_setup($app)
+{
+    print PHP_EOL . "Setting up LC server..." . PHP_EOL;
+    $server = $app['cloud']->server;
+    $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite",
+        'user' => 'bitnami',
+        'keypair' => $app['keypair']);
+    $server->run("sudo sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  src/etc/config.template.php > src/etc/config.php", $options);
+    $server->run("sudo /etc/init.d/lc-startup", $options);
+    $server->run("sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/local.template.php | sed 's/_grid_hub_/" . $app['cloud']->hub->private_dns . "/g' | sed 's/_clients_count_/" . $app['farms_count'] . "/g' > .dev/tests/local.php", $options);
+    $server->run("sed -i 's/_clients_count_/" . $app['farms_count'] . "/g' .dev/phpunit-parallel.php", $options);
+    $options['pwd'] .= '/.dev';
+    $server->run("./phpunit tests/Dev_Install.php", $options);
+}
+
 require_once "lib/Cloud.php";
 task("setup", function ($app)
 {
@@ -44,9 +70,11 @@ task("setup", function ($app)
     $app['keypair'] = getenv("EC2_KEYPAIR");
     $app['keypair_name'] = getenv("EC2_KEYPAIR_NAME");
     $app['selenium_grid_path'] = "/http/selenium/selenium-grid";
-    $app['logdir'] = 'logs-'.time();
-    if (!file_exists($app['logdir']))
-                mkdir($app['logdir']);
+    $app['logdir'] = 'logs';
+    if (file_exists($app['logdir'])) {
+        exec('rm -rf ' . $app['logdir']);
+    }
+    mkdir($app['logdir']);
 });
 
 
@@ -255,6 +283,7 @@ group("rc", function()
         $farm = $app['cloud']->micro_farm;
         $farm->run("nohup rake rc:start_all HUB_URL=" . $app['cloud']->hub->private_url . " HOST=" . $farm->private_dns . " PORTS=" . $app['remote_control_port_range'] . " BACKGROUND=true",
             array('display' => ":0", 'path' => "/usr/lib/firefox-8.0", 'pwd' => $app["selenium_grid_path"], 'keypair' => $app['keypair']));
+        $farm->run("nohup vncserver :0", array('keypair' => $app['keypair']));
     });
 
     task('shutdown_micro', function($app)
@@ -326,16 +355,7 @@ group("server", function()
     desc("Set up testing environment");
     task('setup', function($app)
     {
-        $server = $app['cloud']->server;
-        $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite",
-            'user' => 'bitnami',
-            'keypair' => $app['keypair']);
-        $server->run("sudo sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  src/etc/config.template.php > src/etc/config.php", $options);
-        $server->run("sudo /etc/init.d/lc-startup", $options);
-        $server->run("sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/local.template.php | sed 's/_grid_hub_/" . $hub_dns . "/g' | sed 's/_clients_count_/" . $app['farms_count'] . "/g' > .dev/tests/local.php", $options);
-        $server->run("sed -i 's/_clients_count_/" . $app['farms_count'] . "/g' .dev/phpunit-parallel.php", $options);
-        $options['pwd'] .= '/.dev';
-        $server->run("./phpunit tests/Dev_Install.php", $options);
+        server_setup($app);
 
     });
 
@@ -346,18 +366,6 @@ group("server", function()
         $app['cloud']->server->run("sudo ./phpunit.sh ONLYWEB", array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']));
     });
 
-    desc('Start non-web tests');
-    task('test_noweb', function($app){
-        $server = $app['cloud']->server;
-        $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']);
-        $server->run('sudo rm -rf coverage', $options);
-        $server->run('mkdir coverage', $options);
-        $server->run('sudo ./phpunit --verbose --log-junit phpunit.noweb.xml --coverage-clover phpunit.clover.xml --coverage-html coverage xliteAllTests tests/AllTests.php LOCAL_TESTS,NOWEB > /tmp/output-noweb.txt; cp phpunit.noweb.xml /tmp/phpunit.noweb.xml; cat /tmp/output-noweb.txt', $options);
-
-        exec('scp -r -i '.$app['keypair'].' bitnami@'.$server->public_dns.':/opt/bitnami/apache2/htdocs/xlite/.dev/coverage '.$app['logdir']);
-        exec('scp -i '.$app['keypair'].' bitnami@'.$server->public_dns.':/opt/bitnami/apache2/htdocs/xlite/.dev/phpunit*.xml '.$app['logdir']);
-    });
-
     desc("Start parallel tests");
     task('test_parallel', ':setup', function($app)
     {
@@ -365,17 +373,37 @@ group("server", function()
         print PHP_EOL . "Run parallel tests on " . $app['cloud']->server->public_dns . "...";
 
         $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']);
-        $code = $server->run("sudo php ./phpunit-parallel.php --build; cat /tmp/output*", $options);
+        $code = $server->run("sudo php ./phpunit-parallel.php --build; cat /tmp/phpunit.txt", $options);
 
-        exec('scp -i '.$app['keypair'].' bitnami@'.$server->public_dns.':/opt/bitnami/apache2/htdocs/xlite/.dev/phpunit*.xml '.$app['logdir']);
+        exec('scp -i ' . $app['keypair'] . ' bitnami@' . $server->public_dns . ':/tmp/phpunit*.xml ' . $app['logdir']);
 
-        if (!file_exists($app['logdir'].'/screenshots'))
-            mkdir($app['logdir'].'/screenshots');
-        foreach ($app['cloud']->farms as $farm) {
-            exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $farm->public_dns . ':/var/www/selenium-screenshots/* ' . $app['logdir']. '/screenshots');
-        }
+        get_screenshots($app);
         if ($code != 0)
             die($code);
+    });
+
+    desc('Drupal + LC deployment test');
+    task('test_deploy', function($app)
+    {
+        $server = $app['cloud']->server;
+        $options = array('pwd' => "/opt/bitnami/apache2/htdocs", 'user' => 'bitnami', 'keypair' => $app['keypair']);
+
+        $server->run('cp xlite/src/etc/config.php xlite/.dev/build/config.local.php;' .
+            'cp xlite_cms/sites/default/settings.php xlite_cms/sites/default/settings.old.php;
+                     cp xlite_cms/sites/default/default.settings.php xlite_cms/sites/default/settings.php;' .
+            'mkdir xlite_cms/modules/lc_connector/litecommerce;
+                     cp -r xlite/src/* xlite_cms/modules/lc_connector/litecommerce;
+                     rm xlite_cms/modules/lc_connector/litecommerce/etc/config.php;
+                     sudo chmod -R 777 .', $options);
+
+        $code = $server->run('cd xlite/.dev; sudo ./phpunit.sh DEPLOY_DRUPAL', $options);
+        get_screenshots($app);
+        $server->run('sudo rm -rf xlite_cms/modules/lc_connector/litecommerce;' .
+            'cp xlite_cms/sites/default/settings.old.php xlite_cms/sites/default/settings.php;' .
+            'sudo chmod -R 777 .', $options);
+        if ($code != 0)
+            die($code);
+        server_setup($app);
     });
 
     desc("Shutdown lc server instance");
@@ -403,7 +431,8 @@ task('parallel_boot', 'setup', 'hub:boot', 'server:boot', 'rc:boot_micro', funct
     }
 });
 
-task('all_tests', 'parallel_boot', 'hub:start', 'rc:start_micro', 'server:setup', 'server:test_noweb', 'rc:boot', 'rc:shutdown_micro', 'rc:start', 'server:test_parallel');
-task('parallel', 'parallel_boot', 'hub:start', 'rc:start_micro', 'server:setup', 'rc:boot', 'rc:shutdown_micro', 'rc:start', 'server:test_parallel');
+task('deploy', 'parallel_boot', 'hub:start', 'rc:start_micro', 'server:setup', 'server:test_deploy');
+task('parallel', 'deploy', 'server:setup', 'rc:boot', 'rc:shutdown_micro', "rc:vnc:start", 'rc:start', 'server:test_parallel', 'grid:shutdown');
+
 
 ?>
