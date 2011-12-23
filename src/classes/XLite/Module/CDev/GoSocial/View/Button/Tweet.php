@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\GoSocial\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="product.details.page.info", weight="120")
+ * @ListChild (list="product.details.page.info.share", weight="200")
  */
 class Tweet extends \XLite\View\AView
 {

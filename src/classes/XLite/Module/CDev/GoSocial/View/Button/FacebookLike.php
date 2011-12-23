@@ -67,4 +67,16 @@ abstract class FacebookLike extends \XLite\View\Button\FacebookLike implements \
             && \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_like_use;
     }
 
+    /**
+     * Get defaul width
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getDefaultWidth()
+    {
+        return 48;
+    }
+
 }

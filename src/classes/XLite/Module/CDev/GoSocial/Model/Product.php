@@ -55,7 +55,7 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
      *
      * @Column (type="boolean")
      */
-    protected $useOGGenerator = true;
+    protected $useCustomOG = false;
 
     /**
      * Get Open Graph meta tags 
@@ -66,9 +66,9 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
      */
     public function getOpenGraphMetaTags()
     {
-        return $this->getUseOGGenerator()
-            ? $this->generateOpenGraphMetaTags()
-            : $this->getOgMeta();
+        return $this->getUseCustomOG()
+            ? $this->getOgMeta()
+            : $this->generateOpenGraphMetaTags();
     }
 
     /**

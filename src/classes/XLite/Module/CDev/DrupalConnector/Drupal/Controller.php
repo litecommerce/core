@@ -358,10 +358,25 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 foreach ($files as $name => $data) {
                     $method($data['file'], $this->getResourceInfo($type, $data));
                 }
+            }
+        }
 
-            } elseif ($type == \XLite\View\AView::RESOURCE_META) {
-                foreach ($files as $html) {
-                    drupal_add_html_head(array('#markup' => $html));
+        $metas = trim(implode(PHP_EOL, \XLite\View\AView::getRegisteredMetas()));
+        if ($metas) {
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $string = '<' . '?xml version="1.0" encoding="UTF-8"?' . '><body>' . $metas . '</body>';
+
+            if (@$dom->loadHTML($string)) {
+                $i = 0;
+                foreach ($dom->getElementsByTagName('body')->item(0)->childNodes as $node) {
+                    if ($node instanceOf \DOMNode) {
+                        $tag = array('#type' => 'html_tag', '#tag' => $node->nodeName, '#attributes' => array());
+                        foreach ($node->attributes as $attribute) {
+                            $tag['#attributes'][$attribute->name] = $attribute->value;
+                        }
+                        drupal_add_html_head($tag, 'lc3' . $i);
+                        $i++;
+                    }
                 }
             }
         }

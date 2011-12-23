@@ -8,14 +8,19 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="product.modify.list", weight="1015")
  *}
 <tr>
-  <td class="name-attribute">{t(#OpenGraph meta tags#)}</td>
+  <td class="name-attribute">{t(#Open Graph meta tags#)}</td>
   <td class="star"></td>
-  <td class="value-attribute">
-    <widget class="\XLite\View\FormField\Textarea\Simple" fieldName="{getNamePostedData(#ogMeta#)}" cols="45" rows="6" value="{product.ogMeta:h}" />
-    <widget class="\XLite\View\FormField\Input\Checkbox" fieldName="{getNamePostedData(#useOGGenerator#)}" cols="45" rows="6" isChecked="{product.useOGGenerator}" fieldId="useOGGeneratorFF" fieldOnly="true" /> <label for="useOGGeneratorFF">Use Open graph tags autogeneration</label>
+  <td class="value-attribute og-tags">
+    <div>
+      <widget class="\XLite\View\FormField\Textarea\Simple" fieldName="{getNamePostedData(#ogMeta#)}" cols="140" rows="8" value="{product.getOpenGraphMetaTags():h}" attributes="{getOpenGraphTextareaAttributes()}" help="{t(#These Open Graph meta tags were generated automatically based on general product information.#)}" />
+      <div class="clear"></div>
+    </div>
+    <div class="control">
+      <widget class="\XLite\View\FormField\Input\Checkbox" fieldName="{getNamePostedData(#useCustomOG#)}" isChecked="{product.useCustomOG}" fieldId="useCustomOGFF" fieldOnly="true" />
+      <label for="useCustomOGFF">{t(#Define OG meta tags manually#)}</label>
+    </div>
   </td>
 </tr>
 

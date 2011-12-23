@@ -11,6 +11,6 @@
  *
  * @ListChild (list="product.details.page.info", weight="110")
  *}
-<div class="facebook">
-  <widget class="\XLite\View\Button\FacebookLike" />
+<div class="share">
+  {displayViewListContent(#product.details.page.info.share#)}
 </div>

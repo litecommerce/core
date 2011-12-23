@@ -24,14 +24,6 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: Application ID
-  - name: fb_app_secret
-    category: CDev\GoSocial
-    type: text
-    orderby: 300
-    value: ''
-    translations:
-      - code: en
-        option_name: Application secret
   - name: fb_app_namespace
     category: CDev\GoSocial
     type: text
@@ -60,7 +52,7 @@ XLite\Model\Config:
     category: CDev\GoSocial
     type: checkbox
     orderby: 1100
-    value: true
+    value: false
     translations:
       - code: en
         option_name: Send button
@@ -99,7 +91,7 @@ XLite\Model\Config:
   - name: fb_comments_use
     category: CDev\GoSocial
     type: checkbox
-    orderby: 2600
+    orderby: 1600
     value: true
     translations:
       - code: en
@@ -108,7 +100,7 @@ XLite\Model\Config:
     category: CDev\GoSocial
     type: XLite\View\FormField\Input\Text\Integer
     orderby: 1700
-    value: 2
+    value: 8
     widgetParameters: { min: 1 }
     translations:
       - code: en

@@ -9,6 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-
-<div class="g-plusone"{foreach:getButtonAttributes(),k,v} data-{k}="{v}"{end:}></div>
+<div class="gplus">
+  <div class="g-plusone"{foreach:getButtonAttributes(),k,v} data-{k}="{v}"{end:}></div>
+</div>
 <widget class="\XLite\Module\CDev\GoSocial\View\ExternalSDK\GooglePlus" />

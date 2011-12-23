@@ -102,4 +102,17 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
 
         return $attrs;
     }
+
+    /**
+     * getDefaultValue
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultValue()
+    {
+        return parent::getDefaultValue() ?: '1';
+    }
+
 }

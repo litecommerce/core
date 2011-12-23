@@ -1255,6 +1255,10 @@ td.value-attribute
   padding-bottom: 5px;
 }
 
+td.value-attribute .table-value {
+  display: inline;
+}
+
 .product-modify-form .name-attribute
 {
   width: 120px;

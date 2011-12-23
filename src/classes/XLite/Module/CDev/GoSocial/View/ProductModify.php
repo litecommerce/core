@@ -25,32 +25,18 @@
  * @since     1.0.15
  */
 
-namespace XLite\Module\CDev\GoSocial\View\Product\Details\Customer\Page;
+namespace XLite\Module\CDev\GoSocial\View;
 
 /**
- * Main product page
+ * Product modify widget
  * 
  * @see   ____class_see____
  * @since 1.0.15
+ *
+ * @ListChild (list="product.modify.list", weight="1015", zone="admin")
  */
-abstract class Main extends \XLite\View\Product\Details\Customer\Page\Main implements \XLite\Base\IDecorator
+class ProductModify extends \XLite\View\AView
 {
-    /**
-     * Register Meta tags
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getMetaTags()
-    {
-        $list = parent::getMetaTags();
-
-        $list[] = $this->getProduct()->getOpenGraphMetaTags();
-
-        return $list;
-    }
-
     /**
      * Register CSS files
      *
@@ -63,6 +49,52 @@ abstract class Main extends \XLite\View\Product\Details\Customer\Page\Main imple
         $list = parent::getCSSFiles();
 
         $list[] = 'modules/CDev/GoSocial/product.css';
+
+        return $list;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'modules/CDev/GoSocial/product.js';
+
+        return $list;
+    }
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'modules/CDev/GoSocial/product.tpl';
+    }
+
+    /**
+     * Get Open Graph textarea attributes 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getOpenGraphTextareaAttributes()
+    {
+        $list = array();
+
+        if (!$this->getProduct()->getUseCustomOG()) {
+            $list['disabled'] = 'disabled';
+        }
 
         return $list;
     }

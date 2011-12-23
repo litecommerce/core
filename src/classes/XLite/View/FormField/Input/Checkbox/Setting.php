@@ -44,7 +44,7 @@ class Setting extends \XLite\View\FormField\Input\Checkbox
      */
     protected function isChecked()
     {
-        return 'Y' == $this->getValue();
+        return 'Y' == $this->getValue() || '1' === $this->getValue();
     }
 
     /**
