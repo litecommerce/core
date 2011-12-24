@@ -14,7 +14,7 @@
 
   <tr>
     <td class="setting-name">
-    <label for="settings_login">{t(#Merchant account username#)}</label>
+    <label for="settings_login">{t(#API Login ID#)}</label>
     </td>
     <td>
     <input type="text" id="settings_login" name="settings[login]" value="{paymentMethod.getSetting(#login#)}" class="field-required" />
