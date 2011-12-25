@@ -197,7 +197,8 @@ table.modules-list div.icon-container {
 
 /* Notes */
 
-table.modules-list div.note
+table.modules-list div.note,
+table.modules-list div.note div
 {
   padding: 10px 20px;
   width: 250px;
@@ -207,11 +208,18 @@ table.modules-list div.note
 }
 
 table.modules-list div.note.dependencies,
-table.modules-list div.note.version.error
+table.modules-list div.note.version.error,
+table.modules-list div.note div
 {
   background-color: #f7eee4;
   color: #7a2e1d;
   border: solid 1px #d6bda5;
+}
+
+table.modules-list div.note div
+{
+  padding: 0;
+  border: none;
 }
 
 table.modules-list div.note.version.upgrade

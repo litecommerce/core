@@ -185,8 +185,11 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 : array();
 
             $errors = array();
-            if ($this->getCart()->getFirstOpenPaymentTransaction()) {
-                $errors = $this->getCart()->getFirstOpenPaymentTransaction()
+
+            $firstOpenTransaction = $this->getCart()->getFirstOpenPaymentTransaction();
+
+            if ($firstOpenTransaction) {
+                $errors = $firstOpenTransaction
                     ->getPaymentMethod()
                     ->getProcessor()
                     ->getInputErrors($data);
@@ -269,6 +272,16 @@ class Checkout extends \XLite\Controller\Customer\Cart
         if (\XLite\Model\Payment\Transaction::PROLONGATION == $result) {
 
             $this->set('silent', true);
+
+            \XLite\Core\TopMessage::addError(
+                'You have an unpaid order #{{ORDER}}',
+                array(
+                    'ORDER' => $cart->getOrderId(),
+                )
+            );
+
+            $cart->setStatus(\XLite\Model\Order::STATUS_INPROGRESS);
+            $this->processSucceed();
 
             exit (0);
 

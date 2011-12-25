@@ -161,15 +161,31 @@ ul.order-body-item-spec li.date {
   color: #1862a4;
 }
 
-ul.order-body-item-spec li.details {
+ul.order-body-item-spec li.details,
+  ul.order-body-item-spec li.reorder
+{
   padding: 5px 0px 0px 11px;
 }
 
 ul.order-body-item-spec li.order-shipping-status {
   float: right;
   padding: 14px 20px 0 0px;
-  color: #257d16;
   font-size: 18px;
+}
+
+.order-status-wrapper {
+  color: #257d16;
+}
+
+.order-status-failed,
+  .order-status-declined
+{
+  color: #8d3021;
+}
+
+.order-status-completed
+{
+  color: #8f8f8f;
 }
 
 ul.order-body-item-spec2 li,

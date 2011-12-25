@@ -571,9 +571,9 @@ abstract class AView extends \XLite\Core\Handler
     protected static function getResourcesSchema()
     {
         return array(
-            array('getCommonFiles', 10, \XLite::COMMON_INTERFACE),
-            array('getResources', 20, null),
-            array('getThemeFiles', 30, null),
+            array('getCommonFiles', 200, \XLite::COMMON_INTERFACE),
+            array('getResources', 300, null),
+            array('getThemeFiles', \XLite::isAdminZone() ? 100 : 400, null),
         );
     }
 

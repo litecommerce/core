@@ -33,4 +33,15 @@ return function()
     if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
         \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
     }
+
+    // Apply config changes
+    $repo = \XLite\Core\Database::getRepo('XLite\Model\Config');
+
+    $option = $repo->findOneBy(array('name' => 'smtp_server_url'));
+    if ($option) {
+        $option->setType('text');
+    }
+
+    \XLite\Core\Database::getEM()->flush();
+    \XLite\Core\Database::getCacheDriver()->deleteAll();
 };

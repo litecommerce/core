@@ -64,7 +64,7 @@ XLite\Model\Config:
   - { name: smtp_security, category: Email, type: 'XLite\View\FormField\Select\SMTPSecurity', orderby: 170, value: no, translations: [{ code: en, option_name: 'Secure connection', option_comment: '' }] }
   - { name: smtp_server, category: Email, type: separator, orderby: 100, translations: [{ code: en, option_name: 'SMTP server', option_comment: '' }] }
   - { name: smtp_server_port, category: Email, type: XLite\View\FormField\Input\Text\Integer, orderby: 130, value: 25, widgetParameters: { min: 0, max: 65535 }, translations: [{ code: en, option_name: 'SMTP port', option_comment: '' }] }
-  - { name: smtp_server_url, category: Email, type: XLite\View\FormField\Input\Text\URL, orderby: 120, translations: [{ code: en, option_name: 'SMTP server', option_comment: '' }] }
+  - { name: smtp_server_url, category: Email, type: text, orderby: 120, translations: [{ code: en, option_name: 'SMTP server', option_comment: '' }] }
   - { name: smtp_username, category: Email, type: text, orderby: 150, translations: [{ code: en, option_name: Username, option_comment: '' }] }
   - { name: start_year, category: Company, type: XLite\View\FormField\Input\Text\PastYear, orderby: 380, value: 2009, translations: [{ code: en, option_name: 'Year when store started its operation', option_comment: '' }] }
   - { name: subcategories_look, category: General, type: 'XLite\View\FormField\Select\SubcategoriesLook', orderby: 220, value: icons, translations: [{ code: en, option_name: 'Category listings format', option_comment: '' }] }

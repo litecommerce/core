@@ -4,6 +4,9 @@
 #
 
 XLite\Model\LanguageLabel:
+  - { name: 'Occurred X add product events and Y update product events', translations: [{ code: en, label: 'Occurred {{new}} add product events and {{old}} update product events.' }] }
+  - { name: 'Occurred X add product events', translations: [{ code: en, label: 'Occurred {{new}} add product events.' }] }
+  - { name: 'Occurred Y update product events', translations: [{ code: en, label: 'Occurred {{old}} update product events.' }] }
   - { name: 'File size exceeds the maximum size', translations: [{ code: en, label: 'File size exceeds the maximum size ({{size}})' }] }
   - { name: 'The file was not loaded because of a failure on the server', translations: [{ code: en, label: 'The file was not loaded because of a failure on the server' }] }
 

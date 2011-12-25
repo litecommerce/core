@@ -414,20 +414,42 @@ class Module extends \XLite\Model\AEntity
     /**
      * Get list of dependency modules as Doctrine entities
      *
+     * @param mixed $onlyDisabled Flag OPTIONAL
+     *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.15
      */
-    public function getDependencyModules()
+    public function getDependencyModules($onlyDisabled = false)
     {
-        $result = array();
+        $result  = array();
+        $classes = array_fill_keys($this->getDependencies(), true);
 
-        foreach ($this->getDependencies() as $class) {
-            $result[$class] = $this->getRepository()
-                ->findOneBy(array_combine(array('author', 'name'), explode('\\', $class)));
+        if (!empty($classes)) {
+            foreach ($this->getRepository()->getDependencyModules($classes) as $module) {
+                unset($classes[$module->getActualName()]);
+
+                if (!($onlyDisabled && $module->getEnabled())) {
+                    $result[] = $module;
+                }
+            }
+
+            foreach ($classes as $class => $tmp) {
+                list($author, $name) = explode('\\', $class);
+
+                $module = new \XLite\Model\Module();
+                $module->setName($name);
+                $module->setAuthor($author);
+                $module->setModuleName($name);
+                $module->setAuthorName($author);
+                $module->setEnabled(false);
+                $module->setInstalled(false);
+
+                $result[] = $module;
+            }
         }
 
-        return array_filter($result);
+        return $result;
     }
 
     /**
