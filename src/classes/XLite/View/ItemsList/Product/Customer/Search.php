@@ -266,6 +266,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
             static::PARAM_INCLUDING         => new \XLite\Model\WidgetParam\Set(
                 'Including',
                 \XLite\Model\Repo\Product::INCLUDING_ANY,
+                false,
                 array(
                     \XLite\Model\Repo\Product::INCLUDING_ALL,
                     \XLite\Model\Repo\Product::INCLUDING_ANY,
