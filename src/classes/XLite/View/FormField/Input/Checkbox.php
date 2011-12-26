@@ -104,7 +104,7 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
     }
 
     /**
-     * getDefaultValue
+     * Get default value
      *
      * @return string
      * @see    ____func_see____

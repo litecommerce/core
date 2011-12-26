@@ -28,12 +28,12 @@
 namespace XLite\View\FormField\Input\Checkbox;
 
 /**
- * Setting option
+ * Simple checkbox
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Setting extends \XLite\View\FormField\Input\Checkbox
+class Simple extends \XLite\View\FormField\Input\Checkbox
 {
     /**
      * Determines if checkbox is checked
@@ -44,24 +44,22 @@ class Setting extends \XLite\View\FormField\Input\Checkbox
      */
     protected function isChecked()
     {
-        return 'Y' == $this->getValue() || '1' === $this->getValue();
+        return parent::isChecked() || 'Y' == $this->getValue() || '1' === $this->getValue();
     }
 
     /**
-     * prepareAttributes
-     *
-     * @param array $attrs Field attributes to prepare
+     * getCommonAttributes
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareAttributes(array $attrs)
+    protected function getCommonAttributes()
     {
-        $attrs = parent::prepareAttributes($attrs);
+        $list = parent::getCommonAttributes();
 
-        $attrs['value'] = 'Y';
+        unset($list['value']);
 
-        return $attrs;
+        return $list;
     }
 }

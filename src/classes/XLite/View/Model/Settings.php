@@ -112,7 +112,7 @@ class Settings extends \XLite\View\Model\AModel
                 break;
 
             case 'checkbox':
-                $class = '\XLite\View\FormField\Input\Checkbox\Setting';
+                $class = '\XLite\View\FormField\Input\Checkbox\Simple';
                 break;
 
             case 'country':
