@@ -39,6 +39,12 @@ function get_screenshots($app)
 function server_setup($app)
 {
     print PHP_EOL . "Setting up LC server..." . PHP_EOL;
+
+    shell_exec('source /u/xcart/public_html/general/projects/xlite/.ec2/env.sh');
+
+    passthru("ec2-version", $code);
+    if ($code != 0)
+        die("EC2 Environment not configured!");
     $server = $app['cloud']->server;
     $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite",
         'user' => 'bitnami',
@@ -59,8 +65,8 @@ task("setup", function ($app)
     $app['launch_timeout'] = array_key_exists('launch_timeout', $app) ? $app['launch_timeout'] : 240;
     $app['cloud'] = Cloud::getInstance();
     $app['farms_count'] = 5;
-    $app['hub_ami'] = exec("ec2-describe-images -a | grep lc-test-grid | cut -f2");
-    $app['lc_ami'] = exec("ec2-describe-images -a | grep lc-server | cut -f2");
+    $app['hub_ami'] = exec("ec2-describe-images | grep lc-test-grid | cut -f2");
+    $app['lc_ami'] = exec("ec2-describe-images | grep lc-server | cut -f2");
     //$app['server_instance_type'] = 'c1.medium';
     //$app['grid_instance_type'] = 'c1.medium';
     //$app['server_instance_type'] = 't1.micro';
