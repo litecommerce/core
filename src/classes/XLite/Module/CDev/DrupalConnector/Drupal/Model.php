@@ -44,7 +44,6 @@ class Model extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected $blocks;
 
-
     /**
      * Get LC-related block(s)
      *
@@ -73,22 +72,21 @@ class Model extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
             // Merge results
             foreach ($this->blocks as $id => &$block) {
-
                 $block['options'] = array();
 
-                foreach ((array) @$settings[$id] as $data) {
+                foreach ((array) \Includes\Utils\ArrayManager::getIndex($settings, $id, true) as $data) {
                     $block['options'][$data['name']] = $data['value'];
                 }
             }
         }
 
-        return isset($blockId) ? @$this->blocks[$blockId] : $this->blocks;
+        return \Includes\Utils\ArrayManager::getIndex($this->blocks, $blockId);
     }
 
     /**
      * Alias
      *
-     * @param integer $blockId Block ID OPTIONAL
+     * @param integer $blockId Block ID
      *
      * @return array
      * @see    ____func_see____

@@ -10,6 +10,13 @@
  * @since     1.0.0
  */
 
+ProductsListView.prototype.getProductSearchParams = function()
+{
+  return {
+    'substring': jQuery('.search-product-form input[name="substring"]').val()
+  };
+}
+
 // Decoration of the products list widget class
 core.bind(
   'load',
@@ -33,8 +40,8 @@ core.bind(
                   o.submitForm(
                     this,
                     function (XMLHttpRequest, textStatus, data, isValid) {
-                      if (isValid) {
-                        o.load();
+                      if ('success' == textStatus) {
+                        o.load(o.getProductSearchParams());
                       } else {
                         o.unshade();
                       }

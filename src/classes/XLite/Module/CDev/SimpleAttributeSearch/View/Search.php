@@ -47,7 +47,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\Search implements \X
      * @see    ____func_see____
      * @since  1.0.0
      */
-    static public function getSearchParams()
+    protected static function getSearchParams()
     {
         $list = parent::getSearchParams();
         $list[\XLite\Model\Repo\Product::P_ATTRIBUTES] = static::PARAM_ATTRIBUTES;
@@ -55,7 +55,37 @@ class Search extends \XLite\View\ItemsList\Product\Customer\Search implements \X
         return $list;
     }
 
-     /**
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = 'modules/CDev/SimpleAttributeSearch/controller.js';
+
+        return $list;
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = 'modules/CDev/SimpleAttributeSearch/style.css';
+
+        return $list;
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void

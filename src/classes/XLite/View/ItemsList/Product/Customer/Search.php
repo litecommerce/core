@@ -49,26 +49,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     const PARAM_BY_SKU            = 'by_sku';
 
     /**
-     * Return search parameters
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    static public function getSearchParams()
-    {
-        return array(
-            \XLite\Model\Repo\Product::P_SUBSTRING         => static::PARAM_SUBSTRING,
-            \XLite\Model\Repo\Product::P_CATEGORY_ID       => static::PARAM_CATEGORY_ID,
-            \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => static::PARAM_SEARCH_IN_SUBCATS,
-            \XLite\Model\Repo\Product::P_INCLUDING         => static::PARAM_INCLUDING,
-            \XLite\Model\Repo\Product::P_BY_TITLE          => static::PARAM_BY_TITLE,
-            \XLite\Model\Repo\Product::P_BY_DESCR          => static::PARAM_BY_DESCR,
-            \XLite\Model\Repo\Product::P_BY_SKU            => static::PARAM_BY_SKU,
-        );
-    }
-
-    /**
      * Return list of targets allowed for this widget
      *
      * @return array
@@ -93,6 +73,26 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     protected static function getWidgetTarget()
     {
         return 'search';
+    }
+
+    /**
+     * Return search parameters
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getSearchParams()
+    {
+        return array(
+            \XLite\Model\Repo\Product::P_SUBSTRING         => static::PARAM_SUBSTRING,
+            \XLite\Model\Repo\Product::P_CATEGORY_ID       => static::PARAM_CATEGORY_ID,
+            \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => static::PARAM_SEARCH_IN_SUBCATS,
+            \XLite\Model\Repo\Product::P_INCLUDING         => static::PARAM_INCLUDING,
+            \XLite\Model\Repo\Product::P_BY_TITLE          => static::PARAM_BY_TITLE,
+            \XLite\Model\Repo\Product::P_BY_DESCR          => static::PARAM_BY_DESCR,
+            \XLite\Model\Repo\Product::P_BY_SKU            => static::PARAM_BY_SKU,
+        );
     }
 
     /**

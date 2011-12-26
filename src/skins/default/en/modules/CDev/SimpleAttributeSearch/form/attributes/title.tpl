@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Top view list
+ * Attribute title
  *  
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,11 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.15
  *
- * @ListChild (list="itemsList.product.search.form.options.parts", weight="300")
+ * @ListChild (list="itemsList.product.search.form.options.parts.attributes.parts", weight="100")
  *}
 
-<table IF="getAttributeGroups()" class="search-form-options-part" title="{t(#Attributes#)}">
-  {foreach:getAttributeGroups(),group}
-    {displayNestedViewListContent(#attributes#,_ARRAY_(#group#^group))}
-  {end:}
-</table>
+<td>{attribute.getTitle():h}</td>

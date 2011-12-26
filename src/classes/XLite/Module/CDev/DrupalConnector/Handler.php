@@ -172,7 +172,6 @@ class Handler extends \XLite\Core\CMSConnector
         $item   = menu_get_item();
 
         if ($item && !empty($item['path'])) {
-
             $result[0] = \XLite\Module\CDev\DrupalConnector\Drupal\Module::getInstance()->getPortal($item['path']);
 
             if ($result[0]) {
