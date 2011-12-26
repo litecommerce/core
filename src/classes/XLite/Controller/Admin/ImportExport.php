@@ -82,6 +82,15 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     protected $filePointer;
 
     /**
+     * Export id 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.15
+     */
+    protected $exportId;
+
+    /**
      * Import cell 
      * 
      * @var   array
@@ -302,6 +311,11 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="catalog.csv"; modification-date="' . date('r') . ';');
 
+        $this->exportId = hash('md4', time());
+
+        $path = LC_DIR_TMP . $this->exportId . LC_DS  . 'images';
+        \Includes\Utils\FileManager::mkdirRecursive($path);
+
         $this->filePointer = fopen('php://output', 'w');
     }
 
@@ -439,8 +453,24 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     {
         $list = array();
 
-        foreach ($product->getImages() as $image) {
-            $list[] = $image->getFrontURL();
+        if (0 < count($product->getImages())) {
+
+            $path = LC_DIR_TMP . $this->exportId . LC_DS  . 'images' . LC_DS . 'product' . LC_DS . $product->getProductId();
+            \Includes\Utils\FileManager::mkdirRecursive($path);
+            $path .= LC_DS;
+
+            foreach ($product->getImages() as $image) {
+                if ($image->isURL()) {
+                    $list[] = $image->getFrontURL();
+
+                } else {
+                    $name = $image->getPath() ?: ($image->getId() . '.' . $image->getExtension());
+                    $subpath = $path . $name;
+                    if (@file_put_contents($subpath, $image->getBody())) {
+                        $list[] = $subpath;
+                    }
+                }
+            }
         }
 
         return implode(';', $list);
@@ -1189,7 +1219,11 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
                     $image = new \XLite\Model\Image\Product\Image();
                     $image->setProduct($product);
 
-                    if ($image->loadFromURL($url)) {
+                    $result = preg_match('/^(https?|ftp):\/\//Ss', $url)
+                        ? $image->loadFromURL($url)
+                        : $image->loadFromLocalFile($url);
+
+                    if ($result) {
                         $product->addImages($image);
                         \XLite\Core\Database::getEM()->persist($image);
 

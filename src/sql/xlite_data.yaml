@@ -488,6 +488,7 @@ XLite\Model\LanguageLabel:
   - { name: 'SHIPPING = raw on-line_rate + flat + ITEMS*per_item + WEIGHT*per_weight + SUBTOTAL*(% of subtotal)/100;', translations: [{ code: en, label: 'SHIPPING = raw on-line_rate + flat + ITEMS*per_item + WEIGHT*per_{{X}} + SUBTOTAL*(% of subtotal)/100;' }] }
   - { name: 'File size exceeds the maximum size', translations: [{ code: en, label: 'File size exceeds the maximum size ({{size}})' }] }
   - { name: 'The file was not loaded because of a failure on the server', translations: [{ code: en, label: 'The file was not loaded because of a failure on the server' }] }
+  - { name: 'X items available', translations: [{ code: en, label: '{{count}} items available' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

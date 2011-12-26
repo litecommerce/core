@@ -331,4 +331,24 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
 
         return $result;
     }
+
+    /**
+     * Get processor methods 
+     * 
+     * @param \XLite\Model\Shipping\Processor\AProcessor $processor Processor
+     *  
+     * @return \XLite\Model\Shipping\Method
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getProcessorMethods(\XLite\Model\Shipping\Processor\AProcessor $processor)
+    {
+        $list = array();
+        foreach ($processor->getShippingMethods() as $i => $method) {
+            $method->setEditLanguageCode(\XLite::getController()->getCurrentLanguage());
+            $list[$i] = $method;
+        }
+
+        return $list;
+    }
 }

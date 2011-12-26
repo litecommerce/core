@@ -76,7 +76,7 @@ function onDeleteButton(method_id)
             <th valign="top">&nbsp;</th>
           </tr>
 
-          <tr FOREACH="processor.getShippingMethods(),shipping_idx,method" class="{getRowClass(shipping_idx,#dialog-box#,#highlight#)}">
+          <tr FOREACH="getProcessorMethods(processor),shipping_idx,method" class="{getRowClass(shipping_idx,#dialog-box#,#highlight#)}">
 
             <td>
               <input type="text" name="methods[{method.getMethodId()}][name]" size="50" value="{method.getName()}" IF="processor.isMethodNamesAdjustable()" />
