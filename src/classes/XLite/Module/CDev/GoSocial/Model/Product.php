@@ -80,12 +80,15 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
      */
     public function defineOpenGraphMetaTags()
     {
+        $language = \XLite\Core\Session::getInstance()->getLanguage();
+
         $list = array(
             'og:title'       => $this->getName(),
-            'og:type'        => 'product',
+            'og:type'        => 'website',
             'og:url'         => $this->getFrontURL(),
             'og:site_name'   => \XLite\Core\Config::getInstance()->Company->company_name,
             'og:description' => $this->getBriefDescription(),
+            'og:locale'      => 'en_US',
         );
 
         if ($this->getImage()) {

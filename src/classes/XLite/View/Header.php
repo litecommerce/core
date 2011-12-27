@@ -33,7 +33,7 @@ namespace XLite\View;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Header extends \XLite\View\Dialog
+class Header extends \XLite\View\Container
 {
     /**
      * Default meta description
@@ -181,4 +181,17 @@ class Header extends \XLite\View\Dialog
 
         return $list;
     }
+
+    /**
+     * Return default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'header/body.tpl';
+    }
+
 }
