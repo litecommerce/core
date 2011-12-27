@@ -166,6 +166,8 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     public function getSoftTranslation($code = null)
     {
+        $code = $code ?: $this->editLanguage;
+
         if (!isset($code)) {
             $code = $this->getDefaultLanguageCode();
         }

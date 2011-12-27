@@ -39,6 +39,12 @@ function get_screenshots($app)
 function server_setup($app)
 {
     print PHP_EOL . "Setting up LC server..." . PHP_EOL;
+
+    shell_exec('source /u/xcart/public_html/general/projects/xlite/.ec2/env.sh');
+
+    passthru("ec2-version", $code);
+    if ($code != 0)
+        die("EC2 Environment not configured!");
     $server = $app['cloud']->server;
     $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite",
         'user' => 'bitnami',
@@ -46,26 +52,28 @@ function server_setup($app)
     $server->run("sudo sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  src/etc/config.template.php > src/etc/config.php", $options);
     $server->run("sudo /etc/init.d/lc-startup", $options);
     $server->run("sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/local.template.php | sed 's/_grid_hub_/" . $app['cloud']->hub->private_dns . "/g' | sed 's/_clients_count_/" . $app['farms_count'] . "/g' > .dev/tests/local.php", $options);
-    $server->run("sed -i 's/_clients_count_/" . $app['farms_count'] . "/g' .dev/phpunit-parallel.php", $options);
     $options['pwd'] .= '/.dev';
-    $server->run("./phpunit tests/Dev_Install.php", $options);
+    $code = $server->run("./phpunit tests/Dev_Install.php", $options);
+    if ($code != 0)
+        die($code);
 }
 
 require_once "lib/Cloud.php";
 task("setup", function ($app)
 {
-    $app['remote_control_port_range'] = array_key_exists('remote_control_port_range', $app) ? $app['remote_control_port_range'] : "5555-5560";
+    $app['remote_control_port_range'] = array_key_exists('remote_control_port_range', $app) ? $app['remote_control_port_range'] : "5555-5555";
     $app['launch_timeout'] = array_key_exists('launch_timeout', $app) ? $app['launch_timeout'] : 240;
     $app['cloud'] = Cloud::getInstance();
     $app['farms_count'] = 5;
-    $app['hub_ami'] = exec("ec2-describe-images -a | grep lc-test-grid | cut -f2");
-    $app['lc_ami'] = exec("ec2-describe-images -a | grep lc-server | cut -f2");
+    $app['hub_ami'] = exec("ec2-describe-images | grep lc-test-grid | cut -f2");
+    $app['lc_ami'] = exec("ec2-describe-images | grep lc-server | cut -f2");
     //$app['server_instance_type'] = 'c1.medium';
     //$app['grid_instance_type'] = 'c1.medium';
     //$app['server_instance_type'] = 't1.micro';
     //$app['grid_instance_type'] = 't1.micro';
     $app['server_instance_type'] = "m1.small";
     $app['grid_instance_type'] = "m1.small";
+    $app['firefox_profile'] = "/http/selenium/selenium-grid/FirefoxProfile";
 
     $app['keypair'] = getenv("EC2_KEYPAIR");
     $app['keypair_name'] = getenv("EC2_KEYPAIR_NAME");
@@ -88,7 +96,7 @@ group("grid", function()
         Ec2Client::authorize_port(5900);
         Ec2Client::authorize_port(6000);
         $boundaries = explode("-", $app['remote_control_port_range']);
-        for ($i = $boundaries[0]; $i < $boundaries[1]; $i++) {
+        for ($i = $boundaries[0]; $i <= (isset($boundaries[1]) ? $boundaries[1] : $boundaries[0]); $i++) {
             Ec2Client::authorize_port($i);
         }
     });
@@ -259,7 +267,7 @@ group("rc", function()
     task('start', function($app)
     {
         foreach ($app['cloud']->farms as $farm) {
-            $farm->run("nohup rake rc:start_all HUB_URL=" . $app['cloud']->hub->private_url . " HOST=" . $farm->private_dns . " PORTS=" . $app['remote_control_port_range'] . " BACKGROUND=true",
+            $farm->run("nohup rake rc:start_all SELENIUM_ARGS=\"-firefoxProfileTemplate ".$app['firefox_profile']."\" HUB_URL=" . $app['cloud']->hub->private_url . " HOST=" . $farm->private_dns . " PORTS=" . $app['remote_control_port_range'] . " BACKGROUND=true",
                 array('display' => ":0", 'path' => "/usr/lib/firefox-8.0", 'pwd' => $app["selenium_grid_path"], 'keypair' => $app['keypair']));
 
         }
@@ -281,7 +289,7 @@ group("rc", function()
     task('start_micro', function($app)
     {
         $farm = $app['cloud']->micro_farm;
-        $farm->run("nohup rake rc:start_all HUB_URL=" . $app['cloud']->hub->private_url . " HOST=" . $farm->private_dns . " PORTS=" . $app['remote_control_port_range'] . " BACKGROUND=true",
+        $farm->run("nohup rake rc:start_all SELENIUM_ARGS=\"-firefoxProfileTemplate ".$app['firefox_profile']."\"  HUB_URL=" . $app['cloud']->hub->private_url . " HOST=" . $farm->private_dns . " PORTS=" . $app['remote_control_port_range'] . " BACKGROUND=true",
             array('display' => ":0", 'path' => "/usr/lib/firefox-8.0", 'pwd' => $app["selenium_grid_path"], 'keypair' => $app['keypair']));
         $farm->run("nohup vncserver :0", array('keypair' => $app['keypair']));
     });
@@ -307,7 +315,7 @@ group("rc", function()
     task('view', function($app)
     {
         foreach ($app['cloud']->farms as $farm) {
-            exec("vncviewer -passwd " . $app['vnc_passwd'] . " " . $farm->public_dns . " >> /dev/null &");
+            exec("vncviewer " . $farm->public_dns . " >> /dev/null &");
         }
     });
 
@@ -373,7 +381,7 @@ group("server", function()
         print PHP_EOL . "Run parallel tests on " . $app['cloud']->server->public_dns . "...";
 
         $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']);
-        $code = $server->run("sudo php ./phpunit-parallel.php --build; cat /tmp/phpunit.txt", $options);
+        $code = $server->run("sudo ./phpunit-parallel.php --build --clients-count ". ($app['farms_count'] - 1) ."; cat /tmp/phpunit.txt", $options);
 
         exec('scp -i ' . $app['keypair'] . ' bitnami@' . $server->public_dns . ':/tmp/phpunit*.xml ' . $app['logdir']);
 

@@ -9,11 +9,10 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<form action="admin.php" method="post" name="change_language_form" class="change-language">
-  <input type="hidden" name="target" value="{getTarget()}" />
-  <input type="hidden" name="action" value="change_language" />
+<widget class="XLite\View\Form\LanguageSelector" name="languageSelector" />
 
-  <select name="language" onchange="javascript: $(this.form).submit();">
-    <option FOREACH="getLanguages(),code,language" value="{code}" selected="{isLanguageSelected(code)}">{language}</option>
+  <select name="language" onchange="javascript: jQuery(this.form).submit();">
+    <option FOREACH="getLanguages(),code,language" value="{code:h}" selected="{isLanguageSelected(code)}">{language}</option>
   </select>
-</form>
+
+<widget name="languageSelector" end />
