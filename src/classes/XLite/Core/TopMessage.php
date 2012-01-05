@@ -264,6 +264,19 @@ class TopMessage extends \XLite\Base\Singleton
     }
 
     /**
+     * Clear top messages list
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function clearTopMessages()
+    {
+        $this->clear();
+    }
+
+
+    /**
      * Clear only AJAX messages
      *
      * @return void

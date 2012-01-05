@@ -146,6 +146,17 @@ class Handler extends \XLite\Core\CMSConnector
         return $url;
     }
 
+    /**
+     * Clear top message in Drupal
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function clearTopMessages()
+    {
+        return drupal_get_messages();
+    }
 
     /**
      * Method to get raw Drupal request arguments
@@ -224,7 +235,7 @@ class Handler extends \XLite\Core\CMSConnector
      *
      * @param array   $args            Drupal URL arguments
      * @param boolean $includePOSTVars Flag OPTIONAL
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
