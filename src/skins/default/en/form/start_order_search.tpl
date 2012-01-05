@@ -11,7 +11,7 @@
  * @since     1.0.0
  *}
 
-<form action="{getFormAction()}" method="{getParam(#formMethod#)}" onsubmit="javascript: {getJSOnSubmitCode()}" class="search-orders" style="display: none;">
+<form action="{getFormAction()}" method="{getParam(#formMethod#)}" accept-charset="utf-8" onsubmit="javascript: {getJSOnSubmitCode()}" class="search-orders" style="display: none;">
 <div class="form-params" style="display: none;">
   <input FOREACH="getFormParams(),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
 </div>
