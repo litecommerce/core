@@ -370,13 +370,13 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->setReturnURL($this->buildURL('cart'));
 
-        } elseif ($cart->isOpen()) {
+        } elseif (!$cart->isPayed()) {
 
             \XLite\Core\TopMessage::addInfo(
                 'Payment for orders not over. Please complete payment of order.'
             );
 
-            $this->setReturnURL($this->buildURL('checkout'));
+            $this->setReturnURL($this->buildURL('order_list'));
 
         } else {
 
