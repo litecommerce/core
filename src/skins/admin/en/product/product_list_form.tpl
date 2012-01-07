@@ -16,7 +16,7 @@
 <widget class="\XLite\View\Form\Product\Modify\Batch" name="products_form" />
 
   {* List of products *}
-  <widget class="\XLite\View\ItemsList\Product\Admin\Search" />
+  <widget class="\XLite\View\ItemsList\Admin\Product\Search" />
 
 {* Close </form> tag *}
 <widget name="products_form" end />

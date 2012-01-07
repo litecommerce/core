@@ -909,11 +909,8 @@ button.bright:active
 }
 
 button.switch-state {
-  border: none;
   background: transparent url(../images/tri_button.png) no-repeat left top;
-  padding: 0px;
   padding-left: 10px;
-  height: auto;
 }
 
 button.switch-state div {
@@ -935,6 +932,9 @@ button.switch-state div img {
   height: 16px;
   width: 16px;
   vertical-align: middle;
+}
+
+button.switch-state div img {
   margin-right: 7px;
   margin-top: -5px;
 }
@@ -1662,4 +1662,3 @@ table.payment-methods td.description button {
   font-size: 20px;
   color: #69a4c9;
 }
-

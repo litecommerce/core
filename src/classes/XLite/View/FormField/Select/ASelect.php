@@ -64,6 +64,24 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
         return self::FIELD_TYPE_SELECT;
     }
 
+    /**
+     * Set value
+     *
+     * @param mixed $value Value to set
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setValue($value)
+    {
+        if (is_object($value) && $value instanceOf \XLite\Model\AEntity) {
+            $value = $value->getUniqueIndetifier();
+        }
+
+        parent::setValue($value);
+    }
+
 
     /**
      * Return field template

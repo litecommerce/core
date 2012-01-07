@@ -28,64 +28,39 @@
 namespace XLite\View\FormField\Select;
 
 /**
- * Form multiple selector
+ * Memberships selector
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Multiple extends \XLite\View\FormField\Select\ASelect
+class Memberships extends \XLite\View\FormField\Select\Multiple
 {
     /**
-     * Set value
-     *
-     * @param mixed $value Value to set
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function setValue($value)
-    {
-        if (is_object($value) && $value instanceOf \Doctrine\Common\Collections\Collection) {
-            $value = $value->toArray();
-
-        } elseif (!is_array($value)) {
-            $value = array($value);
-        }
-
-        foreach ($value as $k => $v) {
-            if (is_object($v) && $v instanceOf \XLite\Model\AEntity) {
-                $value[$k] = $v->getUniqueIndetifier();
-            }
-        }
-
-        parent::setValue($value);
-    }
-
-    /**
-     * getDefaultAttributes
+     * Get Memberships list
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultAttributes()
+    protected function getMembershipsList()
     {
-        return parent::getDefaultAttributes() + array('multiple' => 'multiple');
+        $list = array();
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\Membership')->findActiveMemberships() as $m) {
+            $list[$m->getMembershipId()] = $m->getName();
+        }
+
+        return $list;
     }
 
     /**
-     * Check - current value is selected or not
+     * Get default options
      *
-     * @param mixed $value Value
-     *
-     * @return boolean
+     * @return array
      * @see    ____func_see____
-     * @since  1.0.13
+     * @since  1.0.0
      */
-    protected function isOptionSelected($value)
+    protected function getDefaultOptions()
     {
-        return in_array($value, $this->getValue());
+        return $this->getMembershipsList();
     }
-
 }

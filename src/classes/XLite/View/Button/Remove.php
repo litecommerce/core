@@ -25,67 +25,54 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\FormField\Select;
+namespace XLite\View\Button;
 
 /**
- * Form multiple selector
+ * Remove button
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Multiple extends \XLite\View\FormField\Select\ASelect
+class Remove extends \XLite\View\Button\AButton
 {
     /**
-     * Set value
-     *
-     * @param mixed $value Value to set
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function setValue($value)
-    {
-        if (is_object($value) && $value instanceOf \Doctrine\Common\Collections\Collection) {
-            $value = $value->toArray();
-
-        } elseif (!is_array($value)) {
-            $value = array($value);
-        }
-
-        foreach ($value as $k => $v) {
-            if (is_object($v) && $v instanceOf \XLite\Model\AEntity) {
-                $value[$k] = $v->getUniqueIndetifier();
-            }
-        }
-
-        parent::setValue($value);
-    }
-
-    /**
-     * getDefaultAttributes
+     * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultAttributes()
+    public function getJSFiles()
     {
-        return parent::getDefaultAttributes() + array('multiple' => 'multiple');
+        $list = parent::getJSFiles();
+
+        $list[] = 'button/js/remove.js';
+
+        return $list;
     }
 
     /**
-     * Check - current value is selected or not
+     * Return widget default template
      *
-     * @param mixed $value Value
-     *
-     * @return boolean
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.13
+     * @since  1.0.0
      */
-    protected function isOptionSelected($value)
+    protected function getDefaultTemplate()
     {
-        return in_array($value, $this->getValue());
+        return 'button/remove.tpl';
     }
 
+    /**
+     * Get style 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function  getStyle()
+    {
+        return 'remove '
+            . ($this->getParam(self::PARAM_STYLE) ? ' ' . $this->getParam(self::PARAM_STYLE) : '');
+    }
 }

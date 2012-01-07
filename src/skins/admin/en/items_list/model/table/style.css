@@ -1,0 +1,72 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Table-based model list
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.15
+ */
+
+/**
+ * Items list : common table
+ */
+.items-list-table {
+  display: inline-block;
+  width: auto;
+}
+
+.items-list-table table.list {
+  width: auto;
+}
+
+.items-list-table table.list thead {
+  background-color: #f1f1f1;
+}
+
+.items-list-table table.list thead th {
+  color: #8f8f8f;
+  font-weight: normal;
+  padding: 19px 12px 12px;
+  font-size: 14px;
+  text-align: left;
+  border-bottom: 1px solid #d5d5d5;
+}
+
+.items-list-table table.list tbody td {
+  border-top: 1px solid #e9e9e9;
+  border-bottom: 1px solid #e9e9e9;
+  padding: 15px 12px 11px;
+  font-size: 16px;
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+.items-list-table table.list tbody td * {
+  vertical-align: middle;
+}
+
+.items-list-table table.list tbody td.actions {
+  background-image: url(images/line-separator.png);
+  background-repeat: no-repeat;
+  text-align: center;
+}
+
+.items-list-table table.list tbody td.actions.left {
+  background-position: right center;
+  padding: 10px 14px 10px 10px;
+}
+
+.items-list-table table.list tbody td.actions.right {
+  background-position: left center;
+  padding: 10px 6px 10px 11px;
+}
+
+.items-list-table table.list tbody td a.link {
+  text-decoration: none;
+  color: #456583;
+}
+
+

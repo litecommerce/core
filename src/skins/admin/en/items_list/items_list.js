@@ -29,6 +29,8 @@ function ItemsList(cell, URLParams, URLAJAXParams)
   this.addListeners();
 }
 
+extend(ItemsList, Base);
+
 ItemsList.prototype.container = null;
 
 ItemsList.prototype.cell = null;
@@ -112,13 +114,13 @@ ItemsList.prototype.checkAll = function(handler)
 ItemsList.prototype.showPage = function(handler)
 {
 //TODO change to getCommentedData() -> also in templates
-  return this.process('pageId', core.getValueFromClass(handler,'page'));
+  return this.process('pageId', core.getValueFromClass(handler, 'page'));
 }
 
 // Change items per page number
 ItemsList.prototype.changePageLength = function(handler)
 {
-  count = parseInt(handler.value);
+  var count = parseInt(jQuery(handler).val());
 
   if (isNaN(count)) {
     count = this.URLParams.itemsPerPage;
