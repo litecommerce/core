@@ -257,7 +257,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
-            30000,
+            300000,
             'check enabled main button'
         );
 
@@ -279,7 +279,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         );
         $this->waitForLocalCondition(
             'jQuery("select#billing_address_state").length == 1',
-            30000,
+            300000,
             'check state selector'
         );
 
@@ -310,7 +310,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
-            30000,
+            300000,
             'check main button enabled after fill billing address'
         );
 
@@ -440,7 +440,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             $this->click('css=.shipping-step .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".shipping-step.current").length == 1',
-                10000,
+                100000,
                 'check switch to shipping step'
             );
         }
@@ -469,14 +469,14 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->click('css=.current .button-row button');
         $this->waitForLocalCondition(
             'jQuery(".shipping-step").hasClass("current") == false',
-            10000,
+            100000,
             'check swicth to next step'
         );
 
         $this->click('css=.shipping-step .button-row button');
         $this->waitForLocalCondition(
             'jQuery(".shipping-step.current").length == 1',
-            10000,
+            100000,
             'check swicth to previous step'
         );
 
@@ -491,7 +491,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->click('css=.current button.address-book');
         $this->waitForLocalCondition(
             'jQuery("form.select-address").length == 1',
-            10000,
+            100000,
             'wait address book popup'
         );
 
@@ -510,14 +510,14 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->click('css=.current .button-row button');
         $this->waitForLocalCondition(
             'jQuery(".shipping-step").hasClass("current") == false',
-            10000,
+            100000,
             'check swicth to payment step'
         );
         if (!$this->getJSExpression('jQuery(".payment-step.current").length')) {
             $this->click('css=.payment-step .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".payment-step").hasClass("current") == true',
-                10000,
+                100000,
                 'check return to payment step'
             );
         }
@@ -529,7 +529,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             $this->toggleByJquery('#same_address', true);
             $this->waitForLocalCondition(
                 'jQuery("#billing_address_name").length == 0',
-                10000,
+                100000,
                 'check full billing address form load'
             );
             $bname = 'Admin Admin';
@@ -538,7 +538,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->toggleByJquery('#same_address', false);
         $this->waitForLocalCondition(
             'jQuery("#billing_address_name").length > 0',
-            10000,
+            100000,
             'check empty billing address form load'
         );
 
@@ -553,7 +553,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->click('css=.current .button-row button');
         $this->waitForLocalCondition(
             'jQuery(".review-step.current").length == 1',
-            10000,
+            100000,
             'check swicth to review step'
         );
 
@@ -570,7 +570,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->click('css=.payment-step .button-row button');
         $this->waitForLocalCondition(
             'jQuery(".payment-step.current").length == 1',
-            10000,
+            100000,
             'check swicth to payment step #2'
         );
 
@@ -578,7 +578,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->toggleByJquery('#same_address', true);
         $this->waitForLocalCondition(
             'jQuery("#billing_address_name").length == 0',
-            10000,
+            100000,
             'check empty billing address form load'
         );
 
@@ -607,7 +607,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
-            10000,
+            100000,
             'check content reloading'
         );
 
@@ -691,7 +691,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery("ul.shipping-rates li input").length > 0',
-            10000,
+            100000,
             'check address-not-completed note hide'
         );
 
@@ -700,7 +700,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
-            10000,
+            100000,
             'check enabled main button'
         );
 
@@ -724,7 +724,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
-            10000,
+            100000,
             'check enabled main button'
         );
 

@@ -49,6 +49,11 @@ class Database extends \XLite\Base\Singleton
     const SCHEMA_FILE_IDENT = '  ';
 
     /**
+     * Charset which is used for DB connection
+     */
+    const DB_CONNECTION_CHARSET = 'utf8';
+
+    /**
      * Doctrine entity manager
      *
      * @var   \Doctrine\ORM\EntityManager
@@ -495,6 +500,9 @@ class Database extends \XLite\Base\Singleton
         }
 
         static::registerCustomTypes(static::$em);
+
+        // Set charset for DB connection
+        $this->setCharset();
 
         // Bind events
         $events = array(\Doctrine\ORM\Events::loadClassMetadata);
@@ -1475,6 +1483,7 @@ OUT;
         $dsnList['path'] = 'mysql:' . implode(';', $dsnString);
         $dsnList['user'] = $options['username'];
         $dsnList['password'] = $options['password'];
+        $dsnList['charset'] = self::DB_CONNECTION_CHARSET;
 
         if ('pdo_mysql' == $dsnList['driver']) {
             $dsnList['driverClass'] = '\XLite\Core\PDOMySqlDriver';
@@ -1624,5 +1633,17 @@ OUT;
         }
 
         return $orderedTables;
+    }
+
+    /**
+     * Set charset for DB connection
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function setCharset()
+    {
+        static::$em->getConnection()->setCharset(self::DB_CONNECTION_CHARSET);
     }
 }

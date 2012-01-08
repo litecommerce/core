@@ -13,7 +13,7 @@
  * @ListChild (list="product.details.quicklook.info", weight="18")
  *}
 
-<span class="stock-level product-in-stock" IF="!product.inventory.isOutOfStock()">
+<span class="stock-level product-in-stock" IF="isAvailableLabelVisible()">
   {t(#In stock#)}
-  <span class="product-items-available">({product.inventory.getAvailableAmount()} {t(#items available#)})</span>
+  <span class="product-items-available">({t(#X items available#,_ARRAY_(#count#^product.inventory.getAvailableAmount()))})</span>
 </span>

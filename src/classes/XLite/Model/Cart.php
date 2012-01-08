@@ -122,17 +122,17 @@ class Cart extends \XLite\Model\Order
     /**
      * Set object instance
      *
-     * @param \XLite\Model\Cart $cart Cart
+     * @param \XLite\Model\Order $object Cart
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function setObject(\XLite\Model\Cart $cart)
+    public static function setObject(\XLite\Model\Order $object)
     {
         $className = get_called_class();
-        static::$instances[$className] = $cart;
-        \XLite\Core\Session::getInstance()->order_id = $cart->getOrderId();
+        static::$instances[$className] = $object;
+        \XLite\Core\Session::getInstance()->order_id = $object->getOrderId();
     }
 
     /**

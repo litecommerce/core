@@ -106,7 +106,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Hard (main page redict) redirect in AJAX request
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -115,7 +115,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Internal (into popup ) redirect in AJAX request
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -124,7 +124,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Popup silence close in AJAX request
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -134,7 +134,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Pure action flag in AJAX request
      * Set to true if the client does not require any action
-     * 
+     *
      * @var   boolean
      * @see   ____var_see____
      * @since 1.0.0
@@ -690,7 +690,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getCharset()
     {
-        return 'UTF-8';
+        return 'utf-8';
     }
 
     /**
@@ -1220,9 +1220,9 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Set pure action flag
-     * 
+     *
      * @param boolean $flag Flag
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

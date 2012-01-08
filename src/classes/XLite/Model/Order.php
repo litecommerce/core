@@ -1173,7 +1173,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Check - order is open (has initialized transactions or has open total) or not
+     * Check - order is open (has initialized transactions and has open total) or not
      *
      * @return boolean
      * @see    ____func_see____
@@ -1182,7 +1182,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     public function isOpen()
     {
         return $this->getFirstOpenPaymentTransaction()
-            || $this->getCurrency()->getMinimumValue() < $this->getCurrency()->roundValue(abs($this->getOpenTotal()));
+            && ($this->getCurrency()->getMinimumValue() < $this->getCurrency()->roundValue(abs($this->getOpenTotal())));
     }
 
     /**

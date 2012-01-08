@@ -352,7 +352,7 @@ abstract class AForm extends \XLite\View\AView
                 : $className . ' ' . self::PARAM_VALIDATION;
         }
 
-        return $className;
+        return trim($className);
     }
 
     /**

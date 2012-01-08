@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<form action="{getFormAction()}" method="{getParam(#formMethod#)}" onsubmit="javascript: {getJSOnSubmitCode()}"{if:getParam(#className#)} class="{getParam(#className#)}"{end:}{if:isMultipart()} enctype="multipart/form-data"{end:}>
+<form action="{getFormAction()}" method="{getParam(#formMethod#)}" accept-charset="utf-8" onsubmit="javascript: {getJSOnSubmitCode()}"{if:getParam(#className#)} class="{getClassName()}"{end:}{if:isMultipart()} enctype="multipart/form-data"{end:}>
 <fieldset>
-<input FOREACH="getFormParams(),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
+  <input FOREACH="getFormParams(),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
 </fieldset>

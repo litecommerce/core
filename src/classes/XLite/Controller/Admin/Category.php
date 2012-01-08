@@ -83,9 +83,13 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     public function getCategory()
     {
-        return ('add_child' === \XLite\Core\Request::getInstance()->mode)
+        $category = ('add_child' === \XLite\Core\Request::getInstance()->mode)
             ? new \XLite\Model\Category()
             : parent::getCategory();
+
+        $category->setEditLanguageCode($this->getCurrentLanguage());
+
+        return $category;
     }
 
     /**
@@ -147,10 +151,18 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     protected function doActionAddChild()
     {
-        if ($properties = $this->validateCategoryData(true)) {
+        $properties = $this->validateCategoryData(true);
+
+        if ($properties) {
 
             $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->insert(
                 array('parent_id' => $this->getCategoryId()) + $properties
+            );
+
+            $category->setEditLanguageCode($this->getCurrentLanguage());
+            \XLite\Core\Database::getRepo('\XLite\Model\Category')->update(
+                $category,
+                $properties
             );
 
             $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $category->getCategoryId())));
@@ -166,10 +178,12 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     protected function doActionModify()
     {
-        if ($properties = $this->validateCategoryData()) {
+        $properties = $this->validateCategoryData();
+
+        if ($properties) {
 
             \XLite\Core\Database::getRepo('\XLite\Model\Category')
-                ->updateById($properties['category_id'], $properties);
+                ->update($this->getCategory(), $properties);
 
             $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $properties['category_id'])));
         }
