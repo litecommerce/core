@@ -6,9 +6,9 @@ if (!isset($argv[1]) || !file_exists($argv[1])){
 }
 
 $dirname = $argv[1];
-collect_xml_output($dirname);
+collectXmlOutput($dirname);
 
-function collect_xml_output($dirname)
+function collectXmlOutput($dirname)
 {
     $dirname = realpath($dirname);
     $dirname = rtrim($dirname, '/');
@@ -45,7 +45,7 @@ function collect_xml_output($dirname)
 
         foreach (glob("$dirname/phpunit*.xml") as $filename) {
             print $filename;
-            merge_xml($writer, $filename);
+            mergeXml($writer, $filename);
         }
 
         $writer->endElement();
@@ -55,7 +55,7 @@ function collect_xml_output($dirname)
     }
 }
 
-function merge_xml(XMLWriter $xmlWriter, $fileName)
+function mergeXml(XMLWriter $xmlWriter, $fileName)
 {
     $reader = new XMLReader();
     $reader->open($fileName);

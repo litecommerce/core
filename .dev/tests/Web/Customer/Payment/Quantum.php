@@ -274,7 +274,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 
         // Type test credit card data
         $this->type('//input[@name="ccnum"]', '4111111111111111');
-        $this->select('//select[@name="ccyr"]', 'value=2011');
+        $this->select('//select[@name="ccyr"]', 'value=2012');
         $this->type('//input[@name="CVV2"]', '666');
 
         // Payment gateway processing - Selenium TTL prolongation

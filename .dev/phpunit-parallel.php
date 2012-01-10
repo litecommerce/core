@@ -1,8 +1,28 @@
 #!/usr/bin/env php
 <?php
 
-/*
- * Constants to run tests
+/**
+ * LiteCommerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * @category   LiteCommerce
+ * @package    Tests
+ * @author     Creative Development LLC <info@cdev.ru>
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      1.0.0
+ *
  */
 parse_options();
 
@@ -303,10 +323,10 @@ class TestRunner
         $this->cleanResources();
         $time = round(microtime(true) - $time, 2);
         print PHP_EOL . " Total time: " . $time . "sec";
-        $this->collect_txt_output($time);
+        $this->collectTxtOutput($time);
     }
 
-    function collect_txt_output($time)
+    function collectTxtOutput($time)
     {
         //Collect console output
         $output = shell_exec('cat /tmp/output* | grep "Tests\|Failures\|Assertions\|Skipped\|Time:\|OK"');
