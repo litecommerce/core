@@ -44,31 +44,13 @@ namespace XLite\Model;
  * @DiscriminatorMap    ({
  *      "0" = "XLite\Model\Attribute",
  *      "1" = "XLite\Model\Attribute\Type\Number",
- *      "2" = "XLite\Model\Attribute\Type\Text"
+ *      "2" = "XLite\Model\Attribute\Type\Text",
+ *      "3" = "XLite\Model\Attribute\Type\Boolean",
+ *      "4" = "XLite\Model\Attribute\Type\Selector"
  * })
  */
 class Attribute extends \XLite\Model\Base\I18n
 {
-    /**
-     * Possible attribute types
-     */
-    const TYPE_NUMBER   = 1;
-    const TYPE_TEXT     = 2;
-    const TYPE_SELECTOR = 3;
-
-    /**
-     * Readable type names
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.14
-     */
-    protected static $typeNames = array(
-        self::TYPE_NUMBER   => 'Number',
-        self::TYPE_TEXT     => 'Text',
-        self::TYPE_SELECTOR => 'Selector',
-    );
-
     /**
      * Attribute unique ID
      *
@@ -117,15 +99,13 @@ class Attribute extends \XLite\Model\Base\I18n
     protected $group;
 
     /**
-     * Relation to attribute choices (only for "Selector" type)
+     * Type identifier
      *
-     * @var   \Doctrine\ORM\PersistentCollection
+     * @var   string
      * @see   ____var_see____
-     * @since 1.0.14
-     *
-     * @OneToMany (targetEntity="XLite\Model\Attribute\Choice", mappedBy="attribute", fetch="LAZY", cascade={"all"})
+     * @since 1.0.15
      */
-    protected $choices;
+    protected $typeName;
 
     /**
      * Return readable name for the attribute type
@@ -136,6 +116,26 @@ class Attribute extends \XLite\Model\Base\I18n
      */
     public function getTypeName()
     {
-        return \Includes\Utils\ArrayManager::getIndex(static::$typeNames, $this->getType(), true) ?: 'N/A';
+        if (!isset($this->typeName)) {
+            $parts = explode('\\', get_class($this));
+
+            $this->typeName = array_pop($parts);
+        }
+
+        return $this->typeName;
+    }
+
+    /**
+     * Check attribute type
+     *
+     * @param string $type Type name
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function checkType($type)
+    {
+        return $type === $this->getTypeName();
     }
 }

@@ -30,27 +30,41 @@ require_once (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'top.inc.php');
 $groups = array();
 $attributes = array();
 
-for ($i = 1; $i < 10; $i++) {
+for ($i = 1; $i < 3; $i++) {
     $group = new \XLite\Model\Attribute\Group();
     $group->setPos($i);
     $group->setTitle('Group ' . $i);
 
     $groups[] = $group;
 
-    for ($j = 1; $j < 10; $j++) {
-        foreach (array('Number', 'Text') as $type) {
+    for ($j = 1; $j < 3; $j++) {
+        foreach (array('Number', 'Text', 'Boolean', 'Selector') as $type) {
             $class = '\XLite\Model\Attribute\Type\\' . $type;
             $attribute = new $class();
             $attribute->setName('ATTR_' . $j . '_' . $i . '_' . $type);
             $attribute->setPos($i * $j);
             $attribute->setTitle('[Group ' . $i . '] Attribute ' . $j . '(' . $type . ')');
-            $attribute->setValue($j);
             $attribute->setGroup($group);
+
+            if ('Selector' === $type) {
+                $limit = rand(2, 5);
+
+                for ($k = 0; $k < $limit; $k++) {
+                    $choice = new \XLite\Model\Attribute\Choice();
+                    $choice->setAttribute($attribute);
+                    $choice->setTitle($attribute->getTitle() . ', choice ' . $k);
+
+                    $attribute->addChoices($choice);
+                }
+            }
 
             $attributes[] = $attribute;
         }
     }
 }
+
+\XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->clearAll();
+\XLite\Core\Database::getRepo('\XLite\Model\Attribute')->clearAll();
 
 \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->insertInBatch($groups);
 \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->insertInBatch($attributes);

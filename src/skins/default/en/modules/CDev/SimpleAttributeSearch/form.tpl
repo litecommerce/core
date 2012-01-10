@@ -12,7 +12,7 @@
  * @ListChild (list="itemsList.product.search.form.options.parts", weight="300")
  *}
 
-<table IF="getAttributeGroups()" class="search-form-options-part" title="{t(#Attributes#)}">
+<table IF="getAttributeGroups()" title="{t(#Attributes#)}">
   {foreach:getAttributeGroups(),group}
     {displayNestedViewListContent(#attributes#,_ARRAY_(#group#^group))}
   {end:}

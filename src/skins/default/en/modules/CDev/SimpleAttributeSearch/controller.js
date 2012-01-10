@@ -18,7 +18,10 @@ decorate(
     return jQuery.extend(
       arguments.callee.previousMethod.apply(this, arguments),
       {
-        'attributes': jQuery('.search-product-form input[name="substring"]').val()
+          '': jQuery('.search-product-form *[name^="attributes"]')
+            .serialize()
+            .split('&').join(URLHandler.argSeparator)
+            .split('=').join(URLHandler.nameValueSeparator)
       }
     );
   }

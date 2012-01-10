@@ -38,14 +38,4 @@ namespace XLite\Model\Attribute\Type;
  */
 class Number extends \XLite\Model\Attribute
 {
-    /**
-     * Atribute value
-     *
-     * @var   float
-     * @see   ____var_see____
-     * @since 1.0.15
-     *
-     * @Column (type="decimal", precision="14", scale="4")
-     */
-    protected $value = 0.00;
 }

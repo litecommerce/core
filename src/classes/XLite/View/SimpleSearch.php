@@ -25,14 +25,40 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Product\Search\Customer;
+namespace XLite\View;
 
 /**
- * Main
+ * Simple form for searching products widget
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Main extends \XLite\View\Form\Product\Search\Customer\ACustomer
+class SimpleSearch extends \XLite\View\AView
 {
+    /**
+     * Return CSS files list
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = 'product/search/simple_form.css';
+
+        return $list;
+    }
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'product/search/simple_form.tpl';
+    }
 }

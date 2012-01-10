@@ -24,4 +24,6 @@
 
   <div class="list-pager list-pager-bottom" IF="isPagerVisible()&pager.isPagesListVisible()">{pager.display()}</div>
   <div IF="isFooterVisible()" class="list-footer">{displayInheritedViewListContent(#footer#)}</div>
+
+  <widget IF="isEmptyListTemplateVisible()" template="{getEmptyListTemplate()}" />
 </div>

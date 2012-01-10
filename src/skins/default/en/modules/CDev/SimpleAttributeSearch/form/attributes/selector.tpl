@@ -12,4 +12,9 @@
  * @ListChild (list="itemsList.product.search.form.options.parts.attributes.parts", weight="200")
  *}
 
-<td>---||---</td>
+<td IF="attribute.checkType(#Selector#)">
+  <select name="{getAttributeBoxName(attribute)}">
+    <option value="" selected="{!getAttributeBoxValue(attribute)}"></option>
+    <option FOREACH="attribute.getChoices(),choice" value="{choice.getId()}" selected="{choice.getId()=getAttributeBoxValue(attribute)}">{choice.getTitle()}</option>
+  </select>
+</td>

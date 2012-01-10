@@ -10,3 +10,13 @@
  * @since     1.0.0
  */
 
+div.search-product-form div.main label,
+div.search-product-form div.options label
+{
+  display: inline;
+}
+
+div.search-product-form div.options
+{
+  display: none;
+}

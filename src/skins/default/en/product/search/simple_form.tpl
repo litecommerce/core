@@ -12,7 +12,7 @@
 
 <div class="simple-search-product-form">
 
-  <widget class="\XLite\View\Form\Product\Search\Customer\SimpleForm" name="simple_products_search" />
+  <widget class="\XLite\View\Form\Product\Search\Customer\Simple" name="simple_products_search" />
     {displayViewListContent(#product.simple-search-form.simple-box#)}
   <widget name="simple_products_search" end />
 

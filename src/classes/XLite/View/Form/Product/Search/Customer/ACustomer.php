@@ -35,4 +35,15 @@ namespace XLite\View\Form\Product\Search\Customer;
  */
 abstract class ACustomer extends \XLite\View\Form\Product\Search\ASearch
 {
+    /**
+     * getDefaultTarget
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTarget()
+    {
+        return 'search';
+    }
 }

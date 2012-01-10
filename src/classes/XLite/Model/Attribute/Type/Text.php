@@ -39,7 +39,7 @@ namespace XLite\Model\Attribute\Type;
 class Text extends \XLite\Model\Attribute
 {
     /**
-     * Atribute value
+     * Atribute default value
      *
      * @var   string
      * @see   ____var_see____
@@ -47,5 +47,5 @@ class Text extends \XLite\Model\Attribute
      *
      * @Column (type="text")
      */
-    protected $value = '';
+    protected $defaultValue = '';
 }

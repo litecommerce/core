@@ -304,7 +304,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         $allEmpty = true;
 
         foreach ($conditionsBy as $conditionBy) {
-            if ('Y' === $this->currentSearchCnd->{$conditionBy}) {
+            if ($this->currentSearchCnd->{$conditionBy}) {
                 $allEmpty = false;
             }
         }
@@ -312,7 +312,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         // if ALL parameters is FALSE then we search by ALL parameters
         if ($allEmpty) {
             foreach ($conditionsBy as $conditionBy) {
-                $this->currentSearchCnd->{$conditionBy} = 'Y';
+                $this->currentSearchCnd->{$conditionBy} = true;
             }
         }
 
@@ -320,7 +320,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
         foreach ($conditionsBy as $conditionBy) {
 
-            $conditionFields = ('Y' === $this->currentSearchCnd->{$conditionBy})
+            $conditionFields = $this->currentSearchCnd->{$conditionBy}
                 ? $this->{'getSubstringSearchFields' . ucfirst($conditionBy)}()
                 : array();
 

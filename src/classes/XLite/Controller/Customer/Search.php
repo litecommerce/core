@@ -36,6 +36,18 @@ namespace XLite\Controller\Customer;
 class Search extends \XLite\Controller\Customer\ACustomer
 {
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getTitle()
+    {
+        return 'Product search';
+    }
+
+    /**
      * Common method to determine current location
      *
      * @return string
@@ -48,14 +60,17 @@ class Search extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Return the current page title (for the content area)
+     * Redirect
      *
-     * @return string
+     * @return void
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.15
      */
-    public function getTitle()
+    protected function doActionSearch()
     {
-        return 'Product search';
+        $param = \XLite\View\ItemsList\Product\Customer\Search::PARAM_SUBSTRING;
+        $value = \XLite\Core\Request::getInstance()->substring;
+
+        $this->setReturnURL($this->buildURL('search', '', array($param => $value)));
     }
 }

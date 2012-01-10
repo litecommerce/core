@@ -12,6 +12,6 @@
  * @ListChild (list="itemsList.product.search.form.options.parts", weight="100")
  *}
 
-<table class="search-form-options-part" title="{t(#Regular search options#)}">
+<table title="{t(#Regular search options#)}">
   {displayNestedViewListContent(#regular#)}
 </table>

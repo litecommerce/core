@@ -13,7 +13,12 @@
 ProductsListView.prototype.getProductSearchParams = function()
 {
   return {
-    'substring': jQuery('.search-product-form input[name="substring"]').val()
+    'substring':  jQuery('.search-product-form input[name="substring"]').val(),
+    'including':  jQuery('.search-product-form input[name="including"]:checked').val(),
+    'byTitle':    undefined != jQuery('.search-product-form input[name="byTitle"]:checked').val(),
+    'byDescr':    undefined != jQuery('.search-product-form input[name="byDescr"]:checked').val(),
+    'bySku':      undefined != jQuery('.search-product-form input[name="bySku"]:checked').val(),
+    'categoryId': jQuery('.search-product-form select[name="categoryId"]').val(),  
   };
 }
 

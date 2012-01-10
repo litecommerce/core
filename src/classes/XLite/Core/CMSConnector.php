@@ -61,13 +61,13 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     protected $widgetsList = array(
         '\XLite\View\TopCategories' => 'Categories list',
         '\XLite\View\Minicart'      => 'Minicart',
+        '\XLite\View\SimpleSearch'  => 'Products search simple form',
         '\XLite\View\Subcategories' => 'Subcategories',
         '\XLite\View\ProductBox'    => 'Product block',
         '\XLite\View\PoweredBy'     => '\'Powered by\' block',
 
         '\XLite\View\ItemsList\Product\Customer\Category' => 'Category products list',
         '\XLite\View\ItemsList\Product\Customer\Search'   => 'Search product list',
-        '\XLite\View\Form\Product\Search\Customer\Simple' => 'Products search simple form',
     );
 
     /**

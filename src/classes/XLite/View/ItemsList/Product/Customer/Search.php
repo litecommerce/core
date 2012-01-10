@@ -44,9 +44,9 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     const PARAM_CATEGORY_ID       = 'categoryId';
     const PARAM_SEARCH_IN_SUBCATS = 'searchInSubcats';
     const PARAM_INCLUDING         = 'including';
-    const PARAM_BY_TITLE          = 'by_title';
-    const PARAM_BY_DESCR          = 'by_descr';
-    const PARAM_BY_SKU            = 'by_sku';
+    const PARAM_BY_TITLE          = 'byTitle';
+    const PARAM_BY_DESCR          = 'byDescr';
+    const PARAM_BY_SKU            = 'bySku';
 
     /**
      * Return list of targets allowed for this widget
@@ -174,6 +174,18 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
+     * Auxiliary method to check visibility
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isDisplayWithEmptyList()
+    {
+        return true;
+    }
+
+    /**
      * Check if head title is visible
      *
      * @return boolean
@@ -182,7 +194,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function isHeadVisible()
     {
-        return true;
+        return !$this->isEmptyListTemplateVisible();
     }
 
     /**
@@ -246,6 +258,50 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
+     * Get default value for search substring
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getDefaultSubstring()
+    {
+        return static::t('Enter phrase to find');
+    }
+
+    /**
+     * Return list of the "Includes" options
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getIncludingOptions()
+    {
+        return array(
+            \XLite\Model\Repo\Product::INCLUDING_ALL    => 'All words',
+            \XLite\Model\Repo\Product::INCLUDING_ANY    => 'Any word',
+            \XLite\Model\Repo\Product::INCLUDING_PHRASE => 'Exact phrase',
+        );
+    }
+
+    /**
+     * Return list of the "Search in" options
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getSearchInOptions()
+    {
+        return array(
+            static::PARAM_BY_TITLE => 'Title',
+            static::PARAM_BY_DESCR => 'Description',
+            static::PARAM_BY_SKU   => 'SKU',
+        );
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -257,23 +313,23 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            static::PARAM_SUBSTRING         => new \XLite\Model\WidgetParam\String('Substring', ''),
-            static::PARAM_CATEGORY_ID       => new \XLite\Model\WidgetParam\Int('Category ID', 0),
-            static::PARAM_SEARCH_IN_SUBCATS => new \XLite\Model\WidgetParam\Bool('Search in subcats', true),
-            static::PARAM_BY_TITLE          => new \XLite\Model\WidgetParam\Checkbox('Search in title', 0),
-            static::PARAM_BY_DESCR          => new \XLite\Model\WidgetParam\Checkbox('Search in description', 0),
-            static::PARAM_BY_SKU            => new \XLite\Model\WidgetParam\String('Search in SKU', 0),
-            static::PARAM_INCLUDING         => new \XLite\Model\WidgetParam\Set(
-                'Including',
-                \XLite\Model\Repo\Product::INCLUDING_ANY,
-                false,
-                array(
-                    \XLite\Model\Repo\Product::INCLUDING_ALL,
-                    \XLite\Model\Repo\Product::INCLUDING_ANY,
-                    \XLite\Model\Repo\Product::INCLUDING_PHRASE,
-                )
+            static::PARAM_SUBSTRING => new \XLite\Model\WidgetParam\String(
+                'Substring', $this->getDefaultSubstring()
+            ),
+            static::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\Int(
+                'Category ID', 0
+            ),
+            static::PARAM_SEARCH_IN_SUBCATS => new \XLite\Model\WidgetParam\Bool(
+                'Search in subcats', true
+            ),
+            static::PARAM_INCLUDING => new \XLite\Model\WidgetParam\Set(
+                'Including', \XLite\Model\Repo\Product::INCLUDING_ANY, false, array_keys($this->getIncludingOptions())
             ),
         );
+
+        foreach ($this->getSearchInOptions() as $param => $title) {
+            $this->widgetParams[$param] = new \XLite\Model\WidgetParam\Checkbox($title, 0);
+        }
     }
 
     /**

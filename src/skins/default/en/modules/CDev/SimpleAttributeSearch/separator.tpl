@@ -12,4 +12,4 @@
  * @ListChild (list="itemsList.product.search.form.options.parts", weight="200")
  *}
 
-<div class="search-form-options-part attributes-separator">---------------------</div>
+<div IF="getAttributeGroups()">---------------------</div>

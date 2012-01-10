@@ -28,39 +28,49 @@
 namespace XLite\View\Form\Product\Search\Customer;
 
 /**
- * Simple form for searching products widget
+ * Simple form
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Simple extends \XLite\View\AView
+class Simple extends \XLite\View\Form\Product\Search\Customer\ACustomer
 {
     /**
-     * Return CSS files list
+     * getDefaultAction
      *
-     * @return array
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.15
      */
-    public function getCSSFiles()
+    protected function getDefaultAction()
     {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'product/search/simple_form.css';
-
-        return $list;
+        return 'search';
     }
 
-
     /**
-     * Return widget default template
+     * JavaScript: this value will be returned on form submit
+     * NOTE - this function designed for AJAX easy switch on/off
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultTemplate()
+    protected function getOnSubmitResult()
     {
-        return 'product/search/simple_form.tpl';
+        return 'true';
+    }
+
+    /**
+     * getDefaultParams
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultParams()
+    {
+        return parent::getDefaultParams() + array(
+            \XLite\View\ItemsList\Product\Customer\Search::PARAM_INCLUDING => \XLite\Model\Repo\Product::INCLUDING_ANY,
+        );
     }
 }

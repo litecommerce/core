@@ -21,7 +21,7 @@ var URLHandler = {
   getParamValue: function(name, params)
   {
     return name
-      + this.nameValueSeparator
+      + ('' == name ? '' : this.nameValueSeparator)
       + (typeof params[name] === 'boolean' ? Number(params[name]) : params[name]);
   },
 

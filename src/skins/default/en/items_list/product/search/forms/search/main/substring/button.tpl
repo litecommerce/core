@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Main part of the search form
+ * Main button
  *  
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.15
  *
- * @ListChild (list="itemsList.product.search.form.main", weight="100")
+ * @ListChild (list="itemsList.product.search.form.main.parts.substring", weight="200")
  *}
 
-<table title="{t(#Main search parameters#)}">
-  {displayNestedViewListContent(#parts#)}
-</table>
+<td>
+  <widget class="\XLite\View\Button\Submit" label="Search products" />
+</td>

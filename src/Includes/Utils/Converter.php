@@ -89,8 +89,10 @@ abstract class Converter extends \Includes\Utils\AUtils
         $result = array();
 
         foreach ($args as $part) {
+
             if (1 < count($tokens = explode($glue, trim($part)))) {
-                $result[$tokens[0]] = trim($tokens[1], $quotes);
+                parse_str($tokens[0] . '=' . trim($tokens[1], $quotes), $tmp);
+                $result = array_replace_recursive($result, $tmp);
             }
         }
 

@@ -79,7 +79,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\Search implements \X
      */
     public function getCSSFiles()
     {
-        $list = parent::getJSFiles();
+        $list = parent::getCSSFiles();
         $list[] = 'modules/CDev/SimpleAttributeSearch/style.css';
 
         return $list;
@@ -109,5 +109,83 @@ class Search extends \XLite\View\ItemsList\Product\Customer\Search implements \X
     protected function getAttributeGroups()
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->findAll();
+    }
+
+    /**
+     * Compose attribute box name
+     *
+     * @param \XLite\Model\Attribute $attribute Current attribute
+     * @param array                  $params    Additional params OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getAttributeBoxName(\XLite\Model\Attribute $attribute, array $params = array())
+    {
+        $result = static::PARAM_ATTRIBUTES . '[' . $attribute->getTypeName() . '][' . $attribute->getId() . ']';
+
+        foreach ($params as $param) {
+            $result .= '[' . $param . ']';
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get attribute box value
+     *
+     * @param \XLite\Model\Attribute $attribute Current attribute
+     * @param array                  $params    Additional params OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getAttributeBoxValue(\XLite\Model\Attribute $attribute, array $params = array())
+    {
+        $result = \Includes\Utils\ArrayManager::getIndex(
+            $this->getParam(static::PARAM_ATTRIBUTES),
+            $attribute->getId()
+        );
+
+        if (isset($result) && !empty($params)) {
+            foreach ($params as $param) {
+                $result = \Includes\Utils\ArrayManager::getIndex($result, $param);
+
+                if (empty($result)) {
+                    break;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Set param values using the request or session
+     *
+     * @param array &$params Param values to modify
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function setWidgetRequestParamValues(array &$params)
+    {
+        parent::setWidgetRequestParamValues($params);
+
+        if (
+            !empty($params[static::PARAM_ATTRIBUTES])
+            && isset(\XLite\Core\Request::getInstance()->{static::PARAM_ATTRIBUTES})
+        ) {
+            $attributes = array();
+
+            foreach ($params[static::PARAM_ATTRIBUTES] as $data) {
+                $attributes += $data;
+            }
+
+            $params[static::PARAM_ATTRIBUTES] = $attributes;
+        }
     }
 }

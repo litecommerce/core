@@ -18,11 +18,11 @@
 <div class="search-product-form">
   <widget class="\XLite\View\Form\Product\Search\Customer\Main" name="products_search" />
 
-  <div class="search-form main">
+  <div class="main">
     {displayViewListContent(#itemsList.product.search.form.main#)}
   </div>
 
-  <div class="search-form options" id="advanced_search_options">
+  <div class="options" id="advanced_search_options">
     {displayViewListContent(#itemsList.product.search.form.options#)}
   </div>
 
