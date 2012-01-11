@@ -13,7 +13,7 @@
 <script type="text/javascript">
 <!--
 
-var msg_err_zone_rename='Zone name cannot be empty, please specify it';
+var msg_err_zone_rename='{t(#Zone name cannot be empty, please specify it#)}';
 
 function onZoneSubmit()
 {
@@ -44,12 +44,12 @@ function ShowNotes()
 -->
 </script>
 
-Use this section to define shipping zones.
+{t(#Use this section to define shipping zones.#)}
 
-<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>How to define shipping zones &gt;&gt;&gt;</b></a></span>
+<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>{t(#How to define shipping zones#)} &gt;&gt;&gt;</b></a></span>
 
 <span id="notes_body" style="display: none"><br /><br />
-Select a country or a state from a list, specify the zone where the country or state should be listed and click on the 'Apply' button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.
+{t(#Select a country or a state from a list, specify the zone where the country or state should be listed and click on the 'Apply' button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.#)}
 </span>
 
 <hr />
@@ -67,11 +67,11 @@ Select a country or a state from a list, specify the zone where the country or s
 
     <tr>
       <td colspan="3">
-        Zone name:
+        {t(#Zone name#)}:
         <input type="text" size="50" name="zone_name" value="{zone.getZoneName()}" />
         &nbsp;&nbsp;
-        <widget class="\XLite\View\Button\Regular" IF="!mode=#add#" label="Update" jsCode="onZoneSubmit();" />
-        <widget class="\XLite\View\Button\Regular" IF="mode=#add#" label="Create" jsCode="onZoneSubmit();" />
+        <widget class="\XLite\View\Button\Regular" IF="!mode=#add#" label="{t(#Update#)}" jsCode="onZoneSubmit();" />
+        <widget class="\XLite\View\Button\Regular" IF="mode=#add#" label="{t(#Create#)}" jsCode="onZoneSubmit();" />
         <br /><br />
       </td>
     </tr>
@@ -81,13 +81,13 @@ Select a country or a state from a list, specify the zone where the country or s
     {* Countries *}
 
 	  <tr class="dialog-box">
-	  	<td class="admin-head" colspan="3"><br />Countries<hr /></td>
+	  	<td class="admin-head" colspan="3"><br />{t(#Countries#)}<hr /></td>
 	  </tr>
 
     <tr>
-      <td style="width:45%;" align="center">Set</td>
+      <td style="width:45%;" align="center">{t(#Set#)}</td>
       <td style="width:10%;">&nbsp;</td>
-      <td style="width:45%;" align="center">Unset</td>
+      <td style="width:45%;" align="center">{t(#Unset#)}</td>
     </tr>
 
     <tr>
@@ -120,13 +120,13 @@ Select a country or a state from a list, specify the zone where the country or s
     {* States *}
 
 	  <tr class="dialog-box">
-	  	<td class="admin-head" colspan="3"><br />States<hr /></td>
+	  	<td class="admin-head" colspan="3"><br />{t(#States#)}<hr /></td>
 	  </tr>
 
     <tr>
-      <td style="width:45%;" align="center">Set</td>
+      <td style="width:45%;" align="center">{t(#Set#)}</td>
       <td style="width:10%;">&nbsp;</td>
-      <td style="width:45%;" align="center">Unset</td>
+      <td style="width:45%;" align="center">{t(#Unset#)}</td>
     </tr>
 
     <tr>
@@ -159,13 +159,13 @@ Select a country or a state from a list, specify the zone where the country or s
     {* City masks *}
     {* TODO - disabled until design review 
 	  <tr class="dialog-box">
-	  	<td class="admin-head" colspan="3">City masks<hr /></td>
+	  	<td class="admin-head" colspan="3">{t(#City masks#)}<hr /></td>
 	  </tr>
 
     <tr>
-      <td style="width:45%;" align="center">Set</td>
+      <td style="width:45%;" align="center">{t(#Set#)}</td>
       <td style="width:10%;">&nbsp;</td>
-      <td style="width:45%;">Examples:</td>
+      <td style="width:45%;">{t(#Examples#)}:</td>
     </tr>
 
     <tr>
@@ -178,20 +178,20 @@ Select a country or a state from a list, specify the zone where the country or s
 </textarea>
       </td>
       <td align="center">&nbsp;</td>
-      <td>Examples</td>
+      <td>{t(#Examples#)}</td>
     </tr>
     *}
 
     {* Zip code masks *}
 
 	  <tr class="dialog-box">
-	  	<td class="admin-head" colspan="3">Zip/postal code masks<hr /></td>
+	  	<td class="admin-head" colspan="3">{t(#Zip/postal code masks#)}<hr /></td>
 	  </tr>
 
     <tr>
-      <td style="width:45%;" align="center">Set</td>
+      <td style="width:45%;" align="center">{t(#Set#)}</td>
       <td style="width:10%;">&nbsp;</td>
-      <td style="width:45%;">Examples:</td>
+      <td style="width:45%;">{t(#Examples#)}:</td>
     </tr>
 
     <tr>
@@ -212,13 +212,13 @@ Select a country or a state from a list, specify the zone where the country or s
     {* TODO - disabled until design review
 
 	  <tr class="dialog-box">
-	  	<td class="admin-head" colspan="3">Address masks<hr /></td>
+	  	<td class="admin-head" colspan="3">{t(#Address masks#)}<hr /></td>
 	  </tr>
 
     <tr>
-      <td style="width:45%;" align="center">Set</td>
+      <td style="width:45%;" align="center">{t(#Set#)}</td>
       <td style="width:10%;">&nbsp;</td>
-      <td style="width:45%;">Examples:</td>
+      <td style="width:45%;">{t(#Examples#)}:</td>
     </tr>
 
     <tr>
@@ -231,13 +231,13 @@ Select a country or a state from a list, specify the zone where the country or s
 </textarea>
       </td>
       <td align="center">&nbsp;</td>
-      <td>Examples</td>
+      <td>{t(#Examples#)}</td>
     </tr>
     *}
 
     <tr>
       <td colspan="3"><br /><br /><hr />
-        <widget class="\XLite\View\Button\Regular" jsCode="onZoneSubmit();" label="Save zone details" />
+        <widget class="\XLite\View\Button\Regular" jsCode="onZoneSubmit();" label="{t(#Save zone details#)}" />
       </td>
     </tr>
 
@@ -246,7 +246,7 @@ Select a country or a state from a list, specify the zone where the country or s
     <tbody IF="zone.getIsDefault()=1">
 
       <tr>
-        <td colspan="3"><br />This is a default zone which covers all addresses. It's impossible to edit this zone's countries, states etc</td>
+        <td colspan="3"><br />{t(#This is a default zone which covers all addresses. It's impossible to edit this zone's countries, states etc#)}</td>
       </tr>
 
     </tbody>

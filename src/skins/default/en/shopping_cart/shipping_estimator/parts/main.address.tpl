@@ -17,11 +17,11 @@
   </ul>
 
   <div IF="isEstimate()" class="buttons">
-    <widget class="\XLite\View\Button\Submit" label="Apply destination" />
+    <widget class="\XLite\View\Button\Submit" label="{t(#Apply destination#)}" />
   </div>
 
   <div IF="!isEstimate()" class="buttons main">
-    <widget class="\XLite\View\Button\Submit" label="Apply destination" style="action"/>
+    <widget class="\XLite\View\Button\Submit" label="{t(#Apply destination#)}" style="action"/>
   </div>
 
 <widget name="destination" end />

@@ -57,7 +57,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Help zone');
+        $this->addLocationNode(static::t('Help zone'));
     }
 
     /**
@@ -69,7 +69,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      */
     protected function getLocation()
     {
-        return 'Recover password';
+        return static::t('Recover password');
     }
 
     /**

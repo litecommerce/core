@@ -102,7 +102,7 @@ class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
         $url = array();
 
         if ('backup' == \XLite\Core\Request::getInstance()->action) {
-            $url[] = '<a href="admin.php?target=db_backup">Return to admin interface.</a>';
+            $url[] = '<a href="admin.php?target=db_backup">'.static::t('Return to admin interface.').'</a>';
 
         } else {
             $url = parent::getPageReturnURL();

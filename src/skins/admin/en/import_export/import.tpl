@@ -20,7 +20,7 @@
     <widget
       class="\XLite\View\Button\FileSelector"
       style="action"
-      label="Import from file"
+      label="{t(#Import from file#)}"
       object="import_export"
       objectId=""
       fileObject="" />

@@ -44,7 +44,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      */
     public function getTitle()
     {
-        return 'AustraliaPost settings';
+        return static::t('AustraliaPost settings');
     }
 
 
@@ -57,7 +57,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      */
     protected function getLocation()
     {
-        return 'AustraliaPost settings';
+        return static::t('AustraliaPost settings');
     }
 
     /**

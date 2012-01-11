@@ -49,7 +49,7 @@ class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
      */
     public function getTitle()
     {
-        return self::MARKETPLACE_TITLE;
+        return static::t(self::MARKETPLACE_TITLE);
     }
 
     /**
@@ -61,6 +61,6 @@ class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
      */
     protected function getLocation()
     {
-        return self::MARKETPLACE_TITLE;
+        return static::t(self::MARKETPLACE_TITLE);
     }
 }

@@ -56,7 +56,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Edit profile';
+        return static::t('Edit profile');
     }
 
 
@@ -133,7 +133,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Users', $this->buildURL('profile_list'));
+        $this->addLocationNode(static::t('Users'), $this->buildURL('profile_list'));
     }
 
     /**

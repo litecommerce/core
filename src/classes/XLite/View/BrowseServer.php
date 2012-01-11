@@ -105,7 +105,7 @@ class BrowseServer extends \XLite\View\SimpleDialog
      */
     protected function getHead()
     {
-        return 'Browse server';
+        return static::t('Browse server');
     }
 
     /**

@@ -124,7 +124,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      */
     protected function getLocation()
     {
-        return 'Authentication';
+        return static::t('Authentication');
     }
 
     /**

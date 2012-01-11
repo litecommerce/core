@@ -24,9 +24,9 @@
 
     <tr>
       <th><input type="checkbox" class="column-selector" /></th>
-      <th class="extender">Option group</th>
-      <th>Pos.</th>
-      <th>Enabled</th>
+      <th class="extender">{t(#Option group#)}</th>
+      <th>{t(#Pos.#)}</th>
+      <th>{t(#Enabled#)}</th>
     </tr>
 
     <tr FOREACH="getOptions(),i,group" class="{getRowClass(i,#highlight#)}">
@@ -39,7 +39,7 @@
   </table>
 
   <div class="buttons">
-    <widget class="\XLite\View\Button\Submit" label="Update" />
+    <widget class="\XLite\View\Button\Submit" label="{t(#Update#)}" />
     <widget class="\XLite\Module\CDev\ProductOptions\View\Button\DeleteSelectedGroups" />
     <widget class="\XLite\Module\CDev\ProductOptions\View\Button\AddGroup" />
   </div>

@@ -72,7 +72,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      */
     protected function getHead()
     {
-        return 'Search result';
+        return static::t('Search results');
     }
 
     /**
@@ -101,7 +101,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
         $result = parent::defineViewList($list);
 
         if ($this->getListName() . '.footer' === $list) {
-            $result[] = $this->getWidget(array('label' => 'Add featured products'), '\XLite\View\Button\Submit');
+            $result[] = $this->getWidget(array('label' => static::t('Add featured products')), '\XLite\View\Button\Submit');
         }
 
         return $result;

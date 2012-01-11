@@ -75,7 +75,7 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      */
     protected function getHead()
     {
-        return 'Search result';
+        return static::t('Search result');
     }
 
     /**
@@ -92,7 +92,7 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
         $result = parent::defineViewList($list);
 
         if ($this->getListName() . '.footer' === $list) {
-            $result[] = $this->getWidget(array('label' => 'Update'), '\XLite\View\Button\Submit');
+            $result[] = $this->getWidget(array('label' => static::t('Update')), '\XLite\View\Button\Submit');
             $result[] = $this->getWidget(array(), '\XLite\View\Button\DeleteSelected');
         }
 

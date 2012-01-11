@@ -13,7 +13,7 @@
   <widget class="\XLite\Module\CDev\ProductOptions\View\ProductOptions" product="{getProduct()}" selectedOptions="{getSelectedOptions()}" />
 
   <div class="buttons">
-    <widget class="\XLite\View\Button\Submit" label="Change" style="action" />
+    <widget class="\XLite\View\Button\Submit" label="{t(#Change#)}" style="action" />
   </div>
 
 <widget name="change_options" end />

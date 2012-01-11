@@ -55,7 +55,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Language labels';
+        return static::t('Language labels');
     }
 
     /**
@@ -94,7 +94,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Language labels';
+        return static::t('Language labels');
     }
 
     /**

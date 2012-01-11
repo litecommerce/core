@@ -55,13 +55,13 @@ class Product extends \XLite\Controller\Admin\AAdmin
     public function getPages()
     {
         $pages = array(
-            'info'  => 'Product info',
+            'info'  => static::t('Product info'),
         );
 
         if (!$this->isNew()) {
             $pages += array(
-                'images'    => 'Product images',
-                'inventory' => 'Inventory tracking',
+                'images'    => static::t('Product images'),
+                'inventory' => static::t('Inventory tracking'),
             );
         }
 
@@ -207,7 +207,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Search products', $this->buildURL('product_list'));
+        $this->addLocationNode(static::t('Search products'), $this->buildURL('product_list'));
     }
 
     /**

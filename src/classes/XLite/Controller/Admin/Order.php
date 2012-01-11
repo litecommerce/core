@@ -67,7 +67,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Order #' . \XLite\Core\Request::getInstance()->order_id;
+        return static::t('Order #') . \XLite\Core\Request::getInstance()->order_id;
     }
 
     /**
@@ -81,7 +81,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Search orders', $this->buildURL('order_list'));
+        $this->addLocationNode(static::t('Search orders'), $this->buildURL('order_list'));
     }
 
     /**
@@ -147,7 +147,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
     public function getPages()
     {
         return array(
-            'default' => 'General info',
+            'default' => static::t('General info'),
         );
     }
 

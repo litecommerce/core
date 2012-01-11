@@ -46,7 +46,7 @@ class Authorization extends \XLite\View\SimpleDialog
      */
     protected function getHead()
     {
-        return 'Authentication';
+        return static::t('Authentication');
     }
 
     /**

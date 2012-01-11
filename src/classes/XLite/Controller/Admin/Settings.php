@@ -75,7 +75,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'General settings';
+        return static::t('General settings');
     }
 
     /**
@@ -88,12 +88,12 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     public function getPages()
     {
         return array(
-            'General'     => 'General',
-            'Company'     => 'Company',
-            'Email'       => 'Email',
-            'Security'    => 'Security',
-            'Environment' => 'Environment',
-            'Performance' => 'Performance',
+            'General'     => static::t('General'),
+            'Company'     => static::t('Company'),
+            'Email'       => static::t('Email'),
+            'Security'    => static::t('Security'),
+            'Environment' => static::t('Environment'),
+            'Performance' => static::t('Performance'),
         );
     }
 
@@ -139,7 +139,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'General settings';
+        return static::t('General settings');
     }
 
     /**

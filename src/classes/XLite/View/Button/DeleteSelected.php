@@ -51,7 +51,7 @@ class DeleteSelected extends \XLite\View\Button\Regular
      */
     protected function getDefaultLabel()
     {
-        return 'Delete selected';
+        return static::t('Delete selected');
     }
 
     /**
@@ -75,7 +75,7 @@ class DeleteSelected extends \XLite\View\Button\Regular
      */
     protected function getDefaultConfirmationText()
     {
-        return 'Do you really want to delete selected items?';
+        return static::t('Do you really want to delete selected items?');
     }
 
     /**

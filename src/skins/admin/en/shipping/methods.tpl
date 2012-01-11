@@ -94,7 +94,7 @@ function onDeleteButton(method_id)
             </td>
 
             <td>
-              <widget IF="processor.isMethodDeleteEnabled()" class="\XLite\View\Button\Regular" name="delete" label="Delete" jsCode="onDeleteButton('{method.getMethodId()}');" />
+              <widget IF="processor.isMethodDeleteEnabled()" class="\XLite\View\Button\Regular" name="delete" label="{t(#Delete#)}" jsCode="onDeleteButton('{method.getMethodId()}');" />
             </td>
           </tr>
 

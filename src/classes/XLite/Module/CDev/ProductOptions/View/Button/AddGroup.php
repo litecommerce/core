@@ -68,6 +68,6 @@ class AddGroup extends \XLite\View\Button\Link
      */
     protected function getDefaultLabel()
     {
-        return 'Add new option group';
+        return static::t('Add new option group');
     }
 }

@@ -67,7 +67,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
         if (!$this->isNew()) {
             $pages += array(
-                'product_options' => 'Product options',
+                'product_options' => static::t('Product options'),
             );
         }
 

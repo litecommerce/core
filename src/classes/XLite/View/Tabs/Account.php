@@ -161,6 +161,6 @@ class Account extends \XLite\View\Tabs\ATabs
      */
     protected function getTitle()
     {
-        return 'My account';
+        return static::t('My account');
     }
 }

@@ -82,7 +82,7 @@ class Search extends \XLite\Controller\Customer\ACustomer
      */
     protected function getLocation()
     {
-        return 'Search results';
+        return static::t('Search results');
     }
 
     /**

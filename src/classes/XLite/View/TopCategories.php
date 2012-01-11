@@ -138,7 +138,7 @@ class TopCategories extends \XLite\View\SideBarBox
      */
     protected function getHead()
     {
-        return 'Categories';
+        return static::t('Categories');
     }
 
     /**

@@ -102,8 +102,8 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
     public function getPages()
     {
         return array(
-            'import' => 'Import',
-            'export' => 'Export',
+            'import' => static::t('Import'),
+            'export' => static::t('Export'),
         );
     }
 
@@ -150,7 +150,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Import / Export';
+        return static::t('Import / Export');
     }
 
     /**

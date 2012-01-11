@@ -65,11 +65,11 @@ class RecoverPassword extends \XLite\View\SectionDialog
     {
         return array(
             '' => array(
-                'head' => 'Forgot password?',
+                'head' => static::t('Forgot password?'),
                 'body' => 'recover_password.tpl',
             ),
             'recoverMessage' => array(
-                'head' => 'Recover password',
+                'head' => static::t('Recover password'),
                 'body' => 'recover_message.tpl',
             ),
         );

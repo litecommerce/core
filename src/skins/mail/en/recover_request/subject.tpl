@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-{config.Company.company_name:h}: Confirm password recovery request
+{config.Company.company_name:h}: {t(#Confirm password recovery request#)}

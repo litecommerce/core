@@ -77,7 +77,7 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Taxes';
+        return static::t('Taxes');
     }
 
     /**
@@ -89,7 +89,7 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Taxes';
+        return static::t('Taxes');
     }
 
     // {{{ Widget-specific getters

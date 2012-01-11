@@ -152,9 +152,9 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     public static function getCenterDisplayModes()
     {
         return array(
-                self::DISPLAY_MODE_GRID  => 'Grid',
-                self::DISPLAY_MODE_LIST  => 'List',
-                self::DISPLAY_MODE_TABLE => 'Table',
+                self::DISPLAY_MODE_GRID  => static::t('Grid'),
+                self::DISPLAY_MODE_LIST  => static::t('List'),
+                self::DISPLAY_MODE_TABLE => static::t('Table'),
             );
     }
 

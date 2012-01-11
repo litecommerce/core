@@ -54,7 +54,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      */
     public function getTitle()
     {
-        return 'Pick address from address book';
+        return static::t('Pick address from address book');
     }
 
     /**
@@ -87,7 +87,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      */
     protected function getLocation()
     {
-        return 'Pick address from address book';
+        return static::t('Pick address from address book');
     }
 
     /**

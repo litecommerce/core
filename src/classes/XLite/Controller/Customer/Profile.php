@@ -106,7 +106,7 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      */
     protected function getLocation()
     {
-        return 'Account details';
+        return static::t('Account details');
     }
 
     /**

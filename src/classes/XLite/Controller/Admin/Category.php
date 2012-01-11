@@ -55,7 +55,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     public function getPages()
     {
         return array(
-            'category_modify' => ($this->getCategory()->getCategoryId()) ? 'Modify category' : 'Add new category'
+            'category_modify' => ($this->getCategory()->getCategoryId()) ? static::t('Modify category') : static::t('Add new category')
         );
     }
 

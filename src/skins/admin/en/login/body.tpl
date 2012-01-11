@@ -34,7 +34,7 @@
       <tr>
         <td>&nbsp;</td>
         <td>
-          <widget class="\XLite\View\Button\Submit" label="Log in" style="main-button" />
+          <widget class="\XLite\View\Button\Submit" label="{t(#Log in#)}" style="main-button" />
           <div class="forgot-password">
             <a href="cart.php?target=recover_password">{t(#Forgot password?#)}</a>
           </div>

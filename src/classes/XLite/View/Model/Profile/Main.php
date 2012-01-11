@@ -200,7 +200,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      */
     protected function getHead()
     {
-        return 'Profile details';
+        return static::t('Profile details');
     }
 
     /**
@@ -294,8 +294,8 @@ class Main extends \XLite\View\Model\Profile\AProfile
     protected function getProfileMainSections()
     {
         return array(
-            self::SECTION_MAIN   => 'Personal info',
-            self::SECTION_ACCESS => 'Access information',
+            self::SECTION_MAIN   => static::t('Personal info'),
+            self::SECTION_ACCESS => static::t('Access information'),
         );
     }
 

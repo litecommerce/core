@@ -160,8 +160,8 @@ class ModifyOptionGroup extends \XLite\View\AView
     public function getModifiersNames()
     {
         return array(
-            'price'  => 'Price modifier',
-            'weight' => 'Weight modifier',
+            'price'  => static::t('Price modifier'),
+            'weight' => static::t('Weight modifier'),
         );
     }
 
@@ -236,8 +236,8 @@ class ModifyOptionGroup extends \XLite\View\AView
     public function getOptionSurchargeModifierTypes()
     {
         return array(
-            \XLite\Module\CDev\ProductOptions\Model\OptionSurcharge::PERCENT_MODIFIER  => 'Percent',
-            \XLite\Module\CDev\ProductOptions\Model\OptionSurcharge::ABSOLUTE_MODIFIER => 'Absolute',
+            \XLite\Module\CDev\ProductOptions\Model\OptionSurcharge::PERCENT_MODIFIER  => static::t('Percent'),
+            \XLite\Module\CDev\ProductOptions\Model\OptionSurcharge::ABSOLUTE_MODIFIER => static::t('Absolute'),
         );
     }
 

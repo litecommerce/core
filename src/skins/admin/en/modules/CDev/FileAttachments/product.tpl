@@ -14,7 +14,7 @@
   <div class="add-file">
     <widget
       class="XLite\View\Button\FileSelector"
-      label="Add file"
+      label="{t(#Add file#)}"
       object="product"
       objectId="{product.getProductId()}"
       fileObject="attachments" />

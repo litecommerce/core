@@ -58,7 +58,7 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
      */
     public function getProcessorName()
     {
-        return 'Manually defined shipping methods';
+        return static::t('Manually defined shipping methods');
     }
 
     /**

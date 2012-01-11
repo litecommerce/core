@@ -44,7 +44,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      */
     public function getTitle()
     {
-        return 'Manage add-ons';
+        return static::t('Manage add-ons');
     }
 
     /**
@@ -56,7 +56,7 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
      */
     protected function getLocation()
     {
-        return 'Manage add-ons';
+        return static::t('Manage add-ons');
     }
 
     // {{{ Short-name methods
