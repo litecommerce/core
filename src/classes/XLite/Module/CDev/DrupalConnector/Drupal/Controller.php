@@ -113,7 +113,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     public function updateMetaTags(array &$elements)
     {
         if (!defined('MAINTENANCE_MODE')) {
-    
+
             foreach (array('description' => 'getMetaDescription', 'keywords' => 'getKeywords') as $name => $method) {
                 $content = $this->getViewer()->$method();
 
@@ -222,6 +222,9 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         // Dispatch events
         \XLite\Core\Event::getInstance()->display();
         \XLite\Core\Event::getInstance()->clear();
+
+        // Send headers. TODO: Should be one header sending point.
+        \XLite\View\Controller::sendHeaders();
 
         // Display content
         echo ('<h2 class="ajax-title-loadable">' . $this->getTitle() . '</h2>');

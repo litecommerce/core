@@ -48,7 +48,7 @@ class RemoteCommand
 //      end
 //
     function ssh_command($options){
-        $command = "ssh ";
+        $command = "ssh -o StrictHostKeyChecking=no ";
         $user = (array_key_exists('user', $options) ? $options['user'] : "ubuntu");
         if ($options['keypair'])
             $command .= " -i '".$options['keypair']."' ";
