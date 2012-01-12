@@ -1,4 +1,4 @@
-?php
+<?php
 /**
  * LiteCommerce
  *
@@ -68,11 +68,6 @@ function server_setup($app)
 {
     print PHP_EOL . "Setting up LC server..." . PHP_EOL;
 
-    shell_exec('source /u/xcart/public_html/general/projects/xlite/.ec2/env.sh');
-
-    passthru("ec2-version", $code);
-    if ($code != 0)
-        die("EC2 Environment not configured!");
     $server = $app['cloud']->server;
     $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite",
         'user' => 'bitnami',
@@ -82,8 +77,8 @@ function server_setup($app)
     $server->run("sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/local.template.php | sed 's/_grid_hub_/" . $app['cloud']->hub->private_dns . "/g' | sed 's/_clients_count_/" . $app['farms_count'] . "/g' > .dev/tests/local.php", $options);
     $options['pwd'] .= '/.dev';
     $code = $server->run("./phpunit tests/Dev_Install.php", $options);
-    if ($code != 0)
-        die($code);
+    //if ($code != 0)
+      //  die($code);
 }
 
 require_once "lib/Cloud.php";
@@ -361,6 +356,7 @@ group("ec2", function()
         }
         print PHP_EOL . "EC2 Version: " . Ec2Client::version();
         print PHP_EOL . "Validated EC2 settings.";
+
     });
 });
 
@@ -402,8 +398,8 @@ group("server", function()
         exec('scp -i ' . $app['keypair'] . ' bitnami@' . $server->public_dns . ':/tmp/phpunit*.xml ' . $app['logdir']);
 
         get_screenshots($app);
-        if ($code != 0)
-            die($code);
+        //if ($code != 0)
+        //    die($code);
     });
 
     desc('Drupal + LC deployment test');
@@ -425,8 +421,8 @@ group("server", function()
         $server->run('sudo rm -rf xlite_cms/modules/lc_connector/litecommerce;' .
             'cp xlite_cms/sites/default/settings.old.php xlite_cms/sites/default/settings.php;' .
             'sudo chmod -R 777 .', $options);
-        if ($code != 0)
-            die($code);
+        //if ($code != 0)
+          //  die($code);
         server_setup($app);
     });
 
@@ -443,7 +439,12 @@ group("server", function()
 
 });
 
-task('parallel_boot', 'setup', 'hub:boot', 'server:boot', function($app)
+task('clear', function(){
+    if (file_exists('data.txt'))
+        unlink('data.txt');
+});
+
+task('parallel_boot', 'clear', 'setup', 'hub:boot', 'server:boot', function($app)
 {
     Ec2Client::authorize_port(22);
     Ec2Client::authorize_port(4444);
@@ -458,5 +459,6 @@ task('parallel_boot', 'setup', 'hub:boot', 'server:boot', function($app)
 task('deploy', 'parallel_boot', 'hub:start', 'server:config', 'server:test_deploy');
 task('parallel', 'deploy', 'rc:boot', 'rc:start', 'server:test_parallel', 'grid:shutdown');
 
+task('default', 'ec2:check_settings', 'parallel');
 
 ?>

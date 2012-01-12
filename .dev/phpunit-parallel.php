@@ -330,24 +330,24 @@ class TestRunner
     {
         //Collect console output
         $output = shell_exec('cat /tmp/output* | grep "Tests\|Failures\|Assertions\|Skipped\|Time:\|OK"');
-            $tests = $assertions = $failures = $skipped = $errors = 0;
+        $tests = $assertions = $failures = $skipped = $errors = 0;
 
-            if (preg_match_all('/Time: (\d+)/Sm', $output, $matches))
-                   $tests += array_sum($matches[1]);
+        if (preg_match_all('/Time: (\d+)/Sm', $output, $matches))
+            $tests += array_sum($matches[1]);
 
-            if (preg_match_all('/Tests: (\d+)/Sm', $output, $matches))
-                $tests += array_sum($matches[1]);
-            if (preg_match_all('/Failures: (\d+)/Sm', $output, $matches))
-                $failures += array_sum($matches[1]);
-            if (preg_match_all('/Assertions: (\d+)/Sm', $output, $matches))
-                $assertions += array_sum($matches[1]);
-            if (preg_match_all('/Skipped: (\d+)/Sm', $output, $matches))
-                $skipped += array_sum($matches[1]);
+        if (preg_match_all('/Tests: (\d+)/Sm', $output, $matches))
+            $tests += array_sum($matches[1]);
+        if (preg_match_all('/Failures: (\d+)/Sm', $output, $matches))
+            $failures += array_sum($matches[1]);
+        if (preg_match_all('/Assertions: (\d+)/Sm', $output, $matches))
+            $assertions += array_sum($matches[1]);
+        if (preg_match_all('/Skipped: (\d+)/Sm', $output, $matches))
+            $skipped += array_sum($matches[1]);
 
-            if (preg_match_all('/OK \((\d+) tests, (\d+) assertions\)/Sm', $output, $matches)) {
-                $tests += array_sum($matches[1]);
-                $assertions += array_sum($matches[2]);
-            }
+        if (preg_match_all('/OK \((\d+) tests, (\d+) assertions\)/Sm', $output, $matches)) {
+            $tests += array_sum($matches[1]);
+            $assertions += array_sum($matches[2]);
+        }
         $out = "/tmp/phpunit.txt";
         $command = 'cat /tmp/output-* | grep "^\(Customer\|Admin\|Time\|Module\|^$\)" | cat -s > ' . $out . ';
                     echo "" >> ' . $out . ';';
@@ -359,10 +359,10 @@ class TestRunner
                         echo "FAILURES!" >> ' . $out . ';';
         }
         $command .= 'echo "Tests complete. Tests: ' . $tests .
-                    '; Assertions: ' . $assertions .
-                    '; Failures: ' . $failures .
-                    '; Skipped tests: ' . $skipped .
-                    '; Errors: ' . $errors . '"  >> ' . $out . ';
+            '; Assertions: ' . $assertions .
+            '; Failures: ' . $failures .
+            '; Skipped tests: ' . $skipped .
+            '; Errors: ' . $errors . '"  >> ' . $out . ';
                     echo "" >> ' . $out . ';
                     echo "Total time: ' . $time . '" >> ' . $out . ';';
         print PHP_EOL . $command . PHP_EOL;
