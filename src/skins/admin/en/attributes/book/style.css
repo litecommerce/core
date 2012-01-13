@@ -10,26 +10,38 @@
  * @since     1.0.14
  */
 
-ul.draggable-rows li.row div.group div.group-title,
-ul.draggable-rows li.row div.group div.group-attributes div.attribute-title
+div.group.hidden,
+div.attribute.hidden
+{
+  width: 748px;
+  display: none;
+}
+
+div.group-title,
+div.attribute-title
 {
   float: left;
 }
 
-ul.draggable-rows li.row div.group div.group-attributes-number,
-ul.draggable-rows li.row div.group div.group-attributes div.attribute-type,
-ul.draggable-rows li.row div.group div.separator.right-separator
+div.group.hidden div.group-title
+{
+  float: none;
+}
+
+div.group-attributes-number,
+div.attribute-type,
+div.separator.right-separator
 {
   float: right;
 }
 
-ul.draggable-rows li.row div.group div.group-attributes
+div.group-attributes
 {
   margin-top: 20px;
   float: left;
 }
 
-ul.draggable-rows li.row div.group div.group-attributes li.row table.attribute-properties
+table.attribute-properties
 {
   clear: both;
 }

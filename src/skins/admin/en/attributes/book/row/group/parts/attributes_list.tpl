@@ -12,6 +12,6 @@
  * @ListChild (list="attributes.book.row.group", weight="600")
  *}
 
-<div class="group-attributes">
+<div IF="!isNew()" class="group-attributes">
   <widget class="\XLite\View\DraggableRows" entries="{getAttributeWidgets()}" />
-<div>
+</div>

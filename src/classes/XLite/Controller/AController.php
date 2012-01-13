@@ -582,8 +582,7 @@ abstract class AController extends \XLite\Core\Handler
     public function getURL(array $params = array())
     {
         $params = array_merge($this->getAllParams(), $params);
-
-        $target = isset($params['target']) ? $params['target'] : '';
+        $target = \Includes\Utils\ArrayManager::getIndex($params, 'target');
 
         unset($params['target']);
 

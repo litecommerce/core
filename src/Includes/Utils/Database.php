@@ -145,7 +145,8 @@ abstract class Database extends \Includes\Utils\AUtils
     {
         return \Includes\Utils\ArrayManager::getIndex(
             static::$dbOptions ?: \Includes\Utils\ConfigParser::getOptions(array('database_details')),
-            $name
+            $name,
+            false
         );
     }
 

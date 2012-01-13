@@ -12,4 +12,6 @@
  * @ListChild (list="attributes.book.row.attribute.properties.id", weight="200")
  *}
 
-<td><input type="text" name="{getNamePostedData(#name#)}" value="{getAttributeID():h}" class="attribute-id" /></td>
+<td>
+  <input type="text" name="{getBoxName(#name#)}" value="{getAttributeID():h}" class="attribute-id" />
+</td>

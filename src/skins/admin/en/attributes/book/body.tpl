@@ -10,4 +10,6 @@
  * @since     1.0.14
  *}
 
-<widget class="\XLite\View\DraggableRows" entries="{getGroupWidgets()}" />
+<widget class="\XLite\View\Form\Attribute\EditList" name="attributes_list" />
+  {displayViewListContent(#attributes.book.parts#)}
+<widget name="attributes_list" end />

@@ -334,7 +334,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     public static function isActiveModule($moduleName)
     {
-        return (bool) \Includes\Utils\ArrayManager::getIndex(static::getActiveModules(), $moduleName, true);
+        return (bool) \Includes\Utils\ArrayManager::getIndex(static::getActiveModules(), $moduleName);
     }
 
     /**

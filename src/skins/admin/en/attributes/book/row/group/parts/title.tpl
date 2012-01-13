@@ -12,4 +12,6 @@
  * @ListChild (list="attributes.book.row.group", weight="200")
  *}
 
-<div class="group-title">{getGroupTitle():h}</div>
+<div class="group-title">
+  <input type="text" name="{getBoxName(#title#)}" value="{getGroupTitle():h}" />
+</div>

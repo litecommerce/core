@@ -380,7 +380,7 @@ class Cell extends \XLite\Base\Singleton
      */
     protected function callCoreEntryMethod($method)
     {
-        $entry = \Includes\Utils\ArrayManager::getIndex($this->getEntries(), self::CORE_IDENTIFIER, true);
+        $entry = \Includes\Utils\ArrayManager::getIndex($this->getEntries(), self::CORE_IDENTIFIER);
 
         // If core entry found, call method with the passed name on it
         return isset($entry) ? $entry->$method() : null;
@@ -475,7 +475,7 @@ class Cell extends \XLite\Base\Singleton
     protected function checkForCoreUpgrade()
     {
         $majorVersion = $this->coreVersion ?: \XLite::getInstance()->getMajorVersion();
-        $data = \Includes\Utils\ArrayManager::getIndex($this->getCoreVersions(), $majorVersion, true);
+        $data = \Includes\Utils\ArrayManager::getIndex($this->getCoreVersions(), $majorVersion);
 
         if (is_array($data)) {
             return $this->addEntry(self::CORE_IDENTIFIER, 'Core', array_merge(array($majorVersion), $data));

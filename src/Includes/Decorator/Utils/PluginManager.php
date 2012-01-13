@@ -121,7 +121,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
             }
         }
 
-        return \Includes\Utils\ArrayManager::getIndex(static::$plugins, $hook);
+        return \Includes\Utils\ArrayManager::getIndex(static::$plugins, $hook, false);
     }
 
     /**

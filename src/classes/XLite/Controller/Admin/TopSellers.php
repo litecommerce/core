@@ -164,20 +164,17 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function processData($data)
+    protected function processData(array $data)
     {
         $stats = $this->stats;
 
         foreach ($this->stats as $rownum => $periods) {
-
             foreach ($periods as $period => $val) {
 
-                $stats[$rownum][$period] = (
-                    is_array($data[$period])
-                    && \Includes\Utils\ArrayManager::getIndex($data[$period], $rownum)
-                )
-                    ? $data[$period][$rownum][0]
-                    : null;
+                $tmp = (array) \Includes\Utils\ArrayManager::getIndex($data, $period);
+                $tmp = (array) \Includes\Utils\ArrayManager::getIndex($tmp, $rownum);
+
+                $stats[$rownum][$period] = \Includes\Utils\ArrayManager::getIndex($tmp, 0);
             }
         }
 

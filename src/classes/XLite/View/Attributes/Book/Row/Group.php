@@ -50,7 +50,7 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
      */
     public function getRowUniqueId()
     {
-        return $this->getGroup()->getId();
+        return $this->getGroup()->getId() ?: '_';
     }
 
     /**
@@ -102,7 +102,7 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
 
         $this->widgetParams += array(
             static::PARAM_GROUP => new \XLite\Model\WidgetParam\Object(
-                'Group object', null, false, '\XLite\Model\Attribute\Group'
+                'Group object', new \XLite\Model\Attribute\Group(), false, '\XLite\Model\Attribute\Group'
             ),
             static::PARAM_ATTRIBUTES => new \XLite\Model\WidgetParam\Collection(
                 'Group attributes', array()
@@ -156,5 +156,19 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
     protected function getGroupAttributesNumber()
     {
         return count($this->getAttributeWidgets());
+    }
+
+    /**
+     * Return name for the box of group field
+     *
+     * @param string $field Field name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getBoxName($field)
+    {
+        return $this->getNamePostedData($field, $this->getRowUniqueId());
     }
 }

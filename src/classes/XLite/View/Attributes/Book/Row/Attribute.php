@@ -49,7 +49,21 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     public function getRowUniqueId()
     {
-        return $this->getAttribute()->getId();
+        return $this->getAttribute()->getId() ?: '_';
+    }
+
+    /**
+     * Common prefix for editable elements in lists
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPrefixPostedData()
+    {
+        return parent::getPrefixPostedData() 
+            . '[' . ($this->getGroupId() ?: '_') . ']' 
+            . '[' . \XLite\Controller\Admin\Attributes::FIELD_ATTRS . ']';
     }
 
     /**
@@ -77,21 +91,6 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     }
 
     /**
-     * Get name for data field
-     *
-     * @param string  $field Field name
-     * @param integer $id    Model object ID OPTIONAL
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.14
-     */
-    protected function getNamePostedData($field, $id = null)
-    {
-        return parent::getNamePostedData('attributes', $this->getGroupId(), $this->getRowUniqueId(), $field);
-    }
-
-    /**
      * Return value of the "position" field
      *
      * @return integer
@@ -116,7 +115,7 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
 
         $this->widgetParams += array(
             static::PARAM_ATTRIBUTE => new \XLite\Model\WidgetParam\Object(
-                'Attribute object', null, false, '\XLite\Model\Attribute'
+                'Attribute object', new \XLite\Model\Attribute(), false, '\XLite\Model\Attribute'
             ),
         );
     }
@@ -179,5 +178,19 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     protected function getAttributeID()
     {
         return $this->getAttribute()->getName();
+    }
+
+    /**
+     * Return name for the box of attribute field
+     *
+     * @param string $field Field name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getBoxName($field)
+    {
+        return $this->getNamePostedData($field, $this->getRowUniqueId()); 
     }
 }

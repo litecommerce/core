@@ -10,4 +10,6 @@
  * @since     1.0.0
  *}
 
-<button type="button" onclick="javascript: {getJSCode():h}"{if:style} class="{style}"{end:}><span>{t(getButtonLabel())}</span></button>
+<button type="button"{if:getId()} id="{getId()}"{end:} onclick="javascript: {getJSCode():h}"{if:style} class="{style}"{end:}>
+  <span>{t(getButtonLabel())}</span>
+</button>

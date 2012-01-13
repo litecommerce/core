@@ -454,7 +454,7 @@ class Classes extends \Includes\DataStructure\Graph
      */
     public function getTag($name)
     {
-        return \Includes\Utils\ArrayManager::getIndex($this->getTags(), strtolower($name), true);
+        return \Includes\Utils\ArrayManager::getIndex($this->getTags(), strtolower($name));
     }
 
     /**

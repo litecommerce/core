@@ -68,15 +68,15 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * Method to safely get array element (or a whole array)
      *
      * @param array          $data  Data array
-     * @param integer|string $index  Array index
-     * @param boolean        $strict Flag; return value or null in any case
+     * @param integer|string $index  Array index OPTIONAL
+     * @param boolean        $strict Flag; return value or null in any case OPTIONAL
      *
      * @return array|mixed|null
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getIndex(array $data, $index = null, $strict = false)
+    public static function getIndex(array $data, $index = null, $strict = true)
     {
         return isset($index) ? (isset($data[$index]) ? $data[$index] : null) : ($strict ? null : $data);
     }
@@ -130,7 +130,7 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
     public static function getArraysArrayFieldValues(array $array, $field)
     {
         foreach ($array as &$element) {
-            $element = static::getIndex($element, $field, true);
+            $element = static::getIndex($element, $field);
         }
 
         return $array;
@@ -153,7 +153,7 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
 
         foreach ($array as $key => $element) {
             $element = (array) $element;
-            if (static::getIndex($element, $field, true) == $value) {
+            if (static::getIndex($element, $field) == $value) {
                 $result[$key] = $element;
             }
         }

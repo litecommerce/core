@@ -78,7 +78,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
             }
         }
 
-        return \Includes\Utils\ArrayManager::getIndex(static::$metadata, $class);
+        return \Includes\Utils\ArrayManager::getIndex(static::$metadata, $class, false);
     }
 
     /**

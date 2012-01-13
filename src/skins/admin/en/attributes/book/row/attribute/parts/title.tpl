@@ -12,4 +12,6 @@
  * @ListChild (list="attributes.book.row.attribute", weight="100")
  *}
 
-<div class="attribute-title">{getAttributeTitle():h}</div>
+<div class="attribute-title">
+  <input type="text" name="{getBoxName(#title#)}" value="{getAttributeTitle():h}" />
+</div>

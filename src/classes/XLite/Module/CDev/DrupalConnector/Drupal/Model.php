@@ -74,13 +74,13 @@ class Model extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             foreach ($this->blocks as $id => &$block) {
                 $block['options'] = array();
 
-                foreach ((array) \Includes\Utils\ArrayManager::getIndex($settings, $id, true) as $data) {
+                foreach ((array) \Includes\Utils\ArrayManager::getIndex($settings, $id) as $data) {
                     $block['options'][$data['name']] = $data['value'];
                 }
             }
         }
 
-        return \Includes\Utils\ArrayManager::getIndex($this->blocks, $blockId);
+        return \Includes\Utils\ArrayManager::getIndex($this->blocks, $blockId, false);
     }
 
     /**

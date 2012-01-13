@@ -225,7 +225,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      */
     public static function getExtension()
     {
-        return \Includes\Utils\ArrayManager::getIndex(static::$extensions, self::COMPRESSION_TYPE, true);
+        return \Includes\Utils\ArrayManager::getIndex(static::$extensions, self::COMPRESSION_TYPE);
     }
 
     /**

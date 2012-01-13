@@ -312,7 +312,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function getMetadata($name)
     {
-        return \Includes\Utils\ArrayManager::getIndex($this->metadata, $name, true);
+        return \Includes\Utils\ArrayManager::getIndex($this->metadata, $name);
     }
 
     /**

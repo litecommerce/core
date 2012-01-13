@@ -12,4 +12,4 @@
  * @ListChild (list="attributes.book.row.group", weight="500")
  *}
 
-<div class="group-attributes-number">{getGroupAttributesNumber():h} {t(#attributes in group#)}</div>
+<div IF="!isNew()" class="group-attributes-number">{getGroupAttributesNumber():h} {t(#attributes in group#)}</div>

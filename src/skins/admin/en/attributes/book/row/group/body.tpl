@@ -10,4 +10,6 @@
  * @since     1.0.14
  *}
 
-<div class="group">{displayViewListContent(#attributes.book.row.group#)}</div>
+<div class="group{if:isNew()} hidden{end:}">
+  {displayViewListContent(#attributes.book.row.group#)}
+</div>

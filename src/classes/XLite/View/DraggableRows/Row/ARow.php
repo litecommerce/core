@@ -100,4 +100,16 @@ abstract class ARow extends \XLite\View\AView
     {
         return parent::getNamePostedData($field, $id ?: $this->getRowUniqueId());
     }
+
+    /**
+     * Check if it's the row for new entry
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isNew()
+    {
+        return 0 >= intval($this->getRowUniqueId());
+    }
 }

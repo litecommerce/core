@@ -10,4 +10,6 @@
  * @since     1.0.14
  *}
 
-<div class="attribute">{displayViewListContent(#attributes.book.row.attribute#)}</div>
+<div class="attribute{if:isNew()} hidden{end:}">
+  {displayViewListContent(#attributes.book.row.attribute#)}
+</div>

@@ -239,7 +239,7 @@ class Graph
      */
     public function find($key)
     {
-        return \Includes\Utils\ArrayManager::getIndex($this->findAll($key), 0, true);
+        return \Includes\Utils\ArrayManager::getIndex($this->findAll($key), 0);
     }
 
     // ------------------------------ Integrity check -

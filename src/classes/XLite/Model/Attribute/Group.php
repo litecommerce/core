@@ -33,7 +33,7 @@ namespace XLite\Model\Attribute;
  * @see   ____class_see____
  * @since 1.0.14
  *
- * @Entity
+ * @Entity (repositoryClass="\XLite\Model\Repo\Attribute\Group")
  * @Table  (name="attribute_groups")
  */
 class Group extends \XLite\Model\Base\I18n
@@ -60,7 +60,7 @@ class Group extends \XLite\Model\Base\I18n
      *
      * @Column (type="integer")
      */
-    protected $pos;
+    protected $pos = 0;
 
     /**
      * Group attribute assigned
@@ -69,7 +69,8 @@ class Group extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.14
      *
-     * @OneToMany  (targetEntity="XLite\Model\Attribute", mappedBy="group", cascade={"all"})
+     * @OneToMany (targetEntity="XLite\Model\Attribute", mappedBy="group", cascade={"all"})
+     * @OrderBy   ({"pos" = "ASC"})
      */
     protected $attributes;
 }

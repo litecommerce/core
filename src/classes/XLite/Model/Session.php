@@ -212,7 +212,7 @@ class Session extends \XLite\Model\AEntity
             }
         }
 
-        return \Includes\Utils\ArrayManager::getIndex($this->cache, $name, true);
+        return \Includes\Utils\ArrayManager::getIndex($this->cache, $name);
     }
 
     /**

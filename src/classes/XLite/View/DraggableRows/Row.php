@@ -64,7 +64,7 @@ class Row extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            static::PARAM_INTERNAL_WIDGET=> new \XLite\Model\WidgetParam\Object(
+            static::PARAM_INTERNAL_WIDGET => new \XLite\Model\WidgetParam\Object(
                 'Entry', null, false, '\XLite\View\DraggableRows\Row\ARow'
             ),
         );

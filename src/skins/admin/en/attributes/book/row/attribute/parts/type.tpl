@@ -12,4 +12,6 @@
  * @ListChild (list="attributes.book.row.attribute", weight="400")
  *}
 
-<div class="attribute-type">{t(getAttributeTypeName()):h}</div>
+<div IF="!isNew()" class="attribute-type">
+  {t(getAttributeTypeName())}
+</div>

@@ -9,3 +9,13 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.14
  */
+
+jQuery().ready(
+  function() {
+    jQuery('div.group .delete').click(
+      function () {
+        jQuery(this).closest('li.row').css('background-color', 'red');
+      }
+    );
+  }
+);

@@ -478,7 +478,11 @@ OUT;
      */
     protected function getRequestDataByPrefix($prefix, $field = null)
     {
-        return \Includes\Utils\ArrayManager::getIndex((array) \XLite\Core\Request::getInstance()->$prefix, $field);
+        return (array) \Includes\Utils\ArrayManager::getIndex(
+            (array) \XLite\Core\Request::getInstance()->$prefix,
+            $field,
+            false
+        );
     }
 
     /**

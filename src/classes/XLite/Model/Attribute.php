@@ -84,7 +84,7 @@ class Attribute extends \XLite\Model\Base\I18n
      *
      * @Column (type="integer")
      */
-    protected $pos;
+    protected $pos = 0;
 
     /**
      * Relation to a group entity

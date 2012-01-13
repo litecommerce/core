@@ -319,7 +319,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function isCoreUpgradeAvailable($majorVersion)
     {
-        return (bool) \Includes\Utils\ArrayManager::getIndex($this->getCoreVersions(), $majorVersion, true);
+        return (bool) \Includes\Utils\ArrayManager::getIndex($this->getCoreVersions(), $majorVersion);
     }
 
     /**
@@ -429,7 +429,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function getDependencyHRef(\XLite\Model\Module $module)
     {
-        return \Includes\Utils\ArrayManager::getIndex($this->getDependencyData($module), 'href', true);
+        return \Includes\Utils\ArrayManager::getIndex($this->getDependencyData($module), 'href');
     }
 
     /**
@@ -443,7 +443,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function getDependencyStatus(\XLite\Model\Module $module)
     {
-        return \Includes\Utils\ArrayManager::getIndex($this->getDependencyData($module), 'status', true);
+        return \Includes\Utils\ArrayManager::getIndex($this->getDependencyData($module), 'status');
     }
 
     /**
@@ -457,7 +457,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function getDependencyCSSClass(\XLite\Model\Module $module)
     {
-        return \Includes\Utils\ArrayManager::getIndex($this->getDependencyData($module), 'class', true);
+        return \Includes\Utils\ArrayManager::getIndex($this->getDependencyData($module), 'class');
     }
 
     // }}}

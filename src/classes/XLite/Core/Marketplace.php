@@ -1297,7 +1297,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function getField(array $data, $field)
     {
-        return \Includes\Utils\ArrayManager::getIndex($data, $field, true);
+        return \Includes\Utils\ArrayManager::getIndex($data, $field);
     }
 
     /**

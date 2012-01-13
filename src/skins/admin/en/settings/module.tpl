@@ -11,6 +11,5 @@
  *
  * @ListChild (list="admin.center", zone="admin")
  *}
+
 <widget target="module" template="settings/base.tpl" />
-
-

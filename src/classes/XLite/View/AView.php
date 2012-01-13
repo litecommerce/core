@@ -557,7 +557,8 @@ abstract class AView extends \XLite\Core\Handler
 
         return \Includes\Utils\ArrayManager::getIndex(
             call_user_func_array('array_merge_recursive', static::$resources),
-            $type
+            $type,
+            false
         );
     }
 
@@ -973,7 +974,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getArrayField(array $array, $field)
     {
-        return \Includes\Utils\ArrayManager::getIndex($array, $field, true);
+        return \Includes\Utils\ArrayManager::getIndex($array, $field);
     }
 
     /**
@@ -1627,19 +1628,15 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getNamePostedData($field, $id = null)
     {
-        $args = func_get_args();
-
+        $args  = func_get_args();
         $field = $args[0];
-
-        $tail = '';
+        $tail  = '';
 
         if (2 <= count($args)) {
-
             $id = $args[1];
         }
 
         if (2 < count($args)) {
-
             $tail = '[' . implode('][', array_slice($args, 2)) . ']';
         }
 

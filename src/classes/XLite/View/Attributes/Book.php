@@ -95,6 +95,19 @@ class Book extends \XLite\View\Dialog
     }
 
     /**
+     * Return list of attribute groups
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getGroups()
+    {
+        // TODO: change to "findAll()" after upgrade to Doctrine2.1
+        return \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->findBy(array(), array('pos' => 'ASC'));
+    }
+
+    /**
      * Return list of attribute group widgets
      *
      * @return array
@@ -105,7 +118,7 @@ class Book extends \XLite\View\Dialog
     {
         $result = array();
 
-        foreach (\XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->findAll() as $group) {
+        foreach ($this->getGroups() as $group) {
             $attributes = array();
 
             foreach ($group->getAttributes() as $attribute) {
