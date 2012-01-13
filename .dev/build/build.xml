@@ -245,7 +245,7 @@
             <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
         </copy>
         <mkdir dir="${buildDir}/coverage" />
-
+        <mkdir dir="${buildDir}/.dev/tests/Amazon/Grid/logs" />
         <chmod perm="ugo+rx" file="${buildDir}/.dev/lib/phake/phake" />
         <chmod perm="ugo+rx" file="${buildDir}/.dev/tests/Amazon/Grid/run-phake.sh" />
         <exec executable="./run-phake.sh" dir="${buildDir}/.dev/tests/Amazon/Grid/" failonerror="off" resultproperty='web_result'>

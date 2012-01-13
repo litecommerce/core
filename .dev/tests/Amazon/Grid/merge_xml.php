@@ -43,7 +43,7 @@ function collectXmlOutput($dirname)
         $writer->writeAttribute('errors', $errors);
         $writer->writeAttribute('time', $time);
 
-        foreach (glob("$dirname/phpunit*.xml") as $filename) {
+        foreach (glob("$dirname/phpunit.*.xml") as $filename) {
             print $filename;
             mergeXml($writer, $filename);
         }
