@@ -108,7 +108,8 @@ class Search extends \XLite\View\ItemsList\Product\Customer\Search implements \X
      */
     protected function getAttributeGroups()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->findAll();
+        // TODO: change to "findAll()" after upgrade to Doctrine2.1
+        return \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->findBy(array(), array('pos' => 'ASC'));
     }
 
     /**
