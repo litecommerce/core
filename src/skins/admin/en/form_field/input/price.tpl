@@ -1,25 +1,16 @@
-/* vim: set ts=2 sw=2 sts=2 et: */
+{* vim: set ts=2 sw=2 sts=2 et: *}
 
-/**
- * jQuery mouse wheel-related styles
+{**
+ * Price form field
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- */
-
-.wheel-mark-input {
-}
-
-span.wheel-mark {
-  margin: 0 10px 0 5px;
-  height: 16px;
-  width: 15px;
-  display: inline-block;
-}
-
-input.focused + span.wheel-mark {
-  background: url(../images/icon_mouse.gif) no-repeat;
-}
+ *}
+<span class="input-field-wrapper {getWrapperClass()}">
+  {displayCommentedData(getCommentedData())}
+  <input{getAttributesCode():h} />
+  <span class="symbol text">{getCurrencySymbol():h}</span>
+</span>

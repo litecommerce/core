@@ -14,16 +14,20 @@ jQuery().ready(
   function () {
     jQuery('button.remove').click(
       function () {
-        var inp = jQuery(this).prev();
-        var remove = !inp.attr('value');
-        inp.attr('value', remove ? '1' : '');
-
         var btn = jQuery(this);
+        var inp = btn.prev();
+        var cell = btn.parents('.line').eq(0);
+
+        var remove = !inp.attr('value');
+        inp.val(remove ? '1' : '');
+
         if (remove) {
-          btn.removeClass('mark');
+          btn.addClass('mark');
+          cell.addClass('remove-mark');
 
         } else {
-          btn.addClass('mark');
+          btn.removeClass('mark');
+          cell.removeClass('remove-mark');
         }
       }
     );

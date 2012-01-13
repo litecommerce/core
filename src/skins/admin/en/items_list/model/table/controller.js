@@ -13,29 +13,34 @@
 // Main class
 function TableItemsList(cell, URLParams, URLAJAXParams)
 {
-  this.container = jQuery('.items-list').eq(0);
-
-  if (!this.container.length) {
-    return;
-  }
-
-  this.cell = cell;
-  this.URLParams = URLParams;
-  this.URLAJAXParams = URLAJAXParams;
-
-  // Common form support
-  CommonForm.autoassign(this.container);
-
-  this.addListeners();
+  TableItemsList.superclass.constructor.apply(this, arguments);
 }
 
 extend(TableItemsList, ItemsList);
 
 TableItemsList.prototype.listeners.pager = function(handler)
 {
-  jQuery('.table-pager .input input', handler.container).blur(
+  jQuery('.table-pager .input input', handler.container).change(
     function() {
       return !handler.process('pageId', this.value);
     }
   );
+
+  jQuery('.table-pager a', handler.container).click(
+    function() {
+      return !(jQuery(this).hasClass('disabled') || handler.process('pageId', jQuery(this).data('pageId')));
+    }
+  );
+
 }
+
+ItemsList.prototype.listeners.pagesCount = function(handler)
+{
+  jQuery('select.page-length', handler.container).change(
+    function() {
+      return !handler.process('itemsPerPage', this.options[this.selectedIndex].value);
+    }
+  );
+}
+
+

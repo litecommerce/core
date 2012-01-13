@@ -12,11 +12,10 @@
 
 <div class="left">
   <span class="title">{t(#Page#)}:</span>
-  <div IF="!isFirstPage()" class="first"><span>&hellip;</span><a href="{buildURLByPageId(firtstPageId)}">{preprocessPageId(firstPageId)}</a></div>
-  <a href="{buildURLByPageId(previousPageId)}" class="{getPrevClass()}"><span>{t(#Prev#)}</span></a>
+  <a href="{buildURLByPageId(previousPageId)}" class="{getPrevClass()}" data-pageId="{getPreviousPageId()}"><span>{t(#Prev#)}</span></a>
   <div class="input"><input type="text" name="pageId" value="{preprocessPageId(pageId)}" class="page-length" /></div>
-  <a href="{buildURLByPageId(nextPageId)}" class="{getNextClass()}"><span>{t(#Next#)}</span></a>
-  <div IF="!isLastPage()" class="last"><span>&hellip;</span><a href="{buildURLByPageId(lastPageId)}">{preprocessPageId(lastPageId)}</a></div>
+  <a href="{buildURLByPageId(nextPageId)}" class="{getNextClass()}" data-pageId="{getNextPageId()}"><span>{t(#Next#)}</span></a>
+  <div class="last"><span class="prefix">{t(#of#)}</span><a IF="!isLastPage()" href="{buildURLByPageId(lastPageId)}" data-pageId="{getLastPageId()}">{preprocessPageId(lastPageId)}</a><span IF="isLastPage()" class="page">{preprocessPageId(lastPageId)}</span></div>
 </div>
 
 <div class="right">

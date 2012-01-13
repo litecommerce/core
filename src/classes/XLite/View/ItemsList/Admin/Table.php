@@ -35,11 +35,12 @@ namespace XLite\View\ItemsList\Admin;
  */
 abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
 {
-    const COLUMN_NAME     = 'name';
-    const COLUMN_TEMPLATE = 'template';
-    const COLUMN_CLASS    = 'class';
-    const COLUMN_CODE     = 'code';
-    const COLUMN_LINK     = 'link';
+    const COLUMN_NAME          = 'name';
+    const COLUMN_TEMPLATE      = 'template';
+    const COLUMN_CLASS         = 'class';
+    const COLUMN_CODE          = 'code';
+    const COLUMN_LINK          = 'link';
+    const COLUMN_METHOD_SUFFIX = 'methodSuffix';
 
     /**
      * Columns (local cache)
@@ -113,6 +114,7 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
 
             foreach ($this->defineColumns() as $idx => $column) {
                 $column[static::COLUMN_CODE] = $idx;
+                $column[static::COLUMN_METHOD_SUFFIX] = \XLite\Core\Converter::convertToCamelCase($column[static::COLUMN_CODE]);
                 if (!isset($column[static::COLUMN_TEMPLATE]) && !isset($column[static::COLUMN_CLASS])) {
                     $column[static::COLUMN_TEMPLATE] = 'items_list/model/table/field.tpl';
                 }
@@ -143,8 +145,15 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
      */
     protected function getColumnValue(array $column, \XLite\Model\AEntity $entity)
     {
-        $value = $entity->{$column[static::COLUMN_CODE]};
+        $suffix = $column[static::COLUMN_METHOD_SUFFIX];
 
+        // Getter
+        $method = 'get' . $suffix . 'ColumnValue';
+        $value = method_exists($this, $method)
+            ? $this->$method($entity)
+            : $entity->{$column[static::COLUMN_CODE]};
+
+        // Preprocessing
         $method = 'preprocess' . \XLite\Core\Converter::convertToCamelCase($column[static::COLUMN_CODE]);
         if (method_exists($this, $method)) {
 
@@ -153,6 +162,29 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
         }
 
         return $value;
+    }
+
+    /**
+     * Get field classes list (only inline-based form fields)
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getFieldClasses()
+    {
+        $list = array();
+
+        foreach ($this->getColumns() as $column) {
+            if (
+                isset($column[static::COLUMN_CLASS])
+                && is_subclass_of($column[static::COLUMN_CLASS], 'XLite\View\FormField\Inline\AInline')
+            ) {
+                $list[] = $column[static::COLUMN_CLASS];
+            }
+        }
+
+        return $list;
     }
 
     /**
@@ -168,6 +200,18 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
     }
 
     // {{{ Content helpers
+
+    /**
+     * Get container class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getContainerClass()
+    {
+        return parent::getContainerClass() . ' items-list-table';
+    }
 
     /**
      * Get head class 
@@ -195,7 +239,24 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
      */
     protected function getColumnClass(array $column, \XLite\Model\AEntity $entity)
     {
-        return 'cell ' . $column[static::COLUMN_CODE];
+        return 'cell '
+            . $column[static::COLUMN_CODE]
+            . ($this->hasColumnAttantion($column, $entity) ? ' attention' : '');
+    }
+
+    /**
+     * Check - has specified column attantion or not
+     *
+     * @param array                $column Column
+     * @param \XLite\Model\AEntity $entity Model
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function hasColumnAttantion(array $column, \XLite\Model\AEntity $entity)
+    {
+        return false;
     }
 
     // }}}

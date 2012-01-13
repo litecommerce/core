@@ -1,0 +1,32 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Inline for mfield common styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.15
+ */
+
+.inline-field .field {
+  display: none;
+}
+
+.edit-open-mark .inline-field .view {
+  display: none;
+}
+
+.edit-open-mark .inline-field .field {
+  display: block;
+}
+
+.edit-mark .inline-field.editable .view {
+  background-color: #fffade;
+  cursor: pointer;
+}
+
+.inline-field .field .wheel-mark {
+  margin-right: 0px;
+}

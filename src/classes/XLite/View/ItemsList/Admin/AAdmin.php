@@ -53,6 +53,277 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     protected $hightlightStep = 2;
 
     /**
+     * Error messages 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.15
+     */
+    protected $errorMessages = array();
+
+    /**
+     * Request data 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.15
+     */
+    protected $requestData;
+
+    /**
+     * Inline fields 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.15
+     */
+    protected $inlineFields;
+
+    // {{{ Model processed
+
+    /**
+     * Get field classes list (only inline-based form fields)
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    abstract protected function getFieldClasses();
+
+    /**
+     * Process
+     * 
+     * @return boolean}integer
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function process()
+    {
+        $result = true;
+
+        if ($this->isActiveModelProcessing()) {
+            $result = $this->validate();
+
+            if ($result) {
+                $result = $this->save();
+
+            } else {
+                $this->processErrors();
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check - moel processing is active or not
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isActiveModelProcessing()
+    {
+        return $this->hasResults() && $this->getFieldClasses();
+    }
+
+    /**
+     * Validate data
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function validate()
+    {
+        $validated = true;
+
+        foreach ($this->getInlineFields() as $field) {
+            $validated = $this->validateCell($field) && $validated;
+        }
+
+        return $validated;
+    }
+
+    /**
+     * Save data
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function save()
+    {
+        $count = 0;
+
+        foreach ($this->getInlineFields() as $field) {
+            $count++;
+            $this->saveCell($field);
+        }
+
+        return $count;
+    }
+
+    /**
+     * Process errors 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function processErrors()
+    {
+        \XLite\Core\TopMessage::getInstance()->addBatch($this->getErrorMessages(), \XLite\Core\TopMessage::ERROR);
+
+        // Run controller's method
+        $this->setActionError();
+    }
+
+    /**
+     * Validate inline field
+     *
+     * @param \XLite\View\FormField\Inline\AInline $inline Inline field
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function validateCell(\XLite\View\FormField\Inline\AInline $inline)
+    {
+        $inline->getField()->setValue($inline->getFieldDataFromRequest($this->getRequestData()));
+        list($flag, $message) = $inline->getField()->validate();
+        if (!$flag) {
+            $this->addErrorMessage($inline, $message);
+        }
+
+        return $flag;
+    }
+
+    /**
+     * Save cell 
+     * 
+     * @param \XLite\View\FormField\Inline\AInline $inline Inline field
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function saveCell(\XLite\View\FormField\Inline\AInline $inline)
+    {
+        $inline->saveValue();
+    }
+
+    /**
+     * Get inline fields 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getInlineFields()
+    {
+        if (!isset($this->inlineFields)) {
+            $this->inlineFields = $thid->defineInlineFields();
+        }
+
+        return $this->inlineFields;
+    }
+
+    /**
+     * Define inline fields 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function defineInlineFields()
+    {
+        $list = array();
+
+        foreach ($this->getPageData() as $entity) {
+            foreach ($this->getFieldClasses() as $class) {
+                $list[] = $this->getInlineField($class, $entity);
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get inline field 
+     * 
+     * @param string               $class  Class
+     * @param \XLite\Model\AEntity $entity Entity
+     *  
+     * @return \XLite\View\FormField\Inline\AInline
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getInlineField($class, \XLite\Model\AEntity $entity)
+    {
+        return new $class(array('entity' => $entity));
+    }
+
+    /**
+     * Get request data 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getRequestData()
+    {
+        if (!isset($this->requestData)) {
+            $this->requestData = $this->defineRequestData();
+        }
+
+        return $this->requestData;
+    }
+
+    /**
+     * Define request data 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function defineRequestData()
+    {
+        return \XLite\Core\Request::getInstance()->getData();
+    }
+
+    /**
+     * Add error message 
+     * 
+     * @param \XLite\View\Inline\AInline $inline  Inline field
+     * @param string                     $message message
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function addErrorMessage(\XLite\View\Inline\AInline $inline, $message)
+    {
+        $this->errorMessages[] = $inline->getField()->getLabel() . ': ' . $message;
+    }
+
+    /**
+     * Get error messages 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getErrorMessages()
+    {
+        return $this->errorMessages;
+    }
+
+    // }}}
+
+    // {{{ Content helpers
+
+    /**
      * Get a list of CSS files
      *
      * @return array
@@ -107,7 +378,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      */
     protected function defineLineClass($index, \XLite\Model\AEntity $entity)
     {
-        $classes = array();
+        $classes = array('line');
 
         if (0 === $index) {
             $classes[] = 'first';
@@ -184,6 +455,23 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     {
         return \XLite\Core\Converter::buildURL($column[static::COLUMN_LINK], '', array('id' => $entity->getUniqueIndetifier()));
     }
+
+    /**
+     * Get container class 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getContainerClass()
+    {
+        return 'items-list'
+            . ' widgetclass-' . $this->getWidgetClass()
+            . ' widgettarget-' . $this->getWidgetTarget()
+            . ' sessioncell-' . $this->getSessionCell();
+    }
+
+    // }}}
 
     // {{{ Line behaviors
 
@@ -264,5 +552,6 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     }
 
     // }}}
+
 }
 

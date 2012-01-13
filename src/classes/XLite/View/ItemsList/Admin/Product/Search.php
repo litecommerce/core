@@ -78,6 +78,22 @@ class Search extends \XLite\View\ItemsList\Admin\Table
     }
 
     /**
+     * Get a list of CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = $this->getDir() . '/' . $this->getPageBodyDir() . '/product/style.css';
+
+        return $list;
+    }
+
+    /**
      * Define columns structure
      *
      * @return array
@@ -88,14 +104,19 @@ class Search extends \XLite\View\ItemsList\Admin\Table
     {
         return array(
             'sku' => array(
-                static::COLUMN_NAME => \XLite\Core\Translation::lbl('SKU'),
+                static::COLUMN_NAME  => \XLite\Core\Translation::lbl('SKU'),
             ),
             'name' => array(
-                static::COLUMN_NAME => \XLite\Core\Translation::lbl('Name'),
-                static::COLUMN_LINK => 'product',
+                static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Product Name'),
+                static::COLUMN_LINK  => 'product',
             ),
             'price' => array(
-                static::COLUMN_NAME => \XLite\Core\Translation::lbl('Price'),
+                static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Price'),
+                static::COLUMN_CLASS => 'XLite\View\FormField\Inline\Input\Text\Price\Product',
+            ),
+            'qty' => array(
+                static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Qty'),
+                static::COLUMN_CLASS => 'XLite\View\FormField\Inline\Input\Text\Integer\ProductQuantity',
             ),
         );
     }
@@ -257,6 +278,55 @@ class Search extends \XLite\View\ItemsList\Admin\Table
         return 'Search result';
     }
 
+    /**
+     * Get container class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getContainerClass()
+    {
+        return parent::getContainerClass() . ' products';
+    }
+
+    /**
+     * Get column cell class
+     *
+     * @param array                $column Column
+     * @param \XLite\Model\AEntity $entity Model
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getColumnClass(array $column, \XLite\Model\AEntity $entity)
+    {
+        $class = parent::getColumnClass($column, $entity);
+
+        if ('qty' == $column[static::COLUMN_CODE] && !$entity->getInventory()->getEnabled()) {
+            $class .= ' infinity';
+        }
+
+        return $class;
+    }
+
+    /**
+     * Check - has specified column attantion or not
+     *
+     * @param array                $column Column
+     * @param \XLite\Model\AEntity $entity Model
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function hasColumnAttantion(array $column, \XLite\Model\AEntity $entity)
+    {
+        return parent::hasColumnAttantion($column, $entity)
+            || ('qty' == $column[static::COLUMN_CODE] && $entity->getInventory()->isLowLimitReached());
+    }
+
     // }}}
 
     // {{{ Behavoirs
@@ -286,5 +356,6 @@ class Search extends \XLite\View\ItemsList\Admin\Table
     }
 
     // }}}
+
 }
 

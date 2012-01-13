@@ -13,7 +13,7 @@
 <widget template="common/dialog.tpl" body="product/search.tpl" />
 
 {* Open <form ...> tag *}
-<widget class="\XLite\View\Form\Product\Modify\Batch" name="products_form" />
+<widget class="\XLite\View\Form\ItemsList\Product\Main" name="products_form" />
 
   {* List of products *}
   <widget class="\XLite\View\ItemsList\Admin\Product\Search" />

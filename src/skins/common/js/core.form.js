@@ -662,7 +662,7 @@ CommonElement.prototype.markAsWheelControlled = function()
   }
 
   jQuery(document.createElement('span'))
-    .addClass('wheel-mark').html('&nbsp;&nbsp;&nbsp;&nbsp;')
+    .addClass('wheel-mark').html('&nbsp;')
     .insertAfter(this.$element);
 
   this.$element.addClass('wheel-mark-input');

@@ -36,6 +36,18 @@ namespace XLite\View\Pager\Admin\Model;
 class Table extends \XLite\View\Pager\Admin\Model\AModel
 {
     /**
+     * Get items per page (default)
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getItemsPerPageDefault()
+    {
+        return 25;
+    }
+
+    /**
      * getDir
      *
      * @return string

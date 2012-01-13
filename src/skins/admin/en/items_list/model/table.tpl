@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<div IF="hasResults()" class="items-list items-list-table widgetclass-{getWidgetClass()} widgettarget-{getWidgetTarget()} sessioncell-{getSessionCell()}">
+<div IF="hasResults()" class="{getContainerClass()}">
 
   <div IF="isHeaderVisible()" class="list-header">
     <div FOREACH="getTopActions(),tpl"><widget template="{tpl:h}"></div>

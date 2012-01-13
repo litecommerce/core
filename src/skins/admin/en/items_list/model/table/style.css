@@ -44,6 +44,12 @@
   line-height: 20px;
 }
 
+.items-list-table table.list tbody td .view,
+.items-list-table table.list tbody td .view *
+{
+  font-size: 16px;
+}
+
 .items-list-table table.list tbody td * {
   vertical-align: middle;
 }
@@ -69,4 +75,22 @@
   color: #456583;
 }
 
+.items-list-table table.list tbody td.attention,
+.items-list-table table.list tbody td.attention .view,
+.items-list-table table.list tbody td.attention .view *
+{
+  color: #d91a1a;
+}
+
+.items-list-table table.list tbody tr.line.remove-mark {
+  opacity: .3;
+}
+
+.items-list-table table.list tbody .inline-field .field input,
+.items-list-table table.list tbody .inline-field .field select,
+.items-list-table table.list tbody .inline-field .field textarea,
+.items-list-table table.list tbody .inline-field .field span.text
+{
+  font-size: 16px;
+}
 
