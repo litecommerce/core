@@ -10,6 +10,6 @@
  * @since     1.0.14
  *}
 
-<li class="row">
+<li class="row {getRowCSSClass()}">
   <div class="container">{displayViewListContent(#draggableRows.row#)}</div>
 </li>

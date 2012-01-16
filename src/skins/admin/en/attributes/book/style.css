@@ -10,6 +10,16 @@
  * @since     1.0.14
  */
 
+ul.draggable-rows li.row
+{
+  height: 150px;
+}
+
+ul.draggable-rows li.row.boolean
+{
+  height: 100px;
+}
+
 div.group.hidden,
 div.attribute.hidden
 {
@@ -44,4 +54,14 @@ div.group-attributes
 table.attribute-properties
 {
   clear: both;
+}
+
+table.attribute-properties div.additional-properties
+{
+  display: inline;
+}
+
+.row-to-delete
+{
+  background-color: #eee;
 }

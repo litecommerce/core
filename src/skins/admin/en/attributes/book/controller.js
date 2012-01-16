@@ -12,9 +12,25 @@
 
 jQuery().ready(
   function() {
-    jQuery('div.group .delete').click(
+    jQuery('div.group .delete.group').click(
       function () {
-        jQuery(this).closest('li.row').css('background-color', 'red');
+        var row = jQuery(this).closest('li.row');
+        var box = jQuery(this).children('input[name*="toDelete"]');
+
+        row.toggleClass('row-to-delete');
+        row.find('div.group-attributes').toggleClass('row-to-delete');
+
+        box.val(true == box.val() ? 0 : 1);
+      }
+    );
+
+    jQuery('div.group .delete.attribute').click(
+      function () {
+        var row = jQuery(this).closest('li.row');
+        var box = jQuery(this).children('input[name*="toDelete"]');
+
+        row.toggleClass('row-to-delete');
+        box.val(true == box.val() ? 0 : 1);
       }
     );
   }

@@ -87,6 +87,18 @@ abstract class ARow extends \XLite\View\AView
     }
 
     /**
+     * Return CSS class for the row
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getRowCSSClass()
+    {
+        return '';
+    }
+
+    /**
      * Get name for data field
      *
      * @param string  $field Field name

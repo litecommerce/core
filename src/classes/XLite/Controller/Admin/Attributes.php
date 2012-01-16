@@ -41,6 +41,20 @@ class Attributes extends \XLite\Controller\Admin\AAdmin
     const FIELD_ATTRS = 'attributes';
 
     /**
+     * Check if there is the "default" field in attribute
+     *
+     * @param \XLite\Model\Attribute $attribute Attribute to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function hasAttributeDefaultValue(\XLite\Model\Attribute $attribute)
+    {
+        return in_array(array('Number', 'Text', 'Selector'), $attribute->getTypeName());
+    }
+
+    /**
      * Return the current page title
      *
      * @return string
@@ -61,75 +75,116 @@ class Attributes extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionSave()
     {
-        $groupObjectsToInsert = $attrObjectsToInsert = array();
-        $groupObjectsToUpdate = $attrObjectsToUpdate = array();
+        $objects = array(
+            'insert' => array(),
+            'update' => array(),
+            'delete' => array(),
+        );
 
         foreach ($this->getPostedData() as $groupId => $groupData) {
-            $group = \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->find($groupId);
-            $title = \Includes\Utils\ArrayManager::getIndex($groupData, 'title');
+            $groupId = intval($groupId);
+            $group   = null;
+            $title   = \Includes\Utils\ArrayManager::getIndex($groupData, 'title');
 
-            if (isset($group) || isset($title)) {
+            if (0 < $groupId) {
+                $group = \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->find($groupId);
 
-                if (!isset($group)) {
-                    $group = new \XLite\Model\Attribute\Group();
-                    $groupObjectsToInsert[] = $group;
+                if (isset($group)) {
+                    if (\Includes\Utils\ArrayManager::getIndex($groupData, $this->getPrefixToDelete())) {
+                        $objects['delete']['group'][] = $group;
+                        continue;
+
+                    } elseif (empty($title)) {
+                        return \XLite\Core\TopMessage::addError(
+                            'Empty title for group "{{group}"',
+                            array('group' => $group->getTitle())
+                        );
+
+                    } else {
+                        $objects['update']['group'][] = $group;
+                    }
 
                 } else {
-                    $groupObjectsToUpdate[] = $group;
+                    return \XLite\Core\TopMessage::addError('Unknown group ID: {{id}}', array('id' => $groupId));
                 }
+
+            } elseif (!empty($title)) {
+                $group = new \XLite\Model\Attribute\Group();
+                $objects['insert']['group'][] = $group;
+            }
+
+            if (isset($group)) {
+                $group->setTitle($title);
 
                 if (!empty($groupData['pos'])) {
                     $group->setPos($groupData['pos']);
-                }
-
-                if (!empty($title)) {
-                    $group->setTitle($title);
-
-                } else {
-                    return \XLite\Core\TopMessage::addError('Empty title for group');
                 }
             }
 
             $attributes = (array) \Includes\Utils\ArrayManager::getIndex($groupData, static::FIELD_ATTRS);
 
             foreach ($attributes as $attrId => $attrData) {
-                $attr = \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->find($attrId);
+                $attrId = intval($attrId);
+                $attr   = null;
+                $title  = \Includes\Utils\ArrayManager::getIndex($attrData, 'title');
 
-                if (!isset($attr)) {
+                if (0 < $attrId) {
+                    $attr = \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->find($attrId);
+
+                    if (isset($attr)) {
+                        if (\Includes\Utils\ArrayManager::getIndex($attrData, $this->getPrefixToDelete())) {
+                            $objects['delete']['attr'][] = $attr;
+                            continue;
+
+                        } elseif (empty($title)) {
+                            return \XLite\Core\TopMessage::addError(
+                                'Empty title for attribute "{{attr}"',
+                                array('attr' => $attr->getTitle())
+                            );
+
+                        } else {
+                            $objects['update']['attr'][] = $attr;
+                        }
+
+                    } else {
+                        return \XLite\Core\TopMessage::addError('Unknown attribute ID: {{id}}', array('id' => $attributeId));
+                    }
+
+                } elseif (!empty($title)) {
                     $attr = new \XLite\Model\Attribute();
-                    $attrObjectsToInsert[] = $attr;
-
-                } else {
-                    $attrObjectsToUpdate[] = $attr;
+                    $objects['insert']['attr'][] = $attr;
                 }
 
-                if (!empty($attrData['name'])) {
-                    $attr->setName($attrData['name']);
+                if (isset($attr)) {
+                    $attr->setTitle($title);
 
-                } else {
-                    return \XLite\Core\TopMessage::addError('Empty identifier for attribute');
+                    if (!empty($attrData['name'])) {
+                        $attr->setName($attrData['name']);
+
+                    } else {
+                        return \XLite\Core\TopMessage::addError(
+                            'Empty identifier for attribute "{{attr}}"',
+                            array('attr' => $attr->getTitle())
+                        );
+                    }
+
+                    if (!empty($attrData['pos'])) {
+                        $attr->setPos($attrData['pos']);
+                    }
+
+                    if (isset($group)) {
+                        $attr->setGroup($group);
+                    }
                 }
-
-                if (!empty($attrData['pos'])) {
-                    $attr->setPos($attrData['pos']);
-                }
-
-                if (!empty($attrData['title'])) {
-                    $attr->setTitle($attrData['title']);
-
-                } else {
-                    return \XLite\Core\TopMessage::addError('Empty title for attribute');
-                }
-
-                $attr->setGroup($group);
             }
         }
 
-        \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->insertInBatch($groupObjectsToInsert);
-        \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->insertInBatch($attrObjectsToInsert);
-
-        \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->updateInBatch($groupObjectsToUpdate);
-        \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->updateInBatch($attrObjectsToUpdate);
+        foreach ($objects as $operation => $tmp) {
+            foreach ($tmp as $type => $data) {
+                \XLite\Core\Database::getRepo('\XLite\Model\Attribute' . ('group' === $type ? '\Group' : ''))
+                    ->{$operation . 'InBatch'}($data);
+            }
+        }
 
         \XLite\Core\TopMessage::addInfo('Groups and attributes have been sucessfully saved');
     }

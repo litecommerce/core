@@ -38,4 +38,36 @@ namespace XLite\Model\Attribute\Type;
  */
 class Number extends \XLite\Model\Attribute
 {
+    /**
+     * Number of digits after decimal point
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.16
+     *
+     * @Column (type="integer")
+     */
+    protected $decimals = 0;
+
+    /**
+     * Unit suffix
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.16
+     *
+     * @Column (type="string", length="8")
+     */
+    protected $unit;
+
+    /**
+     * Default value
+     *
+     * @var   float
+     * @see   ____var_see____
+     * @since 1.0.16
+     *
+     * @Column (type="decimal", precision="14", scale="4")
+     */
+    protected $default;
 }

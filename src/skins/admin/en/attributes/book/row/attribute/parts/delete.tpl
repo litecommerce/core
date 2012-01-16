@@ -12,6 +12,6 @@
  * @ListChild (list="attributes.book.row.attribute", weight="200")
  *}
 
-<div IF="!isNew()" class="delete">
+<div IF="!isNew()" class="delete attribute">
   <input type="hidden" name="{getBoxName(#toDelete#)}" value="{#0#}" />
 </div>

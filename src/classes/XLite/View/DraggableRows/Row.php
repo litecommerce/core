@@ -129,4 +129,16 @@ class Row extends \XLite\View\AView
     {
         $this->getInternalWidget()->display();
     }
+
+    /**
+     * Return CSS class for the row
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getRowCSSClass()
+    {
+        return $this->getInternalWidget()->getRowCSSClass();
+    }
 }

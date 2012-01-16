@@ -39,6 +39,17 @@ namespace XLite\Model\Attribute\Type;
 class Selector extends \XLite\Model\Attribute
 {
     /**
+     * Attribute default value
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.15
+     *
+     * @Column (type="integer")
+     */
+    protected $default;
+
+    /**
      * Relation to attribute choices (only for "Selector" type)
      *
      * @var   \Doctrine\ORM\PersistentCollection

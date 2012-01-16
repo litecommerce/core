@@ -67,6 +67,18 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     }
 
     /**
+     * Return CSS class for the row
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getRowCSSClass()
+    {
+        return strtolower($this->getAttributeTypeName());
+    }
+
+    /**
      * Return widget template path
      *
      * @return string
@@ -181,6 +193,54 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     }
 
     /**
+     * Get specific param for the "Number" attributes
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAttributeDecimals()
+    {
+        return 'Number' === $this->getAttributeTypeName() ? $this->getAttribute()->getDecimals() : 0;
+    }
+
+    /**
+     * Get specific param for the "Number" attributes
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAttributeUnit()
+    {
+        return 'Number' === $this->getAttributeTypeName() ? $this->getAttribute()->getUnit() : 0;
+    }
+
+    /**
+     * Get specific param for the "Selector" attributes
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAttributeChoices()
+    {
+        return 'Selector' === $this->getAttributeTypeName() ? $this->getAttribute()->getChoices() : array();
+    }
+
+    /**
+     * Get specific param for some attribute types
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAttributeDefaultValue()
+    {
+        return $this->hasAttributeDefaultValue($this->getAttribute()) ? $this->getAttribute()->getDefault() : null;
+    }
+
+    /**
      * Return name for the box of attribute field
      *
      * @param string $field Field name
@@ -192,5 +252,46 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     protected function getBoxName($field)
     {
         return $this->getNamePostedData($field, $this->getRowUniqueId()); 
+    }
+
+    /**
+     * Return list of allowed attribute types
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAttributeTypes()
+    {
+        return array(
+            'Text'     => 'Text field',
+            'Number'   => 'Number',
+            'Selector' => 'Selector',
+            'Boolean'  => 'Checkbox',
+        );
+    }
+
+    /**
+     * Get list of "Decimal" param values for the "Number" attributes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDecimalRange()
+    {
+        return range(0, 4);
+    }
+
+    /**
+     * Get label for popup link
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getSelectorChoicesLinkTitle()
+    {
+        return static::t('{{X}} choices submited', array('X' => count($this->getAttributeChoices())));
     }
 }
