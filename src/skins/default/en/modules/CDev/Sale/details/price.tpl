@@ -12,7 +12,7 @@
  * @ListChild (list="product.plain_price", weight="10")
  *}
 
- <li class="sale-banner">
+ <li IF="product.getParticipateSale()" class="sale-banner">
    <div class="sale-banner-block">
      <div class="text">{t(#sale#)}</div>
      <div class="percent">{getSalePercent(product)}% off</div>
