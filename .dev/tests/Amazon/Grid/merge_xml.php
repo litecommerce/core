@@ -1,14 +1,14 @@
 <?php
 
-if (!isset($argv[1]) || !file_exists($argv[1])){
+if (!isset($argv[1]) || !file_exists($argv[1])) {
     print PHP_EOL . "You should specify phpunit logs directory!" . PHP_EOL . "Usage: php merge_xml.php <logs_directory>" . PHP_EOL;
     die(1);
 }
 
 $dirname = $argv[1];
-collect_xml_output($dirname);
+collectXmlOutput($dirname);
 
-function collect_xml_output($dirname)
+function collectXmlOutput($dirname)
 {
     $dirname = realpath($dirname);
     $dirname = rtrim($dirname, '/');
@@ -43,9 +43,9 @@ function collect_xml_output($dirname)
         $writer->writeAttribute('errors', $errors);
         $writer->writeAttribute('time', $time);
 
-        foreach (glob("$dirname/phpunit*.xml") as $filename) {
+        foreach (glob("$dirname/phpunit.*.xml") as $filename) {
             print $filename;
-            merge_xml($writer, $filename);
+            mergeXml($writer, $filename);
         }
 
         $writer->endElement();
@@ -55,18 +55,25 @@ function collect_xml_output($dirname)
     }
 }
 
-function merge_xml(XMLWriter $xmlWriter, $fileName)
+function mergeXml(XMLWriter $xmlWriter, $fileName)
 {
-    $reader = new XMLReader();
-    $reader->open($fileName);
+    if (filesize($fileName) == 0)
+        return;
+    try {
+        $reader = new XMLReader();
+        $reader->open($fileName);
 
-    while ($reader->read()) {
-        if ($reader->name == 'testsuite') {
-            if (strpos($reader->getAttribute('name'), 'AllTests')) {
-                $xmlWriter->writeRaw($reader->readInnerXml());
-                break;
+        while ($reader->read()) {
+            if ($reader->name == 'testsuite') {
+                if (strpos($reader->getAttribute('name'), 'AllTests')) {
+                    $xmlWriter->writeRaw($reader->readInnerXml());
+                    break;
+                }
             }
         }
+        $reader->close();
     }
-    $reader->close();
+    catch (\PEAR2\MultiErrors\Exception $ex) {
+        echo PHP_EOL . "XML Merge error: " . $ex->getMessage() . PHP_EOL;
+    }
 }
