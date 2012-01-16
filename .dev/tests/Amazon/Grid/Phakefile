@@ -95,10 +95,6 @@ task("setup", function ($app)
     $app['farms_count'] = 5;
     $app['hub_ami'] = exec("ec2-describe-images | grep lc-test-grid | cut -f2");
     $app['lc_ami'] = exec("ec2-describe-images | grep lc-server | cut -f2");
-    //$app['server_instance_type'] = 'c1.medium';
-    //$app['grid_instance_type'] = 'c1.medium';
-    //$app['server_instance_type'] = 't1.micro';
-    //$app['grid_instance_type'] = 't1.micro';
     $app['server_instance_type'] = "m1.small";
     $app['grid_instance_type'] = "m1.small";
     $app['firefox_profile'] = "/http/selenium/selenium-grid/FirefoxProfile";
@@ -393,7 +389,7 @@ group("server", function()
         print PHP_EOL . "Run parallel tests on " . $app['cloud']->server->public_dns . "...";
 
         $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']);
-        $code = $server->run("sudo ./phpunit-parallel.php --build --clients-count ". ($app['farms_count'] - 1) ."; cat /tmp/phpunit.txt", $options);
+        $code = $server->run("sudo ./phpunit-parallel.php --build --clients-count ". ($app['farms_count']) ."; cat /tmp/phpunit.txt", $options);
 
         exec('scp -i ' . $app['keypair'] . ' bitnami@' . $server->public_dns . ':/tmp/phpunit*.xml ' . $app['logdir']);
 
@@ -456,9 +452,10 @@ task('parallel_boot', 'clear', 'setup', 'hub:boot', 'server:boot', function($app
     }
 });
 
-task('deploy', 'parallel_boot', 'hub:start', 'server:config', 'server:test_deploy');
-task('parallel', 'deploy', 'rc:boot', 'rc:start', 'server:test_parallel', 'grid:shutdown');
 
-task('default', 'ec2:check_settings', 'parallel');
+task('parallel', 'parallel_boot', 'hub:start', 'server:config', 'rc:boot', 'rc:start', 'server:test_parallel', 'grid:shutdown');
+
+task('deploy', 'parallel_boot', 'hub:start', 'server:config', 'server:test_deploy');
+task('default', 'ec2:check_settings', 'deploy', 'parallel', 'rc:boot', 'rc:start', 'server:test_parallel', 'grid:shutdown');
 
 ?>

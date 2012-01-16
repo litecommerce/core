@@ -99,12 +99,14 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
     }
 
     protected function tearDown(){
+        xdebug_stop_code_coverage(false);
         if (!empty($this->orders))
             foreach($this->orders as $order)
                 $this->clearEntity($order);
         if ($this->order)
             $this->clearEntity($this->order);
         $this->order = null;
+        xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);
         parent::tearDown();
     }
 
