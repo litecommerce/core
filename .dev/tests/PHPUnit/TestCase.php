@@ -650,4 +650,13 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     }
     // }}}
 
+    /**
+     * Trace test execution time
+     * @param $msg
+     */
+    protected function traceTime($msg){
+        $time = microtime(true) - $this->start['time'];
+        print PHP_EOL . 'TRACE: ' . $msg . '... ' . $time . ' sec';
+    }
+
 }
