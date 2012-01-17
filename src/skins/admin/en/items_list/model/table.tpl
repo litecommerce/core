@@ -29,6 +29,10 @@
 
 <script type="text/javascript">
 //<![CDATA[
-  new TableItemsList('{getSessionCell()}', {getURLParamsJS():h}, {getURLAJAXParamsJS():h});
+jQuery().ready(
+  function() {
+    new TableItemsList('{getSessionCell()}', {getURLParamsJS():h}, {getURLAJAXParamsJS():h});
+  }
+);
 //]]>
 </script>

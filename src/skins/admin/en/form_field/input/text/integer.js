@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * Price field controller
+ * Float field microcontroller
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -12,19 +12,17 @@
 
 jQuery().ready(
   function () {
-    jQuery('.inline-field.inline-price').each(
+    jQuery('input.integer').each(
       function () {
 
-        this.viewValuePattern = '.view .value';
-
-        this.sanitize = function ()
+        this.sanitizeValue = function (value)
         {
-          var input = jQuery('.field :input', this).eq(0);
+          return Math.round(value);
+        }
 
-          if (input.length) {
-            var e = input.data('e');
-            input.val(input.get(0).sanitizeValue(input.val(), e ? e : 0));
-          }
+        this.commonController.isEqualValues = function (oldValue, newValue)
+        {
+          return this.element.sanitizeValue(oldValue) == this.element.sanitizeValue(newValue);
         }
 
       }

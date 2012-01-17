@@ -121,6 +121,46 @@ class Search extends \XLite\View\ItemsList\Admin\Table
         );
     }
 
+    /**
+     * Define repository name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function defineRepositoryName()
+    {
+        return 'XLite\Model\Repo\Product';
+    }
+
+    /**
+     * Get remove message
+     *
+     * @param integer $count Count
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getRemoveMessage($count)
+    {
+        return \XLite\Core\Translation::lbl('X product(s) has been removed', array('count' => $count));
+    }
+
+    /**
+     * Get create message
+     *
+     * @param integer $count Count
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getCreateMessage($count)
+    {
+        return \XLite\Core\Translation::lbl('X product(s) has been created', array('count' => $count));
+    }
+
     // {{{ Search
 
     /**
@@ -294,13 +334,13 @@ class Search extends \XLite\View\ItemsList\Admin\Table
      * Get column cell class
      *
      * @param array                $column Column
-     * @param \XLite\Model\AEntity $entity Model
+     * @param \XLite\Model\AEntity $entity Model OPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getColumnClass(array $column, \XLite\Model\AEntity $entity)
+    protected function getColumnClass(array $column, \XLite\Model\AEntity $entity = null)
     {
         $class = parent::getColumnClass($column, $entity);
 

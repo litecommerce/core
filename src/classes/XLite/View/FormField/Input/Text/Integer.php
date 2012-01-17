@@ -42,6 +42,22 @@ class Integer extends \XLite\View\FormField\Input\Text
     const PARAM_MAX = 'max';
 
     /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'form_field/input/text/integer.js';
+
+        return $list;
+    }
+
+    /**
      * Define widget params
      *
      * @return void
@@ -164,6 +180,7 @@ class Integer extends \XLite\View\FormField\Input\Text
         $classes = parent::assembleClasses($classes);
 
         $classes[] = 'wheel-ctrl';
+        $classes[] = 'integer';
 
         return $classes;
     }

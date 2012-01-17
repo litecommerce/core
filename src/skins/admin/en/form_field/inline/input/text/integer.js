@@ -12,18 +12,14 @@
 
 jQuery().ready(
   function () {
-    jQuery('.inline-field.inline-price').each(
+    jQuery('.inline-field.inline-integer').each(
       function () {
-
-        this.viewValuePattern = '.view .value';
 
         this.sanitize = function ()
         {
           var input = jQuery('.field :input', this).eq(0);
-
           if (input.length) {
-            var e = input.data('e');
-            input.val(input.get(0).sanitizeValue(input.val(), e ? e : 0));
+            input.val(input.get(0).sanitizeValue(input.val()));
           }
         }
 

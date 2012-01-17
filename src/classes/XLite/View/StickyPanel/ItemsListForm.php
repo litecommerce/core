@@ -47,8 +47,9 @@ class ItemsListForm extends \XLite\View\Base\FormStickyPanel
         return array(
             $this->getWidget(
                 array(
-                    'style' => 'action',
-                    'label' => \XLite\Core\Translation::lbl('Save changes'),
+                    'style'    => 'action submit',
+                    'label'    => \XLite\Core\Translation::lbl('Save changes'),
+                    'disabled' => true,
                 ),
                 'XLite\View\Button\Submit'
             ),

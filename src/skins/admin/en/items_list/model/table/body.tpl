@@ -18,16 +18,24 @@
     </tr>
   </thead>
 
+  <tbody IF="isTopInlineCreation()" class="create top-create">
+    <widget tempalte="items_list/model/table/create_box.tpl" />
+  </tbody>
+
   <tbody>
     <tr FOREACH="getPageData(),idx,entity" class="{getLineClass(idx,entity)}">
       <td FOREACH="getColumns(),column" class="{getColumnClass(column,entity)}">
         {if:column.template}
           <widget template="{column.template}" idx="{idx}" entity="{entity}" column="{column}" />
         {else:}
-          <widget class="{column.class}" idx="{idx}" entity="{entity}" column="{column}" />
+          <widget class="{column.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" />
         {end:}
       </td>
     </tr>
+  </tbody>
+
+  <tbody IF="isBottomInlineCreation()" class="create bottom-create">
+    <widget tempalte="items_list/model/table/create_box.tpl" />
   </tbody>
 
 </table>

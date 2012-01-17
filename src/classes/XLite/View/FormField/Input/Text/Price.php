@@ -161,9 +161,25 @@ class Price extends \XLite\View\FormField\Input\Text\Float
         $attributes = parent::getCommonAttributes();
 
         $attributes['value'] = $this->getCurrency()->formatValue($attributes['value']);
-        $attributes['data-e'] = $this->getCurrency()->getE();
+        $e = $this->getE();
+        if (isset($e)) {
+            $attributes['data-e'] = $e;
+        }
 
         return $attributes;
     }
+
+    /**
+     * Get mantis
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getE()
+    {
+        return $this->getCurrency()->getE();
+    }
+
 }
 

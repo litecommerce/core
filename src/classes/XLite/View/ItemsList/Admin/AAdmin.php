@@ -42,6 +42,13 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     const SORT_TYPE_MOVE  = 1;
     const SORT_TYPE_INPUT = 2;
 
+    /**
+     * Create inline position
+     */
+    const CREATE_INLINE_NONE   = 0;
+    const CREATE_INLINE_TOP    = 1;
+    const CREATE_INLINE_BOTTOM = 2;
+
 
     /**
      * Hightlight step 
@@ -79,7 +86,68 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      */
     protected $inlineFields;
 
-    // {{{ Model processed
+    /**
+     * Dump entity 
+     * 
+     * @var   \XLite\Model\AEntity
+     * @see   ____var_see____
+     * @since 1.0.15
+     */
+    protected $dumpEntity;
+
+    // {{{ Fields
+
+    /**
+     * Get data prefix 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getDataPrefix()
+    {
+        return 'data';
+    }
+
+    /**
+     * Get data prefix for remove cells
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getRemoveDataPrefix()
+    {
+        return 'delete';
+    }
+
+    /**
+     * Get data prefix for new data
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getCreateDataPrefix()
+    {
+        return 'new';
+    }
+
+    /**
+     * Get self 
+     * 
+     * @return \XLite\View\ItemsList\Admin\AAdmin
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getSelf()
+    {
+        return $this;
+    }
+
+    // }}}
+
+    // {{{ Model processing
 
     /**
      * Get field classes list (only inline-based form fields)
@@ -91,6 +159,15 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     abstract protected function getFieldClasses();
 
     /**
+     * Define repository name 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    abstract protected function defineRepositoryName();
+
+    /**
      * Process
      * 
      * @return boolean}integer
@@ -99,16 +176,237 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      */
     public function process()
     {
+        $this->processRemove();
+        $this->processCreate();
+        $this->processUpdate();
+
+        \XLite\Core\Database::getEM()->flush();
+    }
+
+    /**
+     * Get repository 
+     * 
+     * @return \XLite\Model\Repo\ARepo
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getRepository()
+    {
+        return \XLite\Core\Database::getRepo($this->defineRepositoryName());
+    }
+
+    // {{{ Create
+
+    /**
+     * Get create message
+     *
+     * @param integer $count Count
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    abstract protected function getCreateMessage($count);
+
+    /**
+     * Get create field classes 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    abstract protected function getCreateFieldClasses();
+
+    /**
+     * Process create new entities
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function processCreate()
+    {
+        $count = 0;
+
+        foreach ($this->getNewDataLine() as $line) {
+
+            if ($this->isNewLineSufficient($line)) {
+                $entity = $this->createEntity();
+                $fields = $this->createInlineFields($line, $entity);
+
+                $validated = 0 < count($fields);
+                foreach ($fields as $inline) {
+                    $validated = $this->validateCell($inline) && $validated;
+                }
+
+                if ($validated) {
+                    foreach ($fields as $inline) {
+                        $this->saveCell($inline);
+                    }
+                    \XLite\Core\Database::getEM()->persist($entity);
+                    $count++;
+                }
+            }
+        }
+
+        if (0 < $count) {
+            $label = $this->getCreateMessage($count);
+            if ($label) {
+                \XLite\Core\TopMessage::getInstance()->addInfo($label);
+            }
+        }
+    }
+
+    /**
+     * Create entity 
+     * 
+     * @return \XLite\Model\AEntity
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function createEntity()
+    {
+        $entityClass = $this->defineRepositoryName();
+
+        return new $entityClass;
+    }
+
+    /**
+     * Get dump entity 
+     * 
+     * @return \XLite\Model\AEntity
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getDumpEntity()
+    {
+        if (!isset($this->dumpEntity)) {
+            $this->dumpEntity = $this->createEntity();
+        }
+
+        return $this->dumpEntity;
+    }
+
+    /**
+     * Get new data line 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getNewDataLine()
+    {
+        $data = $this->getRequestData();
+        $prefix = $this->getCreateDataPrefix();
+
+        return (isset($data[$prefix]) && is_array($data[$prefix])) ? $data[$prefix] : array();
+    }
+
+    /**
+     * Check - new line is sufficient or not
+     * 
+     * @param array $line Data line
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isNewLineSufficient(array $line)
+    {
+        return 0 < count($line);
+    }
+
+    /**
+     * Create inline fields list
+     * 
+     * @param array                $line   Line data
+     * @param \XLite\Model\AEntity $entity Entity
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function createInlineFields(array $line, \XLite\Model\AEntity $entity)
+    {
+        $list = array();
+
+        foreach ($this->getCreateFieldClasses() as $class) {
+            $list[] = $this->getInlineField($class, $entity);
+        }
+
+        return $list;
+    }
+
+    // }}}
+
+    // {{{ Remove
+
+    /**
+     * Get remove message 
+     * 
+     * @param integer $count Count
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    abstract protected function getRemoveMessage($count);
+
+    /**
+     * Process remove 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function processRemove()
+    {
+        $data = $this->getRequestData();
+        $prefix = $this->getRemoveDataPrefix();
+        $count = 0;
+
+        if (isset($data[$prefix]) && is_array($data[$prefix]) && $data[$prefix]) {
+            $repo = $this->getRepository();
+            foreach ($data[$prefix] as $id) {
+                $entity = $repo->find($id);
+                if ($entity) {
+                    $repo->remove($entity);
+                    $count++;
+                }
+            }
+        }
+
+        if (0 < $count) {
+            $label = $this->getRemoveMessage($count);
+            if ($label) {
+                \XLite\Core\TopMessage::getInstance()->addInfo($label);
+            }
+        }
+    }
+
+    // }}}
+
+    // {{{ Update
+
+    /**
+     * Process update 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function processUpdate()
+    {
         $result = true;
 
         if ($this->isActiveModelProcessing()) {
-            $result = $this->validate();
+            $result = $this->validateUpdate();
 
             if ($result) {
-                $result = $this->save();
+                $result = $this->update();
 
             } else {
-                $this->processErrors();
+                $this->processUpdateErrors();
             }
         }
 
@@ -134,7 +432,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function validate()
+    protected function validateUpdate()
     {
         $validated = true;
 
@@ -152,7 +450,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function save()
+    protected function update()
     {
         $count = 0;
 
@@ -171,7 +469,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function processErrors()
+    protected function processUpdateErrors()
     {
         \XLite\Core\TopMessage::getInstance()->addBatch($this->getErrorMessages(), \XLite\Core\TopMessage::ERROR);
 
@@ -190,7 +488,10 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      */
     protected function validateCell(\XLite\View\FormField\Inline\AInline $inline)
     {
-        $inline->getField()->setValue($inline->getFieldDataFromRequest($this->getRequestData()));
+        $value = $inline->getFieldDataFromRequest($this->getRequestData());
+        if (isset($value)) {
+            $inline->getField()->setValue($value);
+        }
         list($flag, $message) = $inline->getField()->validate();
         if (!$flag) {
             $this->addErrorMessage($inline, $message);
@@ -261,8 +562,12 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      */
     protected function getInlineField($class, \XLite\Model\AEntity $entity)
     {
-        return new $class(array('entity' => $entity));
+        return new $class(array('entity' => $entity, 'itemsList' => $this));
     }
+
+    // }}}
+
+    // {{{ Misc.
 
     /**
      * Get request data 
@@ -318,6 +623,8 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     {
         return $this->errorMessages;
     }
+
+    // }}}
 
     // }}}
 
@@ -521,6 +828,18 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     protected function isSelectable()
     {
         return false;
+    }
+
+    /**
+     * Inline creation mechanism position
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isInlineCreation()
+    {
+        return static::CREATE_INLINE_NONE;
     }
 
     /**

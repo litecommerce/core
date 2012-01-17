@@ -10,4 +10,4 @@
  * @since     1.0.15
  *}
 
-<widget class="XLite\View\Button\Switcher" enabled="{getEntityActivity(entity)}" buttonName="switch[{entity.getUniqueIndetifier():h}]" />
+<widget class="XLite\View\Button\Switcher" enabled="{getEntityActivity(entity)}" buttonName="{getDataPrefix()}[{entity.getUniqueIndetifier():h}][enabled]" />

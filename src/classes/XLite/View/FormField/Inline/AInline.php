@@ -35,7 +35,8 @@ namespace XLite\View\FormField\Inline;
  */
 abstract class AInline extends \XLite\View\AView
 {
-    const PARAM_ENTITY = 'entity';
+    const PARAM_ENTITY     = 'entity';
+    const PARAM_ITEMS_LIST = 'itemsList';
 
 
     /**
@@ -91,7 +92,8 @@ abstract class AInline extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            static::PARAM_ENTITY => new \XLite\Model\WidgetParam\Object('Entity', null, false, 'XLite\Model\AEntity'),
+            static::PARAM_ENTITY     => new \XLite\Model\WidgetParam\Object('Entity', null, false, 'XLite\Model\AEntity'),
+            static::PARAM_ITEMS_LIST => new \XLite\Model\WidgetParam\Object('Items list', null, false, 'XLite\View\ItemsList\Admin\AAdmin'),
         );
     }
 
@@ -247,7 +249,7 @@ abstract class AInline extends \XLite\View\AView
     public function getNameParts()
     {
         return array(
-            'data',
+            $this->getParam(static::PARAM_ITEMS_LIST)->getDataPrefix(),
             $this->getEntity()->getUniqueIndetifier(),
         );
     }

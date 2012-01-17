@@ -732,6 +732,11 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
 
     if (jQuery(this.element).validationEngine('validateField', '#' + this.element.id)) {
       this.element.value = oldValue;
+
+    } else {
+      this.$element.change();
+      jQuery(this.element.form).change();
+    
     }
 
     this.$element.removeClass('wrong-amount');
@@ -756,23 +761,28 @@ CommonElement.prototype.isChangedWatcher = function()
 // Check - element changed or not
 CommonElement.prototype.isChanged = function(onlyVisible)
 {
-  if (onlyVisible && !this.isVisible()) {
-    return false;
-  }
+  if (!(onlyVisible && !this.isVisible())) {
 
-  if (
-    (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['text', 'password', 'hidden']))
-    || isElement(this.element, 'select')
-    || isElement(this.element, 'textarea')
-  ) {
-    return this.element.initialValue != this.element.value;
-  }
+    if (
+      (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['text', 'password', 'hidden']))
+      || isElement(this.element, 'select')
+      || isElement(this.element, 'textarea')
+    ) {
+      return !this.isEqualValues(this.element.initialValue, this.element.value);
+    }
 
-  if (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['checkbox', 'radio'])) {
-    return this.element.initialValue != this.element.checked;
+    if (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['checkbox', 'radio'])) {
+      return !this.isEqualValues(this.element.initialValue, this.element.checked);
+    }
   }
 
   return false;
+}
+
+// Check element old value and new valies - equal or not
+CommonElement.prototype.isEqualValues = function(oldValue, newValue)
+{
+  return oldValue == newValue;
 }
 
 // Save element value as initial value

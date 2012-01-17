@@ -43,6 +43,22 @@ class Float extends \XLite\View\FormField\Input\Text
     const PARAM_E   = 'e';
 
     /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'form_field/input/text/float.js';
+
+        return $list;
+    }
+
+    /**
      * Define widget params
      *
      * @return void
@@ -166,6 +182,7 @@ class Float extends \XLite\View\FormField\Input\Text
         $classes = parent::assembleClasses($classes);
 
         $classes[] = 'wheel-ctrl';
+        $classes[] = 'float';
 
         return $classes;
     }
@@ -180,6 +197,18 @@ class Float extends \XLite\View\FormField\Input\Text
     protected function getDefaultMaxSize()
     {
         return 15;
+    }
+
+    /**
+     * Get mantis
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getE()
+    {
+        return null;
     }
 
 }

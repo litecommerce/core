@@ -36,6 +36,22 @@ namespace XLite\View\FormField\Inline\Input\Text;
 abstract class Integer extends \XLite\View\FormField\Inline\AInline
 {
     /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'form_field/inline/input/text/integer.js';
+
+        return $list;
+    }
+
+    /**
      * Define form field
      *
      * @return string
@@ -46,5 +62,18 @@ abstract class Integer extends \XLite\View\FormField\Inline\AInline
     {
         return 'XLite\View\FormField\Input\Text\Integer';
     }
+
+    /**
+     * Get container class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getContainerClass()
+    {
+        return parent::getContainerClass() . ' inline-integer';
+    }
+
 }
 

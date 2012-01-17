@@ -16,31 +16,9 @@ jQuery().ready(
     jQuery('.inline-field').each(
       function () {
 
-        // Field methods
+        // Field properties and methods
 
-        // Show field box
-        this.showField = function()
-        {
-          jQuery(this).find('.field').show();
-        }
-
-        // Hide field box
-        this.hideField = function()
-        {
-          jQuery(this).find('.field').hide();
-        }
-
-        // Show view box
-        this.showView = function()
-        {
-          jQuery(this).find('.view').show();
-        }
-
-        // Hide view box
-        this.hideView = function()
-        {
-          jQuery(this).find('.view').hide();
-        }
+        this.viewValuePattern = '.view';
 
         // Get field position into current line
         this.getPositionIntoLine = function()
@@ -72,7 +50,12 @@ jQuery().ready(
         // Save field into view
         this.saveField = function()
         {
-          jQuery(this).find('.view').html(jQuery(this).find('.field :input').eq(0).val());
+          jQuery(this).find(this.viewValuePattern).html(jQuery(this).find('.field :input').eq(0).val());
+        }
+
+        // Sanitize-and-set value into field
+        this.sanitize = function()
+        {
         }
 
         // Field input(s)
@@ -208,6 +191,7 @@ jQuery().ready(
           {
             jQuery('.inline-field', this).each( 
               function () {
+                this.sanitize();
                 this.saveField();
               }
             );

@@ -10,4 +10,4 @@
  * @since     1.0.15
  *}
 
-<div FOREACH="getButtons(),button" class="pnael-cell" >{button.display():h}</div>
+<div FOREACH="getButtons(),button" class="panel-cell" >{button.display():h}</div>

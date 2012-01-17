@@ -489,6 +489,8 @@ XLite\Model\LanguageLabel:
   - { name: 'File size exceeds the maximum size', translations: [{ code: en, label: 'File size exceeds the maximum size ({{size}})' }] }
   - { name: 'The file was not loaded because of a failure on the server', translations: [{ code: en, label: 'The file was not loaded because of a failure on the server' }] }
   - { name: 'X items available', translations: [{ code: en, label: '{{count}} items available' }] }
+  - { name: 'X product(s) has been removed', translations: [{ code: en, label: '{{count}} product(s) has been removed' }] }
+  - { name: 'X product(s) has been created', translations: [{ code: en, label: '{{count}} product(s) has been created' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

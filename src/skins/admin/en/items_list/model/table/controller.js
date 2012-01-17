@@ -18,6 +18,9 @@ function TableItemsList(cell, URLParams, URLAJAXParams)
 
 extend(TableItemsList, ItemsList);
 
+TableItemsList.prototype.form = null;
+
+// Pager listener
 TableItemsList.prototype.listeners.pager = function(handler)
 {
   jQuery('.table-pager .input input', handler.container).change(
@@ -34,7 +37,8 @@ TableItemsList.prototype.listeners.pager = function(handler)
 
 }
 
-ItemsList.prototype.listeners.pagesCount = function(handler)
+// Item per page input listener
+TableItemsList.prototype.listeners.pagesCount = function(handler)
 {
   jQuery('select.page-length', handler.container).change(
     function() {
@@ -43,4 +47,35 @@ ItemsList.prototype.listeners.pagesCount = function(handler)
   );
 }
 
+// Form listener
+TableItemsList.prototype.listeners.form = function(handler)
+{
+  var form = handler.container.parents('form').eq(0);
+
+  form.get(0).commonController.submitOnlyChanged = true;
+
+  form.change(
+    function () {
+      var form = jQuery(this);
+      var btn = form.find('button.submit');
+
+      if (this.commonController.isChanged()) {
+        form.addClass('changed');
+        btn.each(
+          function() {
+            this.enable();
+          }
+        );
+
+      } else {
+        form.removeClass('changed');
+        btn.each(
+          function() {
+            this.disable();
+          }
+        );
+      }
+    }
+  );
+}
 

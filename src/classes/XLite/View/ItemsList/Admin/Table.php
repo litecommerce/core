@@ -41,6 +41,7 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
     const COLUMN_CODE          = 'code';
     const COLUMN_LINK          = 'link';
     const COLUMN_METHOD_SUFFIX = 'methodSuffix';
+    const COLUMN_CREATE_CLASS  = 'createClass';
 
     /**
      * Columns (local cache)
@@ -188,6 +189,103 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
     }
 
     /**
+     * Get create field classes
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getCreateFieldClasses()
+    {
+        $list = array();
+
+        foreach ($this->getColumns() as $column) {
+            if (
+                isset($column[static::COLUMN_CREATE_CLASS])
+                && is_subclass_of($column[static::COLUMN_CREATE_CLASS], 'XLite\View\FormField\Inline\AInline')
+            ) {
+                $list[] = $column[static::COLUMN_CREATE_CLASS];
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get create line columns 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getCreateColumns()
+    {
+        $columns = array();
+
+        if ($this->getLeftActions()) {
+            $columns[] = array(
+                static::COLUMN_CODE     => 'actions left',
+                static::COLUMN_NAME     => '',
+                static::COLUMN_TEMPLATE => 'items_list/model/table/empty.tpl',
+            );
+        }
+
+        foreach ($this->defineColumns() as $idx => $column) {
+            if (
+                (isset($column[static::COLUMN_CREATE_CLASS]) && $column[static::COLUMN_CREATE_CLASS])
+                || (isset($column[static::COLUMN_CLASS]) && $column[static::COLUMN_CLASS])
+            ) {
+                $column[static::COLUMN_CODE] = $idx;
+                $column[static::COLUMN_METHOD_SUFFIX] = \XLite\Core\Converter::convertToCamelCase($column[static::COLUMN_CODE]);
+                if (!isset($column[static::COLUMN_CREATE_CLASS]) || !$column[static::COLUMN_CREATE_CLASS]) {
+                    $column[static::COLUMN_CREATE_CLASS] = $column[static::COLUMN_CLASS];
+                }
+                $columns[] = $column;
+
+            } else {
+                $columns[] = array(
+                    static::COLUMN_CODE => $idx,
+                    static::COLUMN_TEMPLATE => 'items_list/model/table/empty.tpl',
+                );
+            }
+        }
+
+        if ($this->getRightActions()) {
+            $columns[] = array(
+                static::COLUMN_CODE     => 'actions right',
+                static::COLUMN_NAME     => '',
+                static::COLUMN_TEMPLATE => 'items_list/model/table/empty.tpl',
+            );
+        }
+
+        return $columns;
+    }
+
+    /**
+     * List has top creation box
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isTopInlineCreation()
+    {
+        return static::CREATE_INLINE_TOP === $this->isInlineCreation();
+    }
+
+    /**
+     * List has bottom creation box
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isBottomInlineCreation()
+    {
+        return static::CREATE_INLINE_BOTTOM === $this->isInlineCreation();
+    }
+
+    /**
      * Return class name for the list pager
      *
      * @return string
@@ -231,13 +329,13 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
      * Get column cell class 
      * 
      * @param array                $column Column
-     * @param \XLite\Model\AEntity $entity Model
+     * @param \XLite\Model\AEntity $entity Model OPTIONAL
      *  
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getColumnClass(array $column, \XLite\Model\AEntity $entity)
+    protected function getColumnClass(array $column, \XLite\Model\AEntity $entity = null)
     {
         return 'cell '
             . $column[static::COLUMN_CODE]
