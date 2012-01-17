@@ -79,8 +79,8 @@ servers=
 ;   https://www.yourhost.com/
 ;
 [host_details]
-http_host = "__hostname__"
-https_host = "__hostname__"
+http_host = "_hostname_"
+https_host = "_hostname_"
 web_dir = "/xlite/src"
 
 

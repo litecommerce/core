@@ -73,9 +73,9 @@ function server_setup($app)
         'user' => 'bitnami',
         'keypair' => $app['keypair']);
     $server->run(
-        "sudo sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/config.template.php > src/etc/config.php;".
-        "sudo /etc/init.d/lc-startup;".
-        "sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/local.template.php | sed 's/_grid_hub_/" . $app['cloud']->hub->private_dns . "/g' | sed 's/_clients_count_/" . $app['farms_count'] . "/g' > .dev/tests/local.php", $options);
+        'sudo sed "s/_hostname_/' . $app["cloud"]->server->private_dns . '/g"  .dev/tests/config.template.php > src/etc/config.php;'.
+        'sudo /etc/init.d/lc-startup;'.
+        'sed "s/_hostname_/' . $app["cloud"]->server->private_dns . '/g"  .dev/tests/local.template.php | sed "s/_grid_hub_/' . $app["cloud"]->hub->private_dns . '/g" | sed "s/_clients_count_/' . $app["farms_count"] . '/g" > .dev/tests/local.php', $options);
     $options['pwd'] .= '/.dev';
     $code = $server->run("./phpunit tests/Dev_Install.php", $options);
     //if ($code != 0)
