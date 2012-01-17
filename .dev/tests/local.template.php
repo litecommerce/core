@@ -62,7 +62,7 @@ if (1 === TEST_DEPLOYMENT_MODE) {
 
 // Settings for screenshots capturing (on failed tests)
 define('SELENIUM_SCREENSHOTS_PATH', '/var/www/selenium-screenshots');
-define('SELENIUM_SCREENSHOTS_URL', 'http://_grid_hub_/selenium-screenshots');
+define('SELENIUM_SCREENSHOTS_URL', '_screenshots_url_');
 
 // Selenium server host
 define('SELENIUM_SERVER', '_grid_hub_');

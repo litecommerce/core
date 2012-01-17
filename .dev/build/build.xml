@@ -266,12 +266,16 @@
             <arg value="NOWEB" />
         </exec>
 
-        <copy file="${buildDir}/logs/phpunit.noweb.xml" todir="${buildDir}/.dev/tests/Amazon/Grid/logs" />
-        <exec executable="php" dir="${buildDir}/.dev/tests/Amazon/Grid" failonerror="on">
-            <arg value="merge_xml.php" />
-            <arg value="logs" />
-        </exec>
-        <copy file="${buildDir}/.dev/tests/Amazon/Grid/logs/phpunit.xml" todir="${buildDir}/logs/" />
+        <copy todir="${buildDir}/logs/">
+            <fileset dir="${buildDir}/.dev/tests/Amazon/Grid/logs" includes="phpunit.*.xml" />
+            <fileset dir="${buildDir}/.dev/tests/Amazon/Grid/logs/screenshots" />
+        </copy>
+        <!--<move file="${buildDir}/logs/phpunit.noweb.xml" todir="${buildDir}/.dev/tests/Amazon/Grid/logs" />-->
+        <!--<exec executable="php" dir="${buildDir}/.dev/tests/Amazon/Grid" failonerror="on">-->
+        <!--<arg value="merge_xml.php" />-->
+        <!--<arg value="logs" />-->
+        <!--</exec>-->
+        <!--<copy file="${buildDir}/.dev/tests/Amazon/Grid/logs/phpunit.xml" todir="${buildDir}/logs/" />-->
         <fail message="Tests failed">
             <condition>
                 <or>
