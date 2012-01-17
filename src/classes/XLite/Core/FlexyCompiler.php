@@ -777,7 +777,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
             $this->unsetAttributes($attrs, array('IF', 'FOREACH', 'class', 'mode'));
 
             if (empty($arguments) && (1 == count($attrs)) && isset($attrs['template'])) {
-                $result .= '$this->includeCompiledFile(' . $this->flexyAttribute($attrs['template'])  . ');';
+                $result .= '$this->display(' . $this->flexyAttribute($attrs['template'])  . ');';
 
             } else {
                 $result .= '$this->getWidget('

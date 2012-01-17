@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Attribute internal identifier note
+ * Attribute assigned info
  *  
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,13 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.14
  *
- * @ListChild (list="attributes.book.row.attribute.properties.id", weight="300")
+ * @ListChild (list="attributes.book.row.attribute.properties", weight="400")
  *}
 
-<td>({t(#must be unique and one word#):h})</td>
+<tr>
+  <td colspan="10">
+    <span>{t(#Assigned to#)}</span>
+    <a href="">{getAssignClassesLinkTitle()}</a>
+    <span IF="getAssignedProductsCount()">{getAssignedProductsInfoLabel()}</span>
+  </td>
+</tr>

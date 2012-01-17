@@ -119,16 +119,7 @@ class Book extends \XLite\View\Dialog
         $result = array();
 
         foreach ($this->getGroups() as $group) {
-            $attributes = array();
-
-            foreach ($group->getAttributes() as $attribute) {
-                $attributes[] = $this->getWidget(
-                    array(
-                        \XLite\View\Attributes\Book\Row\Attribute::PARAM_ATTRIBUTE => $attribute,
-                    ),
-                    '\XLite\View\Attributes\Book\Row\Attribute'
-                );
-            }
+            $attributes = $this->getAttributeWidgets($group->getAttributes()->toArray());
 
             $result[] = $this->getWidget(
                 array(
@@ -136,6 +127,45 @@ class Book extends \XLite\View\Dialog
                     \XLite\View\Attributes\Book\Row\Group::PARAM_ATTRIBUTES => $attributes,
                 ),
                 '\XLite\View\Attributes\Book\Row\Group'
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return list of attribute without group widgets
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getNonGroupedWidgets()
+    {
+        return $this->getAttributeWidgets(
+            \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->getNonGroupedAttributes()
+        );
+    }
+
+    /**
+     * Return list of widget-containers for attributes
+     *
+     * @param array $attributes Attributes list
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAttributeWidgets(array $attributes)
+    {
+        $result = array();
+
+        foreach ($attributes as $attr) {
+            $result[] = $this->getWidget(
+                array(
+                    \XLite\View\Attributes\Book\Row\Attribute::PARAM_ATTRIBUTE => $attr,
+                ),
+                '\XLite\View\Attributes\Book\Row\Attribute'
             );
         }
 

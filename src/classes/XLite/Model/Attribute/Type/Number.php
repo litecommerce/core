@@ -56,7 +56,7 @@ class Number extends \XLite\Model\Attribute
      * @see   ____var_see____
      * @since 1.0.16
      *
-     * @Column (type="string", length="8")
+     * @Column (type="string", length="8", nullable=true)
      */
     protected $unit;
 
@@ -67,7 +67,7 @@ class Number extends \XLite\Model\Attribute
      * @see   ____var_see____
      * @since 1.0.16
      *
-     * @Column (type="decimal", precision="14", scale="4")
+     * @Column (type="decimal", precision="14", scale="4", nullable=true)
      */
-    protected $default;
+    protected $defaultValue;
 }

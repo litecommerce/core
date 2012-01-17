@@ -43,4 +43,18 @@ class Attribute extends \XLite\Model\Repo\Base\I18n
      * @since 1.0.15
      */
     protected $defaultOrderBy = array('pos' => true);
+
+    /**
+     * Find all attributes which are not assigned to any group
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getNonGroupedAttributes()
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.group IS NULL')
+            ->getResult();
+    }
 }

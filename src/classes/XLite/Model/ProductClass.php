@@ -51,7 +51,6 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     protected $id;
 
-
     /**
      * Products
      *
@@ -63,7 +62,6 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     protected $products;
 
-
     /**
      * Shipping methods
      *
@@ -74,7 +72,6 @@ class ProductClass extends \XLite\Model\Base\I18n
      * @ManyToMany (targetEntity="XLite\Model\Shipping\Method", mappedBy="classes")
      */
     protected $shipping_methods;
-
 
     /**
      * Constructor

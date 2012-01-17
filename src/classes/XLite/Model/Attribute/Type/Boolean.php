@@ -38,4 +38,14 @@ namespace XLite\Model\Attribute\Type;
  */
 class Boolean extends \XLite\Model\Attribute
 {
+    /**
+     * Attribute default value
+     *
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.15
+     *
+     * @Column (type="boolean", nullable=true)
+     */
+    protected $defaultValue;
 }

@@ -45,7 +45,7 @@ class Text extends \XLite\Model\Attribute
      * @see   ____var_see____
      * @since 1.0.15
      *
-     * @Column (type="text")
+     * @Column (type="text", nullable=true)
      */
-    protected $default = '';
+    protected $defaultValue;
 }

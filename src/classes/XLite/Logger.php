@@ -100,28 +100,6 @@ class Logger extends \XLite\Base\Singleton
     protected $runtimeId;
 
     /**
-     * Mark templates flag
-     *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $markTemplates = false;
-
-
-    /**
-     * Check - display debug templates info or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function isMarkTemplates()
-    {
-        return self::$markTemplates;
-    }
-
-    /**
      * Constructor
      *
      * @return void
@@ -160,8 +138,6 @@ class Logger extends \XLite\Base\Singleton
         } else {
             ini_set('log_errors', 1);
         }
-
-        self::$markTemplates = (bool)\XLite::getInstance()->getOptions(array('debug', 'mark_templates'));
 
         $logger = \Log::singleton(
             $this->getType(),

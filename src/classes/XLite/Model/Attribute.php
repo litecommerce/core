@@ -42,14 +42,13 @@ namespace XLite\Model;
  * @InheritanceType     ("JOINED")
  * @DiscriminatorColumn (name="type", type="uinteger")
  * @DiscriminatorMap    ({
- *      "0" = "XLite\Model\Attribute",
  *      "1" = "XLite\Model\Attribute\Type\Number",
  *      "2" = "XLite\Model\Attribute\Type\Text",
  *      "3" = "XLite\Model\Attribute\Type\Boolean",
  *      "4" = "XLite\Model\Attribute\Type\Selector"
  * })
  */
-class Attribute extends \XLite\Model\Base\I18n
+abstract class Attribute extends \XLite\Model\Base\I18n
 {
     /**
      * Attribute unique ID
@@ -97,6 +96,21 @@ class Attribute extends \XLite\Model\Base\I18n
      * @JoinColumn (name="groupId", referencedColumnName="id")
      */
     protected $group;
+
+    /**
+     * Assigned product classes
+     *
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 1.0.16
+     *
+     * @ManyToMany (targetEntity="XLite\Model\ProductClass")
+     * @JoinTable  (name="attribute_classes",
+     *      joinColumns={@JoinColumn(name="attributeId", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="classId", referencedColumnName="id")}
+     * )
+     */
+    protected $classes;
 
     /**
      * Type identifier

@@ -12,12 +12,8 @@
 
 ul.draggable-rows li.row
 {
-  height: 150px;
-}
-
-ul.draggable-rows li.row.boolean
-{
-  height: 100px;
+  display: table;
+  width: 748px;
 }
 
 div.group.hidden,
@@ -40,9 +36,16 @@ div.group.hidden div.group-title
 
 div.group-attributes-number,
 div.attribute-type,
-div.separator.right-separator
+div.separator.right-separator,
+div.attribute-change-label
 {
   float: right;
+}
+
+div.attribute-change-label
+{
+  border: 1px solid;
+  cursor: pointer;
 }
 
 div.group-attributes
@@ -54,6 +57,12 @@ div.group-attributes
 table.attribute-properties
 {
   clear: both;
+  display: none;
+}
+
+div.attribute.hidden table.attribute-properties
+{
+  display: table;
 }
 
 table.attribute-properties div.additional-properties

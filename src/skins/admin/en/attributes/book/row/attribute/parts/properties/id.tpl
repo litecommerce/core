@@ -12,4 +12,8 @@
  * @ListChild (list="attributes.book.row.attribute.properties", weight="100")
  *}
 
-<tr>{displayViewListContent(#attributes.book.row.attribute.properties.id#)}</tr>
+<tr>
+  <td>{t(#ID#)}:</td>
+  <td><input type="text" name="{getBoxName(#name#)}" value="{getAttributeID():h}" class="attribute-id" /></td>
+  <td>({t(#must be unique and one word#):h})</td>
+</tr>

@@ -45,9 +45,9 @@ class Selector extends \XLite\Model\Attribute
      * @see   ____var_see____
      * @since 1.0.15
      *
-     * @Column (type="integer")
+     * @Column (type="integer", nullable=true)
      */
-    protected $default;
+    protected $defaultValue;
 
     /**
      * Relation to attribute choices (only for "Selector" type)

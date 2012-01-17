@@ -12,7 +12,25 @@
 
 jQuery().ready(
   function() {
-    jQuery('div.group .delete.group').click(
+    jQuery('button#new_attribute_button').click(
+      function () {
+        jQuery('div.group.hidden').hide();
+      }
+    );
+
+    jQuery('button#new_group_button').click(
+      function () {
+        jQuery('div.attribute.hidden').hide();
+      }
+    );
+
+    jQuery('div.attribute-change-label').click(
+      function () {
+        jQuery(this).nextAll('table.attribute-properties').toggle();
+      }
+    );
+
+    jQuery('div.group div.delete.group').click(
       function () {
         var row = jQuery(this).closest('li.row');
         var box = jQuery(this).children('input[name*="toDelete"]');
@@ -24,7 +42,7 @@ jQuery().ready(
       }
     );
 
-    jQuery('div.group .delete.attribute').click(
+    jQuery('div.attribute div.delete.attribute').click(
       function () {
         var row = jQuery(this).closest('li.row');
         var box = jQuery(this).children('input[name*="toDelete"]');
@@ -33,5 +51,18 @@ jQuery().ready(
         box.val(true == box.val() ? 0 : 1);
       }
     );
+
+    var typeSelector = jQuery('select[name="postedData[_][attributes][_][class]"]');
+
+    typeSelector.change(
+      function () {
+        var parentRow = jQuery(this).parents('tr');
+
+        parentRow.nextAll('tr.additional-properties').hide();
+        parentRow.nextAll('tr#' + jQuery("option:selected",this).val().toLowerCase() + '_additional').show();
+      }
+    );
+
+    typeSelector.change();
   }
 );

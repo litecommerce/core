@@ -72,24 +72,21 @@ body {
 HTML;
     }
 
-
     /**
      * Compile and display a template
      *
-     * @param string $original         Template file name OPTIONAL
-     * @param string $previousSkin     Previous skin OPTIONAL
-     * @param string $previousTemplate Previous template OPTIONAL
+     * @param string $template Template file name OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function includeCompiledFile($original = null, $previousSkin = null, $previousTemplate = null)
+    protected function display($template = null)
     {
-        if (\XLite::isAdminZone() && 'main.tpl' === basename($this->getTemplateFile($original))) {
+        if (\XLite::isAdminZone() && 'main.tpl' === basename($this->getTemplateFile($template))) {
             echo (self::getAdditionalHeader());
         }
 
-        parent::includeCompiledFile($original);
+        parent::display($template);
     }
 }

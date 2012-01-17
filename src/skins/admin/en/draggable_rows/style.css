@@ -24,7 +24,7 @@ ul.draggable-rows li.row
 
 ul.draggable-rows li.row div.container
 {
-  height: 50px;
+  clear: both;
 }
 
 ul.draggable-rows li.row div.container div.move-cursor

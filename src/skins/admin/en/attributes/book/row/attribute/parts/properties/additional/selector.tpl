@@ -12,15 +12,15 @@
  * @ListChild (list="attributes.book.row.attribute.properties", weight="300")
  *}
 
-<tr IF="#Selector#=getAttributeTypeName()">
+<tr IF="#Selector#=getAttributeTypeName()|isNew()" id="selector_additional" class="additional-properties">
   <td>&nbsp;</td>
-  <td>
+  <td colspan="10">
     <div class="additional-properties link">
       <a href="">{getSelectorChoicesLinkTitle()}</a>
     </div>
 
-    <div class="additional-properties label">{t(#Default#)}:</div>
-    <div class="additional-properties box">
+    <div IF="getAttributeChoices()" class="additional-properties label">{t(#Default#)}:</div>
+    <div IF="getAttributeChoices()" class="additional-properties box">
       <select name="{getBoxName(#default#)}">
         <option FOREACH="getAttributeChoices(),choice" value="{choice.getId()}" selected="{getAttributeDefaultValue()=choice.getId()}">{choice.getTitle()}</option>
       </select>

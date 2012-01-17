@@ -12,4 +12,4 @@
  * @ListChild (list="attributes.book.parts", weight="200")
  *}
 
-<widget class="\XLite\View\Button\Regular" label="New group" jsCode="jQuery('div.group.hidden').toggle()" />
+<widget class="\XLite\View\Button\Regular" label="New group" id="new_group_button" jsCode="jQuery('div.group.hidden').toggle()" />

@@ -12,4 +12,12 @@
  * @ListChild (list="attributes.book.row.attribute.properties", weight="200")
  *}
 
-<tr>{displayViewListContent(#attributes.book.row.attribute.properties.type#)}</tr>
+<tr>
+  <td>{t(#Type#)}:</td>
+  <td>
+    <select name="{getBoxName(#class#)}" disabled="{!isNew()}">
+      <option FOREACH="getAttributeTypes(),key,label" value="{key}" selected="{key=getAttributeTypeName()}">{t(label)}</option>
+    </select>
+  </td>
+  <td><widget class="\XLite\View\Tooltip" text="Some text" /></td>
+</tr>

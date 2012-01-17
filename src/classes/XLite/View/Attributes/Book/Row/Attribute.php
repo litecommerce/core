@@ -41,6 +41,15 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     const PARAM_ATTRIBUTE = 'attribute';
 
     /**
+     * Cache
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.16
+     */
+    protected $assignedProductsCount;
+
+    /**
      * Return row identifier
      *
      * @return void
@@ -49,7 +58,14 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     public function getRowUniqueId()
     {
-        return $this->getAttribute()->getId() ?: '_';
+        $result = '_';
+        $attr = $this->getAttribute();
+
+        if (isset($attr) && $attr->getId()) {
+            $result = $attr->getId();
+        }
+
+        return $result;
     }
 
     /**
@@ -111,7 +127,7 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     protected function getRowPosFieldValue()
     {
-        return $this->getAttribute()->getPos();
+        return ($attr = $this->getAttribute()) ? $attr->getPos() : 0;
     }
 
     /**
@@ -127,7 +143,7 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
 
         $this->widgetParams += array(
             static::PARAM_ATTRIBUTE => new \XLite\Model\WidgetParam\Object(
-                'Attribute object', new \XLite\Model\Attribute(), false, '\XLite\Model\Attribute'
+                'Attribute object', null, false, '\XLite\Model\Attribute'
             ),
         );
     }
@@ -153,7 +169,18 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     protected function getGroupId()
     {
-        return ($group = $this->getAttribute()->getGroup()) ? $group->getId() : null;
+        $result = null;
+        $attr = $this->getAttribute();
+
+        if (isset($attr)) {
+            $group = $attr->getGroup();
+
+            if (isset($group)) {
+                $result = $group->getId();
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -165,7 +192,7 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     protected function getAttributeTitle()
     {
-        return $this->getAttribute()->getTitle();
+        return ($attr = $this->getAttribute()) ? $attr->getTitle() : null;
     }
 
     /**
@@ -177,7 +204,7 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     protected function getAttributeTypeName()
     {
-        return $this->getAttribute()->getTypeName();
+        return ($attr = $this->getAttribute()) ? $attr->getTypeName() : null;
     }
 
     /**
@@ -189,7 +216,7 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     protected function getAttributeID()
     {
-        return $this->getAttribute()->getName();
+        return ($attr = $this->getAttribute()) ? $attr->getName() : null;
     }
 
     /**
@@ -201,7 +228,17 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     protected function getAttributeDecimals()
     {
-        return 'Number' === $this->getAttributeTypeName() ? $this->getAttribute()->getDecimals() : 0;
+        $result = 0;
+
+        if ('Number' === $this->getAttributeTypeName()) {
+            $attr = $this->getAttribute();
+
+            if (isset($attr)) {
+                $result = $attr->getDecimals();
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -213,7 +250,17 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     protected function getAttributeUnit()
     {
-        return 'Number' === $this->getAttributeTypeName() ? $this->getAttribute()->getUnit() : 0;
+        $result = null;
+
+        if ('Number' === $this->getAttributeTypeName()) {
+            $attr = $this->getAttribute();
+
+            if (isset($attr)) {
+                $result = $attr->getUnit();
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -225,7 +272,17 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     protected function getAttributeChoices()
     {
-        return 'Selector' === $this->getAttributeTypeName() ? $this->getAttribute()->getChoices() : array();
+        $result = array();
+
+        if ('Selector' === $this->getAttributeTypeName()) {
+            $attr = $this->getAttribute();
+
+            if (isset($attr)) {
+                $result = $attr->getChoices();
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -237,7 +294,50 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     protected function getAttributeDefaultValue()
     {
-        return $this->hasAttributeDefaultValue($this->getAttribute()) ? $this->getAttribute()->getDefault() : null;
+        $result = null;
+        $attr = $this->getAttribute();
+
+        if (isset($attr)) {
+            $result = $attr->getDefaultValue();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return classes list assigned to current attribute
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAssignedClasses()
+    {
+        return ($attr = $this->getAttribute()) ? $attr->getClasses() : array();
+    }
+
+    /**
+     * Return number of products assigned to current attribute
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAssignedProductsCount()
+    {
+        if (!isset($this->assignedProductsCount)) {
+            $this->assignedProductsCount = 0;
+            $attr = $this->getAttribute();
+
+            if ($attr) {
+                $ids = \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($attr->getClasses()->toArray(), 'getId');
+
+                $this->assignedProductsCount = \XLite\Core\Database::getRepo('\XLite\Model\Product')
+                    ->getAssignedProductsCountByClassIDs($ids);
+            }
+        }
+
+        return $this->assignedProductsCount;
     }
 
     /**
@@ -293,5 +393,29 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     protected function getSelectorChoicesLinkTitle()
     {
         return static::t('{{X}} choices submited', array('X' => count($this->getAttributeChoices())));
+    }
+
+    /**
+     * Get label for popup link
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAssignClassesLinkTitle()
+    {
+        return static::t('{{X}} product classes', array('X' => count($this->getAssignedClasses())));
+    }
+
+    /**
+     * Get the "products assigned..." label
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAssignedProductsInfoLabel()
+    {
+        return static::t('{{X}} products in total', array('X' => $this->getAssignedProductsCount()));
     }
 }

@@ -12,9 +12,9 @@
  * @ListChild (list="attributes.book.row.attribute.properties", weight="300")
  *}
 
-<tr IF="#Number#=getAttributeTypeName()">
+<tr IF="#Number#=getAttributeTypeName()|isNew()" id="number_additional" class="additional-properties">
   <td>&nbsp;</td>
-  <td>
+  <td colspan="10">
     <div class="additional-properties label">{t(#Decimals#)}:</div>
     <div class="additional-properties box">
       <select name="{getBoxName(#decimals#)}">
@@ -24,7 +24,7 @@
     
     <div class="additional-properties label">{t(#Unit#)}:</div>
     <div class="additional-properties box">
-      <input type="text" name="{getBoxName(#decimals#)}" value="{getAttributeUnit():h}" />
+      <input type="text" name="{getBoxName(#unit#)}" value="{getAttributeUnit():h}" />
     </div>
     <div class="additional-properties note">({t(#suffix#)})</div>
 

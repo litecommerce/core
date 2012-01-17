@@ -93,18 +93,16 @@ abstract class Autoloader
     }
 
     /**
-     * Common autoloader
+     * Main LC autoloader
      *
-     * @param string $namespace namespace to check
-     * @param string $class     class to load
-     * @param string $dir       path to the PHP files
+     * @param string $class name of the class to load
      *
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function autoloadCommon($namespace, $class, $dir)
+    public static function __lc_autoload($class)
     {
         /**
          * NOTE: it's the PHP bug: in some cases it adds or removes the leading slash. Examples:
@@ -120,25 +118,9 @@ abstract class Autoloader
          *
          * May be that issue is related: http://bugs.php.net/50731
          */
-        if (0 === strpos($class = ltrim($class, '\\'), $namespace)) {
-            include_once ($dir . str_replace('\\', LC_DS, $class) . '.php');
+        if (0 === strpos($class = ltrim($class, '\\'), LC_NAMESPACE)) {
+            include_once (static::$lcAutoloadDir . str_replace('\\', LC_DS, $class) . '.php');
         }
-    }
-
-
-    /**
-     * Main LC autoloader
-     *
-     * @param string $class name of the class to load
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function __lc_autoload($class)
-    {
-        self::autoloadCommon(LC_NAMESPACE, $class, static::$lcAutoloadDir);
     }
 
     /**
@@ -153,7 +135,23 @@ abstract class Autoloader
      */
     public static function __lc_autoload_includes($class)
     {
-        self::autoloadCommon(LC_NAMESPACE_INCLUDES, $class, LC_DIR_ROOT);
+        /**
+         * NOTE: it's the PHP bug: in some cases it adds or removes the leading slash. Examples:
+         *
+         * 1. For static call "\Includes\Decorator\Utils\CacheManager::rebuildCache()" it will remove
+         * the leading slash, and class name passed in this function will be "Includes\Decorator\Utils\CacheManager".
+         *
+         * 2. Pass class name as a string into the functions, e.g.
+         * "is_subclass_of($object, '\Includes\Decorator\Utils\CacheManager')". Then the class
+         * name will be passed into the autoloader with the leading slash - "\Includes\Decorator\Utils\CacheManager"
+         *
+         * Remove the "ltrim()" call when this issue will be resolved
+         *
+         * May be that issue is related: http://bugs.php.net/50731
+         */
+        if (0 === strpos($class = ltrim($class, '\\'), LC_NAMESPACE_INCLUDES)) {
+            include_once (LC_DIR_ROOT . str_replace('\\', LC_DS, $class) . '.php');
+        }
     }
 
     /**

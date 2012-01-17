@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.15
  *
- * @ListChild (list="attributes.book.parts", weight="600")
+ * @ListChild (list="attributes.book.parts", weight="700")
  *}
 
 <widget class="\XLite\View\Button\Submit" label="Save" />

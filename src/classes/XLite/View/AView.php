@@ -55,24 +55,6 @@ abstract class AView extends \XLite\Core\Handler
     const REPLACE       = 'replace';
 
     /**
-     * Deep count
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $countDeep = 0;
-
-    /**
-     * Level count
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $countLevel = 0;
-
-    /**
      * Widgets resources collector
      *
      * @var   array
@@ -82,13 +64,13 @@ abstract class AView extends \XLite\Core\Handler
     protected static $resources = array();
 
     /**
-     * Templates tail
+     * Profiler data
      *
      * @var   array
      * @see   ____var_see____
-     * @since 1.0.0
+     * @since 1.0.16
      */
-    protected static $tail = array();
+    protected static $profilerInfo;
 
     /**
      * isCloned
@@ -148,7 +130,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     public static function getTail()
     {
-        return \XLite\View\AView::$tail;
+        return static::$profilerInfo['tail'];
     }
 
     /**
@@ -162,13 +144,9 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function __get($name)
     {
-        $value = 'mm' == $name
-            ? \XLite\Core\Database::getRepo('\XLite\Model\Module')
-            : parent::__get($name);
+        $value = parent::__get($name);
 
-        return isset($value)
-            ? $value
-            : \XLite::getController()->$name;
+        return isset($value) ? $value : \XLite::getController()->$name;
     }
 
     /**
@@ -252,16 +230,61 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Attempts to display widget using its template
      *
+     * @param string $template Template file name OPTIONAL
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function display()
+    public function display($template = null)
     {
-        if ($this->checkVisibility()) {
-            $this->isCloned ?: $this->initView();
-            $this->includeCompiledFile();
-            $this->isCloned ?: $this->closeView();
+        $flag = isset($template);
+
+        if ($flag || $this->checkVisibility()) {
+            if (!$this->isCloned && !$flag) {
+                $this->initView();
+            }
+
+            // Body of the old includeCompiledFile() method
+            $normalized = $this->getTemplateFile($template);
+            $compiled = \XLite\Singletons::$handler->flexy->prepare($normalized);
+
+            $cnt = static::$profilerInfo['countDeep']++;
+            $cntLevel = static::$profilerInfo['countLevel']++;
+
+            if (static::$profilerInfo['isEnabled']) {
+                $timePoint = str_repeat('+', $cntLevel) . '[TPL ' . str_repeat('0', 4 - strlen((string)$cnt)) . $cnt . '] '
+                    . get_class($this) . ' :: ' . substr($template, strlen(LC_DIR_SKINS));
+                \XLite\Core\Profiler::getInstance()->log($timePoint);
+            }
+
+            if (static::$profilerInfo['markTemplates']) {
+                $template = substr($template, strlen(LC_DIR_SKINS));
+                $markTplText = get_class($this) . ' : ' . $template . ' (' . $cnt . ')'
+                    . ($this->viewListName ? ' [\'' . $this->viewListName . '\' list child]' : '');
+
+                echo ('<!-- ' . $markTplText . ' {' . '{{ -->');
+            }
+
+            static::$profilerInfo['tail'][] = $normalized;
+
+            include $compiled;
+
+            array_pop(static::$profilerInfo['tail']);
+
+            if (static::$profilerInfo['markTemplates']) {
+                echo ('<!-- }}' . '} ' . $markTplText . ' -->');
+            }
+
+            if (static::$profilerInfo['isEnabled']) {
+                \XLite\Core\Profiler::getInstance()->log($timePoint);
+            }
+
+            if (!$this->isCloned && !$flag) {
+                $this->closeView();
+            }
+
+            static::$profilerInfo['countLevel']--;
         }
     }
 
@@ -481,7 +504,7 @@ abstract class AView extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function includeCompiledFile($original = null)
+/*    protected function includeCompiledFile($original = null)
     {
         $normalized = $this->getTemplateFile($original);
         $compiled = \XLite\Singletons::$handler->flexy->prepare($normalized);
@@ -648,7 +671,7 @@ abstract class AView extends \XLite\Core\Handler
             ),
         );
 
-        if (\XLite\Logger::isMarkTemplates()) {
+        if (static::$profilerInfo['markTemplates']) {
             $list[static::RESOURCE_JS][]  = 'js/template_debuger.js';
             $list[static::RESOURCE_CSS][] = 'css/template_debuger.css';
         }
@@ -781,6 +804,14 @@ abstract class AView extends \XLite\Core\Handler
             list(, $index, ) = $data;
             static::$resources[$index] = static::getResourcesTypeSchema();
         }
+
+        static::$profilerInfo = array(
+            'isEnabled'     => \XLite\Core\Profiler::isTemplatesProfilingEnabled(),
+            'markTemplates' => (bool) \XLite::getInstance()->getOptions(array('debug', 'mark_templates')),
+            'countDeep'     => 0,
+            'countLevel'    => 0,
+            'tail'          => array(),
+        );
     }
 
     /**
@@ -795,7 +826,9 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function displayViewListContent($list, array $arguments = array())
     {
-        echo ($this->getViewListContent($list, $arguments));
+        foreach ($this->getViewList($list, $arguments) as $widget) {
+            $widget->display();
+        }
     }
 
     /**
@@ -1341,20 +1374,6 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Content postprocessing
-     *
-     * @param string $content Content
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function postprocessContent($content)
-    {
-        return $content;
-    }
-
-    /**
      * Get XPath by content
      *
      * @param string $content Content
@@ -1384,9 +1403,7 @@ abstract class AView extends \XLite\Core\Handler
     protected function getViewListContent($list, array $arguments = array())
     {
         ob_start();
-        foreach ($this->getViewList($list, $arguments) as $widget) {
-            $widget->display();
-        }
+        $this->displayViewListContent($list, $arguments);
         $content = ob_get_contents();
         ob_end_clean();
 

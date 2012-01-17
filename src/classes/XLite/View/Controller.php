@@ -46,7 +46,6 @@ class Controller extends \XLite\View\AView
      */
     public static $bodyContent = null;
 
-
     /**
      * Send headers
      *
@@ -85,11 +84,13 @@ class Controller extends \XLite\View\AView
     /**
      * Show current page and, optionally, footer
      *
+     * @param string $template Template file name OPTIONAL
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function display()
+    public function display($template = null)
     {
         if (!$this->isSilent()) {
             $this->displayPage();

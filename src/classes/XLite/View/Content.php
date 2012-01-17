@@ -40,19 +40,19 @@ class Content extends \XLite\View\AView
      */
     const BUFFER_SIZE = 8192;
 
-
     /**
      * display
+     *
+     * @param string $template Template file name OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function display()
+    public function display($template = null)
     {
-        isset(\XLite\View\Controller::$bodyContent) ? $this->echoContent() : parent::display();
+        isset(\XLite\View\Controller::$bodyContent) ? $this->echoContent() : parent::display($template);
     }
-
 
     /**
      * getBufferSize

@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Attribute type note
+ * "Change" label
  *  
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.14
  *
- * @ListChild (list="attributes.book.row.attribute.properties.type", weight="300")
+ * @ListChild (list="attributes.book.row.attribute", weight="500")
  *}
 
-<td>
-  <widget class="\XLite\View\Tooltip" text="Some text" />
-</td>
+<div IF="!isNew()" class="attribute-change-label">{t(#Change#)}</div>

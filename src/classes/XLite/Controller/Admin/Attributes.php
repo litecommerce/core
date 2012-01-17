@@ -51,7 +51,7 @@ class Attributes extends \XLite\Controller\Admin\AAdmin
      */
     public function hasAttributeDefaultValue(\XLite\Model\Attribute $attribute)
     {
-        return in_array(array('Number', 'Text', 'Selector'), $attribute->getTypeName());
+        return in_array($attribute->getTypeName(), array('Number', 'Text', 'Selector'));
     }
 
     /**
@@ -151,7 +151,17 @@ class Attributes extends \XLite\Controller\Admin\AAdmin
                     }
 
                 } elseif (!empty($title)) {
-                    $attr = new \XLite\Model\Attribute();
+                    if (empty($attrData['class'])) {
+                        return \XLite\Core\TopMessage::addError('Attribute type is not selected');
+                    }
+
+                    $class = '\XLite\Model\Attribute\Type\\' . $attrData['class'];
+
+                    if (!\Includes\Utils\Operator::checkIfClassExists($class)) {
+                        return \XLite\Core\TopMessage::addError('Unknown attribute class: {{class}}', array('class' => $class));
+                    }
+
+                    $attr = new $class();
                     $objects['insert']['attr'][] = $attr;
                 }
 
@@ -172,7 +182,19 @@ class Attributes extends \XLite\Controller\Admin\AAdmin
                         $attr->setPos($attrData['pos']);
                     }
 
-                    if (isset($group)) {
+                    $attr->setDefaultValue(\Includes\Utils\ArrayManager::getIndex($attrData, 'default'));
+
+                    switch ($attr->getTypeName()) {
+                        case 'Number':
+                            $attr->setDecimals(\Includes\Utils\ArrayManager::getIndex($attrData, 'decimals'));
+                            $attr->setUnit(\Includes\Utils\ArrayManager::getIndex($attrData, 'unit'));
+                            break;
+
+                        default:
+                            // ...
+                    }
+
+                    if (isset($group) && $group->isPersistent()) {
                         $attr->setGroup($group);
                     }
                 }

@@ -34,7 +34,6 @@ namespace XLite\Model;
  * @since 1.0.0
  *
  * @Entity
- *
  * @Table (name="product_class_translations",
  *         indexes={
  *              @Index (name="ci", columns={"code","id"}),
