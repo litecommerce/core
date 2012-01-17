@@ -72,9 +72,10 @@ function server_setup($app)
     $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite",
         'user' => 'bitnami',
         'keypair' => $app['keypair']);
-    $server->run("sudo sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  src/etc/config.template.php > src/etc/config.php", $options);
-    $server->run("sudo /etc/init.d/lc-startup", $options);
-    $server->run("sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/local.template.php | sed 's/_grid_hub_/" . $app['cloud']->hub->private_dns . "/g' | sed 's/_clients_count_/" . $app['farms_count'] . "/g' | sed 's/_screenshots_url_/". $app['screenshots_url'] ."/g'  > .dev/tests/local.php", $options);
+    $server->run(
+        "sudo sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/config.template.php > src/etc/config.php;".
+        "sudo /etc/init.d/lc-startup;".
+        "sed 's/_hostname_/" . $app['cloud']->server->private_dns . "/g'  .dev/tests/local.template.php | sed 's/_grid_hub_/" . $app['cloud']->hub->private_dns . "/g' | sed 's/_clients_count_/" . $app['farms_count'] . "/g' > .dev/tests/local.php", $options);
     $options['pwd'] .= '/.dev';
     $code = $server->run("./phpunit tests/Dev_Install.php", $options);
     //if ($code != 0)
@@ -92,16 +93,12 @@ task("setup", function ($app)
     $app['remote_control_port_range'] = array_key_exists('remote_control_port_range', $app) ? $app['remote_control_port_range'] : "5555-5555";
     $app['launch_timeout'] = array_key_exists('launch_timeout', $app) ? $app['launch_timeout'] : 240;
     $app['cloud'] = Cloud::getInstance();
-    if (!isset($app['farms_count']))
-        $app['farms_count'] = 5;
+    $app['farms_count'] = 5;
     $app['hub_ami'] = exec("ec2-describe-images | grep lc-test-grid | cut -f2");
     $app['lc_ami'] = exec("ec2-describe-images | grep lc-server | cut -f2");
     $app['server_instance_type'] = "m1.small";
     $app['grid_instance_type'] = "m1.small";
     $app['firefox_profile'] = "/http/selenium/selenium-grid/FirefoxProfile";
-
-    if (!isset($app['screenshots_url']))
-        $app['screenshots_url'] = 'http://localhost/screenshots';
 
     $app['keypair'] = getenv("EC2_KEYPAIR");
     $app['keypair_name'] = getenv("EC2_KEYPAIR_NAME");
@@ -439,9 +436,10 @@ group("server", function()
 
 });
 
-task('clear', function(){
+task('clear', function($app){
     if (file_exists('data.txt'))
         unlink('data.txt');
+    $app['time'] = microtime(true);
 });
 
 task('parallel_boot', 'clear', 'setup', 'hub:boot', 'server:boot', function($app)
@@ -459,7 +457,14 @@ task('parallel_boot', 'clear', 'setup', 'hub:boot', 'server:boot', function($app
 
 task('parallel', 'parallel_boot', 'hub:start', 'server:config', 'rc:boot', 'rc:start', 'server:test_parallel', 'grid:shutdown');
 
-task('deploy', 'parallel_boot', 'hub:start', 'server:config', 'server:test_deploy');
-task('default', 'ec2:check_settings', 'deploy', 'parallel', 'rc:boot', 'rc:start', 'server:test_parallel', 'grid:shutdown');
+task('deploy', 'parallel_boot', 'hub:start', 'server:config', 'server:test_deploy', function ($app){
+    $app['deploy_time'] = microtime(true) - $app['time'];
+    $app['time'] = microtime(true);
+});
+task('default', 'ec2:check_settings', 'deploy', 'parallel', 'rc:boot', 'rc:start', 'server:test_parallel', 'grid:shutdown', function ($app){
+    echo PHP_EOL . "TRACE:  Instance type: ". $app['grid_instance_type'];
+    echo PHP_EOL . "TRACE:  Time for deploy: ". $app['deploy_time'];
+    echo PHP_EOL . "TRACE:  Time for parallel: ". microtime(true) - $app['time'];
+});
 
 ?>
