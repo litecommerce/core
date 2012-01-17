@@ -87,6 +87,6 @@ class SaleSelected extends \XLite\Controller\Admin\AAdmin
     {
         $data = $this->getPostedData();
 
-        return array('participateSale' => (0 != $data['sale_price_value'])) + $data;
+        return array('participateSale' => (0 != $data['salePriceValue'])) + $data;
     }
 }
