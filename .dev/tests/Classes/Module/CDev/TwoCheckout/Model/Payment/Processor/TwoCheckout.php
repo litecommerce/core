@@ -54,7 +54,6 @@ class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout ex
         $this->assertFalse(is_null($order->getProfile()->getBillingAddress()), 'check billing address');
 
         $this->assertEquals(0, $order->getOpenTotal(), 'check open total');
-        $this->assertTrue($order->isOpen(), 'check open status');
 
         ob_start();
         $r = $t->handleCheckoutAction();
@@ -64,7 +63,6 @@ class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout ex
         $this->assertEquals($t::PROLONGATION, $r, 'check result');
         $this->assertEquals($t::STATUS_INPROGRESS, $t->getStatus(), 'check status');
         $this->assertEquals(0, $order->getOpenTotal(), 'check open total #2');
-        $this->assertFalse($order->isOpen(), 'check open status #2');
         $this->assertFalse($order->isPayed(), 'check payed status');
 
         $oid = $order->getOrderId();
@@ -196,13 +194,13 @@ HTML;
         \XLite\Core\Request::getInstance()->setRequestMethod('POST');
         \XLite\Core\Request::getInstance()->cart_order_id = $t->getTransactionId();
         \XLite\Core\Request::getInstance()->total = $order->getTotal();
-        
+
         \XLite\Core\Request::getInstance()->key = strtoupper(md5(
             'tango' . '260852' . $order->getOrderId() . $order->getTotal()
         ));
 
         $p->processReturn($t);
-        
+
         $this->assertEquals($t::STATUS_SUCCESS, $t->getStatus(), 'check status #2');
 
         $fields = array();
