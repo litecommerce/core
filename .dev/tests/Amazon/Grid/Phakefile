@@ -1,4 +1,6 @@
 <?php
+// vim: set ts=2 sw=2 sts=2 et ft=php:
+
 /**
  * LiteCommerce
  *
@@ -93,12 +95,16 @@ task("setup", function ($app)
     $app['remote_control_port_range'] = array_key_exists('remote_control_port_range', $app) ? $app['remote_control_port_range'] : "5555-5555";
     $app['launch_timeout'] = array_key_exists('launch_timeout', $app) ? $app['launch_timeout'] : 240;
     $app['cloud'] = Cloud::getInstance();
-    $app['farms_count'] = 5;
+    if (!isset($app['farms_count']))
+        $app['farms_count'] = 5;
     $app['hub_ami'] = exec("ec2-describe-images | grep lc-test-grid | cut -f2");
     $app['lc_ami'] = exec("ec2-describe-images | grep lc-server | cut -f2");
     $app['server_instance_type'] = "m1.small";
     $app['grid_instance_type'] = "m1.small";
     $app['firefox_profile'] = "/http/selenium/selenium-grid/FirefoxProfile";
+
+    if (!isset($app['screenshots_url']))
+        $app['screenshots_url'] = 'http://localhost/screenshots';
 
     $app['keypair'] = getenv("EC2_KEYPAIR");
     $app['keypair_name'] = getenv("EC2_KEYPAIR_NAME");
