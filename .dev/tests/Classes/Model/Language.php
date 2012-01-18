@@ -119,7 +119,6 @@ class XLite_Tests_Model_Language extends XLite_Tests_TestCase
         $l = \XLite\Core\Database::getRepo('XLite\Model\Language')
             ->findOneBy(array('code' => 'uk'));
 
-        $flag = $l->getFlagURL();
         $this->assertRegExp('/.images.flags.uk\.png$/Ss', $l->getFlagURL(), 'UK flag');
 
         $l = \XLite\Core\Database::getRepo('XLite\Model\Language')
