@@ -36,16 +36,13 @@ namespace XLite\View\FormField\Inline\Input\Text\Integer;
 class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
 {
     /**
-     * Get field name parts
+     * Short name
      *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.15
      */
-    public function getNameParts()
-    {
-        return array_merge(parent::getNameParts(), array('quantity'));
-    }
+    protected $shortName = 'quantity';
 
     /**
      * Save value
@@ -105,18 +102,6 @@ class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
     protected function getViewTemplate()
     {
         return 'form_field/inline/input/text/integer/product_quantity.tpl';
-    }
-
-    /**
-     * Get field label
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getLabel()
-    {
-        return \XLite\Core\Translation::lbl('Quantity');
     }
 
 }

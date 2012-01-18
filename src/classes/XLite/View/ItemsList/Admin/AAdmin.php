@@ -837,23 +837,33 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      * @see    ____func_see____
      * @since  1.0.15
      */
+    protected function isCreation()
+    {
+        return static::CREATE_INLINE_NONE;
+    }
+
+    /**
+     * Inline creation mechanism position
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
     protected function isInlineCreation()
     {
         return static::CREATE_INLINE_NONE;
     }
 
     /**
-     * Get entity activity
+     * Get create entity URL
      *
-     * @param \XLite\Model\AEntity $entity Entity
-     *
-     * @return boolean
+     * @return string
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getEntityActivity(\XLite\Model\AEntity $entity)
+    protected function getCreateURL()
     {
-        return $entity->getEnabled();
+        return null;
     }
 
     /**

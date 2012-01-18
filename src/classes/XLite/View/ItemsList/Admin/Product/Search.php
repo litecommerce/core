@@ -105,10 +105,12 @@ class Search extends \XLite\View\ItemsList\Admin\Table
         return array(
             'sku' => array(
                 static::COLUMN_NAME  => \XLite\Core\Translation::lbl('SKU'),
+                static::COLUMN_CREATE_CLASS => 'XLite\View\FormField\Inline\Input\Text\Product\SKU',
             ),
             'name' => array(
                 static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Product Name'),
                 static::COLUMN_LINK  => 'product',
+                static::COLUMN_CREATE_CLASS => 'XLite\View\FormField\Inline\Input\Text\Product\Name',
             ),
             'price' => array(
                 static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Price'),
@@ -130,7 +132,7 @@ class Search extends \XLite\View\ItemsList\Admin\Table
      */
     protected function defineRepositoryName()
     {
-        return 'XLite\Model\Repo\Product';
+        return 'XLite\Model\Product';
     }
 
     /**
@@ -159,6 +161,18 @@ class Search extends \XLite\View\ItemsList\Admin\Table
     protected function getCreateMessage($count)
     {
         return \XLite\Core\Translation::lbl('X product(s) has been created', array('count' => $count));
+    }
+
+    /**
+     * Get create entity URL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getCreateURL()
+    {
+        return \XLite\Core\Converter::buildUrl('add_product');
     }
 
     // {{{ Search
@@ -355,16 +369,16 @@ class Search extends \XLite\View\ItemsList\Admin\Table
      * Check - has specified column attantion or not
      *
      * @param array                $column Column
-     * @param \XLite\Model\AEntity $entity Model
+     * @param \XLite\Model\AEntity $entity Model OPTIONAL
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function hasColumnAttantion(array $column, \XLite\Model\AEntity $entity)
+    protected function hasColumnAttantion(array $column, \XLite\Model\AEntity $entity = null)
     {
         return parent::hasColumnAttantion($column, $entity)
-            || ('qty' == $column[static::COLUMN_CODE] && $entity->getInventory()->isLowLimitReached());
+            || ('qty' == $column[static::COLUMN_CODE] && $entity && $entity->getInventory()->isLowLimitReached());
     }
 
     // }}}
@@ -397,5 +411,44 @@ class Search extends \XLite\View\ItemsList\Admin\Table
 
     // }}}
 
+    // {{{ TODO - REMOVE! test purpose...
+
+    /**
+     * Mark list as sortable
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getSortableType()
+    {
+        return static::SORT_TYPE_INPUT;
+    }
+
+    /**
+     * Mark list as selectable
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isSelectable()
+    {
+        return true;
+    }
+
+    /**
+     * Inline creation mechanism position
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isInlineCreation()
+    {
+        return static::CREATE_INLINE_TOP;
+    }
+
+    // }}}
 }
 

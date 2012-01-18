@@ -10,4 +10,4 @@
  * @since     1.0.15
  *}
 
-<input type="text" name="position[{entity.getUniqueIndetifier():h}]" value="{getEntityPosition(entity)}" class="position" maxlength="10" />
+<input type="text" name="{getDataPrefix()}[{entity.getUniqueIndetifier():h}][position]" value="{getEntityPosition(entity)}" class="position" maxlength="10" />

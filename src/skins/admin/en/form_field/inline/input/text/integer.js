@@ -10,21 +10,19 @@
  * @since     1.0.15
  */
 
-jQuery().ready(
-  function () {
-    jQuery('.inline-field.inline-integer').each(
-      function () {
+CommonForm.elementControllers.push(
+  {
+    pattern: '.inline-field.inline-integer',
+    handler: function () {
 
-        this.sanitize = function ()
-        {
-          var input = jQuery('.field :input', this).eq(0);
-          if (input.length) {
-            input.val(input.get(0).sanitizeValue(input.val()));
-          }
+      this.sanitize = function ()
+      {
+        var input = jQuery('.field :input', this).eq(0);
+        if (input.length) {
+          input.val(input.get(0).sanitizeValue(input.val()));
         }
-
       }
-    );
+
+    }
   }
 );
-

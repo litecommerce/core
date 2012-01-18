@@ -101,6 +101,9 @@ function CommonForm(form)
 
 extend(CommonForm, Base);
 
+// Element controllers
+CommonForm.elementControllers = [];
+
 // Autoload class method
 CommonForm.autoload = function()
 {
@@ -162,11 +165,49 @@ CommonForm.prototype.getElements = function()
 // Bind form elements
 CommonForm.prototype.bindElements = function()
 {
+  var form = this.$form;
+
   this.getElements().each(
     function() {
-      new CommonElement(this);
+      if ('undefined' == typeof(this.commonController)) {
+        var elm = new CommonElement(this);
+
+        jQuery.each(
+          CommonForm.elementControllers,
+          function (i, controller) {
+            if ('function' == typeof(controller)) {
+
+              // Controller is function-handler
+              controller.call(elm);
+            }
+          }
+        );
+      }
     }
   );
+
+  jQuery.each(
+    CommonForm.elementControllers,
+    function (i, controller) {
+      if ('object' == typeof(controller) && 0 < form.find(controller.pattern).length) {
+
+        // Controller is { pattern: '.element', handler: function () { ... } }
+        form.find(controller.pattern).each(
+          function () {
+            if ('undefined' == typeof(this.assignedElementControllers)) {
+              this.assignedElementControllers = [];
+            }
+
+            if (-1 == jQuery.inArray(i, this.assignedElementControllers)) {
+              controller.handler.call(this);
+              this.assignedElementControllers.push(i);
+            }
+          }
+        );
+      }
+    }
+  );
+
 }
 
 // Validate form
@@ -661,9 +702,11 @@ CommonElement.prototype.markAsWheelControlled = function()
     }
   }
 
-  jQuery(document.createElement('span'))
-    .addClass('wheel-mark').html('&nbsp;')
-    .insertAfter(this.$element);
+  if (!this.$element.hasClass('no-wheel-mark')) {
+    jQuery(document.createElement('span'))
+      .addClass('wheel-mark').html('&nbsp;')
+      .insertAfter(this.$element);
+  }
 
   this.$element.addClass('wheel-mark-input');
 

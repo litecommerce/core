@@ -346,20 +346,20 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
      * Check - has specified column attantion or not
      *
      * @param array                $column Column
-     * @param \XLite\Model\AEntity $entity Model
+     * @param \XLite\Model\AEntity $entity Model OPTIONAL
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function hasColumnAttantion(array $column, \XLite\Model\AEntity $entity)
+    protected function hasColumnAttantion(array $column, \XLite\Model\AEntity $entity = null)
     {
         return false;
     }
 
     // }}}
 
-    // {{{ Top behaviors
+    // {{{ Top / bottom behaviors
 
     /**
      * Get top actions 
@@ -372,23 +372,35 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
     {
         $actions = array();
 
-        if ($this->getCreateURL()) {
+        if (static::CREATE_INLINE_TOP == $this->isCreation() && $this->getCreateURL()) {
             $actions[] = 'items_list/model/table/parts/create.tpl';
+
+        } elseif (static::CREATE_INLINE_TOP == $this->isInlineCreation()) {
+            $actions[] = 'items_list/model/table/parts/create_inline.tpl';
         }
 
         return $actions;
     }
 
     /**
-     * Get create entity URL 
-     * 
-     * @return string
+     * Get bottom actions
+     *
+     * @return array
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getCreateURL()
+    protected function getBottomActions()
     {
-        return null;
+        $actions = array();
+
+        if (static::CREATE_INLINE_BOTTOM == $this->isCreation() && $this->getCreateURL()) {
+            $actions[] = 'items_list/model/table/parts/create.tpl';
+
+        } elseif (static::CREATE_INLINE_BOTTOM == $this->isInlineCreation()) {
+            $actions[] = 'items_list/model/table/parts/create_inline.tpl';
+        }
+
+        return $actions;
     }
 
     // }}}
@@ -456,6 +468,18 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
     protected function isHeaderVisible()
     {
         return 0 < count($this->getTopActions());
+    }
+
+    /**
+     * isFooterVisible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isFooterVisible()
+    {
+        return 0 < count($this->getBottomActions());
     }
 
     /**

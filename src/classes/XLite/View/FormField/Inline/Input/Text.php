@@ -25,35 +25,39 @@
  * @since     1.0.15
  */
 
-namespace XLite\View\FormField\Inline\Input\Text\Price;
+namespace XLite\View\FormField\Inline\Input;
 
 /**
- * Product price
+ * Text
  * 
  * @see   ____class_see____
  * @since 1.0.15
  */
-class Product extends \XLite\View\FormField\Inline\Input\Text\Price
+abstract class Text extends \XLite\View\FormField\Inline\AInline
 {
     /**
-     * Short name
+     * Define form field
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.15
-     */
-    protected $shortName = 'price';
-
-    /**
-     * Get initial field parameters
-     *
-     * @return array
+     * @return string
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getFieldParams()
+    protected function defineFieldClass()
     {
-        return parent::getFieldParams() + array('min' => 0);
+        return 'XLite\View\FormField\Input\Text';
+    }
+
+    /**
+     * Get container class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getContainerClass()
+    {
+        return parent::getContainerClass() . ' inline-text';
     }
 
 }
+

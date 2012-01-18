@@ -10,34 +10,33 @@
  * @since     1.0.15
  */
 
-jQuery().ready(
-  function () {
-    jQuery('input.float').each(
-      function () {
+CommonForm.elementControllers.push(
+  {
+    pattern: '.input-field-wrapper input.float',
+    handler: function () {
 
-        this.sanitizeValue = function (value, e)
-        {
-          if (0 < e) {
-            value = Math.round(value * Math.pow(10, e)).toString();
-            value = value.substr(0, value.length - e) + '.' + value.substr(-1 * e);
+      this.sanitizeValue = function (value, e)
+      {
+        if (0 < e) {
+          value = Math.round(value * Math.pow(10, e)).toString();
+          value = value.substr(0, value.length - e) + '.' + value.substr(-1 * e);
 
-          } else {
-            value = Math.round(value);
-          }
-
-          return value;
+        } else {
+          value = Math.round(value);
         }
 
-        this.commonController.isEqualValues = function (oldValue, newValue)
-        {
-          var e = this.$element.data('e');
-          e = e ? e : 0;
-
-          return this.element.sanitizeValue(oldValue, e) == this.element.sanitizeValue(newValue, e);
-        }
-
+        return value;
       }
-    );
+
+      this.commonController.isEqualValues = function (oldValue, newValue)
+      {
+        var e = this.$element.data('e');
+        e = e ? e : 0;
+
+        return this.element.sanitizeValue(oldValue, e) == this.element.sanitizeValue(newValue, e);
+      }
+
+    }
   }
 );
 

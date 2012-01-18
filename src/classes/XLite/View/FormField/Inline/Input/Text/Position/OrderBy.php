@@ -25,35 +25,62 @@
  * @since     1.0.15
  */
 
-namespace XLite\View\FormField\Inline\Input\Text\Price;
+namespace XLite\View\FormField\Inline\Input\Text\Position;
 
 /**
- * Product price
+ * Order by position
  * 
  * @see   ____class_see____
  * @since 1.0.15
  */
-class Product extends \XLite\View\FormField\Inline\Input\Text\Price
+class OrderBy extends \XLite\View\FormField\Inline\Input\Text\Position
 {
     /**
-     * Short name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.15
-     */
-    protected $shortName = 'price';
-
-    /**
-     * Get initial field parameters
+     * Get field name parts
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getFieldParams()
+    public function getNameParts()
     {
-        return parent::getFieldParams() + array('min' => 0);
+        return array_merge(parent::getNameParts(), array('orderby'));
+    }
+
+    /**
+     * Save value
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function saveValue()
+    {
+        $this->getEntity()->setOrderBy((bool)$this->getValue());
+    }
+
+    /**
+     * Get entity value for field
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getEntityValue()
+    {
+        return $this->getEntity()->getOrderBy();
+    }
+
+    /**
+     * Get field label
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getLabel()
+    {
+        return \XLite\Core\Translation::lbl('Position');
     }
 
 }

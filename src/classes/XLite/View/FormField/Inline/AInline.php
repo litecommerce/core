@@ -49,6 +49,15 @@ abstract class AInline extends \XLite\View\AView
     protected $field;
 
     /**
+     * Short name 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.15
+     */
+    protected $shortName;
+
+    /**
      * Register CSS files
      *
      * @return array
@@ -133,6 +142,31 @@ abstract class AInline extends \XLite\View\AView
         return true;
     }
 
+    /**
+     * Check - field is editable or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function hasSeparateView()
+    {
+        return $this->getEntity() && $this->getEntity()->getUniqueIndetifier();
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && ($this->isEditable() || $this->hasSeparateView());
+    }
+
     // {{{ Content helpers
 
     /**
@@ -144,7 +178,9 @@ abstract class AInline extends \XLite\View\AView
      */
     protected function getContainerClass()
     {
-        return 'inline-field' . ($this->isEditable() ? ' editable' : '');
+        return 'inline-field'
+            . ($this->isEditable() ? ' editable' : '')
+            . ($this->hasSeparateView() ? ' has-view' : '');
     }
 
     /**
@@ -182,7 +218,13 @@ abstract class AInline extends \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.15
      */
-    abstract public function saveValue();
+    public function saveValue()
+    {
+        $method = 'set' + $this->shortName;
+
+        // $method assembled from 'set' + field short name
+        $this->getEntity()->$method($this->getValue());
+    }
 
     /**
      * Define form field
@@ -200,7 +242,13 @@ abstract class AInline extends \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.15
      */
-    abstract protected function getEntityValue();
+    protected function getEntityValue()
+    {
+        $method = 'get' + $this->shortName;
+
+        // $method assembled from 'get' + field short name
+        return $this->getEntity()->getSKU();
+    }
 
     /**
      * Get field label 
@@ -209,7 +257,10 @@ abstract class AInline extends \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.15
      */
-    abstract protected function getLabel();
+    protected function getLabel()
+    {
+        return \XLite\Core\Translation::lbl(ucfirst($this->shortName));
+    }
 
     /**
      * Get field 
@@ -250,7 +301,8 @@ abstract class AInline extends \XLite\View\AView
     {
         return array(
             $this->getParam(static::PARAM_ITEMS_LIST)->getDataPrefix(),
-            $this->getEntity()->getUniqueIndetifier(),
+            $this->getEntity()->getUniqueIndetifier() ?: 0,
+            $this->shortName,
         );
     }
 

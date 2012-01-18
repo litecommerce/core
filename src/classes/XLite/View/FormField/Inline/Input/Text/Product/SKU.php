@@ -25,15 +25,15 @@
  * @since     1.0.15
  */
 
-namespace XLite\View\FormField\Inline\Input\Text\Price;
+namespace XLite\View\FormField\Inline\Input\Text\Product;
 
 /**
- * Product price
+ * Product SKU
  * 
  * @see   ____class_see____
  * @since 1.0.15
  */
-class Product extends \XLite\View\FormField\Inline\Input\Text\Price
+class SKU extends \XLite\View\FormField\Inline\Input\Text
 {
     /**
      * Short name
@@ -42,7 +42,23 @@ class Product extends \XLite\View\FormField\Inline\Input\Text\Price
      * @see   ____var_see____
      * @since 1.0.15
      */
-    protected $shortName = 'price';
+    protected $shortName = 'SKU';
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'form_field/inline/input/text/product/sku.css';
+
+        return $list;
+    }
 
     /**
      * Get initial field parameters
@@ -53,7 +69,19 @@ class Product extends \XLite\View\FormField\Inline\Input\Text\Price
      */
     protected function getFieldParams()
     {
-        return parent::getFieldParams() + array('min' => 0);
+        return parent::getFieldParams() + array('maxlength' => 32);
     }
 
+    /**
+     * Get container class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getContainerClass()
+    {
+        return trim(parent::getContainerClass() . ' product-sku');
+    }
 }
+

@@ -19,7 +19,7 @@
   </thead>
 
   <tbody IF="isTopInlineCreation()" class="create top-create">
-    <widget tempalte="items_list/model/table/create_box.tpl" />
+    <widget template="items_list/model/table/parts/create_box.tpl" />
   </tbody>
 
   <tbody>
@@ -35,7 +35,7 @@
   </tbody>
 
   <tbody IF="isBottomInlineCreation()" class="create bottom-create">
-    <widget tempalte="items_list/model/table/create_box.tpl" />
+    <widget template="items_list/model/table/parts/create_box.tpl" />
   </tbody>
 
 </table>

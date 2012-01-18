@@ -10,25 +10,23 @@
  * @since     1.0.15
  */
 
-jQuery().ready(
-  function () {
-    jQuery('.inline-field.inline-price').each(
-      function () {
+CommonForm.elementControllers.push(
+  {
+    pattern: '.inline-field.inline-price',
+    handler: function () {
 
-        this.viewValuePattern = '.view .value';
+      this.viewValuePattern = '.view .value';
 
-        this.sanitize = function ()
-        {
-          var input = jQuery('.field :input', this).eq(0);
+      this.sanitize = function ()
+      {
+        var input = jQuery('.field :input', this).eq(0);
 
-          if (input.length) {
-            var e = input.data('e');
-            input.val(input.get(0).sanitizeValue(input.val(), e ? e : 0));
-          }
+        if (input.length) {
+          var e = input.data('e');
+          input.val(input.get(0).sanitizeValue(input.val(), e ? e : 0));
         }
-
       }
-    );
+
+    }
   }
 );
-

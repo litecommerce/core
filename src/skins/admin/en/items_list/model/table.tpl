@@ -13,7 +13,7 @@
 <div IF="hasResults()" class="{getContainerClass()}">
 
   <div IF="isHeaderVisible()" class="list-header">
-    <div FOREACH="getTopActions(),tpl"><widget template="{tpl:h}"></div>
+    <div FOREACH="getTopActions(),tpl" class="button-container"><widget template="{tpl:h}" /></div>
     {displayInheritedViewListContent(#header#)}
   </div>
 
@@ -21,7 +21,10 @@
 
   <div IF="pager.isVisibleBottom()" class="table-pager">{pager.display()}</div>
 
-  <div IF="isFooterVisible()" class="list-footer">{displayInheritedViewListContent(#footer#)}</div>
+  <div IF="isFooterVisible()" class="list-footer">
+    <div FOREACH="getBottomActions(),tpl" class="button-container"><widget template="{tpl:h}" /></div>
+    {displayInheritedViewListContent(#footer#)}
+  </div>
 
 </div>
 

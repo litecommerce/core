@@ -10,23 +10,22 @@
  * @since     1.0.15
  */
 
-jQuery().ready(
-  function () {
-    jQuery('input.integer').each(
-      function () {
+CommonForm.elementControllers.push(
+  {
+    pattern: '.input-field-wrapper input.integer',
+    handler: function () {
 
-        this.sanitizeValue = function (value)
-        {
-          return Math.round(value);
-        }
-
-        this.commonController.isEqualValues = function (oldValue, newValue)
-        {
-          return this.element.sanitizeValue(oldValue) == this.element.sanitizeValue(newValue);
-        }
-
+      this.sanitizeValue = function (value)
+      {
+        return Math.round(value);
       }
-    );
+
+      this.commonController.isEqualValues = function (oldValue, newValue)
+      {
+        return this.element.sanitizeValue(oldValue) == this.element.sanitizeValue(newValue);
+      }
+
+    }
   }
 );
 

@@ -25,77 +25,59 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\FormField\Input;
+namespace XLite\View\FormField\Input\Text;
 
 /**
- * Text
+ * Poisiotn
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Text extends \XLite\View\FormField\Input\Base\String
+class Position extends \XLite\View\FormField\Input\Text\Integer
 {
-    const PARAM_MAX_LENGTH = 'maxlength';
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = $this->getDir() . '/input/text/position.css';
+
+        return $list;
+    }
 
     /**
-     * Return field type
+     * Get default wrapper class
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.13
      */
-    public function getFieldType()
+    protected function getDefaultWrapperClass()
     {
-        return self::FIELD_TYPE_TEXT;
+        return trim(parent::getDefaultWrapperClass() . ' position');
     }
 
     /**
-     * Get a list of JS files required to display the widget properly
+     * Assemble classes
+     *
+     * @param array $classes Classes
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.13
      */
-    public function getJSFiles()
+    protected function assembleClasses(array $classes)
     {
-        $list = parent::getJSFiles();
-        $list[] = $this->getDir() . '/js/text.js';
+        $list = parent::assembleClasses($classes);
+
+        $list[] = 'no-wheel-mark';
 
         return $list;
     }
-
-    /**
-     * Define widget params
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_MAX_LENGTH => new \XLite\Model\WidgetParam\Int('Max. length', 0),
-        );
-    }
-
-    /**
-     * Get common attributes
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCommonAttributes()
-    {
-        $list = parent::getCommonAttributes();
-
-        if ($this->getParam(static::PARAM_MAX_LENGTH)) {
-            $list['maxlength'] = $this->getParam(static::PARAM_MAX_LENGTH);
-        }
-
-        return $list;
-    }
-
 }

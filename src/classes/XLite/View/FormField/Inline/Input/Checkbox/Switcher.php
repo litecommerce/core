@@ -25,24 +25,39 @@
  * @since     1.0.15
  */
 
-namespace XLite\View\FormField\Inline\Input\Text\Price;
+namespace XLite\View\FormField\Inline\Input\Checkbox;
 
 /**
- * Product price
+ * Switcher
  * 
  * @see   ____class_see____
  * @since 1.0.15
  */
-class Product extends \XLite\View\FormField\Inline\Input\Text\Price
+abstract class Switcher extends \XLite\View\FormField\Inline\AInline
 {
     /**
-     * Short name
+     * Define form field
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.15
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
      */
-    protected $shortName = 'price';
+    protected function defineFieldClass()
+    {
+        return 'XLite\View\FormField\Input\Checkbox\Switcher';
+    }
+
+    /**
+     * Get container class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getContainerClass()
+    {
+        return parent::getContainerClass() . ' inline-switcher';
+    }
 
     /**
      * Get initial field parameters
@@ -53,7 +68,9 @@ class Product extends \XLite\View\FormField\Inline\Input\Text\Price
      */
     protected function getFieldParams()
     {
-        return parent::getFieldParams() + array('min' => 0);
+        return parent::getFieldParams() + array(
+            \XLite\View\FormField\Input\Checkbox::PARAM_IS_CHECKED => $this->getEntityValue(),
+        );
     }
-
 }
+

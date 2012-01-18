@@ -11,11 +11,11 @@
  *}
 
 <tr class="create-tpl" style="display: none;">
-  <td FOREACH="getCreateColumns(),column" class="{getColumnClass(column,entity)}">
-    {if:column.template}
-      <widget template="{column.template}" idx="{idx}" entity="{getDumpEntity()}" column="{column}" />
-    {else:}
+  <td FOREACH="getCreateColumns(),column" class="{getColumnClass(column,dumpEntity)}">
+    {if:column.createClass}
       <widget class="{column.createClass}" idx="{idx}" entity="{getDumpEntity()}" column="{column}" itemsList="{getSelf()}" />
+    {else:}
+      <widget template="{column.template}" idx="{idx}" entity="{getDumpEntity()}" column="{column}" />
     {end:}
   </td>
 </tr>

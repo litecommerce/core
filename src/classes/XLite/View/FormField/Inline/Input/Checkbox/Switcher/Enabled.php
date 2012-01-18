@@ -25,15 +25,15 @@
  * @since     1.0.15
  */
 
-namespace XLite\View\FormField\Inline\Input\Text\Price;
+namespace XLite\View\FormField\Inline\Input\Checkbox\Switcher;
 
 /**
- * Product price
+ * Enabled state switcher
  * 
  * @see   ____class_see____
  * @since 1.0.15
  */
-class Product extends \XLite\View\FormField\Inline\Input\Text\Price
+class Enabled extends \XLite\View\FormField\Inline\Input\Checkbox\Switcher
 {
     /**
      * Short name
@@ -42,18 +42,19 @@ class Product extends \XLite\View\FormField\Inline\Input\Text\Price
      * @see   ____var_see____
      * @since 1.0.15
      */
-    protected $shortName = 'price';
+    protected $shortName = 'enabled';
 
     /**
-     * Get initial field parameters
+     * Check - field is editable or not
      *
-     * @return array
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getFieldParams()
+    protected function hasSeparateView()
     {
-        return parent::getFieldParams() + array('min' => 0);
+        return false;
     }
 
 }
+

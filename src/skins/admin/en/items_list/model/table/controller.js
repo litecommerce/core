@@ -10,7 +10,9 @@
  * @since     1.0.15
  */
 
-// Main class
+/**
+ * Items list controller 
+ */
 function TableItemsList(cell, URLParams, URLAJAXParams)
 {
   TableItemsList.superclass.constructor.apply(this, arguments);
@@ -79,3 +81,37 @@ TableItemsList.prototype.listeners.form = function(handler)
   );
 }
 
+// Inline creaetion button listener
+TableItemsList.prototype.listeners.createButton = function(handler)
+{
+  jQuery('button.create-inline', handler.container)
+    .removeAttr('onclick')
+    .click(
+      function (event) {
+
+        event.stopPropagation();
+
+        var box = jQuery('tbody.create', handler.container);
+        var length = box.find('.line').length;
+        var idx = length + 1;
+        var line = box.find('.create-tpl').clone(true);
+        line
+          .show()
+          .removeClass('create-tpl')
+          .addClass('create-line')
+          .addClass('line')
+          .find(':input').each(
+            function () {
+              if (this.id) {
+                this.id = this.id.replace(/-0-/, '-n' + idx + '-');
+              }
+              this.name = this.name.replace(/\[0\]/, '[' + (-1 * idx) + ']');
+            }
+          );
+
+        box.append(line);
+
+        return false;
+      }
+    );
+}
