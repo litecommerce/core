@@ -123,7 +123,6 @@ class Shipping extends \XLite\Base\Singleton
             $methods = self::$registeredProcessors[$processorClass]->getShippingMethods();
 
         } else {
-
             foreach (self::$registeredProcessors as $processor) {
                 $methods = array_merge($processor->getShippingMethods());
             }

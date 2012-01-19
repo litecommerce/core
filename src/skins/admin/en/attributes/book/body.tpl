@@ -10,6 +10,6 @@
  * @since     1.0.14
  *}
 
-<widget class="\XLite\View\Form\Attribute\EditList" name="attributes_list" />
+<widget class="\XLite\View\Form\Attribute\EditList" name="attribute_list" />
   {displayViewListContent(#attributes.book.parts#)}
-<widget name="attributes_list" end />
+<widget name="attribute_list" end />

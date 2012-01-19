@@ -27,18 +27,22 @@
 
 require_once (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'top.inc.php');
 
-$groups     = array();
-$attributes = array();
+\XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->clearAll();
+\XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->clearAll();
+\XLite\Core\Database::getRepo('\XLite\Model\Attribute')->clearAll();
+
 $classes    = array();
+$attributes = array();
 $products   = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findAll();
 
 for ($i = 1; $i < 10; $i++) {
     $class = new \XLite\Model\ProductClass();
     $class->setName('Product class ' . $i);
+    \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert($class);
 
     if (rand(0, 3)) {
         foreach (array_rand($products, rand(3, count($products))) as $index) {
-            $class->addProducts($products[$index]);
+            $products[$index]->addClasses($class);
         }
     }
 
@@ -49,8 +53,7 @@ for ($i = 1; $i < 3; $i++) {
     $group = new \XLite\Model\Attribute\Group();
     $group->setPos($i);
     $group->setTitle('Group ' . $i);
-
-    $groups[] = $group;
+    \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->insert($group);
 
     for ($j = 1; $j < 3; $j++) {
         foreach (array('Number', 'Text', 'Boolean', 'Selector') as $type) {
@@ -73,19 +76,16 @@ for ($i = 1; $i < 3; $i++) {
                 }
             }
 
-            foreach (array_rand($classes, rand(2, 9)) as $index) {
-                $attribute->addClasses($classes[$index]);
-            }
-
+            \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->insert($attribute);
             $attributes[] = $attribute;
         }
     }
 }
 
-\XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->clearAll();
-\XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->clearAll();
-\XLite\Core\Database::getRepo('\XLite\Model\Attribute')->clearAll();
+foreach ($classes as $class) {
+    foreach (rand(0, 1) ? (array) array_rand($attributes, rand(1, 9)) : array() as $index) {
+        $class->addAttributes($attributes[$index]);
+    }
+}
 
-\XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insertInBatch($classes);
-\XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->insertInBatch($groups);
-\XLite\Core\Database::getRepo('\XLite\Model\Attribute')->insertInBatch($attributes);
+XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->flushChanges();

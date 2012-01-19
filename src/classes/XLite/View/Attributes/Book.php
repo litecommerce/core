@@ -117,17 +117,12 @@ class Book extends \XLite\View\Dialog
     protected function getGroupWidgets()
     {
         $result = array();
+        $class  = '\XLite\View\Attributes\Book\Row\Group';
 
         foreach ($this->getGroups() as $group) {
-            $attributes = $this->getAttributeWidgets($group->getAttributes()->toArray());
+            $attrs = $this->getAttributeWidgets($group->getAttributes()->toArray());
 
-            $result[] = $this->getWidget(
-                array(
-                    \XLite\View\Attributes\Book\Row\Group::PARAM_GROUP      => $group,
-                    \XLite\View\Attributes\Book\Row\Group::PARAM_ATTRIBUTES => $attributes,
-                ),
-                '\XLite\View\Attributes\Book\Row\Group'
-            );
+            $result[] = $this->getWidget(array($class::PARAM_GROUP => $group, $class::PARAM_ATTRS => $attrs), $class);
         }
 
         return $result;
@@ -159,14 +154,10 @@ class Book extends \XLite\View\Dialog
     protected function getAttributeWidgets(array $attributes)
     {
         $result = array();
+        $class  = '\XLite\View\Attributes\Book\Row\Attribute';
 
-        foreach ($attributes as $attr) {
-            $result[] = $this->getWidget(
-                array(
-                    \XLite\View\Attributes\Book\Row\Attribute::PARAM_ATTRIBUTE => $attr,
-                ),
-                '\XLite\View\Attributes\Book\Row\Attribute'
-            );
+        foreach ($attributes as $object) {
+            $result[] = $this->getWidget(array($class::PARAM_ATTRIBUTE => $object), $class);
         }
 
         return $result;

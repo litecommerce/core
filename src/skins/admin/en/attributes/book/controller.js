@@ -32,37 +32,17 @@ jQuery().ready(
 
     jQuery('div.group div.delete.group').click(
       function () {
-        var row = jQuery(this).closest('li.row');
-        var box = jQuery(this).children('input[name*="toDelete"]');
-
-        row.toggleClass('row-to-delete');
-        row.find('div.group-attributes').toggleClass('row-to-delete');
-
-        box.val(true == box.val() ? 0 : 1);
+        jQuery(this).children('input[name*="toDelete"]').find('div.group-attributes').toggleClass('row-to-delete');
       }
     );
 
-    jQuery('div.attribute div.delete.attribute').click(
-      function () {
-        var row = jQuery(this).closest('li.row');
-        var box = jQuery(this).children('input[name*="toDelete"]');
-
-        row.toggleClass('row-to-delete');
-        box.val(true == box.val() ? 0 : 1);
-      }
-    );
-
-    var typeSelector = jQuery('select[name="postedData[_][attributes][_][class]"]');
-
-    typeSelector.change(
+    jQuery('select[name="postedData[_][attributes][_][class]"]').change(
       function () {
         var parentRow = jQuery(this).parents('tr');
 
         parentRow.nextAll('tr.additional-properties').hide();
         parentRow.nextAll('tr#' + jQuery("option:selected",this).val().toLowerCase() + '_additional').show();
       }
-    );
-
-    typeSelector.change();
+    ).change();
   }
 );

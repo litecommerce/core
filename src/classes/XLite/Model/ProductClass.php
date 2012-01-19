@@ -52,6 +52,17 @@ class ProductClass extends \XLite\Model\Base\I18n
     protected $id;
 
     /**
+     * Position
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.16
+     *
+     * @Column (type="integer")
+     */
+    protected $pos = 0;
+
+    /**
      * Products
      *
      * @var   \Doctrine\Common\Collections\ArrayCollection
@@ -61,6 +72,18 @@ class ProductClass extends \XLite\Model\Base\I18n
      * @ManyToMany (targetEntity="XLite\Model\Product", mappedBy="classes")
      */
     protected $products;
+
+    /**
+     * Assigned attributes
+     *
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 1.0.16
+     *
+     * @ManyToMany (targetEntity="XLite\Model\Attribute", inversedBy="classes")
+     * @JoinTable  (name="product_class_attribute_links")
+     */
+    protected $attributes;
 
     /**
      * Shipping methods

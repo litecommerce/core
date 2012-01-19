@@ -341,20 +341,6 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     }
 
     /**
-     * Return name for the box of attribute field
-     *
-     * @param string $field Field name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getBoxName($field)
-    {
-        return $this->getNamePostedData($field, $this->getRowUniqueId()); 
-    }
-
-    /**
      * Return list of allowed attribute types
      *
      * @return string

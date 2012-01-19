@@ -226,13 +226,12 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @since 1.0.0
      *
      * @ManyToMany (targetEntity="XLite\Model\ProductClass", inversedBy="products")
-     * @JoinTable (name="product_class_links",
+     * @JoinTable  (name="product_class_links",
      *      joinColumns={@JoinColumn(name="product_id", referencedColumnName="product_id")},
      *      inverseJoinColumns={@JoinColumn(name="class_id", referencedColumnName="id")}
      * )
      */
     protected $classes;
-
 
     /**
      * Constructor

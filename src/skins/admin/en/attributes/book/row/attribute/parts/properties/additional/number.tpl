@@ -17,20 +17,20 @@
   <td colspan="10">
     <div class="additional-properties label">{t(#Decimals#)}:</div>
     <div class="additional-properties box">
-      <select name="{getBoxName(#decimals#)}">
+      <select name="{getNamePostedData(#decimals#)}">
         <option FOREACH="getDecimalRange(),number" selected="{number=getAttributeDecimals()}">{number}</option>
       </select>
     </div>
     
     <div class="additional-properties label">{t(#Unit#)}:</div>
     <div class="additional-properties box">
-      <input type="text" name="{getBoxName(#unit#)}" value="{getAttributeUnit():h}" />
+      <input type="text" name="{getNamePostedData(#unit#)}" value="{getAttributeUnit():h}" />
     </div>
     <div class="additional-properties note">({t(#suffix#)})</div>
 
     <div class="additional-properties label">{t(#Default#)}:</div>
     <div class="additional-properties box">
-      <input type="text" name="{getBoxName(#default#)}" value="{getAttributeDefaultValue():h}" />
+      <input type="text" name="{getNamePostedData(#default#)}" value="{getAttributeDefaultValue():h}" />
     </div>
   </td>
 </tr>

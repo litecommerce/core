@@ -22,35 +22,34 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.14
+ * @since     1.0.16
  */
 
-namespace XLite\View\Attributes\Book\Row;
+namespace XLite\View\ProductClasses\Book;
 
 /**
- * Group 
+ * Row 
  *
  * @see   ____class_see____
- * @since 1.0.14
+ * @since 1.0.16
  */
-class Group extends \XLite\View\DraggableRows\Row\ARow
+class Row extends \XLite\View\DraggableRows\Row\ARow
 {
     /**
      * Widget param names
      */
-    const PARAM_GROUP = 'group';
-    const PARAM_ATTRS = 'attributes';
+    const PARAM_CLASS = 'productClass';
 
     /**
      * Return row identifier
      *
      * @return void
      * @see    ____func_see____
-     * @since  1.0.14
+     * @since  1.0.16
      */
     public function getRowUniqueId()
     {
-        return $this->getGroup()->getId() ?: '_';
+        return $this->getClass()->getId() ?: '_';
     }
 
     /**
@@ -58,11 +57,11 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.14
+     * @since  1.0.16
      */
     protected function getDefaultTemplate()
     {
-        return 'attributes/book/row/group/body.tpl';
+        return 'product_classes/book/row/body.tpl';
     }
 
     /**
@@ -70,7 +69,7 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.14
+     * @since  1.0.16
      */
     protected function getRowPosFieldName()
     {
@@ -82,11 +81,11 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
      *
      * @return integer
      * @see    ____func_see____
-     * @since  1.0.14
+     * @since  1.0.16
      */
     protected function getRowPosFieldValue()
     {
-        return $this->getGroup()->getPos();
+        return $this->getClass()->getPos();
     }
 
     /**
@@ -94,18 +93,15 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
      *
      * @return void
      * @see    ____func_see____
-     * @since  1.0.14
+     * @since  1.0.16
      */
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            static::PARAM_GROUP => new \XLite\Model\WidgetParam\Object(
-                'Group object', new \XLite\Model\Attribute\Group(), false, '\XLite\Model\Attribute\Group'
-            ),
-            static::PARAM_ATTRS => new \XLite\Model\WidgetParam\Collection(
-                'Group attributes', array()
+            static::PARAM_CLASS => new \XLite\Model\WidgetParam\Object(
+                'Product class object', new \XLite\Model\ProductClass(), false, '\XLite\Model\ProductClass'
             ),
         );
     }
@@ -115,11 +111,11 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
      *
      * @return \XLite\Model\Attribute\Group
      * @see    ____func_see____
-     * @since  1.0.14
+     * @since  1.0.16
      */
-    protected function getGroup()
+    protected function getClass()
     {
-        return $this->getParam(static::PARAM_GROUP);
+        return $this->getParam(static::PARAM_CLASS);
     }
 
     /**
@@ -127,23 +123,11 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.14
+     * @since  1.0.16
      */
-    protected function getGroupTitle()
+    protected function getClassName()
     {
-        return $this->getGroup()->getTitle();
-    }
-
-    /**
-     * Alias
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.14
-     */
-    protected function getAttributeWidgets()
-    {
-        return $this->getParam(static::PARAM_ATTRS);
+        return $this->getClass()->getName();
     }
 
     /**
@@ -151,10 +135,22 @@ class Group extends \XLite\View\DraggableRows\Row\ARow
      *
      * @return integer
      * @see    ____func_see____
-     * @since  1.0.14
+     * @since  1.0.16
      */
-    protected function getGroupAttributesNumber()
+    protected function getAttributes()
     {
-        return count($this->getAttributeWidgets());
+        return $this->getClass()->getAttributes();
+    }
+
+    /**
+     * Alias
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAttributesNumber()
+    {
+        return count($this->getAttributes());
     }
 }

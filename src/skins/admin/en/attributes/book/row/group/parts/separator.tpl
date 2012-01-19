@@ -12,4 +12,4 @@
  * @ListChild (list="attributes.book.row.group", weight="400")
  *}
 
-<div IF="!isnew()" class="separator right-separator">&nbsp;</div>
+<div IF="!isNew()" class="separator right-separator">&nbsp;</div>

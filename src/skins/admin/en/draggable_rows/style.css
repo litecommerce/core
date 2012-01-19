@@ -10,14 +10,11 @@
  * @since     1.0.14
  */
 
-ul.draggable-rows
-{
-  width: 748px;
-  display: table-cell;
-}
-
 ul.draggable-rows li.row
 {
+  display: table;
+  width: 748px;
+  padding: 5px;
   border-top: 1px solid #d7e1e8;
   border-bottom: 1px solid #d7e1e8;
 }
@@ -53,3 +50,17 @@ ul.draggable-rows li.row div.container div.delete
   cursor: pointer;
 }
 
+ul.draggable-rows li.row div.container div.separator.right-separator
+{
+  float: right;
+}
+
+div.hidden
+{
+  display: none;
+}
+
+.row-to-delete
+{
+  background-color: #eee;
+}

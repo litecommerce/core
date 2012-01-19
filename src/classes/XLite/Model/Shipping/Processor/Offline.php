@@ -122,5 +122,4 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
     {
         return true;
     }
-
 }

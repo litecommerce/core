@@ -15,7 +15,7 @@
 <tr>
   <td>{t(#Type#)}:</td>
   <td>
-    <select name="{getBoxName(#class#)}" disabled="{!isNew()}">
+    <select name="{getNamePostedData(#class#)}" disabled="{!isNew()}">
       <option FOREACH="getAttributeTypes(),key,label" value="{key}" selected="{key=getAttributeTypeName()}">{t(label)}</option>
     </select>
   </td>

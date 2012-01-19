@@ -17,7 +17,7 @@
   <td colspan="10">
     <div class="additional-properties label">{t(#Default#)}:</div>
     <div class="additional-properties box">
-      <input type="text" name="{getBoxName(#default#)}" value="{getAttributeDefaultValue():h}" />
+      <input type="text" name="{getNamePostedData(#default#)}" value="{getAttributeDefaultValue():h}" />
     </div>
   </td>
 </tr>

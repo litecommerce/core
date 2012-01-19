@@ -36,51 +36,79 @@ namespace XLite\Controller\Admin;
 class ProductClasses extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Field name for new 'name' value
-     */
-    const NEW_NAME = 'new_name';
-
-    /**
-     * Field name for 'name' array values
-     */
-    const NAME = 'name';
-
-
-    /**
-     * Update action
+     * Page title
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.16
      */
-    protected function doActionUpdate()
+    public function getTitle()
     {
-        $data = $this->getPostedData();
-
-        if (!empty($data[static::NEW_NAME])) {
-            $this->addClass($data[static::NEW_NAME]);
-        }
-
-        if (isset($data[static::NEW_NAME])) {
-            unset($data[static::NEW_NAME]);
-        }
-
-        if (!empty($data)) {
-            \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->updateInBatchById($data);
-        }
+        return 'Product classes';
     }
 
     /**
-     * Add product class entry
-     *
-     * @param string $name Name value
+     * Add/update product classes
      *
      * @return void
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.16
      */
-    protected function addClass($name)
+    protected function doActionSave()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert(array(static::NAME => strval($name)));
+        $objects = array(
+            'insert' => array(),
+            'update' => array(),
+            'delete' => array(),
+        );
+
+        foreach ($this->getPostedData() as $classId => $classData) {
+            $classId = intval($classId);
+            $class   = null;
+            $name    = \Includes\Utils\ArrayManager::getIndex($classData, 'name');
+
+            if (0 < $classId) {
+                $class = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->find($classId);
+
+                if (isset($class)) {
+                    if (\Includes\Utils\ArrayManager::getIndex($classData, $this->getPrefixToDelete())) {
+                        $objects['delete']['class'][] = $class;
+                        continue;
+
+                    } elseif (empty($name)) {
+                        return \XLite\Core\TopMessage::addError(
+                            'Empty name for class "{{class}"',
+                            array('class' => $class->getName())
+                        );
+
+                    } else {
+                        $objects['update']['class'][] = $class;
+                    }
+
+                } else {
+                    return \XLite\Core\TopMessage::addError('Unknown class ID: {{id}}', array('id' => $classId));
+                }
+
+            } elseif (!empty($name)) {
+                $class = new \XLite\Model\ProductClass();
+                $objects['insert']['class'][] = $class;
+            }
+
+            if (isset($class)) {
+                $class->setName($name);
+
+                if (!empty($classData['pos'])) {
+                    $class->setPos($classData['pos']);
+                }
+            }
+        }
+
+        foreach ($objects as $operation => $tmp) {
+            foreach ($tmp as $type => $data) {
+                \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->{$operation . 'InBatch'}($data);
+            }
+        }
+
+        \XLite\Core\TopMessage::addInfo('Product classes have been sucessfully saved');
     }
 }

@@ -12,7 +12,7 @@
  * @ListChild (list="attributes.book.row.attribute.properties", weight="400")
  *}
 
-<tr>
+<tr IF="!isNew()">
   <td colspan="10">
     <span>{t(#Assigned to#)}</span>
     <a href="">{getAssignClassesLinkTitle()}</a>

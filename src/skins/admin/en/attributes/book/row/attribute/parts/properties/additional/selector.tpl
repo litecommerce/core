@@ -21,7 +21,7 @@
 
     <div IF="getAttributeChoices()" class="additional-properties label">{t(#Default#)}:</div>
     <div IF="getAttributeChoices()" class="additional-properties box">
-      <select name="{getBoxName(#default#)}">
+      <select name="{getNamePostedData(#default#)}">
         <option FOREACH="getAttributeChoices(),choice" value="{choice.getId()}" selected="{getAttributeDefaultValue()=choice.getId()}">{choice.getTitle()}</option>
       </select>
     </div>

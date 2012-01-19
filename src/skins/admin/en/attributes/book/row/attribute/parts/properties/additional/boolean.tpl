@@ -17,7 +17,7 @@
   <td colspan="10">
     <div class="additional-properties label">{t(#Default#)}:</div>
     <div class="additional-properties box">
-      <select name="{getBoxName(#default#)}">
+      <select name="{getNamePostedData(#default#)}">
         <option value="{#1#}" selected="{getAttributeDefaultValue()}">{t(#True#)}</option>
         <option value="{#0#}" selected="{!getAttributeDefaultValue()}">{t(#False#)}</option>
       </select>

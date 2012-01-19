@@ -10,19 +10,6 @@
  * @since     1.0.14
  */
 
-ul.draggable-rows li.row
-{
-  display: table;
-  width: 748px;
-}
-
-div.group.hidden,
-div.attribute.hidden
-{
-  width: 748px;
-  display: none;
-}
-
 div.group-title,
 div.attribute-title
 {
@@ -36,7 +23,6 @@ div.group.hidden div.group-title
 
 div.group-attributes-number,
 div.attribute-type,
-div.separator.right-separator,
 div.attribute-change-label
 {
   float: right;
@@ -68,9 +54,4 @@ div.attribute.hidden table.attribute-properties
 table.attribute-properties div.additional-properties
 {
   display: inline;
-}
-
-.row-to-delete
-{
-  background-color: #eee;
 }

@@ -251,13 +251,10 @@ class Product extends \XLite\Controller\Admin\AAdmin
         $data = new \Doctrine\Common\Collections\ArrayCollection();
 
         foreach ((array) $this->getPostedData('class_ids') as $classId) {
-
             $class = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findOneById($classId);
 
             if ($class) {
-
                 if (!$class->getProducts()->contains($product)) {
-
                     $class->getProducts()->add($product);
                 }
 
@@ -383,7 +380,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\TopMessage::addError($form->getValidationMessage());
 
         } else {
-
             $product = $this->getProduct();
 
             // Clear all category associates
@@ -396,14 +392,9 @@ class Product extends \XLite\Controller\Admin\AAdmin
             $data = $this->getCategoryProducts($product) + $this->getClasses($product) + $this->getPostedData();
 
             // Update all data
-            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
-                $product,
-                $data
-            );
+            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update($product, $data);
 
-            \XLite\Core\TopMessage::addInfo(
-                'Product info has been successfully updated'
-            );
+            \XLite\Core\TopMessage::addInfo('Product info has been successfully updated');
         }
     }
 

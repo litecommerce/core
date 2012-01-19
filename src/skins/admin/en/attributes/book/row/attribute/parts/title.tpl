@@ -13,5 +13,5 @@
  *}
 
 <div class="attribute-title">
-  <input type="text" name="{getBoxName(#title#)}" value="{getAttributeTitle():h}" />
+  <input type="text" name="{getNamePostedData(#title#)}" value="{getAttributeTitle():h}" />
 </div>

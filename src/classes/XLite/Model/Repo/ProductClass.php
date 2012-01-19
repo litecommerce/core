@@ -35,4 +35,12 @@ namespace XLite\Model\Repo;
  */
 class ProductClass extends \XLite\Model\Repo\Base\I18n
 {
+    /**
+     * Default 'order by' field name
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.16
+     */
+    protected $defaultOrderBy = array('pos' => true);
 }

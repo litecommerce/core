@@ -13,7 +13,15 @@
 jQuery().ready(
   function () {
 
-    // Drag-and-drop-based sorting
+    jQuery('ul.draggable-rows li.row div.container div.delete').click(
+      function () {
+        var box = jQuery(this).children('input[name*="toDelete"]');
+
+        jQuery(this).closest('li.row').toggleClass('row-to-delete');
+        box.val(true == box.val() ? 0 : 1);
+      }
+    );
+
     jQuery('ul.draggable-rows .move-cursor').click(
       function (event) {
         event.stopPropagation();

@@ -22,65 +22,40 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.15
  */
 
-namespace XLite\View\ProductClass;
+namespace XLite\View\Form\ProductClass;
 
 /**
- * Product classes main input widget
+ * Product class list form
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.15
  */
-class MainInput extends \XLite\View\AView
+class EditList extends \XLite\View\Form\AForm
 {
-
-    const CLASS_NAME = 'className';
-    const CLASS_ID   = 'classId';
-
     /**
-     * Return allowed targets
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-
-        $result[] = 'product_classes';
-
-        return $result;
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::CLASS_NAME => new \XLite\Model\WidgetParam\String('className', null),
-            self::CLASS_ID   => new \XLite\Model\WidgetParam\String('classId', null),
-        );
-    }
-
-    /**
-     * getDefaultTemplate()
+     * getDefaultTarget
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.15
      */
-    protected function getDefaultTemplate()
+    protected function getDefaultTarget()
     {
-        return 'product_classes/list/main_input.tpl';
+        return 'product_classes';
+    }
+
+    /**
+     * getDefaultAction
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getDefaultAction()
+    {
+        return 'save';
     }
 }

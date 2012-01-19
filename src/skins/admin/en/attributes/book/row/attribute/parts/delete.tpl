@@ -13,5 +13,5 @@
  *}
 
 <div IF="!isNew()" class="delete attribute">
-  <input type="hidden" name="{getBoxName(#toDelete#)}" value="{#0#}" />
+  <input type="hidden" name="{getNamePostedData(#toDelete#)}" value="{#0#}" />
 </div>

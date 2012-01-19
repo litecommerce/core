@@ -104,11 +104,7 @@ abstract class Attribute extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.16
      *
-     * @ManyToMany (targetEntity="XLite\Model\ProductClass")
-     * @JoinTable  (name="attribute_classes",
-     *      joinColumns={@JoinColumn(name="attributeId", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="classId", referencedColumnName="id")}
-     * )
+     * @ManyToMany (targetEntity="XLite\Model\ProductClass", mappedBy="attributes")
      */
     protected $classes;
 

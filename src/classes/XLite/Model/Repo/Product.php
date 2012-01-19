@@ -183,13 +183,19 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     public function getAssignedProductsCountByClassIDs(array $classIDs)
     {
-        $qb = $this->createQueryBuilder('p');
+        $result = 0;
 
-        return $qb
-            ->select($qb->expr()->countDistinct('p.product_id'))
-            ->innerJoin('p.classes', 'c')
-            ->andWhere($qb->expr()->in('c.id', $classIDs))
-            ->getSingleScalarResult();
+        if (!empty($classIDs)) {
+            $qb = $this->createQueryBuilder('p');
+
+            $result = $qb
+                ->select($qb->expr()->countDistinct('p.product_id'))
+                ->innerJoin('p.classes', 'c')
+                ->andWhere($qb->expr()->in('c.id', $classIDs))
+                ->getSingleScalarResult();
+        }
+
+        return $result;
     }
 
     /**
