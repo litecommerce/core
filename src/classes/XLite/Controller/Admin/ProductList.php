@@ -93,7 +93,21 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateInBatchById($this->getPostedData());
+        $form = new \XLite\View\Form\Product\Modify\Batch();
+        $requestData = $form->getRequestData();
+
+        if ($form->getValidationMessage()) {
+
+            \XLite\Core\TopMessage::addError($form->getValidationMessage());
+
+        } else {
+
+            \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateInBatchById($this->getPostedData());
+
+            \XLite\Core\TopMessage::addInfo(
+                'Products information has been successfully updated'
+            );
+        }
     }
 
     /**

@@ -706,36 +706,6 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Common prefix for editable elements in lists
-     *
-     * NOTE: this method is requered for the GetWidget and AAdmin classes
-     * TODO: after the multiple inheritance should be moved to the AAdmin class
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPrefixPostedData()
-    {
-        return 'postedData';
-    }
-
-    /**
-     * Common prefix for the "delete" checkboxes in lists
-     *
-     * NOTE: this method is requered for the GetWidget and AAdmin classes
-     * TODO: after the multiple inheritance should be moved to the AAdmin class
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPrefixToDelete()
-    {
-        return 'toDelete';
-    }
-
-    /**
      * Return the reserved ID of root category
      *
      * @return integer

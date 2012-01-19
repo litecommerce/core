@@ -56,7 +56,22 @@ class SaleSelected extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionSetSalePrice()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateInBatchById($this->getUpdateInfo());
+        $form = new \XLite\Module\CDev\Sale\View\Form\SaleSelectedDialog();
+
+        $requestData = $form->getRequestData();
+
+        if ($form->getValidationMessage()) {
+
+            \XLite\Core\TopMessage::addError($form->getValidationMessage());
+
+        } else {
+
+            \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateInBatchById($this->getUpdateInfo());
+
+            \XLite\Core\TopMessage::addInfo(
+                'Products information has been successfully updated'
+            );
+        }
 
         $this->setReturnURL($this->buildURL('product_list', '', array('mode' => 'search')));
     }

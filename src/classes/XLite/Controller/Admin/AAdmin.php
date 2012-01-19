@@ -447,8 +447,8 @@ OUT;
     }
 
     /**
-     * Change language common action 
-     * 
+     * Change language common action
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -460,51 +460,6 @@ OUT;
         if ($language && $language->getEnabled()) {
             \XLite\Core\Session::getInstance()->editLanguage = $code;
         }
-    }
-
-    // }}}
-
-    // {{{ Methods to work with the received data
-
-    /**
-     * getRequestDataByPrefix
-     *
-     * @param string $prefix Index in the request array
-     * @param string $field  Name of the field to retrieve OPTIONAL
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getRequestDataByPrefix($prefix, $field = null)
-    {
-        return \Includes\Utils\ArrayManager::getIndex((array) \XLite\Core\Request::getInstance()->$prefix, $field);
-    }
-
-    /**
-     * getPostedData
-     *
-     * @param string $field Name of the field to retrieve OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getPostedData($field = null)
-    {
-        return $this->getRequestDataByPrefix($this->getPrefixPostedData(), $field);
-    }
-
-    /**
-     * getToDelete
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getToDelete()
-    {
-        return $this->getRequestDataByPrefix($this->getPrefixToDelete());
     }
 
     // }}}

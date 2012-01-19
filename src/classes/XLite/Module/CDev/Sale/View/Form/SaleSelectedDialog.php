@@ -60,6 +60,41 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
     }
 
     /**
+     * Get validator
+     *
+     * @return \XLite\Core\Validator\HashArray
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getValidator()
+    {
+        $validator = parent::getValidator();
+
+        $data = $validator->addPair(
+            'postedData',
+            new \XLite\Core\Validator\HashArray()
+        );
+
+        $this->setDataValidators($data);
+
+        return $validator;
+    }
+
+    /**
+     * Set validators pairs for products data
+     *
+     * @param mixed $data Data
+     *
+     * @return null
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function setDataValidators(&$data)
+    {
+        $this->setSaleDataValidators($data);
+    }
+
+    /**
      * Called before the includeCompiledFile()
      *
      * @return void
@@ -79,6 +114,13 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
             }
         }
 
+        $postedData = array(
+            'postedData[participateSale]' => true,
+        );
+
         $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue($toDelete);
+        $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue($postedData);
     }
+
+
 }
