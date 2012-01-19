@@ -40,5 +40,5 @@
 # VERBOSE_FLAG="--verbose"
 
 cd $(dirname $0)
-./phpunit $VERBOSE_FLAG xliteAllTests tests/AllTests_no_restore.php LOCAL_TESTS,$1
+./phpunit $2 $3 $4 $5 xliteAllTests tests/AllTests_no_restore.php LOCAL_TESTS,$1
 

@@ -27,7 +27,16 @@
               location="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id,#profile_id#^profile.profile_id))}"
               />
           </li>
-          <li class="order-shipping-status"><widget template="common/order_status.tpl" /></li>
+          <li class="reorder">
+            <widget
+              class="\XLite\View\Button\Link"
+              label="Re-order"
+              location="{buildURL(#cart#,#add_order#,_ARRAY_(#order_id#^order.order_id))}"
+              />
+          </li>
+          <li class="order-shipping-status">
+            <widget class="\XLite\View\OrderStatus" order="{order}" useWrapper="true" />
+          </li>
         </ul>
 
         <ul class="order-body-item-spec2">

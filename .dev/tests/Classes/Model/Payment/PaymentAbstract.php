@@ -44,6 +44,7 @@ class XLite_Tests_Model_Payment_PaymentAbstract extends XLite_Tests_Model_OrderA
     */
     protected function getTestMethod()
     {
+        xdebug_stop_code_coverage(false);
         $method = new \XLite\Model\Payment\Method();
 
         $method->map($this->testMethod);
@@ -67,12 +68,14 @@ class XLite_Tests_Model_Payment_PaymentAbstract extends XLite_Tests_Model_OrderA
         \XLite\Core\Database::getEM()->persist($method);
         \XLite\Core\Database::getEM()->flush();
         $this->method = $method;
+        xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);
         return $method;
     }
 
     /**
-    * @return XLite\Model\Order
-    */
+     * @param bool $new_order
+     * @return XLite\Model\Order
+     */
     protected function getTestOrder($new_order = false)
     {
         $order = parent::getTestOrder($new_order);
@@ -86,7 +89,9 @@ class XLite_Tests_Model_Payment_PaymentAbstract extends XLite_Tests_Model_OrderA
 
     protected function tearDown()
     {
+        xdebug_stop_code_coverage(false);
         $this->clearEntity($this->method);
+        xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);
         parent::tearDown();
     }
 }

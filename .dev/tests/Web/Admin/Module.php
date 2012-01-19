@@ -29,46 +29,65 @@
 
 require_once __DIR__ . '/AAdmin.php';
 
+/**
+ * XLite_Web_Admin_Module 
+ *
+ * @see   ____class_see____
+ * @since 1.0.15
+ */
 class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
 {
-    const BUTTON_ENTER_LICENSE_KEY = '//button[@class="popup-button"]/span[text()="Enter license key"]';
-
+/*    const BUTTON_ENTER_LICENSE_KEY = '//button[@class="popup-button"]/span[text()="Enter license key"]';
     const INPUT_KEY = '//div[@class="addon-key"]/input[@type="text" and @name="key"]';
+    const BUTTON_KEY = '//button[@type="submit"]/span[text()="Validate key"]';*/
 
-    const BUTTON_KEY = '//button[@type="submit"]/span[text()="Validate key"]';
-
-
+    /**
+     * setUp
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
     protected function setUp()
     {
         parent::setUp();
 
-        $this->markTestSkipped('Awaiting for new marketplace');
+        $this->markTestSkipped('Awaiting for...');
 
-        $testModulesDir = dirname(__FILE__) . LC_DS . '..' . LC_DS . '..' . LC_DS . '..' . LC_DS . 'test_modules' . LC_DS . 'Test';
-
-        \Includes\Utils\FileManager::copyRecursive(
-            $testModulesDir,
+        /*\Includes\Utils\FileManager::copyRecursive(
+            dirname(__FILE__) . LC_DS . '..' . LC_DS . '..' . LC_DS . '..' . LC_DS . 'test_modules' . LC_DS . 'Test',
             LC_DIR_MODULES . 'Test'
-        );
+        );*/
     }
 
+    /**
+     * tearDown
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
     protected function tearDown()
     {
-        \Includes\Utils\FileManager::unlinkRecursive(
-            LC_DIR_MODULES . 'Test'
-        );
+        // \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_MODULES . 'Test');
 
         parent::tearDown();
     }
 
-
+    /**
+     * testModulesManage
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
     public function testModulesManage()
     {
+        $this->skipCoverage();
         $this->logIn();
+        $this->open('admin.php?target=addons_list_installed');
 
-        $this->open('admin.php?target=modules');
-
-        $this->assertElementPresent(
+        /*$this->assertElementPresent(
             '//tr[@class="module-11 disabled"]/td[@class="module-main-section"]/div[@class="actions"]/span[@class="disabled" and text()="Enable"]',
             'Enable is not a text label'
         );
@@ -91,12 +110,19 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
         $this->assertElementPresent(
             '//tr[@class="module-13 disabled"]/td[@class="module-main-section"]/div/div[@class="note dependencies"]/ul/li/a[text()="Test module 2 (by Test)"]',
             'test module 2 dependency is absent'
-        );
+        );*/
 
     }
 
 
-    public function testEnterLicenseKeyBlock()
+    /**
+     * testEnterLicenseKeyBlock
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    /*public function testEnterLicenseKeyBlock()
     {
         $this->logIn();
 
@@ -188,6 +214,5 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
         $this->waitForPageToLoad(6000);
 
         $this->assertElementNotPresent($moduleBlock, 'MegaModule48 module was not uninstalled');
-    }
-
+    }*/
 }

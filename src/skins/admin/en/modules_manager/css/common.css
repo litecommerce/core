@@ -28,12 +28,12 @@
   color: #0055bd;
 }
 
-table.modules-list.items-list {
+.modules-list.items-list {
   border-top: solid 2px #e5e5e5;
   width: 965px;
 }
 
-table.modules-list tr td {
+.modules-list tr td {
   padding: 20px 0px 20px 20px;
   border-bottom: solid 1px #e5e5e5;
   border-top: 0;
@@ -42,50 +42,50 @@ table.modules-list tr td {
   vertical-align: top;
 }
 
-table.modules-list tr td.icon {
+.modules-list tr td.icon {
   width: 100px;
 }
 
-table.modules-list tr td.module-main-section {
+.modules-list tr td.module-main-section {
   width: 25%;
 }
 
-table.modules-list tr td.module-description-section {
+.modules-list tr td.module-description-section {
   width: 66%;
   white-space: normal;
 }
 
-table.modules-list tr.disabled td {
+.modules-list tr.disabled td {
   border-top: solid 1px #ffffff;
 }
 
-table.modules-list tr.disabled td {
+.modules-list tr.disabled td {
   background-color: #f2f2f2;
 }
 
-table.modules-list div.name {
+.modules-list .name {
   font-size: 20px;
   margin-bottom: 5px;
 }
 
-table.modules-list div.description {
+.modules-list .description {
   font-size: 14px;
   margin-bottom: 10px;
 }
 
-table.modules-list tr.disabled div.name {
+.modules-list tr.disabled .name {
   color: #8f8f8f;
 }
 
-table.modules-list div.version,
-table.modules-list div.note
+.modules-list .version,
+.modules-list .note
 {
   font-size: 12px;
   color: #5c88a8;
   margin-bottom: 15px;
 }
 
-table.modules-list div.author {
+.modules-list .author {
   font-size: 14px;
   color: #5c88a8;
   margin-top: 10px;
@@ -93,11 +93,15 @@ table.modules-list div.author {
   margin-right: 20px;
 }
 
-table.modules-list .actions {
+.modules-list .author span {
+  font-size: 14px;
+}
+
+.modules-list .actions {
   margin-bottom: 10px;
 }
 
-table.modules-list .actions li {
+.modules-list .actions li {
   display: inline;
   border-width: 1px;
   border-top-style: solid;
@@ -110,25 +114,25 @@ table.modules-list .actions li {
   margin: 0px;
 }
 
-table.modules-list .actions li,
-table.modules-list .actions label,
-table.modules-list .actions a
+.modules-list .actions li,
+.modules-list .actions label,
+.modules-list .actions a
 {
   font-size: 14px;
   text-decoration: none;
 }
 
-table.modules-list .actions label {
+.modules-list .actions label {
   color: #5080a2;
 }
 
-table.modules-list .actions li {
+.modules-list .actions li {
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px;
 }
 
-table.modules-list .actions li.first {
+.modules-list .actions li.first {
   -moz-border-radius-topleft: 3px;
   -moz-border-radius-bottomleft: 3px;
   -webkit-border-top-left-radius: 3px;
@@ -139,7 +143,7 @@ table.modules-list .actions li.first {
   padding-left: 8px;
 }
 
-table.modules-list .actions li.last {
+.modules-list .actions li.last {
   -moz-border-radius-topright: 3px;
   -moz-border-radius-bottomright: 3px;
   -webkit-border-top-right-radius: 3px;
@@ -148,45 +152,45 @@ table.modules-list .actions li.last {
   border-bottom-right: 3px;
 }
 
-table.modules-list .actions li.last a.text {
+.modules-list .actions li.last a.text {
   margin-right: 3px;
 }
 
-table.modules-list .actions li * {
+.modules-list .actions li * {
   vertical-align: middle;
 }
 
-table.modules-list .disabled .actions li {
+.modules-list .disabled .actions li {
   background-color: #f5f5f5;
 }
 
-table.modules-list .actions li input {
+.modules-list .actions li input {
   margin-right: 3px;
   margin-bottom: 2px;
 }
 
-table.modules-list .actions li label {
+.modules-list .actions li label {
   padding-bottom: 2px;
 }
 
-table.modules-list .actions .uninstall img {
+.modules-list .actions .uninstall img {
   background: transparent url(../../images/icon_trash.png) no-repeat left top;
   width: 22px;
   height: 21px;
 }
 
-table.modules-list tr.disabled div.module-name {
+.modules-list tr.disabled .module-name {
   color: #a3a3a3;
   white-space: nowrap;
 }
 
-table.modules-list div.module-url {
+.modules-list .module-url {
   margin-top: 10px;
   font-size: 14px;
   float: left;
 }
 
-table.modules-list div.icon-container {
+.modules-list .icon-container {
   position: relative;
 }
 
@@ -197,7 +201,8 @@ table.modules-list div.icon-container {
 
 /* Notes */
 
-table.modules-list div.note
+.modules-list .note,
+.modules-list .note div
 {
   padding: 10px 20px;
   width: 250px;
@@ -206,43 +211,50 @@ table.modules-list div.note
   line-height: 24px;
 }
 
-table.modules-list div.note.dependencies,
-table.modules-list div.note.version.error
+.modules-list .note.dependencies,
+.modules-list .note.version.error,
+.modules-list .note div
 {
   background-color: #f7eee4;
   color: #7a2e1d;
   border: solid 1px #d6bda5;
 }
 
-table.modules-list div.note.version.upgrade
+.modules-list .note div
+{
+  padding: 0;
+  border: none;
+}
+
+.modules-list .note.version.upgrade
 {
   background-color: #e4f7e4;
   color: #466444;
   border: solid 1px #a8d6a5;
 }
 
-div.icon-container div.addon-disabled {
+.icon-container .addon-disabled {
   position: absolute;
   top: 0px;
   left: 0px;
 }
 
-div.icon-container div.addon-disabled img.disabled,
-  div.icon-container div.addon-disabled,
-  div.icon-container div.addon-icon img.addon-icon
+.icon-container .addon-disabled .disabled,
+  .icon-container .addon-disabled,
+  .icon-container .addon-icon .addon-icon
 {
   width: 84px;
   height: 84px;
 }
 
-div.icon-container div.addon-disabled img.disabled {
+.icon-container .addon-disabled .disabled {
   background: transparent url(../../images/addon_disabled.png) left top no-repeat;
 }
 
-div.icon-container div.addon-icon img.addon-default-icon {
+.icon-container .addon-icon .addon-default-icon {
   background: transparent url(../../images/addon_default.png) left top no-repeat;
 }
 
-div.icon-container div.addon-icon.addon-disabled-note {
+.icon-container .addon-icon.addon-disabled-note {
   text-align: center;
 }

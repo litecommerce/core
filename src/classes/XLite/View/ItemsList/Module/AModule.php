@@ -104,6 +104,20 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
+     * Check if there are some errors for the current module
+     *
+     * @param \XLite\Model\Module $module Module to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function hasErrors(\XLite\Model\Module $module)
+    {
+        return !$this->canEnable($module);
+    }
+
+    /**
      * Check if the module can be enabled
      *
      * @param \XLite\Model\Module $module Module
@@ -235,6 +249,34 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
         return \XLite::getInstance()->checkVersion($module->getMajorVersion(), $operator);
     }
 
+    /**
+     * Return list of modules current module depends on
+     *
+     * @param \XLite\Model\Module $module Current module
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getDependencyModules(\XLite\Model\Module $module)
+    {
+        return $module->getDependencyModules(true);
+    }
+
+    /**
+     * Check if there are modules current module depends on
+     *
+     * @param \XLite\Model\Module $module Current module
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function hasWrongDependencies(\XLite\Model\Module $module)
+    {
+        return (bool) $this->getDependencyModules($module);
+    }
+
     // }}}
 
     // {{{ Methods to search modules of certain types
@@ -334,6 +376,88 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     protected function getModuleVersion(\XLite\Model\Module $module)
     {
         return $module->getVersion();
+    }
+
+    // }}}
+
+    // {{{ Dependency statuses
+
+    /**
+     * Get all data to dependency item in list
+     *
+     * @param \XLite\Model\Module $module Current module
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getDependencyData(\XLite\Model\Module $module)
+    {
+        if ($module->isPersistent()) {
+            if ($module->getInstalled()) {
+                if ($module->getEnabled()) {
+                    $result = array('status' => 'enabled', 'class' => 'good');
+
+                } else {
+                    $result = array('status' => 'disabled', 'class' => 'none');
+                }
+
+                $result['href'] = $this->buildURL('addons_list_installed') . '#' . $module->getName();
+
+            } else {
+                $url  = $this->buildURL('addons_list_marketplace', '', array('substring' => $module->getModuleName()));
+                $url .= '#' . $module->getName();
+
+                $result = array('href' => $url, 'status' => 'not installed', 'class' => 'none');
+            }
+
+        } else {
+            $result = array('status' => 'unknown', 'class' => 'poor');
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get some data for depenendecy in list
+     *
+     * @param \XLite\Model\Module $module Current module
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getDependencyHRef(\XLite\Model\Module $module)
+    {
+        return \Includes\Utils\ArrayManager::getIndex($this->getDependencyData($module), 'href', true);
+    }
+
+    /**
+     * Get some data for depenendecy in list
+     *
+     * @param \XLite\Model\Module $module Current module
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getDependencyStatus(\XLite\Model\Module $module)
+    {
+        return \Includes\Utils\ArrayManager::getIndex($this->getDependencyData($module), 'status', true);
+    }
+
+    /**
+     * Get some data for depenendecy in list
+     *
+     * @param \XLite\Model\Module $module Current module
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getDependencyCSSClass(\XLite\Model\Module $module)
+    {
+        return \Includes\Utils\ArrayManager::getIndex($this->getDependencyData($module), 'class', true);
     }
 
     // }}}

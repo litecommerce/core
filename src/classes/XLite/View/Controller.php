@@ -48,6 +48,24 @@ class Controller extends \XLite\View\AView
 
 
     /**
+     * Send headers
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function sendHeaders()
+    {
+        // send no-cache headers
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Cache-Control: post-check=0, pre-check=0', false);
+        header('Pragma: no-cache');
+        header('Content-Type: text/html; charset=utf-8');
+    }
+
+    /**
      * __construct
      *
      * @param array  $params          Widget params OPTIONAL
@@ -82,25 +100,6 @@ class Controller extends \XLite\View\AView
         }
 
         $this->postprocess();
-    }
-
-
-    /**
-     * Send headers
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function startPage()
-    {
-        // send no-cache headers
-        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-        header('Cache-Control: no-store, no-cache, must-revalidate');
-        header('Cache-Control: post-check=0, pre-check=0', false);
-        header('Pragma: no-cache');
-        header('Content-Type: text/html');
     }
 
     /**
@@ -293,6 +292,9 @@ class Controller extends \XLite\View\AView
      */
     protected function displayPage()
     {
+        // Send page headers first
+        static::sendHeaders();
+
         if ($this->useDefaultDisplayMode()) {
             // Display widget content inside some CMS content
             $this->getContentWidget()->display();
@@ -300,9 +302,6 @@ class Controller extends \XLite\View\AView
         } else {
             // Display widget in standalone display mode
             $this->prepareContent();
-
-            // Send page headers first
-            $this->startPage();
 
             parent::display();
         }

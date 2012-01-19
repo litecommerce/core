@@ -466,9 +466,10 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     /**
      * getTestProfile
      *
-     * @param int $id ____param_comment____
+     * @param int $selectedProfileId
+     * @param int $selectedAddressesId
      *
-     * @return void
+     * @return \XLite\Model\Profile
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
@@ -496,7 +497,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
         $this->assertNotNull($profile, sprintf('Profile creation failed (%d, %d)', $selectedProfileId, $selectedAddressesId));
 
-        return $result ? $profile : null;
+        return $profile;
     }
 
     /**

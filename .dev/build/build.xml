@@ -5,7 +5,7 @@
 
     <target name="build" depends="set-properties,clean,prepare-git,prepare-release,prepare,phpunit-deployment,tests,php-documentor,analysis" />
 
-    <target name="cc" depends="set-properties-cc,clean,prepare-git-cc,prepare-release-cc,prepare,phpunit-deployment-cc,tests-cc,php-documentor,analysis,comparison,create-build" />
+    <target name="cc" depends="set-properties-cc,clean,prepare-git-cc,prepare-release-cc,prepare,tests-cc,php-documentor,analysis,comparison,create-build" />
 
     <target name="pure-build" depends="set-properties,clean,prepare,php-documentor,create-build" />
 
@@ -28,6 +28,7 @@
         <property name="root" location="${basedir}" />
         <property name="buildDir" location="${root}/build" />
         <property name="sourceDir" location="${root}/source" />
+        <property name="ec2Dir" location="${root}/.ec2" />
         <property name="drupalDir" location="${root}/xlite_cms" />
         <property name="lcConnectorDir" location="${drupalDir}/modules/lc_connector" />
         <property name="lc3CleanDir" location="${drupalDir}/sites/all/themes/lc3_clean" />
@@ -160,16 +161,17 @@
     </target>
 
     <!-- Install Drupal+LC (cc) -->
-    <target name="phpunit-deployment-cc">
-        <exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="on">
-            <arg value="xliteAllTests" />
-            <arg value="${buildDir}/.dev/tests/AllTests.php" />
-            <arg value="DEPLOY_DRUPAL" />
-        </exec>
-        <copy file="/u/xcart/etc/config.local.php" tofile="${installDir}/modules/lc_connector/litecommerce/etc/config.local.php" />
-    </target>
+    <!--<target name="phpunit-deployment-cc">-->
+    <!--<exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="on">-->
+    <!--<arg value="xliteAllTests" />-->
+    <!--<arg value="${buildDir}/.dev/tests/AllTests.php" />-->
+    <!--<arg value="DEPLOY_DRUPAL" />-->
+    <!--</exec>-->
+    <!--<copy file="/u/xcart/etc/config.local.php" tofile="${installDir}/modules/lc_connector/litecommerce/etc/config.local.php" />-->
+    <!--</target>-->
 
     <target name="prepare-db">
+        <copy file="/u/xcart/etc/config.local-cc.php" tofile="${installDir}/modules/lc_connector/litecommerce/etc/config.local.php" />
         <!-- Replace SQL data by the demo data (for testing) -->
         <exec executable="php" dir="${lcRoot}" failonerror="on">
             <arg value="${lcRoot}/restoredb" />
@@ -243,10 +245,17 @@
             <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
         </copy>
         <mkdir dir="${buildDir}/coverage" />
-        <exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="on">
+        <mkdir dir="${buildDir}/.dev/tests/Amazon/Grid/logs" />
+        <chmod perm="ugo+rx" file="${buildDir}/.dev/lib/phake/phake" />
+        <chmod perm="ugo+rx" file="${buildDir}/.dev/tests/Amazon/Grid/run-phake.sh" />
+        <exec executable="./run-phake.sh" dir="${buildDir}/.dev/tests/Amazon/Grid/" failonerror="off" resultproperty='web_result'>
+            <arg value="${buildDir}/.dev/lib/phake"/>
+            <arg value="${ec2Dir}"/>
+        </exec>
+        <exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="off" resultproperty='noweb_result'>
             <arg value="--verbose" />
             <arg value="--log-junit" />
-            <arg value="${buildDir}/logs/phpunit.xml" />
+            <arg value="${buildDir}/logs/phpunit.noweb.xml" />
             <!-- PHPUnit PMD and PHPUnit Metrics have been removed from PHPUnit 3.5 -->
             <arg value="--coverage-clover" />
             <arg value="${buildDir}/logs/phpunit.coverage.xml" />
@@ -254,7 +263,27 @@
             <arg value="${buildDir}/coverage" />
             <arg value="xliteAllTests" />
             <arg value="${buildDir}/.dev/tests/AllTests.php" />
+            <arg value="NOWEB" />
         </exec>
+
+        <copy todir="${buildDir}/logs/">
+            <fileset dir="${buildDir}/.dev/tests/Amazon/Grid/logs" includes="phpunit.*.xml" />
+            <fileset dir="${buildDir}/.dev/tests/Amazon/Grid/logs/screenshots" />
+        </copy>
+        <!--<move file="${buildDir}/logs/phpunit.noweb.xml" todir="${buildDir}/.dev/tests/Amazon/Grid/logs" />-->
+        <!--<exec executable="php" dir="${buildDir}/.dev/tests/Amazon/Grid" failonerror="on">-->
+        <!--<arg value="merge_xml.php" />-->
+        <!--<arg value="logs" />-->
+        <!--</exec>-->
+        <!--<copy file="${buildDir}/.dev/tests/Amazon/Grid/logs/phpunit.xml" todir="${buildDir}/logs/" />-->
+        <fail message="Tests failed">
+            <condition>
+                <or>
+                    <isfailure code="${web_result}" />
+                    <isfailure code="${noweb_result}" />
+                </or>
+            </condition>
+        </fail>
         <exec executable="php" dir="${sourceDir}">
             <arg value=".dev/tests/graph.php" />
             <arg value="${buildDir}/logs/phpunit.xml.speed" />

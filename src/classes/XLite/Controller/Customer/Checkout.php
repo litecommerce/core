@@ -185,8 +185,11 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 : array();
 
             $errors = array();
-            if ($this->getCart()->getFirstOpenPaymentTransaction()) {
-                $errors = $this->getCart()->getFirstOpenPaymentTransaction()
+
+            $firstOpenTransaction = $this->getCart()->getFirstOpenPaymentTransaction();
+
+            if ($firstOpenTransaction) {
+                $errors = $firstOpenTransaction
                     ->getPaymentMethod()
                     ->getProcessor()
                     ->getInputErrors($data);
@@ -270,6 +273,17 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->set('silent', true);
 
+            \XLite\Core\TopMessage::addError(
+                'You have an unpaid order #{{ORDER}}',
+                array(
+                    'ORDER' => $cart->getOrderId(),
+                )
+            );
+
+            $cart->setStatus(\XLite\Model\Order::STATUS_INPROGRESS);
+
+            $this->processSucceed();
+
             exit (0);
 
         } elseif (\XLite\Model\Payment\Transaction::SILENT == $result) {
@@ -308,6 +322,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->processSucceed();
 
+            \XLite\Core\TopMessage::getInstance()->clearTopMessages();
+
             $this->setReturnURL(
                 $this->buildURL(
                     'checkoutSuccess',
@@ -337,7 +353,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         // use the one set in merchant account, so we can't pass
         // 'order_id' in run-time, instead pass the order id parameter name
         $orderId = \XLite\Core\Request::getInstance()->order_id;
-        $cart = \XLite\Core\Database::getRepo('XLite\Model\Cart')->find($orderId);
+        $cart = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($orderId);
 
         if ($cart) {
 
@@ -354,13 +370,13 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->setReturnURL($this->buildURL('cart'));
 
-        } elseif ($cart->isOpen()) {
+        } elseif (!$cart->isPayed()) {
 
             \XLite\Core\TopMessage::addInfo(
                 'Payment for orders not over. Please complete payment of order.'
             );
 
-            $this->setReturnURL($this->buildURL('checkout'));
+            $this->setReturnURL($this->buildURL('order_list'));
 
         } else {
 
@@ -370,7 +386,15 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->processSucceed();
 
-            $this->setReturnURL($this->buildURL('checkoutSuccess', '', array('order_id' => $orderId)));
+            \XLite\Core\TopMessage::getInstance()->clearTopMessages();
+
+            $this->setReturnURL(
+                $this->buildURL(
+                    'checkoutSuccess',
+                    '',
+                    array('order_id' => $orderId)
+                )
+            );
         }
     }
 

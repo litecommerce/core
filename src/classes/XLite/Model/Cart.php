@@ -39,7 +39,7 @@ namespace XLite\Model;
 class Cart extends \XLite\Model\Order
 {
     /**
-     * Cart renew period 
+     * Cart renew period
      */
     const RENEW_PERIOD = 3600;
 
@@ -69,9 +69,10 @@ class Cart extends \XLite\Model\Order
             $orderId = \XLite\Core\Session::getInstance()->order_id;
 
             if ($orderId) {
+
                 $cart = \XLite\Core\Database::getRepo('XLite\Model\Cart')->find($orderId);
 
-                if ($cart && self::STATUS_TEMPORARY != $cart->getStatus()) {
+                if ($cart && !$cart->hasCartStatus()) {
                     \XLite\Core\Session::getInstance()->order_id = 0;
 
                     $cart = null;
@@ -121,17 +122,17 @@ class Cart extends \XLite\Model\Order
     /**
      * Set object instance
      *
-     * @param \XLite\Model\Cart $cart Cart
+     * @param \XLite\Model\Order $object Cart
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function setObject(\XLite\Model\Cart $cart)
+    public static function setObject(\XLite\Model\Order $object)
     {
         $className = get_called_class();
-        static::$instances[$className] = $cart;
-        \XLite\Core\Session::getInstance()->order_id = $cart->getOrderId();
+        static::$instances[$className] = $object;
+        \XLite\Core\Session::getInstance()->order_id = $object->getOrderId();
     }
 
     /**
@@ -236,6 +237,18 @@ class Cart extends \XLite\Model\Order
     public function markAsOrder()
     {
         $this->getRepository()->markAsOrder($this->getOrderId());
+    }
+
+    /**
+     * Check if the cart has a "Cart" status. ("in progress", "temporary")
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function hasCartStatus()
+    {
+        return in_array($this->getStatus(), array(self::STATUS_INPROGRESS, self::STATUS_TEMPORARY));
     }
 
     /**

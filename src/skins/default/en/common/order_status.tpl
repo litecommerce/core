@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Order satstus label
+ * Order status info
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-{if:isSelected(order,#status#,#Q#)}{t(#Queued#)}{end:}
-{if:isSelected(order,#status#,#P#)}{t(#Processed#)}{end:}
-{if:isSelected(order,#status#,#I#)}{t(#Incomplete#)}{end:}
-{if:isSelected(order,#status#,#F#)}{t(#Failed#)}{end:}
-{if:isSelected(order,#status#,#D#)}{t(#Declined#)}{end:}
-{if:isSelected(order,#status#,#C#)}{t(#Complete#)}{end:}
+{if:getParam(#useWrapper#)}
+{displayViewListContent(#order_status.wrapper#)}
+{end:}
+{if:!getParam(#useWrapper#)}
+{displayViewListContent(#order_status.nowrapper#)}
+{end:}

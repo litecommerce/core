@@ -71,7 +71,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             100000,
             'check content reloading'
         );
-
+        sleep(2);
         $this->clickAndWait('css=.lc-minicart .title a');
 
         return $product;

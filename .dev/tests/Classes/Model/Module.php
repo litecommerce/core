@@ -191,25 +191,58 @@ class XLite_Tests_Model_Module extends XLite_Tests_TestCase
      */
     public function testGetDependencyModules()
     {
-        $module1 = $this->getTestModule1();
-        $module2 = $this->getTestModule2();
-
-        $this->assertEmpty($module1->getDependencyModules(), 'check ' . self::TEST_MODULE_1 . ' dependencies');
-        $this->assertEmpty($module2->getDependencyModules(), 'check ' . self::TEST_MODULE_2 . ' dependencies');
-
-        $dependencies = array(
-            self::TEST_AUTHOR . '\\ProductOptions',
-            self::TEST_AUTHOR . '\\FeaturedProducts',
+        $data = array(
+            'author' => self::TEST_AUTHOR,
+            'majorVersion' => '1.0',
+            'minorVersion' => '1',
+            'moduleName' => '',
+            'authorName' => '',
         );
-        $dependentModules = array();
 
-        foreach ($dependencies as $dependency) {
-            list($author, $name) = explode('\\', $dependency);
-            $dependentModules[$dependency] = $this->getModuleByAuthorAndName($author, $name);
-        }
+        $modules = array(
+            /* 0 */ new \XLite\Model\Module($data + array('name' => 'Test1', 'enabled' => true, 'fromMarketplace' => false)),
+            /* 1 */ new \XLite\Model\Module($data + array('name' => 'Test1', 'enabled' => true, 'fromMarketplace' => true)),
+            /* 2 */ new \XLite\Model\Module($data + array('name' => 'Test2', 'enabled' => false, 'fromMarketplace' => false)),
+            /* 3 */ new \XLite\Model\Module($data + array('name' => 'Test2', 'enabled' => false, 'fromMarketplace' => true)),
+            /* 4 */ new \XLite\Model\Module($data + array('name' => 'Test3', 'enabled' => true, 'fromMarketplace' => false)),
+            /* 5 */ new \XLite\Model\Module($data + array('name' => 'Test4', 'enabled' => false, 'fromMarketplace' => false)),
+            /* 6 */ new \XLite\Model\Module($data + array('name' => 'Test5', 'enabled' => true, 'fromMarketplace' => true)),
+            /* 7 */ new \XLite\Model\Module($data + array('name' => 'Test6', 'enabled' => false, 'fromMarketplace' => true)),
+        );
+        $module = $this->getTestModule1();
+        $fakeDep = new \XLite\Model\Module(
+            array(
+                'author'     => self::TEST_AUTHOR,
+                'name'       => 'Test7',
+                'authorName' => self::TEST_AUTHOR,
+                'moduleName' => 'Test7',
+                'enabled'    => false,
+                'installed'  => false,
+            )
+        );
 
-        $module1->setDependencies($dependencies);
-        $this->assertEquals($dependentModules, $module1->getDependencyModules(), 'check ' . self::TEST_MODULE_1 . ' dependencies [1]');
+        $module->setDependencies(
+            array(
+                $modules[0]->getActualName(),
+                $modules[2]->getActualName(),
+                $modules[4]->getActualName(),
+                $modules[5]->getActualName(),
+                $modules[6]->getActualName(),
+                $modules[7]->getActualName(),
+                $fakeDep->getActualName(),
+            )
+        );
+
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->insertInBatch($modules);
+
+        $all = array($modules[0], $modules[2], $modules[4], $modules[5], $modules[6], $modules[7], $fakeDep);
+        $onlyDisabled = array($modules[2], $modules[5], $modules[7], $fakeDep);
+
+        $this->assertEquals($all, $module->getDependencyModules(), 'check dependencies [1]');
+        $this->assertEquals($all, $module->getDependencyModules(false), 'check dependencies [2]');
+        $this->assertEquals($onlyDisabled, $module->getDependencyModules(true), 'check dependencies [3]');
+
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->deleteInBatch($modules);
     }
 
     /**

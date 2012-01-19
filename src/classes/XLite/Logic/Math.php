@@ -88,7 +88,7 @@ class Math extends \XLite\Logic\ALogic
 
         return number_format(
             $this->roundByCurrency($value, $currency),
-            $currency->getE(),
+            $config->General->decimal_delim ? $currency->getE() : 0,
             $config->General->decimal_delim,
             $config->General->thousand_delim
         );

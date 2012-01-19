@@ -11,7 +11,5 @@
  *}
 
  <div class="box-frame marketplace-not-connected">
-   <div class="box">
-     {getWarningMessage()}
-   </div>
+   <div class="box">{t(getWarningMessage())}</div>
  </div>

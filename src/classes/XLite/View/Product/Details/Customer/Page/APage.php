@@ -75,6 +75,19 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
         return $list;
     }
 
+    /**
+     * Check - 'items available' label is visible or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isAvailableLabelVisible()
+    {
+        return $this->getProduct()->getInventory()->getEnabled()
+            && !$this->getProduct()->getInventory()->isOutOfStock();
+    }
+
     // {{{ Tabs
 
     /**

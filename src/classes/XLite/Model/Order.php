@@ -613,8 +613,9 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $items = array();
 
         foreach ($this->getItems() as $item) {
-            $inventory = $item->getProduct()->getInventory();
-            if ($inventory->getEnabled() && $inventory->getAmount() < $item->getAmount()) {
+
+            if ($item->hasWrongAmount()) {
+
                 $items[] = $item;
             }
         }
@@ -623,8 +624,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get order currency 
-     * 
+     * Get order currency
+     *
      * @return \XLite\Model\Currency
      * @see    ____func_see____
      * @since  1.0.8
@@ -1172,7 +1173,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Check - order is open (has initialized transactions or has open total) or not
+     * Check - order is open (has initialized transactions and has open total) or not
      *
      * @return boolean
      * @see    ____func_see____
@@ -1181,7 +1182,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     public function isOpen()
     {
         return $this->getFirstOpenPaymentTransaction()
-            || $this->getCurrency()->getMinimumValue() < $this->getCurrency()->roundValue(abs($this->getOpenTotal()));
+            && ($this->getCurrency()->getMinimumValue() < $this->getCurrency()->roundValue(abs($this->getOpenTotal())));
     }
 
     /**
@@ -1447,7 +1448,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Get items exclude surcharges info
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -1468,8 +1469,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get items included surcharges totals 
-     * 
+     * Get items included surcharges totals
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.8
@@ -1541,7 +1542,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Renew order
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.8
@@ -1603,8 +1604,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Finalize items calculation 
-     * 
+     * Finalize items calculation
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0

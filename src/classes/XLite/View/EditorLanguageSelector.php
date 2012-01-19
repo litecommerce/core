@@ -63,12 +63,12 @@ class EditorLanguageSelector extends \XLite\View\AView
      */
     public function getLanguages()
     {
-        if (is_null($this->activeLanguages)) {
+        if (!isset($this->activeLanguages)) {
 
             $list = array();
 
             foreach (\XLite\Core\Database::getRepo('\XLite\Model\Language')->findActiveLanguages() as $l) {
-                $list[$l->code] = $l->name;
+                $list[$l->getCode()] = $l->getName();
             }
 
             $this->activeLanguages = $list;
@@ -89,10 +89,7 @@ class EditorLanguageSelector extends \XLite\View\AView
     public function isLanguageSelected($code)
     {
         if (!isset($this->currentCode)) {
-            $this->currentCode = \XLite\Core\Request::getInstance()->language;
-            if (!$this->currentCode) {
-                $this->currentCode = \XLite\Core\Translation::getCurrentLanguageCode();
-            }
+            $this->currentCode = \XLite::getController()->getCurrentLanguage();
         }
 
         return $code == $this->currentCode;

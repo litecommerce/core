@@ -65,7 +65,7 @@ class Memberships extends \XLite\View\Dialog
 
         // TODO - add linked profiles calculataion
 
-        $language = $this->getLanguage();
+        $language = \XLite::getController()->getCurrentLanguage();
 
         $result = array();
         foreach ($list as $m) {
@@ -89,20 +89,6 @@ class Memberships extends \XLite\View\Dialog
     protected function getDir()
     {
         return 'memberships';
-    }
-
-    /**
-     * Get current language code
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLanguage()
-    {
-        $language = \XLite\Core\Request::getInstance()->language;
-
-        return $language ? $language : \XLite\Core\Translation::getCurrentLanguageCode();
     }
 
     /**
