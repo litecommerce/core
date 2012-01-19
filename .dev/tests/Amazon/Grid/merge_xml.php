@@ -15,7 +15,7 @@ function collectXmlOutput($dirname)
 
     $tests = $assertions = $failures = $errors = $time = 0;
 
-    $summary = shell_exec("cat $dirname/phpunit*.xml | grep AllTests");
+    $summary = shell_exec("cat $dirname/phpunit.*.xml | grep AllTests");
 
     if (preg_match_all('/tests="(\d+)" assertions="(\d+)" failures="(\d+)" errors="(\d+)" time="([\d\.]+)"/Sm', $summary, $matches)) {
         $tests = array_sum($matches[1]);

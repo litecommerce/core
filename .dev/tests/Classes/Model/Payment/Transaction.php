@@ -105,14 +105,12 @@ class XLite_Tests_Model_Payment_Transaction extends XLite_Tests_Model_Payment_Pa
         $method = $order->getPaymentMethod();
 
         $this->assertEquals(0, $order->getOpenTotal(), 'check open total');
-        $this->assertTrue($order->isOpen(), 'check open status');
 
         $r = $t->handleCheckoutAction();
 
         $this->assertEquals($t::COMPLETED, $r, 'check result');
         $this->assertEquals($t::STATUS_PENDING, $t->getStatus(), 'check status');
         $this->assertEquals(0, $order->getOpenTotal(), 'check open total #2');
-        $this->assertFalse($order->isOpen(), 'check open status #2');
         $this->assertFalse($order->isPayed(), 'check payed status');
     }
 
