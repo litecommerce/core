@@ -63,7 +63,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return 'Thank you for your order';
+        return static::t('Thank you for your order');
     }
 
     /**

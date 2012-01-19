@@ -91,7 +91,7 @@ class States extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'States';
+        return static::t('States');
     }
 
     /**

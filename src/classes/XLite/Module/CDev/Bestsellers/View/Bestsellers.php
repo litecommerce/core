@@ -126,7 +126,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getHead()
     {
-        return 'Bestsellers';
+        return static::t('Bestsellers');
     }
 
     /**

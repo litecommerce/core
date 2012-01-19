@@ -54,7 +54,7 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Backup/Restore';
+        return static::t('Backup/Restore');
     }
 
     /**
@@ -136,6 +136,6 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Backup/Restore', $this->buildURL('db_backup'));
+        $this->addLocationNode(static::t('Backup/Restore'), $this->buildURL('db_backup'));
     }
 }

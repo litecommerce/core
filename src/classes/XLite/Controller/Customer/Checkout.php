@@ -81,7 +81,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     public function getTitle()
     {
-        return 'Checkout';
+        return static::t('Checkout');
     }
 
     /**
@@ -568,7 +568,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function getLocation()
     {
-        return 'Checkout';
+        return static::t('Checkout');
     }
 
     /**

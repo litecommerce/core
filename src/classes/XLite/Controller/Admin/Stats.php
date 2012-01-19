@@ -93,11 +93,11 @@ class Stats extends \XLite\Controller\Admin\AAdmin
     public function getColumnTitles()
     {
         return array(
-            self::P_TODAY => 'Today',
-            self::P_WEEK  => 'This week',
-            self::P_MONTH => 'This month',
-            self::P_YEAR  => 'This year',
-            self::P_ALL   => 'All time',
+            self::P_TODAY => static::t('Today'),
+            self::P_WEEK  => static::t('This week'),
+            self::P_MONTH => static::t('This month'),
+            self::P_YEAR  => static::t('This year'),
+            self::P_ALL   => static::t('All time'),
         );
     }
 

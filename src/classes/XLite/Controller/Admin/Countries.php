@@ -44,7 +44,7 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Countries';
+        return static::t('Countries');
     }
 
     /**
@@ -70,7 +70,7 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Countries';
+        return static::t('Countries');
     }
 
     /**

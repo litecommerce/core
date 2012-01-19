@@ -102,7 +102,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      */
     protected function getLocation()
     {
-        return 'Top sellers';
+        return static::t('Top sellers');
     }
 
     /**
@@ -116,7 +116,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Statistics', $this->buildURL('orders_stats'));
+        $this->addLocationNode(static::t('Statistics'), $this->buildURL('orders_stats'));
     }
 
     /**

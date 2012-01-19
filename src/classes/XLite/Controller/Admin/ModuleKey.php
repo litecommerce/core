@@ -46,7 +46,7 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Enter license key';
+        return static::t('Enter license key');
     }
 
     // }}}

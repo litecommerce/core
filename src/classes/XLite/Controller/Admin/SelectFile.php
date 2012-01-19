@@ -44,7 +44,7 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Upload file';
+        return static::t('Upload file');
     }
 
     /**

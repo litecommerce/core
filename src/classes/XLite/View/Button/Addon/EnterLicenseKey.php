@@ -44,7 +44,7 @@ class EnterLicenseKey extends \XLite\View\Button\PopupButton
      */
     protected function getDefaultLabel()
     {
-        return 'Enter license key';
+        return static::t('Enter license key');
     }
 
     /**

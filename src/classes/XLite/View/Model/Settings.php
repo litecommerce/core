@@ -182,7 +182,7 @@ class Settings extends \XLite\View\Model\AModel
         $result = parent::getFormButtons();
         $result['submit'] = new \XLite\View\Button\Submit(
             array(
-                \XLite\View\Button\AButton::PARAM_LABEL => 'Submit',
+                \XLite\View\Button\AButton::PARAM_LABEL => static::t('Submit'),
                 \XLite\View\Button\AButton::PARAM_STYLE => 'action',
             )
         );

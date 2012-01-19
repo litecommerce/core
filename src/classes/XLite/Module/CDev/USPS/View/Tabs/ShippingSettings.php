@@ -47,7 +47,7 @@ class ShippingSettings extends \XLite\View\Tabs\ShippingSettings implements \XLi
         parent::init();
 
         $this->tabs['usps'] = array(
-            'title'    => 'U.S.P.S. settings',
+            'title'    => static::t('U.S.P.S. settings'),
             'template' => 'modules/CDev/USPS/main.tpl'
         );
     }

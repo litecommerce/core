@@ -76,7 +76,7 @@ class DeleteUser extends \XLite\View\Button\APopupButton
      */
     protected function getDefaultLabel()
     {
-        return 'Delete profile';
+        return static::t('Delete profile');
     }
 
     /**

@@ -32,7 +32,7 @@
 
     <widget class="\XLite\View\Form\Cart\ShippingEstimator\Open" name="shippingEstimator" />
       <div class="buttons">
-        <widget class="\XLite\View\Button\Submit" label="Estimate shipping cost" style="action estimate" />
+        <widget class="\XLite\View\Button\Submit" label="{t(#Estimate shipping cost#)}" style="action estimate" />
       </div>
     <widget name="shippingEstimator" end />
 

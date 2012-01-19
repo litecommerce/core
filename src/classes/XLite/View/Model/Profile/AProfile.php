@@ -118,7 +118,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      */
     protected function getSubmitButtonLabel()
     {
-        return \XLite\Core\Auth::getInstance()->isLogged() ? 'Update profile' : 'Create new account';
+        return \XLite\Core\Auth::getInstance()->isLogged() ? static::t('Update profile') : static::t('Create new account');
     }
 
     /**

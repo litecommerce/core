@@ -74,7 +74,7 @@ class BrowseServer extends \XLite\View\Button\APopupButton
      */
     protected function getDefaultLabel()
     {
-        return 'Browse server';
+        return static::t('Browse server');
     }
 
     /**

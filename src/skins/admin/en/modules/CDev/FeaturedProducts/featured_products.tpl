@@ -46,7 +46,7 @@
 
 <br /><br />
 
-<widget template="common/dialog.tpl" head="Add featured products" body="modules/CDev/FeaturedProducts/product/search.tpl" />
+<widget template="common/dialog.tpl" head="{t(#Add featured products#)}" body="modules/CDev/FeaturedProducts/product/search.tpl" />
 
 {* Open <form ...> tag *}
 <widget class="\XLite\Module\CDev\FeaturedProducts\View\Form\Add" name="products_form" />

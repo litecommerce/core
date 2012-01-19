@@ -29,7 +29,7 @@ function ShowNotes()
 //]]>
 </script>
 
-Use this section to define shipping zones.
+{t(#Use this section to define shipping zones.#)}
 
 <hr />
 
@@ -43,8 +43,8 @@ Use this section to define shipping zones.
 checkboxes_form = 'zonesform';
 checkboxes = new Array({foreach:getShippingZones(),k,v}{if:!k=0},{end:}'to_delete[{v.getZoneId()}]'{end:});
 
-lbl_no_items_have_been_selected = 'No items have been selected';
-lbl_delete_confirmation = 'Are you sure you wish to delete the selected zones?';
+lbl_no_items_have_been_selected = '{t(#No items have been selected#)}';
+lbl_delete_confirmation = '{t(#Are you sure you wish to delete the selected zones?#)}';
 
 function deleteZones()
 {
@@ -79,7 +79,7 @@ function deleteZones()
   <tr>
   <td colspan="2">
   <br />
-  <widget class="\XLite\View\Button\Regular" IF="isZonesDefined()" label="Delete selected" jsCode="deleteZones();" />
+  <widget class="\XLite\View\Button\Regular" IF="isZonesDefined()" label="{t(#Delete selected#)}" jsCode="deleteZones();" />
   </td>
 </tr>
 
@@ -92,4 +92,4 @@ function deleteZones()
 <br />
 <br />
 
-<widget class="\XLite\View\Button\Regular" label="Add zone" jsCode="self.location='admin.php?target=shipping_zones&mode=add';" />
+<widget class="\XLite\View\Button\Regular" label="{t(#Add zone#)}" jsCode="self.location='admin.php?target=shipping_zones&mode=add';" />

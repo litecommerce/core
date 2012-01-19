@@ -57,7 +57,7 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Shipping';
+        return static::t('Shipping');
     }
 
     /**
@@ -136,6 +136,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      */
     protected function getOptionsCategory()
     {
-        return static::t('Shipping');
+        return 'Shipping';
     }
 }

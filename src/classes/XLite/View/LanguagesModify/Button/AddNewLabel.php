@@ -58,7 +58,7 @@ class AddNewLabel extends \XLite\View\Button\Regular
             self::PARAM_PAGE     => new \XLite\Model\WidgetParam\Int('Page index', 1),
         );
 
-        $this->widgetParams[self::PARAM_LABEL]->setValue('Add new label');
+        $this->widgetParams[self::PARAM_LABEL]->setValue(static::t('Add new label'));
         $this->widgetParams[self::PARAM_STYLE]->setValue('add-new-label');
     }
 

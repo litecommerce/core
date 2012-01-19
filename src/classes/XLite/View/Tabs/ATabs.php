@@ -303,6 +303,10 @@ abstract class ATabs extends \XLite\View\AView
                 $tab['selected'] = $this->isSelectedTab($target, $tab);
                 $tab['url'] = $this->buildTabURL($target, $tab);
 
+                if (isset($tab['title'])) {
+                    $tab['title'] = static::t($tab['title']);
+                }
+
                 // Set default values for missing tab parameters
                 $tab += $defaultValues;
 

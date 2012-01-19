@@ -162,7 +162,7 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
 
             case 'restore_from_uploaded_file':
             case 'restore_from_local_file':
-                $url[] = '<a href="admin.php?target=db_restore">Return to admin interface.</a>';
+                $url[] = '<a href="admin.php?target=db_restore">'.static::t('Return to admin interface.').'</a>';
                 break;
 
             default:

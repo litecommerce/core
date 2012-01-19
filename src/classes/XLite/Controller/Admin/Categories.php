@@ -46,7 +46,7 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
     {
         return ($this->getCategory() && $this->getRootCategoryId() !== $this->getCategory()->getCategoryId())
             ? $this->getCategory()->getName()
-            : 'Manage categories';
+            : static::t('Manage categories');
     }
 
     /**

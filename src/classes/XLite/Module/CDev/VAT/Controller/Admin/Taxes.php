@@ -52,7 +52,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
     {
         $list = parent::getPages();
 
-        $list[self::PAGE_VAT_TAX] = 'VAT';
+        $list[self::PAGE_VAT_TAX] = static::t('VAT');
 
         return $list;
     }

@@ -24,7 +24,7 @@
 <widget target="main" template="common/dialog.tpl" body="menu.tpl" />
 
 <widget name="categoriesWidget" target="categories" template="common/dialog.tpl" body="categories/body.tpl" IF="!mode=#delete#" />
-<widget module="CDev\FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/CDev/FeaturedProducts/featured_products.tpl" IF="{namedWidgets.categoriesWidget.visible}" />
+<widget module="CDev\FeaturedProducts" template="common/dialog.tpl" head="{t(#Featured products#)}" body="modules/CDev/FeaturedProducts/featured_products.tpl" IF="{namedWidgets.categoriesWidget.visible}" />
 
 {* Some bug in Flexy *}
 <widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" IF="getCategory()" />
@@ -41,7 +41,7 @@
 
 <widget target="order" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
 
-<widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="Countries">
+<widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="{t(#Countries#)}">
 
 <widget target="update_inventory" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 

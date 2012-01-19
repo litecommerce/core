@@ -83,7 +83,7 @@ class DeleteCategory extends \XLite\View\Button\APopupButton
      */
     protected function getDefaultLabel()
     {
-        return 'Delete';
+        return static::t('Delete');
     }
 
     /**

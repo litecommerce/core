@@ -44,6 +44,6 @@ class BrowseServer extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Browse server';
+        return static::t('Browse server');
     }
 }

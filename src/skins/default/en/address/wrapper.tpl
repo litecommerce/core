@@ -36,7 +36,7 @@
       <td class="address-entry-actions-cell">
 
         <div class="change-action">
-          <widget class="\XLite\View\Button\ModifyAddress" label="Change" addressId="{address.getAddressId()}" />
+          <widget class="\XLite\View\Button\ModifyAddress" label="{t(#Change#)}" addressId="{address.getAddressId()}" />
         </div>
 
         <div class="address-icons">
@@ -53,7 +53,7 @@
   </table>
 
   <div class="address-center-button" IF="{!address.getAddressId()}">
-    <widget class="\XLite\View\Button\AddAddress" style="action" label="Add new address" profileId="{profile_id}" />
+    <widget class="\XLite\View\Button\AddAddress" style="action" label="{t(#Add new address#)}" profileId="{profile_id}" />
   </div>
 
 </div>

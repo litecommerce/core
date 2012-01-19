@@ -22,7 +22,7 @@
 
   <div class="login">
     <h3>{t(#Already have an account?#)}</h3>
-    <widget class="\XLite\View\Button\Link" label="Login here" location="{getLoginURL()}" />
+    <widget class="\XLite\View\Button\Link" label="{t(#Login here#)}" location="{getLoginURL()}" />
   </div>
 
   <div class="clear"></div>

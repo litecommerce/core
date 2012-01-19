@@ -68,7 +68,7 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Search products';
+        return static::t('Search products');
     }
 
 
@@ -81,7 +81,7 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Search product';
+        return static::t('Search product');
     }
 
     /**

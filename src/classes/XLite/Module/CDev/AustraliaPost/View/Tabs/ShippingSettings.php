@@ -47,7 +47,7 @@ class ShippingSettings extends \XLite\View\Tabs\ShippingSettings implements \XLi
         parent::init();
 
         $this->tabs['aupost'] = array(
-            'title'    => 'Australia Post settings',
+            'title'    => static::t('Australia Post settings'),
             'template' => 'modules/CDev/AustraliaPost/main.tpl'
         );
     }

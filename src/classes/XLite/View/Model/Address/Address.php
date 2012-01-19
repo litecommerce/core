@@ -135,6 +135,9 @@ class Address extends \XLite\View\Model\AModel
         $addressId = $this->getAddressId();
 
         foreach ($this->addressSchema as $key => $data) {
+            if (isset($data[self::SCHEMA_LABEL])) {
+                $data[self::SCHEMA_LABEL] = static::t($data[self::SCHEMA_LABEL]);
+            }
             $result[$addressId . '_' . $key] = $data;
         }
 

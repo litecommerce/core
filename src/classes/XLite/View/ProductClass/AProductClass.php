@@ -44,7 +44,7 @@ abstract class AProductClass extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Product classes';
+        return static::t('Product classes');
     }
 
     /**

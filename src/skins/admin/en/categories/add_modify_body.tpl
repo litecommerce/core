@@ -136,8 +136,8 @@
 
     <tr>
       <td colspan="3">
-        <widget IF="category.getCategoryId()" class="\XLite\View\Button\Submit" label="Update" />
-        <widget IF="!category.getCategoryId()" class="\XLite\View\Button\Submit" label="Create category" />
+        <widget IF="category.getCategoryId()" class="\XLite\View\Button\Submit" label="{t(#Update#)}" />
+        <widget IF="!category.getCategoryId()" class="\XLite\View\Button\Submit" label="{t(#Create category#)}" />
       </td>
     </tr>
 

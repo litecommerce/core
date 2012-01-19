@@ -44,7 +44,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Shipping zones';
+        return static::t('Shipping zones');
     }
     /**
      * Add elements into the specified zone
@@ -88,7 +88,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Shipping zones';
+        return static::t('Shipping zones');
     }
 
     /**

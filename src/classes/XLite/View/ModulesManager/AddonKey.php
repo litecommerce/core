@@ -76,7 +76,7 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getHead()
     {
-        return 'Enter license key';
+        return static::t('Enter license key');
     }
 
     /**

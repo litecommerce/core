@@ -62,7 +62,7 @@
 <widget
   class="\XLite\View\Button\FileSelector"
   style="main-button"
-  label="Add image"
+  label="{t(#Add image#)}"
   object="product"
   objectId="{product.getProductId()}"
   fileObject="images" />

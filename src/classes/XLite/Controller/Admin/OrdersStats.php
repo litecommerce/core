@@ -68,12 +68,12 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     public function getRowTitles()
     {
         return array(
-            self::P_PROCESSED  => 'Processed/Completed',
-            self::P_QUEUED     => 'Queued',
-            self::P_FAILED     => 'Failed/Declined',
-            self::P_INCOMPLETE => 'Not finished',
-            self::P_TOTAL      => 'Total',
-            self::P_PAID       => 'Paid',
+            self::P_PROCESSED  => static::t('Processed/Completed'),
+            self::P_QUEUED     => static::t('Queued'),
+            self::P_FAILED     => static::t('Failed/Declined'),
+            self::P_INCOMPLETE => static::t('Not finished'),
+            self::P_TOTAL      => static::t('Total'),
+            self::P_PAID       => static::t('Paid'),
         );
     }
 

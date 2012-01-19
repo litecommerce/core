@@ -59,7 +59,7 @@ class Upload extends \XLite\View\Button\PopupButton
      */
     protected function getDefaultLabel()
     {
-        return 'Upload add-on';
+        return static::t('Upload add-on');
     }
 
     /**

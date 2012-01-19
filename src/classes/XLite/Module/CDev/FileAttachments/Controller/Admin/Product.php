@@ -47,7 +47,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
         $list = parent::getPages();
 
         if (!$this->isNew()) {
-            $list['attachments'] = 'Attachments';
+            $list['attachments'] = static::t('Attachments');
         }
 
         return $list;

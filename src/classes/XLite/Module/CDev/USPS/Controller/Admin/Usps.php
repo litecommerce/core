@@ -44,7 +44,7 @@ class Usps extends \XLite\Controller\Admin\ShippingSettings
      */
     public function getTitle()
     {
-        return 'U.S.P.S. settings';
+        return static::t('U.S.P.S. settings');
     }
 
     /**
@@ -148,7 +148,7 @@ class Usps extends \XLite\Controller\Admin\ShippingSettings
      */
     protected function getLocation()
     {
-        return 'U.S.P.S. settings';
+        return static::t('U.S.P.S. settings');
     }
 
     /**

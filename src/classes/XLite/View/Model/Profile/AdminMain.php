@@ -316,7 +316,7 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function getHead()
     {
-        return 'Profile details';
+        return static::t('Profile details');
     }
 
     /**
@@ -484,9 +484,9 @@ class AdminMain extends \XLite\View\Model\AModel
     protected function getProfileMainSections()
     {
         return array(
-            self::SECTION_SUMMARY => 'Account summary',
-            self::SECTION_MAIN    => 'Email &amp; password',
-            self::SECTION_ACCESS  => 'Access information',
+            self::SECTION_SUMMARY => static::t('Account summary'),
+            self::SECTION_MAIN    => static::t('Email &amp; password'),
+            self::SECTION_ACCESS  => static::t('Access information'),
         );
     }
 
@@ -626,7 +626,7 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function getSubmitButtonLabel()
     {
-        return $this->isRegisterMode() ? 'Create account' : 'Update';
+        return $this->isRegisterMode() ? static::t('Create account') : static::t('Update');
     }
 
     /**

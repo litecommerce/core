@@ -44,7 +44,7 @@ class States extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'States';
+        return static::t('States');
     }
 
     /**
@@ -95,7 +95,7 @@ class States extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'States';
+        return static::t('States');
     }
 
     /**

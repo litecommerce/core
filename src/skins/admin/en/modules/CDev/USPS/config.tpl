@@ -175,7 +175,7 @@
     </tr>
 
     <tr>
-      <td colspan="2"><br /><widget class="\XLite\View\Button\Submit" label="Save" /></TD>
+      <td colspan="2"><br /><widget class="\XLite\View\Button\Submit" label="{t(#Save#)}" /></TD>
     </tr>
 
   </table>

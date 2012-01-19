@@ -73,7 +73,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
      */
     protected function getHead()
     {
-        return 'Featured products';
+        return static::t('Featured products');
     }
 
     /**

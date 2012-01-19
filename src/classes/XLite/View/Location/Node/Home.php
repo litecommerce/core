@@ -58,7 +58,7 @@ class Home extends \XLite\View\Location\Node
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_NAME]->setValue('Home');
+        $this->widgetParams[self::PARAM_NAME]->setValue(static::t('Home'));
         $this->widgetParams[self::PARAM_LINK]->setValue($this->buildURL());
     }
 }

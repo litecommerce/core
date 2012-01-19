@@ -44,7 +44,7 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Search users';
+        return static::t('Search users');
     }
 
     /**
@@ -56,7 +56,7 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Users';
+        return static::t('Users');
     }
 
     /**

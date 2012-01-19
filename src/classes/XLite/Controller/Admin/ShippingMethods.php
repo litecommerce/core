@@ -44,7 +44,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Shipping methods';
+        return static::t('Shipping methods');
     }
 
     /**

@@ -56,6 +56,6 @@ class Submit extends \XLite\View\Button\AButton
      */
     protected function getDefaultLabel()
     {
-        return 'Submit';
+        return static::t('Submit');
     }
 }

@@ -170,7 +170,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Shipping rates';
+        return static::t('Shipping rates');
     }
 
     /**
