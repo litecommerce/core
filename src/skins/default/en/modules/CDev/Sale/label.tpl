@@ -13,7 +13,7 @@
  * @ListChild (list="product.details.quicklook.info", weight="42")
  *}
 
-<div IF="product.getParticipateSale()" class="sale-label-product-details">
+<div IF="participateSale(product)" class="sale-label-product-details">
   <div class="text">
     {displayNestedViewListContent(#sale_price.text#)}
   </div>

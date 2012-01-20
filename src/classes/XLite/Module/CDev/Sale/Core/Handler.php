@@ -54,7 +54,7 @@ class Handler extends \XLite\Core\Handler implements \XLite\Base\IDecorator
                     ->setRange(0);
             } else {
                 // sale value is percent
-                $data->addPair('salePriceValue', new \XLite\Core\Validator\Integer(), null, static::t('Sale price'))
+                $data->addPair('salePriceValue', new \XLite\Core\Validator\Integer(), null, static::t('Percent off'))
                     ->setRange(0, 100);
             }
         }

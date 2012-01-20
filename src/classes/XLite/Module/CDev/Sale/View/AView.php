@@ -64,4 +64,18 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     {
         return intval($product->getSalePercent());
     }
+
+    /**
+     * Return sale participation flag
+     *
+     * @param \XLite\Model\Product $product Product model
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function participateSale(\XLite\Model\Product $product)
+    {
+        return $product->getParticipateSale() && ($product->getSalePriceValue() < $product->getPrice());
+    }
 }

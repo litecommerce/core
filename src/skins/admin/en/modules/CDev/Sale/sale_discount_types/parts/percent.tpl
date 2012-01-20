@@ -27,7 +27,7 @@
      <input
        type="text"
        id="sale-price-value-{%\XLite\Model\Product::SALE_DISCOUNT_TYPE_PERCENT%}"
-       value="{getParam(#salePriceValue#)}" />
+       value="{getPercentOffValue()}" />
    </li>
  </ul>
 

@@ -79,7 +79,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
-    protected $salePriceValue = 0.0000;
+    protected $salePriceValue = 0;
 
 
     /**
@@ -120,13 +120,13 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      */
     public function getSalePrice()
     {
-        $salePrice = $this->getPrice();
+        $salePrice = $price = $this->getPrice();
 
         if ($this->getParticipateSale()) {
             switch ($this->getDiscountType()) {
 
                 case self::SALE_DISCOUNT_TYPE_PERCENT:
-                    $salePrice = $salePrice * ( 1 - $this->getSalePriceValue()/100);
+                    $salePrice = $price * ( 1 - $this->getSalePriceValue()/100);
                     break;
 
                 case self::SALE_DISCOUNT_TYPE_PRICE:
@@ -136,7 +136,8 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
                 default :
             }
         }
-        return $salePrice;
+
+        return min($salePrice, $price);
     }
 
     /**

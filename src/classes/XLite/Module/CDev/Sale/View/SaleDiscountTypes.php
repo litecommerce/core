@@ -91,6 +91,18 @@ class SaleDiscountTypes extends \XLite\View\AView
     }
 
     /**
+     * Return percent off value.
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPercentOffValue()
+    {
+        return intval($this->getParam('salePriceValue'));
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void

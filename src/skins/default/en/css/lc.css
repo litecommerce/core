@@ -1073,7 +1073,8 @@ div.product-details .product-image-gallery
 .product-details ul.product-price {
   list-style: none;
   display: block;
-  margin-bottom: 90px;
+  margin-bottom: 0px;
+  height: 90px;
 }
 
 .product-details ul.product-price li {
