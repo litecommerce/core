@@ -212,6 +212,21 @@ CommonForm.prototype.bindElements = function()
     }
   );
 
+  // Cancel button
+  this.$form.find('.form-cancel')
+    .not('.assigned')
+    .click(
+      function (event) {
+        event.stopPropagation();
+        var form = jQuery(this).not('.disabled').parents('form').get(0);
+        if (form ) {
+          form.commonController.undo();
+        }
+
+        return false;
+      }
+    )
+    .addClass('assigned');
 }
 
 // Validate form
@@ -806,7 +821,16 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
 // Undo changes
 CommonElement.prototype.undo = function()
 {
-  this.element.value = this.element.initialValue;
+  if (this.isChanged(true)) {
+    if (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['checkbox', 'radio'])) {
+      this.element.checked = this.element.initialValue;
+
+    } else {
+      this.element.value = this.element.initialValue;
+    }
+
+    this.$element.trigger('undo');
+  }
 }
 
 // Element is state watcher

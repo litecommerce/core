@@ -15,4 +15,4 @@
 {else:}
   {getColumnValue(column,entity)}
 {end:}
-{displayInheritedViewListContent(#cell#,_ARRAY_(#column#^column,#entity#^entity))}
+{displayInheritedViewListContent(getCellListNamePart(#cell#,column),_ARRAY_(#column#^column,#entity#^entity))}

@@ -96,6 +96,7 @@ TableItemsList.prototype.listeners.form = function(handler)
         handler.container.find('.table-pager .input input').attr('disabled', 'disabled');
         handler.container.find('.table-pager .page-length').attr('disabled', 'disabled');
         handler.container.find('.table-pager a').attr('disabled', 'disabled');
+        form.find('.cancel.disabled').removeClass('disabled');
 
       } else {
         form.removeClass('changed');
@@ -107,6 +108,7 @@ TableItemsList.prototype.listeners.form = function(handler)
         handler.container.find('.table-pager .input input').removeAttr('disabled');
         handler.container.find('.table-pager .page-length').removeAttr('disabled');
         handler.container.find('.table-pager a').removeAttr('disabled');
+        form.find('.cancel').addClass('disabled');
       }
     }
   );

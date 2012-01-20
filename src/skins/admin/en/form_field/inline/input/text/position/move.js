@@ -31,12 +31,17 @@ CommonForm.elementControllers.push(
           handle: '.inline-move .move',
           start: function (event, ui)
           {
-            ui.item.find('td').each(
-              function () {
-                var td = jQuery(this);
-                td.attr('style', 'width: ' +  td.data('saved-width') + 'px');
-              }
-            );
+            if (ui.item.hasClass('remove-mark')) {
+              ui.item.parent().sortable('cancel');
+
+            } else {
+              ui.item.find('td').each(
+                function () {
+                  var td = jQuery(this);
+                  td.attr('style', 'width: ' +  td.data('saved-width') + 'px');
+                }
+              );
+            }
           },
           update: function(event, ui)
           {

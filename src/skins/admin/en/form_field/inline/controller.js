@@ -43,7 +43,7 @@ CommonForm.elementControllers.push(
       // View click effect (show field and hide view)
       jQuery('.view', this).click(
         function() {
-          if (field.hasClass('editable')) {
+          if (field.hasClass('editable') && !field.parents('.line').hasClass('remove-mark')) {
             line.addClass('edit-open-mark');
             jQuery(this).next().find(':input').eq(0).focus().select();
           }
@@ -62,6 +62,13 @@ CommonForm.elementControllers.push(
       }
 
       // Field input(s)
+
+      inputs.bind(
+        'undo',
+        function () {
+          field.get(0).saveField();
+        }
+      );
 
       // Input blur effect (initialize save fields group)
       inputs.blur(

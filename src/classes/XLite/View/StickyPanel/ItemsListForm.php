@@ -53,6 +53,11 @@ class ItemsListForm extends \XLite\View\Base\FormStickyPanel
                 ),
                 'XLite\View\Button\Submit'
             ),
+            $this->getWidget(
+                array(
+                    'template' => 'items_list/model/cancel.tpl',
+                )
+            ),
         );
     }
 }

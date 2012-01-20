@@ -424,44 +424,5 @@ class Search extends \XLite\View\ItemsList\Admin\Table
 
     // }}}
 
-    // {{{ TODO - REMOVE! test purpose...
-
-    /**
-     * Mark list as sortable
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getSortableType()
-    {
-        return static::SORT_TYPE_MOVE;
-    }
-
-    /**
-     * Mark list as selectable
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function isSelectable()
-    {
-        return true;
-    }
-
-    /**
-     * Inline creation mechanism position
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function isInlineCreation()
-    {
-        return static::CREATE_INLINE_TOP;
-    }
-
-    // }}}
 }
 

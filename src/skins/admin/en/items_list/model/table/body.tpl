@@ -15,8 +15,7 @@
   <thead>
     <tr>
       <th FOREACH="getColumns(),column" class="{getHeadClass(column)}">
-        {column.name}
-        {displayInheritedViewListContent(#head#,_ARRAY_(#column#^column))}
+        <widget template="items_list//model/table/parts/head.cell.tpl" />
       </th>
     </tr>
   </thead>
@@ -26,15 +25,18 @@
   </tbody>
 
   <tbody class="lines">
-    <tr FOREACH="getPageData(),idx,entity" class="{getLineClass(idx,entity)}">
-      <td FOREACH="getColumns(),column" class="{getColumnClass(column,entity)}">
-        {if:column.template}
-          <widget template="{column.template}" idx="{idx}" entity="{entity}" column="{column}" />
-        {else:}
-          <widget class="{column.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" />
-        {end:}
-      </td>
-    </tr>
+    {foreach:getPageData(),idx,entity}
+      <tr class="{getLineClass(idx,entity)}">
+        <td FOREACH="getColumns(),column" class="{getColumnClass(column,entity)}">
+          {if:column.template}
+            <widget template="{column.template}" idx="{idx}" entity="{entity}" column="{column}" />
+          {else:}
+            <widget class="{column.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" />
+          {end:}
+        </td>
+      </tr>
+      {displayInheritedViewListContent(#row#,_ARRAY_(#idx#^idx,#entity#^entity))}
+    {end:}
   </tbody>
 
   <tbody IF="isBottomInlineCreation()" class="create bottom-create">
@@ -42,4 +44,3 @@
   </tbody>
 
 </table>
-

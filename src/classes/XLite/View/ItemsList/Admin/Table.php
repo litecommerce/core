@@ -363,6 +363,21 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
         return 'XLite\View\Pager\Admin\Model\Table';
     }
 
+    /**
+     * Get cell list name part 
+     * 
+     * @param string $type   Cell type
+     * @param array  $column Column
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getCellListNamePart($type, array $column)
+    {
+        return $type . '.' . str_replace(' ', '.', $column[static::COLUMN_CODE]);
+    }
+
     // {{{ Content helpers
 
     /**

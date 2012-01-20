@@ -1670,3 +1670,16 @@ form.list-form {
   display: inline-block;
   width: auto;
 }
+
+form.list-form .sticky-panel .panel-cell {
+  display: inline-block;
+}
+
+form.list-form .sticky-panel a.cancel {
+  text-decoration: underline;
+}
+
+form.list-form .sticky-panel a.cancel.disabled {
+  color: #8f8f8f;
+  text-decoration: none;
+}
