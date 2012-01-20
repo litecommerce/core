@@ -16,9 +16,9 @@ core.bind(
     jQuery('.input-field-wrapper').each(function () {
       var obj = jQuery(this);
 
-      if ('' !== core.getCommentedData(obj, 'defaultValue')) {
+      var defaultValue = core.getCommentedData(obj, 'defaultValue');
+      if (defaultValue) {
         var inputField = jQuery('input', obj);
-        var defaultValue = core.getCommentedData(obj, 'defaultValue');
 
         if ('' === inputField.val()) {
           inputField.val(defaultValue).addClass('default-value');

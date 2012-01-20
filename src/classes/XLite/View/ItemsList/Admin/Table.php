@@ -247,6 +247,17 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
             }
         }
 
+        if ($this->isSwitchable()) {
+            $list[] = 'XLite\View\FormField\Inline\Input\Checkbox\Switcher\Enabled';
+        }
+
+        if (static::SORT_TYPE_INPUT == $this->getSortableType()) {
+            $list[] = 'XLite\View\FormField\Inline\Input\Text\Position\OrderBy';
+
+        } elseif (static::SORT_TYPE_MOVE == $this->getSortableType()) {
+            $list[] = 'XLite\View\FormField\Inline\Input\Text\Position\Move';
+        }
+
         return $list;
     }
 

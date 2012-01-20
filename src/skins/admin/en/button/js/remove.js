@@ -29,6 +29,7 @@ jQuery().ready(
           btn.removeClass('mark');
           cell.removeClass('remove-mark');
         }
+        cell.parents('form').change();
       }
     );
   }

@@ -12,7 +12,7 @@
 
 <span class="input-field-wrapper {getWrapperClass()}">
   {displayCommentedData(getCommentedData())}
-  <input type="hidden" name="{getName()}" value="{isChecked()}" />
+  <input type="hidden" name="{getName()}" value="" />
   <input{getAttributesCode():h} />
   <div class="widget" title="{getWidgetTitle()}" data-enable-label="{getEnableLabel()}" data-disable-label="{getDisableLabel()}"></div>
 </span>

@@ -67,6 +67,31 @@ class Switcher extends \XLite\View\FormField\Input\Checkbox
         return $list;
     }
 
+   /**
+     * Register CSS class to use for wrapper block (SPAN) of input field.
+     * It is usable to make unique changes of the field.
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    public function getWrapperClass()
+    {
+        return trim(parent::getWrapperClass() . ' ' . ($this->isChecked() ? 'enabled' : 'disabled'));
+    }
+
+    /**
+     * Determines if checkbox is checked
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isChecked()
+    {
+        return $this->getValue() || $this->checkSavedValue();
+    }
+
     /**
      * Return field template
      *
@@ -128,21 +153,19 @@ class Switcher extends \XLite\View\FormField\Input\Checkbox
     }
 
     /**
-     * prepareAttributes
-     *
-     * @param array $attrs Field attributes to prepare
+     * getCommonAttributes
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareAttributes(array $attrs)
+    protected function getCommonAttributes()
     {
-        $attrs = parent::prepareAttributes($attrs);
+        $list = parent::getCommonAttributes();
 
-        $attrs['value'] = '1';
+        $list['value'] = '1';
 
-        return $attrs;
+        return $list;
     }
 
 }

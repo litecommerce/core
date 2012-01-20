@@ -45,6 +45,20 @@ class Enabled extends \XLite\View\FormField\Inline\Input\Checkbox\Switcher
     protected $shortName = 'enabled';
 
     /**
+     * Preprocess value forsave
+     *
+     * @param mixed $value Value
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function preprocessSavedValue($value)
+    {
+        return (bool)$value;
+    }
+
+    /**
      * Check - field has view or not
      *
      * @return boolean

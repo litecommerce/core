@@ -232,10 +232,10 @@ abstract class AInline extends \XLite\View\AView
      */
     public function saveValue()
     {
-        $method = 'set' + $this->shortName;
+        $method = 'set' . $this->shortName;
 
         // $method assembled from 'set' + field short name
-        $this->getEntity()->$method($this->getValue());
+        $this->getEntity()->$method($this->preprocessSavedValue($this->getField()->getValue()));
     }
 
     /**
@@ -248,6 +248,20 @@ abstract class AInline extends \XLite\View\AView
     abstract protected function defineFieldClass();
 
     /**
+     * Preprocess value forsave
+     * 
+     * @param mixed $value Value
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function preprocessSavedValue($value)
+    {
+        return $value;
+    }
+
+    /**
      * Get entity value for field
      * 
      * @return mixed
@@ -256,10 +270,10 @@ abstract class AInline extends \XLite\View\AView
      */
     protected function getEntityValue()
     {
-        $method = 'get' + $this->shortName;
+        $method = 'get' . $this->shortName;
 
         // $method assembled from 'get' + field short name
-        return $this->getEntity()->getSKU();
+        return $this->getEntity()->$method();
     }
 
     /**

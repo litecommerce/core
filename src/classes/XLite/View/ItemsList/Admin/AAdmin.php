@@ -180,9 +180,26 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     abstract protected function defineRepositoryName();
 
     /**
+     * Quick process
+     * 
+     * @param array $parameters Parameters OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function processQuick(array $parameters = array())
+    {
+        $this->setWidgetParams($parameters);
+        $this->init();
+        $this->process();
+    }
+
+
+    /**
      * Process
      * 
-     * @return boolean}integer
+     * @return void
      * @see    ____func_see____
      * @since  1.0.15
      */
@@ -367,7 +384,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     /**
      * Process remove 
      * 
-     * @return void
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.15
      */
@@ -379,11 +396,13 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
 
         if (isset($data[$prefix]) && is_array($data[$prefix]) && $data[$prefix]) {
             $repo = $this->getRepository();
-            foreach ($data[$prefix] as $id) {
-                $entity = $repo->find($id);
-                if ($entity) {
-                    $repo->remove($entity);
-                    $count++;
+            foreach ($data[$prefix] as $id => $allow) {
+                if ($allow) {
+                    $entity = $repo->find($id);
+                    if ($entity) {
+                        \XLite\Core\Database::getEM()->remove($entity);
+                        $count++;
+                    }
                 }
             }
         }
@@ -394,6 +413,8 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
                 \XLite\Core\TopMessage::getInstance()->addInfo($label);
             }
         }
+
+        return $count;
     }
 
     // }}}
@@ -536,7 +557,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     protected function getInlineFields()
     {
         if (!isset($this->inlineFields)) {
-            $this->inlineFields = $thid->defineInlineFields();
+            $this->inlineFields = $this->defineInlineFields();
         }
 
         return $this->inlineFields;

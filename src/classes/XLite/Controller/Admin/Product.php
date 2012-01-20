@@ -42,7 +42,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @see   ____var_see____
      * @since 1.0.0
      */
-    public $params = array('target', 'product_id', 'page', 'backURL');
+    public $params = array('target', 'id', 'page', 'backURL');
 
 
     /**
@@ -166,7 +166,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     public function getProductId()
     {
-        return intval(\XLite\Core\Request::getInstance()->product_id);
+        return intval(\XLite\Core\Request::getInstance()->id);
     }
 
     /**
@@ -226,7 +226,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
         foreach ((array) $this->getPostedData('category_ids') as $categoryId) {
             $data[] = new \XLite\Model\CategoryProducts(
                 array(
-                    'product_id'  => $product->getProductId(),
+                    'id'  => $product->getProductId(),
                     'category_id' => $categoryId,
                     'category'    => \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($categoryId),
                     'product'     => $product,
@@ -362,7 +362,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
                 );
 
                 // Add the ID of created product to the return URL
-                $this->setReturnURL($this->buildURL('product', '', array('product_id' => $product->getProductId())));
+                $this->setReturnURL($this->buildURL('product', '', array('id' => $product->getProductId())));
             }
         }
     }

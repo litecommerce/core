@@ -93,7 +93,8 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateInBatchById($this->getPostedData());
+        $list = new \XLite\View\ItemsList\Admin\Product\Search();
+        $list->processQuick();
     }
 
     /**

@@ -53,7 +53,7 @@ class ProductQuantity extends \XLite\View\FormField\Inline\Input\Text\Integer
      */
     public function saveValue()
     {
-        $this->getEntity()->getInventory()->setAmount($this->getValue());
+        $this->getEntity()->getInventory()->setAmount($this->getField()->getValue());
     }
 
     /**
