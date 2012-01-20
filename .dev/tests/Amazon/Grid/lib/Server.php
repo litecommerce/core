@@ -99,6 +99,19 @@ class Server extends Ec2Client
         $command = new RemoteCommand($command, $options);
         return $command->execute();
     }
+
+    function download($filename, $toDir, $options = array()){
+        if (!isset($options['keypair'])){
+            throw new Exception('Keypair must be set');
+        }
+        if (!isset($options['user'])){
+            $options['user'] = 'ubuntu';
+        }
+        if (!file_exists($toDir) && is_dir($toDir)){
+            mkdir($toDir);
+        }
+        exec('scp -o StrictHostKeyChecking=no -r -i ' . $options['keypair'] . ' ' .$options['user']. '@' . $this->public_dns . ':'.$filename.' ' . $toDir);
+    }
 //     def run(command, options)
 //       command = RemoteCommand.new command, options.merge(:host => public_dns)
 //       command.execute
