@@ -41,7 +41,6 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
 
     const PARAM_IS_CHECKED = 'isChecked';
 
-
     /**
      * Return field type
      *

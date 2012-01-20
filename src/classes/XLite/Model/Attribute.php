@@ -148,4 +148,63 @@ abstract class Attribute extends \XLite\Model\Base\I18n
     {
         return $type === $this->getTypeName();
     }
+
+    /**
+     * Get attribute value for the certain product
+     *
+     * @param \XLite\Model\Product $product Product to get value for
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getValue(\XLite\Model\Product $product)
+    {
+        $object = $this->getAttrValueObject($product);
+
+        return isset($object) ? $object->getValue() : $this->getDefaultValue();
+    }
+
+    /**
+     * Set attribute value for the certain product
+     *
+     * @param \XLite\Model\Product $product Product to get value for
+     * @param mixed                $value   Value to set
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function setValue(\XLite\Model\Product $product, $value)
+    {
+        $object = $this->getAttrValueObject($product);
+
+        if (!isset($object)) {
+            $class = '\XLite\Model\Attribute\Value\\' . $this->getTypeName();
+            $object = new $class();
+            $object->setAttributeId($this->getId());
+            $object->setProduct($product);
+            $product->addAttributeValues($object);
+        }
+
+        $object->setValue($value);
+    }
+
+    /**
+     * Get attribute value object for the certain product
+     *
+     * @param \XLite\Model\Product $product Product to get value for
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAttrValueObject(\XLite\Model\Product $product)
+    {
+        return \Includes\Utils\ArrayManager::searchInObjectsArray(
+            $product->getAttributeValues(),
+            'getAttributeId',
+            $this->getId()
+        );
+    }
 }

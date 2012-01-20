@@ -22,28 +22,28 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.16
  */
 
-namespace XLite\View\FormField\Select;
+namespace XLite\View\Form\Product\Modify;
 
 /**
- * Form regular selector
+ * Attributes
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.16
  */
-class Regular extends \XLite\View\FormField\Select\ASelect
+class Attributes extends \XLite\View\Form\Product\Modify\Base\Single
 {
     /**
-     * Return default options list
+     * getDefaultAction
      *
-     * @return array
+     * @return string
      * @see    ____func_see____
      * @since  1.0.16
      */
-    protected function getDefaultOptions()
+    protected function getDefaultAction()
     {
-        return array();
+        return 'update_attributes';
     }
 }

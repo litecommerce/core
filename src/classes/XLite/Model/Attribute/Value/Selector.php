@@ -25,7 +25,7 @@
  * @since     1.0.15
  */
 
-namespace XLite\Model\Attribute\Type;
+namespace XLite\Model\Attribute\Value;
 
 /**
  * Selector
@@ -34,20 +34,20 @@ namespace XLite\Model\Attribute\Type;
  * @since 1.0.15
  *
  * @Entity
- * @Table  (name="attribute_type_selector")
+ * @Table  (name="attribute_value_selector")
  */
-class Selector extends \XLite\Model\Attribute
+class Selector extends \XLite\Model\Attribute\Value
 {
     /**
-     * Attribute default value
+     * Attribute value
      *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.15
      *
-     * @Column (type="integer", nullable=true)
+     * @Column (type="integer")
      */
-    protected $defaultValue;
+    protected $value;
 
     /**
      * Relation to attribute choices (only for "Selector" type)

@@ -41,7 +41,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
 
     const PARAM_OPTIONS = 'options';
 
-
     /**
      * Return default options list
      *
@@ -50,7 +49,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * @since  1.0.0
      */
     abstract protected function getDefaultOptions();
-
 
     /**
      * Return field type
@@ -63,7 +61,6 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
     {
         return self::FIELD_TYPE_SELECT;
     }
-
 
     /**
      * Return field template

@@ -60,8 +60,9 @@ class Product extends \XLite\Controller\Admin\AAdmin
 
         if (!$this->isNew()) {
             $pages += array(
-                'images'    => 'Product images',
-                'inventory' => 'Inventory tracking',
+                'images'     => 'Product images',
+                'inventory'  => 'Inventory tracking',
+                'attributes' => 'Attributes',
             );
         }
 
@@ -84,8 +85,9 @@ class Product extends \XLite\Controller\Admin\AAdmin
 
         if (!$this->isNew()) {
             $tpls += array(
-                'images'    => 'product/product_images.tpl',
-                'inventory' => 'product/inventory.tpl',
+                'images'     => 'product/product_images.tpl',
+                'inventory'  => 'product/inventory.tpl',
+                'attributes' => 'product/attributes.tpl',
             );
         }
 
@@ -134,6 +136,18 @@ class Product extends \XLite\Controller\Admin\AAdmin
     public function getInventory()
     {
         return $this->getProduct()->getInventory();
+    }
+
+    /**
+     * Return attributes list
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getAttributes()
+    {
+        return $this->getProduct()->getAttributes();
     }
 
     /**
@@ -441,21 +455,16 @@ class Product extends \XLite\Controller\Admin\AAdmin
         $zoomId = 0;
 
         if (isset(\XLite\Core\Request::getInstance()->is_zoom)) {
-
             $keys = array_keys(\XLite\Core\Request::getInstance()->is_zoom);
-
             $zoomId = array_shift($keys);
         }
 
         foreach (\XLite\Core\Request::getInstance()->alt as $imageId => $alt) {
-
             $img = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Image')
                 ->find($imageId);
 
             if ($img) {
-
                 $img->setAlt($alt);
-
                 $img->setOrderby(\XLite\Core\Request::getInstance()->orderby[$imageId]);
 
                 \XLite\Core\Database::getEM()->persist($img);
@@ -487,6 +496,42 @@ class Product extends \XLite\Controller\Admin\AAdmin
 
         \XLite\Core\Database::getEM()->persist($inv);
         \XLite\Core\Database::getEM()->flush();
+    }
+
+    /**
+     * Update attributes
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function doActionUpdateAttributes()
+    {
+        $product = $this->getProduct();
+
+        foreach ($this->getPostedData() as $attrId => $data) {
+            if (!empty($data['value'])) {
+                $attribute = \Includes\Utils\ArrayManager::searchInObjectsArray(
+                    $product->getAttributes(),
+                    'getId',
+                    $attrId
+                );
+
+                if (!isset($attribute)) {
+                    return \XLite\Core\TopMessage::addError('Invalid attribute ID: {{id}}', array('id' => $attrId));
+                }
+
+                $attribute->setValue($product, $data['value']);
+            }
+        }
+
+        $product->setAttrsInTab((bool) \XLite\Core\Request::getInstance()->attrsInTab);
+
+        // Update record in DB
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')->update($product);
+
+        // Show message
+        \XLite\Core\TopMessage::addInfo('Attributes have been updated successfully');
     }
 
     /**
