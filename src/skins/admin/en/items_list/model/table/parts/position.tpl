@@ -10,4 +10,4 @@
  * @since     1.0.15
  *}
 
-<input type="text" name="{getDataPrefix()}[{entity.getUniqueIndetifier():h}][position]" value="{getEntityPosition(entity)}" class="position" maxlength="10" />
+<widget class="XLite\View\FormField\Inline\Input\Text\Position\OrderBy" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" />

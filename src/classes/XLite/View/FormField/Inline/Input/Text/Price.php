@@ -102,5 +102,18 @@ abstract class Price extends \XLite\View\FormField\Inline\AInline
         return 'form_field/inline/input/text/price.tpl';
     }
 
+    /**
+     * Get initial field parameters
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getFieldParams()
+    {
+        return parent::getFieldParams()
+            + array(\XLite\View\FormField\Input\Text\Base\Numeric::PARAM_MOUSE_WHEEL_ICON => false);
+    }
+
 }
 

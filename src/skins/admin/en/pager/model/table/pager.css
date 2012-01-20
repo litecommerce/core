@@ -108,16 +108,22 @@
   padding-right: 10px;
 }
 
-.table-pager .prev.disabled {
+.table-pager .prev.disabled,
+form.changed .table-pager .prev
+{
   background-position: left -26px;
 }
 
-.table-pager .next.disabled {
+.table-pager .next.disabled,
+form.changed .table-pager .next
+{
   background-position: right -26px;
 }
 
 .table-pager .prev.disabled span,
-.table-pager .next.disabled span
+.table-pager .next.disabled span,
+form.changed .table-pager .prev span,
+form.changed .table-pager .next span
 {
   border-color: #e0e0e0;
   background-color: #fff;

@@ -20,6 +20,7 @@
   width: 16px;
   vertical-align: middle;
   cursor: pointer;
+  margin: auto;
 }
 
 .input-field-wrapper.switcher.disabled .widget {

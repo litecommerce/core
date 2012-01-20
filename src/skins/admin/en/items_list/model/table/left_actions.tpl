@@ -10,5 +10,5 @@
  * @since     1.0.15
  *}
 
-<div FOREACH="getLeftActions(),tpl" class="action"><widget template="{tpl:h}" /></div>
+<div FOREACH="getLeftActions(),i,tpl" class="{getActionCellClass(i,tpl)}"><widget template="{tpl:h}" /></div>
 

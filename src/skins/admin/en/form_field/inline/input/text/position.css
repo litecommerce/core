@@ -10,10 +10,6 @@
  * @since     1.0.15
  */
 
-.input-field-wrapper.position input[type="text"] {
-  background: transparent url(../../../images/position.png) no-repeat 6px 6px;
-  padding-left: 20px;
-  width: 23px;
-  text-align: right;
+.inline-field.inline-position {
+  width: 50px;
 }
-

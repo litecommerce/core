@@ -122,6 +122,18 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
+     * Get data prefix for select cells
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getSelectorDataPrefix()
+    {
+        return 'select';
+    }
+
+    /**
      * Get data prefix for new data
      *
      * @return string
@@ -735,6 +747,18 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
      */
     protected function getListName()
     {
+        return parent::getListName() . '.' . implode('.', $this->getListNameSuffixes());
+    }
+
+    /**
+     * Get list name suffixes 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getListNameSuffixes()
+    {
         $parts = explode('\\', get_called_class());
 
         $names = array();
@@ -745,7 +769,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
 
         $names[] = strtolower($parts[count($parts) - 1]);
 
-        return implode('.', $names) . '.' . parent::getListName();
+        return $name;
     }
 
     /**
@@ -831,7 +855,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Inline creation mechanism position
+     * Creation button position
      *
      * @return integer
      * @see    ____func_see____
@@ -864,6 +888,18 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     protected function getCreateURL()
     {
         return null;
+    }
+
+    /**
+     * Get create button label 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getCreateButtonLabel()
+    {
+        return 'Create';
     }
 
     /**

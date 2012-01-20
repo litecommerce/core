@@ -104,13 +104,14 @@ class Search extends \XLite\View\ItemsList\Admin\Table
     {
         return array(
             'sku' => array(
-                static::COLUMN_NAME  => \XLite\Core\Translation::lbl('SKU'),
+                static::COLUMN_NAME         => \XLite\Core\Translation::lbl('SKU'),
                 static::COLUMN_CREATE_CLASS => 'XLite\View\FormField\Inline\Input\Text\Product\SKU',
             ),
             'name' => array(
-                static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Product Name'),
-                static::COLUMN_LINK  => 'product',
+                static::COLUMN_NAME         => \XLite\Core\Translation::lbl('Product Name'),
+                static::COLUMN_LINK         => 'product',
                 static::COLUMN_CREATE_CLASS => 'XLite\View\FormField\Inline\Input\Text\Product\Name',
+                static::COLUMN_MAIN         => true,
             ),
             'price' => array(
                 static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Price'),
@@ -173,6 +174,18 @@ class Search extends \XLite\View\ItemsList\Admin\Table
     protected function getCreateURL()
     {
         return \XLite\Core\Converter::buildUrl('add_product');
+    }
+
+    /**
+     * Get list name suffixes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getListNameSuffixes()
+    {
+        return array('products', 'search');
     }
 
     // {{{ Search
@@ -422,7 +435,7 @@ class Search extends \XLite\View\ItemsList\Admin\Table
      */
     protected function getSortableType()
     {
-        return static::SORT_TYPE_INPUT;
+        return static::SORT_TYPE_MOVE;
     }
 
     /**

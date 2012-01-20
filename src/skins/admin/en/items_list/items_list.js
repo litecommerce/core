@@ -241,15 +241,7 @@ ItemsList.prototype.loadHandler = function(xhr, s)
   var processed = false;
 
   if (xhr.status == 200 && xhr.responseText) {
-
-    var div = document.createElement('div');
-
-    jQuery(div).html(jQuery('.items-list.sessioncell-' + this.cell, xhr.responseText));
-
-    this.container.replaceWith(div);
-
-    new ItemsList(this.cell, this.URLParams, this.URLAJAXParams);
-
+    this.placeNewContent(xhr.responseText);
     processed = true;
   }
 
@@ -258,4 +250,19 @@ ItemsList.prototype.loadHandler = function(xhr, s)
   if (!processed) {
     self.location = this.buildURL();
   }
+}
+
+// Place new list content
+ItemsList.prototype.placeNewContent = function(content)
+{
+  var div = document.createElement('div');
+  jQuery(div).html(jQuery('.items-list.sessioncell-' + this.cell, content));
+  this.container.replaceWith(div);
+  this.reassign();
+}
+
+// Reassign items list controller
+ItemsList.prototype.reassign = function()
+{
+  new ItemsList(this.cell, this.URLParams, this.URLAJAXParams);
 }

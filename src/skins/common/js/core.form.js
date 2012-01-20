@@ -189,7 +189,11 @@ CommonForm.prototype.bindElements = function()
   jQuery.each(
     CommonForm.elementControllers,
     function (i, controller) {
-      if ('object' == typeof(controller) && 0 < form.find(controller.pattern).length) {
+      if (
+        'object' == typeof(controller)
+        && 0 < form.find(controller.pattern).length
+        && ('undefined' == typeof(controller.condition) || 0 < form.find(controller.condition).length)
+      ) {
 
         // Controller is { pattern: '.element', handler: function () { ... } }
         form.find(controller.pattern).each(
@@ -199,7 +203,7 @@ CommonForm.prototype.bindElements = function()
             }
 
             if (-1 == jQuery.inArray(i, this.assignedElementControllers)) {
-              controller.handler.call(this);
+              controller.handler.call(this, form);
               this.assignedElementControllers.push(i);
             }
           }
@@ -218,6 +222,17 @@ CommonForm.prototype.validate = function(silent)
       return !this.validate(silent);
     }
   ).length;
+}
+
+// Undo all changes
+CommonForm.prototype.undo = function()
+{
+  this.getElements().filter('input,select,textarea').each(
+    function () {
+      this.commonController.undo();
+    }
+  );
+  this.$form.change();
 }
 
 // Enabled background submit mode and set callbacks
@@ -788,6 +803,11 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
   return false;
 }
 
+// Undo changes
+CommonElement.prototype.undo = function()
+{
+  this.element.value = this.element.initialValue;
+}
 
 // Element is state watcher
 CommonElement.prototype.isWatcher = function()

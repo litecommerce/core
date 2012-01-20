@@ -10,4 +10,4 @@
  * @since     1.0.15
  *}
 
-<div FOREACH="getRightActions(),tpl" class="action"><widget template="{tpl:h}" /></div>
+<div FOREACH="getRightActions(),tpl" class="{getActionCellClass(i,tpl)}"><widget template="{tpl:h}" /></div>

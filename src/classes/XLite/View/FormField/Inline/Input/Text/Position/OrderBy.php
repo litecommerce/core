@@ -36,40 +36,13 @@ namespace XLite\View\FormField\Inline\Input\Text\Position;
 class OrderBy extends \XLite\View\FormField\Inline\Input\Text\Position
 {
     /**
-     * Get field name parts
+     * Short name
      *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.15
      */
-    public function getNameParts()
-    {
-        return array_merge(parent::getNameParts(), array('orderby'));
-    }
-
-    /**
-     * Save value
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    public function saveValue()
-    {
-        $this->getEntity()->setOrderBy((bool)$this->getValue());
-    }
-
-    /**
-     * Get entity value for field
-     *
-     * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getEntityValue()
-    {
-        return $this->getEntity()->getOrderBy();
-    }
+    protected $shortName = 'orderby';
 
     /**
      * Get field label

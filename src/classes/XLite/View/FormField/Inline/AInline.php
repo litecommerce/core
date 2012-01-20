@@ -186,13 +186,25 @@ abstract class AInline extends \XLite\View\AView
     /**
      * Get view template 
      * 
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.15
      */
     protected function getViewTemplate()
     {
         return 'form_field/inline/view.tpl';
+    }
+
+    /**
+     * Get field template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getFieldTemplate()
+    {
+        return 'form_field/inline/field.tpl';
     }
 
     /**

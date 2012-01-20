@@ -42,6 +42,8 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
     const COLUMN_LINK          = 'link';
     const COLUMN_METHOD_SUFFIX = 'methodSuffix';
     const COLUMN_CREATE_CLASS  = 'createClass';
+    const COLUMN_MAIN          = 'main';
+    const COLUMN_SERVICE       = 'service';
 
     /**
      * Columns (local cache)
@@ -51,6 +53,15 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
      * @since 1.0.15
      */
     protected $columns;
+
+    /**
+     * Main column index
+     * 
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.15
+     */
+    protected $mainColumn;
 
     /**
      * Define columns structure
@@ -110,6 +121,7 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
                     static::COLUMN_CODE     => 'actions left',
                     static::COLUMN_NAME     => '',
                     static::COLUMN_TEMPLATE => 'items_list/model/table/left_actions.tpl',
+                    static::COLUMN_SERVICE  => true,
                 );
             }
 
@@ -127,11 +139,61 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
                     static::COLUMN_CODE     => 'actions right',
                     static::COLUMN_NAME     => '',
                     static::COLUMN_TEMPLATE => 'items_list/model/table/right_actions.tpl',
+                    static::COLUMN_SERVICE  => true,
                 );
             }
         }
 
         return $this->columns;
+    }
+
+    /**
+     * Get main column 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getMainColumn()
+    {
+        if (!isset($this->mainColumn)) {
+            $result = null;
+            $first = null;
+
+            foreach ($this->getColumns() as $i => $column) {
+                if (!isset($column[static::COLUMN_SERVICE]) || !$column[static::COLUMN_SERVICE]) {
+                    if (!isset($first)) {
+                        $first = $i;
+                    }
+                    if (isset($column[static::COLUMN_MAIN]) && $column[static::COLUMN_MAIN]) {
+                        $result = $i;
+                        break;
+                    }
+                }
+            }
+
+            $this->mainColumn = isset($result) ? $result : $first;
+        }
+
+        $columns = $this->getColumns();
+
+        return isset($columns[$this->mainColumn]) ? $columns[$this->mainColumn] : null;
+    }
+
+    /**
+     * Check - specified column is main or not
+     * 
+     * @param array $column Column
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isMainColumn(array $column)
+    {
+        $main = $this->getMainColumn();
+
+        return $main && $column[static::COLUMN_CODE] == $main[static::COLUMN_CODE];
     }
 
     /**
@@ -226,7 +288,8 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
             $columns[] = array(
                 static::COLUMN_CODE     => 'actions left',
                 static::COLUMN_NAME     => '',
-                static::COLUMN_TEMPLATE => 'items_list/model/table/empty.tpl',
+                static::COLUMN_SERVICE  => true,
+                static::COLUMN_TEMPLATE => 'items_list/model/table/parts/empty.tpl',
             );
         }
 
@@ -254,7 +317,10 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
             $columns[] = array(
                 static::COLUMN_CODE     => 'actions right',
                 static::COLUMN_NAME     => '',
-                static::COLUMN_TEMPLATE => 'items_list/model/table/empty.tpl',
+                static::COLUMN_SERVICE  => true,
+                static::COLUMN_TEMPLATE => $this->isRemoved()
+                    ? 'items_list/model/table/parts/remove_create.tpl'
+                    : 'items_list/model/table/parts/empty.tpl',
             );
         }
 
@@ -339,7 +405,8 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
     {
         return 'cell '
             . $column[static::COLUMN_CODE]
-            . ($this->hasColumnAttantion($column, $entity) ? ' attention' : '');
+            . ($this->hasColumnAttantion($column, $entity) ? ' attention' : '')
+            . ($this->isMainColumn($column) ? ' main' : '');
     }
 
     /**
@@ -355,6 +422,21 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
     protected function hasColumnAttantion(array $column, \XLite\Model\AEntity $entity = null)
     {
         return false;
+    }
+
+    /**
+     * Get action cell class 
+     * 
+     * @param integer $i        Cell index
+     * @param string  $template Template
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getActionCellClass($i, $template)
+    {
+        return 'action' . (0 < $i ? ' next' : '');
     }
 
     // }}}
@@ -422,15 +504,15 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
             $list[] = 'items_list/model/table/parts/move.tpl';
 
         } elseif (static::SORT_TYPE_INPUT === $this->getSortableType()) {
-            $list[] = 'items_list/model/table/parts/sort.tpl';
-        }
-
-        if ($this->isSwitchable()) {
-            $list[] = 'items_list/model/table/parts/switcher.tpl';
+            $list[] = 'items_list/model/table/parts/position.tpl';
         }
 
         if ($this->isSelectable()) {
             $list[] = 'items_list/model/table/parts/selector.tpl';
+        }
+
+        if ($this->isSwitchable()) {
+            $list[] = 'items_list/model/table/parts/switcher.tpl';
         }
 
         return $list;

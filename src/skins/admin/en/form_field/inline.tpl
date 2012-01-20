@@ -12,5 +12,5 @@
 
 <div class="{getContainerClass()}">
   <div IF="hasSeparateView()" class="view"><widget template="{getViewTemplate()}" /></div>
-  <div IF="isEditable()" class="field">{field.display()}</div>
+  <div IF="isEditable()" class="field"><widget template="{getFieldTemplate()}" /></div>
 </div>

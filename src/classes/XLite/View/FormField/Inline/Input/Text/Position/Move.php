@@ -25,16 +25,25 @@
  * @since     1.0.15
  */
 
-namespace XLite\View\FormField\Inline\Input\Text;
+namespace XLite\View\FormField\Inline\Input\Text\Position;
 
 /**
- * Position
+ * Order by position (soratable)
  * 
  * @see   ____class_see____
  * @since 1.0.15
  */
-abstract class Position extends \XLite\View\FormField\Inline\AInline
+class Move extends \XLite\View\FormField\Inline\Input\Text\Position
 {
+    /**
+     * Short name
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.15
+     */
+    protected $shortName = 'orderby';
+
     /**
      * Register CSS files
      *
@@ -46,21 +55,37 @@ abstract class Position extends \XLite\View\FormField\Inline\AInline
     {
         $list = parent::getCSSFiles();
 
-        $list[] = 'form_field/inline/input/text/position.css';
+        $list[] = 'form_field/inline/input/text/position/move.css';
 
         return $list;
     }
 
     /**
-     * Define form field
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'form_field/inline/input/text/position/move.js';
+
+        return $list;
+    }
+
+    /**
+     * Get field label
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function defineFieldClass()
+    protected function getLabel()
     {
-        return 'XLite\View\FormField\Input\Text\Position';
+        return \XLite\Core\Translation::lbl('Position');
     }
 
     /**
@@ -72,21 +97,31 @@ abstract class Position extends \XLite\View\FormField\Inline\AInline
      */
     protected function getContainerClass()
     {
-        return parent::getContainerClass() . ' inline-position';
+        return trim(str_replace('inline-position', '', parent::getContainerClass()) . ' inline-move');
     }
 
     /**
-     * Get initial field parameters
+     * Get field template
      *
-     * @return array
+     * @return void
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getFieldParams()
+    protected function getFieldTemplate()
     {
-        return parent::getFieldParams()
-            + array(\XLite\View\FormField\Input\Text\Base\Numeric::PARAM_MOUSE_WHEEL_ICON => false);
+        return 'form_field/inline/input/text/position/move.tpl';
+    }
+
+    /**
+     * Check - field has view or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function hasSeparateView()
+    {
+        return false;
     }
 
 }
-

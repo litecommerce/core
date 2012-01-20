@@ -52,6 +52,20 @@ class Position extends \XLite\View\FormField\Input\Text\Integer
     }
 
     /**
+     * Define widget params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[static::PARAM_MOUSE_WHEEL_ICON]->setValue(false);
+    }
+
+    /**
      * Get default wrapper class
      *
      * @return string

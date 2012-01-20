@@ -22,6 +22,31 @@ extend(TableItemsList, ItemsList);
 
 TableItemsList.prototype.form = null;
 
+// Set a param and send the request
+TableItemsList.prototype.process = function(paramName, paramValue)
+{
+  var form = this.container.parents('form').get(0);
+
+  var result = true;
+
+  if (!form || !form.commonController.isChanged(true)) {
+    result = TableItemsList.superclass.process.apply(this, arguments);
+  }
+
+  return result;
+}
+
+// Place new list content
+TableItemsList.prototype.placeNewContent = function(content)
+{
+  TableItemsList.superclass.placeNewContent.apply(this, arguments);
+  var form = this.container.parents('form').get(0);
+  if (form) {
+    form.bindElements();
+    form.change();
+  }
+}
+
 // Pager listener
 TableItemsList.prototype.listeners.pager = function(handler)
 {
@@ -68,6 +93,9 @@ TableItemsList.prototype.listeners.form = function(handler)
             this.enable();
           }
         );
+        handler.container.find('.table-pager .input input').attr('disabled', 'disabled');
+        handler.container.find('.table-pager .page-length').attr('disabled', 'disabled');
+        handler.container.find('.table-pager a').attr('disabled', 'disabled');
 
       } else {
         form.removeClass('changed');
@@ -76,6 +104,9 @@ TableItemsList.prototype.listeners.form = function(handler)
             this.disable();
           }
         );
+        handler.container.find('.table-pager .input input').removeAttr('disabled');
+        handler.container.find('.table-pager .page-length').removeAttr('disabled');
+        handler.container.find('.table-pager a').removeAttr('disabled');
       }
     }
   );
@@ -111,7 +142,85 @@ TableItemsList.prototype.listeners.createButton = function(handler)
 
         box.append(line);
 
+        var form = box.parents('form').get(0);
+        if (form) {
+          form.commonController.bindElements();
+        }
+
         return false;
       }
     );
 }
+
+// Remove button for inline creation listener
+TableItemsList.prototype.listeners.removeLineButton = function(handler)
+{
+  jQuery('.create-tpl button.remove', handler.container).click(
+    function () {
+      if (0 == jQuery(this).parents('tr.create-tpl').length) {
+        jQuery(this).parents('tr').eq(0).remove();
+      }
+    }
+  );
+}
+
+// Selector actions
+TableItemsList.prototype.listeners.selector = function(handler)
+{
+  jQuery('.actions input.selector', handler.container).click(
+    function () {
+      var box = jQuery(this).parent('div.selector');
+
+      if (this.checked) {
+        box.addClass('checked');
+
+      } else {
+        box.removeClass('checked');
+      }
+
+      return true;
+    }
+  );
+}
+
+// Position changed
+TableItemsList.prototype.listeners.positionChanged = function(handler)
+{
+  jQuery('tbody.lines', handler.container).bind(
+    'positionChange',
+    function () {
+      var i = 0;
+      var length = jQuery(this).find('.lines').length;
+      jQuery(this).find('.lines').each(
+        function () {
+          var tr = jQuery(this);
+
+          if (0 == i) {
+            tr.addClass('first');
+          } else {
+            tr.removeClass('first');
+          }
+
+          if (length - 1 == i) {
+            tr.addClass('last');
+          } else {
+            tr.removeClass('last');
+          }
+
+          if (0 == (i + 1) % 2) {
+            tr.addClass('even');
+          } else {
+            tr.removeClass('even');
+          }
+        }
+      );
+    }
+  );
+}
+
+// Reassign items list controller
+TableItemsList.prototype.reassign = function()
+{
+  new TableItemsList(this.cell, this.URLParams, this.URLAJAXParams);
+}
+

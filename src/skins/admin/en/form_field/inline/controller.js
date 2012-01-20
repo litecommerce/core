@@ -45,7 +45,7 @@ CommonForm.elementControllers.push(
         function() {
           if (field.hasClass('editable')) {
             line.addClass('edit-open-mark');
-            jQuery(this).next().find(':input').focus().select();
+            jQuery(this).next().find(':input').eq(0).focus().select();
           }
         }
       );

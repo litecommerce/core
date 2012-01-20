@@ -27,3 +27,18 @@
   font-size: 16px;
 }
 
+.items-list.products table.list thead th.sku {
+  width: 110px;
+}
+
+.items-list.products table.list thead th.name {
+  width: 450px;
+}
+
+.items-list.products table.list thead th.price {
+  width: 100px;
+}
+
+.items-list.products table.list thead th.qty {
+  width: 130px;
+}

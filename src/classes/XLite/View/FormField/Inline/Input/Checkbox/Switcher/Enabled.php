@@ -45,7 +45,7 @@ class Enabled extends \XLite\View\FormField\Inline\Input\Checkbox\Switcher
     protected $shortName = 'enabled';
 
     /**
-     * Check - field is editable or not
+     * Check - field has view or not
      *
      * @return boolean
      * @see    ____func_see____

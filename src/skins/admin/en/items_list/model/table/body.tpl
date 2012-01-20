@@ -14,7 +14,10 @@
 
   <thead>
     <tr>
-      <th FOREACH="getColumns(),column" class="{getHeadClass(column)}">{column.name}</th>
+      <th FOREACH="getColumns(),column" class="{getHeadClass(column)}">
+        {column.name}
+        {displayInheritedViewListContent(#head#,_ARRAY_(#column#^column))}
+      </th>
     </tr>
   </thead>
 
@@ -22,7 +25,7 @@
     <widget template="items_list/model/table/parts/create_box.tpl" />
   </tbody>
 
-  <tbody>
+  <tbody class="lines">
     <tr FOREACH="getPageData(),idx,entity" class="{getLineClass(idx,entity)}">
       <td FOREACH="getColumns(),column" class="{getColumnClass(column,entity)}">
         {if:column.template}

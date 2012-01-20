@@ -10,4 +10,4 @@
  * @since     1.0.15
  *}
 
-<widget class="XLite\View\Button\Link" label="{t(#Create#)}" location="{getCreateURL()}" style="create-inline" />
+<widget class="XLite\View\Button\Link" label="{t(getCreateButtonLabel())}" location="{getCreateURL()}" style="create-inline" />
