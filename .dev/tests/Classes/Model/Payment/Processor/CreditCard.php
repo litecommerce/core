@@ -44,7 +44,7 @@ class XLite_Tests_Model_Payment_Processor_CreditCard extends XLite_Tests_Model_P
         $method = $order->getPaymentMethod();
 
         $this->assertEquals(0, $order->getOpenTotal(), 'check open total');
-        $this->assertTrue($order->isOpen(), 'check open status');
+        $this->assertFalse($order->isPayed(), 'check open status');
 
         $data = array(
             'name'       => 1,

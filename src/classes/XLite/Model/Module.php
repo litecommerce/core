@@ -190,7 +190,7 @@ class Module extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length=8)
+     * @Column (type="integer")
      */
     protected $minorVersion;
 

@@ -41,6 +41,7 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
 
     protected function getTestOrder($new_order = false)
     {
+        xdebug_stop_code_coverage(false);
         if ($this->order && !$new_order)
             return $this->order;
         \XLite\Core\Auth::getInstance()->logoff();
@@ -93,16 +94,19 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
         if (!$this->order || $new_order)
             $this->orders[] = $order;
         $this->order = $order;
+        xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);
         return $order;
     }
 
     protected function tearDown(){
+        xdebug_stop_code_coverage(false);
         if (!empty($this->orders))
             foreach($this->orders as $order)
                 $this->clearEntity($order);
         if ($this->order)
             $this->clearEntity($this->order);
         $this->order = null;
+        xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);
         parent::tearDown();
     }
 

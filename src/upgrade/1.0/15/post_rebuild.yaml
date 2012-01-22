@@ -1,0 +1,7 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Data for core upgrading 1.0.14 -> 1.0.15
+#
+
+XLite\Model\LanguageLabel:
+  - { name: 'X items available', translations: [{ code: en, label: '{{count}} items available' }] }
