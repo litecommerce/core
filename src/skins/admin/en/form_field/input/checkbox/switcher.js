@@ -16,20 +16,32 @@ CommonForm.elementControllers.push(
     handler: function () {
       var input = jQuery(':checkbox', this);
       var cnt = jQuery(this);
-      jQuery('.widget', this).click(
+      var widget = jQuery('.widget', this);
+
+      widget.click(
         function () {
-          var widget = jQuery(this);
           if (!input.attr('checked')) {
             input.attr('checked', 'checked');
+            input.get(0).setAttribute('checked', 'checked');
+
+          } else {
+            input.removeAttr('checked');
+          }
+
+          input.change();
+        }
+      );
+
+      input.change(
+        function () {
+          if (this.checked) {
             cnt.addClass('enabled').removeClass('disabled');
             widget.attr('title', widget.data('disable-label'));
 
           } else {
-            input.removeAttr('checked');
             cnt.removeClass('enabled').addClass('disabled');
             widget.attr('title', widget.data('enable-label'));
           }
-          input.change();
         }
       );
     }

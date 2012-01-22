@@ -1673,6 +1673,11 @@ form.list-form {
 
 form.list-form .sticky-panel .panel-cell {
   display: inline-block;
+  padding-left: 10px;
+}
+
+form.list-form .sticky-panel .panel-cell.first {
+  padding-left: 0px;
 }
 
 form.list-form .sticky-panel a.cancel {

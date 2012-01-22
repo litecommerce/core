@@ -55,4 +55,25 @@ abstract class FormStickyPanel extends \XLite\View\Base\StickyPanel
     {
         return 'form/panel';
     }
+
+    /**
+     * Get cell class 
+     * 
+     * @param integer           $idx    Button index
+     * @param \XLite\View\AView $button Button
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getCellClass($idx, \XLite\View\AView $button)
+    {
+        $classes = array('panel-cell');
+
+        if (0 == $idx) {
+            $classes[] = 'first';
+        }
+
+        return implode(' ', $classes);
+    }
 }

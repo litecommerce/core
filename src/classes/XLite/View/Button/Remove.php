@@ -72,7 +72,7 @@ class Remove extends \XLite\View\Button\AButton
      */
     protected function  getStyle()
     {
-        return 'remove '
+        return 'remove'
             . ($this->getParam(self::PARAM_STYLE) ? ' ' . $this->getParam(self::PARAM_STYLE) : '');
     }
 }

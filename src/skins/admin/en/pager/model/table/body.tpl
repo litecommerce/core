@@ -13,7 +13,7 @@
 <div class="left">
   <span class="title">{t(#Page#)}:</span>
   <a href="{buildURLByPageId(previousPageId)}" class="{getPrevClass()}" data-pageId="{getPreviousPageId()}"><span>{t(#Prev#)}</span></a>
-  <div class="input"><input type="text" name="pageId" value="{preprocessPageId(pageId)}" class="page-length" /></div>
+  <div class="input"><input type="text" name="pageId" value="{preprocessPageId(pageId)}" /></div>
   <a href="{buildURLByPageId(nextPageId)}" class="{getNextClass()}" data-pageId="{getNextPageId()}"><span>{t(#Next#)}</span></a>
   <div class="last"><span class="prefix">{t(#of#)}</span><a IF="!isLastPage()" href="{buildURLByPageId(lastPageId)}" data-pageId="{getLastPageId()}">{preprocessPageId(lastPageId)}</a><span IF="isLastPage()" class="page">{preprocessPageId(lastPageId)}</span></div>
 </div>

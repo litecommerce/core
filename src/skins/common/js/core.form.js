@@ -828,6 +828,7 @@ CommonElement.prototype.undo = function()
     } else {
       this.element.value = this.element.initialValue;
     }
+    this.$element.change();
 
     this.$element.trigger('undo');
   }

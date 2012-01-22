@@ -27,6 +27,11 @@
   cursor: pointer;
 }
 
+.remove-mark .inline-field.editable .view {
+  background-color: transparent;
+  cursor: auto;
+}
+
 .inline-field .field .wheel-mark {
   margin-right: 0px;
 }

@@ -93,9 +93,13 @@ TableItemsList.prototype.listeners.form = function(handler)
             this.enable();
           }
         );
-        handler.container.find('.table-pager .input input').attr('disabled', 'disabled');
-        handler.container.find('.table-pager .page-length').attr('disabled', 'disabled');
-        handler.container.find('.table-pager a').attr('disabled', 'disabled');
+        handler.container.find('.table-pager .input input, .table-pager .page-length').each(
+          function () {
+            jQuery(this).attr('disabled', 'disabled');
+            this.setAttribute('disabled', 'disabled');
+          }
+        );
+        handler.container.find('.table-pager a').addClass('disabled').removeClass('enabled');
         form.find('.cancel.disabled').removeClass('disabled');
 
       } else {
@@ -105,9 +109,8 @@ TableItemsList.prototype.listeners.form = function(handler)
             this.disable();
           }
         );
-        handler.container.find('.table-pager .input input').removeAttr('disabled');
-        handler.container.find('.table-pager .page-length').removeAttr('disabled');
-        handler.container.find('.table-pager a').removeAttr('disabled');
+        handler.container.find('.table-pager .input input, .table-pager .page-length').removeAttr('disabled');
+        handler.container.find('.table-pager a').removeClass('disabled').addClass('enabled');
         form.find('.cancel').addClass('disabled');
       }
     }
