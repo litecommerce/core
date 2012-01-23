@@ -10,28 +10,42 @@
  * @since     1.0.15
  */
 
-jQuery().ready(
-  function () {
-    jQuery('button.remove').click(
-      function () {
-        var btn = jQuery(this);
-        var inp = btn.prev();
-        var cell = btn.parents('.line').eq(0);
+CommonForm.elementControllers.push(
+  {
+    pattern: '.line .actions button.remove',
+    handler: function () {
+      var inp = jQuery('input', this);
+      var btn = jQuery(this);
+      var cell = btn.parents('.line').eq(0);
 
-        var remove = !inp.attr('value');
-        inp.val(remove ? '1' : '');
+      btn.click(
+        function () {
+          if (inp.attr('checked')) {
+            inp.removeAttr('checked');
 
-        if (remove) {
-          btn.addClass('mark');
-          cell.addClass('remove-mark');
-
-        } else {
-          btn.removeClass('mark');
-          cell.removeClass('remove-mark');
+          } else {
+            inp.attr('checked', 'checked');
+            inp.get(0).setAttribute('checked', 'checked');
+          }
+          inp.change();
         }
-        cell.parents('form').change();
-      }
-    );
+      );
+
+      inp.change(
+        function () {
+          if (this.checked) {
+            btn.addClass('mark');
+            cell.addClass('remove-mark');
+
+          } else {
+            btn.removeClass('mark');
+            cell.removeClass('remove-mark');
+          }
+
+          cell.parents('form').change();
+        }
+      );
+    }
   }
 );
 

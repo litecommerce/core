@@ -203,7 +203,7 @@ abstract class AItemsList extends \XLite\View\Container
         $list = parent::getJSFiles();
 
         // Static call of the non-static function
-        $list[] = $this->getDir() . '/items_list.js';
+        $list[] = self::getDir() . '/items_list.js';
 
         return $list;
     }
@@ -235,7 +235,7 @@ abstract class AItemsList extends \XLite\View\Container
         $list = parent::getCSSFiles();
 
         // Static call of the non-static function
-        $list[] = $this->getDir() . '/items_list.css';
+        $list[] = self::getDir() . '/items_list.css';
 
         $list = self::preparePagerCSSFiles($list);
 
@@ -332,7 +332,7 @@ abstract class AItemsList extends \XLite\View\Container
     protected function getBody()
     {
         // Static call of the non-static function
-        return $this->getDir() . LC_DS . $this->getBodyTemplate();
+        return self::getDir() . LC_DS . $this->getBodyTemplate();
     }
 
     /**
@@ -381,7 +381,7 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected function getEmptyListTemplate()
     {
-        return $this->getDir() . LC_DS . $this->getEmptyListFile();
+        return self::getDir() . LC_DS . $this->getEmptyListFile();
     }
 
     /**

@@ -247,6 +247,7 @@ CommonForm.prototype.undo = function()
       this.commonController.undo();
     }
   );
+  this.$form.trigger('undo');
   this.$form.change();
 }
 
@@ -849,7 +850,7 @@ CommonElement.prototype.isChangedWatcher = function()
 // Check - element changed or not
 CommonElement.prototype.isChanged = function(onlyVisible)
 {
-  if (!(onlyVisible && !this.isVisible())) {
+  if (!(onlyVisible && !this.isVisible()) && this.isSignificantInput()) {
 
     if (
       (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['text', 'password', 'hidden']))
@@ -865,6 +866,12 @@ CommonElement.prototype.isChanged = function(onlyVisible)
   }
 
   return false;
+}
+
+// Check - element is significant or not
+CommonElement.prototype.isSignificantInput = function ()
+{
+  return !this.$element.hasClass('not-significant');
 }
 
 // Check element old value and new valies - equal or not

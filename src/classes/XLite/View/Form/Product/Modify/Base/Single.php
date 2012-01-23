@@ -56,6 +56,6 @@ abstract class Single extends \XLite\View\Form\Product\Modify\AModify
      */
     protected function getDefaultParams()
     {
-        return parent::getDefaultParams() + array('product_id' => $this->getProductId());
+        return parent::getDefaultParams() + array('id' => $this->getProductId());
     }
 }
