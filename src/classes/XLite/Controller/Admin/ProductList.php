@@ -93,22 +93,8 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        $form = new \XLite\View\Form\Product\Modify\Batch();
-        $requestData = $form->getRequestData();
-
-        if ($form->getValidationMessage()) {
-
-            \XLite\Core\TopMessage::addError($form->getValidationMessage());
-
-        } else {
-
-            $list = new \XLite\View\ItemsList\Admin\Product\Search();
-            $list->processQuick();
-
-            \XLite\Core\TopMessage::addInfo(
-                'Products information has been successfully updated'
-            );
-        }
+        $list = new \XLite\View\ItemsList\Admin\Product\Search();
+        $list->processQuick();
     }
 
     /**

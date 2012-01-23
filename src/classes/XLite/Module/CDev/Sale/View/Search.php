@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\Sale\View;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Search extends \XLite\View\ItemsList\Product\Admin\Search implements \XLite\Base\IDecorator
+class Search extends \XLite\View\ItemsList\Admin\Product\Search implements \XLite\Base\IDecorator
 {
     /**
      * Register JS files
