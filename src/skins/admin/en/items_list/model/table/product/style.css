@@ -1,0 +1,44 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Product items lsit styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.15
+ */
+
+.items-list.products table.list thead th.price,
+.items-list.products table.list thead th.qty
+{
+  text-align: center;
+}
+
+.items-list.products table.list tbody td.price,
+.items-list.products table.list tbody td.qty
+{
+  text-align: right;
+}
+
+.items-list.products table.list tbody td.infinity .view {
+  font-family: Verdana;
+  font-size: 16px;
+}
+
+.items-list.products table.list thead th.sku {
+  width: 110px;
+}
+
+.items-list.products table.list thead th.name {
+  width: 450px;
+}
+
+.items-list.products table.list thead th.price {
+  width: 100px;
+}
+
+.items-list.products table.list thead th.qty {
+  width: 130px;
+}

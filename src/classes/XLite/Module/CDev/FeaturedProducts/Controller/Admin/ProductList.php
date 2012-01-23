@@ -46,12 +46,12 @@ class ProductList extends \XLite\Controller\Admin\ProductList implements \XLite\
     {
         $sessionCell    = \XLite\Module\CDev\FeaturedProducts\View\Admin\FeaturedProducts::getSessionCellName();
 
-        $searchParams   = \XLite\View\ItemsList\Product\Admin\Search::getSearchParams();
+        $searchParams   = \XLite\View\ItemsList\Admin\Product\Search::getSearchParams();
 
         $productsSearch = array();
 
         $cBoxFields     = array(
-            \XLite\View\ItemsList\Product\Admin\Search::PARAM_SEARCH_IN_SUBCATS
+            \XLite\View\ItemsList\Admin\Product\Search::PARAM_SEARCH_IN_SUBCATS
         );
 
         foreach ($searchParams as $modelParam => $requestParam) {

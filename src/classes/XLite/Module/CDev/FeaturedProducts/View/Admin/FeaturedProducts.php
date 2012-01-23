@@ -198,7 +198,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
 
         $this->requestParams = array_merge(
             $this->requestParams,
-            \XLite\View\ItemsList\Product\Admin\Search::getSearchParams()
+            \XLite\View\ItemsList\Admin\Product\Search::getSearchParams()
         );
     }
 
@@ -213,7 +213,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
     {
         $result = parent::getSearchCondition();
 
-        foreach (\XLite\View\ItemsList\Product\Admin\Search::getSearchParams() as $modelParam => $requestParam) {
+        foreach (\XLite\View\ItemsList\Admin\Product\Search::getSearchParams() as $modelParam => $requestParam) {
             $result->$modelParam = $this->getParam($requestParam);
         }
 

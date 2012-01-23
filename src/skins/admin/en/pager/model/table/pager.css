@@ -1,0 +1,171 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Table-based pager styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.15
+ */
+
+.table-pager {
+  background-color: #f1f1f1;
+  height: 37px;
+  padding-top: 11px;
+  padding-left: 20px;
+  padding-right: 12px;
+}
+
+.table-pager,
+.table-pager *
+{
+  vertical-align: top;
+}
+
+.table-pager .left {
+  float: left;
+}
+
+.table-pager .right {
+  float: right;
+}
+
+.table-pager .title,
+.table-pager .right span,
+.table-pager .last span
+{
+  color: #8f8f8f;
+  font-size: 14px;
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+.table-pager .title {
+  padding-right: 10px;
+  padding-top: 4px;
+}
+
+.table-pager .title,
+.table-pager .last,
+.table-pager .prev,
+.table-pager .next,
+.table-pager .input,
+.table-pager .prev span,
+.table-pager .next span
+{
+  display: inline-block;
+}
+
+.table-pager .prev,
+.table-pager .next
+{
+  line-height: 26px;
+  text-decoration: none;
+}
+
+.table-pager .prev span,
+.table-pager .next span
+{
+  background-color: #eff8fe;
+  color: #154e9c;
+  border: 1px solid #cadce8;
+  line-height: 24px;
+}
+
+.table-pager .prev {
+  background: transparent url(../../../images/tri_left_button.png) no-repeat left top;
+  padding-left: 13px;
+}
+
+.table-pager .next {
+  padding-right: 13px;
+  background: transparent url(../../../images/tri_right_button.png) no-repeat right top;
+}
+
+.table-pager .prev span {
+  border-left: 0px none;
+  -moz-top-right-border-radius: 3px;
+  -moz-bottom-right-border-radius: 3px;
+  -webkit-top-right-border-radius: 3px;
+  -webkit-bottom-right-border-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  padding-right: 12px;
+  padding-left: 9px;
+}
+
+.table-pager .next span {
+  border-right: 0px none;
+  -moz-top-left-border-radius: 3px;
+  -moz-bottom-left-border-radius: 3px;
+  -webkit-top-left-border-radius: 3px;
+  -webkit-bottom-left-border-radius: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.table-pager .prev.disabled,
+form.changed .table-pager .prev
+{
+  background-position: left -26px;
+}
+
+.table-pager .next.disabled,
+form.changed .table-pager .next
+{
+  background-position: right -26px;
+}
+
+.table-pager .prev.disabled span,
+.table-pager .next.disabled span,
+form.changed .table-pager .prev span,
+form.changed .table-pager .next span
+{
+  border-color: #e0e0e0;
+  background-color: #fff;
+  color: #d3d3d3;
+  vertical-align: top;
+}
+
+.table-pager .input {
+  padding-left: 7px;
+  padding-right: 6px;
+}
+
+.table-pager .input input {
+  width: 25px;
+  text-align: right;
+  padding: 5px 5px 3px;
+  font-size: 14px;
+}
+
+.table-pager .last {
+  padding-top: 6px;
+  font-size: 14px;
+}
+
+.table-pager .last span.prefix {
+  padding-right: 10px;
+  padding-left: 10px;
+  line-height: normal;
+}
+
+.table-pager .last a {
+  text-decoration: underline;
+}
+
+.table-pager .last span.page {
+  color: #333;
+}
+
+.table-pager .right span {
+  padding-top: 11px;
+}
+
+.table-pager .right select {
+  font-size: 14px;
+}

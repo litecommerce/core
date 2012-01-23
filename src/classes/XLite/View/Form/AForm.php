@@ -138,7 +138,19 @@ abstract class AForm extends \XLite\View\AView
      */
     protected function getTemplate()
     {
-        return $this->getParam(self::PARAM_END) ? 'form/end.tpl' : parent::getTemplate();
+        return $this->getParam(self::PARAM_END) ? $this->getEndTemplate() : parent::getTemplate();
+    }
+
+    /**
+     * Get end form template 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getEndTemplate()
+    {
+        return 'form/end.tpl';
     }
 
     /**
