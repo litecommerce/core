@@ -10,42 +10,42 @@
  * @since     1.0.15
  */
 
-jQuery().ready(
-  function () {
+CommonForm.elementControllers.push(
+  {
+    pattern: '.line .actions button.remove',
+    handler: function () {
+      var inp = jQuery('input', this);
+      var btn = jQuery(this);
+      var cell = btn.parents('.line').eq(0);
 
-    jQuery('button.remove').click(
-      function () {
-        var inp = jQuery('input', this);
-        var checked = inp.attr('checked');
-        if (checked) {
-          inp.removeAttr('checked');
+      btn.click(
+        function () {
+          if (inp.attr('checked')) {
+            inp.removeAttr('checked');
 
-        } else {
-          inp.attr('checked', 'checked');
-          inp.get(0).setAttribute('checked', 'checked');
+          } else {
+            inp.attr('checked', 'checked');
+            inp.get(0).setAttribute('checked', 'checked');
+          }
+          inp.change();
         }
-        inp.change();
-      }
-    );
+      );
 
-    jQuery('button.remove input').change(
-      function () {
-        var btn = jQuery(this).parent();
-        var cell = btn.parents('.line').eq(0);
+      inp.change(
+        function () {
+          if (this.checked) {
+            btn.addClass('mark');
+            cell.addClass('remove-mark');
 
-        if (this.checked) {
-          btn.addClass('mark');
-          cell.addClass('remove-mark');
+          } else {
+            btn.removeClass('mark');
+            cell.removeClass('remove-mark');
+          }
 
-        } else {
-          btn.removeClass('mark');
-          cell.removeClass('remove-mark');
+          cell.parents('form').change();
         }
-        cell.parents('form').change();
-      }
-    );
-
-
+      );
+    }
   }
 );
 

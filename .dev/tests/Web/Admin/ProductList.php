@@ -435,4 +435,64 @@ class XLite_Web_Admin_ProductList extends XLite_Web_Admin_AAdmin
             'Wait 25 items per page'
         );
     }
+
+    /**
+     * Test reactions after page reload
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function testReactionsAfterReload()
+    {
+        $this->logIn();
+
+        $this->open(static::PRODUCT_LIST_PAGE);
+
+        $pagerInpXpath = 'xpath=//div[@class="table-pager"]/div/div/input';
+
+        $name = $this->getAttribute('xpath=//table[@class="list"]/tbody[@class="lines"]/tr[position()=1]/td[@class="cell actions right"]/div/button/input[@type="checkbox"]@name');
+        $this->type($pagerInpXpath, '2');
+        $this->getJSExpression('jQuery(".table-pager .left input").blur()');
+        $this->waitForLocalCondition('jQuery("tbody.lines .line .remove input").attr("name") != "' . $name . '"', 30000, 'Wait widget reload #1');
+        $this->waitForLocalCondition(
+            'jQuery(".table-pager .left input").val() == 2',
+            1000,
+            'Wait 2 page - input'
+        );
+
+        $saveDisabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and contains(@class,"disabled")]';
+        $saveEnabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and not(contains(@class,"disabled"))]';
+        $cancelDisabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel") and contains(@class,"disabled")]';
+        $cancelEnabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel") and not(contains(@class,"disabled"))]';
+
+
+        // Check remove
+        $rowXpath = 'xpath=//table[@class="list"]/tbody[@class="lines"]/tr[position()=1 and contains(@class,"remove-mark")]';
+        $inpXpath = 'xpath=//table[@class="list"]/tbody[@class="lines"]/tr[position()=1]/td[@class="cell actions right"]/div/button/input';
+
+        $this->assertElementPresent($saveDisabledXpath, '\'Save changes\' button is disabled (pre) #2');
+        $this->assertElementPresent($cancelDisabledXpath, '\'Cancel\' button is disabled (pre) #2');
+        $this->assertElementNotPresent($rowXpath, 'No remove highlight row');
+        $this->assertElementValueNotEquals($inpXpath, 'on');
+
+        $this->click(
+            'xpath=//table[@class="list"]/tbody[@class="lines"]/tr[position()=1]/td[@class="cell actions right"]/div/button[contains(@class,"remove")]'
+        );
+
+        $this->assertElementPresent($rowXpath, 'Has remove highlight row');
+        $this->assertElementValueEquals($inpXpath, 'on');
+        $this->assertElementPresent($saveEnabledXpath, '\'Save changes\' button is enabled (action) #2');
+        $this->assertElementPresent($cancelEnabledXpath, '\'Cancel\' button is enabled (action) #2');
+
+        $this->click(
+            'xpath=//table[@class="list"]/tbody[@class="lines"]/tr[position()=1]/td[@class="cell actions right"]/div/button[contains(@class,"remove")]'
+        );
+
+        $this->assertElementNotPresent($rowXpath, 'No remove highlight row (switch)');
+        $this->assertElementValueNotEquals($inpXpath, 'on');
+        $this->assertElementPresent($saveDisabledXpath, '\'Save changes\' button is disabled (post) #2');
+        $this->assertElementPresent($cancelDisabledXpath, '\'Cancel\' button is disabled (post) #2');
+
+    }
 }
