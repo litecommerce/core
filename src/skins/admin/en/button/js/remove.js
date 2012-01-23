@@ -12,16 +12,28 @@
 
 jQuery().ready(
   function () {
+
     jQuery('button.remove').click(
       function () {
-        var btn = jQuery(this);
-        var inp = btn.prev();
+        var inp = jQuery('input', this);
+        var checked = inp.attr('checked');
+        if (checked) {
+          inp.removeAttr('checked');
+
+        } else {
+          inp.attr('checked', 'checked');
+          inp.get(0).setAttribute('checked', 'checked');
+        }
+        inp.change();
+      }
+    );
+
+    jQuery('button.remove input').change(
+      function () {
+        var btn = jQuery(this).parent();
         var cell = btn.parents('.line').eq(0);
 
-        var remove = !inp.attr('value');
-        inp.val(remove ? '1' : '');
-
-        if (remove) {
+        if (this.checked) {
           btn.addClass('mark');
           cell.addClass('remove-mark');
 
@@ -32,6 +44,8 @@ jQuery().ready(
         cell.parents('form').change();
       }
     );
+
+
   }
 );
 

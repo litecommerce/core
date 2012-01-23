@@ -10,6 +10,10 @@
  * @since     1.0.15
  */
 
+.items-list button.remove input {
+  display: none;
+}
+
 .items-list button.switcher,
 .items-list button.remove
 {

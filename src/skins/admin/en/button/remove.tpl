@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<input type="hidden" name="{getName()}" value="" />
 <button type="button" class="{getStyle()}" title="{t(#Remove#)}">
+  <input type="checkbox" name="{getName()}" value="1" />
   <img src="images/spacer.gif" alt="" />
 </button>

@@ -52,7 +52,7 @@ TableItemsList.prototype.listeners.pager = function(handler)
 {
   jQuery('.table-pager .input input', handler.container).change(
     function() {
-      return !handler.process('pageId', this.value);
+      return !handler.process('pageId', this.value - 1);
     }
   );
 

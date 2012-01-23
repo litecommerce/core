@@ -247,6 +247,7 @@ CommonForm.prototype.undo = function()
       this.commonController.undo();
     }
   );
+  this.$form.trigger('undo');
   this.$form.change();
 }
 
