@@ -13,14 +13,14 @@
 <div class="left">
   <span class="title">{t(#Page#)}:</span>
   <a href="{buildURLByPageId(previousPageId)}" class="{getPrevClass()}" data-pageId="{getPreviousPageId()}"><span>{t(#Prev#)}</span></a>
-  <div class="input"><input type="text" name="pageId" value="{preprocessPageId(pageId)}" /></div>
+  <div class="input"><input type="text" name="pageId" value="{preprocessPageId(pageId)}" class="not-significant" /></div>
   <a href="{buildURLByPageId(nextPageId)}" class="{getNextClass()}" data-pageId="{getNextPageId()}"><span>{t(#Next#)}</span></a>
   <div class="last"><span class="prefix">{t(#of#)}</span><a IF="!isLastPage()" href="{buildURLByPageId(lastPageId)}" data-pageId="{getLastPageId()}">{preprocessPageId(lastPageId)}</a><span IF="isLastPage()" class="page">{preprocessPageId(lastPageId)}</span></div>
 </div>
 
 <div class="right">
   <span>{t(#Items per page#)}:</span>
-  <select name="itemsPerPage" class="page-length">
+  <select name="itemsPerPage" class="page-length not-significant">
     <option FOREACH="getItemsPerPageRanges(),range" value="{range}" selected="{isRangeSelected(range)}">{range}</option>
   </select>
 </div>
