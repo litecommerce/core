@@ -25,7 +25,7 @@
  * @since     1.0.15
  */
 
-namespace XLite\View\ItemsList\Admin;
+namespace XLite\View\ItemsList\Model;
 
 /**
  * Abstract admin model-based items list (table)
@@ -33,7 +33,7 @@ namespace XLite\View\ItemsList\Admin;
  * @see   ____class_see____
  * @since 1.0.15
  */
-abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
+abstract class Table extends \XLite\View\ItemsList\Model\AModel
 {
     const COLUMN_NAME          = 'name';
     const COLUMN_TEMPLATE      = 'template';
