@@ -490,11 +490,15 @@ class Product extends \XLite\Controller\Admin\AAdmin
     {
         $inv = $this->getInventory();
 
-        $inv->product = $this->getProduct();
-
         $inv->map($this->getPostedData());
 
-        \XLite\Core\Database::getEM()->persist($inv);
+        if (!$inv->getInventoryId()) {
+            $product = $this->getProduct();
+            $product->setInventory($inv);
+            $inv->setProduct($product);
+            \XLite\Core\Database::getEM()->persist($inv);
+        }
+
         \XLite\Core\Database::getEM()->flush();
     }
 
