@@ -150,16 +150,6 @@ function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = tr
     return $result;
 }
 
-function xlite_clean_up_cache()
-{
-    echo (PHP_EOL.'Clean up the cache ... ');
-
-    \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_DATACACHE);
-
-    echo ('done' . PHP_EOL);
-}
-
-
 if (false === defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'XLite_Tests_AllTests::main');
 }

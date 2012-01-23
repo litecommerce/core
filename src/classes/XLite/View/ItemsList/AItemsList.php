@@ -69,7 +69,7 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * pager
      *
-     * @var   \XLite\View\PagerOrig
+     * @var   \XLite\View\Pager\APager
      * @see   ____var_see____
      * @since 1.0.0
      */
