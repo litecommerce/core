@@ -24,11 +24,12 @@ final class XLite_Tests_TestSuite extends PHPUnit_Framework_TestSuite
     protected function tearDown()
     {
         if (ROOT_TEST_SUITE_NAME !== $this->name) {
-            if (strpos($this->name, "Web"))
+            if (strpos($this->name, "Web")) {
                 $this->restoreDBState();
-            $this->cleanUpCache();
-        }
-        else{
+            }
+
+            echo (PHP_EOL);
+        } else{
             $this->restoreDBState();
         }
     }
@@ -43,15 +44,5 @@ final class XLite_Tests_TestSuite extends PHPUnit_Framework_TestSuite
         xlite_restore_sql_from_backup();
 
         sleep(1);
-    }
-
-    /**
-     * Clear data cache
-     *
-     * @since  1.0.13
-     */
-    protected function cleanUpCache()
-    {
-        xlite_clean_up_cache();
     }
 }

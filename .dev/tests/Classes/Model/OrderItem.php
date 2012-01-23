@@ -235,7 +235,6 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
     {
         $order = $this->getTestOrder();
         $item = $order->getItems()->get(0);
-        print_r($item->getProduct()->getName());
         $this->assertEquals(
             $this->getProduct()->getImage()->getURL(),
             $item->getImageURL(),

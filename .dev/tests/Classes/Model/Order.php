@@ -656,7 +656,6 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
         $order->getProfile()->setLastPaymentId(1);
 
         $order->renewPaymentMethod();
-        print_r($order->getPaymentMethod());
         $this->assertFalse(is_null($order->getPaymentMethod()), 'reassign payment method');
     }
 
