@@ -379,7 +379,7 @@ class Search extends \XLite\View\ItemsList\Admin\Table
     }
 
     /**
-     * Check - has specified column attantion or not
+     * Check - has specified column attention or not
      *
      * @param array                $column Column
      * @param \XLite\Model\AEntity $entity Model OPTIONAL

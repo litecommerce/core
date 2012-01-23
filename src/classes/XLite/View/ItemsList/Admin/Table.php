@@ -436,7 +436,7 @@ abstract class Table extends \XLite\View\ItemsList\Admin\AAdmin
     }
 
     /**
-     * Check - has specified column attantion or not
+     * Check - has specified column attention or not
      *
      * @param array                $column Column
      * @param \XLite\Model\AEntity $entity Model OPTIONAL
