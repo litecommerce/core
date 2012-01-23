@@ -33,7 +33,7 @@ namespace XLite\View\FormField\Input\Text;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Float extends \XLite\View\FormField\Input\Text\base\Numeric
+class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
 {
     /**
      * Widget param names
