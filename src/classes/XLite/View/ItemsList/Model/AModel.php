@@ -939,5 +939,33 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     // }}}
 
+    // {{{ Sticky panell
+
+    /**
+     * Check - sticky panel is visible or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function isPanelVisible()
+    {
+        return $this->getPanelClass() && $this->hasResults();
+    }
+
+    /**
+     * Get panel class
+     *
+     * @return \XLite\View\Base\FormStickyPanel
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getPanelClass()
+    {
+        return 'XLite\View\StickyPanel\ItemsListForm';
+    }
+
+    // }}}
+
 }
 
