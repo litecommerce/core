@@ -25,7 +25,7 @@
  * @since     1.0.15
  */
 
-namespace XLite\View\ItemsList\Admin\Product;
+namespace XLite\View\ItemsList\Model\Product\Admin;
 
 /**
  * Search product
@@ -33,7 +33,7 @@ namespace XLite\View\ItemsList\Admin\Product;
  * @see   ____class_see____
  * @since 1.0.15
  */
-class Search extends \XLite\View\ItemsList\Admin\Table
+class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
 {
     /**
      * Allowed sort criterions
@@ -125,58 +125,6 @@ class Search extends \XLite\View\ItemsList\Admin\Table
     }
 
     /**
-     * Define repository name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function defineRepositoryName()
-    {
-        return 'XLite\Model\Product';
-    }
-
-    /**
-     * Get remove message
-     *
-     * @param integer $count Count
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getRemoveMessage($count)
-    {
-        return \XLite\Core\Translation::lbl('X product(s) has been removed', array('count' => $count));
-    }
-
-    /**
-     * Get create message
-     *
-     * @param integer $count Count
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getCreateMessage($count)
-    {
-        return \XLite\Core\Translation::lbl('X product(s) has been created', array('count' => $count));
-    }
-
-    /**
-     * Get create entity URL
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getCreateURL()
-    {
-        return \XLite\Core\Converter::buildUrl('add_product');
-    }
-
-    /**
      * Get list name suffixes
      *
      * @return array
@@ -185,7 +133,7 @@ class Search extends \XLite\View\ItemsList\Admin\Table
      */
     protected function getListNameSuffixes()
     {
-        return array('products', 'search');
+        return array_merge(parent::getListNameSuffixes(), array('search'));
     }
 
     // {{{ Search
@@ -343,18 +291,6 @@ class Search extends \XLite\View\ItemsList\Admin\Table
     protected function getHead()
     {
         return 'Search result';
-    }
-
-    /**
-     * Get container class
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getContainerClass()
-    {
-        return parent::getContainerClass() . ' products';
     }
 
     /**

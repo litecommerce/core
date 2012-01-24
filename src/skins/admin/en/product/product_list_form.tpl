@@ -16,7 +16,7 @@
 <widget class="\XLite\View\Form\ItemsList\Product\Main" name="products_form" />
 
   {* List of products *}
-  <widget class="\XLite\View\ItemsList\Admin\Product\Search" />
+  <widget class="\XLite\View\ItemsList\Model\Product\Admin\Search" />
 
 {* Close </form> tag *}
 <widget name="products_form" end />

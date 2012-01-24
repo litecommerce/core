@@ -25,7 +25,7 @@
  * @since     1.0.15
  */
 
-namespace XLite\View\ItemsList\Admin;
+namespace XLite\View\ItemsList\Model;
 
 /**
  * Abstract admin model-based items list
@@ -33,7 +33,7 @@ namespace XLite\View\ItemsList\Admin;
  * @see   ____class_see____
  * @since 1.0.15
  */
-abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
+abstract class AModel extends \XLite\View\ItemsList\AItemsList
 {
     /**
      * Sortable types 
@@ -148,7 +148,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\AItemsList
     /**
      * Get self 
      * 
-     * @return \XLite\View\ItemsList\Admin\AAdmin
+     * @return \XLite\View\ItemsList\Model\AModel
      * @see    ____func_see____
      * @since  1.0.15
      */

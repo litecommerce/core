@@ -102,7 +102,7 @@ abstract class AInline extends \XLite\View\AView
 
         $this->widgetParams += array(
             static::PARAM_ENTITY     => new \XLite\Model\WidgetParam\Object('Entity', null, false, 'XLite\Model\AEntity'),
-            static::PARAM_ITEMS_LIST => new \XLite\Model\WidgetParam\Object('Items list', null, false, 'XLite\View\ItemsList\Admin\AAdmin'),
+            static::PARAM_ITEMS_LIST => new \XLite\Model\WidgetParam\Object('Items list', null, false, 'XLite\View\ItemsList\Model\AModel'),
         );
     }
 
