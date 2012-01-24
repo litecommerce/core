@@ -97,7 +97,6 @@ class DeleteCategory extends \XLite\View\SimpleDialog
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && 'delete' === \XLite\Core\Request::getInstance()->pre_action;
+        return parent::isVisible() && 'delete' === \XLite\Core\Request::getInstance()->pre_action;
     }
 }
