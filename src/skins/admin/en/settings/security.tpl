@@ -91,7 +91,7 @@ document.options_form.admin_security.onclick = https_checkbox_click;
   {* Check if https is available *}
   {t(#Trying to access the shop at X#,_ARRAY_(#url#^getShopURL(#cart.php#,#1#))):h}
   <span id="httpserror-message" style="visibility:hidden">
-    <p class="error-message"><strong>{t(#Failed#)}</strong> {t(##Secure connection cannot be established.)}</p>
+    <p class="error-message"><strong>{t(#Failed#)}:</strong> {t(#Secure connection cannot be established.#)}</p>
     {t(#To fix this problem, do the following: 3 points#):h}
   </span>
 
