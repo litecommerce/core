@@ -67,5 +67,6 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      */
     protected function prepareCndAttributes(\Doctrine\ORM\QueryBuilder $queryBuilder, array $attributes)
     {
+        // print_r(\XLite\Core\Request::getInstance()->{static::P_ATTRIBUTES});die;
     }
 }

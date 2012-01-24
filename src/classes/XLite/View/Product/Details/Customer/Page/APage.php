@@ -69,7 +69,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
-
         $list['js'][] = 'js/jquery.blockUI.js';
 
         return $list;
@@ -84,8 +83,9 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function isAvailableLabelVisible()
     {
-        return $this->getProduct()->getInventory()->getEnabled()
-            && !$this->getProduct()->getInventory()->isOutOfStock();
+        $inventory = $this->getProduct()->getInventory();
+
+        return isset($inventory) && $inventory->getEnabled() && $inventory->isOutOfStock();
     }
 
     // {{{ Tabs
@@ -169,7 +169,7 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
     }
 
     /**
-     * Check - product has Description tab or not
+     * Check if product has Description tab or not
      * 
      * @return boolean
      * @see    ____func_see____
@@ -177,8 +177,7 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function hasDescription()
     {
-        return 0 < strlen($this->getProduct()->getDescription())
-            || $this->hasAttributes();
+        return 0 < strlen($this->getProduct()->getDescription()) || $this->hasAttributes();
     }
 
     /**
@@ -190,8 +189,7 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function hasAttributes()
     {
-        return 0 < $this->getProduct()->getWeight()
-            || 0 < strlen($this->getProduct()->getSku());
+        return 0 < $this->getProduct()->getWeight() || 0 < strlen($this->getProduct()->getSku());
     }
 
     // }}}

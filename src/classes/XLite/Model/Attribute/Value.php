@@ -70,9 +70,10 @@ abstract class Value extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.16
      *
-     * @Column (type="integer")
+     * @ManyToOne  (targetEntity="XLite\Model\Attribute", inversedBy="values", fetch="LAZY")
+     * @JoinColumn (name="attributeId", referencedColumnName="id")
      */
-    protected $attributeId;
+    protected $attribute;
 
     /**
      * Relation to a product entity

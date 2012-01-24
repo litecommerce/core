@@ -66,7 +66,6 @@ abstract class ATabs extends \XLite\View\AView
      */
     protected $processedTabs = null;
 
-
     /**
      * Register JS files
      *
@@ -77,10 +76,9 @@ abstract class ATabs extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
+        $tab  = $this->getSelectedTab();
 
-        $tab = $this->getSelectedTab();
-
-        if (isset($tab) && isset($tab['jsFiles']) && !empty($tab['jsFiles'])) {
+        if (!empty($tab['jsFiles'])) {
             if (is_array($tab['jsFiles'])) {
                 $list = array_merge($list, $tab['jsFiles']);
 
@@ -99,11 +97,11 @@ abstract class ATabs extends \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isTemplateOnlyTab()
+    protected function isTemplateOnlyTab()
     {
         $tab = $this->getSelectedTab();
 
-        return !is_null($tab) && empty($tab['widget']) && !empty($tab['template']);
+        return isset($tab) && empty($tab['widget']) && !empty($tab['template']);
     }
 
     /**
@@ -113,11 +111,11 @@ abstract class ATabs extends \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isFullWidgetTab()
+    protected function isFullWidgetTab()
     {
         $tab = $this->getSelectedTab();
 
-        return !is_null($tab) && !empty($tab['widget']) && !empty($tab['template']);
+        return isset($tab) && !empty($tab['widget']) && !empty($tab['template']);
     }
 
     /**
@@ -127,11 +125,25 @@ abstract class ATabs extends \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isWidgetOnlyTab()
+    protected function isWidgetOnlyTab()
     {
         $tab = $this->getSelectedTab();
 
-        return !is_null($tab) && !empty($tab['widget']) && empty($tab['template']);
+        return isset($tab) && !empty($tab['widget']) && empty($tab['template']);
+    }
+
+    /**
+     * Checks whether no template is specified for the selected tab
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isCommonTab()
+    {
+        $tab = $this->getSelectedTab();
+
+        return isset($tab) && empty($tab['widget']) && empty($tab['template']);
     }
 
     /**
@@ -141,11 +153,9 @@ abstract class ATabs extends \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTabWidget()
+    protected function getTabWidget()
     {
-        $tab = $this->getSelectedTab();
-
-        return isset($tab['widget']) ? $tab['widget'] : '';
+        return \Includes\Utils\ArrayManager::getIndex($this->getSelectedTab(), 'widget');
     }
 
     /**
@@ -155,27 +165,10 @@ abstract class ATabs extends \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTabTemplate()
+    protected function getTabTemplate()
     {
-        $tab = $this->getSelectedTab();
-
-        return isset($tab['template']) ? $tab['template'] : '';
+        return \Includes\Utils\ArrayManager::getIndex($this->getSelectedTab(), 'template');
     }
-
-    /**
-     * Checks whether no template is specified for the selected tab
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isCommonTab()
-    {
-        $tab = $this->getSelectedTab();
-
-        return !is_null($tab) && empty($tab['widget']) && empty($tab['template']);
-    }
-
 
     /**
      * Flag: display (true) or hide (false) tabs
@@ -262,7 +255,7 @@ abstract class ATabs extends \XLite\View\AView
      */
     protected function isSelectedTab($target)
     {
-        return ($target === $this->getCurrentTarget());
+        return $target === $this->getCurrentTarget();
     }
 
     /**
@@ -275,12 +268,11 @@ abstract class ATabs extends \XLite\View\AView
     protected function getDefaultTabValues()
     {
         return array(
-            'title'     => '',
-            'widget'    => '',
-            'template'  => '',
+            'title'    => '',
+            'widget'   => '',
+            'template' => '',
         );
     }
-
 
     /**
      * Returns an array(tab) descriptions
@@ -292,14 +284,11 @@ abstract class ATabs extends \XLite\View\AView
     protected function getTabs()
     {
         // Process tabs only once
-        if (is_null($this->processedTabs)) {
-
+        if (!isset($this->processedTabs)) {
             $this->processedTabs = array();
-
             $defaultValues = $this->getDefaultTabValues();
 
             foreach ($this->tabs as $target => $tab) {
-
                 $tab['selected'] = $this->isSelectedTab($target, $tab);
                 $tab['url'] = $this->buildTabURL($target, $tab);
 
@@ -308,7 +297,6 @@ abstract class ATabs extends \XLite\View\AView
 
                 $this->processedTabs[$target] = $tab;
             }
-
         }
 
         return $this->processedTabs;
@@ -335,9 +323,6 @@ abstract class ATabs extends \XLite\View\AView
      */
     protected function getSelectedTab()
     {
-        $tabs = $this->getTabs();
-        $target = $this->getCurrentTarget();
-
-        return (isset($tabs[$target]) ? $tabs[$target] : null);
+        return \Includes\Utils\ArrayManager::getIndex($this->getTabs(), $this->getCurrentTarget());
     }
 }

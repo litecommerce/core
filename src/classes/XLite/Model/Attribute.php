@@ -109,6 +109,17 @@ abstract class Attribute extends \XLite\Model\Base\I18n
     protected $classes;
 
     /**
+     * Associated values
+     *
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 1.0.16
+     *
+     * @OneToMany (targetEntity="XLite\Model\Attribute\Value", mappedBy="attribute", cascade={"all"}, fetch="LAZY")
+     */
+    protected $values;
+
+    /**
      * Type identifier
      *
      * @var   string

@@ -44,7 +44,6 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     protected $params = array('target', 'product_id');
 
-
     /**
      * Check whether the title is to be displayed in the content area
      *

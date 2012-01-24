@@ -30,6 +30,7 @@ require_once (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'top.inc.php');
 \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->clearAll();
 \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->clearAll();
 \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->clearAll();
+\XLite\Core\Database::getRepo('\XLite\Model\Attribute\Value')->clearAll();
 
 $classes    = array();
 $attributes = array();
@@ -88,4 +89,44 @@ foreach ($classes as $class) {
     }
 }
 
-XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->flushChanges();
+foreach ($products as $product) {
+    $attrs = call_user_func_array(
+        'array_merge',
+        \Includes\Utils\ArrayManager::getArraysArrayFieldValues($product->getAttributes(), 'attributes')
+    );
+
+    if (2 < count($attrs)) {
+        foreach (array_rand($attrs, rand(2, count($attrs))) as $index) {
+            $class = '\XLite\Model\Attribute\Value\\' . $attrs[$index]->getTypeName();
+            $value = new $class();
+            $value->setAttribute($attrs[$index]);
+            $value->setProduct($product);
+
+            switch ($attrs[$index]->getTypeName()) {
+                case 'Number':
+                    $data = rand(10, 1000) / 10;
+                    break;
+
+                case 'Text':
+                    $data = uniqid();
+                    break;
+
+                case 'Boolean':
+                    $data = (bool) rand(0, 1);
+                    break;
+
+                case 'Selector':
+                    $data = rand(0, count($attrs[$index]->getChoices()) - 1);
+                    break;
+
+                default:
+                    die('Unknown attrbute type: ' . $attrs[$index]->getTypeName());
+            }
+
+            $value->setValue($data);
+            $product->addAttributeValues($value);
+        }
+    }
+}
+
+XLite\Core\Database::getEM()->flush();

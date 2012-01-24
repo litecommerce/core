@@ -224,7 +224,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @OneToOne (targetEntity="XLite\Model\Inventory", mappedBy="product", fetch="LAZY", cascade={"all"})
+     * @OneToOne (targetEntity="XLite\Model\Inventory", mappedBy="product", cascade={"all"})
      */
     protected $inventory;
 
@@ -235,7 +235,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToMany (targetEntity="XLite\Model\ProductClass", inversedBy="products")
+     * @ManyToMany (targetEntity="XLite\Model\ProductClass", inversedBy="products", fetch="LAZY")
      * @JoinTable  (name="product_class_links",
      *      joinColumns={@JoinColumn(name="product_id", referencedColumnName="product_id")},
      *      inverseJoinColumns={@JoinColumn(name="class_id", referencedColumnName="id")}
@@ -250,7 +250,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see   ____var_see____
      * @since 1.0.16
      *
-     * @OneToMany (targetEntity="XLite\Model\Attribute\Value", mappedBy="product", cascade={"all"})
+     * @OneToMany (targetEntity="XLite\Model\Attribute\Value", mappedBy="product", cascade={"all"}, fetch="LAZY")
      */
     protected $attributeValues;
 

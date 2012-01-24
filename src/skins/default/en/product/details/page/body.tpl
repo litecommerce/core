@@ -9,6 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <div class="product-details hproduct">
   <widget class="\XLite\View\Form\Product\AddToCart" name="add_to_cart" product="{product}" className="product-details" validationEngine />
     {displayViewListContent(#product.details.page#)}
