@@ -30,6 +30,8 @@
 
 <widget IF="isEmptyListTemplateVisible()" template="{getEmptyListTemplate()}" />
 
+<widget IF="isPanelVisible()" class="{getPanelClass()}" />
+
 <script type="text/javascript">
 //<![CDATA[
 jQuery().ready(

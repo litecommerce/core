@@ -33,7 +33,7 @@ namespace XLite\View\Form\ItemsList;
  * @see   ____class_see____
  * @since 1.0.15
  */
-abstract class AItemsList extends \XLite\View\Form\Base\Panelled
+abstract class AItemsList extends \XLite\View\Form\AForm
 {
     /**
      * getDefaultClassName
