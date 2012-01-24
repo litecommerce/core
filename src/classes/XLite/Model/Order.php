@@ -949,6 +949,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     public function renewPaymentMethod()
     {
         $method = $this->getPaymentMethod();
+
         if ($method) {
             $this->setPaymentMethod($method);
         }
@@ -1736,11 +1737,13 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Since Doctrine lifecycle callbacks do not allow to modify associations, we've added this method
      *
+     * @param string $type Type of current operation
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function prepareEntityBeforeCommit()
+    public function prepareEntityBeforeCommit($type)
     {
         if ($this->isStatusChanged()) {
             $this->changeStatusPostprocess($this->oldStatus, $this->getStatus());

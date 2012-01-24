@@ -38,7 +38,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Widget parameter names
      */
-
     const PARAM_PAGE_ID                      = 'pageId';
     const PARAM_ITEMS_COUNT                  = 'itemsCount';
     const PARAM_ONLY_PAGES                   = 'onlyPages';
@@ -50,12 +49,10 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Page short names
      */
-
     const PAGE_FIRST    = 'first';
     const PAGE_PREVIOUS = 'previous';
     const PAGE_NEXT     = 'next';
     const PAGE_LAST     = 'last';
-
 
     /**
      * currentPageId

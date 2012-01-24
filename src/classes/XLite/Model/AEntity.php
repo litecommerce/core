@@ -36,6 +36,13 @@ namespace XLite\Model;
 abstract class AEntity
 {
     /**
+     * Possible action by entity Repo
+     */
+    const ACTION_INSERT = 'insert';
+    const ACTION_UPDATE = 'update';
+    const ACTION_DELETE = 'delete';
+
+    /**
      * Cache enabled flag (cache)
      *
      * @var   array
@@ -337,11 +344,13 @@ abstract class AEntity
     /**
      * Since Doctrine lifecycle callbacks do not allow to modify associations, we've added this method
      *
+     * @param string $type Type of current operation
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function prepareEntityBeforeCommit()
+    public function prepareEntityBeforeCommit($type)
     {
     }
 

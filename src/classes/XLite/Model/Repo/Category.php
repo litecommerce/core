@@ -240,66 +240,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Create new DB entry.
-     * This function is used to create new QuickFlags entry
-     *
-     * @param array $data Entity properties
-     *
-     * @return \XLite\Model\Category
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function insert(array $data)
-    {
-        $entity = parent::insert($data);
-
-        // Create new record for the QuickFlags model
-        $quickFlags = new \XLite\Model\Category\QuickFlags();
-        $quickFlags->setCategory($entity);
-
-        $this->update($entity, array('quickFlags' => $quickFlags));
-
-        return $entity;
-    }
-
-    /**
-     * Wrapper. Use this function instead of the native "delete...()"
-     *
-     * @param integer $categoryId  ID of category to delete
-     * @param boolean $onlySubtree Flag OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function deleteCategory($categoryId, $onlySubtree = false)
-    {
-        // Find category by ID
-        $entity = $this->getCategory($categoryId);
-
-        // ROOT category cannot be removed. Only its subtree
-        if ($categoryId == $this->getRootCategoryId()) {
-            $onlySubtree = true;
-        }
-
-        // Save some variables
-        $right = $entity->getRpos() - ($onlySubtree ? 1 : 0);
-        $width = $entity->getRpos() - $entity->getLpos() - ($onlySubtree ? 1 : -1);
-
-        if ($onlySubtree) {
-            $this->deleteInBatch($this->getSubtree($entity->getCategoryId()));
-
-        } else {
-            $this->delete($entity);
-        }
-
-        // Update indexes in the nested set
-        $this->defineUpdateIndexQuery('lpos', $right, -$width)->execute();
-        $this->defineUpdateIndexQuery('rpos', $right, -$width)->execute();
-    }
-
-
-    /**
      * Add the conditions for the current subtree
      *
      * NOTE: function is public since it's needed to the Product model repository
@@ -674,16 +614,32 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $quickFlags = $entity->getQuickFlags();
 
-        if ($quickFlags) {
-            foreach ($flags as $name => $delta) {
-                $name = \Includes\Utils\Converter::convertToPascalCase($name);
-                $quickFlags->{'set' . $name}($quickFlags->{'get' . $name}() + $delta);
-            }
+        if (!isset($quickFlags)) {
+            $quickFlags = new \XLite\Model\Category\QuickFlags();
+            $quickFlags->setCategory($entity);
+            $entity->setQuickFlags($quickFlags);
         }
 
-        // Do not change to $this->update() or $this->performUpdate():
-        // it will cause the unfinite recursion
-        parent::performUpdate($entity);
+        foreach ($flags as $name => $delta) {
+            $name = \Includes\Utils\Converter::convertToPascalCase($name);
+            $quickFlags->{'set' . $name}($quickFlags->{'get' . $name}() + $delta);
+        }
+    }
+
+    // {{{ Methods to manage entities
+
+    /**
+     * Remove all subcategories
+     *
+     * @param integer $categoryId Main category
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function deleteSubcategories($categoryId)
+    {
+        $this->deleteInBatch($this->getSubtree($categoryId));
     }
 
     /**
@@ -760,10 +716,31 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function performDelete(\XLite\Model\AEntity $entity)
     {
         // Update quick flags
-        $this->updateQuickFlags($entity->getParent(), $this->prepareQuickFlags(-1, $entity->getEnabled() ? -1 : 0));
+        if ($entity->getParent()) {
+            $this->updateQuickFlags($entity->getParent(), $this->prepareQuickFlags(-1, $entity->getEnabled() ? -1 : 0));
+        }
 
-        parent::performDelete($entity);
+        // Root category cannot be removed. Only its subtree
+        $onlySubtree = ($entity->getCategoryId() == $this->getRootCategoryId());
+
+        // Calculate some variables
+        $right = $entity->getRpos() - ($onlySubtree ? 1 : 0);
+        $width = $entity->getRpos() - $entity->getLpos() - ($onlySubtree ? 1 : -1);
+
+        // Update indexes in the nested set.
+        // FIXME: must not use execute()
+        $this->defineUpdateIndexQuery('lpos', $right, -$width)->execute();
+        $this->defineUpdateIndexQuery('rpos', $right, -$width)->execute();
+
+        if ($onlySubtree) {
+            $this->deleteInBatch($this->getSubtree($entity->getCategoryId()), false);
+
+        } else {
+            parent::performDelete($entity);
+        }
     }
+
+    // }}}
 
     /**
      * Assemble regular fields from record
