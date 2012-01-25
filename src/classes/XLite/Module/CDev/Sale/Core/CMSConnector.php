@@ -25,60 +25,27 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Sale\View;
+namespace XLite\Module\CDev\Sale\Core;
 
 /**
- * Search
+ * CMSConnector class
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Search extends \XLite\View\ItemsList\Model\Product\Admin\Search implements \XLite\Base\IDecorator
+abstract class CMSConnector extends \XLite\Core\CMSConnector implements \XLite\Base\IDecorator
 {
     /**
-     * Register JS files
+     * Constructor
      *
-     * @return array
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getJSFiles()
+    protected function __construct()
     {
-        $list = parent::getJSFiles();
+        parent::__construct();
 
-        // TODO: Remove after JS-autoloading is added.
-        $list[] = 'modules/CDev/Sale/sale_discount_types/js/script.js';
-
-        return $list;
+        $this->widgetsList['\XLite\Module\CDev\Sale\View\Sale'] = 'Sale';
     }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        // TODO: Remove after CSS-autoloading is added.
-        $list[] = 'modules/CDev/Sale/sale_discount_types/css/style.css';
-
-        return $list;
-    }
-
-    /**
-     * Mark list as selectable
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function isSelectable()
-    {
-        return true;
-    }
-
 }

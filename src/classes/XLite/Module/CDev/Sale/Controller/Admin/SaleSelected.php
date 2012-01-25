@@ -86,7 +86,7 @@ class SaleSelected extends \XLite\Controller\Admin\AAdmin
     protected function getUpdateInfo()
     {
         return array_fill_keys(
-            array_keys($this->getToDelete()),
+            array_keys($this->getSelected()),
             $this->getUpdateInfoElement()
         );
     }

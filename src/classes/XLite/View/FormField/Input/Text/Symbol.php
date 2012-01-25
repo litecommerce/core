@@ -28,14 +28,14 @@
 namespace XLite\View\FormField\Input\Text;
 
 /**
- * Price
+ * Input with symbol
  *
  * @see   ____class_see____
  * @since 1.0.15
  */
-class Price extends \XLite\View\FormField\Input\Text\Symbol
+class Symbol extends \XLite\View\FormField\Input\Text\Float
 {
-    const PARAM_CURRENCY = 'currency';
+    const PARAM_SYMBOL = 'symbol';
 
     /**
      * Get a list of CSS files required to display the widget properly
@@ -48,54 +48,46 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
     {
         $list = parent::getCSSFiles();
 
-        $list[] = $this->getDir() . '/input/price.css';
+        $list[] = $this->getDir() . '/input/symbol.css';
 
         return $list;
     }
 
-    /**
-     * Set widget params
-     *
-     * @param array $params Handler params
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function setWidgetParams(array $params)
-    {
-        parent::setWidgetParams($params);
-
-        foreach ($this->getWidgetParams() as $name => $param) {
-            if (static::PARAM_E == $name) {
-                $param->setValue($this->getCurrency()->getE());
-                break;
-            }
-        }
-    }
-
-    /**
-     * Get currency
-     *
-     * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    public function getCurrency()
-    {
-        return $this->getParam(static::PARAM_CURRENCY);
-    }
-
-    /**
-     * Get currency symbol
+   /**
+     * Register CSS class to use for wrapper block (SPAN) of input field.
+     * It is usable to make unique changes of the field.
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.15
+     * @since  1.0.1
+     */
+    public function getWrapperClass()
+    {
+        return trim(parent::getWrapperClass() . ' input-text-symbol');
+    }
+
+    /**
+     * Return symbol
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
      */
     public function getSymbol()
     {
-        return $this->getCurrency()->getSymbol() ?: $this->getCurrency()->getCode();
+        return $this->getParam(self::PARAM_SYMBOL);
+    }
+
+    /**
+     * Return field template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFieldTemplate()
+    {
+        return 'input/symbol.tpl';
     }
 
     /**
@@ -110,11 +102,9 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_CURRENCY => new \XLite\Model\WidgetParam\Object(
-                'Currency',
-                \XLite::getInstance()->getCurrency(),
-                false,
-                'XLite\Model\Currency'
+            self::PARAM_SYMBOL => new \XLite\Model\WidgetParam\String(
+                'Symbol',
+                ''
             ),
         );
     }
@@ -132,41 +122,9 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
     {
         $classes = parent::assembleClasses($classes);
 
-        $classes[] = 'price';
+        $classes[] = 'symbol';
 
         return $classes;
-    }
-
-    /**
-     * getCommonAttributes
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCommonAttributes()
-    {
-        $attributes = parent::getCommonAttributes();
-
-        $attributes['value'] = $this->getCurrency()->formatValue($attributes['value']);
-        $e = $this->getE();
-        if (isset($e)) {
-            $attributes['data-e'] = $e;
-        }
-
-        return $attributes;
-    }
-
-    /**
-     * Get mantis
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getE()
-    {
-        return $this->getCurrency()->getE();
     }
 
 }

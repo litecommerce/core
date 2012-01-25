@@ -296,7 +296,7 @@ abstract class Handler extends \XLite\Base
     }
 
     /**
-     * Common prefix for the "delete" checkboxes in lists
+     * Common prefix for the selected checkboxes in lists
      *
      * NOTE: this method is requered for the GetWidget and AAdmin classes
      * TODO: after the multiple inheritance should be moved to the AAdmin class
@@ -305,9 +305,9 @@ abstract class Handler extends \XLite\Base
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPrefixToDelete()
+    public function getPrefixSelected()
     {
-        return 'toDelete';
+        return 'select';
     }
 
     // {{{ Methods to work with the received data
@@ -342,15 +342,15 @@ abstract class Handler extends \XLite\Base
     }
 
     /**
-     * getToDelete
+     * Return selected index array
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getToDelete()
+    protected function getSelected()
     {
-        return $this->getRequestDataByPrefix($this->getPrefixToDelete());
+        return $this->getRequestDataByPrefix($this->getPrefixSelected());
     }
 
     // }}}

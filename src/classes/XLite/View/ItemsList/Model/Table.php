@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -29,7 +29,7 @@ namespace XLite\View\ItemsList\Model;
 
 /**
  * Abstract admin model-based items list (table)
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.15
  */
@@ -47,7 +47,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Columns (local cache)
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.15
@@ -56,7 +56,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Main column index
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.15
@@ -65,7 +65,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Define columns structure
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -106,7 +106,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Get preprocessed columns structire
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -148,8 +148,8 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
-     * Get main column 
-     * 
+     * Get main column
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -182,9 +182,9 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Check - specified column is main or not
-     * 
+     *
      * @param array $column Column
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -197,11 +197,11 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
-     * Get column value 
-     * 
+     * Get column value
+     *
      * @param array                $column Column
      * @param \XLite\Model\AEntity $entity Model
-     *  
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.15
@@ -285,8 +285,8 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
-     * Get create line columns 
-     * 
+     * Get create line columns
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -340,7 +340,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * List has top creation box
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.15
@@ -375,11 +375,11 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
-     * Get cell list name part 
-     * 
+     * Get cell list name part
+     *
      * @param string $type   Cell type
      * @param array  $column Column
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
@@ -404,10 +404,10 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
-     * Get head class 
-     * 
+     * Get head class
+     *
      * @param array $column Column
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
@@ -418,11 +418,11 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
-     * Get column cell class 
-     * 
+     * Get column cell class
+     *
      * @param array                $column Column
      * @param \XLite\Model\AEntity $entity Model OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
@@ -431,7 +431,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     {
         return 'cell '
             . $column[static::COLUMN_CODE]
-            . ($this->hasColumnAttantion($column, $entity) ? ' attention' : '')
+            . ($this->hasColumnAttention($column, $entity) ? ' attention' : '')
             . ($this->isMainColumn($column) ? ' main' : '');
     }
 
@@ -445,17 +445,17 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function hasColumnAttantion(array $column, \XLite\Model\AEntity $entity = null)
+    protected function hasColumnAttention(array $column, \XLite\Model\AEntity $entity = null)
     {
         return false;
     }
 
     /**
-     * Get action cell class 
-     * 
+     * Get action cell class
+     *
      * @param integer $i        Cell index
      * @param string  $template Template
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
@@ -470,8 +470,8 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     // {{{ Top / bottom behaviors
 
     /**
-     * Get top actions 
-     * 
+     * Get top actions
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -517,7 +517,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Get left actions tempaltes
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -546,7 +546,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
 
     /**
      * Get right actions tempaltes
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15

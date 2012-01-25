@@ -28,57 +28,30 @@
 namespace XLite\Module\CDev\Sale\View;
 
 /**
- * Search
+ * Items list form button
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Search extends \XLite\View\ItemsList\Model\Product\Admin\Search implements \XLite\Base\IDecorator
+class ItemsListForm extends \XLite\View\StickyPanel\ItemsListForm implements \XLite\Base\IDecorator
 {
     /**
-     * Register JS files
+     * Get buttons widgets
      *
      * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        // TODO: Remove after JS-autoloading is added.
-        $list[] = 'modules/CDev/Sale/sale_discount_types/js/script.js';
-
-        return $list;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        // TODO: Remove after CSS-autoloading is added.
-        $list[] = 'modules/CDev/Sale/sale_discount_types/css/style.css';
-
-        return $list;
-    }
-
-    /**
-     * Mark list as selectable
-     *
-     * @return boolean
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function isSelectable()
+    protected function getButtons()
     {
-        return true;
+        return array_merge(
+            array(
+                $this->getWidget(
+                    array('disabled' => true,),
+                    'XLite\Module\CDev\Sale\View\SaleSelectedButton'
+                )
+            ),
+            parent::getButtons()
+        );
     }
-
 }

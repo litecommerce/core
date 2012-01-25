@@ -2,8 +2,8 @@
 
 /**
  * Items list controller
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -11,7 +11,7 @@
  */
 
 /**
- * Items list controller 
+ * Items list controller
  */
 function TableItemsList(cell, URLParams, URLAJAXParams)
 {
@@ -84,7 +84,7 @@ TableItemsList.prototype.listeners.form = function(handler)
   form.change(
     function () {
       var form = jQuery(this);
-      var btn = form.find('button.submit');
+      var btn = form.find('button');
 
       if (this.commonController.isChanged()) {
         form.addClass('changed');
@@ -117,7 +117,7 @@ TableItemsList.prototype.listeners.form = function(handler)
   );
 }
 
-// Inline creaetion button listener
+// Inline creation button listener
 TableItemsList.prototype.listeners.createButton = function(handler)
 {
   jQuery('button.create-inline', handler.container)

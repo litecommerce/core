@@ -9,3 +9,19 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.15
  */
+
+.input-text-symbol {
+  position: relative;
+  display: block;
+}
+
+div.table-value .input-text-symbol input {
+  width: 60px;
+  padding-left: 30px;
+}
+
+.input-text-symbol .symbol.text {
+  left: 10px;
+  position: absolute;
+  top: 1px;
+}

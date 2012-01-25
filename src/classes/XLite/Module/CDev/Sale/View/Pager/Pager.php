@@ -25,73 +25,62 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Sale;
+namespace XLite\Module\CDev\Sale\View\Pager;
 
 /**
- * Sale module main class
+ * Pager for Sale products list
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Main extends \XLite\Module\AModule
+class Pager extends \XLite\View\Pager\APager
 {
     /**
-     * Author name
+     * Return number of items per page
      *
-     * @return string
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAuthorName()
+    protected function getItemsPerPageDefault()
     {
-        return 'Creative Development LLC';
+        return 0;
     }
 
     /**
-     * Module version
+     * Return number of pages to display
      *
-     * @return string
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getMinorVersion()
+    protected function getPagesPerFrame()
     {
-        return '0';
+        return 0;
     }
 
     /**
-     * Module name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getModuleName()
-    {
-        return 'Sale';
-    }
-
-    /**
-     * Module description
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getDescription()
-    {
-        return 'Simple and easy to use module to hold a fire sale.';
-    }
-
-    /**
-     * Determines if we need to show settings form link
+     * Hide "pages" part of widget
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function showSettingsForm()
+    protected function isPagesListVisible()
     {
-        return true;
+        return false;
+    }
+
+    /**
+     * Hide "items per page" part of widget
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isItemsPerPageVisible()
+    {
+        return false;
+
     }
 }

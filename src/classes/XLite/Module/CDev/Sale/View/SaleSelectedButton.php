@@ -81,8 +81,8 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
     protected function prepareURLParams()
     {
         return array(
-            'target'        => 'sale_selected',
-            'widget'        => '\XLite\Module\CDev\Sale\View\SaleSelectedDialog',
+            'target' => 'sale_selected',
+            'widget' => '\XLite\Module\CDev\Sale\View\SaleSelectedDialog',
         );
     }
 
@@ -99,21 +99,6 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
     }
 
     /**
-     * Define widget params
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-        );
-    }
-
-    /**
      * Return CSS classes
      *
      * @return string
@@ -122,6 +107,6 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      */
     protected function getClass()
     {
-        return 'sale-selected-button ' . ($this->getParam(self::PARAM_STYLE) ?: '');
+        return 'action sale-selected-button ' . ($this->getParam(self::PARAM_STYLE) ?: '');
     }
 }

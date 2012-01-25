@@ -25,73 +25,54 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Sale;
+namespace XLite\Module\CDev\Sale\Model\Repo;
 
 /**
- * Sale module main class
+ * The Product model repository extension
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Main extends \XLite\Module\AModule
+class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorator
 {
     /**
-     * Author name
+     * Allowable search params
+     */
+    const P_PARTICIPATE_SALE      = 'participateSale';
+
+    // {{{ Search functionallity extension
+
+    /**
+     * Add arrivalDate to the list of handling search params
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAuthorName()
+    protected function getHandlingSearchParams()
     {
-        return 'Creative Development LLC';
+        $params = parent::getHandlingSearchParams();
+
+        $params[] = self::P_PARTICIPATE_SALE;
+
+        return $params;
     }
 
     /**
-     * Module version
+     * Prepare certain search condition
      *
-     * @return string
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     *
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getMinorVersion()
+    protected function prepareCndParticipateSale(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        return '0';
+        $queryBuilder->andWhere('p.participateSale = :participateSale')
+            ->setParameter('participateSale', $value);
     }
 
-    /**
-     * Module name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getModuleName()
-    {
-        return 'Sale';
-    }
-
-    /**
-     * Module description
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getDescription()
-    {
-        return 'Simple and easy to use module to hold a fire sale.';
-    }
-
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function showSettingsForm()
-    {
-        return true;
-    }
+    // }}}
 }

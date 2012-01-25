@@ -37,7 +37,7 @@ decorate(
   {
     var urlParams = arguments.callee.previousMethod.apply(this, arguments);
 
-    jQuery('[name*="toDelete"]:checked').each(function (index, elem) {urlParams[elem.name] = 1});
+    jQuery('[name*="select"]:checked').each(function (index, elem) {urlParams[elem.name] = 1});
 
     return urlParams;
   }

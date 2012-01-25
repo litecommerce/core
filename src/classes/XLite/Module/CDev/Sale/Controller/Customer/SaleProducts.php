@@ -25,73 +25,37 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Sale;
+namespace XLite\Module\CDev\Sale\Controller\Customer;
 
 /**
- * Sale module main class
+ * Sale products page controller
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Main extends \XLite\Module\AModule
+class SaleProducts extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * Author name
+     * Get page title
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAuthorName()
+    public function getTitle()
     {
-        return 'Creative Development LLC';
+        return static::t('Sale');
     }
 
     /**
-     * Module version
+     * Common method to determine current location
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getMinorVersion()
+    protected function getLocation()
     {
-        return '0';
-    }
-
-    /**
-     * Module name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getModuleName()
-    {
-        return 'Sale';
-    }
-
-    /**
-     * Module description
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getDescription()
-    {
-        return 'Simple and easy to use module to hold a fire sale.';
-    }
-
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function showSettingsForm()
-    {
-        return true;
+        return $this->getTitle();
     }
 }

@@ -25,73 +25,86 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Sale;
+namespace XLite\Module\CDev\Sale\View;
 
 /**
- * Sale module main class
+ * Sale products list widget
  *
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="center")
  */
-abstract class Main extends \XLite\Module\AModule
+class SalePage extends \XLite\Module\CDev\Sale\View\ASale
 {
     /**
-     * Author name
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+
+        $result[] = self::WIDGET_TARGET_SALE_PRODUCTS;
+
+        return $result;
+    }
+
+    /**
+     * Initialize widget (set attributes)
+     *
+     * @param array $params Widget params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        $this->widgetParams[\XLite\View\Pager\APager::PARAM_MAX_ITEMS_COUNT]->setValue($this->getMaxCountInFullList());
+    }
+
+    /**
+     * Return class name for the list pager
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAuthorName()
+    protected function getPagerClass()
     {
-        return 'Creative Development LLC';
+        return '\XLite\Module\CDev\Sale\View\Pager\Customer\ControllerPager';
     }
 
     /**
-     * Module version
+     * Returns empty widget head title (controller page header will be used instead)
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getMinorVersion()
+    protected function getHead()
     {
-        return '0';
+        return '';
     }
 
     /**
-     * Module name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getModuleName()
-    {
-        return 'Sale';
-    }
-
-    /**
-     * Module description
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getDescription()
-    {
-        return 'Simple and easy to use module to hold a fire sale.';
-    }
-
-    /**
-     * Determines if we need to show settings form link
+     * Check if widget is visible
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function showSettingsForm()
+    protected function isVisible()
     {
-        return true;
+        $result = parent::isVisible()
+            && static::getWidgetTarget() == \XLite\Core\Request::getInstance()->target;
+
+        return $result;
     }
 }

@@ -24,9 +24,10 @@
      </label>
    </li>
    <li class="sale-price-value">
-     <input
-       type="text"
-       id="sale-price-value-{%\XLite\Model\Product::SALE_DISCOUNT_TYPE_PRICE%}"
+     <widget
+       class="\XLite\View\FormField\Input\Text\Price"
+       fieldOnly="true"
+       fieldId="sale-price-value"
        value="{getParam(#salePriceValue#)}" />
    </li>
  </ul>
