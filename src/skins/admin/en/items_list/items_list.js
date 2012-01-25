@@ -29,6 +29,8 @@ function ItemsList(cell, URLParams, URLAJAXParams)
   this.addListeners();
 }
 
+extend(ItemsList, Base);
+
 ItemsList.prototype.container = null;
 
 ItemsList.prototype.cell = null;
@@ -112,13 +114,13 @@ ItemsList.prototype.checkAll = function(handler)
 ItemsList.prototype.showPage = function(handler)
 {
 //TODO change to getCommentedData() -> also in templates
-  return this.process('pageId', core.getValueFromClass(handler,'page'));
+  return this.process('pageId', core.getValueFromClass(handler, 'page'));
 }
 
 // Change items per page number
 ItemsList.prototype.changePageLength = function(handler)
 {
-  count = parseInt(handler.value);
+  var count = parseInt(jQuery(handler).val());
 
   if (isNaN(count)) {
     count = this.URLParams.itemsPerPage;
@@ -239,15 +241,7 @@ ItemsList.prototype.loadHandler = function(xhr, s)
   var processed = false;
 
   if (xhr.status == 200 && xhr.responseText) {
-
-    var div = document.createElement('div');
-
-    jQuery(div).html(jQuery('.items-list.sessioncell-' + this.cell, xhr.responseText));
-
-    this.container.replaceWith(div);
-
-    new ItemsList(this.cell, this.URLParams, this.URLAJAXParams);
-
+    this.placeNewContent(xhr.responseText);
     processed = true;
   }
 
@@ -256,4 +250,19 @@ ItemsList.prototype.loadHandler = function(xhr, s)
   if (!processed) {
     self.location = this.buildURL();
   }
+}
+
+// Place new list content
+ItemsList.prototype.placeNewContent = function(content)
+{
+  var div = document.createElement('div');
+  jQuery(div).html(jQuery('.items-list.sessioncell-' + this.cell, content));
+  this.container.replaceWith(div);
+  this.reassign();
+}
+
+// Reassign items list controller
+ItemsList.prototype.reassign = function()
+{
+  new ItemsList(this.cell, this.URLParams, this.URLAJAXParams);
 }

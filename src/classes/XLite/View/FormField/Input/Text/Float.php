@@ -33,14 +33,28 @@ namespace XLite\View\FormField\Input\Text;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Float extends \XLite\View\FormField\Input\Text
+class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
 {
     /**
      * Widget param names
      */
-    const PARAM_MIN = 'min';
-    const PARAM_MAX = 'max';
     const PARAM_E   = 'e';
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'form_field/input/text/float.js';
+
+        return $list;
+    }
 
     /**
      * Define widget params
@@ -54,66 +68,8 @@ class Float extends \XLite\View\FormField\Input\Text
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_MIN => new \XLite\Model\WidgetParam\Int('Minimum', null),
-            self::PARAM_MAX => new \XLite\Model\WidgetParam\Int('Maximum', null),
             self::PARAM_E   => new \XLite\Model\WidgetParam\Int('Number of digits after the decimal separator', 2),
         );
-    }
-
-    /**
-     * Check field validity
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function checkFieldValidity()
-    {
-        $result = parent::checkFieldValidity();
-
-        if ($result) {
-            $result = $this->checkRange();
-        }
-
-        return $result;
-    }
-
-    /**
-     * Check range 
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.13
-     */
-    protected function checkRange()
-    {
-        $result = true;
-
-        if (!is_null($this->getParam(self::PARAM_MIN)) && $this->getValue() < $this->getParam(self::PARAM_MIN)) {
-
-            $result = false;
-            $this->errorMessage = \XLite\Core\Translation::lbl(
-                'The value of X field must be greater than Y',
-                array(
-                    'name' => $this->getLabel(),
-                    'min' => $this->getParam(self::PARAM_MIN),
-                )
-            );
-
-        } elseif (!is_null($this->getParam(self::PARAM_MAX)) && $this->getValue() > $this->getParam(self::PARAM_MAX)) {
-
-            $result = false;
-            $this->errorMessage = \XLite\Core\Translation::lbl(
-                'The value of X field must be less than Y',
-                array(
-                    'name' => $this->getLabel(),
-                    'max' => $this->getParam(self::PARAM_MAX),
-                )
-            );
-
-        }
-
-        return $result;
     }
 
     /**
@@ -141,14 +97,6 @@ class Float extends \XLite\View\FormField\Input\Text
 
         $rules[] = 'custom[number]';
 
-        if (!is_null($this->getParam(self::PARAM_MIN))) {
-            $rules[] = 'min[' . $this->getParam(self::PARAM_MIN) . ']';
-        }
-
-        if (!is_null($this->getParam(self::PARAM_MAX))) {
-            $rules[] = 'max[' . $this->getParam(self::PARAM_MAX) . ']';
-        }
-
         return $rules;
     }
 
@@ -165,7 +113,7 @@ class Float extends \XLite\View\FormField\Input\Text
     {
         $classes = parent::assembleClasses($classes);
 
-        $classes[] = 'wheel-ctrl';
+        $classes[] = 'float';
 
         return $classes;
     }
@@ -180,6 +128,18 @@ class Float extends \XLite\View\FormField\Input\Text
     protected function getDefaultMaxSize()
     {
         return 15;
+    }
+
+    /**
+     * Get mantis
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getE()
+    {
+        return null;
     }
 
 }

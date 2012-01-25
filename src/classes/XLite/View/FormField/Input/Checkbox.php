@@ -28,7 +28,7 @@
 namespace XLite\View\FormField\Input;
 
 /**
- * \XLite\View\FormField\Input\Checkbox
+ * Common checkbox
  *
  * @see   ____class_see____
  * @since 1.0.0

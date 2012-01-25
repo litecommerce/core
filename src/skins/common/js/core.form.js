@@ -101,6 +101,9 @@ function CommonForm(form)
 
 extend(CommonForm, Base);
 
+// Element controllers
+CommonForm.elementControllers = [];
+
 // Autoload class method
 CommonForm.autoload = function()
 {
@@ -162,11 +165,68 @@ CommonForm.prototype.getElements = function()
 // Bind form elements
 CommonForm.prototype.bindElements = function()
 {
+  var form = this.$form;
+
   this.getElements().each(
     function() {
-      new CommonElement(this);
+      if ('undefined' == typeof(this.commonController)) {
+        var elm = new CommonElement(this);
+
+        jQuery.each(
+          CommonForm.elementControllers,
+          function (i, controller) {
+            if ('function' == typeof(controller)) {
+
+              // Controller is function-handler
+              controller.call(elm);
+            }
+          }
+        );
+      }
     }
   );
+
+  jQuery.each(
+    CommonForm.elementControllers,
+    function (i, controller) {
+      if (
+        'object' == typeof(controller)
+        && 0 < form.find(controller.pattern).length
+        && ('undefined' == typeof(controller.condition) || 0 < form.find(controller.condition).length)
+      ) {
+
+        // Controller is { pattern: '.element', handler: function () { ... } }
+        form.find(controller.pattern).each(
+          function () {
+            if ('undefined' == typeof(this.assignedElementControllers)) {
+              this.assignedElementControllers = [];
+            }
+
+            if (-1 == jQuery.inArray(i, this.assignedElementControllers)) {
+              controller.handler.call(this, form);
+              this.assignedElementControllers.push(i);
+            }
+          }
+        );
+      }
+    }
+  );
+
+  // Cancel button
+  this.$form.find('.form-cancel')
+    .not('.assigned')
+    .click(
+      function (event) {
+        event.stopPropagation();
+        var form = jQuery(this).not('.disabled').parents('form').get(0);
+        if (form ) {
+          form.commonController.undo();
+        }
+
+        return false;
+      }
+    )
+    .addClass('assigned');
 }
 
 // Validate form
@@ -177,6 +237,18 @@ CommonForm.prototype.validate = function(silent)
       return !this.validate(silent);
     }
   ).length;
+}
+
+// Undo all changes
+CommonForm.prototype.undo = function()
+{
+  this.getElements().filter('input,select,textarea').each(
+    function () {
+      this.commonController.undo();
+    }
+  );
+  this.$form.trigger('undo');
+  this.$form.change();
 }
 
 // Enabled background submit mode and set callbacks
@@ -661,9 +733,11 @@ CommonElement.prototype.markAsWheelControlled = function()
     }
   }
 
-  jQuery(document.createElement('span'))
-    .addClass('wheel-mark').html('&nbsp;&nbsp;&nbsp;&nbsp;')
-    .insertAfter(this.$element);
+  if (!this.$element.hasClass('no-wheel-mark')) {
+    jQuery(document.createElement('span'))
+      .addClass('wheel-mark').html('&nbsp;')
+      .insertAfter(this.$element);
+  }
 
   this.$element.addClass('wheel-mark-input');
 
@@ -732,6 +806,11 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
 
     if (jQuery(this.element).validationEngine('validateField', '#' + this.element.id)) {
       this.element.value = oldValue;
+
+    } else {
+      this.$element.change();
+      jQuery(this.element.form).change();
+    
     }
 
     this.$element.removeClass('wrong-amount');
@@ -740,6 +819,21 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
   return false;
 }
 
+// Undo changes
+CommonElement.prototype.undo = function()
+{
+  if (this.isChanged(true)) {
+    if (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['checkbox', 'radio'])) {
+      this.element.checked = this.element.initialValue;
+
+    } else {
+      this.element.value = this.element.initialValue;
+    }
+    this.$element.change();
+
+    this.$element.trigger('undo');
+  }
+}
 
 // Element is state watcher
 CommonElement.prototype.isWatcher = function()
@@ -756,23 +850,34 @@ CommonElement.prototype.isChangedWatcher = function()
 // Check - element changed or not
 CommonElement.prototype.isChanged = function(onlyVisible)
 {
-  if (onlyVisible && !this.isVisible()) {
-    return false;
-  }
+  if (!(onlyVisible && !this.isVisible()) && this.isSignificantInput()) {
 
-  if (
-    (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['text', 'password', 'hidden']))
-    || isElement(this.element, 'select')
-    || isElement(this.element, 'textarea')
-  ) {
-    return this.element.initialValue != this.element.value;
-  }
+    if (
+      (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['text', 'password', 'hidden']))
+      || isElement(this.element, 'select')
+      || isElement(this.element, 'textarea')
+    ) {
+      return !this.isEqualValues(this.element.initialValue, this.element.value);
+    }
 
-  if (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['checkbox', 'radio'])) {
-    return this.element.initialValue != this.element.checked;
+    if (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['checkbox', 'radio'])) {
+      return !this.isEqualValues(this.element.initialValue, this.element.checked);
+    }
   }
 
   return false;
+}
+
+// Check - element is significant or not
+CommonElement.prototype.isSignificantInput = function ()
+{
+  return !this.$element.hasClass('not-significant');
+}
+
+// Check element old value and new valies - equal or not
+CommonElement.prototype.isEqualValues = function(oldValue, newValue)
+{
+  return oldValue == newValue;
 }
 
 // Save element value as initial value

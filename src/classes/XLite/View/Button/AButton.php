@@ -38,7 +38,7 @@ abstract class AButton extends \XLite\View\AView
     /**
      * Widget parameter names
      */
-    const PARAM_NAME     = 'name';
+    const PARAM_NAME     = 'buttonName';
     const PARAM_VALUE    = 'value';
     const PARAM_LABEL    = 'label';
     const PARAM_STYLE    = 'style';

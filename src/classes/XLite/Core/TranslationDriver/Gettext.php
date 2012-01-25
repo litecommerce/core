@@ -215,10 +215,12 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
     protected function getDomain($code)
     {
         if (!isset($this->domains[$code])) {
-            $pattern = LC_DIR_LOCALE . LC_DS . $this->getLocaleByCode($code) . LC_DS . self::CATEGORY . LC_DS . '*.mo';
-            foreach (glob($pattern) as $file) {
-                $this->domains[$code] = substr(basename($file), 0, -3);
-                break;
+            $files = glob(LC_DIR_LOCALE . LC_DS . $this->getLocaleByCode($code) . LC_DS . self::CATEGORY . LC_DS . '*.mo');
+            if (is_array($files)) {
+                foreach ($files as $file) {
+                    $this->domains[$code] = substr(basename($file), 0, -3);
+                    break;
+                }
             }
 
             if (!isset($this->domains[$code])) {

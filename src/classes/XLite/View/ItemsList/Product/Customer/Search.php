@@ -246,18 +246,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * Get URL common parameters
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCommonParams()
-    {
-        return parent::getCommonParams() + array('mode' => 'search');
-    }
-
-    /**
      * Get default value for search substring
      *
      * @return string

@@ -190,7 +190,10 @@ abstract class AFormField extends \XLite\View\AView
     {
         $this->setValue($this->sanitize());
 
-        return array($this->getValidityFlag(), $this->getValidityFlag() ? null : $this->errorMessage);
+        return array(
+            $this->getValidityFlag(),
+            $this->getValidityFlag() ? null : $this->errorMessage
+        );
     }
 
     /**
@@ -571,7 +574,7 @@ abstract class AFormField extends \XLite\View\AView
             $result = false;
         }
 
-        return $result;;
+        return $result;
     }
 
     /**
