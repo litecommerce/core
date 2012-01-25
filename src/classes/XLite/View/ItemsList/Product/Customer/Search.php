@@ -55,7 +55,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
     /**
      * Return search parameters.
-     * :TODO: refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchParams()
+     * :TODO: refactor
      *
      * @return array
      * @see    ____func_see____
@@ -311,7 +311,8 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * Return params list to use for search TODO refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchCondition()
+     * Return params list to use for search
+     * TODO refactor
      *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____

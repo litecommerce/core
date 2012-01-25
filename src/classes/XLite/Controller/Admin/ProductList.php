@@ -93,7 +93,8 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateInBatchById($this->getPostedData());
+        $list = new \XLite\View\ItemsList\Model\Product\Admin\Search();
+        $list->processQuick();
     }
 
     /**
@@ -118,7 +119,7 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
     protected function doActionSearch()
     {
         \XLite\Core\Session::getInstance()
-            ->{\XLite\View\ItemsList\Product\Admin\Search::getSessionCellName()} = $this->getSearchParams();
+            ->{\XLite\View\ItemsList\Model\Product\Admin\Search::getSessionCellName()} = $this->getSearchParams();
 
         $this->setReturnURL($this->buildURL('product_list', '', array('mode' => 'search')));
     }
@@ -150,7 +151,7 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
         $productsSearchParams = array();
 
         foreach (
-            \XLite\View\ItemsList\Product\Admin\Search::getSearchParams() as $requestParam
+            \XLite\View\ItemsList\Model\Product\Admin\Search::getSearchParams() as $requestParam
         ) {
             if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
 
@@ -174,9 +175,9 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
         $productsSearchParams = array();
 
         $cBoxFields = array(
-            \XLite\View\ItemsList\Product\Admin\Search::PARAM_SEARCH_IN_SUBCATS,
-            \XLite\View\ItemsList\Product\Admin\Search::PARAM_BY_TITLE,
-            \XLite\View\ItemsList\Product\Admin\Search::PARAM_BY_DESCR,
+            \XLite\View\ItemsList\Model\Product\Admin\Search::PARAM_SEARCH_IN_SUBCATS,
+            \XLite\View\ItemsList\Model\Product\Admin\Search::PARAM_BY_TITLE,
+            \XLite\View\ItemsList\Model\Product\Admin\Search::PARAM_BY_DESCR,
         );
 
         foreach ($cBoxFields as $requestParam) {
@@ -198,7 +199,7 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
     protected function getConditions()
     {
         $searchParams = \XLite\Core\Session::getInstance()
-            ->{\XLite\View\ItemsList\Product\Admin\Search::getSessionCellName()};
+            ->{\XLite\View\ItemsList\Model\Product\Admin\Search::getSessionCellName()};
 
         if (!is_array($searchParams)) {
 

@@ -257,6 +257,20 @@ abstract class AEntity
     }
 
     /**
+     * Get entity unique indetifier value
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getUniqueIndetifier()
+    {
+        $method = 'get' . $this->getMethodName($this->getRepository()->getPrimaryKeyField());
+
+        return $this->$method();
+    }
+
+    /**
      * Update entity
      *
      * @return boolean

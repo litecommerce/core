@@ -36,6 +36,33 @@ namespace XLite\View\FormField\Select;
 abstract class Multiple extends \XLite\View\FormField\Select\ASelect
 {
     /**
+     * Set value
+     *
+     * @param mixed $value Value to set
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setValue($value)
+    {
+        if (is_object($value) && $value instanceOf \Doctrine\Common\Collections\Collection) {
+            $value = $value->toArray();
+
+        } elseif (!is_array($value)) {
+            $value = array($value);
+        }
+
+        foreach ($value as $k => $v) {
+            if (is_object($v) && $v instanceOf \XLite\Model\AEntity) {
+                $value[$k] = $v->getUniqueIndetifier();
+            }
+        }
+
+        parent::setValue($value);
+    }
+
+    /**
      * getDefaultAttributes
      *
      * @return array
@@ -46,4 +73,19 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
     {
         return parent::getDefaultAttributes() + array('multiple' => 'multiple');
     }
+
+    /**
+     * Check - current value is selected or not
+     *
+     * @param mixed $value Value
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function isOptionSelected($value)
+    {
+        return in_array($value, $this->getValue());
+    }
+
 }
