@@ -141,7 +141,7 @@ CommonForm.elementControllers.push(
       );
 
       // Move focus to next field in this column (if axists)
-      inputs.keypress(
+      inputs.keydown(
         function (event) {
           var result = true;
 
