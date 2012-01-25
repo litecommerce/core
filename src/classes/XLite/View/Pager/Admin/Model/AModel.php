@@ -36,6 +36,18 @@ namespace XLite\View\Pager\Admin\Model;
 abstract class AModel extends \XLite\View\Pager\Admin\AAdmin
 {
     /**
+     * Check visibility
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function isVisible()
+    {
+        return parent::isVisible();
+    }
+
+    /**
      * Get items per page (default)
      *
      * @return integer
