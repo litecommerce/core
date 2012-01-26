@@ -27,7 +27,7 @@ function SalePriceValue() {
   });
 
   jQuery('.sale-price-value input[type="text"]').bind('change', function () {
-    jQuery('#sale-price-value').val(jQuery(this).val());
+    jQuery('input[name="postedData[salePriceValue]"]').val(jQuery(this).val());
   });
 }
 
