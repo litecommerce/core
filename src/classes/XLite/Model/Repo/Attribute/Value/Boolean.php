@@ -25,27 +25,33 @@
  * @since     1.0.15
  */
 
-namespace XLite\Model\Attribute\Value;
+namespace XLite\Model\Repo\Attribute\Value;
 
 /**
- * Boolean
+ * Attribute value
  *
  * @see   ____class_see____
- * @since 1.0.15
- *
- * @Entity (repositoryClass="\XLite\Model\Repo\Attribute\Value\Boolean")
- * @Table  (name="attribute_value_boolean")
+ * @since 1.0.16
  */
-class Boolean extends \XLite\Model\Attribute\Value
+class Boolean extends \XLite\Model\Repo\Attribute\Value
 {
     /**
-     * Attribute value
+     * Subclasses must define their own search criterions
      *
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.15
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query object
+     * @param integer                    $id           Attribute ID
+     * @param boolean                    $data         Attribute value to search
      *
-     * @Column (type="boolean")
+     * @return \Doctrine\ORM\Query\Expr\Andx
+     * @see    ____func_see____
+     * @since  1.0.16
      */
-    protected $value;
+    protected function getExpressionPartForProductIDsByValuesQuery(\Doctrine\ORM\QueryBuilder $queryBuilder, $id, $data)
+    {
+        $result = new \Doctrine\ORM\Query\Expr\Andx();
+        $result->add('av.value = :value' . $id);
+        $queryBuilder->setParameter('value' . $id, (bool) $data);
+
+        return $result;
+    }
 }

@@ -304,10 +304,11 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         if (!isset(static::$activeModules)) {
 
             // Fetch active modules from the common list
-            static::$activeModules = \Includes\Utils\ArrayManager::searchAllInArraysArray(
+            static::$activeModules = \Includes\Utils\ArrayManager::searchInArraysArray(
                 static::getModulesList(),
                 'enabled',
-                true
+                true,
+                false
             );
 
             // Remove unsupported modules from list

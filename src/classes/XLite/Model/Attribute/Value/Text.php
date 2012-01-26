@@ -33,7 +33,7 @@ namespace XLite\Model\Attribute\Value;
  * @see   ____class_see____
  * @since 1.0.15
  *
- * @Entity
+ * @Entity (repositoryClass="\XLite\Model\Repo\Attribute\Value\Text")
  * @Table  (name="attribute_value_text")
  */
 class Text extends \XLite\Model\Attribute\Value

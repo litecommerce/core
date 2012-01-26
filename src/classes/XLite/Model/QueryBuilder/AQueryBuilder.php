@@ -62,6 +62,18 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
     }
 
     /**
+     * Get result as scalar
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getScalarResult()
+    {
+        return $this->getQuery()->getScalarResult();
+    }
+
+    /**
      * Get single result
      *
      * @return \XLite\Model\AEntity|void

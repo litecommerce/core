@@ -31,6 +31,7 @@ require_once (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'top.inc.php');
 \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->clearAll();
 \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->clearAll();
 \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Value')->clearAll();
+\XLite\Core\Database::getRepo('\XLite\Model\Attribute\Choice')->clearAll();
 
 $classes    = array();
 $attributes = array();
@@ -39,9 +40,9 @@ $products   = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findAll();
 for ($i = 1; $i < 10; $i++) {
     $class = new \XLite\Model\ProductClass();
     $class->setName('Product class ' . $i);
-    \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert($class);
+    \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert($class, false);
 
-    if (rand(0, 3)) {
+    if (rand(0, 5)) {
         foreach (array_rand($products, rand(3, count($products))) as $index) {
             $products[$index]->addClasses($class);
         }
@@ -54,7 +55,7 @@ for ($i = 1; $i < 3; $i++) {
     $group = new \XLite\Model\Attribute\Group();
     $group->setPos($i);
     $group->setTitle('Group ' . $i);
-    \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->insert($group);
+    \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->insert($group, false);
 
     for ($j = 1; $j < 3; $j++) {
         foreach (array('Number', 'Text', 'Boolean', 'Selector') as $type) {
@@ -72,22 +73,24 @@ for ($i = 1; $i < 3; $i++) {
                     $choice = new \XLite\Model\Attribute\Choice();
                     $choice->setAttribute($attribute);
                     $choice->setTitle($attribute->getTitle() . ', choice ' . $k);
+                    \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Choice')->insert($choice, false);
 
                     $attribute->addChoices($choice);
                 }
             }
 
-            \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->insert($attribute);
             $attributes[] = $attribute;
         }
     }
 }
 
 foreach ($classes as $class) {
-    foreach (rand(0, 1) ? (array) array_rand($attributes, rand(1, 9)) : array() as $index) {
+    foreach (rand(0, 5) ? (array) array_rand($attributes, rand(1, 9)) : array() as $index) {
         $class->addAttributes($attributes[$index]);
     }
 }
+
+\XLite\Core\Database::getRepo('\XLite\Model\Attribute')->insertInBatch($attributes);
 
 foreach ($products as $product) {
     $attrs = call_user_func_array(
@@ -99,8 +102,8 @@ foreach ($products as $product) {
         foreach (array_rand($attrs, rand(2, count($attrs))) as $index) {
             $class = '\XLite\Model\Attribute\Value\\' . $attrs[$index]->getTypeName();
             $value = new $class();
-            $value->setAttribute($attrs[$index]);
-            $value->setProduct($product);
+            $value->setAttributeId($attrs[$index]->getId());
+            $value->setProductId($product->getProductId());
 
             switch ($attrs[$index]->getTypeName()) {
                 case 'Number':
@@ -116,7 +119,8 @@ foreach ($products as $product) {
                     break;
 
                 case 'Selector':
-                    $data = rand(0, count($attrs[$index]->getChoices()) - 1);
+                    $choices = $attrs[$index]->getChoices();
+                    $data = $choices[rand(0, count($choices) - 1)]->getId();
                     break;
 
                 default:
@@ -124,7 +128,7 @@ foreach ($products as $product) {
             }
 
             $value->setValue($data);
-            $product->addAttributeValues($value);
+            \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Value')->insert($value, false);
         }
     }
 }

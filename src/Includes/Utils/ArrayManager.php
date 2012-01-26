@@ -139,44 +139,34 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
     /**
      * Search entities in array by a field value
      *
-     * @param array  $array Array to search
-     * @param string $field Field to search by
-     * @param mixed  $value Value to use for comparison
+     * @param array   $array   Array to search
+     * @param string  $field   Field to search by
+     * @param mixed   $value   Value to use for comparison
+     * @param boolean $onlyOne Flag OPTIONAL
      *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function searchAllInArraysArray(array $array, $field, $value)
+    public static function searchInArraysArray(array $array, $field, $value, $onlyOne = true)
     {
-        $result = array();
+        $result = $onlyOne ? null : array();
 
         foreach ($array as $key => $element) {
             $element = (array) $element;
+
             if (static::getIndex($element, $field) == $value) {
-                $result[$key] = $element;
+                if ($onlyOne) {
+                    $result = $element;
+                    break;
+
+                } else {
+                    $result[$key] = $element;
+                }
             }
         }
 
         return $result;
-    }
-
-    /**
-     * Search entities in array by a field value
-     *
-     * @param array  $array Array to search
-     * @param string $field Field to search by
-     * @param mixed  $value Value to use for comparison
-     *
-     * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function searchInArraysArray(array $array, $field, $value)
-    {
-        $list = static::searchAllInArraysArray($array, $field, $value);
-
-        return $list ? reset($list) : null;
     }
 
     /**
@@ -205,42 +195,30 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
      * @param array   $array    Array to search
      * @param string  $field    Field to search by
      * @param mixed   $value    Value to use for comparison
+     * @param boolean $onlyOne  Flag OPTIONAL
      * @param boolean $isGetter Determines if the second param is a property name or a method OPTIONAL
      *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function searchAllInObjectsArray(array $array, $field, $value, $isGetter = true)
+    public static function searchInObjectsArray(array $array, $field, $value, $onlyOne = true, $isGetter = true)
     {
-        $result = array();
+        $result = $onlyOne ? null : array();
 
         foreach ($array as $key => $element) {
             if (static::getObjectField($element, $field, $isGetter) == $value) {
-                $result[$key] = $element;
+                if ($onlyOne) {
+                    $result = $element;
+                    break;
+
+                } else {
+                    $result[$key] = $element;
+                }
             }
         }
 
         return $result;
-    }
-
-    /**
-     * Search entity in array by a field value
-     *
-     * @param array   $array    Array to search
-     * @param string  $field    Field to search by
-     * @param mixed   $value    Value to use for comparison
-     * @param boolean $isGetter Determines if the second param is a property name or a method OPTIONAL
-     *
-     * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function searchInObjectsArray(array $array, $field, $value, $isGetter = true)
-    {
-        $list = static::searchAllInObjectsArray($array, $field, $value, $isGetter);
-
-        return $list ? reset($list) : null;
     }
 
     /**

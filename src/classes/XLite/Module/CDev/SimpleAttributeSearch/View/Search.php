@@ -145,10 +145,12 @@ class Search extends \XLite\View\ItemsList\Product\Customer\Search implements \X
      */
     protected function getAttributeBoxValue(\XLite\Model\Attribute $attribute, array $params = array())
     {
-        $result = \Includes\Utils\ArrayManager::getIndex(
-            $this->getParam(static::PARAM_ATTRIBUTES),
-            $attribute->getId()
-        );
+        $result = null;
+        $attrs  = $this->getParam(static::PARAM_ATTRIBUTES);
+
+        if (isset($attrs[$attribute->getTypeName()][$attribute->getId()])) {
+            $result = $attrs[$attribute->getTypeName()][$attribute->getId()];
+        }
 
         if (isset($result) && !empty($params)) {
             foreach ($params as $param) {
@@ -161,32 +163,5 @@ class Search extends \XLite\View\ItemsList\Product\Customer\Search implements \X
         }
 
         return $result;
-    }
-
-    /**
-     * Set param values using the request or session
-     *
-     * @param array &$params Param values to modify
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function setWidgetRequestParamValues(array &$params)
-    {
-        parent::setWidgetRequestParamValues($params);
-
-        if (
-            !empty($params[static::PARAM_ATTRIBUTES])
-            && isset(\XLite\Core\Request::getInstance()->{static::PARAM_ATTRIBUTES})
-        ) {
-            $attributes = array();
-
-            foreach ($params[static::PARAM_ATTRIBUTES] as $data) {
-                $attributes += $data;
-            }
-
-            $params[static::PARAM_ATTRIBUTES] = $attributes;
-        }
     }
 }

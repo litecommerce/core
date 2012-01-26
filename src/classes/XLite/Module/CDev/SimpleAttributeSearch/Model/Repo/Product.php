@@ -67,6 +67,19 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      */
     protected function prepareCndAttributes(\Doctrine\ORM\QueryBuilder $queryBuilder, array $attributes)
     {
-        // print_r(\XLite\Core\Request::getInstance()->{static::P_ATTRIBUTES});die;
+        $ids = array();
+
+        foreach ($attributes as $type => $data) {
+            $result = \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Value\\' . $type)
+                ->getProductIDsByValues($data);
+
+            if (!empty($result)) {
+                $ids = empty($ids) ? $result : (array_intersect($result, $ids) ?: array('0'));
+            }   
+        }   
+        
+        if (!empty($ids)) {
+            $queryBuilder->andWhere($queryBuilder->expr()->in('p.product_id', $ids));
+        }
     }
 }

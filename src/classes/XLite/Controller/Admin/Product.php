@@ -511,22 +511,22 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdateAttributes()
     {
-        $product = $this->getProduct();
-
+        $product    = $this->getProduct();
+        $attributes = call_user_func_array(
+            'array_merge',
+            \Includes\Utils\ArrayManager::getArraysArrayFieldValues($product->getAttributes(), 'attributes')
+        );  
+        
         foreach ($this->getPostedData() as $attrId => $data) {
             if (!empty($data['value'])) {
-                $attribute = \Includes\Utils\ArrayManager::searchInObjectsArray(
-                    $product->getAttributes(),
-                    'getId',
-                    $attrId
-                );
-
+                $attribute = \Includes\Utils\ArrayManager::searchInObjectsArray($attributes, 'getId', $attrId);
+                
                 if (!isset($attribute)) {
                     return \XLite\Core\TopMessage::addError('Invalid attribute ID: {{id}}', array('id' => $attrId));
-                }
-
+                }   
+                
                 $attribute->setValue($product, $data['value']);
-            }
+            }   
         }
 
         $product->setAttrsInTab((bool) \XLite\Core\Request::getInstance()->attrsInTab);

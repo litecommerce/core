@@ -244,15 +244,13 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     protected $classes;
 
     /**
-     * Values for assigned attributes
+     * Cache of assigned attribute values
      *
-     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @var   array
      * @see   ____var_see____
      * @since 1.0.16
-     *
-     * @OneToMany (targetEntity="XLite\Model\Attribute\Value", mappedBy="product", cascade={"all"}, fetch="LAZY")
      */
-    protected $attributeValues;
+    protected $attrValues;
 
     /**
      * Constructor
@@ -269,7 +267,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
         $this->images           = new \Doctrine\Common\Collections\ArrayCollection();
         $this->order_items      = new \Doctrine\Common\Collections\ArrayCollection();
         $this->classes          = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->attributeValues  = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }
@@ -706,6 +703,23 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
         }
 
         return $result;
+    }
+
+    /**
+     * Return list of associated attribute values
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getAttributeValues()
+    {
+        if (!isset($this->attrValues)) {
+            $this->attrValues = \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Value')
+                ->findByProductId($this->getProductId());
+        }
+
+        return $this->attrValues;
     }
 
     /**
