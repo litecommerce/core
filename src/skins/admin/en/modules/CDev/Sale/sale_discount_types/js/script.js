@@ -11,7 +11,6 @@
  */
 
 function SalePriceValue() {
-//  jQuery('.sale-price-value input[type="text"]').hide();
 
   jQuery('.discount-type input:radio:checked').closest('ul.sale-discount').addClass('active');
 
@@ -21,9 +20,11 @@ function SalePriceValue() {
 
     jQuery(this).closest('ul.sale-discount').addClass('active');
 
-    //jQuery('.sale-price-value input[type="text"]').hide();
+    var input = jQuery('#sale-price-value-' + jQuery(this).val());
 
-    jQuery('#sale-price-value-' + jQuery(this).val()).focus();
+    input.focus();
+
+    jQuery('input[name="postedData[salePriceValue]"]').val(input.val());
   });
 
   jQuery('.sale-price-value input[type="text"]').bind('change', function () {
