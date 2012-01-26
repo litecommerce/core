@@ -17,7 +17,7 @@
   <input type="hidden" name="action" value="update_option_group" />
   <input type="hidden" name="page" value="product_options" />
   <input type="hidden" name="language" value="{language}" />
-  <input type="hidden" name="product_id" value="{getProductId()}" />
+  <input type="hidden" name="id" value="{getProductId()}" />
   <input type="hidden" name="groupId" value="{getGroupId()}" />
 
   <ul class="form">
