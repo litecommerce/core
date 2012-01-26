@@ -48,6 +48,15 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: Use Facebook Like button
+  - name: fb_admins
+    category: CDev\GoSocial
+    type: text
+    orderby: 1060
+    value: ''
+    translations:
+      - code: en
+        option_name: Administrators IDs
+        option_comment: 'Specify a comma-separated list of Facebook user IDs (or a single user ID) who can moderate Facebook statistics for this site'
   - name: fb_like_send_button
     category: CDev\GoSocial
     type: checkbox

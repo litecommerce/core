@@ -99,6 +99,10 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
             $list['fb:app_id'] = \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_app_id;
         }
 
+        if (\XLite\Core\Config::getInstance()->CDev->GoSocial->fb_admins) {
+            $list['fb:admins'] = \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_admins;
+        }
+
         return $list;
     }
 
