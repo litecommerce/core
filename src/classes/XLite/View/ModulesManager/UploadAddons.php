@@ -87,7 +87,7 @@ class UploadAddons extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Upload add-on';
+        return static::t('Upload add-on');
     }
 
     /**
