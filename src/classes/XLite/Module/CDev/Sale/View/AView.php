@@ -76,6 +76,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      */
     protected function participateSale(\XLite\Model\Product $product)
     {
-        return $product->getParticipateSale() && ($product->getSalePriceValue() < $product->getPrice());
+        return $product->getParticipateSale() && ($product->getSalePrice() < $product->getPrice());
     }
 }

@@ -70,8 +70,27 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      */
     protected function prepareCndParticipateSale(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder->andWhere('p.participateSale = :participateSale')
-            ->setParameter('participateSale', $value);
+        $cnd = new \Doctrine\ORM\Query\Expr\Orx();
+
+        $pricePercentCnd = new \Doctrine\ORM\Query\Expr\Andx();
+
+        $pricePercentCnd->add('p.discountType = :discountTypePercent');
+        $pricePercentCnd->add('p.salePriceValue > 0');
+
+        $priceAbsoluteCnd = new \Doctrine\ORM\Query\Expr\Andx();
+
+        $priceAbsoluteCnd->add('p.discountType = :discountTypePrice');
+        $priceAbsoluteCnd->add('p.price > p.salePriceValue');
+
+        $cnd->add($pricePercentCnd);
+        $cnd->add($priceAbsoluteCnd);
+
+        $queryBuilder
+            ->andWhere('p.participateSale = :participateSale')
+            ->andWhere($cnd)
+            ->setParameter('participateSale', $value)
+            ->setParameter('discountTypePercent', \XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PERCENT)
+            ->setParameter('discountTypePrice', \XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PRICE);
     }
 
     // }}}
