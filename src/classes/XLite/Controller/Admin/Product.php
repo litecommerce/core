@@ -166,7 +166,9 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     public function getProductId()
     {
-        return intval(\XLite\Core\Request::getInstance()->id);
+        return isset(\XLite\Core\Request::getInstance()->id)
+            ? intval(\XLite\Core\Request::getInstance()->id)
+            : intval(\XLite\Core\Request::getInstance()->product_id);
     }
 
     /**
