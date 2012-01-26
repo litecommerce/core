@@ -10,16 +10,17 @@
  * @since     1.0.0
  *}
 
-<div IF="hasResults()" class="{getContainerClass()}">
+<div class="{getContainerClass()}">
 
   <div IF="isHeaderVisible()" class="list-header">
     <div FOREACH="getTopActions(),tpl" class="button-container"><widget template="{tpl:h}" /></div>
     {displayInheritedViewListContent(#header#)}
   </div>
 
-  <widget template="{getPageBodyTemplate()}" />
+  <widget IF="isPageBodyVisible()" template="{getPageBodyTemplate()}" />
+  <widget IF="!isPageBodyVisible()" template="{getEmptyListTemplate()}" />
 
-  <div IF="pager.isVisibleBottom()" class="table-pager">{pager.display()}</div>
+  <div IF="isPagerVisible()" class="table-pager">{pager.display()}</div>
 
   <div IF="isFooterVisible()" class="list-footer">
     <div FOREACH="getBottomActions(),tpl" class="button-container"><widget template="{tpl:h}" /></div>
@@ -27,8 +28,6 @@
   </div>
 
 </div>
-
-<widget IF="isEmptyListTemplateVisible()" template="{getEmptyListTemplate()}" />
 
 <widget IF="isPanelVisible()" class="{getPanelClass()}" />
 

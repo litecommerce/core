@@ -680,6 +680,30 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
+     * Check - body tempalte is visible or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function isPageBodyVisible()
+    {
+        return $this->hasResults() || static::CREATE_INLINE_NONE != $this->isInlineCreation();
+    }
+
+    /**
+     * Check - pager box is visible or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function isPagerVisible()
+    {
+        return $this->isPageBodyVisible() && $this->getPager();
+    }
+
+    /**
      * Return dir which contains the page body template
      *
      * @return string
@@ -939,7 +963,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     // }}}
 
-    // {{{ Sticky panell
+    // {{{ Sticky panel
 
     /**
      * Check - sticky panel is visible or not

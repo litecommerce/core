@@ -22,41 +22,15 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.15
+ * @since     1.0.16
  */
 
-namespace XLite\View\Pager\Admin\Model;
-
-/**
- * Common pager for model-based items lists
- * 
- * @see   ____class_see____
- * @since 1.0.15
- */
-abstract class AModel extends \XLite\View\Pager\Admin\AAdmin
+return function()
 {
-    /**
-     * Check visibility
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.16
-     */
-    public function isVisible()
-    {
-        return parent::isVisible();
-    }
+    // Loading data to the database from yaml file
+    $yamlFile = __DIR__ . LC_DS . 'post_rebuild.yaml';
 
-    /**
-     * Get items per page (default)
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getItemsPerPageDefault()
-    {
-        return 20;
+    if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
+        \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
     }
-}
-
+};
