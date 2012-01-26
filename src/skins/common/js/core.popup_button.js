@@ -40,12 +40,12 @@ PopupButton.prototype.eachClick = function (elem)
 {
   lastPopupButton = jQuery(elem);
 
-  return loadDialogByLink(
+  return !lastPopupButton.hasClass('disabled') ? loadDialogByLink(
     elem,
     URLHandler.buildURL(this.getURLParams(elem)),
     this.options,
     this.callback
-  );
+  ) : false;
 }
 
 PopupButton.prototype.eachCallback = function (elem)

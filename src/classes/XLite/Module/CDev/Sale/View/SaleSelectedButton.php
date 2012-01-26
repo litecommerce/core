@@ -107,6 +107,6 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      */
     protected function getClass()
     {
-        return 'action sale-selected-button ' . ($this->getParam(self::PARAM_STYLE) ?: '');
+        return parent::getClass() . ' action sale-selected-button';
     }
 }
