@@ -227,24 +227,16 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     // {{{ Create
 
     /**
-     * Get create message
-     *
-     * @param integer $count Count
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    abstract protected function getCreateMessage($count);
-
-    /**
      * Get create field classes 
      * 
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
      */
-    abstract protected function getCreateFieldClasses();
+    protected function getCreateFieldClasses()
+    {
+        return array();
+    }
 
     /**
      * Process create new entities
@@ -284,6 +276,20 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
                 \XLite\Core\TopMessage::getInstance()->addInfo($label);
             }
         }
+    }
+
+    /**
+     * Get create message
+     *
+     * @param integer $count Count
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getCreateMessage($count)
+    {
+        return \XLite\Core\Translation::lbl('X entities has been created', array('count' => $count));
     }
 
     /**
@@ -379,7 +385,10 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      * @see    ____func_see____
      * @since  1.0.15
      */
-    abstract protected function getRemoveMessage($count);
+    protected function getRemoveMessage($count)
+    {
+        return \XLite\Core\Translation::lbl('X entities has been removed', array('count' => $count));
+    }
 
     /**
      * Process remove 
@@ -780,7 +789,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      */
     protected function getPagerClass()
     {
-        return 'XLite\View\Pager\Admin\Model';
+        return 'XLite\View\Pager\Admin\Model\Infinity';
     }
 
     /**

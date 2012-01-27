@@ -46,5 +46,17 @@ abstract class AItemsList extends \XLite\View\Form\AForm
     {
         return trim(parent::getDefaultClassName() . ' list-form');
     }
-}
 
+    /**
+     * getDefaultAction
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'update';
+    }
+
+}
