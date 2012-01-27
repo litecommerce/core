@@ -142,4 +142,66 @@ class Cart extends \XLite\View\Dialog
     {
         return $this->getCart()->isEmpty() ? 'empty.tpl' : parent::getBodyTemplate();
     }
+
+    // {{{ Surcharges
+
+    /**
+     * Get surcharge totals 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getSurchargeTotals()
+    {
+        return $this->getCart()->getSurchargeTotals();
+    }
+
+    /**
+     * Get surcharge class name 
+     * 
+     * @param string $type      Surcharge type
+     * @param array  $surcharge Surcharge
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getSurchargeClassName($type, array $surcharge)
+    {
+        return 'order-modifier '
+            . $type . '-modifier '
+            . strtolower($surcharge['code']) . '-code-modifier';
+    }
+
+    /**
+     * Format surcharge value
+     * 
+     * @param array $surcharge Surcharge
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function formatSurcharge(array $surcharge)
+    {
+        return $this->formatPrice(abs($surcharge['cost']), $this->getCart()->getCurrency());
+    }
+
+    /**
+     * Get exclude surcharges by type 
+     * 
+     * @param string $type Surcharge type
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getExcludeSurchargesByType($type)
+    {
+        return $this->getCart()->getExcludeSurchargesByType($type);
+    }
+
+    // }}}
+
 }

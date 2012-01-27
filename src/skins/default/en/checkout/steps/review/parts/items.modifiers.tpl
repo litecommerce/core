@@ -13,14 +13,14 @@
  *}
 <ul class="modifiers">
 
-  <li FOREACH="cart.getSurchargeTotals(),type,surcharge" class="order-modifier {type}-modifier">
+  <li FOREACH="getSurchargeTotals(),type,surcharge" class="{getSurchargeClassName(type,surcharge)}">
     {if:surcharge.count=#1#}
       <span class="name">{surcharge.lastName}:</span>
     {else:}
       <span class="name list-owner">{surcharge.name}:</span>
     {end:}
     {if:surcharge.available}
-      <span class="value">{formatPrice(surcharge.cost,cart.getCurrency()):h}</span>
+      <span class="value">{formatSurcharge(surcharge):h}</span>
     {else:}
       <span class="value">{t(#n/a#)}</span>
     {end:}
@@ -29,7 +29,7 @@
     {else:}
       <div style="display: none;" class="order-modifier-details">
         <ul>
-          <li FOREACH="cart.getExcludeSurchargesByType(type),row">
+          <li FOREACH="getExcludeSurchargesByType(type),row">
             <span class="name">{row.getName()}:</span>
             <span class="value">{formatPrice(row.getValue(),cart.getCurrency()):h}</span>
           </li>

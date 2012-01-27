@@ -142,6 +142,7 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
                     'available' => $surcharge->getAvailable(),
                     'count'     => 0,
                     'lastName'  => null,
+                    'code'      => $surcharge->getCode(),
                 );
             }
 
