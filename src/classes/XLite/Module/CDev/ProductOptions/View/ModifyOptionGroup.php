@@ -75,7 +75,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      */
     public function getProductId()
     {
-        return intval(\XLite\Core\Request::getInstance()->product_id);
+        return intval(\XLite\Core\Request::getInstance()->id);
     }
 
     /**

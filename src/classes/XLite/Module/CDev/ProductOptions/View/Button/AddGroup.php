@@ -51,9 +51,9 @@ class AddGroup extends \XLite\View\Button\Link
                 'product',
                 '',
                 array(
-                    'product_id' => \XLite\Core\Request::getInstance()->product_id,
-                    'page'       => 'product_options',
-                    'groupId'    => '0',
+                    'id'      => \XLite\Core\Request::getInstance()->id,
+                    'page'    => 'product_options',
+                    'groupId' => '0',
                 )
             )
         );
