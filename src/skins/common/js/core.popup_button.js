@@ -29,6 +29,25 @@ PopupButton.prototype.options = {'width' : 'auto'};
 
 PopupButton.prototype.callback = function (selector, link)
 {
+  jQuery('form', selector).each(
+    function() {
+      jQuery(this).commonController(
+        'enableBackgroundSubmit',
+        function () {
+          jQuery(selector).dialog('close');
+          openWaitBar();
+
+          return true;
+        },
+        function () {
+          closeWaitBar();
+          jQuery(selector).remove();
+
+          return false;
+        }
+      );
+    }
+  );
 }
 
 PopupButton.prototype.getURLParams = function (button)

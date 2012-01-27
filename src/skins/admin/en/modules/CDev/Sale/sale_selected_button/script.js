@@ -24,6 +24,9 @@ decorate(
   'callback',
   function (selector, link)
   {
+    // previous method call
+    arguments.callee.previousMethod.apply(this, arguments);
+
     // Autoloading of browse server link (popup widget).
     // TODO. make it dynamically and move it to ONE widget initialization (Main widget)
     core.autoload(SalePriceValue);
