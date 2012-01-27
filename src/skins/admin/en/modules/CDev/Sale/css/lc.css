@@ -10,6 +10,10 @@
  * @since     1.0.0
  */
 
+ .product-name-sale-label-disabled {
+   display: none;
+ }
+
  .product-name-sale-label {
    color: #E57C32;
    font-style: italic;

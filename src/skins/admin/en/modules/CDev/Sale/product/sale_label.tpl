@@ -11,4 +11,9 @@
  * @ListChild (list="itemsList.products.search.cell.name", weight="10")
  *}
 
-<span IF="{participateSale(entity)}" class="product-name-sale-label">{t(#sale#)}</span>
+<span
+  id="product-sale-label-{entity.getProductId()}"
+  class="product-name-sale-label{if:!participateSale(entity)} product-name-sale-label-disabled{end:}"
+  >
+  {t(#sale#)}
+</span>

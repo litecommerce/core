@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -29,14 +29,14 @@ namespace XLite\View\ItemsList\Model;
 
 /**
  * Abstract admin model-based items list
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.15
  */
 abstract class AModel extends \XLite\View\ItemsList\AItemsList
 {
     /**
-     * Sortable types 
+     * Sortable types
      */
     const SORT_TYPE_NONE  = 0;
     const SORT_TYPE_MOVE  = 1;
@@ -51,8 +51,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
 
     /**
-     * Hightlight step 
-     * 
+     * Hightlight step
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.15
@@ -60,8 +60,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     protected $hightlightStep = 2;
 
     /**
-     * Error messages 
-     * 
+     * Error messages
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.15
@@ -69,8 +69,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     protected $errorMessages = array();
 
     /**
-     * Request data 
-     * 
+     * Request data
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.15
@@ -78,8 +78,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     protected $requestData;
 
     /**
-     * Inline fields 
-     * 
+     * Inline fields
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.15
@@ -87,8 +87,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     protected $inlineFields;
 
     /**
-     * Dump entity 
-     * 
+     * Dump entity
+     *
      * @var   \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.15
@@ -98,8 +98,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     // {{{ Fields
 
     /**
-     * Get data prefix 
-     * 
+     * Get data prefix
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
@@ -111,7 +111,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Get data prefix for remove cells
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
@@ -146,8 +146,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get self 
-     * 
+     * Get self
+     *
      * @return \XLite\View\ItemsList\Model\AModel
      * @see    ____func_see____
      * @since  1.0.15
@@ -163,7 +163,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Get field classes list (only inline-based form fields)
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -171,8 +171,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     abstract protected function getFieldClasses();
 
     /**
-     * Define repository name 
-     * 
+     * Define repository name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
@@ -181,9 +181,9 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Quick process
-     * 
+     *
      * @param array $parameters Parameters OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -198,7 +198,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Process
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -213,8 +213,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get repository 
-     * 
+     * Get repository
+     *
      * @return \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  1.0.15
@@ -238,8 +238,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     abstract protected function getCreateMessage($count);
 
     /**
-     * Get create field classes 
-     * 
+     * Get create field classes
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -248,7 +248,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Process create new entities
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -287,8 +287,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Create entity 
-     * 
+     * Create entity
+     *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.15
@@ -301,8 +301,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get dump entity 
-     * 
+     * Get dump entity
+     *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.15
@@ -317,8 +317,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get new data line 
-     * 
+     * Get new data line
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -333,9 +333,9 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Check - new line is sufficient or not
-     * 
+     *
      * @param array $line Data line
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.15
@@ -347,10 +347,10 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Create inline fields list
-     * 
+     *
      * @param array                $line   Line data
      * @param \XLite\Model\AEntity $entity Entity
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -371,10 +371,10 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     // {{{ Remove
 
     /**
-     * Get remove message 
-     * 
+     * Get remove message
+     *
      * @param integer $count Count
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
@@ -382,8 +382,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     abstract protected function getRemoveMessage($count);
 
     /**
-     * Process remove 
-     * 
+     * Process remove
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.15
@@ -422,8 +422,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     // {{{ Update
 
     /**
-     * Process update 
-     * 
+     * Process update
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -448,7 +448,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Check - moel processing is active or not
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -460,7 +460,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Validate data
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.15
@@ -478,7 +478,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Save data
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.15
@@ -496,8 +496,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Process errors 
-     * 
+     * Process errors
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -534,10 +534,10 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Save cell 
-     * 
+     * Save cell
+     *
      * @param \XLite\View\FormField\Inline\AInline $inline Inline field
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -548,8 +548,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get inline fields 
-     * 
+     * Get inline fields
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -564,8 +564,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Define inline fields 
-     * 
+     * Define inline fields
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -584,11 +584,11 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get inline field 
-     * 
+     * Get inline field
+     *
      * @param string               $class  Class
      * @param \XLite\Model\AEntity $entity Entity
-     *  
+     *
      * @return \XLite\View\FormField\Inline\AInline
      * @see    ____func_see____
      * @since  1.0.15
@@ -603,8 +603,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     // {{{ Misc.
 
     /**
-     * Get request data 
-     * 
+     * Get request data
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -619,8 +619,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Define request data 
-     * 
+     * Define request data
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -631,11 +631,11 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Add error message 
-     * 
+     * Add error message
+     *
      * @param \XLite\View\Inline\AInline $inline  Inline field
      * @param string                     $message message
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -646,8 +646,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get error messages 
-     * 
+     * Get error messages
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -681,7 +681,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Check - body tempalte is visible or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.16
@@ -693,7 +693,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Check - pager box is visible or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.16
@@ -731,7 +731,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Define line class  as list of names
+     * Define line class as list of names
      *
      * @param integer              $index  Line index
      * @param \XLite\Model\AEntity $entity Line model
@@ -755,6 +755,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
         if (0 === ($index + 1) % $this->hightlightStep) {
             $classes[] = 'even';
         }
+
+        $classes[] = 'entity-' . $entity->getUniqueIdentifier();
 
         return $classes;
     }
@@ -796,8 +798,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get list name suffixes 
-     * 
+     * Get list name suffixes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -818,23 +820,23 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Build entity page URL 
-     * 
+     * Build entity page URL
+     *
      * @param \XLite\Model\AEntity $entity Entity
      * @param array                $column Column data
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
      */
     protected function buildEntityURL(\XLite\Model\AEntity $entity, array $column)
     {
-        return \XLite\Core\Converter::buildURL($column[static::COLUMN_LINK], '', array('id' => $entity->getUniqueIndetifier()));
+        return \XLite\Core\Converter::buildURL($column[static::COLUMN_LINK], '', array('id' => $entity->getUniqueIdentifier()));
     }
 
     /**
-     * Get container class 
-     * 
+     * Get container class
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
@@ -852,8 +854,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     // {{{ Line behaviors
 
     /**
-     * Mark list as sortable 
-     * 
+     * Mark list as sortable
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.15
@@ -936,8 +938,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get create button label 
-     * 
+     * Get create button label
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
@@ -948,10 +950,10 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get entity position 
-     * 
+     * Get entity position
+     *
      * @param \XLite\Model\AEntity $entity Entity
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.15
@@ -967,7 +969,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Check - sticky panel is visible or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.16

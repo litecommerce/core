@@ -110,7 +110,7 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
         if (is_array(\XLite\Core\Request::getInstance()->select)) {
             foreach (\XLite\Core\Request::getInstance()->select as $productId => $value) {
 
-                $toDelete['select[' . $productId . ']'] = $value;
+                $toDelete['select[' . $productId . ']'] = $productId;
             }
         }
 

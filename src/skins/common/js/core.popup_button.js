@@ -27,22 +27,32 @@ PopupButton.prototype.pattern = '.popup-button';
 
 PopupButton.prototype.options = {'width' : 'auto'};
 
+PopupButton.prototype.afterSubmit = function (selector) {
+
+}
+
 PopupButton.prototype.callback = function (selector, link)
 {
+  var obj = this;
+
   jQuery('form', selector).each(
     function() {
       jQuery(this).commonController(
         'enableBackgroundSubmit',
         function () {
+          // Close dialog (but it is available in DOM)
           jQuery(selector).dialog('close');
           openWaitBar();
 
           return true;
         },
-        function () {
+        function (event) {
           closeWaitBar();
-          jQuery(selector).remove();
 
+          obj.afterSubmit(selector);
+
+          // Remove dialog from DOM
+          jQuery(selector).remove();
           return false;
         }
       );
@@ -63,7 +73,8 @@ PopupButton.prototype.eachClick = function (elem)
     elem,
     URLHandler.buildURL(this.getURLParams(elem)),
     this.options,
-    this.callback
+    this.callback,
+    this
   ) : false;
 }
 

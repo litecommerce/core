@@ -35,6 +35,29 @@ decorate(
 
 decorate(
   'PopupButtonSaleSelectedButton',
+  'afterSubmit',
+  function (selector)
+  {
+    // previous method call
+    arguments.callee.previousMethod.apply(this, arguments);
+
+    var val = jQuery('input[name="postedData[salePriceValue]"]').val();
+
+    jQuery('input[name*="select"]', jQuery(selector)).each(function (index, elem) {
+
+      if (val == 0) {
+        jQuery('.entity-' + jQuery(elem).val() + ' .product-name-sale-label')
+          .addClass('product-name-sale-label-disabled');
+      } else {
+        jQuery('.entity-' + jQuery(elem).val() + ' .product-name-sale-label')
+          .removeClass('product-name-sale-label-disabled');
+      }
+    });
+  }
+);
+
+decorate(
+  'PopupButtonSaleSelectedButton',
   'getURLParams',
   function (button)
   {
