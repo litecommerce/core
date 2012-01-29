@@ -97,8 +97,8 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
     protected function getParamsObjectProduct()
     {
         return array(
-            'page'       => \XLite\Core\Request::getInstance()->fileObject,
-            'product_id' => \XLite\Core\Request::getInstance()->objectId,
+            'page' => \XLite\Core\Request::getInstance()->fileObject,
+            'id'   => \XLite\Core\Request::getInstance()->objectId,
         );
     }
 

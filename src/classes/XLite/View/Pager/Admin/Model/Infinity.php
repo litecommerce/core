@@ -22,76 +22,92 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.15
  */
 
-namespace XLite\Module\CDev\FeaturedProducts;
+namespace XLite\View\Pager\Admin\Model;
 
 /**
- * Featured Products module manager
- *
+ * Infinity pager
+ * 
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.15
  */
-abstract class Main extends \XLite\Module\AModule
+class Infinity extends \XLite\View\Pager\Admin\Model\AModel
 {
     /**
-     * Author name
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR]->setValue(false);
+        $this->widgetParams[self::PARAM_ONLY_PAGES]->setValue(true);
+    }
+
+    /**
+     * Get items per page (default)
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getItemsPerPageDefault()
+    {
+        return $this->getItemsPerPageMax();
+    }
+
+    /**
+     * Return maximal possible items number per page
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getItemsPerPageMax()
+    {
+        return 1000000000;
+    }
+
+    /**
+     * getItemsPerPage
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getItemsPerPage()
+    {
+        return $this->getItemsPerPageMax();
+    }
+
+    /**
+     * Return ID of the current page
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPageId()
+    {
+        return 0;
+    }
+
+    /**
+     * Get direcory
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAuthorName()
+    protected function getDir()
     {
-        return 'Creative Development LLC';
+        return 'pager/model';
     }
 
-    /**
-     * Module name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getModuleName()
-    {
-        return 'Featured Products';
-    }
-
-    /**
-     * Module version
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getMinorVersion()
-    {
-        return '8';
-    }
-
-    /**
-     * Module description
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getDescription()
-    {
-        return 'Shows your best and most profitable products to customers.';
-    }
-
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function showSettingsForm()
-    {
-        return true;
-    }
 }

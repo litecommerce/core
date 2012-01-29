@@ -16,7 +16,7 @@
   <input type="hidden" name="action" value="update_option_groups_exceptions" />
   <input type="hidden" name="page" value="product_options" />
   <input type="hidden" name="language" value="{language}" />
-  <input type="hidden" name="product_id" value="{getProductId()}" />
+  <input type="hidden" name="id" value="{getProductId()}" />
 
   <div FOREACH="getExceptions(),eid,exception">
     <input type="checkbox" name="mark[]" value="{eid}" id="exception_mark_{eid}" class="mark" />

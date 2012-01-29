@@ -10,14 +10,14 @@
  * @since     1.0.0
  * @ListChild (list="cart.panel.totals", weight="20")
  *}
-<li FOREACH="cart.getSurchargeTotals(),type,surcharge" class="order-modifier {type}-modifier">
+<li FOREACH="getSurchargeTotals(),type,surcharge" class="{getSurchargeClassName(type,surcharge)}">
   {if:surcharge.count=#1#}
     <strong>{surcharge.lastName}:</strong>
   {else:}
     <strong class="list-owner">{surcharge.name}:</strong>
   {end:}
   {if:surcharge.available}
-    <span class="value">{formatPrice(surcharge.cost,cart.getCurrency()):h}</span>
+    <span class="value">{formatSurcharge(surcharge):h}</span>
   {else:}
     <span>{t(#n/a#)}</span>
   {end:}
@@ -26,7 +26,7 @@
   {else:}
     <div style="display: none;" class="order-modifier-details">
       <ul>
-        <li FOREACH="cart.getExcludeSurchargesByType(type),row">
+        <li FOREACH="getExcludeSurchargesByType(type),row">
           <span class="name">{row.getName()}:</span>
           <span class="value">{formatPrice(row.getValue(),cart.getCurrency()):h}</span>
         </li>

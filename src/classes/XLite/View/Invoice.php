@@ -165,4 +165,52 @@ class Invoice extends \XLite\View\AView
     {
         return 4 + count($this->getOrder()->getItemsExcludeSurcharges());
     }
+
+    // {{{ Surcharges
+
+    /**
+     * Get surcharge totals
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getSurchargeTotals()
+    {
+        return $this->getOrder()->getSurchargeTotals();
+    }
+
+    /**
+     * Get surcharge class name
+     *
+     * @param string $type      Surcharge type
+     * @param array  $surcharge Surcharge
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getSurchargeClassName($type, array $surcharge)
+    {
+        return 'order-modifier '
+            . $type . '-modifier '
+            . strtolower($surcharge['code']) . '-code-modifier';
+    }
+
+    /**
+     * Format surcharge value
+     *
+     * @param array $surcharge Surcharge
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function formatSurcharge(array $surcharge)
+    {
+        return $this->formatPrice(abs($surcharge['cost']), $this->getOrder()->getCurrency());
+    }
+
+    // }}}
+
 }

@@ -265,7 +265,7 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
     protected function assembleProductData(\XLite\Model\Product $product)
     {
         return array(
-            'loc'        => array('target' => 'product', 'product_id' => $product->getProductId()),
+            'loc'        => array('target' => 'product', 'id' => $product->getProductId()),
             'lastmod'    => time(),
             'changefreq' => \XLite\Core\Config::getInstance()->CDev->XMLSitemap->product_changefreq,
             'priority'   => $this->processPriority(\XLite\Core\Config::getInstance()->CDev->XMLSitemap->product_priority),

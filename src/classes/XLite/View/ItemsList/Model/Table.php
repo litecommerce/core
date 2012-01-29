@@ -105,6 +105,19 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
+     * Check - pager box is visible or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function isPagerVisible()
+    {
+        return parent::isPagerVisible()
+            && $this->getPager()->isVisible();
+    }
+
+    /**
      * Get preprocessed columns structire
      * 
      * @return array

@@ -11,4 +11,4 @@
  *
  * @ListChild (list="product.attachments.row", weight="500", zone="admin")
  *}
-<a href="{buildURL(#product#,#removeAttachment#,_ARRAY_(#product_id#^product.getProductId(),#id#^attachment.getId()))}" class="remove" title="{t(#Remove#)}"><img src="images/spacer.gif" alt="" /></a>
+<a href="{buildURL(#product#,#removeAttachment#,_ARRAY_(#id#^product.getProductId(),#id#^attachment.getId()))}" class="remove" title="{t(#Remove#)}"><img src="images/spacer.gif" alt="" /></a>

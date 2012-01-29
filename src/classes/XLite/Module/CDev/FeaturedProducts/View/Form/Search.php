@@ -74,4 +74,17 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
 
         return $params;
     }
+
+    /**
+     * JavaScript: this value will be returned on form submit
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getOnSubmitResult()
+    {
+        return 'true';
+    }
+
 }

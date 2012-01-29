@@ -25,7 +25,7 @@
         <td align="center"><input type="checkbox" name="delete[{featuredProduct.id}]" /></td>
         <td align="center"><input type="text" size="4" name="orderbys[{featuredProduct.id}]" value="{featuredProduct.order_by}" /></td>
         <td class="table-label">
-          <a href="admin.php?target=product&product_id={featuredProduct.product.product_id}">{featuredProduct.product.name:h}</a>
+          <a href="{buildUrl(#product#,##,_ARRAY_(#id#^featuredProduct.product.product_id))}">{featuredProduct.product.name:h}</a>
           <span IF="{!featuredProduct.product.enabled}" color="red">&nbsp;&nbsp;&nbsp;(not available for sale)</span>
         </td>
       </tr>
