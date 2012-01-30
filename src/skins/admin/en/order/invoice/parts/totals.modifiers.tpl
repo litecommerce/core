@@ -10,18 +10,24 @@
  * @since     1.0.8
  * @ListChild (list="invoice.base.totals", weight="200")
  *}
-<tr FOREACH="order.getSurchargeTotals(),type,surcharge" class="{type}-modifier">
+<tr FOREACH="getSurchargeTotals(),type,surcharge" class="{getSurchargeClassName(type,surcharge)}">
   {if:surcharge.count=#1#}
-    <td class="title">{surcharge.lastName}:</td>
+    <td class="title">
+      {surcharge.lastName}:
+      {displayViewListContent(#invoice.base.totals.modifier.name#,_ARRAY_(#surcharge#^surcharge,#type#^type,#order#^order))}
+    </td>
   {else:}
-    <td class="title list-owner">{surcharge.name}:</td>
+    <td class="title list-owner">
+      {surcharge.name}:
+      {displayViewListContent(#invoice.base.totals.modifier.name#,_ARRAY_(#surcharge#^surcharge,#type#^type,#order#^order))}
+    </td>
   {end:}
   <td class="value">
     {if:surcharge.available}
-      {formatPrice(surcharge.cost,order.getCurrency()):h}
+      {formatSurcharge(surcharge):h}
     {else:}
       {t(#n/a#)}
     {end:}
-    {displayViewListContent(#invoice.base.totals.modifier#,_ARRAY_(#surcharge#^surcharge,#type#^type,#order#^order))}
+    {displayViewListContent(#invoice.base.totals.modifier.value#,_ARRAY_(#surcharge#^surcharge,#type#^type,#order#^order))}
   </td>
 </tr>

@@ -47,17 +47,4 @@ class Main extends \XLite\View\Form\ItemsList\AItemsList
         return 'product_list';
     }
 
-    /**
-     * getDefaultAction
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultAction()
-    {
-        return 'update';
-    }
-
 }
-

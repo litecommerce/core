@@ -898,7 +898,9 @@ button.bright:active
 
 button.switch-state {
   background: transparent url(../images/tri_button.png) no-repeat left top;
-  padding-left: 10px;
+  padding: 0px;
+  padding-left: 11px;
+  border: 0px none;
 }
 
 button.switch-state div {
