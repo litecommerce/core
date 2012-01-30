@@ -94,6 +94,12 @@ class Sale extends \XLite\Module\CDev\Sale\View\ASale
             ),
         );
 
+        $widgetType = \XLite\Core\Config::getInstance()->CDev->Sale->sale_menu
+            ? self::WIDGET_TYPE_SIDEBAR
+            : self::WIDGET_TYPE_CENTER;
+
+        $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue($widgetType);
+
         unset($this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]);
         unset($this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]);
     }

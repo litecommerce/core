@@ -227,17 +227,6 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     // {{{ Create
 
     /**
-     * Get create message
-     *
-     * @param integer $count Count
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    abstract protected function getCreateMessage($count);
-
-    /**
      * Get create field classes
      *
      * @return void
