@@ -27,8 +27,55 @@ PopupButton.prototype.pattern = '.popup-button';
 
 PopupButton.prototype.options = {'width' : 'auto'};
 
-PopupButton.prototype.callback = function (selector)
+PopupButton.prototype.afterSubmit = function (selector) {
+
+}
+
+PopupButton.prototype.callback = function (selector, link)
 {
+  var obj = this;
+
+  jQuery('form', selector).each(
+    function() {
+      jQuery(this).commonController(
+        'enableBackgroundSubmit',
+        function () {
+          // Close dialog (but it is available in DOM)
+          jQuery(selector).dialog('close');
+          openWaitBar();
+
+          return true;
+        },
+        function (event) {
+          closeWaitBar();
+
+          obj.afterSubmit(selector);
+
+          // Remove dialog from DOM
+          jQuery(selector).remove();
+          return false;
+        }
+      );
+    }
+  );
+}
+
+PopupButton.prototype.getURLParams = function (button)
+{
+  return core.getCommentedData(button, 'url_params');
+}
+
+PopupButton.prototype.eachClick = function (elem)
+{
+  lastPopupButton = jQuery(elem);
+
+  return !lastPopupButton.hasClass('disabled') ? loadDialogByLink(
+    elem,
+    URLHandler.buildURL(this.getURLParams(elem)),
+    this.options,
+    this.callback,
+    this
+  ) : false;
 }
 
 PopupButton.prototype.eachCallback = function (elem)
@@ -42,16 +89,7 @@ PopupButton.prototype.eachCallback = function (elem)
 
     jQuery(elem).click(
       function () {
-        var urlParams;
-        urlParams = core.getCommentedData(button, 'url_params');
-        lastPopupButton = jQuery(this);
-
-        return loadDialogByLink(
-          button,
-          URLHandler.buildURL(urlParams),
-          obj.options,
-          callback
-        );
+        obj.eachClick(this);
       }
     );
 }

@@ -58,4 +58,41 @@ class Batch extends \XLite\View\Form\Product\Modify\AModify
     {
         return 'update';
     }
+
+
+    /**
+     * Get validator
+     *
+     * @return \XLite\Core\Validator\HashArray
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getValidator()
+    {
+        $validator = parent::getValidator();
+
+        $validator->addPair(
+            'postedData',
+            new \XLite\Core\Validator\PlainArray()
+        )->setValidator($this->getDataValidator());
+
+        return $validator;
+    }
+
+    /**
+     * Get validator products data
+     *
+     * @return null
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDataValidator()
+    {
+        $data = new \XLite\Core\Validator\HashArray();
+
+        $data->addPair('price', new \XLite\Core\Validator\Float(), null, static::t('Price'))
+            ->setRange(0);
+
+        return $data;
+    }
 }

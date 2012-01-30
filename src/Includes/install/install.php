@@ -1658,6 +1658,7 @@ function doFinishInstallation(&$params, $silentMode = false)
 <br />
 
 <div class="field-label"><?php echo xtr('LiteCommerce software has been successfully installed and is now available at the following URLs:'); ?></div>
+<img src="http://www.litecommerce.com/img/spacer2.gif" width="1" height="1" alt="" />
 
 <br />
 

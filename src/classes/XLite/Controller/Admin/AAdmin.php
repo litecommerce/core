@@ -41,7 +41,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     const MARKETPLACE_LAST_REQUEST_TIME = 'marketplaceLastRequestTime';
 
-
     /**
      * List of recently logged in administrators
      *
@@ -75,7 +74,6 @@ abstract class AAdmin extends \XLite\Controller\AController
         parent::postprocess();
 
         if ($this->dumpStarted) {
-
             $this->displayPageFooter();
         }
     }
@@ -137,7 +135,6 @@ abstract class AAdmin extends \XLite\Controller\AController
         } else {
 
             if (isset(\XLite\Core\Request::getInstance()->no_https)) {
-
                 \XLite\Core\Session::getInstance()->no_https = true;
             }
 
@@ -154,10 +151,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     public function getRecentAdmins()
     {
-        if (
-            \XLite\Core\Auth::getInstance()->isLogged()
-            && is_null($this->recentAdmins)
-        ) {
+        if (\XLite\Core\Auth::getInstance()->isLogged() && !isset($this->recentAdmins)) {
             $this->recentAdmins = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findRecentAdmins();
         }
 
@@ -393,7 +387,7 @@ OUT;
     protected function defineSpecialIgnoredTargets()
     {
         return array(
-            'files'          => array('tar', 'tar_skins', 'untar_skins'),
+            'files' => array('tar', 'tar_skins', 'untar_skins'),
         );
     }
 
@@ -447,8 +441,8 @@ OUT;
     }
 
     /**
-     * Change language common action 
-     * 
+     * Change language common action
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -460,55 +454,6 @@ OUT;
         if ($language && $language->getEnabled()) {
             \XLite\Core\Session::getInstance()->editLanguage = $code;
         }
-    }
-
-    // }}}
-
-    // {{{ Methods to work with the received data
-
-    /**
-     * getRequestDataByPrefix
-     *
-     * @param string $prefix Index in the request array
-     * @param string $field  Name of the field to retrieve OPTIONAL
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getRequestDataByPrefix($prefix, $field = null)
-    {
-        return (array) \Includes\Utils\ArrayManager::getIndex(
-            (array) \XLite\Core\Request::getInstance()->$prefix,
-            $field,
-            false
-        );
-    }
-
-    /**
-     * getPostedData
-     *
-     * @param string $field Name of the field to retrieve OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getPostedData($field = null)
-    {
-        return $this->getRequestDataByPrefix($this->getPrefixPostedData(), $field);
-    }
-
-    /**
-     * getToDelete
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getToDelete()
-    {
-        return $this->getRequestDataByPrefix($this->getPrefixToDelete());
     }
 
     // }}}

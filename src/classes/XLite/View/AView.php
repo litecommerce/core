@@ -787,7 +787,7 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     // }}}
-    
+
     // {{{ Routines for templates
 
     /**
@@ -868,10 +868,10 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Format file size 
-     * 
+     * Format file size
+     *
      * @param integer $size Size in bytes
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.10
@@ -1671,7 +1671,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getNameToDelete($id)
     {
-        return $this->getPrefixToDelete() . '[' . $id . ']';
+        return $this->getPrefixSelected() . '[' . $id . ']';
     }
 
     /**

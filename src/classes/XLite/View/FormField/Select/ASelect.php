@@ -73,7 +73,7 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
     public function setValue($value)
     {
         if (is_object($value) && $value instanceOf \XLite\Model\AEntity) {
-            $value = $value->getUniqueIndetifier();
+            $value = $value->getUniqueIdentifier();
         }
 
         parent::setValue($value);

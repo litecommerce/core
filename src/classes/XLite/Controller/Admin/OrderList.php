@@ -157,7 +157,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDelete()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Order')->deleteInBatchById($this->getToDelete());
+        \XLite\Core\Database::getRepo('\XLite\Model\Order')->deleteInBatchById($this->getSelected());
     }
 
     /**
