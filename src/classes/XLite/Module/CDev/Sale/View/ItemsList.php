@@ -35,4 +35,27 @@ namespace XLite\Module\CDev\Sale\View;
  */
 abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustomer implements \XLite\Base\IDecorator
 {
+    /**
+     * Return list of product labels
+     *
+     * @param \XLite\Model\Product $product The product to look for
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLabels(\XLite\Model\Product $product)
+    {
+        $labels = parent::getLabels($product);
+
+        if ($this->participateSale($product)) {
+
+            $labels += array(
+                'orange sale-price' => intval($product->getSalePercent()) . '% '
+                    . \XLite\Core\Translation::getInstance()->translate('off')
+            );
+        }
+
+        return $labels;
+    }
 }
