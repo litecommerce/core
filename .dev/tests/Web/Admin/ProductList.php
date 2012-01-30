@@ -46,10 +46,10 @@ class XLite_Web_Admin_ProductList extends XLite_Web_Admin_AAdmin
 
         $this->open(static::PRODUCT_LIST_PAGE);
 
-        $saveDisabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and contains(@class,"disabled")]';
-        $saveEnabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and not(contains(@class,"disabled"))]';
-        $cancelDisabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel") and contains(@class,"disabled")]';
-        $cancelEnabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel") and not(contains(@class,"disabled"))]';
+        $saveDisabledXpath = 'xpath=//form/div/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and contains(@class,"disabled")]';
+        $saveEnabledXpath = 'xpath=//form/div/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and not(contains(@class,"disabled"))]';
+        $cancelDisabledXpath = 'xpath=//form/div/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel") and contains(@class,"disabled")]';
+        $cancelEnabledXpath = 'xpath=//form/div/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel") and not(contains(@class,"disabled"))]';
 
 
         // Row hightlight
@@ -229,7 +229,7 @@ class XLite_Web_Admin_ProductList extends XLite_Web_Admin_AAdmin
         );
 
         $this->click(
-            'xpath=//form/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and not(contains(@class,"disabled"))]'
+            'xpath=//form/div/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and not(contains(@class,"disabled"))]'
         );
 
         $this->waitForPageToLoad();
@@ -291,7 +291,7 @@ class XLite_Web_Admin_ProductList extends XLite_Web_Admin_AAdmin
         );
 
         $this->click(
-            'xpath=//form/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and not(contains(@class,"disabled"))]'
+            'xpath=//form/div/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and not(contains(@class,"disabled"))]'
         );
         $this->waitForPageToLoad();
 
@@ -333,8 +333,8 @@ class XLite_Web_Admin_ProductList extends XLite_Web_Admin_AAdmin
         $clickXpath2 = 'xpath=//table[@class="list"]/tbody[@class="lines"]/tr[position()=2]/td[contains(@class,"price")]/div/div[@class="view"]';
         $inpXpath = 'xpath=//table[@class="list"]/tbody[@class="lines"]/tr[position()=1]/td[contains(@class,"price")]/div/div[@class="field"]';
         $clickSWXpath = 'xpath=//table[@class="list"]/tbody[@class="lines"]/tr[position()=1]/td[@class="cell actions left"]/div/div[@class="inline-field editable inline-switcher"]/div/div/span/div[@class="widget"]';
-        $cancelXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel")]';
-        $cancelDisabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel") and contains(@class,"disabled")]';
+        $cancelXpath = 'xpath=//form/div/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel")]';
+        $cancelDisabledXpath = 'xpath=//form/div/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel") and contains(@class,"disabled")]';
         $removeRowXpath = 'xpath=//table[@class="list"]/tbody[@class="lines"]/tr[position()=3 and contains(@class,"remove-mark")]';
 
         $this->click($clickXpath);
@@ -461,10 +461,10 @@ class XLite_Web_Admin_ProductList extends XLite_Web_Admin_AAdmin
             'Wait 2 page - input'
         );
 
-        $saveDisabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and contains(@class,"disabled")]';
-        $saveEnabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and not(contains(@class,"disabled"))]';
-        $cancelDisabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel") and contains(@class,"disabled")]';
-        $cancelEnabledXpath = 'xpath=//form/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel") and not(contains(@class,"disabled"))]';
+        $saveDisabledXpath = 'xpath=//form/div/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and contains(@class,"disabled")]';
+        $saveEnabledXpath = 'xpath=//form/div/div[@class="sticky-panel"]/div/div/div/button[contains(@class,"submit") and not(contains(@class,"disabled"))]';
+        $cancelDisabledXpath = 'xpath=//form/div/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel") and contains(@class,"disabled")]';
+        $cancelEnabledXpath = 'xpath=//form/div/div[@class="sticky-panel"]/div/div/div/a[contains(@class,"cancel") and not(contains(@class,"disabled"))]';
 
 
         // Check remove
