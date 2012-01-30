@@ -11,5 +11,5 @@
  *}
 
 <div class="selector">
-  <input type="checkbox" name="{getSelectorDataPrefix()}[{entity.getUniqueIndetifier()}]" value="1" class="selector" />
+  <input type="checkbox" name="{getSelectorDataPrefix()}[{entity.getUniqueIdentifier()}]" value="1" class="selector" />
 </div>

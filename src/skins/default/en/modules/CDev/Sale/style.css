@@ -1,0 +1,57 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Sale widget styles. Customer area.
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.0
+ */
+
+.products .sale-label-product-details {
+  color: #8f8f8f;
+  font-size: 14px;
+  font-style: italic;
+  text-decoration: line-through;
+  display: inline;
+  float: left;
+  padding-right: 10px;
+  margin-top: 0.9em;
+}
+
+ul.products.products-sidebar .sale-label-product-details {
+  font-size: 12px;
+  margin-top: 0.5em;
+  padding-right: 5px;
+}
+
+.sale-label-product-details {
+  display: inline-block;
+  margin-bottom: -15px;
+}
+
+.sale-label-product-details div.text {
+  display: inline;
+  font-size: 16px;
+  color: #8f8f8f;
+  vertical-align: middle;
+}
+
+.sale-label-product-details ul.labels {
+  display: inline-block;
+}
+
+.sale-label-product-details ul.labels li,
+.sale-label-product-details ul.labels li div {
+  display: inline-block;
+}
+
+.sale-label-product-details div.text span.value {
+  text-decoration: line-through;
+}
+
+.sale-label-product-details div.text span.you-save {
+  color: #ff9000;
+}

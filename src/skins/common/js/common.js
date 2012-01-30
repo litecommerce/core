@@ -192,7 +192,7 @@ function openDialog(selector, additionalOptions)
 }
 
 // Loadable dialog
-function loadDialog(url, dialogOptions, callback, link)
+function loadDialog(url, dialogOptions, callback, link, $this)
 {
   openWaitBar();
 
@@ -223,7 +223,7 @@ function loadDialog(url, dialogOptions, callback, link)
         closeWaitBar();
 
         if (callback) {
-          callback('.' + selector, link);
+          callback.call($this, '.' + selector, link);
         }
       }
     }
@@ -233,13 +233,13 @@ function loadDialog(url, dialogOptions, callback, link)
 }
 
 // Load dialog by link
-function loadDialogByLink(link, url, options, callback)
+function loadDialogByLink(link, url, options, callback, $this)
 {
   // Close every popup window opened before. Only one popup window is allowed to be displayed at once.
   jQuery('.popup-window-entry').dialog('close');
 
   if (!link.linkedDialog) {
-    link.linkedDialog = loadDialog(url, options, callback, link);
+    link.linkedDialog = loadDialog(url, options, callback, link, $this);
 
   } else {
     openDialog(link.linkedDialog, options, callback);
