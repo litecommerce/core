@@ -101,6 +101,7 @@ if (COPYRIGHT_EXISTS) {
 <span class="checkbox-field">
 <input type="checkbox" id="agree" name="agree" onclick="javascript:setNextButtonDisabled(!this.checked);" />
 <label for="agree"><?php echo xtr('I accept the License Agreement'); ?></label>
+<img src="http://www.litecommerce.com/img/spacer1.gif" width="1" height="1" alt="" />
 </span>
 
 <?php
