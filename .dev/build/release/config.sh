@@ -14,8 +14,20 @@ DRUPAL_REPO="https://github.com/litecommerce/drupal/tarball/7.x-master-dev"
 # LC Connector module repository URL
 LC_CONNECTOR_REPO="https://github.com/litecommerce/lc_connector/tarball/7.x-1.x"
 
+# LC Connector URL on drupal.org site
+# LC_CONNECTOR_URL="http://ftp.drupal.org/files/projects/lc_connector-7.x-1.1.tar.gz"
+
+# LC Connector file (tar.gz) downloaded from $LC_CONNECTOR_URL and stored locally
+# LC_CONNECTOR_URL="path-to-file/lc_connector-7.x-1.1.tar.gz"
+
 # LC3 Clean theme repository URL
 LC3_CLEAN_REPO="https://github.com/litecommerce/lc3_clean/tarball/7.x-1.x"
+
+# LC3 Clean URL on drupal.org site
+# LC3_CLEAN_URL="http://ftp.drupal.org/files/projects/lc3_clean-7.x-1.1.tar.gz"
+
+# LC3 Clean file (tar.gz) downloaded from $LC3_CLEAN_URL and stored locally
+# LC3_CLEAN_URL="path-to-file/lc3_clean-7.x-1.1.tar.gz"
 
 # Output directory name
 OUTPUT_DIR="output"
