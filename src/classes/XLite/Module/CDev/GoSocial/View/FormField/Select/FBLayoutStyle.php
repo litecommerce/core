@@ -25,43 +25,29 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\FormField\Input\Checkbox;
+namespace XLite\Module\CDev\GoSocial\View\FormField\Select;
 
 /**
- * Setting option
+ * Facebook Like button layot styles selector
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.1
  */
-class Setting extends \XLite\View\FormField\Input\Checkbox
+class FBLayoutStyle extends \XLite\View\FormField\Select\Regular
 {
     /**
-     * Determines if checkbox is checked
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isChecked()
-    {
-        return 'Y' == $this->getValue();
-    }
-
-    /**
-     * prepareAttributes
-     *
-     * @param array $attrs Field attributes to prepare
+     * getDefaultOptions
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.1
      */
-    protected function prepareAttributes(array $attrs)
+    protected function getDefaultOptions()
     {
-        $attrs = parent::prepareAttributes($attrs);
-
-        $attrs['value'] = 'Y';
-
-        return $attrs;
+        return array(
+            'standard'     => 'standard',
+            'button_count' => 'button_count',
+            'box_count'    => 'box_count',
+        );
     }
 }

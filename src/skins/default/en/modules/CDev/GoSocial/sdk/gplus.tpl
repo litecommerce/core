@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Facebook Like button
+ * Google+ SDK loader
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,5 +10,12 @@
  * @since     1.0.0
  *}
 
-<widget class="\XLite\View\ExternalSDK\Facebook" />
-<div class="fb-like"{foreach:getButtonAttributes(),k,v} data-{k}="{v}"{end:}></div>
+<script type="text/javascript">
+<!--
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+-->
+</script>

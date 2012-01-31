@@ -62,6 +62,30 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected $resourcesCounter = 0;
 
+    /**
+     * Get RDF namespaces 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getRDFNamespaces()
+    {
+        return \XLite\View\AView::getRegisteredNamespaces();
+    }
+
+    /**
+     * Get head prefixes 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getHeadPrefixes()
+    {
+        return \XLite\View\Header::defineHeadPrefixes();
+    }
+
     // {{{ Menu callbacks
 
     /**
@@ -357,8 +381,30 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         foreach (\XLite\View\AView::getRegisteredResources() as $type => $files) {
             $method = 'drupal_add_' . $type;
 
-            foreach ($files as $name => $data) {
-                $method($data['file'], $this->getResourceInfo($type, $data));
+            if (function_exists($method)) {
+                foreach ($files as $name => $data) {
+                    $method($data['file'], $this->getResourceInfo($type, $data));
+                }
+            }
+        }
+
+        $metas = trim(implode(PHP_EOL, \XLite\View\AView::getRegisteredMetas()));
+        if ($metas) {
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            $string = '<' . '?xml version="1.0" encoding="UTF-8"?' . '><body>' . $metas . '</body>';
+
+            if (@$dom->loadHTML($string)) {
+                $i = 0;
+                foreach ($dom->getElementsByTagName('body')->item(0)->childNodes as $node) {
+                    if ($node instanceOf \DOMNode) {
+                        $tag = array('#type' => 'html_tag', '#tag' => $node->nodeName, '#attributes' => array());
+                        foreach ($node->attributes as $attribute) {
+                            $tag['#attributes'][$attribute->name] = $attribute->value;
+                        }
+                        drupal_add_html_head($tag, 'lc3' . $i);
+                        $i++;
+                    }
+                }
             }
         }
     }

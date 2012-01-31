@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 
-<head profile="http://www.w3.org/1999/xhtml/vocab">
+<head {foreach:getHeadAttributes(),k,v} {k}="{v}"{end:}>
   {displayViewListContent(#head#)}
 </head>

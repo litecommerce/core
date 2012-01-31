@@ -25,106 +25,73 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\FormField\Input;
+namespace XLite\Module\CDev\GoSocial;
 
 /**
- * Common checkbox
+ * Go social module main class
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Checkbox extends \XLite\View\FormField\Input\AInput
+abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Widget param names
-     */
-
-    const PARAM_IS_CHECKED = 'isChecked';
-
-
-    /**
-     * Return field type
+     * Author name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getFieldType()
+    public static function getAuthorName()
     {
-        return self::FIELD_TYPE_CHECKBOX;
+        return 'Creative Development LLC';
     }
 
-
     /**
-     * Define widget params
+     * Module version
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function defineWidgetParams()
+    public static function getMinorVersion()
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_IS_CHECKED => new \XLite\Model\WidgetParam\Bool('Is checked', false),
-        );
+        return '0';
     }
 
     /**
-     * Determines if checkbox is checked
+     * Module name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getModuleName()
+    {
+        return 'Go Social';
+    }
+
+    /**
+     * Module description
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getDescription()
+    {
+        return 'Adds social media sharing functions like Facebook comments, OpenGraph meta tags and share buttons for product pages.';
+    }
+
+    /**
+     * Determines if we need to show settings form link
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isChecked()
+    public static function showSettingsForm()
     {
-        return $this->getParam(self::PARAM_IS_CHECKED) || $this->checkSavedValue();
+        return true;
     }
-
-    /**
-     * prepareAttributes
-     *
-     * @param array $attrs Field attributes to prepare
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function prepareAttributes(array $attrs)
-    {
-        $attrs = parent::prepareAttributes($attrs);
-
-        if ($this->isChecked()) {
-            $attrs['checked'] = 'checked';
-        }
-
-        return $attrs;
-    }
-
-    /**
-     * Get default value
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultValue()
-    {
-        return parent::getDefaultValue() ?: '1';
-    }
-
-    /**
-     * Return field template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFieldTemplate()
-    {
-        return 'checkbox.tpl';
-    }
-
 }

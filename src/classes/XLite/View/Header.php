@@ -33,7 +33,7 @@ namespace XLite\View;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Header extends \XLite\View\Dialog
+class Header extends \XLite\View\Container
 {
     /**
      * Default meta description
@@ -52,6 +52,18 @@ class Header extends \XLite\View\Dialog
      * @since 1.0.0
      */
     protected $defaultTitle = 'Litecommerce';
+
+    /**
+     * Get head prefixes 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public static function defineHeadPrefixes()
+    {
+        return array();
+    }
 
     /**
      * Get meta description
@@ -118,6 +130,18 @@ class Header extends \XLite\View\Dialog
     }
 
     /**
+     * Get collected meta tags
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getMetaResources()
+    {
+        return static::getRegisteredMetas();
+    }
+
+    /**
      * Get script
      *
      * @return string
@@ -128,4 +152,46 @@ class Header extends \XLite\View\Dialog
     {
         return \XLite::getInstance()->getScript();
     }
+
+    /**
+     * Get head tag attributes 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getHeadAttributes()
+    {
+        $list = array(
+            'profile' => 'http://www.w3.org/1999/xhtml/vocab',
+        );
+
+        $prefixes = static::defineHeadPrefixes();
+        if ($prefixes) {
+            $data = array();
+            foreach ($prefixes as $name => $uri) {
+                $data[] = $name . ': ' . $uri;
+            }
+            $prefixes = implode(' ', $data);
+        }
+
+        if ($prefixes) {
+            $list['prefix'] = $prefixes;
+        }
+
+        return $list;
+    }
+
+    /**
+     * Return default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'header/body.tpl';
+    }
+
 }

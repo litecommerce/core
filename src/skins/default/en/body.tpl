@@ -16,6 +16,7 @@
   xmlns:dc="http://purl.org/dc/terms/"
   xmlns:foaf="http://xmlns.com/foaf/0.1/"
   xmlns:og="http://ogp.me/ns#"
+  xmlns:fb="https://www.facebook.com/2008/fbml"
   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
   xmlns:sioc="http://rdfs.org/sioc/ns#"
   xmlns:sioct="http://rdfs.org/sioc/types#"

@@ -468,6 +468,20 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
+     * Get front URL 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function getFrontURL()
+    {
+        return $this->getProductId()
+            ? \XLite::getInstance()->getShopURL(\XLite\Core\Converter::buildURL('product', '', array('product_id' => $this->getProductId()), 'cart.php'))
+            : null;
+    }
+
+    /**
      * Minimal available amount
      *
      * @return integer

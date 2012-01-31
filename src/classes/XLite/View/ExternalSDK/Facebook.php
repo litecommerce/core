@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,48 +13,28 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.15
  */
 
-namespace XLite\View\Button;
+namespace XLite\View\ExternalSDK;
 
 /**
- * Facebook Like button
- *
+ * Facebook SDK loader
+ * 
  * @see   ____class_see____
- * @since 1.0.0
- *
- * @ListChild (list="product.details.page.info.share", weight="100")
+ * @since 1.0.15
  */
-class FacebookLike extends \XLite\View\AView
+class Facebook extends \XLite\View\ExternalSDK\AExternalSDK
 {
-    /**
-     * Widget parameters
-     */
-    const PARAM_WIDTH  = 'width';
-
-    /**
-     * Get width
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getWidth()
-    {
-        return $this->getParam(self::PARAM_WIDTH);
-    }
-
-
     /**
      * Return widget default template
      *
@@ -64,51 +44,45 @@ class FacebookLike extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'button/facebook_like.tpl';
+        return 'sdk/facebook.tpl';
     }
 
     /**
-     * Define widget parameters
+     * Get javascript SDK URL
      *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_WIDTH => new \XLite\Model\WidgetParam\Int('Width', $this->getDefaultWidth()),
-        );
-
-    }
-
-    /**
-     * Get defaul width 
-     * 
-     * @return integer
+     * @return string
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getDefaultWidth()
+    protected function getSDKUrl()
     {
-        return 450;
+        return 'http://connect.facebook.net/' . $this->getLocale() . '/all.js#' . http_build_query($this->getQuery());
     }
 
     /**
-     * Get button attributes 
+     * Get locale 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getLocale()
+    {
+        return 'en_US';
+    }
+
+    /**
+     * Get SDK URL hash query 
      * 
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getButtonAttributes()
+    protected function getQuery()
     {
         return array(
-            'send'       => 'false',
-            'width'      => $this->getWidth(),
-            'show-faces' => 'true',
+            'xfbml' => 1,
         );
     }
 }
+
