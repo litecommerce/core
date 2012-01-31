@@ -9,3 +9,14 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.16
  */
+
+jQuery().ready(
+  function() {
+    jQuery('form.add-choices-form').bind('afterSubmit', function (XMLHttpRequest, textStatus, data, valid) {
+        if (valid) {
+          self.location.reload();
+        }
+      }
+    );
+  }
+);

@@ -90,7 +90,7 @@ class Attributes extends \XLite\Controller\Admin\AAdmin
                 $group = \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Group')->find($groupId);
 
                 if (isset($group)) {
-                    if (\Includes\Utils\ArrayManager::getIndex($groupData, $this->getPrefixToDelete())) {
+                    if (\Includes\Utils\ArrayManager::getIndex($groupData, 'toDelete')) {
                         $objects['delete']['group'][] = $group;
                         continue;
 
@@ -132,7 +132,7 @@ class Attributes extends \XLite\Controller\Admin\AAdmin
                     $attr = \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->find($attrId);
 
                     if (isset($attr)) {
-                        if (\Includes\Utils\ArrayManager::getIndex($attrData, $this->getPrefixToDelete())) {
+                        if (\Includes\Utils\ArrayManager::getIndex($attrData, 'toDelete')) {
                             $objects['delete']['attr'][] = $attr;
                             continue;
 

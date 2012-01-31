@@ -10,6 +10,6 @@
  * @since     1.0.16
  *}
 
-<widget class="\XLite\View\Form\Attribute\AddChoices" name="attr_add_choices_form" />
+<widget class="\XLite\View\Form\Attribute\AddChoices" name="attr_add_choices_form" className="add-choices-form" />
   {displayViewListContent(#attributes.book.row.addChoices#)}
 <widget name="attr_add_choices_form" end />

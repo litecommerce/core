@@ -71,7 +71,7 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
                 $class = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->find($classId);
 
                 if (isset($class)) {
-                    if (\Includes\Utils\ArrayManager::getIndex($classData, $this->getPrefixToDelete())) {
+                    if (\Includes\Utils\ArrayManager::getIndex($classData, 'toDelete')) {
                         $objects['delete']['class'][] = $class;
                         continue;
 

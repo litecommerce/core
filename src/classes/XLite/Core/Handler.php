@@ -183,7 +183,6 @@ abstract class Handler extends \XLite\Base
         foreach ($this->getWidgetSettings() as $name => $param) {
 
             if (isset($attrs[$name])) {
-
                 list($result, $widgetErrors) = $param->validate($attrs[$name]);
 
                 if (false === $result) {
@@ -191,7 +190,6 @@ abstract class Handler extends \XLite\Base
                 }
 
             } else {
-
                 $messages[] = $param->label . ': is not set';
             }
         }
