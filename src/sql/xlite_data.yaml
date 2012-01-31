@@ -92,7 +92,7 @@ XLite\Model\Config:
   - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime', option_comment: '' }] }
   - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key', option_comment: '' }] }
 XLite\Model\Category:
-  - { }
+  - { category_id: 1, show_title: false, translations: [{ code: en, name: 'Catalog' }] }
 XLite\Model\Currency:
   directives: { insert: true }
   - { currency_id: 20, code: ADP, e: 2, translations: [{ code: en, name: 'Andorran Pesseta' }] }
