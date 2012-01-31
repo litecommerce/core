@@ -95,7 +95,7 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      */
     protected function getDefaultLabel()
     {
-        return 'Sale selected...';
+        return 'Put selected on sale';
     }
 
     /**

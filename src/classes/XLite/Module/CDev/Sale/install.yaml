@@ -14,7 +14,7 @@ XLite\Model\Config:
     orderby: 10
     translations:
       - code: en
-        option_name: '"Sale" block settings'
+        option_name: '"Products on sale" block settings'
 
   - name: sale_enabled
     category: CDev\Sale
@@ -23,7 +23,7 @@ XLite\Model\Config:
     value: Y
     translations:
       - code: en
-        option_name: 'Enable "Sale" feature in catalog'
+        option_name: 'Display the "Products on sale" block in the storefront'
 
   - name: block_max_count_in_full_list
     category: CDev\Sale
@@ -32,8 +32,8 @@ XLite\Model\Config:
     value: 30
     translations:
       - code: en
-        option_name: 'Maximum number of products to display in complete sale list'
-        option_comment: 'Limits the total number of products that can be displayed when user clicks the "All sale products" link in the "Sale" block. Leave 0 for no limit.'
+        option_name: 'The maximum number of products to be displayed on the "All products on sale" page'
+        option_comment: 'The maximum number of products to be displayed on the "All products on sale" page. Set zero to display all products on the page.'
 
   - name: sale_max_count_in_block
     category: CDev\Sale
@@ -42,8 +42,8 @@ XLite\Model\Config:
     value: 3
     translations:
       - code: en
-        option_name: 'Maximum number of products to display in "Sale" block'
-        option_comment: 'Defines the maximum number of products that can be displayed in the "Sale" block. Specify a non-zero value; otherwise, 3 products will be displayed by default. If the specified value is less than the total amount of products on complete sale products list, that value will be used instead. Drupal block settings can override this option (when the DrupalConnector module is enabled).'
+        option_name: 'The maximum number of products to be displayed in the "Products on sale" block'
+        option_comment: 'The maximum number of products to be displayed in the "Products on sale" block. Set zero to display all products in the block. Drupal block settings can override this option (when the DrupalConnector module is enabled).'
 
   - name: sale_menu
     category: CDev\Sale
@@ -52,4 +52,5 @@ XLite\Model\Config:
     value: 1
     translations:
       - code: en
-        option_name: Display the sale list in
+        option_name: Display the "Products on sale" block in
+        option_comment: 'Drupal block settings can override this option (when the DrupalConnector module is enabled).'
