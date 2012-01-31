@@ -16,11 +16,12 @@
 
   <div class="tabs">
     <ul class="tabs primary">
-      <li FOREACH="getTabs(),index,tab" class="{getTabClass(index,tab)}"><a href="#{tab.id:h}">{t(tab.name)}</a></li>
+      <li FOREACH="getTabs(),index,tab" class="{getTabClass(tab)}"><a href="#{tab.id:h}" id="link-{tab.id:h}">{t(tab.name)}</a></li>
     </ul>
   </div>
 
-  <div FOREACH="getTabs(),tab" id="{tab.id:h}" class="tab-container">
+  <div FOREACH="getTabs(),tab" id="{tab.id:h}" class="tab-container" style="{getTabStyle(tab)}">
+    <a name="{tab.id:h}"></a>
     {if:tab.template}
       <widget template="{tab.template}" />
 
