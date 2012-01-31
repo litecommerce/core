@@ -84,7 +84,8 @@ TableItemsList.prototype.listeners.form = function(handler)
   form.change(
     function () {
       var form = jQuery(this);
-      var btn = form.find('button');
+      var btn = form.find('.sticky-panel button');
+      var cancel = form.find('.sticky-panel .cancel');
 
       if (this.commonController.isChanged()) {
         form.addClass('changed');
@@ -100,7 +101,7 @@ TableItemsList.prototype.listeners.form = function(handler)
           }
         );
         handler.container.find('.table-pager a').addClass('disabled').removeClass('enabled');
-        form.find('.cancel.disabled').removeClass('disabled');
+        cancel.removeClass('disabled');
 
       } else {
         form.removeClass('changed');
@@ -111,7 +112,7 @@ TableItemsList.prototype.listeners.form = function(handler)
         );
         handler.container.find('.table-pager .input input, .table-pager .page-length').removeAttr('disabled');
         handler.container.find('.table-pager a').removeClass('disabled').addClass('enabled');
-        form.find('.cancel').addClass('disabled');
+        cancel.addClass('disabled');
       }
     }
   );
