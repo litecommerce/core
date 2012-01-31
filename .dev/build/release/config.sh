@@ -44,12 +44,14 @@ CDev/DrupalConnector
 CDev/FeaturedProducts
 CDev/FileAttachments
 CDev/GoogleAnalytics
+CDev/GoSocial
 CDev/MarketPrice
 CDev/Moneybookers
 CDev/PaypalWPS
 CDev/ProductOptions
 CDev/Quantum
 CDev/SalesTax
+CDev/Sale
 CDev/TinyMCE
 CDev/TwoCheckout
 CDev/VAT
