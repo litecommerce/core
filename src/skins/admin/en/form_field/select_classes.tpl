@@ -10,9 +10,7 @@
  * @since     1.0.0
  *}
 <div IF="!isListEmpty()" class="select-classes">
-<select id="{getFieldId()}" name="{getName()}"{getAttributesCode():h} />
-  <option FOREACH="getOptions(),class" value="{class.getId()}" selected="{isClassSelected(class.getId())}">{class.getName()}</option>
-</select>
+  <widget template="form_field/select.tpl" />
 {* TODO Rework
 <div class="classes-list">
 {getSelectedClassesList()}<a href="javascript:void(0);" class="popup-classes"></a>
@@ -20,5 +18,5 @@
 *}
 </div>
 <span IF="isListEmpty()" class="empty-list">
-<a href="{buildURL(#product_classes#)}">{t(#Define classes#)}</a>
+  <a href="{buildURL(#product_classes#)}">{t(#Define classes#)}</a>
 </span>
