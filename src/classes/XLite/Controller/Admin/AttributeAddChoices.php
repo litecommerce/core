@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,40 +13,48 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.16
  */
 
-namespace XLite\View\Button;
+namespace XLite\Controller\Admin;
 
 /**
- * Button to use with popup (with defined AUTOLOADing of JS object)
+ * AttributeAddChoices 
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.16
  */
-abstract class PopupButton extends \XLite\View\Button\APopupButton
+class AttributeAddChoices extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Get a list of JavaScript files required to display the widget properly
+     * Return page title
      *
-     * @return array
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.16
      */
-    public function getJSFiles()
+    public function getTitle()
     {
-        $list = parent::getJSFiles();
-        $list[] = 'button/js/popup_button.js';
+        return 'Edit attribute values';
+    }
 
-        return $list;
+    /**
+     * Save changes
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function doActionSave()
+    {
     }
 }

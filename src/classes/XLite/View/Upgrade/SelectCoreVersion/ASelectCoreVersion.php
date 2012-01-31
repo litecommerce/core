@@ -33,7 +33,7 @@ namespace XLite\View\Upgrade\SelectCoreVersion;
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class ASelectCoreVersion extends \XLite\View\Button\APopupButton
+abstract class ASelectCoreVersion extends \XLite\View\Button\Popup\Button
 {
     /**
      * Register JS files
@@ -50,7 +50,6 @@ abstract class ASelectCoreVersion extends \XLite\View\Button\APopupButton
         return $list;
     }
 
-
     /**
      * Return text for button and link
      *
@@ -64,20 +63,43 @@ abstract class ASelectCoreVersion extends \XLite\View\Button\APopupButton
     }
 
     /**
+     * Return default value for widget param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultTarget()
+    {
+        return 'upgrade';
+    }
+
+    /**
+     * Return default value for widget param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultWidget()
+    {
+        return '\XLite\View\Upgrade\SelectCoreVersion';
+    }
+
+    /**
      * Return URL parameters to use in AJAX popup
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareURLParams()
+    protected function getAdditionalURLParams()
     {
-        return array(
-            'target' => 'upgrade',
-            'action' => 'view',
-            'mode'   => 'select_core_version',
-            'widget' => '\XLite\View\Upgrade\SelectCoreVersion',
-        );
+        $list = parent::getAdditionalURLParams();
+        $list['action'] = 'view';
+        $list['mode']   = 'select_core_version';
+
+        return $list;
     }
 
     /**

@@ -25,69 +25,30 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button;
+namespace XLite\View\Button\Popup;
 
 /**
- * Browse server popup button
+ * Link to use with popup
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class BrowseServer extends \XLite\View\Button\Popup\Link
+class Link extends \XLite\View\Button\Popup\APopup
 {
     /**
-     * Register JS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-        $list[] = 'button/js/browse_server.js';
-
-        return $list;
-    }
-
-    /**
-     * Return default value for widget param
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
-     */
-    protected function getDefaultTarget()
-    {
-        return 'browse_server';
-    }
-
-    /**
-     * Return default value for widget param
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
-     */
-    protected function getDefaultWidget()
-    {
-        return '\XLite\View\BrowseServer';
-    }
-
-    /**
-     * Return default button label
+     * Return widget default template
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultLabel()
+    protected function getDefaultTemplate()
     {
-        return 'Browse server';
+        return 'button/popup_link.tpl';
     }
 
     /**
-     * Return CSS classes
+     * Defines CSS class for widget to use in templates
      *
      * @return string
      * @see    ____func_see____
@@ -95,6 +56,6 @@ class BrowseServer extends \XLite\View\Button\Popup\Link
      */
     protected function getClass()
     {
-        return 'browse-server-button ' . ($this->getParam(self::PARAM_STYLE) ?: '');
+        return parent::getClass() . ' link';
     }
 }

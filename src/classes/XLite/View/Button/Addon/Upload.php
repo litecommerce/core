@@ -33,7 +33,7 @@ namespace XLite\View\Button\Addon;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Upload extends \XLite\View\Button\PopupButton
+class Upload extends \XLite\View\Button\Popup\Button
 {
     /**
      * Get a list of JavaScript files required to display the widget properly
@@ -63,18 +63,27 @@ class Upload extends \XLite\View\Button\PopupButton
     }
 
     /**
-     * Return URL parameters to use in AJAX popup
+     * Return default value for widget param
      *
-     * @return array
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.16
      */
-    protected function prepareURLParams()
+    protected function getDefaultTarget()
     {
-        return array(
-            'target' => \XLite\View\ModulesManager\UploadAddons::UPLOAD_ADDONS_TARGET,
-            'widget' => '\XLite\View\ModulesManager\UploadAddons',
-        );
+        return \XLite\View\ModulesManager\UploadAddons::UPLOAD_ADDONS_TARGET;
+    }
+
+    /**
+     * Return default value for widget param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultWidget()
+    {
+        return '\XLite\View\ModulesManager\UploadAddons';
     }
 
     /**

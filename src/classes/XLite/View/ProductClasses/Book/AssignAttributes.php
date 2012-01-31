@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,88 +13,84 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.16
  */
 
-namespace XLite\View\Button;
+namespace XLite\View\ProductClasses\Book;
 
 /**
- * Browse server popup button
+ * AssignAttributes
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.16
+ *
+ * @ListChild (list="admin.center", zone="admin")
  */
-class BrowseServer extends \XLite\View\Button\Popup\Link
+class AssignAttributes extends \XLite\View\Dialog
 {
     /**
-     * Register JS files
+     * Return list of targets allowed for this widget
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.16
      */
-    public function getJSFiles()
+    public static function getAllowedTargets()
     {
-        $list = parent::getJSFiles();
-        $list[] = 'button/js/browse_server.js';
+        $result = parent::getAllowedTargets();
+        $result[] = 'product_class_assign_attributes';
+
+        return $result;
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/style.css';
 
         return $list;
     }
 
     /**
-     * Return default value for widget param
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = $this->getDir() . '/controller.js';
+
+        return $list;
+    }
+
+    /**
+     * Return templates directory name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.16
      */
-    protected function getDefaultTarget()
+    protected function getDir()
     {
-        return 'browse_server';
-    }
-
-    /**
-     * Return default value for widget param
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
-     */
-    protected function getDefaultWidget()
-    {
-        return '\XLite\View\BrowseServer';
-    }
-
-    /**
-     * Return default button label
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultLabel()
-    {
-        return 'Browse server';
-    }
-
-    /**
-     * Return CSS classes
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getClass()
-    {
-        return 'browse-server-button ' . ($this->getParam(self::PARAM_STYLE) ?: '');
+        return 'product_classes/book/row/assign_attributes';
     }
 }

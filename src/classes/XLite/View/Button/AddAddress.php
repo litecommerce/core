@@ -34,7 +34,7 @@ namespace XLite\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class AddAddress extends \XLite\View\Button\APopupButton
+class AddAddress extends \XLite\View\Button\Popup\Button
 {
     /*
      * Profile identificator parameter
@@ -73,19 +73,42 @@ class AddAddress extends \XLite\View\Button\APopupButton
     }
 
     /**
+     * Return default value for widget param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultTarget()
+    {
+        return 'address_book';
+    }
+
+    /**
+     * Return default value for widget param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultWidget()
+    {
+        return '\XLite\View\Address\Modify';
+    }
+
+    /**
      * Return URL parameters to use in AJAX popup
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareURLParams()
+    protected function getAdditionalURLParams()
     {
-        return array(
-            'target'       => 'address_book',
-            'profile_id'   => $this->getParam(self::PARAM_PROFILE_ID),
-            'widget'       => '\XLite\View\Address\Modify',
-        );
+        $list = parent::getAdditionalURLParams();
+        $list['profile_id'] = $this->getParam(self::PARAM_PROFILE_ID);
+
+        return $list;
     }
 
     /**
@@ -99,5 +122,4 @@ class AddAddress extends \XLite\View\Button\APopupButton
     {
         return 'add-address ' . ($this->getParam(self::PARAM_STYLE) ?: '');
     }
-
 }

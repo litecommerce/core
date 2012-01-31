@@ -25,23 +25,24 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button\Addon;
+namespace XLite\View\Button\Popup;
 
 /**
- * Install addon popup button
+ * Element to use with popup
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Install extends \XLite\View\Button\Popup\Button
+abstract class APopup extends \XLite\View\Button\AButton
 {
     /**
      * Widget param names
      */
-    const PARAM_MODULEID = 'moduleId';
+    const PARAM_POPUP_TARGET = 'popupTarget';
+    const PARAM_POPUP_WIDGET = 'popupWidget';
 
     /**
-     * Register CSS files
+     * Return CSS files list
      *
      * @return array
      * @see    ____func_see____
@@ -50,17 +51,13 @@ class Install extends \XLite\View\Button\Popup\Button
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        // :TODO: must be taken from LICENSE module widget
-        $list[] = 'modules_manager/license/css/style.css';
-        // :TODO: must be taken from SwitchButton widget
-        $list[] = \XLite\View\Button\SwitchButton::SWITCH_CSS_FILE;
-        $list[] = 'modules_manager/installation_type/css/style.css';
+        $list[] = 'button/css/popup.css';
 
         return $list;
     }
 
     /**
-     * Register JS files
+     * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
      * @see    ____func_see____
@@ -69,26 +66,42 @@ class Install extends \XLite\View\Button\Popup\Button
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $list[] = 'button/js/install_addon.js';
-        // :TODO: must be taken from LICENSE module widget
-        $list[] = 'modules_manager/license/js/switch-button.js';
-        // :TODO: must be taken from SwitchButton widget
-        $list[] = \XLite\View\Button\SwitchButton::JS_SCRIPT;
-        $list[] = 'button/js/select_installation_type.js';
+        $list[] = 'button/js/popup_button.js';
 
         return $list;
     }
 
     /**
-     * Return content for popup button
+     * Register files from common repository
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultLabel()
+    public function getCommonFiles()
     {
-        return 'Install';
+        $list = parent::getCommonFiles();
+        $list[static::RESOURCE_JS][] = 'js/core.popup.js';
+        $list[static::RESOURCE_JS][] = 'js/core.popup_button.js';
+
+        return $list;
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            static::PARAM_POPUP_TARGET => new \XLite\Model\WidgetParam\String('Target', $this->getDefaultTarget()),
+            static::PARAM_POPUP_WIDGET => new \XLite\Model\WidgetParam\String('Widget', $this->getDefaultWidget()),
+        );
     }
 
     /**
@@ -100,7 +113,7 @@ class Install extends \XLite\View\Button\Popup\Button
      */
     protected function getDefaultTarget()
     {
-        return \XLite\View\ModulesManager\ModuleLicense::MODULE_LICENSE_TARGET;
+        return '';
     }
 
     /**
@@ -112,43 +125,52 @@ class Install extends \XLite\View\Button\Popup\Button
      */
     protected function getDefaultWidget()
     {
-        return '\XLite\View\ModulesManager\ModuleLicense';
+        return '';
     }
 
     /**
-     * Return URL parameters to use in AJAX popup
+     * Return array of additional URL params for JS
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAdditionalURLParams()
+    {
+        return array();
+    }
+
+    /**
+     * Return array of URL params for JS
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getAdditionalURLParams()
+    protected function getURLParams()
     {
-        $list = parent::getAdditionalURLParams();
-        $list['action']   = 'view_license';
-        $list['moduleId'] = $this->getParam(static::PARAM_MODULEID);
-
-        return $list;
-    }
-
-    /**
-     * Define widgets parameters
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            static::PARAM_MODULEID => new \XLite\Model\WidgetParam\String('ModuleId', '', true),
+        return array(
+            'url_params' => array(
+                'target' => $this->getParam(static::PARAM_POPUP_TARGET),
+                'widget' => $this->getParam(static::PARAM_POPUP_WIDGET),
+            ) + $this->getAdditionalURLParams(),
         );
     }
 
     /**
-     * Return CSS classes
+     * Return content for popup button
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getButtonContent()
+    {
+        return $this->getParam(self::PARAM_LABEL) ?: $this->getDefaultLabel();
+    }
+
+    /**
+     * Defines CSS class for widget to use in templates
      *
      * @return string
      * @see    ____func_see____
@@ -156,6 +178,6 @@ class Install extends \XLite\View\Button\Popup\Button
      */
     protected function getClass()
     {
-        return parent::getClass() . ' install-addon-button';
+        return parent::getClass() . ' popup-opener';
     }
 }

@@ -33,7 +33,7 @@ namespace XLite\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class DeleteCategory extends \XLite\View\Button\APopupButton
+class DeleteCategory extends \XLite\View\Button\Popup\Link
 {
     /**
      * Widget param names
@@ -57,21 +57,44 @@ class DeleteCategory extends \XLite\View\Button\APopupButton
     }
 
     /**
+     * Return default value for widget param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultTarget()
+    {
+        return 'categories';
+    }
+
+    /**
+     * Return default value for widget param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultWidget()
+    {
+        return '\XLite\View\DeleteCategory';
+    }
+
+    /**
      * Return URL parameters to use in AJAX popup
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareURLParams()
+    protected function getAdditionalURLParams()
     {
-        return array(
-            'target'      => 'categories',
-            'pre_action'  => 'delete',
-            'widget'      => '\XLite\View\DeleteCategory',
-            'category_id' => $this->getParam(self::PARAM_CATEGORY_ID),
-            'subcats'     => (bool) $this->getParam(self::PARAM_REMOVE_SUBCATEGORIES),
-        );
+        $list = parent::getAdditionalURLParams();
+        $list['pre_action']  = 'delete';
+        $list['category_id'] = $this->getParam(self::PARAM_CATEGORY_ID);
+        $list['subcats']     = (bool) $this->getParam(self::PARAM_REMOVE_SUBCATEGORIES);
+
+        return $list;
     }
 
     /**
@@ -113,17 +136,5 @@ class DeleteCategory extends \XLite\View\Button\APopupButton
     protected function getClass()
     {
         return 'delete-category-button ' . ($this->getParam(self::PARAM_STYLE) ?: '');
-    }
-
-    /**
-     * Return template path
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'button/delete_category.tpl';
     }
 }

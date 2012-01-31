@@ -33,7 +33,7 @@ namespace XLite\View\Button\Addon;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class SelectInstallationType extends \XLite\View\Button\APopupButton
+class SelectInstallationType extends \XLite\View\Button\Popup\Button
 {
     /**
      * Widget param names
@@ -83,20 +83,43 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
     }
 
     /**
+     * Return default value for widget param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultTarget()
+    {
+        return 'addon_install';
+    }
+
+    /**
+     * Return default value for widget param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultWidget()
+    {
+        return '\XLite\View\ModulesManager\InstallationType';
+    }
+
+    /**
      * Return URL parameters to use in AJAX popup
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareURLParams()
+    protected function getAdditionalURLParams()
     {
-        return array(
-            'target'   => 'addon_install',
-            'action'   => 'select_installation_type',
-            'widget'   => '\XLite\View\ModulesManager\InstallationType',
-            'moduleId' => $this->getParam(self::PARAM_MODULEID),
-        );
+        $list = parent::getAdditionalURLParams();
+        $list['action']   = 'select_installation_type';
+        $list['moduleId'] = $this->getParam(static::PARAM_MODULEID);
+
+        return $list;
     }
 
     /**
@@ -111,7 +134,7 @@ class SelectInstallationType extends \XLite\View\Button\APopupButton
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_MODULEID => new \XLite\Model\WidgetParam\String('ModuleId', '', true),
+            static::PARAM_MODULEID => new \XLite\Model\WidgetParam\String('ModuleId', '', true),
         );
     }
 

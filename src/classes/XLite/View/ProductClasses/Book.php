@@ -64,6 +64,12 @@ class Book extends \XLite\View\Dialog
         $list = parent::getCSSFiles();
         $list[] = $this->getDir() . '/style.css';
 
+        // For popups
+        $list = array_merge(
+            $list,
+            $this->getWidget(array(), '\XLite\View\ProductClasses\Book\AssignAttributes')->getCSSFiles()
+        );
+
         return $list;
     }
 
@@ -78,6 +84,12 @@ class Book extends \XLite\View\Dialog
     {
         $list = parent::getJSFiles();
         $list[] = $this->getDir() . '/controller.js';
+
+        // For popups
+        $list = array_merge(
+            $list,
+            $this->getWidget(array(), '\XLite\View\ProductClasses\Book\AssignAttributes')->getJSFiles()
+        );
 
         return $list;
     }

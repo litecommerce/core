@@ -27,14 +27,13 @@
 
 namespace XLite\View\Button;
 
-
 /**
  * Delete user button widget. Customer area.
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class DeleteUser extends \XLite\View\Button\APopupButton
+class DeleteUser extends \XLite\View\Button\Popup\Link
 {
     /**
      * getJSFiles
@@ -52,19 +51,42 @@ class DeleteUser extends \XLite\View\Button\APopupButton
     }
 
     /**
+     * Return default value for widget param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultTarget()
+    {
+        return 'profile';
+    }
+
+    /**
+     * Return default value for widget param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultWidget()
+    {
+        return '\XLite\View\Account\Delete';
+    }
+
+    /**
      * Return URL parameters to use in AJAX popup
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareURLParams()
+    protected function getAdditionalURLParams()
     {
-        return array(
-            'target' => 'profile',
-            'mode'   => 'delete',
-            'widget' => '\XLite\View\Account\Delete',
-        );
+        $list = parent::getAdditionalURLParams();
+        $list['mode'] = 'delete';
+
+        return $list;
     }
 
     /**
@@ -80,18 +102,6 @@ class DeleteUser extends \XLite\View\Button\APopupButton
     }
 
     /**
-     * Return widget default template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'button/delete_user.tpl';
-    }
-
-    /**
      * Return CSS classes
      *
      * @return string
@@ -102,5 +112,4 @@ class DeleteUser extends \XLite\View\Button\APopupButton
     {
         return 'delete-user-button ' . ($this->getParam(self::PARAM_STYLE) ?: '');
     }
-
 }

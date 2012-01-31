@@ -23,10 +23,8 @@ function PopupButton()
   );
 }
 
-PopupButton.prototype.pattern = '.popup-button';
-
+PopupButton.prototype.pattern = '.popup-opener';
 PopupButton.prototype.options = {'width' : 'auto'};
-
 PopupButton.prototype.afterSubmit = function (selector) {
 
 }

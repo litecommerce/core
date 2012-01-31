@@ -13,5 +13,5 @@
  *}
 
 <div IF="getAttributesNumber()&!isNew()" class="product-class-change-attributes">
-  {t(#Change attributes#)}
+  <widget class="\XLite\View\Button\Popup\Link" label="Change attributes" popupTarget="product_class_assign_attributes" popupWidget="\XLite\View\ProductClasses\Book\AssignAttributes" />
 </div>

@@ -15,7 +15,7 @@
 <tr IF="!isNew()">
   <td colspan="10">
     <span>{t(#Assigned to#)}</span>
-    <a href="">{getAssignClassesLinkTitle()}</a>
+    <widget class="\XLite\View\Button\Popup\Link" label="{getAssignClassesLinkTitle():h}" popupTarget="attribute_assign_classes" popupWidget="\XLite\View\Attributes\Book\Row\Attribute\AssignClasses" />
     <span IF="getAssignedProductsCount()">{getAssignedProductsInfoLabel()}</span>
   </td>
 </tr>

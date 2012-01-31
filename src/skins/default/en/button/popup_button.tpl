@@ -9,7 +9,8 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<button type="button" class="{getClass()}">
-{displayCommentedData(getURLParams())}
-<span>{t(getButtonContent())}</span>
+
+<button type="button" class="{getClass()}" {if:isDisabled()} disabled="disabled"{end:}>
+  {displayCommentedData(getURLParams())}
+  <span>{t(getButtonContent())}</span>
 </button>

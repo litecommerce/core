@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\Sale\View;
  * @see   ____class_see____
  * @since 1.0.6
  */
-class SaleSelectedButton extends \XLite\View\Button\APopupButton
+class SaleSelectedButton extends \XLite\View\Button\Popup\Button
 {
     /**
      * Register JS files
@@ -62,9 +62,7 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules/CDev/Sale/sale_selected_button/style.css';
-
         // TODO: dynamic CSS inclusion
         $list[] = 'modules/CDev/Sale/sale_selected_dialog/style.css';
 
@@ -72,18 +70,27 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
     }
 
     /**
-     * Return URL parameters to use in AJAX popup
+     * Return default value for widget param
      *
-     * @return array
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.16
      */
-    protected function prepareURLParams()
+    protected function getDefaultTarget()
     {
-        return array(
-            'target' => 'sale_selected',
-            'widget' => '\XLite\Module\CDev\Sale\View\SaleSelectedDialog',
-        );
+        return 'sale_selected';
+    }
+
+    /**
+     * Return default value for widget param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultWidget()
+    {
+        return '\XLite\Module\CDev\Sale\View\SaleSelectedDialog';
     }
 
     /**

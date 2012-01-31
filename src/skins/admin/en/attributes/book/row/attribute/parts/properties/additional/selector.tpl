@@ -16,7 +16,7 @@
   <td>&nbsp;</td>
   <td colspan="10">
     <div class="additional-properties link">
-      <a href="">{getSelectorChoicesLinkTitle()}</a>
+      <widget class="\XLite\View\Button\Popup\Link" label="{getSelectorChoicesLinkTitle():h}" popupTarget="attribute_add_choices" popupWidget="\XLite\View\Attributes\Book\Row\Attribute\AddChoices" />
     </div>
 
     <div IF="getAttributeChoices()" class="additional-properties label">{t(#Default#)}:</div>
