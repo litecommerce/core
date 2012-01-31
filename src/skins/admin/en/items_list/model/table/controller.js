@@ -172,7 +172,21 @@ TableItemsList.prototype.listeners.removeLineButton = function(handler)
 // Selector actions
 TableItemsList.prototype.listeners.selector = function(handler)
 {
+  jQuery('.actions div.selector', handler.container).click(
+    function () {
+      var input = jQuery('input', this).get(0);
+      input.checked = !input.checked;
+      jQuery('input', this).change();
+    }
+  );
+
   jQuery('.actions input.selector', handler.container).click(
+    function (event) {
+      event.stopPropagation();
+    }
+  );
+
+  jQuery('.actions input.selector', handler.container).change(
     function () {
       var box = jQuery(this).parent('div.selector');
 
