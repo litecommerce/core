@@ -174,4 +174,16 @@ class PoweredBy extends \XLite\View\AView
 
         return $phrase;
     }
+
+    /**
+     * Get current year
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCurrentYear()
+    {
+        return \XLite\Core\Converter::formatDate(time(), '%Y');
+    }
 }
