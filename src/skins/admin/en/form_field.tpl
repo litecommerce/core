@@ -25,4 +25,6 @@
   <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
 </div>
 
-<div class="clear"></div>
+{if:!getParam(#fieldOnly#)}
+  <div class="clear"></div>
+{end:}

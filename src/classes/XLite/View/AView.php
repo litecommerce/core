@@ -38,8 +38,8 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Resource types
      */
-    const RESOURCE_JS  = 'js';
-    const RESOURCE_CSS = 'css';
+    const RESOURCE_JS   = 'js';
+    const RESOURCE_CSS  = 'css';
 
     /**
      * Common widget parameter names
@@ -80,6 +80,24 @@ abstract class AView extends \XLite\Core\Handler
      * @since 1.0.0
      */
     protected static $resources = array();
+
+    /**
+     * Widgets meta collector
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected static $metas = array();
+
+    /**
+     * HTML namespaces
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected static $namespaces = array();
 
     /**
      * Templates tail
@@ -562,6 +580,30 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * Return list of all registered meta tags
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getRegisteredMetas()
+    {
+        return static::$metas;
+    }
+
+    /**
+     * Return list of all registered namespaces
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getRegisteredNamespaces()
+    {
+        return static::$namespaces;
+    }
+
+    /**
      * Get list of methods, priorities and interfaces for the resources
      *
      * @return array
@@ -587,8 +629,8 @@ abstract class AView extends \XLite\Core\Handler
     protected static function getResourcesTypeSchema()
     {
         return array(
-            static::RESOURCE_JS  => array(),
-            static::RESOURCE_CSS => array(),
+            static::RESOURCE_JS   => array(),
+            static::RESOURCE_CSS  => array(),
         );
     }
 
@@ -612,6 +654,30 @@ abstract class AView extends \XLite\Core\Handler
      * @since  1.0.0
      */
     public function getJSFiles()
+    {
+        return array();
+    }
+
+    /**
+     * Register Meta tags
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMetaTags()
+    {
+        return array();
+    }
+
+    /**
+     * Register Meta tags
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getNamespaces()
     {
         return array();
     }
@@ -683,8 +749,8 @@ abstract class AView extends \XLite\Core\Handler
     protected function getResources()
     {
         return array(
-            static::RESOURCE_JS  => $this->getJSFiles(),
-            static::RESOURCE_CSS => $this->getCSSFiles(),
+            static::RESOURCE_JS   => $this->getJSFiles(),
+            static::RESOURCE_CSS  => $this->getCSSFiles(),
         );
     }
 
@@ -702,6 +768,9 @@ abstract class AView extends \XLite\Core\Handler
 
             $this->registerResources($this->$method(), $index, $interface);
         }
+
+        $this->registerMetas();
+        $this->registerNamespaces();
     }
 
     /**
@@ -728,6 +797,38 @@ abstract class AView extends \XLite\Core\Handler
                     static::$resources[$index][$type][$data['file']] = $this->prepareResource($data, $interface);
                 }
             }
+        }
+    }
+
+    /**
+     * Register meta data
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function registerMetas()
+    {
+        $meta = $this->getMetaTags();
+
+        if ($meta) {
+            static::$metas = array_merge(static::$metas, $meta);
+        }
+    }
+
+    /**
+     * Register meta data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function registerNamespaces()
+    {
+        $data = $this->getNamespaces();
+
+        if ($data) {
+            static::$namespaces = array_merge(static::$namespaces, $data);
         }
     }
 
@@ -763,7 +864,7 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     // }}}
-    
+
     // {{{ Routines for templates
 
     /**
@@ -834,10 +935,10 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Format file size 
-     * 
+     * Format file size
+     *
      * @param integer $size Size in bytes
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.10
@@ -1657,7 +1758,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getNameToDelete($id)
     {
-        return $this->getPrefixToDelete() . '[' . $id . ']';
+        return $this->getPrefixSelected() . '[' . $id . ']';
     }
 
     /**

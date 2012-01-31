@@ -120,7 +120,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     /**
      * Get options for current tab (category)
      *
-     * @return void
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */

@@ -55,7 +55,7 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
 
         foreach ($value as $k => $v) {
             if (is_object($v) && $v instanceOf \XLite\Model\AEntity) {
-                $value[$k] = $v->getUniqueIndetifier();
+                $value[$k] = $v->getUniqueIdentifier();
             }
         }
 

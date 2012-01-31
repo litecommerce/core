@@ -151,7 +151,7 @@ abstract class AInline extends \XLite\View\AView
      */
     protected function hasSeparateView()
     {
-        return $this->getEntity() && $this->getEntity()->getUniqueIndetifier();
+        return $this->getEntity() && $this->getEntity()->getUniqueIdentifier();
     }
 
     /**
@@ -327,7 +327,7 @@ abstract class AInline extends \XLite\View\AView
     {
         return array(
             $this->getParam(static::PARAM_ITEMS_LIST)->getDataPrefix(),
-            $this->getEntity()->getUniqueIndetifier() ?: 0,
+            $this->getEntity()->getUniqueIdentifier() ?: 0,
             $this->shortName,
         );
     }

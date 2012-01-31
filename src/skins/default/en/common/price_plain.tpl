@@ -9,4 +9,5 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<span class="price product-price">{formatPrice(getListPrice()):h}</span>
+
+<ul class="product-price">{displayViewListContent(#product.plain_price#)}</ul>

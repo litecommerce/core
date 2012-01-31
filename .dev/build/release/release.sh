@@ -118,15 +118,49 @@ prepare_directory()
 
 	else
 
+		lc_connector_file="${1}_lc_connector.tgz";
+		lc3_clean_file="${1}_lc3_clean.tgz";
+
 		if [ "x${LOCAL_REPO}" = "x" ]; then
 			# Download archive
 			curl -L $2 -o $1.tgz >>LOG 2>>LOG
 			#cp ${BASE_DIR}/$1.tgz .
 
 			if [ "$3" ]; then
+
 				# If it is a Drupal then need to download also archives for lc_connector and lc3_clean
-				curl -L $LC_CONNECTOR_REPO -o $1_lc_connector.tgz >>LOG 2>>LOG
-				curl -L $LC3_CLEAN_REPO -o $1_lc3_clean.tgz >>LOG 2>>LOG
+
+				echo ""
+
+				if [ "$LC_CONNECTOR_PACK" ]; then
+					echo "   Copy: $LC_CONNECTOR_PACK -> $lc_connector_file"
+					cp $LC_CONNECTOR_PACK $lc_connector_file >>LOG 2>>LOG
+				fi
+
+				if [ ! -f $lc_connector_file -a "$LC_CONNECTOR_URL" ]; then
+					echo "   Download $LC_CONNECTOR_URL"
+					curl -L $LC_CONNECTOR_URL -o $lc_connector_file >>LOG 2>>LOG
+				fi
+
+				if [ ! -f $lc_connector_file ]; then
+					echo "   Download $LC_CONNECTOR_REPO"
+					curl -L $LC_CONNECTOR_REPO -o $lc_connector_file >>LOG 2>>LOG
+				fi
+
+				if [ "$LC3_CLEAN_PACK" ]; then
+					echo "   Copy: $LC3_CLEAN_PACK -> $lc3_clean_file"
+					cp $LC3_CLEAN_PACK $lc3_clean_file >>LOG 2>>LOG
+				fi
+
+				if [ ! -f $lc3_clean_file -a "$LC3_CLEAN_URL" ]; then
+					echo "   Download $LC3_CLEAN_URL"
+					curl -L $LC3_CLEAN_URL -o $lc3_clean_file >>LOG 2>>LOG
+				fi
+
+				if [ ! -f $lc3_clean_file ]; then
+					echo "   Download $LC3_CLEAN_REPO"
+					curl -L $LC3_CLEAN_REPO -o $lc3_clean_file >>LOG 2>>LOG
+				fi
 			fi
 
 		else
@@ -137,12 +171,42 @@ prepare_directory()
 				git archive --format=tar --prefix=git-prj/ HEAD | gzip > ${OUTPUT_DIR}/$1.tgz
 				
 				if [ "$3" ]; then
-					# If it is a Drupal then need to get also archives for lc_connector and lc3_clean
-					cd $2/modules/lc_connector
-					git archive --format=tar --prefix=git-prj/ HEAD | gzip > ${OUTPUT_DIR}/$1_lc_connector.tgz
 
-					cd $2/sites/all/themes/lc3_clean
-					git archive --format=tar --prefix=git-prj/ HEAD | gzip > ${OUTPUT_DIR}/$1_lc3_clean.tgz
+					# If it is a Drupal then need to get also archives for lc_connector and lc3_clean
+
+					echo ""
+
+					if [ "$LC_CONNECTOR_PACK" ]; then
+						echo "   Copy: $LC_CONNECTOR_PACK -> $lc_connector_file"
+						cp $LC_CONNECTOR_PACK ${OUTPUT_DIR}/$lc_connector_file >>LOG 2>>LOG
+					fi
+
+					if [ ! -f ${OUTPUT_DIR}/$lc_connector_file -a "$LC_CONNECTOR_URL" ]; then
+						echo "   Download $LC_CONNECTOR_URL"
+						curl -L $LC_CONNECTOR_URL -o ${OUTPUT_DIR}/$lc_connector_file >>LOG 2>>LOG
+					fi
+
+					if [ ! -f ${OUTPUT_DIR}/$lc_connector_file ]; then
+						echo "   Git archive $2/modules/lc_connector"
+						cd $2/modules/lc_connector
+						git archive --format=tar --prefix=git-prj/ HEAD | gzip > ${OUTPUT_DIR}/$lc_connector_file
+					fi
+
+					if [ "$LC3_CLEAN_PACK" ]; then
+						echo "   Copy: $LC3_CLEAN_PACK -> $lc3_clean_file"
+						cp $LC3_CLEAN_PACK ${OUTPUT_DIR}/$lc3_clean_file >>LOG 2>>LOG
+					fi
+
+					if [ ! -f ${OUTPUT_DIR}/$lc3_clean_file -a "$LC3_CLEAN_URL" ]; then
+						echo "   Download $LC3_CLEAN_URL"
+						curl -L $LC3_CLEAN_URL -o ${OUTPUT_DIR}/$lc3_clean_file >>LOG 2>>LOG
+					fi
+
+					if [ ! -f ${OUTPUT_DIR}/$lc3_clean_file ]; then
+						echo "   Git archive $2/sites/all/themes/lc3_clean"
+						cd $2/sites/all/themes/lc3_clean
+						git archive --format=tar --prefix=git-prj/ HEAD | gzip > ${OUTPUT_DIR}/$lc3_clean_file
+					fi
 				fi
 
 				cd $_curdir
@@ -158,11 +222,11 @@ prepare_directory()
 
 	    if [ "x${_ERR}" = "x" -a "$3" ]; then
 			# Check the downloaded archive
-			tar -tzf $1_lc_connector.tgz >>TAR_LOG 2>>TAR_LOG
+			tar -tzf $lc_connector_file >>TAR_LOG 2>>TAR_LOG
 			_ERR=`grep "^tar: Error " TAR_LOG`
 
 			if [ "x${_ERR}" = "x" ]; then
-				tar -tzf $1_lc3_clean.tgz >>TAR_LOG 2>>TAR_LOG
+				tar -tzf $lc3_clean_file >>TAR_LOG 2>>TAR_LOG
 				_ERR=`grep "^tar: Error " TAR_LOG`
 			fi
 		fi
@@ -178,17 +242,17 @@ prepare_directory()
 				tar -xzf ../$1.tgz
 				_tmp_dir=`ls`
 				mv $_tmp_dir ../$1
-				tar -xzf ../$1_lc_connector.tgz
+				tar -xzf ../$lc_connector_file
 				_tmp_dir=`ls`
 				rm -rf ../$1/modules/lc_connector
 				mv $_tmp_dir ../$1/modules/lc_connector
-				tar -xzf ../$1_lc3_clean.tgz
+				tar -xzf ../$lc3_clean_file
 				_tmp_dir=`ls`
 				rm -rf ../$1/sites/all/themes/lc3_clean
 				mv $_tmp_dir ../$1/sites/all/themes/lc3_clean
 				cd ..
 				rm -rf _xxx
-				rm -f $1.tgz $1_lc_connector.tgz $1_lc3_clean.tgz
+				rm -f $1.tgz $lc_connector_file $lc3_clean_file
 
 			else
 				# Unpack archive and move it to the specified temporary directory ($1)
@@ -380,6 +444,13 @@ if [ "x${LOCAL_REPO}" = "x" ]; then
 else
 	echo "*** MODE: LOCAL REPO"
 	[ ! "${GENERATE_CORE}" ] && echo "*** DRUPAL LOCAL REPOSITORY: $DRUPAL_LOCAL_REPO"
+fi
+
+if [ ! "${GENERATE_CORE}" ]; then
+	[ "$LC_CONNECTOR_PACK" ] && echo "*** LC_CONNECTOR PACK: $LC_CONNECTOR_PACK"
+	[ "$LC_CONNECTOR_URL" ] && echo "*** LC_CONNECTOR URL: $LC_CONNECTOR_URL"
+	[ "$LC3_CLEAN_PACK" ] && echo "*** LC3_CLEAN PACK: $LC3_CLEAN_PACK"
+	[ "$LC3_CLEAN_URL" ] && echo "*** LC3_CLEAN URL: $LC3_CLEAN_URL"
 fi
 
 echo "*** OUTPUT_DIR: $OUTPUT_DIR"

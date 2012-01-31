@@ -189,7 +189,7 @@ ul.products-sidebar li h3.product-name {
 
 .products-grid .product-name,
 .products-grid .product-thumbnail,
-.products-grid .product-price
+.products-grid span.product-price
 {
   display: block;
 }

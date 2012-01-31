@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<button type="button" class="{getClass()}">
+<button type="button" class="{getClass()}" {if:isDisabled()} disabled="disabled"{end:}>
   {displayCommentedData(getURLParams())}
   <span>{t(getButtonContent())}</span>
 </button>
