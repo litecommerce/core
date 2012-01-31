@@ -12,5 +12,5 @@
 
 <a href="javascript: void(0);" class="{getClass()}" {if:isDisabled()} disabled="disabled"{end:}>
   {displayCommentedData(getURLParams())}
-  {t(getButtonContent())}
+  {t(getButtonLabel())}
 </a>

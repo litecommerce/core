@@ -158,18 +158,6 @@ abstract class APopup extends \XLite\View\Button\AButton
     }
 
     /**
-     * Return content for popup button
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getButtonContent()
-    {
-        return $this->getParam(self::PARAM_LABEL) ?: $this->getDefaultLabel();
-    }
-
-    /**
      * Defines CSS class for widget to use in templates
      *
      * @return string

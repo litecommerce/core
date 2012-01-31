@@ -84,7 +84,7 @@ abstract class AButton extends \XLite\View\AView
      */
     protected function getDefaultLabel()
     {
-        return '--- Button title is not defined ---';
+        return null;
     }
 
     /**

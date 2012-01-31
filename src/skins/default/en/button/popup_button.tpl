@@ -12,5 +12,5 @@
 
 <button type="button" class="{getClass()}" {if:isDisabled()} disabled="disabled"{end:}>
   {displayCommentedData(getURLParams())}
-  <span>{t(getButtonContent())}</span>
+  <span>{t(getButtonLabel())}</span>
 </button>

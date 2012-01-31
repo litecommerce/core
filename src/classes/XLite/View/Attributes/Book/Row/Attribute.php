@@ -305,18 +305,6 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     }
 
     /**
-     * Return classes list assigned to current attribute
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.16
-     */
-    protected function getAssignedClasses()
-    {
-        return ($attr = $this->getAttribute()) ? $attr->getClasses() : array();
-    }
-
-    /**
      * Return number of products assigned to current attribute
      *
      * @return integer
@@ -367,30 +355,6 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     protected function getDecimalRange()
     {
         return range(0, 4);
-    }
-
-    /**
-     * Get label for popup link
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
-     */
-    protected function getSelectorChoicesLinkTitle()
-    {
-        return static::t('{{X}} choices submited', array('X' => count($this->getAttributeChoices())));
-    }
-
-    /**
-     * Get label for popup link
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
-     */
-    protected function getAssignClassesLinkTitle()
-    {
-        return static::t('{{X}} product classes', array('X' => count($this->getAssignedClasses())));
     }
 
     /**

@@ -33,7 +33,7 @@ namespace XLite\Controller\Admin;
  * @see   ____class_see____
  * @since 1.0.16
  */
-class AttributeAddChoices extends \XLite\Controller\Admin\AAdmin
+class AttributeAddChoices extends \XLite\Controller\Admin\Base\AttributePopup
 {
     /**
      * Return page title
@@ -56,5 +56,6 @@ class AttributeAddChoices extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionSave()
     {
+        var_dump(\XLite\Core\Request::getInstance()->getData());die;
     }
 }

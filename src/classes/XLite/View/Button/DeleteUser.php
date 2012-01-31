@@ -36,21 +36,6 @@ namespace XLite\View\Button;
 class DeleteUser extends \XLite\View\Button\Popup\Link
 {
     /**
-     * getJSFiles
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-        $list[] = 'button/js/delete_user.js';
-
-        return $list;
-    }
-
-    /**
      * Return default value for widget param
      *
      * @return string

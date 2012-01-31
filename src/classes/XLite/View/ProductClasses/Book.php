@@ -115,6 +115,7 @@ class Book extends \XLite\View\Dialog
      */
     protected function getProductClasses()
     {
+        // FIXME [DOCTRINE 2.1]
         return \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findBy(array(), array('pos' => 'ASC'));
     }
 

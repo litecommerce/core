@@ -93,4 +93,17 @@ class AssignClasses extends \XLite\View\Dialog
     {
         return 'attributes/book/row/attribute/assign_classes';
     }
+
+    /**
+     * Get all product classes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getProductClasses()
+    {
+        // FIXME [DOCTRINE 2.1]
+        return \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findBy(array(), array('pos' => 'ASC'));
+    }
 }

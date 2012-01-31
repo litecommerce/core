@@ -10,4 +10,6 @@
  * @since     1.0.16
  *}
 
-"Add choices" popup
+<widget class="\XLite\View\Form\Attribute\AddChoices" name="attr_add_choices_form" />
+  {displayViewListContent(#attributes.book.row.addChoices#)}
+<widget name="attr_add_choices_form" end />

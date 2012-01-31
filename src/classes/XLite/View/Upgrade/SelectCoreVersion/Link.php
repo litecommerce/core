@@ -44,6 +44,6 @@ class Link extends \XLite\View\Upgrade\SelectCoreVersion\ASelectCoreVersion
      */
     protected function getDefaultTemplate()
     {
-        return 'upgrade/select_core_version/link.tpl';
+        return 'button/popup_link.tpl';
     }
 }

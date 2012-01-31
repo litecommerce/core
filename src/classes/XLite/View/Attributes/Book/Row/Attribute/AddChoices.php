@@ -93,4 +93,16 @@ class AddChoices extends \XLite\View\Dialog
     {
         return 'attributes/book/row/attribute/add_choices';
     }
+
+    /**
+     * Alias
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAttributeTitle()
+    {
+        return $this->getAttribute()->getTitle();
+    }
 }

@@ -28,7 +28,7 @@
 namespace XLite\Model\WidgetParam;
 
 /**
- * ____description____
+ * Object
  *
  * @see   ____class_see____
  * @since 1.0.0
@@ -43,7 +43,6 @@ class Object extends \XLite\Model\WidgetParam\AWidgetParam
      * @since 1.0.0
      */
     protected $class = null;
-
 
     /**
      * Constructor
@@ -66,7 +65,6 @@ class Object extends \XLite\Model\WidgetParam\AWidgetParam
             $this->class = $class;
         }
     }
-
 
     /**
      * Return list of conditions to check

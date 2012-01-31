@@ -143,7 +143,7 @@ class Install extends \XLite\View\Button\Popup\Button
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            static::PARAM_MODULEID => new \XLite\Model\WidgetParam\String('ModuleId', '', true),
+            static::PARAM_MODULEID => new \XLite\Model\WidgetParam\String('ModuleId'),
         );
     }
 

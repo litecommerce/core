@@ -12,11 +12,11 @@
  * @ListChild (list="attributes.book.row.attribute.properties", weight="300")
  *}
 
-<tr IF="#Selector#=getAttributeTypeName()|isNew()" id="selector_additional" class="additional-properties">
+<tr IF="#Selector#=getAttributeTypeName()" id="selector_additional" class="additional-properties">
   <td>&nbsp;</td>
   <td colspan="10">
     <div class="additional-properties link">
-      <widget class="\XLite\View\Button\Popup\Link" label="{getSelectorChoicesLinkTitle():h}" popupTarget="attribute_add_choices" popupWidget="\XLite\View\Attributes\Book\Row\Attribute\AddChoices" />
+      <widget class="\XLite\View\Button\Attribute\AddChoices" attribute="{getAttribute()}" />
     </div>
 
     <div IF="getAttributeChoices()" class="additional-properties label">{t(#Default#)}:</div>

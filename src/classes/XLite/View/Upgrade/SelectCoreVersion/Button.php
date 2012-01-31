@@ -76,16 +76,4 @@ class Button extends \XLite\View\Upgrade\SelectCoreVersion\ASelectCoreVersion
     {
         return parent::isVisible() && (bool) $this->getCoreVersionsList();
     }
-
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'upgrade/select_core_version/button.tpl';
-    }
 }

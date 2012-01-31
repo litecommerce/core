@@ -39,10 +39,8 @@ abstract class ErrorHandler
     /**
      * Common error codes
      */
-
     const ERROR_UNKNOWN     = -1;
     const ERROR_FATAL_ERROR = 2;
-
 
     /**
      * Throw exception

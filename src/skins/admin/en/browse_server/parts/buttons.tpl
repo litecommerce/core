@@ -11,6 +11,7 @@
  *
  * @ListChild (list="browseServer", zone="admin", weight="200")
  *}
+
 <div class="browse-selector-actions">
   <button class="back-button">{t(#Back to file select#)}</button>
   <button class="choose-file-button main-button">{t(#Choose file#)}</button>

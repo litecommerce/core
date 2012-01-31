@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -25,37 +25,52 @@
  * @since     1.0.16
  */
 
-namespace XLite\Controller\Admin;
+namespace XLite\View\Button\Attribute;
 
 /**
- * AttributeAssignClasses 
+ * AddChoices 
  *
  * @see   ____class_see____
  * @since 1.0.16
  */
-class AttributeAssignClasses extends \XLite\Controller\Admin\Base\AttributePopup
+class AddChoices extends \XLite\View\Button\Attribute\Base\Popup
 {
     /**
-     * Return page title
+     * Return button label
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getButtonLabel()
+    {
+        return parent::getButtonLabel() ?: static::t(
+            '{{X}} choices submited',
+            array('X' => count($this->getParam(static::PARAM_ATTRIBUTE)->getChoices()))
+        );
+    }
+
+    /**
+     * Return default value for widget param
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.16
      */
-    public function getTitle()
+    protected function getDefaultTarget()
     {
-        return 'Assign to clases';
+        return 'attribute_add_choices';
     }
 
     /**
-     * Save changes
+     * Return default value for widget param
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.16
      */
-    protected function doActionSave()
+    protected function getDefaultWidget()
     {
-        var_dump(\XLite\Core\Request::getInstance()->getData());die;
+        return '\XLite\View\Attributes\Book\Row\Attribute\AddChoices';
     }
 }

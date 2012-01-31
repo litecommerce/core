@@ -11,6 +11,7 @@
  *
  * @ListChild (list="browseServer", zone="admin", weight="100")
  *}
+
 <div class="browse-selector">
   <ul class="file-system-entries">
     <li class="file-system-entry up-level">
