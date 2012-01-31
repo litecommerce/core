@@ -12,4 +12,11 @@
  * @ListChild (list="attributes.book.row.addChoices", weight="200")
  *}
 
-<div>--List--</div>
+<ul id="choices-list">
+  <li FOREACH="getChoices(),choice" class="{getChoiceRowCSSClass(choice)}">
+    <input type="text" name="{getNamePostedData(#title#,choice.getId())}" value="{choice.getTitle():h}" />
+    <div IF="choice.isPersistent()" class="delete choice">
+      <input type="hidden" name="{getNamePostedData(#toDelete#,choice.getId())}" value="{#0#}" />
+    </div>
+  </li>
+</ul>

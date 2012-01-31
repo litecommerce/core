@@ -77,4 +77,20 @@ class Selector extends \XLite\Model\Attribute
 
         return $result;
     }
+
+    /**
+     * Constructor
+     *
+     * @param array $data Entity properties OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function __construct(array $data = array())
+    {
+        $this->choices = new \Doctrine\Common\Collections\ArrayCollection();
+        
+        parent::__construct($data);
+    }
 }

@@ -105,4 +105,33 @@ class AddChoices extends \XLite\View\Dialog
     {
         return $this->getAttribute()->getTitle();
     }
+
+    /**
+     * Return list of attribute choices
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getChoices()
+    {
+        $result = $this->getAttribute()->getChoices();
+        $result[] = new \XLite\Model\Attribute\Choice();
+
+        return $result;
+    }
+
+    /**
+     * Get CSS class for a list row
+     *
+     * @param \XLite\Model\Attribute\Choice $choice Current object
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getChoiceRowCSSClass(\XLite\Model\Attribute\Choice $choice)
+    {
+        return $choice->isPersistent() ? '' : 'hidden';
+    }
 }

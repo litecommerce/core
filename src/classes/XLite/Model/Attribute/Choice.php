@@ -58,7 +58,7 @@ class Choice extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.14
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Attribute", inversedBy="choices")
+     * @ManyToOne  (targetEntity="XLite\Model\Attribute\Type\Selector", inversedBy="choices", fetch="LAZY")
      * @JoinColumn (name="attributeId", referencedColumnName="id")
      */
     protected $attribute;

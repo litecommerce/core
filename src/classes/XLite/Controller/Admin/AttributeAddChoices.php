@@ -56,6 +56,58 @@ class AttributeAddChoices extends \XLite\Controller\Admin\Base\AttributePopup
      */
     protected function doActionSave()
     {
-        var_dump(\XLite\Core\Request::getInstance()->getData());die;
+        $this->setReturnURL($this->buildURL('attributes'));
+
+        $objects = array(
+            'insert' => array(),
+            'update' => array(),
+            'delete' => array(),
+        );
+
+        foreach ($this->getPostedData() as $id => $data) {
+            $id = intval($id);
+
+            if (0 < $id) {
+                $choice = \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Choice')->find($id);
+
+                if (!isset($choice)) {
+                    return \XLite\Core\TopMessage::addError('Unknown choice ID: {{id}}', array('id' => $id));
+                }
+
+                if (\Includes\Utils\ArrayManager::getIndex($data, 'toDelete')) {
+                    $objects['delete'][] = $choice;
+
+                } else {
+                    $title = \Includes\Utils\ArrayManager::getIndex($data, 'title');
+
+                    if (empty($title)) {
+                        return \XLite\Core\TopMessage::addError(
+                            'Empty title for attribute "{{title}}"',
+                            array('title' => $title)
+                        );
+                    }
+
+                    $choice->setTitle($title);
+                    $objects['update'][] = $choice;
+                }
+
+            } else {
+                $title = \Includes\Utils\ArrayManager::getIndex($data, 'title');
+
+                if (!empty($title)) {
+                    $choice = new \XLite\Model\Attribute\Choice();
+                    $choice->setTitle($title);
+                    $choice->setAttribute($this->getAttribute());
+
+                    $objects['insert'][] = $choice;
+                }
+            }
+        }
+
+        foreach ($objects as $method => $choices) {
+            \XLite\Core\Database::getRepo('\XLite\Model\Attribute\Choice')->{$method . 'InBatch'}($choices);
+        }
+
+        \XLite\Core\TopMessage::addInfo('Attribute choices has been successfully saved');
     }
 }
