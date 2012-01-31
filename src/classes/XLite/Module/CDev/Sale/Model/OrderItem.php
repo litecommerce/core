@@ -48,7 +48,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 
         $product = $this->getProduct();
 
-        if ($product->getParticipateSale()) {
+        if (is_object($product) && $product->getParticipateSale()) {
 
             $price = $product->getSalePrice();
         }
