@@ -136,6 +136,18 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
         return array_merge(parent::getListNameSuffixes(), array('search'));
     }
 
+    /**
+     * Get panel class
+     *
+     * @return \XLite\View\Base\FormStickyPanel
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getPanelClass()
+    {
+        return 'XLite\View\StickyPanel\Product\Admin\Search';
+    }
+
     // {{{ Search
 
     /**
