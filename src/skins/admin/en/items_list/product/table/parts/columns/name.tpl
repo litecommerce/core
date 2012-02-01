@@ -11,4 +11,4 @@
  * @ListChild (list="itemsList.product.table.admin.search.columns", weight="30")
  *}
 
-<td><a class="name" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.getProductId()))}">{if:product.getName()}{product.getName():h}{else:}N/A{end:}</a></td>
+<td><a class="name" href="{buildURL(#product#,##,_ARRAY_(#id#^product.getProductId()))}">{if:product.getName()}{product.getName():h}{else:}N/A{end:}</a></td>

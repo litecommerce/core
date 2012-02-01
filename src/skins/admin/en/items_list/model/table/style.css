@@ -1,0 +1,160 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Table-based model list
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.15
+ */
+
+/**
+ * Items list : common table
+ */
+.items-list-table {
+  display: inline-block;
+  width: auto;
+}
+
+.items-list-table table.list {
+  width: auto;
+}
+
+.items-list-table table.list thead {
+  background-color: #f1f1f1;
+}
+
+.items-list-table table.list thead th {
+  color: #8f8f8f;
+  font-weight: normal;
+  padding: 19px 12px 12px;
+  font-size: 14px;
+  text-align: left;
+  border-bottom: 1px solid #d5d5d5;
+}
+
+.items-list-table table.list tbody td {
+  border-top: 1px solid #e9e9e9;
+  border-bottom: 1px solid #e9e9e9;
+  padding: 10px 12px 6px;
+  font-size: 16px;
+  vertical-align: middle;
+  line-height: 25px;
+  white-space: nowrap;
+}
+
+.items-list-table table.list tbody td.main {
+}
+
+.items-list-table table.list tbody td .view,
+.items-list-table table.list tbody td .view *
+{
+  font-size: 16px;
+}
+
+.items-list-table table.list tbody td * {
+  vertical-align: middle;
+}
+
+.items-list-table table.list tbody td.actions {
+  background-image: url(images/line-separator.png);
+  background-repeat: no-repeat;
+  text-align: center;
+}
+
+.items-list-table table.list tbody td.actions.left {
+  background-position: right 16px;
+  padding-right: 1px;
+}
+
+.items-list-table table.list tbody td.actions.right {
+  background-position: left 16px;
+  padding-right: 6px;
+}
+
+.items-list-table table.list tbody td.actions .action {
+  display: inline-block;
+  padding-right: 2px;
+  height: 31px;
+}
+
+.items-list-table table.list tbody td.actions .action.next {
+  padding-left: 7px;
+  background: transparent url(../../../images/actions_separator.png) no-repeat left 7px;
+}
+
+.items-list-table table.list tbody td.actions div.selector {
+  width: 31px;
+  height: 31px;
+  text-align: center;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.items-list-table table.list tbody td.actions div.selector.checked {
+  background-color: #d2f5cc;
+}
+
+.items-list-table table.list tbody td.actions div.selector input {
+  margin: 0px;
+  vertical-align: middle;
+}
+
+.items-list-table table.list tbody td.actions .inline-field .view {
+  padding-top: 4px;
+}
+
+.items-list-table table.list tbody td.actions .inline-switcher {
+  width: 31px;
+  padding-top: 7px;
+}
+
+.items-list-table table.list tbody td.actions .inline-move {
+  height: 31px;
+  padding-top: 8px;
+  width: 37px;
+}
+
+.items-list-table table.list tbody td.actions .inline-switcher .field {
+  text-align: center;
+}
+
+.items-list-table table.list tbody td a.link {
+  text-decoration: none;
+  color: #456583;
+}
+
+.items-list-table table.list tbody td.attention,
+.items-list-table table.list tbody td.attention .view,
+.items-list-table table.list tbody td.attention .view *
+{
+  color: #d91a1a;
+}
+
+.items-list-table table.list tbody tr.line.remove-mark {
+  opacity: .3;
+}
+
+.items-list-table table.list tbody .inline-field .field input,
+.items-list-table table.list tbody .inline-field .field select,
+.items-list-table table.list tbody .inline-field .field textarea,
+.items-list-table table.list tbody .inline-field .field span.text
+{
+  font-size: 16px;
+}
+
+.items-list-table table.list tbody .inline-field .field input,
+.items-list-table table.list tbody .inline-field .field select
+{
+  height: 18px;
+  line-height: 18px;
+}
+
+.items-list-table table.list tbody .inline-field .field input {
+}
+
+.items-list-table table.list tbody .inline-field .table-value {
+  float: none;
+}

@@ -1,0 +1,41 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Sale widget styles. Customer area.
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.0
+ */
+
+ .product-price .sale-banner {
+   display: none;
+ }
+
+ .product-details-info .product-price .sale-banner {
+   display: block;
+   background: transparent url(../images/sale-banner-arrow.png) 0px 20px no-repeat;
+   padding-left: 7px;
+   margin-top: 7px;
+   margin-left: 12px;
+ }
+
+ .sale-banner-block {
+   background-color: #FF9000;
+   border-radius: 5px;
+   height: 50px;
+   padding: 5px 12px 0 10px;
+ }
+
+ .sale-banner-block .text {
+   text-transform: uppercase;
+   font-size: 20px;
+   color: #ffffff;
+ }
+
+ .sale-banner-block .percent {
+   color: #692a00;
+   font-style: italic;
+ }

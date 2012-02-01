@@ -68,6 +68,11 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     const TYPE_INTERNAL  = 'internal';
 
     /**
+     * Default value for the "flush" param
+     */
+    const FLUSH_BY_DEFAULT = true;
+
+    /**
      * Cache cells (local cache)
      *
      * @var   array
@@ -458,69 +463,270 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         return $this->getEntityManager()->flush();
     }
 
+    // {{{ Methods to manage entities
+
     /**
-     * Perform some common operations to modify records
-     * Possible functions "(insert|update|delete)(InBatch)(ById)"
+     * Insert entity
      *
-     * @param string $method Method to call
-     * @param array  $args   Call arguments
+     * @param \XLite\Model\AEntity|array $entity Entity to insert
+     * @param boolean                    $flush  Flag OPTIONAL
      *
-     * @return mixed
+     * @return \XLite\Model\AEntity
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.16
      */
-    public function __call($method, $args)
+    public function insert($entity = null, $flush = self::FLUSH_BY_DEFAULT)
     {
-        $result = null;
+        $entity = $this->performInsert($entity);
 
-        if (preg_match($this->getModifierPattern(), $method, $matches)) {
-
-            // Common method
-            $method = 'perform' . $matches[1];
-
-            // First passed variable:
-            // - for "*()": entity
-            // - for "*InBatch()": entities array
-            // - for "*InBatchById()": array with the <id,(array)data> pairs
-            $commonArg = $args[0];
-
-            // Check if the batch processing is requred ($matches[2] == {''|'InBatch'})
-            if (empty($matches[2])) {
-
-                // Get entity by ID (if needed: $matches[3] == {''|'ById'})
-                $entity = empty($matches[3]) ? $commonArg : $this->getById($commonArg);
-
-                // Check arguments and perform action.
-                // For all methods the second argument can be ommited
-                $result = isset($args[1]) ? $this->$method($entity, $args[1]) : $this->$method($entity);
-
-            } else {
-
-                // Batch processing: iterate over the first argument.
-                // For all methods the second argument can be ommited
-                foreach ($commonArg as $id => $data) {
-
-                    // Get entity by ID (if needed: $matches[3] == {''|'ById'}).
-                    // Perform action
-                    if (empty($matches[3])) {
-                        $result = isset($args[1]) ? $this->$method($data, $args[1]) : $this->$method($data);
-
-                    } else {
-                        $result = $this->$method($this->getById($id), $data);
-                    }
-                }
-            }
-
-            // Execute queries and save changes
+        if ($flush) {
             $this->flushChanges();
+        }
 
-        } else {
+        return $entity;
+    }
 
-            $result = parent::__call($method, $args);
+    /**
+     * Insert entities
+     *
+     * @param array   $entities List of entities to insert
+     * @param boolean $flush    Flag OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function insertInBatch(array $entities, $flush = self::FLUSH_BY_DEFAULT)
+    {
+        $result = array();
+
+        foreach ($entities as $entity) {
+            $result[] = $this->performInsert($entity);
+        }
+
+        if ($flush) {
+            $this->flushChanges();
         }
 
         return $result;
     }
+
+    /**
+     * Update entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity to update
+     * @param array                $data   New values for entity properties
+     * @param boolean              $flush  Flag OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function update(\XLite\Model\AEntity $entity, array $data = array(), $flush = self::FLUSH_BY_DEFAULT)
+    {
+        $this->performUpdate($entity, $data);
+
+        if ($flush) {
+            $this->flushChanges();
+        }
+    }
+
+    /**
+     * Find entity by ID and update it
+     *
+     * @param integer $id    ID of entity to update
+     * @param array   $data  New values for entity properties
+     * @param boolean $flush Flag OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function updateById($id, array $data = array(), $flush = self::FLUSH_BY_DEFAULT)
+    {
+        $this->update($this->getById($id), $data, $flush);
+    }
+
+    /**
+     * Update entities
+     *
+     * @param array   $entities List of entities to update
+     * @param boolean $flush    Flag OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function updateInBatch(array $entities, $flush = self::FLUSH_BY_DEFAULT)
+    {
+        foreach ($entities as $entity) {
+            $this->performUpdate($entity);
+        }
+
+        if ($flush) {
+            $this->flushChanges();
+        }   
+    }
+
+    /**
+     * Find entities by ID and update them
+     *
+     * @param array   $data  Array of <id => array(properties)> elements
+     * @param boolean $flush Flag OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function updateInBatchById(array $data, $flush = self::FLUSH_BY_DEFAULT)
+    {
+        foreach ($data as $id => $properties) {
+            $this->performUpdate($this->getById($id), $properties);
+        }
+
+        if ($flush) {
+            $this->flushChanges();
+        }
+    }
+
+    /**
+     * Delete entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity to delete
+     * @param boolean              $flush  Flag OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function delete(\XLite\Model\AEntity $entity, $flush = self::FLUSH_BY_DEFAULT)
+    {
+        $this->performDelete($entity);
+
+        if ($flush) {
+            $this->flushChanges();
+        }
+    }
+
+    /**
+     * Find entity by ID and delete it
+     *
+     * @param integer $id    ID of entity to delete
+     * @param boolean $flush Flag OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function deleteById($id, $flush = self::FLUSH_BY_DEFAULT)
+    {
+        $this->delete($this->getById($id), $flush);
+    }
+
+    /**
+     * Delete entities
+     *
+     * @param array   $entities List of entities to delete
+     * @param boolean $flush    Flag OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function deleteInBatch(array $entities, $flush = self::FLUSH_BY_DEFAULT)
+    {
+        foreach ($entities as $entity) {
+            $this->performDelete($entity);
+        }
+
+        if ($flush) {
+            $this->flushChanges();
+        }
+    }
+
+    /**
+     * Find entities by ID and delete them
+     *
+     * @param array   $data  Array of <id => array(properties)> elements
+     * @param boolean $flush Flag OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function deleteInBatchById(array $data, $flush = self::FLUSH_BY_DEFAULT)
+    {
+        foreach ($data as $id => $tmp) {
+            $this->performDelete($this->getById($id));
+        }
+
+        if ($flush) {
+            $this->flushChanges();
+        }
+    }
+
+    /**
+     * Insert single entity
+     *
+     * @param \XLite\Model\AEntity|array $entity Data to insert OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function performInsert($entity = null)
+    {
+        if (!isset($entity) || !($entity instanceof \XLite\Model\AEntity)) {
+            $entity = new $this->_entityName((array) $entity);
+        }
+
+        // Since Doctrine lifecycle callbacks do not allow
+        // to modify associations, we've added this method
+        $entity->prepareEntityBeforeCommit($entity::ACTION_INSERT);
+
+        $this->getEntityManager()->persist($entity);
+
+        return $entity;
+    }
+ 
+    /**
+     * Update single entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity to use
+     * @param array                $data   Data to save OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
+    {
+        $entity->map($data);
+
+        // Since Doctrine lifecycle callbacks do not allow
+        // to modify associations, we've added this method
+        $entity->prepareEntityBeforeCommit($entity::ACTION_UPDATE);
+    }
+
+    /**
+     * Delete single entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity to detach
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function performDelete(\XLite\Model\AEntity $entity)
+    {
+        // Since Doctrine lifecycle callbacks do not allow
+        // to modify associations, we've added this method
+        $entity->prepareEntityBeforeCommit($entity::ACTION_DELETE);
+
+        $this->getEntityManager()->remove($entity);
+    }
+
+    // }}}
 
     /**
      * Delete all records in associated table
@@ -1374,8 +1580,9 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected function getById($id)
     {
         $entity = $this->find($id);
+
         if (!$entity) {
-            throw new \Exception(get_called_class() . '::getById() - unknown ID (' . $id . ')');
+            throw new \Exception(get_class($this) . '::getById() - unknown ID (' . $id . ')');
         }
 
         return $entity;
@@ -1403,83 +1610,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected function getModifierPattern()
     {
         return '/(' . implode('|', $this->getAllowedModifiers()) . ')(InBatch)?(ById)?/Si';
-    }
-
-    /**
-     * Common method to create entity
-     * 
-     * @param \XLite\Model\AEntity|array $data Data to use
-     *  
-     * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function createEntityFromData($data)
-    {
-        if (!isset($data) || !($data instanceof \XLite\Model\AEntity)) {
-            $data = new $this->_entityName((array) $data);
-        }
-
-        return $data;
-    }
-
-    /**
-     * Insert single entity
-     *
-     * @param \XLite\Model\AEntity|array $entity Data to insert OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function performInsert($entity = null)
-    {
-        $entity = $this->createEntityFromData($entity);
-
-        // Since Doctrine lifecycle callbacks do not allow
-        // to modify associations, we've added this method
-        $entity->prepareEntityBeforeCommit();
-
-        $this->getEntityManager()->persist($entity);
-
-        return $entity;
-    }
-
-    /**
-     * Update single entity
-     *
-     * @param \XLite\Model\AEntity $entity Entity to use
-     * @param array                $data   Data to save OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
-    {
-        $entity->map($data);
-
-        // Since Doctrine lifecycle callbacks do not allow
-        // to modify associations, we've added this method
-        $entity->prepareEntityBeforeCommit();
-    }
-
-    /**
-     * Delete single entity
-     *
-     * @param \XLite\Model\AEntity $entity Entity to detach
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function performDelete(\XLite\Model\AEntity $entity)
-    {
-        // Since Doctrine lifecycle callbacks do not allow
-        // to modify associations, we've added this method
-        $entity->prepareEntityBeforeCommit();
-
-        $this->getEntityManager()->remove($entity);
     }
 
     /**

@@ -97,10 +97,10 @@ class ModifyProductOptions extends \XLite\View\AView
             'product',
             '',
             array(
-                'page'       => 'product_options',
-                'product_id' => $this->getProductId(),
-                'groupId'    => $option->getGroupId(),
-                'language'   => \XLite\Core\Request::getInstance()->language,
+                'page'     => 'product_options',
+                'id'       => $this->getProductId(),
+                'groupId'  => $option->getGroupId(),
+                'language' => \XLite\Core\Request::getInstance()->language,
             )
         );
     }
@@ -137,7 +137,7 @@ class ModifyProductOptions extends \XLite\View\AView
             self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
                 'Product',
                 \XLite\Core\Database::getRepo('\XLite\Model\Product')->find(
-                    \XLite\Core\Request::getInstance()->product_id
+                    \XLite\Core\Request::getInstance()->id
                 ),
                 false,
                 '\XLite\Model\Product'

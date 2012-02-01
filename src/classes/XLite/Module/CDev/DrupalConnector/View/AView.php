@@ -47,10 +47,10 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     // {{{ Static methods
 
     /**
-     * Modify resource path 
-     * 
+     * Modify resource path
+     *
      * @param string $path Absolute resource path
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -128,6 +128,24 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 
         return $result;
     }
+
+
+    /**
+     * Return theme common files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function getThemeFiles()
+    {
+        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+            ? array(
+                static::RESOURCE_CSS => array(),
+            )
+            : parent::getThemeFiles();
+    }
+
 
     /**
      * Common method to register resources

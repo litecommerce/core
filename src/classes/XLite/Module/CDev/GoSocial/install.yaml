@@ -1,0 +1,182 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Fixtures
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+# @since     1.0.0
+XLite\Model\Config:
+  - name: gosocial_sep_1
+    category: CDev\GoSocial
+    type: separator
+    orderby: 100
+    value: ''
+    translations:
+      - code: en
+        option_name: Facebook application settings
+  - name: fb_app_id
+    category: CDev\GoSocial
+    type: text
+    orderby: 200
+    value: ''
+    translations:
+      - code: en
+        option_name: Application ID
+  - name: fb_app_namespace
+    category: CDev\GoSocial
+    type: text
+    orderby: 400
+    value: ''
+    translations:
+      - code: en
+        option_name: Application namespace
+  - name: gosocial_sep_2
+    category: CDev\GoSocial
+    type: separator
+    orderby: 1000
+    value: ''
+    translations:
+      - code: en
+        option_name: Facebook Like button settings
+  - name: fb_like_use
+    category: CDev\GoSocial
+    type: checkbox
+    orderby: 1050
+    value: true
+    translations:
+      - code: en
+        option_name: Use Facebook Like button
+  - name: fb_admins
+    category: CDev\GoSocial
+    type: text
+    orderby: 1060
+    value: ''
+    translations:
+      - code: en
+        option_name: Administrators IDs
+        option_comment: 'Specify a comma-separated list of Facebook user IDs (or a single user ID) who can moderate Facebook statistics for this site'
+  - name: fb_like_send_button
+    category: CDev\GoSocial
+    type: checkbox
+    orderby: 1100
+    value: false
+    translations:
+      - code: en
+        option_name: Send button
+  - name: fb_like_layout
+    category: CDev\GoSocial
+    type: XLite\Module\CDev\GoSocial\View\FormField\Select\FBLayoutStyle
+    orderby: 1200
+    value: standard
+    translations:
+      - code: en
+        option_name: Layout style
+  - name: fb_like_show_faces
+    category: CDev\GoSocial
+    type: checkbox
+    orderby: 1300
+    value: true
+    translations:
+      - code: en
+        option_name: Show faces
+  - name: fb_like_verb
+    category: CDev\GoSocial
+    type: XLite\Module\CDev\GoSocial\View\FormField\Select\FBVerbDisplay
+    orderby: 1400
+    value: like
+    translations:
+      - code: en
+        option_name: Verb to display
+  - name: gosocial_sep_21
+    category: CDev\GoSocial
+    type: separator
+    orderby: 1500
+    value: ''
+    translations:
+      - code: en
+        option_name: Facebook comments settings
+  - name: fb_comments_use
+    category: CDev\GoSocial
+    type: checkbox
+    orderby: 1600
+    value: true
+    translations:
+      - code: en
+        option_name: Use Facebook comments
+  - name: fb_comments_num_posts
+    category: CDev\GoSocial
+    type: XLite\View\FormField\Input\Text\Integer
+    orderby: 1700
+    value: 8
+    widgetParameters: { min: 1 }
+    translations:
+      - code: en
+        option_name: Number of posts
+  - name: gosocial_sep_3
+    category: CDev\GoSocial
+    type: separator
+    orderby: 2000
+    value: ''
+    translations:
+      - code: en
+        option_name: Tweet button settings
+  - name: tweet_use
+    category: CDev\GoSocial
+    type: checkbox
+    orderby: 2050
+    value: true
+    translations:
+      - code: en
+        option_name: Use Tweet button
+  - name: tweet_show_count
+    category: CDev\GoSocial
+    type: checkbox
+    orderby: 2100
+    value: true
+    translations:
+      - code: en
+        option_name: Show count
+  - name: tweet_via
+    category: CDev\GoSocial
+    type: text
+    orderby: 2200
+    value: ''
+    translations:
+      - code: en
+        option_name: Via
+  - name: tweet_recommend
+    category: CDev\GoSocial
+    type: text
+    orderby: 2300
+    value: ''
+    translations:
+      - code: en
+        option_name: Recommend
+  - name: tweet_hashtag
+    category: CDev\GoSocial
+    type: text
+    orderby: 2300
+    value: ''
+    translations:
+      - code: en
+        option_name: Hashtag
+  - name: gosocial_sep_4
+    category: CDev\GoSocial
+    type: separator
+    orderby: 3000
+    value: ''
+    translations:
+      - code: en
+        option_name: Google+ button settings
+  - name: gplus_use
+    category: CDev\GoSocial
+    type: checkbox
+    orderby: 3050
+    value: true
+    translations:
+      - code: en
+        option_name: Use Google+ button
+XLite\Model\LanguageLabel:
+  - { name: Tweet, translations: [{ code: en, label: Tweet }] }

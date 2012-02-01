@@ -402,8 +402,11 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function prepareCndSKU(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder->andWhere('p.sku LIKE :sku')
-            ->setParameter('sku', '%' . $value . '%');
+        $value = trim($value);
+        if (0 < strlen($value)) {
+            $queryBuilder->andWhere('p.sku LIKE :sku')
+                ->setParameter('sku', '%' . $value . '%');
+        }
     }
 
     /**

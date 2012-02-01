@@ -89,23 +89,12 @@ class Classes extends \XLite\View\FormField\Select\Multiple
      */
     protected function getDefaultOptions()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findAll();
-    }
+        $list = array();
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findAll() as $class) {
+            $list[$class->getId()] = $class->getName();
+        }
 
-    /**
-     * Is class selected
-     *
-     * @param integer $classId Class ID to check
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isClassSelected($classId)
-    {
-        return $this->getValue()->contains(
-            \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findOneById($classId)
-        );
+        return $list;
     }
 
     /**

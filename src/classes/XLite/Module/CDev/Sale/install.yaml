@@ -1,0 +1,56 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Fixtures
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+# @since     1.0.0
+XLite\Model\Config:
+  - name: sep_sale_block
+    category: CDev\Sale
+    type: separator
+    orderby: 10
+    translations:
+      - code: en
+        option_name: '"Products on sale" block settings'
+
+  - name: sale_enabled
+    category: CDev\Sale
+    type: checkbox
+    orderby: 20
+    value: Y
+    translations:
+      - code: en
+        option_name: 'Display the "Products on sale" block in the storefront'
+
+  - name: block_max_count_in_full_list
+    category: CDev\Sale
+    type: text
+    orderby: 40
+    value: 30
+    translations:
+      - code: en
+        option_name: 'The maximum number of products to be displayed on the "All products on sale" page'
+        option_comment: 'The maximum number of products to be displayed on the "All products on sale" page. Set zero to display all products on the page.'
+
+  - name: sale_max_count_in_block
+    category: CDev\Sale
+    type: text
+    orderby: 80
+    value: 3
+    translations:
+      - code: en
+        option_name: 'The maximum number of products to be displayed in the "Products on sale" block'
+        option_comment: 'The maximum number of products to be displayed in the "Products on sale" block. Set zero to display all products in the block. Drupal block settings can override this option (when the DrupalConnector module is enabled).'
+
+  - name: sale_menu
+    category: CDev\Sale
+    type: 'XLite\Module\CDev\Sale\View\FormField\Select\Menu'
+    orderby: 90
+    value: 1
+    translations:
+      - code: en
+        option_name: Display the "Products on sale" block in
+        option_comment: 'Drupal block settings can override this option (when the DrupalConnector module is enabled).'

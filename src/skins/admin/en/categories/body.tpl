@@ -116,7 +116,7 @@
     <tbody IF="category&category.hasSubcategories()">
 
     <tr
-      FOREACH="getSubcategories(getCategoryId()),id,cat"
+      FOREACH="category.getSubcategories(),id,cat"
       class="{getRowClass(id,##,#highlight#)}"
       onmouseover="javascript:jQuery('.hidden-{cat.getCategoryId()}').show()"
       onmouseout="javascript:jQuery('.hidden-{cat.getCategoryId()}').hide()">

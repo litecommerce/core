@@ -819,18 +819,6 @@ button:hover
   border-color: #b1c9e0;
 }
 
-button.disabled {
-  background-color: #CCCCCC;
-  background-image: none;
-  border-color: #CCCCCC;
-  color: #FFFFFF;
-  cursor: default;
-}
-
-button.disabled span {
-  color: #FFFFFF;
-}
-
 button.main-button,
 input.main-button
 {
@@ -909,11 +897,10 @@ button.bright:active
 }
 
 button.switch-state {
-  border: none;
   background: transparent url(../images/tri_button.png) no-repeat left top;
   padding: 0px;
-  padding-left: 10px;
-  height: auto;
+  padding-left: 11px;
+  border: 0px none;
 }
 
 button.switch-state div {
@@ -935,12 +922,27 @@ button.switch-state div img {
   height: 16px;
   width: 16px;
   vertical-align: middle;
+}
+
+button.switch-state div img {
   margin-right: 7px;
   margin-top: -5px;
 }
 
 button.switch-state.disabled-state div img {
   background-position: left -16px;
+}
+
+button.disabled {
+  background-color: #CCCCCC;
+  background-image: none;
+  border-color: #CCCCCC;
+  color: #FFFFFF;
+  cursor: default;
+}
+
+button.disabled span {
+  color: #FFFFFF;
 }
 
 /* Fade */
@@ -1253,6 +1255,10 @@ td.value-attribute
 {
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+td.value-attribute .table-value {
+  display: inline;
 }
 
 .product-modify-form .name-attribute
@@ -1663,3 +1669,28 @@ table.payment-methods td.description button {
   color: #69a4c9;
 }
 
+/**
+ * List-based form
+ */
+form.list-form {
+  display: inline-block;
+  width: auto;
+}
+
+form.list-form .sticky-panel .panel-cell {
+  display: inline-block;
+  padding-left: 10px;
+}
+
+form.list-form .sticky-panel .panel-cell.first {
+  padding-left: 0px;
+}
+
+form.list-form .sticky-panel a.cancel {
+  text-decoration: underline;
+}
+
+form.list-form .sticky-panel a.cancel.disabled {
+  color: #8f8f8f;
+  text-decoration: none;
+}

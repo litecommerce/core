@@ -15,6 +15,6 @@
   <td class="name-attribute">{t(#Category#)}</td>
   <td class="star"></td>
   <td class="value-attribute">
-    <widget class="\XLite\View\FormField\Select\Categories" fieldName="{getNamePostedData(##,#category_ids#)}" fieldOnly=true value="{product.getCategories()}" />
+    <widget class="\XLite\View\FormField\Select\Categories" fieldName="{getNamePostedData(#category_ids#)}" fieldOnly=true value="{product.getCategories()}" />
   </td>
 </tr>

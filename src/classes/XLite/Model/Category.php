@@ -215,18 +215,6 @@ class Category extends \XLite\Model\Base\I18n
     protected $flagVisible = null;
 
     /**
-     * "Enabled category" filter closure
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.7
-     */
-    public static function isEnabledFilter(Category $category)
-    {
-        return $category->getEnabled();
-    }
-
-    /**
      * Set parent
      *
      * @param \XLite\Model\Category $parent Parent category OPTIONAL
@@ -275,13 +263,11 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function isVisible()
     {
-        if (is_null($this->flagVisible)) {
-
+        if (!isset($this->flagVisible)) {
             $current = $this;
             $hidden = false;
 
             while (\XLite\Model\Repo\Category::CATEGORY_ID_ROOT != $current->getCategoryId()) {
-
                 if (!$current->getEnabled()) {
                     $hidden = true;
                     break;
@@ -340,10 +326,10 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getSubcategories()
     {
-        $object = $this;
-
         return $this->getChildren()->filter(
-            function ($category) {return \XLite\Model\Category::isEnabledFilter($category);}
+            function (\XLite\Model\Category $category) {
+                return $category->getEnabled();
+            }
         );
     }
 

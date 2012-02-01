@@ -120,15 +120,15 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
         if (is_array($rates)) {
             foreach ($rates as $rateId => $data) {
 
+                $rate = null;
+
                 if ('%' == $rateId) {
 
                     // Temporary (fake) rate
-                    $rate = null;
 
                 } elseif (0 < $rateId) {
 
                     // Find rate by rateId
-                    $rate = null;
                     foreach ($tax->getRates() as $r) {
                         if ($r->getId() == $rateId) {
                             $rate = $r;

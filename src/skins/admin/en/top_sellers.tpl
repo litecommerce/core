@@ -23,7 +23,7 @@
     <td FOREACH="row,idx1,val">
       {if:val}
         {if:val.product.product_id}
-          <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^val.product.product_id))}">{val.name}</a>
+          <a href="{buildURL(#product#,##,_ARRAY_(#id#^val.product.product_id))}">{val.name}</a>
         {else:}
           <span>{val.name} ({t(#deleted#)})</span>
         {end:}

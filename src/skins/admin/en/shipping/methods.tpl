@@ -86,7 +86,7 @@ function onDeleteButton(method_id)
             <td><input type="text" name="methods[{method.getMethodId()}][position]" size="4" value="{method.getPosition()}" /></td>
 
             <td>
-            <widget class="\XLite\View\FormField\Select\Classes" fieldName="{getNamePostedData(method.getMethodId(),#class_ids#,##)}" fieldOnly=true value="{method.getClasses()}" />
+            <widget class="\XLite\View\FormField\Select\Classes" fieldName="{getNamePostedData(method.getMethodId(),#class_ids#)}" fieldOnly=true value="{method.getClasses()}" />
             </td>
 
             <td align="center">
