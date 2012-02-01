@@ -83,19 +83,19 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
     public function getTitle()
     {
         if ($this->isCoreSelection()) {
-            $result = 'Upgrade core';
+            $result = static::t('Upgrade core');
 
         } elseif ($this->isDownload()) {
-            $result = 'Downloading updates';
+            $result = static::t('Downloading updates');
 
         } else {
             $version = \XLite\Upgrade\Cell::getInstance()->getCoreMajorVersion();
 
             if (\XLite::getInstance()->checkVersion($version, '<')) {
-                $result = 'Upgrade to version ' . $version;
+                $result = static::t('Upgrade to version') . ' ' . $version;
 
             } else {
-                $result = 'Updates for your version (' . $version . ')';
+                $result = static::t('Updates for your version') . ' (' . $version . ')';
             }
         }
 
@@ -174,7 +174,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return $this->isUpdate() ? 'Updates available' : 'Upgrade';
+        return $this->isUpdate() ? static::t('Updates available') : static::t('Upgrade');
     }
 
     /**
