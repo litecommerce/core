@@ -2,7 +2,7 @@
 
 {**
  * Group attributes list
- *  
+ *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -13,5 +13,5 @@
  *}
 
 <div IF="!isNew()" class="group-attributes">
-  <widget class="\XLite\View\DraggableRows" entries="{getAttributeWidgets()}" />
+  <widget class="\XLite\View\DraggableRows" style_classes="attributes" entries="{getAttributeWidgets()}" />
 </div>

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -28,7 +28,7 @@
 namespace XLite\View;
 
 /**
- * DraggableRows 
+ * DraggableRows
  *
  * @see   ____class_see____
  * @since 1.0.14
@@ -38,7 +38,8 @@ class DraggableRows extends \XLite\View\Dialog
     /**
      * Widget param names
      */
-    const PARAM_ENTRIES = 'entries';
+    const PARAM_ENTRIES         = 'entries';
+    const PARAM_STYLE_CLASSES   = 'style_classes';
 
     /**
      * Register CSS files
@@ -83,6 +84,18 @@ class DraggableRows extends \XLite\View\Dialog
     }
 
     /**
+     * Return CSS classes for main container
+     *
+     * @return string
+     * @see    ____func_see____
+     * since   1.0.14
+     */
+    protected function getStyleClasses()
+    {
+        return 'draggable-rows ' . ($this->getParam(static::PARAM_STYLE_CLASSES)?: '');
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -94,7 +107,8 @@ class DraggableRows extends \XLite\View\Dialog
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            static::PARAM_ENTRIES => new \XLite\Model\WidgetParam\Collection('Entries list', array()),
+            static::PARAM_ENTRIES       => new \XLite\Model\WidgetParam\Collection('Entries list', array()),
+            static::PARAM_STYLE_CLASSES => new \XLite\Model\WidgetParam\String('CSS style classes', ''),
         );
     }
 

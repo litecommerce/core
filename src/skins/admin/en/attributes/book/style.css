@@ -2,8 +2,8 @@
 
 /**
  * CSS styles for the attributes list
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -14,6 +14,7 @@ div.group-title,
 div.attribute-title
 {
   float: left;
+  width: 70%;
 }
 
 div.group.hidden div.group-title
@@ -54,4 +55,57 @@ div.attribute.hidden table.attribute-properties
 table.attribute-properties div.additional-properties
 {
   display: inline;
+}
+
+#new_attribute_button {
+  background: #e9f2fe url(images/new_attribute_button.png) 12px 2px no-repeat;
+  padding-left: 30px;
+}
+
+#new_group_button {
+  background: #e9f2fe url(images/new_group_button.png) 12px 4px no-repeat;
+  padding-left: 30px;
+  margin-left: 10px;
+}
+
+.attributes-groups {
+  margin-top: 12px;
+}
+
+.attribute-title .title {
+  display: none;
+}
+
+.attribute .attribute-change-label {
+  display: none;
+}
+
+.attribute.hover .attribute-change-label {
+  display: block;
+}
+
+.group .group-attributes {
+  display: none;
+}
+
+.group .group-attributes.opened {
+  display: block;
+}
+
+.group-title {
+  background: transparent url(images/group_plus.png) 0px 0px no-repeat;
+  padding: 0px 0px 0px 30px;
+}
+
+.group-title.opened {
+  background: transparent url(images/group_minus.png) 0px 0px no-repeat;
+}
+
+.group-row {
+  padding-right: 5px;
+  background: transparent url(images/group_plus_background.png) 0px 0px repeat-x;
+}
+
+.group-row.opened-group {
+  background: transparent url(images/group_minus_background.png) 0px 0px repeat-x;
 }

@@ -2,7 +2,7 @@
 
 {**
  * Group title
- *  
+ *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -13,5 +13,6 @@
  *}
 
 <div class="group-title">
+  <span class="title">{getGroupTitle():h}</span>
   <input type="text" name="{getNamePostedData(#title#)}" value="{getGroupTitle():h}" />
 </div>
