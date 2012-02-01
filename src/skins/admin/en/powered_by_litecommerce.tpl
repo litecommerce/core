@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 <div class="powered-by">
-  <p class="copyright">&copy; {getCurrentYear()} {config.Company.company_name}</p>
+  <p class="copyright">&copy;{config.Company.start_year}{if:!config.Company.start_year=getCurrentYear()} - {getCurrentYear()}{end:} {config.Company.company_name}</p>
   <p>{getMessage():h}</p>
 </div>
