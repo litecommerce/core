@@ -41,15 +41,6 @@ ul.draggable-rows li.row div.container div.separator
   float: left;
 }
 
-ul.draggable-rows li.row div.container div.delete
-{
-  background: transparent url(../images/icon_trash.png) repeat-y center center;
-  width: 15px;
-  height: 20px;
-  float: right;
-  cursor: pointer;
-}
-
 ul.draggable-rows li.row div.container div.separator.right-separator
 {
   float: right;
@@ -58,6 +49,15 @@ ul.draggable-rows li.row div.container div.separator.right-separator
 div.hidden
 {
   display: none;
+}
+
+div.delete
+{
+  background: transparent url(../images/icon_trash.png) repeat-y center center;
+  width: 15px;
+  height: 20px;
+  float: right;
+  cursor: pointer;
 }
 
 .row-to-delete

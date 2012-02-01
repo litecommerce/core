@@ -73,4 +73,16 @@ class AddChoices extends \XLite\View\Button\Attribute\Base\Popup
     {
         return '\XLite\View\Attributes\Book\Row\Attribute\AddChoices';
     }
+
+    /**
+     * Return CSS classes
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getClass()
+    {
+        return parent::getClass() . ' add-choices-button';
+    }
 }

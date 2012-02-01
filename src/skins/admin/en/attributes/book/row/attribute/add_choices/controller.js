@@ -10,13 +10,57 @@
  * @since     1.0.16
  */
 
-jQuery().ready(
-  function() {
-    jQuery('form.add-choices-form').bind('afterSubmit', function (XMLHttpRequest, textStatus, data, valid) {
-        if (valid) {
-          self.location.reload();
-        }
+function PopupButtonAddChoices()
+{
+  PopupButtonAddChoices.superclass.constructor.apply(this, arguments);
+}
+
+extend(PopupButtonAddChoices, PopupButton);
+
+PopupButtonAddChoices.prototype.pattern = '.add-choices-button';
+PopupButtonAddChoices.prototype.fakeID = -1;
+
+decorate(
+  'PopupButtonAddChoices',
+  'callback',
+  function (selector, link)
+  {
+    // previous method call
+    arguments.callee.previousMethod.apply(this, arguments);
+
+    var o = this;
+
+    jQuery('a.new-value').click(
+      function () {
+        jQuery('ul#choices-list li').last().clone().appendTo('ul#choices-list');
+        jQuery('ul#choices-list li').last().show();
+        jQuery('ul#choices-list li').last().children('input').val('');
+        jQuery('ul#choices-list li').last().children('input').attr('name', 'postedData[' + o.fakeID-- + '][title]');
+        jQuery('ul#choices-list li').last().children('input').focus();
+      }
+    );
+
+    jQuery('div.delete').click(
+      function () {
+        var box = jQuery(this).children('input[name*="toDelete"]');
+
+        jQuery(this).closest('li').toggleClass('row-to-delete');
+        box.val(true == box.val() ? 0 : 1);
       }
     );
   }
 );
+
+decorate(
+  'PopupButtonAddChoices',
+  'afterSubmit',
+  function (selector)
+  {
+    // previous method call
+    arguments.callee.previousMethod.apply(this, arguments);
+
+    self.location.reload();
+  }
+);
+
+core.autoload(PopupButtonAddChoices);

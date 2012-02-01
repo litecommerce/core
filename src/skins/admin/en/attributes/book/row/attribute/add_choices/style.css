@@ -9,3 +9,8 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.16
  */
+
+ul#choices-list li.hidden
+{
+  display: none;
+}
