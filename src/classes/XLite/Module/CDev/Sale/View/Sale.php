@@ -176,7 +176,7 @@ class Sale extends \XLite\Module\CDev\Sale\View\ASale
      */
     protected function getMoreLinkText()
     {
-        return static::t('All sale products');
+        return static::t('All products on sale');
     }
 
     /**
