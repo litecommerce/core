@@ -28,7 +28,7 @@
 namespace XLite\Module\CDev\Sale\View;
 
 /**
- * Coming soon block widget
+ * Sale products block widget
  *
  * @see   ____class_see____
  * @since 1.0.0
@@ -151,6 +151,19 @@ class Sale extends \XLite\Module\CDev\Sale\View\ASale
         $result = parent::isVisible()
             && static::getWidgetTarget() != \XLite\Core\Request::getInstance()->target
             && 0 < $this->getData(new \XLite\Core\CommonCell(), true);
+
+        if ($result) {
+
+            if (!\XLite\Core\CMSConnector::isCMSStarted()) {
+
+                if (self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)) {
+                    $result = ('sidebar.first' == $this->viewListName);
+
+                } elseif (self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE)) {
+                    $result = ('center.bottom' == $this->viewListName);
+                }
+            }
+        }
 
         return $result;
     }
