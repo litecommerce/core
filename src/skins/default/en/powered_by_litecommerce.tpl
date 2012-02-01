@@ -10,6 +10,6 @@
  * @since     1.0.0
    *}
 <div class="powered-by">
-  <p class="copyright">&copy; 2011 {config.Company.company_name}. All rights reserved.</p>
+  <p class="copyright">&copy; {config.Company.start_year}{if:!config.Company.start_year=getCurrentYear()} - {getCurrentYear()}{end:} {config.Company.company_name}. All rights reserved.</p>
   <p class="powered-by-label">{getMessage():h}</p>
 </div>
