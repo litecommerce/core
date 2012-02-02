@@ -62,7 +62,7 @@ class ProductModify extends \XLite\View\AView
      */
     public function getJSFiles()
     {
-        $list = parent::getCSSFiles();
+        $list = parent::getJSFiles();
 
         $list[] = 'modules/CDev/GoSocial/product.js';
 
