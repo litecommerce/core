@@ -77,4 +77,17 @@ class SalePage extends \XLite\Module\CDev\Sale\View\ASale
         return '';
     }
 
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && static::getWidgetTarget() == \XLite\Core\Request::getInstance()->target;
+    }
+
 }

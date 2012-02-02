@@ -150,6 +150,7 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
     {
         $result = parent::isVisible()
             && \XLite\Core\Config::getInstance()->CDev->Sale->sale_enabled
+            && static::getWidgetTarget() != \XLite\Core\Request::getInstance()->target
             && 0 < $this->getData(new \XLite\Core\CommonCell(), true);
 
         if ($result) {

@@ -138,19 +138,6 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible()
-            && static::getWidgetTarget() == \XLite\Core\Request::getInstance()->target;
-    }
-
-    /**
      * Get max number of products displayed in block
      *
      * @return integer
