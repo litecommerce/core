@@ -46,6 +46,6 @@ abstract class CMSConnector extends \XLite\Core\CMSConnector implements \XLite\B
     {
         parent::__construct();
 
-        $this->widgetsList['\XLite\Module\CDev\Sale\View\Sale'] = 'Products on sale';
+        $this->widgetsList['\XLite\Module\CDev\Sale\View\SaleBlock'] = 'Products on sale';
     }
 }
