@@ -54,6 +54,7 @@
 
 .sale-price-value input {
   width: 70px;
+  text-align: right;
 }
 
 .discount-type input {

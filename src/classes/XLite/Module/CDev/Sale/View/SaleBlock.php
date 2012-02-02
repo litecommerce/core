@@ -36,7 +36,7 @@ namespace XLite\Module\CDev\Sale\View;
  * @ListChild (list="center.bottom", zone="customer", weight="600")
  * @ListChild (list="sidebar.first", zone="customer", weight="170")
  */
-class Sale extends \XLite\Module\CDev\Sale\View\ASale
+class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
 {
     /**
      * Widget parameter
@@ -149,7 +149,7 @@ class Sale extends \XLite\Module\CDev\Sale\View\ASale
     protected function isVisible()
     {
         $result = parent::isVisible()
-            && static::getWidgetTarget() != \XLite\Core\Request::getInstance()->target
+            && \XLite\Core\Config::getInstance()->CDev->Sale->sale_enabled
             && 0 < $this->getData(new \XLite\Core\CommonCell(), true);
 
         if ($result) {

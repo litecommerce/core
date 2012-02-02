@@ -54,22 +54,6 @@ class SalePage extends \XLite\Module\CDev\Sale\View\ASale
     }
 
     /**
-     * Initialize widget (set attributes)
-     *
-     * @param array $params Widget params
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function setWidgetParams(array $params)
-    {
-        parent::setWidgetParams($params);
-
-        $this->widgetParams[\XLite\View\Pager\APager::PARAM_MAX_ITEMS_COUNT]->setValue($this->getMaxCountInFullList());
-    }
-
-    /**
      * Return class name for the list pager
      *
      * @return string
@@ -93,18 +77,4 @@ class SalePage extends \XLite\Module\CDev\Sale\View\ASale
         return '';
     }
 
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        $result = parent::isVisible()
-            && static::getWidgetTarget() == \XLite\Core\Request::getInstance()->target;
-
-        return $result;
-    }
 }

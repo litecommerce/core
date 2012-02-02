@@ -41,7 +41,7 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     const WIDGET_TARGET_SALE_PRODUCTS = 'sale_products';
 
-    
+
     /**
      * Return target to retrive this widget from AJAX
      *
@@ -146,7 +146,8 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function isVisible()
     {
-        return parent::isVisible() && \XLite\Core\Config::getInstance()->CDev->Sale->sale_enabled;
+        return parent::isVisible()
+            && static::getWidgetTarget() == \XLite\Core\Request::getInstance()->target;
     }
 
     /**
@@ -161,15 +162,4 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return intval(\XLite\Core\Config::getInstance()->CDev->Sale->sale_max_count_in_block) ?: 3;
     }
 
-    /**
-     * Get max number of products displayed in list
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getMaxCountInFullList()
-    {
-        return intval(\XLite\Core\Config::getInstance()->CDev->Sale->sale_max_count_in_full_list) ?: 10;
-    }
 }

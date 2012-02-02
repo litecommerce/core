@@ -8,13 +8,6 @@
 # @link      http://www.litecommerce.com/
 # @since     1.0.0
 XLite\Model\Config:
-  - name: sep_sale_block
-    category: CDev\Sale
-    type: separator
-    orderby: 10
-    translations:
-      - code: en
-        option_name: '"Products on sale" block settings'
 
   - name: sale_enabled
     category: CDev\Sale
@@ -24,16 +17,6 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: 'Display the "Products on sale" block in the storefront'
-
-  - name: block_max_count_in_full_list
-    category: CDev\Sale
-    type: text
-    orderby: 40
-    value: 30
-    translations:
-      - code: en
-        option_name: 'The maximum number of products to be displayed on the "All products on sale" page'
-        option_comment: 'The maximum number of products to be displayed on the "All products on sale" page. Set zero to display all products on the page.'
 
   - name: sale_max_count_in_block
     category: CDev\Sale

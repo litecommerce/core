@@ -19,3 +19,14 @@
    font-style: italic;
    font-size: 14px;
  }
+
+ .set-price-dialog .label {
+   color: #8f8f8f;
+   font-size: 14px;
+   padding: 10px;
+ }
+
+ .set-price-dialog button {
+   margin: 10px 0px 0px 100px;
+ }
+
