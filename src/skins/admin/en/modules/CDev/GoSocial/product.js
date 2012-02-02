@@ -12,16 +12,15 @@
 
 jQuery().ready(
   function () {
-    jQuery('#useCustomOGFF').click(
+    jQuery('.og-tags .control select').change(
       function () {
-        if (this.checked) {
-          jQuery('.og-tags textarea').removeAttr('disabled').removeClass('disabled');
+        if (1 == this.options[this.selectedIndex].value) {
+          jQuery('.og-tags .og-textarea').show();
 
         } else {
-          jQuery('.og-tags textarea').attr('disabled', 'disabled').addClass('disabled');
+          jQuery('.og-tags .og-textarea').hide();
         }
       }
     );
-    jQuery('.og-tags textarea').filter(function () { return this.disabled; }).addClass('disabled');
   }
 );
