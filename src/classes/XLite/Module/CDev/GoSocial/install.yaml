@@ -11,7 +11,7 @@ XLite\Model\Config:
   - name: gosocial_sep_1
     category: CDev\GoSocial
     type: separator
-    orderby: 100
+    orderby: 5000
     value: ''
     translations:
       - code: en
@@ -19,7 +19,7 @@ XLite\Model\Config:
   - name: fb_app_id
     category: CDev\GoSocial
     type: text
-    orderby: 200
+    orderby: 5100
     value: ''
     translations:
       - code: en
@@ -27,12 +27,20 @@ XLite\Model\Config:
   - name: fb_app_namespace
     category: CDev\GoSocial
     type: text
-    orderby: 400
+    orderby: 5200
     value: ''
     translations:
       - code: en
         option_name: Application namespace
-  - name: gosocial_sep_2
+  - name: fb_admins
+    category: CDev\GoSocial
+    type: text
+    orderby: 5300
+    value: ''
+    translations:
+      - code: en
+        option_name: Administrators IDs
+        option_comment: 'Specify a comma-separated list of Facebook user IDs (or a single user ID) who can moderate Facebook statistics for this site'  - name: gosocial_sep_2
     category: CDev\GoSocial
     type: separator
     orderby: 1000
@@ -47,16 +55,7 @@ XLite\Model\Config:
     value: true
     translations:
       - code: en
-        option_name: Use Facebook Like button
-  - name: fb_admins
-    category: CDev\GoSocial
-    type: text
-    orderby: 1060
-    value: ''
-    translations:
-      - code: en
-        option_name: Administrators IDs
-        option_comment: 'Specify a comma-separated list of Facebook user IDs (or a single user ID) who can moderate Facebook statistics for this site'
+        option_name: Display Facebook Like button
   - name: fb_like_send_button
     category: CDev\GoSocial
     type: checkbox
@@ -64,7 +63,7 @@ XLite\Model\Config:
     value: false
     translations:
       - code: en
-        option_name: Send button
+        option_name: Display Send button
   - name: fb_like_layout
     category: CDev\GoSocial
     type: XLite\Module\CDev\GoSocial\View\FormField\Select\FBLayoutStyle
@@ -104,7 +103,7 @@ XLite\Model\Config:
     value: true
     translations:
       - code: en
-        option_name: Use Facebook comments
+        option_name: Display Facebook comments
   - name: fb_comments_num_posts
     category: CDev\GoSocial
     type: XLite\View\FormField\Input\Text\Integer
