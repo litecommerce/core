@@ -48,6 +48,19 @@ class AttributeAssignClasses extends \XLite\Controller\Admin\Base\AttributePopup
     }
 
     /**
+     * Get all product classes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getProductClasses()
+    {
+        // FIXME [DOCTRINE 2.1]
+        return \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findBy(array(), array('pos' => 'ASC'));
+    }
+
+    /**
      * Save changes
      *
      * @return void
@@ -56,6 +69,22 @@ class AttributeAssignClasses extends \XLite\Controller\Admin\Base\AttributePopup
      */
     protected function doActionSave()
     {
-        var_dump(\XLite\Core\Request::getInstance()->getData());die;
+        $this->setReturnURL($this->buildURL('attributes'));
+
+        $classes    = $this->getProductClasses();
+        $attribute  = $this->getAttribute();
+        $postedData = $this->getPostedData();
+
+        foreach ($classes as $class) {
+            $flag = empty($postedData[$class->getId()]);
+
+            if ($class->getAttributes()->contains($attribute) xor !$flag) {
+                $class->getAttributes()->{$flag ? 'removeElement' : 'add'}($attribute);
+            }
+        }
+
+        \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->updateInBatch($classes);
+
+        \XLite\Core\TopMessage::addInfo('Product classes have been successfully assigned');
     }
 }

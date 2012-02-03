@@ -9,3 +9,14 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.16
  */
+
+ul.attributes-list-popup,
+div.assign-attributes-note
+{
+  width: 600px;
+}
+
+div.group-attributes-number
+{
+  float: right;
+}

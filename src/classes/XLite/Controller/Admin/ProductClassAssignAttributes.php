@@ -28,7 +28,7 @@
 namespace XLite\Controller\Admin;
 
 /**
- * ProductClassAssignAttributes 
+ * ProductClassAssignProductClasss 
  *
  * @see   ____class_see____
  * @since 1.0.16
@@ -48,6 +48,43 @@ class ProductClassAssignAttributes extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Get product class object
+     *
+     * @return \XLite\Model\ProductClass
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getProductClass()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->find($this->getProductClassId())
+            ?: \Includes\ErrorHandler::fireError('There is no class with ID "' . $this->getProductClassId() . '"');
+    }
+
+    /**
+     * Return list of grouped attributes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getGroupedAttributes()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->getGroupedAttributes();
+    }
+
+    /**
+     * Get class ID from request
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getProductClassId()
+    {
+        return intval(\XLite\Core\Request::getInstance()->classId);
+    }
+
+    /**
      * Save changes
      *
      * @return void
@@ -56,5 +93,21 @@ class ProductClassAssignAttributes extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionSave()
     {
+        $this->setReturnURL($this->buildURL('product_classes'));
+
+        $productClass = $this->getProductClass();
+        $attributes   = \XLite\Core\Database::getRepo('\XLite\Model\Attribute')->findByIds(
+            array_keys(array_filter($this->getPostedData()))
+        );
+
+        $productClass->getAttributes()->clear();
+
+        foreach ($attributes as $attribute) {
+            $productClass->addAttributes($attribute);
+        }
+
+        \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->update($productClass);
+
+        \XLite\Core\TopMessage::addInfo('Attributes has been successfully assigned');
     }
 }

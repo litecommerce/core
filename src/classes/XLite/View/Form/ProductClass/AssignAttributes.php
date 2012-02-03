@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -25,62 +25,52 @@
  * @since     1.0.15
  */
 
-namespace XLite\View\ExternalSDK;
+namespace XLite\View\Form\ProductClass;
 
 /**
- * Abstract external SDK loader
- * 
+ * AssignAttributes 
+ *
  * @see   ____class_see____
- * @since 1.0.15
+ * @since 1.0.16
  */
-abstract class AExternalSDK extends \XLite\View\AView
+class AssignAttributes extends \XLite\View\Form\AForm
 {
     /**
-     * Loaded state
-     * 
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 1.0.15
-     */
-    protected static $loaded = array();
-
-    /**
-     * Check - loaded SDK or not
-     * 
-     * @return boolean
+     * getDefaultTarget
+     *
+     * @return string
      * @see    ____func_see____
      * @since  1.0.15
      */
-    public static function isLoaded()
+    protected function getDefaultTarget()
     {
-        return (bool) \Includes\Utils\ArrayManager::getIndex(static::$loaded, get_called_class());
+        return 'product_class_assign_attributes';
     }
 
     /**
-     * Attempts to display widget using its template
+     * getDefaultAction
      *
-     * @param string $template Template file name OPTIONAL
-     *
-     * @return void
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.15
      */
-    public function display($template = null)
+    protected function getDefaultAction()
     {
-        parent::display($template);
-
-        static::$loaded[get_called_class()] = true;
+        return 'save';
     }
 
     /**
-     * Check if widget is visible
+     * Return list of the form default parameters
      *
-     * @return boolean
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isVisible()
+    protected function getDefaultParams()
     {
-        return parent::isVisible() && !static::isLoaded();
+        $result = parent::getDefaultParams();
+        $result['classId'] = $this->getProductClass()->getId();
+
+        return $result;
     }
 }

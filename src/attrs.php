@@ -42,7 +42,7 @@ for ($i = 1; $i < 10; $i++) {
     $class->setName('Product class ' . $i);
     \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert($class, false);
 
-    if (rand(0, 5)) {
+    if (rand(0, 3)) {
         foreach (array_rand($products, rand(3, count($products))) as $index) {
             $products[$index]->addClasses($class);
         }

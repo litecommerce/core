@@ -109,13 +109,22 @@ abstract class Attribute extends \XLite\Model\Base\I18n
     protected $classes;
 
     /**
-     * Type identifier
+     * Type identifier (cache)
      *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.15
      */
     protected $typeName;
+
+    /**
+     * Number of assigned products (cache)
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.16
+     */
+    protected $productsCount;
 
     /**
      * Return readable name for the attribute type
@@ -192,6 +201,26 @@ abstract class Attribute extends \XLite\Model\Base\I18n
         if (!$object->isPersistent() && !empty($class)) {
             \XLite\Core\Database::getRepo($class)->insert($object, false);
         }
+    }
+
+    /**
+     * Returned number of assigned products
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getAssignedProductsCount()
+    {
+        if (!isset($this->productsCount)) {
+            $this->productsCount = 0;
+            $ids = \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($this->getClasses()->toArray(), 'getId');
+
+            $this->productsCount = \XLite\Core\Database::getRepo('\XLite\Model\Product')
+                    ->getAssignedProductsCountByClassIDs($ids);
+        }
+
+        return $this->productsCount;
     }
 
     /**

@@ -14,7 +14,7 @@
 
 <div IF="!isNew()" class="product-class-number{if:!getAttributesNumber()} expandable{end:}">
   <div IF="!getAttributesNumber()" class="product-class-assign-attributes">
-    <widget class="\XLite\View\Button\Popup\Link" label="Assign attributes" popupTarget="product_class_assign_attributes" popupWidget="\XLite\View\ProductClasses\Book\AssignAttributes" />
+    <widget class="\XLite\View\Button\ProductClass\AssignAttributes" label="Assign attributes" productClass="{getClass()}" />
   </div>
   <span>{getAttributesNumber()}</span>
 </div>

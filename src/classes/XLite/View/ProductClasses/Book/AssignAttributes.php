@@ -93,4 +93,84 @@ class AssignAttributes extends \XLite\View\Dialog
     {
         return 'product_classes/book/row/assign_attributes';
     }
+
+    /**
+     * Check if all attributes in group are assigned
+     *
+     * @param \XLite\Model\Attribute\Group $group Group to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function isGroupSelected(\XLite\Model\Attribute\Group $group)
+    {
+        return false;
+    }
+
+    /**
+     * Get numder of attributes in group
+     *
+     * @param \XLite\Model\Attribute\Group $group Group to get info
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getGroupAttributesCount(\XLite\Model\Attribute\Group $group)
+    {
+        return count($group->getAttributes());
+    }
+
+    /**
+     * Get text label
+     *
+     * @param \XLite\Model\Attribute\Group $group Group to get info
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getGroupAttributesCountLabel(\XLite\Model\Attribute\Group $group)
+    {
+        return static::t('{{X}} attributes in group', array('X' => $this->getGroupAttributesCount($group)));
+    }
+
+    /**
+     * Check if the attribute is assigned ot current class
+     *
+     * @param \XLite\Model\Attribute $attribute Attribute to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function isAttributeSelected(\XLite\Model\Attribute $attribute)
+    {
+        return $this->getProductClass()->getAttributes()->contains($attribute);
+    }
+
+    /**
+     * Return number of assigned attributes
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAttributesCount()
+    {
+        return count($this->getProductClass()->getAttributes());
+    }
+
+    /**
+     * Get text label
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAttributesCountLabel()
+    {
+        return static::t('{{X}} attributes selected', array('X' => $this->getAttributesCount()));
+    }
 }
