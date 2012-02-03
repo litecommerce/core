@@ -196,7 +196,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
             }
 
             if ('checkbox' === $type) {
-                $value = ('Y' == $value);
+                $value = ('Y' == $value || '1' === $value);
 
             } elseif ('serialized' === $type) {
                 $value = unserialize($value);

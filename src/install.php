@@ -384,7 +384,7 @@ function setNextButtonDisabled(flag)
     <div class="sw-version">
       <div class="current">LiteCommerce shopping cart software v.<?php echo LC_VERSION; ?></div>
       <div class="upgrade-note">
-        &copy; 2011 <a href="http://www.cdev.ru/">Creative Development LLC</a>
+        &copy; 2012 <a href="http://www.cdev.ru/">Creative Development LLC</a>
       </div>
     </div>
 

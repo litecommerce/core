@@ -14,7 +14,7 @@ button.button.switch-button {
   background: none;
   border: 0 none;
   margin: 0px;
-  padding: 0px;
+  padding: 0px 5px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   height: 31px;

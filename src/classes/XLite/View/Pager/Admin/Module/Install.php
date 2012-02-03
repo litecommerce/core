@@ -98,6 +98,6 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      */
     protected function isVisibleBottom()
     {
-        return false;
+        return true;
     }
 }

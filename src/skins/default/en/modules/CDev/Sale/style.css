@@ -28,8 +28,8 @@ ul.products.products-sidebar .sale-label-product-details {
 }
 
 .sale-label-product-details {
-  display: inline-block;
-  margin-bottom: -15px;
+  display: block;
+  margin-bottom: 15px;
 }
 
 .sale-label-product-details div.text {

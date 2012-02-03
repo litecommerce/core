@@ -28,7 +28,7 @@
 namespace XLite\Module\CDev\Sale\View;
 
 /**
- * Coming soon block widget
+ * Sale products block widget
  *
  * @see   ____class_see____
  * @since 1.0.0
@@ -36,7 +36,7 @@ namespace XLite\Module\CDev\Sale\View;
  * @ListChild (list="center.bottom", zone="customer", weight="600")
  * @ListChild (list="sidebar.first", zone="customer", weight="170")
  */
-class Sale extends \XLite\Module\CDev\Sale\View\ASale
+class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
 {
     /**
      * Widget parameter
@@ -149,8 +149,22 @@ class Sale extends \XLite\Module\CDev\Sale\View\ASale
     protected function isVisible()
     {
         $result = parent::isVisible()
+            && \XLite\Core\Config::getInstance()->CDev->Sale->sale_enabled
             && static::getWidgetTarget() != \XLite\Core\Request::getInstance()->target
             && 0 < $this->getData(new \XLite\Core\CommonCell(), true);
+
+        if ($result) {
+
+            if (!\XLite\Core\CMSConnector::isCMSStarted()) {
+
+                if (self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)) {
+                    $result = ('sidebar.first' == $this->viewListName);
+
+                } elseif (self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE)) {
+                    $result = ('center.bottom' == $this->viewListName);
+                }
+            }
+        }
 
         return $result;
     }
@@ -176,7 +190,7 @@ class Sale extends \XLite\Module\CDev\Sale\View\ASale
      */
     protected function getMoreLinkText()
     {
-        return static::t('All sale products');
+        return static::t('All products on sale');
     }
 
     /**

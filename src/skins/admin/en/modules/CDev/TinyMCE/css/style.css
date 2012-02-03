@@ -11,7 +11,7 @@
  */
 
 span.mceEditor {
-  margin: 0px 5px;
+  margin: 0px;
 }
 
 ul.tinymce-widget {
@@ -20,8 +20,4 @@ ul.tinymce-widget {
 
 ul.tinymce-widget li {
   float: left;
-}
-
-ul.tinymce-widget li.button button.button.switch-button {
-  margin: 23px 5px;
 }

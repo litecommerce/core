@@ -16,35 +16,50 @@ core.bind(
     jQuery('.input-field-wrapper').each(function () {
       var obj = jQuery(this);
 
+      var inputField = jQuery('input,textarea', obj);
       var defaultValue = core.getCommentedData(obj, 'defaultValue');
-      if (defaultValue) {
-        var inputField = jQuery('input', obj);
+      var type = inputField.attr('type');
+
+      if (
+        '' !== defaultValue
+        && null !== defaultValue
+        && 'checkbox' != type
+        && 'radio' != type
+        && 'file' != type
+        && 'image' != type
+        && 'submit' != type
+        && 'button' != type
+      ) {
 
         if ('' === inputField.val()) {
           inputField.val(defaultValue).addClass('default-value');
         }
 
-        inputField
-        .click(function () {
-          if (defaultValue === inputField.val()) {
-            inputField.removeClass('default-value').val('');
-          }
-        }).blur(function () {
-          if ('' === inputField.val()) {
-            inputField.addClass('default-value').val(defaultValue);
-          }
-        });
-
-        inputField.parents('form')
-        .bind(
-          'submit',
-          function() {
+        inputField.click(
+          function () {
             if (defaultValue === inputField.val()) {
-              inputField.val('');
+              inputField.removeClass('default-value').val('');
             }
+          }
+        ).blur(
+          function () {
+            if ('' === inputField.val()) {
+              inputField.addClass('default-value').val(defaultValue);
+            }
+          }
+        );
 
-            return true;
-          });
+        inputField
+          .parents('form')
+          .submit(
+            function() {
+              if (defaultValue === inputField.val()) {
+                inputField.val('');
+              }
+  
+              return true;
+            }
+          );
       }
     });
   }

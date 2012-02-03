@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Common selector
+ * Checkbox template
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,5 +9,8 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-
-<widget class="\XLite\View\CategorySelect" isMultiple="{#1#}" fieldName="{getName()}" selectedCategoryIds="{getSelectedIDs()}" />
+<span class="input-field-wrapper {getWrapperClass()}">
+  {displayCommentedData(getCommentedData())}
+  <input type="hidden" name="{getName()}" value="" />
+  <input{getAttributesCode():h} />
+</span>
