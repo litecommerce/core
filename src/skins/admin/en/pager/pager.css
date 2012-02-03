@@ -24,8 +24,6 @@ ul.pager {
 }
 
 ul.pager li {
-  padding: 0;
-  border: none;
   list-style: none;
   background: none;
   height: 1.9em;
