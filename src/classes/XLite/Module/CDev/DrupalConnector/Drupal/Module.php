@@ -220,7 +220,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function invokeHookInit()
     {
-        include_once \Includes\Utils\ModulesManager::getAbsoluteDir('CDev', 'DrupalConnector') 
+        include_once \Includes\Utils\ModulesManager::getAbsoluteDir('CDev', 'DrupalConnector')
             . 'Drupal' . LC_DS . 'Include' . LC_DS . 'Callbacks.php';
     }
 
@@ -277,7 +277,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             foreach ($list as $name => $script) {
                 $list[$name]['weight'] = $i;
                 $list[$name]['group'] = JS_DEFAULT;
-                $list[$name]['defer'] = true;
+                $list[$name]['defer'] = 'footer' == $script['scope'];
                 $list[$name]['every_page'] = false;
 
                 $i++;
