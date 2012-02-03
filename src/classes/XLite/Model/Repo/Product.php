@@ -106,18 +106,42 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         $this->currentSearchCnd = $cnd;
 
         foreach ($this->currentSearchCnd as $key => $value) {
-            $this->callSearchConditionHandler($value, $key, $queryBuilder);
+            $this->callSearchConditionHandler($value, $key, $queryBuilder, $countOnly);
         }
 
-        if ($countOnly) {
-            $queryBuilder->select('COUNT(DISTINCT p.product_id)');
-            $result = intval($queryBuilder->getSingleScalarResult());
+        return $countOnly
+            ? $this->searchCount($queryBuilder)
+            : $this->searchResult($queryBuilder);
+    }
 
-        } else {
-            $result = $queryBuilder->getResult();
-        }
+    /**
+     * Search count only routine.
+     *
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder routine
+     *
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function searchCount(\Doctrine\ORM\QueryBuilder $qb)
+    {
+        $qb->select('COUNT(DISTINCT p.product_id)');
 
-        return $result;
+        return intval($qb->getSingleScalarResult());
+    }
+
+    /**
+     * Search result routine.
+     *
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder routine
+     *
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function searchResult(\Doctrine\ORM\QueryBuilder $qb)
+    {
+        return $qb->getResult();
     }
 
     /**
@@ -161,9 +185,9 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
     /**
      * Count last updated products
-     * 
+     *
      * @param integer $limit Time limit
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.14
@@ -217,8 +241,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     }
 
     /**
-     * Get import iterator 
-     * 
+     * Get import iterator
+     *
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult
      * @see    ____func_see____
      * @since  1.0.10
@@ -229,8 +253,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     }
 
     /**
-     * Define import querty 
-     * 
+     * Define import querty
+     *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
      * @see    ____func_see____
      * @since  1.0.10
@@ -242,9 +266,9 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
     /**
      * Define query for countLastUpdated()
-     * 
+     *
      * @param integer $limit Time limit
-     *  
+     *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
      * @see    ____func_see____
      * @since  1.0.14
@@ -484,12 +508,12 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     }
 
     /**
-     * Assign prica range-based search condition 
-     * 
+     * Assign prica range-based search condition
+     *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder
      * @param float                      $min          Minimum
      * @param float                      $max          Maximum
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.8
@@ -668,21 +692,24 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      * @param array                      $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag. Do not need to add "order by" clauses if only count is needed.
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value, $countOnly)
     {
-        list($sort, $order) = $value;
+        if (!$countOnly) {
+            list($sort, $order) = $value;
 
-        // FIXME - add aliases for sort modes
-        if ('i.amount' === $sort) {
-            $queryBuilder->innerJoinInventory();
+            // FIXME - add aliases for sort modes
+            if ('i.amount' === $sort) {
+                $queryBuilder->innerJoinInventory();
+            }
+
+            $queryBuilder->addOrderBy($sort, $order);
         }
-
-        $queryBuilder->addOrderBy($sort, $order);
     }
 
     /**
@@ -711,10 +738,10 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
+    protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder, $countOnly)
     {
         if ($this->isSearchParamHasHandler($key)) {
-            $this->{'prepareCnd' . ucfirst($key)}($queryBuilder, $value);
+            $this->{'prepareCnd' . ucfirst($key)}($queryBuilder, $value, $countOnly);
 
         } else {
             // TODO - add logging here

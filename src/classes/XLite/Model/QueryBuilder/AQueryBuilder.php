@@ -50,6 +50,22 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
     }
 
     /**
+     * Get result as object array.
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getObjectResult()
+    {
+        $result = array();
+
+        foreach ($this->getResult() as $idx => $item) {
+            $result[$idx] = is_object($item) ? $item : $item[0];
+        }
+    }
+
+    /**
      * Get result as array
      *
      * @return array
@@ -130,8 +146,8 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
     }
 
     /**
-     * Get only entities 
-     * 
+     * Get only entities
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0

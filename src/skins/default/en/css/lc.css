@@ -1072,9 +1072,8 @@ div.product-details .product-image-gallery
 
 .product-details ul.product-price {
   list-style: none;
-  display: block;
-  margin-bottom: 0px;
-  height: 90px;
+  display: inline-block;
+  margin-bottom: 10px;
 }
 
 .product-details ul.product-price li {
