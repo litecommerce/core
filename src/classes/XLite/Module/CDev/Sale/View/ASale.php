@@ -55,23 +55,6 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * Define and set widget attributes; initialize widget
-     *
-     * @param array $params Widget params OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
-     */
-    public function __construct(array $params = array())
-    {
-        parent::__construct($params);
-
-        unset($this->sortByModes[self::SORT_BY_MODE_AMOUNT_ASC]);
-        unset($this->sortByModes[self::SORT_BY_MODE_AMOUNT_DESC]);
-    }
-
-    /**
      * Returns CSS classes for the container element
      *
      * @return string
@@ -81,6 +64,22 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
     public function getListCSSClasses()
     {
         return parent::getListCSSClasses() . ' sale-products';
+    }
+
+    /**
+     * Initialize widget (set attributes)
+     *
+     * @param array $params Widget params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        unset($this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]);
     }
 
     /**
@@ -117,6 +116,11 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
     protected function getSearchConditions(\XLite\Core\CommonCell $cnd)
     {
         $cnd->{\XLite\Module\CDev\Sale\Model\Repo\Product::P_PARTICIPATE_SALE} = true;
+
+        $cnd->{\XLite\Model\Repo\Product::P_ORDER_BY} = array(
+            \XLite\Module\CDev\Sale\Model\Repo\Product::PERCENT_CALCULATED_FIELD,
+            'DESC'
+        );
 
         return $cnd;
     }

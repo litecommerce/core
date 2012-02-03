@@ -75,6 +75,7 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
 
         unset($this->widgetParams[\XLite\View\Pager\APager::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR]);
         unset($this->widgetParams[\XLite\View\Pager\APager::PARAM_ITEMS_PER_PAGE]);
+        unset($this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]);
     }
 
     /**
@@ -99,9 +100,6 @@ class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
             : self::WIDGET_TYPE_CENTER;
 
         $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue($widgetType);
-
-        unset($this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]);
-        unset($this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]);
     }
 
     /**
