@@ -116,10 +116,9 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     public function getTitle()
     {
         return ('add_child' === \XLite\Core\Request::getInstance()->mode)
-            ? static::t('Add category')
+            ? 'Add category'
             : parent::getCategory()->getName();
     }
-
 
     /**
      * Common method to determine current location

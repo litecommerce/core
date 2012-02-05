@@ -159,7 +159,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Import / Export';
+        return 'Import/Export';
     }
 
     /**

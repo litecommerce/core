@@ -92,11 +92,13 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             $version = \XLite\Upgrade\Cell::getInstance()->getCoreMajorVersion();
 
             if (\XLite::getInstance()->checkVersion($version, '<')) {
-                $result = 'Upgrade to version ' . $version;
+                $result = 'Upgrade to version {{version}}';
 
             } else {
-                $result = 'Updates for your version (' . $version . ')';
+                $result = 'Updates for your version ({{version}})';
             }
+
+            $result = static::t($result, array('version' => $version));
         }
 
         return $result;

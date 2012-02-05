@@ -35,8 +35,8 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\LanguageLabel")
  * @Table (name="language_labels",
- *      indexes={
- *          @Index (name="name", columns={"name"})
+ *      uniqueConstraints={
+ *          @UniqueConstraint (name="name", columns={"name"})
  *      }
  * )
  */

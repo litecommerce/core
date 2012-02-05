@@ -44,9 +44,8 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return static::t('Payment methods');
+        return 'Payment methods';
     }
-
 
     /**
      * Common method to determine current location

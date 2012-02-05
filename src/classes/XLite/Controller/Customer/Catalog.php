@@ -44,7 +44,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     abstract protected function getModelObject();
 
-
     /**
      * Return current (or default) category object
      *

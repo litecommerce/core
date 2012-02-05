@@ -59,7 +59,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     public function getTitle()
     {
         return $this->getCart()->isEmpty()
-            ? static::t('Your shopping bag is empty')
+            ? 'Your shopping bag is empty'
             : static::t('Your shopping bag - X items', array('count' => $this->getCart()->countQuantity()));
     }
 

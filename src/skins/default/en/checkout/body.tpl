@@ -9,6 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <div class="checkout-block">
   {displayViewListContent(#checkout.main#)}
 </div>

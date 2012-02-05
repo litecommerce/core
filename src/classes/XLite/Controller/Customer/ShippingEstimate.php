@@ -53,7 +53,7 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return static::t('Estimate shipping cost');
+        return 'Estimate shipping cost';
     }
 
     /**
@@ -83,7 +83,6 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
 
         return $this->modifier;
     }
-
 
     /**
      * Common method to determine current location

@@ -38,11 +38,9 @@ class Profile extends \XLite\Controller\Customer\ACustomer
     /**
      * Types of model form
      */
-
     const SECTIONS_MAIN      = 'main';
     const SECTIONS_ADDRESSES = 'addresses';
     const SECTIONS_ALL       = 'all';
-
 
     /**
      * Return value for the "register" mode param
@@ -81,7 +79,9 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return ('delete' == \XLite\Core\Request::getInstance()->mode ? 'Delete account' : null);
+        return 'delete' == \XLite\Core\Request::getInstance()->mode 
+            ? 'Delete account' 
+            : parent::getTitle();
     }
 
     /**

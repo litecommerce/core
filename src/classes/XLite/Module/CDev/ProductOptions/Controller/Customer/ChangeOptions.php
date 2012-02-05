@@ -53,7 +53,6 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      */
     protected $internalError = false;
 
-
     /**
      * Get page title
      *
@@ -63,10 +62,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return static::t(
-            '"X product" options',
-            array('product' => $this->getItem()->getName())
-        );
+        return static::t('"X product" options', array('product' => $this->getItem()->getName()));
     }
 
     /**
@@ -94,7 +90,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      */
     public function getItem()
     {
-        if (is_null($this->item)) {
+        if (!isset($this->item)) {
             $this->item = false;
 
             if (

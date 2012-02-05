@@ -11,4 +11,5 @@
  *
  * @ListChild (list="head", weight="100")
  *}
-<title>{getTitle()}</title>
+
+<title>{t(getTitle())}</title>

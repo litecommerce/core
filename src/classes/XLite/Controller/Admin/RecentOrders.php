@@ -44,8 +44,7 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      */
     public function handleRequest()
     {
-        if (is_null(\XLite\Core\Request::getInstance()->mode)) {
-
+        if (!isset(\XLite\Core\Request::getInstance()->mode)) {
             \XLite\Core\Request::getInstance()->{self::PARAM_ACTION} = 'search';
         }
 
@@ -62,9 +61,8 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      */
     public function getTitle()
     {
-        return static::t('Recent orders');
+        return 'Recent orders';
     }
-
 
     /**
      * Common method to determine current location

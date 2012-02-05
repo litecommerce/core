@@ -47,7 +47,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
         return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
     }
 
-
     /**
      * Return path for the current category
      *

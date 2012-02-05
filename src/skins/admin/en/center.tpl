@@ -13,7 +13,7 @@
 
 <widget class="\XLite\View\Location" />
 
-<h1 class="title" id="page-title" IF="isTitleVisible()&getTitle()">{getTitle():h}</h1>
+<h1 class="title" id="page-title" IF="isTitleVisible()&getTitle()">{t(getTitle())}</h1>
 
 <widget target="access_denied" template="access_denied.tpl" />
 

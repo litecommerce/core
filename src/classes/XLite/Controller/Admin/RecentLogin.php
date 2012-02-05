@@ -44,9 +44,8 @@ class RecentLogin extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return static::t('Login history');
+        return 'Login history';
     }
-
 
     /**
      * Common method to determine current location

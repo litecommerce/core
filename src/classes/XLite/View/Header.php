@@ -90,7 +90,7 @@ class Header extends \XLite\View\Container
      */
     protected function getTitle()
     {
-        return \XLite::getController()->getPageTitle() ?: static::t($this->defaultTitle);
+        return \XLite::getController()->getPageTitle() ?: $this->defaultTitle;
     }
 
     /**
@@ -193,5 +193,4 @@ class Header extends \XLite\View\Container
     {
         return 'header/body.tpl';
     }
-
 }

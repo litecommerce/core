@@ -44,7 +44,7 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return static::t('Moneybookers settings');
+        return 'Moneybookers settings';
     }
 
     /**
