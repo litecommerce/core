@@ -11,7 +11,7 @@
  * @ListChild (list="sale_discount_types", weight="30")
  *}
 
- <input
+ <input IF="getParam(#discountType#)=%\XLite\Model\Product::SALE_DISCOUNT_TYPE_PRICE%"
    type="hidden"
    id="sale-price-value"
    name="{getNamePostedData(#salePriceValue#)}"
