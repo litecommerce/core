@@ -33,6 +33,11 @@ function CommonForm(form)
 
   this.form.commonController = this;
 
+  if (!this.form.getAttribute('id')) {
+    var d = new Date();
+    this.form.setAttribute('id', 'form-' + d.getTime());
+  }
+
   var methods = [
     'validate',    'submitBackground', 'isChanged',
     'getElements'

@@ -27,6 +27,7 @@
      <widget
        class="\XLite\View\FormField\Input\Text\Symbol"
        fieldOnly="true"
+       mouseWheelIcon="false"
        symbol="%"
        fieldId="sale-price-value-{%\XLite\Model\Product::SALE_DISCOUNT_TYPE_PERCENT%}"
        value="{getPercentOffValue()}" />

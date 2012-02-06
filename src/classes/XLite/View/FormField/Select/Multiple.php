@@ -36,6 +36,24 @@ namespace XLite\View\FormField\Select;
 abstract class Multiple extends \XLite\View\FormField\Select\ASelect
 {
     /**
+     * Set widget params
+     *
+     * @param array $params Handler params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        if (isset($params['value'])) {
+            $this->setValue($params['value']);
+        }
+    }
+
+    /**
      * Set value
      *
      * @param mixed $value Value to set
@@ -63,7 +81,7 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
     }
 
     /**
-     * getDefaultAttributes
+     * Get default attributes
      *
      * @return array
      * @see    ____func_see____
@@ -86,6 +104,22 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
     protected function isOptionSelected($value)
     {
         return in_array($value, $this->getValue());
+    }
+
+    /**
+     * Get common attributes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCommonAttributes()
+    {
+        $list = parent::getCommonAttributes();
+
+        $list['name'] .= '[]';
+
+        return $list;
     }
 
 }

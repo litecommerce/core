@@ -27,6 +27,12 @@
 
 namespace XLite\View\Button\Attribute\Base;
 
+/**
+ * Popup 
+ *
+ * @see   ____class_see____
+ * @since 1.0.16
+ */
 class Popup extends \XLite\View\Button\Popup\Link
 {
     /**

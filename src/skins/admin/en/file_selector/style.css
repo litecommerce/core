@@ -39,6 +39,10 @@
   width: 260px;
 }
 
+.selections-list div.table-value {
+  float: none;
+}
+
 .selections-list .browse-server-button {
   float: right;
   clear: right;

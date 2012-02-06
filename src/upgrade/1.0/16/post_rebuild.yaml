@@ -6,3 +6,5 @@
 XLite\Model\LanguageLabel:
   - { name: 'X product(s) has been removed', translations: [{ code: en, label: '{{count}} product(s) has been removed' }] }
   - { name: 'X product(s) has been created', translations: [{ code: en, label: '{{count}} product(s) has been created' }] }
+  - { name: 'X entities has been removed', translations: [{ code: en, label: '{{count}} entities has been removed' }] }
+  - { name: 'X entities has been created', translations: [{ code: en, label: '{{count}} entities has been created' }] }

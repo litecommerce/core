@@ -57,4 +57,64 @@ class Attribute extends \XLite\Model\Repo\Base\I18n
             ->andWhere('a.group IS NULL')
             ->getResult();
     }
+
+    /**
+     * Group attributes
+     *
+     * @param array $attributes Attributes to group
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getGroupedAttributes(array $attributes = null)
+    {
+        if (!isset($attributes)) {
+            $attributes = $this->findAll();
+        }
+
+        $result = array(
+            -1 => array(
+                'group'      => new \XLite\Model\Attribute\Group(array('pos' => -1)),
+                'attributes' => array()
+            )
+        );
+
+        foreach ($attributes as $attribute) {
+            $group = $attribute->getGroup();
+            $id = isset($group) ? $group->getId() : -1;
+
+            if (isset($group)) {
+                if (!isset($result[$id])) {
+                    $result[$id] = array(
+                        'group'      => $group,
+                        'attributes' => array(),
+                    );
+                }
+            }
+
+            $result[$id]['attributes'][$attribute->getId()] = $attribute;
+        }
+
+        usort(
+            $result,
+            function (array $a, array $b) {
+                $pos1 = $a['group']->getPos();
+                $pos2 = $b['group']->getPos();
+
+                return $pos1 === $pos2 ? 0 : ($pos1 < $pos2 ? -1 : 1);
+            }
+        );
+
+        foreach ($result as &$data) {
+            usort(
+                $data['attributes'],
+                function (\XLite\Model\Attribute $a, \XLite\Model\Attribute $b) {
+                    return $a->getPos() === $b->getPos() ? 0 : ($a->getPos() < $b->getPos() ? -1 : 1);
+                }  
+            );
+        }
+
+        return $result;
+    }
 }

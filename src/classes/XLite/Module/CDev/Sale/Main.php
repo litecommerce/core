@@ -80,7 +80,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Simple and easy to use module to hold a fire sale.';
+        return 'Lets you set special sale prices for certain products.';
     }
 
     /**

@@ -35,22 +35,12 @@ namespace XLite\View\FormField\Select;
  */
 class Categories extends \XLite\View\FormField\Select\Multiple
 {
-    /**
-     * Return field template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getFieldTemplate()
-    {
-        return 'select_category.tpl';
-    }
+    const INDENT_STRING     = '-';
+    const INDENT_MULTIPLIER = 3;
+
 
     /**
      * Return default options list
-     *
-     * :NOTE: categories will be fetched in "\XLite\View\CategorySelect" widget (see template)
      *
      * @return array
      * @see    ____func_see____
@@ -58,18 +48,49 @@ class Categories extends \XLite\View\FormField\Select\Multiple
      */
     protected function getDefaultOptions()
     {
-        return array();
+        $list = array();
+        foreach(\XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoriesPlainList() as $category) {
+            $name = $this->getCategoryName($category) ?: 'N/A';
+            $list[$category['category_id']] = $this->getIndentationString($category) . $name;
+        }
+
+        return $list;
     }
 
     /**
-     * Return IDs of the selected categories
+     * Return indentation string for displaying category depth level
      *
-     * @return array
+     * @param array $category Category data
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.14
+     */
+    protected function getIndentationString(array $category)
+    {
+        return str_repeat(static::INDENT_STRING, $category['depth'] * static::INDENT_MULTIPLIER);
+    }
+
+    /**
+     * Return translated category name
+     *
+     * :KLUDGE: it's the hack to prevent execution of superflous queries
+     *
+     * @param array $category Category data
+     *
+     * @return string
      * @see    ____func_see____
      * @since  1.0.6
      */
-    protected function getSelectedIDs()
+    protected function getCategoryName(array $category)
     {
-        return \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($this->getValue(), 'getCategoryId');
+        $data = \Includes\Utils\ArrayManager::searchInArraysArray(
+            $category['translations'],
+            'code',
+            \XLite\Core\Session::getInstance()->getLanguage()->getCode()
+        );
+
+        return empty($data) ? null : $data['name'];
     }
+
 }

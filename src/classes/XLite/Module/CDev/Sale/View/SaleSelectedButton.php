@@ -102,7 +102,7 @@ class SaleSelectedButton extends \XLite\View\Button\Popup\Button
      */
     protected function getDefaultLabel()
     {
-        return 'Sale selected...';
+        return 'Put selected on sale';
     }
 
     /**

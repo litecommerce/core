@@ -10,4 +10,6 @@
  * @since     1.0.16
  *}
 
-"Assign attributes" popup
+<widget class="\XLite\View\Form\ProductClass\AssignAttributes" name="class_assign_attrs_form" />
+  {displayViewListContent(#productClass.book.row.assignAttributes#)}
+<widget name="class_assign_attrs_form" end />

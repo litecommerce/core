@@ -21,7 +21,7 @@
 
    <div class="label">{t(#The changes will be applied to all selected products#)}</div>
 
-   <widget class="\XLite\View\Button\Submit" label="Apply price" />
+   <widget class="\XLite\View\Button\Submit" style="action" label="Apply price" />
 
  </div>
 

@@ -154,7 +154,7 @@ class Date extends \XLite\View\FormField\Input\Text
         $list = parent::getCommonAttributes();
 
         if (is_numeric($list['value']) || is_int($list['value'])) {
-            $list['value'] = $list['value'] ? date('Y-m-d', $list['value']) : '';
+            $list['value'] = $list['value'] ? date('m/d/Y', $list['value']) : '';
         }
 
         return $list;

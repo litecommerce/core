@@ -41,15 +41,6 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
     const PARAM_ATTRIBUTE = 'attribute';
 
     /**
-     * Cache
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.16
-     */
-    protected $assignedProductsCount;
-
-    /**
      * Return row identifier
      *
      * @return void
@@ -313,19 +304,7 @@ class Attribute extends \XLite\View\DraggableRows\Row\ARow
      */
     protected function getAssignedProductsCount()
     {
-        if (!isset($this->assignedProductsCount)) {
-            $this->assignedProductsCount = 0;
-            $attr = $this->getAttribute();
-
-            if ($attr) {
-                $ids = \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($attr->getClasses()->toArray(), 'getId');
-
-                $this->assignedProductsCount = \XLite\Core\Database::getRepo('\XLite\Model\Product')
-                    ->getAssignedProductsCountByClassIDs($ids);
-            }
-        }
-
-        return $this->assignedProductsCount;
+        return ($attr = $this->getAttribute()) ? $attr->getAssignedProductsCount() : 0;
     }
 
     /**

@@ -9,3 +9,26 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.16
  */
+
+function PopupButtonAssignClasses()
+{
+  PopupButtonAssignClasses.superclass.constructor.apply(this, arguments);
+}
+
+extend(PopupButtonAssignClasses, PopupButton);
+
+PopupButtonAssignClasses.prototype.pattern = '.assign-classes-button';
+
+decorate(
+  'PopupButtonAssignClasses',
+  'afterSubmit',
+  function (selector)
+  {
+    // previous method call
+    arguments.callee.previousMethod.apply(this, arguments);
+
+    self.location.reload();
+  }
+);
+
+core.autoload(PopupButtonAssignClasses);

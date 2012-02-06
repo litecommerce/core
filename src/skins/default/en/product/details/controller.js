@@ -213,7 +213,7 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
     jQuery('.product-details-tabs .tabs li a', this.base).click(
       function () {
         if (!jQuery(this).parent().hasClass('active')) {
-          var id = this.href.substr(1);
+          var id = this.id.substr(5);
           jQuery(this).parents('ul').eq(0).find('li.active').removeClass('active');
           jQuery(this).parent().addClass('active');
 
@@ -222,9 +222,13 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
           box.find('#' + id).show();
         }
 
-        return false;
+        return true;
       }
     );
+
+    if (self.location.hash) {
+      jQuery('.product-details-tabs .tabs li a#link-' + self.location.hash.substr(1), this.base).click();
+    }
 
   }
 }

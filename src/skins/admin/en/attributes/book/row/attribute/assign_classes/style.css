@@ -9,3 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.16
  */
+
+ul.classes-list-popup,
+div.assign-attributes-note
+{
+  width: 600px;
+}

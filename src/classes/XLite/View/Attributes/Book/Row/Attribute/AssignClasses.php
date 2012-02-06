@@ -95,15 +95,52 @@ class AssignClasses extends \XLite\View\Dialog
     }
 
     /**
-     * Get all product classes
+     * Check if class assigned to attribute
      *
-     * @return array
+     * @param \XLite\Model\ProductClass $class Product class to check
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.16
      */
-    protected function getProductClasses()
+    protected function isProductClassAssigned(\XLite\Model\ProductClass $class)
     {
-        // FIXME [DOCTRINE 2.1]
-        return \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findBy(array(), array('pos' => 'ASC'));
+        return $this->getAttribute()->getClasses()->contains($class);
+    }
+
+    /**
+     * Get text label
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAssignedClassesInfoLabel()
+    {
+        return static::t('{{X}} product classes selected', array('X' => count($this->getAttribute()->getClasses())));
+    }
+
+    /**
+     * Return number of products assigned to attribute
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAssignedProductsCount()
+    {
+        return $this->getAttribute()->getAssignedProductsCount();
+    }
+
+    /**
+     * Get text label
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getAssignedProductsInfoLabel()
+    {
+        return static::t('{{X}} products in total', array('X' => $this->getAssignedProductsCount()));
     }
 }
