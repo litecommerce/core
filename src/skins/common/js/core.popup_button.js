@@ -25,39 +25,42 @@ function PopupButton()
 
 PopupButton.prototype.pattern = '.popup-button';
 
+PopupButton.prototype.enableBackgroundSubmit = true;
+
 PopupButton.prototype.options = {'width' : 'auto'};
 
 PopupButton.prototype.afterSubmit = function (selector) {
-
 }
 
 PopupButton.prototype.callback = function (selector, link)
 {
   var obj = this;
 
-  jQuery('form', selector).each(
-    function() {
-      jQuery(this).commonController(
-        'enableBackgroundSubmit',
-        function () {
-          // Close dialog (but it is available in DOM)
-          jQuery(selector).dialog('close');
-          openWaitBar();
+  if (this.enableBackgroundSubmit) {
+    jQuery('form', selector).each(
+      function() {
+        jQuery(this).commonController(
+          'enableBackgroundSubmit',
+          function () {
+            // Close dialog (but it is available in DOM)
+            jQuery(selector).dialog('close');
+            openWaitBar();
 
-          return true;
-        },
-        function (event) {
-          closeWaitBar();
+            return true;
+          },
+          function (event) {
+            closeWaitBar();
 
-          obj.afterSubmit(selector);
+            obj.afterSubmit(selector);
 
-          // Remove dialog from DOM
-          jQuery(selector).remove();
-          return false;
-        }
-      );
-    }
-  );
+            // Remove dialog from DOM
+            jQuery(selector).remove();
+            return false;
+          }
+        );
+      }
+    );
+  }
 }
 
 PopupButton.prototype.getURLParams = function (button)
