@@ -118,22 +118,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
         $dates = $this->getCondition(\XLite\Model\Repo\Order::P_DATE);
         $n = (true === $start) ? 0 : 1;
 
-        return isset($dates) && isset($dates[$n])
-            ? $dates[$n]
-            : null;
-    }
-
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return static::t('Search orders');
+        return isset($dates[$n]) ? $dates[$n] : null;
     }
 
     /**

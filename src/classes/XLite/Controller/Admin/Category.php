@@ -121,27 +121,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     }
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        if (
-            'modify' == \XLite\Core\Request::getInstance()->mode
-            && $this->getRootCategoryId() == $this->getCategoryId()
-        ) {
-            $this->addLocationNode(static::t('Root category'));
-        }
-
-        return ('add_child' === \XLite\Core\Request::getInstance()->mode)
-            ? static::t('Add category')
-            : static::t('Details');
-    }
-
-    /**
      * doActionAddChild
      *
      * @return void

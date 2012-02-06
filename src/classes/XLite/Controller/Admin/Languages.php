@@ -84,19 +84,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         return $url;
     }
 
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Language labels';
-    }
-
     /**
      * Search labels
      *

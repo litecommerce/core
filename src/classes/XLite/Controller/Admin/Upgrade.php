@@ -168,18 +168,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Common method to set current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->isUpdate() ? 'Updates available' : 'Upgrade';
-    }
-
-    /**
      * Check the flag in request
      *
      * @return boolean

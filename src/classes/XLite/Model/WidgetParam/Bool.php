@@ -42,12 +42,7 @@ class Bool extends \XLite\Model\WidgetParam\Set
      * @see   ____var_see____
      * @since 1.0.1
      */
-    protected $trueValues = array(
-        '1',
-        'true',
-        1,
-        true,
-    );
+    protected $trueValues = array('1', 'true', 1, true);
 
     /**
      * Options
@@ -72,9 +67,7 @@ class Bool extends \XLite\Model\WidgetParam\Set
      */
     public function __get($name)
     {
-        $value = parent::__get($name);
-
-        return $this->isTrue($value);
+        return $this->isTrue(parent::__get($name));
     }
 
 

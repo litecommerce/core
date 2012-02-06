@@ -53,6 +53,98 @@ abstract class ACustomer extends \XLite\Controller\AController
      */
     protected $initialCartFingerprint;
 
+    /**
+     * Breadcrumbs
+     *
+     * @var   \XLite\View\Location
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $locationPath;
+
+    // {{{ Breadcrumbs
+
+    /**
+     * Return current location path
+     *
+     * @return \XLite\View\Location
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getLocationPath()
+    {
+        if (!isset($this->locationPath)) {
+            $this->defineLocationPath();
+        }
+
+        return $this->locationPath;
+    }
+
+    /**
+     * Method to create the location line
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineLocationPath()
+    {
+        $this->locationPath = array();
+
+        // Common element for all location lines
+        $this->locationPath[] = new \XLite\View\Location\Node\Home();
+
+        // Ability to add part to the line
+        $this->addBaseLocation();
+
+        // Ability to define last element in path via short function
+        $location = $this->getLocation();
+
+        if ($location) {
+            $this->addLocationNode($location);
+        }
+    }
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLocation()
+    {
+        return null;
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addBaseLocation()
+    {
+    }
+
+    /**
+     * Add node to the location line
+     *
+     * @param string $name     Node title
+     * @param string $link     Node link OPTIONAL
+     * @param array  $subnodes Node subnodes OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addLocationNode($name, $link = null, array $subnodes = null)
+    {
+        $this->locationPath[] = \XLite\View\Location\Node::create($name, $link, $subnodes);
+    }
+
+    // }}}
 
     /**
      * Return cart instance

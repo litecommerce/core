@@ -11,8 +11,6 @@
  *}
 <widget template="noscript.tpl" />
 
-<widget class="\XLite\View\Location" />
-
 <h1 class="title" id="page-title" IF="isTitleVisible()&getTitle()">{t(getTitle())}</h1>
 
 <widget target="access_denied" template="access_denied.tpl" />

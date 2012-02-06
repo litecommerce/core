@@ -49,32 +49,6 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->getPaymentMethod()->getName();
-    }
-
-    /**
-     * Add part to the location nodes list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addBaseLocation()
-    {
-        parent::addBaseLocation();
-
-        $this->addLocationNode('Payment methods', $this->buildURL('payment_methods'));
-    }
-
-    /**
      * Update payment method
      *
      * @return void
@@ -87,28 +61,19 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
         $m = $this->getPaymentMethod();
 
         if (!is_array($settings)) {
-
-            \XLite\Core\TopMessage::addError(
-                static::t('Wrong input data!')
-            );
+            \XLite\Core\TopMessage::addError('Wrong input data!');
 
         } elseif (!$m) {
-
-            \XLite\Core\TopMessage::addError(
-                static::t('An attempt to update settings of unknown payment method')
-            );
+            \XLite\Core\TopMessage::addError('An attempt to update settings of unknown payment method');
 
         } else {
-
             foreach ($settings as $name => $value) {
                 $m->setSetting($name, $value);
             }
 
             \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->update($m);
 
-            \XLite\Core\TopMessage::addInfo(
-                static::t('The settings of payment method successfully updated')
-            );
+            \XLite\Core\TopMessage::addInfo('The settings of payment method successfully updated');
 
             $this->setReturnURL($this->buildURL('payment_methods'));
         }

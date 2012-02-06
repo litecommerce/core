@@ -41,11 +41,9 @@ abstract class AController extends \XLite\Core\Handler
      */
     const MARKETPLACE_LAST_REQUEST_TIME = 'marketplaceLastRequestTime';
 
-
     /**
      * Controller main params
      */
-
     const PARAM_TARGET = 'target';
     const PARAM_ACTION = 'action';
 
@@ -65,15 +63,6 @@ abstract class AController extends \XLite\Core\Handler
      * @since 1.0.0
      */
     protected $actionStatus;
-
-    /**
-     * Breadcrumbs
-     *
-     * @var   \XLite\View\Location
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $locationPath;
 
     /**
      * returnURL
@@ -259,22 +248,6 @@ abstract class AController extends \XLite\Core\Handler
     public function getShopURL($url = '', $secure = false)
     {
         return \XLite::getInstance()->getShopURL($url, $secure);
-    }
-
-    /**
-     * Return current location path
-     *
-     * @return \XLite\View\Location
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getLocationPath()
-    {
-        if (!isset($this->locationPath)) {
-            $this->defineLocationPath();
-        }
-
-        return $this->locationPath;
     }
 
     /**
@@ -582,9 +555,7 @@ abstract class AController extends \XLite\Core\Handler
     public function getURL(array $params = array())
     {
         $params = array_merge($this->getAllParams(), $params);
-
         $target = isset($params['target']) ? $params['target'] : '';
-
         unset($params['target']);
 
         return $this->buildURL($target, '', $params);
@@ -863,70 +834,6 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return null;
-    }
-
-    /**
-     * Add part to the location nodes list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addBaseLocation()
-    {
-    }
-
-    /**
-     * Add node to the location line
-     *
-     * @param string $name     Node title
-     * @param string $link     Node link OPTIONAL
-     * @param array  $subnodes Node subnodes OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addLocationNode($name, $link = null, array $subnodes = null)
-    {
-        $this->locationPath[] = \XLite\View\Location\Node::create($name, $link, $subnodes);
-    }
-
-    /**
-     * Method to create the location line
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineLocationPath()
-    {
-        $this->locationPath = array();
-
-        // Common element for all location lines
-        $this->locationPath[] = new \XLite\View\Location\Node\Home();
-
-        // Ability to add part to the line
-        $this->addBaseLocation();
-
-        // Ability to define last element in path via short function
-        $location = $this->getLocation();
-
-        if ($location) {
-            $this->addLocationNode($location);
-        }
-    }
-
-    /**
      * Select template to use
      *
      * @return string
@@ -1061,6 +968,7 @@ abstract class AController extends \XLite\Core\Handler
             );
             header('event-message: ' . $encodedMessage);
         }
+
         \XLite\Core\TopMessage::getInstance()->clearAJAX();
     }
 
@@ -1406,5 +1314,4 @@ abstract class AController extends \XLite\Core\Handler
 
         return $this->redirect($this->getShopURL($this->getURL(), true));
     }
-
 }

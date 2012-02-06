@@ -44,7 +44,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     public $params = array('target', 'id', 'page', 'backURL');
 
-
     /**
      * Get pages sections
      *
@@ -185,33 +184,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
         return 0 >= $this->getProductId();
     }
 
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->getProduct()->getName();
-    }
-
-    /**
-     * Add part to the location nodes list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addBaseLocation()
-    {
-        parent::addBaseLocation();
-
-        $this->addLocationNode('Search products', $this->buildURL('product_list'));
-    }
-
     /**
      * Return list of the CategoryProduct entities
      *
@@ -253,13 +225,10 @@ class Product extends \XLite\Controller\Admin\AAdmin
         $data = new \Doctrine\Common\Collections\ArrayCollection();
 
         foreach ((array) $this->getPostedData('class_ids') as $classId) {
-
             $class = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findOneById($classId);
 
             if ($class) {
-
                 if (!$class->getProducts()->contains($product)) {
-
                     $class->getProducts()->add($product);
                 }
 

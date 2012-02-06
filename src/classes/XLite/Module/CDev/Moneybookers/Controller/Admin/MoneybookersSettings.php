@@ -48,18 +48,6 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->getTitle();
-    }
-
-    /**
      * Validate email
      *
      * @return void

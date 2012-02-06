@@ -60,38 +60,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
         return \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
     }
 
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Countries';
-    }
-
-    /**
-     * setObligatoryStatus
-     * TODO!! REMOVE ???
-     *
-     * @param mixed $status ____param_comment____
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function setObligatoryStatus($status)
-    {
-        if (!in_array('status', $this->params)) {
-            $this->params[] = 'status';
-        }
-
-        $this->set('status', $status);
-    }
-
     /**
      * action 'update'
      *
@@ -119,7 +87,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->flush();
         }
 
-        $this->setObligatoryStatus('updated');
         \XLite\Core\Database::getRepo('XLite\Model\State')->cleanCache();
     }
 
@@ -134,7 +101,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
     {
         if (empty(\XLite\Core\Request::getInstance()->code)) {
             $this->set('valid', false);
-            $this->setObligatoryStatus('code');
 
         } else {
             $country = \XLite\Core\Database::getRepo('XLite\Model\Country')
@@ -142,13 +108,11 @@ class Countries extends \XLite\Controller\Admin\AAdmin
 
             if ($country) {
                 $this->set('valid', false);
-                $this->setObligatoryStatus('exists');
 
             } else {
 
                 if (empty(\XLite\Core\Request::getInstance()->country)) {
                     $this->set('valid', false);
-                    $this->setObligatoryStatus('country');
 
                 } else {
                     $country = new \XLite\Model\Country();
@@ -158,7 +122,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
                     \XLite\Core\Database::getEM()->persist($country);
                     \XLite\Core\Database::getEM()->flush();
 
-                    $this->setObligatoryStatus('added');
                     \XLite\Core\Database::getRepo('XLite\Model\State')->cleanCache();
                 }
             }
@@ -188,7 +151,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->flush();
         }
 
-        $this->setObligatoryStatus('deleted');
         \XLite\Core\Database::getRepo('XLite\Model\State')->cleanCache();
     }
 }

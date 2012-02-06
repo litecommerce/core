@@ -126,20 +126,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function getOptions()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Config')
-            ->findByCategoryAndVisible($this->page);
-    }
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'General settings';
+        return \XLite\Core\Database::getRepo('\XLite\Model\Config')->findByCategoryAndVisible($this->page);
     }
 
     /**

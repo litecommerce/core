@@ -36,11 +36,6 @@ namespace XLite\Controller\Admin;
 class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
 {
     /**
-     * Title of module Marketplace page (installation/updating modules)
-     */
-    const MARKETPLACE_TITLE = 'Module Marketplace';
-
-    /**
      * Return the current page title (for the content area)
      *
      * @return string
@@ -49,18 +44,6 @@ class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
      */
     public function getTitle()
     {
-        return self::MARKETPLACE_TITLE;
-    }
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return self::MARKETPLACE_TITLE;
+        return 'Module Marketplace';
     }
 }
