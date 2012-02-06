@@ -10,6 +10,19 @@
  * @since     1.0.0
  */
 
+function PopupButtonUploadAddon()
+{
+  PopupButtonUploadAddon.superclass.constructor.apply(this, arguments);
+}
+
+extend(PopupButtonUploadAddon, PopupButton);
+
+PopupButtonUploadAddon.prototype.pattern = '.upload-addons';
+
+PopupButtonUploadAddon.prototype.enableBackgroundSubmit = false;
+
+core.autoload(PopupButtonUploadAddon);
+
 window.core.multiAdd = function (addArea, addObj, removeElement)
 {
   var cloneObj;
