@@ -41,7 +41,7 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     const WIDGET_TARGET_SALE_PRODUCTS = 'sale_products';
 
-    
+
     /**
      * Return target to retrive this widget from AJAX
      *
@@ -55,23 +55,6 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * Define and set widget attributes; initialize widget
-     *
-     * @param array $params Widget params OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
-     */
-    public function __construct(array $params = array())
-    {
-        parent::__construct($params);
-
-        unset($this->sortByModes[self::SORT_BY_MODE_AMOUNT_ASC]);
-        unset($this->sortByModes[self::SORT_BY_MODE_AMOUNT_DESC]);
-    }
-
-    /**
      * Returns CSS classes for the container element
      *
      * @return string
@@ -81,6 +64,22 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
     public function getListCSSClasses()
     {
         return parent::getListCSSClasses() . ' sale-products';
+    }
+
+    /**
+     * Initialize widget (set attributes)
+     *
+     * @param array $params Widget params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        unset($this->widgetParams[static::PARAM_SHOW_SORT_BY_SELECTOR]);
     }
 
     /**
@@ -118,6 +117,16 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         $cnd->{\XLite\Module\CDev\Sale\Model\Repo\Product::P_PARTICIPATE_SALE} = true;
 
+        /**
+         * TODO: Restore for LC 1.0.17 core
+         *
+        $cnd->{\XLite\Model\Repo\Product::P_ORDER_BY} = array(
+            \XLite\Module\CDev\Sale\Model\Repo\Product::PERCENT_CALCULATED_FIELD,
+            'DESC'
+        );
+         *
+         */
+
         return $cnd;
     }
 
@@ -138,18 +147,6 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && \XLite\Core\Config::getInstance()->CDev->Sale->sale_enabled;
-    }
-
-    /**
      * Get max number of products displayed in block
      *
      * @return integer
@@ -161,15 +158,4 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return intval(\XLite\Core\Config::getInstance()->CDev->Sale->sale_max_count_in_block) ?: 3;
     }
 
-    /**
-     * Get max number of products displayed in list
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getMaxCountInFullList()
-    {
-        return intval(\XLite\Core\Config::getInstance()->CDev->Sale->sale_max_count_in_full_list) ?: 10;
-    }
 }

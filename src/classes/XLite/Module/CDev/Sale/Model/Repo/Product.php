@@ -38,7 +38,13 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
     /**
      * Allowable search params
      */
-    const P_PARTICIPATE_SALE      = 'participateSale';
+    const P_PARTICIPATE_SALE = 'participateSale';
+
+    /**
+     * Name of the calculated field - percent value.
+     */
+    const PERCENT_CALCULATED_FIELD = 'percentValueCalculated';
+
 
     // {{{ Search functionallity extension
 
@@ -53,7 +59,7 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
     {
         $params = parent::getHandlingSearchParams();
 
-        $params[] = self::P_PARTICIPATE_SALE;
+        $params[] = static::P_PARTICIPATE_SALE;
 
         return $params;
     }
@@ -68,7 +74,7 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareCndParticipateSale(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    protected function prepareCndParticipateSale(\Doctrine\ORM\QueryBuilder $queryBuilder, $value, $countOnly)
     {
         $cnd = new \Doctrine\ORM\Query\Expr\Orx();
 
@@ -85,13 +91,81 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
         $cnd->add($pricePercentCnd);
         $cnd->add($priceAbsoluteCnd);
 
+        /**
+         * TODO: Restore for LC 1.0.17 core
+         *
+        if (!$countOnly) {
+            $queryBuilder->addSelect(
+                'if(p.discountType = :discountTypePercent, p.salePriceValue, 100 - 100 * p.salePriceValue / p.price) ' . static::PERCENT_CALCULATED_FIELD
+            );
+        }
+        */
+
         $queryBuilder
             ->andWhere('p.participateSale = :participateSale')
             ->andWhere($cnd)
             ->setParameter('participateSale', $value)
             ->setParameter('discountTypePercent', \XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PERCENT)
+            ->setParameter('discountTypePercent', \XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PERCENT)
             ->setParameter('discountTypePrice', \XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PRICE);
     }
+
+
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag. Do not need to add "order by" clauses if only count is needed.
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    /**
+     * TODO: Restore for LC 1.0.17 core
+     *
+    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value, $countOnly)
+    {
+        if (!$countOnly) {
+            list($sort, $order) = $value;
+
+            if ('p.price' === $sort && !\XLite::isAdminZone()) {
+
+                $queryBuilder->addSelect(
+                    'if(p.salePriceValueCalculated = 0 , p.price, p.salePriceValueCalculated) salePriceValueCalculated'
+                );
+
+                $queryBuilder->addOrderBy('salePriceValueCalculated', $order);
+
+            } else {
+
+                parent::prepareCndOrderBy($queryBuilder, $value, $countOnly);
+            }
+        }
+    }
+     *
+     */
+
+    /**
+     * Search result routine.
+     *
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder routine
+     *
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    /**
+     * TODO: Restore for LC 1.0.17 core
+     *
+    public function searchResult(\Doctrine\ORM\QueryBuilder $qb)
+    {
+        return $qb->getOnlyEntities();
+    }
+     *
+     */
 
     // }}}
 }

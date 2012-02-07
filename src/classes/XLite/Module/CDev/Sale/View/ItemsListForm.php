@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\Sale\View;
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class ItemsListForm extends \XLite\View\StickyPanel\Product\Admin\AAdmin implements \XLite\Base\IDecorator
+abstract class ItemsListForm extends \XLite\View\StickyPanel\ItemsListForm implements \XLite\Base\IDecorator
 {
     /**
      * Get buttons widgets

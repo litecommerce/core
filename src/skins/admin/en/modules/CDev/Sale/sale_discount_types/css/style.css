@@ -54,9 +54,13 @@
 
 .sale-price-value input {
   width: 70px;
+  text-align: right;
 }
 
 .discount-type input {
   margin: 4px;
 }
 
+#sale-price-value-sale_percent {
+  width: 70px;
+}

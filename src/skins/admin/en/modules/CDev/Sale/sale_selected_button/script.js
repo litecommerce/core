@@ -59,19 +59,6 @@ decorate(
 
 decorate(
   'PopupButtonSaleSelectedButton',
-  'getURLParams',
-  function (button)
-  {
-    var urlParams = arguments.callee.previousMethod.apply(this, arguments);
-
-    jQuery('[name*="select"]:checked').each(function (index, elem) {urlParams[elem.name] = 1});
-
-    return urlParams;
-  }
-);
-
-decorate(
-  'PopupButtonSaleSelectedButton',
   'eachClick',
   function (elem)
   {
@@ -83,5 +70,42 @@ decorate(
     return arguments.callee.previousMethod.apply(this, arguments);
   }
 );
+
+decorate(
+  'PopupButtonSaleSelectedButton',
+  'eachCallback',
+  function (elem)
+  {
+    var button;
+    var callback;
+    var obj = this;
+
+    button = elem;
+    callback = obj.callback;
+
+    jQuery(elem).click(
+      function () {
+
+        var urlParams;
+
+        urlParams = core.getCommentedData(button, 'url_params');
+
+        jQuery('[name*="select"]:checked').each(function (index, elem) {urlParams[elem.name] = 1});
+
+        lastPopupButton = jQuery(this);
+
+        if (!jQuery(this).hasClass('disabled')) {
+          return loadDialogByLink(
+            button,
+            URLHandler.buildURL(urlParams),
+            obj.options,
+            callback
+          );
+        }
+      }
+    );
+  }
+  );
+
 
 core.autoload(PopupButtonSaleSelectedButton);

@@ -36,7 +36,7 @@ namespace XLite\Module\CDev\Sale\View;
  * @ListChild (list="center.bottom", zone="customer", weight="600")
  * @ListChild (list="sidebar.first", zone="customer", weight="170")
  */
-class Sale extends \XLite\Module\CDev\Sale\View\ASale
+class SaleBlock extends \XLite\Module\CDev\Sale\View\ASale
 {
     /**
      * Widget parameter
@@ -75,6 +75,7 @@ class Sale extends \XLite\Module\CDev\Sale\View\ASale
 
         unset($this->widgetParams[\XLite\View\Pager\APager::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR]);
         unset($this->widgetParams[\XLite\View\Pager\APager::PARAM_ITEMS_PER_PAGE]);
+        unset($this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]);
     }
 
     /**
@@ -99,9 +100,6 @@ class Sale extends \XLite\Module\CDev\Sale\View\ASale
             : self::WIDGET_TYPE_CENTER;
 
         $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue($widgetType);
-
-        unset($this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]);
-        unset($this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]);
     }
 
     /**
@@ -149,6 +147,7 @@ class Sale extends \XLite\Module\CDev\Sale\View\ASale
     protected function isVisible()
     {
         $result = parent::isVisible()
+            && \XLite\Core\Config::getInstance()->CDev->Sale->sale_enabled
             && static::getWidgetTarget() != \XLite\Core\Request::getInstance()->target
             && 0 < $this->getData(new \XLite\Core\CommonCell(), true);
 
