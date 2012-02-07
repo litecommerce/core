@@ -25,7 +25,7 @@
    </li>
    <li class="sale-price-value">
      <widget
-       class="\XLite\View\FormField\Input\Text\Symbol"
+       class="\XLite\View\FormField\Input\Text"
        fieldOnly="true"
        mouseWheelIcon="false"
        symbol="%"
