@@ -59,7 +59,7 @@ class GooglePlus extends \XLite\View\AView
     protected function getButtonAttributes()
     {
         return array(
-            'href' => $this->getURL(),
+            'href' => \XLite::getInstance()->getShopURL($this->getURL()),
         );
     }
 

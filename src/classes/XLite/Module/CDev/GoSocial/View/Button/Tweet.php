@@ -67,8 +67,10 @@ class Tweet extends \XLite\View\AView
      */
     protected function getButtonAttributes()
     {
+        $url = \XLite::getInstance()->getShopURL($this->getURL());
         $list = array(
-            'url' => $this->getURL(),
+            'url'      => $url,
+            'counturl' => $url,
         );
 
         if (!\XLite\Core\Config::getInstance()->CDev->GoSocial->tweet_show_count) {
