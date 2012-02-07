@@ -56,22 +56,11 @@ class SaleSelected extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionSetSalePrice()
     {
-        $form = new \XLite\Module\CDev\Sale\View\Form\SaleSelectedDialog();
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateInBatchById($this->getUpdateInfo());
 
-        $requestData = $form->getRequestData();
-
-        if ($form->getValidationMessage()) {
-
-            \XLite\Core\TopMessage::addError($form->getValidationMessage());
-
-        } else {
-
-            \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateInBatchById($this->getUpdateInfo());
-
-            \XLite\Core\TopMessage::addInfo(
+        \XLite\Core\TopMessage::addInfo(
                 'Products information has been successfully updated'
-            );
-        }
+        );
 
         $this->setReturnURL($this->buildURL('product_list', '', array('mode' => 'search')));
     }
@@ -86,7 +75,7 @@ class SaleSelected extends \XLite\Controller\Admin\AAdmin
     protected function getUpdateInfo()
     {
         return array_fill_keys(
-            array_keys($this->getSelected()),
+            array_keys(\XLite\Core\Request::getInstance()->select),
             $this->getUpdateInfoElement()
         );
     }
