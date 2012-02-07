@@ -92,19 +92,18 @@ abstract class Autoloader
         require_once (LC_DIR_LIB . 'PEAR2' . LC_DS . 'Autoload.php');
     }
 
+
     /**
-     * Common autoloader
+     * Main LC autoloader
      *
-     * @param string $namespace namespace to check
-     * @param string $class     class to load
-     * @param string $dir       path to the PHP files
+     * @param string $class name of the class to load
      *
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function autoloadCommon($namespace, $class, $dir)
+    public static function __lc_autoload($class)
     {
         /**
          * NOTE: it's the PHP bug: in some cases it adds or removes the leading slash. Examples:
@@ -120,25 +119,10 @@ abstract class Autoloader
          *
          * May be that issue is related: http://bugs.php.net/50731
          */
-        if (0 === strpos($class = ltrim($class, '\\'), $namespace)) {
-            include_once ($dir . str_replace('\\', LC_DS, $class) . '.php');
+        $class = ltrim($class, '\\');       
+        if (0 === strpos($class, LC_NAMESPACE)) {
+            include_once (static::$lcAutoloadDir . str_replace('\\', LC_DS, $class) . '.php');
         }
-    }
-
-
-    /**
-     * Main LC autoloader
-     *
-     * @param string $class name of the class to load
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function __lc_autoload($class)
-    {
-        self::autoloadCommon(LC_NAMESPACE, $class, static::$lcAutoloadDir);
     }
 
     /**
@@ -153,7 +137,10 @@ abstract class Autoloader
      */
     public static function __lc_autoload_includes($class)
     {
-        self::autoloadCommon(LC_NAMESPACE_INCLUDES, $class, LC_DIR_ROOT);
+        $class = ltrim($class, '\\');
+        if (0 === strpos($class, LC_NAMESPACE_INCLUDES)) {
+            include_once (LC_DIR_ROOT . str_replace('\\', LC_DS, $class) . '.php');
+        }
     }
 
     /**

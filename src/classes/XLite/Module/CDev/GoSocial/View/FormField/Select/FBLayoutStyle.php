@@ -46,8 +46,8 @@ class FBLayoutStyle extends \XLite\View\FormField\Select\Regular
     {
         return array(
             'standard'     => 'standard',
-            'button_count' => 'button_count',
-            'box_count'    => 'box_count',
+            'button_count' => 'button',
+            'box_count'    => 'box',
         );
     }
 }

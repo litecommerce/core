@@ -33,7 +33,7 @@ namespace XLite\View\Button\Addon;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Upload extends \XLite\View\Button\PopupButton
+class Upload extends \XLite\View\Button\APopupButton
 {
     /**
      * Get a list of JavaScript files required to display the widget properly

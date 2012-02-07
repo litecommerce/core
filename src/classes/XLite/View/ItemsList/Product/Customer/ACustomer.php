@@ -263,6 +263,9 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         $list[] = $this->getDir() . '/quick_look.css';
         $list[] = 'css/cloud-zoom.css';
 
+        //TODO: Remove after CSS loading feature is added.
+        $list[] = 'labels/style.css';
+
         return array_merge($list, $this->getPopupCSS());
     }
 

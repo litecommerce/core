@@ -106,6 +106,39 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
             ->setParameter('discountTypePrice', \XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PRICE);
     }
 
+
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag. Do not need to add "order by" clauses if only count is needed.
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value, $countOnly)
+    {
+        if (!$countOnly) {
+            list($sort, $order) = $value;
+
+            if ('p.price' === $sort && !\XLite::isAdminZone()) {
+
+                $queryBuilder->addSelect(
+                    'if(p.salePriceValueCalculated = 0 , p.price, p.salePriceValueCalculated) salePriceValueCalculated'
+                );
+
+                $queryBuilder->addOrderBy('salePriceValueCalculated', $order);
+
+            } else {
+
+                parent::prepareCndOrderBy($queryBuilder, $value, $countOnly);
+            }
+        }
+    }
+
     /**
      * Search result routine.
      *
