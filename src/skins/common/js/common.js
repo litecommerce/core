@@ -464,16 +464,37 @@ function attachTooltip(elm, content) {
   jQuery(elm).each(
     function () {
       var block = this;
+      var $block = jQuery(this);
 
-      jQuery(this).hover(
+      var hide = function () {
+        $block.validationEngine('hide');
+      }
+      var startHide = function () {
+        block.timeoutId = setTimeout(hide, 300);
+      }
+      var clearHide = function () {
+        if ('undefined' != typeof(block.timeoutId) && block.timeoutId) {
+          clearTimeout(block.timeoutId);
+          block.timeoutId = false;
+        }
+      }
+
+      $block.mouseover(
         function() {
+          clearHide();
           jQuery('.formError').remove();
-          jQuery(block).validationEngine('showPrompt', content, 'load');
-        },
-        function() {
-          jQuery(block).validationEngine('hide');
+          $block.validationEngine('showPrompt', content, 'load');
+          var box = jQuery('.formError .formErrorContent');
+          var l = box.offset().left;
+          var w = jQuery(window).width();
+          var bw = w - l;
+          box.css('max-width', (bw - Math.round(bw * 0.1)) + 'px');
+          box.mouseover(clearHide);
+          box.mouseout(startHide);
         }
       );
+
+      $block.mouseover(startHide);
     }
   );
 }
