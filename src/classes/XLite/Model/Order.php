@@ -967,7 +967,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $transaction = $this->getFirstOpenPaymentTransaction();
 
         if (!$transaction) {
-            $transaction = $this->isOpen()
+            $transaction = $this->hasUnpaidTotal() || 0 == count($this->getPaymentTransactions())
                 ? $this->assignLastPaymentMethod()
                 : $this->getPaymentTransactions()->last();
         }
@@ -1182,8 +1182,19 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function isOpen()
     {
-        return $this->getFirstOpenPaymentTransaction()
-            && ($this->getCurrency()->getMinimumValue() < $this->getCurrency()->roundValue(abs($this->getOpenTotal())));
+        return $this->getFirstOpenPaymentTransaction() && $this->hasUnpaidTotal();
+    }
+
+    /**
+     * Has unpaid total?
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function hasUnpaidTotal()
+    {
+        return $this->getCurrency()->getMinimumValue() < $this->getCurrency()->roundValue(abs($this->getOpenTotal()));
     }
 
     /**
