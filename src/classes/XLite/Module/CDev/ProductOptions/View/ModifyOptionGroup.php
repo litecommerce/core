@@ -177,7 +177,6 @@ class ModifyOptionGroup extends \XLite\View\AView
     public function getOptionModifiers(\XLite\Module\CDev\ProductOptions\Model\Option $option = null)
     {
         $keys = array_keys($this->getModifiersNames());
-
         $result = array();
 
         foreach ($keys as $key) {
@@ -186,7 +185,7 @@ class ModifyOptionGroup extends \XLite\View\AView
             }
 
             if (!isset($result[$key]) || !$result[$key]) {
-                $result[$key] = new \XLite\Module\CDev\ProductOptions\Model\OptionSurcharge;
+                $result[$key] = new \XLite\Module\CDev\ProductOptions\Model\OptionSurcharge();
                 $result[$key]->setType($key);
             }
         }
@@ -321,7 +320,20 @@ class ModifyOptionGroup extends \XLite\View\AView
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && ($this->getGroup()->getGroupId() || $this->isNew());
+        return parent::isVisible() && ($this->getGroup()->getGroupId() || $this->isNew());
+    }
+
+    /**
+     * Return label for the header
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function getHeadLabel()
+    {
+        return $this->isNew() 
+            ? 'Add new option group' 
+            : static::t('Modify "{{name}}" option group', array('name' => $this->getGroup()->getName()));
     }
 }

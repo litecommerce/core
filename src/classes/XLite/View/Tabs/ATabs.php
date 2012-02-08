@@ -77,7 +77,6 @@ abstract class ATabs extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $tab = $this->getSelectedTab();
 
         if (isset($tab) && isset($tab['jsFiles']) && !empty($tab['jsFiles'])) {
@@ -103,7 +102,7 @@ abstract class ATabs extends \XLite\View\AView
     {
         $tab = $this->getSelectedTab();
 
-        return !is_null($tab) && empty($tab['widget']) && !empty($tab['template']);
+        return isset($tab) && empty($tab['widget']) && !empty($tab['template']);
     }
 
     /**
@@ -117,7 +116,7 @@ abstract class ATabs extends \XLite\View\AView
     {
         $tab = $this->getSelectedTab();
 
-        return !is_null($tab) && !empty($tab['widget']) && !empty($tab['template']);
+        return isset($tab) && !empty($tab['widget']) && !empty($tab['template']);
     }
 
     /**
@@ -131,7 +130,7 @@ abstract class ATabs extends \XLite\View\AView
     {
         $tab = $this->getSelectedTab();
 
-        return !is_null($tab) && !empty($tab['widget']) && empty($tab['template']);
+        return isset($tab) && !empty($tab['widget']) && empty($tab['template']);
     }
 
     /**
@@ -173,7 +172,7 @@ abstract class ATabs extends \XLite\View\AView
     {
         $tab = $this->getSelectedTab();
 
-        return !is_null($tab) && empty($tab['widget']) && empty($tab['template']);
+        return isset($tab) && empty($tab['widget']) && empty($tab['template']);
     }
 
 
@@ -292,10 +291,8 @@ abstract class ATabs extends \XLite\View\AView
     protected function getTabs()
     {
         // Process tabs only once
-        if (is_null($this->processedTabs)) {
-
+        if (!isset($this->processedTabs)) {
             $this->processedTabs = array();
-
             $defaultValues = $this->getDefaultTabValues();
 
             foreach ($this->tabs as $target => $tab) {
@@ -335,9 +332,6 @@ abstract class ATabs extends \XLite\View\AView
      */
     protected function getSelectedTab()
     {
-        $tabs = $this->getTabs();
-        $target = $this->getCurrentTarget();
-
-        return (isset($tabs[$target]) ? $tabs[$target] : null);
+        return \Includes\Utils\ArrayManager::getIndex($this->getTabs(), $this->getCurrentTarget());
     }
 }

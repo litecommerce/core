@@ -214,6 +214,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
                     $this->getCategoryURL($category),
                     $this->getLocationNodeSubnodes($category)
                 );
+
             } else {
                 break;
             }

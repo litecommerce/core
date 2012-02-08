@@ -13,13 +13,13 @@
   <select {getAttributesCode():h}>
     <option value="" IF="getParam(#allOption#)">{t(#All#)}</option>
     {foreach:getOptions(),optionValue,optionLabel}
-      <option value="{optionValue}"{if:optionValue=getValue()} selected="selected"{end:}{if:isOptionDisabled(optionValue)} disabled="disabled"{end:}>{optionLabel:h}</option>
+      <option value="{optionValue}"{if:optionValue=getValue()} selected="selected"{end:}{if:isOptionDisabled(optionValue)} disabled="disabled"{end:}>{t(optionLabel)}</option>
     {end:}
   </select>
   <a id="status_warning_{getParam(#orderId#)}" class="icon-warning popup-warning" href="#">
     <img src="images/spacer.gif" width="1" height="1" alt="" />
   </a>
   <div IF="isStatusWarning()" class="status-warning-content">
-    {getStatusWarningContent()}
+    {t(getStatusWarningContent())}
   </div>
 </div>

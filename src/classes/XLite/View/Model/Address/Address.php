@@ -120,7 +120,6 @@ class Address extends \XLite\View\Model\AModel
      */
     protected $address = null;
 
-
     /**
      * getAddressSchema
      *
@@ -208,7 +207,6 @@ class Address extends \XLite\View\Model\AModel
             : \Xlite\Core\Auth::getInstance()->getProfile()->getProfileId();
     }
 
-
     /**
      * Returns widget head
      *
@@ -231,20 +229,16 @@ class Address extends \XLite\View\Model\AModel
     protected function getDefaultModelObject()
     {
         if (!isset($this->address)) {
-
             $addressId = $this->getAddressId();
 
             if (isset($addressId)) {
                 $this->address = \XLite\Core\Database::getRepo('XLite\Model\Address')->find($this->getAddressId());
 
             } else {
-
                 $this->address = new \XLite\Model\Address();
-
                 $profileId = $this->getProfileId();
 
                 if (0 < intval($profileId)) {
-
                     $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($profileId);
 
                     if (isset($profile)) {
@@ -325,7 +319,7 @@ class Address extends \XLite\View\Model\AModel
      */
     protected function getSubmitButtonLabel()
     {
-        return static::t('Save changes');
+        return 'Save changes';
     }
 
     /**
@@ -338,6 +332,7 @@ class Address extends \XLite\View\Model\AModel
     protected function getFormButtons()
     {
         $result = parent::getFormButtons();
+
         $result['submit'] = new \XLite\View\Button\Submit(
             array(
                 \XLite\View\Button\AButton::PARAM_LABEL => $this->getSubmitButtonLabel(),
@@ -360,23 +355,18 @@ class Address extends \XLite\View\Model\AModel
         $data = parent::prepareDataForMapping();
 
         foreach ($data as $key => $value) {
-
             $newKey = preg_replace('/^([^_]*_)(.*)$/', '\2', $key);
-
             $data[$newKey] = $value;
-            
             unset($data[$key]);
         }
 
         if (isset($data['country_code'])) {
-
             $data['country'] = \XLite\Core\Database::getRepo('XLite\Model\Country')
                 ->findOneByCode($data['country_code']);
 
             $data['state'] = null;
 
             if (isset($data['state_id'])) {
-
                 $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($data['state_id']);
 
                 if (isset($state) && $state->getCountry()->getCode() == $data['country_code']) {

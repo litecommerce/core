@@ -91,9 +91,6 @@ abstract class ACustomer extends \XLite\Controller\AController
     {
         $this->locationPath = array();
 
-        // Common element for all location lines
-        $this->locationPath[] = new \XLite\View\Location\Node\Home();
-
         // Ability to add part to the line
         $this->addBaseLocation();
 
@@ -126,6 +123,8 @@ abstract class ACustomer extends \XLite\Controller\AController
      */
     protected function addBaseLocation()
     {
+        // Common element for all location lines
+        $this->locationPath[] = new \XLite\View\Location\Node\Home();
     }
 
     /**

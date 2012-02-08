@@ -37,7 +37,6 @@ namespace XLite\View\Tabs;
  */
 class ShippingSettings extends \XLite\View\Tabs\ATabs
 {
-
     /**
      * Description of tabs related to shipping settings and their targets
      *
@@ -254,7 +253,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
         return (count($array) - 1 > $id);
     }
 
-
     /**
      * Prepares markups array for displaying on admin page. Result array has the following format:
      *
@@ -284,9 +282,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     protected function prepareMarkups($markups)
     {
         $result = array();
-
         $zones = $this->getShippingZones();
-
         $methods = array();
 
         foreach ($markups as $markup) {

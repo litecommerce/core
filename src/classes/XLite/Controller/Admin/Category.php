@@ -44,7 +44,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     public $params = array('target', 'category_id', 'mode');
 
-
     /**
      * Get pages sections
      *

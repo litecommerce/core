@@ -43,7 +43,6 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
     const PARAM_STATUS   = 'status';
     const PARAM_DATE     = 'date';
 
-
     /**
      * getSearchParams
      *
@@ -82,7 +81,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      */
     protected function getHead()
     {
-        return static::t('Search result');
+        return 'Search result';
     }
 
     /**

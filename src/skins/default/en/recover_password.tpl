@@ -9,14 +9,15 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
  <div class="recover-password-message">
-  {t(#In order to recover your password, please type in your valid e-mail address you used as a login.#)}
+  {t(#In order to recover your password, please type in your valid e-mail address you used as a login#)}
  </div>
  <div class="recover-password-message">
-  {t(#Your account information will be e-mailed to you shortly.#)}
+  {t(#Your account information will be e-mailed to you shortly#)}
  </div>
 
-<form action="cart.php" method=post name="recover_password">
+<form action="cart.php" method="post" name="recover_password">
   <input type="hidden" name="target" value="recover_password" />
   <input type="hidden" name="action" value="recover_password" />
 

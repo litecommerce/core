@@ -160,6 +160,18 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
+     * Return list of page templates
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function getPageTemplates()
+    {
+        return array();
+    }
+
+    /**
      * getPages
      *
      * @return void

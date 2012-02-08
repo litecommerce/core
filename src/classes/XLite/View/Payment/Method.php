@@ -47,7 +47,6 @@ class Method extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'payment_method';
 
         return $result;
@@ -107,7 +106,7 @@ class Method extends \XLite\View\Dialog
     protected function getHead()
     {
         return $this->getPaymentMethod()
-            ? $this->getPaymentMethod()->getServiceName() . ' settings'
+            ? static::t('{{paymentMethod}} settings', array('paymentMethod' => $this->getPaymentMethod()->getServiceName()))
             : 'Payment method settings';
     }
 
@@ -120,6 +119,6 @@ class Method extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'payment' . LC_DS . 'method';
+        return 'payment/method';
     }
 }

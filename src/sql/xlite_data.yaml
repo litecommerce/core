@@ -493,6 +493,7 @@ XLite\Model\LanguageLabel:
   - { name: 'X product(s) has been created', translations: [{ code: en, label: '{{count}} product(s) has been created' }] }
   - { name: 'X entities has been removed', translations: [{ code: en, label: '{{count}} entities has been removed' }] }
   - { name: 'X entities has been created', translations: [{ code: en, label: '{{count}} entities has been created' }] }
+  - { name: 'Select a country or a state from a list, specify the zone', translations: [{ code: en, label: 'Select a country or a state from a list, specify the zone where the country or state should be listed and click on the "Apply" button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
