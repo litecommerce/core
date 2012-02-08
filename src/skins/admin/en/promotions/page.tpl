@@ -9,8 +9,5 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-{if:getPages()}
-  <widget class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
-{else:}
-  <widget template="promotions/empty.tpl" />
-{end:}
+
+<widget class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
