@@ -703,8 +703,14 @@ abstract class AView extends \XLite\Core\Handler
                 'js/core.form.js',
                 'js/php.js',
                 'js/jquery.mousewheel.js',
-                'js/jquery.validationEngine-' . $this->getCurrentLanguage()->getCode() . '.js',
-                'js/jquery.validationEngine.js',
+                array(
+                    'file' => 'js/validationEngine/languages/jquery.validationEngine-LANGUAGE_CODE.js',
+                    'filelist' => array(
+                        'js/validationEngine/languages/jquery.validationEngine-' . $this->getCurrentLanguage()->getCode() . '.js',
+                        'js/validationEngine/languages/jquery.validationEngine-en.js',
+                    ),
+                ),
+                'js/validationEngine/jquery.validationEngine.js',
             ),
             static::RESOURCE_CSS => array(
                 'ui/jquery-ui.css',
@@ -790,7 +796,10 @@ abstract class AView extends \XLite\Core\Handler
             foreach ($files as $data) {
 
                 if (is_string($data)) {
-                    $data = array('file' => $data);
+                    $data = array(
+                        'file' => $data,
+                        'filelist' => array($data),
+                    );
                 }
 
                 if (!isset(static::$resources[$index][$type][$data['file']])) {
@@ -844,20 +853,29 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function prepareResource(array $data, $interface = null)
     {
-        $shortURL = str_replace(LC_DS, '/', $data['file']);
-        $fullURL  = \XLite\Singletons::$handler->layout->getResourceWebPath(
-            $shortURL,
-            \XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
-            $interface
-        );
+        foreach ($data['filelist'] as $file) {
 
-        $data += array(
-            'media' => 'all',
-            'url'   => $fullURL,
-        );
+            $shortURL = str_replace(LC_DS, '/', $file);
 
-        if (isset($fullURL)) {
-            $data['file'] = \XLite\Singletons::$handler->layout->getResourceFullPath($shortURL, $interface, false);
+            $fullURL  = \XLite\Singletons::$handler->layout->getResourceWebPath(
+                $shortURL,
+                \XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
+                $interface
+            );
+
+            if (isset($fullURL)) {
+
+                $data['file'] = \XLite\Singletons::$handler
+                    ->layout
+                    ->getResourceFullPath($shortURL, $interface, false);
+
+                $data += array(
+                    'media' => 'all',
+                    'url'   => $fullURL,
+                );
+
+                break;
+            }
         }
 
         return $data;
