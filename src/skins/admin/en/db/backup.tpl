@@ -33,7 +33,7 @@ function ShowNotes()
 
 {t(#Use this section to backup the database of your online store. Please note that database backup procedure can take up to several minutes.#)}
 
-<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>{t(#How to backup your store database#)} &gt;&gt;&gt;</b></a></span>
+<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>{t(#How to back your store database up#)} &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <p class="adminParagraph">
 <table cellpadding="5" cellspacing="0">
@@ -90,6 +90,6 @@ function ShowNotes()
 </table>
 <p align="justify">
   <b>{t(#Note#)}:</b>
-  {t(#if you store product images in the database, they will be included in the SQL dump file. If product images are located on the file system, they are not included. To backup such images you need to download them directly from the server.#)}
+  {t(#If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back such images up you need to download them directly from the server.#)}
 </p>
 </form>

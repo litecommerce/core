@@ -96,7 +96,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
         parent::__construct($params);
 
         $this->sortByModes = array(
-            self::SORT_BY_MODE_DEFAULT => static::t('Default'),
+            self::SORT_BY_MODE_DEFAULT => 'Default',
         ) + $this->sortByModes;
     }
 

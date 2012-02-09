@@ -40,7 +40,7 @@ function ShowNotes()
 <span id="notes_body" style="display: none">
 <br /><br />
 <p align="justify">
-  {t(#Shipping rates are comprised of several components (rate types) and are calculated according to the following generic patterns:#)}
+  {t(#Shipping rates are comprised of several components (rate types) and calculated according to the following generic patterns#)}:
 </p>
 <p align="justify">
   {t(#SHIPPING = flat + ITEMS*per_item + WEIGHT*per_weight + SUBTOTAL*(% of subtotal)/100;#,_ARRAY_(#X#^config.General.weight_unit))}
@@ -58,7 +58,7 @@ function ShowNotes()
 </p>
 <br />
 <p align="justify">
-  {t(#Descriptions for various rate types are provided below:#)}
+  {t(#Descriptions of various rate types are provided below#)}:
 </p>
 <br />
 

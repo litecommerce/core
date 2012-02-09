@@ -70,11 +70,7 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
     {
         $validator = parent::getValidator();
 
-        $data = $validator->addPair(
-            'postedData',
-            new \XLite\Core\Validator\HashArray()
-        );
-
+        $data = $validator->addPair('postedData', new \XLite\Core\Validator\HashArray());
         $this->setDataValidators($data);
 
         return $validator;

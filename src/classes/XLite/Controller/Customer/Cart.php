@@ -391,7 +391,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     protected function processAddItemSuccess()
     {
-        \XLite\Core\TopMessage::addInfo('Product has been added to the cart');
+        \XLite\Core\TopMessage::addInfo('Product has been added to cart');
     }
 
     /**
@@ -406,17 +406,13 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         $url = \XLite\Core\Session::getInstance()->productListURL;
 
         if (!$url) {
-
             if (\XLite\Core\Request::getInstance()->returnURL) {
-
                 $url = \XLite\Core\Request::getInstance()->returnURL;
 
             } elseif (!empty($_SERVER['HTTP_REFERER'])) {
-
                 $url = $_SERVER['HTTP_REFERER'];
 
             } else {
-
                 $url = $this->buildURL('product', '', array('product_id' => $this->getProductId()));
             }
         }

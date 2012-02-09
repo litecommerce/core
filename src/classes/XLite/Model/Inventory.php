@@ -119,7 +119,6 @@ class Inventory extends \XLite\Model\AEntity
      */
     protected $product;
 
-
     /**
      * Setter
      *

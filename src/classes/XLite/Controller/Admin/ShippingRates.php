@@ -67,7 +67,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->persist($newMarkup);
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Core\TopMessage::addInfo('Shipping markup is successfully created');
+            \XLite\Core\TopMessage::addInfo('Shipping markup has been created successfully');
         }
     }
 

@@ -190,14 +190,14 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         parent::__construct($params);
 
         $this->sortByModes = array(
-            static::SORT_BY_MODE_PRICE_ASC    => static::t('Price: low to high'),
-            static::SORT_BY_MODE_PRICE_DESC   => static::t('Price: high to low'),
-            static::SORT_BY_MODE_NAME_ASC     => static::t('Name: A-Z'),
-            static::SORT_BY_MODE_NAME_DESC    => static::t('Name: Z-A'),
-            static::SORT_BY_MODE_SKU_ASC      => static::t('SKU: a-z'),
-            static::SORT_BY_MODE_SKU_DESC     => static::t('SKU: z-a'),
-            static::SORT_BY_MODE_AMOUNT_ASC   => static::t('Amount: low to high'),
-            static::SORT_BY_MODE_AMOUNT_DESC  => static::t('Amount: high to low'),
+            static::SORT_BY_MODE_PRICE_ASC    => 'Price: low to high',
+            static::SORT_BY_MODE_PRICE_DESC   => 'Price: high to low',
+            static::SORT_BY_MODE_NAME_ASC     => 'Name: A-Z',
+            static::SORT_BY_MODE_NAME_DESC    => 'Name: Z-A',
+            static::SORT_BY_MODE_SKU_ASC      => 'SKU: a-z',
+            static::SORT_BY_MODE_SKU_DESC     => 'SKU: z-a',
+            static::SORT_BY_MODE_AMOUNT_ASC   => 'Quantity: low to high',
+            static::SORT_BY_MODE_AMOUNT_DESC  => 'Quantity: high to low',
         );
     }
 

@@ -207,22 +207,19 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
                 && $this->getItem()->getProduct()->checkOptionsException($options)
             ) {
                 $this->getItem()->setProductOptions($options);
-
                 $this->updateCart();
 
-                \XLite\Core\TopMessage::addInfo('Options has been successfully changed');
+                \XLite\Core\TopMessage::addInfo('Options have been successfully changed');
 
                 $this->setSilenceClose();
 
             } else {
-
                 \XLite\Core\TopMessage::addError(
                     'The product options you have selected are not valid or fall into an exception.'
                     . ' Please select other product options'
                 );
 
                 $this->setInternalRedirect();
-
                 $this->internalError = true;
             }
         }

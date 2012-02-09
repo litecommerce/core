@@ -704,7 +704,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
 
             if (0 < $this->importCell['warning_count']) {
                 \XLite\Core\TopMessage::getInstance()->add(
-                    'During the import was recorded X errors. You can get them by downloading the log imports.',
+                    'During the import was recorded X errors. You can get them by downloading the log files.',
                     array(
                         'count' => $this->importCell['warning_count'],
                         'url'   => \XLite\Logger::getInstance()->getCustomLogURL('import'),
