@@ -703,13 +703,7 @@ abstract class AView extends \XLite\Core\Handler
                 'js/core.form.js',
                 'js/php.js',
                 'js/jquery.mousewheel.js',
-                array(
-                    'file' => 'js/validationEngine/languages/jquery.validationEngine-LANGUAGE_CODE.js',
-                    'filelist' => array(
-                        'js/validationEngine/languages/jquery.validationEngine-' . $this->getCurrentLanguage()->getCode() . '.js',
-                        'js/validationEngine/languages/jquery.validationEngine-en.js',
-                    ),
-                ),
+                $this->getValidationEngineLanguageResource(),
                 'js/validationEngine/jquery.validationEngine.js',
             ),
             static::RESOURCE_CSS => array(
@@ -758,6 +752,40 @@ abstract class AView extends \XLite\Core\Handler
             static::RESOURCE_JS   => $this->getJSFiles(),
             static::RESOURCE_CSS  => $this->getCSSFiles(),
         );
+    }
+
+    /**
+     * Return resource structure for validation engine language file.
+     * By default there are several ready-to-use language files from validationEngine project.
+     * The translation module is able to use its own language validation file. It should decorate this method for this case.
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getValidationEngineLanguageResource()
+    {
+        return array(
+            'file' => 'js/validationEngine/languages/jquery.validationEngine-LANGUAGE_CODE.js',
+            'filelist' => array(
+                $this->getValidationEngineLanguageFile(),
+                'js/validationEngine/languages/jquery.validationEngine-en.js',
+            ),
+        );
+    }
+
+    /**
+     * Return validation engine language file path.
+     * By default there are several ready-to-use language files from validationEngine project.
+     * The translation module is able to use its own language validation file. It should decorate this method for this case.
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getValidationEngineLanguageFile()
+    {
+        return 'js/validationEngine/languages/jquery.validationEngine-' . $this->getCurrentLanguage()->getCode() . '.js';
     }
 
     /**
