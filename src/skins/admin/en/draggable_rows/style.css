@@ -13,10 +13,11 @@
 ul.draggable-rows li.row
 {
   display: table;
-  width: 748px;
-  padding: 5px 0px;
+  width: 648px;
+  padding: 6px 0px;
   border-top: 1px solid #d7e1e8;
   border-bottom: 1px solid #d7e1e8;
+  margin: 9px 0;
 }
 
 ul.draggable-rows li.row div.container
@@ -31,6 +32,7 @@ ul.draggable-rows li.row div.container div.move-cursor
   height: 20px;
   cursor: move;
   float: left;
+  margin: 8px 0 0 13px;
 }
 
 ul.draggable-rows li.row div.container div.separator
@@ -39,6 +41,7 @@ ul.draggable-rows li.row div.container div.separator
   width: 15px;
   height: 20px;
   float: left;
+  margin: 7px 4px;
 }
 
 ul.draggable-rows li.row div.container div.separator.right-separator

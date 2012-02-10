@@ -14,17 +14,17 @@ jQuery().ready(
   function() {
     jQuery('#new_attribute_button').click(
       function () {
-        jQuery('div.group.hidden').hide();
+        jQuery('div.attribute').toggleClass('hidden');
       }
     );
 
     jQuery('#new_group_button').click(
       function () {
-        jQuery('div.attribute.hidden').hide();
+        jQuery('div.group').toggleClass('hidden');
       }
     );
 
-    jQuery('.attribute-change-label').click(
+    jQuery('.attribute-change-label-frame').click(
       function () {
         jQuery(this).nextAll('table.attribute-properties').toggle();
       }
@@ -45,21 +45,33 @@ jQuery().ready(
       }
     ).change();
 
+    jQuery('.attributes-entry-element').each(
+      function (idx, elem) {
+
+        var input = jQuery('input', elem);
+
+        if (input.val() != '') {
+          var title = jQuery('.title', elem);
+
+          title.show();
+
+          input.hide();
+
+          title.click(function () {
+            title.hide();
+            input.show().focus();
+          });
+
+          input.blur(function () {
+            title.show();
+            input.hide();
+          });
+        }
+      }
+    );
+
     jQuery('.attribute').each(
       function (idx, elem) {
-        var title = jQuery('.title', elem)
-        title.show();
-
-        var input = jQuery('input', elem)
-        input.hide();
-
-        title.click(function () {
-          title.hide();
-          input.show().focus();
-        }).blur(function () {
-          title.show();
-          input.hide();
-        });
 
         jQuery(elem).closest('.row').hover(
           function () {
@@ -78,9 +90,8 @@ jQuery().ready(
       function (idx, elem) {
         jQuery(elem).closest('.row').addClass('group-row');
 
-        jQuery('.group-title', elem).dblclick(
-          function () {
-            jQuery('.group-attributes, .group-title', elem).toggleClass('opened');
+        jQuery('.group-title .open-group', elem).click(
+          function (event) {
             jQuery(elem).closest('.row').toggleClass('opened-group');
           }
         );

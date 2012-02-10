@@ -12,7 +12,7 @@
  * @ListChild (list="attributes.book.row.attribute", weight="100")
  *}
 
-<div class="attribute-title">
+<div class="attribute-title attributes-entry-element">
   <span class="title">{getAttributeTitle():h}</span>
   <input type="text" name="{getNamePostedData(#title#)}" value="{getAttributeTitle():h}" />
 </div>
