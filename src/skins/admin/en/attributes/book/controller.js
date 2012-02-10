@@ -26,7 +26,7 @@ jQuery().ready(
 
     jQuery('.attribute-change-label-frame').click(
       function () {
-        jQuery(this).nextAll('table.attribute-properties').toggle();
+        jQuery(this).closest('.row').toggleClass('open-attribute');
       }
     );
 
