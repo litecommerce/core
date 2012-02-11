@@ -25,15 +25,15 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Sale\Core;
+namespace XLite\Module\CDev\Sale\View\Form;
 
 /**
- * Handler
+ * "Set the sale price" dialog form class
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Handler extends \XLite\Core\Handler implements \XLite\Base\IDecorator
+class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDecorator
 {
     /**
      * Set validators pairs for products data. Sale structure.

@@ -821,16 +821,24 @@ abstract class AView extends \XLite\Core\Handler
     protected function registerResources(array $resources, $index, $interface = null)
     {
         foreach ($resources as $type => $files) {
+
             foreach ($files as $data) {
 
                 if (is_string($data)) {
+
                     $data = array(
                         'file' => $data,
                         'filelist' => array($data),
                     );
                 }
 
+                if (!isset($data['filelist'])) {
+
+                    $data['filelist'] = array($data['file']);
+                }
+
                 if (!isset(static::$resources[$index][$type][$data['file']])) {
+
                     static::$resources[$index][$type][$data['file']] = $this->prepareResource($data, $interface);
                 }
             }
