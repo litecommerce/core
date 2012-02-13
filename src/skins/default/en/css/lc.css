@@ -1823,6 +1823,25 @@ form.estimator .main,
   padding: 6px 0px;
 }
 
+.estimate-methods ul li label {
+  display: inline-block;
+  width: 300px;
+  margin-right: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.estimate-methods ul li label .fade {
+  background: transparent url(../images/right_fade.png) repeat-y right top;
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 20px;
+  height: 100%;
+}
+
 .estimate-methods ul li span {
   white-space: nowrap;
   float: right;
