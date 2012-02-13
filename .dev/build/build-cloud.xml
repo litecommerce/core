@@ -133,7 +133,7 @@
             <arg line="submodule update --init" />
         </exec>
         <exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce/classes">
-            <arg line="${buildDir}/.dev/lib/apigen/apigen.php --config ${buildDir}/.dev/build/apigen.neon --template-config ${buildDir}/.dev/lib/apigen/templates/default/config.neon" />
+            <arg line="${buildDir}/.dev/lib/apigen/apigen.php --source ${installDir}/modules/lc_connector/litecommerce/classes --config ${buildDir}/.dev/build/apigen.neon --template-config ${buildDir}/.dev/lib/apigen/templates/default/config.neon" />
         </exec>
         <move file="${installDir}/modules/lc_connector/litecommerce/classes/api" tofile="${buildDir}/api" />
     </target>
