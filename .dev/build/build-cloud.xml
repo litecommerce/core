@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="xlite" default="cc" basedir=".">
+
+    <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" classpath="/usr/share/jmeter/lib/ext/ant-jmeter-1.1.1.jar" />
+
+    <target name="cloud" depends="set-properties,clean,prepare-git,prepare-release, prepare,php-documentor,tests,analysis,comparison,create-build" />
+
+    <target name="set-properties">
+        <property name="version" value="3.x-dev" />
+        <property name="mode" value="cloud" />
+        <property name="root" location="${basedir}" />
+        <property name="buildDir" location="${root}/build" />
+        <property name="sourceDir" location="${root}/source" />
+        <property name="ec2Dir" location="${root}/.ec2" />
+        <property name="drupalDir" location="${root}/xlite_cms" />
+        <property name="lcConnectorDir" location="${drupalDir}/modules/lc_connector" />
+        <property name="lc3CleanDir" location="${drupalDir}/sites/all/themes/lc3_clean" />
+        <property name="jmeterDir" location="/usr/share/jmeter" />
+        <property name="distrDir" location="${buildDir}/output" />
+        <property name="installDir" location="${buildDir}/src" />
+        <property name="lcRoot" location="${installDir}/modules/lc_connector/litecommerce" />
+        <property name="varRunClasses" value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
+        <property name="buildTag" value="${label}" />
+        <property name="phakeDir" value="${buildDir}/.dev/tests/Amazon/Grid" />
+        <property name="phake" value="${buildDir}/.dev/lib/phake/phake" />
+    </target>
+
+    <target name="clean">
+        <delete dir="${buildDir}" />
+        <mkdir dir="${buildDir}" />
+        <mkdir dir="${buildDir}/logs" />
+        <mkdir dir="${buildDir}/api" />
+        <mkdir dir="${buildDir}/reports" />
+        <mkdir dir="${buildDir}/screenshots" />
+        <mkdir dir="${distrDir}" />
+    </target>
+
+    <target name="prepare-git">
+
+        <echo message="Update LiteCommerce source" />
+        <exec executable="git" dir="${sourceDir}">
+            <arg value="pull" />
+        </exec>
+
+        <echo message="Update Drupal source" />
+        <exec executable="git" dir="${drupalDir}">
+            <arg value="pull" />
+        </exec>
+
+        <echo message="Update LC Connector source" />
+        <exec executable="git" dir="${lcConnectorDir}">
+            <arg value="pull" />
+        </exec>
+
+        <echo message="Update LC3 Clean source" />
+        <exec executable="git" dir="${lc3CleanDir}">
+            <arg value="pull" />
+        </exec>
+
+    </target>
+
+    <target name="prepare-phake">
+        <copy todir="${buildDir}">
+            <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
+        </copy>
+        <mkdir dir="${buildDir}/coverage" />
+        <mkdir dir="${phakeDir}/logs" />
+        <chmod perm="ugo+rx" file="${phake}" />
+    </target>
+
+    <target name="run-phake" depends="prepare-phake">
+        <property name="EC2_HOME" value="${EC2_DIR}/tools" />
+        <property name="EC2_PRIVATE_KEY" value="${EC2_DIR}/pk-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem" />
+        <property name="EC2_CERT" value="${EC2_DIR}/cert-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem" />
+        <property name="EC2_KEYPAIR" value="${EC2_DIR}/lc-test.pem" />
+        <property name="EC2_KEYPAIR_NAME" value="lc-test" />
+        <property environment="env"/>
+        <exec executable="${phake}" dir="${phakeDir}">
+            <arg value="${target}" />
+            <arg line="${userVars}" />
+            <env key="EC2_HOME" value="${EC2_HOME}" />
+            <env key="EC2_PRIVATE_KEY" value="${EC2_PRIVATE_KEY}" />
+            <env key="EC2_CERT" value="${EC2_CERT}" />
+            <env key="EC2_KEYPAIR" value="${EC2_KEYPAIR}" />
+            <env key="EC2_KEYPAIR_NAME" value="${EC2_KEYPAIR_NAME}" />
+            <env key="PATH" path="${env.PATH}:${EC2_HOME}/bin" />
+        </exec>
+    </target>
+
+    <target name="prepare-release">
+
+        <echo message="Create revision tag" />
+        <exec executable="git" dir="${sourceDir}">
+            <arg line="tag -a -f ${buildTag} -m 'Night-build tag'" />
+        </exec>
+        <echo message='DRUPAL_LOCAL_REPO="${drupalDir}"' file="${sourceDir}/.dev/build/release/config.local.sh" />
+        <chmod dir="${distrDir}" perm="a+w" type="both" />
+        <echo message="Run release builder" />
+        <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}" failonerror="on">
+            <arg line="-c -l -b ${label} -d ${distrDir} -t" />
+        </exec>
+    </target>
+
+    <target name="prepare">
+
+        <echo message="Deploy built releases" />
+
+        <exec executable="tar" dir="${buildDir}">
+            <arg line="-xzf ${distrDir}/drupal-lc3-${version}-${label}-test.tgz" />
+        </exec>
+        <move file="${buildDir}/drupal" tofile="${installDir}" />
+
+        <echo message="Copy .dev from source directory" />
+        <mkdir dir="${buildDir}/.dev" />
+        <copy todir="${buildDir}/.dev">
+            <fileset dir="${sourceDir}/.dev" />
+        </copy>
+
+        <echo message="Prepare deployed repositories" />
+        <!--<copy file="/u/xcart/etc/config.local-cc.php" tofile="${buildDir}/.dev/build/config.local.php" />-->
+        <copy file="${buildDir}/.dev/tests/local-cc.php" tofile="${buildDir}/.dev/tests/local.php" />
+        <exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce">
+            <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
+        </exec>
+    </target>
+
+
+    <target name="php-documentor">
+        <exec executable="git" dir="${buildDir}/.dev/lib">
+            <arg line="clone https://github.com/apigen/apigen.git" />
+        </exec>
+        <exec executable="git" dir="${buildDir}/.dev/lib/apigen">
+            <arg line="submodule update --init" />
+        </exec>
+        <exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce/classes">
+            <arg line="${buildDir}/.dev/lib/apigen/apigen.php --config ${buildDir}/.dev/build/apigen.neon --template-config ${buildDir}/.dev/lib/apigen/templates/default/config.neon" />
+        </exec>
+        <move file="${installDir}/modules/lc_connector/litecommerce/classes/api" tofile="${buildDir}/api" />
+    </target>
+
+    <target name="tests" depends="plint,phpunit-cc,php-codesniffer-cc,jmeter" />
+
+    <!-- Install Drupal+LC (local) -->
+    <target name="phpunit-deployment">
+        <exec executable="phpunit" dir="${buildDir}" failonerror="on">
+            <arg line="xliteAllTests ${buildDir}/.dev/tests/AllTests.php DEPLOY_DRUPAL" />
+        </exec>
+    </target>
+
+    <!-- Install Drupal+LC (cc) -->
+    <!--<target name="phpunit-deployment-cc">-->
+    <!--<exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="on">-->
+    <!--<arg value="xliteAllTests" />-->
+    <!--<arg value="${buildDir}/.dev/tests/AllTests.php" />-->
+    <!--<arg value="DEPLOY_DRUPAL" />-->
+    <!--</exec>-->
+    <!--<copy file="/u/xcart/etc/config.local.php" tofile="${installDir}/modules/lc_connector/litecommerce/etc/config.local.php" />-->
+    <!--</target>-->
+
+    <target name="php-codesniffer-cc">
+        <exec executable="${sourceDir}/.dev/phpcs" dir="${installDir}" output="${buildDir}/logs/checkstyle.xml">
+            <arg value="--report=checkstyle" />
+            <arg value="--standard=${sourceDir}/.dev/code-sniffs/XLite" />
+            <arg value="--ignore=.dev,src/etc,src/var" />
+            <arg value="${installDir}/modules/lc_connector/litecommerce/classes" />
+        </exec>
+    </target>
+
+
+    <target name="phpunit-cc">
+
+        <chmod perm="ugo+rx" file="${phakeDir}/run-phake.sh" />
+        <antcall target="run-phake">
+            <param name="target" value="default" />
+            <!--<param name="userVars" value="screenshots_url='http://xcart2-530.crtdev.local/~xcart/general/projects/xlite/build/logs/screenshots'" />-->
+            <param name="userVars" value="log_dir='${buildDir}/logs' screenshots_url='http:\/\/ec2-50-17-21-109.compute-1.amazonaws.com\/screenshots'" />
+            <param name="EC2_DIR" value="${ec2Dir}" />
+        </antcall>
+
+        <copy todir="/var/www/screenshots">
+            <fileset dir="${buildDir}/logs/screenshots" />
+        </copy>
+
+        <!--<copy file="${phakeDir}/logs/phpunit.xml" todir="${buildDir}/logs/" />-->
+        <exec executable="php" dir="${sourceDir}">
+            <arg value=".dev/tests/graph-cloud.php" />
+            <arg value="${buildDir}/logs/phpunit.xml.speed" />
+            <arg value="${buildDir}/reports" />
+            <arg value="../../../artifacts/xlite" />
+        </exec>
+    </target>
+
+    <target name="jmeter">
+        <echo message="Run JMeter" />
+        <jmeter jmeterhome="${jmeterDir}" testplan="${sourceDir}/.dev/loadtests/JMeterLoadTest.jmx" resultlog="${buildDir}/logs/JMeterResults.jtl">
+        </jmeter>
+        <xslt in="${buildDir}/logs/JMeterResults.jtl" out="${buildDir}/reports/jmeter.html" style="${sourceDir}/.dev/loadtests/jmeter-results-report.xsl" />
+        <exec executable="php" dir="${sourceDir}">
+            <arg value=".dev/loadtests/graph-cloud.php" />
+            <arg value="${buildDir}/logs/JMeterResults.jtl" />
+            <arg value="${buildDir}/reports" />
+            <arg value="../../../artifacts/xlite" />
+        </exec>
+    </target>
+
+    <target name="plint">
+        <echo message="Run PHPlint" />
+        <exec executable="${sourceDir}/.dev/phpl.sh" dir="${installDir}/modules/lc_connector/litecommerce" failonerror="true" output="${buildDir}/reports/plint.html" />
+    </target>
+
+    <target name="analysis" depends="phpdepend,phpmd,copy-paste-detect,git-stat" />
+
+    <target name="phpdepend">
+        <echo message="Run PHPDepend" />
+        <exec executable="php" dir="${buildDir}">
+            <arg value="${sourceDir}/.dev/pdepend.php" />
+            <arg value="--jdepend-chart=${buildDir}/reports/pdepend.svg" />
+            <arg value="--overview-pyramid=${buildDir}/reports/pyramid.svg" />
+            <arg value="--coderank-mode=property,inheritance,method" />
+            <arg value="${varRunClasses}" />
+        </exec>
+    </target>
+
+    <target name="phpmd">
+        <echo message="Run PHPMD" />
+        <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html">
+            <arg value="${sourceDir}/.dev/phpmd.php" />
+            <arg value="${sourceDir}/src/classes" />
+            <arg value="html" />
+            <arg value="rulesets/codesize.xml,rulesets/design.xml,rulesets/naming.xml,rulesets/unusedcode.xml" />
+        </exec>
+    </target>
+
+    <target name="copy-paste-detect">
+        <echo message="Run PHP Copy-Paste detecor" />
+        <exec executable="phpcpd" dir="${sourceDir}/src" output="${buildDir}/reports/phpcpd.txt" failonerror="false">
+            <arg value="--exclude" />
+            <arg value="var" />
+            <arg value="--exclude" />
+            <arg value="lib" />
+            <arg value="${sourceDir}/src" />
+        </exec>
+    </target>
+
+    <target name="git-stat">
+        <echo message="Run Git stats" />
+        <mkdir dir="${buildDir}/reports/gitstat" />
+        <chmod file="${buildDir}/.dev/lib/gitstats/gitstats" perm="ugo+rx" />
+        <exec executable="${buildDir}/.dev/lib/gitstats/gitstats" dir="${sourceDir}">
+            <arg line="-c project_name=XLite -c authors_top=10 ${sourceDir} ${buildDir}/reports/gitstat" />
+        </exec>
+    </target>
+
+    <target name="comparison">
+        <!--exec executable="svn" dir="${buildDir}" >
+            <arg line="checkout svn://svn.crtdev.local/repo/comparison/main comparison" />
+        </exec>
+        <ant antfile="${buildDir}/comparison/build.xml" target="cc" dir="${buildDir}/comparison" /-->
+    </target>
+
+    <target name="create-build">
+        <tar destfile="${buildDir}/litecommerce-${version}.${label}-api.tgz" basedir="${buildDir}/api" compression="gzip" />
+        <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
+            <arg line="-c -l -b ${label} -d ${distrDir}" />
+        </exec>
+        <copy todir="/home/ubuntu/lc_night_builds" overwrite="true">
+            <fileset dir="${distrDir}" />
+            <fileset file="${buildDir}/litecommerce-${version}.${label}-api.tgz" />
+        </copy>
+    </target>
+
+</project>

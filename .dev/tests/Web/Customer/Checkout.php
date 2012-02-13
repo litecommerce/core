@@ -27,8 +27,7 @@
  * @resource user
  * @resource admin_address_book
  * @resource order
- * @resource product_inventory
- * @use product
+ * @resource product
  * @use shipping_method
  */
 

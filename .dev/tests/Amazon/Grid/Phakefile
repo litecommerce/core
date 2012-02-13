@@ -55,16 +55,16 @@ function array_reduce_index($array, $callback, $initial = null)
 
 function get_screenshots($app)
 {
-    if (!file_exists($app['logdir'] . '/screenshots'))
-        mkdir($app['logdir'] . '/screenshots');
+    if (!file_exists($app['log_dir'] . '/screenshots'))
+        mkdir($app['log_dir'] . '/screenshots');
     $options = array('keypair' => $app['keypair'], 'user' => 'ubuntu');
     foreach ($app['cloud']->farms as $farm) {
-        $farm->download('/var/www/selenium-screenshots/*', $app['logdir'] . '/screenshots', $options);
-        //exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $farm->public_dns . ':/var/www/selenium-screenshots/* ' . $app['logdir'] . '/screenshots');
+        $farm->download('/var/www/selenium-screenshots/*', $app['log_dir'] . '/screenshots', $options);
+        //exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $farm->public_dns . ':/var/www/selenium-screenshots/* ' . $app['log_dir'] . '/screenshots');
     }
     if ($app['cloud']->micro_farm){
-        $app['cloud']->micro_farm->download('/var/www/selenium-screenshots/*', $app['logdir'] . '/screenshots' , $options);
-        //exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $app['cloud']->micro_farm->public_dns . ':/var/www/selenium-screenshots/* ' . $app['logdir'] . '/screenshots');
+        $app['cloud']->micro_farm->download('/var/www/selenium-screenshots/*', $app['log_dir'] . '/screenshots' , $options);
+        //exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $app['cloud']->micro_farm->public_dns . ':/var/www/selenium-screenshots/* ' . $app['log_dir'] . '/screenshots');
     }
 }
 
@@ -73,13 +73,22 @@ function server_setup($app)
     print PHP_EOL . "Setting up LC server..." . PHP_EOL;
 
     $server = $app['cloud']->server;
-    $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite",
+
+
+    $options = array('pwd' => $app['server_htdocs'] . "/xlite",
         'user' => 'bitnami',
         'keypair' => $app['keypair']);
+    $code = $server->run('ls', $options);
+    while ($code != 0){
+        sleep(2);
+        $code = $server->run('ls', $options);
+    }
+
+
     $server->run(
         'sudo sed "s/_hostname_/' . $app["cloud"]->server->private_dns . '/g"  .dev/tests/config.template.php > src/etc/config.php;'.
-        'sudo /etc/init.d/lc-startup;'.
-        'sed "s/_hostname_/' . $app["cloud"]->server->private_dns . '/g"  .dev/tests/local.template.php | sed "s/_grid_hub_/' . $app["cloud"]->hub->private_dns . '/g" | sed "s/_clients_count_/' . $app["farms_count"] . '/g" > .dev/tests/local.php', $options);
+        'sudo /etc/init.d/lc-startup -b tests;'.
+        'sed "s/_hostname_/' . $app["cloud"]->server->private_dns . '/g"  .dev/tests/local.template.php | sed "s/_grid_hub_/' . $app["cloud"]->hub->private_dns . '/g" | sed "s/_clients_count_/' . $app["farms_count"] . '/g" | sed "s/_screenshots_url_/' . $app['screenshots_url'] . '/g" > .dev/tests/local.php', $options);
     $options['pwd'] .= '/.dev';
     $code = $server->run("./phpunit tests/Dev_Install.php", $options);
     //if ($code != 0)
@@ -103,19 +112,22 @@ task("setup", function ($app)
     $app['lc_ami'] = exec("ec2-describe-images | grep lc-server | cut -f2");
     $app['server_instance_type'] = "c1.medium";
     $app['grid_instance_type'] = "m1.small";
+    $app['keypair'] = getenv("EC2_KEYPAIR");
+    $app['keypair_name'] = getenv("EC2_KEYPAIR_NAME");
+
     $app['firefox_profile'] = "/http/selenium/selenium-grid/FirefoxProfile";
 
     if (!isset($app['screenshots_url']))
-        $app['screenshots_url'] = 'http://localhost/screenshots';
+        $app['screenshots_url'] = 'http:\/\/localhost\/screenshots';
 
-    $app['keypair'] = getenv("EC2_KEYPAIR");
-    $app['keypair_name'] = getenv("EC2_KEYPAIR_NAME");
+    $app['server_htdocs'] = '/opt/bitnami/apache2/htdocs';
     $app['selenium_grid_path'] = "/http/selenium/selenium-grid";
-    $app['logdir'] = 'logs';
-    if (file_exists($app['logdir'])) {
-        exec('rm -rf ' . $app['logdir']);
+    if (!isset($app['log_dir']))
+        $app['log_dir'] = realpath('logs');
+    if (file_exists($app['log_dir'])) {
+        exec('rm -rf ' . $app['log_dir']);
     }
-    mkdir($app['logdir']);
+    mkdir($app['log_dir']);
 });
 
 
@@ -388,7 +400,8 @@ group("server", function()
     task('test_seq', 'config', function($app)
     {
         print PHP_EOL . "Run sequential tests on " . $app['cloud']->server->public_dns . "...";
-        $app['cloud']->server->run("sudo ./phpunit.sh ONLYWEB", array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']));
+        $code = $app['cloud']->server->run("sudo ./phpunit.sh ONLYWEB", array('pwd' => $app['server_htdocs'] . "/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']));
+
     });
 
     desc("Start parallel tests");
@@ -397,30 +410,28 @@ group("server", function()
         $server = $app['cloud']->server;
         print PHP_EOL . "Run parallel tests on " . $app['cloud']->server->public_dns . "...";
 
-        $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']);
+        $options = array('pwd' => $app['server_htdocs'] . "/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']);
         $code = $server->run("sudo ./phpunit-parallel.php --build --clients-count ". ($app['farms_count']) ."; cat /tmp/phpunit.txt", $options);
-        $server->download('/tmp/phpunit*.txt', $app['logdir'], $options);
-        //exec('scp -i ' . $app['keypair'] . ' bitnami@' . $server->public_dns . ':/tmp/phpunit*.xml ' . $app['logdir']);
+        $server->download('/tmp/phpunit*.txt', $app['log_dir'], $options);
+        $server->download('/tmp/phpunit*.xml', $app['log_dir'], $options);
 
         get_screenshots($app);
-        //if ($code != 0)
-        //    die($code);
     });
     desc('Run noweb phpunit tests on LC server with code coverage collecting');
     task('test_noweb', 'config', function($app){
         $server = $app['cloud']->server;
         print PHP_EOL . 'Starting Non-web tests on ' .$server->public_dns . '...';
-        $options = array('pwd' => "/opt/bitnami/apache2/htdocs/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']);
+        $options = array('pwd' => $app['server_htdocs'] . "/xlite/.dev", 'user' => 'bitnami', 'keypair' => $app['keypair']);
         $code = $server->run('mkdir /tmp/coverage-html; sudo ./phpunit --coverage-clover /tmp/phpunit-clover.xml --coverage-html /tmp/coverage-html --verbose --log-junit /tmp/phpunit-noweb.xml xliteAllTests tests/AllTests.php LOCAL_TESTS,NOWEB', $options);
-        $server->download('/tmp/phpunit-*.xml', $app['logdir'], $options);
-        $server->download('/tmp/coverage-html', $app['logdir'], $options);
+        $server->download('/tmp/phpunit-*.xml', $app['log_dir'], $options);
+        $server->download('/tmp/coverage-html', $app['log_dir'], $options);
     });
 
     desc('Drupal + LC deployment test');
     task('test_deploy', "setup", function($app)
     {
         $server = $app['cloud']->server;
-        $options = array('pwd' => "/opt/bitnami/apache2/htdocs", 'user' => 'bitnami', 'keypair' => $app['keypair']);
+        $options = array('pwd' => $app['server_htdocs'] , 'user' => 'bitnami', 'keypair' => $app['keypair']);
 
         $server->run('cp xlite/src/etc/config.php xlite/.dev/build/config.local.php;' .
             'cp xlite_cms/sites/default/settings.php xlite_cms/sites/default/settings.old.php;
@@ -435,8 +446,6 @@ group("server", function()
         $server->run('sudo rm -rf xlite_cms/modules/lc_connector/litecommerce;' .
             'cp xlite_cms/sites/default/settings.old.php xlite_cms/sites/default/settings.php;' .
             'sudo chmod -R 777 .', $options);
-        //if ($code != 0)
-          //  die($code);
         server_setup($app);
     });
 
@@ -471,16 +480,30 @@ task('parallel_boot', 'clear', 'setup', 'hub:boot', 'server:boot', function($app
     }
 });
 
-
 task('parallel', 'parallel_boot', 'hub:start', 'server:config', 'rc:boot', 'rc:start', 'server:test_parallel', 'grid:shutdown');
 
-task('deploy', 'parallel_boot', 'hub:start', 'server:config', 'server:test_deploy', function ($app){
+task('noweb', 'ec2:check_settings', 'parallel_boot', 'hub:start', 'server:config', 'server:test_noweb', function($app){
+    $app['noweb_time'] = microtime(true);
+    server_setup($app);
+});
+
+task('deploy', 'noweb', 'server:test_deploy',function ($app){
     $app['deploy_time'] = microtime(true);
 });
-task('default', 'ec2:check_settings', 'deploy', 'rc:boot', 'rc:start', 'server:test_parallel', 'grid:shutdown', function ($app){
+
+task('default', 'deploy', 'rc:boot', 'rc:start', 'server:test_parallel', 'grid:shutdown', function ($app){
     echo PHP_EOL . "TRACE:  Instance type: ". $app['grid_instance_type'];
-    echo PHP_EOL . "TRACE:  Time for deploy: ". ($app['deploy_time'] - $app['time']);
-    echo PHP_EOL . "TRACE:  Time for parallel: ". (microtime(true) - $app['deploy_time']);
+    $last = $app['time'];
+    if (isset($app['deploy_time'])){
+        echo PHP_EOL . "TRACE:  Time for deploy: ". ($app['deploy_time'] - $app['time']);
+        $last = $app['deploy_time'];
+    }
+    if (isset($app['noweb_time'])){
+        echo PHP_EOL . "TRACE:  Time for non web tests: ". ($app['noweb_time'] - $last);
+        $last = $app['noweb_time'];
+    }
+    echo PHP_EOL . "TRACE:  Time for parallel: ". (microtime(true) - $last);
 });
+
 
 ?>
