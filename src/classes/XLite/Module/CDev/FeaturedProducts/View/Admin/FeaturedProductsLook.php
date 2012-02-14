@@ -25,15 +25,15 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\FormField\Select;
+namespace XLite\Module\CDev\FeaturedProducts\View\Admin;
 
 /**
- * Sibcategories look selector
+ * Featured products widget look selector
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class SubcategoriesLook extends \XLite\View\FormField\Select\Regular
+class FeaturedProductsLook extends \XLite\View\FormField\Select\Regular
 {
     /**
      * Get default options
@@ -46,7 +46,8 @@ class SubcategoriesLook extends \XLite\View\FormField\Select\Regular
     {
         return array(
             'list'  => 'List',
-            'icons' => 'Icons',
+            'grid'  => 'Grid',
+            'table' => 'Table',
         );
     }
 }

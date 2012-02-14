@@ -65,6 +65,20 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
     }
 
     /**
+     * Get widget display mode
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDisplayMode()
+    {
+        return $this->getParam(self::PARAM_IS_EXPORTED)
+            ? $this->getParam(self::PARAM_DISPLAY_MODE)
+            : \XLite\Core\Config::getInstance()->CDev->FeaturedProducts->featured_products_look;
+    }
+
+    /**
      * Return title
      *
      * @return string
@@ -98,9 +112,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_DISPLAY_MODE]
-            ->setValue(\XLite\Core\Config::getInstance()->CDev->FeaturedProducts->featured_products_look);
 
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
 

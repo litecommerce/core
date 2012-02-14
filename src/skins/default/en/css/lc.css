@@ -350,25 +350,22 @@ h1#page-title.hidden-title
 /* Subcategories */
 
 .category-description,
-ul.subcategory-icons
+  ul.subcategory-list
 {
   margin-bottom: 40px;
 }
 
-ul.subcategory-icons
-{
+ul.subcategory-list {
   margin-top: 5px;
 }
 
-ul.grid-list.subcategory-icons li {
+ul.subcategory-list li {
   margin: 21px 23px;
 }
 
-ul.subcategory-icons a
-{
+ul.subcategory-list a {
   font-size: 19px;
 }
-
 
 /* Products */
 
@@ -703,6 +700,10 @@ ul.subcategory-icons a
   list-style: none;
   display: block;
   margin-bottom: 35px;
+}
+
+.products .products-table ul.product-price {
+  margin-bottom: 0px;
 }
 
 .products ul.product-price li {
