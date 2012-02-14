@@ -22,5 +22,5 @@ XLite\Model\LanguageLabel:
   - { name: 'Required field X is not defined or empty', translations: [{ code: en, label: "Required field '{{name}}' is not defined or empty. The product was not created" }] }
   - { name: 'X image unable to load', translations: [{ code: en, label: '{{url}} image unable to load' }] }
   - { name: 'During the import was recorded X errors. You can get them by downloading the log files.', translations: [{ code: en, label: 'During the import was recorded {{count}} errors. You can get them by <a href="{{url}}">downloading</a> the log files.' }] }
-  - { name: 'Some products could have been imported incorrectly', translations: [{ code: en, label: 'Some products could have been imported incorrectly. Please check your catalog. Find the ID\'s of the products that could have been imported incorrectly in the import log file available at the above link.' }] }
+  - { name: 'Some products could have been imported incorrectly', translations: [{ code: en, label: 'Some products could have been imported incorrectly. Please check your catalog. Find the ID\'s of such products in the import log file available at the above link.' }] }
 

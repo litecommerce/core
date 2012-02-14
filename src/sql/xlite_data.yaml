@@ -334,7 +334,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Select language to edit', translations: [{ code: en, label: 'Select language to edit' }] }
   - { name: 'Add new language', translations: [{ code: en, label: 'Add new language' }] }
   - { name: Save, translations: [{ code: en, label: Save }] }
-  - { name: 'Please specify text labels for each language', translations: [{ code: en, label: 'Please specify text labels for each language. If you do not specify a value for some language, {{language}} label wiil be used.' }] }
+  - { name: 'Please specify text labels for each language', translations: [{ code: en, label: 'Please specify text labels for each language. If you do not specify a value for some language, the {{language}} label will be used.' }] }
   - { name: 'Label name', translations: [{ code: en, label: 'Label name' }] }
   - { name: required, translations: [{ code: en, label: required }] }
   - { name: 'Confirm deletion', translations: [{ code: en, label: 'Confirm deletion' }] }
@@ -367,7 +367,6 @@ XLite\Model\LanguageLabel:
   - { name: 'Other items', translations: [{ code: en, label: 'Other items' }] }
   - { name: 'The selected shipping method has been deleted successfully', translations: [{ code: en, label: 'The selected shipping method has been deleted successfully' }] }
   - { name: 'Shipping methods have been updated', translations: [{ code: en, label: 'Shipping methods have been updated' }] }
-  - { name: 'Shipping method has been added', translations: [{ code: en, label: 'Shipping method has been added' }] }
   - { name: 'The selected zones have been deleted successfully', translations: [{ code: en, label: 'The selected zones have been deleted successfully' }] }
   - { name: 'Zone details have been updated successfully', translations: [{ code: en, label: 'Zone details have been updated successfully' }] }
   - { name: 'New zone has been created successfully', translations: [{ code: en, label: 'New zone has been created successfully' }] }
@@ -459,7 +458,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Required field X is not defined or empty', translations: [{ code: en, label: "Required field '{{name}}' is not defined or empty. The product was not created" }] }
   - { name: 'X image unable to load', translations: [{ code: en, label: '{{url}} image unable to load' }] }
   - { name: 'During the import was recorded X errors. You can get them by downloading the log files.', translations: [{ code: en, label: 'During the import was recorded {{count}} errors. You can get them by <a href="{{url}}">downloading</a> the log files.' }] }
-  - { name: 'Some products could have been imported incorrectly', translations: [{ code: en, label: 'Some products could have been imported incorrectly. Please check your catalog. Find the ID\'s of the products that could have been imported incorrectly in the import log file available at the above link.' }] }
+  - { name: 'Some products could have been imported incorrectly', translations: [{ code: en, label: 'Some products could have been imported incorrectly. Please check your catalog. Find the ID\'s of such products in the import log file available at the above link.' }] }
   - { name: 'Order #X, Y', translations: [{ code: en, label: 'Order #{{id}}, {{date}}' }] }
   - { name: 'Order X', translations: [{ code: en, label: 'Order #{{id}}' }] }
   - { name: 'The X field is empty', translations: [{ code: en, label: 'The {{name}} field is empty' }] }

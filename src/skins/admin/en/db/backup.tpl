@@ -42,7 +42,7 @@ function ShowNotes()
         <td>&nbsp;&nbsp;</td>
         <td>&nbsp;</td>
         <td>
-  {t(#You can choose if to download your database data (SQL dump) directly to your local computer by clicking on the 'Download SQL file' button or to save database data to a file on the web server ('var/backup/sqldump.sql.php') by clicking on the 'Create SQL file' button#)}.
+  {t(#You can choose if to download your database data (SQL dump) directly to your local computer by clicking on the "Download SQL file" button or to save database data to a file on the web server ("var/backup/sqldump.sql.php") by clicking on the "Create SQL file" button#)}.
   {t(#If you choose the second option, you can download the file from the server later on and delete it from the server by clicking on the 'Delete SQL file' button.#)}
         </td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
