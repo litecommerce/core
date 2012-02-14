@@ -18,7 +18,7 @@
         <property name="jmeterDir" location="/usr/share/jmeter" />
         <property name="distrDir" location="${buildDir}/output" />
         <property name="installDir" location="${buildDir}/src" />
-        <property name="lcRoot" location="${lcRoot}" />
+        <property name="lcRoot" location="${installDir}/modules/lc_connector/litecommerce" />
         <property name="varRunClasses" value="${lcRoot}/var/run/classes" />
         <property name="buildTag" value="${label}" />
         <property name="phakeDir" value="${buildDir}/.dev/tests/Amazon/Grid" />
