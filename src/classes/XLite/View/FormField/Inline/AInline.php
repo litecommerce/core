@@ -325,11 +325,17 @@ abstract class AInline extends \XLite\View\AView
      */
     public function getNameParts()
     {
-        return array(
-            $this->getParam(static::PARAM_ITEMS_LIST)->getDataPrefix(),
-            $this->getEntity()->getUniqueIdentifier() ?: 0,
-            $this->shortName,
-        );
+        return $this->getEntity()->getUniqueIdentifier() ? 
+            array(
+                $this->getParam(static::PARAM_ITEMS_LIST)->getDataPrefix(),
+                $this->getEntity()->getUniqueIdentifier(),
+                $this->shortName,
+            )
+            : array(
+                $this->getParam(static::PARAM_ITEMS_LIST)->getCreateDataPrefix(),
+                0,
+                $this->shortName,
+            );
     }
 
     /**
