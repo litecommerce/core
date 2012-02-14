@@ -187,6 +187,27 @@ button:focus
 }
 
 /**
+ * Markup free clearing.
+ *
+ * @see http://perishablepress.com/press/2009/12/06/new-clearfix-hack
+ */
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+/* IE6 */
+* html .clearfix {
+  height: 1%;
+}
+/* IE7 */
+*:first-child + html .clearfix {
+  min-height: 1%;
+}
+
+/**
  * Layout
  */
 

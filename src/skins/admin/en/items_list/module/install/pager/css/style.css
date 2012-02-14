@@ -15,9 +15,18 @@
   width: 950px;
 }
 
+.pager-bottom.addons-pager {
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
 .addons-install-pager-found-title {
   font-size: 20px;
   float: left;
+}
+
+.pager-bottom .addons-install-pager-found-title {
+  display: none;
 }
 
 .addons-install-pager-list {

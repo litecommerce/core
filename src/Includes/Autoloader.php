@@ -92,6 +92,7 @@ abstract class Autoloader
         require_once (LC_DIR_LIB . 'PEAR2' . LC_DS . 'Autoload.php');
     }
 
+    
     /**
      * Main LC autoloader
      *
@@ -118,7 +119,9 @@ abstract class Autoloader
          *
          * May be that issue is related: http://bugs.php.net/50731
          */
-        if (0 === strpos($class = ltrim($class, '\\'), LC_NAMESPACE)) {
+        $class = ltrim($class, '\\');
+
+        if (0 === strpos($class, LC_NAMESPACE)) {
             include_once (static::$lcAutoloadDir . str_replace('\\', LC_DS, $class) . '.php');
         }
     }
@@ -135,21 +138,8 @@ abstract class Autoloader
      */
     public static function __lc_autoload_includes($class)
     {
-        /**
-         * NOTE: it's the PHP bug: in some cases it adds or removes the leading slash. Examples:
-         *
-         * 1. For static call "\Includes\Decorator\Utils\CacheManager::rebuildCache()" it will remove
-         * the leading slash, and class name passed in this function will be "Includes\Decorator\Utils\CacheManager".
-         *
-         * 2. Pass class name as a string into the functions, e.g.
-         * "is_subclass_of($object, '\Includes\Decorator\Utils\CacheManager')". Then the class
-         * name will be passed into the autoloader with the leading slash - "\Includes\Decorator\Utils\CacheManager"
-         *
-         * Remove the "ltrim()" call when this issue will be resolved
-         *
-         * May be that issue is related: http://bugs.php.net/50731
-         */
-        if (0 === strpos($class = ltrim($class, '\\'), LC_NAMESPACE_INCLUDES)) {
+        $class = ltrim($class, '\\');
+        if (0 === strpos($class, LC_NAMESPACE_INCLUDES)) {
             include_once (LC_DIR_ROOT . str_replace('\\', LC_DS, $class) . '.php');
         }
     }

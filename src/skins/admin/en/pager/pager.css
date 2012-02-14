@@ -21,33 +21,27 @@ ul.pager {
   padding: 0;
   margin: 0;
   list-style: none;
-  display: inline;
 }
 
 ul.pager li {
-  padding: 0;
-  border: none;
-  display: inline-table;
   list-style: none;
   background: none;
-  height: 2.1em;
+  height: 1.9em;
   width: 2.1em;
   text-align: center;
   vertical-align: middle;
   border: 1px solid #fff;
   float: left;
+  padding: 0.3em 0 0 0;
 }
 
 ul.pager li a,
 ul.pager li span {
   border: 0;
-  display: table-cell;
   text-decoration: none;
   font-weight: normal;
   text-align: center;
   vertical-align: middle;
-  width: 100%;
-  height: 100%;
   font-size: 1.1em;
 }
 
@@ -61,7 +55,9 @@ ul.pager li.disabled
   display: none;
 }
 
-ul.pager li.selected span {
+ul.pager li.selected,
+  ul.pager li.selected span
+{
   background: #869cb1 none;
   color: #fff;
   cursor: text;

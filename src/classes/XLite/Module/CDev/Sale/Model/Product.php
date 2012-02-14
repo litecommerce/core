@@ -32,6 +32,10 @@ namespace XLite\Module\CDev\Sale\Model;
  *
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @MappedSuperclass
+ * @HasLifecycleCallbacks
+ *
  */
 class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
@@ -80,6 +84,18 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @Column (type="decimal", precision=14, scale=4)
      */
     protected $salePriceValue = 0;
+
+
+    /**
+     * "Sale value" price calculated
+     *
+     * @var   float
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="decimal", precision=14, scale=4)
+     */
+    protected $salePriceValueCalculated = 0;
 
 
     /**
@@ -170,7 +186,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
         return $difference;
     }
 
-
     /**
      * Return product list price (price for customer interface)
      *
@@ -182,4 +197,19 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     {
         return $this->getSalePrice();
     }
+
+    /**
+     * Prepare update date
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     *
+     * @PreUpdate
+     */
+    public function prepareUpdateSalePriceCalculatedFields()
+    {
+        $this->setSalePriceValueCalculated($this->getSalePrice());
+    }
+
 }

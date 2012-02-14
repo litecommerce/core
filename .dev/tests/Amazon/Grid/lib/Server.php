@@ -112,6 +112,16 @@ class Server extends Ec2Client
         }
         exec('scp -o StrictHostKeyChecking=no -r -i ' . $options['keypair'] . ' ' .$options['user']. '@' . $this->public_dns . ':'.$filename.' ' . $toDir);
     }
+
+    function upload($filename, $toDir, $options = array()){
+        if (!isset($options['keypair'])){
+            throw new Exception('Keypair must be set');
+        }
+        if (!isset($options['user'])){
+            $options['user'] = 'ubuntu';
+        }
+        exec('scp -o StrictHostKeyChecking=no -r -i ' . $options['keypair'] . ' ' . $filename . ' ' .$options['user']. '@' . $this->public_dns . ':'.$toDir);
+    }
 //     def run(command, options)
 //       command = RemoteCommand.new command, options.merge(:host => public_dns)
 //       command.execute

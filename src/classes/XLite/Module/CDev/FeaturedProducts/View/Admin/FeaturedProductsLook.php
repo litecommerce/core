@@ -25,38 +25,29 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Sale\Core;
+namespace XLite\Module\CDev\FeaturedProducts\View\Admin;
 
 /**
- * Handler
+ * Featured products widget look selector
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Handler extends \XLite\Core\Handler implements \XLite\Base\IDecorator
+class FeaturedProductsLook extends \XLite\View\FormField\Select\Regular
 {
     /**
-     * Set validators pairs for products data. Sale structure.
+     * Get default options
      *
-     * @param mixed $data Data
-     *
-     * @return null
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function setSaleDataValidators(&$data)
+    protected function getDefaultOptions()
     {
-        if ($this->getPostedData('participateSale')) {
-
-            if (\XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PRICE == $this->getPostedData('discountType')) {
-                // sale value is price
-                $data->addPair('salePriceValue', new \XLite\Core\Validator\Float(), null, static::t('Sale price'))
-                    ->setRange(0);
-            } else {
-                // sale value is percent
-                $data->addPair('salePriceValue', new \XLite\Core\Validator\Integer(), null, static::t('Percent off'))
-                    ->setRange(0, 100);
-            }
-        }
+        return array(
+            'list'  => 'List',
+            'grid'  => 'Grid',
+            'table' => 'Table',
+        );
     }
 }
