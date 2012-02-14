@@ -494,7 +494,7 @@ function attachTooltip(elm, content) {
         }
       );
 
-      $block.mouseover(startHide);
+      $block.mouseout(startHide);
     }
   );
 }

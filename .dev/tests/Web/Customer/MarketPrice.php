@@ -24,9 +24,8 @@
  * @see       ____file_see____
  * @since     1.0.10
  *
- * @resource product_market_price
+ * @resource product
  * @resource category
- * @use product
  */
 
 require_once __DIR__ . '/ACustomer.php';

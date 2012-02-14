@@ -80,7 +80,7 @@ die ()
 
 get_current_time ()
 {
-	_current_time=`$PHP -qr 'echo mktime();'`
+	_current_time=`$PHP -qr 'echo time();'`
 	eval "$1=$_current_time"
 }
 
@@ -95,7 +95,7 @@ get_elapsed_time()
 		exit 2;
 	fi
 
-	_php_code='$s=mktime()-'$1'; echo sprintf("%d:%02d:%02d", ($s1=intval($s/3600)), ($s2=intval(($s-$s1*3600)/60)), ($s-$s1*3600-$s2*60));'
+	_php_code='$s=time()-'$1'; echo sprintf("%d:%02d:%02d", ($s1=intval($s/3600)), ($s2=intval(($s-$s1*3600)/60)), ($s-$s1*3600-$s2*60));'
 
 	_elapsed_time=`eval $PHP" -qr '"$_php_code"'"`
 }

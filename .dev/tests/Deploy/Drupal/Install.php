@@ -428,7 +428,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         $this->waitForCondition(
             'selenium.isElementPresent("//title[contains(text(), \'Installing ' . self::PRODUCT_NAME . '\')]")',
-            20000
+            200000
         );
     }
 
@@ -473,7 +473,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         $this->waitForCondition(
             'selenium.isElementPresent("//title[contains(text(), \'Configure site\')]")',
-            20000
+            200000
         );
     }
 
@@ -583,7 +583,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         $this->waitForLocalCondition(
             'jQuery("#edit-clean-url").attr("value") == "1"',
-            30000,
+            300000,
             'Waiting for clean URLs testing'
         );
 
