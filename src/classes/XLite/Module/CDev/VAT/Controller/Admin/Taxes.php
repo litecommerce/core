@@ -183,7 +183,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
             }
         }
 
-        \XLite\Core\TopMessage::addInfo('Tax rates has been updated successfully');
+        \XLite\Core\TopMessage::addInfo('Tax rates have been updated successfully');
         \Xlite\Core\Database::getEM()->flush();
     }
 

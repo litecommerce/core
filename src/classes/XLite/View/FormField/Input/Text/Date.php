@@ -107,7 +107,7 @@ class Date extends \XLite\View\FormField\Input\Text
 
             $result = false;
             $this->errorMessage = \XLite\Core\Translation::lbl(
-                'The value of X field must be greater than Y',
+                'The value of the X field must be greater than Y',
                 array(
                     'name' => $this->getLabel(),
                     'min'  => $this->formatDate($this->getParam(self::PARAM_MIN)),
@@ -118,7 +118,7 @@ class Date extends \XLite\View\FormField\Input\Text
 
             $result = false;
             $this->errorMessage = \XLite\Core\Translation::lbl(
-                'The value of X field must be less than Y',
+                'The value of the X field must be less than Y',
                 array(
                     'name' => $this->getLabel(),
                     'max'  => $this->formatDate($this->getParam(self::PARAM_MAX)),

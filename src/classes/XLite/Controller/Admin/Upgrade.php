@@ -226,7 +226,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                     }
 
                 } else {
-                    $message = 'unable to add module entry to the install list: "{{name}}"';
+                    $message = 'unable to add module entry to the installation list: "{{name}}"';
                     $this->showError(__FUNCTION__, $message, array('name' => $module->getActualName()));
                 }
 
@@ -259,7 +259,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             $entry = \XLite\Upgrade\Cell::getInstance()->addUploadedModule($path);
 
             if (!isset($entry)) {
-                $message = 'unable to add module entry to the install list: "{{path}}"';
+                $message = 'unable to add module entry to the installation list: "{{path}}"';
                 $this->showError(__FUNCTION__, $message, array('path' => $path));
 
             } elseif (\XLite::getInstance()->checkVersion($entry->getMajorVersionNew(), '!=')) {

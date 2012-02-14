@@ -44,6 +44,6 @@ class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
      */
     public function getTitle()
     {
-        return 'Module Marketplace';
+        return 'Modules Marketplace';
     }
 }

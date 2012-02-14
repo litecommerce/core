@@ -44,7 +44,7 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Search users';
+        return 'Search for users';
     }
 
     /**

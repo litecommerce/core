@@ -292,22 +292,16 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
 
         // TODO: methodToLoad - move to this controller from Image model
         if (call_user_func_array(array($image, $methodToLoad), $paramsToLoad)) {
-
             $image->setProduct($product);
-
             $product->getImages()->add($image);
 
             \XLite\Core\Database::getEM()->persist($image);
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Core\TopMessage::addInfo(
-                'The detailed image has been successfully added'
-            );
+            \XLite\Core\TopMessage::addInfo('The detailed image has been added successfully');
 
         } else {
-            \XLite\Core\TopMessage::addError(
-                'Failed to add detailed image'
-            );
+            \XLite\Core\TopMessage::addError('Failed to add detailed image');
         }
     }
 

@@ -116,7 +116,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
         $rates = \XLite\Core\Request::getInstance()->rates;
         if (is_array($rates)) {
             foreach ($rates as $rateId => $data) {
-
                 $rate = null;
 
                 if ('%' == $rateId) {
@@ -143,7 +142,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
                 }
 
                 if ($rate) {
-
                     $productClass = $data['productClass']
                         ? \XLite\Core\Database::getRepo('XLite\Model\ProductClass')->find($data['productClass'])
                         : null;
@@ -170,7 +168,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
             }
         }
 
-        \XLite\Core\TopMessage::addInfo('Tax rates has been updated successfully');
+        \XLite\Core\TopMessage::addInfo('Tax rates have been updated successfully');
         \Xlite\Core\Database::getEM()->flush();
     }
 

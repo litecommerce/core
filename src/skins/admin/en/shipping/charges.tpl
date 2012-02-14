@@ -34,7 +34,7 @@ function ShowNotes()
 -->
 </script>
 
-{t(#Use this section to define rules for calculating shipping rates.#)}
+{t(#Use this section to define shipping rates calculation rules#)}
 
 <span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>{t(#How to define shipping rates#)} &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
@@ -84,7 +84,7 @@ function ShowNotes()
 <br />
 <p align="justify">
 <b>{t(#Raw online rate (on-line rate)#)}</b> <br />
-  {t(#This component is automatically calculated by shipping add-on modules and cannot be edited.#)}
+  {t(#This component is automatically calculated by shipping add-on module and cannot be edited#)}.
 </p>
 <br />
 </span>

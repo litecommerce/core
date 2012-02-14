@@ -50,7 +50,7 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
 
         return ($module && 'view_license' === $this->getAction())
                 ? static::t('{{module}} license agreement', array('module' => $module->getModuleName()))
-                : 'Updates available';
+                : 'Updates are available';
     }
 
     /**

@@ -45,7 +45,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      */
     protected $params = array('target', 'language', 'page');
 
-
     /**
      * Return the current page title (for the content area)
      *
@@ -363,7 +362,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         $id = \XLite\Core\Request::getInstance()->label_id;
 
         if ($id) {
-
             $label = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->find($id);
 
             if ($label) {
@@ -412,13 +410,13 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         } elseif (!isset($label[$codeDefault]) || !$label[$codeDefault]) {
 
             \XLite\Core\TopMessage::addError(
-                'The text label has not been added, because its translation for the default application language has not been specified'
+                'The text label has not been added, because its translation to the default application language has not been specified'
             );
 
         } elseif (!isset($label[$codeInterface]) || !$label[$codeInterface]) {
 
             \XLite\Core\TopMessage::addError(
-                'The text label has not been added, because its translation for the default interface language has not been specified'
+                'The text label has not been added, because its translation to the default interface language has not been specified'
             );
 
         } else {
@@ -465,13 +463,13 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         } elseif (!isset($label[$codeDefault]) || !$label[$codeDefault]) {
 
             \XLite\Core\TopMessage::addError(
-                'The text label has not been modified, because its translation for the default application language has not been specified'
+                'The text label has not been modified, because its translation to the default application language has not been specified'
             );
 
         } elseif (!isset($label[$codeInterface]) || !$label[$codeInterface]) {
 
             \XLite\Core\TopMessage::addError(
-                'The text label has not been modified, because its translation for the default interface language has not been specified'
+                'The text label has not been modified, because its translation to the default interface language has not been specified'
             );
 
         } else {

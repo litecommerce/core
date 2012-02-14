@@ -15,7 +15,7 @@
   <div class="top-note">
     <div>
       {t(#After you enable this tax it will be included in product prices#)}<br />
-      {t(#This taxis calculated based on customer's billing address.#)}
+      {t(#This tax is calculated based on customer's billing address#)}.
     </div>
   </div>
 

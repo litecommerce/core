@@ -32,7 +32,7 @@ function ShowNotes()
 	}
 </style>
 
-{t(#Use this section to restore the database of your online store. Please note that database restore procedure can take up to several minutes.#)}
+{t(#Use this section to restore the database of your online store. Please note that the database restoration procedure can take up to several minutes#)}
 
 <span id="notes_url" style="display:">
   <a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()">
@@ -54,7 +54,7 @@ function ShowNotes()
         <br /><br />
         {t(#Alternatively, upload file sqldump.sql.php to the var/backup/ sub-directory click on the "Restore from server" button#)}
         <br /><br />
-        {t(#To restore the images which are stored in the file system, you have to copy them from the archive to LiteCommerce catalog#)}
+        {t(#To restore the images stored in the file system you have to copy them from the archive to the LiteCommerce catalog#)}
         </td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
     </tr>

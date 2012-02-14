@@ -9,4 +9,5 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-{config.Company.company_name:h}: {t(#User profile modified#)}
+
+{config.Company.company_name:h}: {t(#User profile is modified#)}

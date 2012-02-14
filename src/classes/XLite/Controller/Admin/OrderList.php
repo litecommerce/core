@@ -44,7 +44,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Search orders';
+        return 'Search for orders';
     }
 
     /**

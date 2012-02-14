@@ -5,17 +5,17 @@
 
 XLite\Model\LanguageLabel:
   - { name: 'The X field is empty', translations: [{ code: en, label: 'The {{name}} field is empty' }] }
-  - { name: 'The value of X field must be greater than Y', translations: [{ code: en, label: 'The value of {{name}} field must be greater than {{min}}' }] }
-  - { name: 'The value of X field must be greater less Y', translations: [{ code: en, label: 'The value of {{name}} field must be less than {{max}}' }] }
-  - { name: 'The value of X has an incorrect format', translations: [{ code: en, label: 'The value of {{name}} has an incorrect format' }] }
-  - { name: 'The value of X should not be longer than Y', translations: [{ code: en, label: 'The value of {{name}} should not be longer than {{max}}' }] }
+  - { name: 'The value of the X field must be greater than Y', translations: [{ code: en, label: 'The value of the {{name}} field must be greater than {{min}}' }] }
+  - { name: 'The value of the X field must be less than Y', translations: [{ code: en, label: 'The value of the {{name}} field must be less than {{max}}' }] }
+  - { name: 'The value of the X field has an incorrect format', translations: [{ code: en, label: 'The value of the {{name}} field has an incorrect format' }] }
+  - { name: 'The value of the X field should not be longer than Y', translations: [{ code: en, label: 'The value of the {{name}} field should not be longer than {{max}}' }] }
   - { name: 'Trying to access the shop at X', translations: [{ code: en, label: 'Trying to access the shop at <a href="{{url}}">{{url}}</a> ...' }] }
-  - { name: 'To fix this problem, do the following: 3 points', translations: [{ code: en, label: 'To fix this problem, do the following: <ul><li>make sure that your hosting service provider has HTTPS protocol enabled;</li><li>verify your HTTPS settings ("https_host" parameter in the "etc/config.php" file must be valid);</li><li>reload this page.</li></ul>' }] }
+  - { name: 'To fix this problem, do the following: 3 points', translations: [{ code: en, label: 'To fix this problem take the following steps: <ul><li>make sure that the HTTPS protocol is enabled by your hosting service provider;</li><li>verify your HTTPS settings ("https_host" parameter in the "etc/config.php" file must be valid);</li><li>reload this page.</li></ul>' }] }
   - { name: 'You can upload the database data directly from your local computer', translations: [{ code: en, label: 'You can upload the database data directly from your local computer by clicking on the "Browse" button, choosing an SQL dump file and clicking on the "Upload and restore" button.  While this method is more convenient, it has a file size limitation of {{N}}.' }] }
   - { name: 'Alternatively, upload file sqldump.sql.php to the var/backup/ sub-directory click on the "Restore from server" button', translations: [{ code: en, label: 'Alternatively, upload the file named sqldump.sql.php to the var/backup/ sub-directory of your LiteCommerce installation on the web server and click on the "Restore from server" button. After the restoration you might want to delete the file from the server by clicking on the "Delete SQL file" button above.' }] }
-  - { name: 'To restore the images which are stored in the file system, you have to copy them from the archive to LiteCommerce catalog', translations: [{ code: en, label: 'To restore the images which are stored in the file system, you have to copy them from the archive to LiteCommerce catalog, taking into consideration the catalog structure.' }] }
+  - { name: 'To restore the images stored in the file system you have to copy them from the archive to the LiteCommerce catalog', translations: [{ code: en, label: 'To restore the images stored in the file system you have to copy them from the archive to the LiteCommerce catalog, taking into consideration the catalog structure.' }] }
   - { name: 'Maximum size of the file to upload is N', translations: [{ code: en, label: 'Maximum size of the file to upload is {{N}}.' }] }
-  - { name: 'Unable to install module X because some modules which it depends on, have not been installed or activated yet', translations: [{ code: en, label: 'Unable to install module &quot;{{X}}&quot; because some modules which it depends on, have not been installed or activated yet.' }] }
+  - { name: 'Unable to install module X because some modules, which it depends on, have not been installed or activated yet', translations: [{ code: en, label: 'Unable to install module &quot;{{X}}&quot; because some modules, which it depends on, have not been installed or activated yet.' }] }
   - { name: 'cannot set X permissions', translations: [{ code: en, label: 'cannot set {{X}} permissions' }] }
   - { name: 'Incorrect owner of X directory', translations: [{ code: en, label: 'Incorrect owner of {{X}} directory' }] }
   - { name: 'Cannot set X permissions for subdirectories:', translations: [{ code: en, label: 'Cannot set {{X}} permissions for subdirectories:' }] }

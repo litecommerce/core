@@ -68,7 +68,7 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Search products';
+        return 'Search for products';
     }
 
     /**

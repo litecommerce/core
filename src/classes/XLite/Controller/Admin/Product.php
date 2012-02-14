@@ -435,9 +435,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
 
         \XLite\Core\Database::getEM()->flush();
 
-        \XLite\Core\TopMessage::addInfo(
-            'The detailed images have been successfully updated'
-        );
+        \XLite\Core\TopMessage::addInfo('The detailed images have been updated successfully');
     }
 
 
