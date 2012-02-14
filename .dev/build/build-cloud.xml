@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="xlite" default="cc" basedir=".">
+<project name="xlite" default="cloud" basedir=".">
 
     <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" classpath="/usr/share/jmeter/lib/ext/ant-jmeter-1.1.1.jar" />
 
@@ -19,7 +19,7 @@
         <property name="distrDir" location="${buildDir}/output" />
         <property name="installDir" location="${buildDir}/src" />
         <property name="lcRoot" location="${installDir}/modules/lc_connector/litecommerce" />
-        <property name="varRunClasses" value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
+        <property name="varRunClasses" value="${lcRoot}/var/run/classes" />
         <property name="buildTag" value="${label}" />
         <property name="phakeDir" value="${buildDir}/.dev/tests/Amazon/Grid" />
         <property name="phake" value="${buildDir}/.dev/lib/phake/phake" />
@@ -119,7 +119,7 @@
         <echo message="Prepare deployed repositories" />
         <!--<copy file="/u/xcart/etc/config.local-cc.php" tofile="${buildDir}/.dev/build/config.local.php" />-->
         <copy file="${buildDir}/.dev/tests/local-cc.php" tofile="${buildDir}/.dev/tests/local.php" />
-        <exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce">
+        <exec executable="php" dir="${lcRoot}">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
         </exec>
     </target>
@@ -132,10 +132,10 @@
         <exec executable="git" dir="${buildDir}/.dev/lib/apigen">
             <arg line="submodule update --init" />
         </exec>
-        <exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce/classes">
-            <arg line="${buildDir}/.dev/lib/apigen/apigen.php --source ${installDir}/modules/lc_connector/litecommerce/classes --config ${buildDir}/.dev/build/apigen.neon --template-config ${buildDir}/.dev/lib/apigen/templates/default/config.neon" />
+        <exec executable="php" dir="${lcRoot}/classes">
+            <arg line="${buildDir}/.dev/lib/apigen/apigen.php --source ${lcRoot}/classes --config ${buildDir}/.dev/build/apigen.neon --template-config ${buildDir}/.dev/lib/apigen/templates/default/config.neon --destination ${lcRoot}/classes/api" />
         </exec>
-        <move file="${installDir}/modules/lc_connector/litecommerce/classes/api" tofile="${buildDir}/api" />
+        <move file="${lcRoot}/classes/api" tofile="${buildDir}/api" />
     </target>
 
     <target name="tests" depends="plint,phpunit-cc,php-codesniffer-cc,jmeter" />
@@ -154,7 +154,7 @@
     <!--<arg value="${buildDir}/.dev/tests/AllTests.php" />-->
     <!--<arg value="DEPLOY_DRUPAL" />-->
     <!--</exec>-->
-    <!--<copy file="/u/xcart/etc/config.local.php" tofile="${installDir}/modules/lc_connector/litecommerce/etc/config.local.php" />-->
+    <!--<copy file="/u/xcart/etc/config.local.php" tofile="${lcRoot}/etc/config.local.php" />-->
     <!--</target>-->
 
     <target name="php-codesniffer-cc">
@@ -162,7 +162,7 @@
             <arg value="--report=checkstyle" />
             <arg value="--standard=${sourceDir}/.dev/code-sniffs/XLite" />
             <arg value="--ignore=.dev,src/etc,src/var" />
-            <arg value="${installDir}/modules/lc_connector/litecommerce/classes" />
+            <arg value="${lcRoot}/classes" />
         </exec>
     </target>
 
@@ -205,7 +205,7 @@
 
     <target name="plint">
         <echo message="Run PHPlint" />
-        <exec executable="${sourceDir}/.dev/phpl.sh" dir="${installDir}/modules/lc_connector/litecommerce" failonerror="true" output="${buildDir}/reports/plint.html" />
+        <exec executable="${sourceDir}/.dev/phpl.sh" dir="${lcRoot}" failonerror="true" output="${buildDir}/reports/plint.html" />
     </target>
 
     <target name="analysis" depends="phpdepend,phpmd,copy-paste-detect,git-stat" />
