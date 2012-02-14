@@ -10,7 +10,7 @@
 XLite\Model\Config:
   - name: featured_products_look
     category: CDev\FeaturedProducts
-    type: 'XLite\View\FormField\Select\SubcategoriesLook'
+    type: 'XLite\Module\CDev\FeaturedProducts\View\Admin\FeaturedProductsLook'
     orderby: 10
     value: grid
     translations:

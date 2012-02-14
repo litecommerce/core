@@ -27,6 +27,9 @@
 
 class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_TestCase
 {
+    public  static function setUpBeforeClass(){
+        xlite_restore_sql_from_backup();
+    }
     public function testGetListPrice()
     {
         $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();

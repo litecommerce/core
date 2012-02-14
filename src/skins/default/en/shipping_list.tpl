@@ -12,7 +12,7 @@
 <ul class="shipping-rates">
   <li FOREACH="getRates(),rate">
     <input type="radio" id="method{getMethodId(rate)}" name="methodId" value="{getMethodId(rate)}" checked="{isRateSelected(rate)}" />
-    <label for="method{getMethodId(rate)}">{getMethodName(rate):h}</label>
+    <label for="method{getMethodId(rate)}">{getMethodName(rate):h}<img src="images/spacer.gif" alt="" class="fade" /></label>
     <span>{formatPrice(getTotalRate(rate),cart.getCurrency()):h}</span>
   </li>
 </ul>

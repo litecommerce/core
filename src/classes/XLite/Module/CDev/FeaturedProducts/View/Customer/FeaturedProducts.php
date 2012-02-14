@@ -60,8 +60,24 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
     {
         parent::setWidgetParams($params);
 
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->getDisplayMode());
+
         $this->widgetParams[\XLite\View\Pager\APager::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR]->setValue(false);
         $this->widgetParams[\XLite\View\Pager\APager::PARAM_ITEMS_COUNT]->setValue(5);
+    }
+
+    /**
+     * Get widget display mode
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDisplayMode()
+    {
+        return $this->getParam(self::PARAM_IS_EXPORTED)
+            ? $this->getParam(self::PARAM_DISPLAY_MODE)
+            : \XLite\Core\Config::getInstance()->CDev->FeaturedProducts->featured_products_look;
     }
 
     /**
@@ -98,9 +114,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_DISPLAY_MODE]
-            ->setValue(\XLite\Core\Config::getInstance()->CDev->FeaturedProducts->featured_products_look);
 
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
 
