@@ -60,6 +60,8 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\Category
     {
         parent::setWidgetParams($params);
 
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->getDisplayMode());
+
         $this->widgetParams[\XLite\View\Pager\APager::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR]->setValue(false);
         $this->widgetParams[\XLite\View\Pager\APager::PARAM_ITEMS_COUNT]->setValue(5);
     }
