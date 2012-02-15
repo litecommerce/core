@@ -85,7 +85,6 @@ class Classes extends \Includes\DataStructure\Graph
      */
     protected $isChanged;
 
-
     // ------------------------------ Constructor and common getters -
 
     /**
@@ -223,7 +222,6 @@ class Classes extends \Includes\DataStructure\Graph
         return $this->isDecorator() && ($children = $this->getChildren()) ? reset($children)->{__FUNCTION__}() : $this;
     }
 
-
     // ------------------------------ Methods to modify graph -
 
     /**
@@ -272,7 +270,6 @@ class Classes extends \Includes\DataStructure\Graph
     {
         $this->isTopLevelNode = true;
     }
-
 
     // ------------------------------ Methods to get paths and source code -
 
@@ -474,7 +471,6 @@ class Classes extends \Includes\DataStructure\Graph
         return $this->tags;
     }
 
-
     // ------------------------------ Auxiliary methods -
 
     /**
@@ -543,5 +539,19 @@ class Classes extends \Includes\DataStructure\Graph
     protected function prepareClassName($class)
     {
         return \Includes\Utils\Converter::trimLeadingChars($class, '\\');
+    }
+
+    /**
+     * For additional info
+     *
+     * @param self $node Current node
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function drawAdditional(self $node)
+    {
+        return parent::drawAdditional($node) . ' <i>(' . $node->getParentClass() . ')</i>';
     }
 }

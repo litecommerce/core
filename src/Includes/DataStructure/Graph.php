@@ -41,7 +41,6 @@ class Graph
      */
     const ROOT_NODE_KEY = '____ROOT____';
 
-
     /**
      * Node unique key
      *
@@ -61,7 +60,6 @@ class Graph
      * @since  1.0.0
      */
     protected $children = array();
-
 
     // ------------------------------ Constructor and common getters -
 
@@ -105,7 +103,6 @@ class Graph
     {
         return $this->children;
     }
-
 
     // ------------------------------ Methods to modify graph -
 
@@ -177,7 +174,6 @@ class Graph
         $oldParent->removeChild($this);
         $newParent->addChild($this);
     }
-
 
     // ------------------------------ Methods to iterate over the graph -
 
@@ -256,7 +252,6 @@ class Graph
     {
     }
 
-
     // ------------------------------ Error handling -
 
     /**
@@ -291,7 +286,6 @@ class Graph
         return $code . ' (' . $this->getKey() . ($node ? (', ' . $node->getKey()) : '') . ')';
     }
 
-
     // ------------------------------ Visualization -
 
     /**
@@ -316,10 +310,24 @@ class Graph
         foreach ($root->getChildren() as $child) {
 
             // Output
-            echo (str_repeat('|__', floor($offset / 2)) . $child->getKey() . '<br />');
+            echo (str_repeat('|__', floor($offset / 2)) . $child->getKey() . $this->drawAdditional($child) . '<br />');
 
             // Recursive call: next level
             $this->{__FUNCTION__}($child, $offset + 2);
         }
+    }
+
+    /**
+     * For additional info
+     *
+     * @param self $node Current node
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function drawAdditional(self $node)
+    {
+        return '';
     }
 }
