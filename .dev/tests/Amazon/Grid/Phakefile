@@ -449,6 +449,23 @@ group("server", function()
         server_setup($app);
     });
 
+    desc("Run apigen");
+    task('apigen', 'setup', function($app){
+        $server = $app['cloud']->server;
+        $options = array('pwd' => $app['server_htdocs'] , 'user' => 'bitnami', 'keypair' => $app['keypair']);
+        $server->run('cd xlite/src;'.
+            'php ../.dev/build/devcode_postprocess.php;'.
+            'cd ../../lib;'.
+            'git clone https://github.com/apigen/apigen.git;'.
+            'cd apigen;'.
+            'git submodule update --init;'.
+            'cd ../../xlite/src;'.
+            '../../lib/apigen/apigen.php --source classes --config ../.dev/build/apigen.neon --template-config ../.dev/lib/apigen/templates/default/config.neon --destination /tmp/api;'
+            , $options);
+        $server->download('/tmp/api', $app['log_dir'], $options);
+        $server->run('rm -rf xlite/src/classes/api; rm -rf lib/apigen', $options);
+    });
+
     desc("Shutdown lc server instance");
     task('shutdown', "setup", function($app)
     {
@@ -482,7 +499,7 @@ task('parallel_boot', 'clear', 'setup', 'hub:boot', 'server:boot', function($app
 
 task('parallel', 'parallel_boot', 'hub:start', 'server:config', 'rc:boot', 'rc:start', 'server:test_parallel', 'grid:shutdown');
 
-task('noweb', 'ec2:check_settings', 'parallel_boot', 'hub:start', 'server:config', 'server:test_noweb', function($app){
+task('noweb', 'ec2:check_settings', 'parallel_boot', 'hub:start', 'server:config', 'apigen', 'server:test_noweb', function($app){
     $app['noweb_time'] = microtime(true);
     server_setup($app);
 });
