@@ -39,6 +39,12 @@
     {end:}
   </tbody>
 
+  <tbody class="no-items" {if:hasResults()}style="display: none;"{end:}>
+    <tr>
+      <td colspan="{getColumnsCount()}"><widget template="{getEmptyListTemplate()}" /></td>
+    </tr>
+  </tbody>
+
   <tbody IF="isBottomInlineCreation()" class="create bottom-create">
     <widget template="items_list/model/table/parts/create_box.tpl" />
   </tbody>

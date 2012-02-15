@@ -18,7 +18,7 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -158,6 +158,18 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
         }
 
         return $this->columns;
+    }
+
+    /**
+     * Returnd columns count
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function getColumnsCount()
+    {
+        return count($this->getColumns());
     }
 
     /**
