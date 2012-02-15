@@ -99,6 +99,16 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
 
     /**
+     * Get discountType
+     *
+     * @return string $discountType
+     */
+    public function getDiscountType()
+    {
+        return $this->discountType ?: self::SALE_DISCOUNT_TYPE_PRICE;
+    }
+
+    /**
      * Calculate "Sale percent off" value.
      * Based on "salePriceValue" and "discountType" fields values
      *
