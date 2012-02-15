@@ -90,7 +90,8 @@ class Version extends \XLite\Controller\Customer\ACustomer
         $result = array();
 
         foreach (\Includes\Utils\ModulesManager::getActiveModules() as $data) {
-            $result[] = '(' . $data['authorName'] . '): ' . $data['moduleName'];
+            $result[] = '(' . $data['authorName'] . '): ' . $data['moduleName'] 
+                . ' (v.' . $data['majorVersion'] . '.' . $data['minorVersion'] . ')';
         }
 
         return 'Installed modules:' . LC_EOL . ($result ? implode(LC_EOL, $result) : static::t('None'));
