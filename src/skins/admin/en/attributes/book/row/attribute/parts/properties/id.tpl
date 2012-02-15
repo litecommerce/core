@@ -2,7 +2,7 @@
 
 {**
  * Attribute internal identifier
- *  
+ *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -12,8 +12,16 @@
  * @ListChild (list="attributes.book.row.attribute.properties", weight="100")
  *}
 
-<tr>
-  <td>{t(#ID#)}:</td>
-  <td><input type="text" name="{getNamePostedData(#name#)}" value="{getAttributeID():h}" class="attribute-id" /></td>
-  <td>({t(#must be unique and one word#):h})</td>
+<tr class="additional-properties-id">
+  <td class="label">
+    {t(#ID#)}:
+  </td>
+
+  <td class="input">
+    <input type="text" name="{getNamePostedData(#name#)}" value="{getAttributeID():h}" class="attribute-id" />
+  </td>
+
+  <td class="note">
+    ({t(#must be unique and one word#):h})
+  </td>
 </tr>

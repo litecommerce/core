@@ -2,7 +2,7 @@
 
 {**
  * Attribute assigned info
- *  
+ *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -13,9 +13,19 @@
  *}
 
 <tr IF="!isNew()">
-  <td colspan="10">
-    <span>{t(#Assigned to#)}</span>
-    <widget class="\XLite\View\Button\Attribute\AssignClasses" attribute="{getAttribute()}" />
-    <span IF="getAssignedProductsCount()">{getAssignedProductsInfoLabel()}</span>
+  <td colspan="3">
+
+    <ul class="assigned-product-classes">
+
+      <li class="label">{t(#Assigned to#)}</li>
+
+      <li class="popup">
+        <widget class="\XLite\View\Button\Attribute\AssignClasses" attribute="{getAttribute()}" />
+      </li>
+
+      <li IF="getAssignedProductsCount()">{getAssignedProductsInfoLabel()}</li>
+  
+    </ul>
+
   </td>
 </tr>

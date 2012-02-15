@@ -28,13 +28,28 @@
 namespace XLite\View\Button\Attribute;
 
 /**
- * AddChoices 
+ * AddChoices
  *
  * @see   ____class_see____
  * @since 1.0.16
  */
 class AddChoices extends \XLite\View\Button\Attribute\Base\Popup
 {
+    /**
+     *  Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = 'attributes/book/row/attribute/add_choices/controller.js';
+
+        return $list;
+    }
+
     /**
      * Return button label
      *

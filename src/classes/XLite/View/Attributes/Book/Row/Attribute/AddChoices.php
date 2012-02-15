@@ -68,6 +68,27 @@ class AddChoices extends \XLite\View\Dialog
     }
 
     /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        // For popups
+        $list = array_merge(
+            $list,
+            $this->getWidget(array(), '\XLite\View\Button\Attribute\AddChoices')->getJSFiles(),
+            $this->getWidget(array(), '\XLite\View\Button\Attribute\AssignClasses')->getJSFiles()
+        );
+
+        return $list;
+    }
+
+    /**
      * Return templates directory name
      *
      * @return string

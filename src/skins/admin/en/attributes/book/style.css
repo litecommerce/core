@@ -51,9 +51,29 @@ div.attribute.hidden .attribute-properties
   display: table;
 }
 
-.attribute-properties .additional-properties
-{
-  display: inline;
+.attribute-properties {
+  width: 100%;
+}
+
+.attribute-properties td.label {
+  width: 50px;
+}
+
+.attribute-properties ul {
+  list-style: none;
+}
+
+.attribute-properties ul li {
+  float: left;
+  padding: 5px 10px;
+}
+
+ul.additional-properties.number li {
+  padding-right: 5px;
+}
+
+ul.additional-properties.number li.label {
+  padding-left: 0px;
 }
 
 #new_attribute_button {

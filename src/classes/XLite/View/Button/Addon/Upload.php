@@ -63,27 +63,18 @@ class Upload extends \XLite\View\Button\APopupButton
     }
 
     /**
-     * Return default value for widget param
+     * Return URL parameters to use in AJAX popup
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
-     * @since  1.0.16
+     * @since  1.0.0
      */
-    protected function getDefaultTarget()
+    protected function prepareURLParams()
     {
-        return \XLite\View\ModulesManager\UploadAddons::UPLOAD_ADDONS_TARGET;
-    }
-
-    /**
-     * Return default value for widget param
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.16
-     */
-    protected function getDefaultWidget()
-    {
-        return '\XLite\View\ModulesManager\UploadAddons';
+        return array(
+            'target' => \XLite\View\ModulesManager\UploadAddons::UPLOAD_ADDONS_TARGET,
+            'widget' => '\XLite\View\ModulesManager\UploadAddons',
+        );
     }
 
     /**

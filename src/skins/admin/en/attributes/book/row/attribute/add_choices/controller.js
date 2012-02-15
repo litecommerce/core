@@ -2,8 +2,8 @@
 
 /**
  * JS for "Add choices" popup
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -32,11 +32,11 @@ decorate(
 
     jQuery('a.new-value').click(
       function () {
-        jQuery('ul#choices-list li').last().clone().appendTo('ul#choices-list');
-        jQuery('ul#choices-list li').last().show();
-        jQuery('ul#choices-list li').last().children('input').val('');
-        jQuery('ul#choices-list li').last().children('input').attr('name', 'postedData[' + o.fakeID-- + '][title]');
-        jQuery('ul#choices-list li').last().children('input').focus();
+        jQuery('#choices-list li').last().clone().appendTo('#choices-list');
+        jQuery('#choices-list li').last().show();
+        jQuery('#choices-list li').last().children('input').val('');
+        jQuery('#choices-list li').last().children('input').attr('name', 'postedData[' + o.fakeID-- + '][title]');
+        jQuery('#choices-list li').last().children('input').focus();
       }
     );
 
