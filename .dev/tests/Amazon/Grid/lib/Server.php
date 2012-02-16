@@ -62,8 +62,20 @@ class Server extends Ec2Client
 
     function run($command, $options = array()){
         $options['host'] = $this->public_dns;
+
+        $this->wait_for_ssh($options);
+
         $command = new RemoteCommand($command, $options);
         return $command->execute();
+    }
+
+    private function wait_for_ssh($options){
+        $ls = new RemoteCommand('ls > /dev/null', $options);
+        $code = $ls->execute(true);
+        while ($code != 0){
+            sleep(2);
+            $code = $ls->execute(true);
+        }
     }
 
     function download($filename, $toDir, $options = array()){

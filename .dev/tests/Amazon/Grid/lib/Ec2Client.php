@@ -33,11 +33,6 @@ class Ec2Client
         throw new InstanceLaunchError($output);
     }
 
-    static function shutdown($instance_id)
-    {
-        return self::ec2_shell("ec2-terminate-instances $instance_id");
-    }
-
     static function version()
     {
         return self::ec2_shell("ec2-version");
