@@ -3,7 +3,7 @@
 
     <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" classpath="/usr/share/jmeter/lib/ext/ant-jmeter-1.1.1.jar" />
 
-    <target name="cloud" depends="set-properties,clean,prepare-git,prepare-release, prepare,php-documentor,tests,analysis,comparison,create-build" />
+    <target name="cloud" depends="set-properties,clean,prepare-git,prepare-release, prepare,tests,analysis,comparison,create-build" />
 
     <target name="set-properties">
         <property name="version" value="3.x-dev" />
