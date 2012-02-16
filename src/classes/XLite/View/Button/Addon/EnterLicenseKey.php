@@ -36,6 +36,21 @@ namespace XLite\View\Button\Addon;
 class EnterLicenseKey extends \XLite\View\Button\Popup\Button
 {
     /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = 'button/js/enter_license_key.js';
+
+        return $list;
+    }
+
+    /**
      * Return content for popup button
      *
      * @return string
@@ -84,5 +99,17 @@ class EnterLicenseKey extends \XLite\View\Button\Popup\Button
         $list['action'] = 'view';
 
         return $list;
+    }
+
+    /**
+     * Return CSS classes
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getClass()
+    {
+        return parent::getClass() . ' enter-license-key';
     }
 }

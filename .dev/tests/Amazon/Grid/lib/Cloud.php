@@ -46,11 +46,9 @@ class Cloud
             self::$instance = unserialize(file_get_contents("data.txt"));
         else
             self::$instance = new Cloud();
-        //print_r(self::$instance);
         return self::$instance;
     }
     function save(){
-        //$data = array('farms' => $this->farms, 'hub' => $this->hub, 'server' => $this->server);
         file_put_contents('data.txt',serialize(self::$instance));
     }
 }
