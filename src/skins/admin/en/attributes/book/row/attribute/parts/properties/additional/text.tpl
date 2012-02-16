@@ -13,7 +13,8 @@
  *}
 
 <tr IF="#Text#=getAttributeTypeName()|isNew()" class="additional-properties">
-  <td colspan="3">
+  <td></td>
+  <td colspan="2">
     <ul class="additional-properties">
 
       <li class="label">{t(#Default#)}:</li>

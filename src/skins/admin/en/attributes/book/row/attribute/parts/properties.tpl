@@ -2,7 +2,7 @@
 
 {**
  * Attribute properties
- *  
+ *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -12,6 +12,8 @@
  * @ListChild (list="attributes.book.row.attribute", weight="500")
  *}
 
-<table class="attribute-properties" title="{t(#Attribute properties#)}">
-  {displayViewListContent(#attributes.book.row.attribute.properties#)}
-</table>
+ <div class="attribute-properties-frame">
+   <table class="attribute-properties" title="{t(#Attribute properties#)}">
+     {displayViewListContent(#attributes.book.row.attribute.properties#)}
+   </table>
+ </div>

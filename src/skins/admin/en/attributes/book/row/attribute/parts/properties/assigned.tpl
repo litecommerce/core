@@ -17,14 +17,14 @@
 
     <ul class="assigned-product-classes">
 
-      <li class="label">{t(#Assigned to#)}</li>
+      <li class="assigned-label">{t(#Assigned to#)}</li>
 
       <li class="popup">
         <widget class="\XLite\View\Button\Attribute\AssignClasses" attribute="{getAttribute()}" />
       </li>
 
-      <li IF="getAssignedProductsCount()">{getAssignedProductsInfoLabel()}</li>
-  
+      <li IF="getAssignedProductsCount()" class="products-info-label">({getAssignedProductsInfoLabel()})</li>
+
     </ul>
 
   </td>

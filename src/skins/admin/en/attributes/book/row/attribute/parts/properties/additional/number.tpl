@@ -13,7 +13,8 @@
  *}
 
 <tr IF="#Number#=getAttributeTypeName()|isNew()" class="additional-properties">
-  <td colspan="3">
+  <td></td>
+  <td colspan="2">
 
     <ul class="additional-properties number">
 
@@ -33,9 +34,9 @@
 
       <li class="note">({t(#suffix#)})</li>
 
-      <li class="label">{t(#Default#)}:</li>
+      <li class="label default">{t(#Default#)}:</li>
 
-      <li class="box">
+      <li class="box default">
         <input type="text" name="{getNamePostedData(#default#)}" value="{getAttributeDefaultValue():h}" />
       </li>
 

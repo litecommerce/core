@@ -13,7 +13,8 @@
  *}
 
 <tr IF="#Selector#=getAttributeTypeName()" class="additional-properties">
-  <td colspan="3">
+  <td></td>
+  <td colspan="2">
 
     <ul class="additional-properties">
 
