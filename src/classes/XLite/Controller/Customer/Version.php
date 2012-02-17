@@ -22,76 +22,78 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.17
  */
 
-namespace XLite\Module\CDev\FeaturedProducts;
+namespace XLite\Controller\Customer;
 
 /**
- * Featured Products module manager
+ * Version 
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.17
  */
-abstract class Main extends \XLite\Module\AModule
+class Version extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * Author name
+     * Preprocessor for no-action ren
      *
-     * @return string
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAuthorName()
+    protected function doNoAction()
     {
-        return 'Creative Development LLC';
+        \Includes\Utils\Operator::flush($this->getInfoMessage());
+
+        exit(0);
     }
 
     /**
-     * Module name
+     * Method to compose different messages
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.17
      */
-    public static function getModuleName()
+    protected function getInfoMessage()
     {
-        return 'Featured Products';
+        $result = '';
+
+        $result .= $this->getVersionMessage() . LC_EOL;
+        $result .= $this->getModulesMessage() . LC_EOL;
+
+        return $result;
     }
 
     /**
-     * Module version
+     * Return info about current LC version
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.17
      */
-    public static function getMinorVersion()
+    protected function getVersionMessage()
     {
-        return '9';
+        return static::t('Version') . ': ' . \XLite::getInstance()->getVersion() . LC_EOL;
     }
 
     /**
-     * Module description
+     * Return info about installed modules
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.17
      */
-    public static function getDescription()
+    protected function getModulesMessage()
     {
-        return 'Shows your best and most profitable products to customers.';
-    }
+        $result = array();
 
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function showSettingsForm()
-    {
-        return true;
+        foreach (\Includes\Utils\ModulesManager::getActiveModules() as $data) {
+            $result[] = '(' . $data['authorName'] . '): ' . $data['moduleName'] 
+                . ' (v.' . $data['majorVersion'] . '.' . $data['minorVersion'] . ')';
+        }
+
+        return 'Installed modules:' . LC_EOL . ($result ? implode(LC_EOL, $result) : static::t('None'));
     }
 }
