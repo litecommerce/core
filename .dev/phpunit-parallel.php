@@ -453,7 +453,7 @@ class ResourcePool
     {
         if ($this->block_all == ResourcePool::RESOURCE_RESERVED)
             throw new Exception("There is block resource");
-        if (array_search(ResourcePool::RESOURCE_CLEARED, $this->resources) !== false) {
+        if (array_search(ResourcePool::RESOURCE_RESERVED, $this->resources) !== false) {
             print_r($this->resources);
             throw new Exception("There is some reserved or used resources");
         }
