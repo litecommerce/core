@@ -918,6 +918,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                 $fCamelCase = \XLite\Core\Converter::convertToCamelCase($f);
                 $assoc = array(
                     'many'         => $isMany,
+                    'many2many'    => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_MANY == $fData['type'],
                     'getter'       => 'get' . $fCamelCase,
                     'setter'       => ($isMany ? 'add' : 'set') . $fCamelCase,
                     'identifiers'  => array(),
@@ -939,7 +940,13 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                 if ($fData['mappedBy']) {
                     $mappedCamelCase = \XLite\Core\Converter::convertToCamelCase($fData['mappedBy']);
                     $assoc['mappedGetter'] = 'get' . $mappedCamelCase;
-                    $assoc['mappedSetter'] = 'set' . $mappedCamelCase;
+
+                    if ($assoc['many2many']) {
+                        $assoc['mappedSetter'] = 'add' . $mappedCamelCase;
+
+                    } else {
+                        $assoc['mappedSetter'] = 'set' . $mappedCamelCase;
+                    }
                 }
 
                 $assocs[$f] = $assoc;

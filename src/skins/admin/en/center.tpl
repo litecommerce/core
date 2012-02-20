@@ -21,8 +21,6 @@
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}" />
 ***}
 
-<widget target="main" template="common/dialog.tpl" body="menu.tpl" />
-
 <widget name="categoriesWidget" target="categories" template="common/dialog.tpl" body="categories/body.tpl" IF="!mode=#delete#" />
 <widget module="CDev\FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/CDev/FeaturedProducts/featured_products.tpl" IF="{namedWidgets.categoriesWidget.visible}" />
 

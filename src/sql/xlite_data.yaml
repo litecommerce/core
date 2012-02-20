@@ -1146,3 +1146,5 @@ XLite\Model\Zone:
   - { zone_name: 'Default zone (all addresses)', is_default: true }
 XLite\Model\Task:
   - { owner: 'XLite\Core\Task\Probe' }
+XLite\Model\Role:
+  - { code: administrator, translations: [{ code: en, name: Administrator }], permissions: [ { code: root access, translations: [{ code: en, name: Root access }] } ] }

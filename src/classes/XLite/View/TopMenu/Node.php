@@ -39,12 +39,13 @@ class Node extends \XLite\View\TopMenu
      * Widget param names
      */
 
-    const PARAM_TITLE    = 'title';
-    const PARAM_LINK     = 'link';
-    const PARAM_LIST     = 'list';
-    const PARAM_CLASS    = 'className';
-    const PARAM_TARGET   = 'linkTarget';
-    const PARAM_EXTRA    = 'extra';
+    const PARAM_TITLE      = 'title';
+    const PARAM_LINK       = 'link';
+    const PARAM_LIST       = 'list';
+    const PARAM_CLASS      = 'className';
+    const PARAM_TARGET     = 'linkTarget';
+    const PARAM_EXTRA      = 'extra';
+    const PARAM_PERMISSION = 'permission';
 
 
     /**
@@ -71,23 +72,26 @@ class Node extends \XLite\View\TopMenu
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_TITLE => new \XLite\Model\WidgetParam\String(
+            self::PARAM_TITLE  => new \XLite\Model\WidgetParam\String(
                 'Name', ''
             ),
-            self::PARAM_LINK => new \XLite\Model\WidgetParam\String(
+            self::PARAM_LINK   => new \XLite\Model\WidgetParam\String(
                 'Link', ''
             ),
-            self::PARAM_LIST => new \XLite\Model\WidgetParam\String(
+            self::PARAM_LIST   => new \XLite\Model\WidgetParam\String(
                 'List', ''
             ),
-            self::PARAM_CLASS => new \XLite\Model\WidgetParam\String(
+            self::PARAM_CLASS  => new \XLite\Model\WidgetParam\String(
                 'Class name', ''
             ),
             self::PARAM_TARGET => new \XLite\Model\WidgetParam\String(
                 'Target', ''
             ),
-            self::PARAM_EXTRA => new \XLite\Model\WidgetParam\Collection(
+            self::PARAM_EXTRA  => new \XLite\Model\WidgetParam\Collection(
                 'Additional request params', array()
+            ),
+            self::PARAM_PERMISSION => new \XLite\Model\WidgetParam\String(
+                'Permission', ''
             ),
         );
     }
@@ -101,7 +105,21 @@ class Node extends \XLite\View\TopMenu
      */
     protected function hasChildren()
     {
-        return '' !== $this->getParam(self::PARAM_LIST);
+        return '' !== $this->getParam(self::PARAM_LIST)
+            && 0 < strlen(trim($this->getViewListContent($this->getListName())));
+    }
+
+    /**
+     * Check - node is branch but has empty childs list
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function isEmptyChildsList()
+    {
+        return '' !== $this->getParam(self::PARAM_LIST)
+            && 0 == strlen(trim($this->getViewListContent($this->getListName())));
     }
 
     /**
@@ -171,4 +189,36 @@ class Node extends \XLite\View\TopMenu
 
         return trim($class);
     }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->checkACL()
+            && !$this->isEmptyChildsList();
+    }
+
+    /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function checkACL()
+    {
+        $auth = \XLite\Core\Auth::getInstance();
+
+        $additionalPermission = $this->getParam(self::PARAM_PERMISSION);
+
+        return $auth->isPermissionAllowed('root access')
+            || ($additionalPermission && $auth->isPermissionAllowed($additionalPermission));
+    }
+
 }

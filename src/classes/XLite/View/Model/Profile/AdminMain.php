@@ -131,6 +131,11 @@ class AdminMain extends \XLite\View\Model\AModel
             self::SCHEMA_LABEL    => 'Pending membership',
             self::SCHEMA_REQUIRED => false,
         ),
+        'roles' => array(
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\CheckboxList\Roles',
+            self::SCHEMA_LABEL    => 'Roles',
+            self::SCHEMA_REQUIRED => false,
+        ),
     );
 
 
@@ -353,6 +358,10 @@ class AdminMain extends \XLite\View\Model\AModel
             unset($this->accessSchema['pending_membership_id']);
         }
 
+        if (!\XLite\Core\Auth::getInstance()->isPermissionAllowed('root access')) {
+            unset($this->accessSchema['roles']);
+        }
+
         return $this->getFieldsBySchema($this->accessSchema);
     }
 
@@ -381,6 +390,28 @@ class AdminMain extends \XLite\View\Model\AModel
     {
         if (isset($data['password'])) {
             $data['password'] = \XLite\Core\Auth::encryptPassword($data['password']);
+        }
+
+        if (isset($data['roles']) && is_array($data['roles'])) {
+
+            $model = $this->getModelObject();
+
+            // Remove old links
+            foreach ($model->getRoles() as $role) {
+                $role->getProfiles()->removeElement($model);
+            }
+            $model->getRoles()->clear();
+
+            // Add new links
+            foreach ($data['roles'] as $rid => $tmp) {
+                if ($tmp) {
+                    $role = \XLite\Core\Database::getRepo('XLite\Model\Role')->find($rid);
+                    if ($role) {
+                        $model->addRoles($role);
+                        $role->addProfiles($model);
+                    }
+                }
+            }
         }
 
         parent::setModelProperties($data);

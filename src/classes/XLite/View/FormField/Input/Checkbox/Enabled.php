@@ -25,25 +25,42 @@
  * @since     1.0.0
  */
 
-namespace XLite\Controller\Admin;
+namespace XLite\View\FormField\Input\Checkbox;
 
 /**
- * Access denied page controller
+ * Enabled
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.1
  */
-class AccessDenied extends \XLite\Controller\Admin\AAdmin
+class Enabled extends \XLite\View\FormField\Input\Checkbox\Simple
 {
     /**
-     * Check ACL permissions
+     * Determines if checkbox is checked
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  1.0.17
+     * @since  1.0.0
      */
-    public function checkACL()
+    protected function isChecked()
     {
-        return true;
+        return parent::isChecked() || true === $this->getValue();
     }
+
+    /**
+     * Get common attributes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCommonAttributes()
+    {
+        $list = parent::getCommonAttributes();
+
+        $list['value'] = 1;
+
+        return $list;
+    }
+
 }

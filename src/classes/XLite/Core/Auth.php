@@ -581,4 +581,24 @@ class Auth extends \XLite\Base
 
         $this->resetProfileCache();
     }
+
+    // {{{ Roles and permissions
+
+    /**
+     * Check - specified permission is allowed or not
+     * 
+     * @param string $code Permission code
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function isPermissionAllowed($code)
+    {
+        $profile = $this->getProfile();
+
+        return $profile && $profile->isPermissionAllowed($code);
+    }
+
+    // }}}
 }

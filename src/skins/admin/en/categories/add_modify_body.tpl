@@ -64,7 +64,7 @@
     <tr>
       <td valign="top">{t(#Description#)}</td>
       <td>&nbsp;</td>
-      <td><widget class="\XLite\View\FormField\Textarea\Advanced" fieldName="description" cols="50" rows="10" value="{category.description}" /></td>
+      <td><widget class="\XLite\View\FormField\Textarea\Advanced" fieldName="description" cols="50" rows="10" value="{category.description}" fieldOnly="true" /></td>
     </tr>
 
     <tr IF="hasImage()">

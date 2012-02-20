@@ -60,7 +60,20 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     public function checkAccess()
     {
-        return (parent::checkAccess() || $this->isPublicZone()) && $this->checkFormId();
+        return ((parent::checkAccess() && $this->checkACL()) || $this->isPublicZone())
+            && $this->checkFormId();
+    }
+
+    /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return \XLite\Core\Auth::getInstance()->isPermissionAllowed('root access');
     }
 
     /**

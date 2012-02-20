@@ -48,6 +48,18 @@ class Main extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Check if current page is accessible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkAccess()
+    {
+        return parent::checkAccess() || $this->isClearRequest();
+    }
+
+    /**
      * doActionUpdateInventoryProducts
      *
      * @return void
@@ -67,5 +79,17 @@ class Main extends \XLite\Controller\Admin\AAdmin
         \XLite\Core\TopMessage::addInfo(
             'Inventory has been successfully updated'
         );
+    }
+
+    /**
+     * Check - is clear request without action or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function isClearRequest()
+    {
+        return !\XLite\Core\Request::getInstance()->action && \XLite\Core\Request::getInstance()->isGet();
     }
 }

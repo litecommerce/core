@@ -1182,7 +1182,8 @@ table.data-table td.table-id-column
   font-weight: normal;
 }
 
-.profile-form input,
+.profile-form input[type="text"],
+.profile-form input[type="password"],
 .profile-form select
 {
   width: 300px;
@@ -1543,6 +1544,27 @@ div.table-value input[type="password"],
 div.table-value select
 {
   width: 250px;
+}
+
+div.table-value input[type="checkbox"] {
+  margin: 0px;
+  vertical-align: middle;
+}
+
+div.table-value .checkbox-list {
+  max-height: 100px;
+  overflow: auto;
+  padding-right: 25px;
+}
+
+div.table-value .checkbox-list li {
+  padding: 0px;
+  padding-bottom: 5px;
+  white-space: nowrap;
+}
+
+div.table-value .checkbox-list label {
+  margin-left: 5px;
 }
 
 div.table-value .input-text-integer input,

@@ -399,20 +399,13 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      */
     protected function processRemove()
     {
-        $data = $this->getRequestData();
-        $prefix = $this->getRemoveDataPrefix();
         $count = 0;
 
-        if (isset($data[$prefix]) && is_array($data[$prefix]) && $data[$prefix]) {
-            $repo = $this->getRepository();
-            foreach ($data[$prefix] as $id => $allow) {
-                if ($allow) {
-                    $entity = $repo->find($id);
-                    if ($entity) {
-                        \XLite\Core\Database::getEM()->remove($entity);
-                        $count++;
-                    }
-                }
+        $repo = $this->getRepository();
+        foreach ($this->getEntityIdListForRemove() as $id) {
+            $entity = $repo->find($id);
+            if ($entity && $this->removeEntity($entity)) {
+                $count++;
             }
         }
 
@@ -424,6 +417,47 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
         }
 
         return $count;
+    }
+
+    /**
+     * Get entity's ID list for remove 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function getEntityIdListForRemove()
+    {
+        $data = $this->getRequestData();
+        $prefix = $this->getRemoveDataPrefix();
+
+        $list = array();
+
+        if (isset($data[$prefix]) && is_array($data[$prefix]) && $data[$prefix]) {
+            foreach ($data[$prefix] as $id => $allow) {
+                if ($allow) {
+                    $list[] = $id;
+                }
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Remove entity 
+     * 
+     * @param \XLite\Model\AEntity $entity Entity
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function removeEntity(\XLite\Model\AEntity $entity)
+    {
+        \XLite\Core\Database::getEM()->remove($entity);
+
+        return true;
     }
 
     // }}}
@@ -665,8 +699,6 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     {
         return $this->errorMessages;
     }
-
-    // }}}
 
     // }}}
 
@@ -1002,5 +1034,23 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
     // }}}
 
+    // {{{ Data
+
+    /**
+     * Return coupons list
+     *
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
+     *
+     * @return array|integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    {
+        return \XLite\Core\Database::getRepo($this->defineRepositoryName())->search($cnd, $countOnly);
+    }
+
+    // }}}
 }
 
