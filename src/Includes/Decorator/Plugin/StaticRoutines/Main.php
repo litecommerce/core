@@ -41,14 +41,12 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     const STATIC_CONSTRUCTOR_METHOD = '__constructStatic';
 
-
-    // ------------------------------ Hook handlers -
+    // {{{ Hook handlers
 
     /**
      * Execute certain hook handler
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -57,8 +55,9 @@ class Main extends \Includes\Decorator\Plugin\APlugin
         static::getClassesTree()->walkThrough(array($this, 'addStaticConstructorCall'));
     }
 
+    // }}}
 
-    // ------------------------------ Auxiliary methods -
+    // {{{ Auxiliary methods
 
     /**
      * Add static constructor calls
@@ -68,7 +67,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @param \Includes\Decorator\DataStructure\Graph\Classes $parent Current node parent
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -87,7 +85,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Node to check
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -111,8 +108,10 @@ class Main extends \Includes\Decorator\Plugin\APlugin
         $content = \Includes\Utils\FileManager::read($path = LC_DIR_CACHE_CLASSES . $node->getPath());
 
         $content .= PHP_EOL . '// Call static constructor' . PHP_EOL;
-        $content .= '\\' . $node->getClass() . '::' . self::STATIC_CONSTRUCTOR_METHOD . '();';
+        $content .= '\\' . $node->getClass() . '::' . static::STATIC_CONSTRUCTOR_METHOD . '();';
 
         \Includes\Utils\FileManager::write($path, $content);
     }
+
+    // }}}
 }
