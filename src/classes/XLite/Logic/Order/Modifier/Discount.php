@@ -18,49 +18,52 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.18
  */
 
-namespace XLite\Core\Validator\Pair;
+namespace XLite\Logic\Order\Modifier;
 
 /**
- * Abstarct hash array pair validator
+ * Abstract Discount modifier - for discounts which should be aggregated
+ * and displayed as a single 'Discount' line in cart/order totals
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.18
  */
-abstract class APair extends \XLite\Core\Validator\AValidator
+abstract class Discount extends \XLite\Logic\Order\Modifier\ADiscount
 {
     /**
-     * Modes
-     */
-    const STRICT = 'strict';
-    const SOFT   = 'soft';
-
-    /**
-     * Validation mode
+     * Modifier unique code
      *
      * @var   string
      * @see   ____var_see____
-     * @since 1.0.0
+     * @since 1.0.18
      */
-    protected $mode = self::STRICT;
+    protected $code = 'DISCOUNT';
+
+    // {{{ Surcharge operations
 
     /**
-     * Constructor
+     * Get surcharge name
      *
-     * @param string $mode Validation mode OPTIONAL
+     * @param \XLite\Model\Order\Surcharge $surcharge Surcharge
      *
-     * @return void
+     * @return \XLite\DataSet\Transport\Order\Surcharge
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.18
      */
-    public function __construct($mode = self::STRICT)
+    public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge)
     {
-        $this->mode = $mode;
+        $info = new \XLite\DataSet\Transport\Order\Surcharge;
+
+        $info->name = \XLite\Core\Translation::lbl('Discount');
+
+        return $info;
     }
+
+    // }}}
 }

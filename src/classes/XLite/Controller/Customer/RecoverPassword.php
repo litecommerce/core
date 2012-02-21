@@ -45,7 +45,6 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      */
     protected $params = array('target', 'mode', 'email', 'link_mailed');
 
-
     /**
      * Add the base part of the location path
      *
@@ -85,9 +84,10 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
         if ($this->requestRecoverPassword($this->get('email'))) {
             $this->set('mode', 'recoverMessage'); // redirect to passwordMessage mode
             $this->set('link_mailed', true); // redirect to passwordMessage mode
+
         } else {
             $this->set('valid', false);
-            \XLite\Core\TopMessage::addError('There are no user with specified email address');
+            \XLite\Core\TopMessage::addError('There is no user with specified email address');
         }
     }
 

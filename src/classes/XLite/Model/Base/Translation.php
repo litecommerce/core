@@ -37,6 +37,9 @@ namespace XLite\Model\Base;
  */
 abstract class Translation extends \XLite\Model\AEntity
 {
+    /**
+     * Default code
+     */
     const DEFAULT_LANGUAGE = 'en';
 
     /**
@@ -63,7 +66,6 @@ abstract class Translation extends \XLite\Model\AEntity
      */
     protected $code = self::DEFAULT_LANGUAGE;
 
-
     /**
      * Return list of class properties which are not translated
      *
@@ -75,7 +77,6 @@ abstract class Translation extends \XLite\Model\AEntity
     {
         return array('label_id', 'code');
     }
-
 
     /**
      * Return the owner object
@@ -89,13 +90,13 @@ abstract class Translation extends \XLite\Model\AEntity
         return $this->owner;
     }
 
-     /**
-      * Check cache after enity persist or remove
-      *
-      * @return void
-      * @see    ____func_see____
-      * @since  1.0.0
-      */
+    /**
+     * Check cache after enity persist or remove
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function checkCache()
     {
         parent::checkCache();

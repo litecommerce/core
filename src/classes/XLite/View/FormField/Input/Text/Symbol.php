@@ -35,6 +35,9 @@ namespace XLite\View\FormField\Input\Text;
  */
 class Symbol extends \XLite\View\FormField\Input\Text\Float
 {
+    /**
+     * Widget param names
+     */
     const PARAM_SYMBOL = 'symbol';
 
     /**
@@ -47,13 +50,12 @@ class Symbol extends \XLite\View\FormField\Input\Text\Float
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/input/symbol.css';
 
         return $list;
     }
 
-   /**
+    /**
      * Register CSS class to use for wrapper block (SPAN) of input field.
      * It is usable to make unique changes of the field.
      *
@@ -75,7 +77,7 @@ class Symbol extends \XLite\View\FormField\Input\Text\Float
      */
     public function getSymbol()
     {
-        return $this->getParam(self::PARAM_SYMBOL);
+        return $this->getParam(static::PARAM_SYMBOL);
     }
 
     /**
@@ -102,10 +104,7 @@ class Symbol extends \XLite\View\FormField\Input\Text\Float
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_SYMBOL => new \XLite\Model\WidgetParam\String(
-                'Symbol',
-                ''
-            ),
+            static::PARAM_SYMBOL => new \XLite\Model\WidgetParam\String('Symbol', ''),
         );
     }
 
@@ -121,11 +120,8 @@ class Symbol extends \XLite\View\FormField\Input\Text\Float
     protected function assembleClasses(array $classes)
     {
         $classes = parent::assembleClasses($classes);
-
         $classes[] = 'symbol';
 
         return $classes;
     }
-
 }
-

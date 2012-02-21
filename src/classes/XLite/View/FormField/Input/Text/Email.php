@@ -53,7 +53,7 @@ class Email extends \XLite\View\FormField\Input\Text
         ) {
             $result = false;
             $this->errorMessage = \XLite\Core\Translation::lbl(
-                'The value of X has an incorrect format',
+                'The value of the X field has an incorrect format',
                 array(
                     'name' => $this->getLabel(),
                 )

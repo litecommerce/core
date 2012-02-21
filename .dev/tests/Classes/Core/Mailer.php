@@ -204,7 +204,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
         $email = array_shift($emails);
 
         $this->assertRegexp('/To: ' . preg_quote(self::ADMIN_EMAIL) . '/msS', $email['header'], 'Wrong email recipient' . $email['header']);
-        $this->assertRegexp('/User profile modified/msS', $email['body'], '"User profile modified" text not found in the email body');
+        $this->assertRegexp('/User profile is modified/msS', $email['body'], '"User profile is modified" text not found in the email body');
 
     }
 
@@ -235,7 +235,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
         $email = array_shift($emails);
 
         $this->assertRegexp('/To: ' . preg_quote(self::ADMIN_EMAIL) . '/msS', $email['header'], 'Wrong email recipient' . $email['header']);
-        $this->assertRegexp('/User profile deleted/msS', $email['body'], '"User profile deleted" text not found in the email body');
+        $this->assertRegexp('/User profile is deleted/msS', $email['body'], '"User profile is deleted" text not found in the email body');
     }
 
     /**

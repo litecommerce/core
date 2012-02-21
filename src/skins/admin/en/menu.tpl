@@ -22,7 +22,7 @@
             <td colspan="5">&nbsp;</td>
         </tr>
         <tr>
-            <widget template="menu_item.tpl" href="admin.php?target=categories" icon="menu/icon_categories.gif" text="<span class='main-menu-item-header'>{t(#Categories#)}</span><br />{t(#Setup your online catalog structure#)}">
+            <widget template="menu_item.tpl" href="admin.php?target=categories" icon="menu/icon_categories.gif" text="<span class='main-menu-item-header'>{t(#Categories#)}</span><br />{t(#Set your online catalog structure up#)}">
             <td style="width:1%;">&nbsp;&nbsp;</td>
             <widget template="menu_item.tpl" href="admin.php?target=orders_stats" icon="menu/icon_statistics.gif" text="<span class='main-menu-item-header'>{t(#Statistics#)}</span><br />{t(#Review statistics on various aspects of your store's operation#)}">
         </tr>
@@ -40,7 +40,7 @@
         <tr>
             <widget template="menu_item.tpl" href="admin.php?target=profile_list" icon="menu/icon_users.gif" text="<span class='main-menu-item-header'>{t(#Users#)}</span><br />{t(#Manage customer and administrator accounts#)}" />
             <td style="width:1%;">&nbsp;&nbsp;</td>
-            <widget template="menu_item.tpl" href="admin.php?target=db_backup" icon="menu/icon_catalog.gif" text="<span class='main-menu-item-header'>{t(#Store Maintenance#)}</span><br />{t(#Perform backup of your store database#)}" />
+            <widget template="menu_item.tpl" href="admin.php?target=db_backup" icon="menu/icon_catalog.gif" text="<span class='main-menu-item-header'>{t(#Store Maintenance#)}</span><br />{t(#Make back-up of your store database#)}" />
         </tr>
 		</table>
   </td>

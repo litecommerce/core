@@ -100,7 +100,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         // Perform some common actions
         $this->performCommonActions();
 
-        return $this->getViewer()->getTitle();
+        return static::t($this->getViewer()->getTitle());
     }
 
     /**
@@ -171,7 +171,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         $trail   = array();
         $content = $this->getViewer()->getContent();
 
-        if ($this->getViewer()->isTitleVisible() && $title) {
+        if ($this->getViewer()->isTitleVisible() && !empty($title)) {
             $trail[] = array(
                 'title'             => $title,
                 'link_path'         => '',
@@ -183,7 +183,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         menu_set_active_trail($trail);
 
         // Set value for <title> tag
-        drupal_set_title($this->getViewer()->getPageTitle());
+        drupal_set_title(static::t($this->getViewer()->getPageTitle()));
 
         return $this->isAJAX() ? $this->displayAJAXContent($content) : $content;
     }
@@ -328,18 +328,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function getPageTitle()
     {
-        $title = null;
-
-        $viewer = $this->getViewer();
-
-        if (!$viewer->isTitleVisible()) {
-            $title = '';
-
-        } elseif ($viewer->getTitle()) {
-            $title = $viewer->getTitle();
-        }
-
-        return $title;
+        return $this->getViewer()->isTitleVisible() ? $this->getTitle() : '';
     }
 
     /**

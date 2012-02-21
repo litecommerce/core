@@ -9,4 +9,5 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-{t(#Congratulations! Your order has been successfully placed#):h}
+
+{t(#Congratulations! Your order has been placed successfully#):h}

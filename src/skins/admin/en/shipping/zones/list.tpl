@@ -29,7 +29,7 @@ function ShowNotes()
 //]]>
 </script>
 
-Use this section to define shipping zones.
+{t(#Use this section to define shipping zones.#)}
 
 <hr />
 
@@ -43,8 +43,8 @@ Use this section to define shipping zones.
 checkboxes_form = 'zonesform';
 checkboxes = new Array({foreach:getShippingZones(),k,v}{if:!k=0},{end:}'to_delete[{v.getZoneId()}]'{end:});
 
-lbl_no_items_have_been_selected = 'No items have been selected';
-lbl_delete_confirmation = 'Are you sure you wish to delete the selected zones?';
+lbl_no_items_have_been_selected = '{t(#No items have been selected#)}';
+lbl_delete_confirmation = '{t(#Are you sure you wish to delete the selected zones?#)}';
 
 function deleteZones()
 {

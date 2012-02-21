@@ -44,10 +44,13 @@ class Invoice extends \XLite\Controller\Customer\Base\Order
      */
     public function getTitle()
     {
-        return 'Invoice #'
-            . $this->getOrderId()
-            . ', '
-            . \XLite\Core\Converter::getInstance()->formatTime($this->getOrder()->getDate());
+        return static::t(
+            'Invoice #{{orderId}}, {{time}}',
+            array(
+                'orderId' => $this->getOrderId(),
+                'time'    => \XLite\Core\Converter::getInstance()->formatTime($this->getOrder()->getDate())
+            )
+        );
     }
 
     /**

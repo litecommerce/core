@@ -44,7 +44,7 @@ class CheckoutPayment extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return static::t('Order payment');
+        return 'Order payment';
     }
 
     /**

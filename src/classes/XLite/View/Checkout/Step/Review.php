@@ -56,7 +56,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      */
     public function getTitle()
     {
-        return static::t('Order review');
+        return 'Order review';
     }
 
     /**
@@ -188,5 +188,4 @@ class Review extends \XLite\View\Checkout\Step\AStep
     }
 
     // }}}
-
 }

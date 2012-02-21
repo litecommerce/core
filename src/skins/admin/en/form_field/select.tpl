@@ -11,5 +11,5 @@
  *}
 
 <select {getAttributesCode():h}>
-  <option FOREACH="getOptions(),optionValue,optionLabel" value="{optionValue}" selected="{isOptionSelected(optionValue)}">{optionLabel:h}</option>
+  <option FOREACH="getOptions(),optionValue,optionLabel" value="{optionValue}" selected="{isOptionSelected(optionValue)}">{t(optionLabel)}</option>
 </select>

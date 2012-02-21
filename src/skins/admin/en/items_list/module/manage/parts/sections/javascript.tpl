@@ -19,7 +19,7 @@ confirmNotes['enable']    = '{t(#Are you sure you want to enable this add-on?#)}
 confirmNotes['disable']   = '{t(#Are you sure you want to disable this add-on?#)}';
 confirmNotes['default']   = '{t(#Are you sure?#)}';
 
-var dependedAlert = '{t(#The following dependent add-ons will be automatically disabled:#)}';
+var dependedAlert = '{t(#The following dependent add-ons will be disabled  automatically#)}:';
 var depends = [];
 -->
 </script>

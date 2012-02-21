@@ -128,28 +128,19 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
                     \XLite\Core\Database::getEM()->persist($attachment);
                     \XLite\Core\Database::getEM()->flush();
 
-                    \XLite\Core\TopMessage::addInfo(
-                        'The attachment has been successfully added'
-                    );
+                    \XLite\Core\TopMessage::addInfo('The attachment has been added successfully');
                 }
 
             } elseif ('extension' == $attachment->getStorage()->getLoadError()) {
-
                 // Forbid extension
-                \XLite\Core\TopMessage::addError(
-                    'Failed to add attachment. File is forbidden to download'
-                );
+                \XLite\Core\TopMessage::addError('Failed to add attachment. File is forbidden to download');
 
             } else {
-                \XLite\Core\TopMessage::addError(
-                    'Failed to add attachment'
-                );
+                \XLite\Core\TopMessage::addError('Failed to add attachment');
             }
 
         } else {
-            \XLite\Core\TopMessage::addError(
-                'Failed to add attachment'
-            );
+            \XLite\Core\TopMessage::addError('Failed to add attachment');
         }
     }
 

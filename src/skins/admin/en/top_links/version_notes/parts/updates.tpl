@@ -12,10 +12,7 @@
  *}
 
 <li IF="areUpdatesAvailable()" class="updates-note">
-  <a
-  href="{buildURL(#upgrade#,##,_ARRAY_(#mode#^#install_updates#))}"
-  title="{t(#There are updates for installed modules and/or LC core#)}"
-  >
-    {t(#Updates available#)}
+  <a href="{buildURL(#upgrade#,##,_ARRAY_(#mode#^#install_updates#))}" title="{t(#Updates for the LC core and/or installed modules are available#)}">
+    {t(#Updates are available#)}
   </a>
 </li>

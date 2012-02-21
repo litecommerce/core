@@ -38,9 +38,7 @@ class Location extends \XLite\View\AView
     /**
      * Widget param names
      */
-
     const PARAM_NODES = 'nodes';
-
 
     /**
      * Return breadcrumbs
@@ -51,7 +49,7 @@ class Location extends \XLite\View\AView
      */
     public function getNodes()
     {
-        $list = array_values($this->getParam(self::PARAM_NODES));
+        $list = array_values($this->getParam(static::PARAM_NODES));
 
         $list[count($list) - 1]->setWidgetParams(
             array(
@@ -61,7 +59,6 @@ class Location extends \XLite\View\AView
 
         return $list;
     }
-
 
     /**
      * Get a list of CSS files
@@ -73,12 +70,10 @@ class Location extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'location/location.css';
 
         return $list;
     }
-
 
     /**
      * Return widget default template
@@ -104,9 +99,7 @@ class Location extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_NODES => new \XLite\Model\WidgetParam\Collection(
-                'Breadcrumbs', $this->getLocationPath()
-            ),
+            static::PARAM_NODES => new \XLite\Model\WidgetParam\Collection('Breadcrumbs', $this->getLocationPath()),
         );
     }
 
@@ -119,7 +112,6 @@ class Location extends \XLite\View\AView
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && 1 < count($this->getNodes());
+        return parent::isVisible() && 1 < count($this->getNodes());
     }
 }

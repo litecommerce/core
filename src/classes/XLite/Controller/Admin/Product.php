@@ -44,7 +44,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     public $params = array('target', 'id', 'page', 'backURL');
 
-
     /**
      * Get pages sections
      *
@@ -185,33 +184,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
         return 0 >= $this->getProductId();
     }
 
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->getProduct()->getName();
-    }
-
-    /**
-     * Add part to the location nodes list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addBaseLocation()
-    {
-        parent::addBaseLocation();
-
-        $this->addLocationNode('Search products', $this->buildURL('product_list'));
-    }
-
     /**
      * Return list of the CategoryProduct entities
      *
@@ -253,13 +225,10 @@ class Product extends \XLite\Controller\Admin\AAdmin
         $data = new \Doctrine\Common\Collections\ArrayCollection();
 
         foreach ((array) $this->getPostedData('class_ids') as $classId) {
-
             $class = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findOneById($classId);
 
             if ($class) {
-
                 if (!$class->getProducts()->contains($product)) {
-
                     $class->getProducts()->add($product);
                 }
 
@@ -359,9 +328,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
                     )
                 );
 
-                \XLite\Core\TopMessage::addInfo(
-                    'New product has been successfully added'
-                );
+                \XLite\Core\TopMessage::addInfo('New product has been added successfully');
 
                 // Add the ID of created product to the return URL
                 $this->setReturnURL($this->buildURL('product', '', array('id' => $product->getProductId())));
@@ -385,7 +352,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\TopMessage::addError($form->getValidationMessage());
 
         } else {
-
             $product = $this->getProduct();
 
             // Clear all category associates
@@ -394,18 +360,12 @@ class Product extends \XLite\Controller\Admin\AAdmin
             );
 
             $product->getClasses()->clear();
-
             $data = $this->getCategoryProducts($product) + $this->getClasses($product) + $this->getPostedData();
 
             // Update all data
-            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
-                $product,
-                $data
-            );
+            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update($product, $data);
 
-            \XLite\Core\TopMessage::addInfo(
-                'Product info has been successfully updated'
-            );
+            \XLite\Core\TopMessage::addInfo('Product info has been updated successfully');
         }
     }
 
@@ -475,9 +435,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
 
         \XLite\Core\Database::getEM()->flush();
 
-        \XLite\Core\TopMessage::addInfo(
-            'The detailed images have been successfully updated'
-        );
+        \XLite\Core\TopMessage::addInfo('The detailed images have been updated successfully');
     }
 
 

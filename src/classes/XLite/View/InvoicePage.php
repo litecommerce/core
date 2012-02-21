@@ -99,7 +99,7 @@ class InvoicePage extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Order #' . $this->getOrder()->getOrderId();
+        return static::t('Order #{{id}}', array('id' => $this->getOrder()->getOrderId()));
     }
 
     /**
@@ -111,7 +111,7 @@ class InvoicePage extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'order' . LC_DS . 'invoice';
+        return 'order/invoice';
     }
 
     /**
@@ -123,6 +123,6 @@ class InvoicePage extends \XLite\View\Dialog
      */
     protected function getBody()
     {
-        return $this->getDir() . LC_DS . 'page.tpl';
+        return $this->getDir() . '/page.tpl';
     }
 }

@@ -81,7 +81,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      */
     protected function getHead()
     {
-        return static::t('Search result');
+        return 'Search result';
     }
 
     /**

@@ -10,4 +10,4 @@
  * @since     1.0.0
  *}
 
-{getLabel()}<br /><hr />
+{t(getLabel())}<br /><hr />

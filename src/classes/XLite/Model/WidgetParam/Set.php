@@ -53,7 +53,6 @@ class Set extends \XLite\Model\WidgetParam\AWidgetParam
      */
     protected $options = null;
 
-
     /**
      * Constructor
      *

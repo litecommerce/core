@@ -88,6 +88,18 @@ abstract class AButton extends \XLite\View\AView
     }
 
     /**
+     * getDefaultStyle
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function getDefaultStyle()
+    {
+        return '';
+    }
+
+    /**
      * getDefaultDisableState
      *
      * @return boolean
@@ -126,7 +138,7 @@ abstract class AButton extends \XLite\View\AView
             self::PARAM_NAME     => new \XLite\Model\WidgetParam\String('Name', '', true),
             self::PARAM_VALUE    => new \XLite\Model\WidgetParam\String('Value', '', true),
             self::PARAM_LABEL    => new \XLite\Model\WidgetParam\String('Label', $this->getDefaultLabel(), true),
-            self::PARAM_STYLE    => new \XLite\Model\WidgetParam\String('Button style', ''),
+            self::PARAM_STYLE    => new \XLite\Model\WidgetParam\String('Button style', $this->getDefaultStyle()),
             self::PARAM_DISABLED => new \XLite\Model\WidgetParam\Bool('Disabled', $this->getDefaultDisableState()),
             self::PARAM_ID       => new \XLite\Model\WidgetParam\String('Button ID', ''),
         );

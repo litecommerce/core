@@ -35,6 +35,9 @@ namespace XLite\View\FormField\Input\Base;
  */
 abstract class String extends \XLite\View\FormField\Input\AInput
 {
+    /**
+     * Widget param names
+     */
     const PARAM_DEFAULT_VALUE = 'defaultValue';
     const PARAM_MAX_SIZE      = 'maxSize';
 
@@ -95,7 +98,7 @@ abstract class String extends \XLite\View\FormField\Input\AInput
         if ($result && strlen($result) > $this->getParam(self::PARAM_MAX_SIZE)) {
             $result = false;
             $this->errorMessage = \XLite\Core\Translation::lbl(
-                'The value of X should not be longer than Y',
+                'The value of the X field should not be longer than Y',
                 array(
                     'name' => $this->getLabel(),
                     'max'  => $this->getParam(self::PARAM_MAX_SIZE),
@@ -116,7 +119,6 @@ abstract class String extends \XLite\View\FormField\Input\AInput
     protected function assembleValidationRules()
     {
         $rules = parent::assembleValidationRules();
-
         $rules[] = 'maxSize[' . $this->getParam(self::PARAM_MAX_SIZE) . ']';
 
         return $rules;

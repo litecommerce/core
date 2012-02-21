@@ -44,7 +44,6 @@ class Terms extends \XLite\Controller\Customer\Category
      */
     protected $params = array('target');
 
-
     /**
      * Check whether the title is to be displayed in the content area
      *
@@ -66,6 +65,6 @@ class Terms extends \XLite\Controller\Customer\Category
      */
     public function getTitle()
     {
-        return static::t('Terms and conditions');
+        return 'Terms and conditions';
     }
 }

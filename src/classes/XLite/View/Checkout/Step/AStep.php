@@ -42,7 +42,6 @@ abstract class AStep extends \XLite\View\AView
     const PARAM_IS_CURRENT    = 'isCurrent';
     const PARAM_IS_PREVIOUS   = 'isPrevious';
 
-
     /**
      * Get step name
      *
@@ -69,7 +68,6 @@ abstract class AStep extends \XLite\View\AView
      * @since  1.0.0
      */
     abstract public function isCompleted();
-
 
     /**
      * Check - is current step or not
@@ -174,5 +172,4 @@ abstract class AStep extends \XLite\View\AView
 
         return $path;
     }
-
 }

@@ -39,11 +39,9 @@ class Regular extends \XLite\View\Button\AButton
     /**
      * Widget parameter names
      */
-
     const PARAM_ACTION      = 'action';
     const PARAM_JS_CODE     = 'jsCode';
     const PARAM_FORM_PARAMS = 'formParams';
-
 
     /**
      * Return widget default template

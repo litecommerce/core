@@ -9,8 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <p class="error-message">
-{t(#Unable to install module X because some modules which it depends on, have not been installed or activated yet#,_ARRAY_(#X#^mm.moduleName))}
+{t(#Unable to install module X because some modules, which it depends on, have not been installed or activated yet#,_ARRAY_(#X#^mm.moduleName))}
 </p>
 <table>
 <tr>
