@@ -64,7 +64,7 @@ task("setup", function ($app)
     $app['launch_timeout'] = array_key_exists('launch_timeout', $app) ? $app['launch_timeout'] : 240;
     $app['cloud'] = Cloud::getInstance();
     if (!isset($app['farms_count']))
-        $app['farms_count'] = 5;
+        $app['farms_count'] = 4;
     $app['hub_ami'] = exec("ec2-describe-images | grep lc-test-grid | cut -f2");
     $app['lc_ami'] = exec("ec2-describe-images | grep lc_ | cut -f2");
     $app['server_instance_type'] = "m1.large";
@@ -331,14 +331,16 @@ group("rc", function()
                 $app['cloud']->farms[] = $farm;
                 $app['cloud']->save();
                 print PHP_EOL . "Started new Remote Control farm at " . $farm->public_dns;
-                print PHP_EOL . "Starting Remote Control at " . $farm->public_dns . "...";
-                $farm->run("nohup rake rc:start_all SELENIUM_ARGS=\"-firefoxProfileTemplate ".$app['firefox_profile']."\" HUB_URL=" . $app['cloud']->hub->private_url . " HOST=" . $farm->private_dns . " PORTS=" . $app['remote_control_port_range'] . " BACKGROUND=true",
-                    array('display' => ":0", 'path' => "/usr/lib/firefox-8.0", 'pwd' => $app["selenium_grid_path"], 'keypair' => $app['keypair']));
-                $farm->run("nohup vncserver :0", array('keypair' => $app['keypair']));
             }
             catch (Exception $e) {
                 print PHP_EOL . "Failed to boot new Remote Control farm.";
             }
+        }
+        foreach($app['cloud']->farms as $farm){
+            print PHP_EOL . "Starting Remote Control at " . $farm->public_dns . "...";
+            $farm->run("nohup rake rc:start_all SELENIUM_ARGS=\"-firefoxProfileTemplate ".$app['firefox_profile']."\" HUB_URL=" . $app['cloud']->hub->private_url . " HOST=" . $farm->private_dns . " PORTS=" . $app['remote_control_port_range'] . " BACKGROUND=true",
+                array('display' => ":0", 'path' => "/usr/lib/firefox-8.0", 'pwd' => $app["selenium_grid_path"], 'keypair' => $app['keypair']));
+            $farm->run("nohup vncserver :0", array('keypair' => $app['keypair']));
         }
         Ec2Client::authorize_port(5900);
         Ec2Client::authorize_port(6000);
