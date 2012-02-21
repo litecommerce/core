@@ -77,6 +77,7 @@ XLITE_SEPARATE_MODULES=$XLITE_SEPARATE_MODULES"
 CDev/Coupons
 CDev/Egoods
 CDev/ProductAdvisor
+CDev/VolumeDiscounts
 "
 
 # LiteCommerce files that must be removed from all distributives
