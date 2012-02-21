@@ -10,8 +10,6 @@
 
 XLite\Model\Config:
   directives: { insert: true }
-  - { name: add_on_mode, category: General, type: checkbox, orderby: 120, value: N, translations: [{ code: en, option_name: 'Checkout desk operation mode', option_comment: '' }] }
-  - { name: add_on_mode_page, category: General, type: 'XLite\View\FormField\Select\DeskOperationMode', orderby: 125, value: 'cart.php?target=cart', translations: [{ code: en, option_name: 'Checkout desk operation mode main page', option_comment: '' }] }
   - { name: admin_presentation, category: General, type: separator, orderby: 400, translations: [{ code: en, option_name: 'Administrator Zone settings', option_comment: '' }] }
   - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone', option_comment: '' }] }
   - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address, option_comment: '' }] }
@@ -29,7 +27,6 @@ XLite\Model\Config:
   - { name: default_purchase_limit, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 293, value: 9999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Default purchase limit', option_comment: '' }] }
   - { name: default_select_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Default payment method', option_comment: '' }] }
   - { name: default_zipcode, category: General, type: text, orderby: 320, translations: [{ code: en, option_name: 'Default zip/postal code in the registration form', option_comment: '' }] }
-  - { name: direct_product_url, category: General, type: checkbox, orderby: 255, value: N, translations: [{ code: en, option_name: 'Allow direct URL access to products from disabled categories', option_comment: '' }] }
   - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method', option_comment: '' }] }
   - { name: enable_anon_checkout, category: General, type: checkbox, orderby: 270, value: Y, translations: [{ code: en, option_name: 'Enable anonymous checkout', option_comment: '' }] }
   - { name: enable_init_order_notif, category: Email, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'E-mail order details to the sales department after order placement', option_comment: '' }] }

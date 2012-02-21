@@ -27,6 +27,8 @@
 
 return function()
 {
+    // Update language labels
+
     $labels = array(
         'insert' => array(
             'Select a country or a state from a list, specify the zone' => 'Select a country or a state from a list, specify the zone where the country or state should be listed and click on the "Apply" button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.',
@@ -206,25 +208,77 @@ return function()
     }
 
 
+    // Update config options
+
     $config = array(
-        'shop_closed' => array('Check this to temporary close the shop', 'Check this to close the shop temporarily'),
-        'location_custom_state' => array('Other state (specify)', 'Another state (specify)'),
-        'anonymous_custom_state' => array('Other state (specify)', 'Another state (specify)'),
-        'login_lifetime' => array('Days to store last login data', 'Number of days to store the last login data'),
-        'recent_orders' => array('Amount of orders in the recent orders list', 'The number of orders in the recent order list'),
+        'insert' => array(
+        ),
+        'update' => array(
+            'General' => array(
+                'shop_closed' => array('Check this to temporary close the shop', 'Check this to close the shop temporarily'),
+                'login_lifetime' => array('Days to store last login data', 'Number of days to store the last login data'),
+                'recent_orders' => array('Amount of orders in the recent orders list', 'The number of orders in the recent order list'),
+            ),
+            'Company' => array(
+                'location_custom_state' => array('Other state (specify)', 'Another state (specify)'),
+            ),
+            'Shipping' => array(
+                'anonymous_custom_state' => array('Other state (specify)', 'Another state (specify)'),
+            ),
+        ),
+        'delete' => array(
+            'General' => array(
+                'add_on_mode',
+                'add_on_mode_page',
+                'direct_product_url',
+            ),
+        ),
     );
 
     $objects = array();
 
-    foreach ($config as $oldKey => $data) {
-        list($oldValue, $newValue) = $data;
-        $object = \XLite\Core\Database::getRepo('\XLite\Model\Config')->findBy(array('name' => $oldKey, 'code' => 'en'));
+    foreach ($config as $method => $tmp) {
+        foreach ($tmp as $category => $data) {
+            foreach ($data as $name => $value) {
+                $object = \XLite\Core\Database::getRepo('\XLite\Model\Config')->findBy(array('name' => $name, 'category' => $category));
 
-        if (isset($object) && $object->getOptionName() === $oldValue) {
-            $object->setOptionName($newValue);
-            $objects[] = $object;
+                if (isset($object)) {
+                    switch ($method) {
+                        case 'update':
+                            list($oldLabel, $newLabel) = $value;
+
+                            if ($object->getOptionName() === $oldLabel) {
+                                $object->setOptionName($newValue);
+                            }
+
+                            break;
+    
+                        case 'delete':
+                            // ...
+                            break;
+
+                        default:
+                            // ...
+                    }
+
+                } elseif ('insert' === $method) {
+                    $object = new \XLite\Model\Config();
+                    $object->setCategory($category);
+                    $object->setName($name);
+
+                    // Add other actions (if needed)
+                    // list($value, $label, $orderby) = $value;
+                }
+
+                if (isset($object)) {
+                    $objects[$method] = $object;
+                }
+            }
         }
     }
 
-    \XLite\Core\Database::getRepo('\XLite\Model\Config')->updateInBatch($objects);
+    foreach ($objects as $method => $config) {
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->{$method . 'InBatch'}($config);
+    }
+
 };

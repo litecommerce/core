@@ -215,8 +215,14 @@ abstract class Operator extends \Includes\Utils\AUtils
      */
     public static function checkIfClassExists($name)
     {
-        $file = \Includes\Autoloader::getLCAutoloadDir() . \Includes\Utils\Converter::getClassFile($name);
+        $result = class_exists($name, false);
 
-        return class_exists($name, false) || \Includes\Utils\FileManager::isFileReadable($file);
+        if (!$result) {
+            $result = \Includes\Utils\FileManager::isFileReadable(
+                \Includes\Autoloader::getLCAutoloadDir() . \Includes\Utils\Converter::getClassFile($name)
+            );
+        }
+
+        return $result;
     }
 }

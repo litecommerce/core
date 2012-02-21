@@ -153,6 +153,8 @@ TableItemsList.prototype.listeners.createButton = function(handler)
           form.commonController.bindElements();
         }
 
+        jQuery('.no-items').css('display', 'none');
+
         return false;
       }
     );
@@ -165,6 +167,9 @@ TableItemsList.prototype.listeners.removeLineButton = function(handler)
     function () {
       if (0 == jQuery(this).parents('tr.create-tpl').length) {
         jQuery(this).parents('tr').eq(0).remove();
+        if (0 == jQuery('tr.create-line').length && 0 == jQuery('tr.line').length) {
+          jQuery('.no-items').css('display', '');
+        }
       }
     }
   );

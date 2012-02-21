@@ -125,7 +125,6 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
         $result = parent::defineViewList($list);
 
         if ($this->getListName() . '.footer' === $list) {
-
             $result[] = $this->getWidget(array('label' => 'Update'), '\XLite\View\Button\Submit');
         }
 

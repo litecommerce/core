@@ -18,7 +18,7 @@
  * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -35,6 +35,30 @@ namespace XLite\View\Pager\Admin\Model;
  */
 class Table extends \XLite\View\Pager\Admin\Model\AModel
 {
+    /**
+     * isVisible: hide pager if table contains no data
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() && 0 < $this->getItemsTotal();
+    }
+
+    /**
+     * Return CSS classes for parent block of pager (list-pager by default)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSClasses()
+    {
+        return 'table-pager';
+    }
+
     /**
      * Get items per page (default)
      *
@@ -57,18 +81,6 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
     protected function getDir()
     {
         return 'pager/model/table';
-    }
-
-    /**
-     * Return CSS classes for parent block of pager (list-pager by default)
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSClasses()
-    {
-        return 'table-pager';
     }
 
     // {{{ Content helpers
