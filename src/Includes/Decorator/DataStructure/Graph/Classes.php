@@ -105,6 +105,23 @@ class Classes extends \Includes\DataStructure\Graph
     }
 
     /**
+     * Add child node
+     *
+     * @param self $node Node to add
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function addChild(self $node)
+    {
+        parent::addChild($node);
+
+        $node->setParentClass($this->getClass());
+    }
+
+    /**
      * Alias
      *
      * @return string
@@ -153,6 +170,20 @@ class Classes extends \Includes\DataStructure\Graph
     public function getParentClass()
     {
         return $this->getReflection()->parentClass;
+    }
+
+    /**
+     * Set name of parent class
+     *
+     * @param strng $class Class name to set
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function setParentClass($class)
+    {
+        $this->getReflection()->parentClass = $class;
     }
 
     /**
@@ -236,8 +267,9 @@ class Classes extends \Includes\DataStructure\Graph
      */
     public function setKey($key)
     {
-        // Preserve Reflection
-        $this->getReflection();
+        foreach ($this->getChildren() as $node) {
+            $node->setParentClass($key);
+        }
 
         parent::setKey($key);
 
@@ -503,7 +535,7 @@ class Classes extends \Includes\DataStructure\Graph
                     \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD
                 );
 
-            } else {
+            } elseif (\Includes\Utils\Operator::checkIfClassExists($this->getClass())) {
                 $reflection = new \ReflectionClass($this->getClass());
 
                 $this->reflection->parentClass = ($class = $reflection->getParentClass()) ? $class->getName() : null;
@@ -552,6 +584,12 @@ class Classes extends \Includes\DataStructure\Graph
      */
     protected function drawAdditional(self $node)
     {
-        return parent::drawAdditional($node) . ' <i>(' . $node->getParentClass() . ')</i>';
+        $result = parent::drawAdditional($node);
+
+        if ($node->getParentClass()) {
+            $result .= ' <i>(' . $node->getParentClass() . ')</i>';
+        }
+
+        return $result;
     }
 }

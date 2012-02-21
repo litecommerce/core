@@ -1379,7 +1379,7 @@ abstract class AView extends \XLite\Core\Handler
     {
         return \XLite\Core\Database::getRepo('XLite\Model\ViewList')->findClassList(
             $list,
-            $this->detectCurrentViewZone()
+            static::detectCurrentViewZone()
         );
     }
 
@@ -1390,7 +1390,7 @@ abstract class AView extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function detectCurrentViewZone()
+    protected static function detectCurrentViewZone()
     {
         if (\XLite\View\Mailer::isComposeRunned()) {
             $zone = \XLite\Model\ViewList::INTERFACE_MAIL;
@@ -1491,7 +1491,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getViewListClass()
     {
-        return get_called_class();
+        return get_class($this);
     }
 
     /**
@@ -1837,6 +1837,39 @@ abstract class AView extends \XLite\Core\Handler
     protected function getCurrencySymbol()
     {
         return \XLite::getInstance()->getCurrency()->getSymbol();
+    }
+
+    // }}}
+
+    // {{{ Remove class/template from list
+
+    /**
+     * Remove widget from list
+     *
+     * @param string  $name       Class/template name
+     * @param boolean $isTemplate Flag OPTIONAL
+     * @param string  $list       List name OPTIONAL
+     * @param string  $zone       Zone name OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public static function removeWidgetFromList($name, $isTemplate = true, $list = null, $zone = null)
+    {
+        $data = array();
+        $data[$isTemplate ? 'tpl' : 'child'] = $name;
+
+        if (!empty($list)) {
+            $data['list'] = $list;
+        }
+
+        if (empty($zone)) {
+            $data['zone'] = static::detectCurrentViewZone();
+        }
+
+        $repo = \XLite\Core\Database::getRepo('\XLite\Model\ViewList');
+        $repo->deleteInBatch($repo->findBy($data));
     }
 
     // }}}

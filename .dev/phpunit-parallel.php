@@ -419,7 +419,7 @@ class ResourcePool
             return false;
         }
         foreach($uses as $use){
-            if (array_key_exists($use, $this->resources) && $this->resources[$use] == self::RESOURCE_RESERVED){
+            if (array_key_exists($use, $this->resources) && $this->resources[$use] == ResourcePool::RESOURCE_RESERVED){
                 return false;
             }
         }
@@ -451,13 +451,9 @@ class ResourcePool
 
     public function reset()
     {
-        if ($this->block_all == self::RESOURCE_RESERVED)
+        if ($this->block_all == ResourcePool::RESOURCE_RESERVED)
             throw new Exception("There is block resource");
-        if (array_any($this->resources, function ($res)
-        {
-            $res != self::RESOURCE_CLEARED;
-        })
-        ) {
+        if (array_search(ResourcePool::RESOURCE_RESERVED, $this->resources) !== false) {
             print_r($this->resources);
             throw new Exception("There is some reserved or used resources");
         }
@@ -470,14 +466,14 @@ class ResourcePool
 
     public function isCleared()
     {
-        if($this->block_all === self::RESOURCE_CLEARED){
+        if($this->block_all === ResourcePool::RESOURCE_CLEARED){
             return true;
         }
         if (empty($this->used) && !empty($this->resources)
             && array_all($this->resources,
                 function ($res)
                 {
-                    return $res == self::RESOURCE_CLEARED;
+                    return $res == ResourcePool::RESOURCE_CLEARED;
                 }))
         {
             return true;
@@ -486,7 +482,7 @@ class ResourcePool
     }
 
     private function addUse($use){
-        if (array_key_exists($use, $this->resources) && $this->resources[$use] == self::RESOURCE_RESERVED)  {
+        if (array_key_exists($use, $this->resources) && $this->resources[$use] == ResourcePool::RESOURCE_RESERVED)  {
             print_r($this->resources);
             throw new Exception("Resource " . $use . " is reserved!");
         }
@@ -501,7 +497,7 @@ class ResourcePool
             print_r($this->used);
             throw new Exception("Resource " . $use . " not used!");
         }
-        if (array_key_exists($use, $this->resources) && $this->resources[$use] == self::RESOURCE_RESERVED){
+        if (array_key_exists($use, $this->resources) && $this->resources[$use] == ResourcePool::RESOURCE_RESERVED){
             print_r($this->resources);
             throw new Exception("Resource " . $use . " is reserved!");
 
@@ -518,7 +514,7 @@ class ResourcePool
             throw new Exception("Resource " . $resource . " is reserved or used!");
 
         }
-        $this->resources[$resource] = self::RESOURCE_RESERVED;
+        $this->resources[$resource] = ResourcePool::RESOURCE_RESERVED;
     }
 
     private function clearResource($resource)
@@ -526,14 +522,14 @@ class ResourcePool
         if (!array_key_exists($resource, $this->resources))
             return;
         //throw new Exception("No such resource: " .$resource);
-        $this->resources[$resource] = self::RESOURCE_CLEARED;
+        $this->resources[$resource] = ResourcePool::RESOURCE_CLEARED;
     }
 
     private function setBlock(){
-        $this->block_all = self::RESOURCE_RESERVED;
+        $this->block_all = ResourcePool::RESOURCE_RESERVED;
     }
     private function clearBlock(){
-        $this->block_all = self::RESOURCE_CLEARED;
+        $this->block_all = ResourcePool::RESOURCE_CLEARED;
     }
 
 }
