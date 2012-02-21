@@ -127,7 +127,7 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
             if ('p.price' === $sort && !\XLite::isAdminZone()) {
 
                 $queryBuilder->addSelect(
-                    'if(p.salePriceValueCalculated = 0 , p.price, p.salePriceValueCalculated) salePriceValueCalculated'
+                    'if(p.participateSale != 1 , p.price, p.salePriceValueCalculated) salePriceValueCalculated'
                 );
 
                 $queryBuilder->addOrderBy('salePriceValueCalculated', $order);
