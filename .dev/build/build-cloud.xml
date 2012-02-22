@@ -75,7 +75,7 @@
         <property name="EC2_KEYPAIR" value="${EC2_DIR}/lc-test.pem" />
         <property name="EC2_KEYPAIR_NAME" value="lc-test" />
         <property environment="env"/>
-        <exec executable="${phake}" dir="${phakeDir}">
+        <exec executable="${phake}" dir="${phakeDir}"  failonerror="Off" resultproperty="phake_result">
             <arg value="${target}" />
             <arg line="${userVars}" />
             <env key="EC2_HOME" value="${EC2_HOME}" />
@@ -150,7 +150,7 @@
         <antcall target="run-phake">
             <param name="target" value="default" />
             <!--<param name="userVars" value="screenshots_url='http://xcart2-530.crtdev.local/~xcart/general/projects/xlite/build/logs/screenshots'" />-->
-            <param name="userVars" value="log_dir='${buildDir}/logs' screenshots_url='http:\/\/ec2-50-17-21-109.compute-1.amazonaws.com\/screenshots'" />
+            <param name="userVars" value="log_dir='${buildDir}/logs' screenshots_url='http:\/\/23.21.234.252\/screenshots'" />
             <param name="EC2_DIR" value="${ec2Dir}" />
         </antcall>
 
@@ -167,6 +167,13 @@
             <arg value="${buildDir}/reports" />
             <arg value="../../../artifacts/xlite" />
         </exec>
+        <fail message="tests failed">
+            <condition>
+                <not>
+                    <equals arg1="0" arg2="phake_result" />
+                </not>
+            </condition>
+        </fail>
     </target>
 
     <target name="jmeter">
