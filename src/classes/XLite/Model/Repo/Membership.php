@@ -182,7 +182,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
             ->setMaxResults(1);
 
         if ($onlyActive) {
-            $qb->addWhere('m.active = :true');
+            $qb->andWhere('m.active = :true');
             $qb->setParameter('true', true);
         }
 
