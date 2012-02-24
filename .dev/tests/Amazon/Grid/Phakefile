@@ -158,7 +158,7 @@ group("server", function()
     task('apigen', 'setup', function($app){
         $server = $app['cloud']->server;
         $options = array('pwd' => $app['server_htdocs'] ,  'keypair' => $app['keypair']);
-        $server->run('cd xlite/src;'.
+        $server->run('mkdir /tmp/api; cd xlite/src;'.
                 'sudo php ../.dev/build/devcode_postprocess.php;'.
                 'cd ' . $app['server_htdocs']. ';'.
                 'mkdir lib'.
@@ -167,7 +167,7 @@ group("server", function()
                 'cd apigen;'.
                 'git submodule update --init;'.
                 'cd ' . $app['server_htdocs']. '/xlite;'.
-                'sudo ' . $app['server_htdocs'] . '/lib/apigen/apigen.php --source src/classes --config .dev/build/apigen.neon --template-config .dev/lib/apigen/templates/default/config.neon --destination /tmp/api;'
+                'sudo php ' . $app['server_htdocs'] . '/lib/apigen/apigen.php --source src/classes --config .dev/build/apigen.neon --template-config .dev/lib/apigen/templates/default/config.neon --destination /tmp/api;'
             , $options);
         $server->download('/tmp/api', $app['log_dir'], $options);
         $server->run('sudo rm -rf xlite/src/classes/api; sudo rm -rf lib/apigen', $options);

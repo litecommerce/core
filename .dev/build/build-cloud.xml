@@ -154,7 +154,7 @@
             <param name="EC2_DIR" value="${ec2Dir}" />
         </antcall>
 
-        <move file="${buildDir}/logs/api" tofile="${buildDir}/api" />
+        <move file="${buildDir}/logs/api" tofile="${buildDir}/api" failonerror="Off" />
 
         <copy todir="/var/www/screenshots">
             <fileset dir="${buildDir}/logs/screenshots" />
