@@ -40,7 +40,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     const NO_REDIRECT = '____NO_REDIRECT____';
 
-
     /**
      * Current CMS name
      *
@@ -49,7 +48,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @since 1.0.0
      */
     protected static $currentCMS = null;
-
 
     /**
      * List of widgets which can be exported
@@ -85,7 +83,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
         'order_list' => 'Orders list',
     );
 
-
     /**
      * Return currently used CMS name
      *
@@ -94,7 +91,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @since  1.0.0
      */
     abstract public function getCMSName();
-
 
     /**
      * Determines if we export content into a CMS
