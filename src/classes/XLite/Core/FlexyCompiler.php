@@ -565,25 +565,25 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 if ($this->findAttr($i + 1, 'if', $pos) && (0 !== strcasecmp($token['name'], 'widget'))) {
                     if ($this->findClosingTag($i, $pos1)) {
                         $expr = $this->flexyCondition($this->getTokenText($pos + 1));
-                        $this->subst($token['start'], 0, self::PHP_OPEN . ' if (' . $expr . '): ' . self::PHP_CLOSE);
+                        $this->subst($token['start'], 0, static::PHP_OPEN . ' if (' . $expr . '): ' . static::PHP_CLOSE);
                         $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], '');
-                        $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], '>' . self::PHP_OPEN . ' endif; ' . self::PHP_CLOSE);
+                        $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], '>' . static::PHP_OPEN . ' endif; ' . static::PHP_CLOSE);
                     }
 
                 } elseif ($this->findAttr($i+1, "iff", $pos)) {
                     $expr = $this->flexyCondition($this->getTokenText($pos + 1));
-                    $this->subst($token['start'], 0, self::PHP_OPEN . " if ($expr){" . self::PHP_CLOSE);
+                    $this->subst($token['start'], 0, static::PHP_OPEN . " if ($expr){" . static::PHP_CLOSE);
                     $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], '');
-                    $this->subst($this->tokens[$i]['end']-1, $this->tokens[$i]['end'], '>' . self::PHP_OPEN . ' }' . self::PHP_CLOSE);
+                    $this->subst($this->tokens[$i]['end']-1, $this->tokens[$i]['end'], '>' . static::PHP_OPEN . ' }' . static::PHP_CLOSE);
 
                 } elseif ($this->findAttr($i + 1, "foreach", $pos)) {
                     if ($this->findClosingTag($i, $pos1)) {
                         list($expr,$k,$forvar) = $this->flexyForeach($this->getTokenText($pos+1));
                         $exprNumber = $forvar . 'ArraySize';
                         $exprCounter = $forvar . 'ArrayPointer';
-                        $this->subst($token['start'], 0, self::PHP_OPEN . " \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach (\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE);
+                        $this->subst($token['start'], 0, static::PHP_OPEN . " \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach (\$_foreach_var as $k){ \$this->$exprCounter++; " . static::PHP_CLOSE);
                         $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], '');
-                        $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], ">\n" . self::PHP_OPEN . " } \$this->$forvar = \$$forvar; " . self::PHP_CLOSE);
+                        $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], ">\n" . static::PHP_OPEN . " } \$this->$forvar = \$$forvar; " . static::PHP_CLOSE);
 
                     } else {
                         $this->error('No closing tag for foreach');
@@ -614,7 +614,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
                     $this->subst(
                         $this->tokens[$pos]['start'],
                         $this->tokens[$pos]['end'],
-                        self::PHP_OPEN . ' if (' . $expr . ') { echo \'' . $boolAttribute . '="' . $boolAttribute . '"\'; } ' . self::PHP_CLOSE
+                        static::PHP_OPEN . ' if (' . $expr . ') { echo \'' . $boolAttribute . '="' . $boolAttribute . '"\'; } ' . static::PHP_CLOSE
                     );
                 }
 
@@ -897,17 +897,17 @@ class FlexyCompiler extends \XLite\Base\Singleton
             list($expr,$k,$forvar) = $this->flexyForeach(substr($str, 9));
             $exprNumber = "$forvar"."ArraySize";
             $exprCounter = "$forvar"."ArrayPointer";
-            return self::PHP_OPEN . " \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach (\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE;
+            return static::PHP_OPEN . " \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach (\$_foreach_var as $k){ \$this->$exprCounter++; " . static::PHP_CLOSE;
         }
         if (substr($str, 0, 4) == '{if:') {
             $expr = $this->flexyCondition(substr($str, 4));
-            return self::PHP_OPEN . " if ($expr){" . self::PHP_CLOSE;
+            return static::PHP_OPEN . " if ($expr){" . static::PHP_CLOSE;
         }
         if ($str == '{end:}') {
-            return self::PHP_OPEN . " }" . self::PHP_CLOSE;
+            return static::PHP_OPEN . " }" . static::PHP_CLOSE;
         }
         if ($str == '{else:}') {
-            return self::PHP_OPEN . " }else{ " . self::PHP_CLOSE;
+            return static::PHP_OPEN . " }else{ " . static::PHP_CLOSE;
         }
         if (substr($str, 0, 2) == "{*") {
             $str = '';
@@ -958,7 +958,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
             $expr = 'if (' . $this->condition . ') ' . $expr;
         }
 
-        return self::PHP_OPEN . ' ' . $expr . '; ' . self::PHP_CLOSE;
+        return static::PHP_OPEN . ' ' . $expr . '; ' . static::PHP_CLOSE;
     }
 
     function flexyExpression(&$str)
@@ -1031,7 +1031,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
             $method = (false !== ($dotPos = strrpos($token, '.'))) ? substr($token, $dotPos + 1) : $token;
             $field  = substr($str, 0, $dotPos);
 
-            if (self::TAG_ARRAY === $method) {
+            if (static::TAG_ARRAY === $method) {
                 $result = 'array';
             } else {
                 $result = '$this->' . ((false === $dotPos) ? '' : 'get' . (strrpos($field, '.') ? 'Complex' : '') . '(\'' . $field . '\')->') . $method;
@@ -1434,7 +1434,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
             $args .= ', ' . $this->getAttributesList($attrs);
         }
 
-        return '$this->display' . $type . 'ViewListContent(\'' . $name . '\'' . $args. ');';
+        return '$this->display' . $type . 'ViewListContent(' . $this->flexyAttribute($name) . $args. ');';
     }
 
     /**
