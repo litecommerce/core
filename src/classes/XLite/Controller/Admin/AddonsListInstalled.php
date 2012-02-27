@@ -47,18 +47,6 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
         return 'Manage add-ons';
     }
 
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Manage add-ons';
-    }
-
     // {{{ Short-name methods
 
     /**

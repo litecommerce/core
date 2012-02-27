@@ -13,11 +13,9 @@
 <div class="address-dialog">
 
   <h2 IF="{address}">{t(#Change address#)}</h2>
-
   <h2 IF="{!address}">{t(#New address#)}</h2>
 
   <widget IF="{address}" class="\XLite\View\Model\Address\Address" modelObject="{address}" useBodyTemplate="1" />
-
   <widget IF="{!address}" class="\XLite\View\Model\Address\Address" profile_id="{profile_id}" useBodyTemplate="1" />
 
 </div>

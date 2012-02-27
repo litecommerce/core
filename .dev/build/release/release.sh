@@ -674,7 +674,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 					module_author=`cat $module_main_file | grep -A 2 "function getAuthorName()" | grep -o -E "'.+'" | sed "s!'!!g"`
 					module_name=`cat $module_main_file | grep -A 2 "function getModuleName()" | grep -o -E "'.+'" | sed "s!'!!g"`
 					module_icon=`cat $module_main_file | grep -A 2 "function getIconURL()" | grep -o -E "'.+'" | sed "s!'!!g"`
-					module_descr=`cat $module_main_file | grep -A 2 "function getDescription()" | grep -o -E "'.+'" | sed "s!'!!g"`
+					module_descr=`cat $module_main_file | grep -A 2 "function getDescription()" | grep -o -E "'.+'" | sed "s_'\(.*\)'_\1_g" | sed "s_'_\\\'_g"`
 					module_dependencies=`cat $module_main_file | grep -A 2 "function getDependencies()" | grep -o -E "\('.+'\)" | sed 's/(\(.*\))/\1/'`
 
 				else

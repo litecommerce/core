@@ -32,7 +32,7 @@
 
   <widget class="\XLite\View\Button\Regular" label="Re-generate access key" jsCode="self.location='{buildURL(#settings#,#safe_mode_key_regen#)}'" />
 
-  <p>{t(#New access key will be also sent to the Site administrator email address#)}</p>
+  <p>{t(#New access key will also be sent to the Site administrator's email address#)}</p>
 
   <h2>{t(#HTTPS check#)}</h2>
 

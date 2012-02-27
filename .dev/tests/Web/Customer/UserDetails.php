@@ -542,10 +542,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
             'id=edit-pass-pass2',
             'aaa'
         );
-        $this->getJSExpression('jQuery(".form-item-pass-pass2 input").keyup()');
-
+        $this->click('id=edit-pass-pass1');
         $this->waitForLocalCondition(
-            'jQuery(".form-item-pass-pass2 .password-confirm .ok").html() == "yes"',
+            'jQuery(".form-item-pass-pass2 .password-confirm .ok").text() == "yes"',
             3000,
             'check "yes" label'
         );

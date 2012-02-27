@@ -9,7 +9,8 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <div class="block block-block">
-  <h2 IF="getHead()">{getHead()}</h2>
+  <h2 IF="getHead()">{t(getHead())}</h2>
   <div class="content"><widget template="{getBody()}" /></div>
 </div>

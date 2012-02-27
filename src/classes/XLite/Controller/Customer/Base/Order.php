@@ -132,6 +132,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Search orders', $this->buildURL('order_list'));
+        $this->addLocationNode('Search for orders', $this->buildURL('order_list'));
     }
 }

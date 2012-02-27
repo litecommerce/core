@@ -47,7 +47,6 @@ class RecoverPassword extends \XLite\View\SectionDialog
     public static function getAllowedTargets()
     {
         $list = parent::getAllowedTargets();
-
         $list[] = 'recover_password';
 
         return $list;

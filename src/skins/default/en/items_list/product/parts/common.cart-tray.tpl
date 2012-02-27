@@ -11,10 +11,11 @@
  *
  * @ListChild (list="itemsList.product.cart")
  *}
+
 <div class="cart-tray">
   <div class="tray-area">
     <div class="drop-here tray-status">{t(#Drop items here to shop#)}</div>
-    <div class="product-added tray-status">{t(#Product added to the bag#)}</div>
+    <div class="product-added tray-status">{t(#Product added to bag#)}</div>
     <div class="progress-bar"><div class="block-wait"><div></div></div></div>
   </div>
 </div>

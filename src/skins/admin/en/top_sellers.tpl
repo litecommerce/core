@@ -9,14 +9,15 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<p align="justify">{t(#This section displays 10 top-selling products for today, this week and this month.#)}</p>
+
+<p align="justify">{t(#This section displays 10 top-selling products for today, this week and this month#)}</p>
 
 <h2>{t(#Top X products#,_ARRAY_(#count#^getRowsCount()))}</h2>
 
 <table class="data-table top-sellers">
   <tr class="TableHead">
     <th class="title"><widget class="XLite\View\Order\Statistics\CurrencySelector" /></th>
-    <th FOREACH="getStatsColumns(),c">{getColumnTitle(c)}</th>
+    <th FOREACH="getStatsColumns(),c">{t(getColumnTitle(c))}</th>
   </tr>
   <tr FOREACH="getStats(),idx,row" class="dialog-box">
     <td class="title">{inc(idx)}.</td>

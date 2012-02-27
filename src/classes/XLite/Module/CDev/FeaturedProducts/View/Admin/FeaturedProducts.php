@@ -38,12 +38,10 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
     /**
      * Widget param names
      */
-
     const PARAM_SUBSTRING         = 'substring';
     const PARAM_CATEGORY_ID       = 'categoryId';
     const PARAM_SKU               = 'sku';
     const PARAM_SEARCH_IN_SUBCATS = 'searchInSubcats';
-
 
     /**
      * Return search parameters
@@ -55,13 +53,12 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
     static public function getSearchParams()
     {
         return array(
-            \XLite\Model\Repo\Product::P_SUBSTRING         => self::PARAM_SUBSTRING,
-            \XLite\Model\Repo\Product::P_CATEGORY_ID       => self::PARAM_CATEGORY_ID,
-            \XLite\Model\Repo\Product::P_SKU               => self::PARAM_SKU,
-            \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => self::PARAM_SEARCH_IN_SUBCATS,
+            \XLite\Model\Repo\Product::P_SUBSTRING         => static::PARAM_SUBSTRING,
+            \XLite\Model\Repo\Product::P_CATEGORY_ID       => static::PARAM_CATEGORY_ID,
+            \XLite\Model\Repo\Product::P_SKU               => static::PARAM_SKU,
+            \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => static::PARAM_SEARCH_IN_SUBCATS,
         );
     }
-
 
     /**
      * Return title
@@ -170,18 +167,10 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_SUBSTRING => new \XLite\Model\WidgetParam\String(
-                'Substring', ''
-            ),
-            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\Int(
-                'Category ID', 0
-            ),
-            self::PARAM_SKU => new \XLite\Model\WidgetParam\String(
-                'SKU', ''
-            ),
-            self::PARAM_SEARCH_IN_SUBCATS => new \XLite\Model\WidgetParam\Checkbox(
-                'Search in subcategories', 0
-            ),
+            static::PARAM_SUBSTRING         => new \XLite\Model\WidgetParam\String('Substring', ''),
+            static::PARAM_CATEGORY_ID       => new \XLite\Model\WidgetParam\Int('Category ID', 0),
+            static::PARAM_SKU               => new \XLite\Model\WidgetParam\String('SKU', ''),
+            static::PARAM_SEARCH_IN_SUBCATS => new \XLite\Model\WidgetParam\Checkbox('Search in subcategories', 0),
         );
     }
 
@@ -217,9 +206,9 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
             $result->$modelParam = $this->getParam($requestParam);
         }
 
-        if (empty($result->{self::PARAM_CATEGORY_ID})) {
-            unset($result->{self::PARAM_CATEGORY_ID});
-            unset($result->{self::PARAM_SEARCH_IN_SUBCATS});
+        if (empty($result->{static::PARAM_CATEGORY_ID})) {
+            unset($result->{static::PARAM_CATEGORY_ID});
+            unset($result->{static::PARAM_SEARCH_IN_SUBCATS});
         }
 
         return $result;

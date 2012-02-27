@@ -9,8 +9,10 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<h2 IF="isNew()">Add new option group</h2>
-<h2 IF="!isNew()">Modify '{group.getName()}' option group</h2>
+
+{* TODO: decompose *}
+
+<h2>{t(getHeadLabel())}</h2>
 
 <form action="admin.php" method="post" name="update_option_group_form" class="options-group-modify">
   <input type="hidden" name="target" value="product" />
@@ -23,52 +25,52 @@
   <ul class="form">
 
     <li class="required">
-      <label for="data_name">Name</label>
+      <label for="data_name">{t(#Name#)}</label>
       <input type="text" id="data_name" name="data[name]" value="{translation.getName()}" class="field-required" />
     </li>
 
     <li>
-      <label for="data_fullname">Text</label>
+      <label for="data_fullname">{t(#Text#)}</label>
       <input type="text" id="data_fullname" name="data[fullname]" value="{translation.getFullname()}" />
     </li>
 
     <li>
-      <label for="data_type">Type</label>
+      <label for="data_type">{t(#Type#)}</label>
       <select name="data[type]" id="data_type">
         <option FOREACH="getOptionGroupTypes(),type,name" value="{type}" selected="{isSelected(group.getType(),type)}">{name}</option>
       </select>
     </li>
 
     <li>
-      <label for="data_view_type">Display type</label>
+      <label for="data_view_type">{t(#Display type#)}</label>
       <select name="data[view_type]" id="data_view_type">
         <option FOREACH="getOptionGroupViewTypes(),type,name" value="{type}" selected="{isSelected(group.getViewType(),type)}">{name}</option>
       </select>
     </li>
 
     <li>
-      <label for="data_orderby">Position</label>
+      <label for="data_orderby">{t(#Position#)}</label>
       <input type="text" id="data_orderby" name="data[orderby]" value="{group.getOrderby()}" class="orderby field-integer" />
     </li>
 
     <li>
-      <label for="data_enabled">Enabled</label>
+      <label for="data_enabled">{t(#Enabled#)}</label>
       <input type="checkbox" id="data_enabled" name="data[enabled]" value="1" checked="{group.getEnabled()}" />
     </li>
 
   </ul>
 
   <div id="options_list">
-    <h3>Group options</h3>
+    <h3>{t(#Group options#)}</h3>
 
     <table cellspacing="1" class="data-table">
 
       <tr>
         <th><input type="checkbox" class="column-selector" /></th>
-        <th class="extender">Name</th>
-        <th FOREACH="getModifiersNames(),m" colspan="2">{m}</th>
-        <th>Pos.</th>
-        <th>Enabled</th>
+        <th class="extender">{t(#Name#)}</th>
+        <th FOREACH="getModifiersNames(),m" colspan="2">{t(m)}</th>
+        <th>{t(#Pos.#)}</th>
+        <th>{t(#Enabled#)}</th>
       </tr>
 
       <tr FOREACH="getOptions(),i,option" class="{getRowClass(i,#highlight#)}">
@@ -80,7 +82,7 @@
           <td><input type="text" name="options[{option.getOptionId()}][modifiers][{key}][modifier]" value="{modifier.getModifier()}" class="price field-float" /></td>
           <td>
             <select name="options[{option.getOptionId()}][modifiers][{key}][modifier_type]">
-              <option FOREACH="getOptionSurchargeModifierTypes(),type,name" value="{type}" selected="{isSelected(modifier.getModifierType(),type)}">{name}</option>
+              <option FOREACH="getOptionSurchargeModifierTypes(),type,name" value="{type}" selected="{isSelected(modifier.getModifierType(),type)}">{t(name)}</option>
             </select>
           </td>
         {end:}
@@ -98,7 +100,7 @@
           <td><input type="text" name="newOption[modifiers][{key}][modifier]" value="{modifier.getModifier()}" class="price field-float" /></td>
           <td>
             <select name="newOption[modifiers][{key}][modifier_type]">
-              <option FOREACH="getOptionSurchargeModifierTypes(),type,name" value="{type}" selected="{isSelected(modifier.getModifierType(),type)}">{name}</option>
+              <option FOREACH="getOptionSurchargeModifierTypes(),type,name" value="{type}" selected="{isSelected(modifier.getModifierType(),type)}">{t(name)}</option>
             </select>
           </td>
         {end:}

@@ -41,7 +41,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     const MARKETPLACE_LAST_REQUEST_TIME = 'marketplaceLastRequestTime';
 
-
     /**
      * List of recently logged in administrators
      *

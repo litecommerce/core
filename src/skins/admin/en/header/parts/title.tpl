@@ -11,4 +11,4 @@
  * @ListChild (list="head", weight="10")
  *}
 
-<title>{t(#LiteCommerce online store builder#)}{if:getTitle()} - {getTitle()}{end:}</title>
+<title>{t(#LiteCommerce online store builder#)}{if:getTitle()} - {t(getTitle())}{end:}</title>

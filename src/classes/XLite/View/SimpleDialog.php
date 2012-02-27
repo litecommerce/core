@@ -68,7 +68,6 @@ abstract class SimpleDialog extends \XLite\View\Dialog
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && $this->getBody();
+        return parent::isVisible() && $this->getBody();
     }
 }

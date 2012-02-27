@@ -18,7 +18,7 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -249,15 +249,15 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     {
         $count = 0;
 
-        foreach ($this->getNewDataLine() as $line) {
+        foreach ($this->getNewDataLine() as $key => $line) {
 
-            if ($this->isNewLineSufficient($line)) {
+            if ($this->isNewLineSufficient($line, $key)) {
                 $entity = $this->createEntity();
                 $fields = $this->createInlineFields($line, $entity);
 
                 $validated = 0 < count($fields);
                 foreach ($fields as $inline) {
-                    $validated = $this->validateCell($inline) && $validated;
+                    $validated = $this->validateCell($inline, $key) && $validated;
                 }
 
                 if ($validated) {
@@ -340,15 +340,16 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     /**
      * Check - new line is sufficient or not
      *
-     * @param array $line Data line
+     * @param array   $line Data line
+     * @param integer $key  Field key gathered from request data, eg: new[this-key][field-name] (see ..\AInline::processCreate())
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function isNewLineSufficient(array $line)
+    protected function isNewLineSufficient(array $line, $key)
     {
-        return 0 < count($line);
+        return 0 !== $key && 0 < count($line);
     }
 
     /**
@@ -557,14 +558,15 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      * Validate inline field
      *
      * @param \XLite\View\FormField\Inline\AInline $inline Inline field
+     * @param integer                              $key    Field key gathered from request data, eg: new[this-key][field-name] (see ..\AInline::processCreate()) OPTIONAL
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function validateCell(\XLite\View\FormField\Inline\AInline $inline)
+    protected function validateCell(\XLite\View\FormField\Inline\AInline $inline, $key = null)
     {
-        $value = $inline->getFieldDataFromRequest($this->getRequestData());
+        $value = $inline->getFieldDataFromRequest($this->getRequestData(), $key);
         if (isset($value)) {
             $inline->getField()->setValue($value);
         }
@@ -677,7 +679,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      * Add error message
      *
      * @param \XLite\View\Inline\AInline $inline  Inline field
-     * @param string                     $message message
+     * @param string                     $message Message
      *
      * @return void
      * @see    ____func_see____
@@ -1017,7 +1019,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      */
     protected function isPanelVisible()
     {
-        return $this->getPanelClass() && $this->hasResults();
+        return $this->getPanelClass() && $this->isPageBodyVisible();
     }
 
     /**

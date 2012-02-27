@@ -38,9 +38,7 @@ class Search extends \XLite\View\Form\AForm
     /**
      * Widget parameter names
      */
-
     const PARAM_MODE = 'mode';
-
 
     /**
      * getDefaultTarget

@@ -41,7 +41,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      */
     const BASE_CLASS_SUFFIX = 'Abstract';
 
-
     // ------------------------------ Classes tree -
 
     /**
@@ -132,7 +131,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
             \Includes\Utils\ModulesManager::getPathPatternForPHP()
         );
     }
-
 
     // ------------------------------ Modules graph -
 
@@ -320,7 +318,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         return ($module = $node->getModuleName()) ? static::getModulesGraph()->getCriticalPath($module) : 0;
     }
 
-
     // ------------------------------ Cache writing -
 
     /**
@@ -340,7 +337,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
     ) {
         \Includes\Utils\FileManager::write(LC_DIR_CACHE_CLASSES . $node->getPath(), $node->getSource($parent));
     }
-
 
     // ------------------------------ Tags parsing -
 

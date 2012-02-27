@@ -61,7 +61,7 @@ class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
                 ->findLabelsByCode($code);
         }
 
-        return isset($this->translations[$code][$name]) ? $this->translations[$code][$name] : null;
+        return \Includes\Utils\ArrayManager::getIndex($this->translations[$code], $name);
     }
 
     /**

@@ -47,7 +47,6 @@ abstract class AItemsList extends \XLite\View\Container
     const SORT_ORDER_ASC  = 'asc';
     const SORT_ORDER_DESC = 'desc';
 
-
     /**
      * Default layout template
      *
@@ -114,7 +113,6 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected static $sortWidgetIds = array();
 
-
     /**
      * Return dir which contains the page body template
      *
@@ -145,7 +143,6 @@ abstract class AItemsList extends \XLite\View\Container
      */
     abstract protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false);
 
-
     /**
      * Get session cell name for the certain list items widget
      *
@@ -157,7 +154,6 @@ abstract class AItemsList extends \XLite\View\Container
     {
         return str_replace('\\', '', get_called_class());
     }
-
 
     /**
      * Initialize widget (set attributes)
@@ -233,10 +229,8 @@ abstract class AItemsList extends \XLite\View\Container
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         // Static call of the non-static function
         $list[] = self::getDir() . '/items_list.css';
-
         $list = self::preparePagerCSSFiles($list);
 
         return $list;
@@ -281,7 +275,6 @@ abstract class AItemsList extends \XLite\View\Container
 
         return $this->itemsCount;
     }
-
 
     /**
      * Return name of the base widgets list

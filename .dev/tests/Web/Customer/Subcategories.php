@@ -53,7 +53,7 @@ class XLite_Web_Customer_Subcategories extends XLite_Web_Customer_ACustomer
         $this->resetBrowser();
         $this->open($url);
 
-        $subcategoriesSelector = "ul.subcategory-$mode";
+        $subcategoriesSelector = "ul.subcategory-view-$mode";
 
         $this->assertElementPresent(
             "css=$subcategoriesSelector",

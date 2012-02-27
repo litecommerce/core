@@ -38,10 +38,8 @@ abstract class URLManager extends \Includes\Utils\AUtils
     /**
      * URL output type codes
      */
-
     const URL_OUTPUT_SHORT = 'short';
     const URL_OUTPUT_FULL  = 'full';
-
 
     /**
      * Remove trailing slashes from URL

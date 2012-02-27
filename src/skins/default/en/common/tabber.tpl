@@ -9,17 +9,15 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<h1 IF="head">{head:h}</h1>
 
+<h1 IF="head">{t(head)}</h1>
 <div class="tabbed-content-wrapper">
-
   <div class="tabs-container">
-
     <div class="page-tabs">
 
       <ul>
         <li FOREACH="getTabberPages(),tabPage" class="tab{if:tabPage.selected}-current{end:}">
-          <a href="{tabPage.url}">{tabPage.title}</a>
+          <a href="{tabPage.url}">{t(tabPage.title)}</a>
         </li>
       </ul>
 
@@ -31,5 +29,4 @@
     </div>
 
   </div>
-
 </div>

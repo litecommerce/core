@@ -44,7 +44,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return static::t('Shipping rates');
+        return 'Shipping rates';
     }
 
     /**
@@ -61,15 +61,13 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
         $data = $this->prepareData($postedData['new'], true);
 
         if (is_array($data)) {
-
             $newMarkup = new \XLite\Model\Shipping\Markup();
-
             $newMarkup->map($data);
 
             \XLite\Core\Database::getEM()->persist($newMarkup);
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Core\TopMessage::addInfo('Shipping markup is successfully created');
+            \XLite\Core\TopMessage::addInfo('Shipping markup has been created successfully');
         }
     }
 
@@ -127,9 +125,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
         $postedData = \XLite\Core\Request::getInstance()->getData();
 
         if (isset($postedData['to_delete']) && is_array($postedData['to_delete'])) {
-
             $markupIds = array_keys($postedData['to_delete']);
-
             $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findMarkupsByIds($markupIds);
 
             if (!empty($markups)) {
@@ -158,19 +154,6 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
     protected function doActionChange()
     {
         $this->redirect($this->getRedirectURL());
-    }
-
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Shipping rates';
     }
 
     /**

@@ -481,8 +481,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function getPages()
     {
-        if (is_null($this->pages)) {
-
+        if (!isset($this->pages)) {
             $this->pages = array();
 
             // Define the list of pages
@@ -491,7 +490,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
             $this->pages[] = array(
                 'type'  => 'previous-page',
                 'num'   => $id,
-                'title' => static::t('Previous page'),
+                'title' => 'Previous page',
             );
 
             $firstId = $this->getFirstPageId();
@@ -501,7 +500,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
                 $this->pages[] = array(
                     'type'  => 'first-page',
                     'num'   => $firstId,
-                    'title' => static::t('First page'),
+                    'title' => 'First page',
                 );
 
                 $this->pages[] = array(
@@ -536,7 +535,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
                 $this->pages[] = array(
                     'type'  => 'last-page',
                     'num'   => $lastId,
-                    'title' => static::t('Last page'),
+                    'title' => 'Last page',
                 );
             }
 
@@ -544,7 +543,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
             $this->pages[] = array(
                 'type'  => 'next-page',
                 'num'   => $id,
-                'title' => static::t('Next page'),
+                'title' => 'Next page',
             );
 
             // Now prepare data for the view
@@ -553,11 +552,11 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
                 $num = isset($page['num']) ? $page['num'] : null;
                 $type = $page['type'];
 
-                $isItem        = !is_null($num) && ('item' === $type);
+                $isItem        = isset($num) && ('item' === $type);
                 $isOmitedItems = 'more-pages' === $type;
                 $isSpecialItem = !$isItem && !$isOmitedItems;
 
-                $isCurrent  = !is_null($num) && $this->isCurrentPage($num);
+                $isCurrent  = isset($num) && $this->isCurrentPage($num);
                 $isSelected = $isItem && $isCurrent;
                 $isDisabled = $isSpecialItem && $isCurrent;
                 $isActive   = !$isSelected && !$isOmitedItems && !$isDisabled;
@@ -572,11 +571,8 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
                     $this->pages[$k]['text'] = '&nbsp;';
                 }
 
-                $this->pages[$k]['page'] = is_null($num)
-                    ? null
-                    : 'page-' . $num;
-
-                $this->pages[$k]['href'] = (is_null($num) || $isSelected || $isDisabled)
+                $this->pages[$k]['page'] = !isset($num) ? null : 'page-' . $num;
+                $this->pages[$k]['href'] = (!isset($num) || $isSelected || $isDisabled)
                     ? null
                     : $this->buildURLByPageId($num);
 

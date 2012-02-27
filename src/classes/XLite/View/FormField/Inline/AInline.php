@@ -18,7 +18,7 @@
  * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -325,11 +325,17 @@ abstract class AInline extends \XLite\View\AView
      */
     public function getNameParts()
     {
-        return array(
-            $this->getParam(static::PARAM_ITEMS_LIST)->getDataPrefix(),
-            $this->getEntity()->getUniqueIdentifier() ?: 0,
-            $this->shortName,
-        );
+        return $this->getEntity()->getUniqueIdentifier() ? 
+            array(
+                $this->getParam(static::PARAM_ITEMS_LIST)->getDataPrefix(),
+                $this->getEntity()->getUniqueIdentifier(),
+                $this->shortName,
+            )
+            : array(
+                $this->getParam(static::PARAM_ITEMS_LIST)->getCreateDataPrefix(),
+                0,
+                $this->shortName,
+            );
     }
 
     /**
@@ -372,18 +378,24 @@ abstract class AInline extends \XLite\View\AView
     /**
      * Get field data from request
      * 
-     * @param array $data Request data OPTIONAL
+     * @param array   $data Request data OPTIONAL
+     * @param integer $key  Field key gathered from request data, eg: new[this-key][field-name]
      *  
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.15
      */
-    public function getFieldDataFromRequest(array $data = array())
+    public function getFieldDataFromRequest(array $data = array(), $key = null)
     {
         $data = $data ?: \XLite\Core\Request::GetInstance()->getData();
         $found = true;
 
         foreach ($this->getNameParts() as $part) {
+
+            if (0 === $part && isset($key)) {
+                $part = $key;
+            }
+
             if (isset($data[$part])) {
                 $data =& $data[$part];
 

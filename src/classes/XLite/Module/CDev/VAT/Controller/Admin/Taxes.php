@@ -40,7 +40,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      */
     const PAGE_VAT_TAX = 'vatTax';
 
-
     /**
      * Get pages sections
      *
@@ -51,7 +50,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
     public function getPages()
     {
         $list = parent::getPages();
-
         $list[self::PAGE_VAT_TAX] = 'VAT';
 
         return $list;
@@ -67,7 +65,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
     public function getPageTemplates()
     {
         $list = parent::getPageTemplates();
-
         $list[self::PAGE_VAT_TAX] = 'modules/CDev/VAT/edit.tpl';
 
         return $list;
@@ -186,7 +183,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
             }
         }
 
-        \XLite\Core\TopMessage::addInfo('Tax rates has been updated successfully');
+        \XLite\Core\TopMessage::addInfo('Tax rates have been updated successfully');
         \Xlite\Core\Database::getEM()->flush();
     }
 
@@ -247,4 +244,3 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
 
     // }}}
 }
-

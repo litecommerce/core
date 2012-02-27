@@ -15,7 +15,7 @@
     <input type="hidden" name="action" value="register_key" />
 
     <div class="enter-key-hint">
-      {t(#If you have a license key for commercial module you may enter them here to register a purchase of the appropriate module.#)}
+      {t(#If you have a license key for a commercial module, you can enter it here to register the purchase of the appropriate module.#)}
     </div>
 
     <div class="addon-key">
