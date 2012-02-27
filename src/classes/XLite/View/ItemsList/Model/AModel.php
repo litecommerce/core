@@ -859,7 +859,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
 
         $names[] = strtolower($parts[count($parts) - 1]);
 
-        return $name;
+        return $names;
     }
 
     /**
