@@ -88,7 +88,9 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         parent::__construct($params);
 
-        $this->sortByModes = array(static::SORT_BY_MODE_DEFAULT => 'Default') + $this->sortByModes;
+        $this->sortByModes = array(
+            self::SORT_BY_MODE_DEFAULT => 'Default',
+        ) + $this->sortByModes;
     }
 
     /**
@@ -128,8 +130,8 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * Get requested category ID 
-     * 
+     * Get requested category ID
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.9

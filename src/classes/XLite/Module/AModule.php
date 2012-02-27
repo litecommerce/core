@@ -47,6 +47,17 @@ abstract class AModule
     }
 
     /**
+     * Decorator run this method at the end of cache rebuild
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public static function runBuildCacheHandler()
+    {
+    }
+
+    /**
      * Return module name
      *
      * @return string
@@ -55,7 +66,7 @@ abstract class AModule
      */
     public static function getModuleName()
     {
-        \Includes\ErrorHandler::fireError('Abstract method call: ' . __METHOD__);
+        \Includes\ErrorHandler::fireErrorAbstractMethodCall(__METHOD__);
     }
 
     /**
@@ -67,7 +78,7 @@ abstract class AModule
      */
     public static function getAuthorName()
     {
-        \Includes\ErrorHandler::fireError('Abstract method call: ' . __METHOD__);
+        \Includes\ErrorHandler::fireErrorAbstractMethodCall(__METHOD__);
     }
 
     /**
@@ -79,7 +90,7 @@ abstract class AModule
      */
     public static function getDescription()
     {
-        \Includes\ErrorHandler::fireError('Abstract method call: ' . __METHOD__);
+        \Includes\ErrorHandler::fireErrorAbstractMethodCall(__METHOD__);
     }
 
     /**
@@ -187,7 +198,7 @@ abstract class AModule
      */
     public static function getMinorVersion()
     {
-        \Includes\ErrorHandler::fireError('Abstract method call: ' . __METHOD__);
+        \Includes\ErrorHandler::fireErrorAbstractMethodCall(__METHOD__);
     }
 
     /**

@@ -93,7 +93,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      */
     abstract public function getRates($inputData, $ignoreCache = false);
 
-
     /**
      * Define public constructor
      *
@@ -214,9 +213,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
     protected function getDataFromCache($key)
     {
         $data = null;
-
         $cacheDriver = \XLite\Core\Database::getCacheDriver();
-
         $key = md5($key);
 
         if ($cacheDriver->contains($key)) {
@@ -238,16 +235,18 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      */
     protected function saveDataInCache($key, $data)
     {
-        $cacheDriver = \XLite\Core\Database::getCacheDriver();
-
-        $cacheDriver->save(md5($key), $data);
+        \XLite\Core\Database::getCacheDriver()->save(md5($key), $data);
     }
 
+    /**
+     * getLogMessage
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
     protected function getLogMessage()
     {
-        return sprintf('[%s] Error: %s',
-            $this->getProcessorName(),
-            $this->getErrorMsg()
-        );
+        return sprintf('[%s] Error: %s', $this->getProcessorName(), $this->getErrorMsg());
     }
 }

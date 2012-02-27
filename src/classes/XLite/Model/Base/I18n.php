@@ -55,7 +55,6 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     protected $editLanguage;
 
-
     /**
      * Get languages query
      *
@@ -66,15 +65,14 @@ abstract class I18n extends \XLite\Model\AEntity
     protected static function getLanguagesQuery()
     {
         if (!isset(self::$languagesQuery)) {
-            self::$languagesQuery = array_fill_keys(
+            static::$languagesQuery = array_fill_keys(
                 \XLite\Core\Database::getRepo('\XLite\Model\Language')->getLanguagesQuery(),
                 false
             );
         }
 
-        return self::$languagesQuery;
+        return static::$languagesQuery;
     }
-
 
     /**
      * Constructor

@@ -18,6 +18,6 @@
 
   <label for="{getSortWidgetId()}">{t(#Sort by#)}</label>
   <select class="sort-crit" id="{getSortWidgetId(true)}">
-    <option FOREACH="sortByModes,key,name" value="{key}" selected="{isSortByModeSelected(key)}">{name}</option>
+    <option FOREACH="sortByModes,key,name" value="{key}" selected="{isSortByModeSelected(key)}">{t(name)}</option>
   </select>
 </div>

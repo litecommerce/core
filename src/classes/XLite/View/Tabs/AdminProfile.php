@@ -77,11 +77,8 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
         parent::init();
 
         if (\XLite\Controller\Admin\Profile::getInstance()->isRegisterMode()) {
-
             foreach ($this->tabs as $key => $tab) {
-
                 if ('profile' != $key) {
-
                     unset($this->tabs[$key]);
                 }
             }
@@ -98,15 +95,12 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
     public function getProfile()
     {
         if (!isset($this->profile)) {
-
             $profileId = \XLite\Core\Request::getInstance()->profile_id;
 
             if (isset($profileId)) {
-
                 $this->profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($profileId);
 
             } else {
-
                 $this->profile = \XLite\Core\Auth::getInstance()->getProfile();
             }
         }

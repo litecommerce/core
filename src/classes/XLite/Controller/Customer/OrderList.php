@@ -44,7 +44,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      */
     protected $params = array('target', 'page');
 
-
     /**
      * Handles the request
      *
@@ -57,11 +56,9 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
         parent::handleRequest();
 
         if (isset(\XLite\Core\Request::getInstance()->pageId)) {
-
             $ordersSearch = \XLite\Core\Session::getInstance()->orders_search;
 
             if (!is_array($ordersSearch)) {
-
                 $ordersSearch = \XLite\Model\Order::getDefaultSearchConditions();
             }
 
@@ -134,7 +131,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode(static::t('My account'));
+        $this->addLocationNode('My account');
     }
 
     /**
@@ -150,22 +147,18 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
         $ordersSearch = \XLite\Core\Session::getInstance()->orders_search;
 
         if (!is_array($ordersSearch)) {
-
             $ordersSearch = \XLite\Model\Order::getDefaultSearchConditions();
         }
 
         if (isset(\XLite\Core\Request::getInstance()->order_id)) {
-
             $ordersSearch['order_id'] = intval(\XLite\Core\Request::getInstance()->order_id);
 
             if (0 == $ordersSearch['order_id']) {
-
                 $ordersSearch['order_id'] = '';
             }
         }
 
         if (isset(\XLite\Core\Request::getInstance()->status)) {
-
             $ordersSearch['status'] = \XLite\Core\Request::getInstance()->status;
         }
 
@@ -182,14 +175,12 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
             );
 
         } elseif (isset(\XLite\Core\Request::getInstance()->startDate)) {
-
             $time = strtotime(\XLite\Core\Request::getInstance()->startDate);
 
             if (
                 false !== $time
                 && -1 !== $time
             ) {
-
                 $ordersSearch['startDate'] = mktime(
                     0, 0, 0,
                     date('m', $time),
@@ -198,7 +189,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
                 );
 
             } elseif (0 == strlen(\XLite\Core\Request::getInstance()->startDate)) {
-
                 $ordersSearch['startDate'] = '';
             }
         }
@@ -216,7 +206,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
             );
 
         } elseif (isset(\XLite\Core\Request::getInstance()->endDate)) {
-
             $time = strtotime(\XLite\Core\Request::getInstance()->endDate);
 
             if (
@@ -231,23 +220,19 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
                 );
 
             } elseif (0 == strlen(\XLite\Core\Request::getInstance()->endDate)) {
-
                 $ordersSearch['endDate'] = '';
             }
         }
 
         if (\XLite\Core\Request::getInstance()->sortCriterion) {
-
             $ordersSearch['sortCriterion'] = \XLite\Core\Request::getInstance()->sortCriterion;
         }
 
         if (\XLite\Core\Request::getInstance()->sortOrder) {
-
             $ordersSearch['sortOrder'] = \XLite\Core\Request::getInstance()->sortOrder;
         }
 
         if (isset(\XLite\Core\Request::getInstance()->pageId)) {
-
             $ordersSearch['pageId'] = intval(\XLite\Core\Request::getInstance()->pageId);
         }
 
@@ -301,5 +286,4 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
     }
 
     // }}}
-
 }

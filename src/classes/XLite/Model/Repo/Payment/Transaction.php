@@ -71,7 +71,7 @@ class Transaction extends \XLite\Model\Repo\ARepo
 
         if (isset($orderId)) {
             $qb->innerJoin('t.order', 'o')
-                ->addWhere('o.order_id = :orderId')
+                ->andWhere('o.order_id = :orderId')
                 ->setPrameter('orderId', $orderId);
         }
 

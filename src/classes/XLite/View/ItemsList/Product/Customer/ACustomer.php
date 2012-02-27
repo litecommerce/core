@@ -136,9 +136,9 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     public static function getSidebarDisplayModes()
     {
         return array(
-            self::DISPLAY_MODE_STHUMB  => 'Cells',
-            self::DISPLAY_MODE_BTHUMB  => 'List',
-            self::DISPLAY_MODE_TEXTS   => 'Text links',
+            static::DISPLAY_MODE_STHUMB  => 'Cells',
+            static::DISPLAY_MODE_BTHUMB  => 'List',
+            static::DISPLAY_MODE_TEXTS   => 'Text links',
         );
     }
 
@@ -152,10 +152,10 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     public static function getCenterDisplayModes()
     {
         return array(
-                self::DISPLAY_MODE_GRID  => 'Grid',
-                self::DISPLAY_MODE_LIST  => 'List',
-                self::DISPLAY_MODE_TABLE => 'Table',
-            );
+            static::DISPLAY_MODE_GRID  => 'Grid',
+            static::DISPLAY_MODE_LIST  => 'List',
+            static::DISPLAY_MODE_TABLE => 'Table',
+        );
     }
 
     /**
@@ -168,10 +168,10 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     public static function getIconSizes()
     {
         return array(
-            self::WIDGET_TYPE_SIDEBAR . '.' . self::DISPLAY_MODE_STHUMB => array(80, 80),
-            self::WIDGET_TYPE_SIDEBAR . '.' . self::DISPLAY_MODE_BTHUMB => array(160, 160),
-            self::WIDGET_TYPE_CENTER . '.' . self::DISPLAY_MODE_GRID => array(160, 160),
-            self::WIDGET_TYPE_CENTER . '.' . self::DISPLAY_MODE_LIST => array(160, 160),
+            static::WIDGET_TYPE_SIDEBAR . '.' . static::DISPLAY_MODE_STHUMB => array(80, 80),
+            static::WIDGET_TYPE_SIDEBAR . '.' . static::DISPLAY_MODE_BTHUMB => array(160, 160),
+            static::WIDGET_TYPE_CENTER . '.' . static::DISPLAY_MODE_GRID => array(160, 160),
+            static::WIDGET_TYPE_CENTER . '.' . static::DISPLAY_MODE_LIST => array(160, 160),
             'other' => array(110, 110),
         );
     }
@@ -190,14 +190,14 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         parent::__construct($params);
 
         $this->sortByModes = array(
-            self::SORT_BY_MODE_PRICE_ASC    => static::t('Price: low to high'),
-            self::SORT_BY_MODE_PRICE_DESC   => static::t('Price: high to low'),
-            self::SORT_BY_MODE_NAME_ASC     => static::t('Name: A-Z'),
-            self::SORT_BY_MODE_NAME_DESC    => static::t('Name: Z-A'),
-            self::SORT_BY_MODE_SKU_ASC      => static::t('SKU: a-z'),
-            self::SORT_BY_MODE_SKU_DESC     => static::t('SKU: z-a'),
-            self::SORT_BY_MODE_AMOUNT_ASC   => static::t('Amount: low to high'),
-            self::SORT_BY_MODE_AMOUNT_DESC  => static::t('Amount: high to low'),
+            static::SORT_BY_MODE_PRICE_ASC    => 'Price: low to high',
+            static::SORT_BY_MODE_PRICE_DESC   => 'Price: high to low',
+            static::SORT_BY_MODE_NAME_ASC     => 'Name: A-Z',
+            static::SORT_BY_MODE_NAME_DESC    => 'Name: Z-A',
+            static::SORT_BY_MODE_SKU_ASC      => 'SKU: a-z',
+            static::SORT_BY_MODE_SKU_DESC     => 'SKU: z-a',
+            static::SORT_BY_MODE_AMOUNT_ASC   => 'Quantity: low to high',
+            static::SORT_BY_MODE_AMOUNT_DESC  => 'Quantity: high to low',
         );
     }
 
@@ -218,36 +218,36 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         // Modify display modes and default display mode
         $allOptions = array_merge(static::getSidebarDisplayModes(), static::getCenterDisplayModes());
 
-        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setOptions($allOptions);
+        $this->widgetParams[static::PARAM_DISPLAY_MODE]->setOptions($allOptions);
 
         $options = $this->getDisplayModes();
 
-        if (!isset($options[$this->getParam(self::PARAM_DISPLAY_MODE)])) {
-            $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(
+        if (!isset($options[$this->getParam(static::PARAM_DISPLAY_MODE)])) {
+            $this->widgetParams[static::PARAM_DISPLAY_MODE]->setValue(
                 $this->isSidebar()
-                    ? self::DISPLAY_MODE_STHUMB
-                    : self::DISPLAY_MODE_GRID
+                    ? static::DISPLAY_MODE_STHUMB
+                    : static::DISPLAY_MODE_GRID
             );
         }
 
         if (
-            !isset($params[self::PARAM_ICON_MAX_WIDTH])
-            && !isset($params[self::PARAM_ICON_MAX_HEIGHT])
-            && 0 == $this->getParam(self::PARAM_ICON_MAX_WIDTH)
-            && 0 == $this->getParam(self::PARAM_ICON_MAX_HEIGHT)
+            !isset($params[static::PARAM_ICON_MAX_WIDTH])
+            && !isset($params[static::PARAM_ICON_MAX_HEIGHT])
+            && 0 == $this->getParam(static::PARAM_ICON_MAX_WIDTH)
+            && 0 == $this->getParam(static::PARAM_ICON_MAX_HEIGHT)
         ) {
             $sizes = static::getIconSizes();
-            $key = $this->getParam(self::PARAM_WIDGET_TYPE) . '.' . $this->getParam(self::PARAM_DISPLAY_MODE);
+            $key = $this->getParam(static::PARAM_WIDGET_TYPE) . '.' . $this->getParam(static::PARAM_DISPLAY_MODE);
             $size = isset($sizes[$key]) ? $sizes[$key] : $sizes['other'];
 
-            $this->widgetParams[self::PARAM_ICON_MAX_WIDTH]->setValue($size[0]);
-            $this->widgetParams[self::PARAM_ICON_MAX_HEIGHT]->setValue($size[1]);
+            $this->widgetParams[static::PARAM_ICON_MAX_WIDTH]->setValue($size[0]);
+            $this->widgetParams[static::PARAM_ICON_MAX_HEIGHT]->setValue($size[1]);
         }
 
         // FIXME - not a good idea, but I don't see a better way
         if ($this->isWrapper() && $this->checkSideBarParams($params)) {
-            $this->defaultTemplate = self::TEMPLATE_SIDEBAR;
-            $this->widgetParams[self::PARAM_TEMPLATE]->setValue($this->getDefaultTemplate());
+            $this->defaultTemplate = static::TEMPLATE_SIDEBAR;
+            $this->widgetParams[static::PARAM_TEMPLATE]->setValue($this->getDefaultTemplate());
         }
     }
 
@@ -352,25 +352,25 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_WIDGET_TYPE => new \XLite\Model\WidgetParam\Set(
-                'Widget type', self::WIDGET_TYPE_CENTER, true, $this->widgetTypes
+            static::PARAM_WIDGET_TYPE => new \XLite\Model\WidgetParam\Set(
+                'Widget type', static::WIDGET_TYPE_CENTER, true, $this->widgetTypes
             ),
-            self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\Set(
-                'Display mode', self::DISPLAY_MODE_GRID, true, array()
+            static::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\Set(
+                'Display mode', static::DISPLAY_MODE_GRID, true, array()
             ),
-            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
+            static::PARAM_SHOW_DISPLAY_MODE_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
                 'Show "Display mode" selector', true, true
             ),
-            self::PARAM_SHOW_SORT_BY_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
+            static::PARAM_SHOW_SORT_BY_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
                 'Show "Sort by" selector', true, true
             ),
-            self::PARAM_GRID_COLUMNS => new \XLite\Model\WidgetParam\Set(
+            static::PARAM_GRID_COLUMNS => new \XLite\Model\WidgetParam\Set(
                 'Number of columns (for Grid mode only)', 3, true, $this->getGridColumnsRange()
             ),
-            self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
+            static::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
                 'Maximal icon width', 0, true
             ),
-            self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
+            static::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
                 'Maximal icon height', 0, true
             ),
         );
@@ -419,7 +419,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getSortByModeDefault()
     {
-        return self::SORT_BY_MODE_NAME_ASC;
+        return static::SORT_BY_MODE_NAME_ASC;
     }
 
     /**
@@ -433,7 +433,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     {
         parent::defineRequestParams();
 
-        $this->requestParams[] = self::PARAM_DISPLAY_MODE;
+        $this->requestParams[] = static::PARAM_DISPLAY_MODE;
     }
 
     /**
@@ -447,7 +447,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function checkSideBarParams(array $params)
     {
-        return isset($params[self::PARAM_WIDGET_TYPE]) && $this->isSidebar();
+        return isset($params[static::PARAM_WIDGET_TYPE]) && $this->isSidebar();
     }
 
     /**
@@ -459,7 +459,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getPageBodyDir()
     {
-        return $this->getParam(self::PARAM_WIDGET_TYPE) . '/' . parent::getPageBodyDir();
+        return $this->getParam(static::PARAM_WIDGET_TYPE) . '/' . parent::getPageBodyDir();
     }
 
     /**
@@ -471,7 +471,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function isSidebar()
     {
-        return self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE);
+        return static::WIDGET_TYPE_SIDEBAR == $this->getParam(static::PARAM_WIDGET_TYPE);
     }
 
     /**
@@ -497,7 +497,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function isDisplayModeSelectorVisible()
     {
-        return $this->getParam(self::PARAM_SHOW_DISPLAY_MODE_SELECTOR) && !$this->isSidebar();
+        return $this->getParam(static::PARAM_SHOW_DISPLAY_MODE_SELECTOR) && !$this->isSidebar();
     }
 
     /**
@@ -509,7 +509,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function isSortBySelectorVisible()
     {
-        return $this->getParam(self::PARAM_SHOW_SORT_BY_SELECTOR) && !$this->isSidebar();
+        return $this->getParam(static::PARAM_SHOW_SORT_BY_SELECTOR) && !$this->isSidebar();
     }
 
     /**
@@ -533,7 +533,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getDisplayMode()
     {
-        return $this->getParam(self::PARAM_DISPLAY_MODE);
+        return $this->getParam(static::PARAM_DISPLAY_MODE);
     }
 
     /**
@@ -547,7 +547,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function isDisplayModeSelected($displayMode)
     {
-        return $this->getParam(self::PARAM_DISPLAY_MODE) == $displayMode;
+        return $this->getParam(static::PARAM_DISPLAY_MODE) == $displayMode;
     }
 
     /**
@@ -594,9 +594,9 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         $rows = array();
 
         if (!empty($data)) {
-            $rows = array_chunk($data, $this->getParam(self::PARAM_GRID_COLUMNS));
+            $rows = array_chunk($data, $this->getParam(static::PARAM_GRID_COLUMNS));
             $last = count($rows) - 1;
-            $rows[$last] = array_pad($rows[$last], $this->getParam(self::PARAM_GRID_COLUMNS), false);
+            $rows[$last] = array_pad($rows[$last], $this->getParam(static::PARAM_GRID_COLUMNS), false);
         }
 
         return $rows;
@@ -612,8 +612,8 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     protected function getGridColumnsRange()
     {
         $range = array_merge(
-            array(self::DISPLAY_GRID_CSS_LAYOUT => self::DISPLAY_GRID_CSS_LAYOUT),
-            range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX)
+            array(static::DISPLAY_GRID_CSS_LAYOUT => static::DISPLAY_GRID_CSS_LAYOUT),
+            range(static::GRID_COLUMNS_MIN, static::GRID_COLUMNS_MAX)
         );
 
         return array_combine($range, $range);
@@ -628,7 +628,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function isCSSLayout()
     {
-        return ($this->getParam(self::PARAM_GRID_COLUMNS) == self::DISPLAY_GRID_CSS_LAYOUT);
+        return ($this->getParam(static::PARAM_GRID_COLUMNS) == static::DISPLAY_GRID_CSS_LAYOUT);
     }
 
     /**
@@ -641,8 +641,8 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     protected function getPageBodyFile()
     {
         if (
-            $this->getParam(self::PARAM_WIDGET_TYPE) == self::WIDGET_TYPE_CENTER
-            && $this->getParam(self::PARAM_DISPLAY_MODE) == self::DISPLAY_MODE_GRID
+            $this->getParam(static::PARAM_WIDGET_TYPE) == static::WIDGET_TYPE_CENTER
+            && $this->getParam(static::PARAM_DISPLAY_MODE) == static::DISPLAY_MODE_GRID
         ) {
             return $this->isCSSLayout() ? 'body-css-layout.tpl' : 'body-table-layout.tpl';
         } else {
@@ -712,7 +712,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getGridItemWidth()
     {
-        return floor(100 / $this->getParam(self::PARAM_GRID_COLUMNS)) - 6;
+        return floor(100 / $this->getParam(static::PARAM_GRID_COLUMNS)) - 6;
     }
 
     /**
@@ -724,7 +724,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getIconWidth()
     {
-        return $this->getParam(self::PARAM_ICON_MAX_WIDTH);
+        return $this->getParam(static::PARAM_ICON_MAX_WIDTH);
     }
 
     /**
@@ -736,7 +736,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getIconHeight()
     {
-        return $this->getParam(self::PARAM_ICON_MAX_HEIGHT);
+        return $this->getParam(static::PARAM_ICON_MAX_HEIGHT);
     }
 
     /**

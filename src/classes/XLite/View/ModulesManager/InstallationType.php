@@ -76,7 +76,7 @@ class InstallationType extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getHead()
     {
-        return 'Updates available';
+        return 'Updates are available';
     }
 
     /**

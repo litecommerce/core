@@ -76,10 +76,12 @@ abstract class ATabs extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $tab  = $this->getSelectedTab();
+        $tab = $this->getSelectedTab();
 
-        if (!empty($tab['jsFiles'])) {
+        if (isset($tab) && isset($tab['jsFiles']) && !empty($tab['jsFiles'])) {
+
             if (is_array($tab['jsFiles'])) {
+
                 $list = array_merge($list, $tab['jsFiles']);
 
             } else {
@@ -167,7 +169,9 @@ abstract class ATabs extends \XLite\View\AView
      */
     protected function getTabTemplate()
     {
-        return \Includes\Utils\ArrayManager::getIndex($this->getSelectedTab(), 'template');
+        $tab = $this->getSelectedTab();
+
+        return isset($tab) && empty($tab['widget']) && empty($tab['template']);
     }
 
     /**

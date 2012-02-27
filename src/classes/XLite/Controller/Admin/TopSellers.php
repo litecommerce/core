@@ -40,7 +40,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      */
     const TOP_SELLERS_NUMBER = 10;
 
-
     /**
      * getPageTemplate
      *
@@ -94,32 +93,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
     }
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Top sellers';
-    }
-
-    /**
-     * Add part to the location nodes list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addBaseLocation()
-    {
-        parent::addBaseLocation();
-
-        $this->addLocationNode('Statistics', $this->buildURL('orders_stats'));
-    }
-
-    /**
      * Get data
      *
      * @return array
@@ -131,9 +104,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
         $data = array();
 
         foreach ($this->getStatsColumns() as $interval) {
-
             $cnd = $this->getSearchCondition($interval);
-
             $cnd->limit = self::TOP_SELLERS_NUMBER;
 
             $currency = null;
@@ -147,9 +118,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
             }
 
             $cnd->currency = $currency->getCurrencyId();
-
-            $data[$interval] = \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')
-                ->getTopSellers($cnd);
+            $data[$interval] = \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->getTopSellers($cnd);
         }
 
         return $data;

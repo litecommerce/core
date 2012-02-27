@@ -51,7 +51,7 @@ function onDeleteButton(method_id)
     </tr>
 
     <tr class="dialog-box">
-      <td class="admin-head" colspan=5>{processor.getProcessorName()}</td>
+      <td class="admin-head" colspan=5>{t(processor.getProcessorName())}</td>
     </tr>
 
     <tr IF="processor.getProcessorId()=#ups#">

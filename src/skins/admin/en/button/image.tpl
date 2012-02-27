@@ -13,6 +13,6 @@
   type="image"
   src="images/spacer.gif"
   class="{getClass()}"
-  value="{getButtonLabel()}"
-  title="{getButtonLabel()}"
+  value="{t(getButtonLabel())}"
+  title="{t(getButtonLabel())}"
   onclick="javascript:{getJSCode():h}" />

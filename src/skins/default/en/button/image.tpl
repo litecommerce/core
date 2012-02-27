@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<input type="image" src="images/spacer.gif" class="{getClass()}" value="{getButtonLabel()}" title="{getButtonLabel()}" onclick="javascript: {getJSCode():h}" disabled="{getParam(#disabled#)}" alt="{getButtonLabel()}" />
+<input type="image" src="images/spacer.gif" class="{getClass()}" value="{t(getButtonLabel())}" title="{t(getButtonLabel())}" onclick="javascript: {getJSCode():h}" disabled="{getParam(#disabled#)}" alt="{t(getButtonLabel())}" />

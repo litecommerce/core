@@ -42,7 +42,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
     const LC_USPS_API_DOMESTIC = 'Domestic';
     const LC_USPS_API_INTL     = 'Intl';
 
-
     /**
      * Unique processor Id
      *
@@ -60,7 +59,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * @since 1.0.0
      */
     protected $apiType = null;
-
 
     // {{{
 

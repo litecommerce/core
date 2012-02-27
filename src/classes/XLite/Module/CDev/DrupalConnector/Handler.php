@@ -48,7 +48,6 @@ class Handler extends \XLite\Core\CMSConnector
         \XLite\Core\TopMessage::ERROR   => 'error',
     );
 
-
     /**
      * Return name of current CMS
      *

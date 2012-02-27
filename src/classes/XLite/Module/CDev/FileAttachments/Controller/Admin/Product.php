@@ -91,7 +91,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
         } else {
             $this->valid = false;
-            \XLite\Core\TopMessage::addError('Attachment has not been deleted successfully');
+            \XLite\Core\TopMessage::addError('Attachment is not deleted');
         }
 
         \XLite\Core\Database::getEM()->flush();
@@ -122,11 +122,9 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
         }
 
         if ($changed) {
-            \XLite\Core\TopMessage::addInfo('Attachments has been updated successfully');
+            \XLite\Core\TopMessage::addInfo('Attachments have been updated successfully');
         }
 
         \XLite\Core\Database::getEM()->flush();
     }
-
 }
-

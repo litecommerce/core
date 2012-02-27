@@ -46,7 +46,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      */
     protected $flexy;
 
-
     /**
      * Execute "postprocess" hook handler
      *

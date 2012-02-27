@@ -92,11 +92,13 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             $version = \XLite\Upgrade\Cell::getInstance()->getCoreMajorVersion();
 
             if (\XLite::getInstance()->checkVersion($version, '<')) {
-                $result = 'Upgrade to version ' . $version;
+                $result = 'Upgrade to version {{version}}';
 
             } else {
-                $result = 'Updates for your version (' . $version . ')';
+                $result = 'Updates for your version ({{version}})';
             }
+
+            $result = static::t($result, array('version' => $version));
         }
 
         return $result;
@@ -166,18 +168,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Common method to set current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->isUpdate() ? 'Updates available' : 'Upgrade';
-    }
-
-    /**
      * Check the flag in request
      *
      * @return boolean
@@ -236,7 +226,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
                     }
 
                 } else {
-                    $message = 'unable to add module entry to the install list: "{{name}}"';
+                    $message = 'unable to add module entry to the installation list: "{{name}}"';
                     $this->showError(__FUNCTION__, $message, array('name' => $module->getActualName()));
                 }
 
@@ -269,7 +259,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             $entry = \XLite\Upgrade\Cell::getInstance()->addUploadedModule($path);
 
             if (!isset($entry)) {
-                $message = 'unable to add module entry to the install list: "{{path}}"';
+                $message = 'unable to add module entry to the installation list: "{{path}}"';
                 $this->showError(__FUNCTION__, $message, array('path' => $path));
 
             } elseif (\XLite::getInstance()->checkVersion($entry->getMajorVersionNew(), '!=')) {

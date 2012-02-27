@@ -14,8 +14,10 @@ class RemoteCommand
         $this->command = $this->full_command($command, $options);
     }
 
-    function execute(){
-        print PHP_EOL.$this->command;
+    function execute($silent = false){
+        if (!$silent){
+            print PHP_EOL.$this->command;
+        }
         $exitcode = 0;
         passthru($this->command, $exitcode);
         return $exitcode;

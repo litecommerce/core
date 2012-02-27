@@ -47,19 +47,6 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
         return 'AustraliaPost settings';
     }
 
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'AustraliaPost settings';
-    }
-
     /**
      * getOptionsCategory
      *
@@ -174,7 +161,6 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
         }
 
         if (isset($cmLog)) {
-
             echo ('<h2>Communication log</h2>');
 
             ob_start();
@@ -194,5 +180,4 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
 
         die ();
     }
-
 }

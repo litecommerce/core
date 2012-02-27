@@ -27,11 +27,11 @@
 
     {else:}
       {if:tab.widget}
-        <widget class="{tab.widget}" product="{product}"/>
+        <widget class="{tab.widget}" product="{product}" />
 
       {else:}
         {if:tab.list}
-          {displayViewListContent(tab.list,_ARRAY_(#product#^product))}
+          <list name="{tab.list}" product="{product}" />
         {end:}
       {end:}
     {end:}

@@ -121,18 +121,15 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
                     \XLite\Core\Database::getEM()->persist($option);
                 }
+
                 \XLite\Core\Database::getEM()->flush();
 
-                \XLite\Core\TopMessage::addInfo(
-                    'The product option groups have been successfully updated'
-                );
+                \XLite\Core\TopMessage::addInfo('The product option groups have been updated successfully');
             }
         }
 
         if (!isset($options) || !$options) {
-            \XLite\Core\TopMessage::addError(
-                'The product option groups have not been successfully updated'
-            );
+            \XLite\Core\TopMessage::addError('The product option groups have not been successfully updated');
         }
     }
 
@@ -265,14 +262,10 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
                 \XLite\Core\Database::getEM()->flush();
 
                 if ('0' === \XLite\Core\Request::getInstance()->groupId) {
-                    \XLite\Core\TopMessage::addInfo(
-                        'The product option group has been successfully added'
-                    );
+                    \XLite\Core\TopMessage::addInfo('The product option group has been added successfully');
 
                 } else {
-                    \XLite\Core\TopMessage::addInfo(
-                        'The product option group has been successfully updated'
-                    );
+                    \XLite\Core\TopMessage::addInfo('The product option group has been updated successfully');
                 }
             }
 
@@ -355,9 +348,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
                 \XLite\Core\Database::getEM()->flush();
             }
 
-            \XLite\Core\TopMessage::addInfo(
-                'The exceptions have been successfully updated'
-            );
+            \XLite\Core\TopMessage::addInfo('The exceptions have been updated successfully');
 
         }
 

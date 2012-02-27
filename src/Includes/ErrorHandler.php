@@ -196,7 +196,6 @@ abstract class ErrorHandler
         showErrorPage($code, $message, $page ?: (LC_IS_CLI_MODE ? LC_ERROR_PAGE_MESSAGE : static::getErrorPage()));
     }
 
-
     /**
      * Shutdown function
      *
@@ -260,6 +259,20 @@ abstract class ErrorHandler
     public static function fireError($message, $code = self::ERROR_UNKNOWN)
     {
         static::throwException($message, $code);
+    }
+
+    /**
+     * Method to display certain error
+     *
+     * @param string $method Name of an abstract method
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public static function fireErrorAbstractMethodCall($method)
+    {
+        static::fireError('Abstract method call: ' . $method);
     }
 
     /**

@@ -45,7 +45,6 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'items_list/module/install/pager/css/style.css';
 
         return $list;

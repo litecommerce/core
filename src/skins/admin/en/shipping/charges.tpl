@@ -34,13 +34,13 @@ function ShowNotes()
 -->
 </script>
 
-{t(#Use this section to define rules for calculating shipping rates.#)}
+{t(#Use this section to define shipping rates calculation rules#)}
 
 <span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>{t(#How to define shipping rates#)} &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <br /><br />
 <p align="justify">
-  {t(#Shipping rates are comprised of several components (rate types) and are calculated according to the following generic patterns:#)}
+  {t(#Shipping rates are comprised of several components (rate types) and calculated according to the following generic patterns#)}:
 </p>
 <p align="justify">
   {t(#SHIPPING = flat + ITEMS*per_item + WEIGHT*per_weight + SUBTOTAL*(% of subtotal)/100;#,_ARRAY_(#X#^config.General.weight_unit))}
@@ -58,7 +58,7 @@ function ShowNotes()
 </p>
 <br />
 <p align="justify">
-  {t(#Descriptions for various rate types are provided below:#)}
+  {t(#Descriptions of various rate types are provided below#)}:
 </p>
 <br />
 
@@ -84,7 +84,7 @@ function ShowNotes()
 <br />
 <p align="justify">
 <b>{t(#Raw online rate (on-line rate)#)}</b> <br />
-  {t(#This component is automatically calculated by shipping add-on modules and cannot be edited.#)}
+  {t(#This component is automatically calculated by shipping add-on module and cannot be edited#)}.
 </p>
 <br />
 </span>

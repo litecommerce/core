@@ -9,4 +9,5 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<h2>{getLabel()}</h2>
+
+<h2>{t(getLabel())}</h2>

@@ -9,8 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <html>
-<head><title>{t(#User profile modified#)}</title></head>
+<head><title>{t(#User profile is modified#)}</title></head>
 <body>
 
 <p>{t(#The user profile was modified:#)} {profile.login}</p>

@@ -147,6 +147,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     {
         if (!isset($this->annotatedPHPCLasses)) {
             $this->annotatedPHPCLasses = array();
+
             static::getClassesTree()->walkThrough(array($this, 'checkClassForListChildTag'));
         }
 
