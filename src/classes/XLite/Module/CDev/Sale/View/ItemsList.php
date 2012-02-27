@@ -58,4 +58,67 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
 
         return $labels;
     }
+
+    /**
+     * Return products list
+     *
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    {
+        return $this->getOnlyEntities(
+            parent::getData($cnd, $countOnly)
+        );
+    }
+
+    /**
+     * getPageData
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPageData()
+    {
+        return $this->getOnlyEntities(
+            parent::getPageData()
+        );
+    }
+
+    /**
+     * Return collection result from the mixed one.
+     *
+     * @param  mixed $data
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function getOnlyEntities($data)
+    {
+        if (is_array($data)) {
+
+            // Sanitize result array as it is contains the following values:
+            // array(0 => Product object, 'cnt' => <counter>)
+            // We should return array of product objects
+
+            $result = array();
+
+            foreach ($data as $row) {
+
+                $result[] = is_array($row) ? $row[0] : $row;
+            }
+
+        } else {
+
+            $result = $data;
+        }
+
+        return $result;
+    }
 }

@@ -106,8 +106,6 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
             ->setParameter('discountTypePrice', \XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PRICE);
     }
 
-
-
     /**
      * Prepare certain search condition
      *
@@ -137,20 +135,6 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
                 parent::prepareCndOrderBy($queryBuilder, $value, $countOnly);
             }
         }
-    }
-
-    /**
-     * Search result routine.
-     *
-     * @param \Doctrine\ORM\QueryBuilder $qb Query builder routine
-     *
-     * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function searchResult(\Doctrine\ORM\QueryBuilder $qb)
-    {
-        return $qb->getOnlyEntities();
     }
 
     // }}}
