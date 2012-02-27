@@ -22,7 +22,7 @@
             <td colspan="5">&nbsp;</td>
         </tr>
         <tr>
-            <widget template="menu_item.tpl" href="admin.php?target=categories" icon="menu/icon_categories.gif" text="<span class='main-menu-item-header'>{t(#Categories#)}</span><br />{t(#Set your online catalog structure up#)}">
+            <widget template="menu_item.tpl" href="admin.php?target=categories" icon="menu/icon_categories.gif" text="<span class='main-menu-item-header'>{t(#Categories#)}</span><br />{t(#Online catalog structure set-up#)}">
             <td style="width:1%;">&nbsp;&nbsp;</td>
             <widget template="menu_item.tpl" href="admin.php?target=orders_stats" icon="menu/icon_statistics.gif" text="<span class='main-menu-item-header'>{t(#Statistics#)}</span><br />{t(#Review statistics on various aspects of your store's operation#)}">
         </tr>

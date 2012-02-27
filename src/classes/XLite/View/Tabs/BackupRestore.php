@@ -46,7 +46,7 @@ class BackupRestore extends \XLite\View\Tabs\ATabs
      */
     protected $tabs = array(
         'db_backup' => array(
-            'title'    => 'Back database up',
+            'title'    => 'Back up database',
             'template' => 'db/backup.tpl',
         ),
         'db_restore' => array(
