@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Row in attributes list (attribute)
+ * List of draggable entries
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,6 +10,6 @@
  * @since     1.0.14
  *}
 
-<div class="attribute{if:isNew()} new-entry hidden{end:}">
-  {displayViewListContent(#attributes.book.row.attribute#)}
-</div>
+<ul class="{getStyleClasses()}">
+  <widget FOREACH="getEntries(),entry" class="{getRowWidgetClass()}" internalWidget="{entry}" />
+</ul>

@@ -1,0 +1,78 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Draggable row styles
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.14
+ */
+
+ul.draggable-rows li.row
+{
+  display: table;
+  width: 648px;
+  border-top: 1px solid #d7e1e8;
+  border-bottom: 1px solid #d7e1e8;
+}
+
+ul.draggable-rows li.row div.container
+{
+  clear: both;
+}
+
+ul.draggable-rows li.row li.placeholder {
+  width: 628px;
+  margin-left: 20px;
+  background-color: #eeeeee;
+}
+
+ul.draggable-rows li.ui-sortable-helper * {
+
+}
+
+ul.draggable-rows li.row div.container div.move-cursor
+{
+  background: transparent url(../images/move_cursor.png) no-repeat center center;
+  width: 20px;
+  height: 20px;
+  cursor: move;
+  float: left;
+  margin: 8px 0 0 13px;
+}
+
+ul.draggable-rows li.row div.container div.separator
+{
+  background: transparent url(../images/vertical_dots.png) repeat-y center center;
+  width: 15px;
+  height: 20px;
+  float: left;
+  margin: 7px 4px;
+}
+
+ul.draggable-rows li.row div.container div.separator.right-separator
+{
+  float: right;
+}
+
+div.hidden
+{
+  display: none;
+}
+
+div.delete
+{
+  background: transparent url(../images/icon_trash.png) repeat-y center center;
+  width: 15px;
+  height: 20px;
+  float: right;
+  cursor: pointer;
+  margin: 8px 8px 0 3px;
+}
+
+.row-to-delete
+{
+  background-color: #eee;
+}

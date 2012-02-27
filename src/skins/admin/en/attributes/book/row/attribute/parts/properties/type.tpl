@@ -12,7 +12,7 @@
  * @ListChild (list="attributes.book.row.attribute.properties", weight="200")
  *}
 
-<tr class="additional-properties-type"">
+<tr class="additional-properties-type">
   <td class="label">{t(#Type#)}:</td>
 
   <td class="input">

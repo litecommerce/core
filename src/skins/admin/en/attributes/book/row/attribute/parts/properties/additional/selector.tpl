@@ -12,7 +12,7 @@
  * @ListChild (list="attributes.book.row.attribute.properties", weight="300")
  *}
 
-<tr IF="#Selector#=getAttributeTypeName()" class="additional-properties">
+<tr IF="#Selector#=getAttributeTypeName()" class="additional-properties selector-additional">
   <td></td>
   <td colspan="2">
 

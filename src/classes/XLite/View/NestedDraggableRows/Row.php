@@ -25,7 +25,7 @@
  * @since     1.0.14
  */
 
-namespace XLite\View\DraggableRows;
+namespace XLite\View\NestedDraggableRows;
 
 /**
  * Row
@@ -49,7 +49,7 @@ class Row extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'draggable_rows/row/body.tpl';
+        return 'nested_draggable_rows/row/body.tpl';
     }
 
     /**
@@ -65,7 +65,7 @@ class Row extends \XLite\View\AView
 
         $this->widgetParams += array(
             static::PARAM_INTERNAL_WIDGET => new \XLite\Model\WidgetParam\Object(
-                'Entry', null, false, '\XLite\View\DraggableRows\Row\ARow'
+                'Entry', null, false, '\XLite\View\NestedDraggableRows\Row\ARow'
             ),
         );
     }
@@ -128,6 +128,37 @@ class Row extends \XLite\View\AView
     protected function displayInternalWidget()
     {
         $this->getInternalWidget()->display();
+    }
+
+    /**
+     * Check if the row has a nest of some other rows.
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function hasNestedInternalWidget()
+    {
+        return $this->getInternalWidget()->isNestedRow();
+    }
+
+    /**
+     * Method to display row nest
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function displayNestedInternalWidget()
+    {
+        $nest = new \XLite\View\NestedDraggableRows(
+            array(
+                'entries'       => $this->getInternalWidget()->getNestedWidgets(),
+                'style_classes' => 'attributes',
+            )
+        );
+
+        $nest->display();
     }
 
     /**

@@ -1,15 +1,15 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Row in attributes list (attribute)
+ * Hidden box with position
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.14
+ *
+ * @ListChild (list="nestedDraggableRows.row", weight="100")
  *}
 
-<div class="attribute{if:isNew()} new-entry hidden{end:}">
-  {displayViewListContent(#attributes.book.row.attribute#)}
-</div>
+<input type="hidden" id="nested_draggable_row_{getInternalWidgetId()}" name="{getInternalWidgetPosFieldName()}" value="{getInternalWidgetPosFieldValue()}" />

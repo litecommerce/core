@@ -25,7 +25,7 @@
  * @since     1.0.14
  */
 
-namespace XLite\View\DraggableRows\Row;
+namespace XLite\View\NestedDraggableRows\Row;
 
 /**
  * ARow
@@ -96,6 +96,30 @@ abstract class ARow extends \XLite\View\AView
     public function getRowCSSClass()
     {
         return '';
+    }
+
+    /**
+     * Check if it's the nested row
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    public function isNestedRow()
+    {
+        return false;
+    }
+
+    /**
+     * Alias
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    public function getNestedWidgets()
+    {
+        return null;
     }
 
     /**

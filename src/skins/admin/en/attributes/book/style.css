@@ -22,22 +22,37 @@ div.group.hidden div.group-title
 {
   float: none;
 }
-
+/*
 .group-attributes-number,
   .attribute-type
 {
   float: right;
 }
-
+*/
 .group-attributes
 {
   margin-top: 13px;
   float: left;
 }
 
-div.attribute.hidden .attribute-properties
+.attribute-properties,
+  .attribute-properties-frame
 {
-  display: table;
+  background: #f7f7f7;
+  clear: both;
+}
+
+.attribute-properties-frame {
+  display: none;
+  padding: 20px;
+}
+
+div.attribute.new-entry .attribute-properties-frame {
+  display: block;
+}
+
+div.attribute.new-entry.hidden .attribute-properties-frame {
+  display: none;
 }
 
 .row.open-attribute .attribute-properties {
@@ -46,18 +61,6 @@ div.attribute.hidden .attribute-properties
 
 .row.open-attribute .attribute-properties-frame {
   display: block;
-}
-
-.attribute-properties,
-  .attribute-properties-frame
-{
-  background: #f7f7f7;
-  clear: both;
-  display: none;
-}
-
-.attribute-properties-frame {
-  padding: 20px;
 }
 
 .attribute-properties td {
@@ -168,37 +171,6 @@ ul.additional-properties.number li.label:first-child {
   display: none;
 }
 
-.attribute .attribute-change-label-frame {
-  display: none;
-}
-
-.attribute.hover .attribute-change-label-frame {
-  display: block;
-}
-
-.attribute-change-label-frame {
-  float: left;
-  background: url("images/change_button.png") no-repeat scroll right 0px transparent;
-  cursor: pointer;
-  height: 25px;
-  padding-right: 33px;
-  width: 70px;
-  margin: 5px 0 0;
-}
-
-.attribute-change-label {
-  border-left: 1px solid #cadce8;
-  border-bottom: 1px solid #cadce8;
-  border-top: 1px solid #cadce8;
-  border-right: none;
-  height: 18px;
-  margin-right: 14px;
-  padding: 4px 0 2px 20px;
-  width: 100%;
-  background-color: #eff8fe;
-  color: #154e9c;
-}
-
 .group .group-attributes {
   display: none;
 }
@@ -232,10 +204,6 @@ ul.additional-properties.number li.label:first-child {
 
 .row.opened-group .group-title div.open-group {
   background: transparent url(images/group_minus.png) 0px 0px no-repeat;
-}
-
-ul.draggable-rows li.row.group-row {
-  padding-right: 5px;
 }
 
 .group-row {

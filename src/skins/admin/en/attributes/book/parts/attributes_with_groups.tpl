@@ -12,4 +12,4 @@
  * @ListChild (list="attributes.book.parts", weight="600")
  *}
 
-<widget class="\XLite\View\DraggableRows" style_classes="attributes-groups" entries="{getGroupWidgets()}" />
+<widget class="\XLite\View\NestedDraggableRows" style_classes="nested-attributes" entries="{getWidgets()}" />

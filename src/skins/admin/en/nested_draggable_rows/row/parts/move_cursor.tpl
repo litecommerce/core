@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Group attributes list
+ * Cross cursor (to move rows)
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.14
  *
- * @ListChild (list="attributes.book.row.group", weight="600")
+ * @ListChild (list="nestedDraggableRows.row", weight="200")
  *}
 
-<div IF="!isNew()" class="group-attributes">
-  <widget class="\XLite\View\DraggableRows" style_classes="attributes" entries="{getAttributeWidgets()}" />
-</div>
+<div class="move-cursor">&nbsp;</div>

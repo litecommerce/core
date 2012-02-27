@@ -14,13 +14,13 @@ jQuery().ready(
   function() {
     jQuery('#new_attribute_button').click(
       function () {
-        jQuery('div.attribute').toggleClass('hidden');
+        jQuery('div.attribute.new-entry').toggleClass('hidden');
       }
     );
 
     jQuery('#new_group_button').click(
       function () {
-        jQuery('div.group').toggleClass('hidden');
+        jQuery('div.group.new-entry').toggleClass('hidden');
       }
     );
 
@@ -41,7 +41,7 @@ jQuery().ready(
         var parentRow = jQuery(this).parents('tr');
 
         parentRow.nextAll('tr.additional-properties').hide();
-        parentRow.nextAll('#' + jQuery("option:selected",this).val().toLowerCase() + '_additional').show();
+        parentRow.nextAll('.' + jQuery("option:selected",this).val().toLowerCase() + '-additional').show();
       }
     ).change();
 
