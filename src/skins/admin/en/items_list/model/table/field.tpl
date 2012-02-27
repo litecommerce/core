@@ -15,5 +15,3 @@
 {else:}
   {getColumnValue(column,entity)}
 {end:}
-
-<list type="inherited" name="{getCellListNamePart(#cell#,column)}" column="{column}" entity="{entity}" />
