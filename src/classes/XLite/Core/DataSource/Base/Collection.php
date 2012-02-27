@@ -38,26 +38,26 @@ abstract class Collection implements \Countable, \SeekableIterator
 {
 
     /**
-     * Ecwid data source
+     * Abstract data source
      * 
      * @var   \XLite\Core\DataSource\ADataSource
      * @see   ____var_see____
      * @since 1.0.17
      */
-    protected $data_source;
+    protected $dataSource;
 
     /**
      * Constructor 
      * 
-     * @param \XLite\Core\DataSource\ADataSource $data_source Abstract data source
+     * @param \XLite\Core\DataSource\ADataSource $dataSource Abstract data source
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function __construct(\XLite\Core\DataSource\ADataSource $data_source)
+    public function __construct(\XLite\Core\DataSource\ADataSource $dataSource)
     {
-        $this->data_source = $data_source;
+        $this->dataSource = $dataSource;
     }
 
 }

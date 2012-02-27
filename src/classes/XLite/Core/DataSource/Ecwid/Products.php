@@ -66,17 +66,17 @@ class Products extends \Xlite\Core\DataSource\Base\Products
     /**
      * Constructor 
      * 
-     * @param Ecwid $data_source Ecwid data source
+     * @param Ecwid $dataSource Ecwid data source
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function __construct(Ecwid $data_source)
+    public function __construct(Ecwid $dataSource)
     {
-        parent::__construct($data_source);
+        parent::__construct($dataSource);
 
-        $this->all_products = $this->getDataSource()->doApiCall('products');
+        $this->all_products = $this->getDataSource()->apiCall('products');
 
         $this->rewind();
 
@@ -177,7 +177,7 @@ class Products extends \Xlite\Core\DataSource\Base\Products
     public function current()
     {
         if (!isset($this->products[$this->position])) {
-            $this->products[$this->position] = $this->getDataSource->doApiCall(
+            $this->products[$this->position] = $this->getDataSource->apiCall(
                 'product',
                 array(
                     'id' => $this->all_products[$this->position]['id']

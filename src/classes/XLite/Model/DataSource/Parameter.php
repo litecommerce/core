@@ -50,7 +50,7 @@ class Parameter extends \XLite\Model\AEntity
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer", length="11", nullable=false)
      */
-    protected $parameter_id;
+    protected $id;
 
     /**
      * DataSource (relation)
@@ -60,9 +60,9 @@ class Parameter extends \XLite\Model\AEntity
      * @since 1.0.17
      *
      * @ManyToOne (targetEntity="XLite\Model\DataSource", inversedBy="parameters")
-     * @JoinColumn (name="data_source_id", referencedColumnName="data_source_id")
+     * @JoinColumn (name="data_source_id", referencedColumnName="id")
      */
-    protected $data_source;
+    protected $dataSource;
 
     /**
      * Parameter name 

@@ -113,7 +113,7 @@ class Ecwid extends ADataSource
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function doApiCall($apiMethod, $params = array())
+    public function apiCall($apiMethod, $params = array())
     {
         $url = 'http://app.ecwid.com/api/v1/'
             . $this->getStoreID() . '/'

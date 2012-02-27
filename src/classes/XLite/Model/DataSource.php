@@ -49,7 +49,7 @@ class DataSource extends \XLite\Model\AEntity
      * @GeneratedValue (strategy="AUTO")
      * @Column         (type="integer")
      */
-    protected $data_source_id;
+    protected $id;
 
     /**
      * Data source parameters (relation)
@@ -76,6 +76,24 @@ class DataSource extends \XLite\Model\AEntity
         $this->parameters = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
+    }
+
+    /**
+     * Get parameter value by its name
+     * 
+     * @param mixed $name Parameter name
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function getParameterByName($name)
+    {
+        $param = $this->getParameters()->filter(function ($p) use ($name) {
+            return $p->getName() == $name;
+        })->first();
+
+        return $param ? $param->getValue() : null;
     }
 
 }

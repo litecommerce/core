@@ -56,17 +56,17 @@ class Categories extends \Xlite\Core\DataSource\Base\Categories
     /**
      * Constructor 
      * 
-     * @param Ecwid $data_source Ecwid data source
+     * @param Ecwid $dataSource Ecwid data source
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function __construct(Ecwid $data_source)
+    public function __construct(Ecwid $dataSource)
     {
-        parent::__construct($data_source);
+        parent::__construct($dataSource);
 
-        $this->categories = $this->getDataSource()->doApiCall('categories');
+        $this->categories = $this->getDataSource()->apiCall('categories');
 
         $this->rewind();
     }
