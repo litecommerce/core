@@ -66,8 +66,8 @@ task("setup", function ($app)
     if (!isset($app['farms_count']))
         $app['farms_count'] = 4;
     $app['hub_ami'] = exec("ec2-describe-images | grep lc-test-grid | cut -f2");
-    $app['lc_ami'] = exec("ec2-describe-images | grep lc_ | cut -f2");
-    $app['server_instance_type'] = "m1.large";
+    $app['lc_ami'] = exec("ec2-describe-images | grep lc_32 | cut -f2");
+    $app['server_instance_type'] = "c1.medium";
     $app['grid_instance_type'] = "m1.small";
     $app['keypair'] = getenv("EC2_KEYPAIR");
     $app['keypair_name'] = getenv("EC2_KEYPAIR_NAME");
@@ -105,7 +105,7 @@ group("server", function()
     task('test_seq', 'setup', function($app)
     {
         print PHP_EOL . "Run sequential tests on " . $app['cloud']->server->public_dns . "...";
-        $code = $app['cloud']->server->run("sudo ./phpunit.sh ONLYWEB", array('pwd' => $app['server_htdocs'] . "/xlite/.dev", 'keypair' => $app['keypair']));
+        $code = $app['cloud']->server->run("sudo ./phpunit.sh ONLYWEB", array('pwd' => $app['server_htdocs'] . "/xlite/.dev", 'keypair' => $app['keypair'], 'user' => 'bitnami'));
 
     });
 
@@ -115,7 +115,7 @@ group("server", function()
         $server = $app['cloud']->server;
         print PHP_EOL . "Run parallel tests on " . $app['cloud']->server->public_dns . "...";
 
-        $options = array('pwd' => $app['server_htdocs'] . "/xlite/.dev",  'keypair' => $app['keypair']);
+        $options = array('pwd' => $app['server_htdocs'] . "/xlite/.dev",  'keypair' => $app['keypair'], 'user' => 'bitnami');
         $code = $server->run("sudo ./phpunit-parallel.php --build --clients-count ". ($app['farms_count']) ."; cat /tmp/phpunit.txt", $options);
         $server->download('/tmp/phpunit*.txt', $app['log_dir'], $options);
         $server->download('/tmp/phpunit*.xml', $app['log_dir'], $options);
@@ -126,7 +126,7 @@ group("server", function()
     task('test_noweb', 'setup', function($app){
         $server = $app['cloud']->server;
         print PHP_EOL . 'Starting Non-web tests on ' .$server->public_dns . '...';
-        $options = array('pwd' => $app['server_htdocs'] . "/xlite/.dev",  'keypair' => $app['keypair']);
+        $options = array('pwd' => $app['server_htdocs'] . "/xlite/.dev",  'keypair' => $app['keypair'], 'user' => 'bitnami');
         $code = $server->run('mkdir /tmp/coverage-html; sudo ./phpunit --coverage-clover /tmp/phpunit-clover.xml --coverage-html /tmp/coverage-html --verbose --log-junit /tmp/phpunit-noweb.xml xliteAllTests tests/AllTests.php LOCAL_TESTS,NOWEB', $options);
         $server->download('/tmp/phpunit-*.xml', $app['log_dir'], $options);
         $server->download('/tmp/coverage-html', $app['log_dir'], $options);
@@ -136,7 +136,7 @@ group("server", function()
     task('test_deploy', "setup", function($app)
     {
         $server = $app['cloud']->server;
-        $options = array('pwd' => $app['server_htdocs'] ,  'keypair' => $app['keypair']);
+        $options = array('pwd' => $app['server_htdocs'] ,  'keypair' => $app['keypair'], 'user' => 'bitnami');
 
         $server->run('cp xlite/src/etc/config.php xlite/.dev/build/config.local.php;' .
             'cp xlite_cms/sites/default/settings.php xlite_cms/sites/default/settings.old.php;
@@ -157,7 +157,7 @@ group("server", function()
     desc("Run apigen");
     task('apigen', 'setup', function($app){
         $server = $app['cloud']->server;
-        $options = array('pwd' => $app['server_htdocs'] ,  'keypair' => $app['keypair']);
+        $options = array('pwd' => $app['server_htdocs'] ,  'keypair' => $app['keypair'], 'user' => 'bitnami');
         $server->run('mkdir /tmp/api; cd xlite/src;'.
                 'sudo php ../.dev/build/devcode_postprocess.php;'.
                 'cd ' . $app['server_htdocs']. ';'.
@@ -449,7 +449,7 @@ function server_setup($app)
     $server = $app['cloud']->server;
 
     $options = array('pwd' => $app['server_htdocs'] . "/xlite",
-        'keypair' => $app['keypair']);
+        'keypair' => $app['keypair'], 'user' => 'bitnami');
 
     $server->run(
         'sudo rm -rf /tmp/*;'.
