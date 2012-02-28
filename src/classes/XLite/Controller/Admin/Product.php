@@ -325,27 +325,50 @@ class Product extends \XLite\Controller\Admin\AAdmin
 
         } else {
             // Insert record into main table
-            $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert($this->getPostedData());
+            $product = $this->insertProduct();
 
             if ($product) {
-                $inventory = new \XLite\Model\Inventory();
-                $inventory->setProduct($product);
-
-                // Create associations (categories and images)
-                \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
-                    $product,
-                    $this->getCategoryProducts($product)
-                    + array(
-                        'inventory' => $inventory,
-                    )
-                );
-
                 \XLite\Core\TopMessage::addInfo('New product has been added successfully');
 
                 // Add the ID of created product to the return URL
                 $this->setReturnURL($this->buildURL('product', '', array('id' => $product->getProductId())));
             }
         }
+    }
+
+    /**
+     * Insert product 
+     * 
+     * @return \XLite\Model\Product
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function insertProduct()
+    {
+        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert($this->getPostedData());
+
+        if ($product) {
+            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update($product, $this->collectInsertData($product));
+        }
+
+        return $product;
+    }
+
+    /**
+     * Collect insert data
+     *
+     * @param \XLite\Model\Product $product Product
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function collectInsertData(\XLite\Model\Product $product)
+    {
+        $inventory = new \XLite\Model\Inventory();
+        $inventory->setProduct($product);
+
+        return $this->getCategoryProducts($product) + array('inventory' => $inventory);
     }
 
     /**
@@ -366,19 +389,46 @@ class Product extends \XLite\Controller\Admin\AAdmin
         } else {
             $product = $this->getProduct();
 
-            // Clear all category associates
-            \XLite\Core\Database::getRepo('\XLite\Model\CategoryProducts')->deleteInBatch(
-                $product->getCategoryProducts()
-            );
-
-            $product->getClasses()->clear();
-            $data = $this->getCategoryProducts($product) + $this->getClasses($product) + $this->getPostedData();
-
-            // Update all data
-            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update($product, $data);
+            $this->modifyProduct($product);
 
             \XLite\Core\TopMessage::addInfo('Product info has been updated successfully');
         }
+    }
+
+    /**
+     * Modify product 
+     * 
+     * @param \XLite\Model\Product $product Product
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function modifyProduct(\XLite\Model\Product $product)
+    {
+        // Clear all category associates
+        \XLite\Core\Database::getRepo('\XLite\Model\CategoryProducts')->deleteInBatch(
+            $product->getCategoryProducts()
+        );
+
+        $product->getClasses()->clear();
+
+        // Update all data
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')->update($product, $this->collectModifyData($product));
+    }
+
+    /**
+     * Collect modify data 
+     * 
+     * @param \XLite\Model\Product $product Product
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function collectModifyData(\XLite\Model\Product $product)
+    {
+        return $this->getCategoryProducts($product) + $this->getClasses($product) + $this->getPostedData();
     }
 
     /**
