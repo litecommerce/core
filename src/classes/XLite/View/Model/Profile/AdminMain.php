@@ -414,6 +414,10 @@ class AdminMain extends \XLite\View\Model\AModel
             }
         }
 
+        if (isset($data['roles'])) {
+            unset($data['roles']);
+        }
+
         parent::setModelProperties($data);
     }
 
