@@ -148,7 +148,7 @@ return function()
         $objects[$method] = array();
 
         foreach ($tmp as $oldKey => $data) {
-            $object = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findBy(array('name' => $oldKey, 'code' => 'en'));
+            $object = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findByName($oldKey);
 
             if (isset($object)) {
                 if (empty($data)) {
