@@ -185,7 +185,7 @@ class AdminPanel extends \XLite\View\AView
     {
         $auth = \XLite\Core\Auth::getInstance();
 
-        $result = $auth->isPermissionAllowed('root access');
+        $result = $auth->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS);
 
         if (!$result) {
             $catalog = array('categories', 'product_list');

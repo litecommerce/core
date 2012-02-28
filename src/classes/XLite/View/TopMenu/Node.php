@@ -219,7 +219,7 @@ class Node extends \XLite\View\TopMenu
         return parent::checkACL()
             && (
                 $this->getParam(self::PARAM_LIST)
-                || $auth->isPermissionAllowed('root access')
+                || $auth->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS)
                 || ($additionalPermission && $auth->isPermissionAllowed($additionalPermission))
             );
     }

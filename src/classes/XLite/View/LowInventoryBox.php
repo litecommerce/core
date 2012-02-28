@@ -59,8 +59,10 @@ class LowInventoryBox extends \XLite\View\AView
      */
     protected function checkACL()
     {
+        $auth = \XLite\Core\Auth::getInstance();
+
         return parent::checkACL()
-            && \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage catalog');
+            && ($auth->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS) || $auth->isPermissionAllowed('manage catalog'));
     }
 }
 

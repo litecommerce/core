@@ -63,6 +63,19 @@ class BenchmarkSummary extends \XLite\View\AView
     }
 
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function checkACL()
+    {
+        return parent::checkACL()
+            && \XLite\Core\Auth::getInstance()->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS);
+    }
+
+    /**
      * Return widget default template
      *
      * @return string
