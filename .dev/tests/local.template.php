@@ -49,7 +49,7 @@ if (1 === TEST_DEPLOYMENT_MODE) {
     define('SELENIUM_SOURCE_URL', 'http://_hostname_/xlite_cms');
 
     // Directory where Drupal installed
-    define('DRUPAL_SITE_PATH', '/var/www/htdocs/xlite_cms');
+    define('DRUPAL_SITE_PATH', '/var/www/xlite_cms');
 
 } else {
 
@@ -57,7 +57,7 @@ if (1 === TEST_DEPLOYMENT_MODE) {
     define('SELENIUM_SOURCE_URL', 'http://_hostname_/xlite_cms');
 
     // Directory where Drupal installed
-    define('DRUPAL_SITE_PATH', '/var/www/htdocs/xlite_cms');
+    define('DRUPAL_SITE_PATH', '/var/www/xlite_cms');
 }
 
 // Settings for screenshots capturing (on failed tests)
