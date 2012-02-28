@@ -354,7 +354,11 @@ class AdminMain extends \XLite\View\Model\AModel
             unset($this->accessSchema['pending_membership_id']);
         }
 
-        if (!\XLite\Core\Auth::getInstance()->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS)) {
+        if (
+            !\XLite\Core\Auth::getInstance()->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS)
+            || !$this->getModelObject()
+            || !$this->getModelObject()->isAdmin()
+        ) {
             unset($this->accessSchema['roles']);
         }
 
