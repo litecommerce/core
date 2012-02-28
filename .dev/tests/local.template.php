@@ -18,10 +18,10 @@ define('TEST_DEPLOYMENT_MODE', 0);
 
 
 // Directory where xlite-tests.config.php is located
-define('XLITE_DEV_CONFIG_DIR', '/home/bitnami/etc');
+define('XLITE_DEV_CONFIG_DIR', '/home/ubuntu/etc');
 
 // Directory with external libs (PHPUnit etc)
-define('XLITE_DEV_LIB_DIR', '/home/bitnami/phpunit');
+define('XLITE_DEV_LIB_DIR', '/home/ubuntu/phpunit');
 
 /**
  * List of directories PHPUnit cloned from GitHub: http://www.phpunit.de/
