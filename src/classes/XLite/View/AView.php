@@ -487,7 +487,19 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function isVisible()
     {
-        return $this->checkTarget() && $this->checkMode();
+        return $this->checkTarget() && $this->checkMode() && $this->checkACL();
+    }
+
+    /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function checkACL()
+    {
+        return true;
     }
 
     /**

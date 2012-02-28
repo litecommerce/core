@@ -36,6 +36,18 @@ namespace XLite\Controller\Admin;
 class RecentOrders extends \XLite\Controller\Admin\OrderList
 {
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage orders');
+    }
+
+    /**
      * Handles the request.
      *
      * @return void

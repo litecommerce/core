@@ -200,7 +200,6 @@ class Node extends \XLite\View\TopMenu
     protected function isVisible()
     {
         return parent::isVisible()
-            && $this->checkACL()
             && !$this->isEmptyChildsList();
     }
 
@@ -217,8 +216,12 @@ class Node extends \XLite\View\TopMenu
 
         $additionalPermission = $this->getParam(self::PARAM_PERMISSION);
 
-        return $auth->isPermissionAllowed('root access')
-            || ($additionalPermission && $auth->isPermissionAllowed($additionalPermission));
+        return parent::checkACL()
+            && (
+                $this->getParam(self::PARAM_LIST)
+                || $auth->isPermissionAllowed('root access')
+                || ($additionalPermission && $auth->isPermissionAllowed($additionalPermission))
+            );
     }
 
 }

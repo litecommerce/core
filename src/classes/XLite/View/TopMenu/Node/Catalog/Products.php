@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,61 +13,44 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.18
  */
 
-namespace XLite\Controller\Admin;
+namespace XLite\View\TopMenu\Node\Catalog;
 
 /**
- * Profile list controller
- *
+ * Products
+ * 
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.18
+ *
+ * @ListChild (list="menu.catalog", weight="50", zone="admin")
  */
-class ProfileList extends \XLite\Controller\Admin\AAdmin
+class Products extends \XLite\View\TopMenu\Node\Catalog\ACatalog
 {
     /**
-     * Check ACL permissions
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
-     */
-    public function checkACL()
-    {
-        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage users');
-    }
-
-    /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getTitle()
-    {
-        return 'Search for users';
-    }
-
-    /**
-     * doActionDelete
+     * Define widget parameters
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionDelete()
+    protected function defineWidgetParams()
     {
-        // :TODO: check if it's really needed
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_TITLE]->setValue(static::t('Products'));
+        $this->widgetParams[self::PARAM_TARGET]->setValue('product_list');
+        $this->widgetParams[self::PARAM_EXTRA]->setValue(array('mode' => 'search'));
     }
 }
+
