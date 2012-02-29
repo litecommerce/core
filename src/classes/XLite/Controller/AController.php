@@ -1161,7 +1161,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function printAJAXOuput($output)
     {
-        echo ('<h2 class="ajax-title-loadable">' . $this->getTitle() . '</h2>');
+        echo ('<h2 class="ajax-title-loadable">' . static::t($this->getTitle()) . '</h2>');
         echo ('<div class="ajax-container-loadable">' . $output . '</div>');
     }
 
