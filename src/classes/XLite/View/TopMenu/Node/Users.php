@@ -33,7 +33,7 @@ namespace XLite\View\TopMenu\Node;
  * @see   ____class_see____
  * @since 1.0.18
  *
- * @ListChild (list="menus", weight="30", zone="admin")
+ * @ListChild (list="menus", weight="400", zone="admin")
  */
 class Users extends \XLite\View\TopMenu\Node
 {
