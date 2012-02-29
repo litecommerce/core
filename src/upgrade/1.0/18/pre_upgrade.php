@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -124,9 +124,10 @@ return function()
 /* ----> */ 'Please specify text labels for each language' => array(null, array('Please specify text labels for each language. If you do not specify a value for some language, the {{language}} label wiil be used.' => 'Please specify text labels for each language. If you do not specify a value for some language, the {{language}} label will be used.')),
 /* ----> */ 'Some products could have been imported incorrectly' => array(null, array('Some products could have been imported incorrectly. Please check your catalog. Find the ID of the products that could have been imported incorrectly in the import log file available at the above link.' => 'Some products could have been imported incorrectly. Please check your catalog. Find the ID\'s of such products in the import log file available at the above link.')),
 /* ----> */ 'The email with your account information was mailed to' => array(null, array('The email with your account information was mailed to {{email}}. We encourage you to authenticate again to verify the received data.' => 'The email with your account information was mailed to {{email}}. We encourage you to authenticate yourself again to verify the received data.')),
-        ),
+
 /* ----> */ 'This user name is used for an existing account. Enter another user name or sign in' => array(null, array('This user names is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>' => 'This user name is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>')),
 /* ----> */ 'To fix this problem, do the following: 3 points' => array(null, array('To fix this problem, do the following: <ul><li>make sure that your hosting service provider has HTTPS protocol enabled;</li><li>verify your HTTPS settings ("https_host" parameter in the "etc/config.php" file must be valid);</li><li>reload this page.</li></ul>' => 'To fix this problem take the following steps: <ul><li>make sure that the HTTPS protocol is enabled by your hosting service provider;</li><li>verify your HTTPS settings ("https_host" parameter in the "etc/config.php" file must be valid);</li><li>reload this page.</li></ul>')),
+        ),
         'delete' => array(
             'Successfully imported X new products and upgraded Y old products' => 'Successfully imported {{new}} new products and upgraded {{old}} old products',
             'Successfully imported X new products' => 'Successfully imported {{new}} new products',
@@ -148,7 +149,7 @@ return function()
         $objects[$method] = array();
 
         foreach ($tmp as $oldKey => $data) {
-            $object = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findByName($oldKey);
+            $object = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findOneBy(array('name'=>$oldKey));
 
             if (isset($object)) {
                 if (empty($data)) {
@@ -232,9 +233,9 @@ return function()
         ),
         'delete' => array(
             'General' => array(
-                'add_on_mode',
-                'add_on_mode_page',
-                'direct_product_url',
+                'add_on_mode' => null,
+                'add_on_mode_page' => null,
+                'direct_product_url' => null,
             ),
         ),
     );
@@ -244,25 +245,15 @@ return function()
     foreach ($config as $method => $tmp) {
         foreach ($tmp as $category => $data) {
             foreach ($data as $name => $value) {
-                $object = \XLite\Core\Database::getRepo('\XLite\Model\Config')->findBy(array('name' => $name, 'category' => $category));
-
+                $object = \XLite\Core\Database::getRepo('\XLite\Model\Config')->findOneBy(array('name' => $name, 'category' => $category));
                 if (isset($object)) {
-                    switch ($method) {
-                        case 'update':
-                            list($oldLabel, $newLabel) = $value;
+                    if($method == 'update'){
+                        list($oldLabel, $newLabel) = $value;
 
-                            if ($object->getOptionName() === $oldLabel) {
-                                $object->setOptionName($newValue);
-                            }
+                        if ($object->getOptionName() === $oldLabel) {
+                            $object->setOptionName($newLabel);
+                        }
 
-                            break;
-    
-                        case 'delete':
-                            // ...
-                            break;
-
-                        default:
-                            // ...
                     }
 
                 } elseif ('insert' === $method) {
@@ -270,12 +261,10 @@ return function()
                     $object->setCategory($category);
                     $object->setName($name);
 
-                    // Add other actions (if needed)
-                    // list($value, $label, $orderby) = $value;
                 }
 
                 if (isset($object)) {
-                    $objects[$method] = $object;
+                    $objects[$method][] = $object;
                 }
             }
         }
