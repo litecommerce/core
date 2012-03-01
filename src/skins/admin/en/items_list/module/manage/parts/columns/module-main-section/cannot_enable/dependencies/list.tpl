@@ -15,6 +15,6 @@
 
 <ul>
   <li FOREACH="getDependencyModules(module),depend">
-    {displayNestedViewListContent(#details#,_ARRAY_(#depend#^depend))}
+    <list name="details" type="nested" depend="{depend}" />
   </li>
 </ul>

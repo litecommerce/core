@@ -24,7 +24,7 @@
     <span>{t(#n/a#)}</span>
   {end:}
   {if:surcharge.count=#1#}
-    {displayNestedViewListContent(#modifier#,_ARRAY_(#surcharge#^surcharge,#sType#^sType,#cart#^cart))}
+    <list name="modifier" type="nested" surcharge="{surcharge}" sType="{sType}" cart="{cart}" />
   {else:}
     <div style="display: none;" class="order-modifier-details">
       <ul>

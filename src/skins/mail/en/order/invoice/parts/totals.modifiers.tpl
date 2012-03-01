@@ -24,6 +24,6 @@
     {else:}
       {t(#n/a#)}
     {end:}
-    {displayViewListContent(#invoice.base.totals.modifier#,_ARRAY_(#surcharge#^surcharge,#sType#^sType,#order#^order))}
+    <list name="invoice.base.totals.modifier" surcharge="{surcharge}" sType="{sType}" order="{order}" />
   </td>
 </tr>

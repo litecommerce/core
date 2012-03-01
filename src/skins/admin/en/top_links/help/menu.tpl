@@ -14,7 +14,7 @@
   <a href="#">{t(#Help Zone#)}</a>
   <div>
     <ul>
-      {displayViewListContent(#top_links.help#)}
+      <list name="top_links.help" />
     </ul>
   </div>
 </li>

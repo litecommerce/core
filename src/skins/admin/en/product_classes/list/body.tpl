@@ -22,7 +22,7 @@
 <widget FOREACH="getData(),idx,class" class="\XLite\View\ProductClass\MainInput" classId="{class.getId()}" className="{class.getName()}" />
 
 <tr>
-{displayViewListContent(#productClasses.list.columns.new#)}
+<list name="productClasses.list.columns.new" />
 </tr>
 
 </table>

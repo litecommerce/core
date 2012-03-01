@@ -14,11 +14,11 @@
 <table class="selected-products" cellspacing="0">
 
   <tr>
-    {displayViewListContent(#cart.items.header#)}
+    <list name="cart.items.header" />
   </tr>
 
   <tr class="selected-product" FOREACH="cart.getItems(),item">
-    {displayViewListContent(#cart.item#,_ARRAY_(#item#^item))}
+    <list name="cart.item" item="{item}" />
   </tr>
 
   <tr class="selected-product additional-item" FOREACH="getViewList(#cart.items#),w">

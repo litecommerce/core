@@ -11,6 +11,6 @@
  *}
 <div id="top-links">
   <ul>
-    {displayViewListContent(#top_links#)}
+    <list name="top_links" />
   </ul>
 </div>

@@ -14,5 +14,5 @@
  *}
 
 <td class="module-main-section">
-  {displayNestedViewListContent(#module-main-section#,_ARRAY_(#module#^module))}
+  <list name="module-main-section" type="nested" module="{module}" />
 </td>

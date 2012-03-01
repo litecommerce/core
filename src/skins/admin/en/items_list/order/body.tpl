@@ -13,11 +13,11 @@
 <table class="data-table items-list">
 
   <tr>
-    {displayInheritedViewListContent(#header#,_ARRAY_(#order#^order))}
+    <list name="header" type="inherited" order="{order}" />
   </tr>
 
   <tr FOREACH="getPageData(),idx,order" class="{getRowClass(idx,##,#highlight#)}">
-    {displayInheritedViewListContent(#columns#,_ARRAY_(#order#^order))}
+    <list name="columns" type="inherited" order="{order}" />
   </tr>
 
   <tr FOREACH="getViewList(#itemsList.order.admin.items#),w">

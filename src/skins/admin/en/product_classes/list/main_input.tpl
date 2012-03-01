@@ -9,5 +9,5 @@
  *}
 
 <tr>
-  {displayViewListContent(#product_classes.main_input#,_ARRAY_(#className#^getParam(#className#),#id#^getParam(#classId#)))}
+  <list name="product_classes.main_input" className="{getParam(#className#)}" id="{getParam(#classId#)}" />
 </tr>

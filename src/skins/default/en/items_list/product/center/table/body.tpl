@@ -13,13 +13,13 @@
 
   <table class="products-table" cellspacing="0" IF="getPageData()">
     <tr>
-      {displayInheritedViewListContent(#captions#)}
+      <list name="captions" type="inherited" />
     </tr>
     <tr FOREACH="getPageData(),product" class="product-cell {getProductCellClass(product)}">
       <td FOREACH="getInheritedViewList(#columns#,_ARRAY_(#product#^product)),column">{column.display()}</td>
     </tr>
   </table>
 
-  {displayNestedViewListContent(#buttons#)}
+  <list name="buttons" type="nested" />
 
 </div>

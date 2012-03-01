@@ -11,5 +11,5 @@
  * @ListChild (list="order.children", weight="10")
  *}
 <div class="order-statuses">
-  {displayViewListContent(#order.status#)}
+  <list name="order.status" />
 </div>

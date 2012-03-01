@@ -14,7 +14,7 @@
   <a href="#">{t(#Storefront#)}</a>
   <div>
     <ul>
-      {displayViewListContent(#top_links.storefront#)}
+      <list name="top_links.storefront" />
     </ul>
   </div>
 </li>

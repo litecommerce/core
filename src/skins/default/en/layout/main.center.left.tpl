@@ -14,6 +14,6 @@
 
 <div id="sidebar-first" class="column sidebar" IF="isSidebarFirstVisible()">
   <div class="section">
-    {displayViewListContent(#sidebar.first#)}
+    <list name="sidebar.first" />
   </div>
 </div>

@@ -11,7 +11,7 @@
  *}
 <div id="shopping-cart" class="checkout-cart">
 
-  {displayViewListContent(#checkout.cart#)}
+  <list name="checkout.cart" />
 
 </div>
 

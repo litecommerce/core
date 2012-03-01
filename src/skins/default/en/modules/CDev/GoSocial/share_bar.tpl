@@ -13,5 +13,5 @@
  *}
 
 <div class="bar">
-  {displayViewListContent(#product.details.page.info.share.bar#)}
+  <list name="product.details.page.info.share.bar" />
 </div>

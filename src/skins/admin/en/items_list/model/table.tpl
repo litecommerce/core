@@ -14,7 +14,7 @@
 
   <div IF="isHeaderVisible()" class="list-header">
     <div FOREACH="getTopActions(),tpl" class="button-container"><widget template="{tpl:h}" /></div>
-    {displayInheritedViewListContent(#header#)}
+    <list name="header" type="inherited" />
   </div>
 
   <widget IF="isPageBodyVisible()" template="{getPageBodyTemplate()}" />
@@ -24,7 +24,7 @@
 
   <div IF="isFooterVisible()" class="list-footer">
     <div FOREACH="getBottomActions(),tpl" class="button-container"><widget template="{tpl:h}" /></div>
-    {displayInheritedViewListContent(#footer#)}
+    <list name="footer" type="inherited" />
   </div>
 
 </div>

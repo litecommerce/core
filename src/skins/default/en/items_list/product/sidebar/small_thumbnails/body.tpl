@@ -10,13 +10,13 @@
  * @since     1.0.0
  *}
 
-{displayViewListContent(#itemsList.product.cart#)}
+<list name="itemsList.product.cart" />
 
 <ul class="list-body-sidebar products products-sidebar products-sidebar-small-thumbnails">
 
   <li FOREACH="getSideBarData(),i,product" class="product-cell hproduct item {getAdditionalItemClass(productArrayPointer,productArraySize)}">
     <div class="{getProductCellClass(product)}">
-      {displayInheritedViewListContent(#info#,_ARRAY_(#product#^product))}
+      <list name="info" type="inherited" product="{product}" />
       <div class="clear"></div>
     </div>
   </li>

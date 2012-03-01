@@ -16,12 +16,12 @@
   {if:surcharge.count=#1#}
     <td class="title">
       {surcharge.lastName}:
-      {displayViewListContent(#invoice.base.totals.modifier.name#,_ARRAY_(#surcharge#^surcharge,#sType#^sType,#order#^order))}
+      <list name="invoice.base.totals.modifier.name" surcharge="{surcharge}" sType="{sType}" order="{order}" />
     </td>
   {else:}
     <td class="title list-owner">
       {surcharge.name}:
-      {displayViewListContent(#invoice.base.totals.modifier.name#,_ARRAY_(#surcharge#^surcharge,#sType#^sType,#order#^order))}
+      <list name="invoice.base.totals.modifier.name" surcharge="{surcharge}" sType="{sType}" order="{order}" />
     </td>
   {end:}
   <td class="value">
@@ -30,6 +30,6 @@
     {else:}
       {t(#n/a#)}
     {end:}
-    {displayViewListContent(#invoice.base.totals.modifier.value#,_ARRAY_(#surcharge#^surcharge,#sType#^sType,#order#^order))}
+    <list name="invoice.base.totals.modifier.value" surcharge="{surcharge}" sType="{sType}" order="{order}" />
   </td>
 </tr>

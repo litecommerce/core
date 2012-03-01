@@ -15,7 +15,7 @@
 
 <div IF="participateSale(product)" class="sale-label-product-details">
   <div class="text">
-    {displayNestedViewListContent(#sale_price.text#)}
+    <list name="sale_price.text" type="nested" />
   </div>
-  {displayNestedViewListContent(#sale_price.label#)}
+  <list name="sale_price.label" type="nested" />
 </div>

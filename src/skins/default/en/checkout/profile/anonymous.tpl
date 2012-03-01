@@ -14,7 +14,7 @@
   <div class="create">
     <h3>{t(#A new customer? Enter your e-mail#)}:</h3>
 
-    {displayViewListContent(#checkout.profile.create#)}
+    <list name="checkout.profile.create" />
 
   </div>
 

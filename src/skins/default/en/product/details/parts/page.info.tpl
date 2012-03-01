@@ -12,5 +12,5 @@
  *}
 
 <div class="product-details-info">
-  {displayViewListContent(#product.details.page.info#)}
+  <list name="product.details.page.info" />
 </div>

@@ -19,7 +19,7 @@
 
     <ul class="by-conditions">
 
-      {displayViewListContent(#product.search.conditions.by-keywords#)}
+      <list name="product.search.conditions.by-keywords" />
 
     </ul>
 

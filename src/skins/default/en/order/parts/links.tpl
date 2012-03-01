@@ -11,7 +11,7 @@
  * @ListChild (list="order.children", weight="20")
  *}
 <ul class="links">
-  {displayViewListContent(#order.links#)}
+  <list name="order.links" />
 </ul>
 
 <hr class="tiny" />

@@ -11,5 +11,5 @@
  * @ListChild (list="invoice.base", weight="40")
  *}
 <table cellspacing="0" class="totals">
-  {displayViewListContent(#invoice.base.totals#)}
+  <list name="invoice.base.totals" />
 </table>

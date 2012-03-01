@@ -13,7 +13,7 @@
 
 <td class="body">
   <div class="quick-look-cell">
-    {displayNestedViewListContent(#quicklook.info#)}
-    {displayNestedViewListContent(#info#,_ARRAY_(#product#^product))}
+    <list name="quicklook.info" type="nested" />
+    <list name="info" type="nested" product="{product}" />
   </div>
 </td>

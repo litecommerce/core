@@ -18,7 +18,7 @@
   <widget class="\XLite\View\Upgrade\Step\ReadyToInstall\CreateBackup" />
 
   <div class="ready-to-install-actions">
-    {displayInheritedViewListContent(#sections#)}
+    <list name="sections" type="inherited" />
     <div class="clear"></div>
   </div>
 

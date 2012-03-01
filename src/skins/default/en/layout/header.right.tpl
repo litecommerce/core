@@ -12,5 +12,5 @@
  * @ListChild (list="layout.header", weight="300")
  *}
 <div id="header">
-  {displayViewListContent(#layout.header.right#,_ARRAY_(#displayMode#^#horizontal#))}
+  <list name="layout.header.right" displayMode="horizontal" />
 </div>

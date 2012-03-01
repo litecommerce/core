@@ -14,6 +14,6 @@
  *}
 <td class="icon">
   <div class="icon-container">
-    {displayNestedViewListContent(#icon#,_ARRAY_(#module#^module))}
+    <list name="icon" type="nested" module="{module}" />
  </div>
 </td>

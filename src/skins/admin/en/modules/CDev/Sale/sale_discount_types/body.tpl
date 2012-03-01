@@ -10,4 +10,4 @@
  * @since     1.0.0
  *}
 
-{displayViewListContent(#sale_discount_types#)}
+<list name="sale_discount_types" />

@@ -14,6 +14,6 @@
 
 <div id="main-wrapper">
   <div id="main" class="clearfix">
-    {displayViewListContent(#layout.main.center#)}
+    <list name="layout.main.center" />
   </div>
 </div>
