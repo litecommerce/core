@@ -7,6 +7,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <tr>
-{displayViewListContent(#product_classes.main_input#,_ARRAY_(#name#^getParam(#className#),#id#^getParam(#classId#)))}
+  {displayViewListContent(#product_classes.main_input#,_ARRAY_(#className#^getParam(#className#),#id#^getParam(#classId#)))}
 </tr>
