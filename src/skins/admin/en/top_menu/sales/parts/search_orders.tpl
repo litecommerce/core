@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="menu.sales", weight="20")
+ * @ListChild (list="menu.sales", weight="200")
  *}
 
 <widget class="\XLite\View\TopMenu\Node" title="Search for orders" linkTarget="order_list" extra="{_ARRAY_(#mode#^#search#)}" />

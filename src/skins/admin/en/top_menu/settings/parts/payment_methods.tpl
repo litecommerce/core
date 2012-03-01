@@ -1,13 +1,15 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Payment methods link
+ * Payment methods page link
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="menu.settings", weight="30")
+ *
+ * @ListChild (list="menu.settings", weight="200")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="{t(#Payment methods#)}" linkTarget="payment_methods" />
+
+<widget class="\XLite\View\TopMenu\Node" title="Payment methods" linkTarget="payment_methods" />

@@ -91,7 +91,7 @@
 
   <div IF="countLabels()" class="right">
     <widget class="\XLite\View\PagerOrig\Simple" pages="{getPages()}" page="{getPage()}" url="{getPagerURL()}" />
-    (<strong>{t(#N items#,_ARRAY_(#n#^countLabels()))}</strong> total)
+    (<strong>{t(#N items total#,_ARRAY_(#n#^countLabels()))}</strong>)
   </div>
 
   <div class="clear"></div>

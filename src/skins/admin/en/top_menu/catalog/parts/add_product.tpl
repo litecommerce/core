@@ -8,6 +8,8 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="menu.catalog", weight="15")
+ *
+ * @ListChild (list="menu.catalog", weight="200")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="{t(#Add Product#)}" linkTarget="add_product" />
+
+<widget class="\XLite\View\TopMenu\Node" title="Add Product" linkTarget="add_product" />
