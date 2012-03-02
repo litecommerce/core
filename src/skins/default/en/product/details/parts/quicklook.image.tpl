@@ -12,5 +12,5 @@
  * @ListChild (list="product.details.quicklook", weight="20")
  *}
 <div IF="product.hasImage()" class="image">
-  {displayViewListContent(#product.details.quicklook.image#)}
+  <list name="product.details.quicklook.image" />
 </div>

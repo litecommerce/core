@@ -15,6 +15,6 @@
   <span IF="!item.getURL()">{item.getName()}</span>
   <span IF="!item.product.isPersistent()" class="deleted-product-note">(deleted)</span>
   <div IF="isViewListVisible(#invoice.item.name#,_ARRAY_(#item#^item))" class="additional">
-    {displayViewListContent(#invoice.item.name#,_ARRAY_(#item#^item))}
+    <list name="invoice.item.name" item="{item}" />
   </div>
 </td>

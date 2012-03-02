@@ -18,7 +18,7 @@
 
   <div id="footer">
     <div class="section">
-      {displayViewListContent(#sidebar.footer#)}
+      <list name="sidebar.footer" />
     </div>
   </div>
 

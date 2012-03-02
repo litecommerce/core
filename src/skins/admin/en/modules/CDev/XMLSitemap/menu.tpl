@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="menu.settings", weight="50")
+ * @ListChild (list="menu.settings", weight="400")
  *}
 
 <widget class="\XLite\View\TopMenu\Node" title="XML sitemap" linkTarget="sitemap" />

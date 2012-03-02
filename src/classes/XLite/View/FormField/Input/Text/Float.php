@@ -131,6 +131,25 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
     }
 
     /**
+     * getCommonAttributes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCommonAttributes()
+    {
+        $attributes = parent::getCommonAttributes();
+
+        $e = $this->getE();
+        if (isset($e)) {
+            $attributes['data-e'] = $e;
+        }
+
+        return $attributes;
+    }
+
+    /**
      * Get mantis
      * 
      * @return integer

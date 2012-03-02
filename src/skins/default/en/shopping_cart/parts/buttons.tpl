@@ -11,5 +11,5 @@
  * @ListChild (list="cart.children", weight="20")
  *}
 <div class="cart-buttons">
-  {displayViewListContent(#cart.buttons#)}
+  <list name="cart.buttons" />
 </div>

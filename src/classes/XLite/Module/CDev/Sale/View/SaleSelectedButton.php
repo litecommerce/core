@@ -62,9 +62,7 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules/CDev/Sale/sale_selected_button/style.css';
-
         // TODO: dynamic CSS inclusion
         $list[] = 'modules/CDev/Sale/sale_selected_dialog/style.css';
 
@@ -95,7 +93,7 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      */
     protected function getDefaultLabel()
     {
-        return 'Put selected on sale';
+        return 'Put up selected for sale';
     }
 
     /**

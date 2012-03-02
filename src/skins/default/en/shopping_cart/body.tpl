@@ -11,9 +11,9 @@
  *}
 <div id="cart">
   <div id="cart-right">
-    {displayViewListContent(#cart.panel#)}
+    <list name="cart.panel" />
   </div>
   <div id="shopping-cart">
-    {displayViewListContent(#cart.children#)}
+    <list name="cart.children" />
   </div>
 </div>

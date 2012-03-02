@@ -19,7 +19,7 @@
   <div class="items-list">
     <ul>
       <li FOREACH="getItemsList(),item">
-        {displayViewListContent(#minicart.vertical.item#,_ARRAY_(#item#^item))}
+        <list name="minicart.vertical.item" item="{item}" />
       </li>
     </ul>
     <p IF="isTruncated()" class="other-items"><a href="{buildURL(#cart#)}">{t(#Other items#)}</a></p>

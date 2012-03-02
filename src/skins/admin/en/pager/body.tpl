@@ -12,9 +12,9 @@
 
 <ul class="pager grid-list" IF="isPagesListVisible()">
   <li FOREACH="getPages(),page" class="{page.classes}">
-    <a IF="page.href" href="{page.href}" class="{page.page}" title="{t(page.title)}">{t(page.text)}</a>
-    <span IF="!page.href" class="{page.page}" title="{t(page.title)}">{t(page.text)}</span>
+    <a IF="page.href" href="{page.href}" class="{page.page}" title="{t(page.title)}">{t(page.text):h}</a>
+    <span IF="!page.href" class="{page.page}" title="{t(page.title)}">{t(page.text):h}</span>
   </li>
 </ul>
 
-{displayInheritedViewListContent(#itemsTotal#)}
+<list name="itemsTotal" type="inherited" />

@@ -327,7 +327,7 @@ XLite\Model\LanguageLabel:
   - { name: 'No other languages defined', translations: [{ code: en, label: 'No other languages defined' }] }
   - { name: 'Add new label', translations: [{ code: en, label: 'Add new label' }] }
   - { name: 'Add language', translations: [{ code: en, label: 'Add language' }] }
-  - { name: 'N items', translations: [{ code: en, label: '{{n}} items' }] }
+  - { name: 'N items total', translations: [{ code: en, label: '{{n}} items total' }] }
   - { name: 'Select language to edit', translations: [{ code: en, label: 'Select language to edit' }] }
   - { name: 'Add new language', translations: [{ code: en, label: 'Add new language' }] }
   - { name: Save, translations: [{ code: en, label: Save }] }

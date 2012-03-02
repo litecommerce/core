@@ -12,6 +12,6 @@
  * @ListChild (list="upgrade.install_updates.sections.form", weight="200")
  *}
 <ul class="module-info">
-  {displayInheritedViewListContent(#sections.form.info#,_ARRAY_(#entry#^entry))}
+  <list name="sections.form.info" type="inherited" entry="{entry}" />
 </ul>
 <div class="clear"></div>

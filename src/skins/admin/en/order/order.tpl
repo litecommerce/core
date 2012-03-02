@@ -38,7 +38,7 @@
 	      <td><textarea name="notes" cols="60" rows="7">{order.notes:h}</textarea></td>
       </tr>
 
-      {displayViewListContent(#order.details#,_ARRAY_(#order#^order))}
+      <list name="order.details" order="{order}" />
 
       <tr valign="top">
 	      <td>&nbsp;</td>

@@ -12,5 +12,5 @@
  * @ListChild (list="itemsList.module.install.columns", weight="70")
  *}
 <td class="module-description-section">
-  {displayNestedViewListContent(#module-description-section#,_ARRAY_(#module#^module))}
+  <list name="module-description-section" type="nested" module="{module}" />
 </td>

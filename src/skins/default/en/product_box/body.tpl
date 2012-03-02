@@ -11,6 +11,6 @@
  *}
 <ul class="products products-sidebar products-sidebar-big-thumbnails product-block">
   <li class="product-cell product hproduct item first last">
-    {displayViewListContent(#productBlock.info#,_ARRAY_(#product#^getProduct()))}
+    <list name="productBlock.info" product="{getProduct()}" />
   </li>
 </ul>

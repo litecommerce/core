@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="menus", weight="70")
+ * @ListChild (list="menus", weight="800")
  *}
 
-<widget class="\XLite\View\TopMenu\Node" title="{t(#Add-ons#)}" className="hl" linkTarget="addons_list_installed" />
+<widget class="\XLite\View\TopMenu\Node" title="Add-ons" className="hl" linkTarget="addons_list_installed" />

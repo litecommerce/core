@@ -11,5 +11,5 @@
  *}
 
 <div class="checkout-block">
-  {displayViewListContent(#checkout.main#)}
+  <list name="checkout.main" />
 </div>

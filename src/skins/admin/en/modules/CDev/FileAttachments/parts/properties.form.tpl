@@ -12,5 +12,5 @@
  * @ListChild (list="product.attachments.properties", weight="100", zone="admin")
  *}
 <table cellspacing="0" class="form">
-  {displayViewListContent(#product.attachments.form#,_ARRAY_(#attachment#^attachment))}
+  <list name="product.attachments.form" attachment="{attachment}" />
 </table>

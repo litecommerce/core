@@ -16,4 +16,4 @@
   </li>
 </ul>
 
-{displayInheritedViewListContent(#itemsTotal#)}
+<list name="itemsTotal" type="inherited" />

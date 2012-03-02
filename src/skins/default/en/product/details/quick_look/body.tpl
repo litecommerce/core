@@ -11,10 +11,10 @@
  *}
 <div class="product-quicklook">
   <widget class="\XLite\View\Form\Product\AddToCart" name="add_to_cart" product="{product}" className="product-details hproduct" validationEngine />
-    {displayViewListContent(#product.details.quicklook#)}
+    <list name="product.details.quicklook" />
   <widget name="add_to_cart" end />
 
-  {displayViewListContent(#product.details.quicklook.rotator#)}
+  <list name="product.details.quicklook.rotator" />
 </div>
 
 <script type="text/javascript">

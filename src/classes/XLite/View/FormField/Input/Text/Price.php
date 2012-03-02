@@ -149,10 +149,6 @@ class Price extends \XLite\View\FormField\Input\Text\Symbol
         $attributes = parent::getCommonAttributes();
 
         $attributes['value'] = $this->getCurrency()->formatValue($attributes['value']);
-        $e = $this->getE();
-        if (isset($e)) {
-            $attributes['data-e'] = $e;
-        }
 
         return $attributes;
     }

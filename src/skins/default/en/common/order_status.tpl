@@ -10,8 +10,8 @@
  * @since     1.0.0
  *}
 {if:getParam(#useWrapper#)}
-{displayViewListContent(#order_status.wrapper#)}
+<list name="order_status.wrapper" />
 {end:}
 {if:!getParam(#useWrapper#)}
-{displayViewListContent(#order_status.nowrapper#)}
+<list name="order_status.nowrapper" />
 {end:}

@@ -15,11 +15,11 @@
 <table class="profile-list data-table items-list">
 
   <tr>
-    {displayInheritedViewListContent(#header#,_ARRAY_(#profile#^profile))}
+    <list name="header" type="inherited" profile="{profile}" />
   </tr>
 
   <tr FOREACH="getPageData(),idx,profile" class="{getRowClass(idx,##,#highlight#)}">
-    {displayInheritedViewListContent(#columns#,_ARRAY_(#profile#^profile))}
+    <list name="columns" type="inherited" profile="{profile}" />
   </tr>
 
   <tr FOREACH="getViewList(#itemsList.profile.items#),w">
@@ -28,6 +28,6 @@
 
 </table>
 
-{displayInheritedViewListContent(#footer#)}
+<list name="footer" type="inherited" />
 
 <widget name="profile_list" end />
