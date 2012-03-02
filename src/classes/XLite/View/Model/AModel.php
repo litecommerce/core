@@ -301,6 +301,7 @@ abstract class AModel extends \XLite\View\Dialog
             $this->postprocessSuccessAction();
 
         } else {
+            $this->rollbackModel();
             $this->saveFormData($requestData);
             $this->postprocessErrorAction();
         }
@@ -777,8 +778,6 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function postprocessErrorAction()
     {
-        \XLite\Core\Database::getEM()->refresh($this->getModelObject());
-
         \XLite\Core\TopMessage::getInstance()->addBatch($this->getErrorMessages(), \XLite\Core\TopMessage::ERROR);
 
         $method = __FUNCTION__ . ucfirst($this->currentAction);
@@ -789,6 +788,18 @@ abstract class AModel extends \XLite\View\Dialog
         }
 
         $this->setActionError();
+    }
+
+    /**
+     * Rollback model if data validation failed
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function rollbackModel()
+    {
+        \XLite\Core\Database::getEM()->refresh($this->getModelObject());
     }
 
     /**
