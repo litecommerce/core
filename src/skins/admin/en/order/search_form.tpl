@@ -51,7 +51,7 @@
         </td>
       </tr>
 
-      {displayViewListContent(#orders.search.children#)}
+      <list name="orders.search.children" />
 
       <tr>
         <td style="width:78;">&nbsp;</td>

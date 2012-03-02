@@ -10,5 +10,5 @@
  * @since     1.0.0
  *}
 <div class="order-box">
-  {displayViewListContent(#order.children#,_ARRAY_(#order#^getOrder()))}
+  <list name="order.children" order="{getOrder()}" />
 </div>

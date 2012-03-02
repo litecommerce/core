@@ -14,6 +14,6 @@
 
 <div class="module-info">
   <ul>
-    {displayViewListContent(#itemsList.module.install.columns.module-description-section.info-element#,_ARRAY_(#module#^module))}
+    <list name="itemsList.module.install.columns.module-description-section.info-element" module="{module}" />
   </ul>
 </div>

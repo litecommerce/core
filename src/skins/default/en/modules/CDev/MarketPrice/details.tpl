@@ -15,7 +15,7 @@
 
 <div IF="isShowMarketPrice(product)" class="product-details-market-price">
   <div class="text">
-    {displayNestedViewListContent(#market_price.text#)}
+    <list name="market_price.text" type="nested" />
   </div>
-  {displayNestedViewListContent(#market_price.label#)}
+  <list name="market_price.label" type="nested" />
 </div>

@@ -10,5 +10,5 @@
  * @since     1.0.0
  *}
 <span class="quantity-box-container">
-  {displayViewListContent(#product.quantity-box#)}
+  <list name="product.quantity-box" />
 </span>

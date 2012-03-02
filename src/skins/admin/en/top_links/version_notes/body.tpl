@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 <ul class="version-note">
-  {displayViewListContent(#top_links.version_notes#)}
+  <list name="top_links.version_notes" />
 </ul>
 <div class="clear"></div>

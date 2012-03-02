@@ -14,6 +14,6 @@
 
 <div id="sidebar-second" class="column sidebar" IF="isSidebarSecondVisible()">
   <div class="section">
-    {displayViewListContent(#sidebar.second#)}
+    <list name="sidebar.second" />
   </div>
 </div>

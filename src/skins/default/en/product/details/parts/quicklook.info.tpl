@@ -11,5 +11,5 @@
  * @ListChild (list="product.details.quicklook", weight="30")
  *}
 <div class="product-details-info product-quicklook-info">
-  {displayViewListContent(#product.details.quicklook.info#)}
+  <list name="product.details.quicklook.info" />
 </div>

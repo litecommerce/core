@@ -13,7 +13,7 @@
   <ul id="menuOuter">
     <li class="root">
       <ul>
-        {displayViewListContent(#menus#)}
+        <list name="menus" />
       </ul>
     </li>
   </ul>

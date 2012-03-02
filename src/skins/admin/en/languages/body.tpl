@@ -151,7 +151,7 @@
   </ul>
 
   <div class="buttons">
-  {displayViewListContent(#languages.actions#)}
+  <list name="languages.actions" />
   </div>
 
 </form>

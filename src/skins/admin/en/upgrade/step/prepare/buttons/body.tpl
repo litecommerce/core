@@ -18,7 +18,7 @@
   <widget class="\XLite\View\Upgrade\Step\Prepare\IncompatibleEntries" />
 
   <div class="incompatible-list-actions">
-    {displayInheritedViewListContent(#sections#)}
+    <list name="sections" type="inherited" />
     <div class="clear"></div>
   </div>
 </form>

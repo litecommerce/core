@@ -13,7 +13,7 @@
 <widget class="XLite\View\Form\Product\Modify\Inventory" name="update_inventory_form" />
 
 <table>
-  {displayViewListContent(#product.inventory.parts#)}
+  <list name="product.inventory.parts" />
 </table>
 
 <widget name="update_inventory_form" end />

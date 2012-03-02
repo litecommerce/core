@@ -14,6 +14,6 @@
 
 <table class="incompatible-modules-list">
   <tr FOREACH="getIncompatibleEntries(),entry">
-    {displayInheritedViewListContent(#sections.table.columns#,_ARRAY_(#entry#^entry))}
+    <list name="sections.table.columns" type="inherited" entry="{entry}" />
   </tr>
 </table>
