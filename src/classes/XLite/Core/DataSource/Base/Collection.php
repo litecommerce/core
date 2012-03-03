@@ -60,4 +60,16 @@ abstract class Collection implements \Countable, \SeekableIterator
         $this->dataSource = $dataSource;
     }
 
+    /**
+     * Data source getter
+     * 
+     * @return \XLite\Core\DataSource\ADataSource
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function getDataSource()
+    {
+        return $this->dataSource;
+    }
+
 }

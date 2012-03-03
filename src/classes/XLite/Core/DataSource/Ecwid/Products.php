@@ -33,7 +33,7 @@ namespace XLite\Core\DataSource\Ecwid;
  * @see   ____class_see____
  * @since 1.0.17
  */
-class Products extends \Xlite\Core\DataSource\Base\Products
+class Products extends \XLite\Core\DataSource\Base\Products
 {
 
     /**
@@ -177,7 +177,7 @@ class Products extends \Xlite\Core\DataSource\Base\Products
     public function current()
     {
         if (!isset($this->products[$this->position])) {
-            $this->products[$this->position] = $this->getDataSource->apiCall(
+            $this->products[$this->position] = $this->getDataSource()->apiCall(
                 'product',
                 array(
                     'id' => $this->all_products[$this->position]['id']

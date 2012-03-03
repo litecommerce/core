@@ -76,7 +76,7 @@ class Ecwid extends ADataSource
      */
     public function getProductsCollection()
     {
-        return new Products($this);
+        return new Ecwid\Products($this);
     }
 
     /**
@@ -88,7 +88,7 @@ class Ecwid extends ADataSource
      */
     public function getCategoriesCollection()
     {
-        return new Categories($this);
+        return new Ecwid\Categories($this);
     }
 
     /**
@@ -127,7 +127,7 @@ class Ecwid extends ADataSource
         $response = $bouncer->sendRequest();
 
         if (200 == $response->code) {
-            json_decode($response->body);
+            return json_decode($response->body, true);
         } else {
             throw new \Exception("Call to '$apiMethod' failed with '$response->code' code");
         }

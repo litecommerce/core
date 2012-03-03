@@ -2,7 +2,7 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * XLite\Core\DataSource\Ecwid classes tests
+ *XLite\Core\DataSource\Ecwid\Products class tests
  *
  * @category   LiteCommerce
  * @package    Tests
@@ -16,35 +16,39 @@
  */
 
 /**
- * XLite_Tests_Core_DataSource_Ecwid 
+ * XLite_Tests_Core_DataSource_Ecwid_Products
  * 
  * @see   ____class_see____
  * @since 1.0.17
  */
-class XLite_Tests_Core_DataSource_Ecwid extends XLite_Tests_TestCase
+class XLite_Tests_Core_DataSource_Ecwid_Products extends XLite_Tests_TestCase
 {
 
     /**
-     * Test various Ecwid API calls
+     * Test Ecwid products collection iterator
      * 
      * @return void
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function testApiCall()
+    public function testProducts()
     {
         $source = new \XLite\Model\DataSource();
-
         // Apply store id here
 
         $ecwid = new \XLite\Core\DataSource\Ecwid($source);
 
-        $result = $ecwid->apiCall('products');
+        $this->assertTrue($ecwid->isValid());
 
-        // Must be an array of products
-        $this->assertInternalType('array', $result);
+        $products = $ecwid->getProductsCollection();
 
-        $this->assertNotEmpty($result, 0, 'Array of products mustn\'t be empty');
+        $this->assertGreaterThan(0, $products->count());
+
+        for ($key = $products->key(); $products->valid(); $products->next()) {
+            $product = $products->current();
+
+            $this->assertGreaterThan(0, $product['id']);
+        }
     }
 
 }
