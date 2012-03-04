@@ -36,4 +36,27 @@ namespace XLite\Core\DataSource\Base;
  */
 abstract class Categories extends Collection
 {
+    /**
+     * Performs a basic validation over a collection of categories
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function isValid()
+    {
+        $uniqueIds = array();
+        // Check if each category has a unique id
+        for (; $this->valid(); $this->next()) {
+            $category = $this->current();
+
+            if (0 >= $category['id'] || in_array($category['id'], $uniqueIds)) {
+                return false;
+            }
+
+            $uniqueIds[] = $category['id'];
+        }
+
+        return true;
+    }
 }

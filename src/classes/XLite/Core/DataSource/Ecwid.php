@@ -45,6 +45,7 @@ class Ecwid extends ADataSource
      */
     public function getInfo()
     {
+        return $this->apiCall('profile');
     }
 
     /**
@@ -56,13 +57,15 @@ class Ecwid extends ADataSource
      */
     public function isValid()
     {
-        /*
+        if (0 >= $this->getStoreId()) {
+            return false;
+        }
+
         try {
-            // Do some api calls to check state?
+            $info = $this->apiCall('profile');
         } catch(\Exception $e) {
             return false;
         }
-        */
 
         return true;
     }
@@ -98,9 +101,9 @@ class Ecwid extends ADataSource
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function getStoreID()
+    public function getStoreId()
     {
-        return 1003; // Testing purposes
+        return $this->getConfiguration()->getParameterValue('storeid');
     }
 
     /**
@@ -109,14 +112,14 @@ class Ecwid extends ADataSource
      * @param string $apiMethod  API method name to call
      * @param string $params Parameters to pass along OPTIONAL
      *  
-     * @return mixed
+     * @return array
      * @see    ____func_see____
      * @since  1.0.17
      */
     public function apiCall($apiMethod, $params = array())
     {
         $url = 'http://app.ecwid.com/api/v1/'
-            . $this->getStoreID() . '/'
+            . $this->getStoreId() . '/'
             . $apiMethod
             . ($params ? ('?' . http_build_query($params)) : '');
             
@@ -129,7 +132,45 @@ class Ecwid extends ADataSource
         if (200 == $response->code) {
             return json_decode($response->body, true);
         } else {
-            throw new \Exception("Call to '$apiMethod' failed with '$response->code' code");
+            throw new \Exception("Call to '$url' failed with '$response->code' code");
         }
     }
+
+    /**
+     * Performs batch api call
+     * Takes an array of parameters in the following form:
+     * array (
+     *     'product_33' => array (
+     *         'method' => 'product',
+     *         'params' => array('id' => 33)
+     *     ),
+     *     'product_34' => array (
+     *         'method' => 'product',
+     *         'params' => array('id' => 34)
+     *     )
+     * )
+     * Returns an array containing keys specified in the input along with results for each call
+     * 
+     * @param array $params An array of call parameters
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function batchApiCall(array $params)
+    {
+        return $this->apiCall('batch', array_map(function ($p) {
+            $queryParams = array();
+            foreach ($p['params'] as $k => $v) {
+                $queryParams[] = $k . '=' . $v;
+            }
+            return $p['method'] . '?' . implode('&', $queryParams);
+
+        }, $params));
+    }
 }
+
+
+
+
+

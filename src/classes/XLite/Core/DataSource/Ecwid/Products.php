@@ -52,7 +52,7 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * @see   ____var_see____
      * @since 1.0.17
      */
-    private $all_products;
+    private $allProducts;
 
     /**
      * An array with cached products (full info)
@@ -72,11 +72,11 @@ class Products extends \XLite\Core\DataSource\Base\Products
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function __construct(Ecwid $dataSource)
+    public function __construct(\XLite\Core\DataSource\Ecwid $dataSource)
     {
         parent::__construct($dataSource);
 
-        $this->all_products = $this->getDataSource()->apiCall('products');
+        $this->allProducts = $this->getDataSource()->apiCall('products');
 
         $this->rewind();
 
@@ -92,7 +92,7 @@ class Products extends \XLite\Core\DataSource\Base\Products
      */
     public function count()
     {
-        return count($this->all_products);
+        return count($this->allProducts);
     }
 
     /**
@@ -177,12 +177,35 @@ class Products extends \XLite\Core\DataSource\Base\Products
     public function current()
     {
         if (!isset($this->products[$this->position])) {
+
+            /*
+            // Naive implementation
             $this->products[$this->position] = $this->getDataSource()->apiCall(
                 'product',
                 array(
-                    'id' => $this->all_products[$this->position]['id']
+                    'id' => $this->allProducts[$this->position]['id']
                 )
             );
+            */
+
+            // Do a batch call to prefetch next 100 (or 15?) products (maximum)
+            // (optimized for forward access)
+            $max = 15;
+            $num = min($max, $this->count() - $this->position);
+
+            $params = array();
+            foreach (range($this->position, $this->position+$num-1) as $index) {
+                $params[$index] = array(
+                    'method' => 'product',
+                    'params' => array(
+                        'id' => $this->allProducts[$index]['id']
+                    )
+                );
+            }
+
+            foreach ($this->getDataSource()->batchApiCall($params) as $key => $p) {
+                $this->products[$key] = $p;
+            }
         }
 
         return $this->products[$this->position];

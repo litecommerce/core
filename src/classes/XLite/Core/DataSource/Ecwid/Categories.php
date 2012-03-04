@@ -33,7 +33,7 @@ namespace XLite\Core\DataSource\Ecwid;
  * @see   ____class_see____
  * @since 1.0.17
  */
-class Categories extends \Xlite\Core\DataSource\Base\Categories
+class Categories extends \XLite\Core\DataSource\Base\Categories
 {
     /**
      * Stores current iterator position
@@ -62,7 +62,7 @@ class Categories extends \Xlite\Core\DataSource\Base\Categories
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function __construct(Ecwid $dataSource)
+    public function __construct(\XLite\Core\DataSource\Ecwid $dataSource)
     {
         parent::__construct($dataSource);
 

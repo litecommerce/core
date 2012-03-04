@@ -36,4 +36,27 @@ namespace XLite\Core\DataSource\Base;
  */
 abstract class Products extends Collection
 {
+    /**
+     * Performs a basic validation over a collection of products
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function isValid()
+    {
+        $uniqueIds = array();
+        // Check if each product has a unique id
+        for (; $this->valid(); $this->next()) {
+            $product = $this->current();
+
+            if (0 >= $product['id'] || in_array($product['id'], $uniqueIds)) {
+                return false;
+            }
+
+            $uniqueIds[] = $product['id'];
+        }
+
+        return true;
+    }
 }

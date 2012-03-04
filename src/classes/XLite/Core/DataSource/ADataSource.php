@@ -93,4 +93,16 @@ abstract class ADataSource
      * @since  1.0.17
      */
     abstract public function getCategoriesCollection();
+
+    /**
+     * Get current data source configuration object
+     * 
+     * @return XLite\Model\DataSource
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function getConfiguration()
+    {
+        return $this->configuration;
+    }
 }

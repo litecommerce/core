@@ -2,7 +2,7 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- *XLite\Core\DataSource\Ecwid\Products class tests
+ *XLite\Core\DataSource\Ecwid\Categories class tests
  *
  * @category   LiteCommerce
  * @package    Tests
@@ -16,22 +16,22 @@
  */
 
 /**
- * XLite_Tests_Core_DataSource_Ecwid_Products
+ * XLite_Tests_Core_DataSource_Ecwid_Categories
  * 
  * @see   ____class_see____
  * @since 1.0.17
  */
-class XLite_Tests_Core_DataSource_Ecwid_Products extends XLite_Tests_TestCase
+class XLite_Tests_Core_DataSource_Ecwid_Categories extends XLite_Tests_TestCase
 {
 
     /**
-     * Test Ecwid products collection iterator
+     * Test Ecwid categories collection iterator
      * 
      * @return void
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function testProducts()
+    public function testCategories()
     {
         $model = new \XLite\Model\DataSource();
         $model->setParameterValue('storeid', 1003);
@@ -40,11 +40,11 @@ class XLite_Tests_Core_DataSource_Ecwid_Products extends XLite_Tests_TestCase
 
         $this->assertTrue($ecwid->isValid());
 
-        $products = $ecwid->getProductsCollection();
+        $categories = $ecwid->getCategoriesCollection();
 
-        $this->assertNotEmpty($products->count());
+        $this->assertNotEmpty($categories->count());
 
-        $this->assertTrue($products->isValid());
+        $this->assertTrue($categories->isValid());
     }
 
 }

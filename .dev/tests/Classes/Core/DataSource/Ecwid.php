@@ -33,11 +33,12 @@ class XLite_Tests_Core_DataSource_Ecwid extends XLite_Tests_TestCase
      */
     public function testApiCall()
     {
-        $source = new \XLite\Model\DataSource();
+        $model = new \XLite\Model\DataSource();
+        $model->setParameterValue('storeid', 1003);
 
-        // Apply store id here
+        $ecwid = new \XLite\Core\DataSource\Ecwid($model);
 
-        $ecwid = new \XLite\Core\DataSource\Ecwid($source);
+        $this->assertTrue($ecwid->isValid());
 
         $result = $ecwid->apiCall('products');
 
@@ -45,6 +46,26 @@ class XLite_Tests_Core_DataSource_Ecwid extends XLite_Tests_TestCase
         $this->assertInternalType('array', $result);
 
         $this->assertNotEmpty($result, 0, 'Array of products mustn\'t be empty');
+    }
+
+    /**
+     * testGetInfo 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function testGetInfo()
+    {
+        $model = new \XLite\Model\DataSource();
+        $model->setParameterValue('storeid', 1003);
+
+        $ecwid = new \XLite\Core\DataSource\Ecwid($model);
+
+        $this->assertTrue($ecwid->isValid());
+
+        $info = $ecwid->getInfo();
+        $this->assertEquals('Ecwid Demo Store', $info['storeName']);
     }
 
 }

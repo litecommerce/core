@@ -101,13 +101,13 @@ class XLite_Tests_Model_DataSource extends XLite_Tests_TestCase
     }
 
     /**
-     * testGetParameterByName 
+     * testGetParameter
      * 
      * @return void
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function testGetParameterByName()
+    public function testGetParameterValue()
     {
         $s = new \XLite\Model\DataSource();
         $s->map($this->entityData);
@@ -124,11 +124,46 @@ class XLite_Tests_Model_DataSource extends XLite_Tests_TestCase
         }
 
         foreach ($this->parameters as $p) {
-            $this->assertEquals($s->getParameterByName($p['name']), $p['value'], 'Unexpected parameter value');
+            $this->assertEquals($s->getParameterValue($p['name']), $p['value'], 'Unexpected parameter value');
         }
 
         // Search for an unexisting parameter
-        $this->assertNull($s->getParameterByName('unexisting'), "Search for 'unexisting' parameter must return null");
+        $this->assertNull($s->getParameterValue('unexisting'), "Search for 'unexisting' parameter must yield null");
+    }
+
+    /**
+     * testSetParameterValue 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function testSetParameterValue()
+    {
+        $s = new \XLite\Model\DataSource();
+        $s->map($this->entityData);
+
+        foreach ($this->parameters as $param) {
+            $s->setParameterValue($param['name'], $param['value']);
+        }
+
+        foreach ($this->parameters as $param) {
+            $this->assertEquals($param['value'], $s->getParameterValue($param['name']));
+        }
+
+        // Redefine existing values
+        $parameters = $this->parameters;
+
+        foreach ($parameters as &$param) {
+            $param['value'] = uniqid();
+                
+            $s->setParameterValue($param['name'], $param['value']);
+        }
+        unset($param);
+
+        foreach ($parameters as $param) {
+            $this->assertEquals($param['value'], $s->getParameterValue($param['name']));
+        }
     }
 
 }
