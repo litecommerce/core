@@ -105,4 +105,11 @@ abstract class ADataSource
     {
         return $this->configuration;
     }
+
+    public function getSources()
+    {
+        return array(
+            '\XLite\Core\DataSource\Ecwid',
+        );
+    }
 }
