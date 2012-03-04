@@ -18,6 +18,7 @@
 class XLite_Tests_Model_DataSource extends XLite_Tests_TestCase
 {
     protected $entityData = array(
+        'type'  => \XLite\Model\DataSource::TYPE_ECWID,
     );
 
     protected $parameters = array(

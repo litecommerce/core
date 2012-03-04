@@ -38,6 +38,12 @@ namespace XLite\Model;
  */
 class DataSource extends \XLite\Model\AEntity
 {
+
+    /**
+     *  Data source model types
+     */
+    const TYPE_ECWID = 'ecwid';
+
     /**
      * Unique data source id
      *
@@ -50,6 +56,17 @@ class DataSource extends \XLite\Model\AEntity
      * @Column         (type="integer")
      */
     protected $id;
+
+    /**
+     * Data source type
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.17
+     *
+     * @Column (type="string", length="255")
+     */
+    protected $type;
 
     /**
      * Data source parameters (relation)
@@ -134,6 +151,38 @@ class DataSource extends \XLite\Model\AEntity
         }
 
         $param->setValue($value);
+    }
+
+    /**
+     * Get data source based on model shop type
+     * 
+     * @return \XLite\Core\DataSource\ADataSource
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function detectSource()
+    {
+        if (self::TYPE_ECWID == $this->getType()) {
+            return new \XLite\Core\DataSource\Ecwid($this);
+        }
+
+        return null;
+    }
+
+    /**
+     * Get concrete model widget class to be used in templates
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function getModelWidgetClass()
+    {
+        if (self::TYPE_ECWID == $this->getType()) {
+            return '\XLite\View\Model\DataSource\Ecwid';
+        }
+
+        return null;
     }
 
 }

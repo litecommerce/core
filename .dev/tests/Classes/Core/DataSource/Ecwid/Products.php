@@ -35,8 +35,9 @@ class XLite_Tests_Core_DataSource_Ecwid_Products extends XLite_Tests_TestCase
     {
         $model = new \XLite\Model\DataSource();
         $model->setParameterValue('storeid', 1003);
+        $model->setType(\XLite\Model\DataSource::TYPE_ECWID);
 
-        $ecwid = new \XLite\Core\DataSource\Ecwid($model);
+        $ecwid = $model->detectSource();
 
         $this->assertTrue($ecwid->isValid());
 

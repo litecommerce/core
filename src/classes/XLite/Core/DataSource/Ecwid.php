@@ -95,6 +95,18 @@ class Ecwid extends ADataSource
     }
 
     /**
+     * Get Ecwid data source name
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function getName()
+    {
+        return 'Ecwid';
+    }
+
+    /**
      * Get Ecwid Store ID
      * 
      * @return integer

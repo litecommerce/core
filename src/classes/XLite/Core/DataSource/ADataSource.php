@@ -106,10 +106,26 @@ abstract class ADataSource
         return $this->configuration;
     }
 
-    public function getSources()
+    /**
+     * Get all data sources
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public static function getDataSources()
     {
         return array(
             '\XLite\Core\DataSource\Ecwid',
         );
     }
+
+    /**
+     * Get current data source name (for ex.: Ecwid)
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    abstract public function getName();
 }
