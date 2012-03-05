@@ -136,7 +136,7 @@ function macro_file_put_contents($path, $data)
  */
 function macro_is_entity($path)
 {
-    return preg_match('/XLite.Model.|Xlite.Module.\w+.\w+.Model./Ss', $path);
+    return preg_match('/XLite.Model.|XLite.Module.\w+.\w+.Model./Ss', $path);
 }
 
 // {{{ Arguments checkers
@@ -310,6 +310,7 @@ HEAD;
         $header = preg_replace('/@HasLifecycleCallbacks/SsU', '', $header);
         $header = preg_replace('/@Table\s*\(.+\)/SsU', '', $header);
         $header = preg_replace('/@Entity\s*\(.+\)/SsU', '', $header);
+        $header = preg_replace('/@Entity/SsU', '', $header);
     }
 
     $header = preg_replace('/@ListChild\s*\(.+\)/SsU', '', $header);
