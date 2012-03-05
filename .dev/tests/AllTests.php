@@ -235,10 +235,11 @@ if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ',
 }
 
 if (!defined('INCLUDE_ONLY_TESTS') || !preg_match('/DEPLOY_/', constant('INCLUDE_ONLY_TESTS'))) {
-    PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(PATH_ROOT . LC_DS . '.dev');
-    PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(PATH_SRC . LC_DS . 'etc');
-    PHP_CodeCoverage_Filter::getInstance()->addDirectoryToWhitelist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes');
-    PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes' . LC_DS . 'XLite' . LC_DS . 'Model' . LC_DS . 'Proxy');
+    $cc = PHP_CodeCoverage_Filter::getInstance();
+    $cc->addDirectoryToWhitelist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes');
+    $cc->removeDirectoryFromWhitelist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes'. LC_DS ."XLite". LC_DS . "Module");
+    $cc->addDirectoryToWhitelist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes'. LC_DS ."XLite". LC_DS . "Module" .LC_DS . "CDev");
+    $cc->removeDirectoryFromWhitelist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes' . LC_DS . 'XLite' . LC_DS . 'Model' . LC_DS . 'Proxy');
 }
 
 foreach (glob(LC_DIR_ROOT . 'var/log/selenium.*.html') as $f) {

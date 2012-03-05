@@ -3,7 +3,7 @@
 
     <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" classpath="/usr/share/jmeter/lib/ext/ant-jmeter-1.1.1.jar" />
 
-    <target name="cloud" depends="set-properties,clean,prepare-git,prepare-release, prepare,tests,analysis,comparison,create-build" />
+    <target name="cloud" depends="set-properties,clean,prepare-git,prepare-release, prepare,analysis,tests,comparison,create-build" />
 
     <target name="set-properties">
         <property name="version" value="3.x-dev" />
@@ -57,34 +57,6 @@
             <arg value="pull" />
         </exec>
 
-    </target>
-
-    <target name="prepare-phake">
-        <copy todir="${buildDir}">
-            <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
-        </copy>
-        <mkdir dir="${buildDir}/coverage" />
-        <mkdir dir="${phakeDir}/logs" />
-        <chmod perm="ugo+rx" file="${phake}" />
-    </target>
-
-    <target name="run-phake" depends="prepare-phake">
-        <property name="EC2_HOME" value="${EC2_DIR}/tools" />
-        <property name="EC2_PRIVATE_KEY" value="${EC2_DIR}/pk-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem" />
-        <property name="EC2_CERT" value="${EC2_DIR}/cert-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem" />
-        <property name="EC2_KEYPAIR" value="${EC2_DIR}/lc-test.pem" />
-        <property name="EC2_KEYPAIR_NAME" value="lc-test" />
-        <property environment="env"/>
-        <exec executable="${phake}" dir="${phakeDir}"  failonerror="Off" resultproperty="phake_result">
-            <arg value="${target}" />
-            <arg line="${userVars}" />
-            <env key="EC2_HOME" value="${EC2_HOME}" />
-            <env key="EC2_PRIVATE_KEY" value="${EC2_PRIVATE_KEY}" />
-            <env key="EC2_CERT" value="${EC2_CERT}" />
-            <env key="EC2_KEYPAIR" value="${EC2_KEYPAIR}" />
-            <env key="EC2_KEYPAIR_NAME" value="${EC2_KEYPAIR_NAME}" />
-            <env key="PATH" path="${env.PATH}:${EC2_HOME}/bin" />
-        </exec>
     </target>
 
     <target name="prepare-release">
@@ -159,6 +131,10 @@
         <copy todir="/var/www/screenshots">
             <fileset dir="${buildDir}/logs/screenshots" />
         </copy>
+        <copy todir="${buildDir}/coverage">
+            <fileset dir="${buildDir}/logs/coverage-html" />
+        </copy>
+
 
         <!--<copy file="${phakeDir}/logs/phpunit.xml" todir="${buildDir}/logs/" />-->
         <exec executable="php" dir="${sourceDir}">
@@ -174,6 +150,33 @@
                 </not>
             </condition>
         </fail>
+    </target>
+    <target name="prepare-phake">
+        <copy todir="${buildDir}">
+            <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
+        </copy>
+        <mkdir dir="${buildDir}/coverage" />
+        <mkdir dir="${phakeDir}/logs" />
+        <chmod perm="ugo+rx" file="${phake}" />
+    </target>
+
+    <target name="run-phake" depends="prepare-phake">
+        <property name="EC2_HOME" value="${EC2_DIR}/tools" />
+        <property name="EC2_PRIVATE_KEY" value="${EC2_DIR}/pk-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem" />
+        <property name="EC2_CERT" value="${EC2_DIR}/cert-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem" />
+        <property name="EC2_KEYPAIR" value="${EC2_DIR}/lc-test.pem" />
+        <property name="EC2_KEYPAIR_NAME" value="lc-test" />
+        <property environment="env"/>
+        <exec executable="${phake}" dir="${phakeDir}"  failonerror="Off" resultproperty="phake_result">
+            <arg value="${target}" />
+            <arg line="${userVars}" />
+            <env key="EC2_HOME" value="${EC2_HOME}" />
+            <env key="EC2_PRIVATE_KEY" value="${EC2_PRIVATE_KEY}" />
+            <env key="EC2_CERT" value="${EC2_CERT}" />
+            <env key="EC2_KEYPAIR" value="${EC2_KEYPAIR}" />
+            <env key="EC2_KEYPAIR_NAME" value="${EC2_KEYPAIR_NAME}" />
+            <env key="PATH" path="${env.PATH}:${EC2_HOME}/bin" />
+        </exec>
     </target>
 
     <target name="jmeter">

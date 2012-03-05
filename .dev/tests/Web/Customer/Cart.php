@@ -286,7 +286,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             "//div[@id='cart']"
             . "/div[@id='cart-right']"
             . "/ul[@class='totals']"
-            . "/li[contains(@class, 'shipping-modifier')]"
+            . "/li[contains(lower-case(@class), 'shipping-modifier')]"
             . "/strong[text()='Shipping cost:']",
             'check Shipping cost'
         );
