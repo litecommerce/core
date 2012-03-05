@@ -15,7 +15,7 @@
   <input type="hidden" name="action" value="select_core_version" />
 
   <div class="upgrade-core-frame">
-    {displayViewListContent(#upgrade.selector-version.details#)}
+    <list name="upgrade.selector-version.details" />
   </div>
 
 </form>

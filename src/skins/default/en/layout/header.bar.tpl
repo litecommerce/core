@@ -12,5 +12,5 @@
  * @ListChild (list="layout.header", weight="200")
  *}
 <div id="header-bar">
-  {displayViewListContent(#layout.header.bar#)}
+  <list name="layout.header.bar" />
 </div>

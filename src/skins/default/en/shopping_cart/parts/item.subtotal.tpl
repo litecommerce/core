@@ -20,5 +20,5 @@
       </tr>
     </table>
   </div>
-  {displayViewListContent(#cart.item.actions#,_ARRAY_(#item#^item))}
+  <list name="cart.item.actions" item="{item}" />
 </td>

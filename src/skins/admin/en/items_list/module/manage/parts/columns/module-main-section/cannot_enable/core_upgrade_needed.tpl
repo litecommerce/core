@@ -14,5 +14,5 @@
  *}
 
 <div IF="isCoreUpgradeNeeded(module)" class="note version error">
-  {displayNestedViewListContent(#core_upgrade_needed#,_ARRAY_(#module#^module))}
+  <list name="core_upgrade_needed" type="nested" module="{module}" />
 </div>

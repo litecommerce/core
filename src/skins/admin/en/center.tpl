@@ -43,4 +43,4 @@
 
 <widget target="update_inventory" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 
-{displayViewListContent(#admin.center#)}
+<list name="admin.center" />

@@ -10,8 +10,8 @@
  * @since     1.0.0
  *}
 
-{displayViewListContent(#customer.order_list.before#)}
+<list name="customer.order_list.before" />
 
 <widget target="order_list" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
 
-{displayViewListContent(#customer.order_list.after#)}
+<list name="customer.order_list.after" />

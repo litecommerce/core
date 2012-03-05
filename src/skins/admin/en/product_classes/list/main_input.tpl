@@ -7,6 +7,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <tr>
-{displayViewListContent(#product_classes.main_input#,_ARRAY_(#name#^getParam(#className#),#id#^getParam(#classId#)))}
+  <list name="product_classes.main_input" className="{getParam(#className#)}" id="{getParam(#classId#)}" />
 </tr>

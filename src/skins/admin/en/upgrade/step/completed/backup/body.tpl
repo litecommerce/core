@@ -10,4 +10,4 @@
  * @since     1.0.0
  *}
 
-{displayInheritedViewListContent(#sections#)}
+<list name="sections" type="inherited" />

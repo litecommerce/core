@@ -14,4 +14,4 @@
 
 <widget template="center_top.tpl" />
 
-{displayViewListContent(#center.bottom#)}
+<list name="center.bottom" />

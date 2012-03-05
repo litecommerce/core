@@ -13,7 +13,7 @@
 <widget class="\XLite\View\Form\Cart\ShippingEstimator\Destination" name="destination" className="estimator" />
 
   <ul class="form">
-    {displayViewListContent(#shippingEstimator.address#)}
+    <list name="shippingEstimator.address" />
   </ul>
 
   <div IF="isEstimate()" class="buttons">

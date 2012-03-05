@@ -12,5 +12,5 @@
  * @ListChild (list="product.details.page.tab.description", weight="50")
  *}
 <ul IF="hasAttributes()" class="extra-fields">
-  {displayViewListContent(#product.details.common.product-attributes#)}
+  <list name="product.details.common.product-attributes" />
 </ul>

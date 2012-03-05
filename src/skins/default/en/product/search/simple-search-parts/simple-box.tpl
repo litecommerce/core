@@ -13,5 +13,5 @@
  *}
 
 <div class="simple-search-box">
-  {displayViewListContent(#product.simple-search-form.simple-box.elements#)}
+  <list name="product.simple-search-form.simple-box.elements" />
 </div>

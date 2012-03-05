@@ -12,6 +12,6 @@
  *}
 <div class="box">
 
-  {displayViewListContent(#cart.panel.box#)}
+  <list name="cart.panel.box" />
 
 </div>

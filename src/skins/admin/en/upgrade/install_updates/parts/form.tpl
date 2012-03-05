@@ -25,7 +25,7 @@
     <ul class="update-module-list">
 
       <li class="update-module-info" FOREACH="getUpgradeEntries(),entry">
-        {displayInheritedViewListContent(#sections.form#,_ARRAY_(#entry#^entry))}
+        <list name="sections.form" type="inherited" entry="{entry}" />
       </li>
 
     </ul>
