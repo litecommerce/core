@@ -1015,7 +1015,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
         $types = array_map('trim', explode('|', $rawType));
         if (4 < count($types)) {
             $this->currentFile->addError(
-				$this->getReqPrefix('REQ.PHP.3.5.17') . 'Число вариантов типов @' . $tag . ' больше 4',
+				$this->getReqPrefix('REQ.PHP.3.5.17') . 'Number of types @' . $tag . ' tag is greater than 4',
 				$errorPos
 			);
         }
@@ -1038,7 +1038,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 				$result = $r;
 
 			} else {
-				$result = 'Тип "' . $type . '" запрещен для использования в @' . $tag;
+				$result = 'Type "' . $type . '" is forbidden for @' . $tag;
 			}
 
 			break;
