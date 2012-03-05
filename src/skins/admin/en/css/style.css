@@ -1564,12 +1564,12 @@ div.model-form-buttons {
   clear: left;
 }
 
-ul.default-table {
+.model-properties ul.table {
   list-style: none;
   min-width: 450px;
 }
 
-ul.default-table li {
+.model-properties ul.table li {
   background-image: none;
   float: left;
   clear: left;
@@ -1579,7 +1579,7 @@ div.table-label {
   float: left;
 }
 
-ul.default-table div.table-label label {
+.model-properties ul.table div.table-label label {
   width: 80px;
 }
 

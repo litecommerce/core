@@ -1387,6 +1387,18 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
+     * Get container class 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function getContainerClass()
+    {
+        return 'model-properties';
+    }
+
+    /**
      * Get item class 
      * 
      * @param integer                          $index  Item index
