@@ -94,7 +94,7 @@ class XLite_Sniffs_PHP_Functions_FunctionCallSignatureSniff extends XLite_ReqCod
 			if ($var !== false && $tokens[$var - 1]['code'] === T_BITWISE_AND && $tokens[$var - 2]['code'] !== T_BITWISE_AND) {
 				$phpcsFile->addError(
 					$this->getReqPrefix('REQ.PHP.2.7.1')
-					. 'Передача данных по ссылке в вызове функции запрещена',
+					. 'п÷п╣я─п╣п╢п╟я┤п╟ п╢п╟п╫п╫я▀я┘ п©п╬ я│я│я▀п╩п╨п╣ п╡ п╡я▀п╥п╬п╡п╣ я└я┐п╫п╨я├п╦п╦ п╥п╟п©я─п╣я┴п╣п╫п╟',
 					$stackPtr
 				);
 			}

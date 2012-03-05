@@ -68,14 +68,14 @@ class XLite_Sniffs_CSS_SemicolonSpacingSniff extends XLite_NameSniff
 
         $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
         if ($semicolon === false || $tokens[$semicolon]['line'] !== $tokens[$stackPtr]['line']) {
-            $error = 'Описание каждого свойства должно завершаться точкой с запятой';
+            $error = 'п·п©п╦я│п╟п╫п╦п╣ п╨п╟п╤п╢п╬пЁп╬ я│п╡п╬п╧я│я┌п╡п╟ п╢п╬п╩п╤п╫п╬ п╥п╟п╡п╣я─я┬п╟я┌я▄я│я▐ я┌п╬я┤п╨п╬п╧ я│ п╥п╟п©я▐я┌п╬п╧';
             $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.9') . $error, $stackPtr);
             return;
         }
 
         if ($tokens[($semicolon - 1)]['code'] === T_WHITESPACE) {
             $length  = strlen($tokens[($semicolon - 1)]['content']);
-            $error = "Не должно быть пробелов/отступов в конце описания свойства перед точкой с запятой. Найдено: $length";
+            $error = "п²п╣ п╢п╬п╩п╤п╫п╬ п╠я▀я┌я▄ п©я─п╬п╠п╣п╩п╬п╡/п╬я┌я│я┌я┐п©п╬п╡ п╡ п╨п╬п╫я├п╣ п╬п©п╦я│п╟п╫п╦я▐ я│п╡п╬п╧я│я┌п╡п╟ п©п╣я─п╣п╢ я┌п╬я┤п╨п╬п╧ я│ п╥п╟п©я▐я┌п╬п╧. п²п╟п╧п╢п╣п╫п╬: $length";
             $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.11') . $error, $stackPtr);
         }
 

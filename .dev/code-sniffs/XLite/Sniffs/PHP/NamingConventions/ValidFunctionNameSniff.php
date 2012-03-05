@@ -139,7 +139,7 @@ class XLite_Sniffs_PHP_NamingConventions_ValidFunctionNameSniff extends XLite_Ab
 		foreach ($words as $wk => $w) {
 			$res = $this->checkCamelWord($w);
 			if ($res == -2) {
-				$error = "þÁÓÔØ '" . $w. "' ÉÚ ÓÌÏ×Á '" .$methodName . "' ÎÅ ×ÁÌÉÄÎÁ É ×ÏÚÍÏÖÎÏ Ñ×ÌÑÅÔÓÑ ÁÂÂÒÅ×ÉÁÔÕÒÏÊ, Ï ËÏÔÏÒÏÊ ×ÁÌÉÄÁÔÏÒ ÎÅ ÚÎÁÅÔ. áÂÂÒÅ×ÉÁÔÕÒÁ ÄÏÌÖÎÁ ÂÙÔØ ÚÁÒÅÇÅÓÔÒÉÒÏ×ÁÎÁ × ÍÁÓÓÉ×Å abbrs.";
+				$error = "Ð§Ð°ÑÑ‚ÑŒ '" . $w. "' Ð¸Ð· ÑÐ»Ð¾Ð²Ð° '" .$methodName . "' Ð½Ðµ Ð²Ð°Ð»Ð¸Ð´Ð½Ð° Ð¸ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð°Ð±Ð±Ñ€ÐµÐ²Ð¸Ð°Ñ‚ÑƒÑ€Ð¾Ð¹, Ð¾ ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¹ Ð²Ð°Ð»Ð¸Ð´Ð°Ñ‚Ð¾Ñ€ Ð½Ðµ Ð·Ð½Ð°ÐµÑ‚. ÐÐ±Ð±Ñ€ÐµÐ²Ð¸Ð°Ñ‚ÑƒÑ€Ð° Ð´Ð¾Ð»Ð¶Ð½Ð° Ð±Ñ‹Ñ‚ÑŒ Ð·Ð°Ñ€ÐµÐ³ÐµÑÑ‚Ñ€Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð° Ð² Ð¼Ð°ÑÑÐ¸Ð²Ðµ abbrs.";
 				$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.2.1') . $error, $stackPtr);
 				
 			} elseif ($res < 0 && (!isset($words[$wk + 1]) || !in_array($w . $words[$wk + 1], $this->twoWordsAbbrs))) {
@@ -194,7 +194,7 @@ class XLite_Sniffs_PHP_NamingConventions_ValidFunctionNameSniff extends XLite_Ab
 		foreach ($words as $w) {
             $res = $this->checkCamelWord($w);
             if ($res == -2) {
-                $error = "þÁÓÔØ '" . $w. "' ÉÚ ÓÌÏ×Á '" .$functionName . "' ÎÅ ×ÁÌÉÄÎÁ É ×ÏÚÍÏÖÎÏ Ñ×ÌÑÅÔÓÑ ÁÂÂÒÅ×ÉÁÔÕÒÏÊ, Ï ËÏÔÏÒÏÊ ×ÁÌÉÄÁÔÏÒ ÎÅ ÚÎÁÅÔ. áÂÂÒÅ×ÉÁÔÕÒÁ ÄÏÌÖÎÁ ÂÙÔØ ÚÁÒÅÇÅÓÔÒÉÒÏ×ÁÎÁ × ÍÁÓÓÉ×Å abbrs.";
+                $error = "Ð§Ð°ÑÑ‚ÑŒ '" . $w. "' Ð¸Ð· ÑÐ»Ð¾Ð²Ð° '" .$functionName . "' Ð½Ðµ Ð²Ð°Ð»Ð¸Ð´Ð½Ð° Ð¸ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð°Ð±Ð±Ñ€ÐµÐ²Ð¸Ð°Ñ‚ÑƒÑ€Ð¾Ð¹, Ð¾ ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¹ Ð²Ð°Ð»Ð¸Ð´Ð°Ñ‚Ð¾Ñ€ Ð½Ðµ Ð·Ð½Ð°ÐµÑ‚. ÐÐ±Ð±Ñ€ÐµÐ²Ð¸Ð°Ñ‚ÑƒÑ€Ð° Ð´Ð¾Ð»Ð¶Ð½Ð° Ð±Ñ‹Ñ‚ÑŒ Ð·Ð°Ñ€ÐµÐ³ÐµÑÑ‚Ñ€Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð° Ð² Ð¼Ð°ÑÑÐ¸Ð²Ðµ abbrs.";
                 $phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.2.1') . $error, $stackPtr);
 
             } elseif ($res < 0) {

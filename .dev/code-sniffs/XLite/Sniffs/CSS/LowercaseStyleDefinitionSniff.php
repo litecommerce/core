@@ -76,14 +76,14 @@ class XLite_Sniffs_CSS_LowercaseStyleDefinitionSniff extends XLite_ReqCodesSniff
                 if ($expected !== $tokens[$i]['content']) {
                     $found = $tokens[$i]['content'];
 					if ($tokens[$i]['code'] === T_STYLE) {
-                    	$error = "éÍÅÎÁ Ó×ÏÊÓÔ× ÐÉÛÕÔÓÑ × ÎÉÖÎÅÍ ÒÅÇÉÓÔÒÅ. îÅÏÂÈÏÄÉÍÏ: $expected, ÎÁÊÄÅÎÏ: $found";
+                    	$error = "Ð˜Ð¼ÐµÐ½Ð° ÑÐ²Ð¾Ð¹ÑÑ‚Ð² Ð¿Ð¸ÑˆÑƒÑ‚ÑÑ Ð² Ð½Ð¸Ð¶Ð½ÐµÐ¼ Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ðµ. ÐÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ð¾: $expected, Ð½Ð°Ð¹Ð´ÐµÐ½Ð¾: $found";
                     	$phpcsFile->addError($this->getReqPrefix('REQ.CSS.1.0.2') . $error, $i);
 					} else {
 						# Find the name of the property and skip checking for the font-family
 						$curPropertyToken = $phpcsFile->findPrevious(T_STYLE, $i, null, false);
 						if (strtolower($tokens[$curPropertyToken]['content']) == 'font-family')
 							continue;	
-                    	$error = "úÎÁÞÅÎÉÑ Ó×ÏÊÓÔ× ÐÉÛÕÔÓÑ × ÎÉÖÎÅÍ ÒÅÇÉÓÔÒÅ. îÅÏÂÈÏÄÉÍÏ: $expected, ÎÁÊÄÅÎÏ $found";
+                    	$error = "Ð—Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ ÑÐ²Ð¾Ð¹ÑÑ‚Ð² Ð¿Ð¸ÑˆÑƒÑ‚ÑÑ Ð² Ð½Ð¸Ð¶Ð½ÐµÐ¼ Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ðµ. ÐÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ð¾: $expected, Ð½Ð°Ð¹Ð´ÐµÐ½Ð¾ $found";
                     	$phpcsFile->addError($this->getReqPrefix('REQ.CSS.1.0.3') . $error, $i);
 					}
                 }

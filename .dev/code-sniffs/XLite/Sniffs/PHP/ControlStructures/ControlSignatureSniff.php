@@ -21,7 +21,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractPatternSniff', true) === fal
 /**
  * Verifies that control statements conform to their coding standards.
  *
- * TODO - переделать для детализации ошибок по каждому требованию, а не по группе
+ * TODO - п©п╣я─п╣п╢п╣п╩п╟я┌я▄ п╢п╩я▐ п╢п╣я┌п╟п╩п╦п╥п╟я├п╦п╦ п╬я┬п╦п╠п╬п╨ п©п╬ п╨п╟п╤п╢п╬п╪я┐ я┌я─п╣п╠п╬п╡п╟п╫п╦я▌, п╟ п╫п╣ п©п╬ пЁя─я┐п©п©п╣
  *
  * @category  PHP
  * @package   PHP_CodeSniffer

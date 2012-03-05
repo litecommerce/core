@@ -71,7 +71,7 @@ class XLite_Sniffs_PHP_Formatting_UniSniff extends XLite_ReqCodesSniff
 
 			if (!$isFor) {
 	            $phpcsFile->addError(
-    	            $this->getReqPrefix('REQ.PHP.3.9.1') . 'Унарные операторы должны вызываться на отдельной строчке кода',
+    	            $this->getReqPrefix('REQ.PHP.3.9.1') . 'пёп╫п╟я─п╫я▀п╣ п╬п©п╣я─п╟я┌п╬я─я▀ п╢п╬п╩п╤п╫я▀ п╡я▀п╥я▀п╡п╟я┌я▄я│я▐ п╫п╟ п╬я┌п╢п╣п╩я▄п╫п╬п╧ я│я┌я─п╬я┤п╨п╣ п╨п╬п╢п╟',
         	        $stackPtr
             	);
 			}

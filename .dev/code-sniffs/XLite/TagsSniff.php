@@ -641,7 +641,9 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 		            $bYear = '2011';
     		        $eYear = @date('Y');
         		    $text = 'Copyright (c) ' . (($bYear == $eYear) ? $bYear : $bYear . '-' . $eYear) . ' Creative Development LLC <info@cdev.ru>. All rights reserved';
-            		if ($content !== $text) {
+                    $eYear2 = $eYear - 1;
+                    $text2 = 'Copyright (c) ' . (($bYear == $eYear2) ? $bYear : $bYear . '-' . $eYear2) . ' Creative Development LLC <info@cdev.ru>. All rights reserved';
+            		if ($content !== $text && $content !== $text2) {
                 		$error = 'Content of the @copyright tag must be in the form "' . $text . '"';
 	                	$this->currentFile->addError($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'copyright')) . $error, $errorPos);
 	    	        }

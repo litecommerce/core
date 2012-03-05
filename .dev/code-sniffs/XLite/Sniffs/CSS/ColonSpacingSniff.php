@@ -67,23 +67,23 @@ class XLite_Sniffs_CSS_ColonSpacingSniff extends XLite_NameSniff
 			return;
 
         if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
-            $error = 'Не должно быть пробелов/отступов перед двоеточием после названия свойств';
+            $error = 'п²п╣ п╢п╬п╩п╤п╫п╬ п╠я▀я┌я▄ п©я─п╬п╠п╣п╩п╬п╡/п╬я┌я│я┌я┐п©п╬п╡ п©п╣я─п╣п╢ п╢п╡п╬п╣я┌п╬я┤п╦п╣п╪ п©п╬я│п╩п╣ п╫п╟п╥п╡п╟п╫п╦я▐ я│п╡п╬п╧я│я┌п╡';
             $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.12') . $error, $stackPtr);
         }
 
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
-            $error = 'Нет отступа между названием свойства и его значением.';
+            $error = 'п²п╣я┌ п╬я┌я│я┌я┐п©п╟ п╪п╣п╤п╢я┐ п╫п╟п╥п╡п╟п╫п╦п╣п╪ я│п╡п╬п╧я│я┌п╡п╟ п╦ п╣пЁп╬ п╥п╫п╟я┤п╣п╫п╦п╣п╪.';
             $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.3') . $error, $stackPtr);
         } else {
             $content = $tokens[($stackPtr + 1)]['content'];
             if (strpos($content, $phpcsFile->eolChar) === false) {
                 $length  = strlen($content);
                 if ($length !== 1) {
-                    $error = "Необходимо разделять название свойства и его значение одним пробелом. Найден(о) $length";
+                    $error = "п²п╣п╬п╠я┘п╬п╢п╦п╪п╬ я─п╟п╥п╢п╣п╩я▐я┌я▄ п╫п╟п╥п╡п╟п╫п╦п╣ я│п╡п╬п╧я│я┌п╡п╟ п╦ п╣пЁп╬ п╥п╫п╟я┤п╣п╫п╦п╣ п╬п╢п╫п╦п╪ п©я─п╬п╠п╣п╩п╬п╪. п²п╟п╧п╢п╣п╫(п╬) $length";
                     $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.3') . $error, $stackPtr);
                 }
             } else {
-                $error = 'Необходимо разделять название свойства и его значение одним пробелом. Обнаружена новая строка';
+                $error = 'п²п╣п╬п╠я┘п╬п╢п╦п╪п╬ я─п╟п╥п╢п╣п╩я▐я┌я▄ п╫п╟п╥п╡п╟п╫п╦п╣ я│п╡п╬п╧я│я┌п╡п╟ п╦ п╣пЁп╬ п╥п╫п╟я┤п╣п╫п╦п╣ п╬п╢п╫п╦п╪ п©я─п╬п╠п╣п╩п╬п╪. п·п╠п╫п╟я─я┐п╤п╣п╫п╟ п╫п╬п╡п╟я▐ я│я┌я─п╬п╨п╟';
                 $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.3') . $error, $stackPtr);
             }
         }//end if

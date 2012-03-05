@@ -84,7 +84,7 @@ class XLite_Sniffs_PHP_NamingConventions_ValidClassNameSniff extends XLite_NameS
 		foreach ($nameBits as $bit) {
 			$res = $this->checkCamelWord($bit);
 			if ($res == -2) {
-				$error = "þÁÓÔØ '" . $bit. "' ÉÚ ÓÌÏ×Á '" .$name . "' ÎÅ ×ÁÌÉÄÎÁ É ×ÏÚÍÏÖÎÏ Ñ×ÌÑÅÔÓÑ ÁÂÂÒÅ×ÉÁÔÕÒÏÊ, Ï ËÏÔÏÒÏÊ ×ÁÌÉÄÁÔÏÒ ÎÅ ÚÎÁÅÔ. áÂÂÒÅ×ÉÁÔÕÒÁ ÄÏÌÖÎÁ ÂÙÔØ ÚÁÒÅÇÅÓÔÒÉÒÏ×ÁÎÁ × ÍÁÓÓÉ×Å abbrs.";
+				$error = "Ð§Ð°ÑÑ‚ÑŒ '" . $bit. "' Ð¸Ð· ÑÐ»Ð¾Ð²Ð° '" .$name . "' Ð½Ðµ Ð²Ð°Ð»Ð¸Ð´Ð½Ð° Ð¸ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð°Ð±Ð±Ñ€ÐµÐ²Ð¸Ð°Ñ‚ÑƒÑ€Ð¾Ð¹, Ð¾ ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¹ Ð²Ð°Ð»Ð¸Ð´Ð°Ñ‚Ð¾Ñ€ Ð½Ðµ Ð·Ð½Ð°ÐµÑ‚. ÐÐ±Ð±Ñ€ÐµÐ²Ð¸Ð°Ñ‚ÑƒÑ€Ð° Ð´Ð¾Ð»Ð¶Ð½Ð° Ð±Ñ‹Ñ‚ÑŒ Ð·Ð°Ñ€ÐµÐ³ÐµÑÑ‚Ñ€Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð° Ð² Ð¼Ð°ÑÑÐ¸Ð²Ðµ abbrs.";
 				$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.2.1') . $error, $stackPtr);
 
 			} elseif ($res < 0) {
@@ -95,7 +95,7 @@ class XLite_Sniffs_PHP_NamingConventions_ValidClassNameSniff extends XLite_NameS
 
 		list($res, $paths) = $this->checkClassPath($nameBits, $ns);
 		if (!$res) {
-			$error = "ðÕÔÉ ÄÏ ÆÁÊÌÁ Ó ÏÂßÑ×ÌÅÎÉÅÍ ËÌÁÓÓÁ '" .$name . "' ÎÅ ÓÕÝÅÓÔ×ÕÀÔ (" .implode('; ', $paths). ")";
+			$error = "ÐŸÑƒÑ‚Ð¸ Ð´Ð¾ Ñ„Ð°Ð¹Ð»Ð° Ñ Ð¾Ð±ÑŠÑÐ²Ð»ÐµÐ½Ð¸ÐµÐ¼ ÐºÐ»Ð°ÑÑÐ° '" .$name . "' Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‚ (" .implode('; ', $paths). ")";
 			$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.3.3') . $error, $stackPtr);
 		}
 

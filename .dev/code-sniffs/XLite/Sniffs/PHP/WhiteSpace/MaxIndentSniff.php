@@ -77,7 +77,7 @@ class XLite_Sniffs_PHP_WhiteSpace_MaxIndentSniff extends XLite_ReqCodesSniff
 			&& $tokens[$stackPtr - 1]['content'] === "\n"
 		) {
             $phpcsFile->addWarning(
-				$this->getReqPrefix('WRN.PHP.2.4.1') . 'Рекомендуется делать не более ' . $this->maxIndents . ' уровней отступов',
+				$this->getReqPrefix('WRN.PHP.2.4.1') . 'п═п╣п╨п╬п╪п╣п╫п╢я┐п╣я┌я│я▐ п╢п╣п╩п╟я┌я▄ п╫п╣ п╠п╬п╩п╣п╣ ' . $this->maxIndents . ' я┐я─п╬п╡п╫п╣п╧ п╬я┌я│я┌я┐п©п╬п╡',
 				$stackPtr
 			);
 		}
