@@ -40,7 +40,6 @@ class AddNewLanguage extends \XLite\View\Button\Regular
      */
     const PARAM_PAGE = 'page';
 
-
     /**
      * Define widget parameters
      *
@@ -55,9 +54,30 @@ class AddNewLanguage extends \XLite\View\Button\Regular
         $this->widgetParams += array(
             self::PARAM_PAGE => new \XLite\Model\WidgetParam\Int('Page index', 1),
         );
+    }
 
-        $this->widgetParams[self::PARAM_LABEL]->setValue('Add new language');
-        $this->widgetParams[self::PARAM_STYLE]->setValue('add-new-language');
+    /**
+     * getDefaultLabel
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultLabel()
+    {
+        return 'Add new language';
+    }
+
+    /**
+     * getDefaultStyle
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function getDefaultStyle()
+    {
+        return 'add-new-language';
     }
 
     /**

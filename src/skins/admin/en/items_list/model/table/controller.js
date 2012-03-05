@@ -79,43 +79,78 @@ TableItemsList.prototype.listeners.form = function(handler)
 {
   var form = handler.container.parents('form').eq(0);
 
-  form.get(0).commonController.submitOnlyChanged = true;
+  if (form.get(0)) {
+    form.get(0).commonController.submitOnlyChanged = true;
+  }
 
   form.change(
     function () {
       var form = jQuery(this);
-      var btn = form.find('.sticky-panel button');
-      var cancel = form.find('.sticky-panel .cancel');
 
       if (this.commonController.isChanged()) {
         form.addClass('changed');
-        btn.each(
-          function() {
-            this.enable();
-          }
-        );
-        handler.container.find('.table-pager .input input, .table-pager .page-length').each(
-          function () {
-            jQuery(this).attr('disabled', 'disabled');
-            this.setAttribute('disabled', 'disabled');
-          }
-        );
-        handler.container.find('.table-pager a').addClass('disabled').removeClass('enabled');
-        cancel.removeClass('disabled');
+        handler.processFormChanged(form);
 
       } else {
         form.removeClass('changed');
-        btn.each(
-          function() {
-            this.disable();
-          }
-        );
-        handler.container.find('.table-pager .input input, .table-pager .page-length').removeAttr('disabled');
-        handler.container.find('.table-pager a').removeClass('disabled').addClass('enabled');
-        cancel.addClass('disabled');
+        handler.processFormUndo(form);
       }
     }
   );
+}
+
+// Process form and form's elements after form changed
+TableItemsList.prototype.processFormChanged = function(form)
+{
+  var btn = this.getFormChangedButtons(form);
+  var cancel = this.getFormChangedLinks(form);
+
+  btn.each(
+    function() {
+      this.enable();
+    }
+  );
+
+  this.container.find('.table-pager .input input, .table-pager .page-length').each(
+    function () {
+      jQuery(this).attr('disabled', 'disabled');
+      this.setAttribute('disabled', 'disabled');
+    }
+  );
+
+  this.container.find('.table-pager a').addClass('disabled').removeClass('enabled');
+
+  cancel.removeClass('disabled');
+}
+
+// Process form and form's elements after form cancel all changes
+TableItemsList.prototype.processFormUndo = function(form)
+{
+  var btn = this.getFormChangedButtons(form);
+  var cancel = this.getFormChangedLinks(form);
+
+  btn.each(
+    function() {
+      this.disable();
+    }
+  );
+
+  this.container.find('.table-pager .input input, .table-pager .page-length').removeAttr('disabled');
+  this.container.find('.table-pager a').removeClass('disabled').addClass('enabled');
+
+  cancel.addClass('disabled');
+}
+
+// Get a form button, which should change as the state of the form
+TableItemsList.prototype.getFormChangedButtons = function(form)
+{
+  return form.find('.sticky-panel button');
+}
+
+// Get a form links, which should change as the state of the form
+TableItemsList.prototype.getFormChangedLinks = function(form)
+{
+  return form.find('.sticky-panel .cancel');
 }
 
 // Inline creation button listener
@@ -153,6 +188,8 @@ TableItemsList.prototype.listeners.createButton = function(handler)
           form.commonController.bindElements();
         }
 
+        jQuery('.no-items').css('display', 'none');
+
         return false;
       }
     );
@@ -165,6 +202,9 @@ TableItemsList.prototype.listeners.removeLineButton = function(handler)
     function () {
       if (0 == jQuery(this).parents('tr.create-tpl').length) {
         jQuery(this).parents('tr').eq(0).remove();
+        if (0 == jQuery('tr.create-line').length && 0 == jQuery('tr.line').length) {
+          jQuery('.no-items').css('display', '');
+        }
       }
     }
   );

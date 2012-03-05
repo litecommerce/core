@@ -36,6 +36,18 @@ namespace XLite\Controller\Admin;
 class OrderList extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage orders');
+    }
+
+    /**
      * Return the current page title (for the content area)
      *
      * @return string
@@ -44,7 +56,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Search orders';
+        return 'Search for orders';
     }
 
     /**
@@ -118,22 +130,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
         $dates = $this->getCondition(\XLite\Model\Repo\Order::P_DATE);
         $n = (true === $start) ? 0 : 1;
 
-        return isset($dates) && isset($dates[$n])
-            ? $dates[$n]
-            : null;
-    }
-
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return static::t('Search orders');
+        return isset($dates[$n]) ? $dates[$n] : null;
     }
 
     /**

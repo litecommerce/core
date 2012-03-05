@@ -41,7 +41,6 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
     const PARAM_ORDER_ID   = 'orderId';
     const PARAM_ALL_OPTION = 'allOption';
 
-
     /**
      * Current order
      *
@@ -194,12 +193,12 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
      */
     protected function isInventoryWarning()
     {
-        if ($this->getOrder() && is_null($this->inventoryWarning)) {
+        if ($this->getOrder() && !isset($this->inventoryWarning)) {
 
             foreach ($this->getOrder()->getItems() as $item) {
 
                 if (
-                    is_null($this->inventoryWarning)
+                    !isset($this->inventoryWarning)
                     && \XLite\Model\Order::STATUS_QUEUED === $this->getOrder()->getStatus()
                     && $item->getProduct()->getInventory()->getEnabled()
                     && $item->getAmount() > $item->getProduct()->getInventory()->getAmount()
@@ -226,7 +225,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
         $content = '';
 
         if ($this->isInventoryWarning()) {
-            $content .= static::t('Warning! There is not enough product items in stock to process the order');
+            $content .= 'Warning! There is not enough product items in stock to process the order';
         }
 
         return $content;

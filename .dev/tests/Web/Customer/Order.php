@@ -328,13 +328,18 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         $i = 2;
         foreach ($order->getSurchargeTotals() as $type => $m) {
             $name = 1 == $m['count'] ? $m['lastName'] : $m['name'];
-            
+
+            $this->assertElementPresent(
+                "//div[@class='invoice-box']"
+                    . "/table[@class='totals']"
+                    . "/tbody"
+                    . "/tr[position()=$i and contains(@class,'" . $type . "-modifier')]");
             $this->assertElementPresent(
                 "//div[@class='invoice-box']"
                 . "/table[@class='totals']"
                 . "/tbody"
-                . "/tr[position()=$i and @class='" . $type . "-modifier']"
-                . "/td[position()=1 and text()='" . $name . ":']"
+                . "/tr[position()=$i and contains(@class,'" . $type . "-modifier')]"
+                . "/td[position()=1 and contains(text(),'" . $name . ":')]"
             );
             $this->assertEquals(
                 '$' . number_format($m['cost'], 2),

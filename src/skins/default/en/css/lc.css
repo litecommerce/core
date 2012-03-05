@@ -1612,6 +1612,10 @@ body.store-cart #main h1 {
   cursor: help;
 }
 
+.discount-code-modifier .value {
+  color: #397928;
+}
+
 table.including-modifiers,
 table.including-modifiers tbody,
 table.including-modifiers tr,

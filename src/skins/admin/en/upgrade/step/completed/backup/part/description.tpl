@@ -23,4 +23,4 @@
   {t(#If there are some critical errors occured you can do the following#)}:
 </div>
 
-{displayInheritedViewListContent(#actions#)}
+<list name="actions" type="inherited" />

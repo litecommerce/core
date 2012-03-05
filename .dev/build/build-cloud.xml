@@ -3,7 +3,7 @@
 
     <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" classpath="/usr/share/jmeter/lib/ext/ant-jmeter-1.1.1.jar" />
 
-    <target name="cloud" depends="set-properties,clean,prepare-git,prepare-release, prepare,php-documentor,tests,analysis,comparison,create-build" />
+    <target name="cloud" depends="set-properties,clean,prepare-git,prepare-release, prepare,tests,analysis,comparison,create-build" />
 
     <target name="set-properties">
         <property name="version" value="3.x-dev" />
@@ -75,7 +75,7 @@
         <property name="EC2_KEYPAIR" value="${EC2_DIR}/lc-test.pem" />
         <property name="EC2_KEYPAIR_NAME" value="lc-test" />
         <property environment="env"/>
-        <exec executable="${phake}" dir="${phakeDir}">
+        <exec executable="${phake}" dir="${phakeDir}"  failonerror="Off" resultproperty="phake_result">
             <arg value="${target}" />
             <arg line="${userVars}" />
             <env key="EC2_HOME" value="${EC2_HOME}" />
@@ -125,19 +125,6 @@
     </target>
 
 
-    <target name="php-documentor">
-        <exec executable="git" dir="${buildDir}/.dev/lib">
-            <arg line="clone https://github.com/apigen/apigen.git" />
-        </exec>
-        <exec executable="git" dir="${buildDir}/.dev/lib/apigen">
-            <arg line="submodule update --init" />
-        </exec>
-        <exec executable="php" dir="${lcRoot}/classes">
-            <arg line="${buildDir}/.dev/lib/apigen/apigen.php --source ${lcRoot}/classes --config ${buildDir}/.dev/build/apigen.neon --template-config ${buildDir}/.dev/lib/apigen/templates/default/config.neon --destination ${lcRoot}/classes/api" />
-        </exec>
-        <move file="${lcRoot}/classes/api" tofile="${buildDir}/api" />
-    </target>
-
     <target name="tests" depends="plint,phpunit-cc,php-codesniffer-cc,jmeter" />
 
     <!-- Install Drupal+LC (local) -->
@@ -146,16 +133,6 @@
             <arg line="xliteAllTests ${buildDir}/.dev/tests/AllTests.php DEPLOY_DRUPAL" />
         </exec>
     </target>
-
-    <!-- Install Drupal+LC (cc) -->
-    <!--<target name="phpunit-deployment-cc">-->
-    <!--<exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="on">-->
-    <!--<arg value="xliteAllTests" />-->
-    <!--<arg value="${buildDir}/.dev/tests/AllTests.php" />-->
-    <!--<arg value="DEPLOY_DRUPAL" />-->
-    <!--</exec>-->
-    <!--<copy file="/u/xcart/etc/config.local.php" tofile="${lcRoot}/etc/config.local.php" />-->
-    <!--</target>-->
 
     <target name="php-codesniffer-cc">
         <exec executable="${sourceDir}/.dev/phpcs" dir="${installDir}" output="${buildDir}/logs/checkstyle.xml">
@@ -173,9 +150,11 @@
         <antcall target="run-phake">
             <param name="target" value="default" />
             <!--<param name="userVars" value="screenshots_url='http://xcart2-530.crtdev.local/~xcart/general/projects/xlite/build/logs/screenshots'" />-->
-            <param name="userVars" value="log_dir='${buildDir}/logs' screenshots_url='http:\/\/ec2-50-17-21-109.compute-1.amazonaws.com\/screenshots'" />
+            <param name="userVars" value="log_dir='${buildDir}/logs' screenshots_url='http:\/\/23.21.234.252\/screenshots'" />
             <param name="EC2_DIR" value="${ec2Dir}" />
         </antcall>
+
+        <move file="${buildDir}/logs/api" tofile="${buildDir}/api" failonerror="Off" />
 
         <copy todir="/var/www/screenshots">
             <fileset dir="${buildDir}/logs/screenshots" />
@@ -188,6 +167,13 @@
             <arg value="${buildDir}/reports" />
             <arg value="../../../artifacts/xlite" />
         </exec>
+        <fail message="tests failed">
+            <condition>
+                <not>
+                    <equals arg1="0" arg2="phake_result" />
+                </not>
+            </condition>
+        </fail>
     </target>
 
     <target name="jmeter">

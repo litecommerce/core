@@ -44,7 +44,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
      */
     protected $module;
 
-
     /**
      * handleRequest
      *
@@ -75,24 +74,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getLocation()
-    {
-        return \XLite\Core\Translation::lbl(
-            'X module settings',
-            array(
-                'name'   => $this->getModule()->getName(),
-                'author' => $this->getModule()->getAuthor(),
-            )
-        );
-    }
-
-    /**
      * Return the current page title (for the content area)
      *
      * @return string
@@ -101,7 +82,13 @@ class Module extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return $this->getLocation();
+        return static::t(
+            'X module settings',
+            array(
+                'name'   => $this->getModule()->getName(),
+                'author' => $this->getModule()->getAuthor(),
+            )
+        );
     }
 
     /**
@@ -115,18 +102,15 @@ class Module extends \XLite\Controller\Admin\AAdmin
     public function getModule()
     {
         if (!isset($this->module)) {
-
             $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleID());
 
             if (!$this->module) {
-
                 throw new \Exception('Add-on does not exist (ID#' . $this->getModuleID() . ')');
             }
         }
 
         return $this->module;
     }
-
 
     /**
      * Get current module ID
@@ -138,20 +122,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
     protected function getModuleID()
     {
         return \XLite\Core\Request::getInstance()->moduleId;
-    }
-
-    /**
-     * Add part to the location nodes list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addBaseLocation()
-    {
-        parent::addBaseLocation();
-
-        $this->addLocationNode('Manage modules', $this->buildURL('addons_list_installed'));
     }
 
     /**
@@ -179,5 +149,4 @@ class Module extends \XLite\Controller\Admin\AAdmin
     {
         return '\XLite\View\Model\Settings';
     }
-
 }

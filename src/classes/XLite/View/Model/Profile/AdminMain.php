@@ -42,7 +42,6 @@ class AdminMain extends \XLite\View\Model\AModel
     const SECTION_MAIN     = 'main';
     const SECTION_ACCESS   = 'access';
 
-
     /**
      * Schema of the "Account summary" section
      *
@@ -138,7 +137,6 @@ class AdminMain extends \XLite\View\Model\AModel
         ),
     );
 
-
     /**
      * Return value for the "register" mode param
      *
@@ -150,7 +148,6 @@ class AdminMain extends \XLite\View\Model\AModel
     {
         return \XLite\Controller\Admin\Profile::getRegisterMode();
     }
-
 
     /**
      * Save current form reference and initialize the cache
@@ -280,7 +277,6 @@ class AdminMain extends \XLite\View\Model\AModel
         return $value;
     }
 
-
     /**
      * This object will be used if another one is not pased
      *
@@ -358,7 +354,11 @@ class AdminMain extends \XLite\View\Model\AModel
             unset($this->accessSchema['pending_membership_id']);
         }
 
-        if (!\XLite\Core\Auth::getInstance()->isPermissionAllowed('root access')) {
+        if (
+            !\XLite\Core\Auth::getInstance()->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS)
+            || !$this->getModelObject()
+            || !$this->getModelObject()->isAdmin()
+        ) {
             unset($this->accessSchema['roles']);
         }
 
@@ -412,6 +412,10 @@ class AdminMain extends \XLite\View\Model\AModel
                     }
                 }
             }
+        }
+
+        if (isset($data['roles'])) {
+            unset($data['roles']);
         }
 
         parent::setModelProperties($data);
@@ -682,6 +686,7 @@ class AdminMain extends \XLite\View\Model\AModel
     protected function getFormButtons()
     {
         $result = parent::getFormButtons();
+
         $result['submit'] = new \XLite\View\Button\Submit(
             array(
                 \XLite\View\Button\AButton::PARAM_LABEL => $this->getSubmitButtonLabel(),

@@ -10,4 +10,4 @@
  * @since     1.0.0
  *}
 
-<widget template="{getDir()}/{getFieldTemplate()}" /><label for="{getFieldId()}">{getParam(#label#)}</label>
+<widget template="{getDir()}/{getFieldTemplate()}" /><label for="{getFieldId()}">{t(getParam(#label#))}</label>

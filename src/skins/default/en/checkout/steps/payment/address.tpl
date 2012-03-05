@@ -22,7 +22,7 @@
 
   {else:}
     <ul class="form">
-      {displayViewListContent(#checkout.payment.address#)}
+      <list name="checkout.payment.address" />
     </ul>
 
     {if:!isAnonymous()}

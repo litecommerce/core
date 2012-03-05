@@ -51,7 +51,7 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected static function getWidgetTarget()
     {
-        return self::WIDGET_TARGET_SALE_PRODUCTS;
+        return static::WIDGET_TARGET_SALE_PRODUCTS;
     }
 
     /**
@@ -91,7 +91,7 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getHead()
     {
-        return static::t('Sale');
+        return 'Sale';
     }
 
     /**
@@ -137,8 +137,10 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')
-            ->search($this->getSearchConditions($cnd), $countOnly);
+        return $this->getOnlyEntities(
+            \XLite\Core\Database::getRepo('XLite\Model\Product')
+                ->search($this->getSearchConditions($cnd), $countOnly)
+        );
     }
 
     /**

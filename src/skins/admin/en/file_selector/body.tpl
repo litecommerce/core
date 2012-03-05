@@ -14,9 +14,9 @@
 
  <div class="file-selector">
    <ul class="selections-list">
-     {displayViewListContent(#file_select_dialog.file_selections#)}
+     <list name="file_select_dialog.file_selections" />
    </ul>
-   {displayViewListContent(#file_select_dialog.actions#)}
+   <list name="file_select_dialog.actions" />
  </div>
 
 <widget name="file_select_form" end />

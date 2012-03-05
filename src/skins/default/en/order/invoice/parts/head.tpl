@@ -12,6 +12,6 @@
  *}
 <table cellspacing="0" class="header">
   <tr>
-    {displayViewListContent(#invoice.head#)}
+    <list name="invoice.head" />
   </tr>
 </table>

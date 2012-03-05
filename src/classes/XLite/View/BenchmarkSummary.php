@@ -32,6 +32,8 @@ namespace XLite\View;
  *
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="main", weight="300")
  */
 class BenchmarkSummary extends \XLite\View\AView
 {
@@ -58,6 +60,19 @@ class BenchmarkSummary extends \XLite\View\AView
         $list[] = 'main';
 
         return $list;
+    }
+
+    /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function checkACL()
+    {
+        return parent::checkACL()
+            && \XLite\Core\Auth::getInstance()->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS);
     }
 
     /**

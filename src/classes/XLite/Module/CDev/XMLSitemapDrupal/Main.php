@@ -56,7 +56,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '0';
+        return '1';
     }
 
     /**
@@ -95,4 +95,22 @@ abstract class Main extends \XLite\Module\AModule
         return array('CDev\XMLSitemap', 'CDev\DrupalConnector');
     }
 
+    /**
+     * Decorator run this method at the end of cache rebuild
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public static function runBuildCacheHandler()
+    {
+        parent::runBuildCacheHandler();
+
+        \XLite\View\AView::removeWidgetFromList(
+            'modules/CDev/XMLSitemap/menu.tpl',
+            true,
+            'menu.settings',
+            \XLite\Model\ViewList::INTERFACE_ADMIN
+        );
+    }
 }

@@ -36,24 +36,6 @@ namespace XLite\View;
 class Header extends \XLite\View\Container
 {
     /**
-     * Default meta description
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $defaultMetaDescription = 'The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP5 with SQL database with highly configurable implementation based on templates';
-
-    /**
-     * Default title
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $defaultTitle = 'Litecommerce';
-
-    /**
      * Get head prefixes 
      * 
      * @return array
@@ -74,11 +56,23 @@ class Header extends \XLite\View\Container
      */
     protected function getMetaDescription()
     {
-        $description = method_exists(\XLite::getController(), 'getMetaDescription')
-            ? \XLite::getController()->getMetaDescription()
-            : static::t($this->defaultMetaDescription);
+        return ($result = \XLite::getController()->getMetaDescription()) 
+            ? trim(strip_tags($result)) 
+            : $this->getDefaultMetaDescription();
+    }
 
-        return trim(strip_tags($description));
+    /**
+     * Get default meta description
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultMetaDescription()
+    {
+        return 'The powerful shopping cart software for web stores and e-commerce '
+            . 'enabled stores is based on PHP5 with SQL database with highly '
+            . 'configurable implementation based on templates';
     }
 
     /**
@@ -90,7 +84,19 @@ class Header extends \XLite\View\Container
      */
     protected function getTitle()
     {
-        return \XLite::getController()->getPageTitle() ?: static::t($this->defaultTitle);
+        return \XLite::getController()->getPageTitle() ?: $this->getDefaultTitle;
+    }
+
+    /**
+     * Get default title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getDefaultTitle()
+    {
+        return 'Litecommerce';
     }
 
     /**
@@ -193,5 +199,4 @@ class Header extends \XLite\View\Container
     {
         return 'header/body.tpl';
     }
-
 }

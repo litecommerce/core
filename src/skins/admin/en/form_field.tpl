@@ -12,7 +12,7 @@
 
 {if:!getParam(#fieldOnly#)}
   <div class="table-label {getFieldId()}-label">
-    <label for="{getFieldId()}">{getParam(#label#)}:</label>
+    <label for="{getFieldId()}">{t(getParam(#label#))}:</label>
   </div>
   <div IF="getParam(#required#)" class="star">*</div>
   <div IF="!getParam(#required#)" class="star">&nbsp;</div>
@@ -21,7 +21,7 @@
 <div class="table-value {getFieldId()}-value">
   <widget template="{getDir()}/{getFieldTemplate()}" />
   <widget IF="getParam(#help#)" class="\XLite\View\Tooltip" text="{getParam(#help#)}" isImageTag=true className="help-icon" />
-  <div IF="getParam(#comment#)" class="form-field-comment {getFieldId()}-comment">{getParam(#comment#):r}</div>
+  <div IF="getParam(#comment#)" class="form-field-comment {getFieldId()}-comment">{t(getParam(#comment#)):r}</div>
   <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
 </div>
 

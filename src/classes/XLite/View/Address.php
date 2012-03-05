@@ -94,7 +94,7 @@ class Address extends \XLite\View\Dialog
         ),
         'custom_state' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Other state',
+            self::SCHEMA_LABEL    => 'Another state',
             self::SCHEMA_REQUIRED => false,
         ),
         'zipcode' => array(

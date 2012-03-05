@@ -87,36 +87,6 @@ class States extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'States';
-    }
-
-    /**
-     * setObligatoryStatus
-     *
-     * @param mixed $status ____param_comment____
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function setObligatoryStatus($status)
-    {
-        if (!in_array('status', $this->params)) {
-            $this->params[] = 'status';
-        }
-
-        $this->set('status', $status);
-    }
-
-    /**
      * doActionAdd
      *
      * @return void
@@ -138,15 +108,12 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         if (!$country) {
             $this->set('valid', false);
-            $this->setObligatoryStatus('country_code');
 
         } elseif (empty($postData['code'])) {
             $this->set('valid', false);
-            $this->setObligatoryStatus('code');
 
         } elseif (empty($postData['state'])) {
             $this->set('valid', false);
-            $this->setObligatoryStatus('state');
 
         } else {
             $found = false;
@@ -161,7 +128,6 @@ class States extends \XLite\Controller\Admin\AAdmin
 
             if ($found) {
                 $this->set('valid', false);
-                $this->setObligatoryStatus('exists');
 
             } else {
                 $state = new \XLite\Model\State();
@@ -171,7 +137,6 @@ class States extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\Database::getEM()->persist($state);
                 \XLite\Core\Database::getEM()->flush();
 
-                $this->setObligatoryStatus('added');
                 \XLite\Core\Database::getRepo('XLite\Model\State')->cleanCache();
             }
         }
@@ -202,7 +167,6 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         \XLite\Core\Database::getEM()->flush();
 
-        $this->setObligatoryStatus('updated');
         \XLite\Core\Database::getRepo('XLite\Model\State')->cleanCache();
     }
 
@@ -231,7 +195,6 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         \XLite\Core\Database::getEM()->flush();
 
-        $this->setObligatoryStatus('deleted');
         \XLite\Core\Database::getRepo('XLite\Model\State')->cleanCache();
     }
 }

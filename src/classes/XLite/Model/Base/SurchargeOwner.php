@@ -135,20 +135,23 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
         $surcharges = array();
 
         foreach ($this->getExcludeSurcharges() as $surcharge) {
-            if (!isset($surcharges[$surcharge->getType()])) {
-                $surcharges[$surcharge->getType()] = array(
+
+            $code = $surcharge->getCode();
+
+            if (!isset($surcharges[$code])) {
+                $surcharges[$code] = array(
                     'name'      => $surcharge->getTypeName(),
                     'cost'      => 0,
                     'available' => $surcharge->getAvailable(),
                     'count'     => 0,
                     'lastName'  => null,
-                    'code'      => $surcharge->getCode(),
+                    'code'      => $code,
                 );
             }
 
-            $surcharges[$surcharge->getType()]['cost'] += $surcharge->getValue();
-            $surcharges[$surcharge->getType()]['count']++;
-            $surcharges[$surcharge->getType()]['lastName'] = $surcharge->getName();
+            $surcharges[$code]['cost'] += $surcharge->getValue();
+            $surcharges[$code]['count']++;
+            $surcharges[$code]['lastName'] = $surcharge->getName();
         }
 
         return $surcharges;

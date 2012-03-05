@@ -14,8 +14,8 @@
 
   <div class="top-note">
     <div>
-      {t(#After you enabled this tax it will be included in product prices#)}<br />
-      {t(#This taxis calculated based on customer's billing address.#)}
+      {t(#After you enable this tax it will be included in product prices#)}<br />
+      {t(#This tax is calculated based on customer's billing address#)}.
     </div>
   </div>
 
@@ -44,7 +44,7 @@
       <widget
         class="\XLite\View\Tooltip"
         id="vat-help-text"
-        text="{t(#Select the membership level and the area which product prices, including VAT, are defined for by the shop administrator#):h}"
+        text="{t(#Select the membership level and area. for which product prices, including VAT, are defined by the shop administrator#):h}"
         caption=""
         isImageTag="true"
         className="help" />
@@ -53,7 +53,7 @@
 
   <h2>{t(#Rates / Conditions#)}</h2>
 
-  <p class="rates-note">{t(#If the product is assigned to multiple classes only the first tax rate with highest priority will be applied on it.#)}</p>
+  <p class="rates-note">{t(#If the product is assigned to multiple classes, only the first tax rate with the highest priority will be applied to it.#)}</p>
 
   <table class="data{if:tax.rates.count()=0} empty-data{end:}">
 
@@ -92,7 +92,7 @@
     </tr>
 
     <tr class="no-data-note">
-      <td colspan="5">{t(#Not tax rate defined#)}</td>
+      <td colspan="5">{t(#No tax rate defined#)}</td>
     </tr>
 
   </table>

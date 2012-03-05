@@ -38,9 +38,7 @@ class DeleteSelected extends \XLite\View\Button\Regular
     /**
      * Widget parameter names
      */
-
     const PARAM_CONFIRMATION = 'confirm';
-
 
     /**
      * getDefaultLabel
@@ -108,7 +106,7 @@ class DeleteSelected extends \XLite\View\Button\Regular
         $code = parent::getDefaultJSCode();
 
         if ($this->getParam(self::PARAM_CONFIRMATION)) {
-            $code = 'if (confirm(\'' . $this->getParam(self::PARAM_CONFIRMATION) . '\')) { ' . $code . ' }';
+            $code = 'if (confirm(\'' . static::t($this->getParam(self::PARAM_CONFIRMATION)) . '\')) { ' . $code . ' }';
         }
 
         return $code;

@@ -69,9 +69,9 @@ class Profile extends \XLite\Controller\Admin\AAdmin
     public function checkACL()
     {
         return parent::checkACL()
+            || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage users')
             || ($this->getProfile() && $this->getProfile()->getProfileId() == \XLite\Core\Auth::getInstance()->getProfile()->getProfileId());
     }
-
 
     /**
      * Check if current page is accessible
@@ -124,32 +124,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->getProfile()->getLogin();
-    }
-
-    /**
-     * Add part to the location nodes list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addBaseLocation()
-    {
-        parent::addBaseLocation();
-
-        $this->addLocationNode('Users', $this->buildURL('profile_list'));
-    }
-
-    /**
      * Class name for the \XLite\View\Model\ form
      *
      * @return string
@@ -187,7 +161,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
         if ($this->getModelForm()->isRegisterMode()) {
 
             // New profile is registered
-
             if ($this->isActionError()) {
 
                 // Return back to register page
@@ -206,7 +179,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
             }
 
         } else {
-
             // Existsing profile is updated
 
             // Send notification to the user
@@ -238,7 +210,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
     protected function doActionDelete()
     {
         $userLogin = $this->getProfile()->getLogin();
-
         $result = $this->getModelForm()->performAction('delete');
 
         // Send notification to the user

@@ -7,10 +7,9 @@
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
 # @since     3.0.0
+
 XLite\Model\Config:
   directives: { insert: true }
-  - { name: add_on_mode, category: General, type: checkbox, orderby: 120, value: N, translations: [{ code: en, option_name: 'Checkout desk operation mode', option_comment: '' }] }
-  - { name: add_on_mode_page, category: General, type: 'XLite\View\FormField\Select\DeskOperationMode', orderby: 125, value: 'cart.php?target=cart', translations: [{ code: en, option_name: 'Checkout desk operation mode main page', option_comment: '' }] }
   - { name: admin_presentation, category: General, type: separator, orderby: 400, translations: [{ code: en, option_name: 'Administrator Zone settings', option_comment: '' }] }
   - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone', option_comment: '' }] }
   - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address, option_comment: '' }] }
@@ -28,7 +27,6 @@ XLite\Model\Config:
   - { name: default_purchase_limit, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 293, value: 9999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Default purchase limit', option_comment: '' }] }
   - { name: default_select_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Default payment method', option_comment: '' }] }
   - { name: default_zipcode, category: General, type: text, orderby: 320, translations: [{ code: en, option_name: 'Default zip/postal code in the registration form', option_comment: '' }] }
-  - { name: direct_product_url, category: General, type: checkbox, orderby: 255, value: N, translations: [{ code: en, option_name: 'Allow direct URL access to products from disabled categories', option_comment: '' }] }
   - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method', option_comment: '' }] }
   - { name: enable_anon_checkout, category: General, type: checkbox, orderby: 270, value: Y, translations: [{ code: en, option_name: 'Enable anonymous checkout', option_comment: '' }] }
   - { name: enable_init_order_notif, category: Email, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'E-mail order details to the sales department after order placement', option_comment: '' }] }
@@ -40,11 +38,11 @@ XLite\Model\Config:
   - { name: location_address, category: Company, type: text, orderby: 390, translations: [{ code: en, option_name: 'Street address', option_comment: '' }] }
   - { name: location_country, category: Company, type: country, orderby: 400, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
   - { name: location_state, category: Company, type: state, orderby: 410, translations: [{ code: en, option_name: State, option_comment: '' }] }
-  - { name: location_custom_state, category: Company, type: text, orderby: 415, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
+  - { name: location_custom_state, category: Company, type: text, orderby: 415, translations: [{ code: en, option_name: 'Another state (specify)', option_comment: '' }] }
   - { name: location_city, category: Company, type: text, orderby: 420, translations: [{ code: en, option_name: City, option_comment: '' }] }
   - { name: location_zipcode, category: Company, type: text, orderby: 430, translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
   - { name: company_phone, category: Company, type: XLite\View\FormField\Input\Text\Phone, orderby: 440, translations: [{ code: en, option_name: Phone, option_comment: '' }] }
-  - { name: login_lifetime, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 450, value: 3, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Days to store last login data', option_comment: '' }] }
+  - { name: login_lifetime, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 450, value: 3, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Number of days to store the last login data', option_comment: '' }] }
   - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Clear cart on customer logoff', option_comment: '' }] }
   - { name: maximal_order_amount, category: General, type: XLite\View\FormField\Input\Text\Float, orderby: 290, value: 99999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Maximum allowed order total', option_comment: '' }] }
   - { name: minimal_order_amount, category: General, type: XLite\View\FormField\Input\Text\Float, orderby: 280, value: '0', widgetParameters: { min: 0 }, translations: [{ code: en, option_name: 'Minimum allowed order total', option_comment: '' }] }
@@ -55,9 +53,9 @@ XLite\Model\Config:
   - { name: products_per_page, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 250, value: 10, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per category listing page', option_comment: '' }] }
   - { name: products_per_page_admin, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 410, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per page', option_comment: '' }] }
   - { name: proxy, category: Security, type: text, orderby: 25, translations: [{ code: en, option_name: 'HTTPS proxy', option_comment: '' }] }
-  - { name: recent_orders, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 440, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Amount of orders in the recent orders list', option_comment: '' }] }
+  - { name: recent_orders, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 440, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'The number of orders in the recent order list', option_comment: '' }] }
   - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product', option_comment: '' }] }
-  - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to temporary close the shop', option_comment: '' }] }
+  - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to close the shop temporarily', option_comment: '' }] }
   - { name: show_thumbnails, category: General, type: checkbox, orderby: 230, value: Y, translations: [{ code: en, option_name: 'Show thumbnails in product list', option_comment: '' }] }
   - { name: site_administrator, category: Company, type: XLite\View\FormField\Input\Text\Email, orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail', option_comment: '' }] }
   - { name: smtp_password, category: Email, type: text, orderby: 160, translations: [{ code: en, option_name: Password, option_comment: '' }] }
@@ -86,7 +84,7 @@ XLite\Model\Config:
   - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line', option_comment: '' }] }
   - { name: anonymous_country, category: Shipping, type: country, orderby: 50, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
   - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State, option_comment: '' }] }
-  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
+  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Another state (specify)', option_comment: '' }] }
   - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City, option_comment: '' }] }
   - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
   - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime', option_comment: '' }] }
@@ -314,11 +312,7 @@ XLite\Model\LanguageLabel:
   - { name: 'The text label has not been deleted: it has been either not found or not specified', translations: [{ code: en, label: 'The text label has not been deleted: it has been either not found or not specified' }] }
   - { name: 'The text label has not been added, because its name has not been specified', translations: [{ code: en, label: 'The text label has not been added, because its name has not been specified' }] }
   - { name: 'The text label has not been added, because such a text label already exists', translations: [{ code: en, label: 'The text label has not been added, because such a text label already exists' }] }
-  - { name: 'The text label has not been added, because its translation for the default application language has not been specified', translations: [{ code: en, label: 'The text label has not been added, because its translation for the default application language has not been specified' }] }
-  - { name: 'The text label has not been added, because its translation for the default interface language has not been specified', translations: [{ code: en, label: 'The text label has not been added, because its translation for the default interface language has not been specified' }] }
   - { name: 'The text label has been added successfully', translations: [{ code: en, label: 'The text label has been added successfully' }] }
-  - { name: 'The text label has not been modified, because its translation for the default application language has not been specified', translations: [{ code: en, label: 'The text label has not been modified, because its translation for the default application language has not been specified' }] }
-  - { name: 'The text label has not been modified, because its translation for the default interface language has not been specified', translations: [{ code: en, label: 'The text label has not been modified, because its translation for the default interface language has not been specified' }] }
   - { name: 'The text label has been modified successfully', translations: [{ code: en, label: 'The text label has been modified successfully' }] }
   - { name: 'The edited language has not been found', translations: [{ code: en, label: 'The edited language has not been found' }] }
   - { name: 'The name of the edited language in the default application language has not been specified', translations: [{ code: en, label: 'The name of the edited language in the default application language has not been specified' }] }
@@ -333,15 +327,15 @@ XLite\Model\LanguageLabel:
   - { name: 'No other languages defined', translations: [{ code: en, label: 'No other languages defined' }] }
   - { name: 'Add new label', translations: [{ code: en, label: 'Add new label' }] }
   - { name: 'Add language', translations: [{ code: en, label: 'Add language' }] }
-  - { name: 'N items', translations: [{ code: en, label: '{{n}} items' }] }
+  - { name: 'N items total', translations: [{ code: en, label: '{{n}} items total' }] }
   - { name: 'Select language to edit', translations: [{ code: en, label: 'Select language to edit' }] }
   - { name: 'Add new language', translations: [{ code: en, label: 'Add new language' }] }
   - { name: Save, translations: [{ code: en, label: Save }] }
-  - { name: 'Please specify text labels for each language', translations: [{ code: en, label: 'Please specify text labels for each language. If you do not specify a value for some language, the {{language}} label wiil be used.' }] }
+  - { name: 'Please specify text labels for each language', translations: [{ code: en, label: 'Please specify text labels for each language. If you do not specify a value for some language, the {{language}} label will be used.' }] }
   - { name: 'Label name', translations: [{ code: en, label: 'Label name' }] }
   - { name: required, translations: [{ code: en, label: required }] }
   - { name: 'Confirm deletion', translations: [{ code: en, label: 'Confirm deletion' }] }
-  - { name: 'You are going to delete X language', translations: [{ code: en, label: 'You are going to delete {{language}} language. This operation is irreversable. Are you sure you want to continue?' }] }
+  - { name: 'You are going to delete the X language', translations: [{ code: en, label: 'You are going to delete the {{language}} language. This operation is irreversible. Are you sure you want to continue?' }] }
   - { name: Delete, translations: [{ code: en, label: Delete }] }
   - { name: Cancel, translations: [{ code: en, label: Cancel }] }
   - { name: 'X Language (Code: Y)', translations: [{ code: en, label: '{{language}} Language (Code: {{code}})' }] }
@@ -349,7 +343,6 @@ XLite\Model\LanguageLabel:
   - { name: 'Native language name', translations: [{ code: en, label: 'Native language name' }] }
   - { name: Disable, translations: [{ code: en, label: Disable }] }
   - { name: Enable, translations: [{ code: en, label: Enable }] }
-  - { name: 'Default for customer zone and can not disabled or deleted', translations: [{ code: en, label: 'Default for customer zone and can not disabled or deleted' }] }
   - { name: 'Set this language as default for customer zone', translations: [{ code: en, label: 'Set this language as default for customer zone' }] }
   - { name: 'Disabled language can not be set as default for customer zone', translations: [{ code: en, label: 'Disabled language can not be set as default for customer zone' }] }
   - { name: 'Delete Language', translations: [{ code: en, label: 'Delete Language' }] }
@@ -359,7 +352,6 @@ XLite\Model\LanguageLabel:
   - { name: 'The language is disabled', translations: [{ code: en, label: 'The language is <span>disabled</span>' }] }
   - { name: 'The module to uninstall has not been found', translations: [{ code: en, label: 'The module to uninstall has not been found' }] }
   - { name: 'The module has been uninstalled successfully', translations: [{ code: en, label: 'The module has been uninstalled successfully' }] }
-  - { name: 'The module has been partially uninstalled', translations: [{ code: en, label: 'The module has been partially uninstalled' }] }
   - { name: 'The X module has been installed successfully', translations: [{ code: en, label: 'The {{module}} module has been installed successfully' }] }
   - { name: 'The X module has been installed with errors: the DB has not been modified correctly', translations: [{ code: en, label: 'The {{module}} module has been installed with errors: the DB has not been modified correctly' }] }
   - { name: 'The X module has been installed incorrectly. Please see the logs for more information', translations: [{ code: en, label: 'The {{module}} module has been installed incorrectly. Please see the logs for more information' }] }
@@ -367,12 +359,11 @@ XLite\Model\LanguageLabel:
   - { name: 'The X module has been uninstalled in an abnormal way', translations: [{ code: en, label: 'The {{module}} module has been uninstalled in an abnormal way' }] }
   - { name: 'The modules have been updated', translations: [{ code: en, label: 'The modules have been updated' }] }
   - { name: 'The X module has been disabled in an abnormal way', translations: [{ code: en, label: 'The {{module}} module has been disabled in an abnormal way' }] }
-  - { name: 'Congratulations! Your order has been successfully placed', translations: [{ code: en, label: 'Congratulations! Your order has been successfully placed.<br />Thank you for using our store. An order notification has been sent to your e-mail address.<br />Your order will be processed according to the delivery details.' }] }
+  - { name: 'Congratulations! Your order has been placed successfully', translations: [{ code: en, label: 'Congratulations! Your order has been placed successfully.<br />Thank you for using our store. An order notification has been sent to your e-mail address.<br />Your order will be processed according to the delivery details.' }] }
   - { name: 'X items in bag', translations: [{ code: en, label: '{{count}} items in bag' }] }
   - { name: 'Other items', translations: [{ code: en, label: 'Other items' }] }
   - { name: 'The selected shipping method has been deleted successfully', translations: [{ code: en, label: 'The selected shipping method has been deleted successfully' }] }
   - { name: 'Shipping methods have been updated', translations: [{ code: en, label: 'Shipping methods have been updated' }] }
-  - { name: 'Shipping method has been added', translations: [{ code: en, label: 'Shipping methods has been added' }] }
   - { name: 'The selected zones have been deleted successfully', translations: [{ code: en, label: 'The selected zones have been deleted successfully' }] }
   - { name: 'Zone details have been updated successfully', translations: [{ code: en, label: 'Zone details have been updated successfully' }] }
   - { name: 'New zone has been created successfully', translations: [{ code: en, label: 'New zone has been created successfully' }] }
@@ -382,7 +373,7 @@ XLite\Model\LanguageLabel:
   - { name: 'X items', translations: [{ code: en, label: '{{count}} items' }] }
   - { name: '_X items_ in bag', translations: [{ code: en, label: '<a href="#">{{count}} items</a> in bag' }] }
   - { name: 'This email address is used for an existing account. Enter another email address or sign in', translations: [{ code: en, label: 'This email address is used for an existing account. Enter another email address or <a href="{{URL}}" class="log-in">sign in</a>' }] }
-  - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: en, label: 'This user names is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>' }] }
+  - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: en, label: 'This user name is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>' }] }
   - { name: 'I accept Terms and Conditions', translations: [{ code: en, label: 'I accept <a href="{{URL}}">Terms & Conditions</a>' }] }
   - { name: 'Place order X', translations: [{ code: en, label: 'Place order: {{total}}' }] }
   - { name: 'Enter a correct email', translations: [{ code: en, label: 'Enter a correct email' }] }
@@ -399,9 +390,9 @@ XLite\Model\LanguageLabel:
   - { name: 'The benchmark evaluates server environment', translations: [{ code: en, label: "The benchmark evaluates server environment, namely:<br />1. File subsystem - read and write speed.<br />2. Database server - computing speed, DB data read and write speed.<br />3. Computing power - speed of computing and exchanging data in the memory.<br /><span>The total test time is the sum of the times, taken by each of these tests.</span>" }] }
   - { name: 'Thank you for registering at LiteCommerce', translations: [{ code: en, label: 'Thank you for registering at {{LiteCommerce}}' }] }
   - { name: 'Thank you for using LiteCommerce services', translations: [{ code: en, label: 'Thank you for using {{LiteCommerce}} services' }] }
-  - { name: 'Your profile has been modified. You can check your account after you logging in to the site', translations: [{ code: en, label: 'Your profile has been modified. You can check your account after you logging in to the site at {{url}}' }] }
+  - { name: 'Your profile has been modified. You can check your account after you log in to the site', translations: [{ code: en, label: 'Your profile has been modified. You can check your account after you log in to the site at {{url}}' }] }
   - { name: 'The confirmation URL link was mailed to email', translations: [{ code: en, label: 'The confirmation URL link was mailed to {{email}}' }] }
-  - { name: 'The email with your account information was mailed to email', translations: [{ code: en, label: 'The email with your account information was mailed to {{email}}. We encourage you to authenticate again to verify the received data.' }] }
+  - { name: 'The email with your account information was mailed to email', translations: [{ code: en, label: 'The email with your account information was mailed to {{email}}. We encourage you to authenticate yourself again to verify the received data.' }] }
   - { name: 'Show filter options', translations: [{ code: en, label: 'Show filter options' }] }
   - { name: 'Customer note', translations: [{ code: en, label: 'Customer note' }] }
   - { name: 'Invoice X', translations: [{ code: en, label: 'Invoice #{{id}}' }] }
@@ -434,7 +425,7 @@ XLite\Model\LanguageLabel:
   - { name: 'per page', translations: [{ code: en, label: 'per page' }] }
   - { name: 'X orders', translations: [{ code: en, label: '<span>{{count}}</span> orders' }] }
   - { name: 'Logged in!', translations: [{ code: en, label: 'Logged in!' }] }
-  - { name: 'Logoff', translations: [{ code: en, label: 'Logoff' }] }
+  - { name: 'Log off', translations: [{ code: en, label: 'Log off' }] }
   - { name: 'Account settings', translations: [{ code: en, label: 'Account settings' }] }
   - { name: 'User X is logged in', translations: [{ code: en, label: 'User <strong>{{login}}</strong> is logged in.' }] }
   - { name: 'X products found', translations: [{ code: en, label: '{{count}} products found' }] }
@@ -454,7 +445,7 @@ XLite\Model\LanguageLabel:
   - { name: 'X minutes', translations: [{ code: en, label: '{{minutes}} minute(s)' }] }
   - { name: 'X seconds', translations: [{ code: en, label: '{{seconds}} second(s)' }] }
   - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: en, label: 'Importing will overwrite the existing product information. This operation connot be undone.' }] }
-  - { name: 'To get the format of the import data, you can export your products to a file.', translations: [{ code: en, label: 'To get the format of the import data, you can <a href="{{url}}">export your products</a> to a file and them review the format of that file.' }] }
+  - { name: 'To get the format of the import data you can export your products to a file', translations: [{ code: en, label: 'To get the format of the import data you can <a href="{{url}}">export your products</a> to a file and then review the format of that file.' }] }
   - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: en, label: 'Depending on the size of your data file, importing may take some time.' }] }
   - { name: 'Occurred X add product events and Y update product events', translations: [{ code: en, label: 'Occurred {{new}} add product events and {{old}} update product events.' }] }
   - { name: 'Occurred X add product events', translations: [{ code: en, label: 'Occurred {{new}} add product events.' }] }
@@ -463,26 +454,26 @@ XLite\Model\LanguageLabel:
   - { name: 'The string is different from that of the title number of columns - X instead of Y', translations: [{ code: en, label: 'The string is different from that of the title number of columns - {{wrong}} instead of {{right}}' }] }
   - { name: 'Required field X is not defined or empty', translations: [{ code: en, label: "Required field '{{name}}' is not defined or empty. The product was not created" }] }
   - { name: 'X image unable to load', translations: [{ code: en, label: '{{url}} image unable to load' }] }
-  - { name: 'During the import was recorded X errors. You can get them by downloading the log imports.', translations: [{ code: en, label: 'During the import was recorded {{count}} errors. You can get them by <a href="{{url}}">downloading</a> the log imports.' }] }
-  - { name: 'Some products could have been imported incorrectly', translations: [{ code: en, label: 'Some products could have been imported incorrectly. Please check your catalog. Find the ID of the products that could have been imported incorrectly in the import log file available at the above link.' }] }
+  - { name: 'During the import was recorded X errors. You can get them by downloading the log files.', translations: [{ code: en, label: 'During the import was recorded {{count}} errors. You can get them by <a href="{{url}}">downloading</a> the log files.' }] }
+  - { name: 'Some products could have been imported incorrectly', translations: [{ code: en, label: 'Some products could have been imported incorrectly. Please check your catalog. Find the ID\'s of such products in the import log file available at the above link.' }] }
   - { name: 'Order #X, Y', translations: [{ code: en, label: 'Order #{{id}}, {{date}}' }] }
   - { name: 'Order X', translations: [{ code: en, label: 'Order #{{id}}' }] }
   - { name: 'The X field is empty', translations: [{ code: en, label: 'The {{name}} field is empty' }] }
-  - { name: 'The value of X field must be greater than Y', translations: [{ code: en, label: 'The value of {{name}} field must be greater than {{min}}' }] }
-  - { name: 'The value of X field must be greater less Y', translations: [{ code: en, label: 'The value of {{name}} field must be less than {{max}}' }] }
-  - { name: 'The value of X has an incorrect format', translations: [{ code: en, label: 'The value of {{name}} has an incorrect format' }] }
-  - { name: 'The value of X should not be longer than Y', translations: [{ code: en, label: 'The value of {{name}} should not be longer than {{max}}' }] }
+  - { name: 'The value of the X field must be greater than Y', translations: [{ code: en, label: 'The value of the {{name}} field must be greater than {{min}}' }] }
+  - { name: 'The value of the X field must be less than Y', translations: [{ code: en, label: 'The value of the {{name}} field must be less than {{max}}' }] }
+  - { name: 'The value of the X field has an incorrect format', translations: [{ code: en, label: 'The value of the {{name}} field has an incorrect format' }] }
+  - { name: 'The value of the X field should not be longer than Y', translations: [{ code: en, label: 'The value of the {{name}} field should not be longer than {{max}}' }] }
   - { name: 'Trying to access the shop at X', translations: [{ code: en, label: 'Trying to access the shop at <a href="{{url}}">{{url}}</a> ...' }] }
-  - { name: 'To fix this problem, do the following: 3 points', translations: [{ code: en, label: 'To fix this problem, do the following: <ul><li>make sure that your hosting service provider has HTTPS protocol enabled;</li><li>verify your HTTPS settings ("https_host" parameter in the "etc/config.php" file must be valid);</li><li>reload this page.</li></ul>' }] }
+  - { name: 'To fix this problem, do the following: 3 points', translations: [{ code: en, label: 'To fix this problem take the following steps: <ul><li>make sure that the HTTPS protocol is enabled by your hosting service provider;</li><li>verify your HTTPS settings ("https_host" parameter in the "etc/config.php" file must be valid);</li><li>reload this page.</li></ul>' }] }
   - { name: 'You can upload the database data directly from your local computer', translations: [{ code: en, label: 'You can upload the database data directly from your local computer by clicking on the "Browse" button, choosing an SQL dump file and clicking on the "Upload and restore" button.  While this method is more convenient, it has a file size limitation of {{N}}.' }] }
-  - { name: 'Alternatively, upload file sqldump.sql.php to the var/backup/ sub-directory click on the "Restore from server" button', translations: [{ code: en, label: 'Alternatively, upload the file named sqldump.sql.php to the var/backup/ sub-directory of your LiteCommerce installation on the web server and click on the "Restore from server" button. After the restore you might want to delete the file from the server by clicking on the "Delete SQL file" button above.' }] }
-  - { name: 'To restore the images which are stored in the file system, you have to copy them from the archive to LiteCommerce catalog', translations: [{ code: en, label: 'To restore the images which are stored in the file system, you have to copy them from the archive to LiteCommerce catalog, taking into consideration the catalog structure.' }] }
+  - { name: 'Alternatively, upload file sqldump.sql.php to the var/backup/ sub-directory click on the "Restore from server" button', translations: [{ code: en, label: 'Alternatively, upload the file named sqldump.sql.php to the var/backup/ sub-directory of your LiteCommerce installation on the web server and click on the "Restore from server" button. After the restoration you might want to delete the file from the server by clicking on the "Delete SQL file" button above.' }] }
+  - { name: 'To restore the images stored in the file system you have to copy them from the archive to the LiteCommerce catalog', translations: [{ code: en, label: 'To restore the images stored in the file system you have to copy them from the archive to the LiteCommerce catalog, taking into consideration the catalog structure.' }] }
   - { name: 'Maximum size of the file to upload is N', translations: [{ code: en, label: 'Maximum size of the file to upload is {{N}}.' }] }
-  - { name: 'Unable to install module X because some modules which it depends on, have not been installed or activated yet', translations: [{ code: en, label: 'Unable to install module &quot;{{X}}&quot; because some modules which it depends on, have not been installed or activated yet.' }] }
+  - { name: 'Unable to install module X because some modules, which it depends on, have not been installed or activated yet', translations: [{ code: en, label: 'Unable to install module &quot;{{X}}&quot; because some modules, which it depends on, have not been installed or activated yet.' }] }
   - { name: 'cannot set X permissions', translations: [{ code: en, label: 'cannot set {{X}} permissions' }] }
-  - { name: 'incorrect owner for X directory', translations: [{ code: en, label: 'incorrect owner for {{X}} directory' }] }
+  - { name: 'Incorrect owner of X directory', translations: [{ code: en, label: 'Incorrect owner of {{X}} directory' }] }
   - { name: 'Cannot set X permissions for subdirectories:', translations: [{ code: en, label: 'Cannot set {{X}} permissions for subdirectories:' }] }
-  - { name: 'incorrect owner for X file', translations: [{ code: en, label: 'incorrect owner for {{X}} file' }] }
+  - { name: 'Incorrect owner of X file', translations: [{ code: en, label: 'Incorrect owner of {{X}} file' }] }
   - { name: 'Flat shipping charge per X ordered (per Y)', translations: [{ code: en, label: 'Flat shipping charge per {{X}} ordered (per {{Y}})' }] }
   - { name: 'SHIPPING = flat + ITEMS*per_item + WEIGHT*per_weight + SUBTOTAL*(% of subtotal)/100;', translations: [{ code: en, label: 'SHIPPING = flat + ITEMS*per_item + WEIGHT*per_{{X}} + SUBTOTAL*(% of subtotal)/100;' }] }
   - { name: 'SHIPPING = raw on-line_rate + flat + ITEMS*per_item + WEIGHT*per_weight + SUBTOTAL*(% of subtotal)/100;', translations: [{ code: en, label: 'SHIPPING = raw on-line_rate + flat + ITEMS*per_item + WEIGHT*per_{{X}} + SUBTOTAL*(% of subtotal)/100;' }] }
@@ -493,6 +484,7 @@ XLite\Model\LanguageLabel:
   - { name: 'X product(s) has been created', translations: [{ code: en, label: '{{count}} product(s) has been created' }] }
   - { name: 'X entities has been removed', translations: [{ code: en, label: '{{count}} entities has been removed' }] }
   - { name: 'X entities has been created', translations: [{ code: en, label: '{{count}} entities has been created' }] }
+  - { name: 'Select a country or a state from a list, specify the zone', translations: [{ code: en, label: 'Select a country or a state from a list, specify the zone where the country or state should be listed and click on the "Apply" button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
@@ -1148,3 +1140,7 @@ XLite\Model\Task:
   - { owner: 'XLite\Core\Task\Probe' }
 XLite\Model\Role:
   - { code: administrator, translations: [{ code: en, name: Administrator }], permissions: [ { code: root access, translations: [{ code: en, name: Root access }] } ] }
+XLite\Model\Role\Permission:
+  - { code: manage catalog, translations: [{ code: en, name: Manage catalog }] }
+  - { code: manage users, translations: [{ code: en, name: Manage users }] }
+  - { code: manage orders, translations: [{ code: en, name: Manage orders }] }

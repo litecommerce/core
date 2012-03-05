@@ -11,4 +11,4 @@
  *}
 
 {column.name}
-{displayInheritedViewListContent(getCellListNamePart(#head#,column),_ARRAY_(#column#^column))}
+<list type="inherited" name="{getCellListNamePart(#head#,column)}" column="{column}" />

@@ -87,7 +87,7 @@ class Float extends \XLite\Core\Validator\Scalar
     public function validate($data)
     {
         if (!is_numeric($data)) {
-            throw $this->throwError('Not a numeric');
+            throw $this->throwError('Not numeric');
         }
 
         $data = $this->sanitize($data);

@@ -13,7 +13,7 @@
 <head><title>{t(#Your profile modified#)}</title></head>
 <body>
 
-<p>{t(#Your profile has been modified. You can check your account after you logging in to the site#,_ARRAY_(#url#^buildFullURL()))}</p>
+<p>{t(#Your profile has been modified. You can check your account after you log in to the site#,_ARRAY_(#url#^buildFullURL()))}</p>
 
 <p>{signature:h}</p>
 

@@ -10,14 +10,14 @@
  * @since     1.0.0
  *}
 <div class="table-label {getFieldId()}-label">
-  <label for="{getFieldId()}">{getParam(#label#)}:</label>
+  <label for="{getFieldId()}">{t(getParam(#label#))}:</label>
 </div>
 <div class="star">
   {if:getParam(#required#)}*{else:}&nbsp;{end:}
 </div>
 <div class="table-value {getFieldId()}-value">
   <widget template="{getDir()}/{getFieldTemplate()}" />
-  <div class="form-field-comment {getFieldId()}-comment">{getParam(#comment#):r}</div>
+  <div class="form-field-comment {getFieldId()}-comment">{t(getParam(#comment#)):r}</div>
   <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
 </div>
  <div class="clear"></div>

@@ -9,12 +9,13 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.12
  *}
+
 <div class="sitemap">
   <p class="url">{t(#XML sitemap URL: X#,_ARRAY_(#url#^getSitemapURL())):h}</p>
 
   <widget class="\XLite\Module\CDev\XMLSitemap\View\Form\Sitemap" name="form" />
 
-  <p>{t(#Mark, what search engines you want to inform about the structure of your site using the site map#)}</p>
+  <p>{t(#Mark, the search engines you want to inform of the structure of your site using the site map#)}</p>
 
   <ul class="engines">
     <li FOREACH="getEngines(),key,engine">

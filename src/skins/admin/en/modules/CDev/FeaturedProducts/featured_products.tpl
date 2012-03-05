@@ -17,8 +17,8 @@
 
       <tr>
         <th style="width:30px">{t(#Delete#)}</th>
-        <th style="width:30px">{t(#Pos.#)}</th>
-        <th>Title</th>
+        <th style="width:30px">{t(#Pos#)}.</th>
+        <th>{t(#Title#)}</th>
       </tr>
 
       <tr FOREACH="featuredProductsList,idx,featuredProduct" class="{getRowClass(idx,##,#highlight#)}">
@@ -26,7 +26,7 @@
         <td align="center"><input type="text" size="4" name="orderbys[{featuredProduct.id}]" value="{featuredProduct.order_by}" /></td>
         <td class="table-label">
           <a href="{buildUrl(#product#,##,_ARRAY_(#id#^featuredProduct.product.product_id))}">{featuredProduct.product.name:h}</a>
-          <span IF="{!featuredProduct.product.enabled}" color="red">&nbsp;&nbsp;&nbsp;(not available for sale)</span>
+          <span IF="{!featuredProduct.product.enabled}" color="red">&nbsp;&nbsp;&nbsp;({t(#not available for sale#)})</span>
         </td>
       </tr>
 

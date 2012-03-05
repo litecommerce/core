@@ -8,6 +8,8 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="menus", weight="60")
+ *
+ * @ListChild (list="menus", weight="700")
  *}
-<widget class="\XLite\View\TopMenu\Node" list="maintenance" title="{t(#Maintenance#)}" className="hl" linkTarget="db_backup" />
+
+<widget class="\XLite\View\TopMenu\Node" list="maintenance" title="Maintenance" className="hl" linkTarget="db_backup" />

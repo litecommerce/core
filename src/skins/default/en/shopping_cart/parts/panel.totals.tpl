@@ -11,5 +11,5 @@
  * @ListChild (list="cart.panel", weight="10")
  *}
 <ul class="totals">
-  {displayViewListContent(#cart.panel.totals#)}
+  <list name="cart.panel.totals" />
 </ul>

@@ -98,4 +98,32 @@ class TopLinks extends \XLite\View\AView
     {
         return true;
     }
+
+    /**
+     * Check ACL permissions for Login history link
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkLoginHistoryACL()
+    {
+        $auth = \XLite\Core\Auth::getInstance();
+
+        return $auth->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS)
+            || $auth->isPermissionAllowed('manage users');
+    }
+
+    /**
+     * Check ACL permissions for Common links
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkCommonACL()
+    {
+        return \XLite\Core\Auth::getInstance()->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS);
+    }
+
 }

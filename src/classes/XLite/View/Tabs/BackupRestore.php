@@ -28,7 +28,7 @@
 namespace XLite\View\Tabs;
 
 /**
- * Tabs related to Backup/restore section
+ * Tabs related to Backup/Restore section
  *
  * @see   ____class_see____
  * @since 1.0.0
@@ -38,7 +38,7 @@ namespace XLite\View\Tabs;
 class BackupRestore extends \XLite\View\Tabs\ATabs
 {
     /**
-     * Description of tabs related to Backup/restore section and their targets
+     * Description of tabs related to Backup/Restore section and their targets
      *
      * @var   array
      * @see   ____var_see____
@@ -46,7 +46,7 @@ class BackupRestore extends \XLite\View\Tabs\ATabs
      */
     protected $tabs = array(
         'db_backup' => array(
-            'title'    => 'Backup database',
+            'title'    => 'Back up database',
             'template' => 'db/backup.tpl',
         ),
         'db_restore' => array(

@@ -44,7 +44,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
     const P_YEAR   = 'year';
     const P_ALL    = 'all';
 
-
     /**
      * Statistics data
      *
@@ -53,7 +52,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * @since  1.0.0
      */
     protected $stats = null;
-
 
     /**
      * Return the current page title (for the content area)
@@ -64,7 +62,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return static::t('Statistics');
+        return 'Statistics';
     }
 
     /**
@@ -76,7 +74,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      */
     public function getStats()
     {
-        if (is_null($this->stats)) {
+        if (!isset($this->stats)) {
             $this->stats = $this->initStats();
         }
 
@@ -124,9 +122,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      */
     public function getColumnTitle($column)
     {
-        $titles = $this->getColumnTitles();
-
-        return !isset($titles[$column]) ?: $titles[$column];
+        return \Includes\Utils\ArrayManager::getIndex($this->getColumnTitles(), $column);
     }
 
     /**
@@ -140,11 +136,8 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      */
     public function getRowTitle($row)
     {
-        $titles = $this->getRowTitles();
-
-        return !isset($titles[$row]) ?: $titles[$row];
+        return \Includes\Utils\ArrayManager::getIndex($this->getRowTitles(), $row);
     }
-
 
     // {{{ Common functions
 
@@ -246,9 +239,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
         return null;
     }
 
-
     // }}}
-
 
     // {{{ Time intervals operations
 

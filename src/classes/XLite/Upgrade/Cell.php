@@ -50,7 +50,6 @@ class Cell extends \XLite\Base\Singleton
      */
     const FREE_SPACE_RESERVE = 5000000;
 
-
     /**
      * List of cell entries
      *

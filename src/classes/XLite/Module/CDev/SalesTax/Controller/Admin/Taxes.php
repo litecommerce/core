@@ -40,7 +40,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      */
     const PAGE_SALES_TAX = 'salesTax';
 
-
     /**
      * Get pages sections
      *
@@ -51,7 +50,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
     public function getPages()
     {
         $list = parent::getPages();
-
         $list[self::PAGE_SALES_TAX] = 'Sales tax';
 
         return $list;
@@ -67,7 +65,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
     public function getPageTemplates()
     {
         $list = parent::getPageTemplates();
-
         $list[self::PAGE_SALES_TAX] = 'modules/CDev/SalesTax/edit.tpl';
 
         return $list;
@@ -119,7 +116,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
         $rates = \XLite\Core\Request::getInstance()->rates;
         if (is_array($rates)) {
             foreach ($rates as $rateId => $data) {
-
                 $rate = null;
 
                 if ('%' == $rateId) {
@@ -146,7 +142,6 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
                 }
 
                 if ($rate) {
-
                     $productClass = $data['productClass']
                         ? \XLite\Core\Database::getRepo('XLite\Model\ProductClass')->find($data['productClass'])
                         : null;
@@ -173,7 +168,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
             }
         }
 
-        \XLite\Core\TopMessage::addInfo('Tax rates has been updated successfully');
+        \XLite\Core\TopMessage::addInfo('Tax rates have been updated successfully');
         \Xlite\Core\Database::getEM()->flush();
     }
 
@@ -234,4 +229,3 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
 
     // }}}
 }
-

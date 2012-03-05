@@ -10,8 +10,8 @@
  * @since     1.0.0
  *}
 
-<h1 class="title" id="page-title" IF="isTitleVisible()&getTitle()">{getTitle():h}</h1>
+<h1 class="title" id="page-title" IF="isTitleVisible()&getTitle()">{t(getTitle())}</h1>
 
 <widget template="center_top.tpl" />
 
-{displayViewListContent(#center.bottom#)}
+<list name="center.bottom" />

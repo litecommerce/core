@@ -80,7 +80,24 @@ class TopMenu extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
+
         $list[] = $this->getDir() . '/menu.css';
+
+        return $list;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = $this->getDir() . '/controller.js';
 
         return $list;
     }
@@ -119,7 +136,7 @@ class TopMenu extends \XLite\View\AView
      */
     protected function isVisible()
     {
-        return \XLite\Core\Auth::getInstance()->isLogged();
+        return parent::isVisible() && \XLite\Core\Auth::getInstance()->isLogged();
     }
 
     /**

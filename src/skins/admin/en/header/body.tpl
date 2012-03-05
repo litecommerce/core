@@ -11,5 +11,5 @@
  *}
 
 <head profile="http://www.w3.org/1999/xhtml/vocab">
-  {displayViewListContent(#head#)}
+  <list name="head" />
 </head>

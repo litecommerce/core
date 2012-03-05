@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 <select name="{getParam(#field#)}">
-  <option value="" selected="{isSelected(##,value)}">{t(#Any membership#)}</option>
+  <option value="" selected="{isSelected(##,value)}">{t(#Any membership level#)}</option>
   <option FOREACH="getMemberships(),membership" value="{membership.membership_id}" selected="{isSelectedMembership(membership)}">{membership.getName()}</option>
 </select>

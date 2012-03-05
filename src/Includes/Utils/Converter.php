@@ -274,7 +274,7 @@ abstract class Converter extends \Includes\Utils\AUtils
         }
 
         // Do not display numbers after decimal point if size is in kilobytes.
-        // When size is greater then display one number after decimal point.
+        // When size is greater than display one number after decimal point.
         $result = array(number_format($size, $multiplier > 1 ? 1 : 0), static::$byteMultipliers[$multiplier]);
 
         return isset($separator) ? implode($separator, $result) : $result;

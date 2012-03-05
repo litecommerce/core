@@ -44,19 +44,19 @@ class RecentLogin extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return static::t('Login history');
+        return 'Login history';
     }
-
 
     /**
-     * Common method to determine current location
+     * Check ACL permissions
      *
-     * @return string
+     * @return boolean
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.17
      */
-    protected function getLocation()
+    public function checkACL()
     {
-        return static::t('Login history');
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage users');
     }
+
 }

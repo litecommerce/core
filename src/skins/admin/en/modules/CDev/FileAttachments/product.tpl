@@ -27,11 +27,11 @@
       <li FOREACH="product.getAttachments(),index,attachment" class="{getItemClass(attachment)}">
 
         <div class="row">
-          {displayViewListContent(#product.attachments.row#,_ARRAY_(#attachment#^attachment))}
+          <list name="product.attachments.row" attachment="{attachment}" />
         </div>
 
         <div class="info" style="display: none;">
-          {displayViewListContent(#product.attachments.properties#,_ARRAY_(#attachment#^attachment))}
+          <list name="product.attachments.properties" attachment="{attachment}" />
         </div>
 
       </li>

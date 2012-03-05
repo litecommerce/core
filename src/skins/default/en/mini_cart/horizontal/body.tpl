@@ -11,8 +11,8 @@
  *}
 <div id="lc-minicart-{getParam(%static::PARAM_DISPLAY_MODE%)}" class="lc-minicart lc-minicart-{getParam(%static::PARAM_DISPLAY_MODE%)} {getCollapsed()}">
 
-  {displayViewListContent(#minicart.horizontal.children#)}
+  <list name="minicart.horizontal.children" />
 
 </div>
 
-{displayViewListContent(#minicart.horizontal.base#)}
+<list name="minicart.horizontal.base" />

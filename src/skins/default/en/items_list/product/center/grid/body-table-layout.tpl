@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-{displayViewListContent(#itemsList.product.cart#)}
+<list name="itemsList.product.cart" />
 
 <div class="products">
 
@@ -20,7 +20,7 @@
         {foreach:row,idx,product}
           <td IF="product" class="product-cell hproduct">
             <div class="{getProductCellClass(product)}">
-              {displayInheritedViewListContent(#info#,_ARRAY_(#product#^product))}
+              <list name="info" type="inherited" product="{product}" />
             </div>
           </td>
           <td IF="!product">&nbsp;</td>

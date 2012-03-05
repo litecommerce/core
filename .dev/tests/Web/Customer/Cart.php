@@ -286,7 +286,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             "//div[@id='cart']"
             . "/div[@id='cart-right']"
             . "/ul[@class='totals']"
-            . "/li[@class='order-modifier shipping-modifier']"
+            . "/li[contains(@class, 'SHIPPING-modifier')]"
             . "/strong[text()='Shipping cost:']",
             'check Shipping cost'
         );
@@ -467,7 +467,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             "//h3[text()='Choose shipping method']"
         );
 
-        $name = $this->getJSExpression('jQuery(".estimate-methods form ul li:eq(1) label ").html()');
+        $name = $this->getJSExpression('jQuery(".estimate-methods form ul li:eq(1) label ").text()');
 
         $this->check(
             "//div[@class='estimate-methods']"

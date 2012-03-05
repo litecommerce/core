@@ -14,19 +14,19 @@
  *}
 
 <table class="downloaded-components">
-  <tr class="header">{displayInheritedViewListContent(#sections.table.header#)}</tr>
+  <tr class="header"><list name="sections.table.header" type="inherited" /></tr>
   {foreach:getUpgradeEntries(),entry}
 
   <tr IF="!entry.getErrorMessages()" class="module-entry">
-    {displayInheritedViewListContent(#sections.table.columns#,_ARRAY_(#entry#^entry))}
+    <list name="sections.table.columns" type="inherited" entry="{entry}" />
   </tr>
 
   <tr IF="entry.getErrorMessages()" class="module-entry module-errors">
-    {displayInheritedViewListContent(#sections.table.columns#,_ARRAY_(#entry#^entry))}
+    <list name="sections.table.columns" type="inherited" entry="{entry}" />
   </tr>
 
   <tr IF="entry.getErrorMessages()" class="error-messages">
-    {displayInheritedViewListContent(#sections.table.columns.error#,_ARRAY_(#messages#^entry.getErrorMessages()))}
+    <list name="sections.table.columns.error" type="inherited" messages="{entry.getErrorMessages()}" />
   </tr>
   {end:}
 </table>

@@ -11,5 +11,5 @@
  *}
 
 <head {foreach:getHeadAttributes(),k,v} {k}="{v}"{end:}>
-  {displayViewListContent(#head#)}
+  <list name="head" />
 </head>

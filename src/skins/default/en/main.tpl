@@ -14,6 +14,6 @@
 
 <div id="page-wrapper">
   <div id="page">
-    {displayViewListContent(#layout.main#)}
+    <list name="layout.main" />
   </div>
 </div>

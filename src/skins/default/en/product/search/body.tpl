@@ -25,7 +25,7 @@
         </td>
 
         <td>
-          <widget class="\XLite\View\Button\Submit" label="Search products" style="search-form-submit" />
+          <widget class="\XLite\View\Button\Submit" label="Search for products" style="search-form-submit" />
         </td>
 
       </tr>

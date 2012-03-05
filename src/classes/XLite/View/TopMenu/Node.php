@@ -47,7 +47,6 @@ class Node extends \XLite\View\TopMenu
     const PARAM_EXTRA      = 'extra';
     const PARAM_PERMISSION = 'permission';
 
-
     /**
      * Return widget default template
      *
@@ -72,27 +71,13 @@ class Node extends \XLite\View\TopMenu
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_TITLE  => new \XLite\Model\WidgetParam\String(
-                'Name', ''
-            ),
-            self::PARAM_LINK   => new \XLite\Model\WidgetParam\String(
-                'Link', ''
-            ),
-            self::PARAM_LIST   => new \XLite\Model\WidgetParam\String(
-                'List', ''
-            ),
-            self::PARAM_CLASS  => new \XLite\Model\WidgetParam\String(
-                'Class name', ''
-            ),
-            self::PARAM_TARGET => new \XLite\Model\WidgetParam\String(
-                'Target', ''
-            ),
-            self::PARAM_EXTRA  => new \XLite\Model\WidgetParam\Collection(
-                'Additional request params', array()
-            ),
-            self::PARAM_PERMISSION => new \XLite\Model\WidgetParam\String(
-                'Permission', ''
-            ),
+            self::PARAM_TITLE  => new \XLite\Model\WidgetParam\String('Name', ''),
+            self::PARAM_LINK   => new \XLite\Model\WidgetParam\String('Link', ''),
+            self::PARAM_LIST   => new \XLite\Model\WidgetParam\String('List', ''),
+            self::PARAM_CLASS  => new \XLite\Model\WidgetParam\String('Class name', ''),
+            self::PARAM_TARGET => new \XLite\Model\WidgetParam\String('Target', ''),
+            self::PARAM_EXTRA  => new \XLite\Model\WidgetParam\Collection('Additional request params', array()),
+            self::PARAM_PERMISSION => new \XLite\Model\WidgetParam\String('Permission', ''),
         );
     }
 
@@ -131,7 +116,7 @@ class Node extends \XLite\View\TopMenu
      */
     protected function getListName()
     {
-        return 'menu.' . $this->getParam(self::PARAM_LIST);
+        return 'menu.' . $this->getParam(static::PARAM_LIST);
     }
 
     /**
@@ -145,11 +130,11 @@ class Node extends \XLite\View\TopMenu
     {
         $link = '#';
 
-        if ('' !== $this->getParam(self::PARAM_LINK)) {
-            $link = $this->getParam(self::PARAM_LINK);
+        if ('' !== $this->getParam(static::PARAM_LINK)) {
+            $link = $this->getParam(static::PARAM_LINK);
 
-        } elseif ('' !== $this->getParam(self::PARAM_TARGET)) {
-            $link = $this->buildURL($this->getParam(self::PARAM_TARGET), '', $this->getParam(self::PARAM_EXTRA));
+        } elseif ('' !== $this->getNodeTarget()) {
+            $link = $this->buildURL($this->getNodeTarget(), '', $this->getParam(static::PARAM_EXTRA));
         }
 
         return $link;
@@ -165,11 +150,8 @@ class Node extends \XLite\View\TopMenu
      */
     protected function isCurrentPageLink()
     {
-        return '' !== $this->getParam(self::PARAM_TARGET)
-            && in_array(
-                \XLite\Core\Request::getInstance()->target,
-                $this->getRelatedTargets($this->getParam(self::PARAM_TARGET))
-            );
+        return '' !== $this->getNodeTarget() 
+            && in_array($this->getTarget(), $this->getRelatedTargets($this->getNodeTarget()));
     }
 
     /**
@@ -181,7 +163,7 @@ class Node extends \XLite\View\TopMenu
      */
     protected function getCSSClass()
     {
-        $class = $this->getParam(self::PARAM_CLASS);
+        $class = $this->getParam(static::PARAM_CLASS);
 
         if ($this->isCurrentPageLink()) {
             $class .= ' active';
@@ -200,7 +182,6 @@ class Node extends \XLite\View\TopMenu
     protected function isVisible()
     {
         return parent::isVisible()
-            && $this->checkACL()
             && !$this->isEmptyChildsList();
     }
 
@@ -217,8 +198,35 @@ class Node extends \XLite\View\TopMenu
 
         $additionalPermission = $this->getParam(self::PARAM_PERMISSION);
 
-        return $auth->isPermissionAllowed('root access')
-            || ($additionalPermission && $auth->isPermissionAllowed($additionalPermission));
+        return parent::checkACL()
+            && (
+                $this->getParam(self::PARAM_LIST)
+                || $auth->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS)
+                || ($additionalPermission && $auth->isPermissionAllowed($additionalPermission))
+            );
     }
 
+    /*
+     * Alias
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function getTitle()
+    {
+        return $this->getParam(static::PARAM_TITLE);
+    }
+
+    /**
+     * Alias
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function getNodeTarget()
+    {
+        return $this->getParam(static::PARAM_TARGET);
+    }
 }

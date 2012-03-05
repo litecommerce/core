@@ -45,30 +45,6 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
     protected $params = array('target', 'page');
 
     /**
-     * Get pages sections
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPages()
-    {
-        return array();
-    }
-
-    /**
-     * Get pages templates
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPageTemplates()
-    {
-        return array();
-    }
-
-    /**
      * Return the current page title (for the content area)
      *
      * @return string
@@ -76,18 +52,6 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
      * @since  1.0.0
      */
     public function getTitle()
-    {
-        return 'Taxes';
-    }
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
     {
         return 'Taxes';
     }

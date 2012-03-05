@@ -13,7 +13,7 @@
   <h2>{t(#Confirm deletion#)}</h2>
   <div class="body">
 
-    {t(#You are going to delete X language#,_ARRAY_(#language#^confirmLanguage.name)):h}
+    {t(#You are going to delete the X language#,_ARRAY_(#language#^confirmLanguage.name)):h}
 
     <div class="row">
       <img IF="confirmLanguage.flagURL" src="{confirmLanguage.flagURL}" alt="" class="flag" />

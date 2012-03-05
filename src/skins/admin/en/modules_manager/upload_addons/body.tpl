@@ -9,7 +9,7 @@
  *}
 
 <div class="upload-addons-text">
-{t(#If you have a plugin in a .tar format, you may install it by uploading it here.#)}
+  {t(#If you have a plugin in the .tar format, you can install it by uploading it here#)}.
 </div>
 
 <div class="upload-addon-form">

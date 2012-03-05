@@ -118,11 +118,13 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         // Main block
         $this->assertElementPresent(
-            "//form[@class='product-details validationEngine']"
-            . "/div[@class='product-details-info']"
-            . "/span[@class='price product-price' and text()='" . $this->formatPrice($product->getPrice()) . "']",
-            'check price'
-        );
+            "//form[contains(@class, 'product-details')]"
+                . "/div[contains(@class, 'product-details-info')]"
+                . "//span[contains(@class,'product-price')]",'check price container');
+
+        $price = $this->getJSExpression('jQuery(".product-details-info span.product-price").text()');
+        $this->assertEquals($this->formatPrice($product->getPrice()), $price, 'check valid price');
+
         $this->assertElementPresent(
             "css=form.product-details .product-details-info .product-buttons input.quantity.wheel-ctrl[type=text][value=1]",
             'check quantity input box'
@@ -138,7 +140,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             'check Add to bag button'
         );
 
-        $facebookSelector = "css=form.product-details .product-details-info .facebook script";
+        $facebookSelector = "css=form.product-details .product-details-info .share .fb-like";
         $this->assertElementPresent(
             $facebookSelector,
             "check Facebook widget"
@@ -156,7 +158,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         $this->assertEquals(
-            1,
+            2,
             $this->getJSExpression('jQuery(".product-details .tabs ul li a").length'),
             'check tabs length'
         );

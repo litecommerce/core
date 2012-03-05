@@ -14,5 +14,5 @@
  * @ListChild (list="itemsList.product.big_thumbnails.customer.info", weight="100")
  *}
 <div class="product-photo">
-  {displayNestedViewListContent(#photo#,_ARRAY_(#product#^product))}
+  <list name="photo" type="nested" product="{product}" />
 </div>

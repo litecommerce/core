@@ -11,5 +11,5 @@
  * @ListChild (list="cart.item", weight="30")
  *}
 <td class="item-info">
-  {displayViewListContent(#cart.item.info#,_ARRAY_(#item#^item))}
+  <list name="cart.item.info" item="{item}" />
 </td>

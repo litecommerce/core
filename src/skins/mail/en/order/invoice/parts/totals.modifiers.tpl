@@ -8,9 +8,11 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.8
+ *
  * @ListChild (list="invoice.base.totals", weight="200")
  *}
-<tr FOREACH="order.getSurchargeTotals(),type,surcharge" class="{type}-modifier">
+
+<tr FOREACH="order.getSurchargeTotals(),sType,surcharge" class="{sType}-modifier">
   {if:surcharge.count=#1#}
     <td class="title">{surcharge.lastName}:</td>
   {else:}
@@ -22,6 +24,6 @@
     {else:}
       {t(#n/a#)}
     {end:}
-    {displayViewListContent(#invoice.base.totals.modifier#,_ARRAY_(#surcharge#^surcharge,#type#^type,#order#^order))}
+    <list name="invoice.base.totals.modifier" surcharge="{surcharge}" sType="{sType}" order="{order}" />
   </td>
 </tr>

@@ -13,11 +13,11 @@
 <table class="data-table items-list">
 
   <tr>
-    {displayInheritedViewListContent(#header#,_ARRAY_(#product#^product))}
+    <list name="header" type="inherited" product="{product}" />
   </tr>
 
   <tr FOREACH="getPageData(),idx,product" class="{getRowClass(idx,##,#highlight#)}">
-    {displayInheritedViewListContent(#columns#,_ARRAY_(#product#^product))}
+    <list name="columns" type="inherited" product="{product}" />
   </tr>
 
   <tr FOREACH="getViewList(#itemsList.product.modify.common.admin.items#),w">

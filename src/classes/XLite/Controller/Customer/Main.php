@@ -45,35 +45,6 @@ class Main extends \XLite\Controller\Customer\Category
     protected $params = array('target');
 
     /**
-     * handleRequest
-     *
-     * :FIXME: is it really needed?
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function handleRequest()
-    {
-        if (\XLite\Core\Config::getInstance()->General->add_on_mode) {
-
-            // switch to cart in Add-on mode
-            $addOnModePage = \XLite\Core\Config::getInstance()->General->add_on_mode_page;
-
-            if ('cart.php' !== $addOnModePage) {
-                $this->redirect($addOnModePage);
-
-            } else {
-                parent::handleRequest();
-            }
-
-        } else {
-            parent::handleRequest();
-        }
-    }
-
-
-    /**
      * Preprocessor for no-action ren
      *
      * @return void

@@ -47,7 +47,6 @@ class Sitemap extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'sitemap';
 
         return $result;
@@ -63,7 +62,6 @@ class Sitemap extends \XLite\View\Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/style.css';
 
         return $list;
@@ -93,4 +91,3 @@ class Sitemap extends \XLite\View\Dialog
         return \XLite::getInstance()->getShopURL(\XLite\Core\Converter::buildURL('sitemap', '', array(), 'cart.php'));
     }
 }
-

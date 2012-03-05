@@ -57,7 +57,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
         static::getClassesTree()->walkThrough(array($this, 'changeControllerClass'));
     }
 
-
     // ------------------------------ Auxiliary methods -
 
     /**

@@ -14,7 +14,7 @@
   <a href="#">{t(#Account#)}</a>
   <div>
     <ul>
-      {displayViewListContent(#top_links.account#)}
+      <list name="top_links.account" />
     </ul>
   </div>
 </li>

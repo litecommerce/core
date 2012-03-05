@@ -490,6 +490,65 @@ div.page-tabs ul li.tab-current a
   border-bottom: 1px solid #fff;
 }
 
+/* Tabs: Second level */
+
+.tabs2-tabbed-content-wrapper {
+  margin-top: -30px;
+}
+
+div.tabs2-page-tabs
+{
+  height: 50px;
+  border-bottom: 1px solid #cadce8;
+  background: url(../images/tabs2_panel_bg.png) repeat-x scroll 0 4px;
+}
+
+div.tabs2-page-tabs ul
+{
+  padding:0;
+  margin:0;
+  list-style:none;
+  margin-left: 10px;
+}
+
+div.tabs2-page-tabs ul li
+{
+  float:left;
+}
+
+div.tabs2-page-tabs ul li
+{
+  display: block;
+  float: left;
+  margin-right: 10px;
+  padding: 18px 15px;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+div.tabs2-page-tabs ul li .footer
+{
+  background: url(../images/tabs2_arrow_up.png) no-repeat scroll 50% 10px;
+  height: 17px;
+  width: 100%;
+}
+
+div.tabs2-page-tabs ul li div
+{
+  text-decoration: none;
+  font-size: 14px;
+}
+
+div.tabs2-page-tabs ul li a {
+  text-decoration: underline;
+}
+
+div.tabs2-page-tabs ul li.tab-current
+{
+}
+
+
 /* Data table */
 
 table.data-table th,
@@ -1505,12 +1564,12 @@ div.model-form-buttons {
   clear: left;
 }
 
-ul.default-table {
+.model-properties ul.table {
   list-style: none;
   min-width: 450px;
 }
 
-ul.default-table li {
+.model-properties ul.table li {
   background-image: none;
   float: left;
   clear: left;
@@ -1520,7 +1579,7 @@ div.table-label {
   float: left;
 }
 
-ul.default-table div.table-label label {
+.model-properties ul.table div.table-label label {
   width: 80px;
 }
 

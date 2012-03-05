@@ -38,6 +38,8 @@ namespace XLite\Model\Role;
  */
 class Permission extends \XLite\Model\Base\I18n
 {
+    const ROOT_ACCESS = 'root access';
+
     /**
      * ID 
      * 
