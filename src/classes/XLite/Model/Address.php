@@ -75,30 +75,6 @@ class Address extends \XLite\Model\Base\Address
     protected $is_shipping = false;
 
     /**
-     * State
-     *
-     * @var   \XLite\Model\State
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @ManyToOne  (targetEntity="XLite\Model\State", cascade={"merge","detach"})
-     * @JoinColumn (name="state_id", referencedColumnName="state_id")
-     */
-    protected $state;
-
-    /**
-     * Country
-     *
-     * @var   \XLite\Model\Country
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @ManyToOne  (targetEntity="XLite\Model\Country", cascade={"merge","detach"})
-     * @JoinColumn (name="country_code", referencedColumnName="code")
-     */
-    protected $country;
-
-    /**
      * Profile: many-to-one relation with profile entity
      *
      * @var   \Doctrine\Common\Collections\ArrayCollection
@@ -207,7 +183,7 @@ class Address extends \XLite\Model\Base\Address
     {
         $result = parent::checkAddress();
 
-        $sameAddress = \XLite\Core\Database::getRepo('XLite\Model\Address')->findSameAddress($this);
+        $sameAddress = $this->getRepository()->findSameAddress($this);
 
         if ($sameAddress) {
             \XLite\Core\TopMessage::addWarning('Address was not saved as other address with specified fields is already exists.');

@@ -128,6 +128,18 @@ abstract class Address extends \XLite\Model\AEntity
     protected $city = '';
 
     /**
+     * State
+     *
+     * @var   \XLite\Model\State
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\State", cascade={"merge","detach"})
+     * @JoinColumn (name="state_id", referencedColumnName="state_id")
+     */
+    protected $state;
+
+    /**
      * Custom state
      *
      * @var   string
@@ -137,6 +149,18 @@ abstract class Address extends \XLite\Model\AEntity
      * @Column (type="string", length="255")
      */
     protected $custom_state = '';
+
+    /**
+     * Country
+     *
+     * @var   \XLite\Model\Country
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Country", cascade={"merge","detach"})
+     * @JoinColumn (name="country_code", referencedColumnName="code")
+     */
+    protected $country;
 
     /**
      * Zip/postal code
