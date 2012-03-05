@@ -14,8 +14,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Standards_AbstractScopeSniff not found');
+if (class_exists('XLite_AbstractScopeSniff', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class XLite_AbstractScopeSniff not found');
 }
 
 /**

@@ -183,7 +183,9 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	 * @since   1.0.0
 	 */
 	protected function checkClassPath(array $words, $namespace) {
-		$paths = explode(PATH_SEPARATOR, XP_CLASSES_ROOT);
+		$paths = defined('XP_CLASSES_ROOT') ? explode(PATH_SEPARATOR, constant('XP_CLASSES_ROOT')) : array();
+        $paths[] = __DIR__ . '/../../../src/classes';
+        $paths[] = __DIR__ . '/../../../src';
 		
 		$fn = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $words) . '.php';
 		$avail_paths = array();
