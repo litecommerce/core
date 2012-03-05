@@ -68,7 +68,7 @@ class XLite_Sniffs_CSS_ColourDefinitionSniff extends XLite_ReqCodesSniff
 
         $expected = strtoupper($colour);
         if ($colour !== $expected) {
-            $error = "ëÏÄÙ CSS Ã×ÅÔÁ ÄÏÖÎÙ ÂÙÔØ ÏÂßÑ×ÌÅÎÙ × ×ÅÒÈÎÅÍ ÒÅÇÉÓÔÒÅ. ïÖÉÄÁÅÍÏÅ ÚÎÁÞÅÎÉÅ: $expected, ÎÁÊÄÅÎÏ $colour";
+            $error = "ÐšÐ¾Ð´Ñ‹ CSS Ñ†Ð²ÐµÑ‚Ð° Ð´Ð¾Ð¶Ð½Ñ‹ Ð±Ñ‹Ñ‚ÑŒ Ð¾Ð±ÑŠÑÐ²Ð»ÐµÐ½Ñ‹ Ð² Ð²ÐµÑ€Ñ…Ð½ÐµÐ¼ Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ðµ. ÐžÐ¶Ð¸Ð´Ð°ÐµÐ¼Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: $expected, Ð½Ð°Ð¹Ð´ÐµÐ½Ð¾ $colour";
             $phpcsFile->addError($this->getReqPrefix('?') . $error, $stackPtr);
         }
 
@@ -79,7 +79,7 @@ class XLite_Sniffs_CSS_ColourDefinitionSniff extends XLite_ReqCodesSniff
 
         if ($colour{1} === $colour{2} && $colour{3} === $colour{4} && $colour{5} === $colour{6}) {
             $expected = '#'.$colour{1}.$colour{3}.$colour{5};
-            $error    = "ëÏÄÙ CSS Ã×ÅÔÁ, ÐÒÉ ×ÏÚÍÏÖÎÏÓÔÉ, ÄÏÌÖÎÙ ÂÙÔØ ÏÂßÑ×ÌÅÎÙ × ÓÏËÒÁÝÅÎÎÏÍ ×ÉÄÅ. ïÖÉÄÁÅÍÏÅ ÚÎÁÞÅÎÉÅ: $expected, ÎÁÊÄÅÎÏ $colour";
+            $error    = "ÐšÐ¾Ð´Ñ‹ CSS Ñ†Ð²ÐµÑ‚Ð°, Ð¿Ñ€Ð¸ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ÑÑ‚Ð¸, Ð´Ð¾Ð»Ð¶Ð½Ñ‹ Ð±Ñ‹Ñ‚ÑŒ Ð¾Ð±ÑŠÑÐ²Ð»ÐµÐ½Ñ‹ Ð² ÑÐ¾ÐºÑ€Ð°Ñ‰ÐµÐ½Ð½Ð¾Ð¼ Ð²Ð¸Ð´Ðµ. ÐžÐ¶Ð¸Ð´Ð°ÐµÐ¼Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ: $expected, Ð½Ð°Ð¹Ð´ÐµÐ½Ð¾ $colour";
             $phpcsFile->addError($this->getReqPrefix('?') . $error, $stackPtr);
         }
 

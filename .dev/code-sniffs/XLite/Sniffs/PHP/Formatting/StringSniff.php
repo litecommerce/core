@@ -80,7 +80,7 @@ class XLite_Sniffs_PHP_Formatting_StringSniff extends XLite_ReqCodesSniff
 
 			if (strlen($str) > 0 && !$isProperty) {
 	            $phpcsFile->addError(
-    	            $this->getReqPrefix('REQ.PHP.2.9.1') . 'Строка обрамляется одинарными кавычками',
+    	            $this->getReqPrefix('REQ.PHP.2.9.1') . 'п║я┌я─п╬п╨п╟ п╬п╠я─п╟п╪п╩я▐п╣я┌я│я▐ п╬п╢п╦п╫п╟я─п╫я▀п╪п╦ п╨п╟п╡я▀я┤п╨п╟п╪п╦',
         	        $stackPtr
             	);
 			}

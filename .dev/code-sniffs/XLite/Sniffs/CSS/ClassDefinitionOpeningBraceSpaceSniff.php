@@ -78,11 +78,11 @@ class XLite_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff extends XLite_ReqCo
 
 				$nextDefinition = $phpcsFile->findNext(T_STRING, ($i+1));
 				if ($nextDefinition !== false && $tokens[$nextDefinition]['line'] === $tokens[$i]['line']) {
-		       		$error = 'åÓÌÉ × ÓÅÌÅËÔÏÒÅ ÎÅÓËÏÌØËÏ ËÌÁÓÓÏ×, ÉÄÕÝÉÈ ÞÅÒÅÚ ÚÁÐÑÔÕÀ, ËÁÖÄÙÊ ÐÏÄÓÅÌÅËÔÏÒ ÎÁÈÏÄÉÔÓÑ ÎÁ ÓÌÅÄÕÀÝÅÊ ÓÔÒÏÞËÅ';
+		       		$error = 'Ð•ÑÐ»Ð¸ Ð² ÑÐµÐ»ÐµÐºÑ‚Ð¾Ñ€Ðµ Ð½ÐµÑÐºÐ¾Ð»ÑŒÐºÐ¾ ÐºÐ»Ð°ÑÑÐ¾Ð², Ð¸Ð´ÑƒÑ‰Ð¸Ñ… Ñ‡ÐµÑ€ÐµÐ· Ð·Ð°Ð¿ÑÑ‚ÑƒÑŽ, ÐºÐ°Ð¶Ð´Ñ‹Ð¹ Ð¿Ð¾Ð´ÑÐµÐ»ÐµÐºÑ‚Ð¾Ñ€ Ð½Ð°Ñ…Ð¾Ð´Ð¸Ñ‚ÑÑ Ð½Ð° ÑÐ»ÐµÐ´ÑƒÑŽÑ‰ÐµÐ¹ ÑÑ‚Ñ€Ð¾Ñ‡ÐºÐµ';
     	    		$phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.6') . $error, $stackPtr);
 				}
 				if ($lastSelectorLine === $currentLine) {
-	            	$error = 'åÓÌÉ × ÓÅÌÅËÔÏÒÅ ÎÅÓËÏÌØËÏ ËÌÁÓÓÏ×, ÉÄÕÝÉÈ ÞÅÒÅÚ ÚÁÐÑÔÕÀ, ÏÔËÒÙ×ÁÀÝÁÑ ÆÉÇÕÒÎÁÑ ÓËÏÂËÁ ÎÁÈÏÄÉÔÓÑ ÎÁ ÓÌÅÄÕÀÝÅÊ ÓÔÒÏÞËÅ';
+	            	$error = 'Ð•ÑÐ»Ð¸ Ð² ÑÐµÐ»ÐµÐºÑ‚Ð¾Ñ€Ðµ Ð½ÐµÑÐºÐ¾Ð»ÑŒÐºÐ¾ ÐºÐ»Ð°ÑÑÐ¾Ð², Ð¸Ð´ÑƒÑ‰Ð¸Ñ… Ñ‡ÐµÑ€ÐµÐ· Ð·Ð°Ð¿ÑÑ‚ÑƒÑŽ, Ð¾Ñ‚ÐºÑ€Ñ‹Ð²Ð°ÑŽÑ‰Ð°Ñ Ñ„Ð¸Ð³ÑƒÑ€Ð½Ð°Ñ ÑÐºÐ¾Ð±ÐºÐ° Ð½Ð°Ñ…Ð¾Ð´Ð¸Ñ‚ÑÑ Ð½Ð° ÑÐ»ÐµÐ´ÑƒÑŽÑ‰ÐµÐ¹ ÑÑ‚Ñ€Ð¾Ñ‡ÐºÐµ';
 	    	        $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.7') . $error, $stackPtr);
 				}
 			}
@@ -93,17 +93,17 @@ class XLite_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff extends XLite_ReqCo
 		}//end for
 
 		if ($lastSelectorLine !== $currentLine && $tokens[$stackPtr]['column'] > 1) {
-           	$error = 'ïÔËÒÙ×ÁÀÝÁÑ ÆÉÇÕÒÎÁÑ ÓËÏÂËÁ, ÎÁÞÉÎÁÀÝÁÑÓÑ Ó ÏÔÄÅÌØÎÏÊ ÓÔÒÏËÉ, ÄÏÌÖÎÁ ÂÙÔØ ×ÙÒÏ×ÎÅÎÁ ÐÏ ÎÁÚ×ÁÎÉÀ ËÌÁÓÓÁ';
+           	$error = 'ÐžÑ‚ÐºÑ€Ñ‹Ð²Ð°ÑŽÑ‰Ð°Ñ Ñ„Ð¸Ð³ÑƒÑ€Ð½Ð°Ñ ÑÐºÐ¾Ð±ÐºÐ°, Ð½Ð°Ñ‡Ð¸Ð½Ð°ÑŽÑ‰Ð°ÑÑÑ Ñ Ð¾Ñ‚Ð´ÐµÐ»ÑŒÐ½Ð¾Ð¹ ÑÑ‚Ñ€Ð¾ÐºÐ¸, Ð´Ð¾Ð»Ð¶Ð½Ð° Ð±Ñ‹Ñ‚ÑŒ Ð²Ñ‹Ñ€Ð¾Ð²Ð½ÐµÐ½Ð° Ð¿Ð¾ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸ÑŽ ÐºÐ»Ð°ÑÑÐ°';
            	$phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.8') . $error, $stackPtr);
 		}
 
 		if ($multipleClasses === false) {
 			if ($lastSelectorLine !== $currentLine) {
-            	$error = 'åÓÌÉ × ÓÅÌÅËÔÏÒÅ ÏÄÉÎ ËÌÁÓÓ, ÏÔËÒÙ×ÁÀÝÁÑ ÆÉÇÕÒÎÁÑ ÓËÏÂËÁ ÎÁ ÔÏÊ ÖÅ ÓÔÒÏËÅ ÞÔÏ É ÓÅÌÅËÔÏÒ.';
+            	$error = 'Ð•ÑÐ»Ð¸ Ð² ÑÐµÐ»ÐµÐºÑ‚Ð¾Ñ€Ðµ Ð¾Ð´Ð¸Ð½ ÐºÐ»Ð°ÑÑ, Ð¾Ñ‚ÐºÑ€Ñ‹Ð²Ð°ÑŽÑ‰Ð°Ñ Ñ„Ð¸Ð³ÑƒÑ€Ð½Ð°Ñ ÑÐºÐ¾Ð±ÐºÐ° Ð½Ð° Ñ‚Ð¾Ð¹ Ð¶Ðµ ÑÑ‚Ñ€Ð¾ÐºÐµ Ñ‡Ñ‚Ð¾ Ð¸ ÑÐµÐ»ÐµÐºÑ‚Ð¾Ñ€.';
             	$phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.5') . $error, $stackPtr);
 
 			} else if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
-            	$error = 'åÓÌÉ × ÓÅÌÅËÔÏÒÅ ÏÄÉÎ ËÌÁÓÓ ÄÏÌÖÅÎ ÂÙÔØ 1 ÐÒÏÂÅÌ ÍÅÖÄÕ ÎÁÚ×ÁÎÉÅÍ ËÌÁÓÓÁ É ÏÔËÒÙ×ÁÀÝÅÊ ÆÉÇÕÒÎÏÊ ÓËÏÂËÏÊ.';
+            	$error = 'Ð•ÑÐ»Ð¸ Ð² ÑÐµÐ»ÐµÐºÑ‚Ð¾Ñ€Ðµ Ð¾Ð´Ð¸Ð½ ÐºÐ»Ð°ÑÑ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð±Ñ‹Ñ‚ÑŒ 1 Ð¿Ñ€Ð¾Ð±ÐµÐ» Ð¼ÐµÐ¶Ð´Ñƒ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸ÐµÐ¼ ÐºÐ»Ð°ÑÑÐ° Ð¸ Ð¾Ñ‚ÐºÑ€Ñ‹Ð²Ð°ÑŽÑ‰ÐµÐ¹ Ñ„Ð¸Ð³ÑƒÑ€Ð½Ð¾Ð¹ ÑÐºÐ¾Ð±ÐºÐ¾Ð¹.';
 	            $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.4') . $error, $stackPtr);
 
 			} else {
@@ -114,7 +114,7 @@ class XLite_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff extends XLite_ReqCo
             	        $length = 'tab';
                 	}
 
-	            	$error = 'åÓÌÉ × ÓÅÌÅËÔÏÒÅ ÏÄÉÎ ËÌÁÓÓ ÄÏÌÖÅÎ ÂÙÔØ 1 ÐÒÏÂÅÌ ÍÅÖÄÕ ÎÁÚ×ÁÎÉÅÍ ËÌÁÓÓÁ É ÏÔËÒÙ×ÁÀÝÅÊ ÆÉÇÕÒÎÏÊ ÓËÏÂËÏÊ. îÁÊÄÅÎÏ: ' . $length;
+	            	$error = 'Ð•ÑÐ»Ð¸ Ð² ÑÐµÐ»ÐµÐºÑ‚Ð¾Ñ€Ðµ Ð¾Ð´Ð¸Ð½ ÐºÐ»Ð°ÑÑ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð±Ñ‹Ñ‚ÑŒ 1 Ð¿Ñ€Ð¾Ð±ÐµÐ» Ð¼ÐµÐ¶Ð´Ñƒ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸ÐµÐ¼ ÐºÐ»Ð°ÑÑÐ° Ð¸ Ð¾Ñ‚ÐºÑ€Ñ‹Ð²Ð°ÑŽÑ‰ÐµÐ¹ Ñ„Ð¸Ð³ÑƒÑ€Ð½Ð¾Ð¹ ÑÐºÐ¾Ð±ÐºÐ¾Ð¹. ÐÐ°Ð¹Ð´ÐµÐ½Ð¾: ' . $length;
     	            $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.4') . $error, $stackPtr);
         	    }
 			}
@@ -124,9 +124,9 @@ class XLite_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff extends XLite_ReqCo
         if ($next !== false && $tokens[$next]['line'] !== ($tokens[$stackPtr]['line'] + 1)) {
             $num   = ($tokens[$next]['line'] - $tokens[$stackPtr]['line'] - 1);
 			if ($num > 0) {
-            	$error = "îÅÄÏÐÕÓÔÉÍÏ ÎÁÌÉÞÉÅ ÐÕÓÔÙÈ ÓÔÒÏË ÐÏÓÌÅ ÏÔËÒÙ×ÁÀÝÅÊ ÓËÏÂËÉ. îÁÊÄÅÎÏ $num ";
+            	$error = "ÐÐµÐ´Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ð¾ Ð½Ð°Ð»Ð¸Ñ‡Ð¸Ðµ Ð¿ÑƒÑÑ‚Ñ‹Ñ… ÑÑ‚Ñ€Ð¾Ðº Ð¿Ð¾ÑÐ»Ðµ Ð¾Ñ‚ÐºÑ€Ñ‹Ð²Ð°ÑŽÑ‰ÐµÐ¹ ÑÐºÐ¾Ð±ÐºÐ¸. ÐÐ°Ð¹Ð´ÐµÐ½Ð¾ $num ";
 			} else {
-	            $error = "ïÐÉÓÁÎÉÅ Ó×ÏÊÓÔ× ÄÏÌÖÎÏ ÎÁÞÉÎÁÔØÓÑ Ó ÎÏ×ÏÊ ÓÔÒÏËÉ ÐÏÓÌÅ ÆÉÇÕÒÎÏÊ ÓËÏÂËÉ";
+	            $error = "ÐžÐ¿Ð¸ÑÐ°Ð½Ð¸Ðµ ÑÐ²Ð¾Ð¹ÑÑ‚Ð² Ð´Ð¾Ð»Ð¶Ð½Ð¾ Ð½Ð°Ñ‡Ð¸Ð½Ð°Ñ‚ÑŒÑÑ Ñ Ð½Ð¾Ð²Ð¾Ð¹ ÑÑ‚Ñ€Ð¾ÐºÐ¸ Ð¿Ð¾ÑÐ»Ðµ Ñ„Ð¸Ð³ÑƒÑ€Ð½Ð¾Ð¹ ÑÐºÐ¾Ð±ÐºÐ¸";
 			}
             $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.8') . $error, $stackPtr);
         }
