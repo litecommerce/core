@@ -799,7 +799,9 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function rollbackModel()
     {
-        \XLite\Core\Database::getEM()->refresh($this->getModelObject());
+        if (\XLite\Core\Database::getEM()->contains($this->getModelObject())) {
+            \XLite\Core\Database::getEM()->refresh($this->getModelObject());
+        }
     }
 
     /**
