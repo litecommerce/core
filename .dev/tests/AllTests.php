@@ -158,7 +158,7 @@ if (!defined('ROOT_TEST_SUITE_NAME')) {
     define('ROOT_TEST_SUITE_NAME', 'LiteCommerce - AllTests');
 }
 
-ini_set('memory_limit', '900M');
+ini_set('memory_limit', '2048M');
 
 // PHPUnit classes
 define('PATH_TESTS', realpath(__DIR__));
@@ -239,6 +239,8 @@ if (!defined('INCLUDE_ONLY_TESTS') || !preg_match('/DEPLOY_/', constant('INCLUDE
     $cc->addDirectoryToWhitelist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes');
     $cc->removeDirectoryFromWhitelist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes'. LC_DS ."XLite". LC_DS . "Module");
     $cc->addDirectoryToWhitelist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes'. LC_DS ."XLite". LC_DS . "Module" .LC_DS . "CDev");
+    $cc->removeDirectoryFromWhitelist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes'. LC_DS ."XLite". LC_DS . "Module" .LC_DS . "CDev" . LC_DS . "View");
+    $cc->removeDirectoryFromWhitelist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes'. LC_DS ."XLite". LC_DS . "Module" .LC_DS . "CDev" . LC_DS . "Controller*");
     $cc->removeDirectoryFromWhitelist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes' . LC_DS . 'XLite' . LC_DS . 'Model' . LC_DS . 'Proxy');
 }
 
