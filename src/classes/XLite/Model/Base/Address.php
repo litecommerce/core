@@ -62,39 +62,6 @@ abstract class Address extends \XLite\Model\AEntity
     protected $address_type = 'R';
 
     /**
-     * Title
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="32")
-     */
-    protected $title = '';
-
-    /**
-     * First name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="128")
-     */
-    protected $firstname = '';
-
-    /**
-     * Last name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="128")
-     */
-    protected $lastname = '';
-
-    /**
      * Phone
      *
      * @var   string
@@ -183,8 +150,6 @@ abstract class Address extends \XLite\Model\AEntity
     public static function getAddressFields()
     {
         return array(
-            'firstname',
-            'lastname',
             'phone',
             'street',
             'city',
@@ -255,35 +220,6 @@ abstract class Address extends \XLite\Model\AEntity
             $this->setCustomState($state);
 
         }
-    }
-
-    /**
-     * Get full name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getName()
-    {
-        return trim($this->getFirstname() . ' ' . $this->getLastname());
-    }
-
-    /**
-     * Set full name
-     *
-     * @param string $value Full name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function setName($value)
-    {
-        $parts = array_map('trim', explode(' ', trim($value), 2));
-
-        $this->setFirstname($parts[0]);
-        $this->setLastname(isset($parts[1]) ? $parts[1] : '');
     }
 
     /**
