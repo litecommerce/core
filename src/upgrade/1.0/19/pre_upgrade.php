@@ -35,6 +35,7 @@ return function()
         'update' => array(
             'Put selected on sale' => 'Put up selected for sale',
 /* ----> */ 'N items' => array('N items total', array('{{n}} items' => '{{n}} items total')),
+/* ----> */ 'Some products could have been imported incorrectly' => array(null, array('Some products could have been imported incorrectly. Please check your catalog. Find the ID\\' => 'Some products could have been imported incorrectly. Please check your catalog. Find the ID\'s of such products in the import log file available at the above link.')),
         ),
         'delete' => array(
         ),

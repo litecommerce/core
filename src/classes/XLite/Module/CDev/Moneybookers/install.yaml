@@ -7,67 +7,69 @@
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
 # @since     1.0.0
+
 XLite\Model\Payment\Method:
-  - { service_name: Moneybookers.WLT, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Moneybookers Wallet' }] }
-  - { service_name: Moneybookers.ACC, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'All Card Types' }] }
-  - { service_name: Moneybookers.VSA, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Visa' }] }
-  - { service_name: Moneybookers.MSC, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'MasterCard' }] }
-  - { service_name: Moneybookers.VSD, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Visa Delta/Debit' }] }
-  - { service_name: Moneybookers.VSE, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Visa Electron' }] }
-  - { service_name: Moneybookers.MAE, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Maestro' }] }
-  - { service_name: Moneybookers.SLO, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Solo' }] }
-  - { service_name: Moneybookers.AMX, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'American Express' }] }
-  - { service_name: Moneybookers.DIN, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Diners' }] }
-  - { service_name: Moneybookers.JCB, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'JCB' }] }
-  - { service_name: Moneybookers.LSR, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Laser' }] }
-  - { service_name: Moneybookers.GCB, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Carte Bleue' }] }
-  - { service_name: Moneybookers.DNK, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Dankort' }] }
-  - { service_name: Moneybookers.PSP, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'PostePay' }] }
-  - { service_name: Moneybookers.CSI, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'CartaSi' }] }
-  - { service_name: Moneybookers.OBT, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Online Bank Transfer' }] }
-  - { service_name: Moneybookers.GIR, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Giropay' }] }
-  - { service_name: Moneybookers.DID, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Direct Debit / ELV' }] }
-  - { service_name: Moneybookers.SFT, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Sofortueberweisung' }] }
-  - { service_name: Moneybookers.ENT, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'eNETS' }] }
-  - { service_name: Moneybookers.EBT, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Nordea Solo' }] }
-  - { service_name: Moneybookers.SO, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Nordea Solo' }] }2
-  - { service_name: Moneybookers.IDL, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'iDEAL' }] }
-  - { service_name: Moneybookers.NPY, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'EPS (Netpay)' }] }
-  - { service_name: Moneybookers.PLI, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'POLi' }] }
-  - { service_name: Moneybookers.PWY, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'All Polish Banks' }] }
-  - { service_name: Moneybookers.PWY5, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'ING Bank Śląski' }] }
-  - { service_name: Moneybookers.PWY6, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'PKO BP (PKO Inteligo)' }] }
-  - { service_name: Moneybookers.PWY7, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Multibank (Multitransfer)' }] }
-  - { service_name: Moneybookers.PWY14, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Lukas Bank' }] }
-  - { service_name: Moneybookers.PWY15, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Bank BPH' }] }
-  - { service_name: Moneybookers.PWY17, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'InvestBank' }] }
-  - { service_name: Moneybookers.PWY18, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'PeKaO S.A.' }] }
-  - { service_name: Moneybookers.PWY19, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Citibank handlowy' }] }
-  - { service_name: Moneybookers.PWY20, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Bank Zachodni WBK (Przelew24)' }] }
-  - { service_name: Moneybookers.PWY21, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'BGŻ' }] }
-  - { service_name: Moneybookers.PWY22, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Millenium' }] }
-  - { service_name: Moneybookers.PWY25, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'mBank (mTransfer)' }] }
-  - { service_name: Moneybookers.PWY26, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Płacę z Inteligo' }] }
-  - { service_name: Moneybookers.PWY28, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Bank Ochrony Środowiska' }] }
-  - { service_name: Moneybookers.PWY32, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Nordea' }] }
-  - { service_name: Moneybookers.PWY33, class: Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers, translations: [{ code: en, name: 'Fortis Bank' }] }
+  - { service_name: 'Moneybookers.WLT', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Moneybookers Wallet' }] }
+  - { service_name: 'Moneybookers.ACC', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'All Card Types' }] }
+  - { service_name: 'Moneybookers.VSA', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Visa' }] }
+  - { service_name: 'Moneybookers.MSC', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'MasterCard' }] }
+  - { service_name: 'Moneybookers.VSD', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Visa Delta/Debit' }] }
+  - { service_name: 'Moneybookers.VSE', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Visa Electron' }] }
+  - { service_name: 'Moneybookers.MAE', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Maestro' }] }
+  - { service_name: 'Moneybookers.SLO', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Solo' }] }
+  - { service_name: 'Moneybookers.AMX', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'American Express' }] }
+  - { service_name: 'Moneybookers.DIN', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Diners' }] }
+  - { service_name: 'Moneybookers.JCB', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'JCB' }] }
+  - { service_name: 'Moneybookers.LSR', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Laser' }] }
+  - { service_name: 'Moneybookers.GCB', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Carte Bleue' }] }
+  - { service_name: 'Moneybookers.DNK', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Dankort' }] }
+  - { service_name: 'Moneybookers.PSP', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'PostePay' }] }
+  - { service_name: 'Moneybookers.CSI', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'CartaSi' }] }
+  - { service_name: 'Moneybookers.OBT', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Online Bank Transfer' }] }
+  - { service_name: 'Moneybookers.GIR', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Giropay' }] }
+  - { service_name: 'Moneybookers.DID', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Direct Debit / ELV' }] }
+  - { service_name: 'Moneybookers.SFT', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Sofortueberweisung' }] }
+  - { service_name: 'Moneybookers.ENT', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'eNETS' }] }
+  - { service_name: 'Moneybookers.EBT', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Nordea Solo' }] }
+  - { service_name: 'Moneybookers.SO', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Nordea Solo' }] }2
+  - { service_name: 'Moneybookers.IDL', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'iDEAL' }] }
+  - { service_name: 'Moneybookers.NPY', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'EPS (Netpay)' }] }
+  - { service_name: 'Moneybookers.PLI', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'POLi' }] }
+  - { service_name: 'Moneybookers.PWY', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'All Polish Banks' }] }
+  - { service_name: 'Moneybookers.PWY5', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'ING Bank Śląski' }] }
+  - { service_name: 'Moneybookers.PWY6', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'PKO BP (PKO Inteligo)' }] }
+  - { service_name: 'Moneybookers.PWY7', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Multibank (Multitransfer)' }] }
+  - { service_name: 'Moneybookers.PWY14', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Lukas Bank' }] }
+  - { service_name: 'Moneybookers.PWY15', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Bank BPH' }] }
+  - { service_name: 'Moneybookers.PWY17', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'InvestBank' }] }
+  - { service_name: 'Moneybookers.PWY18', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'PeKaO S.A.' }] }
+  - { service_name: 'Moneybookers.PWY19', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Citibank handlowy' }] }
+  - { service_name: 'Moneybookers.PWY20', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Bank Zachodni WBK (Przelew24)' }] }
+  - { service_name: 'Moneybookers.PWY21', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'BGŻ' }] }
+  - { service_name: 'Moneybookers.PWY22', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Millenium' }] }
+  - { service_name: 'Moneybookers.PWY25', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'mBank (mTransfer)' }] }
+  - { service_name: 'Moneybookers.PWY26', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Płacę z Inteligo' }] }
+  - { service_name: 'Moneybookers.PWY28', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Bank Ochrony Środowiska' }] }
+  - { service_name: 'Moneybookers.PWY32', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Nordea' }] }
+  - { service_name: 'Moneybookers.PWY33', class: 'Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers', translations: [{ code: en, name: 'Fortis Bank' }] }
+
 XLite\Model\Config:
   - name: email
-    category: CDev\Moneybookers
+    category: 'CDev\Moneybookers'
     type: text
     orderby: 100
     translations:
       - code: en
         option_name: "Merchant's moneybookers.com account"
   - name: logo_url
-    category: CDev\Moneybookers
-    type: XLite\View\FormField\Input\Text\URL
+    category: 'CDev\Moneybookers'
+    type: 'XLite\View\FormField\Input\Text\URL'
     orderby: 200
     translations:
       - code: en
         option_name: 'Company logo URL'
   - name: test
-    category: CDev\Moneybookers
+    category: 'CDev\Moneybookers'
     type: checkbox
     orderby: 300
     value: '0'
@@ -75,7 +77,7 @@ XLite\Model\Config:
       - code: en
         option_name: 'Test mode'
   - name: secret_word
-    category: CDev\Moneybookers
+    category: 'CDev\Moneybookers'
     type: text
     orderby: 400
     translations:
@@ -83,7 +85,7 @@ XLite\Model\Config:
         option_name: 'Secret word'
         option_comment: 'The uppercase MD5 value of the ASCII equivalent of the secret word submitted in the "Merchant Tools" section of the Merchant.s online Moneybookers account.'
   - name: prefix
-    category: CDev\Moneybookers
+    category: 'CDev\Moneybookers'
     type: text
     orderby: 500
     value: 'xlite'
@@ -91,8 +93,8 @@ XLite\Model\Config:
       - code: en
         option_name: 'Invoice number prefix'
   - name: id
-    category: CDev\Moneybookers
-    type: ''
+    category: 'CDev\Moneybookers'
+
 XLite\Model\LanguageLabel:
   - { name: "To have access to the International payment network of Moneybookers please register here for a free account if you don't have one yet.", translations: [{ code: en, label: "To have access to the International payment network of Moneybookers please register <a href=\"{{url}}\">here</a> for a free account if you don't have one yet." }] }
   - { name: "Moneybookers Quick Checkout enables you to take direct payment from credit cards, debit cards and over 60 other local payment options in over 200 countries as well as the Moneybookers eWallet.", translations: [{ code: en, label: "<strong>Moneybookers Quick Checkout</strong> enables you to take <strong>direct</strong> payment from credit cards, debit cards and over 60 othe local payment options in over 200 countries as well as the Moneybookers eWallet. The highly competitive rates for this service are published on the Moneybookers website at <a href=\"http://www.moneybookers.com/app/help.pl?s=m_fees\">www.moneybookers.com</a>" }] }

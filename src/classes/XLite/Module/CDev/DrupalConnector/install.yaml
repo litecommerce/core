@@ -8,12 +8,12 @@
 # @license   http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)
 # @link      http://www.litecommerce.com/
 # @since     1.0.0
+
 XLite\Model\Config:
   - name: drupal_root_url
     category: CDev\DrupalConnector
     type: XLite\View\FormField\Input\Text\URL
     orderby: 10
-    value: ''
     translations:
       - code: en
         option_name: Root URL of the Drupal installation
