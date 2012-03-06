@@ -111,6 +111,20 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
         'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'void', 'object', 'resource', 'callback',
     );
 
+    protected $modulesLCL = array(
+        'CDev/Coupons',
+        'CDev/Egoods',
+        'CDev/ProductAdvisor',
+        'CDev/VolumeDiscounts',
+        'CDev/Wholesale',
+    );
+
+    protected $modulesGPL = array(
+        'CDev/DrupalConnector',
+        'CDev/GoogleAnalytics',
+        'CDev/XMLSitemapDrupal',
+    );
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -658,17 +672,40 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
     protected function processLicense($errorPos)
     {
         $license = $this->commentParser->getLicense();
+        $error = null;
+
         if ($license !== null) {
+
             $value   = $license->getValue();
             $comment = $license->getComment();
-			$content = $value . ' ' . $comment;
+            $content = $value . ' ' . $comment;
+
 			if (empty($content)) {
                 $error = "Content missing for @license tag in " . $this->docBlock ." comment";
                 $this->currentFile->addError($this->getReqPrefix($this->reqCodeEmpty) . ' ' . $error, $errorPos);
 
-            } elseif ($content !== 'http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)') {
-                $error = 'Content of the @license tag must be in the form "http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement"';
-                $this->currentFile->addError($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'license')) . $error, $errorPos);
+            } else {
+
+                preg_match('/^.*\/(CDev\/[^\/]+)\/.*$/', $this->currentFile->getFilename(), $match);
+                $module = (isset($match[1]) ? $match[1] : null);
+
+                if (in_array($module, $this->modulesLCL)) {
+                    $error = $content != 'LiteCommerce Module License (Commercial EULA)'
+                        ? 'Content of the @license tag for module "' . $module . '" must be in the form "LiteCommerce Module License (Commercial EULA)"'
+                        : null;
+
+                } elseif (in_array($module, $this->modulesGPL)) {
+                    $error = $content != 'http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)'
+                        ? 'Content of the @license tag for module "' . $module . '" must be in the form "http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)"'
+                        : null;
+    
+                } elseif ($content != 'http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)') {
+                    $error = 'Content of the @license tag must be in the form "http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)"';
+                }
+
+                if ($error) {
+                    $this->currentFile->addError($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'license')) . $error, $errorPos);
+                }
 			}
         }
 
