@@ -28,12 +28,12 @@
 namespace XLite\View\FormField\Select;
 
 /**
- * Categories selector
+ * Category selector
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Categories extends \XLite\View\FormField\Select\Multiple
+class Category extends \XLite\View\FormField\Select\ASelect
 {
     const INDENT_STRING     = '-';
     const INDENT_MULTIPLIER = 3;
