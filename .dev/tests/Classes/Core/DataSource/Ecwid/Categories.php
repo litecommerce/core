@@ -24,6 +24,13 @@
 class XLite_Tests_Core_DataSource_Ecwid_Categories extends XLite_Tests_TestCase
 {
 
+    protected $requiredFields = array(
+        'id',
+        'name',
+        'url',
+        'description',
+    );
+
     /**
      * Test Ecwid categories collection iterator
      * 
@@ -46,6 +53,11 @@ class XLite_Tests_Core_DataSource_Ecwid_Categories extends XLite_Tests_TestCase
         $this->assertNotEmpty($categories->count());
 
         $this->assertTrue($categories->isValid());
+
+        $firstCat = $categories->current();
+        foreach ($this->requiredFields as $f) {
+            $this->assertNotEmpty($firstCat[$f]);
+        }
     }
 
 }

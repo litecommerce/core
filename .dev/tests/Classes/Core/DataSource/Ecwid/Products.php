@@ -24,6 +24,16 @@
 class XLite_Tests_Core_DataSource_Ecwid_Products extends XLite_Tests_TestCase
 {
 
+    protected $requiredFields = array(
+        'id',
+        'sku',
+        'name',
+        'price',
+        'url',
+        'description',
+        'categories',
+    );
+
     /**
      * Test Ecwid products collection iterator
      * 
@@ -46,6 +56,11 @@ class XLite_Tests_Core_DataSource_Ecwid_Products extends XLite_Tests_TestCase
         $this->assertNotEmpty($products->count());
 
         $this->assertTrue($products->isValid());
+
+        $firstProduct = $products->current();
+        foreach ($this->requiredFields as $f) {
+            $this->assertNotEmpty($firstProduct[$f]);
+        }
     }
 
 }

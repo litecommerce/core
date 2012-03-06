@@ -31,7 +31,7 @@ class XLite_Tests_Core_DataSource_Ecwid extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function testApiCall()
+    public function testCallApi()
     {
         $model = new \XLite\Model\DataSource();
         $model->setParameterValue('storeid', 1003);
@@ -41,7 +41,7 @@ class XLite_Tests_Core_DataSource_Ecwid extends XLite_Tests_TestCase
 
         $this->assertTrue($ecwid->isValid());
 
-        $result = $ecwid->apiCall('products');
+        $result = $ecwid->callApi('products');
 
         // Must be an array of products
         $this->assertInternalType('array', $result);
