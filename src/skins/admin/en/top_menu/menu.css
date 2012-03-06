@@ -141,7 +141,8 @@
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
-  width: 170px;
+  min-width: 170px;
+  white-space: nowrap;
   margin: 0;
 }
 
