@@ -21,7 +21,7 @@
         <property name="lcRoot" location="${installDir}/modules/lc_connector/litecommerce" />
         <property name="varRunClasses" value="${lcRoot}/var/run/classes" />
         <property name="buildTag" value="${label}" />
-        <property name="phakeDir" value="${buildDir}/.dev/tests/Amazon/Grid" />
+        <property name="phakeDir" value="${buildDir}/.dev/tests/Grid" />
         <property name="phake" value="${buildDir}/.dev/lib/phake/phake" />
     </target>
 
@@ -151,31 +151,17 @@
             </condition>
         </fail>
     </target>
-    <target name="prepare-phake">
+
+    <target name="run-phake">
         <copy todir="${buildDir}">
             <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
         </copy>
         <mkdir dir="${buildDir}/coverage" />
         <mkdir dir="${phakeDir}/logs" />
         <chmod perm="ugo+rx" file="${phake}" />
-    </target>
-
-    <target name="run-phake" depends="prepare-phake">
-        <property name="EC2_HOME" value="${EC2_DIR}/tools" />
-        <property name="EC2_PRIVATE_KEY" value="${EC2_DIR}/pk-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem" />
-        <property name="EC2_CERT" value="${EC2_DIR}/cert-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem" />
-        <property name="EC2_KEYPAIR" value="${EC2_DIR}/lc-test.pem" />
-        <property name="EC2_KEYPAIR_NAME" value="lc-test" />
-        <property environment="env"/>
         <exec executable="${phake}" dir="${phakeDir}"  failonerror="Off" resultproperty="phake_result">
             <arg value="${target}" />
-            <arg line="${userVars}" />
-            <env key="EC2_HOME" value="${EC2_HOME}" />
-            <env key="EC2_PRIVATE_KEY" value="${EC2_PRIVATE_KEY}" />
-            <env key="EC2_CERT" value="${EC2_CERT}" />
-            <env key="EC2_KEYPAIR" value="${EC2_KEYPAIR}" />
-            <env key="EC2_KEYPAIR_NAME" value="${EC2_KEYPAIR_NAME}" />
-            <env key="PATH" path="${env.PATH}:${EC2_HOME}/bin" />
+            <arg line="${userVars} ec2_dir=${EC2_DIR}" />
         </exec>
     </target>
 
