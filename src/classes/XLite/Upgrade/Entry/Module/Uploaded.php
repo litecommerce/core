@@ -36,6 +36,11 @@ namespace XLite\Upgrade\Entry\Module;
 class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
 {
     /**
+     * Default URL for module icon
+     */
+    const DEFAULT_ICON_URL = 'skins/admin/en/images/addon_default.png';
+
+    /**
      * Module metadata
      *
      * @var   array
@@ -71,15 +76,13 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     /**
      * Return icon URL
      *
-     * :TODO: actualize
-     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function getIconURL()
     {
-        return 'skins/admin/en/images/addon_default.png';
+        return $this->getMetadata('IconLink') ?: static::DEFAULT_ICON_URL;
     }
 
     /**

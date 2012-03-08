@@ -379,7 +379,7 @@ abstract class AEntry
     {
         $path = $this->getRepositoryPath();
 
-        return !empty($path) && \Includes\Utils\FileManager::isFile($path);
+        return !empty($path) && \Includes\Utils\FileManager::isExists($path);
     }
 
     /**
