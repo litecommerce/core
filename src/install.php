@@ -152,11 +152,6 @@ $modules = array (
  */
 if (isset($_GET['target']) && $_GET['target'] == 'install') {
 
-	// Loopback action
-	if (isset($_GET['action']) && $_GET['action'] == 'loopback_test') {
-		die('LOOPBACK-TEST-OK');
-	}
-
     // Creating dirs action
     if (isset($_GET['action']) && $_GET['action'] == 'dirs') {
 
