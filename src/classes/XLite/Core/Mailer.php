@@ -451,6 +451,35 @@ class Mailer extends \XLite\Base\Singleton
         );
     }
 
+    /**
+     * Send test email
+     *
+     * @param string $from Email address to send test email from
+     * @param string $to   Email address to send test email to
+     * @param string $body Body test email text
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function sendTestEmail($from, $to, $body = '')
+    {
+        static::register(
+            array(
+                'body' => $body,
+            )
+        );
+
+        static::setMailInterface(\XLite::ADMIN_INTERFACE);
+
+        static::compose(
+            $from,
+            $to,
+            'test_email'
+        );
+
+        return static::getMailer()->getLastError();
+    }
 
     /**
      * Set mail interface
