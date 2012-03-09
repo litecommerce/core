@@ -98,7 +98,9 @@ class Module extends \XLite\Core\Pack\APack
         $result = new \AppendIterator();
 
         foreach ($this->getDirs() as $dir) {
-            $result->append($this->getDirectorySPLIterator($dir));
+            if (\Includes\Utils\FileManager::isDir($dir)) {
+                $result->append($this->getDirectorySPLIterator($dir));
+            }
         }
 
         return $result;

@@ -38,7 +38,7 @@ XLite\Model\Config:
     orderby: 5300
     translations:
       - code: en
-        option_name: 'Facebook Adminis'
+        option_name: 'Facebook Admins'
         option_comment: 'Comma-separated list of the Facebook User IDs of page administrators. Include at least your own Facebook User ID.'
   - name: gosocial_sep_2
     category: 'CDev\GoSocial'
