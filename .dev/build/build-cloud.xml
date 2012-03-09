@@ -180,14 +180,14 @@
 
     <target name="plint">
         <echo message="Run PHPlint" />
-        <exec executable="${sourceDir}/.dev/phpl.sh" dir="${lcRoot}" failonerror="true" output="${buildDir}/reports/plint.html" />
+        <exec executable="${sourceDir}/.dev/phpl.sh" dir="${lcRoot}" failonerror="false" output="${buildDir}/reports/plint.html" />
     </target>
 
     <target name="analysis" depends="phpdepend,phpmd,copy-paste-detect,git-stat" />
 
     <target name="phpdepend">
         <echo message="Run PHPDepend" />
-        <exec executable="php" dir="${buildDir}">
+        <exec executable="php" dir="${buildDir}" failonerror="false">
             <arg value="${sourceDir}/.dev/pdepend.php" />
             <arg value="--jdepend-chart=${buildDir}/reports/pdepend.svg" />
             <arg value="--overview-pyramid=${buildDir}/reports/pyramid.svg" />
@@ -198,7 +198,7 @@
 
     <target name="phpmd">
         <echo message="Run PHPMD" />
-        <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html">
+        <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html" failonerror="false">
             <arg value="${sourceDir}/.dev/phpmd.php" />
             <arg value="${sourceDir}/src/classes" />
             <arg value="html" />
