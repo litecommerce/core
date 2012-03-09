@@ -32,22 +32,26 @@ task('clear', function($app)
     $app['time'] = microtime(true);
 });
 
-task('parallel_boot', 'clear', 'setup', 'grid:start_hub', 'server:start');
+task('parallel_boot', 'clear', 'setup', 'ec2:check_settings', 'grid:start_hub', 'server:start');
 
 task('parallel', 'parallel_boot', 'rc:start', 'server:test_parallel', 'grid:shutdown');
 
-task('noweb', 'ec2:check_settings', 'parallel_boot', 'server:apigen', 'server:test_noweb', function($app)
+task('apigen', 'parallel_boot', 'server:apigen', 'grid:shutdown');
+
+task('noweb', 'parallel_boot', 'server:test_noweb', 'grid:shutdown');
+
+task('boot_noweb', 'parallel_boot', 'server:apigen', 'server:test_noweb', function($app)
 {
     $app['noweb_time'] = microtime(true);
     server_setup($app);
 });
 
-task('deploy', 'noweb', 'server:test_deploy', function ($app)
+task('build_deploy', 'boot_noweb', 'server:test_deploy', function ($app)
 {
     $app['deploy_time'] = microtime(true);
 });
 
-task('default', 'deploy', 'grid:start_rc', 'server:test_parallel', 'grid:shutdown', function ($app)
+task('default', 'build_deploy', 'grid:start_rc', 'server:test_parallel', 'grid:shutdown', function ($app)
 {
     echo PHP_EOL . "TRACE:  Instance type: " . $app['grid_instance_type'];
     $last = $app['time'];
@@ -489,6 +493,7 @@ function get_screenshots($app)
 }
 
 function setup_ec2($dir = null){
+    echo $dir;
     if (realpath($dir)){
         $dir = realpath($dir);
         putenv("EC2_HOME=$dir/tools");

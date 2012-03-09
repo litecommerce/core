@@ -159,6 +159,7 @@
         <mkdir dir="${buildDir}/coverage" />
         <mkdir dir="${phakeDir}/logs" />
         <chmod perm="ugo+rx" file="${phake}" />
+        <echo message="${pahke} ${target} ${userVars} ec2_dir=${EC2_DIR}" />
         <exec executable="${phake}" dir="${phakeDir}"  failonerror="Off" resultproperty="phake_result">
             <arg value="${target}" />
             <arg line="${userVars} ec2_dir=${EC2_DIR}" />
