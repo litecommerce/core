@@ -50,7 +50,7 @@ extends XLite_Tests_TestCase
     {
         $stores = new \XLite\Module\Qualiteam\EcwidAggregator\Core\PartnerStores(true);
 
-        $this->assertGreaterThan(0, $stores->count());
+        $this->assertGreaterThan(0, $stores->count(), 'Test stores collection mustn\'t be empty');
 
         // Test element at the middle
         $middle = intval($stores->count() / 2);

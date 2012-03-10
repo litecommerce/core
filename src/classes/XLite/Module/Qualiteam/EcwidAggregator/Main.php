@@ -83,4 +83,16 @@ abstract class Main extends \XLite\Module\AModule
         return '';
     }
 
+    /**
+     * Do show settings form
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
+
 }

@@ -236,7 +236,7 @@ class PartnerStores implements \Countable, \SeekableIterator
      */
     protected function getApiKey()
     {
-        return '12345';
+        return \XLite\Core\Config::getInstance()->Qualiteam->EcwidAggregator->api_key;
     }
 
     /**
