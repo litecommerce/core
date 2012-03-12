@@ -27,24 +27,76 @@
 
 class XLite_Web_Module_CDev_Sale_Admin_ProductList extends XLite_Web_Admin_AAdmin
 {
-    function testPutOnSale(){
+
+
+    function testPutOnSale()
+    {
+        $this->logIn();
+
+        $this->open('admin.php?target=product_list');
         #Check checkboxes
+        $products = $this->getProducts();
+        foreach ($products as $product) {
+            $this->click("//input[@name='select[" . $product->getId() . "]']");
+        }
 
+        $success = 'Products information has been successfully updated';
+        $min = 'Minimum limit is broken';
+        $max = 'Maximum limit is broken';
+        $examples = array(
+            array('percent' => 1000, 'price' => 'old', 'message' => $max),
+            array('percent' => -10, 'price' => 'old', 'message' => $min),
+            array('percent' => 0, 'price' => 'old', 'message' => $success),
+            array('percent' => 50, 'price' => '50%', 'message' => $success),
+
+            array('sale_price' => -10, 'price' => 'old', 'message' => $min),
+            array('sale_price' => 1000, 'price' => 'old', 'message' => $success),
+            array('sale_price' => 0, 'price' => 0, 'message' => $success),
+            array('sale_price' => 1, 'price' => 1, 'message' => $success),
+        );
         #iteration:
-        #Click Put on sale
-        #Data
-        #Click save
-        #check sale and msg
 
-        #Data:
-        #Percent > 100
-        #Percent < 0
-        #Sale price > price
-        #Sale price < 0
-        #Percent = 0
-        #Sale price = 0
-        #Percent > 0 < 100
-        #Sale price > 0 < price
+        foreach ($examples as $example) {
+            #Click Put on sale
+            $this->click('css=.sale-selected-button');
+            $this->waitForPopUpDialog();
+            #Data
+            if (isset($example['sale_price'])) {
+                $this->type('css=#sale-price-value-sale_price', $example['sale_price']);
+            }
+            else {
+                $this->click('css=#sale-price-percent-off');
+                $this->type('css=#sale-price-value-sale_percent', $example['percent']);
+            }
+            #Click save
+            $this->click('css=.action');
+            sleep(1);
+            #check sale and msg
+            $this->waitForLocalCondition(
+                'jQuery("#status-messages:contains('.$example['message'].')").length > 0',
+                10000,
+                'Popup dialog is not present'
+            );
+            //$this->waitForTextPresent($example['message']);
 
+            foreach ($products as $product) {
+                $this->assertElementPresent('css=#product-sale-label-' . $product->getId());
+                if ($example['price'] !== 'old') {
+                    $this->assertJqueryNotPresent('#product-sale-label-' . $product->getId() . '.product-name-sale-label-disabled');
+                }
+                else {
+                    $this->assertJqueryPresent('#product-sale-label-' . $product->getId() . '.product-name-sale-label-disabled');
+                }
+            }
+        }
+    }
+
+    /**
+     * @return XLite\Model\Product[]
+     */
+    private function getProducts()
+    {
+        #First 5 products with price > 10 and < 500 sorted by name asc
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->createQueryBuilder('p')->andWhere('p.price > 10')->andWhere('p.price < 500')->orderBy('translations.name', 'asc')->setMaxResults(5)->getResult();
     }
 }

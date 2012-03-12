@@ -79,7 +79,7 @@ task("setup", function ($app)
     setup_ec2(isset($app['ec2_dir']) ? $app['ec2_dir'] : null);
 
     $app['hub_ami'] = exec("ec2-describe-images | grep lc-test-grid | cut -f2");
-    $app['lc_ami'] = exec("ec2-describe-images | grep lc_ | cut -f2");
+    $app['lc_ami'] = exec("ec2-describe-images | grep lc_server_64 | cut -f2");
 
     $app['server_instance_type'] = "m1.large";
     $app['grid_instance_type'] = "m1.small";
@@ -494,7 +494,7 @@ function get_screenshots($app)
 
 function setup_ec2($dir = null){
     echo $dir;
-    if (realpath($dir)){
+    if (realpath($dir) && $dir !== null){
         $dir = realpath($dir);
         putenv("EC2_HOME=$dir/tools");
         putenv("EC2_PRIVATE_KEY=$dir/pk-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem");
