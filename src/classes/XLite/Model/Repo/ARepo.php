@@ -1167,6 +1167,17 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         return true;
     }
 
+    /**
+     * Clean up all cache cells
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function cleanCache()
+    {
+        array_map(array($this, 'deleteCache'), array_keys($this->defineCacheCells()));
+    }
 
     /**
      * Define cache cells
