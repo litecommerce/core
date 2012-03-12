@@ -75,7 +75,7 @@ class DataSource extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.17
      *
-     * @OneToMany (targetEntity="XLite\Model\DataSource\Parameter", mappedBy="data_source", cascade={"all"})
+     * @OneToMany (targetEntity="XLite\Model\DataSource\Parameter", mappedBy="dataSource", cascade={"all"})
      */
     protected $parameters;
 
@@ -149,7 +149,7 @@ class DataSource extends \XLite\Model\AEntity
             $param->setDataSource($this);
             $param->setName($name);
 
-            $this->getParameters()->add($param);
+            $this->addParameters($param);
         }
 
         $param->setValue($value);
@@ -164,11 +164,13 @@ class DataSource extends \XLite\Model\AEntity
      */
     public function detectSource()
     {
+        $result = null;
+
         if (self::TYPE_ECWID == $this->getType()) {
-            return new \XLite\Core\DataSource\Ecwid($this);
+            $result = new \XLite\Core\DataSource\Ecwid($this);
         }
 
-        return null;
+        return $result;
     }
 
     /**
@@ -180,11 +182,13 @@ class DataSource extends \XLite\Model\AEntity
      */
     public function getModelWidgetClass()
     {
+        $result = null;
+
         if (self::TYPE_ECWID == $this->getType()) {
-            return '\XLite\View\Model\DataSource\Ecwid';
+            $result = '\XLite\View\Model\DataSource\Ecwid';
         }
 
-        return null;
+        return $result;
     }
 
 }

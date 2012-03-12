@@ -57,17 +57,18 @@ class Ecwid extends ADataSource
      */
     public function isValid()
     {
-        if (0 >= $this->getStoreId()) {
-            return false;
+        $result = false;
+
+        if (0 < $this->getStoreId()) {
+
+            try {
+                $result = (bool)$this->callApi('profile');
+
+            } catch(\Exception $e) {
+            }
         }
 
-        try {
-            $info = $this->callApi('profile');
-        } catch(\Exception $e) {
-            return false;
-        }
-
-        return true;
+        return $result;
     }
 
     /**
@@ -79,7 +80,7 @@ class Ecwid extends ADataSource
      */
     public function getProductsCollection()
     {
-        return new Ecwid\Products($this);
+        return new \XLite\Core\DataSource\Ecwid\Products($this);
     }
 
     /**
@@ -91,7 +92,7 @@ class Ecwid extends ADataSource
      */
     public function getCategoriesCollection()
     {
-        return new Ecwid\Categories($this);
+        return new \XLite\Core\DataSource\Ecwid\Categories($this);
     }
 
     /**
@@ -135,18 +136,22 @@ class Ecwid extends ADataSource
             . $this->getStoreId() . '/'
             . $apiMethod
             . ($params ? ('?' . http_build_query($params)) : '');
-            
 
         $bouncer = new \XLite\Core\HTTP\Request($url);
 
         $bouncer->requestTimeout = 5;
         $response = $bouncer->sendRequest();
 
+        $result = null;
+
         if (200 == $response->code) {
-            return json_decode($response->body, true);
+            $result = json_decode($response->body, true);
+
         } else {
-            throw new \Exception("Call to '$url' failed with '$response->code' code");
+            throw new \Exception('Call to \'' . $url . '\' failed with \'' . $response->code . '\' code');
         }
+
+        return $result;
     }
 
     /**
@@ -172,20 +177,17 @@ class Ecwid extends ADataSource
      */
     public function callBatchApi(array $params)
     {
-        $params = array_map(function ($p) {
+        $queries = array();
+
+        foreach ($params as $key => $param) {
             $queryParams = array();
-            foreach ($p['params'] as $k => $v) {
+            foreach ($param['params'] as $k => $v) {
                 $queryParams[] = $k . '=' . $v;
             }
 
-            return $p['method'] . '?' . implode('&', $queryParams);
-        }, $params);
+            $queries[$key] = $param['method'] . '?' . implode('&', $queryParams);
+        }
 
-        return $this->callApi('batch', $params);
+        return $this->callApi('batch', $queries);
     }
 }
-
-
-
-
-

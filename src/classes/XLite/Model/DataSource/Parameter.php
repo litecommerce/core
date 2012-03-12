@@ -48,7 +48,7 @@ class Parameter extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="uinteger")
      */
     protected $id;
 
@@ -95,7 +95,7 @@ class Parameter extends \XLite\Model\AEntity
      */
     public function getValue()
     {
-        return !empty($this->value) ? unserialize($this->value) : null;
+        return empty($this->value) ? null : unserialize($this->value);
     }
 
     /**
