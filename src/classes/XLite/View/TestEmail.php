@@ -25,74 +25,42 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\XMLSitemap;
+namespace XLite\View;
 
 /**
- * XML sitemap module main class
+ * \XLite\View\TestEmail
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Main extends \XLite\Module\AModule
+class TestEmail extends \XLite\View\Dialog
 {
     /**
-     * Author name
+     * Return list of required CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = $this->getDir() . '/style.css';
+
+        return $list;
+    }
+
+    /**
+     * Return templates directory name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAuthorName()
+    protected function getDir()
     {
-        return 'Creative Development LLC';
-    }
-
-    /**
-     * Module version
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getMinorVersion()
-    {
-        return '4';
-    }
-
-    /**
-     * Module name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getModuleName()
-    {
-        return 'XML sitemap';
-    }
-
-    /**
-     * Module description
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getDescription()
-    {
-        return 'Module generates an XML file with information for search engines.';
-    }
-
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function showSettingsForm()
-    {
-        return true;
+        return 'test_email';
     }
 
 }

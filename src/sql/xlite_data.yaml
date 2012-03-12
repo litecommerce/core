@@ -10,85 +10,85 @@
 
 XLite\Model\Config:
   directives: { insert: true }
-  - { name: admin_presentation, category: General, type: separator, orderby: 400, translations: [{ code: en, option_name: 'Administrator Zone settings', option_comment: '' }] }
-  - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone', option_comment: '' }] }
-  - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address, option_comment: '' }] }
-  - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts, option_comment: '' }] }
-  - { name: company_fax, category: Company, type: 'XLite\View\FormField\Input\Text\Phone', orderby: 420, translations: [{ code: en, option_name: Fax, option_comment: '' }] }
-  - { name: company_identity, category: Company, type: separator, orderby: 350, translations: [{ code: en, option_name: Identity, option_comment: '' }] }
-  - { name: company_name, category: Company, type: text, orderby: 360, translations: [{ code: en, option_name: 'Company name', option_comment: '' }] }
-  - { name: company_website, category: Company, type: XLite\View\FormField\Input\Text\URL, orderby: 370, translations: [{ code: en, option_name: 'Company website', option_comment: '' }] }
-  - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings', option_comment: '' }] }
+  - { name: admin_presentation, category: General, type: separator, orderby: 400, translations: [{ code: en, option_name: 'Administrator Zone settings' }] }
+  - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone' }] }
+  - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address }] }
+  - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts }] }
+  - { name: company_fax, category: Company, type: 'XLite\View\FormField\Input\Text\Phone', orderby: 420, translations: [{ code: en, option_name: Fax }] }
+  - { name: company_identity, category: Company, type: separator, orderby: 350, translations: [{ code: en, option_name: Identity }] }
+  - { name: company_name, category: Company, type: text, orderby: 360, translations: [{ code: en, option_name: 'Company name' }] }
+  - { name: company_website, category: Company, type: 'XLite\View\FormField\Input\Text\URL', orderby: 370, translations: [{ code: en, option_name: 'Company website' }] }
+  - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings' }] }
   - { name: customer_security, category: Security, type: checkbox, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Customer Zone (for login, Checkout and profile pages)' }] }
-  - { name: date_format, category: General, type: 'XLite\View\FormField\Select\DateFormat', orderby: 660, value: '%b %e, %Y', translations: [{ code: en, option_name: 'Date format', option_comment: '' }] }
-  - { name: decimal_delim, category: General, type: 'XLite\View\FormField\Select\DecimalPart', orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal separator', option_comment: '' }] }
-  - { name: default_country, category: General, type: country, orderby: 310, value: US, translations: [{ code: en, option_name: 'Default country in the registration form', option_comment: '' }] }
-  - { name: default_offline_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Payment method to be assumed in case of zero order totals', option_comment: '' }] }
-  - { name: default_purchase_limit, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 293, value: 9999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Default purchase limit', option_comment: '' }] }
-  - { name: default_select_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Default payment method', option_comment: '' }] }
-  - { name: default_zipcode, category: General, type: text, orderby: 320, translations: [{ code: en, option_name: 'Default zip/postal code in the registration form', option_comment: '' }] }
-  - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method', option_comment: '' }] }
-  - { name: enable_anon_checkout, category: General, type: checkbox, orderby: 270, value: Y, translations: [{ code: en, option_name: 'Enable anonymous checkout', option_comment: '' }] }
-  - { name: enable_init_order_notif, category: Email, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'E-mail order details to the sales department after order placement', option_comment: '' }] }
-  - { name: enable_init_order_notif_customer, category: Email, type: checkbox, value: N, translations: [{ code: en, option_name: 'E-mail order details to customers after order placement', option_comment: '' }] }
-  - { name: form_id_protection, category: Security, type: checkbox, orderby: 90, value: Y, translations: [{ code: en, option_name: 'Enable admin forms protection system', option_comment: '' }] }
-  - { name: full_customer_security, category: Security, type: checkbox, orderby: 5, value: N, translations: [{ code: en, option_name: 'Customer Zone fully on HTTPS', option_comment: '' }] }
+  - { name: date_format, category: General, type: 'XLite\View\FormField\Select\DateFormat', orderby: 660, value: '%b %e, %Y', translations: [{ code: en, option_name: 'Date format' }] }
+  - { name: decimal_delim, category: General, type: 'XLite\View\FormField\Select\DecimalPart', orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal separator' }] }
+  - { name: default_country, category: General, type: country, orderby: 310, value: US, translations: [{ code: en, option_name: 'Default country in the registration form' }] }
+  - { name: default_offline_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Payment method to be assumed in case of zero order totals' }] }
+  - { name: default_purchase_limit, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 293, value: 9999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Default purchase limit' }] }
+  - { name: default_select_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Default payment method' }] }
+  - { name: default_zipcode, category: General, type: text, orderby: 320, translations: [{ code: en, option_name: 'Default zip/postal code in the registration form' }] }
+  - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method' }] }
+  - { name: enable_anon_checkout, category: General, type: checkbox, orderby: 270, value: Y, translations: [{ code: en, option_name: 'Enable anonymous checkout' }] }
+  - { name: enable_init_order_notif, category: Email, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'E-mail order details to the sales department after order placement' }] }
+  - { name: enable_init_order_notif_customer, category: Email, type: checkbox, value: N, translations: [{ code: en, option_name: 'E-mail order details to customers after order placement' }] }
+  - { name: form_id_protection, category: Security, type: checkbox, orderby: 90, value: Y, translations: [{ code: en, option_name: 'Enable admin forms protection system' }] }
+  - { name: full_customer_security, category: Security, type: checkbox, orderby: 5, value: N, translations: [{ code: en, option_name: 'Customer Zone fully on HTTPS' }] }
   - { name: last_date, category: Htaccess, value: '0' }
   - { name: license, category: License, type: text }
-  - { name: location_address, category: Company, type: text, orderby: 390, translations: [{ code: en, option_name: 'Street address', option_comment: '' }] }
-  - { name: location_country, category: Company, type: country, orderby: 400, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
-  - { name: location_state, category: Company, type: state, orderby: 410, translations: [{ code: en, option_name: State, option_comment: '' }] }
-  - { name: location_custom_state, category: Company, type: text, orderby: 415, translations: [{ code: en, option_name: 'Another state (specify)', option_comment: '' }] }
-  - { name: location_city, category: Company, type: text, orderby: 420, translations: [{ code: en, option_name: City, option_comment: '' }] }
-  - { name: location_zipcode, category: Company, type: text, orderby: 430, translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
-  - { name: company_phone, category: Company, type: XLite\View\FormField\Input\Text\Phone, orderby: 440, translations: [{ code: en, option_name: Phone, option_comment: '' }] }
-  - { name: login_lifetime, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 450, value: 3, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Number of days to store the last login data', option_comment: '' }] }
-  - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Clear cart on customer logoff', option_comment: '' }] }
-  - { name: maximal_order_amount, category: General, type: XLite\View\FormField\Input\Text\Float, orderby: 290, value: 99999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Maximum allowed order total', option_comment: '' }] }
-  - { name: minimal_order_amount, category: General, type: XLite\View\FormField\Input\Text\Float, orderby: 280, value: '0', widgetParameters: { min: 0 }, translations: [{ code: en, option_name: 'Minimum allowed order total', option_comment: '' }] }
-  - { name: operation_presentation, category: General, type: separator, orderby: 100, translations: [{ code: en, option_name: 'Maintenance and operation', option_comment: '' }] }
-  - { name: orders_department, category: Company, type: XLite\View\FormField\Input\Text\Email, orderby: 480, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Sales department e-mail', option_comment: '' }] }
-  - { name: orders_per_page, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 430, value: 30, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Orders per page', option_comment: '' }] }
-  - { name: order_starting_number, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 460, value: 1, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Initial order number', option_comment: '' }] }
-  - { name: products_per_page, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 250, value: 10, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per category listing page', option_comment: '' }] }
-  - { name: products_per_page_admin, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 410, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per page', option_comment: '' }] }
-  - { name: proxy, category: Security, type: text, orderby: 25, translations: [{ code: en, option_name: 'HTTPS proxy', option_comment: '' }] }
-  - { name: recent_orders, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 440, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'The number of orders in the recent order list', option_comment: '' }] }
-  - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product', option_comment: '' }] }
-  - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to close the shop temporarily', option_comment: '' }] }
-  - { name: show_thumbnails, category: General, type: checkbox, orderby: 230, value: Y, translations: [{ code: en, option_name: 'Show thumbnails in product list', option_comment: '' }] }
-  - { name: site_administrator, category: Company, type: XLite\View\FormField\Input\Text\Email, orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail', option_comment: '' }] }
-  - { name: smtp_password, category: Email, type: text, orderby: 160, translations: [{ code: en, option_name: Password, option_comment: '' }] }
-  - { name: smtp_security, category: Email, type: 'XLite\View\FormField\Select\SMTPSecurity', orderby: 170, value: no, translations: [{ code: en, option_name: 'Secure connection', option_comment: '' }] }
-  - { name: smtp_server, category: Email, type: separator, orderby: 100, translations: [{ code: en, option_name: 'SMTP server', option_comment: '' }] }
-  - { name: smtp_server_port, category: Email, type: XLite\View\FormField\Input\Text\Integer, orderby: 130, value: 25, widgetParameters: { min: 0, max: 65535 }, translations: [{ code: en, option_name: 'SMTP port', option_comment: '' }] }
-  - { name: smtp_server_url, category: Email, type: text, orderby: 120, translations: [{ code: en, option_name: 'SMTP server', option_comment: '' }] }
-  - { name: smtp_username, category: Email, type: text, orderby: 150, translations: [{ code: en, option_name: Username, option_comment: '' }] }
-  - { name: start_year, category: Company, type: XLite\View\FormField\Input\Text\PastYear, orderby: 380, value: 2012, translations: [{ code: en, option_name: 'Year when store started its operation', option_comment: '' }] }
-  - { name: subcategories_look, category: General, type: 'XLite\View\FormField\Select\SubcategoriesLook', orderby: 220, value: icons, translations: [{ code: en, option_name: 'Category listings format', option_comment: '' }] }
-  - { name: support_department, category: Company, type: XLite\View\FormField\Input\Text\Email, orderby: 490, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'HelpDesk/Support service e-mail', option_comment: '' }] }
-  - { name: thousand_delim, category: General, type: 'XLite\View\FormField\Select\ThousandDelimiter', orderby: 640, translations: [{ code: en, option_name: 'Currency thousands separator', option_comment: '' }] }
-  - { name: time_format, category: General, type: 'XLite\View\FormField\Select\TimeFormat', orderby: 670, value: '%H:%M', translations: [{ code: en, option_name: 'Time format', option_comment: '' }] }
-  - { name: time_zone, category: General, type: 'XLite\View\FormField\Select\TimeZone', orderby: 680, translations: [{ code: en, option_name: 'Time zone', option_comment: '' }] }
-  - { name: unit_presentation, category: General, type: separator, orderby: 600, translations: [{ code: en, option_name: 'Units of measurement', option_comment: '' }] }
-  - { name: users_department, category: Company, type: XLite\View\FormField\Input\Text\Email, orderby: 470, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Customer relations e-mail', option_comment: '' }] }
-  - { name: users_per_page, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 420, value: '30', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Users per page', option_comment: '' }] }
-  - { name: use_smtp, category: Email, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Use SMTP server', option_comment: '' }] }
-  - { name: use_smtp_auth, category: Email, type: checkbox, orderby: 140, value: N, translations: [{ code: en, option_name: 'Use authentication', option_comment: '' }] }
+  - { name: location_address, category: Company, type: text, orderby: 390, translations: [{ code: en, option_name: 'Street address' }] }
+  - { name: location_country, category: Company, type: country, orderby: 400, value: US, translations: [{ code: en, option_name: Country }] }
+  - { name: location_state, category: Company, type: state, orderby: 410, translations: [{ code: en, option_name: State }] }
+  - { name: location_custom_state, category: Company, type: text, orderby: 415, translations: [{ code: en, option_name: 'Another state (specify)' }] }
+  - { name: location_city, category: Company, type: text, orderby: 420, translations: [{ code: en, option_name: City }] }
+  - { name: location_zipcode, category: Company, type: text, orderby: 430, translations: [{ code: en, option_name: 'Zip/postal code' }] }
+  - { name: company_phone, category: Company, type: 'XLite\View\FormField\Input\Text\Phone', orderby: 440, translations: [{ code: en, option_name: Phone }] }
+  - { name: login_lifetime, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 450, value: 3, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Number of days to store the last login data' }] }
+  - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Clear cart on customer logoff' }] }
+  - { name: maximal_order_amount, category: General, type: 'XLite\View\FormField\Input\Text\Float', orderby: 290, value: 99999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Maximum allowed order total' }] }
+  - { name: minimal_order_amount, category: General, type: 'XLite\View\FormField\Input\Text\Float', orderby: 280, value: '0', widgetParameters: { min: 0 }, translations: [{ code: en, option_name: 'Minimum allowed order total' }] }
+  - { name: operation_presentation, category: General, type: separator, orderby: 100, translations: [{ code: en, option_name: 'Maintenance and operation' }] }
+  - { name: orders_department, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 480, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Sales department e-mail' }] }
+  - { name: orders_per_page, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 430, value: 30, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Orders per page' }] }
+  - { name: order_starting_number, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 460, value: 1, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Initial order number' }] }
+  - { name: products_per_page, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 250, value: 10, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per category listing page' }] }
+  - { name: products_per_page_admin, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 410, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per page' }] }
+  - { name: proxy, category: Security, type: text, orderby: 25, translations: [{ code: en, option_name: 'HTTPS proxy' }] }
+  - { name: recent_orders, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 440, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'The number of orders in the recent order list' }] }
+  - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product' }] }
+  - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to close the shop temporarily' }] }
+  - { name: show_thumbnails, category: General, type: checkbox, orderby: 230, value: Y, translations: [{ code: en, option_name: 'Show thumbnails in product list' }] }
+  - { name: site_administrator, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail' }] }
+  - { name: smtp_password, category: Email, type: text, orderby: 160, translations: [{ code: en, option_name: Password }] }
+  - { name: smtp_security, category: Email, type: 'XLite\View\FormField\Select\SMTPSecurity', orderby: 170, value: no, translations: [{ code: en, option_name: 'Secure connection' }] }
+  - { name: smtp_server, category: Email, type: separator, orderby: 100, translations: [{ code: en, option_name: 'SMTP server' }] }
+  - { name: smtp_server_port, category: Email, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 130, value: 25, widgetParameters: { min: 0, max: 65535 }, translations: [{ code: en, option_name: 'SMTP port' }] }
+  - { name: smtp_server_url, category: Email, type: text, orderby: 120, translations: [{ code: en, option_name: 'SMTP server' }] }
+  - { name: smtp_username, category: Email, type: text, orderby: 150, translations: [{ code: en, option_name: Username }] }
+  - { name: start_year, category: Company, type: 'XLite\View\FormField\Input\Text\PastYear', orderby: 380, value: 2012, translations: [{ code: en, option_name: 'Year when store started its operation' }] }
+  - { name: subcategories_look, category: General, type: 'XLite\View\FormField\Select\SubcategoriesLook', orderby: 220, value: icons, translations: [{ code: en, option_name: 'Category listings format' }] }
+  - { name: support_department, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 490, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'HelpDesk/Support service e-mail' }] }
+  - { name: thousand_delim, category: General, type: 'XLite\View\FormField\Select\ThousandDelimiter', orderby: 640, translations: [{ code: en, option_name: 'Currency thousands separator' }] }
+  - { name: time_format, category: General, type: 'XLite\View\FormField\Select\TimeFormat', orderby: 670, value: '%H:%M', translations: [{ code: en, option_name: 'Time format' }] }
+  - { name: time_zone, category: General, type: 'XLite\View\FormField\Select\TimeZone', orderby: 680, translations: [{ code: en, option_name: 'Time zone' }] }
+  - { name: unit_presentation, category: General, type: separator, orderby: 600, translations: [{ code: en, option_name: 'Units of measurement' }] }
+  - { name: users_department, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 470, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Customer relations e-mail' }] }
+  - { name: users_per_page, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 420, value: '30', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Users per page' }] }
+  - { name: use_smtp, category: Email, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Use SMTP server' }] }
+  - { name: use_smtp_auth, category: Email, type: checkbox, orderby: 140, value: N, translations: [{ code: en, option_name: 'Use authentication' }] }
   - { name: version, category: Version, value: xlite_3_0_x }
-  - { name: weight_symbol, category: General, type: text, orderby: 620, value: lbs, translations: [{ code: en, option_name: 'Weight symbol', option_comment: '' }] }
-  - { name: weight_unit, category: General, type: 'XLite\View\FormField\Select\WeightUnit', orderby: 610, value: lbs, translations: [{ code: en, option_name: 'Weight unit', option_comment: '' }] }
-  - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency', option_comment: '' }] }
+  - { name: weight_symbol, category: General, type: text, orderby: 620, value: lbs, translations: [{ code: en, option_name: 'Weight symbol' }] }
+  - { name: weight_unit, category: General, type: 'XLite\View\FormField\Select\WeightUnit', orderby: 610, value: lbs, translations: [{ code: en, option_name: 'Weight unit' }] }
+  - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency' }] }
   - { name: default_language, category: General, orderby: 330, value: en }
-  - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address', option_comment: '' }] }
-  - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line', option_comment: '' }] }
-  - { name: anonymous_country, category: Shipping, type: country, orderby: 50, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
-  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State, option_comment: '' }] }
-  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Another state (specify)', option_comment: '' }] }
-  - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City, option_comment: '' }] }
-  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
-  - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime', option_comment: '' }] }
-  - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key', option_comment: '' }] }
+  - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address' }] }
+  - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line' }] }
+  - { name: anonymous_country, category: Shipping, type: country, orderby: 50, value: US, translations: [{ code: en, option_name: Country }] }
+  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State }] }
+  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Another state (specify)' }] }
+  - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City }] }
+  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code' }] }
+  - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime' }] }
+  - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key' }] }
 XLite\Model\Category:
   - { category_id: 1, show_title: false, translations: [{ code: en, name: 'Catalog' }] }
 XLite\Model\Currency:
@@ -455,7 +455,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Required field X is not defined or empty', translations: [{ code: en, label: "Required field '{{name}}' is not defined or empty. The product was not created" }] }
   - { name: 'X image unable to load', translations: [{ code: en, label: '{{url}} image unable to load' }] }
   - { name: 'During the import was recorded X errors. You can get them by downloading the log files.', translations: [{ code: en, label: 'During the import was recorded {{count}} errors. You can get them by <a href="{{url}}">downloading</a> the log files.' }] }
-  - { name: 'Some products could have been imported incorrectly', translations: [{ code: en, label: 'Some products could have been imported incorrectly. Please check your catalog. Find the ID\'s of such products in the import log file available at the above link.' }] }
+  - { name: 'Some products could have been imported incorrectly', translations: [{ code: en, label: 'Some products could have been imported incorrectly. Please check your catalog. Find the ID''s of such products in the import log file available at the above link.' }] }
   - { name: 'Order #X, Y', translations: [{ code: en, label: 'Order #{{id}}, {{date}}' }] }
   - { name: 'Order X', translations: [{ code: en, label: 'Order #{{id}}' }] }
   - { name: 'The X field is empty', translations: [{ code: en, label: 'The {{name}} field is empty' }] }
@@ -675,12 +675,12 @@ XLite\Model\Language:
   - { code: zu, code3: zul, translations: [{ code: en, name: Zulu }] }
 XLite\Model\Payment\Method:
   directives: { insert: true }
-  - { service_name: PurchaseOrder, class: Model\Payment\Processor\PurchaseOrder, orderby: 20, translations: [{ code: en, name: 'Purchase Order', description: '' }] }
-  - { service_name: PhoneOrdering, class: Model\Payment\Processor\Offline, orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
-  - { service_name: FaxOrdering, class: Model\Payment\Processor\Offline, orderby: 40, translations: [{ code: en, name: 'Fax Ordering', description: 'Fax: (555) 555-5555' }] }
-  - { service_name: MoneyOrdering, class: Model\Payment\Processor\Offline, orderby: 50, translations: [{ code: en, name: 'Money Order', description: 'US Banks Only' }] }
-  - { service_name: Echeck, class: Model\Payment\Processor\Check, orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }
-  - { service_name: COD, class: Model\Payment\Processor\Offline, orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
+  - { service_name: PurchaseOrder, class: 'Model\Payment\Processor\PurchaseOrder', orderby: 20, translations: [{ code: en, name: 'Purchase Order' }] }
+  - { service_name: PhoneOrdering, class: 'Model\Payment\Processor\Offline', orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
+  - { service_name: FaxOrdering, class: 'Model\Payment\Processor\Offline', orderby: 40, translations: [{ code: en, name: 'Fax Ordering', description: 'Fax: (555) 555-5555' }] }
+  - { service_name: MoneyOrdering, class: 'Model\Payment\Processor\Offline', orderby: 50, translations: [{ code: en, name: 'Money Order', description: 'US Banks Only' }] }
+  - { service_name: Echeck, class: 'Model\Payment\Processor\Check', orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }
+  - { service_name: COD, class: 'Model\Payment\Processor\Offline', orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
 XLite\Model\Country:
   directives: { insert: true }
   - { country: Afghanistan, code3: AFG, code: AF, enabled: false }

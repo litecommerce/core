@@ -155,7 +155,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\Database::getEM()->flush();
                 \XLite\Core\Database::getEM()->clear();
 
-                \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache($zoneId);
+                \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache();
 
                 \XLite\Core\TopMessage::addInfo('Zone details have been updated successfully');
 
@@ -203,7 +203,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
                     \XLite\Core\Database::getEM()->persist($zone);
                     \XLite\Core\Database::getEM()->flush();
 
-                    \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache($zoneId);
+                    \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache();
 
                     \XLite\Core\TopMessage::addInfo('New zone has been created successfully');
 

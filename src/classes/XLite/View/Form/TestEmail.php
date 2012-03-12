@@ -25,74 +25,37 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\XMLSitemap;
+namespace XLite\View\Form;
 
 /**
- * XML sitemap module main class
+ * Test email form
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Main extends \XLite\Module\AModule
+class TestEmail extends \XLite\View\Form\AForm
 {
     /**
-     * Author name
+     * getDefaultTarget
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAuthorName()
+    protected function getDefaultTarget()
     {
-        return 'Creative Development LLC';
+        return 'settings';
     }
 
     /**
-     * Module version
+     * getDefaultAction
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getMinorVersion()
+    protected function getDefaultAction()
     {
-        return '4';
+        return 'test_email';
     }
-
-    /**
-     * Module name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getModuleName()
-    {
-        return 'XML sitemap';
-    }
-
-    /**
-     * Module description
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getDescription()
-    {
-        return 'Module generates an XML file with information for search engines.';
-    }
-
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function showSettingsForm()
-    {
-        return true;
-    }
-
 }

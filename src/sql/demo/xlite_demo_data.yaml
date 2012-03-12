@@ -7,7 +7,6 @@
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
 # @since     3.0.0
-# TODO - untranslated - UPDATE xlite_modules SET enabled = 0;
 
 XLite\Model\Config:
   - { name: shop_closed, category: General, translations: [{ code: en, option_name: 'Check this to close the shop temporarily (not available in Demo store)' }] }

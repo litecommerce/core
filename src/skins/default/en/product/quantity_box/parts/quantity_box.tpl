@@ -12,4 +12,10 @@
  * @ListChild (list="product.quantity-box", weight="20")
  *}
 
-<input type="text" value="{getBoxValue()}" class="{getClass()} validate[required,custom[integer],min[1]{if:product.inventory.enabled},max[{getMaxQuantity()}]{end:}]" id="{getBoxId()}" name="{getBoxName()}" title="{t(getBoxTitle())}" />
+<input
+  type="text"
+  value="{getBoxValue()}"
+  class="{getClass()} validate[required,custom[integer],min[{getMinQuantity()}]{if:product.inventory.enabled},max[{getMaxQuantity()}]{end:}]"
+  id="{getBoxId()}"
+  name="{getBoxName()}"
+  title="{t(getBoxTitle())}" />

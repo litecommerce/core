@@ -77,7 +77,7 @@ function print_info()
     -h - print this info
     --clients-count - set selenium RC clients count, 5 by default
     --build - start with standard build configuration (--verbose --log-junit phpunit.xml)
-    --log-junit, --verbose - options for phpunit";
+    --log-junit, --verbose - options for phpunit". PHP_EOL;
 }
 
 class TestRunner

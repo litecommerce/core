@@ -321,20 +321,5 @@ class State extends \XLite\Model\Repo\ARepo
         return $list;
     }
 
-    /**
-     * cleanCache
-     *
-     * @param integer $zoneId Zone Id OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function cleanCache($zoneId = null)
-    {
-        $this->deleteCache('all');
-        $this->deleteCache('codes');
-    }
-
     // }}}
 }
