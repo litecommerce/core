@@ -52,17 +52,6 @@ class Role extends \XLite\Model\Base\I18n
     protected $id;
 
     /**
-     * Code
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
-     *
-     * @Column (type="fixedstring", length="32")
-     */
-    protected $code;
-
-    /**
      * Permissions
      *
      * @var   \Doctrine\Common\Collections\Collection
@@ -115,7 +104,7 @@ class Role extends \XLite\Model\Base\I18n
      */
     public function getPublicName()
     {
-        return $this->getName() ?: $this->getCode();
+        return $this->getName();
     }
 
     /**

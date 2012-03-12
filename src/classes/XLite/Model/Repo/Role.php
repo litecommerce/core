@@ -35,16 +35,4 @@ namespace XLite\Model\Repo;
  */
 class Role extends \XLite\Model\Repo\Base\I18n
 {
-
-    /**
-     * Alternative record identifiers
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $alternativeIdentifier = array(
-        array('code'),
-    );
-
 }

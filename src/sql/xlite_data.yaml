@@ -1139,7 +1139,7 @@ XLite\Model\Zone:
 XLite\Model\Task:
   - { owner: 'XLite\Core\Task\Probe' }
 XLite\Model\Role:
-  - { code: administrator, translations: [{ code: en, name: Administrator }], permissions: [ { code: root access, translations: [{ code: en, name: Root access }] } ] }
+  - { translations: [{ code: en, name: Administrator }], permissions: [ { code: root access, translations: [{ code: en, name: Root access }] } ] }
 XLite\Model\Role\Permission:
   - { code: manage catalog, translations: [{ code: en, name: Manage catalog }] }
   - { code: manage users, translations: [{ code: en, name: Manage users }] }
