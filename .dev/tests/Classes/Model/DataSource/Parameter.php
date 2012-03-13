@@ -18,9 +18,9 @@
 class XLite_Tests_Model_DataSource_Parameter extends XLite_Tests_TestCase
 {
     protected $entityData = array(
-        'id'  => 999,
-        'name'          => 'info',
-        'value'         => array(
+        'id'    => 999,
+        'name'  => 'info',
+        'value' => array(
             'type'    => 'Ecwid',
             'storeid' => 1003,
         ),

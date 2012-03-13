@@ -95,7 +95,9 @@ class Parameter extends \XLite\Model\AEntity
      */
     public function getValue()
     {
-        return empty($this->value) ? null : unserialize($this->value);
+        $value = @unserialize($this->value);
+
+        return false === $value ? $this->value : $value;
     }
 
     /**
@@ -109,6 +111,6 @@ class Parameter extends \XLite\Model\AEntity
      */
     public function setValue($value)
     {
-        $this->value = serialize($value);
+        $this->value = is_scalar($value) ? serialize($value) : $value;
     }
 }
