@@ -819,7 +819,7 @@ table.form input[type="text"]
   white-space: normal;
 }
 
-.settings ul.table .table-label label {
+.settings .model-properties ul.table div.table-label label {
   width: auto;
 }
 
