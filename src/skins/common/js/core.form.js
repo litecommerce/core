@@ -791,14 +791,14 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
       && typeof(jQuery(this).mousewheel.options) != 'undefined'
     ) {
 
-      var mwBase = jQuery(this).mousewheel.options;
+      var mwBase = jQuery(this).mousewheel.options,
+          min = parseFloat(mwBase.min),
+          max = parseFloat(mwBase.max);
 
-      if (typeof(mwBase.min) != 'undefined' && mwBase.min > value) {
-        value = mwBase.min;
-      }
-
-      if (typeof(mwBase.max) != 'undefined' && mwBase.max < value) {
-        value = mwBase.max;
+      if (typeof(mwBase.min) != 'undefined' && min > value) {
+        value = min;
+      } else if (typeof(mwBase.max) != 'undefined' && max < value) {
+        value = max;
       }
     }
 
@@ -815,7 +815,7 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
     } else {
       this.$element.change();
       jQuery(this.element.form).change();
-    
+
     }
 
     this.$element.removeClass('wrong-amount');
