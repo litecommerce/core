@@ -363,7 +363,6 @@ class XLite_Tests_AllTests
                 $k = array_search('W3C', $includes);
                 unset($includes[$k]);
             }
-
             foreach ($includes as $k => $v) {
                 if ('-' == substr($v, 0, 1)) {
                     $excludes[] = substr($v, 1);
