@@ -1117,13 +1117,19 @@ div.product-details .product-image-gallery
 .product-details .product-items-available
 {
   color: #888;
-
 }
 
 .product-details .product-in-stock,
 .product-quicklook .product-in-stock
 {
   color: #019026;
+}
+
+.product-details .product-out-of-stock,
+.product-quicklook .product-out-of-stock,
+.product-details .product-in-stock,
+.product-quicklook .product-in-stock
+{
   display: block;
 }
 
@@ -1243,25 +1249,6 @@ div.product-details .continue-button-intend
   color: #7e7e7e;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 table.list-body td.hproduct a.product-thumbnail
 {
   width: 194px;
@@ -1329,6 +1316,12 @@ table.list-body-list td
   height: 100%;
   position: relative;         /* Position nested popups inside these blocks */
   cursor: pointer;
+}
+
+.lc-wishlist,
+.lc-minicart
+{
+  width: auto;
 }
 
 .lc-wishlist:hover,

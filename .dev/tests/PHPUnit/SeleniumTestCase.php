@@ -1238,9 +1238,9 @@ JS;
         return $oldSleep;
     }
 
-    protected function waitForPopUpDialog(){
+    protected function waitForPopUpDialog($selector = '.ui-dialog.popup'){
         $this->waitForLocalCondition(
-            'jQuery(".ui-dialog.popup:visible").length > 0',
+            'jQuery("'.$selector.':visible").length > 0',
             10000,
             'Popup dialog is not present'
         );

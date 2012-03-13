@@ -45,8 +45,8 @@ class XLite_Web_Module_CDev_Sale_Admin_ProductDetails extends XLite_Web_Admin_AA
             $this->openAndWait("admin.php?target=add_product");
 
             #Product name/price
-            $this->type("input[@name='postedData[name]']", $productName);
-            $this->type("input[@name='postedData[price]']", $productPrice);
+            $this->type("css=input[name='postedData[name]']", $productName);
+            $this->type("css=input[name='postedData[price]']", $productPrice);
             #Check Sale
             $this->check("#participate-sale");
             #Sale fields
@@ -88,7 +88,10 @@ class XLite_Web_Module_CDev_Sale_Admin_ProductDetails extends XLite_Web_Admin_AA
         foreach($examples as $example){
             #Click edit product
             $this->openAndWait("admin.php?target=product_list");
-            $this->clickAndWait("//a[text()='$productName'");
+            $this->select("css=.page-length", '100');
+
+
+            $this->clickAndWait("//a[text()='$productName']");
 
             #Check Sale
             $this->check("#participate-sale");
@@ -109,7 +112,7 @@ class XLite_Web_Module_CDev_Sale_Admin_ProductDetails extends XLite_Web_Admin_AA
     }
     private function checkCustomerPage($name, $price, $example){
         $this->openAndWait("admin.php?target=product_list");
-        $this->clickAndWait("//a[text()='$name'");
+        $this->clickAndWait("//a[text()='$name']");
         $url = $this->getLocation();
         $parts = explode("=", $url);
         $id = $parts[count($parts) - 1];

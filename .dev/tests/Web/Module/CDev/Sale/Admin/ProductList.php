@@ -65,27 +65,28 @@ class XLite_Web_Module_CDev_Sale_Admin_ProductList extends XLite_Web_Admin_AAdmi
                 $this->type('css=#sale-price-value-sale_price', $example['sale_price']);
             }
             else {
-                $this->click('css=#sale-price-percent-off');
+                $this->click('css=label[for="sale-price-percent-off"]');
+                sleep(1);
                 $this->type('css=#sale-price-value-sale_percent', $example['percent']);
             }
             #Click save
-            $this->click('css=.action');
+            $this->click('css=.ui-dialog.popup button.action span');
             sleep(1);
             #check sale and msg
             $this->waitForLocalCondition(
-                'jQuery("#status-messages:contains('.$example['message'].')").length > 0',
+                'jQuery(":contains(\''.$example['message'].'\')").length > 0',
                 10000,
-                'Popup dialog is not present'
+                'Message is not present'
             );
             //$this->waitForTextPresent($example['message']);
 
             foreach ($products as $product) {
                 $this->assertElementPresent('css=#product-sale-label-' . $product->getId());
                 if ($example['price'] !== 'old') {
-                    $this->assertJqueryNotPresent('#product-sale-label-' . $product->getId() . '.product-name-sale-label-disabled');
+                    $this->assertJqueryNotPresent('#product-sale-label-' . $product->getId() . ' .product-name-sale-label-disabled', 'No sale label');
                 }
                 else {
-                    $this->assertJqueryPresent('#product-sale-label-' . $product->getId() . '.product-name-sale-label-disabled');
+                    $this->assertJqueryPresent('#product-sale-label-' . $product->getId() . ' .product-name-sale-label-disabled', 'Sale label is shown');
                 }
             }
         }
