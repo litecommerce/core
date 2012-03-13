@@ -16,7 +16,9 @@
 
   <div class="tabs">
     <ul class="tabs primary">
-      <li FOREACH="getTabs(),index,tab" class="{getTabClass(tab)}"><a href="#{tab.id:h}" id="link-{tab.id:h}">{t(tab.name)}</a></li>
+      <li FOREACH="getTabs(),index,tab" class="{getTabClass(tab)}">
+        <span id="link-{tab.id:h}">{t(tab.name)}</span>
+      </li>
     </ul>
   </div>
 
