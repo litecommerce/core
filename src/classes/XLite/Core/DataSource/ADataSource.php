@@ -81,15 +81,6 @@ abstract class ADataSource
     abstract public function getCategoriesCollection();
 
     /**
-     * Get current data source name (for ex.: Ecwid)
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
-     */
-    abstract public function getName();
-
-    /**
      * Get all data sources
      * 
      * @return array
