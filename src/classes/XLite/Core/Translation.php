@@ -128,7 +128,7 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
             $code = \XLite\Core\Session::getInstance()->getLanguage()->getCode();
         }
 
-        if (isset($name)) {
+        if (!empty($name)) {
             $result = $this->getDriver()->translate($name, $code);
 
             if (!isset($result)) {
