@@ -53,7 +53,7 @@ class DataSource extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer")
+     * @Column         (type="uinteger")
      */
     protected $id;
 

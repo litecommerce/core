@@ -46,7 +46,7 @@ class Ecwid extends ADataSource
     protected $schemaDefault = array(
         'parameter_storeid' => array(
             self::SCHEMA_CLASS      => '\XLite\View\FormField\Input\Text\Integer',
-            self::SCHEMA_LABEL      => 'STOREID',
+            self::SCHEMA_LABEL      => 'Store ID',
             self::SCHEMA_REQUIRED   => true,
             \XLite\View\FormField\Input\Text\Integer::PARAM_MIN => 1000,
         ),
