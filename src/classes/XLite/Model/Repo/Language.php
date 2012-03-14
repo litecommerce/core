@@ -62,6 +62,17 @@ class Language extends \XLite\Model\Repo\Base\I18n
      */
     protected $defaultLanguage = null;
 
+    /**
+     * Alternative record identifiers
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $alternativeIdentifier = array(
+        array('code'),
+    );
+
     // {{{
 
     /**
@@ -238,41 +249,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
         return $this->createQueryBuilder()
             ->andWhere('l.status != :status')
             ->setParameter('status', \XLite\Model\Language::INACTIVE);
-    }
-
-    // }}}
-
-    // {{{ findOneByCode
-
-    /**
-     * Find language one by code
-     *
-     * @param string $code Code
-     *
-     * @return \XLite\Model\Language|void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function findOneByCode($code)
-    {
-        return $this->defineOneByCodeQuery($code)->getSingleResult();
-    }
-
-    /**
-     * Define query builder for findOneByCode()
-     *
-     * @param string $code Language code
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineOneByCodeQuery($code)
-    {
-        return $this->createQueryBuilder()
-            ->andWhere('l.code = :code')
-            ->setParameter('code', $code)
-            ->setMaxResults(1);
     }
 
     // }}}

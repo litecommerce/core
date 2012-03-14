@@ -35,16 +35,60 @@ namespace XLite\Model\Repo;
  */
 class Role extends \XLite\Model\Repo\Base\I18n
 {
+    /**
+     * Find one role byN nme 
+     * 
+     * @param string $name Name
+     *  
+     * @return \XLite\Model\Role
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function findOneByName($name)
+    {
+        return $this->defineFindOneByNameQuery($name)->getSingleResult();
+    }
 
     /**
-     * Alternative record identifiers
+     * Find one by record
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @param array                $data   Record
+     * @param \XLite\Model\AEntity $parent Parent model OPTIONAL
+     *
+     * @return \XLite\Model\AEntity|void
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    protected $alternativeIdentifier = array(
-        array('code'),
-    );
+    public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
+    {
+        $model = parent::findOneByRecord($data, $parent);
 
+        if (!$model && !empty($data['translations'])) {
+            foreach ($data['translations'] as $translation) {
+               $model = $this->findOneByName($translation['name']) ;
+                if ($model) {
+                    break;
+                }
+            }
+        }
+
+        return $model;
+    }
+
+    /**
+     * Define query for findOneByName() method
+     * 
+     * @param string $name Name
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function defineFindOneByNameQuery($name)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('translations.name = :name')
+            ->setParameter('name', $name)
+            ->setMaxResults(1);
+    }
 }

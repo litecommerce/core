@@ -28,7 +28,7 @@
 namespace XLite\View\FormField\Select;
 
 /**
- * Category selector
+ * Categories selector
  *
  * @see   ____class_see____
  * @since 1.0.0

@@ -9,15 +9,23 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<div class="table-label {getFieldId()}-label">
-  <label for="{getFieldId()}">{t(getParam(#label#))}:</label>
-</div>
-<div class="star">
-  {if:getParam(#required#)}*{else:}&nbsp;{end:}
-</div>
+
+{if:!getParam(#fieldOnly#)}
+  <div class="table-label {getFieldId()}-label">
+    <label for="{getFieldId()}">{t(getParam(#label#))}:</label>
+  </div>
+  <div class="star">
+    {if:getParam(#required#)}*{else:}&nbsp;{end:}
+  </div>
+{end:}
+
 <div class="table-value {getFieldId()}-value">
   <widget template="{getDir()}/{getFieldTemplate()}" />
-  <div class="form-field-comment {getFieldId()}-comment">{t(getParam(#comment#)):r}</div>
+  <widget IF="getParam(#help#)" class="\XLite\View\Tooltip" text="{getParam(#help#)}" isImageTag=true className="help-icon" />
+  <div IF="getParam(#comment#)" class="form-field-comment {getFieldId()}-comment">{t(getParam(#comment#)):r}</div>
   <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
 </div>
- <div class="clear"></div>
+
+{if:!getParam(#fieldOnly#)}
+  <div class="clear"></div>
+{end:}

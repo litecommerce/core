@@ -41,7 +41,7 @@ namespace XLite\Model;
  *      }
  * )
  */
-class Address extends \XLite\Model\Base\Address
+class Address extends \XLite\Model\Base\PersonalAddress
 {
 
     /**

@@ -21,7 +21,7 @@
         <property name="lcRoot" location="${installDir}/modules/lc_connector/litecommerce" />
         <property name="varRunClasses" value="${lcRoot}/var/run/classes" />
         <property name="buildTag" value="${label}" />
-        <property name="phakeDir" value="${buildDir}/.dev/tests/Amazon/Grid" />
+        <property name="phakeDir" value="${buildDir}/.dev/tests/Grid" />
         <property name="phake" value="${buildDir}/.dev/lib/phake/phake" />
     </target>
 
@@ -57,34 +57,6 @@
             <arg value="pull" />
         </exec>
 
-    </target>
-
-    <target name="prepare-phake">
-        <copy todir="${buildDir}">
-            <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
-        </copy>
-        <mkdir dir="${buildDir}/coverage" />
-        <mkdir dir="${phakeDir}/logs" />
-        <chmod perm="ugo+rx" file="${phake}" />
-    </target>
-
-    <target name="run-phake" depends="prepare-phake">
-        <property name="EC2_HOME" value="${EC2_DIR}/tools" />
-        <property name="EC2_PRIVATE_KEY" value="${EC2_DIR}/pk-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem" />
-        <property name="EC2_CERT" value="${EC2_DIR}/cert-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem" />
-        <property name="EC2_KEYPAIR" value="${EC2_DIR}/lc-test.pem" />
-        <property name="EC2_KEYPAIR_NAME" value="lc-test" />
-        <property environment="env"/>
-        <exec executable="${phake}" dir="${phakeDir}"  failonerror="Off" resultproperty="phake_result">
-            <arg value="${target}" />
-            <arg line="${userVars}" />
-            <env key="EC2_HOME" value="${EC2_HOME}" />
-            <env key="EC2_PRIVATE_KEY" value="${EC2_PRIVATE_KEY}" />
-            <env key="EC2_CERT" value="${EC2_CERT}" />
-            <env key="EC2_KEYPAIR" value="${EC2_KEYPAIR}" />
-            <env key="EC2_KEYPAIR_NAME" value="${EC2_KEYPAIR_NAME}" />
-            <env key="PATH" path="${env.PATH}:${EC2_HOME}/bin" />
-        </exec>
     </target>
 
     <target name="prepare-release">
@@ -159,6 +131,10 @@
         <copy todir="/var/www/screenshots">
             <fileset dir="${buildDir}/logs/screenshots" />
         </copy>
+        <copy todir="${buildDir}/coverage">
+            <fileset dir="${buildDir}/logs/coverage-html" />
+        </copy>
+
 
         <!--<copy file="${phakeDir}/logs/phpunit.xml" todir="${buildDir}/logs/" />-->
         <exec executable="php" dir="${sourceDir}">
@@ -176,6 +152,20 @@
         </fail>
     </target>
 
+    <target name="run-phake">
+        <copy todir="${buildDir}">
+            <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
+        </copy>
+        <mkdir dir="${buildDir}/coverage" />
+        <mkdir dir="${phakeDir}/logs" />
+        <chmod perm="ugo+rx" file="${phake}" />
+        <echo message="${pahke} ${target} ${userVars} ec2_dir=${EC2_DIR}" />
+        <exec executable="${phake}" dir="${phakeDir}"  failonerror="Off" resultproperty="phake_result">
+            <arg value="${target}" />
+            <arg line="${userVars} ec2_dir=${EC2_DIR}" />
+        </exec>
+    </target>
+
     <target name="jmeter">
         <echo message="Run JMeter" />
         <jmeter jmeterhome="${jmeterDir}" testplan="${sourceDir}/.dev/loadtests/JMeterLoadTest.jmx" resultlog="${buildDir}/logs/JMeterResults.jtl">
@@ -191,14 +181,14 @@
 
     <target name="plint">
         <echo message="Run PHPlint" />
-        <exec executable="${sourceDir}/.dev/phpl.sh" dir="${lcRoot}" failonerror="true" output="${buildDir}/reports/plint.html" />
+        <exec executable="${sourceDir}/.dev/phpl.sh" dir="${lcRoot}" failonerror="false" output="${buildDir}/reports/plint.html" />
     </target>
 
     <target name="analysis" depends="phpdepend,phpmd,copy-paste-detect,git-stat" />
 
     <target name="phpdepend">
         <echo message="Run PHPDepend" />
-        <exec executable="php" dir="${buildDir}">
+        <exec executable="php" dir="${buildDir}" failonerror="false">
             <arg value="${sourceDir}/.dev/pdepend.php" />
             <arg value="--jdepend-chart=${buildDir}/reports/pdepend.svg" />
             <arg value="--overview-pyramid=${buildDir}/reports/pyramid.svg" />
@@ -209,7 +199,7 @@
 
     <target name="phpmd">
         <echo message="Run PHPMD" />
-        <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html">
+        <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html" failonerror="false">
             <arg value="${sourceDir}/.dev/phpmd.php" />
             <arg value="${sourceDir}/src/classes" />
             <arg value="html" />

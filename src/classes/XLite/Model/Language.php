@@ -50,9 +50,8 @@ class Language extends \XLite\Model\Base\I18n
      * Language statuses
      */
     const INACTIVE = 0;
-    const ADDED = 1;
-    const ENABLED = 2;
-
+    const ADDED    = 1;
+    const ENABLED  = 2;
 
     /**
      * Unique id

@@ -41,7 +41,6 @@ if (!defined('XLITE_INSTALL_MODE')) {
 
 $translation = array (
   'Installation script' => 'Installation script',
-  'Loopback test' => 'Loopback test',
   'PHP version' => 'PHP version',
   'PHP safe_mode' => 'PHP safe_mode',
   'Disabled functions' => 'Disabled functions',
@@ -62,7 +61,6 @@ $translation = array (
   'Checking requirements is successfully complete' => 'Checking requirements completed successfully',
   'Some requirements are failed' => 'Some requirements failed',
   'LiteCommerce installation script not found. Restore it  and try again' => 'LiteCommerce installation script not found. Restore it and try again',
-  'Loopback test failed. Response:' => 'Loopback test failed. Response:',
   'PHP Version must be :minver as a minimum' => 'PHP Version must be at least :minver',
   'PHP Version must be not greater than :maxver' => 'PHP Version must be not greater than :maxver',
   'Unsupported PHP version detected' => 'Unsupported PHP version detected',
@@ -259,7 +257,6 @@ LiteCommerce Installation Wizard
   'Prevents unauthorized use of installation script' => 'Prevents unauthorized use<br />of the installation script',
   'I accept the License Agreement' => 'I accept the License Agreement and the <a href="http://www.litecommerce.com/privacy-policy.html" target="_blank">Privacy policy</a>',
   'Could not find license agreement file.<br />Aborting installation.' => 'Could not find license agreement file.<br />Aborting installation.',
-  'lc_loopback_description' => 'Loopback test failed for host :host. One of the reasons could be the firewall installed on your server and configured to decline loopback requests.<br /><br />Loopback requests are used to run additional tests of your server environment, such as memory allocation test and recursion test. You can ignore these tests and continue the installation process or reconfigure the firewall.',
   'lc_php_version_description' => 'PHP versions <b>5.3.0+</b> are currently supported.<br /><br />This version of LiteCommerce will work on any OS,<br />where PHP/MySQL meets the minimum <a href="http://www.litecommerce.com/server_requirements.html">system requirements</a>.
 <br /><br />You can find more information on LiteCommerce software<br />at <a href="http://www.litecommerce.com/faqs.html">http://www.litecommerce.com/faqs.html</a>.',
   'lc_php_disable_functions_description' => 'Some functions, used by LiteCommerce, are found disabled. Check these functions are not listed in "disable_functions" option or all php extensions required for these functions availability are enabled in php.ini file. Please correct this and try again.',

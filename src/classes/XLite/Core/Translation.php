@@ -122,23 +122,25 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      */
     public function translate($name, array $arguments = array(), $code = null)
     {
+        $result = '';
+
         if (!isset($code)) {
             $code = \XLite\Core\Session::getInstance()->getLanguage()->getCode();
         }
 
-        if (isset($name)) {
-            $translated = $this->getDriver()->translate($name, $code);
+        if (!empty($name)) {
+            $result = $this->getDriver()->translate($name, $code);
+
+            if (!isset($result)) {
+                $result = $name;
+            }
+
+            if (!empty($arguments)) {
+                $result = $this->processSubstitute($result, $arguments);
+            }
         }
 
-        if (empty($translated)) {
-            $translated = $name;
-        }
-
-        if (!empty($arguments)) {
-            $translated = $this->processSubstitute($translated, $arguments);
-        }
-
-        return $translated;
+        return $result;
     }
 
 

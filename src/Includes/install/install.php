@@ -252,12 +252,6 @@ function doCheckRequirements()
         'critical' => true,
     );
 
-    $checkRequirements['lc_loopback'] = array(
-        'title'    => xtr('Loopback test'),
-        'critical' => false,
-        'depends' => 'lc_install_script'
-    );
-
     $checkRequirements['lc_php_version'] = array(
         'title'    => xtr('PHP version'),
         'critical' => true,
@@ -302,13 +296,11 @@ function doCheckRequirements()
     $checkRequirements['lc_mem_allocation'] = array(
         'title'    => xtr('Memory allocation test'),
         'critical' => false,
-        'depends'  => 'lc_loopback'
     );
 
     $checkRequirements['lc_recursion_test'] = array(
         'title'    => xtr('Recursion test'),
         'critical' => false,
-        'depends'  => 'lc_loopback'
     );
 
     $checkRequirements['lc_file_permissions'] = array(
@@ -494,31 +486,6 @@ function checkConfigFile(&$errorMsg, $value = null)
         } else {
             $result = true;
         }
-    }
-
-    return $result;
-}
-
-/**
- * Check an ability to do HTTP requests to the server where LiteCommerce located
- *
- * @param string $errorMsg Error message if checking failed
- * @param string $value    Actual value of the checked parameter
- *
- * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
- */
-function checkLoopback(&$errorMsg, $value = null)
-{
-    $result = true;
-
-    $response = inst_http_request_install("action=loopback_test");
-
-    if (strpos($response, "LOOPBACK-TEST-OK") === false) {
-        $result = false;
-        $errorMsg = xtr('Loopback test failed. Response:') . "\n" . $response;
     }
 
     return $result;
@@ -3023,14 +2990,13 @@ function module_check_cfg()
     );
 
     $steps = array(
-        1 => array(
+        /*1 => array(
             'title'        => xtr('Environment'),
             'error_msg'    => xtr('Environment checking failed'),
             'section'      => 'A',
             'requirements' => array(
-                'lc_loopback'
             )
-        ),
+        ),*/
         2 => array(
             'title'        => xtr('Critical dependencies'),
             'error_msg'    => xtr('Critical dependency failed'),

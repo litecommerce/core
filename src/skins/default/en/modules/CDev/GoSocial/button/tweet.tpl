@@ -10,5 +10,4 @@
  * @since     1.0.0
  *}
 
-<a href="https://twitter.com/share" class="twitter-share-button"{foreach:getButtonAttributes(),k,v} data-{k}="{v}"{end:}>{t(#Tweet#)}</a>
-<widget class="\XLite\Module\CDev\GoSocial\View\ExternalSDK\Twitter" />
+<iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/tweet_button.html#{foreach:getButtonAttributes(),k,v}{k}={v:u}&amp;{end:}" style="width:110px; height:20px;" class="twitter-share-button twitter-count-horizontal"></iframe>

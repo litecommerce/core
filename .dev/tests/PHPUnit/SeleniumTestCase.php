@@ -1237,4 +1237,12 @@ JS;
 
         return $oldSleep;
     }
+
+    protected function waitForPopUpDialog($selector = '.ui-dialog.popup'){
+        $this->waitForLocalCondition(
+            'jQuery("'.$selector.':visible").length > 0',
+            10000,
+            'Popup dialog is not present'
+        );
+    }
 }
