@@ -194,7 +194,7 @@ ALoadable.prototype.loadHandler = function(xhr, s, data)
     this.postloadHandler.call(this.base, xhr);
   }
 
-  core.trigger('widgetLoad', {widget: this});
+  core.trigger('widgetLoad', this);
 
   return processed;
 }
