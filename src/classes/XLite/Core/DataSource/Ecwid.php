@@ -37,6 +37,18 @@ class Ecwid extends ADataSource
 {
 
     /**
+     * Get Ecwid data source name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public static function getName()
+    {
+        return 'Ecwid';
+    }
+
+    /**
      * Get standardized data source information array
      * 
      * @return array
@@ -93,18 +105,6 @@ class Ecwid extends ADataSource
     public function getCategoriesCollection()
     {
         return new \XLite\Core\DataSource\Ecwid\Categories($this);
-    }
-
-    /**
-     * Get Ecwid data source name
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
-     */
-    public function getName()
-    {
-        return 'Ecwid';
     }
 
     /**
