@@ -44,7 +44,7 @@ class Probe extends \XLite\Core\Task\Base\Periodic
      */
     public function getTitle()
     {
-        return null;
+        return 'Benchmark';
     }
 
     /**
@@ -70,6 +70,5 @@ class Probe extends \XLite\Core\Task\Base\Periodic
     {
         return 3600;
     }
-
 
 }
