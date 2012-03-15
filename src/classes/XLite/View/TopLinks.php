@@ -135,11 +135,17 @@ class TopLinks extends \XLite\View\AView
      */
     protected function getChangeLanguageLink(\XLite\Model\Language $language)
     {
-        return $this->buildURL(
-            $this->getTarget(),
-            'change_language',
-            array('language' => $language->getCode()) + $this->getAllParams()
-        );
+        $result = '#';
+
+        if (!$this->isLanguageSelected($language)) {
+            $result = $this->buildURL(
+                $this->getTarget(),
+                'change_language',
+                array('language' => $language->getCode()) + $this->getAllParams()
+            );
+        }
+
+        return $result;
     }
 
     /**
@@ -153,7 +159,21 @@ class TopLinks extends \XLite\View\AView
      */
     protected function getChangeLanguageLinkClass(\XLite\Model\Language $language)
     {
-        return '';
+        return $this->isLanguageSelected($language) ? 'text' : '';
+    }
+
+    /**
+     * Check if language is selected
+     *
+     * @param \XLite\Model\Language $language Language to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function isLanguageSelected(\XLite\Model\Language $language)
+    {
+        return $language->getCode() === \XLite\Core\Session::getInstance()->getLanguage()->getCode();
     }
 
     // }}}

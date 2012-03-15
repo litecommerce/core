@@ -47,7 +47,6 @@ class Methods extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'payment_methods';
 
         return $result;
@@ -140,8 +139,7 @@ class Methods extends \XLite\View\Dialog
      */
     public function isModuleConfigurable(\XLite\Model\Payment\Method $method)
     {
-        return $method->getProcessor()->hasModuleSettings()
-            && $this->getModuleURL($method);
+        return $method->getProcessor()->hasModuleSettings() && $this->getModuleURL($method);
     }
 
     /**
@@ -154,7 +152,6 @@ class Methods extends \XLite\View\Dialog
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = $this->getDir() . '/controller.js';
 
         return $list;
@@ -208,9 +205,8 @@ class Methods extends \XLite\View\Dialog
      */
     protected function getLanguage()
     {
-        $language = \XLite\Core\Request::getInstance()->language;
-
-        return $language ? $language : \XLite\Core\Translation::getCurrentLanguageCode();
+        return \XLite\Core\Request::getInstance()->language 
+            ?: \XLite\Core\Session::getInstance()->getLanguage()->getCode();
     }
 
     /**

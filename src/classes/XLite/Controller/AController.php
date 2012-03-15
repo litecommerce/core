@@ -1338,7 +1338,9 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getCurrentLanguage()
     {
-        return \XLite\Core\Session::getInstance()->editLanguage ?: \XLite\Core\Translation::getCurrentLanguageCode();
+        $instance = \XLite\Core\Session::getInstance();
+
+        return $instance->editLanguage ?: $instance->getLanguage()->getCode();
     }
 
     /**
