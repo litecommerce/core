@@ -105,6 +105,10 @@ ul.products-sidebar li h3.product-name {
   display: inline;
 }
 
+ul.products-sidebar li .clearfix {
+  clear: none;
+}
+
 .products div.product,
 .products div.product-info,
 .products div.product-photo
