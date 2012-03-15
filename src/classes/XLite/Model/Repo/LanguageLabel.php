@@ -131,7 +131,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
         $result = array();
 
         foreach ($data as $row) {
-            $result[$row->getName()] = $row->getSoftTranslation($code)->getLabel();
+            $result[$row->getName()] = $row->getTranslation($code)->getLabel();
         }
 
         ksort($result);

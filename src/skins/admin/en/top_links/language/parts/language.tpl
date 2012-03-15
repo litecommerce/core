@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Storefront link
+ * Select language link
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,14 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="top_links", weight="300")
+ * @ListChild (list="top_links.languages", weight="100")
  *}
 
-<li IF="isStorefrontMenuVisible()">
-  <a href="#">{t(#Storefront#)}</a>
-  <div>
-    <ul>
-      <list name="top_links.storefront" />
-    </ul>
-  </div>
+<li FOREACH="getActiveLanguages(),language">
+  <a href="{getChangeLanguageLink(language)}" class="{getChangeLanguageLinkClass(language)}">{language.getName():h}</a>
 </li>

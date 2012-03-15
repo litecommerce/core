@@ -272,7 +272,7 @@ abstract class AController extends \XLite\Core\Handler
     public function getReturnURL()
     {
         if (!isset($this->returnURL)) {
-            $this->returnURL = \XLite\Core\Request::getInstance()->{self::RETURN_URL};
+            $this->returnURL = \XLite\Core\Request::getInstance()->{static::RETURN_URL};
         }
 
         return $this->returnURL;
@@ -829,7 +829,7 @@ abstract class AController extends \XLite\Core\Handler
         \XLite\Core\Operator::redirect(
             $location,
             $this->getRedirectMode(),
-            $this->getParam(self::PARAM_REDIRECT_CODE)
+            $this->getParam(static::PARAM_REDIRECT_CODE)
         );
     }
 
@@ -869,7 +869,7 @@ abstract class AController extends \XLite\Core\Handler
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_REDIRECT_CODE => new \XLite\Model\WidgetParam\Int('Redirect code', $this->getDefaultRedirectCode()),
+            static::PARAM_REDIRECT_CODE => new \XLite\Model\WidgetParam\Int('Redirect code', $this->getDefaultRedirectCode()),
         );
     }
 
@@ -1270,7 +1270,7 @@ abstract class AController extends \XLite\Core\Handler
         $params = array();
 
         // FIXME: is it really needed?
-        foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
+        foreach (array(static::PARAM_SILENT, static::PARAM_DUMP_STARTED) as $name) {
             $params[$name] = $this->get($name);
         }
 
@@ -1326,4 +1326,43 @@ abstract class AController extends \XLite\Core\Handler
 
         return $this->redirect($this->getShopURL($this->getURL(), true));
     }
+
+    // {{{ Language-related routines
+
+    /**
+     * Get current language code
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCurrentLanguage()
+    {
+        return \XLite\Core\Session::getInstance()->editLanguage ?: \XLite\Core\Translation::getCurrentLanguageCode();
+    }
+
+    /**
+     * Change current language
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function doActionChangeLanguage()
+    {
+        $code = \XLite\Core\Request::getInstance()->language;
+
+        if (!empty($code)) {
+            $language = \XLite\Core\Database::getRepo('\XLite\Model\Language')->findOneByCode($code);
+
+            if (isset($language) && $language->getEnabled()) {
+                \XLite\Core\Session::getInstance()->setLanguage($language->getCode());
+                // \XLite\Core\Session::getInstance()->editLanguage = $language->getCode();
+            }
+        }
+
+        $this->setReturnURL($this->getURL());
+    }
+
+    // }}}
 }

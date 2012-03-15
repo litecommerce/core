@@ -277,7 +277,6 @@ abstract class I18n extends \XLite\Model\AEntity
         }
     }
 
-
     /**
      * Get default language code
      *

@@ -9,6 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
+
 #top-links
 {
   position: absolute;
@@ -17,7 +18,8 @@
   padding: 5px 10px 0 0;
 }
 
-#top-links ul{
+#top-links ul
+{
   list-style-type: none;
   padding: 0;
   margin:0;
@@ -79,7 +81,8 @@
 }
 
 #top-links ul li:hover ul,
-#top-links ul a:hover ul{
+#top-links ul a:hover ul
+{
   visibility: visible;
 }
 
