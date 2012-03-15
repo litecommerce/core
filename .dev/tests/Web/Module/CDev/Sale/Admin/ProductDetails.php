@@ -32,11 +32,11 @@ class XLite_Web_Module_CDev_Sale_Admin_ProductDetails extends XLite_Web_Admin_AA
         $productName = 'Sale_product';
         $productPrice = 100;
         $examples = array(
-            array('sale_price' => -10, 'message' => 'Minimum limit is broken', 'expected_title' => ''),
-            array('percent' => 10000, 'message' => 'Maximum limit is broken', 'expected_title' => ''),
-            array('percent' => -10, 'message' => 'Minimum limit is broken', 'expected_title' => ''),
-            array('percent' => 0, 'message' => 'Minimum limit is broken', 'expected_title' => ''),
-            array('sale_price' => 0, 'message' => 'New product has been added successfully', 'expected_title' => $productName)
+            array('sale_price' => '-10', 'message' => 'Minimum limit is broken', 'expected_title' => ''),
+            array('percent' => '10000', 'message' => 'Maximum limit is broken', 'expected_title' => ''),
+            array('percent' => '-10', 'message' => 'Minimum limit is broken', 'expected_title' => ''),
+            array('percent' => '0', 'message' => 'Minimum limit is broken', 'expected_title' => ''),
+            array('sale_price' => '0', 'message' => 'New product has been added successfully', 'expected_title' => $productName)
         );
 
         $this->logIn();
@@ -48,26 +48,26 @@ class XLite_Web_Module_CDev_Sale_Admin_ProductDetails extends XLite_Web_Admin_AA
             $this->type("css=input[name='postedData[name]']", $productName);
             $this->type("css=input[name='postedData[price]']", $productPrice);
             #Check Sale
-            $this->check("#participate-sale");
+            $this->click("css=#participate-sale");
             #Sale fields
-            if ($example['sale_price']){
-                $this->typeKeys("#sale-price-value-sale_price", $example['sale_price']);
+            if (isset($example['sale_price'])){
+                $this->typeKeys("css=#sale-price-value-sale_price", $example['sale_price']);
             }
             else{
-                $this->check("#sale-price-percent-off");
-                $this->typeKeys("#sale-price-value-sale_percent", $example['percent']);
+                $this->click("css=#sale-price-percent-off");
+                $this->typeKeys("css=#sale-price-value-sale_percent", $example['percent']);
             }
             #Click save
-            $this->clickAndWait(".main-button");
-            $this->assertTextPresent($example['message']);
+            $this->clickAndWait("css=.main-button");
+            $this->assertElementContainsText('css=#status-messages',$example['message']);
             #If product name in title
             if ($example['expected_title']){
-                $this->assertElementContainsText("#page-title", $example['expected_title']);
+                $this->assertElementContainsText("css=#page-title", $example['expected_title']);
                 #Check customer page
                 $this->checkCustomerPage($productName, $productPrice, $example);
             }
             else{
-                $this->assertElementNotPresent("#page-title");
+                $this->assertElementNotPresent("css=#page-title");
             }
         }
 
@@ -77,11 +77,11 @@ class XLite_Web_Module_CDev_Sale_Admin_ProductDetails extends XLite_Web_Admin_AA
         $productName = 'Sale_product';
         $productPrice = 100;
         $examples = array(
-            array('sale_price' => -10, 'message' => 'Minimum limit is broken'),
-            array('percent' => 10000, 'message' => 'Maximum limit is broken'),
-            array('percent' => -10, 'message' => 'Minimum limit is broken'),
-            array('percent' => 0, 'message' => 'Minimum limit is broken'),
-            array('sale_price' => 0, 'message' => 'New product has been added successfully')
+            array('sale_price' => '-10', 'message' => 'Minimum limit is broken'),
+            array('percent' => '10000', 'message' => 'Maximum limit is broken'),
+            array('percent' => '-10', 'message' => 'Minimum limit is broken'),
+            array('percent' => '0', 'message' => 'Minimum limit is broken'),
+            array('sale_price' => '0', 'message' => 'New product has been added successfully')
         );
 
         $this->logIn();
@@ -90,22 +90,27 @@ class XLite_Web_Module_CDev_Sale_Admin_ProductDetails extends XLite_Web_Admin_AA
             $this->openAndWait("admin.php?target=product_list");
             $this->select("css=.page-length", '100');
 
+            $this->waitForLocalCondition(
+                'jQuery("tbody.lines tr.line").length > 30',
+                30000,
+                'Wait 100 items per page'
+            );
 
             $this->clickAndWait("//a[text()='$productName']");
 
             #Check Sale
-            $this->check("#participate-sale");
+            $this->click("css=#participate-sale");
             #Sale fields
-            if ($example['sale_price']){
-                $this->typeKeys("#sale-price-value-sale_price", $example['sale_price']);
+            if (isset($example['sale_price'])){
+                $this->typeKeys("css=#sale-price-value-sale_price", $example['sale_price']);
             }
             else{
-                $this->check("#sale-price-percent-off");
-                $this->typeKeys("#sale-price-value-sale_percent", $example['percent']);
+                $this->check("css=#sale-price-percent-off");
+                $this->typeKeys("css=#sale-price-value-sale_percent", $example['percent']);
             }
             #Click save
-            $this->clickAndWait(".main-button");
-            $this->assertTextPresent($example['message']);
+            $this->clickAndWait("css=.main-button");
+            $this->assertElementContainsText('css=#status-messages',$example['message']);
             #Check customer page
             $this->checkCustomerPage($productName, $productPrice, $example);
         }
