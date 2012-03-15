@@ -519,7 +519,7 @@ class Classes extends \Includes\DataStructure\Graph
             $this->reflection = new \StdClass();
             $util = '\Includes\Decorator\Utils\Tokenizer';
 
-            if ($util::getDecoratorFlag()) {
+            if ($util::getDecoratorFlag() || !\Includes\Utils\Operator::checkIfClassExists($this->getClass())) {
                 $util = '\Includes\Decorator\Utils\Tokenizer';
 
                 $this->reflection->parentClass = $util::getParentClassName($this->getFile());
@@ -535,7 +535,7 @@ class Classes extends \Includes\DataStructure\Graph
                     \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD
                 );
 
-            } elseif (\Includes\Utils\Operator::checkIfClassExists($this->getClass())) {
+            } else {
                 $reflection = new \ReflectionClass($this->getClass());
 
                 $this->reflection->parentClass = ($class = $reflection->getParentClass()) ? $class->getName() : null;
