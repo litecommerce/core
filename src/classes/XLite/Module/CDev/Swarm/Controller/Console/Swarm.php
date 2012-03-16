@@ -51,7 +51,7 @@ class Swarm extends \XLite\Controller\Console\AConsole
                 ->setPlanner(\XLite\Module\CDev\Swarm\Core\Swarm\Planner\Common::getInstance());
 
             $this->printContent('done');
-            $swram->run();
+            $swarm->run();
 
         } else {
             $this->printContent('failed (PCNTL PHP extension is not installed)');

@@ -89,8 +89,8 @@ abstract class AMQP extends \Swarm\Worker\AMQP
     {
         $driver = new \XLite\Core\EventDriver\AMQP;
 
-        $this->connection = false;
-        $this->channel = $dirver->getChannel();
+        $this->connection = null;
+        $this->channel = $driver->getChannel();
     }
 
 }

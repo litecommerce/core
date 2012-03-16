@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 // vim: set ts=4 sw=4 sts=4 et:
 
@@ -25,30 +26,35 @@
  * @since     1.0.19
  */
 
-namespace XLite\Module\CDev\Swarm\Core\Swarm\Planner;
-
 /**
- * Common planner 
- * 
- * @see   ____class_see____
- * @since 1.0.19
+ * ./amqp-publish.php queue_name json_encoded_array 
  */
-class Common extends \XLite\Module\CDev\Swarm\Core\Swarm\Planner\APlanner
-{
-    /**
-     * Define workers
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineWorkers()
-    {
-        $this->addWorker(
-            'XLite\Module\CDev\Swarm\Core\Swarm\Worker\AMQP',
-            null,
-            \XLite\Core\Config::getInstance()->CDev->Swarm->workers_count
-        );
-    }
+
+define('PATH_SRC', __DIR__ . '/../src');
+require_once PATH_SRC . '/top.inc.php';
+
+if (PHP_SAPI != 'cli') {
+    echo 'Only CLI!' . PHP_WOL;
+    die(1);
 }
 
+if (!\XLite\Core\EventDriver\AMQP::isValid()) {
+    echo 'Connection to AMPQ server failed' . PHP_EOL;
+    die(3);
+}
+
+array_shift($_SERVER['argv']);
+$queue = @array_shift($_SERVER['argv']);
+$data = @array_shift($_SERVER['argv']);
+
+if (!$queue) {
+    echo 'Queue name is empty!' . PHP_EOL;
+    die(2);
+}
+
+echo 'Publish \'' . $queue . '\' task ... ';
+$driver = new \XLite\Core\EventDriver\AMQP;
+$result = $driver->fire($queue, $data ? json_decode($data, true) : array());
+
+echo ($result ? 'done' : 'failed') . PHP_EOL;
+die(0);

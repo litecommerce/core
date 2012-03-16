@@ -82,11 +82,11 @@ abstract class AMQP extends \Swarm\Worker\AMQP\Handler
         } else {
             if ($this->processMessage($queue, $data)) {
                 $success = true;
-                emm()->flush();
+                \XLite\Core\Database::getEM()->flush();
                 $this->sendAck($message);
             }
 
-            emm()->em()->clear();
+            \XLite\Core\Database::getEM()->clear();
         }
 
         $this->postprocess();
