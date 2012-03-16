@@ -176,11 +176,24 @@ upgrade_step_time_limit = 240
 send_shop_domain = On
 
 ;
+; AMQP server
+;
+[amqp]
+host     = "localhost"
+port     = 5672
+user     = "guest"
+password = "guest"
+vhost    = "/"
+exchange = "xlite"
+
+;
 ; Other options
 ;
 [other]
 ; Translation drive code - auto / gettext / db
 translation_driver = auto
+; Event driver code - auto / db / amqp
+event_driver = auto
 
 ; WARNING: Do not change the line below
 ; */ ?>
