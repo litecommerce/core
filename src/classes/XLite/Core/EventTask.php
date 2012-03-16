@@ -38,7 +38,7 @@ class EventTask extends \XLite\Base\Singleton
     /**
      * Driver 
      * 
-     * @var   \XLite\COre\EventDriver\AEventDriver
+     * @var   \XLite\Core\EventDriver\AEventDriver
      * @see   ____var_see____
      * @since 1.0.19
      */
@@ -56,15 +56,20 @@ class EventTask extends \XLite\Base\Singleton
      */
     public static function __callStatic($name, array $args = array())
     {
-        $driver = $this->getDriver();
+        $result = false;
 
-        return $driver ? $driver->fire($name, $args) : false;
+        if (in_array($name, \XLite\Core\EventListener::getInstance()->getEvents())) {
+            $driver = static::getInstance()->getDriver();
+            $result = $driver ? $driver->fire($name, $args) : false;
+        }
+
+        return $result;
     }
 
     /**
      * Get driver 
      * 
-     * @return \XLite\COre\EventDriver\AEventDriver
+     * @return \XLite\Core\EventDriver\AEventDriver
      * @see    ____func_see____
      * @since  1.0.19
      */

@@ -79,7 +79,7 @@ abstract class AConsole extends \XLite\Controller\AController
 
                 $this->printContent(
                     PHP_EOL . 'Execution time: '
-                    . date('H:i:s', floor($duration) - intval(date('Z')))
+                    . gmdate('H:i:s', floor($duration))
                     . '.' . sprintf('%04d', $micro * 10000) . ' sec.'
                     . PHP_EOL
                 );

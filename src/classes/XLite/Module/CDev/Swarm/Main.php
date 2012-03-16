@@ -25,55 +25,75 @@
  * @since     1.0.0
  */
 
-namespace XLite\Core\Task;
+namespace XLite\Module\CDev\Swarm;
 
 /**
- * Event listener (DB-based)
+ * Swarm module main class
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class EventListener extends \XLite\Core\Task\Base\Periodic
+abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Get title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getTitle()
-    {
-        return 'Event listener (DB)';
-    }
-
-    /**
-     * Run step
+     * Method to initialize concrete module instance
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function runStep()
+    public static function init()
     {
-        $listener = \XLite\Core\EventListener::getInstance();
-        foreach (\XLite\Core\Database::getRepo('XLite\Model\EventTask')->findQuery() as $task) {
-            if ($listener->handle($task->getName(), $task->getArguments())) {
-                \XLite\Core\Database::getEM()->remove($task);
-            }
-        }
+//        $loader = new \Doctrine\Common\ClassLoader('Swarm', __DIR__ . LC_DS . 'lib');
+//        $loader->register();
     }
 
     /**
-     * Get period (seconds)
+     * Author name
      *
-     * @return integer
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getPeriod()
+    public static function getAuthorName()
     {
-        return 1800;
+        return 'Creative Development LLC';
+    }
+
+    /**
+     * Module version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getMinorVersion()
+    {
+        return '0';
+    }
+
+    /**
+     * Module name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getModuleName()
+    {
+        return 'Swarm';
+    }
+
+    /**
+     * Module description
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getDescription()
+    {
+        return '';
     }
 
 }

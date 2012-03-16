@@ -25,67 +25,73 @@
  * @since     1.0.19
  */
 
-namespace XLite\Core;
+namespace XLite\Module\CDev\Swarm\Core\Swarm\Worker\Base;
 
 /**
- * Event listener (common) 
- * 
+ * Abstract AMQP worker
+ *
  * @see   ____class_see____
- * @since 1.0.19
+ * @since 1.0.0
  */
-class EventListener extends \XLite\Base\Singleton
+abstract class AMQP extends \Swarm\Worker\AMQP
 {
     /**
-     * Handle event
+     * Get pid's files directory 
      * 
-     * @param string $name      Event name
-     * @param array  $arguments Event arguments OPTIONAL
-     *  
-     * @return boolean
+     * @return string
      * @see    ____func_see____
      * @since  1.0.19
      */
-    public function handle($name, array $arguments = array())
+    public static function getPidsDirectory()
     {
-        $result = false;
-        $list = $this->getListeners();
-
-        if (isset($list[$name])) {
-            $list = is_array($list[$name]) ? $list[$name] : array($list[$name]);
-            foreach ($list as $class) {
-                if ($class::handle($name, $arguments)) {
-                    $result = true;
-                }
-            }
-        }
-
-        return $result;
+        return sys_get_temp_dir();
     }
 
     /**
-     * Get events 
-     * 
-     * @return array
+     * Constructor
+     *
+     * @param \Swarm\Manager $manager Manager
+     *
+     * @return void
      * @see    ____func_see____
-     * @since  1.0.19
+     * @since  1.0.0
      */
-    public function getEvents()
+    public function __construct(\Swarm\Manager $manager)
     {
-        return array_keys($this->getListeners());
-    }
+        parent::__construct($manager);
 
-    /**
-     * Get listeners 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
-     */
-    protected function getListeners()
-    {
-        return array(
-            'probe' => array('\XLite\Core\EventListener\Probe'),
+        file_put_contents(
+            static::getPidsDirectory() . LC_DS . 'xlite.worker.' . posix_getpid() . '.pid',
+            posix_getpid()
         );
     }
+
+    /**
+     * Get AMQP server settings
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getAMQPServerSettings()
+    {
+        return array();
+    }
+
+    /**
+     * Initialize connection
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function initializeConnection()
+    {
+        $driver = new \XLite\Core\EventDriver\AMQP;
+
+        $this->connection = false;
+        $this->channel = $dirver->getChannel();
+    }
+
 }
 

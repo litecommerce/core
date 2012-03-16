@@ -59,7 +59,7 @@ abstract class AEventListener extends \XLite\Base\Singleton
      */
     public static function handle($name, array $arguments = array())
     {
-        return static::checkEvent($name, $arguments) ? static::LgetInstance()->handleEvent($name, $arguments) : false;
+        return static::checkEvent($name, $arguments) ? static::getInstance()->handleEvent($name, $arguments) : false;
     }
 
     /**

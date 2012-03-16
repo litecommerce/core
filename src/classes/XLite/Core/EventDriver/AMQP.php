@@ -181,6 +181,65 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
     }
 
     /**
+     * Consume queue
+     * 
+     * @param string   $queue    Queue name
+     * @param callable $listener Callable listener
+     * @param string   $tag      Consumer tag OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function consume($queue, $listener, $tag = null)
+    {
+        $channel = $this->getChannel();
+
+        if ($channel) {
+            $channel->basic_consume(
+                $queue,
+                $tag,
+                false,
+                false,
+                false,
+                false,
+                $listener
+            );
+        }
+
+    }
+
+    /**
+     * Send acknowledge
+     * 
+     * @param \AMQPMessage $message Mesasge
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function sendAck(\AMQPMessage $message)
+    {
+        $message->delivery_info['channel']->basic_ack($message->delivery_info['delivery_tag']);
+    }
+
+    /**
+     * Wait messages
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function wait()
+    {
+        $channel = $this->getChannel();
+
+        if ($channel && 0 < count($channel->callbacks)) {
+            $channel->wait();
+        }
+    }
+
+    /**
      * Get exchange name
      *
      * @return string

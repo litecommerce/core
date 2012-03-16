@@ -25,67 +25,45 @@
  * @since     1.0.19
  */
 
-namespace XLite\Core;
+namespace XLite\Module\CDev\Swarm\Core\Swarm\Handler;
 
 /**
- * Event listener (common) 
+ * AMQP handler 
  * 
  * @see   ____class_see____
  * @since 1.0.19
  */
-class EventListener extends \XLite\Base\Singleton
+class AMQP extends \XLite\Module\CDev\Swarm\Core\Swarm\Handler\Base\AMQP
 {
     /**
-     * Handle event
+     * Constructor
      * 
-     * @param string $name      Event name
-     * @param array  $arguments Event arguments OPTIONAL
-     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function __construct()
+    {
+        $this->listeners = array();
+        foreach (\XLite\Core\EventListener::getInstance()->getEvents() as $name) {
+            $this->listeners[] = array($name);
+        }
+    }
+
+    /**
+     * Process message
+     *
+     * @param string $name Queue name
+     * @param array  $data Data
+     *
      * @return boolean
      * @see    ____func_see____
-     * @since  1.0.19
+     * @since  1.0.0
      */
-    public function handle($name, array $arguments = array())
+    protected function processMessage($name, array $data)
     {
-        $result = false;
-        $list = $this->getListeners();
-
-        if (isset($list[$name])) {
-            $list = is_array($list[$name]) ? $list[$name] : array($list[$name]);
-            foreach ($list as $class) {
-                if ($class::handle($name, $arguments)) {
-                    $result = true;
-                }
-            }
-        }
-
-        return $result;
+        return \XLite\Core\EventListener::getInstance()->handle($name, $data);
     }
 
-    /**
-     * Get events 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
-     */
-    public function getEvents()
-    {
-        return array_keys($this->getListeners());
-    }
-
-    /**
-     * Get listeners 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.19
-     */
-    protected function getListeners()
-    {
-        return array(
-            'probe' => array('\XLite\Core\EventListener\Probe'),
-        );
-    }
 }
 
