@@ -16,7 +16,7 @@
 }
 
 div.table-value .input-text-symbol input {
-  width: 60px;
+  width: 45px;
   padding-left: 30px;
 }
 
@@ -24,4 +24,5 @@ div.table-value .input-text-symbol input {
   left: 10px;
   position: absolute;
   top: 1px;
+  color: #456583;
 }

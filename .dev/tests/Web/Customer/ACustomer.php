@@ -242,4 +242,36 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
     {
         return '$' . number_format($value, 2, '.', '');
     }
+
+    /**
+     * Waits until the progress bar appears and is hidden then
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function waitForAjaxProgress()
+    {
+        $listSelector = $this->getListSelector();
+
+        // wait until the progress bar appears
+        // it is commented due to the fact that sometimes the progress bar disappers faster than selenium checks whether it is visible
+        //$this->waitForLocalCondition("jQuery('$listSelector .blockUI.block-wait:visible').length > 0");
+
+        // wait until the progress bar is hidden
+        $this->waitForLocalCondition(
+            'jQuery("' . $listSelector . ' .blockUI.block-wait:visible").length > 0',
+            60000,
+            'Wait for products list update layer will appear'
+        );
+
+
+        // wait until the progress bar is hidden
+        $this->waitForLocalCondition(
+            'jQuery("' . $listSelector . ' .blockUI.block-wait:visible").length <= 0',
+            60000,
+            'Wait for products list update layer will disappear'
+        );
+
+    }
 }

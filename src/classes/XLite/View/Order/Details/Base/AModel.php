@@ -98,6 +98,6 @@ abstract class AModel extends \XLite\View\Model\AModel
      */
     protected function getHead()
     {
-        return 'Order #' . $this->getOrderId() . ' details';
+        return static::t('Order #{{id}} details', array('id' => $this->getOrderId()));
     }
 }

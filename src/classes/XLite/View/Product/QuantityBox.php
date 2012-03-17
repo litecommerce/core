@@ -230,4 +230,16 @@ class QuantityBox extends \XLite\View\Product\AProduct
     {
         return $this->getProduct()->getInventory()->{$this->getMaxQuantityMethod()}();
     }
+
+    /**
+     * Return minimum quantity
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getMinQuantity()
+    {
+        return 1;
+    }
 }

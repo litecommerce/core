@@ -11,19 +11,15 @@
  *}
 
 <div class="{getListCSSClasses()}">
-
-  {displayCommentedData(getJSData())}
+  {displayCommentedData(getJSData()):s}
 
   <h2 IF="isHeadVisible()" class="items-list-title">{getListHead()}</h2>
-
-  <div IF="isPagerVisible()" class="list-pager">{pager.display()}</div>
-
-  <div IF="isHeaderVisible()" class="list-header">{displayInheritedViewListContent(#header#)}</div>
+  <div IF="isPagerVisible()" class="list-pager">{pager.display():s}</div>
+  <div IF="isHeaderVisible()" class="list-header"><list name="header" type="inherited" /></div>
 
   <widget template="{getPageBodyTemplate()}" />
 
-  <div class="list-pager list-pager-bottom" IF="isPagerVisible()&pager.isPagesListVisible()">{pager.display()}</div>
-
-  <div IF="isFooterVisible()" class="list-footer">{displayInheritedViewListContent(#footer#)}</div>
+  <div class="list-pager list-pager-bottom" IF="isPagerVisible()&pager.isPagesListVisible()">{pager.display():s}</div>
+  <div IF="isFooterVisible()" class="list-footer"><list name="footer" type="inherited" /></div>
 
 </div>

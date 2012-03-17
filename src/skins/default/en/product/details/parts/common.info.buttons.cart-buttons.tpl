@@ -16,5 +16,5 @@
  *}
 
 <div class="buttons-row" IF="isProductAvailableForSale()">
-  {displayNestedViewListContent(#cart-buttons#)}
+  <list name="cart-buttons" type="nested" />
 </div>

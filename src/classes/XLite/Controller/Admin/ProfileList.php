@@ -44,19 +44,7 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Search users';
-    }
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Users';
+        return 'Search for users';
     }
 
     /**

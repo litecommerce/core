@@ -18,8 +18,14 @@ CommonForm.elementControllers.push(
       this.sanitizeValue = function (value, e)
       {
         if (0 < e) {
-          value = Math.round(value * Math.pow(10, e)).toString();
-          value = value.substr(0, value.length - e) + '.' + value.substr(-1 * e);
+          value = Math.round(value * Math.pow(10, e));
+          if (0 == value) {
+            value = '0' + '.' + (new Array(e + 1).join('0'));
+
+          } else {
+            value = value.toString();
+            value = value.substr(0, value.length - e) + '.' + value.substr(-1 * e);
+          }
 
         } else {
           value = Math.round(value);

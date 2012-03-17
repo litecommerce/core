@@ -41,7 +41,7 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     const WIDGET_TARGET_SALE_PRODUCTS = 'sale_products';
 
-    
+
     /**
      * Return target to retrive this widget from AJAX
      *
@@ -51,24 +51,7 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected static function getWidgetTarget()
     {
-        return self::WIDGET_TARGET_SALE_PRODUCTS;
-    }
-
-    /**
-     * Define and set widget attributes; initialize widget
-     *
-     * @param array $params Widget params OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
-     */
-    public function __construct(array $params = array())
-    {
-        parent::__construct($params);
-
-        unset($this->sortByModes[self::SORT_BY_MODE_AMOUNT_ASC]);
-        unset($this->sortByModes[self::SORT_BY_MODE_AMOUNT_DESC]);
+        return static::WIDGET_TARGET_SALE_PRODUCTS;
     }
 
     /**
@@ -84,6 +67,22 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
+     * Initialize widget (set attributes)
+     *
+     * @param array $params Widget params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        unset($this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]);
+    }
+
+    /**
      * Get title
      *
      * @return string
@@ -92,7 +91,7 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getHead()
     {
-        return static::t('Sale');
+        return 'Sale';
     }
 
     /**
@@ -118,6 +117,11 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         $cnd->{\XLite\Module\CDev\Sale\Model\Repo\Product::P_PARTICIPATE_SALE} = true;
 
+        $cnd->{\XLite\Model\Repo\Product::P_ORDER_BY} = array(
+            \XLite\Module\CDev\Sale\Model\Repo\Product::PERCENT_CALCULATED_FIELD,
+            'DESC'
+        );
+
         return $cnd;
     }
 
@@ -133,20 +137,10 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')
-            ->search($this->getSearchConditions($cnd), $countOnly);
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && \XLite\Core\Config::getInstance()->CDev->Sale->sale_enabled;
+        return $this->getOnlyEntities(
+            \XLite\Core\Database::getRepo('XLite\Model\Product')
+                ->search($this->getSearchConditions($cnd), $countOnly)
+        );
     }
 
     /**
@@ -161,15 +155,4 @@ abstract class ASale extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return intval(\XLite\Core\Config::getInstance()->CDev->Sale->sale_max_count_in_block) ?: 3;
     }
 
-    /**
-     * Get max number of products displayed in list
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getMaxCountInFullList()
-    {
-        return intval(\XLite\Core\Config::getInstance()->CDev->Sale->sale_max_count_in_full_list) ?: 10;
-    }
 }

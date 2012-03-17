@@ -7,176 +7,177 @@
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
 # @since     1.0.0
+
 XLite\Model\Config:
   - name: gosocial_sep_1
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: separator
-    orderby: 100
-    value: ''
+    orderby: 5000
     translations:
       - code: en
-        option_name: Facebook application settings
+        option_name: 'Facebook application settings'
   - name: fb_app_id
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: text
-    orderby: 200
-    value: ''
+    orderby: 5100
     translations:
       - code: en
-        option_name: Application ID
+        option_name: 'Facebook Application ID'
+        option_comment: 'Facebook Platform application ID that administers your site pages. You can get this ID by visiting the page at <a href="https://developers.facebook.com/apps/">https://developers.facebook.com/apps/</a><br /><br />You should specify this field:<ul><li>to make your site statistics appear in the Facebook Insights dashboard</li><li>to enable a moderator interface on Facebook where comments from all product pages can be easily moderated together</li></ul>'
   - name: fb_app_namespace
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: text
-    orderby: 400
-    value: ''
+    orderby: 5200
     translations:
       - code: en
-        option_name: Application namespace
+        option_name: 'Facebook Application Namespace'
+        option_comment: 'Specify the same app namespace that you entered when configured your Facebook Platform application.'
+  - name: fb_admins
+    category: 'CDev\GoSocial'
+    type: text
+    orderby: 5300
+    translations:
+      - code: en
+        option_name: 'Facebook Admins'
+        option_comment: 'Comma-separated list of the Facebook User IDs of page administrators. Include at least your own Facebook User ID.'
   - name: gosocial_sep_2
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: separator
     orderby: 1000
-    value: ''
     translations:
       - code: en
-        option_name: Facebook Like button settings
+        option_name: 'Facebook Like Button settings'
   - name: fb_like_use
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: checkbox
     orderby: 1050
     value: true
     translations:
       - code: en
-        option_name: Use Facebook Like button
-  - name: fb_admins
-    category: CDev\GoSocial
-    type: text
-    orderby: 1060
-    value: ''
-    translations:
-      - code: en
-        option_name: Administrators IDs
-        option_comment: 'Specify a comma-separated list of Facebook user IDs (or a single user ID) who can moderate Facebook statistics for this site'
+        option_name: 'Display the Like button on product pages'
+        option_comment: 'The Like button lets a customer share your product pages with friends on Facebook.'
   - name: fb_like_send_button
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: checkbox
     orderby: 1100
     value: false
     translations:
       - code: en
-        option_name: Send button
+        option_name: 'Display the Send button along with the Like button'
+        option_comment: 'The Send button lets a customer send a message with a link to your product page to a Facebook group that he/she belongs to, or to a friend on Facebook.'
   - name: fb_like_layout
-    category: CDev\GoSocial
-    type: XLite\Module\CDev\GoSocial\View\FormField\Select\FBLayoutStyle
+    category: 'CDev\GoSocial'
+    type: 'XLite\Module\CDev\GoSocial\View\FormField\Select\FBLayoutStyle'
     orderby: 1200
     value: standard
     translations:
       - code: en
-        option_name: Layout style
+        option_name: 'Layout style'
+        option_comment: 'There are three options:<ul><li>"standard" - displays social text to the right of the button and friends'' profile photos below</li><li>"button" - displays the total number of likes to the right of the button</li><li>"box" - displays the total number of likes above the button.</li></ul>'
   - name: fb_like_show_faces
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: checkbox
     orderby: 1300
     value: true
     translations:
       - code: en
-        option_name: Show faces
+        option_name: 'Show profile pictures below the Like button'
+        option_comment: 'Profile pictures appear in the "standard" layout style only.'
   - name: fb_like_verb
-    category: CDev\GoSocial
-    type: XLite\Module\CDev\GoSocial\View\FormField\Select\FBVerbDisplay
+    category: 'CDev\GoSocial'
+    type: 'XLite\Module\CDev\GoSocial\View\FormField\Select\FBVerbDisplay'
     orderby: 1400
     value: like
     translations:
       - code: en
-        option_name: Verb to display
+        option_name: 'The verb to display in the Like button'
   - name: gosocial_sep_21
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: separator
     orderby: 1500
-    value: ''
     translations:
       - code: en
-        option_name: Facebook comments settings
+        option_name: 'Facebook comments settings'
   - name: fb_comments_use
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: checkbox
     orderby: 1600
     value: true
     translations:
       - code: en
-        option_name: Use Facebook comments
+        option_name: 'Display the Facebook Comments tab on product pages'
+        option_comment: 'To moderate comments, specify your Facebook User ID in the "Facebook Admins" field below.<br />To enable the moderator interface on Facebook where comments from all product pages can be easily moderated together, specify your Facebook App ID in the "Facebook Application ID" field below.'
   - name: fb_comments_num_posts
-    category: CDev\GoSocial
-    type: XLite\View\FormField\Input\Text\Integer
+    category: 'CDev\GoSocial'
+    type: 'XLite\View\FormField\Input\Text\Integer'
     orderby: 1700
     value: 8
     widgetParameters: { min: 1 }
     translations:
       - code: en
-        option_name: Number of posts
+        option_name: 'Number of posts to show on the tab by default'
   - name: gosocial_sep_3
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: separator
     orderby: 2000
-    value: ''
     translations:
       - code: en
-        option_name: Tweet button settings
+        option_name: 'Tweet button settings'
   - name: tweet_use
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: checkbox
     orderby: 2050
     value: true
     translations:
       - code: en
-        option_name: Use Tweet button
+        option_name: 'Display the Tweet button on product pages'
+        option_comment: 'The Tweet button allows customers to easily share your product pages with their Twitter followers.'
   - name: tweet_show_count
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: checkbox
     orderby: 2100
     value: true
     translations:
       - code: en
-        option_name: Show count
+        option_name: 'Show the count box along with the Tweet button'
+        option_comment: 'The count box shows how many times the product page has been Tweeted.'
   - name: tweet_via
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: text
     orderby: 2200
-    value: ''
     translations:
       - code: en
-        option_name: Via
+        option_name: 'Account name of the user to attribute the Tweet to (optional)'
   - name: tweet_recommend
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: text
     orderby: 2300
-    value: ''
     translations:
       - code: en
-        option_name: Recommend
+        option_name: 'Account name of the user to follow after sending a Tweet (optional)'
+        option_comment: 'Twitter will suggest customers to follow this user once they have sent a Tweet using the Tweet button.'
   - name: tweet_hashtag
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: text
     orderby: 2300
-    value: ''
     translations:
       - code: en
-        option_name: Hashtag
+        option_name: 'Hashtag to show within the Tweet button and in the text of the tweet status (optional)'
   - name: gosocial_sep_4
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: separator
     orderby: 3000
-    value: ''
     translations:
       - code: en
-        option_name: Google+ button settings
+        option_name: 'Google+ button settings'
   - name: gplus_use
-    category: CDev\GoSocial
+    category: 'CDev\GoSocial'
     type: checkbox
     orderby: 3050
     value: true
     translations:
       - code: en
-        option_name: Use Google+ button
+        option_name: 'Display the Google+ button on product pages'
+
 XLite\Model\LanguageLabel:
-  - { name: Tweet, translations: [{ code: en, label: Tweet }] }
+  - { name: Tweet, translations: [{ code: en, label: 'Tweet' }] }

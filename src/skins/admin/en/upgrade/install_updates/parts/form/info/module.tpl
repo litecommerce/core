@@ -14,6 +14,6 @@
 
 <li class="module" IF="isModule(entry)">
   <ul class="details">
-  {displayInheritedViewListContent(#sections.form.info.module#,_ARRAY_(#entry#^entry))}
+  <list name="sections.form.info.module" type="inherited" entry="{entry}" />
   </ul>
 </li>

@@ -11,7 +11,7 @@
  *}
 <div class="orders-list {getClassIdentifier()}">
 
-  {displayViewListContent(#orders.children#)}
+  <list name="orders.children" />
 
 {* TODO Restore
 

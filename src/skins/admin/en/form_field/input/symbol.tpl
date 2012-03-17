@@ -12,5 +12,5 @@
 <span class="input-field-wrapper {getWrapperClass()}">
   {displayCommentedData(getCommentedData())}
   <input{getAttributesCode():h} />
-  <span class="symbol text">{getSymbol():h}</span>
+  <span class="symbol text">{t(getSymbol())}</span>
 </span>

@@ -9,8 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <html>
-<head><title>{t(#User profile deleted#)}</title></head>
+<head><title>{t(#User profile is deleted#)}</title></head>
 <body>
 
 <p>{t(#The user profile has been deleted:#)} {userLogin:h}</p>

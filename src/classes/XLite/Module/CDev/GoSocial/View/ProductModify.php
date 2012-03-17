@@ -62,7 +62,7 @@ class ProductModify extends \XLite\View\AView
      */
     public function getJSFiles()
     {
-        $list = parent::getCSSFiles();
+        $list = parent::getJSFiles();
 
         $list[] = 'modules/CDev/GoSocial/product.js';
 
@@ -79,24 +79,6 @@ class ProductModify extends \XLite\View\AView
     protected function getDefaultTemplate()
     {
         return 'modules/CDev/GoSocial/product.tpl';
-    }
-
-    /**
-     * Get Open Graph textarea attributes 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getOpenGraphTextareaAttributes()
-    {
-        $list = array();
-
-        if (!$this->getProduct()->getUseCustomOG()) {
-            $list['disabled'] = 'disabled';
-        }
-
-        return $list;
     }
 }
 

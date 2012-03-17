@@ -20,12 +20,13 @@
 }
 
 .formError .formErrorContent {
-  width: 100%;
   background: #e65e57;
   position:relative;
   z-index: 1400001;
   color: #fff;
-  width: 150px;
+  width: auto;
+  min-width: 150px;
+  display: inline-block;
   font-family: tahoma;
   font-size: 12px;
   border: 2px solid #e9d9d8;
@@ -36,6 +37,18 @@
   border-radius: 6px;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
+}
+
+.formError .formErrorContent ul {
+  list-style: disc outside none;
+}
+
+.formError .formErrorContent ul li {
+  margin-left: 1em;
+}
+
+.formError .formErrorContent a:hover {
+  text-decoration: underline;
 }
 
 .greenPopup .formErrorContent {

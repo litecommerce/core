@@ -1,5 +1,5 @@
 # Source file or directory to parse
-source: './'
+#source: './'
 # Directory where to save the generated documentation
 destination: 'api'
 # Mask to exclude file or directory from processing

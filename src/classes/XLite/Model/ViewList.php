@@ -46,20 +46,16 @@ class ViewList extends \XLite\Model\AEntity
     /**
      * Predefined weights
      */
-
     const POSITION_FIRST = 0;
     const POSITION_LAST  = 16777215;
-
 
     /**
      * Predefined interfaces
      */
-
     const INTERFACE_CUSTOMER = 'customer';
     const INTERFACE_ADMIN    = 'admin';
     const INTERFACE_CONSOLE  = 'console';
     const INTERFACE_MAIL     = 'mail';
-
 
     /**
      * List id

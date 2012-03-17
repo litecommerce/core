@@ -45,7 +45,6 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'items_list/module/install/pager/css/style.css';
 
         return $list;
@@ -98,6 +97,6 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      */
     protected function isVisibleBottom()
     {
-        return false;
+        return true;
     }
 }

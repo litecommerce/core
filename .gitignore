@@ -28,4 +28,5 @@
 /src/var/.decorator.fixtures.ini.php
 /src/var/.decorator.modules.ini.php
 /src/var/.decorator.unsafe_modules.ini.php
+/src/var/.disabled.structures.php
 /nbproject

@@ -1,0 +1,510 @@
+<?php
+/**
+ * LiteCommerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * @category   LiteCommerce
+ * @package    Tests
+ * @subpackage Amazon
+ * @author     Creative Development LLC <info@cdev.ru>
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ */
+
+require_once "lib/Cloud.php";
+
+
+task('clear', function($app)
+{
+    if (file_exists('data.txt'))
+        unlink('data.txt');
+    $app['time'] = microtime(true);
+});
+
+task('parallel_boot', 'clear', 'setup', 'ec2:check_settings', 'grid:start_hub', 'server:start');
+
+task('parallel', 'parallel_boot', 'rc:start', 'server:test_parallel', 'grid:shutdown');
+
+task('apigen', 'parallel_boot', 'server:apigen', 'grid:shutdown');
+
+task('noweb', 'parallel_boot', 'server:test_noweb', 'grid:shutdown');
+
+task('boot_noweb', 'parallel_boot', 'server:apigen', 'server:test_noweb', function($app)
+{
+    $app['noweb_time'] = microtime(true);
+    server_setup($app);
+});
+
+task('build_deploy', 'boot_noweb', 'server:test_deploy', function ($app)
+{
+    $app['deploy_time'] = microtime(true);
+});
+
+task('default', 'build_deploy', 'grid:start_rc', 'server:test_parallel', 'grid:shutdown', function ($app)
+{
+    echo PHP_EOL . "TRACE:  Instance type: " . $app['grid_instance_type'];
+    $last = $app['time'];
+    if (isset($app['deploy_time'])) {
+        echo PHP_EOL . "TRACE:  Time for deploy: " . ($app['deploy_time'] - $app['time']);
+        $last = $app['deploy_time'];
+    }
+    if (isset($app['noweb_time'])) {
+        echo PHP_EOL . "TRACE:  Time for non web tests: " . ($app['noweb_time'] - $last);
+        $last = $app['noweb_time'];
+    }
+    echo PHP_EOL . "TRACE:  Time for parallel: " . (microtime(true) - $last);
+});
+
+task("setup", function ($app)
+{
+    $app['remote_control_port_range'] = array_key_exists('remote_control_port_range', $app) ? $app['remote_control_port_range'] : "5555-5555";
+    $app['launch_timeout'] = array_key_exists('launch_timeout', $app) ? $app['launch_timeout'] : 240;
+
+    $app['cloud'] = Cloud::getInstance();
+
+    if (!isset($app['farms_count']))
+        $app['farms_count'] = 4;
+
+    setup_ec2(isset($app['ec2_dir']) ? $app['ec2_dir'] : null);
+
+    $app['hub_ami'] = exec("ec2-describe-images | grep lc-test-grid | cut -f2");
+    $app['lc_ami'] = exec("ec2-describe-images | grep lc_server_64 | cut -f2");
+
+    $app['server_instance_type'] = "m1.large";
+    $app['grid_instance_type'] = "m1.small";
+
+    $app['keypair'] = getenv("EC2_KEYPAIR");
+    $app['keypair_name'] = getenv("EC2_KEYPAIR_NAME");
+
+    $app['firefox_profile'] = "/http/selenium/selenium-grid/FirefoxProfile";
+
+    if (!isset($app['screenshots_url']))
+        $app['screenshots_url'] = 'http:\/\/localhost\/screenshots';
+
+    $app['server_htdocs'] = '/var/www';
+
+    $app['selenium_grid_path'] = "/http/selenium/selenium-grid";
+
+    $app['server_options'] = array('pwd' => $app['server_htdocs'] . "/xlite", 'keypair' => $app['keypair'], 'user' => 'ubuntu');
+
+    if (!isset($app['log_dir']) || empty($app['log_dir']))
+        $app['log_dir'] = realpath('.') . '/logs';
+    if (file_exists($app['log_dir'])) {
+        exec('rm -rf ' . $app['log_dir']);
+    }
+    mkdir($app['log_dir']);
+
+});
+
+group("server", function()
+{
+    desc("Start LC server instance");
+    task('start', 'setup', function($app)
+    {
+        print PHP_EOL . "Starting a new EC2 Instance...";
+        $app['cloud']->server = LcServer::boot_and_acquire_dns($app['lc_ami'], array('keypair_name' => $app['keypair_name'], 'type' => $app['server_instance_type']));
+        print PHP_EOL . "Started new lc server at " . $app['cloud']->server->public_dns;
+        $app['cloud']->save();
+        server_setup($app);
+
+    });
+
+    desc("Start tests");
+    task('test_seq', 'setup', function($app)
+    {
+        print PHP_EOL . "Run sequential tests on " . $app['cloud']->server->public_dns . "...";
+        $code = $app['cloud']->server->run("cd .dev; sudo ./phpunit.sh ONLYWEB", $app['server_options']);
+
+    });
+
+    desc("Start parallel tests");
+    task('test_parallel', 'setup', function($app)
+    {
+        $server = $app['cloud']->server;
+        print PHP_EOL . "Run parallel tests on " . $app['cloud']->server->public_dns . "...";
+
+        $options = $app['server_options'];
+
+        $code = $server->run("cd .dev; sudo ./phpunit-parallel.php --build --clients-count " . ($app['farms_count']) . "; cat /tmp/phpunit.txt", $options);
+        $server->download('/tmp/phpunit*.txt', $app['log_dir'], $options);
+        $server->download('/tmp/phpunit*.xml', $app['log_dir'], $options);
+
+        get_screenshots($app);
+    });
+    desc('Run noweb phpunit tests on LC server with code coverage collecting');
+    task('test_noweb', 'setup', function($app)
+    {
+        $server = $app['cloud']->server;
+        print PHP_EOL . 'Starting Non-web tests on ' . $server->public_dns . '...';
+
+        $options = $app['server_options'];
+
+        $code = $server->run('mkdir /tmp/coverage-html; cd .dev; sudo ./phpunit --coverage-clover /tmp/phpunit-clover.xml --coverage-html /tmp/coverage-html --verbose --log-junit /tmp/phpunit-noweb.xml xliteAllTests tests/AllTests.php LOCAL_TESTS,NOWEB', $options);
+
+        $server->download('/tmp/phpunit-*.xml', $app['log_dir'], $options);
+        $server->download('/tmp/coverage-html', $app['log_dir'], $options);
+    });
+
+    desc('Drupal + LC deployment test');
+    task('test_deploy', "setup", function($app)
+    {
+        $server = $app['cloud']->server;
+        $options = $app['server_options'];
+
+        $server->run(
+            'cd ../;' .
+                'cp xlite/src/etc/config.php xlite/.dev/build/config.local.php;' .
+                'cp xlite_cms/sites/default/settings.php xlite_cms/sites/default/settings.old.php;' .
+                'cp xlite_cms/sites/default/default.settings.php xlite_cms/sites/default/settings.php;' .
+                'mkdir xlite_cms/modules/lc_connector/litecommerce;' .
+                'cp -r xlite/src/* xlite_cms/modules/lc_connector/litecommerce;' .
+                'rm xlite_cms/modules/lc_connector/litecommerce/etc/config.php;' .
+                'sudo chmod -R 777 .', $options);
+
+        $code = $server->run('cd xlite/.dev; sudo ./phpunit.sh DEPLOY_DRUPAL', $options);
+        get_screenshots($app);
+        $server->run(
+            'cd ../;' .
+                'sudo rm -rf xlite_cms/modules/lc_connector/litecommerce;' .
+                'cp xlite_cms/sites/default/settings.old.php xlite_cms/sites/default/settings.php;' .
+                'sudo chmod -R 777 .', $options);
+        server_setup($app);
+    });
+
+    desc("Run apigen");
+    task('apigen', 'setup', function($app)
+    {
+        $server = $app['cloud']->server;
+        $options = $app['server_options'];
+        $server->run(
+            'mkdir /tmp/api; cd src;' .
+                'sudo php ../.dev/build/devcode_postprocess.php;' .
+                'cd ' . $app['server_htdocs'] . ';' .
+                'mkdir lib;' .
+                'cd lib;' .
+                'git clone https://github.com/apigen/apigen.git;' .
+                'cd apigen;' .
+                'git submodule update --init;' .
+                'cd ' . $app['server_htdocs'] . '/xlite;' .
+                'sudo php ' . $app['server_htdocs'] . '/lib/apigen/apigen.php --source src/classes --config .dev/build/apigen.neon --destination /tmp/api;'
+            , $options);
+        $server->download('/tmp/api', $app['log_dir'], $options);
+        $server->run('sudo rm -rf src/classes/api; sudo rm -rf ../lib/apigen', $options);
+    });
+
+    desc("Shutdown lc server instance");
+    task('shutdown', "setup", function($app)
+    {
+        if ($app['cloud']->server) {
+            print PHP_EOL . "Shutting down EC2 Instance " . $app['cloud']->server->public_dns . "...";
+            $app['cloud']->server->shutdown();
+            $app['cloud']->server = null;
+            $app['cloud']->save();
+        }
+    });
+
+});
+
+function server_setup($app)
+{
+    print PHP_EOL . "Setting up LC server..." . PHP_EOL;
+
+    $server = $app['cloud']->server;
+
+    $options = $app['server_options'];
+
+    $server->run(
+        'sudo rm -rf /tmp/*;' .
+            'sudo /etc/init.d/mysql restart;' .
+            'sudo sed "s/_hostname_/' . $app["cloud"]->server->private_dns . '/g"  .dev/tests/config.template.php > src/etc/config.php;' .
+            'sudo /etc/init.d/lc-startup -b master-dev;' .
+            'sed "s/_hostname_/' . $app["cloud"]->server->private_dns . '/g"  .dev/tests/local.template.php | sed "s/_grid_hub_/' . $app["cloud"]->hub->private_dns . '/g" | sed "s/_clients_count_/' . $app["farms_count"] . '/g" | sed "s/_screenshots_url_/' . $app['screenshots_url'] . '/g" > .dev/tests/local.php', $options);
+    print PHP_EOL . "Running dev_install";
+
+    $code = $server->run("cd .dev; ./phpunit tests/Dev_Install.php", $options);
+    //if ($code != 0)
+    //  die($code);
+}
+
+group("grid", function()
+{
+    task("start_hub", "hub:start", function($app)
+    {
+        wait_for_service($app['cloud']->hub->public_dns, 4444, $app['launch_timeout']);
+    });
+
+    task("start_rc", "rc:start", function($app)
+    {
+        Ec2Client::authorize_port(22);
+        Ec2Client::authorize_port(4444);
+        Ec2Client::authorize_port(5900);
+        Ec2Client::authorize_port(6000);
+        $boundaries = explode("-", $app['remote_control_port_range']);
+        for ($i = $boundaries[0]; $i <= (isset($boundaries[1]) ? $boundaries[1] : $boundaries[0]); $i++) {
+            Ec2Client::authorize_port($i);
+        }
+    });
+
+    desc("Shutdown EC2 Instance used to run Selenium Hub.");
+    task("shutdown", 'setup', "hub:shutdown", "server:shutdown", "rc:shutdown", function ($app)
+    {
+        $app['cloud'] = Cloud::getInstance();
+        $app['cloud']->save();
+    });
+
+    desc("Start Selenium Grid.");
+    task("start_all", "start_hub", "start_rc", "server:config");
+
+    desc("Display information about current Selenium Grid");
+    task("info", 'setup', function($app)
+    {
+        print
+            PHP_EOL . "EC2 Selenium Grid:
+        ==================
+
+        Hub:
+        ----"
+                . ($app['cloud']->hub ?
+                "\n      - Public DNS:  " . $app['cloud']->hub->public_url .
+                    "\n      - Private DNS: " . $app['cloud']->hub->private_url .
+                    "\n      - Console:     " . $app['cloud']->hub->console_url : "") .
+                PHP_EOL .
+                "  LC server:
+        ----"
+                . ($app['cloud']->server ?
+                "\n      - Public DNS:  " . $app['cloud']->server->public_dns .
+                    "\n      - Private DNS: " . $app['cloud']->server->private_dns .
+                    "\n      - Admin URL: " . $app['cloud']->server->admin_url .
+                    "\n      - XLite CMS URL: " . $app['cloud']->server->cms_url : "") .
+                PHP_EOL .
+                "  Remote Control Farms:
+        ---------------------"
+                . array_reduce_index($app['cloud']->farms, function($val, $el, $key) use($app)
+            {
+                return $val . PHP_EOL .
+                    "       * Farm #$key
+                    - Public DNS:  " . $el->public_dns . PHP_EOL
+                    . "               - Private DNS: " . $el->private_dns . PHP_EOL
+                    . "               - Port Range: " . $app['remote_control_port_range'] . PHP_EOL;
+
+            });
+    });
+
+});
+
+###### Hub Recipes ######
+group("hub", function()
+{
+    desc("Shutdown EC2 Instance used to run Selenium Hub.");
+    task("shutdown", "setup", function($app)
+    {
+        if ($app['cloud']->hub) {
+            print PHP_EOL . "Shutting down EC2 Instance " . $app['cloud']->hub->public_dns . "...";
+            $app['cloud']->hub->shutdown();
+            $app['cloud']->hub = null;
+            $app['cloud']->save();
+        }
+        if ($app['cloud']->micro_farm) {
+            print PHP_EOL . "Shutting down EC2 Instance " . $app['cloud']->micro_farm->public_dns . "...";
+            $app['cloud']->micro_farm->shutdown();
+            $app['cloud']->micro_farm = null;
+            $app['cloud']->save();
+        }
+    });
+
+    desc("Start Selenium Grid Hub.");
+    task("start", "setup", function($app)
+    {
+        print PHP_EOL . "Starting a new EC2 Instance...";
+        $hub = Hub::boot_and_acquire_dns($app['hub_ami'], array('keypair_name' => $app['keypair_name'], 'type' => 't1.micro' /*$app['grid_instance_type']*/));
+        $app['cloud']->hub = $hub;
+        $app['cloud']->save();
+        print PHP_EOL . "Started new Hub at " . $hub->public_dns;
+        $hub->run("nohup rake hub:start BACKGROUND=true", array('pwd' => $app['selenium_grid_path'], 'keypair' => $app['keypair']));
+
+
+        print PHP_EOL . "Starting a new EC2 Instance...";
+        try {
+            $farm = Server::boot_and_acquire_dns($app['hub_ami'], array('keypair_name' => $app['keypair_name'], 'type' => 't1.micro'));
+            $app['cloud']->micro_farm = $farm;
+            $app['cloud']->save();
+            print PHP_EOL . "Started new Remote Control farm at " . $farm->public_dns;
+            $farm->run("nohup rake rc:start_all SELENIUM_ARGS=\"-firefoxProfileTemplate " . $app['firefox_profile'] . "\"  HUB_URL=" . $hub->private_url . " HOST=" . $farm->private_dns . " PORTS=" . $app['remote_control_port_range'] . " BACKGROUND=true",
+                array('display' => ":0", 'path' => "/usr/lib/firefox-8.0", 'pwd' => $app["selenium_grid_path"], 'keypair' => $app['keypair']));
+            $farm->run("nohup vncserver :0", array('keypair' => $app['keypair']));
+        }
+        catch (Exception $e) {
+            print PHP_EOL . "Failed to boot new Remote Control farm.";
+        }
+    });
+
+    desc("Open Selenium Grid Hub Console in a browser.");
+    task("console", "setup", function($app)
+    {
+        exec("firefox " . $app['cloud']->hub->console_url);
+    });
+
+    desc("View Selenium Grid Hub logs.");
+    task('logs', "setup", function($app)
+    {
+        $app['cloud']->hub->run("tail -200f " . $app['selenium_grid_path'] . "/log/hub.log", array('keypair' => $app['keypair']));
+    });
+
+});
+
+
+###### Remote Control Recipes ######
+group("rc", function()
+{
+    desc("Start Remote Controls for <farms count> farms.");
+    task('start', "setup", function($app)
+    {
+        if ($app['cloud']->micro_farm) {
+            print PHP_EOL . "Stopping Remote Control at " . $app['cloud']->micro_farm->public_dns . "...";
+            $app['cloud']->micro_farm->run("rake rc:stop_all PORTS=" . $app['remote_control_port_range'], array('pwd' => $app['selenium_grid_path'], 'keypair' => $app['keypair']));
+        }
+        for ($i = 0; $i < $app['farms_count']; $i++) {
+            print PHP_EOL . "Starting a new EC2 Instance...";
+            try {
+                $farm = Server::boot_and_acquire_dns($app['hub_ami'], array('keypair_name' => $app['keypair_name'], 'type' => $app['grid_instance_type']));
+                $app['cloud']->farms[] = $farm;
+                $app['cloud']->save();
+                print PHP_EOL . "Started new Remote Control farm at " . $farm->public_dns;
+            }
+            catch (Exception $e) {
+                print PHP_EOL . "Failed to boot new Remote Control farm.";
+            }
+        }
+        foreach ($app['cloud']->farms as $farm) {
+            print PHP_EOL . "Starting Remote Control at " . $farm->public_dns . "...";
+            $farm->run("nohup rake rc:start_all SELENIUM_ARGS=\"-firefoxProfileTemplate " . $app['firefox_profile'] . "\" HUB_URL=" . $app['cloud']->hub->private_url . " HOST=" . $farm->private_dns . " PORTS=" . $app['remote_control_port_range'] . " BACKGROUND=true",
+                array('display' => ":0", 'path' => "/usr/lib/firefox-8.0", 'pwd' => $app["selenium_grid_path"], 'keypair' => $app['keypair']));
+            $farm->run("nohup vncserver :0", array('keypair' => $app['keypair']));
+        }
+        Ec2Client::authorize_port(5900);
+        Ec2Client::authorize_port(6000);
+    });
+
+    desc("Shutdown all EC2 Instances used to run Selenium Grid Remote Controls.");
+    task("shutdown", "setup", function($app)
+    {
+        foreach ($app['cloud']->farms as $key => $farm) {
+            print PHP_EOL . "Shutting down EC2 Instance " . $farm->public_dns . "...";
+            $farm->shutdown();
+            unset($app['cloud']->farms[$key]);
+        }
+        $app['cloud']->save();
+    });
+
+
+    desc("Visualize what is happening in Remote Control Farms with VNC");
+    task('view', "setup", function($app)
+    {
+        foreach ($app['cloud']->farms as $farm) {
+            exec("vncviewer " . $farm->public_dns . " >> /dev/null &");
+        }
+    });
+
+});
+
+###### Settings Recipes ######
+group("ec2", function()
+{
+    desc("Check EC2 related configuration.");
+    task('check_settings', function()
+    {
+        print PHP_EOL . "Validating environment variables...";
+        foreach (array("EC2_HOME", "EC2_PRIVATE_KEY", "EC2_CERT", "EC2_KEYPAIR") as $var) {
+            if (!getenv($var))
+                throw new Exception(PHP_EOL .
+                    "+++++++++++++++++++++++++++++++++++++++++++++++
+                You must set $var.
+
+                Read http://docs.amazonwebservices.com/AWSEC2/2007-08-29/GettingStartedGuide/?ref=get-started
+                for more details.
+
+                ++++++++++++++++++++++++++++++++++++++++++++++++" . PHP_EOL);
+        }
+        foreach (array("EC2_PRIVATE_KEY", "EC2_CERT", "EC2_KEYPAIR") as $var) {
+            if (!file_exists(getenv($var)))
+                throw new Exception("$var environment variable does not point to a valid path: '" . getenv($var) . "'");
+        }
+        print PHP_EOL . "EC2 Version: " . Ec2Client::version();
+        print PHP_EOL . "Validated EC2 settings.";
+
+    });
+});
+
+/**
+ * @param $url
+ * @param $port
+ * @param $timeout
+ * @return bool
+ */
+function wait_for_service($url, $port, $timeout)
+{
+    $time = time() + $timeout;
+    while ($time > time()) {
+        $ch = curl_init($url . ':' . $port);
+        curl_setopt($ch, CURLOPT_HEADER, TRUE);
+        curl_setopt($ch, CURLOPT_NOBODY, TRUE); // remove body
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if ($httpCode == 200)
+            return true;
+    }
+    return false;
+}
+
+function array_reduce_index($array, $callback, $initial = null)
+{
+    foreach ($array as $key => $element) {
+        $initial = call_user_func($callback, $initial, $element, $key);
+    }
+    return $initial;
+}
+
+function get_screenshots($app)
+{
+    if (!file_exists($app['log_dir'] . '/screenshots'))
+        mkdir($app['log_dir'] . '/screenshots');
+    $options = array('keypair' => $app['keypair'], 'user' => 'ubuntu');
+    foreach ($app['cloud']->farms as $farm) {
+        $farm->download('/var/www/selenium-screenshots/*', $app['log_dir'] . '/screenshots', $options);
+        //exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $farm->public_dns . ':/var/www/selenium-screenshots/* ' . $app['log_dir'] . '/screenshots');
+    }
+    if ($app['cloud']->micro_farm) {
+        $app['cloud']->micro_farm->download('/var/www/selenium-screenshots/*', $app['log_dir'] . '/screenshots', $options);
+        //exec('scp -i ' . $app['keypair'] . ' ubuntu@' . $app['cloud']->micro_farm->public_dns . ':/var/www/selenium-screenshots/* ' . $app['log_dir'] . '/screenshots');
+    }
+}
+
+function setup_ec2($dir = null){
+    echo $dir;
+    if (realpath($dir) && $dir !== null){
+        $dir = realpath($dir);
+        putenv("EC2_HOME=$dir/tools");
+        putenv("EC2_PRIVATE_KEY=$dir/pk-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem");
+        putenv("EC2_CERT=$dir/cert-XQNBCXEZPL3CVVWJ7VFULNKEZDB2R533.pem");
+        putenv("EC2_KEYPAIR=$dir/lc-test.pem");
+        putenv("EC2_KEYPAIR_NAME=lc-test");
+        $path = getenv("PATH") . PATH_SEPARATOR . "$dir/tools/bin";
+        putenv("PATH=$path");
+
+    }
+}
+
+?>

@@ -9,12 +9,11 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<ul class="subcategory-list" IF="category.getSubcategories()">
+
+<ul class="subcategory-view-list subcategory-list grid-list" IF="category.getSubcategories()">
   <li FOREACH="category.getSubcategories(),subcategory">
     <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}" class="subcategory-name">{subcategory.name}</a>
   </li>
-  <li FOREACH="getViewList(#subcategories.children#),w">
-    {w.display()}
-  </li>
+  <li FOREACH="getNestedViewList(#children#),item">{item.display()}</li>
 </ul>
-{displayViewListContent(#subcategories.base#)}
+<list name="subcategories.base" />

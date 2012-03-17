@@ -55,7 +55,6 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     protected $editLanguage;
 
-
     /**
      * Get languages query
      *
@@ -65,16 +64,15 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     protected static function getLanguagesQuery()
     {
-        if (!isset(self::$languagesQuery)) {
-            self::$languagesQuery = array_fill_keys(
+        if (!isset(static::$languagesQuery)) {
+            static::$languagesQuery = array_fill_keys(
                 \XLite\Core\Database::getRepo('\XLite\Model\Language')->getLanguagesQuery(),
                 false
             );
         }
 
-        return self::$languagesQuery;
+        return static::$languagesQuery;
     }
-
 
     /**
      * Constructor
@@ -166,52 +164,39 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     public function getSoftTranslation($code = null)
     {
-        $code = $code ?: $this->editLanguage;
+        $result = null;
 
         if (!isset($code)) {
-            $code = $this->getDefaultLanguageCode();
+            $code = $this->editLanguage ?: $this->getDefaultLanguageCode();
         }
 
-        $result = null;
-        $query = self::getLanguagesQuery();
-        $queryFilled = false;
+        $translations = $this->getTranslations();
+        $result = \Includes\Utils\ArrayManager::searchInObjectsArray($translations->toArray(), 'getCode', $code);
 
-        foreach ($this->getTranslations() as $t) {
-            if ($t->getCode() == $code) {
-                $result = $t;
-                break;
+        if (!isset($result)) {
+            $availLangs = static::getLanguagesQuery();
 
-            } elseif (isset($query[$t->getCode()])) {
-                $query[$t->getCode()] = $t;
-                $queryFilled = true;
-            }
-        }
-
-        if (!$result) {
-            if ($queryFilled) {
-                foreach ($query as $t) {
-                    if ($t) {
-                        $result = $t;
-                        break;
-                    }
-                }
-
-            } elseif (0 < count($this->getTranslations())) {
-                foreach ($this->getTranslations() as $t) {
-                    $result = $t;
+            foreach ($translations as $object) {
+                if (isset($availLangs[$object->getCode()])) {
+                    $result = $object;
                     break;
                 }
             }
-        }
 
-        if (!$result) {
-            $className = $this instanceof \Doctrine\ORM\Proxy\Proxy
-                ? get_parent_class($this) . 'Translation'
-                : get_called_class() . 'Translation';
-            $result = new $className();
-            $result->setOwner($this);
-            $result->setCode($code);
-            $this->addTranslations($result);
+            if (!isset($result)) {
+                $result = $translations->first();
+
+                // DO NOT use isset() here
+                if (!$result) {
+                    $class  = $this instanceof \Doctrine\ORM\Proxy\Proxy ? get_parent_class($this) : get_class($this);
+                    $class .= 'Translation';
+
+                    $result = new $class();
+                    $result->setOwner($this);
+                    $result->setCode($code);
+                    $this->addTranslations($result);
+                }
+            }
         }
 
         return $result;

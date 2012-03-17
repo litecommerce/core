@@ -112,7 +112,8 @@ hr {
 
 a,
 #main-menu ul.menu a,
-div.tabs .primary a:hover
+div.tabs .primary a:hover,
+div.tabs .primary span:hover
 {
   color: #2c5fa6;
 }
@@ -158,7 +159,8 @@ td
 }
 
 th,
-div.tabs .primary a
+div.tabs .primary a,
+div.tabs .primary span
 {
   background: #eff8fe url(../images/bg.png) repeat-x top left;
 }
@@ -206,7 +208,8 @@ table .descending-order
   border-radius: 5px;
 }
 
-div.tabs .secondary a.active
+div.tabs .secondary a.active,
+div.tabs .secondary span.active
 {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
@@ -224,7 +227,8 @@ div.tabs .secondary a.active
   border-top-left-radius: 5px;
 }
 
-ul.primary li a
+ul.primary li a,
+ul.primary li span
 {
   -moz-border-radius-topleft: 12px;
   -moz-border-radius-topright: 12px;
@@ -263,6 +267,7 @@ td,
 table th,
 ul.tabs,
 div.tabs ul.primary a,
+div.tabs ul.primary span,
 #header,
 #header .block .content,
 #header-bar
@@ -1410,16 +1415,19 @@ div.tabs .primary
   margin: 5px;
 }
 
-div.tabs .primary a
+div.tabs .primary a,
+div.tabs .primary span
 {
   padding: 11px 18px 7px;
   vertical-align: baseline;
   border-style: solid solid none solid;
   border-width: 1px;
   text-decoration: none;
+  cursor: pointer;
 }
 
-div.tabs .primary .active a
+div.tabs .primary .active a,
+div.tabs .primary .active span
 {
   color: #333;
   border-bottom-style: solid;
@@ -1428,7 +1436,10 @@ div.tabs .primary .active a
 
 div.tabs .primary .active a,
 div.tabs .primary a:hover,
-div.tabs .primary .active a:hover
+div.tabs .primary .active a:hover,
+div.tabs .primary .active span,
+div.tabs .primary span:hover,
+div.tabs .primary .active span:hover
 {
   border-bottom-color: white;
   background: white;
@@ -1449,12 +1460,14 @@ div.tabs .secondary li
   margin: 0 10px 0 0;
 }
 
-div.tabs .secondary a
+div.tabs .secondary a,
+div.tabs .secondary span
 {
   text-decoration: underline;
 }
 
-div.tabs .secondary a.active
+div.tabs .secondary a.active,
+div.tabs .secondary span.active
 {
   border-style: none;
   background-color: #5296ca;

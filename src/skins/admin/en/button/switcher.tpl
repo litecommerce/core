@@ -11,6 +11,6 @@
  *}
 
 <input type="hidden" name="{getName()}" value="{getEnabled()}" />
-<button type="button" class="{getStyle()}" title="{getTitle()}" data-lbl-enable="{t(#Enable#)}" data-lbl-disable="{t(#Disable#)}">
+<button type="button" class="{getStyle()}" title="{t(getTitle())}" data-lbl-enable="{t(#Enable#)}" data-lbl-disable="{t(#Disable#)}">
   <img src="images/spacer.gif" alt="" />
 </button>

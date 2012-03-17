@@ -86,32 +86,6 @@ class Zone extends \XLite\Model\Repo\ARepo
 
     // }}}
 
-    // {{{ cleanCache
-
-    /**
-     * cleanCache
-     *
-     * @param integer $zoneId Zone Id OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function cleanCache($zoneId = null)
-    {
-        $this->deleteCache('all');
-        $this->deleteCache('default');
-
-        if (isset($zoneId)) {
-            $this->deleteCache('zone.' . sprintf('%d', $zoneId));
-
-        } else {
-            $this->deleteCache('zone');
-        }
-    }
-
-    // }}}
-
     // {{{ findAllZones
 
     /**

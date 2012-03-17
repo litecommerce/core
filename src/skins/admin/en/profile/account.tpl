@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 
-{displayViewListContent(#admin.profile.details#)}
+<list name="admin.profile.details" />
 
 <widget class="\XLite\View\Model\Profile\AdminMain" useBodyTemplate="1" />

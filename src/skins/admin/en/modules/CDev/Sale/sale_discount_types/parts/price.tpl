@@ -27,6 +27,7 @@
      <widget
        class="\XLite\View\FormField\Input\Text\Price"
        fieldOnly="true"
+       mouseWheelIcon="false"
        fieldId="sale-price-value-{%\XLite\Model\Product::SALE_DISCOUNT_TYPE_PRICE%}"
        value="{getParam(#salePriceValue#)}" />
    </li>

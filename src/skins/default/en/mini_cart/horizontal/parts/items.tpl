@@ -18,7 +18,7 @@
 
   <ul>
     <li FOREACH="getItemsList(),item">
-      {displayViewListContent(#minicart.horizontal.item#,_ARRAY_(#item#^item))}
+      <list name="minicart.horizontal.item" item="{item}" />
     </li>
   </ul>
 
@@ -26,6 +26,6 @@
 
   <hr />
 
-  {displayViewListContent(#minicart.horizontal.buttons#)}
+  <list name="minicart.horizontal.buttons" />
 
 </div>

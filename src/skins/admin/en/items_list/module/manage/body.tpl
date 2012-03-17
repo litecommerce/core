@@ -10,4 +10,4 @@
  * @since     1.0.0
  *}
 
-{displayInheritedViewListContent(#sections#,_ARRAY_(#module#^module))}
+<list name="sections" type="inherited" module="{module}" />

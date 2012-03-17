@@ -239,9 +239,9 @@ class TopCategories extends \XLite\View\SideBarBox
 
             if (is_array($categoriesPath)) {
 
-                foreach ($categoriesPath as $category) {
+                foreach ($categoriesPath as $cat) {
 
-                    $this->pathIds[] = $category->getCategoryId();
+                    $this->pathIds[] = $cat->getCategoryId();
 
                 }
 

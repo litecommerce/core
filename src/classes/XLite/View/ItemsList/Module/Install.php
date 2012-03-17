@@ -97,9 +97,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
-
         $list['js'][] = 'js/ui.selectmenu.js';
-
         // popup button is using several specific popup JS
         $list['js'][] = 'js/core.popup.js';
         $list['js'][] = 'js/core.popup_button.js';
@@ -120,19 +118,13 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     {
         $list = parent::getCSSFiles();
         $list[] = 'modules_manager/common.css';
-
         // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
         $list[] = 'modules_manager/enter_key/css/style.css';
-
         // TODO must be taken from LICENSE module widget
         $list[] = 'modules_manager/license/css/style.css';
-
         $list[] = 'modules_manager/installation_type/css/style.css';
-
         // TODO must be taken from SwitchButton widget
         $list[] = \XLite\View\Button\SwitchButton::SWITCH_CSS_FILE;
-
-
         $list[] = $this->getDir() . '/style.css';
 
         return $list;
@@ -148,17 +140,13 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         // TODO must be taken from Button/InstallAddon widget
         $list[] = 'button/js/install_addon.js';
         $list[] = 'button/js/select_installation_type.js';
-
         // TODO must be taken from SwitchButton widget
         $list[] = \XLite\View\Button\SwitchButton::JS_SCRIPT;
-
         // TODO must be taken from LICENSE module widget
         $list[] = 'modules_manager/license/js/switch-button.js';
-
         $list[] = $this->getDir() . '/' . $this->getPageBodyDir() . '/js/controller.js';
 
         return $list;
@@ -186,8 +174,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function isMarketplaceAccessible()
     {
-        return $this->isPHARAvailable()
-            && !is_null(\XLite\Core\Marketplace::getInstance()->checkForUpdates());
+        return $this->isPHARAvailable() && !is_null(\XLite\Core\Marketplace::getInstance()->checkForUpdates());
     }
 
     /**
@@ -386,8 +373,8 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     protected function getWarningMessage()
     {
         return $this->isPHARAvailable() 
-            ? 'Can\'t connect to the Module Marketplace server'
-            : 'You need Phar extension for PHP on your server to download modules from Module Marketplace';
+            ? 'Can\'t connect to the Modules Marketplace server'
+            : 'You need Phar extension for PHP on your server to download modules from Modules Marketplace';
     }
 
     // {{{ Helpers to use in templates

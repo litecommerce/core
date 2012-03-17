@@ -10,8 +10,8 @@
  * @since     1.0.0
  *}
 
-{displayViewListContent(#customer.account.details.before#)}
+<list name="customer.account.details.before" />
 
 <widget class="\XLite\View\Model\Profile\Main" useBodyTemplate="1" />
 
-{displayViewListContent(#customer.account.details.after#)}
+<list name="customer.account.details.after" />

@@ -9,10 +9,11 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <table cellpadding=3 cellspacing=0>
   <tr>
     <td>{t(#User X is logged in#,_ARRAY_(#login#^auth.profile.login))}</td>
-    <td><widget class="\XLite\View\Button\Link" label="Logoff" location="{buildURL(#login#,#logoff#)}" /></td>
+    <td><widget class="\XLite\View\Button\Link" label="Log off" location="{buildURL(#login#,#logoff#)}" /></td>
   </tr>
   <tr>
     <td colspan=2>&nbsp;</td>

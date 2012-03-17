@@ -896,7 +896,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     public function getEntityProperties()
     {
         if (!isset($this->entityProperties)) {
-
             $cmd = $this->getClassMetadata();
 
             $regular = array();
@@ -916,19 +915,20 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                     || $fData['type'] == \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_MANY;
 
                 $fCamelCase = \XLite\Core\Converter::convertToCamelCase($f);
+                $targetEntity = $fData['targetEntity'];
+
                 $assoc = array(
                     'many'         => $isMany,
                     'getter'       => 'get' . $fCamelCase,
                     'setter'       => ($isMany ? 'add' : 'set') . $fCamelCase,
                     'identifiers'  => array(),
-                    'entityName'   => $fData['targetEntity'],
+                    'entityName'   => $targetEntity,
                     'mappedGetter' => null,
                     'mappedSetter' => null,
-                    'repo'         => \XLite\Core\Database::getRepo($fData['targetEntity']),
+                    'repo'         => \XLite\Core\Database::getRepo($targetEntity),
                 );
 
-                $identifiers = \XLite\Core\Database::getEM()->getClassMetadata($fData['targetEntity'])->identifier;
-                foreach ($identifiers as $ident) {
+                foreach (\XLite\Core\Database::getEM()->getClassMetadata($targetEntity)->identifier as $ident) {
                     $identCamelCase = \XLite\Core\Converter::convertToCamelCase($ident);
                     $assoc['identifiers'][$ident] = array(
                         'getter' => 'get' . $identCamelCase,
@@ -1167,6 +1167,17 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         return true;
     }
 
+    /**
+     * Clean up all cache cells
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function cleanCache()
+    {
+        array_map(array($this, 'deleteCache'), array_keys($this->defineCacheCells()));
+    }
 
     /**
      * Define cache cells

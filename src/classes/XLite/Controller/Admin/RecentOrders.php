@@ -44,13 +44,11 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      */
     public function handleRequest()
     {
-        if (is_null(\XLite\Core\Request::getInstance()->mode)) {
-
+        if (!isset(\XLite\Core\Request::getInstance()->mode)) {
             \XLite\Core\Request::getInstance()->{self::PARAM_ACTION} = 'search';
         }
 
         parent::handleRequest();
-
     }
 
     /**
@@ -62,20 +60,7 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      */
     public function getTitle()
     {
-        return static::t('Recent orders');
-    }
-
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return static::t('Recent orders');
+        return 'Recent orders';
     }
 
     /**
@@ -91,10 +76,7 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
 
         \XLite\Core\Session::getInstance()
             ->{\XLite\View\ItemsList\Order\Admin\Recent::getSessionCellName()} = array(
-                \XLite\Model\Repo\Order::P_DATE => array(
-                    LC_START_TIME - 86400,
-                    LC_START_TIME,
-                ),
+                \XLite\Model\Repo\Order::P_DATE => array(LC_START_TIME - 86400, LC_START_TIME),
             );
 
         $this->setReturnURL($this->buildURL('recent_orders', '', array('mode' => 'search')));

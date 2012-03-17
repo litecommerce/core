@@ -33,10 +33,17 @@
           {else:}
             <widget class="{column.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" />
           {end:}
+          <list type="inherited" name="{getCellListNamePart(#cell#,column)}" column="{column}" entity="{entity}" />
         </td>
       </tr>
-      {displayInheritedViewListContent(#row#,_ARRAY_(#idx#^idx,#entity#^entity))}
+      <list type="inherited" name="row" idx="{idx}" entity="{entity}" />
     {end:}
+  </tbody>
+
+  <tbody class="no-items" {if:hasResults()}style="display: none;"{end:}>
+    <tr>
+      <td colspan="{getColumnsCount()}"><widget template="{getEmptyListTemplate()}" /></td>
+    </tr>
   </tbody>
 
   <tbody IF="isBottomInlineCreation()" class="create bottom-create">

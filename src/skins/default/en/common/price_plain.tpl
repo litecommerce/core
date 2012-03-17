@@ -10,4 +10,6 @@
  * @since     1.0.0
  *}
 
-<ul class="product-price">{displayViewListContent(#product.plain_price#)}</ul>
+<ul class="product-price clearfix">
+  <list name="product.plain_price" />
+</ul>

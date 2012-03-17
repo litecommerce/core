@@ -44,7 +44,7 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      */
     protected function getHead()
     {
-        return static::t('Products with low inventory');
+        return 'Products with low inventory';
     }
 
     /**
@@ -125,7 +125,6 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
         $result = parent::defineViewList($list);
 
         if ($this->getListName() . '.footer' === $list) {
-
             $result[] = $this->getWidget(array('label' => 'Update'), '\XLite\View\Button\Submit');
         }
 

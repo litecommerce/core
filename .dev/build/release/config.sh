@@ -74,8 +74,11 @@ CDev/XMLSitemapDrupal
 
 # LiteCommerce paid modules which should be packed as separate distributives
 XLITE_SEPARATE_MODULES=$XLITE_SEPARATE_MODULES"
+CDev/Coupons
 CDev/Egoods
 CDev/ProductAdvisor
+CDev/VolumeDiscounts
+CDev/Wholesale
 "
 
 # LiteCommerce files that must be removed from all distributives

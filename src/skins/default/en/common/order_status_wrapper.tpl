@@ -13,5 +13,5 @@
  *}
 
 <span class="order-status-wrapper {getCSSClass()}">
-{displayViewListContent(#order_status.nowrapper#)}
+<list name="order_status.nowrapper" />
 </span>

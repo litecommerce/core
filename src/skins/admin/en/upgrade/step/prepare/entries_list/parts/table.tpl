@@ -13,11 +13,11 @@
  *}
 
 <table class="entries-list">
-  <tr class="header">{displayInheritedViewListContent(#sections.table.header#)}</tr>
+  <tr class="header"><list name="sections.table.header" type="inherited" /></tr>
   <tr class="separator"><td colspan="6"></td></tr>
   {foreach:getUpgradeEntries(),entry}
   <tr class="{getEntryRowCSSClass(entry)}">
-    {displayInheritedViewListContent(#sections.table.columns#,_ARRAY_(#entry#^entry))}
+    <list name="sections.table.columns" type="inherited" entry="{entry}" />
     {if:!isModule(entry)}
       </tr><tr class="separator"><td colspan="6"></td>
     {end:}

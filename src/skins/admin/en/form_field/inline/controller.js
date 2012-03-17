@@ -53,7 +53,27 @@ CommonForm.elementControllers.push(
       // Save field into view
       this.saveField = function()
       {
-        field.find(this.viewValuePattern).html(inputs.eq(0).val());
+        field.find(this.viewValuePattern).html(this.getFieldFormattedValue());
+      }
+
+      // Get field(s) formatted value (usage as view content)
+      this.getFieldFormattedValue = function(input)
+      {
+        input = input ? jQuery(input).eq(0) : inputs.eq(0);
+
+        var result = '';
+
+        if (input) {
+          if (input.is('select')) {
+            var elm = input.get(0);
+            result = elm.options[elm.selectedIndex].text;
+
+          } else {
+            result = input.val();
+          }
+        }
+        
+        return result;
       }
 
       // Sanitize-and-set value into field

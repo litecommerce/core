@@ -13,6 +13,6 @@
 <td class="name" colspan="{getItemDescriptionCount()}">
   <a href="{item.getURL()}">{item.getName()}</a>
   <div IF="isViewListVisible(#invoice.item.name#,_ARRAY_(#item#^item))" class="additional">
-    {displayViewListContent(#invoice.item.name#,_ARRAY_(#item#^item))}
+    <list name="invoice.item.name" item="{item}" />
   </div>
 </td>

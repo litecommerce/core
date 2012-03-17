@@ -9,6 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <a name="select_country"></a>
 
 <p>{t(#Use this section to manage the lists of counties, provinces, regions and states of different countries. The lists are used in shipping settings and calculations, and in the registration form at the Customer Front-end.#)}
@@ -16,9 +17,9 @@
 <hr />
 
 <span IF="status=#country_code#" class="error-message"><br /><br />&gt;&gt;&nbsp;{t(#Please, select country#)}&nbsp;&lt;&lt;<br /><br /></span>
-<span IF="status=#added#" class="success-message"><br /><br />&gt;&gt;&nbsp;{t(#State added successfully#)}&nbsp;&lt;&lt;<br /><br /></span>
-<span IF="status=#deleted#" class="success-message"><br /><br />&gt;&gt;&nbsp;{t(#State(s) deleted successfully#)}&nbsp;&lt;&lt;<br /><br /></span>
-<span IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;{t(#State(s) updated successfully#)}&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#added#" class="success-message"><br /><br />&gt;&gt;&nbsp;{t(#The state has been added successfully#)}&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#deleted#" class="success-message"><br /><br />&gt;&gt;&nbsp;{t(#States have been deleted successfully#)}&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;{t(#States have been updated successfully#)}&nbsp;&lt;&lt;<br /><br /></span>
 
 <form name="select_country_form" method="get">
 

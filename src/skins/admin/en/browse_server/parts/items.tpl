@@ -18,7 +18,7 @@
       <a class="type-catalog up-level"><img src="images/spacer.gif" alt="" />[...]</a>
     </li>
     <li FOREACH="getFSEntries(),idx,entry" class="fs-entry">
-      {displayViewListContent(#browseServer.item#,_ARRAY_(#entry#^entry))}
+      <list name="browseServer.item" entry="{entry}" />
     </li>
     <li IF="isEmptyCatalog()" class="empty-catalog">{t(#Directory is empty#)}</li>
   </ul>

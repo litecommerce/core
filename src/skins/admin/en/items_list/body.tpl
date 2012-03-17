@@ -11,15 +11,15 @@
  *}
 <div IF="hasResults()" class="items-list widgetclass-{getWidgetClass()} widgettarget-{getWidgetTarget()} sessioncell-{getSessionCell()}">
 
-  <div IF="pager.isVisible()" class="{pager.getCSSClasses()}">{pager.display()}</div>
+  <div IF="pager.isVisible()" class="pager-top {pager.getCSSClasses()}">{pager.display()}</div>
 
-  <div IF="isHeaderVisible()" class="list-header">{displayInheritedViewListContent(#header#)}</div>
+  <div IF="isHeaderVisible()" class="list-header"><list name="header" type="inherited" /></div>
 
   <widget template="{getPageBodyTemplate()}" />
 
-  <div IF="pager.isVisibleBottom()" class="list-pager">{pager.display()}</div>
+  <div IF="pager.isVisibleBottom()" class="pager-bottom {pager.getCSSClasses()}">{pager.display()}</div>
 
-  <div IF="isFooterVisible()" class="list-footer">{displayInheritedViewListContent(#footer#)}</div>
+  <div IF="isFooterVisible()" class="list-footer"><list name="footer" type="inherited" /></div>
 
 </div>
 

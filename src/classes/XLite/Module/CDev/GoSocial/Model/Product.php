@@ -59,16 +59,20 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
 
     /**
      * Get Open Graph meta tags 
+     *
+     * @param boolean $preprocessed Preprocessed OPTIONAL
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
      */
-    public function getOpenGraphMetaTags()
+    public function getOpenGraphMetaTags($preprocessed = true)
     {
-        return $this->getUseCustomOG()
+        $tags = $this->getUseCustomOG()
             ? $this->getOgMeta()
             : $this->generateOpenGraphMetaTags();
+
+        return $preprocessed ? $this->preprocessOpenGraphMetaTags($tags) : $tags;
     }
 
     /**
@@ -78,28 +82,27 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
      * @see    ____func_see____
      * @since  1.0.15
      */
-    public function defineOpenGraphMetaTags()
+    protected function defineOpenGraphMetaTags()
     {
         $language = \XLite\Core\Session::getInstance()->getLanguage();
 
         $list = array(
             'og:title'       => $this->getName(),
-            'og:type'        => 'website',
-            'og:url'         => $this->getFrontURL(),
+            'og:type'        => 'article',
+            'og:url'         => '[PAGE_URL]',
             'og:site_name'   => \XLite\Core\Config::getInstance()->Company->company_name,
             'og:description' => $this->getBriefDescription(),
             'og:locale'      => 'en_US',
         );
 
         if ($this->getImage()) {
-            $list['og:image'] = $this->getImage()->getFrontURL();
+            $list['og:image'] = '[IMAGE_URL]';
         }
 
         if (\XLite\Core\Config::getInstance()->CDev->GoSocial->fb_app_id) {
             $list['fb:app_id'] = \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_app_id;
-        }
 
-        if (\XLite\Core\Config::getInstance()->CDev->GoSocial->fb_admins) {
+        } elseif (\XLite\Core\Config::getInstance()->CDev->GoSocial->fb_admins) {
             $list['fb:admins'] = \XLite\Core\Config::getInstance()->CDev->GoSocial->fb_admins;
         }
 
@@ -125,5 +128,28 @@ abstract class Product extends \XLite\Model\Product implements \XLite\Base\IDeco
         return implode("\n", $html);
     }
 
+    /**
+     * Preprocess Open Graph meta tags 
+     * 
+     * @param string $tags Tags content
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function preprocessOpenGraphMetaTags($tags)
+    {
+        return str_replace(
+            array(
+                '[PAGE_URL]',
+                '[IMAGE_URL]',
+            ),
+            array(
+                $this->getFrontURL(),
+                $this->getImage() ? $this->getImage()->getFrontURL() : '',
+            ),
+            $tags
+        );
+    }
 }
 

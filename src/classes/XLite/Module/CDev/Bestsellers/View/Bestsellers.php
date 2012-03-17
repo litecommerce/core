@@ -270,7 +270,10 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         $result = parent::isVisible();
 
-        if (!\XLite\Core\CMSConnector::isCMSStarted()) {
+        if (
+            !\XLite\Core\CMSConnector::isCMSStarted()
+            && !$this->isAJAX()
+        ) {
             if (self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)) {
                 $result = $result && 'sidebar.first' == $this->viewListName;
 

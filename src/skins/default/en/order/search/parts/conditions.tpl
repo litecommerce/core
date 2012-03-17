@@ -22,10 +22,10 @@
   <div id="advanced_search_order_options" style="display:none;">
     <widget class="\XLite\View\Form\Order\Search" name="order_search_form" />
       <table cellspacing="0" class="form-table search-orders">
-      {displayViewListContent(#orders.search.conditions#)}
+      <list name="orders.search.conditions" />
       </table>
     <widget name="order_search_form" end />
-    {displayViewListContent(#orders.search.panel#)}
+    <list name="orders.search.panel" />
   </div>
 </div>
 

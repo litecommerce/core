@@ -350,25 +350,22 @@ h1#page-title.hidden-title
 /* Subcategories */
 
 .category-description,
-ul.subcategory-icons
+  ul.subcategory-list
 {
   margin-bottom: 40px;
 }
 
-ul.subcategory-icons
-{
+ul.subcategory-list {
   margin-top: 5px;
 }
 
-ul.grid-list.subcategory-icons li {
+ul.subcategory-list li {
   margin: 21px 23px;
 }
 
-ul.subcategory-icons a
-{
+ul.subcategory-list a {
   font-size: 19px;
 }
-
 
 /* Products */
 
@@ -703,6 +700,10 @@ ul.subcategory-icons a
   list-style: none;
   display: block;
   margin-bottom: 35px;
+}
+
+.products .products-table ul.product-price {
+  margin-bottom: 0px;
 }
 
 .products ul.product-price li {
@@ -1072,9 +1073,8 @@ div.product-details .product-image-gallery
 
 .product-details ul.product-price {
   list-style: none;
-  display: block;
-  margin-bottom: 0px;
-  height: 90px;
+  display: inline-block;
+  margin-bottom: 10px;
 }
 
 .product-details ul.product-price li {
@@ -1117,13 +1117,19 @@ div.product-details .product-image-gallery
 .product-details .product-items-available
 {
   color: #888;
-
 }
 
 .product-details .product-in-stock,
 .product-quicklook .product-in-stock
 {
   color: #019026;
+}
+
+.product-details .product-out-of-stock,
+.product-quicklook .product-out-of-stock,
+.product-details .product-in-stock,
+.product-quicklook .product-in-stock
+{
   display: block;
 }
 
@@ -1243,25 +1249,6 @@ div.product-details .continue-button-intend
   color: #7e7e7e;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 table.list-body td.hproduct a.product-thumbnail
 {
   width: 194px;
@@ -1329,6 +1316,12 @@ table.list-body-list td
   height: 100%;
   position: relative;         /* Position nested popups inside these blocks */
   cursor: pointer;
+}
+
+.lc-wishlist,
+.lc-minicart
+{
+  width: auto;
 }
 
 .lc-wishlist:hover,
@@ -1612,6 +1605,10 @@ body.store-cart #main h1 {
   cursor: help;
 }
 
+.discount-code-modifier .value {
+  color: #397928;
+}
+
 table.including-modifiers,
 table.including-modifiers tbody,
 table.including-modifiers tr,
@@ -1822,6 +1819,25 @@ form.estimator .main,
 
 .estimate-methods ul li {
   padding: 6px 0px;
+}
+
+.estimate-methods ul li label {
+  display: inline-block;
+  width: 300px;
+  margin-right: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.estimate-methods ul li label .fade {
+  background: transparent url(../images/right_fade.png) repeat-y right top;
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 20px;
+  height: 100%;
 }
 
 .estimate-methods ul li span {

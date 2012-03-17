@@ -153,17 +153,13 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
     protected function getClasses(\XLite\Model\Shipping\Method $method)
     {
         $classes = new \Doctrine\Common\Collections\ArrayCollection();
-
         $postedData = $this->getPostedData('class_ids');
 
         foreach ((array) $postedData[$method->getMethodId()] as $classId) {
-
             $class = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findOneById($classId);
 
             if ($class) {
-
                 if (!$class->getShippingMethods()->contains($method)) {
-
                     $class->getShippingMethods()->add($method);
                 }
 
@@ -172,17 +168,5 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
         }
 
         return $classes;
-    }
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return static::t('Shipping methods');
     }
 }

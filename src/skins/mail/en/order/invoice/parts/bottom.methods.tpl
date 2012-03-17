@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="invoice.bottom", weight="20")
  *}
-{displayViewListContent(#invoice.bottom.methods#)}
+<list name="invoice.bottom.methods" />

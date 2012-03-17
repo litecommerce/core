@@ -76,20 +76,14 @@ class HashArray extends \XLite\Core\Validator\AValidator
     ) {
         $result = null;
 
-        $mode = isset($mode) ? $mode : \XLite\Core\Validator\Pair\APair::STRICT;
-        
-
         if (is_object($name) && $name instanceof \XLite\Core\Validator\Pair\APair) {
-
-            // Add pair
             $result = $name;
 
         } elseif ($name && $validator) {
-
-            // Create and add pair
             $result = new \XLite\Core\Validator\Pair\Simple($mode);
             $result->setName($name);
             $result->setValidator($validator);
+
             if ($publicName) {
                 $result->setPublicName($publicName);
             }
@@ -97,12 +91,13 @@ class HashArray extends \XLite\Core\Validator\AValidator
 
         if ($result) {
             $this->pairs[] = $result;
+
             if (method_exists($result, 'getValidator')) {
                 $result = $result->getValidator();
             }
         }
 
-        return $result ? $result : null;
+        return $result;
     }
 
     /**

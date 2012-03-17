@@ -10,5 +10,5 @@
  * @since     1.0.0
  *}
 <ul class="form">
-  {displayViewListContent(#checkout.shipping.address#)}
+  <list name="checkout.shipping.address" />
 </ul>

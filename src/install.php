@@ -152,11 +152,6 @@ $modules = array (
  */
 if (isset($_GET['target']) && $_GET['target'] == 'install') {
 
-	// Loopback action
-	if (isset($_GET['action']) && $_GET['action'] == 'loopback_test') {
-		die('LOOPBACK-TEST-OK');
-	}
-
     // Creating dirs action
     if (isset($_GET['action']) && $_GET['action'] == 'dirs') {
 
@@ -201,43 +196,6 @@ if (isset($_GET['target']) && $_GET['target'] == 'install') {
         exit();
 
     }
-
-
-	// Memory test action
-	if (isset($_GET['action']) && $_GET['action'] == 'memory_test' && isset($_GET['size'])) {
-        $size = intval($_GET['size']);
-
-		if ($size <= 0) {
-			die('MEMORY-TEST-INVALID-PARAMS');
-		}
-
-		if (!function_exists('memory_get_usage')) {
-			die("MEMORY-TEST-SKIPPED\n" . xtr('Reason: memory_get_usage() is disabled on your hosting.'));
-		}
-
-		// check memory limit set
-        $res = @ini_get('memory_limit');
-
-        if (!check_memory_limit($res, $size . 'M')) {
-            die('MEMORY-TEST-LIMIT-FAILED');
-        }
-
-		$size -= (ceil(memory_get_usage() / (1024*1024)) + 1);
-
-        $array = array();
-
-		for ($i = 0; $i < $size; $i++) {
-			$array[] = str_repeat('*', 1024 * 1024);
-		}
-
-		die('MEMORY-TEST-OK');
-	}
-
-    // Recursion test action
-	if (isset($_GET['action']) && $_GET['action'] == 'recursion_test') {
-		recursion_depth_test(1);
-		die('RECURSION-TEST-OK');
-	}
 }
 
 // First error flag

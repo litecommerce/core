@@ -44,19 +44,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return static::t('Membership levels');
-    }
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return static::t('Membership levels');
+        return 'Membership levels';
     }
 
     /**
@@ -71,21 +59,16 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
         $data = \XLite\Core\Request::getInstance()->update_memberships;
 
         if (!is_array($data)) {
-
             // TODO - add top message
 
         } else {
-
             $code = $this->getCurrentLanguage();
-
             $flag = false;
 
             foreach ($data as $id => $row) {
-
                 $m = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->find($id);
 
                 if ($m) {
-
                     $duplicate = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder()
                        ->andWhere('translations.name = :name', 'm.membership_id != :id')
                        ->setParameter('name', $row['membership'])
@@ -94,16 +77,13 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
                        ->getSingleResult();
 
                     if (!is_null($duplicate)) {
-
                         \XLite\Core\TopMessage::addWarning(
                             '"' . $row['membership'] . '" ' . ' membership name is already in use. '
                             . 'Please specify another name for this membership level'
                         );
 
                     } else {
-
                         $m->getTranslation($code)->setName($row['membership']);
-
                     }
 
                     $m->setOrderby(intval($row['orderby']));
@@ -165,19 +145,15 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
         $data = \XLite\Core\Request::getInstance()->new_membership;
 
         if (!is_array($data)) {
-
             // TODO - add top message
 
         } elseif (!isset($data['membership']) || !$data['membership']) {
-
             // TODO - add top message
 
         } elseif (\XLite\Core\Database::getRepo('\XLite\Model\Membership')->findOneByName($data['membership'], false)) {
-
             // TODO - add top message
 
         } else {
-
             $code = $this->getCurrentLanguage();
             $membership = new \XLite\Model\Membership();
             $membership->setOrderby(intval($data['orderby']));

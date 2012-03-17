@@ -43,6 +43,22 @@ class FacebookLike extends \XLite\View\AView
     const PARAM_WIDTH  = 'width';
 
     /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'button/js/facebook_like.js';
+
+        return $list;
+    }
+
+    /**
      * Get width
      *
      * @return integer

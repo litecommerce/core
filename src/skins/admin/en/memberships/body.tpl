@@ -23,7 +23,7 @@
   <table cellspacing="1" class="data-table">
 
     <tr>
-      <th>{t(#Pos#)}.</th>
+      <th>{t(#Pos.#)}</th>
       <th class="extender">{t(#Membership name#)}</th>
       <th>{t(#Active#)}</th>
       <th><input type="checkbox" class="column-selector" /></th>

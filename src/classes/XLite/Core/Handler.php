@@ -38,13 +38,11 @@ abstract class Handler extends \XLite\Base
     /**
      * Common handler params
      */
-
     const PARAM_IS_EXPORTED = 'isExported';
 
     /**
      * Controller-specific params
      */
-
     const PARAM_SILENT       = 'silent';
     const PARAM_DUMP_STARTED = 'dumpStarted';
 

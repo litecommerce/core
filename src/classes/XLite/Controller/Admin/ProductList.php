@@ -68,20 +68,7 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Search products';
-    }
-
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Search product';
+        return 'Search for products';
     }
 
     /**

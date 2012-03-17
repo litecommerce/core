@@ -22,7 +22,7 @@
   <td class="value-attribute">&nbsp;</td>
 </tr>
 
-{displayViewListContent(#product.modify.list#)}
+<list name="product.modify.list" />
 
 </table>
 

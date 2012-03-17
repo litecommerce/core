@@ -47,7 +47,6 @@ class SubcategoriesLook extends \XLite\View\FormField\Select\Regular
         return array(
             'list'  => 'List',
             'icons' => 'Icons',
-            'table' => 'Table',
         );
     }
 }

@@ -187,6 +187,27 @@ button:focus
 }
 
 /**
+ * Markup free clearing.
+ *
+ * @see http://perishablepress.com/press/2009/12/06/new-clearfix-hack
+ */
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+/* IE6 */
+* html .clearfix {
+  height: 1%;
+}
+/* IE7 */
+*:first-child + html .clearfix {
+  min-height: 1%;
+}
+
+/**
  * Layout
  */
 
@@ -468,6 +489,65 @@ div.page-tabs ul li.tab-current a
   color: #333;
   border-bottom: 1px solid #fff;
 }
+
+/* Tabs: Second level */
+
+.tabs2-tabbed-content-wrapper {
+  margin-top: -30px;
+}
+
+div.tabs2-page-tabs
+{
+  height: 50px;
+  border-bottom: 1px solid #cadce8;
+  background: url(../images/tabs2_panel_bg.png) repeat-x scroll 0 4px;
+}
+
+div.tabs2-page-tabs ul
+{
+  padding:0;
+  margin:0;
+  list-style:none;
+  margin-left: 10px;
+}
+
+div.tabs2-page-tabs ul li
+{
+  float:left;
+}
+
+div.tabs2-page-tabs ul li
+{
+  display: block;
+  float: left;
+  margin-right: 10px;
+  padding: 18px 15px;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+div.tabs2-page-tabs ul li .footer
+{
+  background: url(../images/tabs2_arrow_up.png) no-repeat scroll 50% 10px;
+  height: 17px;
+  width: 100%;
+}
+
+div.tabs2-page-tabs ul li div
+{
+  text-decoration: none;
+  font-size: 14px;
+}
+
+div.tabs2-page-tabs ul li a {
+  text-decoration: underline;
+}
+
+div.tabs2-page-tabs ul li.tab-current
+{
+}
+
 
 /* Data table */
 
@@ -980,21 +1060,16 @@ button.disabled span {
   );
 }
 
-/* jQueryUI-based wait box */
-
-.wait-box .box
-{
-  background: transparent url(../images/progress.gif) repeat-x left top;
-  width: 100%;
-  height: 11px;
-}
-
-.wait-box .ui-dialog-titlebar {
-  display: none;
-}
-
 .ui-corner-all {
   -moz-border-radius: 12px;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+  padding-bottom: 0px;
+}
+
+.ui-dialog .ui-dialog-content {
+  padding-top: 10px;
 }
 
 /* Advertise block */
@@ -1245,7 +1320,7 @@ table.data-table td.table-id-column
 td.name-attribute
 {
   white-space: nowrap;
-  vertical-align: middle;
+  vertical-align: top;
   padding-right: 10px;
   padding-top: 5px;
   padding-bottom: 5px;

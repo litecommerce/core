@@ -45,7 +45,6 @@ class Switcher extends \XLite\View\FormField\Input\Checkbox
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/input/checkbox/switcher.css';
 
         return $list;
@@ -61,7 +60,6 @@ class Switcher extends \XLite\View\FormField\Input\Checkbox
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = $this->getDir() . '/input/checkbox/switcher.js';
 
         return $list;
@@ -137,7 +135,7 @@ class Switcher extends \XLite\View\FormField\Input\Checkbox
      */
     protected function getDisableLabel()
     {
-        return \XLite\Core\Translation::lbl('Disable');
+        return 'Disable';
     }
 
     /**
@@ -149,7 +147,7 @@ class Switcher extends \XLite\View\FormField\Input\Checkbox
      */
     protected function getEnableLabel()
     {
-        return \XLite\Core\Translation::lbl('Enable');
+        return 'Enable';
     }
 
     /**
@@ -162,10 +160,8 @@ class Switcher extends \XLite\View\FormField\Input\Checkbox
     protected function getCommonAttributes()
     {
         $list = parent::getCommonAttributes();
-
         $list['value'] = '1';
 
         return $list;
     }
-
 }

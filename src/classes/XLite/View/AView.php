@@ -613,9 +613,9 @@ abstract class AView extends \XLite\Core\Handler
     protected static function getResourcesSchema()
     {
         return array(
-            array('getCommonFiles', 200, \XLite::COMMON_INTERFACE),
+            array('getCommonFiles', 100, \XLite::COMMON_INTERFACE),
             array('getResources', 300, null),
-            array('getThemeFiles', \XLite::isAdminZone() ? 100 : 400, null),
+            array('getThemeFiles', \XLite::isAdminZone() ? 200 : 400, null),
         );
     }
 
@@ -703,8 +703,8 @@ abstract class AView extends \XLite\Core\Handler
                 'js/core.form.js',
                 'js/php.js',
                 'js/jquery.mousewheel.js',
-                'js/jquery.validationEngine-' . $this->getCurrentLanguage()->getCode() . '.js',
-                'js/jquery.validationEngine.js',
+                $this->getValidationEngineLanguageResource(),
+                'js/validationEngine/jquery.validationEngine.js',
             ),
             static::RESOURCE_CSS => array(
                 'ui/jquery-ui.css',
@@ -755,6 +755,40 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * Return resource structure for validation engine language file.
+     * By default there are several ready-to-use language files from validationEngine project.
+     * The translation module is able to use its own language validation file. It should decorate this method for this case.
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getValidationEngineLanguageResource()
+    {
+        return array(
+            'file' => 'js/validationEngine/languages/jquery.validationEngine-LANGUAGE_CODE.js',
+            'filelist' => array(
+                $this->getValidationEngineLanguageFile(),
+                'js/validationEngine/languages/jquery.validationEngine-en.js',
+            ),
+        );
+    }
+
+    /**
+     * Return validation engine language file path.
+     * By default there are several ready-to-use language files from validationEngine project.
+     * The translation module is able to use its own language validation file. It should decorate this method for this case.
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getValidationEngineLanguageFile()
+    {
+        return 'js/validationEngine/languages/jquery.validationEngine-' . $this->getCurrentLanguage()->getCode() . '.js';
+    }
+
+    /**
      * Register widget resources
      *
      * @return void
@@ -787,13 +821,24 @@ abstract class AView extends \XLite\Core\Handler
     protected function registerResources(array $resources, $index, $interface = null)
     {
         foreach ($resources as $type => $files) {
+
             foreach ($files as $data) {
 
                 if (is_string($data)) {
-                    $data = array('file' => $data);
+
+                    $data = array(
+                        'file' => $data,
+                        'filelist' => array($data),
+                    );
+                }
+
+                if (!isset($data['filelist'])) {
+
+                    $data['filelist'] = array($data['file']);
                 }
 
                 if (!isset(static::$resources[$index][$type][$data['file']])) {
+
                     static::$resources[$index][$type][$data['file']] = $this->prepareResource($data, $interface);
                 }
             }
@@ -802,7 +847,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Register meta data
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.15
@@ -844,20 +889,29 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function prepareResource(array $data, $interface = null)
     {
-        $shortURL = str_replace(LC_DS, '/', $data['file']);
-        $fullURL  = \XLite\Singletons::$handler->layout->getResourceWebPath(
-            $shortURL,
-            \XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
-            $interface
-        );
+        foreach ($data['filelist'] as $file) {
 
-        $data += array(
-            'media' => 'all',
-            'url'   => $fullURL,
-        );
+            $shortURL = str_replace(LC_DS, '/', $file);
 
-        if (isset($fullURL)) {
-            $data['file'] = \XLite\Singletons::$handler->layout->getResourceFullPath($shortURL, $interface, false);
+            $fullURL  = \XLite\Singletons::$handler->layout->getResourceWebPath(
+                $shortURL,
+                \XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
+                $interface
+            );
+
+            if (isset($fullURL)) {
+
+                $data['file'] = \XLite\Singletons::$handler
+                    ->layout
+                    ->getResourceFullPath($shortURL, $interface, false);
+
+                $data += array(
+                    'media' => 'all',
+                    'url'   => $fullURL,
+                );
+
+                break;
+            }
         }
 
         return $data;
@@ -883,6 +937,8 @@ abstract class AView extends \XLite\Core\Handler
         }
     }
 
+    // {{{ View lists
+
     /**
      * Display view list content
      *
@@ -893,10 +949,100 @@ abstract class AView extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function displayViewListContent($list, array $arguments = array())
+    protected function displayViewListContent($list, array $arguments = array())
     {
         echo ($this->getViewListContent($list, $arguments));
     }
+
+    /**
+     * Display a nested view list
+     *
+     * @param string $part   Suffix that should be appended to the name of a parent list (will be delimited with a dot)
+     * @param array  $params Widget params OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function displayNestedViewListContent($part, array $params = array())
+    {
+        $this->displayViewListContent($this->getNestedListName($part), $params);
+    }
+
+    /**
+     * Display a inherited view list
+     *
+     * @param string $part   Suffix that should be appended to the name of a inherited list (will be delimited with a dot)
+     * @param array  $params Widget params OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function displayInheritedViewListContent($part, array $params = array())
+    {
+        $this->displayViewListContent($this->getInheritedListName($part), $params);
+    }
+
+    /**
+     * Combines the nested list name from the parent list name and a suffix
+     *
+     * @param string $part Suffix to be added to the parent list name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getNestedListName($part)
+    {
+        return $this->viewListName ? $this->viewListName . '.' . $part : $part;
+    }
+
+    /**
+     * Get a nested view list
+     *
+     * @param string $part      Suffix of the nested list name
+     * @param array  $arguments List common arguments OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getNestedViewList($part, array $arguments = array())
+    {
+        return $this->getViewList($this->getNestedListName($part), $arguments);
+    }
+
+    /**
+     * Combines the inherited list name from the parent list name and a suffix
+     *
+     * @param string $part Suffix to be added to the inherited list name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getInheritedListName($part)
+    {
+        return $this->getListName() ? $this->getListName() . '.' . $part : $part;
+    }   
+    
+    /**
+     * Get a inherited view list
+     *
+     * @param string $part      Suffix of the inherited list name
+     * @param array  $arguments List common arguments OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getInheritedViewList($part, array $arguments = array())
+    {
+        return $this->getViewList($this->getInheritedListName($part), $arguments);
+    }
+
+    // }}}
 
     /**
      * Display plain array as JS array
@@ -1325,7 +1471,7 @@ abstract class AView extends \XLite\Core\Handler
     {
         return \XLite\Core\Database::getRepo('XLite\Model\ViewList')->findClassList(
             $list,
-            $this->detectCurrentViewZone()
+            static::detectCurrentViewZone()
         );
     }
 
@@ -1336,7 +1482,7 @@ abstract class AView extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function detectCurrentViewZone()
+    protected static function detectCurrentViewZone()
     {
         if (\XLite\View\Mailer::isComposeRunned()) {
             $zone = \XLite\Model\ViewList::INTERFACE_MAIL;
@@ -1437,7 +1583,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getViewListClass()
     {
-        return get_called_class();
+        return get_class($this);
     }
 
     /**
@@ -1617,50 +1763,6 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Combines the nested list name from the parent list name and a suffix
-     *
-     * @param string $part Suffix to be added to the parent list name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getNestedListName($part)
-    {
-        return $this->viewListName ? $this->viewListName . '.' . $part : $part;
-    }
-
-    /**
-     * Display a nested view list
-     *
-     * @param string $part   Suffix that should be appended to the name of a parent list (will be delimited with a dot)
-     * @param array  $params Widget params OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function displayNestedViewListContent($part, array $params = array())
-    {
-        $this->displayViewListContent($this->getNestedListName($part), $params);
-    }
-
-    /**
-     * Get a nested view list
-     *
-     * @param string $part      Suffix of the nested list name
-     * @param array  $arguments List common arguments OPTIONAL
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getNestedViewList($part, array $arguments = array())
-    {
-        return $this->getViewList($this->getNestedListName($part), $arguments);
-    }
-
-    /**
      * Return internal list name
      *
      * @return string
@@ -1670,50 +1772,6 @@ abstract class AView extends \XLite\Core\Handler
     protected function getListName()
     {
         return null;
-    }
-
-    /**
-     * Combines the inherited list name from the parent list name and a suffix
-     *
-     * @param string $part Suffix to be added to the inherited list name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getInheritedListName($part)
-    {
-        return $this->getListName() ? $this->getListName() . '.' . $part : $part;
-    }
-
-    /**
-     * Display a inherited view list
-     *
-     * @param string $part   Suffix that should be appended to the name of a inherited list (will be delimited with a dot)
-     * @param array  $params Widget params OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function displayInheritedViewListContent($part, array $params = array())
-    {
-        $this->displayViewListContent($this->getInheritedListName($part), $params);
-    }
-
-    /**
-     * Get a inherited view list
-     *
-     * @param string $part      Suffix of the inherited list name
-     * @param array  $arguments List common arguments OPTIONAL
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getInheritedViewList($part, array $arguments = array())
-    {
-        return $this->getViewList($this->getInheritedListName($part), $arguments);
     }
 
     /**
@@ -1783,6 +1841,39 @@ abstract class AView extends \XLite\Core\Handler
     protected function getCurrencySymbol()
     {
         return \XLite::getInstance()->getCurrency()->getSymbol();
+    }
+
+    // }}}
+
+    // {{{ Remove class/template from list
+
+    /**
+     * Remove widget from list
+     *
+     * @param string  $name       Class/template name
+     * @param boolean $isTemplate Flag OPTIONAL
+     * @param string  $list       List name OPTIONAL
+     * @param string  $zone       Zone name OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public static function removeWidgetFromList($name, $isTemplate = true, $list = null, $zone = null)
+    {
+        $data = array();
+        $data[$isTemplate ? 'tpl' : 'child'] = $name;
+
+        if (!empty($list)) {
+            $data['list'] = $list;
+        }
+
+        if (empty($zone)) {
+            $data['zone'] = static::detectCurrentViewZone();
+        }
+
+        $repo = \XLite\Core\Database::getRepo('\XLite\Model\ViewList');
+        $repo->deleteInBatch($repo->findBy($data));
     }
 
     // }}}

@@ -44,19 +44,7 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return static::t('Moneybookers settings');
-    }
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->getTitle();
+        return 'Moneybookers settings';
     }
 
     /**

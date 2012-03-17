@@ -10,12 +10,14 @@ if (empty($argv) && false !== array_search('silentMode', array_keys($argv))) {
 	$silentMode = true;
 }
 
-$files = getPHPs('./');
+echo "Running devcode_postprocess on " . realpath('./') . PHP_EOL;
+
+$files = getPHPs(realpath('./'));
 
 echo "Trim developer blocks / files post-processing...\n";
 
 foreach ($files as $f) {
-	$f = substr($f, 2);
+	//$f = substr($f, 2);
 
 	$data = file_get_contents($f);
 
@@ -39,13 +41,14 @@ echo "    done\n";
 */
 
 function getPHPs($path) {
-    $i = new RecursiveDirectoryIterator($path);
+    $i = new RecursiveDirectoryIterator($path,FilesystemIterator::SKIP_DOTS);
     $files = array();
     foreach ($i as $f) {
         if ($f->isFile() && preg_match('/\.php$/Ss', $f->getFilename())) {
             $files[] = $f->getPathname();
 
         } elseif ($f->isDir()) {
+            //echo "Get directory: " .$f->getPathname() . PHP_EOL;
             $tmp = getPHPs($f->getPathname());
             if ($tmp)
                 $files = array_merge($files, $tmp);

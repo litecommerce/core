@@ -70,19 +70,15 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
     public function doActionUpdate()
     {
         $postedData = \XLite\Core\Request::getInstance()->getData();
-
-        $options = \XLite\Core\Database::getRepo('\XLite\Model\Config')
+        $options    = \XLite\Core\Database::getRepo('\XLite\Model\Config')
             ->findBy(array('category' => $this->getOptionsCategory()));
-
-        $isUpdated = false;
+        $isUpdated  = false;
 
         foreach ($options as $key => $option) {
-
             $name = $option->getName();
             $type = $option->getType();
 
             if (isset($postedData[$name]) || 'checkbox' == $type) {
-
                 if ('checkbox' == $type) {
                     $option->setValue(isset($postedData[$name]) ? 'Y' : 'N');
 
@@ -114,19 +110,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
         return \XLite\Core\Database::getRepo('XLite\Model\State')->find($stateId);
     }
 
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return static::t('Shipping settings');
-    }
-
     /**
      * getOptionsCategory
      *
@@ -136,6 +119,6 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      */
     protected function getOptionsCategory()
     {
-        return static::t('Shipping');
+        return 'Shipping';
     }
 }
