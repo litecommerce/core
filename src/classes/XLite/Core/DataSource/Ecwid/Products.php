@@ -189,20 +189,72 @@ class Products extends \XLite\Core\DataSource\Base\Products
             $num = min($max, $this->count() - $this->position);
 
             $params = array();
-            foreach (range($this->position, $this->position+$num-1) as $index) {
+            foreach (range($this->position, $this->position + $num - 1) as $index) {
                 $params[$index] = array(
                     'method' => 'product',
                     'params' => array(
-                        'id' => $this->allProducts[$index]['id']
+                        'id' => $this->allProducts[$index]['id'],
                     )
                 );
             }
 
             foreach ($this->getDataSource()->callBatchApi($params) as $key => $p) {
-                $this->products[$key] = $p;
+                $this->products[$key] = $this->normalizeProduct($p);
             }
         }
 
         return $this->products[$this->position];
+    }
+
+    /**
+     * Normalize product 
+     * 
+     * @param array $data Raw data
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function normalizeProduct(array $data)
+    {
+        $product = array(
+            'id'          => $data['id'],
+            'categories'  => array(),
+            'images'      => array(),
+            'url'         => $data['url'],
+            'price'       => doubleval($data['price']),
+            'name'        => $data['name'],
+            'description' => empty($data['description']) ? '' : $data['description'],
+            'sku'         => empty($data['sku']) ? '' : $data['sku'],
+            'quantity'    => empty($data['quantity']) ? 0 : intval($data['quantity']),
+        );
+
+        if (!empty($data['imageUrl'])) {
+            $product['images'][] = array(
+                'url'    => $data['imageUrl'],
+                'main'   => true,
+                'width'  => 0,
+                'height' => 0,
+                'type'   => '',
+            );
+        }
+
+        if (!empty($data['galleryImages']) && is_array($data['galleryImages'])) {
+            foreach ($data['galleryImages'] as $image) {
+                $product['images'][] = array(
+                    'url'    => $image['url'],
+                    'main'   => false,
+                    'width'  => 0,
+                    'height' => 0,
+                    'type'   => '',
+                );
+            }
+        }
+
+        if (!empty($data['categories']) && is_array($data['categories'])) {
+            $product['categories'] = $data['categories'];
+        }
+
+        return $product;
     }
 }
