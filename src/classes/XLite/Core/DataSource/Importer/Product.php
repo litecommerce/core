@@ -193,7 +193,7 @@ abstract class Product extends \XLite\Base
     protected function detectProduct(array $cell)
     {
         $product = null;
-        $repo = \XLite\Core\Database::getRepo('XLite\Mo9del\Product');
+        $repo = \XLite\Core\Database::getRepo('XLite\Model\Product');
 
         if (!empty($cell['sku'])) {
             $product = $repo->findOneBy(array('sku' => $cell['sku']));
