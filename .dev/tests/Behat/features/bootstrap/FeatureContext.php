@@ -28,6 +28,8 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
 {
 
     protected static $parameters;
+    public static $adminUrl;
+    public static $clientUrl;
 
     /**
      * Initializes context.
@@ -250,8 +252,17 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
      */
     function getStepDefinitionResources()
     {
-        $steps = array("addressBook", "countries", "coupons");
-        return array_map(function($name){return __DIR__.'/../steps/'.$name.'.php';}, $steps);
+        $steps = array();
+        $directory = realpath(__DIR__."/../steps");
+        if (!empty($directory)){
+            $iterator = new DirectoryIterator($directory);
+            foreach ($iterator as $fileinfo) {
+                if ($fileinfo->isFile()) {
+                    $steps[] = $fileinfo->getPathname();
+                }
+            }
+        }
+        return $steps;
     }
 
     /**
@@ -296,6 +307,18 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
                 $screenshot_url = $this->getParameter('screenshots_url');
                 echo "Captured screenshot: " . ($screenshot_url ? ($screenshot_url . '/' . $fileName) : $path)  . PHP_EOL;
             }
+        }
+    }
+    /**
+     * @BeforeSuite
+     */
+    public static function initUrls(\Behat\Behat\Event\SuiteEvent $event){
+        $params = $event->getContextParameters();
+        if(isset($params['client_url'])){
+            self::$clientUrl =$params['client_url'];
+        }
+        if(isset($params['admin_url'])){
+            self::$clientUrl =$params['admin_url'];
         }
     }
 }

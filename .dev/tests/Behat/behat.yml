@@ -2,8 +2,9 @@ default:
   context:
     parameters:
       javascript_session:   selenium
-      #base_url: http://localhost/drupal-lc/xlite/src/
-      base_url: http://localhost/private/src/
+      client_url: http://localhost/drupal-lc/xlite_cms/
+      admin_url: http://localhost/drupal-lc/xlite/src/
+      base_url: http://localhost/drupal-lc/xlite_cms/
       screenshots_path: /var/www/localhost/htdocs/selenium-screenshots
       screenshots_url: http://localhost/selenium-screenshots
       selenium:

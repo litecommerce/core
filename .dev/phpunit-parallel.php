@@ -58,7 +58,7 @@ function parse_options()
 
     if (isset($options['log-junit'])) {
         TestRunner::$log_xml = true;
-        shell_exec("rm /tmp/phpunit*.xml");
+        shell_exec("rm /tmp/TEST*.xml");
     }
     if (isset($options['verbose']))
         TestRunner::$verbose = true;
@@ -331,13 +331,13 @@ class TestTask
         //$this->process = proc_open("sleep " . rand(2, 4), $descriptorspec, $pipes);
         //Real run
         if ($this->type == self::PHPUNIT_TEST){
-            $options = TestRunner::$log_xml ? ' --log-junit /tmp/phpunit.' . $testName . ".xml " : "";
+            $options = TestRunner::$log_xml ? ' --log-junit /tmp/TEST-.' . $testName . ".xml " : "";
             $options .= TestRunner::$verbose ? ' --verbose ' : "";
             $this->process = proc_open('./phpunit_no_restore.sh ' . $this->name . " " . $options, $descriptorspec, $pipes);
 
             //$this->process = proc_open("sleep " . rand(1, 2), $descriptorspec, $pipes);
         } elseif($this->type == self::BEHAT_FEATURE){
-            $options = TestRunner::$log_xml ? '-f progress,junit --out ,/tmp/phpunit.'.$testName."xml " : "-f progress";
+            $options = TestRunner::$log_xml ? '-f progress,junit --out ,/tmp' : "-f progress";
             $options .= TestRunner::$verbose ? ' --expand ' : "";
             //echo 'cd ./tests/Behat; bin/behat features/' . $this->name . ".feature " . $options;
             $this->process = proc_open('cd ./tests/Behat; bin/behat features/' . $this->name . ".feature " . $options, $descriptorspec, $pipes);

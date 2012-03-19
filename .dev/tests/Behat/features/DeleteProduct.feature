@@ -2,6 +2,10 @@
 # @resource order
 Feature: Delete products
     @javascript
+    Background:
+        And I am logged in as admin
+
+    @javascript
     Scenario: Add to cart
         Given there are 2 products with enabled inventory
         When I buy products
