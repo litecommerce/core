@@ -47,6 +47,9 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		// Method offsetSet() defined in Doctrine
         'offset',
         'forbid', 'alter', 'submit', 'invoke', 'optimize', 'escape',
+
+        // Add new verbs
+        'seek',
 	);
 
 	protected $cssPseudoClasses = array(
