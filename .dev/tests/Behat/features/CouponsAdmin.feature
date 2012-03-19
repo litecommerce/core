@@ -2,7 +2,7 @@
 Feature: Discount coupons admin page
     @javascript
     Background:
-         Given I am logged in as admin
+         And I am logged in as admin
          And I am on "admin.php?target=promotions&page=coupons"
          And I should see "Coupons"
 

@@ -37,51 +37,7 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
      */
     public function __construct(array $parameters)
     {
-
-        //$this->useContext('admin', new AdminContext($parameters));
     }
-
-    /**
-     * @param $name
-     * @return mixed|null
-     */
-    public function getParameter($name){
-        self::$parameters = parent::getParameters();
-        return isset(self::$parameters[$name]) ? self::$parameters[$name] : null;
-    }
-
-    /**
-     * @param $name
-     * @param $value
-     * @return mixed|null Previous value of parameter, null if not set
-     */
-    public function setParameter($name, $value){
-        $param = $this->getParameter($name);
-        self::$parameters[$name] = $value;
-        return $param;
-    }
-
-    /**
-     * Returns array of step definition files (*.php).
-     *
-     * @return  array
-     */
-    function getStepDefinitionResources()
-    {
-        $steps = array("addressBook", "countries", "coupons");
-        return array_map(function($name){return __DIR__.'/../steps/'.$name.'.php';}, $steps);
-    }
-
-    /**
-     * Returns array of hook definition files (*.php).
-     *
-     * @return  array
-     */
-    function getHookDefinitionResources()
-    {
-        return array();
-    }
-
     /**
      * Clicks link with specified css_path.
      *
@@ -100,15 +56,6 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
     {
         $world = $this;
         $this->withSpeed(1000, function() use($locator, $world){$world->find('css', $locator)->focus();});
-    }
-
-    public function pressButton($button){
-
-        return $this->withSpeed(1000, array('parent::pressButton', $button), true);
-    }
-    public function clickLink($link){
-
-        return $this->withSpeed(1000, array('parent::clickLink', $link), true);
     }
 
     /**
@@ -196,6 +143,16 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
         //echo PHP_EOL."POS of string: " . $pos;
         return $pos !== false;
     }
+
+    public function pressButton($button){
+
+        return $this->withSpeed(1000, array('parent::pressButton', $button), true);
+    }
+    public function clickLink($link){
+
+        return $this->withSpeed(1000, array('parent::clickLink', $link), true);
+    }
+
     protected function withSpeed($speed, $callback, $isMethod = false){
         if (is_array($callback)){
             $func = $callback[0];
@@ -284,6 +241,47 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
     function getSubcontextByClassName($className)
     {
         return array();// TODO: Implement getSubcontextByClassName() method.
+    }
+
+    /**
+     * Returns array of step definition files (*.php).
+     *
+     * @return  array
+     */
+    function getStepDefinitionResources()
+    {
+        $steps = array("addressBook", "countries", "coupons");
+        return array_map(function($name){return __DIR__.'/../steps/'.$name.'.php';}, $steps);
+    }
+
+    /**
+     * Returns array of hook definition files (*.php).
+     *
+     * @return  array
+     */
+    function getHookDefinitionResources()
+    {
+        return array();
+    }
+
+    /**
+     * @param $name
+     * @return mixed|null
+     */
+    public function getParameter($name){
+        self::$parameters = parent::getParameters();
+        return isset(self::$parameters[$name]) ? self::$parameters[$name] : null;
+    }
+
+    /**
+     * @param $name
+     * @param $value
+     * @return mixed|null Previous value of parameter, null if not set
+     */
+    public function setParameter($name, $value){
+        $param = $this->getParameter($name);
+        self::$parameters[$name] = $value;
+        return $param;
     }
 
     /** @AfterStep */

@@ -177,7 +177,7 @@ class TestRunner
         $this->resources->reset();
         $time = round(microtime(true) - $time, 2);
         print PHP_EOL . " Total time: " . $time . "sec";
-        exec('cat /tmp/output-*');
+        exec('cat /tmp/output-* > /tmp/phpunit.txt');
     }
 
     private function isComplete()
