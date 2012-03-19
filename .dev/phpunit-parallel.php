@@ -177,7 +177,7 @@ class TestRunner
         $this->resources->reset();
         $time = round(microtime(true) - $time, 2);
         print PHP_EOL . " Total time: " . $time . "sec";
-        exec('ls /tmp/output-*');
+        exec('cat /tmp/output-*');
     }
 
     private function isComplete()
@@ -333,9 +333,9 @@ class TestTask
         if ($this->type == self::PHPUNIT_TEST){
             $options = TestRunner::$log_xml ? ' --log-junit /tmp/phpunit.' . $testName . ".xml " : "";
             $options .= TestRunner::$verbose ? ' --verbose ' : "";
-            //$this->process = proc_open('./phpunit_no_restore.sh ' . $this->name . " " . $options, $descriptorspec, $pipes);
+            $this->process = proc_open('./phpunit_no_restore.sh ' . $this->name . " " . $options, $descriptorspec, $pipes);
 
-            $this->process = proc_open("sleep " . rand(1, 2), $descriptorspec, $pipes);
+            //$this->process = proc_open("sleep " . rand(1, 2), $descriptorspec, $pipes);
         } elseif($this->type == self::BEHAT_FEATURE){
             $options = TestRunner::$log_xml ? '-f progress,junit --out ,/tmp/phpunit.'.$testName."xml " : "-f progress";
             $options .= TestRunner::$verbose ? ' --expand ' : "";
