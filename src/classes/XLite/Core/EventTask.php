@@ -59,6 +59,7 @@ class EventTask extends \XLite\Base\Singleton
         $result = false;
 
         if (in_array($name, \XLite\Core\EventListener::getInstance()->getEvents())) {
+            $args = isset($args[0]) && is_array($args[0]) ? $args[0] : array();
             $driver = static::getInstance()->getDriver();
             $result = $driver ? $driver->fire($name, $args) : false;
         }

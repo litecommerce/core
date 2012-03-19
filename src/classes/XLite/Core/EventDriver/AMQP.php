@@ -196,6 +196,7 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
         $channel = $this->getChannel();
 
         if ($channel) {
+            $this->redeclareQueue($queue);
             $channel->basic_consume(
                 $queue,
                 $tag,
