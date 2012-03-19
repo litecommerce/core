@@ -137,7 +137,7 @@ class Language extends \XLite\Model\Base\I18n
             $status != $this->getAdded()
             && (!$status || !$this->getEnabled())
         ) {
-            $this->status = $status ? self::ADDED : self::INACTIVE;
+            $this->status = $status ? static::ADDED : static::INACTIVE;
         }
     }
 
@@ -150,7 +150,7 @@ class Language extends \XLite\Model\Base\I18n
      */
     public function getEnabled()
     {
-        return self::ENABLED == $this->status;
+        return static::ENABLED == $this->status;
     }
 
     /**
@@ -165,7 +165,7 @@ class Language extends \XLite\Model\Base\I18n
     public function setEnabled($status)
     {
         if ($status != $this->getEnabled()) {
-            $this->status = $status ? self::ENABLED : self::ADDED;
+            $this->status = $status ? static::ENABLED : static::ADDED;
         }
     }
 

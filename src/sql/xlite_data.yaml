@@ -485,6 +485,8 @@ XLite\Model\LanguageLabel:
   - { name: 'X entities has been removed', translations: [{ code: en, label: '{{count}} entities has been removed' }] }
   - { name: 'X entities has been created', translations: [{ code: en, label: '{{count}} entities has been created' }] }
   - { name: 'Select a country or a state from a list, specify the zone', translations: [{ code: en, label: 'Select a country or a state from a list, specify the zone where the country or state should be listed and click on the "Apply" button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.' }] }
+  - { name: 'If you store product images in the database, they are included in the SQL dump file', translations: [{ code: en, label: 'If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back such images up you need to download them directly from the server.' }] }
+  - { name: 'You can choose if to download your database data', translations: [{ code: en, label: 'You can choose if to download your database data (SQL dump) directly to your local computer by clicking on the "Download SQL file" button or to save database data to a file on the web server ("var/backup/sqldump.sql.php") by clicking on the "Create SQL file" button#)}.<br />If you choose the second option, you can download the file from the server later on and delete it from the server by clicking on the "Delete SQL file" button.' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

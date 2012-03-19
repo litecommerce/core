@@ -9,6 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <ul class="version-note">
   <list name="top_links.version_notes" />
 </ul>
