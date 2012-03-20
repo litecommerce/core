@@ -331,7 +331,7 @@ class TestTask
         //$this->process = proc_open("sleep " . rand(2, 4), $descriptorspec, $pipes);
         //Real run
         if ($this->type == self::PHPUNIT_TEST){
-            $options = TestRunner::$log_xml ? ' --log-junit /tmp/TEST-.' . $testName . ".xml " : "";
+            $options = TestRunner::$log_xml ? ' --log-junit /tmp/TEST-' . $testName . ".xml " : "";
             $options .= TestRunner::$verbose ? ' --verbose ' : "";
             $this->process = proc_open('./phpunit_no_restore.sh ' . $this->name . " " . $options, $descriptorspec, $pipes);
 
