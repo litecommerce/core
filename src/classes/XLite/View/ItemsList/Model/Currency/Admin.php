@@ -73,7 +73,7 @@ class Admin extends \XLite\View\ItemsList\Model\Currency\ACurrency
                 static::COLUMN_CLASS => 'XLite\View\FormField\Inline\Input\Text\Currency\Symbol',
             ),
             'e' => array(
-                static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Fractional part length'),
+                static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Number of digits after the decimal separator'),
             ),
         );
     }
@@ -103,19 +103,43 @@ class Admin extends \XLite\View\ItemsList\Model\Currency\ACurrency
     }
 
     /**
-     * Return products list
+     * Define repository name
      *
-     * @param \XLite\Core\CommonCell $cnd       Search condition
-     * @param boolean                $countOnly Return items list or only its size OPTIONAL
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function defineRepositoryName()
+    {
+        return '\XLite\Model\Currency';
+    }
+
+    /**
+     * Return params list to use for search
      *
-     * @return array|integer
+     * @return \XLite\Core\CommonCell
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    protected function getSearchCondition()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Currency')->search($cnd, $countOnly);
+        $result = parent::getSearchCondition();
+
+        $result->{\XLite\Model\Repo\Currency::SEARCH_ORDER_BY} = array('translations.name', 'asc');
+
+        return $result;
     }
 
+    /**
+     * Get container class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getContainerClass()
+    {
+        return trim(parent::getContainerClass() . ' currencies');
+    }
 }
 

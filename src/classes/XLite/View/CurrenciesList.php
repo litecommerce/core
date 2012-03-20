@@ -62,7 +62,7 @@ class CurrenciesList extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'currencies\list.tpl';
+        return 'currencies/list.tpl';
     }
 
 }

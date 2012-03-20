@@ -56,5 +56,16 @@ class Symbol extends \XLite\View\FormField\Inline\Input\Text
         return trim(parent::getContainerClass() . ' currency-symbol');
     }
 
+    /**
+     * Get initial field parameters
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getFieldParams()
+    {
+        return parent::getFieldParams() + array('maxlength' => 16);
+    }
 }
 

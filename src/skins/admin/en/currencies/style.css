@@ -10,4 +10,18 @@
  * @since     1.0.19
  */
 
+.currencies table.list thead th.name {
+  width: 300px;
+}
 
+.currencies table.list thead th.symbol {
+  width: 100px;
+}
+
+.currencies table.list tbody td.symbol input {
+  width: 5em;
+}
+
+.currencies table.list tbody td.e {
+  text-align: right;
+}

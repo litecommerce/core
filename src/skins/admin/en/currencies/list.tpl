@@ -10,8 +10,6 @@
  * @since     1.0.19
  *}
 
-<widget class="\XLite\View\Form\ItemsList\Currency\Main" name="form" />
+<widget class="\XLite\View\Form\ItemsList\Currency\Admin" name="form" />
   <widget class="\XLite\View\ItemsList\Model\Currency\Admin" />
 <widget name="form" end />
-
-

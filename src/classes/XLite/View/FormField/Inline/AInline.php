@@ -216,7 +216,7 @@ abstract class AInline extends \XLite\View\AView
      */
     protected function getViewValue()
     {
-        return $this->getField()->getValue();
+        return 0 == strlen(strval($this->getField()->getValue())) ? '&nbsp;' : $this->getField()->getValue();
     }
 
     // }}}

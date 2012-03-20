@@ -33,8 +33,14 @@ namespace XLite\Model\Repo;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Currency extends \XLite\Model\Repo\ARepo
+class Currency extends \XLite\Model\Repo\Base\I18n
 {
+    /**
+     * Allowable search params
+     */
+    const SEARCH_ORDER_BY = 'orderBy';
+    const SEARCH_LIMIT    = 'limit';
+
     /**
      * Repository type
      *
@@ -107,4 +113,146 @@ class Currency extends \XLite\Model\Repo\ARepo
         return $this->createQueryBuilder('c')
             ->innerJoin('c.orders', 'o', 'WITH', 'o.order_id IS NOT NULL');
     }
+
+    // {{{ Search
+
+    /**
+     * Common search
+     *
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
+     *
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    {
+        $queryBuilder = $this->createQueryBuilder();
+        $this->currentSearchCnd = $cnd;
+
+        foreach ($this->currentSearchCnd as $key => $value) {
+            $this->callSearchConditionHandler($value, $key, $queryBuilder, $countOnly);
+        }
+
+        return $countOnly
+            ? $this->searchCount($queryBuilder)
+            : $this->searchResult($queryBuilder);
+    }
+
+    /**
+     * Search count only routine.
+     *
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder routine
+     *
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function searchCount(\Doctrine\ORM\QueryBuilder $qb)
+    {
+        $qb->select('COUNT(DISTINCT c.currency_id)');
+
+        return intval($qb->getSingleScalarResult());
+    }
+
+    /**
+     * Search result routine.
+     *
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder routine
+     *
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function searchResult(\Doctrine\ORM\QueryBuilder $qb)
+    {
+        return $qb->getResult();
+    }
+
+    /**
+     * Return list of handling search params
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getHandlingSearchParams()
+    {
+        return array(
+            self::SEARCH_ORDER_BY,
+            self::SEARCH_LIMIT,
+        );
+    }
+
+    /**
+     * Call corresponded method to handle a search condition
+     *
+     * @param mixed                      $value        Condition data
+     * @param string                     $key          Condition name
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder, $countOnly)
+    {
+        if ($this->isSearchParamHasHandler($key)) {
+            $this->{'prepareCnd' . ucfirst($key)}($queryBuilder, $value, $countOnly);
+
+        } else {
+            // TODO - add logging here
+        }
+    }
+
+    /**
+     * Check if param can be used for search
+     *
+     * @param string $param Name of param to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isSearchParamHasHandler($param)
+    {
+        return in_array($param, $this->getHandlingSearchParams());
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     * @param boolean                    $countOnly    "Count only" flag. Do not need to add "order by" clauses if only count is needed.
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value, $countOnly)
+    {
+        if (!$countOnly) {
+            list($sort, $order) = $value;
+            $queryBuilder->addOrderBy($sort, $order);
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    {
+        call_user_func_array(array($this, 'assignFrame'), array_merge(array($queryBuilder), $value));
+    }
+
+    // }}}
 }
