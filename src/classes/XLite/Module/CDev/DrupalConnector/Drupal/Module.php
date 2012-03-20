@@ -285,10 +285,11 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         }
 
         // Remove duplicate jquery* files
-
+        $uniqueScripts = array();
+        $scriptsToReview = array();
         foreach ($list as $key => $data) {
             if (preg_match('/(jquery([^\/]+))$/isSU', $key, $match)) {
-                $uniqueScripts[$match[1]]++;
+                $uniqueScripts[$match[1]] = isset($uniqueScripts[$match[1]]) ? $uniqueScripts[$match[1]] + 1 : 1;
                 $scriptsToReview[$key] = $match[1];
             }
         }
