@@ -35,103 +35,41 @@ namespace XLite\View\FormField\Select\CheckboxList;
  */
 abstract class ACheckboxList extends \XLite\View\FormField\Select\Multiple
 {
+
     /**
-     * Return field template
+     * Register JS files
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getFieldTemplate()
+    public function getJSFiles()
     {
-        return 'checkbox_list.tpl';
+        $list = parent::getJSFiles();
+
+        $list[] = $this->getDir() . '/js/multiselect.js';
+
+        return $list;
     }
 
     /**
-     * Get item attributes as string
-     * 
-     * @param mixed $value Item value
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
-     */
-    protected function getItemAttributesCode($value)
-    {
-        $result = '';
-
-        foreach ($this->getItemAttributes($value) as $name => $value) {
-            $result .= ' ' . $name . '="' . func_htmlspecialchars($value) . '"';
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get item attributes
-     *
-     * @param mixed $value Item value
+     * Register files from common repository
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.17
+     * @since  1.0.0
      */
-    protected function getItemAttributes($value)
+    protected function getCommonFiles()
     {
-        $attributes = $this->getAttributes();
+        $list = parent::getCommonFiles();
 
+        $list[static::RESOURCE_JS][] = 'js/jquery.multiselect.min.js';
+        $list[static::RESOURCE_JS][] = 'js/jquery.multiselect.filter.min.js';
 
-        if ($this->isOptionSelected($value)) {
-            $attributes['checked'] = 'checked';
-        }
+        $list[static::RESOURCE_CSS][] = 'css/jquery.multiselect.css';
+        $list[static::RESOURCE_CSS][] = 'css/jquery.multiselect.filter.css';
 
-        $attributes['name'] .= '[' . $value . ']';
-        $attributes['id'] = $this->getItemId($value);
-        $attributes['type'] = self::FIELD_TYPE_CHECKBOX;
-
-        return $attributes;
-    }
-
-    /**
-     * Get item attributes for dump input
-     *
-     * @param mixed $value Item value
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.17
-     */
-    protected function getItemDumpAttributes($value)
-    {
-        $attributes = $this->getItemAttributes($value);
-
-        $attributes = array(
-            'type'  => 'hidden',
-            'name'  => $attributes['name'],
-            'value' => '',
-        );
-
-        return $attributes;
-    }
-
-    /**
-     * Get item attributes as string
-     *
-     * @param mixed $value Item value
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
-     */
-    protected function getItemDUmpAttributesCode($value)
-    {
-        $result = '';
-
-        foreach ($this->getItemDumpAttributes($value) as $name => $value) {
-            $result .= ' ' . $name . '="' . func_htmlspecialchars($value) . '"';
-        }
-
-        return $result;
+        return $list;
     }
 
     /**
@@ -147,27 +85,10 @@ abstract class ACheckboxList extends \XLite\View\FormField\Select\Multiple
     {
         $attrs = parent::prepareAttributes($attrs);
 
-        if (isset($attrs['multiple'])) {
-            unset($attrs['multiple']);
-        }
-
-        $attrs['name'] = substr($attrs['name'], 0, -2);
+        $attrs['class'] = (empty($attrs['class']) ? '' : $attrs['class'] . ' ')
+            . 'multiselect';
 
         return $attrs;
-    }
-
-    /**
-     * Get item ID
-     * 
-     * @param mixed $value Item value
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.17
-     */
-    protected function getItemId($value)
-    {
-        return str_replace(array('[', ']'), array('-', ''), $this->getName()) . '-' . $value;
     }
 
 }
