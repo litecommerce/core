@@ -98,6 +98,18 @@ class Currency extends \XLite\Model\Base\I18n
      */
     protected $orders;
 
+    /**
+     * Country
+     *
+     * @var   \XLite\Model\Country
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @OneToOne   (targetEntity="XLite\Model\Country", inversedBy="currency")
+     * @JoinColumn (name="country_code", referencedColumnName="code")
+     */
+    protected $country;
+
 
     /**
      * Set currency Id

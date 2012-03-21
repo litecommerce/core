@@ -100,6 +100,17 @@ class Country extends \XLite\Model\AEntity
      */
     protected $states;
 
+    /**
+     * Currency
+     *
+     * @var   \XLite\Model\Currency
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @OneToOne (targetEntity="XLite\Model\Currency", mappedBy="country", cascade={"all"})
+     */
+    protected $currency;
+
 
     /**
      * Constructor
