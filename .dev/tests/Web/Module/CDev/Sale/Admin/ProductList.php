@@ -65,7 +65,7 @@ class XLite_Web_Module_CDev_Sale_Admin_ProductList extends XLite_Web_Admin_AAdmi
                 $this->type('css=#sale-price-value-sale_price', $example['sale_price']);
             }
             else {
-                $this->click('css=label[for="sale-price-percent-off"]');
+                $this->click('css=#sale-price-percent-off');
                 sleep(1);
                 $this->type('css=#sale-price-value-sale_percent', $example['percent']);
             }

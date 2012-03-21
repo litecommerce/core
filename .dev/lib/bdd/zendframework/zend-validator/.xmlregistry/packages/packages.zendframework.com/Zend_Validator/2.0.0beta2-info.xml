@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd" packagerversion="2.0.0">
+ <name>Zend_Validator</name>
+ <channel>packages.zendframework.com</channel>
+ <summary>Package Zend_Validator summary.\n\n&quot; . &quot;Package detailed description here (found in README)</summary>
+ <description/>
+ <lead>
+  <name>Your Name</name>
+  <user>handle</user>
+  <email>handle@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2011-12-20</date>
+ <time>21:57:11</time>
+ <version>
+  <release>2.0.0beta2</release>
+  <api>2.0.0beta2</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+ <notes>Package  Zend_Validator release notes for version 0.1.0.
+
+Package Zend_Validator API release notes for version 0.1.0.</notes>
+ <contents>
+  <dir name="/">
+   <file role="php" name="php/Zend/Validator/ValidatorLoader.php"/>
+   <file role="php" name="php/Zend/Validator/ValidatorChain.php"/>
+   <file role="php" name="php/Zend/Validator/ValidatorBroker.php"/>
+   <file role="php" name="php/Zend/Validator/Validator.php"/>
+   <file role="php" name="php/Zend/Validator/StringLength.php"/>
+   <file role="php" name="php/Zend/Validator/StaticValidator.php"/>
+   <file role="php" name="php/Zend/Validator/Sitemap/Priority.php"/>
+   <file role="php" name="php/Zend/Validator/Sitemap/Loc.php"/>
+   <file role="php" name="php/Zend/Validator/Sitemap/Lastmod.php"/>
+   <file role="php" name="php/Zend/Validator/Sitemap/Changefreq.php"/>
+   <file role="php" name="php/Zend/Validator/Regex.php.orig"/>
+   <file role="php" name="php/Zend/Validator/Regex.php"/>
+   <file role="php" name="php/Zend/Validator/PostCode.php"/>
+   <file role="php" name="php/Zend/Validator/NotEmpty.php"/>
+   <file role="php" name="php/Zend/Validator/LessThan.php"/>
+   <file role="php" name="php/Zend/Validator/Isbn.php"/>
+   <file role="php" name="php/Zend/Validator/Ip.php"/>
+   <file role="php" name="php/Zend/Validator/Int.php"/>
+   <file role="php" name="php/Zend/Validator/InArray.php"/>
+   <file role="php" name="php/Zend/Validator/Identical.php.orig"/>
+   <file role="php" name="php/Zend/Validator/Identical.php"/>
+   <file role="php" name="php/Zend/Validator/Iban.php"/>
+   <file role="php" name="php/Zend/Validator/Hostname/Jp.php"/>
+   <file role="php" name="php/Zend/Validator/Hostname/Com.php"/>
+   <file role="php" name="php/Zend/Validator/Hostname/Cn.php"/>
+   <file role="php" name="php/Zend/Validator/Hostname/Biz.php"/>
+   <file role="php" name="php/Zend/Validator/Hostname.php"/>
+   <file role="php" name="php/Zend/Validator/Hex.php"/>
+   <file role="php" name="php/Zend/Validator/GreaterThan.php"/>
+   <file role="php" name="php/Zend/Validator/Float.php"/>
+   <file role="php" name="php/Zend/Validator/File/WordCount.php"/>
+   <file role="php" name="php/Zend/Validator/File/Upload.php"/>
+   <file role="php" name="php/Zend/Validator/File/Size.php"/>
+   <file role="php" name="php/Zend/Validator/File/Sha1.php"/>
+   <file role="php" name="php/Zend/Validator/File/NotExists.php"/>
+   <file role="php" name="php/Zend/Validator/File/MimeType.php"/>
+   <file role="php" name="php/Zend/Validator/File/Md5.php"/>
+   <file role="php" name="php/Zend/Validator/File/IsImage.php"/>
+   <file role="php" name="php/Zend/Validator/File/IsCompressed.php"/>
+   <file role="php" name="php/Zend/Validator/File/ImageSize.php"/>
+   <file role="php" name="php/Zend/Validator/File/Hash.php"/>
+   <file role="php" name="php/Zend/Validator/File/FilesSize.php"/>
+   <file role="php" name="php/Zend/Validator/File/Extension.php"/>
+   <file role="php" name="php/Zend/Validator/File/Exists.php"/>
+   <file role="php" name="php/Zend/Validator/File/ExcludeMimeType.php"/>
+   <file role="php" name="php/Zend/Validator/File/ExcludeExtension.php"/>
+   <file role="php" name="php/Zend/Validator/File/Crc32.php"/>
+   <file role="php" name="php/Zend/Validator/File/Count.php"/>
+   <file role="php" name="php/Zend/Validator/Exception/RuntimeException.php"/>
+   <file role="php" name="php/Zend/Validator/Exception/InvalidArgumentException.php"/>
+   <file role="php" name="php/Zend/Validator/Exception/ExtensionNotLoadedException.php"/>
+   <file role="php" name="php/Zend/Validator/Exception/BadMethodCallException.php"/>
+   <file role="php" name="php/Zend/Validator/Exception.php"/>
+   <file role="php" name="php/Zend/Validator/EmailAddress.php"/>
+   <file role="php" name="php/Zend/Validator/Digits.php"/>
+   <file role="php" name="php/Zend/Validator/Db/RecordExists.php"/>
+   <file role="php" name="php/Zend/Validator/Db/NoRecordExists.php"/>
+   <file role="php" name="php/Zend/Validator/Db/AbstractDb.php"/>
+   <file role="php" name="php/Zend/Validator/Date.php"/>
+   <file role="php" name="php/Zend/Validator/CreditCard.php"/>
+   <file role="php" name="php/Zend/Validator/Callback.php"/>
+   <file role="php" name="php/Zend/Validator/Between.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Upce.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Upca.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Sscc.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Royalmail.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Postnet.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Planet.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Leitcode.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Itf14.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Issn.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Intelligentmail.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Identcode.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Gtin14.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Gtin13.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Gtin12.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Ean18.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Ean14.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Ean13.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Ean12.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Ean8.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Ean5.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Ean2.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Code128.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Code93ext.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Code93.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Code39ext.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Code39.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Code25interleaved.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Code25.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Codabar.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/Adapter.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode/AbstractAdapter.php"/>
+   <file role="php" name="php/Zend/Validator/Barcode.php"/>
+   <file role="php" name="php/Zend/Validator/Alpha.php"/>
+   <file role="php" name="php/Zend/Validator/Alnum.php"/>
+   <file role="php" name="php/Zend/Validator/AbstractValidator.php"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>2.0.0a1</min>
+   </pearinstaller>
+  </required>
+  <optional>
+   <package>
+    <name>Zend_Translator</name>
+    <channel>packages.zendframework.com</channel>
+   </package>
+   <package>
+    <name>Zend_Config</name>
+    <channel>packages.zendframework.com</channel>
+   </package>
+   <package>
+    <name>Zend_Db</name>
+    <channel>packages.zendframework.com</channel>
+   </package>
+  </optional>
+ </dependencies>
+ <phprelease/>
+</package>

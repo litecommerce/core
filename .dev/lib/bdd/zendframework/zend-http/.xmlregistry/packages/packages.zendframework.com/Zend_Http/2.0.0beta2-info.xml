@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd" packagerversion="2.0.0">
+ <name>Zend_Http</name>
+ <channel>packages.zendframework.com</channel>
+ <summary>Package Zend_Http summary.\n\n&quot; . &quot;Package detailed description here (found in README)</summary>
+ <description/>
+ <lead>
+  <name>Your Name</name>
+  <user>handle</user>
+  <email>handle@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2011-12-20</date>
+ <time>21:56:34</time>
+ <version>
+  <release>2.0.0beta2</release>
+  <api>2.0.0beta2</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+ <notes>Package  Zend_Http release notes for version 0.1.0.
+
+Package Zend_Http API release notes for version 0.1.0.</notes>
+ <contents>
+  <dir name="/">
+   <file role="php" name="php/Zend/Http/Response/Stream.php"/>
+   <file role="php" name="php/Zend/Http/Response.php"/>
+   <file role="php" name="php/Zend/Http/Request.php"/>
+   <file role="php" name="php/Zend/Http/PhpEnvironment/Response.php"/>
+   <file role="php" name="php/Zend/Http/PhpEnvironment/Request.php"/>
+   <file role="php" name="php/Zend/Http/Headers.php"/>
+   <file role="php" name="php/Zend/Http/Header/WWWAuthenticate.php"/>
+   <file role="php" name="php/Zend/Http/Header/Warning.php"/>
+   <file role="php" name="php/Zend/Http/Header/Via.php"/>
+   <file role="php" name="php/Zend/Http/Header/Vary.php"/>
+   <file role="php" name="php/Zend/Http/Header/UserAgent.php"/>
+   <file role="php" name="php/Zend/Http/Header/Upgrade.php"/>
+   <file role="php" name="php/Zend/Http/Header/TransferEncoding.php"/>
+   <file role="php" name="php/Zend/Http/Header/Trailer.php"/>
+   <file role="php" name="php/Zend/Http/Header/TE.php"/>
+   <file role="php" name="php/Zend/Http/Header/SetCookie.php"/>
+   <file role="php" name="php/Zend/Http/Header/Server.php"/>
+   <file role="php" name="php/Zend/Http/Header/RetryAfter.php"/>
+   <file role="php" name="php/Zend/Http/Header/Refresh.php"/>
+   <file role="php" name="php/Zend/Http/Header/Referer.php"/>
+   <file role="php" name="php/Zend/Http/Header/Range.php"/>
+   <file role="php" name="php/Zend/Http/Header/ProxyAuthorization.php"/>
+   <file role="php" name="php/Zend/Http/Header/ProxyAuthenticate.php"/>
+   <file role="php" name="php/Zend/Http/Header/Pragma.php"/>
+   <file role="php" name="php/Zend/Http/Header/MultipleHeaderDescription.php"/>
+   <file role="php" name="php/Zend/Http/Header/MaxForwards.php"/>
+   <file role="php" name="php/Zend/Http/Header/Location.php"/>
+   <file role="php" name="php/Zend/Http/Header/LastModified.php"/>
+   <file role="php" name="php/Zend/Http/Header/KeepAlive.php"/>
+   <file role="php" name="php/Zend/Http/Header/IfUnmodifiedSince.php"/>
+   <file role="php" name="php/Zend/Http/Header/IfRange.php"/>
+   <file role="php" name="php/Zend/Http/Header/IfNoneMatch.php"/>
+   <file role="php" name="php/Zend/Http/Header/IfModifiedSince.php"/>
+   <file role="php" name="php/Zend/Http/Header/IfMatch.php"/>
+   <file role="php" name="php/Zend/Http/Header/Host.php"/>
+   <file role="php" name="php/Zend/Http/Header/HeaderDescription.php"/>
+   <file role="php" name="php/Zend/Http/Header/GenericMultiHeader.php"/>
+   <file role="php" name="php/Zend/Http/Header/GenericHeader.php"/>
+   <file role="php" name="php/Zend/Http/Header/From.php"/>
+   <file role="php" name="php/Zend/Http/Header/Expires.php"/>
+   <file role="php" name="php/Zend/Http/Header/Expect.php"/>
+   <file role="php" name="php/Zend/Http/Header/Exception/RuntimeException.php"/>
+   <file role="php" name="php/Zend/Http/Header/Exception/InvalidArgumentException.php"/>
+   <file role="php" name="php/Zend/Http/Header/Exception.php"/>
+   <file role="php" name="php/Zend/Http/Header/Etag.php"/>
+   <file role="php" name="php/Zend/Http/Header/Date.php"/>
+   <file role="php" name="php/Zend/Http/Header/Cookie.php"/>
+   <file role="php" name="php/Zend/Http/Header/ContentType.php"/>
+   <file role="php" name="php/Zend/Http/Header/ContentRange.php"/>
+   <file role="php" name="php/Zend/Http/Header/ContentMD5.php"/>
+   <file role="php" name="php/Zend/Http/Header/ContentLocation.php"/>
+   <file role="php" name="php/Zend/Http/Header/ContentLength.php"/>
+   <file role="php" name="php/Zend/Http/Header/ContentLanguage.php"/>
+   <file role="php" name="php/Zend/Http/Header/ContentEncoding.php"/>
+   <file role="php" name="php/Zend/Http/Header/ContentDisposition.php"/>
+   <file role="php" name="php/Zend/Http/Header/Connection.php"/>
+   <file role="php" name="php/Zend/Http/Header/CacheControl.php"/>
+   <file role="php" name="php/Zend/Http/Header/Authorization.php"/>
+   <file role="php" name="php/Zend/Http/Header/AuthenticationInfo.php"/>
+   <file role="php" name="php/Zend/Http/Header/Allow.php"/>
+   <file role="php" name="php/Zend/Http/Header/Age.php"/>
+   <file role="php" name="php/Zend/Http/Header/AcceptRanges.php"/>
+   <file role="php" name="php/Zend/Http/Header/AcceptLanguage.php"/>
+   <file role="php" name="php/Zend/Http/Header/AcceptEncoding.php"/>
+   <file role="php" name="php/Zend/Http/Header/AcceptCharset.php"/>
+   <file role="php" name="php/Zend/Http/Header/Accept.php"/>
+   <file role="php" name="php/Zend/Http/Exception/RuntimeException.php"/>
+   <file role="php" name="php/Zend/Http/Exception/InvalidArgumentException.php"/>
+   <file role="php" name="php/Zend/Http/Exception.php"/>
+   <file role="php" name="php/Zend/Http/Cookies.php"/>
+   <file role="php" name="php/Zend/Http/ClientStatic.php"/>
+   <file role="php" name="php/Zend/Http/Client/Exception/RuntimeException.php"/>
+   <file role="php" name="php/Zend/Http/Client/Exception/InvalidArgumentException.php"/>
+   <file role="php" name="php/Zend/Http/Client/Exception.php"/>
+   <file role="php" name="php/Zend/Http/Client/Cookies.php"/>
+   <file role="php" name="php/Zend/Http/Client/Adapter/Test.php"/>
+   <file role="php" name="php/Zend/Http/Client/Adapter/Stream.php"/>
+   <file role="php" name="php/Zend/Http/Client/Adapter/Socket.php"/>
+   <file role="php" name="php/Zend/Http/Client/Adapter/Proxy.php"/>
+   <file role="php" name="php/Zend/Http/Client/Adapter/Exception/TimeoutException.php"/>
+   <file role="php" name="php/Zend/Http/Client/Adapter/Exception/RuntimeException.php"/>
+   <file role="php" name="php/Zend/Http/Client/Adapter/Exception/OutOfRangeException.php"/>
+   <file role="php" name="php/Zend/Http/Client/Adapter/Exception/InvalidArgumentException.php"/>
+   <file role="php" name="php/Zend/Http/Client/Adapter/Exception/InitializationException.php"/>
+   <file role="php" name="php/Zend/Http/Client/Adapter/Exception.php"/>
+   <file role="php" name="php/Zend/Http/Client/Adapter/Curl.php"/>
+   <file role="php" name="php/Zend/Http/Client/Adapter.php"/>
+   <file role="php" name="php/Zend/Http/Client.php"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>2.0.0a1</min>
+   </pearinstaller>
+   <package>
+    <name>Zend_Stdlib</name>
+    <channel>packages.zendframework.com</channel>
+   </package>
+   <package>
+    <name>Zend_Uri</name>
+    <channel>packages.zendframework.com</channel>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease/>
+</package>

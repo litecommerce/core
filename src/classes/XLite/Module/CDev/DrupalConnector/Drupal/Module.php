@@ -287,8 +287,17 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         // Remove duplicate jquery* files
         $uniqueScripts = array();
         $scriptsToReview = array();
+
         foreach ($list as $key => $data) {
+
             if (preg_match('/(jquery([^\/]+))$/isSU', $key, $match)) {
+
+                // Depending on Drupal's module 'jQuery update' status on the list will be available or jquery.js or jquery.min.js 
+                if (preg_match('/^jquery\.js$/', $match[1])) {
+                    $uniqueScripts['jquery.min.js'] = isset($uniqueScripts['jquery.min.js']) ? $uniqueScripts['jquery.min.js'] + 1 : 1;
+                }
+
+>>>>>>> core-master-dev
                 $uniqueScripts[$match[1]] = isset($uniqueScripts[$match[1]]) ? $uniqueScripts[$match[1]] + 1 : 1;
                 $scriptsToReview[$key] = $match[1];
             }

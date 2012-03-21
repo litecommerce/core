@@ -602,9 +602,18 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function typeKeys($locator, $value)
     {
-        $this->__call('type', array($locator, substr($value, 0, -1)));
+        if (!empty($value)){
+            $type = substr($value, 0, -1);
+            $typeKeys = substr($value, -1);
+        }
+        else{
+            $type = '';
+            $typeKeys = '';
+        }
+        if (!empty($type))
+            $this->__call('type', array($locator, $type));
         $this->focus($locator);
-        return $this->__call('typeKeys', array($locator, substr($value, -1)));
+        return $this->__call('typeKeys', array($locator, $typeKeys));
     }
 
     /**

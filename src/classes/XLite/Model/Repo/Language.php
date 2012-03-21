@@ -127,9 +127,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
     protected function defineCacheCells()
     {
         $list = parent::defineCacheCells();
-
         $list['all'] = array();
-
         $list['status'] = array(
             self::ATTRS_CACHE_CELL => array('status'),
         );
@@ -185,6 +183,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
     public function findActiveLanguages()
     {
         $data = $this->getFromCache('status', array('status' => \XLite\Model\Language::ENABLED));
+
         if (!isset($data)) {
             $data = $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getResult();
             $this->saveToCache($data, 'status', array('status' => \XLite\Model\Language::ENABLED));

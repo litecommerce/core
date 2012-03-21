@@ -652,7 +652,7 @@ class Profile extends \XLite\Model\AEntity
         $language = $this->getLanguage();
 
         if (empty($language)) {
-            $this->setLanguage(\XLite\Core\Translation::getCurrentLanguageCode());
+            $this->setLanguage(\XLite\Core\Session::getInstance()->getLanguage()->getCode());
         }
 
         // Assign referer value

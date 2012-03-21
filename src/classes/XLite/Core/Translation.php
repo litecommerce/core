@@ -36,15 +36,6 @@ namespace XLite\Core;
 class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 {
     /**
-     * Current language code
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $currentLanguageCode;
-
-    /**
      * Translation driver
      *
      * @var   \XLite\Core\TranslationDriver\ATranslationDriver
@@ -66,23 +57,8 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     );
 
     /**
-     * Get current language code
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getCurrentLanguageCode($force = false)
-    {
-        if (!isset(static::$currentLanguageCode) || $force) {
-            static::$currentLanguageCode = \XLite\Core\Session::getInstance()->getLanguage()->getCode();
-        }
-
-        return static::$currentLanguageCode;
-    }
-
-    /**
      * Get translation (short static method)
+     * TODO: to remove
      *
      * @param string $name      Label name
      * @param array  $arguments Substitute arguments OPTIONAL
@@ -142,7 +118,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 
         return $result;
     }
-
 
     /**
      * Get REST entity names

@@ -293,16 +293,6 @@ function doCheckRequirements()
         'critical' => false,
     );
 
-    $checkRequirements['lc_mem_allocation'] = array(
-        'title'    => xtr('Memory allocation test'),
-        'critical' => false,
-    );
-
-    $checkRequirements['lc_recursion_test'] = array(
-        'title'    => xtr('Recursion test'),
-        'critical' => false,
-    );
-
     $checkRequirements['lc_file_permissions'] = array(
         'title'    => xtr('File permissions'),
         'critical' => true,
@@ -850,78 +840,6 @@ function checkPhpUploadMaxFilesize(&$errorMsg, &$value)
     if (empty($value)) {
         $result = false;
         $errorMsg = xtr('PHP option upload_max_filesize should contain a value. It is empty currently.');
-    }
-
-    return $result;
-}
-
-/**
- * Check the memory allocation
- *
- * @param string $errorMsg Error message if checking failed
- * @param string $value    Actual value of the checked parameter
- *
- * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
- */
-function checkMemAllocation(&$errorMsg, &$value)
-{
-    $result = true;
-
-    $sizes = array(32, 64, 128);
-
-    $currentMemoryLimit = convert_ini_str_to_int(@ini_get('memory_limit'));
-
-    if (max($sizes) > $currentMemoryLimit) {
-
-        foreach ($sizes as $size) {
-
-            if ($size > $currentMemoryLimit) {
-
-                $response = inst_http_request_install("action=memory_test&size=$size");
-
-                if (!(strpos($response, "MEMORY-TEST-SKIPPED") === false)) {
-                    $value = 'MEMORY-TEST-SKIPPED';
-                    break;
-                }
-
-                if (strpos($response, "MEMORY-TEST-OK") === false) {
-                    $status = false;
-                    $errorMsg = xtr('Memory allocation test failed. Response:') . "\n" . substr($response, 0, 255);
-                    break;
-                }
-
-                $value = $size . 'M';
-            }
-        }
-    }
-
-    return $result;
-}
-
-/**
- * Check the recursion depth
- *
- * @param string $errorMsg Error message if checking failed
- * @param string $value    Actual value of the checked parameter
- *
- * @return bool
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
- */
-function checkRecursionTest(&$errorMsg, &$value)
-{
-    $result = true;
-
-    $response = inst_http_request_install("action=recursion_test");
-
-    if (strpos($response, "RECURSION-TEST-OK") === false) {
-        $result = false;
-        $errorMsg = xtr('Recursion test failed.');
-        $value = constant('MAX_RECURSION_DEPTH');
     }
 
     return $result;
@@ -2328,23 +2246,6 @@ function convert_ini_str_to_int($string)
 }
 
 /**
- * Do recursion depth testing
- *
- * @param int $index
- *
- * @return void
- * @access public
- * @see    ____func_see____
- * @since  1.0.0
- */
-function recursion_depth_test($index)
-{
-    if ($index <= MAX_RECURSION_DEPTH) {
-        recursion_depth_test(++$index);
-    }
-}
-
-/**
  * Preparing text of the configuration checking report
  *
  * @param array $requirements
@@ -3020,8 +2921,6 @@ function module_check_cfg()
             'requirements' => array(
                 'lc_php_file_uploads',
                 'lc_php_upload_max_filesize',
-                'lc_mem_allocation',
-                'lc_recursion_test',
                 'lc_php_gdlib',
                 'lc_php_phar',
                 'lc_https_bouncer',

@@ -337,12 +337,10 @@ class Session extends \XLite\Base\Singleton
     public function getLanguage()
     {
         if (!isset($this->language)) {
-
             $this->language = \XLite\Core\Database::getRepo('XLite\Model\Language')
                 ->findOneByCode($this->getCurrentLanguage());
 
             if ($this->language) {
-
                 $this->language->detach();
             }
         }
@@ -362,22 +360,16 @@ class Session extends \XLite\Base\Singleton
     public function setLanguage($language)
     {
         $code = $this->session->language;
-
         $zone = \XLite::isAdminZone() ? 'admin' : 'customer';
 
         if (!is_array($code)) {
-
             $code = array();
         }
 
-        if (
-            !isset($code[$zone])
-            || $code[$zone] != $language
-        ) {
+        if (!isset($code[$zone]) || $code[$zone] !== $language) {
             $code[$zone] = $language;
 
             $this->session->language = $code;
-
             $this->language = null;
         }
     }

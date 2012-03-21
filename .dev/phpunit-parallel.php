@@ -38,7 +38,6 @@ set_include_path(
 
 require_once PATH_SRC . '/top.inc.php';
 
-
 parse_options();
 
 function parse_options()
@@ -59,7 +58,7 @@ function parse_options()
 
     if (isset($options['log-junit'])) {
         TestRunner::$log_xml = true;
-        shell_exec("rm /tmp/phpunit*.xml");
+        shell_exec("rm /tmp/TEST*.xml");
     }
     if (isset($options['verbose']))
         TestRunner::$verbose = true;
@@ -102,11 +101,59 @@ class TestRunner
     function __construct()
     {
         $this->tests = self::getTests();
+        $this->tests = array_merge($this->tests, self::getFeatures());
         $this->resources = new ResourcePool();
         array_map(function (TestTask $test)
         {
             print $test->toString();
         }, $this->tests);
+    }
+    static private function getTests()
+    {
+        $testDir = 'tests' . DIRECTORY_SEPARATOR . 'Web';
+        $classesDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . $testDir . DIRECTORY_SEPARATOR;
+        $pattern = '/^' . preg_quote($classesDir, '/') . '(.*)\.php$/';
+        $dirIterator = new RecursiveDirectoryIterator($classesDir);
+        $iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+        $ds = preg_quote(DIRECTORY_SEPARATOR, '/');
+
+        $tests = array();
+        foreach ($iterator as $filePath => $fileObject) {
+
+            if (
+                preg_match($pattern, $filePath, $matches)
+                && !empty($matches[1])
+                && !preg_match('/' . $ds . '(\w+Abstract|A[A-Z]\w+)\.php/Ss', $filePath)
+                && !preg_match('/' . $ds . '(\w+WebDriver\w+)\.php/Ss', $filePath)
+                && !preg_match('/' . $ds . '(?:scripts|skins)' . $ds . '/Ss', $filePath)
+            ) {
+
+                $tests[] = new TestTask($filePath, $classesDir);
+            }
+        }
+        return $tests;
+
+    }
+    private static function getFeatures()
+    {
+        $testDir = 'tests' . DIRECTORY_SEPARATOR . 'Behat'.DIRECTORY_SEPARATOR.'features';
+        $classesDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . $testDir . DIRECTORY_SEPARATOR;
+        $pattern = '/^' . preg_quote($classesDir, '/') . '(.*)\.feature$/';
+        $dirIterator = new RecursiveDirectoryIterator($classesDir);
+        $iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+        $ds = preg_quote(DIRECTORY_SEPARATOR, '/');
+
+        $tests = array();
+        foreach ($iterator as $filePath => $fileObject) {
+
+            if (
+                preg_match($pattern, $filePath, $matches)
+                && !empty($matches[1])
+            ) {
+                $tests[] = new TestTask($filePath, $classesDir, TestTask::BEHAT_FEATURE);
+            }
+        }
+        return $tests;
     }
 
     function start($clientsCount)
@@ -130,7 +177,7 @@ class TestRunner
         $this->resources->reset();
         $time = round(microtime(true) - $time, 2);
         print PHP_EOL . " Total time: " . $time . "sec";
-        $this->collectTxtOutput($time);
+        exec('cat /tmp/output-* > /tmp/phpunit.txt');
     }
 
     private function isComplete()
@@ -183,92 +230,19 @@ class TestRunner
             }
         }
     }
-
-    static private function getTests()
-    {
-
-        if (!defined('DIR_TESTS')) {
-            define('DIR_TESTS', 'tests' . DIRECTORY_SEPARATOR . 'Web');
-        }
-        $classesDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . constant('DIR_TESTS') . DIRECTORY_SEPARATOR;
-
-        $pattern = '/^' . preg_quote($classesDir, '/') . '(.*)\.php$/';
-
-        $dirIterator = new RecursiveDirectoryIterator($classesDir);
-        $iterator = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
-        $ds = preg_quote(DIRECTORY_SEPARATOR, '/');
-
-        $tests = array();
-        foreach ($iterator as $filePath => $fileObject) {
-
-            if (
-                preg_match($pattern, $filePath, $matches)
-                && !empty($matches[1])
-                && !preg_match('/' . $ds . '(\w+Abstract|A[A-Z]\w+)\.php/Ss', $filePath)
-                && !preg_match('/' . $ds . '(\w+WebDriver\w+)\.php/Ss', $filePath)
-                && !preg_match('/' . $ds . '(?:scripts|skins)' . $ds . '/Ss', $filePath)
-            ) {
-
-                $tests[] = new TestTask($filePath, $classesDir);
-            }
-        }
-        return $tests;
-
-    }
-
-    function collectTxtOutput($time)
-    {
-        //Collect console output
-        $output = shell_exec('cat /tmp/output* | grep "Tests\|Failures\|Assertions\|Skipped\|Time:\|OK"');
-        $tests = $assertions = $failures = $skipped = $errors = 0;
-
-        if (preg_match_all('/Time: (\d+)/Sm', $output, $matches))
-            $tests += array_sum($matches[1]);
-
-        if (preg_match_all('/Tests: (\d+)/Sm', $output, $matches))
-            $tests += array_sum($matches[1]);
-        if (preg_match_all('/Failures: (\d+)/Sm', $output, $matches))
-            $failures += array_sum($matches[1]);
-        if (preg_match_all('/Assertions: (\d+)/Sm', $output, $matches))
-            $assertions += array_sum($matches[1]);
-        if (preg_match_all('/Skipped: (\d+)/Sm', $output, $matches))
-            $skipped += array_sum($matches[1]);
-
-        if (preg_match_all('/OK \((\d+) tests, (\d+) assertions\)/Sm', $output, $matches)) {
-            $tests += array_sum($matches[1]);
-            $assertions += array_sum($matches[2]);
-        }
-        $out = "/tmp/phpunit.txt";
-        $command = 'cat /tmp/output-* | grep "^\(Customer\|Admin\|Time\|Module\|^$\)" | cat -s > ' . $out . ';
-                    echo "" >> ' . $out . ';';
-        if ($failures || $skipped || $errors) {
-            $command .= 'echo "There were ' . $failures . ' failures, ' . $skipped . ' skipped tests and ' . $errors . ' errors: " >> ' . $out . ';
-                        echo "" >> ' . $out . ';
-                        cat /tmp/output-* | grep -v "^\(Customer\|Admin\|Time\|Module\)" | grep -v "^\(FAILURES\|Tests\|#\|PHPUnit\|OK\)" | cat -s | sed "s/There \(was\|were\) \(.*\) \(failure\|skipped test\|error\)/\3/" >> ' . $out . ';
-                        echo "" >> ' . $out . ';
-                        echo "FAILURES!" >> ' . $out . ';';
-        }
-        $command .= 'echo "Tests complete. Tests: ' . $tests .
-            '; Assertions: ' . $assertions .
-            '; Failures: ' . $failures .
-            '; Skipped tests: ' . $skipped .
-            '; Errors: ' . $errors . '"  >> ' . $out . ';
-                    echo "" >> ' . $out . ';
-                    echo "Total time: ' . $time . '" >> ' . $out . ';';
-        print PHP_EOL . $command . PHP_EOL;
-        exec($command);
-    }
-
 }
 
 
 class TestTask
 {
+    const BEHAT_FEATURE = 1;
+    const PHPUNIT_TEST = 0;
     public $name;
     public $resources = array();
     public $uses = array();
     public $block_all = false;
     public $status = 'init';
+    public $type = self::PHPUNIT_TEST;
     /**
      * @var Resource
      */
@@ -276,22 +250,29 @@ class TestTask
 
     private $exitCode = 0;
 
-    function __construct($filePath, $classesDir)
+    function __construct($filePath, $classesDir, $type = self::PHPUNIT_TEST)
     {
-        $this->name = substr(str_replace($classesDir, '', $filePath), 0, -4);
+        $fileName = str_replace($classesDir, '', $filePath);
+        $this->name = substr($fileName, 0, strpos($fileName, '.'));
+        $this->type = $type;
+
         $source = file_get_contents($filePath);
 
-        $comments = token_get_all($source);
+        if($type == self::PHPUNIT_TEST){
+            $comments = self::getPHPComments($source);
+        } elseif($type == self::BEHAT_FEATURE){
+            $comments = self::getGherkinComments($source);
+        } else{
+            $comments = array();
+        }
 
         $resources = array();
         $uses = array();
         $block_all = false;
-        foreach ($comments as $key => $comment) {
-            if ($comment[0] == T_DOC_COMMENT) {
-                $resources = array_merge($resources, self::getResources($comment[1], 'resource'));
-                $uses = array_merge($uses, self::getResources($comment[1], 'use'));
-                $block_all = $block_all || preg_match('/^.*\@block_all\s*$/Sm', $comment[1]) > 0;
-            }
+        foreach($comments as $comment){
+            $resources = array_merge($resources, self::getResources($comment, 'resource'));
+            $uses = array_merge($uses, self::getResources($comment, 'use'));
+            $block_all = $block_all || preg_match('/^.*\@block_all\s*$/Sm', $comment) > 0;
         }
 
         if ($block_all) {
@@ -301,6 +282,27 @@ class TestTask
             $this->resources = $resources;
             $this->uses = $uses;
         }
+    }
+
+    private static function getGherkinComments($source){
+        $result = array();
+        if (preg_match_all('/#.*@(use|resource|block_all).+/', $source, $matches)){
+            foreach($matches[0] as $comment){
+                $result[] = $comment;
+            }
+        }
+        return $result;
+    }
+
+    private static function getPHPComments($source){
+        $result = array();
+        $comments = token_get_all($source);
+        foreach ($comments as $key => $comment) {
+            if ($comment[0] == T_DOC_COMMENT) {
+                $result[] = $comment[1];
+            }
+        }
+        return $result;
     }
 
     private static function getResources($comment, $res_string)
@@ -328,9 +330,23 @@ class TestTask
         //Fake run
         //$this->process = proc_open("sleep " . rand(2, 4), $descriptorspec, $pipes);
         //Real run
-        $options = TestRunner::$log_xml ? ' --log-junit /tmp/phpunit.' . $testName . ".xml " : "";
-        $options .= TestRunner::$verbose ? ' --verbose ' : "";
-        $this->process = proc_open('./phpunit_no_restore.sh ' . $this->name . " " . $options, $descriptorspec, $pipes);
+        if ($this->type == self::PHPUNIT_TEST){
+            $options = TestRunner::$log_xml ? ' --log-junit /tmp/TEST-' . $testName . ".xml " : "";
+            $options .= TestRunner::$verbose ? ' --verbose ' : "";
+            $this->process = proc_open('./phpunit_no_restore.sh ' . $this->name . " " . $options, $descriptorspec, $pipes);
+
+            //$this->process = proc_open("sleep " . rand(1, 2), $descriptorspec, $pipes);
+        } elseif($this->type == self::BEHAT_FEATURE){
+            $options = TestRunner::$log_xml ? '-f progress,junit --out ,/tmp' : "-f progress";
+            $options .= TestRunner::$verbose ? ' --expand ' : "";
+            //echo 'cd ./tests/Behat; bin/behat features/' . $this->name . ".feature " . $options;
+            $this->process = proc_open('cd ./tests/Behat; bin/behat features/' . $this->name . ".feature " . $options, $descriptorspec, $pipes);
+            //$this->process = proc_open("sleep " . rand(2, 4), $descriptorspec, $pipes);
+        } else{
+            $this->process = null;
+        }
+
+
         if ($this->process) {
             print PHP_EOL . "Running test: " . $this->name;
             $this->status = 'running';

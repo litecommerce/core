@@ -31,6 +31,8 @@ return function()
 
     $labels = array(
         'insert' => array(
+            'If you store product images in the database, they are included in the SQL dump file' => 'If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back such images up you need to download them directly from the server.',
+            'You can choose if to download your database data' => 'You can choose if to download your database data (SQL dump) directly to your local computer by clicking on the "Download SQL file" button or to save database data to a file on the web server ("var/backup/sqldump.sql.php") by clicking on the "Create SQL file" button#)}.<br />If you choose the second option, you can download the file from the server later on and delete it from the server by clicking on the "Delete SQL file" button.',
         ),
         'update' => array(
             'Put selected on sale' => 'Put up selected for sale',
@@ -96,6 +98,7 @@ return function()
 
             } elseif ('insert' === $method) {
                 $object = new \XLite\Model\LanguageLabel();
+                $object->setEditLanguageCode('en');
                 $object->setName($oldKey);
                 $object->setLabel($data);
             }
