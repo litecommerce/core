@@ -877,7 +877,7 @@ XLite\Model\Country:
   - { country: Qatar, code3: QAT, code: QA, currency: { currency_id: 634 }  }
   - { country: Reunion, code: RE }
   - { country: Romania, code3: ROU, code: RO, eu_member: true }
-  - { country: 'Russian Federation', code3: RUS, code: RU }
+  - { country: 'Russian Federation', code3: RUS, code: RU, currency: { currency_id: 643 }, symbolBefore: false }
   - { country: Rwanda, code3: RWA, code: RW, currency: { currency_id: 646 }  }
   - { country: 'Saint Lucia', code3: LCA, code: LC, currency: { currency_id: 951 }  }
   - { country: Samoa, code3: WSM, code: WS, currency: { currency_id: 882 }  }

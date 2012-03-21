@@ -95,6 +95,48 @@ class Math extends \XLite\Logic\ALogic
     }
 
     /**
+     * Format currency as parts 
+     * 
+     * @param float                 $value    Value
+     * @param \XLite\Model\Currency $currency Currency
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function formatParts($value, \XLite\Model\Currency $currency)
+    {
+        $value = $currency->roundValue($value);
+
+        $parts = array();
+
+        if (0 > $value) {
+            $parts['sign'] = '-';
+        }
+
+        $symbolBefore = $currency->getSymbolBefore();
+        $symbol = $currency->getSymbol();
+        if (!$symbol) {
+            $symbol = strtoupper($currency->getCode());
+            $symbolBefore = true;
+        }
+        if ($symbolBefore) {
+            $parts['symbol'] = $symbol;
+        }
+
+        $parts['integer'] = floor(abs($value));
+
+        $parts['decimalDelimiter'] = $currency->getDecimalDelimiter();
+        $parts['decimal'] = substr(strval(abs($value) * pow(10, $currency->getE())), -1 * $currency->getE());
+
+        if (!$symbolBefore) {
+            $parts['symbol'] = $symbol;
+        }
+
+        return $parts;
+    }
+
+    /**
      * Round up
      *
      * @param float   $value     Value
