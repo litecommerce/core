@@ -221,7 +221,7 @@ XLite\Model\Currency:
   - { currency_id: 634, code: QAR, e: 2, translations: [{ code: en, name: 'Qatari Rial' }] }
   - { currency_id: 642, code: ROL, e: 2, translations: [{ code: en, name: Leu }] }
   - { currency_id: 941, code: RSD, e: 2, translations: [{ code: en, name: 'Serbian Dinar' }] }
-  - { currency_id: 810, code: RUR, e: 2, translations: [{ code: en, name: 'Russian Ruble' }] }
+  - { currency_id: 643, code: RUB, e: 2, translations: [{ code: en, name: 'Russian Ruble' }] }
   - { currency_id: 646, code: RWF, translations: [{ code: en, name: 'Rwanda Franc' }] }
   - { currency_id: 682, code: SAR, e: 2, translations: [{ code: en, name: 'Saudi Riyal' }] }
   - { currency_id: 90, code: SBD, e: 2, translations: [{ code: en, name: 'Solomon Islands Dollar' }] }
