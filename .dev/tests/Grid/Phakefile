@@ -139,8 +139,8 @@ group("server", function()
         $code = $server->run("cd .dev; sudo ./phpunit-parallel.php --build --clients-count " . ($app['farms_count']) . "; cat /tmp/phpunit.txt", $options);
         $server->download('/tmp/phpunit*.txt', $app['log_dir'], $options);
         //$server->download('/tmp/phpunit*.xml', $app['log_dir'], $options);
-        $server->run('cd ' . $app['log_dir'] . '; for f in TEST-*.xml; do mv "$f" "phpunit.${f#TEST-}"; done');
-        $server->download('/tmp/TEST-*.xml', $app['log_dir'], $options);
+        $server->run('cd ' . $app['log_dir'] . '; for f in TEST-*.xml; do mv "$f" "phpunit.${f#TEST-}"; done', $options);
+        $server->download('/tmp/phpunit.*.xml', $app['log_dir'], $options);
 
 
 
