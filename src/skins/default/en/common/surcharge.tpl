@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Display price modifier
+ * Surcharge widget
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,4 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<widget class="XLite\View\Surcharge" surcharge="{modifier.getAbsoluteValue()}" />
+
+<span class="surcharge">
+  <list name="surcharge.common" />
+</span>
