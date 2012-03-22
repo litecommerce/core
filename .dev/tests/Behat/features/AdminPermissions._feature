@@ -1,0 +1,6 @@
+Feature: Check user permissions for admin zone
+    @javascript
+    Scenario: No permissions
+        Given I logged in as no permission
+        Then I should see Access denied in all controllers
+
