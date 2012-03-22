@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
-../../lib/phake/phake
+../../lib/phake/phake $@
 

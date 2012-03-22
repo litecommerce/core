@@ -3,9 +3,9 @@ use \Behat\Behat\Context\Step\When;
 
 $steps->Given('/^there are (\d+) products with enabled inventory$/', function(FeatureContext $world, $count)
 {
-    $world->visit('admin.php?target=product_list&mode=search');
+    $world->visit($world::$adminUrl . 'admin.php?target=product_list&mode=search');
 
-    $productIds = array();
+    $products = array();
     $rows = $world->findAll('xpath', '//tr[contains(@class, "entity-")]');
 
     foreach ($rows as $row) {
@@ -14,64 +14,106 @@ $steps->Given('/^there are (\d+) products with enabled inventory$/', function(Fe
         if (strpos($quantity->getAttribute('class'), 'infinity') !== false) {
             continue;
         }
+
+        $name = $row->find('css', '.cell.name a')->getText();
+        $price = $row->find('css', '.cell.price')->getText();
+        $sku = $row->find('css', '.cell.sku')->getText();
+
         if (preg_match('/entity-([0-9]+)$/', $row->getAttribute('class'), $matches) && isset($matches[1])) {
-            $productIds[] = $matches[1];
-            if (count($productIds) == $count) {
-                $world->setParameter('productIds', $productIds);
-                return;
-            }
+            $products[] = array('id' => $matches[1], 'name' =>$name, 'price' =>$price, 'sku' =>$sku);
+        }
+
+
+        if (count($products) == $count) {
+            $world->setParameter('products', $products);
+
+            return;
         }
     }
 });
 
 $steps->When('/^I buy products$/', function(FeatureContext $world)
 {
-    $urls = array_map($world->getParameter('productIds'), function($productId) use($world)
+    $products = $world->getParameter('products');
+    $urls = array_map(function($product) use($world)
     {
-        return $world::$clientUrl . "store/product/0/product_id-" . $productId;
-    });
+        return $world::$clientUrl . "store/product/0/product_id-" . $product['id'];
+    }, $products);
 
     return array(
-        new When('I visit "'. $world::$clientUrl . "store/cart/" . '"'),
-        new When('I follow "Clear bag"'),
-        new When('I visit "'.$urls[0].'"'),
-        new When('I press "Add to cart"'),
-        new When('I visit "'.$urls[1].'"'),
-        new When('I press "Add to cart"')
+        //new When('I am on "'. $world::$clientUrl . "store/cart/" . '"'),
+        new When('I am logged in'),
+        new When('I am on "'.$urls[0].'"'),
+        new When('I press "Add to Bag"'),
+        new When('I am on "'.$urls[1].'"'),
+        new When('I press "Add to Bag"'),
+        new When('I pass checkout')
     );
 });
 
 $steps->Given('/^I delete first$/', function(FeatureContext $world)
 {
-
+    $products = $world->getParameter('products');
+    $world->deleteProduct($products[0]['id']);
+});
+$steps->When('/^I delete second$/', function(FeatureContext $world)
+{
+    $products = $world->getParameter('products');
+    $world->deleteProduct($products[1]['id']);
 });
 
 $steps->Then('/^I should see valid order info$/', function(FeatureContext $world)
 {
-    throw new \Behat\Behat\Exception\PendingException();
+    $checkInvoice = function(FeatureContext $world){
+        $products = $world->getParameter('products');
+        $subtotal = 0;
+        foreach($products as $product){
+            $world->assertAnyElementContainsText('td.name', $product['name']);
+            $world->assertAnyElementContainsText('td.price', $product['price']);
+            $world->assertAnyElementContainsText('td.sku', $product['sku']);
+            $subtotal += $product['price'];
+        }
+        $world->assertAnyElementContainsText('.totals .value', $subtotal);
+    };
+    #client
+    $orderId = $world->getParameter('orderId');
+    $world->logIn();
+    $world->clickLink('My account');
+    $world->clickLink('Orders');
+    $world->visit($world->getSession()->getCurrentUrl() . '/' . $orderId);
+    call_user_func($checkInvoice, $world);
+    #admin
+    $world->visit($world::$adminUrl . 'admin.php?target=order&order_id=' . $orderId);
+    call_user_func($checkInvoice, $world);
 });
 
 $steps->Given('/^I am on order page$/', function(FeatureContext $world)
 {
-    throw new \Behat\Behat\Exception\PendingException();
+    $orderId = $world->getParameter('orderId');
+    $world->visit($world::$adminUrl . 'admin.php?target=order&order_id=' . $orderId);
 });
 
-$steps->When('/^I change status to "([^"]*)"$/', function(FeatureContext $world, $arg1)
+$steps->When('/^I change status to "([^"]*)"$/', function(FeatureContext $world, $status)
 {
-    throw new \Behat\Behat\Exception\PendingException();
+    $world->selectOption('status', $status);
+    $world->pressButton('Submit');
 });
 
-$steps->Given('/^I should see valid top sellers$/', function(FeatureContext $world)
+$steps->Then('/^I should see products in top sellers$/', function(FeatureContext $world)
 {
-    throw new \Behat\Behat\Exception\PendingException();
+    $world->visit($world::$adminUrl . 'admin.php?target=top_sellers');
+    $products = $world->getParameter('products');
+    foreach($products as $product){
+        $world->assertPageContainsText($product['name']);
+    }
 });
 
-$steps->Given('/^I should see valis statistics$/', function(FeatureContext $world)
+$steps->Then('/^I should not see products in top sellers$/', function(FeatureContext $world)
 {
-    throw new \Behat\Behat\Exception\PendingException();
+    $world->visit($world::$adminUrl . 'admin.php?target=top_sellers');
+    $products = $world->getParameter('products');
+    foreach($products as $product){
+        $world->assertPageNotContainsText($product['name']);
+    }
 });
 
-$steps->When('/^I delete second$/', function(FeatureContext $world)
-{
-    throw new \Behat\Behat\Exception\PendingException();
-});

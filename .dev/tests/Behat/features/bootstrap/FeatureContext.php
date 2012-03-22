@@ -27,7 +27,7 @@ require_once 'PHPUnit/Framework/Assert/Functions.php';
 class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements ClosuredContextInterface
 {
 
-    protected static $parameters;
+    protected static $parameters = array();
     public static $adminUrl;
     public static $clientUrl;
 
@@ -114,22 +114,35 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
     /**
      * @Given /^I am logged in as admin$/
      */
-    public function iAmLoggedInAsAdmin()
+    public function logInAsAdmin()
     {
-        $url = $this->getSession()->getCurrentUrl();
-
-        if (strpos($url, 'admin.php') === false){
-            $this->visit('admin.php');
-        }
+        $this->visit(self::$adminUrl .'admin.php');
         if($this->isPageContainsText('Please identify yourself')){
-            //$this->visit('admin.php?target=login&action=logoff');
             $this->fillField('login', 'rnd_tester@cdev.ru');
             $this->fillField('password', 'master');
             $this->pressButton('Log in');
-            $this->visit('admin.php');
+            $this->visit(self::$adminUrl .'admin.php');
         }
         if(!$this->isPageContainsText('Sign out')){
             throw new Exception('Failed to log in as admin');
+        }
+    }
+
+    /**
+     * @Given /^I am logged in$/
+     */
+    public function logIn(){
+        $user = 'master';
+        $password = 'master';
+        $this->visit(self::$clientUrl);
+        if ($this->isPageContainsText('Log in')){
+            $this->clickLink('Log in');
+            $this->fillField('edit-name', 'master');
+            $this->fillField('pass', $password);
+            $this->pressButton('Log in');
+        }
+        if(!$this->isPageContainsText('Log out')){
+            throw new Exception('Failed to log in');
         }
     }
 
@@ -140,7 +153,8 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
         return $this->getSession()->getDriver()->getBrowser()->getConfirmation();
     }
 
-    protected function isPageContainsText($text){
+    public function isPageContainsText($text){
+        $session = $this->getSession()->getDriver()->getBrowser()->waitForPageToLoad(20000);
         $pos = strpos($this->getSession()->getPage()->getText(), $text);
         //echo PHP_EOL."POS of string: " . $pos;
         return $pos !== false;
@@ -225,6 +239,47 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
 
     }
 
+    public function deleteProduct($id){
+        $this->visit(self::$adminUrl . 'admin.php?target=product_list');
+        $line = $this->find('css', '.entity-'.$id);
+        $line->pressButton("Remove");
+        $this->pressButton("Save changes");
+    }
+
+    /**
+     * @Given /^I pass checkout$/
+     */
+    public function checkout(){
+        $this->visit(self::$clientUrl . "store/checkout");
+        if ($this->find('css', '.shipping-step.current', false) !== null){
+            $this->fillFields(new TableNode(<<<TABLE
+          | shippingAddress[name]    | name_test    |
+          | shippingAddress[street]  | street_test  |
+          | shippingAddress[city]    | city_test    |
+          | shippingAddress[zipcode] | zipcode_test |
+          | shippingAddress[phone]   | phone_test   |
+TABLE
+            ));
+            $this->click('.secondary');
+            $this->click('#method1');
+            $this->pressButton('Continue');
+        }
+        if ($this->find('css', '.payment-step.current', false) !== null){
+            $this->click('#pmethod2');
+            $this->pressButton('Continue');
+        }
+        $this->click('#place_order_agree');
+        $this->pressButton('Place order');
+        sleep(2);
+        //$this->getSession()->getDriver()->getBrowser()->waitForPageToLoad(2000);
+        $url = $this->getSession()->getCurrentUrl();
+        if (preg_match('/order_id-(\d+)/', $url, $matches)){
+            $this->setParameter('orderId', $matches[1]);
+        }
+
+
+    }
+
     /**
      * Returns all added subcontexts.
      *
@@ -280,7 +335,9 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
      * @return mixed|null
      */
     public function getParameter($name){
-        self::$parameters = parent::getParameters();
+        if (empty(self::$parameters)){
+            self::$parameters = parent::getParameters();
+        }
         return isset(self::$parameters[$name]) ? self::$parameters[$name] : null;
     }
 
@@ -315,10 +372,16 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
     public static function initUrls(\Behat\Behat\Event\SuiteEvent $event){
         $params = $event->getContextParameters();
         if(isset($params['client_url'])){
-            self::$clientUrl =$params['client_url'];
+            $url = $params['client_url'];
+            self::$clientUrl = (strpos($url, 'http://') === 0)
+                ? $params['client_url']
+                : $params['base_url'] . $params['client_url'];
         }
         if(isset($params['admin_url'])){
-            self::$clientUrl =$params['admin_url'];
+            $url = $params['admin_url'];
+            self::$adminUrl = (strpos($url, 'http://') === 0)
+                ? $url
+                : $params['base_url'] . $url;
         }
     }
 }
