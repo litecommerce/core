@@ -13,5 +13,5 @@
 <div class="secondary" IF="isShippingAvailable()">
   <div class="label">{t(#Shipping method#)}:</div>
   {modifier.method.name:h}
-  <span class="price">{formatPrice(getTotalRate(modifier.selectedRate),cart.getCurrency())}</span>
+  <span class="price"><widget class="XLite\View\Surcharge" surcharge="{getTotalRate(modifier.selectedRate)}" currency="{cart.getCurrency()}" /></span>
 </div>

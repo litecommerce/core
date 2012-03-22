@@ -170,7 +170,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      */
     protected function formatSurcharge(array $surcharge)
     {
-        return $this->formatPrice(abs($surcharge['cost']), $this->getCart()->getCurrency());
+        return abs($surcharge['cost']);
     }
 
     /**

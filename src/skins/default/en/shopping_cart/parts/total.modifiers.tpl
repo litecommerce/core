@@ -19,7 +19,7 @@
     <strong class="list-owner">{surcharge.name}:</strong>
   {end:}
   {if:surcharge.available}
-    <span class="value">{formatSurcharge(surcharge):h}</span>
+    <span class="value"><widget class="XLite\View\Surcharge" surcharge="{surcharge}" currency="{cart.getCurrency()}" /></span>
   {else:}
     <span>{t(#n/a#)}</span>
   {end:}
@@ -30,7 +30,7 @@
       <ul>
         <li FOREACH="getExcludeSurchargesByType(sType),row">
           <span class="name">{row.getName()}:</span>
-          <span class="value">{formatPrice(row.getValue(),cart.getCurrency()):h}</span>
+          <span class="value"><widget class="XLite\View\Surcharge" surcharge="{row.getValue()}" currency="{cart.getCurrency()}" /></span>
         </li>
       </ul>
     </div>

@@ -12,4 +12,4 @@
  * @ListChild (list="surcharge.common", weight="100")
  *}
 
-<span class="surcharge-cell">{formatPriceHTML(getSurcharge()):h}</span>
+<span class="surcharge-cell">{formatPriceHTML(getSurcharge(),getCurrency()):h}</span>
