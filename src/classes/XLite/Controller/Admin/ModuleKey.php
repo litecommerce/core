@@ -93,6 +93,8 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
                         $entity = $repo->insert($info + array('keyValue' => $key));
                     }
 
+                    \XLite\Core\Database::getEM()->flush();
+
                     // Clear cache for proper installation
                     \XLite\Core\Marketplace::getInstance()->clearActionCache(\XLite\Core\Marketplace::ACTION_GET_ADDONS_LIST);
 
