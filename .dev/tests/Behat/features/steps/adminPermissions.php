@@ -15,12 +15,12 @@ $steps->Given('/^there are "([^"]*)" admin with no roles$/', function(FeatureCon
 });
 
 $steps->Given('/^I logged in as no permission$/', function(FeatureContext $world){
-    $world->visit($world::$adminUrl .'admin.php');
+    $world->visit('admin.php');
     if($world->isPageContainsText('Please identify yourself')){
         $world->fillField('login', 'rnd_tester@rrf.ru');
         $world->fillField('password', 'master');
         $world->pressButton('Log in');
-        $world->visit($world::$adminUrl .'admin.php');
+        $world->visit('admin.php');
     }
     if(!$world->isPageContainsText('Sign out')){
         throw new Exception('Failed to log in as admin');
@@ -58,7 +58,7 @@ $steps->Then('/^I should see Access denied in all controllers$/', function(Featu
     );
 
     foreach($controllers as $controller){
-        $world->visit($world::$adminUrl);
+        $world->visit("admin.php?target=".$controller);
         $world->assertPageContainsText("Access denied");
     }
 });

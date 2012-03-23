@@ -116,12 +116,12 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
      */
     public function logInAsAdmin()
     {
-        $this->visit(self::$adminUrl .'admin.php');
+        $this->visit('admin.php');
         if($this->isPageContainsText('Please identify yourself')){
             $this->fillField('login', 'rnd_tester@cdev.ru');
             $this->fillField('password', 'master');
             $this->pressButton('Log in');
-            $this->visit(self::$adminUrl .'admin.php');
+            $this->visit('admin.php');
         }
         if(!$this->isPageContainsText('Sign out')){
             throw new Exception('Failed to log in as admin');
@@ -140,7 +140,9 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
             $this->fillField('edit-name', 'master');
             $this->fillField('pass', $password);
             $this->pressButton('Log in');
+            sleep(2);
         }
+
         if(!$this->isPageContainsText('Log out')){
             throw new Exception('Failed to log in');
         }
@@ -154,7 +156,6 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
     }
 
     public function isPageContainsText($text){
-        $session = $this->getSession()->getDriver()->getBrowser()->waitForPageToLoad(20000);
         $pos = strpos($this->getSession()->getPage()->getText(), $text);
         //echo PHP_EOL."POS of string: " . $pos;
         return $pos !== false;
@@ -167,6 +168,16 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
     public function clickLink($link){
 
         return $this->withSpeed(1000, array('parent::clickLink', $link), true);
+    }
+    public function visit($page){
+        if (strpos($page, 'http://') === 0){
+            parent::visit($page);
+        } elseif (strpos($page, 'admin.php') === 0){
+            parent::visit(self::$adminUrl . $page);
+        } else{
+            parent::visit(self::$clientUrl . $page);
+        }
+
     }
 
     protected function withSpeed($speed, $callback, $isMethod = false){
@@ -240,17 +251,33 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
     }
 
     public function deleteProduct($id){
-        $this->visit(self::$adminUrl . 'admin.php?target=product_list');
+        $this->visit('admin.php?target=product_list');
         $line = $this->find('css', '.entity-'.$id);
         $line->pressButton("Remove");
         $this->pressButton("Save changes");
+    }
+    public function waitForButton($locator, $timeout = 60000){
+        $i = 0;
+        $period = 500;
+        while($i < $timeout){
+            $button = $this->getSession()->getPage()->findButton($locator);
+            if (null !== $button){
+                return;
+            }
+            $i += $period;
+            usleep($period * 1000);
+        }
+        if (null === $button){
+            throw new \Behat\Mink\Exception\ExpectationException("Wait for $locator timed out after $timeout ms", $this->getSession());
+        }
+
     }
 
     /**
      * @Given /^I pass checkout$/
      */
     public function checkout(){
-        $this->visit(self::$clientUrl . "store/checkout");
+        $this->visit("store/checkout");
         if ($this->find('css', '.shipping-step.current', false) !== null){
             $this->fillFields(new TableNode(<<<TABLE
           | shippingAddress[name]    | name_test    |
@@ -263,6 +290,7 @@ TABLE
             $this->click('.secondary');
             $this->click('#method1');
             $this->pressButton('Continue');
+            $this->waitForButton('Change shipping info');
         }
         if ($this->find('css', '.payment-step.current', false) !== null){
             $this->click('#pmethod2');

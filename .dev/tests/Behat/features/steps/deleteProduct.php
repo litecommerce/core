@@ -3,7 +3,7 @@ use \Behat\Behat\Context\Step\When;
 
 $steps->Given('/^there are (\d+) products with enabled inventory$/', function(FeatureContext $world, $count)
 {
-    $world->visit($world::$adminUrl . 'admin.php?target=product_list&mode=search');
+    $world->visit('admin.php?target=product_list&mode=search');
 
     $products = array();
     $rows = $world->findAll('xpath', '//tr[contains(@class, "entity-")]');
@@ -15,9 +15,9 @@ $steps->Given('/^there are (\d+) products with enabled inventory$/', function(Fe
             continue;
         }
 
-        $name = $row->find('css', '.cell.name a')->getText();
-        $price = $row->find('css', '.cell.price')->getText();
-        $sku = $row->find('css', '.cell.sku')->getText();
+        $name = trim($row->find('css', '.cell.name a')->getText());
+        $price = trim($row->find('css', '.cell.price .value')->getText());
+        $sku = trim($row->find('css', '.cell.sku')->getText());
 
         if (preg_match('/entity-([0-9]+)$/', $row->getAttribute('class'), $matches) && isset($matches[1])) {
             $products[] = array('id' => $matches[1], 'name' =>$name, 'price' =>$price, 'sku' =>$sku);
@@ -37,7 +37,7 @@ $steps->When('/^I buy products$/', function(FeatureContext $world)
     $products = $world->getParameter('products');
     $urls = array_map(function($product) use($world)
     {
-        return $world::$clientUrl . "store/product/0/product_id-" . $product['id'];
+        return "store/product/0/product_id-" . $product['id'];
     }, $products);
 
     return array(
@@ -80,17 +80,18 @@ $steps->Then('/^I should see valid order info$/', function(FeatureContext $world
     $world->logIn();
     $world->clickLink('My account');
     $world->clickLink('Orders');
+    sleep(2);
     $world->visit($world->getSession()->getCurrentUrl() . '/' . $orderId);
     call_user_func($checkInvoice, $world);
     #admin
-    $world->visit($world::$adminUrl . 'admin.php?target=order&order_id=' . $orderId);
+    $world->visit('admin.php?target=order&order_id=' . $orderId);
     call_user_func($checkInvoice, $world);
 });
 
 $steps->Given('/^I am on order page$/', function(FeatureContext $world)
 {
     $orderId = $world->getParameter('orderId');
-    $world->visit($world::$adminUrl . 'admin.php?target=order&order_id=' . $orderId);
+    $world->visit('admin.php?target=order&order_id=' . $orderId);
 });
 
 $steps->When('/^I change status to "([^"]*)"$/', function(FeatureContext $world, $status)
@@ -101,7 +102,7 @@ $steps->When('/^I change status to "([^"]*)"$/', function(FeatureContext $world,
 
 $steps->Then('/^I should see products in top sellers$/', function(FeatureContext $world)
 {
-    $world->visit($world::$adminUrl . 'admin.php?target=top_sellers');
+    $world->visit('admin.php?target=top_sellers');
     $products = $world->getParameter('products');
     foreach($products as $product){
         $world->assertPageContainsText($product['name']);
@@ -110,7 +111,7 @@ $steps->Then('/^I should see products in top sellers$/', function(FeatureContext
 
 $steps->Then('/^I should not see products in top sellers$/', function(FeatureContext $world)
 {
-    $world->visit($world::$adminUrl . 'admin.php?target=top_sellers');
+    $world->visit('admin.php?target=top_sellers');
     $products = $world->getParameter('products');
     foreach($products as $product){
         $world->assertPageNotContainsText($product['name']);
