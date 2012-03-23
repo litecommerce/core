@@ -112,7 +112,13 @@ CODE;
      */
     public function ____SETTER____(\$value)
     {
-        return \$this->getTranslation(\$this->editLanguage)->____SETTER____(\$value);
+        \$translation = \$this->getTranslation(\$this->editLanguage);
+
+        if (!\$translation->isPersistent()) {
+             \$this->addTranslations(\$translation);
+        }
+
+        return \$translation->____SETTER____(\$value);
     }
 CODE;
 
