@@ -63,40 +63,50 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
     protected function doActionRegisterKey()
     {
         $key  = \XLite\Core\Request::getInstance()->key;
-        $info = \XLite\Core\Marketplace::getInstance()->checkAddonKey($key);
+        $addonsInfo = \XLite\Core\Marketplace::getInstance()->checkAddonKey($key);
 
-        if ($info) {
-            $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($info);
+        if ($addonsInfo) {
 
-            if ($module) {
-                $repo   = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey');
-                $entity = $repo->findKey($info['author'], $info['name']);
+            $repo = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey');
 
-                if ($entity) {
-                    $entity->setKeyValue($key);
-                    $repo->update($entity);
+            foreach ($addonsInfo as $info) {
 
-                } else {
-                    $entity = $repo->insert($info + array('keyValue' => $key));
-                }
-
-                // Clear cache for proper installation
-                \XLite\Core\Marketplace::getInstance()->clearActionCache(\XLite\Core\Marketplace::ACTION_GET_ADDONS_LIST);
-
-                $this->showInfo(
-                    __FUNCTION__,
-                    'License key has been successfully verified for "{{name}}" module by "{{author}}" author',
+                $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy(
                     array(
-                        'name'   => $module->getModuleName(),
-                        'author' => $module->getAuthorName(),
+                        'author' => $info['author'],
+                        'name'   => $info['name'],
                     )
                 );
 
-            } else {
-                $this->showError(
-                    __FUNCTION__,
-                    'Key is validated, but the module [' . explode(',', $info) . '] was not found'
-                );
+                if ($module) {
+
+                    $entity = $repo->findKey($info['author'], $info['name']);
+
+                    if ($entity) {
+
+                        $entity->setKeyValue($key);
+
+                        $repo->update($entity);
+
+                    } else {
+
+                        $entity = $repo->insert($info + array('keyValue' => $key));
+                    }
+
+                    // Clear cache for proper installation
+                    \XLite\Core\Marketplace::getInstance()->clearActionCache(\XLite\Core\Marketplace::ACTION_GET_ADDONS_LIST);
+
+                    $this->showInfo(
+                        __FUNCTION__, 'License key has been successfully verified for "{{name}}" module by "{{author}}" author', array(
+                            'name'   => $module->getModuleName(),
+                            'author' => $module->getAuthorName(),
+                        )
+                    );
+                } else {
+                    $this->showError(
+                            __FUNCTION__, 'Key is validated, but the module [' . implode(',', $info) . '] was not found'
+                    );
+                }
             }
 
         } else {

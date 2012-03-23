@@ -61,6 +61,7 @@ class Marketplace extends \XLite\Base\Singleton
     const FIELD_LENGTH                = 'length';
     const FIELD_GZIPPED               = 'gzipped';
     const FIELD_NAME                  = 'name';
+    const FIELD_KEY_TYPE              = 'keyType';
     const FIELD_MODULE                = 'module';
     const FIELD_MODULES               = 'modules';
     const FIELD_AUTHOR                = 'author';
@@ -839,8 +840,15 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function validateResponseForCheckAddonKeyAction(array $data)
     {
+        $result = true;
 
-        return $this->validateAgainstSchema($data, $this->getSchemaResponseForCheckAddonKeyAction());
+        foreach ($data as $module) {
+            $result = $result
+                && is_array($module)
+                && $this->validateAgainstSchema($module, $this->getSchemaResponseForCheckAddonKeyAction());
+        }
+
+        return $result;
     }
 
     /**
@@ -860,6 +868,10 @@ class Marketplace extends \XLite\Base\Singleton
             self::FIELD_NAME => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
                 'options' => array('regexp' => self::REGEXP_WORD),
+            ),
+            self::FIELD_KEY_TYPE => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => self::REGEXP_NUMBER),
             ),
         );
     }
