@@ -10,32 +10,6 @@
  * @since     1.0.0
  */
 
-.top-controls button {
-  margin: 0px;
-}
-
-div.addons-search-panel input {
-  padding: 4px 7px;
-  vertical-align: middle;
-  width: 300px;
-  border-top: 1px solid #7f7f7f;
-  border-left: 1px solid #7f7f7f;
-  border-right: 1px solid #cbcbcb;
-  border-bottom: 1px solid #cbcbcb;
-  font-family: arial, helvetica, sans-serif;
-  font-size: 13px;
-  margin-right: 10px;
-}
-
-div.addons-search-panel input.default-value {
-  font-style: italic;
-  color: #a5a5a5;
-}
-
-div.addons-search-panel input.search-substring {
-  width: 390px;
-}
-
 div.addons-search-panel .clear {
   clear: none;
   float: left;
@@ -63,23 +37,48 @@ div.tags div.tags-title {
 }
 
 div.top-controls {
-  position: relative;
-  width: 100%;
-  margin-bottom: 20px;
-  height: 40px;
-}
-
-div.top-controls div.addons-search-panel {
+  background-color: #ededed;
   float: left;
 }
 
-div.top-controls div.action-buttons {
-  float: left;
-  margin-left: 30px;
+div.top-controls.search-form {
+  padding: 30px;
+  height: 120px;
+}
+
+div.top-controls.search-form div.substring {
+  border: 1px solid #a3a3a3;
+  border-radius: 10px;
+}
+
+div.top-controls.search-form button[type="submit"] {
+  background: #fff url(../../../images/search.png) no-repeat center center;
+  margin: 0;
+  padding: 0;
+  width: 30px;
+  border: 0;
+  border-radius: 0;
+  border-radius: 0 10px 10px 0;
+}
+
+div.top-controls.search-form button.enter-license-key {
+  margin-top: 20px;
+}
+
+div.top-controls.search-form input#substring {
+  border: 0;
+  padding: 4px 7px;
+  vertical-align: middle;
+  font-family: arial, helvetica, sans-serif;
+  font-size: 13px;
+  font-style: italic;
+  color: #a5a5a5;
+  border-radius: 10px 0 0 10px;
+  width: 230px;
 }
 
 .modules-list .price,
-  .modules-list .installed
+.modules-list .installed
 {
   margin-bottom: 10px;
 }
