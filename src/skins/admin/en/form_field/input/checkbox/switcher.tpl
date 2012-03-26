@@ -14,5 +14,5 @@
   {displayCommentedData(getCommentedData())}
   <input type="hidden" name="{getName()}" value="" />
   <input{getAttributesCode():h} />
-  <div class="widget" title="{getWidgetTitle()}" data-enable-label="{getEnableLabel()}" data-disable-label="{getDisableLabel()}"></div>
+  <div class="widget" title="{t(getWidgetTitle())}" data-enable-label="{t(getEnableLabel())}" data-disable-label="{t(getDisableLabel())}"></div>
 </span>

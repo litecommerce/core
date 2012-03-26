@@ -46,11 +46,6 @@ function get_lc_config_file_description()
     );
 }
 
-function get_lc_loopback_description()
-{
-    return xtr('lc_loopback_description', array(':host' => $_SERVER["HTTP_HOST"]));
-}
-
 function get_lc_php_version_description()
 {
     return xtr('lc_php_version_description', array(':phpver' => phpversion()));
@@ -89,16 +84,6 @@ function get_lc_php_file_uploads_description()
 function get_lc_php_upload_max_filesize_description()
 {
     return xtr('lc_php_upload_max_filesize_description');
-}
-
-function get_lc_mem_allocation_description()
-{
-    return xtr('lc_mem_allocation_description');
-}
-
-function get_lc_recursion_test_description()
-{
-    return xtr('lc_recursion_test_description');
 }
 
 function get_lc_php_gdlib_description()

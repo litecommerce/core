@@ -55,7 +55,6 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     protected $editLanguage;
 
-
     /**
      * Get languages query
      *
@@ -65,16 +64,15 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     protected static function getLanguagesQuery()
     {
-        if (!isset(self::$languagesQuery)) {
-            self::$languagesQuery = array_fill_keys(
+        if (!isset(static::$languagesQuery)) {
+            static::$languagesQuery = array_fill_keys(
                 \XLite\Core\Database::getRepo('\XLite\Model\Language')->getLanguagesQuery(),
                 false
             );
         }
 
-        return self::$languagesQuery;
+        return static::$languagesQuery;
     }
-
 
     /**
      * Constructor
@@ -121,37 +119,33 @@ abstract class I18n extends \XLite\Model\AEntity
     /**
      * Get translation
      *
-     * @param string $code Language code OPTIONAL
+     * @param string  $code             Language code OPTIONAL
+     * @param boolean $allowEmptyResult Flag OPTIONAL
      *
      * @return \XLite\Model\Base\Translation
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTranslation($code = null)
+    public function getTranslation($code = null, $allowEmptyResult = false)
     {
-        if (!isset($code)) {
-            $code = $this->getDefaultLanguageCode();
-        }
-
         $result = null;
 
-        foreach ($this->getTranslations() as $t) {
-            if ($t->getCode() == $code) {
-                $result = $t;
-                break;
-            }
+        if (!isset($code)) {
+            $code = $this->editLanguage ?: $this->getDefaultLanguageCode();
         }
 
-        if (!$result) {
-            $className = $this instanceof \Doctrine\ORM\Proxy\Proxy
-                ? get_parent_class($this) . 'Translation'
-                : get_called_class() . 'Translation';
-            $result = new $className();
+        $translations = $this->getTranslations();
+        $result = \Includes\Utils\ArrayManager::searchInObjectsArray($translations->toArray(), 'getCode', $code);
+
+        if (!isset($result) && !$allowEmptyResult) {
+            $class  = $this instanceof \Doctrine\ORM\Proxy\Proxy ? get_parent_class($this) : get_class($this);
+            $class .= 'Translation';
+
+            $result = new $class();
             $result->setOwner($this);
             $result->setCode($code);
-            $this->addTranslations($result);
-        }
-
+        }   
+        
         return $result;
     }
 
@@ -166,52 +160,26 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     public function getSoftTranslation($code = null)
     {
-        $code = $code ?: $this->editLanguage;
+        $result = $this->getTranslation($code);
 
-        if (!isset($code)) {
-            $code = $this->getDefaultLanguageCode();
-        }
+        if (!$result->isPersistent()) {
+            $translations = $this->getTranslations();
+            $availLangs   = static::getLanguagesQuery();
 
-        $result = null;
-        $query = self::getLanguagesQuery();
-        $queryFilled = false;
-
-        foreach ($this->getTranslations() as $t) {
-            if ($t->getCode() == $code) {
-                $result = $t;
-                break;
-
-            } elseif (isset($query[$t->getCode()])) {
-                $query[$t->getCode()] = $t;
-                $queryFilled = true;
-            }
-        }
-
-        if (!$result) {
-            if ($queryFilled) {
-                foreach ($query as $t) {
-                    if ($t) {
-                        $result = $t;
-                        break;
-                    }
-                }
-
-            } elseif (0 < count($this->getTranslations())) {
-                foreach ($this->getTranslations() as $t) {
-                    $result = $t;
+            foreach ($translations as $object) {
+                if (isset($availLangs[$object->getCode()])) {
+                    $tmp = $object;
                     break;
                 }
             }
-        }
 
-        if (!$result) {
-            $className = $this instanceof \Doctrine\ORM\Proxy\Proxy
-                ? get_parent_class($this) . 'Translation'
-                : get_called_class() . 'Translation';
-            $result = new $className();
-            $result->setOwner($this);
-            $result->setCode($code);
-            $this->addTranslations($result);
+            if (!isset($tmp)) {
+                $tmp = $translations->first();
+            }
+
+            if (!empty($tmp)) {
+                $result = $tmp;
+            }
         }
 
         return $result;
@@ -291,7 +259,6 @@ abstract class I18n extends \XLite\Model\AEntity
             $t->detach();
         }
     }
-
 
     /**
      * Get default language code

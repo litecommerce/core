@@ -11,5 +11,5 @@
  *}
 
 <ul class="product-price clearfix">
-  {displayViewListContent(#product.plain_price#)}
+  <list name="product.plain_price" />
 </ul>

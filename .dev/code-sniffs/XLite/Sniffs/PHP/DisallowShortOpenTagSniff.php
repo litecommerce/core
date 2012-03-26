@@ -75,7 +75,7 @@ class XLite_Sniffs_PHP_DisallowShortOpenTagSniff extends XLite_ReqCodesSniff
 			!$phpcsFile->findNext(T_OPEN_TAG_WITH_ECHO, $stackPtr + 1) &&
 			$phpcsFile->findNext(T_CLOSE_TAG, $stackPtr)
 		) {
-            $error = 'æÁÊÌ ÉÍÅÅÔ ÔÏÌØËÏ ÏÄÉÎ ÏÔËÒÙ×ÁÀÝÉÊ PHP-ÔÜÇ, ÎÏ ÉÍÅÅÔ ÚÁËÒÙ×ÁÀÝÉÊ PHP-ÔÜÇ.';
+            $error = 'Ð¤Ð°Ð¹Ð» Ð¸Ð¼ÐµÐµÑ‚ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð¾Ð´Ð¸Ð½ Ð¾Ñ‚ÐºÑ€Ñ‹Ð²Ð°ÑŽÑ‰Ð¸Ð¹ PHP-Ñ‚ÑÐ³, Ð½Ð¾ Ð¸Ð¼ÐµÐµÑ‚ Ð·Ð°ÐºÑ€Ñ‹Ð²Ð°ÑŽÑ‰Ð¸Ð¹ PHP-Ñ‚ÑÐ³.';
    	        $phpcsFile->addError($this->getReqPrefix('REQ.PHP.2.1.1') . $error, $stackPtr);
 		}
 			

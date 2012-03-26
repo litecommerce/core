@@ -120,6 +120,26 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
     }
 
     /**
+     * Check - options list Has option groups or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function hasOptionGroups()
+    {
+        $cnt = 0;
+
+        foreach ($this->getOptions() as $option) {
+            if (is_array($option)) {
+                $cnt++;
+            }
+        }
+
+        return count($this->getOptions()) == $cnt;
+    }
+
+    /**
      * Define widget params
      *
      * @return void
@@ -150,4 +170,123 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
     {
         return $value == $this->getValue();
     }
+
+    /**
+     * Check - specified option group is disabled or not
+     * 
+     * @param mixed $optionGroupIndex Option group index
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function isOptionGroupDisabled($optionGroupIndex)
+    {
+        return false;
+    }
+
+    /**
+     * Check - specidifed option is disabled or not
+     * 
+     * @param mixed $value Option value
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function isOptionDisabled($value)
+    {
+        return false;
+    }
+
+    /**
+     * Get option group attributes as HTML code 
+     * 
+     * @param mixed $optionGroupIdx Option group index
+     * @param array $optionGroup    Option group
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function getOptionGroupAttributesCode($optionGroupIdx, array $optionGroup)
+    {
+        $list = array();
+
+        foreach ($this->getOptionGroupAttributes($optionGroupIdx, $optionGroup) as $name => $value) {
+            $list[] = $name . '="' . func_htmlspecialchars($value) . '"';
+        }
+
+        return implode(' ', $list);
+    }
+
+    /**
+     * Get option group attributes 
+     * 
+     * @param mixed $optionGroupIdx Option group index
+     * @param array $optionGroup    Option group
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function getOptionGroupAttributes($optionGroupIdx, array $optionGroup)
+    {
+        $attributes = array(
+            'label' => static::t($optionGroup['label']),
+        );
+
+        if ($this->isOptionGroupDisabled($optionGroupIdx)) {
+            $attributes['disabled'] = 'disabled';
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Get option attributes as HTML code
+     *
+     * @param mixed $value Value
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function getOptionAttributesCode($value)
+    {
+        $list = array();
+
+        foreach ($this->getOptionAttributes($value) as $name => $value) {
+            $list[] = $name . '="' . func_htmlspecialchars($value) . '"';
+        }
+
+        return implode(' ', $list);
+    }
+
+    /**
+     * Get option attributes 
+     * 
+     * @param mixed $value Value
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function getOptionAttributes($value)
+    {
+        $attributes = array(
+            'value' => func_htmlspecialchars($value),
+        );
+
+        if ($this->isOptionSelected($value)) {
+            $attributes['selected'] = 'selected';
+        }
+
+        if ($this->isOptionDisabled($value)) {
+            $attributes['disabled'] = 'disabled';
+        }
+
+        return $attributes;
+    }
+
 }

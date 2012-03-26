@@ -57,15 +57,14 @@ class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
     public function translate($name, $code)
     {
         if (!isset($this->translations[$code])) {
-            $this->translations[$code] = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')
-                ->findLabelsByCode($code);
+            $this->translations[$code] = $this->getRepo()->findLabelsByCode($code);
         }
 
-        return isset($this->translations[$code][$name]) ? $this->translations[$code][$name] : null;
+        return \Includes\Utils\ArrayManager::getIndex($this->translations[$code], $name);
     }
 
     /**
-     * Check - valid driver or not
+     * Check if driver is valid or not
      *
      * @return boolean
      * @see    ____func_see____
@@ -86,6 +85,18 @@ class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
     public function reset()
     {
         $this->translations = array();
+        $this->getRepo()->cleanCache();
     }
 
+    /**
+     * Alias
+     *
+     * @return \XLite\Model\Repo\LanguageLabel
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function getRepo()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel');
+    }
 }

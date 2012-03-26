@@ -58,7 +58,7 @@ class XLite_Sniffs_PHP_Formatting_EvalSniff extends XLite_ReqCodesSniff
 		if ($tokens[$stackPtr]['code'] === T_EVAL) {
 	        $phpcsFile->addError(
     	        $this->getReqPrefix('REQ.PHP.3.11.1')
-        	    . 'Использование eval() запрещено',
+        	    . 'п≤я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣ eval() п╥п╟п©я─п╣я┴п╣п╫п╬',
             	$stackPtr
 	        );
 
@@ -67,7 +67,7 @@ class XLite_Sniffs_PHP_Formatting_EvalSniff extends XLite_ReqCodesSniff
 
 	            $phpcsFile->addError(
             	    $this->getReqPrefix('REQ.PHP.3.11.2')
-        	        . 'Использование create_function() запрещено',
+        	        . 'п≤я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣ create_function() п╥п╟п©я─п╣я┴п╣п╫п╬',
     	            $stackPtr
 	            );
 			}

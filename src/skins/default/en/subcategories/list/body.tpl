@@ -16,4 +16,4 @@
   </li>
   <li FOREACH="getNestedViewList(#children#),item">{item.display()}</li>
 </ul>
-{displayViewListContent(#subcategories.base#)}
+<list name="subcategories.base" />

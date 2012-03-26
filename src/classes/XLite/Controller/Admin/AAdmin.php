@@ -41,7 +41,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     const MARKETPLACE_LAST_REQUEST_TIME = 'marketplaceLastRequestTime';
 
-
     /**
      * List of recently logged in administrators
      *
@@ -73,7 +72,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     public function checkACL()
     {
-        return \XLite\Core\Auth::getInstance()->isPermissionAllowed('root access');
+        return \XLite\Core\Auth::getInstance()->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS);
     }
 
     /**
@@ -444,38 +443,6 @@ OUT;
     {
         return substr(trim(preg_replace('/[^a-z0-9 \/\._-]+/Sis', '', $cleanURL)), 0, 200);
     }
-
-    // {{{ Multilanguage support
-
-    /**
-     * Get current language code
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCurrentLanguage()
-    {
-        return \XLite\Core\Session::getInstance()->editLanguage ?: \XLite\Core\Translation::getCurrentLanguageCode();
-    }
-
-    /**
-     * Change language common action
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function doActionChangeLanguage()
-    {
-        $code = \XLite\Core\Request::getInstance()->language;
-        $language = \XLite\Core\Database::getRepo('\XLite\Model\Language')->findOneBy(array('code' => $code));
-        if ($language && $language->getEnabled()) {
-            \XLite\Core\Session::getInstance()->editLanguage = $code;
-        }
-    }
-
-    // }}}
 
     // {{{ Updates logging and error handling
 

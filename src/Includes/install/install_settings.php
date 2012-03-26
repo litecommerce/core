@@ -58,9 +58,6 @@ define('LC_DEFAULT_CONFIG_FILE', 'config.default.php');
 // Config file name
 define('LC_CONFIG_FILE', 'config.php');
 
-// Maximum recursion depth for checking
-define('MAX_RECURSION_DEPTH', 97);
-
 // Other LiteCommerce settings
 global $lcSettings;
 

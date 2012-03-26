@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-{displayViewListContent(#modules.manage.buttons#)}
+<list name="modules.manage.buttons" />
 
 <br /><br />
 {* Display add-ons list *}

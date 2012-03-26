@@ -45,6 +45,18 @@ class Order extends \XLite\Controller\Admin\AAdmin
     protected $params = array('target', 'order_id', 'page');
 
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage orders');
+    }
+
+    /**
      * Check if current page is accessible
      *
      * @return boolean
@@ -56,32 +68,6 @@ class Order extends \XLite\Controller\Admin\AAdmin
         return parent::checkAccess()
             && \XLite\Core\Request::getInstance()->order_id
             && \XLite\Core\Database::getRepo('XLite\Model\Order')->find(\XLite\Core\Request::getInstance()->order_id);
-    }
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Order #' . \XLite\Core\Request::getInstance()->order_id;
-    }
-
-    /**
-     * Add part to the location nodes list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addBaseLocation()
-    {
-        parent::addBaseLocation();
-
-        $this->addLocationNode('Search orders', $this->buildURL('order_list'));
     }
 
     /**

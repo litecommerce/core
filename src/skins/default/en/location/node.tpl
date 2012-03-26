@@ -12,13 +12,13 @@
 
 <li class="location-node{if:getSubnodes()} expandable{end:}{if:isLast()} last{end:}">
 
-  <a IF="getLink()" href="{getLink()}" class="location-title">{getName()}</a>
-  <span IF="!getLink()" class="location-text">{getName()}</span>
+  <a IF="getLink()" href="{getLink()}" class="location-title">{t(getName())}</a>
+  <span IF="!getLink()" class="location-text">{t(getName())}</span>
 
   <ul class="location-subnodes" IF="getSubnodes()">
     <li FOREACH="getSubnodes(),node">
-      <a href="{node.getLink()}" IF="!node.getName()=getName()">{node.getName()}</a>
-      <a href="{node.getLink()}" IF="node.getName()=getName()" class="current">{node.getName()}</a>
+      <a href="{node.getLink()}" IF="!node.getName()=getName()">{t(node.getName())}</a>
+      <a href="{node.getLink()}" IF="node.getName()=getName()" class="current">{t(node.getName())}</a>
     </li>
   </ul>
 

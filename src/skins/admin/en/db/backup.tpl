@@ -31,9 +31,9 @@ function ShowNotes()
     }
 </style>
 
-{t(#Use this section to backup the database of your online store. Please note that database backup procedure can take up to several minutes.#)}
+{t(#Use this section to back the database of your online store up. Please note that the database backup procedure can take up to several minutes.#)}
 
-<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>{t(#How to backup your store database#)} &gt;&gt;&gt;</b></a></span>
+<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>{t(#How to back up your store database#)} &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <p class="adminParagraph">
 <table cellpadding="5" cellspacing="0">
@@ -41,10 +41,7 @@ function ShowNotes()
         <td>&nbsp;&nbsp;</td>
         <td>&nbsp;&nbsp;</td>
         <td>&nbsp;</td>
-        <td>
-  {t(#You can choose to download your database data (SQL dump) directly to your local computer by clicking on the 'Download SQL file' button, or save database data to a file on the web server ('var/backup/sqldump.sql.php') by clicking on the 'Create SQL file' button.#)}
-  {t(#If you choose the second option, you can download the file from the server later on and delete it from the server by clicking on the 'Delete SQL file' button.#)}
-        </td>
+        <td>{t(#You can choose if to download your database data#):h}</td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
     </tr>
 </table>
@@ -90,6 +87,6 @@ function ShowNotes()
 </table>
 <p align="justify">
   <b>{t(#Note#)}:</b>
-  {t(#if you store product images in the database, they will be included in the SQL dump file. If product images are located on the file system, they are not included. To backup such images you need to download them directly from the server.#)}
+  {t(#If you store product images in the database, they are included in the SQL dump file#):h}
 </p>
 </form>

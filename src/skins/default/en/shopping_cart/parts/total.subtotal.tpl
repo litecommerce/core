@@ -13,12 +13,12 @@
  *}
 <li class="subtotal">
   <strong>{t(#Subtotal#)}:</strong>
-  <span class="cart-subtotal{if:cart.getItemsIncludeSurchargesTotals()} modified-subtotal{end:}">{formatPrice(cart.getSubtotal(),cart.getCurrency())}</span>
+  <span class="cart-subtotal{if:cart.getItemsIncludeSurchargesTotals()} modified-subtotal{end:}"><widget class="XLite\View\Surcharge" surcharge="{cart.getSubtotal()}" currency="{cart.getCurrency()}" /></span>
   <div IF="cart.getItemsIncludeSurchargesTotals()" class="including-modifiers" style="display: none;">
     <table class="including-modifiers" cellspacing="0">
       <tr FOREACH="cart.getItemsIncludeSurchargesTotals(),row">
         <td class="name">{t(#Including X#,_ARRAY_(#name#^row.surcharge.getName()))}:</td>
-        <td class="value">{formatPrice(row.cost,cart.getCurrency())}</td>
+        <td class="value"><widget class="XLite\View\Surcharge" surcharge="{row.cost}" currency="{cart.getCurrency()}" /></td>
       </tr>
     </table>
   </div>

@@ -35,8 +35,6 @@ namespace XLite\View\FormField\Input;
  */
 class Text extends \XLite\View\FormField\Input\Base\String
 {
-    const PARAM_MAX_LENGTH = 'maxlength';
-
     /**
      * Return field type
      *
@@ -60,40 +58,6 @@ class Text extends \XLite\View\FormField\Input\Base\String
     {
         $list = parent::getJSFiles();
         $list[] = $this->getDir() . '/js/text.js';
-
-        return $list;
-    }
-
-    /**
-     * Define widget params
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_MAX_LENGTH => new \XLite\Model\WidgetParam\Int('Max. length', 0),
-        );
-    }
-
-    /**
-     * Get common attributes
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCommonAttributes()
-    {
-        $list = parent::getCommonAttributes();
-
-        if ($this->getParam(static::PARAM_MAX_LENGTH)) {
-            $list['maxlength'] = $this->getParam(static::PARAM_MAX_LENGTH);
-        }
 
         return $list;
     }

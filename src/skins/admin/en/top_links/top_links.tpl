@@ -9,8 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <div id="top-links">
   <ul>
-    {displayViewListContent(#top_links#)}
+    <list name="top_links" />
   </ul>
 </div>

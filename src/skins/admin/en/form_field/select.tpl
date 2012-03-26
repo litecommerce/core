@@ -11,5 +11,17 @@
  *}
 
 <select {getAttributesCode():h}>
-  <option FOREACH="getOptions(),optionValue,optionLabel" value="{optionValue}" selected="{isOptionSelected(optionValue)}">{optionLabel:h}</option>
+  {if:hasOptionGroups()}
+    {foreach:getOptions(),optionGroupIdx,optionGroup}
+      <optgroup {getOptionGroupAttributesCode(optionGroupIdx,optionGroup):h}>
+        {foreach:optionGroup,optionValue,optionLabel}
+          <option {getOptionAttributesCode(optionValue):h}>{t(optionLabel)}</option>
+        {end:}
+      </optgroup>
+    {end:}
+  {else:}
+    {foreach:getOptions(),optionValue,optionLabel}
+      <option {getOptionAttributesCode(optionValue):h}>{t(optionLabel)}</option>
+    {end:}
+  {end:}
 </select>

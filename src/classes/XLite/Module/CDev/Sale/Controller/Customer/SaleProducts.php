@@ -44,7 +44,7 @@ class SaleProducts extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return static::t('Sale');
+        return 'Sale';
     }
 
     /**

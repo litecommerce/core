@@ -41,7 +41,6 @@ if (!defined('XLITE_INSTALL_MODE')) {
 
 $translation = array (
   'Installation script' => 'Installation script',
-  'Loopback test' => 'Loopback test',
   'PHP version' => 'PHP version',
   'PHP safe_mode' => 'PHP safe_mode',
   'Disabled functions' => 'Disabled functions',
@@ -62,7 +61,6 @@ $translation = array (
   'Checking requirements is successfully complete' => 'Checking requirements completed successfully',
   'Some requirements are failed' => 'Some requirements failed',
   'LiteCommerce installation script not found. Restore it  and try again' => 'LiteCommerce installation script not found. Restore it and try again',
-  'Loopback test failed. Response:' => 'Loopback test failed. Response:',
   'PHP Version must be :minver as a minimum' => 'PHP Version must be at least :minver',
   'PHP Version must be not greater than :maxver' => 'PHP Version must be not greater than :maxver',
   'Unsupported PHP version detected' => 'Unsupported PHP version detected',
@@ -259,7 +257,6 @@ LiteCommerce Installation Wizard
   'Prevents unauthorized use of installation script' => 'Prevents unauthorized use<br />of the installation script',
   'I accept the License Agreement' => 'I accept the License Agreement and the <a href="http://www.litecommerce.com/privacy-policy.html" target="_blank">Privacy policy</a>',
   'Could not find license agreement file.<br />Aborting installation.' => 'Could not find license agreement file.<br />Aborting installation.',
-  'lc_loopback_description' => 'Loopback test failed for host :host. One of the reasons could be the firewall installed on your server and configured to decline loopback requests.<br /><br />Loopback requests are used to run additional tests of your server environment, such as memory allocation test and recursion test. You can ignore these tests and continue the installation process or reconfigure the firewall.',
   'lc_php_version_description' => 'PHP versions <b>5.3.0+</b> are currently supported.<br /><br />This version of LiteCommerce will work on any OS,<br />where PHP/MySQL meets the minimum <a href="http://www.litecommerce.com/server_requirements.html">system requirements</a>.
 <br /><br />You can find more information on LiteCommerce software<br />at <a href="http://www.litecommerce.com/faqs.html">http://www.litecommerce.com/faqs.html</a>.',
   'lc_php_disable_functions_description' => 'Some functions, used by LiteCommerce, are found disabled. Check these functions are not listed in "disable_functions" option or all php extensions required for these functions availability are enabled in php.ini file. Please correct this and try again.',
@@ -268,8 +265,6 @@ LiteCommerce Installation Wizard
   'lc_php_pdo_mysql_description' => 'PDO extension with enabled MySQL support is used by LiteCommerce for connecting to the database. Please make sure this extension is loaded in your php.ini file and try again.',
   'lc_php_file_uploads_description' => 'The configuration of the server where LiteCommerce will be installed meets the Server requirements; however, some server software issues, which can impair LiteCommerce operation, have been identified on the server.<br /><br />To ensure the proper operation of LiteCommerce, the value of the upload_max_filesize variable in php.ini file should contain the maximum size of files allowed for upload.',
   'lc_php_upload_max_filesize_description' => 'To ensure the proper operation of LiteCommerce, the value of upload_max_filesize option in php.ini file should contain the maximum size of files allowed for upload. Please correct this option or contact your hosting provider\'s support service to adjust this parameter.',
-  'lc_mem_allocation_description' => 'The configuration of the server where LiteCommerce will be installed meets the Server requirements, however some server software issues, which can impair LiteCommerce operation, have been identified on the server.<br /><br />Please contact our support team for further investigation.',
-  'lc_recursion_test_description' => 'The configuration of the server where LiteCommerce will be installed meets the Server requirements, however some server software issues, which can impair LiteCommerce operation, have been identified on the server.<br /><br />Please contact our support team for further investigation.',
   'lc_php_gdlib_description' => 'GDLib 2.0 or better required for automatic generation of product thumbnails form product images and for some other modules. GDLib must be compiled with libJpeg (ensure that PHP is configured with the option --with-jpeg-dir=DIR, where DIR is the directory where libJpeg is installed). Please contact the support services of your hosting provider to adjust this parameter.',
   'lc_php_phar_description' => 'Phar extension is required for installing external LiteCommerce addons from the marketplace. Please contact your hosting provider\'s support service to adjust this parameter.',
   'lc_https_bouncer_description' => 'libCURL module with HTTPS protocol support and a valid SSL certificate are required for processing credit cards using Authorize.NET, PayPal or other payment gateways or using real-time shipping calculation services (these services require your website to accept secure connections via HTTPS/SSL). Please contact your hosting provider\'s support service to adjust this parameter.',

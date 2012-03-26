@@ -153,7 +153,7 @@ class Country extends \XLite\View\FormField\Select\Regular
         $list = parent::getOptions();
 
         if (!$this->getValue()) {
-            $list = array('' => static::t('Select one...')) + $list;
+            $list = array('' => 'Select one...') + $list;
         }
 
         return $list;

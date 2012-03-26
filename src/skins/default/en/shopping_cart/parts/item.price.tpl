@@ -10,5 +10,5 @@
  * @since     1.0.0
  * @ListChild (list="cart.item", weight="40")
  *}
-<td class="item-price">{formatPrice(item.getNetPrice(),cart.getCurrency())}</td>
+<td class="item-price"><widget class="XLite\View\Surcharge" surcharge="{item.getNetPrice()}" currency="{cart.getCurrency()}" /></td>
 <td class="item-multi">&times;</td>

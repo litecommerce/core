@@ -20,6 +20,7 @@
 
 .items-list-table table.list {
   width: auto;
+  clear: both;
 }
 
 .items-list-table table.list thead {
@@ -157,4 +158,8 @@
 
 .items-list-table table.list tbody .inline-field .table-value {
   float: none;
+}
+
+.items-list-table table.list tbody.no-items td {
+  text-align: center;
 }

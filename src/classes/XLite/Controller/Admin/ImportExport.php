@@ -99,6 +99,18 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      */
     protected $importCell;
 
+    /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage catalog');
+    }
+
     // {{{ Tabs
 
     /**
@@ -131,21 +143,6 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
         );
     }
 
-    /**
-     * Get page code
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPage()
-    {
-        $page = $this->page;
-        $pages = $this->getPages();
-
-        return $page && isset($pages[$page]) ? $page : key($pages);
-    }
-
     // }}}
 
     // {{{ Content
@@ -159,19 +156,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Import / Export';
-    }
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->getTitle();
+        return 'Import/Export';
     }
 
     // }}}
@@ -731,7 +716,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
 
             if (0 < $this->importCell['warning_count']) {
                 \XLite\Core\TopMessage::getInstance()->add(
-                    'During the import was recorded X errors. You can get them by downloading the log imports.',
+                    'During the import was recorded X errors. You can get them by downloading the log files.',
                     array(
                         'count' => $this->importCell['warning_count'],
                         'url'   => \XLite\Logger::getInstance()->getCustomLogURL('import'),

@@ -41,11 +41,9 @@ abstract class AController extends \XLite\Core\Handler
      */
     const MARKETPLACE_LAST_REQUEST_TIME = 'marketplaceLastRequestTime';
 
-
     /**
      * Controller main params
      */
-
     const PARAM_TARGET = 'target';
     const PARAM_ACTION = 'action';
 
@@ -65,15 +63,6 @@ abstract class AController extends \XLite\Core\Handler
      * @since 1.0.0
      */
     protected $actionStatus;
-
-    /**
-     * Breadcrumbs
-     *
-     * @var   \XLite\View\Location
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $locationPath;
 
     /**
      * returnURL
@@ -171,6 +160,18 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
+     * Return list of page templates
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function getPageTemplates()
+    {
+        return array();
+    }
+
+    /**
      * getPages
      *
      * @return void
@@ -262,22 +263,6 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Return current location path
-     *
-     * @return \XLite\View\Location
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getLocationPath()
-    {
-        if (!isset($this->locationPath)) {
-            $this->defineLocationPath();
-        }
-
-        return $this->locationPath;
-    }
-
-    /**
      * Get return URL
      *
      * @return string
@@ -287,7 +272,7 @@ abstract class AController extends \XLite\Core\Handler
     public function getReturnURL()
     {
         if (!isset($this->returnURL)) {
-            $this->returnURL = \XLite\Core\Request::getInstance()->{self::RETURN_URL};
+            $this->returnURL = \XLite\Core\Request::getInstance()->{static::RETURN_URL};
         }
 
         return $this->returnURL;
@@ -582,9 +567,7 @@ abstract class AController extends \XLite\Core\Handler
     public function getURL(array $params = array())
     {
         $params = array_merge($this->getAllParams(), $params);
-
         $target = isset($params['target']) ? $params['target'] : '';
-
         unset($params['target']);
 
         return $this->buildURL($target, '', $params);
@@ -846,7 +829,7 @@ abstract class AController extends \XLite\Core\Handler
         \XLite\Core\Operator::redirect(
             $location,
             $this->getRedirectMode(),
-            $this->getParam(self::PARAM_REDIRECT_CODE)
+            $this->getParam(static::PARAM_REDIRECT_CODE)
         );
     }
 
@@ -860,70 +843,6 @@ abstract class AController extends \XLite\Core\Handler
     protected function getRedirectMode()
     {
         return false;
-    }
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return null;
-    }
-
-    /**
-     * Add part to the location nodes list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addBaseLocation()
-    {
-    }
-
-    /**
-     * Add node to the location line
-     *
-     * @param string $name     Node title
-     * @param string $link     Node link OPTIONAL
-     * @param array  $subnodes Node subnodes OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addLocationNode($name, $link = null, array $subnodes = null)
-    {
-        $this->locationPath[] = \XLite\View\Location\Node::create($name, $link, $subnodes);
-    }
-
-    /**
-     * Method to create the location line
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineLocationPath()
-    {
-        $this->locationPath = array();
-
-        // Common element for all location lines
-        $this->locationPath[] = new \XLite\View\Location\Node\Home();
-
-        // Ability to add part to the line
-        $this->addBaseLocation();
-
-        // Ability to define last element in path via short function
-        $location = $this->getLocation();
-
-        if ($location) {
-            $this->addLocationNode($location);
-        }
     }
 
     /**
@@ -950,7 +869,7 @@ abstract class AController extends \XLite\Core\Handler
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_REDIRECT_CODE => new \XLite\Model\WidgetParam\Int('Redirect code', $this->getDefaultRedirectCode()),
+            static::PARAM_REDIRECT_CODE => new \XLite\Model\WidgetParam\Int('Redirect code', $this->getDefaultRedirectCode()),
         );
     }
 
@@ -1061,6 +980,7 @@ abstract class AController extends \XLite\Core\Handler
             );
             header('event-message: ' . $encodedMessage);
         }
+
         \XLite\Core\TopMessage::getInstance()->clearAJAX();
     }
 
@@ -1241,7 +1161,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function printAJAXOuput($output)
     {
-        echo ('<h2 class="ajax-title-loadable">' . $this->getTitle() . '</h2>');
+        echo ('<h2 class="ajax-title-loadable">' . static::t($this->getTitle()) . '</h2>');
         echo ('<div class="ajax-container-loadable">' . $output . '</div>');
     }
 
@@ -1350,7 +1270,7 @@ abstract class AController extends \XLite\Core\Handler
         $params = array();
 
         // FIXME: is it really needed?
-        foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
+        foreach (array(static::PARAM_SILENT, static::PARAM_DUMP_STARTED) as $name) {
             $params[$name] = $this->get($name);
         }
 
@@ -1407,4 +1327,44 @@ abstract class AController extends \XLite\Core\Handler
         return $this->redirect($this->getShopURL($this->getURL(), true));
     }
 
+    // {{{ Language-related routines
+
+    /**
+     * Get current language code
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCurrentLanguage()
+    {
+        $instance = \XLite\Core\Session::getInstance();
+
+        return $instance->editLanguage ?: $instance->getLanguage()->getCode();
+    }
+
+    /**
+     * Change current language
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function doActionChangeLanguage()
+    {
+        $code = \XLite\Core\Request::getInstance()->language;
+
+        if (!empty($code)) {
+            $language = \XLite\Core\Database::getRepo('\XLite\Model\Language')->findOneByCode($code);
+
+            if (isset($language) && $language->getEnabled()) {
+                \XLite\Core\Session::getInstance()->setLanguage($language->getCode());
+                // \XLite\Core\Session::getInstance()->editLanguage = $language->getCode();
+            }
+        }
+
+        $this->setReturnURL($this->getURL());
+    }
+
+    // }}}
 }

@@ -510,6 +510,10 @@ abstract class Storage extends \XLite\Model\AEntity
             $result = false;
         }
 
+        if ($result && $basename) {
+            $this->setFileName($basename);
+        }
+
         return $result && $this->savePath($path);
     }
 
@@ -676,7 +680,9 @@ abstract class Storage extends \XLite\Model\AEntity
 
         $pathToRemove = $this->getPath();
         $this->setPath($savePath);
-        $this->setFileName(basename($this->getPath()));
+        if (!$this->getFileName()) {
+            $this->setFileName(basename($this->getPath()));
+        }
 
         $result = $this->renew() && $this->updatePathByMIME();
         $result = $result && $this->checkSecurity();

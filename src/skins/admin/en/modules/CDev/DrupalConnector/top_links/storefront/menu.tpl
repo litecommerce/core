@@ -14,7 +14,7 @@
   <a href="#">{t(#Drupal#)}</a>
   <div>
     <ul>
-      {displayViewListContent(#top_links.drupal_storefront#)}
+      <list name="top_links.drupal_storefront" />
     </ul>
   </div>
 </li>

@@ -18,10 +18,10 @@ define('TEST_DEPLOYMENT_MODE', 0);
 
 
 // Directory where xlite-tests.config.php is located
-define('XLITE_DEV_CONFIG_DIR', '/home/bitnami/etc');
+define('XLITE_DEV_CONFIG_DIR', '/home/ubuntu/etc');
 
 // Directory with external libs (PHPUnit etc)
-define('XLITE_DEV_LIB_DIR', '/home/bitnami/phpunit');
+define('XLITE_DEV_LIB_DIR', '/home/ubuntu/phpunit');
 
 /**
  * List of directories PHPUnit cloned from GitHub: http://www.phpunit.de/
@@ -49,7 +49,7 @@ if (1 === TEST_DEPLOYMENT_MODE) {
     define('SELENIUM_SOURCE_URL', 'http://_hostname_/xlite_cms');
 
     // Directory where Drupal installed
-    define('DRUPAL_SITE_PATH', '/opt/bitnami/apache2/htdocs/xlite_cms');
+    define('DRUPAL_SITE_PATH', '/var/www/xlite_cms');
 
 } else {
 
@@ -57,7 +57,7 @@ if (1 === TEST_DEPLOYMENT_MODE) {
     define('SELENIUM_SOURCE_URL', 'http://_hostname_/xlite_cms');
 
     // Directory where Drupal installed
-    define('DRUPAL_SITE_PATH', '/opt/bitnami/apache2/htdocs/xlite_cms');
+    define('DRUPAL_SITE_PATH', '/var/www/xlite_cms');
 }
 
 // Settings for screenshots capturing (on failed tests)

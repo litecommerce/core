@@ -27,6 +27,12 @@
 
 namespace XLite\View\FormField\Select\CheckboxList;
 
+/**
+ * Roles 
+ * 
+ * @see   ____class_see____
+ * @since 1.0.17
+ */
 class Roles extends \XLite\View\FormField\Select\CheckboxList\ACheckboxList
 {
     /**

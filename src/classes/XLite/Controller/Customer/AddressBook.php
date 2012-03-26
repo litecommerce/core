@@ -44,7 +44,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      */
     protected $address = null;
 
-
     /**
      * Return the current page title (for the content area)
      *
@@ -54,7 +53,7 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return \XLite\Core\Request::getInstance()->widget ? static::t('Address details') : '';
+        return \XLite\Core\Request::getInstance()->widget ? 'Address details' : '';
     }
 
     /**
@@ -79,7 +78,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
     public function getReturnURL()
     {
         if (\XLite\Core\Request::getInstance()->action) {
-
             $profileId = \XLite\Core\Request::getInstance()->profile_id;
 
             if (!isset($profileId)) {
@@ -87,7 +85,6 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
             }
 
             $params = isset($profileId) ? array('profile_id' => $profileId) : array();
-
             $url = $this->buildURL('address_book', '', $params);
 
         } else {
@@ -150,7 +147,7 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode(static::t('My account'));
+        $this->addLocationNode('My account');
     }
 
     /**
@@ -192,9 +189,7 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
             \XLite\Core\Database::getEM()->remove($address);
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Core\TopMessage::addInfo(
-                static::t('Address has been deleted')
-            );
+            \XLite\Core\TopMessage::addInfo('Address has been deleted');
         }
     }
 

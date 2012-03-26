@@ -1117,13 +1117,19 @@ div.product-details .product-image-gallery
 .product-details .product-items-available
 {
   color: #888;
-
 }
 
 .product-details .product-in-stock,
 .product-quicklook .product-in-stock
 {
   color: #019026;
+}
+
+.product-details .product-out-of-stock,
+.product-quicklook .product-out-of-stock,
+.product-details .product-in-stock,
+.product-quicklook .product-in-stock
+{
   display: block;
 }
 
@@ -1243,25 +1249,6 @@ div.product-details .continue-button-intend
   color: #7e7e7e;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 table.list-body td.hproduct a.product-thumbnail
 {
   width: 194px;
@@ -1329,6 +1316,12 @@ table.list-body-list td
   height: 100%;
   position: relative;         /* Position nested popups inside these blocks */
   cursor: pointer;
+}
+
+.lc-wishlist,
+.lc-minicart
+{
+  width: auto;
 }
 
 .lc-wishlist:hover,
@@ -1610,6 +1603,10 @@ body.store-cart #main h1 {
 {
   border-bottom: 1px dotted #c2c2c2;
   cursor: help;
+}
+
+.discount-code-modifier .value {
+  color: #397928;
 }
 
 table.including-modifiers,
@@ -2255,7 +2252,7 @@ form.estimator .main,
   padding-left: 5px;
 }
 
-.checkout-block .steps .shipping-step .shipping-rates li span {
+.checkout-block .steps .shipping-step .shipping-rates li span.value {
   float: right;
   color: #579ed2;
 }
@@ -2379,7 +2376,7 @@ form.estimator .main,
   display: inline-block;
 }
 
-.checkout-block .review-step .items-row span {
+.checkout-block .review-step .items-row span.price {
   padding-right: 8px;
 }
 
@@ -2450,7 +2447,7 @@ form.estimator .main,
 .checkout-block .review-step .items-row span.price,
 .checkout-block .review-step .list li div,
 .checkout-block .review-step .modifiers span.value,
-.checkout-block .review-step .total span
+.checkout-block .review-step .total span.value
 {
   float: right;
 }

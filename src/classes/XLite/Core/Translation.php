@@ -36,15 +36,6 @@ namespace XLite\Core;
 class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 {
     /**
-     * Current language code
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $currentLanguageCode;
-
-    /**
      * Translation driver
      *
      * @var   \XLite\Core\TranslationDriver\ATranslationDriver
@@ -66,23 +57,8 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     );
 
     /**
-     * Get current language code
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getCurrentLanguageCode($force = false)
-    {
-        if (!isset(static::$currentLanguageCode) || $force) {
-            static::$currentLanguageCode = \XLite\Core\Session::getInstance()->getLanguage()->getCode();
-        }
-
-        return static::$currentLanguageCode;
-    }
-
-    /**
      * Get translation (short static method)
+     * TODO: to remove
      *
      * @param string $name      Label name
      * @param array  $arguments Substitute arguments OPTIONAL
@@ -122,22 +98,26 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      */
     public function translate($name, array $arguments = array(), $code = null)
     {
+        $result = '';
+
         if (!isset($code)) {
             $code = \XLite\Core\Session::getInstance()->getLanguage()->getCode();
         }
 
-        $translated = $this::getInstance()->getDriver()->translate($name, $code);
-        if (!isset($translated) || 0 == strlen($translated)) {
-            $translated = $name;
+        if (!empty($name)) {
+            $result = $this->getDriver()->translate($name, $code);
+
+            if (!isset($result)) {
+                $result = $name;
+            }
+
+            if (!empty($arguments)) {
+                $result = $this->processSubstitute($result, $arguments);
+            }
         }
 
-        if ($arguments) {
-            $translated = $this->processSubstitute($translated, $arguments);
-        }
-
-        return $translated;
+        return $result;
     }
-
 
     /**
      * Get REST entity names

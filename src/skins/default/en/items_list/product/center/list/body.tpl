@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-{displayViewListContent(#itemsList.product.cart#)}
+<list name="itemsList.product.cart" />
 
 <div class="products">
 
@@ -21,17 +21,17 @@
         <tr>
           <td class="product-photo">
             <div class="product-photo">
-              {displayInheritedViewListContent(#photo#,_ARRAY_(#product#^product))}
+              <list name="photo" type="inherited" product="{product}" />
               <div IF="product.hasImage()">
-                {displayInheritedViewListContent(#quicklook#,_ARRAY_(#product#^product))}
+                <list name="quicklook" type="inherited" product="{product}" />
               </div>
             </div>
           </td>
           <td class="product-info">
             <div class="product-info">
-              {displayInheritedViewListContent(#info#,_ARRAY_(#product#^product))}
+              <list name="info" type="inherited" product="{product}" />
               <div IF="!product.hasImage()">
-                {displayInheritedViewListContent(#quicklook#,_ARRAY_(#product#^product))}
+                <list name="quicklook" type="inherited" product="{product}" />
               </div>
             </div>
           </td>

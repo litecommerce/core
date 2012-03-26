@@ -63,7 +63,7 @@ class XLite_Sniffs_PHP_Formatting_ArraySniff extends XLite_ReqCodesSniff
 				if ($tokens[$notWS]['code'] === T_LNUMBER && $tokens[$notWS - 1]['code'] === T_MINUS) {
 		            $phpcsFile->addError(
         		        $this->getReqPrefix('REQ.PHP.3.3.1')
-                		. 'Ключ массива не может быть отрицательным числом',
+                		. 'п п╩я▌я┤ п╪п╟я│я│п╦п╡п╟ п╫п╣ п╪п╬п╤п╣я┌ п╠я▀я┌я▄ п╬я┌я─п╦я├п╟я┌п╣п╩я▄п╫я▀п╪ я┤п╦я│п╩п╬п╪',
 		                $notWS
         		    );
 				}
@@ -100,7 +100,7 @@ class XLite_Sniffs_PHP_Formatting_ArraySniff extends XLite_ReqCodesSniff
 			) {
                 $phpcsFile->addError(
                     $this->getReqPrefix('REQ.PHP.3.3.3')
-                    . 'Объявление многострочного массива должно иметь следующий уровень отступа; найдено ' . ($tokens[$pos + 2]['column'] - 1) . ' пробелов вместо ' . $nextColumn,
+                    . 'п·п╠я┼я▐п╡п╩п╣п╫п╦п╣ п╪п╫п╬пЁп╬я│я┌я─п╬я┤п╫п╬пЁп╬ п╪п╟я│я│п╦п╡п╟ п╢п╬п╩п╤п╫п╬ п╦п╪п╣я┌я▄ я│п╩п╣п╢я┐я▌я┴п╦п╧ я┐я─п╬п╡п╣п╫я▄ п╬я┌я│я┌я┐п©п╟; п╫п╟п╧п╢п╣п╫п╬ ' . ($tokens[$pos + 2]['column'] - 1) . ' п©я─п╬п╠п╣п╩п╬п╡ п╡п╪п╣я│я┌п╬ ' . $nextColumn,
                     $pos + 2
                 );
 			}
@@ -131,7 +131,7 @@ class XLite_Sniffs_PHP_Formatting_ArraySniff extends XLite_ReqCodesSniff
 							if ($arrayCodePos === false) {
 		    	                $phpcsFile->addError(
     		    	                $this->getReqPrefix('REQ.PHP.3.3.4')
-        		    	            . 'Для многостраничного хэш-массива каждая пара ключа-значение должно определятся на отдельной строке',
+        		    	            . 'п■п╩я▐ п╪п╫п╬пЁп╬я│я┌я─п╟п╫п╦я┤п╫п╬пЁп╬ я┘я█я┬-п╪п╟я│я│п╦п╡п╟ п╨п╟п╤п╢п╟я▐ п©п╟я─п╟ п╨п╩я▌я┤п╟-п╥п╫п╟я┤п╣п╫п╦п╣ п╢п╬п╩п╤п╫п╬ п╬п©я─п╣п╢п╣п╩я▐я┌я│я▐ п╫п╟ п╬я┌п╢п╣п╩я▄п╫п╬п╧ я│я┌я─п╬п╨п╣',
             		    	        $posNext
                 		    	);
 
@@ -163,7 +163,7 @@ class XLite_Sniffs_PHP_Formatting_ArraySniff extends XLite_ReqCodesSniff
 			foreach ($clines as $commasPerLine) {
 				if (count($commasPerLine) != $avgCount && count($commasPerLine) > 0) {
 					$phpcsFile->addWarning(
-						$this->getReqPrefix('WRN.PHP.-3-.3.2') . 'При определении многострочного массива рекомендуется на каждой строке иметь одинаковое количество элементов, за исключением последней строки',
+						$this->getReqPrefix('WRN.PHP.-3-.3.2') . 'п÷я─п╦ п╬п©я─п╣п╢п╣п╩п╣п╫п╦п╦ п╪п╫п╬пЁп╬я│я┌я─п╬я┤п╫п╬пЁп╬ п╪п╟я│я│п╦п╡п╟ я─п╣п╨п╬п╪п╣п╫п╢я┐п╣я┌я│я▐ п╫п╟ п╨п╟п╤п╢п╬п╧ я│я┌я─п╬п╨п╣ п╦п╪п╣я┌я▄ п╬п╢п╦п╫п╟п╨п╬п╡п╬п╣ п╨п╬п╩п╦я┤п╣я│я┌п╡п╬ я█п╩п╣п╪п╣п╫я┌п╬п╡, п╥п╟ п╦я│п╨п╩я▌я┤п╣п╫п╦п╣п╪ п©п╬я│п╩п╣п╢п╫п╣п╧ я│я┌я─п╬п╨п╦',
 						$commasPerLine[0]
 					);
 				}

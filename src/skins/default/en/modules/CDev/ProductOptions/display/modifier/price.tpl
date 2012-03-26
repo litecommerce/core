@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-{modifier.getSign():h}&#8197;{formatPrice(modifier.getPositiveAbsoluteValue()):h}
+<widget class="XLite\View\Surcharge" surcharge="{modifier.getAbsoluteValue()}" />

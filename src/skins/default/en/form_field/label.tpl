@@ -10,4 +10,4 @@
  * @since     1.0.0
  *}
 
-<span{getAttributesCode():h}>{getValue():h}</span>
+<span{getAttributesCode():h}>{t(getValue())}</span>

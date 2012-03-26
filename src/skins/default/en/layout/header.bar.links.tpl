@@ -14,6 +14,5 @@
 
 
 <ul class="account-links inline" IF="!isLogged()">
-  <li class="account-link-1 first"><a href="{buildURL(#login#)}" class="log-in">{t(#Log in#)}</a></li>
-  <li class="account-link-2 last"><a href="{buildURL(#profile#,##,_ARRAY_(#mode#^#register#))}" class="register">{t(#Register#)}</a></li>
+  <list name="layout.header.bar.links.newby" />
 </ul>

@@ -65,7 +65,7 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      */
     public function getTitle()
     {
-        return static::t('Shipping info');
+        return 'Shipping info';
     }
 
     /**
@@ -99,8 +99,7 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
 
         return $profile
             && $profile->getShippingAddress()
-            && $profile->getShippingAddress()
-                ->isCompleted(\XLite\Model\Address::SHIPPING);
+            && $profile->getShippingAddress()->isCompleted(\XLite\Model\Address::SHIPPING);
     }
 
     /**
@@ -164,8 +163,7 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      */
     public function isDisabled()
     {
-        return parent::isDisabled()
-            || !$this->isShippingEnabled();
+        return parent::isDisabled() || !$this->isShippingEnabled();
     }
 
     /**
@@ -183,5 +181,4 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
 
         return $this->modifier;
     }
-
 }

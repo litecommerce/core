@@ -12,6 +12,6 @@
  *}
 <div class="box">
 
-  {displayViewListContent(#checkout.review.inactive.items#)}
+  <list name="checkout.review.inactive.items" />
 
 </div>

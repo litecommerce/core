@@ -10,4 +10,4 @@
  * @since     1.0.0
  *}
 
-{displayViewListContent(#center#)}
+<list name="center" />

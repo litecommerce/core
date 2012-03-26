@@ -56,7 +56,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      */
     public function getTitle()
     {
-        return static::t('Order review');
+        return 'Order review';
     }
 
     /**
@@ -170,7 +170,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      */
     protected function formatSurcharge(array $surcharge)
     {
-        return $this->formatPrice(abs($surcharge['cost']), $this->getCart()->getCurrency());
+        return abs($surcharge['cost']);
     }
 
     /**
@@ -188,5 +188,4 @@ class Review extends \XLite\View\Checkout\Step\AStep
     }
 
     // }}}
-
 }

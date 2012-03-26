@@ -62,6 +62,17 @@ class Language extends \XLite\Model\Repo\Base\I18n
      */
     protected $defaultLanguage = null;
 
+    /**
+     * Alternative record identifiers
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $alternativeIdentifier = array(
+        array('code'),
+    );
+
     // {{{
 
     /**
@@ -116,9 +127,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
     protected function defineCacheCells()
     {
         $list = parent::defineCacheCells();
-
         $list['all'] = array();
-
         $list['status'] = array(
             self::ATTRS_CACHE_CELL => array('status'),
         );
@@ -174,6 +183,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
     public function findActiveLanguages()
     {
         $data = $this->getFromCache('status', array('status' => \XLite\Model\Language::ENABLED));
+
         if (!isset($data)) {
             $data = $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getResult();
             $this->saveToCache($data, 'status', array('status' => \XLite\Model\Language::ENABLED));
@@ -238,41 +248,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
         return $this->createQueryBuilder()
             ->andWhere('l.status != :status')
             ->setParameter('status', \XLite\Model\Language::INACTIVE);
-    }
-
-    // }}}
-
-    // {{{ findOneByCode
-
-    /**
-     * Find language one by code
-     *
-     * @param string $code Code
-     *
-     * @return \XLite\Model\Language|void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function findOneByCode($code)
-    {
-        return $this->defineOneByCodeQuery($code)->getSingleResult();
-    }
-
-    /**
-     * Define query builder for findOneByCode()
-     *
-     * @param string $code Language code
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineOneByCodeQuery($code)
-    {
-        return $this->createQueryBuilder()
-            ->andWhere('l.code = :code')
-            ->setParameter('code', $code)
-            ->setMaxResults(1);
     }
 
     // }}}

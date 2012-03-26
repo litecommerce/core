@@ -42,7 +42,6 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
     const TAG_LIST_CHILD = 'listchild';
     const TAG_INHERITED_LIST_CHILD = 'inheritedlistchild';
 
-
     /**
      * List of .tpl files
      *
@@ -77,7 +76,6 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
         'mail'    => \XLite\Model\ViewList::INTERFACE_MAIL,
     );
 
-
     /**
      * Return templates list
      *
@@ -96,14 +94,14 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
 
                 $data = \Includes\Decorator\Utils\Operator::getTags(
                     \Includes\Utils\FileManager::read($path, true),
-                    array(self::TAG_LIST_CHILD, self::TAG_INHERITED_LIST_CHILD)
+                    array(static::TAG_LIST_CHILD, static::TAG_INHERITED_LIST_CHILD)
                 );
 
-                if (isset($data[self::TAG_LIST_CHILD])) {
-                    $this->addTags($data[self::TAG_LIST_CHILD], $path);
+                if (isset($data[static::TAG_LIST_CHILD])) {
+                    $this->addTags($data[static::TAG_LIST_CHILD], $path);
                 }
 
-                if (isset($data[self::TAG_INHERITED_LIST_CHILD])) {
+                if (isset($data[static::TAG_INHERITED_LIST_CHILD])) {
                     static::$inheritedTemplates[] = $path;
                 }
             }
@@ -144,7 +142,6 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
         $base = \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_SKINS);
 
         foreach ($data as $tags) {
-
             $skin = \Includes\Utils\ArrayManager::getIndex(explode(LC_DS, $base), 0, true);
             $zone = array_search($skin, static::$zones) ?: \XLite\Model\ViewList::INTERFACE_CUSTOMER;
             $template = substr($base, strpos($base, LC_DS) + ('common' == $skin ? 1 : 4));

@@ -39,21 +39,18 @@ class XLite extends \XLite\Base
     /**
      * Endpoints
      */
-
     const CART_SELF  = 'cart.php';
     const ADMIN_SELF = 'admin.php';
 
     /**
      * This target will be used if the "target" params is not passed in the request
      */
-
     const TARGET_DEFAULT = 'main';
     const TARGET_404     = 'page_not_found';
 
     /**
      * Interfaces codes
      */
-
     const ADMIN_INTERFACE    = 'admin';
     const CUSTOMER_INTERFACE = 'customer';
     const CONSOLE_INTERFACE  = 'console';
@@ -460,7 +457,7 @@ class XLite extends \XLite\Base
      */
     final public function getMinorVersion()
     {
-        return '17';
+        return '20';
     }
 
     /**

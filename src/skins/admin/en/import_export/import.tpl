@@ -9,10 +9,11 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.10
  *}
+
 <div class="import">
   <div class="warning"><div>{t(#Importing will overwrite the existing product information. This operation connot be undone.#)}</div></div>
   <div class="note">
-    {t(#To get the format of the import data, you can export your products to a file.#,_ARRAY_(#url#^buildURL(target,##,_ARRAY_(#page#^#export#)))):h}<br />
+    {t(#To get the format of the import data you can export your products to a file#,_ARRAY_(#url#^buildURL(target,##,_ARRAY_(#page#^#export#)))):h}.<br />
     {t(#Depending on the size of your data file, importing may take some time.#)}
   </div>
 

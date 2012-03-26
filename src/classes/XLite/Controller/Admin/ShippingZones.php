@@ -46,6 +46,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
     {
         return 'Shipping zones';
     }
+
     /**
      * Add elements into the specified zone
      *
@@ -59,11 +60,9 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
     public function addElements($zone, $data)
     {
         foreach ($data as $elementType => $elements) {
-
             if (is_array($elements) && !empty($elements)) {
 
                 foreach ($elements as $elementValue) {
-
                     $newElement = new \XLite\Model\ZoneElement();
 
                     $newElement->setElementValue($elementValue);
@@ -76,19 +75,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
         }
 
         return $zone;
-    }
-
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Shipping zones';
     }
 
     /**
@@ -169,7 +155,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\Database::getEM()->flush();
                 \XLite\Core\Database::getEM()->clear();
 
-                \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache($zoneId);
+                \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache();
 
                 \XLite\Core\TopMessage::addInfo('Zone details have been updated successfully');
 
@@ -194,11 +180,9 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
     protected function doActionCreate()
     {
         $postedData = \XLite\Core\Request::getInstance()->getData();
-
         $data = $this->getElementsData($postedData);
 
         if (!empty($data[\XLite\Model\ZoneElement::ZONE_ELEMENT_COUNTRY])) {
-
             $zoneName = trim($postedData['zone_name']);
 
             if (!empty($zoneName)) {
@@ -219,7 +203,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
                     \XLite\Core\Database::getEM()->persist($zone);
                     \XLite\Core\Database::getEM()->flush();
 
-                    \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache($zoneId);
+                    \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache();
 
                     \XLite\Core\TopMessage::addInfo('New zone has been created successfully');
 

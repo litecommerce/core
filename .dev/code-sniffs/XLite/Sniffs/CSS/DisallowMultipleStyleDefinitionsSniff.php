@@ -67,7 +67,7 @@ class XLite_Sniffs_CSS_DisallowMultipleStyleDefinitionsSniff extends XLite_ReqCo
         }
 
         if ($tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
-            $error = 'ëÁÖÄÁÑ ÐÁÒÁ "Ó×ÏÊÓÔ×Ï: ÚÎÁÞÅÎÉÅ_Ó×ÏÊÓÔ×Á" ÄÏÌÖÎÙ ÎÁÈÏÄÉÔØÓÑ ÎÁ ÏÔÄÅÌØÎÏÊ ÓÔÒÏÞËÅ';
+            $error = 'ÐšÐ°Ð¶Ð´Ð°Ñ Ð¿Ð°Ñ€Ð° "ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð¾: Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ_ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð°" Ð´Ð¾Ð»Ð¶Ð½Ñ‹ Ð½Ð°Ñ…Ð¾Ð´Ð¸Ñ‚ÑŒÑÑ Ð½Ð° Ð¾Ñ‚Ð´ÐµÐ»ÑŒÐ½Ð¾Ð¹ ÑÑ‚Ñ€Ð¾Ñ‡ÐºÐµ';
             $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.2') . $error, $next);
         }
 

@@ -437,21 +437,7 @@ CommonElement.prototype.bind = function(elm)
   this.element.isInitialError = this.$element.hasClass('validation-error');
 
   // Assign behaviors
-  if (this.$element.hasClass('watcher')) {
-    this.markAsWatcher();
-  }
-
-  if (this.$element.hasClass('field-state') && this.$element.hasClass('linked')) {
-    this.linkWithCountry();
-  }
-
-  if (this.$element.hasClass('column-switcher') && 0 < this.$element.parents('th').length) {
-    this.markAsColumnSwitcher();
-  }
-
-  if (this.$element.hasClass('wheel-ctrl')) {
-    this.markAsWheelControlled();
-  }
+  this.assignHandlers();
 }
 
 // Get validators by form element
@@ -791,14 +777,14 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
       && typeof(jQuery(this).mousewheel.options) != 'undefined'
     ) {
 
-      var mwBase = jQuery(this).mousewheel.options;
+      var mwBase = jQuery(this).mousewheel.options,
+          min = parseFloat(mwBase.min),
+          max = parseFloat(mwBase.max);
 
-      if (typeof(mwBase.min) != 'undefined' && mwBase.min > value) {
-        value = mwBase.min;
-      }
-
-      if (typeof(mwBase.max) != 'undefined' && mwBase.max < value) {
-        value = mwBase.max;
+      if (typeof(mwBase.min) != 'undefined' && min > value) {
+        value = min;
+      } else if (typeof(mwBase.max) != 'undefined' && max < value) {
+        value = max;
       }
     }
 
@@ -815,7 +801,7 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
     } else {
       this.$element.change();
       jQuery(this.element.form).change();
-    
+
     }
 
     this.$element.removeClass('wrong-amount');
@@ -1239,6 +1225,51 @@ CommonElement.prototype.validateRequired = function()
     apply:   true
   };
 }
+
+// Handlers mechanism
+
+// Assign handlers
+CommonElement.prototype.assignHandlers = function ()
+{
+  var o = this;
+
+  jQuery.each(
+    this.handlers,
+    function (index, elm) {
+      if (elm.canApply.call(o)) {
+        elm.handler.call(o);
+      }
+    }
+  );
+}
+
+// Handlers repository
+CommonElement.prototype.handlers = [
+  {
+    canApply: function () {
+      return this.$element.hasClass('watcher');
+    },
+    handler: CommonElement.prototype.markAsWatcher
+  },
+  {
+    canApply: function () {
+      return this.$element.hasClass('field-state') && this.$element.hasClass('linked');
+    },
+    handler: CommonElement.prototype.linkWithCountry
+  },
+  {
+    canApply: function () {
+      return this.$element.hasClass('column-switcher') && 0 < this.$element.parents('th').length;
+    },
+    handler: CommonElement.prototype.markAsColumnSwitcher
+  },
+  {
+    canApply: function () {
+      return this.$element.hasClass('wheel-ctrl');
+    },
+    handler: CommonElement.prototype.markAsWheelControlled
+  }
+];
 
 // Autostart
 core.autoload(CommonForm);

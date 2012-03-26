@@ -122,7 +122,7 @@ class XLite_Sniffs_PHP_Functions_FunctionCallArgumentSpacingSniff extends XLite_
                 $nextToken = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($nextSeperator + 1), $closeBracket, true);
                 if ($nextToken !== false) {
                     if ($tokens[$nextToken]['code'] === T_EQUAL) {
-                        $error = 'ðÒÉÓ×ÁÉ×ÁÎÉÅ × ÁÒÇÕÍÅÎÔÁÈ ÆÕÎËÃÉÉ ÚÁÐÒÅÝÅÎÏ';
+                        $error = 'ÐŸÑ€Ð¸ÑÐ²Ð°Ð¸Ð²Ð°Ð½Ð¸Ðµ Ð² Ð°Ñ€Ð³ÑƒÐ¼ÐµÐ½Ñ‚Ð°Ñ… Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ Ð·Ð°Ð¿Ñ€ÐµÑ‰ÐµÐ½Ð¾';
                         $phpcsFile->addError($this->getReqPrefix('REQ.PHP.2.7.10') . $error, $stackPtr);
                     }
                 }

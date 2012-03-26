@@ -50,12 +50,11 @@ class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDecorator
 
             if (\XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PRICE == $this->getPostedData('discountType')) {
                 // sale value is price
-                $data->addPair('salePriceValue', new \XLite\Core\Validator\Float(), null, static::t('Sale price'))
-                    ->setRange(0);
+                $data->addPair('salePriceValue', new \XLite\Core\Validator\Float(), null, 'Sale price')->setRange(0);
+
             } else {
                 // sale value is percent
-                $data->addPair('salePriceValue', new \XLite\Core\Validator\Integer(), null, static::t('Percent off'))
-                    ->setRange(0, 100);
+                $data->addPair('salePriceValue', new \XLite\Core\Validator\Integer(), null, 'Percent off')->setRange(1, 100);
             }
         }
     }

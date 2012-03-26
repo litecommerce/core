@@ -44,20 +44,7 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return static::t('Payment methods');
-    }
-
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return static::t('Payment methods');
+        return 'Payment methods';
     }
 
     /**
@@ -72,21 +59,16 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
         $data = \XLite\Core\Request::getInstance()->data;
 
         if (!is_array($data)) {
-
             // TODO - add top message
 
         } else {
-
             $code = $this->getCurrentLanguage();
-
             $flag = false;
 
             foreach ($data as $id => $row) {
-
                 $m = \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->find($id);
 
                 if ($m) {
-
                     $m->getTranslation($code)->setName($row['name']);
                     $m->getTranslation($code)->setDescription($row['description']);
                     $m->setOrderby(intval($row['orderby']));

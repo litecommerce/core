@@ -62,7 +62,7 @@ class XLite_Sniffs_PHP_Formatting_OperandBracketSniff extends XLite_ReqCodesSnif
 		if ($tokens[$stackPtr + 1]['code'] !== T_WHITESPACE || $tokens[$stackPtr + 1]['content'] !== ' ') {
 			$phpcsFile->addError(
 				$this->getReqPrefix('REQ.PHP.2.6.8')
-				. 'Оператор "' .$tokens[$stackPtr]['content']. '" должен иметь 1 пробел между ним и открывающейся скобкой',
+				. 'п·п©п╣я─п╟я┌п╬я─ "' .$tokens[$stackPtr]['content']. '" п╢п╬п╩п╤п╣п╫ п╦п╪п╣я┌я▄ 1 п©я─п╬п╠п╣п╩ п╪п╣п╤п╢я┐ п╫п╦п╪ п╦ п╬я┌п╨я─я▀п╡п╟я▌я┴п╣п╧я│я▐ я│п╨п╬п╠п╨п╬п╧',
 				$stackPtr
 			);
 
@@ -70,7 +70,7 @@ class XLite_Sniffs_PHP_Formatting_OperandBracketSniff extends XLite_ReqCodesSnif
 
 			$phpcsFile->addError(
 				$this->getReqPrefix('REQ.PHP.2.6.1')
-				. 'Аргументы функции "' .$tokens[$stackPtr]['content']. '" должены быть обрамлены скобками',
+				. 'п░я─пЁя┐п╪п╣п╫я┌я▀ я└я┐п╫п╨я├п╦п╦ "' .$tokens[$stackPtr]['content']. '" п╢п╬п╩п╤п╣п╫я▀ п╠я▀я┌я▄ п╬п╠я─п╟п╪п╩п╣п╫я▀ я│п╨п╬п╠п╨п╟п╪п╦',
 				$stackPtr
 			);
 		}

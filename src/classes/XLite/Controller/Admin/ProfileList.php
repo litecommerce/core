@@ -36,6 +36,18 @@ namespace XLite\Controller\Admin;
 class ProfileList extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage users');
+    }
+
+    /**
      * Return the current page title (for the content area)
      *
      * @return string
@@ -44,19 +56,7 @@ class ProfileList extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Search users';
-    }
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Users';
+        return 'Search for users';
     }
 
     /**

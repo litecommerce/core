@@ -174,6 +174,18 @@ url = "http://www.litecommerce.com/?q=api/"
 log_data = Off
 upgrade_step_time_limit = 240
 send_shop_domain = On
+; banner_url = "http://www.litecommerce.com/banners"
+
+;
+; AMQP server
+;
+[amqp]
+host     = "localhost"
+port     = 5672
+user     = "guest"
+password = "guest"
+vhost    = "/"
+exchange = "xlite"
 
 ;
 ; Other options
@@ -181,6 +193,8 @@ send_shop_domain = On
 [other]
 ; Translation drive code - auto / gettext / db
 translation_driver = auto
+; Event driver code - auto / db / amqp
+event_driver = auto
 
 ; WARNING: Do not change the line below
 ; */ ?>

@@ -44,7 +44,6 @@ abstract class SectionDialog extends \XLite\View\SimpleDialog
      */
     abstract protected function defineSections();
 
-
     /**
      * Return title
      *

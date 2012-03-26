@@ -10,14 +10,14 @@
  * @since     1.0.0
  *}
 
-<div class="top-controls">
+<div>
   <div class="form-panel users-search-panel">
 
     <form name="searchform" method="get" action="admin.php">
       <input FOREACH="getURLParams(),name,value" type="hidden" name="{name}" value="{value}" />
 
       <table cellpadding="1" cellspacing="5">
-        {displayInheritedViewListContent(#search_form#)}
+        <list name="search_form" type="inherited" />
       </table>
 
     </form>

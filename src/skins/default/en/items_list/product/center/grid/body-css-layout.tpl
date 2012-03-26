@@ -10,14 +10,14 @@
  * @since     1.0.0
  *}
 
-{displayViewListContent(#itemsList.product.cart#)}
+<list name="itemsList.product.cart" />
 
 <div class="products">
 
   <ul class="products-grid grid-list" IF="getPageData()">
     <li FOREACH="getPageData(),product" class="product-cell hproduct">
       <div class="{getProductCellClass(product)}">
-        {displayInheritedViewListContent(#info#,_ARRAY_(#product#^product))}
+        <list name="info" type="inherited" product="{product}" />
       </div>
     </li>
     <li FOREACH="getNestedViewList(#items#),item" class="product-cell hproduct">{item.display()}</li>

@@ -7,90 +7,88 @@
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
 # @since     3.0.0
+
 XLite\Model\Config:
   directives: { insert: true }
-  - { name: add_on_mode, category: General, type: checkbox, orderby: 120, value: N, translations: [{ code: en, option_name: 'Checkout desk operation mode', option_comment: '' }] }
-  - { name: add_on_mode_page, category: General, type: 'XLite\View\FormField\Select\DeskOperationMode', orderby: 125, value: 'cart.php?target=cart', translations: [{ code: en, option_name: 'Checkout desk operation mode main page', option_comment: '' }] }
-  - { name: admin_presentation, category: General, type: separator, orderby: 400, translations: [{ code: en, option_name: 'Administrator Zone settings', option_comment: '' }] }
-  - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone', option_comment: '' }] }
-  - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address, option_comment: '' }] }
-  - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts, option_comment: '' }] }
-  - { name: company_fax, category: Company, type: 'XLite\View\FormField\Input\Text\Phone', orderby: 420, translations: [{ code: en, option_name: Fax, option_comment: '' }] }
-  - { name: company_identity, category: Company, type: separator, orderby: 350, translations: [{ code: en, option_name: Identity, option_comment: '' }] }
-  - { name: company_name, category: Company, type: text, orderby: 360, translations: [{ code: en, option_name: 'Company name', option_comment: '' }] }
-  - { name: company_website, category: Company, type: XLite\View\FormField\Input\Text\URL, orderby: 370, translations: [{ code: en, option_name: 'Company website', option_comment: '' }] }
-  - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings', option_comment: '' }] }
+  - { name: admin_presentation, category: General, type: separator, orderby: 400, translations: [{ code: en, option_name: 'Administrator Zone settings' }] }
+  - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone' }] }
+  - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address }] }
+  - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts }] }
+  - { name: company_fax, category: Company, type: 'XLite\View\FormField\Input\Text\Phone', orderby: 420, translations: [{ code: en, option_name: Fax }] }
+  - { name: company_identity, category: Company, type: separator, orderby: 350, translations: [{ code: en, option_name: Identity }] }
+  - { name: company_name, category: Company, type: text, orderby: 360, translations: [{ code: en, option_name: 'Company name' }] }
+  - { name: company_website, category: Company, type: 'XLite\View\FormField\Input\Text\URL', orderby: 370, translations: [{ code: en, option_name: 'Company website' }] }
+  - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings' }] }
   - { name: customer_security, category: Security, type: checkbox, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Customer Zone (for login, Checkout and profile pages)' }] }
-  - { name: date_format, category: General, type: 'XLite\View\FormField\Select\DateFormat', orderby: 660, value: '%b %e, %Y', translations: [{ code: en, option_name: 'Date format', option_comment: '' }] }
-  - { name: decimal_delim, category: General, type: 'XLite\View\FormField\Select\DecimalPart', orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal separator', option_comment: '' }] }
-  - { name: default_country, category: General, type: country, orderby: 310, value: US, translations: [{ code: en, option_name: 'Default country in the registration form', option_comment: '' }] }
-  - { name: default_offline_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Payment method to be assumed in case of zero order totals', option_comment: '' }] }
-  - { name: default_purchase_limit, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 293, value: 9999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Default purchase limit', option_comment: '' }] }
-  - { name: default_select_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Default payment method', option_comment: '' }] }
-  - { name: default_zipcode, category: General, type: text, orderby: 320, translations: [{ code: en, option_name: 'Default zip/postal code in the registration form', option_comment: '' }] }
-  - { name: direct_product_url, category: General, type: checkbox, orderby: 255, value: N, translations: [{ code: en, option_name: 'Allow direct URL access to products from disabled categories', option_comment: '' }] }
-  - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method', option_comment: '' }] }
-  - { name: enable_anon_checkout, category: General, type: checkbox, orderby: 270, value: Y, translations: [{ code: en, option_name: 'Enable anonymous checkout', option_comment: '' }] }
-  - { name: enable_init_order_notif, category: Email, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'E-mail order details to the sales department after order placement', option_comment: '' }] }
-  - { name: enable_init_order_notif_customer, category: Email, type: checkbox, value: N, translations: [{ code: en, option_name: 'E-mail order details to customers after order placement', option_comment: '' }] }
-  - { name: form_id_protection, category: Security, type: checkbox, orderby: 90, value: Y, translations: [{ code: en, option_name: 'Enable admin forms protection system', option_comment: '' }] }
-  - { name: full_customer_security, category: Security, type: checkbox, orderby: 5, value: N, translations: [{ code: en, option_name: 'Customer Zone fully on HTTPS', option_comment: '' }] }
+  - { name: date_format, category: General, type: 'XLite\View\FormField\Select\DateFormat', orderby: 660, value: '%b %e, %Y', translations: [{ code: en, option_name: 'Date format' }] }
+  - { name: decimal_delim, category: General, type: 'XLite\View\FormField\Select\DecimalPart', orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal separator' }] }
+  - { name: default_country, category: General, type: country, orderby: 310, value: US, translations: [{ code: en, option_name: 'Default country in the registration form' }] }
+  - { name: default_offline_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Payment method to be assumed in case of zero order totals' }] }
+  - { name: default_purchase_limit, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 293, value: 9999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Default purchase limit' }] }
+  - { name: default_select_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Default payment method' }] }
+  - { name: default_zipcode, category: General, type: text, orderby: 320, translations: [{ code: en, option_name: 'Default zip/postal code in the registration form' }] }
+  - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method' }] }
+  - { name: enable_anon_checkout, category: General, type: checkbox, orderby: 270, value: Y, translations: [{ code: en, option_name: 'Enable anonymous checkout' }] }
+  - { name: enable_init_order_notif, category: Email, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'E-mail order details to the sales department after order placement' }] }
+  - { name: enable_init_order_notif_customer, category: Email, type: checkbox, value: N, translations: [{ code: en, option_name: 'E-mail order details to customers after order placement' }] }
+  - { name: form_id_protection, category: Security, type: checkbox, orderby: 90, value: Y, translations: [{ code: en, option_name: 'Enable admin forms protection system' }] }
+  - { name: full_customer_security, category: Security, type: checkbox, orderby: 5, value: N, translations: [{ code: en, option_name: 'Customer Zone fully on HTTPS' }] }
   - { name: last_date, category: Htaccess, value: '0' }
   - { name: license, category: License, type: text }
-  - { name: location_address, category: Company, type: text, orderby: 390, translations: [{ code: en, option_name: 'Street address', option_comment: '' }] }
-  - { name: location_country, category: Company, type: country, orderby: 400, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
-  - { name: location_state, category: Company, type: state, orderby: 410, translations: [{ code: en, option_name: State, option_comment: '' }] }
-  - { name: location_custom_state, category: Company, type: text, orderby: 415, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
-  - { name: location_city, category: Company, type: text, orderby: 420, translations: [{ code: en, option_name: City, option_comment: '' }] }
-  - { name: location_zipcode, category: Company, type: text, orderby: 430, translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
-  - { name: company_phone, category: Company, type: XLite\View\FormField\Input\Text\Phone, orderby: 440, translations: [{ code: en, option_name: Phone, option_comment: '' }] }
-  - { name: login_lifetime, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 450, value: 3, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Days to store last login data', option_comment: '' }] }
-  - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Clear cart on customer logoff', option_comment: '' }] }
-  - { name: maximal_order_amount, category: General, type: XLite\View\FormField\Input\Text\Float, orderby: 290, value: 99999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Maximum allowed order total', option_comment: '' }] }
-  - { name: minimal_order_amount, category: General, type: XLite\View\FormField\Input\Text\Float, orderby: 280, value: '0', widgetParameters: { min: 0 }, translations: [{ code: en, option_name: 'Minimum allowed order total', option_comment: '' }] }
-  - { name: operation_presentation, category: General, type: separator, orderby: 100, translations: [{ code: en, option_name: 'Maintenance and operation', option_comment: '' }] }
-  - { name: orders_department, category: Company, type: XLite\View\FormField\Input\Text\Email, orderby: 480, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Sales department e-mail', option_comment: '' }] }
-  - { name: orders_per_page, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 430, value: 30, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Orders per page', option_comment: '' }] }
-  - { name: order_starting_number, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 460, value: 1, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Initial order number', option_comment: '' }] }
-  - { name: products_per_page, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 250, value: 10, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per category listing page', option_comment: '' }] }
-  - { name: products_per_page_admin, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 410, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per page', option_comment: '' }] }
-  - { name: proxy, category: Security, type: text, orderby: 25, translations: [{ code: en, option_name: 'HTTPS proxy', option_comment: '' }] }
-  - { name: recent_orders, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 440, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Amount of orders in the recent orders list', option_comment: '' }] }
-  - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product', option_comment: '' }] }
-  - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to temporary close the shop', option_comment: '' }] }
-  - { name: show_thumbnails, category: General, type: checkbox, orderby: 230, value: Y, translations: [{ code: en, option_name: 'Show thumbnails in product list', option_comment: '' }] }
-  - { name: site_administrator, category: Company, type: XLite\View\FormField\Input\Text\Email, orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail', option_comment: '' }] }
-  - { name: smtp_password, category: Email, type: text, orderby: 160, translations: [{ code: en, option_name: Password, option_comment: '' }] }
-  - { name: smtp_security, category: Email, type: 'XLite\View\FormField\Select\SMTPSecurity', orderby: 170, value: no, translations: [{ code: en, option_name: 'Secure connection', option_comment: '' }] }
-  - { name: smtp_server, category: Email, type: separator, orderby: 100, translations: [{ code: en, option_name: 'SMTP server', option_comment: '' }] }
-  - { name: smtp_server_port, category: Email, type: XLite\View\FormField\Input\Text\Integer, orderby: 130, value: 25, widgetParameters: { min: 0, max: 65535 }, translations: [{ code: en, option_name: 'SMTP port', option_comment: '' }] }
-  - { name: smtp_server_url, category: Email, type: text, orderby: 120, translations: [{ code: en, option_name: 'SMTP server', option_comment: '' }] }
-  - { name: smtp_username, category: Email, type: text, orderby: 150, translations: [{ code: en, option_name: Username, option_comment: '' }] }
-  - { name: start_year, category: Company, type: XLite\View\FormField\Input\Text\PastYear, orderby: 380, value: 2012, translations: [{ code: en, option_name: 'Year when store started its operation', option_comment: '' }] }
-  - { name: subcategories_look, category: General, type: 'XLite\View\FormField\Select\SubcategoriesLook', orderby: 220, value: icons, translations: [{ code: en, option_name: 'Category listings format', option_comment: '' }] }
-  - { name: support_department, category: Company, type: XLite\View\FormField\Input\Text\Email, orderby: 490, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'HelpDesk/Support service e-mail', option_comment: '' }] }
-  - { name: thousand_delim, category: General, type: 'XLite\View\FormField\Select\ThousandDelimiter', orderby: 640, translations: [{ code: en, option_name: 'Currency thousands separator', option_comment: '' }] }
-  - { name: time_format, category: General, type: 'XLite\View\FormField\Select\TimeFormat', orderby: 670, value: '%H:%M', translations: [{ code: en, option_name: 'Time format', option_comment: '' }] }
-  - { name: time_zone, category: General, type: 'XLite\View\FormField\Select\TimeZone', orderby: 680, translations: [{ code: en, option_name: 'Time zone', option_comment: '' }] }
-  - { name: unit_presentation, category: General, type: separator, orderby: 600, translations: [{ code: en, option_name: 'Units of measurement', option_comment: '' }] }
-  - { name: users_department, category: Company, type: XLite\View\FormField\Input\Text\Email, orderby: 470, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Customer relations e-mail', option_comment: '' }] }
-  - { name: users_per_page, category: General, type: XLite\View\FormField\Input\Text\Integer, orderby: 420, value: '30', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Users per page', option_comment: '' }] }
-  - { name: use_smtp, category: Email, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Use SMTP server', option_comment: '' }] }
-  - { name: use_smtp_auth, category: Email, type: checkbox, orderby: 140, value: N, translations: [{ code: en, option_name: 'Use authentication', option_comment: '' }] }
+  - { name: location_address, category: Company, type: text, orderby: 390, translations: [{ code: en, option_name: 'Street address' }] }
+  - { name: location_country, category: Company, type: country, orderby: 400, value: US, translations: [{ code: en, option_name: Country }] }
+  - { name: location_state, category: Company, type: state, orderby: 410, translations: [{ code: en, option_name: State }] }
+  - { name: location_custom_state, category: Company, type: text, orderby: 415, translations: [{ code: en, option_name: 'Another state (specify)' }] }
+  - { name: location_city, category: Company, type: text, orderby: 420, translations: [{ code: en, option_name: City }] }
+  - { name: location_zipcode, category: Company, type: text, orderby: 430, translations: [{ code: en, option_name: 'Zip/postal code' }] }
+  - { name: company_phone, category: Company, type: 'XLite\View\FormField\Input\Text\Phone', orderby: 440, translations: [{ code: en, option_name: Phone }] }
+  - { name: login_lifetime, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 450, value: 3, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Number of days to store the last login data' }] }
+  - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Clear cart on customer logoff' }] }
+  - { name: maximal_order_amount, category: General, type: 'XLite\View\FormField\Input\Text\Float', orderby: 290, value: 99999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Maximum allowed order total' }] }
+  - { name: minimal_order_amount, category: General, type: 'XLite\View\FormField\Input\Text\Float', orderby: 280, value: '0', widgetParameters: { min: 0 }, translations: [{ code: en, option_name: 'Minimum allowed order total' }] }
+  - { name: operation_presentation, category: General, type: separator, orderby: 100, translations: [{ code: en, option_name: 'Maintenance and operation' }] }
+  - { name: orders_department, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 480, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Sales department e-mail' }] }
+  - { name: orders_per_page, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 430, value: 30, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Orders per page' }] }
+  - { name: order_starting_number, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 460, value: 1, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Initial order number' }] }
+  - { name: products_per_page, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 250, value: 10, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per category listing page' }] }
+  - { name: products_per_page_admin, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 410, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per page' }] }
+  - { name: proxy, category: Security, type: text, orderby: 25, translations: [{ code: en, option_name: 'HTTPS proxy' }] }
+  - { name: recent_orders, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 440, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'The number of orders in the recent order list' }] }
+  - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product' }] }
+  - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to close the shop temporarily' }] }
+  - { name: show_thumbnails, category: General, type: checkbox, orderby: 230, value: Y, translations: [{ code: en, option_name: 'Show thumbnails in product list' }] }
+  - { name: site_administrator, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail' }] }
+  - { name: smtp_password, category: Email, type: text, orderby: 160, translations: [{ code: en, option_name: Password }] }
+  - { name: smtp_security, category: Email, type: 'XLite\View\FormField\Select\SMTPSecurity', orderby: 170, value: no, translations: [{ code: en, option_name: 'Secure connection' }] }
+  - { name: smtp_server, category: Email, type: separator, orderby: 100, translations: [{ code: en, option_name: 'SMTP server' }] }
+  - { name: smtp_server_port, category: Email, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 130, value: 25, widgetParameters: { min: 0, max: 65535 }, translations: [{ code: en, option_name: 'SMTP port' }] }
+  - { name: smtp_server_url, category: Email, type: text, orderby: 120, translations: [{ code: en, option_name: 'SMTP server' }] }
+  - { name: smtp_username, category: Email, type: text, orderby: 150, translations: [{ code: en, option_name: Username }] }
+  - { name: start_year, category: Company, type: 'XLite\View\FormField\Input\Text\PastYear', orderby: 380, value: 2012, translations: [{ code: en, option_name: 'Year when store started its operation' }] }
+  - { name: subcategories_look, category: General, type: 'XLite\View\FormField\Select\SubcategoriesLook', orderby: 220, value: icons, translations: [{ code: en, option_name: 'Category listings format' }] }
+  - { name: support_department, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 490, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'HelpDesk/Support service e-mail' }] }
+  - { name: thousand_delim, category: General, type: 'XLite\View\FormField\Select\ThousandDelimiter', orderby: 640, translations: [{ code: en, option_name: 'Currency thousands separator' }] }
+  - { name: time_format, category: General, type: 'XLite\View\FormField\Select\TimeFormat', orderby: 670, value: '%H:%M', translations: [{ code: en, option_name: 'Time format' }] }
+  - { name: time_zone, category: General, type: 'XLite\View\FormField\Select\TimeZone', orderby: 680, translations: [{ code: en, option_name: 'Time zone' }] }
+  - { name: unit_presentation, category: General, type: separator, orderby: 600, translations: [{ code: en, option_name: 'Units of measurement' }] }
+  - { name: users_department, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 470, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Customer relations e-mail' }] }
+  - { name: users_per_page, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 420, value: '30', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Users per page' }] }
+  - { name: use_smtp, category: Email, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Use SMTP server' }] }
+  - { name: use_smtp_auth, category: Email, type: checkbox, orderby: 140, value: N, translations: [{ code: en, option_name: 'Use authentication' }] }
   - { name: version, category: Version, value: xlite_3_0_x }
-  - { name: weight_symbol, category: General, type: text, orderby: 620, value: lbs, translations: [{ code: en, option_name: 'Weight symbol', option_comment: '' }] }
-  - { name: weight_unit, category: General, type: 'XLite\View\FormField\Select\WeightUnit', orderby: 610, value: lbs, translations: [{ code: en, option_name: 'Weight unit', option_comment: '' }] }
-  - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency', option_comment: '' }] }
+  - { name: weight_symbol, category: General, type: text, orderby: 620, value: lbs, translations: [{ code: en, option_name: 'Weight symbol' }] }
+  - { name: weight_unit, category: General, type: 'XLite\View\FormField\Select\WeightUnit', orderby: 610, value: lbs, translations: [{ code: en, option_name: 'Weight unit' }] }
+  - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency' }] }
   - { name: default_language, category: General, orderby: 330, value: en }
-  - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address', option_comment: '' }] }
-  - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line', option_comment: '' }] }
-  - { name: anonymous_country, category: Shipping, type: country, orderby: 50, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
-  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State, option_comment: '' }] }
-  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
-  - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City, option_comment: '' }] }
-  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
-  - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime', option_comment: '' }] }
-  - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key', option_comment: '' }] }
+  - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address' }] }
+  - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line' }] }
+  - { name: anonymous_country, category: Shipping, type: country, orderby: 50, value: US, translations: [{ code: en, option_name: Country }] }
+  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State }] }
+  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Another state (specify)' }] }
+  - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City }] }
+  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code' }] }
+  - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime' }] }
+  - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key' }] }
 XLite\Model\Category:
   - { category_id: 1, show_title: false, translations: [{ code: en, name: 'Catalog' }] }
 XLite\Model\Currency:
@@ -223,7 +221,7 @@ XLite\Model\Currency:
   - { currency_id: 634, code: QAR, e: 2, translations: [{ code: en, name: 'Qatari Rial' }] }
   - { currency_id: 642, code: ROL, e: 2, translations: [{ code: en, name: Leu }] }
   - { currency_id: 941, code: RSD, e: 2, translations: [{ code: en, name: 'Serbian Dinar' }] }
-  - { currency_id: 810, code: RUR, e: 2, translations: [{ code: en, name: 'Russian Ruble' }] }
+  - { currency_id: 643, code: RUB, e: 2, translations: [{ code: en, name: 'Russian Ruble' }] }
   - { currency_id: 646, code: RWF, translations: [{ code: en, name: 'Rwanda Franc' }] }
   - { currency_id: 682, code: SAR, e: 2, translations: [{ code: en, name: 'Saudi Riyal' }] }
   - { currency_id: 90, code: SBD, e: 2, translations: [{ code: en, name: 'Solomon Islands Dollar' }] }
@@ -314,11 +312,7 @@ XLite\Model\LanguageLabel:
   - { name: 'The text label has not been deleted: it has been either not found or not specified', translations: [{ code: en, label: 'The text label has not been deleted: it has been either not found or not specified' }] }
   - { name: 'The text label has not been added, because its name has not been specified', translations: [{ code: en, label: 'The text label has not been added, because its name has not been specified' }] }
   - { name: 'The text label has not been added, because such a text label already exists', translations: [{ code: en, label: 'The text label has not been added, because such a text label already exists' }] }
-  - { name: 'The text label has not been added, because its translation for the default application language has not been specified', translations: [{ code: en, label: 'The text label has not been added, because its translation for the default application language has not been specified' }] }
-  - { name: 'The text label has not been added, because its translation for the default interface language has not been specified', translations: [{ code: en, label: 'The text label has not been added, because its translation for the default interface language has not been specified' }] }
   - { name: 'The text label has been added successfully', translations: [{ code: en, label: 'The text label has been added successfully' }] }
-  - { name: 'The text label has not been modified, because its translation for the default application language has not been specified', translations: [{ code: en, label: 'The text label has not been modified, because its translation for the default application language has not been specified' }] }
-  - { name: 'The text label has not been modified, because its translation for the default interface language has not been specified', translations: [{ code: en, label: 'The text label has not been modified, because its translation for the default interface language has not been specified' }] }
   - { name: 'The text label has been modified successfully', translations: [{ code: en, label: 'The text label has been modified successfully' }] }
   - { name: 'The edited language has not been found', translations: [{ code: en, label: 'The edited language has not been found' }] }
   - { name: 'The name of the edited language in the default application language has not been specified', translations: [{ code: en, label: 'The name of the edited language in the default application language has not been specified' }] }
@@ -333,15 +327,15 @@ XLite\Model\LanguageLabel:
   - { name: 'No other languages defined', translations: [{ code: en, label: 'No other languages defined' }] }
   - { name: 'Add new label', translations: [{ code: en, label: 'Add new label' }] }
   - { name: 'Add language', translations: [{ code: en, label: 'Add language' }] }
-  - { name: 'N items', translations: [{ code: en, label: '{{n}} items' }] }
+  - { name: 'N items total', translations: [{ code: en, label: '{{n}} items total' }] }
   - { name: 'Select language to edit', translations: [{ code: en, label: 'Select language to edit' }] }
   - { name: 'Add new language', translations: [{ code: en, label: 'Add new language' }] }
   - { name: Save, translations: [{ code: en, label: Save }] }
-  - { name: 'Please specify text labels for each language', translations: [{ code: en, label: 'Please specify text labels for each language. If you do not specify a value for some language, the {{language}} label wiil be used.' }] }
+  - { name: 'Please specify text labels for each language', translations: [{ code: en, label: 'Please specify text labels for each language. If you do not specify a value for some language, the {{language}} label will be used.' }] }
   - { name: 'Label name', translations: [{ code: en, label: 'Label name' }] }
   - { name: required, translations: [{ code: en, label: required }] }
   - { name: 'Confirm deletion', translations: [{ code: en, label: 'Confirm deletion' }] }
-  - { name: 'You are going to delete X language', translations: [{ code: en, label: 'You are going to delete {{language}} language. This operation is irreversable. Are you sure you want to continue?' }] }
+  - { name: 'You are going to delete the X language', translations: [{ code: en, label: 'You are going to delete the {{language}} language. This operation is irreversible. Are you sure you want to continue?' }] }
   - { name: Delete, translations: [{ code: en, label: Delete }] }
   - { name: Cancel, translations: [{ code: en, label: Cancel }] }
   - { name: 'X Language (Code: Y)', translations: [{ code: en, label: '{{language}} Language (Code: {{code}})' }] }
@@ -349,7 +343,6 @@ XLite\Model\LanguageLabel:
   - { name: 'Native language name', translations: [{ code: en, label: 'Native language name' }] }
   - { name: Disable, translations: [{ code: en, label: Disable }] }
   - { name: Enable, translations: [{ code: en, label: Enable }] }
-  - { name: 'Default for customer zone and can not disabled or deleted', translations: [{ code: en, label: 'Default for customer zone and can not disabled or deleted' }] }
   - { name: 'Set this language as default for customer zone', translations: [{ code: en, label: 'Set this language as default for customer zone' }] }
   - { name: 'Disabled language can not be set as default for customer zone', translations: [{ code: en, label: 'Disabled language can not be set as default for customer zone' }] }
   - { name: 'Delete Language', translations: [{ code: en, label: 'Delete Language' }] }
@@ -359,7 +352,6 @@ XLite\Model\LanguageLabel:
   - { name: 'The language is disabled', translations: [{ code: en, label: 'The language is <span>disabled</span>' }] }
   - { name: 'The module to uninstall has not been found', translations: [{ code: en, label: 'The module to uninstall has not been found' }] }
   - { name: 'The module has been uninstalled successfully', translations: [{ code: en, label: 'The module has been uninstalled successfully' }] }
-  - { name: 'The module has been partially uninstalled', translations: [{ code: en, label: 'The module has been partially uninstalled' }] }
   - { name: 'The X module has been installed successfully', translations: [{ code: en, label: 'The {{module}} module has been installed successfully' }] }
   - { name: 'The X module has been installed with errors: the DB has not been modified correctly', translations: [{ code: en, label: 'The {{module}} module has been installed with errors: the DB has not been modified correctly' }] }
   - { name: 'The X module has been installed incorrectly. Please see the logs for more information', translations: [{ code: en, label: 'The {{module}} module has been installed incorrectly. Please see the logs for more information' }] }
@@ -367,12 +359,11 @@ XLite\Model\LanguageLabel:
   - { name: 'The X module has been uninstalled in an abnormal way', translations: [{ code: en, label: 'The {{module}} module has been uninstalled in an abnormal way' }] }
   - { name: 'The modules have been updated', translations: [{ code: en, label: 'The modules have been updated' }] }
   - { name: 'The X module has been disabled in an abnormal way', translations: [{ code: en, label: 'The {{module}} module has been disabled in an abnormal way' }] }
-  - { name: 'Congratulations! Your order has been successfully placed', translations: [{ code: en, label: 'Congratulations! Your order has been successfully placed.<br />Thank you for using our store. An order notification has been sent to your e-mail address.<br />Your order will be processed according to the delivery details.' }] }
+  - { name: 'Congratulations! Your order has been placed successfully', translations: [{ code: en, label: 'Congratulations! Your order has been placed successfully.<br />Thank you for using our store. An order notification has been sent to your e-mail address.<br />Your order will be processed according to the delivery details.' }] }
   - { name: 'X items in bag', translations: [{ code: en, label: '{{count}} items in bag' }] }
   - { name: 'Other items', translations: [{ code: en, label: 'Other items' }] }
   - { name: 'The selected shipping method has been deleted successfully', translations: [{ code: en, label: 'The selected shipping method has been deleted successfully' }] }
   - { name: 'Shipping methods have been updated', translations: [{ code: en, label: 'Shipping methods have been updated' }] }
-  - { name: 'Shipping method has been added', translations: [{ code: en, label: 'Shipping methods has been added' }] }
   - { name: 'The selected zones have been deleted successfully', translations: [{ code: en, label: 'The selected zones have been deleted successfully' }] }
   - { name: 'Zone details have been updated successfully', translations: [{ code: en, label: 'Zone details have been updated successfully' }] }
   - { name: 'New zone has been created successfully', translations: [{ code: en, label: 'New zone has been created successfully' }] }
@@ -382,7 +373,7 @@ XLite\Model\LanguageLabel:
   - { name: 'X items', translations: [{ code: en, label: '{{count}} items' }] }
   - { name: '_X items_ in bag', translations: [{ code: en, label: '<a href="#">{{count}} items</a> in bag' }] }
   - { name: 'This email address is used for an existing account. Enter another email address or sign in', translations: [{ code: en, label: 'This email address is used for an existing account. Enter another email address or <a href="{{URL}}" class="log-in">sign in</a>' }] }
-  - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: en, label: 'This user names is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>' }] }
+  - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: en, label: 'This user name is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>' }] }
   - { name: 'I accept Terms and Conditions', translations: [{ code: en, label: 'I accept <a href="{{URL}}">Terms & Conditions</a>' }] }
   - { name: 'Place order X', translations: [{ code: en, label: 'Place order: {{total}}' }] }
   - { name: 'Enter a correct email', translations: [{ code: en, label: 'Enter a correct email' }] }
@@ -399,9 +390,9 @@ XLite\Model\LanguageLabel:
   - { name: 'The benchmark evaluates server environment', translations: [{ code: en, label: "The benchmark evaluates server environment, namely:<br />1. File subsystem - read and write speed.<br />2. Database server - computing speed, DB data read and write speed.<br />3. Computing power - speed of computing and exchanging data in the memory.<br /><span>The total test time is the sum of the times, taken by each of these tests.</span>" }] }
   - { name: 'Thank you for registering at LiteCommerce', translations: [{ code: en, label: 'Thank you for registering at {{LiteCommerce}}' }] }
   - { name: 'Thank you for using LiteCommerce services', translations: [{ code: en, label: 'Thank you for using {{LiteCommerce}} services' }] }
-  - { name: 'Your profile has been modified. You can check your account after you logging in to the site', translations: [{ code: en, label: 'Your profile has been modified. You can check your account after you logging in to the site at {{url}}' }] }
+  - { name: 'Your profile has been modified. You can check your account after you log in to the site', translations: [{ code: en, label: 'Your profile has been modified. You can check your account after you log in to the site at {{url}}' }] }
   - { name: 'The confirmation URL link was mailed to email', translations: [{ code: en, label: 'The confirmation URL link was mailed to {{email}}' }] }
-  - { name: 'The email with your account information was mailed to email', translations: [{ code: en, label: 'The email with your account information was mailed to {{email}}. We encourage you to authenticate again to verify the received data.' }] }
+  - { name: 'The email with your account information was mailed to email', translations: [{ code: en, label: 'The email with your account information was mailed to {{email}}. We encourage you to authenticate yourself again to verify the received data.' }] }
   - { name: 'Show filter options', translations: [{ code: en, label: 'Show filter options' }] }
   - { name: 'Customer note', translations: [{ code: en, label: 'Customer note' }] }
   - { name: 'Invoice X', translations: [{ code: en, label: 'Invoice #{{id}}' }] }
@@ -434,7 +425,7 @@ XLite\Model\LanguageLabel:
   - { name: 'per page', translations: [{ code: en, label: 'per page' }] }
   - { name: 'X orders', translations: [{ code: en, label: '<span>{{count}}</span> orders' }] }
   - { name: 'Logged in!', translations: [{ code: en, label: 'Logged in!' }] }
-  - { name: 'Logoff', translations: [{ code: en, label: 'Logoff' }] }
+  - { name: 'Log off', translations: [{ code: en, label: 'Log off' }] }
   - { name: 'Account settings', translations: [{ code: en, label: 'Account settings' }] }
   - { name: 'User X is logged in', translations: [{ code: en, label: 'User <strong>{{login}}</strong> is logged in.' }] }
   - { name: 'X products found', translations: [{ code: en, label: '{{count}} products found' }] }
@@ -454,7 +445,7 @@ XLite\Model\LanguageLabel:
   - { name: 'X minutes', translations: [{ code: en, label: '{{minutes}} minute(s)' }] }
   - { name: 'X seconds', translations: [{ code: en, label: '{{seconds}} second(s)' }] }
   - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: en, label: 'Importing will overwrite the existing product information. This operation connot be undone.' }] }
-  - { name: 'To get the format of the import data, you can export your products to a file.', translations: [{ code: en, label: 'To get the format of the import data, you can <a href="{{url}}">export your products</a> to a file and them review the format of that file.' }] }
+  - { name: 'To get the format of the import data you can export your products to a file', translations: [{ code: en, label: 'To get the format of the import data you can <a href="{{url}}">export your products</a> to a file and then review the format of that file.' }] }
   - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: en, label: 'Depending on the size of your data file, importing may take some time.' }] }
   - { name: 'Occurred X add product events and Y update product events', translations: [{ code: en, label: 'Occurred {{new}} add product events and {{old}} update product events.' }] }
   - { name: 'Occurred X add product events', translations: [{ code: en, label: 'Occurred {{new}} add product events.' }] }
@@ -463,26 +454,26 @@ XLite\Model\LanguageLabel:
   - { name: 'The string is different from that of the title number of columns - X instead of Y', translations: [{ code: en, label: 'The string is different from that of the title number of columns - {{wrong}} instead of {{right}}' }] }
   - { name: 'Required field X is not defined or empty', translations: [{ code: en, label: "Required field '{{name}}' is not defined or empty. The product was not created" }] }
   - { name: 'X image unable to load', translations: [{ code: en, label: '{{url}} image unable to load' }] }
-  - { name: 'During the import was recorded X errors. You can get them by downloading the log imports.', translations: [{ code: en, label: 'During the import was recorded {{count}} errors. You can get them by <a href="{{url}}">downloading</a> the log imports.' }] }
-  - { name: 'Some products could have been imported incorrectly', translations: [{ code: en, label: 'Some products could have been imported incorrectly. Please check your catalog. Find the ID of the products that could have been imported incorrectly in the import log file available at the above link.' }] }
+  - { name: 'During the import was recorded X errors. You can get them by downloading the log files.', translations: [{ code: en, label: 'During the import was recorded {{count}} errors. You can get them by <a href="{{url}}">downloading</a> the log files.' }] }
+  - { name: 'Some products could have been imported incorrectly', translations: [{ code: en, label: 'Some products could have been imported incorrectly. Please check your catalog. Find the ID''s of such products in the import log file available at the above link.' }] }
   - { name: 'Order #X, Y', translations: [{ code: en, label: 'Order #{{id}}, {{date}}' }] }
   - { name: 'Order X', translations: [{ code: en, label: 'Order #{{id}}' }] }
   - { name: 'The X field is empty', translations: [{ code: en, label: 'The {{name}} field is empty' }] }
-  - { name: 'The value of X field must be greater than Y', translations: [{ code: en, label: 'The value of {{name}} field must be greater than {{min}}' }] }
-  - { name: 'The value of X field must be greater less Y', translations: [{ code: en, label: 'The value of {{name}} field must be less than {{max}}' }] }
-  - { name: 'The value of X has an incorrect format', translations: [{ code: en, label: 'The value of {{name}} has an incorrect format' }] }
-  - { name: 'The value of X should not be longer than Y', translations: [{ code: en, label: 'The value of {{name}} should not be longer than {{max}}' }] }
+  - { name: 'The value of the X field must be greater than Y', translations: [{ code: en, label: 'The value of the {{name}} field must be greater than {{min}}' }] }
+  - { name: 'The value of the X field must be less than Y', translations: [{ code: en, label: 'The value of the {{name}} field must be less than {{max}}' }] }
+  - { name: 'The value of the X field has an incorrect format', translations: [{ code: en, label: 'The value of the {{name}} field has an incorrect format' }] }
+  - { name: 'The value of the X field should not be longer than Y', translations: [{ code: en, label: 'The value of the {{name}} field should not be longer than {{max}}' }] }
   - { name: 'Trying to access the shop at X', translations: [{ code: en, label: 'Trying to access the shop at <a href="{{url}}">{{url}}</a> ...' }] }
-  - { name: 'To fix this problem, do the following: 3 points', translations: [{ code: en, label: 'To fix this problem, do the following: <ul><li>make sure that your hosting service provider has HTTPS protocol enabled;</li><li>verify your HTTPS settings ("https_host" parameter in the "etc/config.php" file must be valid);</li><li>reload this page.</li></ul>' }] }
+  - { name: 'To fix this problem, do the following: 3 points', translations: [{ code: en, label: 'To fix this problem take the following steps: <ul><li>make sure that the HTTPS protocol is enabled by your hosting service provider;</li><li>verify your HTTPS settings ("https_host" parameter in the "etc/config.php" file must be valid);</li><li>reload this page.</li></ul>' }] }
   - { name: 'You can upload the database data directly from your local computer', translations: [{ code: en, label: 'You can upload the database data directly from your local computer by clicking on the "Browse" button, choosing an SQL dump file and clicking on the "Upload and restore" button.  While this method is more convenient, it has a file size limitation of {{N}}.' }] }
-  - { name: 'Alternatively, upload file sqldump.sql.php to the var/backup/ sub-directory click on the "Restore from server" button', translations: [{ code: en, label: 'Alternatively, upload the file named sqldump.sql.php to the var/backup/ sub-directory of your LiteCommerce installation on the web server and click on the "Restore from server" button. After the restore you might want to delete the file from the server by clicking on the "Delete SQL file" button above.' }] }
-  - { name: 'To restore the images which are stored in the file system, you have to copy them from the archive to LiteCommerce catalog', translations: [{ code: en, label: 'To restore the images which are stored in the file system, you have to copy them from the archive to LiteCommerce catalog, taking into consideration the catalog structure.' }] }
+  - { name: 'Alternatively, upload file sqldump.sql.php to the var/backup/ sub-directory click on the "Restore from server" button', translations: [{ code: en, label: 'Alternatively, upload the file named sqldump.sql.php to the var/backup/ sub-directory of your LiteCommerce installation on the web server and click on the "Restore from server" button. After the restoration you might want to delete the file from the server by clicking on the "Delete SQL file" button above.' }] }
+  - { name: 'To restore the images stored in the file system you have to copy them from the archive to the LiteCommerce catalog', translations: [{ code: en, label: 'To restore the images stored in the file system you have to copy them from the archive to the LiteCommerce catalog, taking into consideration the catalog structure.' }] }
   - { name: 'Maximum size of the file to upload is N', translations: [{ code: en, label: 'Maximum size of the file to upload is {{N}}.' }] }
-  - { name: 'Unable to install module X because some modules which it depends on, have not been installed or activated yet', translations: [{ code: en, label: 'Unable to install module &quot;{{X}}&quot; because some modules which it depends on, have not been installed or activated yet.' }] }
+  - { name: 'Unable to install module X because some modules, which it depends on, have not been installed or activated yet', translations: [{ code: en, label: 'Unable to install module &quot;{{X}}&quot; because some modules, which it depends on, have not been installed or activated yet.' }] }
   - { name: 'cannot set X permissions', translations: [{ code: en, label: 'cannot set {{X}} permissions' }] }
-  - { name: 'incorrect owner for X directory', translations: [{ code: en, label: 'incorrect owner for {{X}} directory' }] }
+  - { name: 'Incorrect owner of X directory', translations: [{ code: en, label: 'Incorrect owner of {{X}} directory' }] }
   - { name: 'Cannot set X permissions for subdirectories:', translations: [{ code: en, label: 'Cannot set {{X}} permissions for subdirectories:' }] }
-  - { name: 'incorrect owner for X file', translations: [{ code: en, label: 'incorrect owner for {{X}} file' }] }
+  - { name: 'Incorrect owner of X file', translations: [{ code: en, label: 'Incorrect owner of {{X}} file' }] }
   - { name: 'Flat shipping charge per X ordered (per Y)', translations: [{ code: en, label: 'Flat shipping charge per {{X}} ordered (per {{Y}})' }] }
   - { name: 'SHIPPING = flat + ITEMS*per_item + WEIGHT*per_weight + SUBTOTAL*(% of subtotal)/100;', translations: [{ code: en, label: 'SHIPPING = flat + ITEMS*per_item + WEIGHT*per_{{X}} + SUBTOTAL*(% of subtotal)/100;' }] }
   - { name: 'SHIPPING = raw on-line_rate + flat + ITEMS*per_item + WEIGHT*per_weight + SUBTOTAL*(% of subtotal)/100;', translations: [{ code: en, label: 'SHIPPING = raw on-line_rate + flat + ITEMS*per_item + WEIGHT*per_{{X}} + SUBTOTAL*(% of subtotal)/100;' }] }
@@ -493,6 +484,9 @@ XLite\Model\LanguageLabel:
   - { name: 'X product(s) has been created', translations: [{ code: en, label: '{{count}} product(s) has been created' }] }
   - { name: 'X entities has been removed', translations: [{ code: en, label: '{{count}} entities has been removed' }] }
   - { name: 'X entities has been created', translations: [{ code: en, label: '{{count}} entities has been created' }] }
+  - { name: 'Select a country or a state from a list, specify the zone', translations: [{ code: en, label: 'Select a country or a state from a list, specify the zone where the country or state should be listed and click on the "Apply" button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.' }] }
+  - { name: 'If you store product images in the database, they are included in the SQL dump file', translations: [{ code: en, label: 'If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back such images up you need to download them directly from the server.' }] }
+  - { name: 'You can choose if to download your database data', translations: [{ code: en, label: 'You can choose if to download your database data (SQL dump) directly to your local computer by clicking on the "Download SQL file" button or to save database data to a file on the web server ("var/backup/sqldump.sql.php") by clicking on the "Create SQL file" button#)}.<br />If you choose the second option, you can download the file from the server later on and delete it from the server by clicking on the "Delete SQL file" button.' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
@@ -683,55 +677,55 @@ XLite\Model\Language:
   - { code: zu, code3: zul, translations: [{ code: en, name: Zulu }] }
 XLite\Model\Payment\Method:
   directives: { insert: true }
-  - { service_name: PurchaseOrder, class: Model\Payment\Processor\PurchaseOrder, orderby: 20, translations: [{ code: en, name: 'Purchase Order', description: '' }] }
-  - { service_name: PhoneOrdering, class: Model\Payment\Processor\Offline, orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
-  - { service_name: FaxOrdering, class: Model\Payment\Processor\Offline, orderby: 40, translations: [{ code: en, name: 'Fax Ordering', description: 'Fax: (555) 555-5555' }] }
-  - { service_name: MoneyOrdering, class: Model\Payment\Processor\Offline, orderby: 50, translations: [{ code: en, name: 'Money Order', description: 'US Banks Only' }] }
-  - { service_name: Echeck, class: Model\Payment\Processor\Check, orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }
-  - { service_name: COD, class: Model\Payment\Processor\Offline, orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
+  - { service_name: PurchaseOrder, class: 'Model\Payment\Processor\PurchaseOrder', orderby: 20, translations: [{ code: en, name: 'Purchase Order' }] }
+  - { service_name: PhoneOrdering, class: 'Model\Payment\Processor\Offline', orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
+  - { service_name: FaxOrdering, class: 'Model\Payment\Processor\Offline', orderby: 40, translations: [{ code: en, name: 'Fax Ordering', description: 'Fax: (555) 555-5555' }] }
+  - { service_name: MoneyOrdering, class: 'Model\Payment\Processor\Offline', orderby: 50, translations: [{ code: en, name: 'Money Order', description: 'US Banks Only' }] }
+  - { service_name: Echeck, class: 'Model\Payment\Processor\Check', orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }
+  - { service_name: COD, class: 'Model\Payment\Processor\Offline', orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
 XLite\Model\Country:
-  directives: { insert: true }
   - { country: Afghanistan, code3: AFG, code: AF, enabled: false }
-  - { country: Albania, code3: ALB, code: AL }
-  - { country: Algeria, code3: DZA, code: DZ }
+  - { country: Albania, code3: ALB, code: AL, currency: { currency_id: 8 }  }
+  - { country: Algeria, code3: DZA, code: DZ, currency: { currency_id: 12 }  }
   - { country: 'American Samoa', code3: ASM, code: AS }
-  - { country: Andorra, code3: AND, code: AD }
+  - { country: Andorra, code3: AND, code: AD, currency: { currency_id: 978 }  }
   - { country: Angola, code3: AGO, code: AO }
-  - { country: Anguilla, code3: AIA, code: AI }
+  - { country: Anguilla, code3: AIA, code: AI, currency: { currency_id: 951 }  }
   - { country: Antarctica, code3: ATA, code: AQ }
-  - { country: 'Antigua and Barbuda', code3: ATG, code: AG }
-  - { country: Argentina, code3: ARG, code: AR }
-  - { country: Armenia, code3: ARM, code: AM }
-  - { country: Aruba, code3: ABW, code: AW }
-  - { country: Australia, code3: AUS, code: AU }
-  - { country: Austria, code3: AUT, code: AT, eu_member: true }
+  - { country: 'Antigua and Barbuda', code3: ATG, code: AG, currency: { currency_id: 951 }  }
+  - { country: Argentina, code3: ARG, code: AR, currency: { currency_id: 32 }  }
+  - { country: Armenia, code3: ARM, code: AM, currency: { currency_id: 51 }  }
+  - { country: Aruba, code3: ABW, code: AW, currency: { currency_id: 533 }  }
+  - { country: Australia, code3: AUS, code: AU, currency: { currency_id: 36 }  }
+  - { country: Austria, code3: AUT, code: AT, currency: { currency_id: 978 } , eu_member: true }
   - { country: Azerbaijan, code3: AZE, code: AZ }
   - { country: Bahamas, code3: BHS, code: BS }
-  - { country: Bahrain, code3: BHR, code: BH }
-  - { country: Bangladesh, code3: BGD, code: BD }
-  - { country: Barbados, code3: BRB, code: BB }
-  - { country: Belarus, code3: BLR, code: BY }
-  - { country: Belgium, code3: BEL, code: BE, eu_member: true }
-  - { country: Belize, code3: BLZ, code: BZ }
-  - { country: Benin, code3: BEN, code: BJ }
-  - { country: Bermuda, code3: BMU, code: BM }
-  - { country: Bhutan, code3: BTN, code: BT }
+  - { country: Bahrain, code3: BHR, code: BH, currency: { currency_id: 48 }  }
+  - { country: Bangladesh, code3: BGD, code: BD, currency: { currency_id: 50 }  }
+  - { country: Barbados, code3: BRB, code: BB, currency: { currency_id: 52 }  }
+  - { country: Belarus, code3: BLR, code: BY, currency: { currency_id: 974 }  }
+  - { country: Belgium, code3: BEL, code: BE, currency: { currency_id: 978 } , eu_member: true }
+  - { country: Belize, code3: BLZ, code: BZ, currency: { currency_id: 84 }  }
+  - { country: Benin, code3: BEN, code: BJ, currency: { currency_id: 952 }  }
+  - { country: Bermuda, code3: BMU, code: BM, currency: { currency_id: 60 }  }
+  - { country: Bhutan, code3: BTN, code: BT, currency: { currency_id: 356 }  }
   - { country: Bolivia, code: BO }
   - { country: 'Bosnia and Herzegowina', code: BA }
-  - { country: Botswana, code3: BWA, code: BW }
+  - { country: Botswana, code3: BWA, code: BW, currency: { currency_id: 72 }  }
   - { country: 'Bouvet Island', code3: BVT, code: BV }
-  - { country: Brazil, code3: BRA, code: BR }
-  - { country: 'British Indian Ocean Territory', code3: IOT, code: IO }
+  - { country: Brazil, code3: BRA, code: BR, currency: { currency_id: 986 }  }
+  - { country: 'British Indian Ocean Territory', code3: IOT, code: IO, currency: { currency_id: 840 }  }
   - { country: 'British Virgin Islands', code: VG }
   - { country: 'Brunei Darussalam', code3: BRN, code: BN }
   - { country: Bulgaria, code3: BGR, code: BG, eu_member: true }
-  - { country: 'Burkina Faso', code3: BFA, code: BF }
-  - { country: Burundi, code3: BDI, code: BI }
+  - { country: 'Burkina Faso', code3: BFA, code: BF, currency: { currency_id: 952 }  }
+  - { country: Burundi, code3: BDI, code: BI, currency: { currency_id: 108 }  }
   - { country: Cambodia, code3: KHM, code: KH }
-  - { country: Cameroon, code3: CMR, code: CM }
+  - { country: Cameroon, code3: CMR, code: CM, currency: { currency_id: 950 }  }
   - country: Canada
     code3: CAN
     code: CA
+    currency: { currency_id: 124 }
     states:
       - { state: Alberta, code: AB }
       - { state: 'British Columbia', code: BC }
@@ -746,161 +740,161 @@ XLite\Model\Country:
       - { state: Quebec, code: QC }
       - { state: Saskatchewan, code: SK }
       - { state: Yukon, code: YT }
-  - { country: 'Cape Verde', code3: CPV, code: CV }
-  - { country: 'Cayman Islands', code3: CYM, code: KY }
-  - { country: 'Central African Republic', code3: CAF, code: CF }
-  - { country: Chad, code3: TCD, code: TD }
-  - { country: Chile, code3: CHL, code: CL }
+  - { country: 'Cape Verde', code3: CPV, code: CV, currency: { currency_id: 132 }  }
+  - { country: 'Cayman Islands', code3: CYM, code: KY, currency: { currency_id: 136 }  }
+  - { country: 'Central African Republic', code3: CAF, code: CF, currency: { currency_id: 950 }  }
+  - { country: Chad, code3: TCD, code: TD, currency: { currency_id: 950 }  }
+  - { country: Chile, code3: CHL, code: CL, currency: { currency_id: 152 }  }
   - { country: China, code3: CHN, code: CN }
   - { country: 'Christmas Island', code3: CXR, code: CX }
   - { country: 'Cocos (Keeling) Islands', code3: CCK, code: CC }
-  - { country: Colombia, code3: COL, code: CO }
-  - { country: Comoros, code3: COM, code: KM }
+  - { country: Colombia, code3: COL, code: CO, currency: { currency_id: 170 }  }
+  - { country: Comoros, code3: COM, code: KM, currency: { currency_id: 174 }  }
   - { country: 'Congo, Democratic Republic of', code3: COG, code: CD }
   - { country: 'Cook Islands', code3: COK, code: CK }
-  - { country: 'Costa Rica', code3: CRI, code: CR }
+  - { country: 'Costa Rica', code3: CRI, code: CR, currency: { currency_id: 188 }  }
   - { country: 'Cote D''ivoire', code: CI }
-  - { country: Croatia, code3: HRV, code: HR }
-  - { country: Cuba, code3: CUB, code: CU }
-  - { country: Cyprus, code3: CYP, code: CY, eu_member: true }
-  - { country: 'Czech Republic', code3: CZE, code: CZ }
+  - { country: Croatia, code3: HRV, code: HR, currency: { currency_id: 191 }  }
+  - { country: Cuba, code3: CUB, code: CU, currency: { currency_id: 192 }  }
+  - { country: Cyprus, code3: CYP, code: CY, currency: { currency_id: 978 } , eu_member: true }
+  - { country: 'Czech Republic', code3: CZE, code: CZ, currency: { currency_id: 203 }  }
   - { country: Czechoslovakia, code: CS }
-  - { country: Denmark, code3: DNK, code: DK, eu_member: true }
-  - { country: Djibouti, code3: DJI, code: DJ }
-  - { country: Dominica, code3: DMA, code: DM }
-  - { country: 'Dominican Republic', code3: DOM, code: DO }
+  - { country: Denmark, code3: DNK, code: DK, currency: { currency_id: 208 } , eu_member: true }
+  - { country: Djibouti, code3: DJI, code: DJ, currency: { currency_id: 262 }  }
+  - { country: Dominica, code3: DMA, code: DM, currency: { currency_id: 951 }  }
+  - { country: 'Dominican Republic', code3: DOM, code: DO, currency: { currency_id: 214 }  }
   - { country: 'East Timor', code: TP }
   - { country: Ecuador, code3: ECU, code: EC }
-  - { country: Egypt, code3: EGY, code: EG }
-  - { country: 'El Salvador', code3: SLV, code: SV }
-  - { country: 'Equatorial Guinea', code3: GNQ, code: GQ }
-  - { country: Eritrea, code3: ERI, code: ER }
-  - { country: Estonia, code3: EST, code: EE, eu_member: true }
-  - { country: Ethiopia, code3: ETH, code: ET }
+  - { country: Egypt, code3: EGY, code: EG, currency: { currency_id: 818 }  }
+  - { country: 'El Salvador', code3: SLV, code: SV, currency: { currency_id: 840 }  }
+  - { country: 'Equatorial Guinea', code3: GNQ, code: GQ, currency: { currency_id: 950 }  }
+  - { country: Eritrea, code3: ERI, code: ER, currency: { currency_id: 232 }  }
+  - { country: Estonia, code3: EST, code: EE, currency: { currency_id: 978 } , eu_member: true }
+  - { country: Ethiopia, code3: ETH, code: ET, currency: { currency_id: 230 }  }
   - { country: 'Falkland Islands (Malvinas)', code3: FLK, code: FK }
   - { country: 'Faroe Islands', code3: FRO, code: FO }
-  - { country: Fiji, code3: FJI, code: FJ }
-  - { country: Finland, code3: FIN, code: FI, enabled: false }
-  - { country: France, code3: FRA, code: FR, eu_member: true }
+  - { country: Fiji, code3: FJI, code: FJ, currency: { currency_id: 242 }  }
+  - { country: Finland, code3: FIN, code: FI, currency: { currency_id: 978 } , enabled: false }
+  - { country: France, code3: FRA, code: FR, currency: { currency_id: 978 } , eu_member: true }
   - { country: 'French Guiana', code3: GUF, code: GF }
-  - { country: 'French Polynesia', code3: PYF, code: PF }
+  - { country: 'French Polynesia', code3: PYF, code: PF, currency: { currency_id: 953 }  }
   - { country: 'French Southern Territories', code3: ATF, code: TF }
-  - { country: Gabon, code3: GAB, code: GA }
+  - { country: Gabon, code3: GAB, code: GA, currency: { currency_id: 950 }  }
   - { country: Gambia, code3: GMB, code: GM }
-  - { country: Georgia, code3: GEO, code: GE }
-  - { country: Germany, code3: DEU, code: DE, eu_member: true }
+  - { country: Georgia, code3: GEO, code: GE, currency: { currency_id: 981 }  }
+  - { country: Germany, code3: DEU, code: DE, currency: { currency_id: 978 } , eu_member: true }
   - { country: Ghana, code3: GHA, code: GH }
-  - { country: Gibraltar, code3: GIB, code: GI }
-  - { country: Greece, code3: GRC, code: GR, eu_member: true }
+  - { country: Gibraltar, code3: GIB, code: GI, currency: { currency_id: 292 }  }
+  - { country: Greece, code3: GRC, code: GR, currency: { currency_id: 978 } , eu_member: true }
   - { country: Greenland, code3: GRL, code: GL }
-  - { country: Grenada, code3: GRD, code: GD }
+  - { country: Grenada, code3: GRD, code: GD, currency: { currency_id: 951 }  }
   - { country: Guadeloupe, code3: GLP, code: GP }
   - { country: Guam, code3: GUM, code: GU }
-  - { country: Guatemala, code3: GTM, code: GT }
-  - { country: Guinea, code3: GIN, code: GN }
-  - { country: Guinea-Bissau, code3: GNB, code: GW }
-  - { country: Guyana, code3: GUY, code: GY }
-  - { country: Haiti, code3: HTI, code: HT }
+  - { country: Guatemala, code3: GTM, code: GT, currency: { currency_id: 320 }  }
+  - { country: Guinea, code3: GIN, code: GN, currency: { currency_id: 324 }  }
+  - { country: Guinea-Bissau, code3: GNB, code: GW, currency: { currency_id: 952 }  }
+  - { country: Guyana, code3: GUY, code: GY, currency: { currency_id: 328 }  }
+  - { country: Haiti, code3: HTI, code: HT, currency: { currency_id: 332 }  }
   - { country: 'Heard and McDonald Islands', code: HM }
-  - { country: Honduras, code3: HND, code: HN }
-  - { country: 'Hong Kong', code3: HKG, code: HK }
-  - { country: Hungary, code3: HUN, code: HU, eu_member: true }
-  - { country: Iceland, code3: ISL, code: IS }
-  - { country: India, code3: IND, code: IN }
-  - { country: Indonesia, code3: IDN, code: ID }
-  - { country: Iraq, code3: IRQ, code: IQ }
-  - { country: Ireland, code3: IRL, code: IE, eu_member: true }
+  - { country: Honduras, code3: HND, code: HN, currency: { currency_id: 340 }  }
+  - { country: 'Hong Kong', code3: HKG, code: HK, currency: { currency_id: 344 }  }
+  - { country: Hungary, code3: HUN, code: HU, currency: { currency_id: 348 } , eu_member: true }
+  - { country: Iceland, code3: ISL, code: IS, currency: { currency_id: 352 }  }
+  - { country: India, code3: IND, code: IN, currency: { currency_id: 356 }  }
+  - { country: Indonesia, code3: IDN, code: ID, currency: { currency_id: 360 }  }
+  - { country: Iraq, code3: IRQ, code: IQ, currency: { currency_id: 368 }  }
+  - { country: Ireland, code3: IRL, code: IE, currency: { currency_id: 978 } , eu_member: true }
   - { country: 'Islamic Republic of Iran', code: IR }
-  - { country: Israel, code3: ISR, code: IL }
-  - { country: Italy, code3: ITA, code: IT, eu_member: true }
-  - { country: Jamaica, code3: JAM, code: JM }
-  - { country: Japan, code3: JPN, code: JP }
-  - { country: Jordan, code3: JOR, code: JO }
-  - { country: Kazakhstan, code3: KAZ, code: KZ }
-  - { country: Kenya, code3: KEN, code: KE }
+  - { country: Israel, code3: ISR, code: IL, currency: { currency_id: 376 }  }
+  - { country: Italy, code3: ITA, code: IT, currency: { currency_id: 978 } , eu_member: true }
+  - { country: Jamaica, code3: JAM, code: JM, currency: { currency_id: 388 }  }
+  - { country: Japan, code3: JPN, code: JP, currency: { currency_id: 392 }  }
+  - { country: Jordan, code3: JOR, code: JO, currency: { currency_id: 400 }  }
+  - { country: Kazakhstan, code3: KAZ, code: KZ, currency: { currency_id: 398 }  }
+  - { country: Kenya, code3: KEN, code: KE, currency: { currency_id: 404 }  }
   - { country: Kiribati, code3: KIR, code: KI }
   - { country: Korea, code: KP }
   - { country: 'Korea, Republic of', code3: KOR, code: KR }
-  - { country: Kuwait, code3: KWT, code: KW }
-  - { country: Kyrgyzstan, code3: KGZ, code: KG }
+  - { country: Kuwait, code3: KWT, code: KW, currency: { currency_id: 414 }  }
+  - { country: Kyrgyzstan, code3: KGZ, code: KG, currency: { currency_id: 417 }  }
   - { country: Laos, code: LA }
-  - { country: Latvia, code3: LVA, code: LV, eu_member: true }
-  - { country: Lebanon, code3: LBN, code: LB }
-  - { country: Lesotho, code3: LSO, code: LS }
-  - { country: Liberia, code3: LBR, code: LR }
+  - { country: Latvia, code3: LVA, code: LV, currency: { currency_id: 428 } , eu_member: true }
+  - { country: Lebanon, code3: LBN, code: LB, currency: { currency_id: 422 }  }
+  - { country: Lesotho, code3: LSO, code: LS, currency: { currency_id: 710 }  }
+  - { country: Liberia, code3: LBR, code: LR, currency: { currency_id: 430 }  }
   - { country: 'Libyan Arab Jamahiriya', code3: LBY, code: LY }
-  - { country: Liechtenstein, code3: LIE, code: LI }
-  - { country: Lithuania, code3: LTU, code: LT, eu_member: true }
-  - { country: Luxembourg, code3: LUX, code: LU, eu_member: true }
+  - { country: Liechtenstein, code3: LIE, code: LI, currency: { currency_id: 756 }  }
+  - { country: Lithuania, code3: LTU, code: LT, currency: { currency_id: 440 } , eu_member: true }
+  - { country: Luxembourg, code3: LUX, code: LU, currency: { currency_id: 978 } , eu_member: true }
   - { country: Macau, code: MO }
   - { country: Macedonia, code: MK }
   - { country: Madagascar, code3: MDG, code: MG }
-  - { country: Malawi, code3: MWI, code: MW }
-  - { country: Malaysia, code3: MYS, code: MY }
-  - { country: Maldives, code3: MDV, code: MV }
-  - { country: Mali, code3: MLI, code: ML }
-  - { country: Malta, code3: MLT, code: MT, eu_member: true }
-  - { country: 'Marshall Islands', code3: MHL, code: MH }
+  - { country: Malawi, code3: MWI, code: MW, currency: { currency_id: 454 }  }
+  - { country: Malaysia, code3: MYS, code: MY, currency: { currency_id: 458 }  }
+  - { country: Maldives, code3: MDV, code: MV, currency: { currency_id: 462 }  }
+  - { country: Mali, code3: MLI, code: ML, currency: { currency_id: 952 }  }
+  - { country: Malta, code3: MLT, code: MT, currency: { currency_id: 978 } , eu_member: true }
+  - { country: 'Marshall Islands', code3: MHL, code: MH, currency: { currency_id: 840 }  }
   - { country: Martinique, code3: MTQ, code: MQ }
-  - { country: Mauritania, code3: MRT, code: MR }
-  - { country: Mauritius, code3: MUS, code: MU }
+  - { country: Mauritania, code3: MRT, code: MR, currency: { currency_id: 478 }  }
+  - { country: Mauritius, code3: MUS, code: MU, currency: { currency_id: 480 }  }
   - { country: Mayotte, code3: MYT, code: YT }
-  - { country: Mexico, code3: MEX, code: MX }
+  - { country: Mexico, code3: MEX, code: MX, currency: { currency_id: 484 }  }
   - { country: Micronesia, code: FM }
   - { country: 'Moldova, Republic of', code3: MDA, code: MD }
-  - { country: Monaco, code3: MCO, code: MC, eu_member: true }
-  - { country: Mongolia, code3: MNG, code: MN }
-  - { country: Montserrat, code3: MSR, code: MS }
-  - { country: Morocco, code3: MAR, code: MA }
+  - { country: Monaco, code3: MCO, code: MC, currency: { currency_id: 978 } , eu_member: true }
+  - { country: Mongolia, code3: MNG, code: MN, currency: { currency_id: 496 }  }
+  - { country: Montserrat, code3: MSR, code: MS, currency: { currency_id: 951 }  }
+  - { country: Morocco, code3: MAR, code: MA, currency: { currency_id: 504 }  }
   - { country: Mozambique, code3: MOZ, code: MZ }
   - { country: Myanmar, code3: MMR, code: MM }
-  - { country: Namibia, code3: NAM, code: NA }
+  - { country: Namibia, code3: NAM, code: NA, currency: { currency_id: 710 }  }
   - { country: Nauru, code3: NRU, code: NR }
-  - { country: Nepal, code3: NPL, code: NP }
-  - { country: Netherlands, code3: NLD, code: NL, eu_member: true }
+  - { country: Nepal, code3: NPL, code: NP, currency: { currency_id: 524 }  }
+  - { country: Netherlands, code3: NLD, code: NL, currency: { currency_id: 978 } , eu_member: true }
   - { country: 'Netherlands Antilles', code3: ANT, code: AN }
-  - { country: 'New Caledonia', code3: NCL, code: NC }
-  - { country: 'New Zealand', code3: NZL, code: NZ }
-  - { country: Nicaragua, code3: NIC, code: NI }
-  - { country: Niger, code3: NER, code: NE }
-  - { country: Nigeria, code3: NGA, code: NG }
+  - { country: 'New Caledonia', code3: NCL, code: NC, currency: { currency_id: 953 }  }
+  - { country: 'New Zealand', code3: NZL, code: NZ, currency: { currency_id: 554 }  }
+  - { country: Nicaragua, code3: NIC, code: NI, currency: { currency_id: 558 }  }
+  - { country: Niger, code3: NER, code: NE, currency: { currency_id: 952 }  }
+  - { country: Nigeria, code3: NGA, code: NG, currency: { currency_id: 566 }  }
   - { country: Niue, code3: NIU, code: NU }
   - { country: 'Norfolk Island', code3: NFK, code: NF }
   - { country: 'Northern Mariana Islands', code3: MNP, code: MP }
-  - { country: Norway, code3: NOR, code: NO }
-  - { country: Oman, code3: OMN, code: OM }
-  - { country: Pakistan, code3: PAK, code: PK }
-  - { country: Palau, code3: PLW, code: PW }
-  - { country: Panama, code3: PAN, code: PA }
-  - { country: 'Papua New Guinea', code3: PNG, code: PG }
-  - { country: Paraguay, code3: PRY, code: PY }
-  - { country: Peru, code3: PER, code: PE }
-  - { country: Philippines, code3: PHL, code: PH }
+  - { country: Norway, code3: NOR, code: NO, currency: { currency_id: 578 }  }
+  - { country: Oman, code3: OMN, code: OM, currency: { currency_id: 512 }  }
+  - { country: Pakistan, code3: PAK, code: PK, currency: { currency_id: 586 }  }
+  - { country: Palau, code3: PLW, code: PW, currency: { currency_id: 840 }  }
+  - { country: Panama, code3: PAN, code: PA, currency: { currency_id: 840 }  }
+  - { country: 'Papua New Guinea', code3: PNG, code: PG, currency: { currency_id: 598 }  }
+  - { country: Paraguay, code3: PRY, code: PY, currency: { currency_id: 600 }  }
+  - { country: Peru, code3: PER, code: PE, currency: { currency_id: 604 }  }
+  - { country: Philippines, code3: PHL, code: PH, currency: { currency_id: 608 }  }
   - { country: Pitcairn, code3: PCN, code: PN }
-  - { country: Poland, code3: POL, code: PL, eu_member: true }
-  - { country: Portugal, code3: PRT, code: PT, eu_member: true }
+  - { country: Poland, code3: POL, code: PL, currency: { currency_id: 985 } , eu_member: true }
+  - { country: Portugal, code3: PRT, code: PT, currency: { currency_id: 978 } , eu_member: true }
   - { country: 'Puerto Rico', code3: PRI, code: PR }
-  - { country: Qatar, code3: QAT, code: QA }
+  - { country: Qatar, code3: QAT, code: QA, currency: { currency_id: 634 }  }
   - { country: Reunion, code: RE }
   - { country: Romania, code3: ROU, code: RO, eu_member: true }
-  - { country: 'Russian Federation', code3: RUS, code: RU }
-  - { country: Rwanda, code3: RWA, code: RW }
-  - { country: 'Saint Lucia', code3: LCA, code: LC }
-  - { country: Samoa, code3: WSM, code: WS }
-  - { country: 'San Marino', code3: SMR, code: SM }
-  - { country: 'Sao Tome and Principe', code3: STP, code: ST }
-  - { country: 'Saudi Arabia', code3: SAU, code: SA }
-  - { country: Senegal, code3: SEN, code: SN }
-  - { country: Seychelles, code3: SYC, code: SC }
-  - { country: 'Sierra Leone', code3: SLE, code: SL }
-  - { country: Singapore, code3: SGP, code: SG }
-  - { country: Slovakia, code3: SVK, code: SK, eu_member: true }
-  - { country: Slovenia, code3: SVN, code: SI, eu_member: true }
-  - { country: 'Solomon Islands', code3: SLB, code: SB }
-  - { country: Somalia, code3: SOM, code: SO }
-  - { country: 'South Africa', code3: ZAF, code: ZA }
-  - { country: Spain, code3: ESP, code: ES, eu_member: true }
-  - { country: 'Sri Lanka', code3: LKA, code: LK }
+  - { country: 'Russian Federation', code3: RUS, code: RU, currency: { currency_id: 643 }, symbolBefore: false }
+  - { country: Rwanda, code3: RWA, code: RW, currency: { currency_id: 646 }  }
+  - { country: 'Saint Lucia', code3: LCA, code: LC, currency: { currency_id: 951 }  }
+  - { country: Samoa, code3: WSM, code: WS, currency: { currency_id: 882 }  }
+  - { country: 'San Marino', code3: SMR, code: SM, currency: { currency_id: 978 }  }
+  - { country: 'Sao Tome and Principe', code3: STP, code: ST, currency: { currency_id: 678 }  }
+  - { country: 'Saudi Arabia', code3: SAU, code: SA, currency: { currency_id: 682 }  }
+  - { country: Senegal, code3: SEN, code: SN, currency: { currency_id: 952 }  }
+  - { country: Seychelles, code3: SYC, code: SC, currency: { currency_id: 690 }  }
+  - { country: 'Sierra Leone', code3: SLE, code: SL, currency: { currency_id: 694 }  }
+  - { country: Singapore, code3: SGP, code: SG, currency: { currency_id: 702 }  }
+  - { country: Slovakia, code3: SVK, code: SK, currency: { currency_id: 978 } , eu_member: true }
+  - { country: Slovenia, code3: SVN, code: SI, currency: { currency_id: 978 } , eu_member: true }
+  - { country: 'Solomon Islands', code3: SLB, code: SB, currency: { currency_id: 90 }  }
+  - { country: Somalia, code3: SOM, code: SO, currency: { currency_id: 706 }  }
+  - { country: 'South Africa', code3: ZAF, code: ZA, currency: { currency_id: 710 }  }
+  - { country: Spain, code3: ESP, code: ES, currency: { currency_id: 978 } , eu_member: true }
+  - { country: 'Sri Lanka', code3: LKA, code: LK, currency: { currency_id: 144 }  }
   - { country: 'St. Helena', code: SH }
   - { country: 'St. Kitts And Nevis', code: KN }
   - { country: 'St. Pierre and Miquelon', code: PM }
@@ -908,29 +902,30 @@ XLite\Model\Country:
   - { country: Sudan, code3: SDN, code: SD }
   - { country: Suriname, code3: SUR, code: SR }
   - { country: 'Svalbard and Jan Mayen', code3: SJM, code: SJ }
-  - { country: Swaziland, code3: SWZ, code: SZ }
-  - { country: Sweden, code3: SWE, code: SE, eu_member: true }
-  - { country: Switzerland, code3: CHE, code: CH }
+  - { country: Swaziland, code3: SWZ, code: SZ, currency: { currency_id: 748 }  }
+  - { country: Sweden, code3: SWE, code: SE, currency: { currency_id: 752 } , eu_member: true }
+  - { country: Switzerland, code3: CHE, code: CH, currency: { currency_id: 756 }  }
   - { country: 'Syrian Arab Republic', code3: SYR, code: SY }
   - { country: Taiwan, code: TW }
-  - { country: Tajikistan, code3: TJK, code: TJ }
+  - { country: Tajikistan, code3: TJK, code: TJ, currency: { currency_id: 972 }  }
   - { country: 'Tanzania, United Republic of', code3: TZA, code: TZ }
-  - { country: Thailand, code3: THA, code: TH }
-  - { country: Togo, code3: TGO, code: TG }
+  - { country: Thailand, code3: THA, code: TH, currency: { currency_id: 764 }  }
+  - { country: Togo, code3: TGO, code: TG, currency: { currency_id: 952 }  }
   - { country: Tokelau, code3: TKL, code: TK }
-  - { country: Tonga, code3: TON, code: TO }
-  - { country: 'Trinidad and Tobago', code3: TTO, code: TT }
-  - { country: Tunisia, code3: TUN, code: TN }
+  - { country: Tonga, code3: TON, code: TO, currency: { currency_id: 776 }  }
+  - { country: 'Trinidad and Tobago', code3: TTO, code: TT, currency: { currency_id: 780 }  }
+  - { country: Tunisia, code3: TUN, code: TN, currency: { currency_id: 788 }  }
   - { country: Turkey, code3: TUR, code: TR }
   - { country: Turkmenistan, code3: TKM, code: TM }
-  - { country: 'Turks and Caicos Islands', code3: TCA, code: TC }
+  - { country: 'Turks and Caicos Islands', code3: TCA, code: TC, currency: { currency_id: 840 }  }
   - { country: Tuvalu, code3: TUV, code: TV }
-  - { country: Uganda, code3: UGA, code: UG }
-  - { country: Ukraine, code3: UKR, code: UA }
-  - { country: 'United Arab Emirates', code3: ARE, code: AE }
+  - { country: Uganda, code3: UGA, code: UG, currency: { currency_id: 800 }  }
+  - { country: Ukraine, code3: UKR, code: UA, currency: { currency_id: 980 }  }
+  - { country: 'United Arab Emirates', code3: ARE, code: AE, currency: { currency_id: 784 }  }
   - country: 'United Kingdom'
     code3: GBR
     code: GB
+    currency: { currency_id: 826 }
     eu_member: true
     states:
       - { state: Aberdeenshire, code: ABd }
@@ -1070,6 +1065,7 @@ XLite\Model\Country:
   - country: 'United States'
     code3: USA
     code: US
+    currency: { currency_id: 840 }
     states:
       - { state: Alabama, code: AL }
       - { state: Alaska, code: AK }
@@ -1126,17 +1122,17 @@ XLite\Model\Country:
       - { state: Wisconsin, code: WI }
       - { state: Wyoming, code: WY }
   - { country: 'USA Virgin Islands', code3: VGB, code: VI }
-  - { country: Uruguay, code3: URY, code: UY }
-  - { country: Uzbekistan, code3: UZB, code: UZ }
-  - { country: Vanuatu, code3: VUT, code: VU }
+  - { country: Uruguay, code3: URY, code: UY, currency: { currency_id: 858 }  }
+  - { country: Uzbekistan, code3: UZB, code: UZ, currency: { currency_id: 860 }  }
+  - { country: Vanuatu, code3: VUT, code: VU, currency: { currency_id: 548 }  }
   - { country: 'Vatican City State', code: VA }
   - { country: Venezuela, code: VE }
   - { country: 'Viet Nam', code3: VNM, code: VN }
   - { country: 'Wallis And Futuna Islands', code: WF }
   - { country: 'Western Sahara', code3: ESH, code: EH }
-  - { country: Yemen, code3: YEM, code: YE }
-  - { country: Serbia, code3: SRB, code: RS }
-  - { country: Zambia, code3: ZMB, code: ZM }
+  - { country: Yemen, code3: YEM, code: YE, currency: { currency_id: 886 }  }
+  - { country: Serbia, code3: SRB, code: RS, currency: { currency_id: 941 }  }
+  - { country: Zambia, code3: ZMB, code: ZM, currency: { currency_id: 894 }  }
   - { country: Zimbabwe, code3: ZWE, code: ZW }
 XLite\Model\Order\Modifier:
   - { class: '\XLite\Logic\Order\Modifier\Shipping', weight: 100 }
@@ -1146,5 +1142,10 @@ XLite\Model\Zone:
   - { zone_name: 'Default zone (all addresses)', is_default: true }
 XLite\Model\Task:
   - { owner: 'XLite\Core\Task\Probe' }
+  - { owner: 'XLite\Core\Task\EventListener' }
 XLite\Model\Role:
-  - { code: administrator, translations: [{ code: en, name: Administrator }], permissions: [ { code: root access, translations: [{ code: en, name: Root access }] } ] }
+  - { translations: [{ code: en, name: Administrator }], permissions: [ { code: root access, translations: [{ code: en, name: Root access }] } ] }
+XLite\Model\Role\Permission:
+  - { code: manage catalog, translations: [{ code: en, name: Manage catalog }] }
+  - { code: manage users, translations: [{ code: en, name: Manage users }] }
+  - { code: manage orders, translations: [{ code: en, name: Manage orders }] }

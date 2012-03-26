@@ -11,5 +11,5 @@
  *}
 
 <div class="invoice-box">
-  {displayViewListContent(#invoice.base#)}
+  <list name="invoice.base" />
 </div>

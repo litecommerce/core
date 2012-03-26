@@ -11,4 +11,4 @@
  *
  * @ListChild (list="head", weight="600")
  *}
-<meta IF="getMetaDescription()" name="description" content="{getMetaDescription():r}" />
+<meta IF="getMetaDescription()" name="description" content="{t(getMetaDescription()):r}" />

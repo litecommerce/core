@@ -104,7 +104,6 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
             );
     }
 
-
     /**
      * isDirExists
      *
@@ -123,19 +122,5 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
         $result = is_dir(LC_DIR_BACKUP) && is_writable(LC_DIR_BACKUP);
 
         return $result;
-    }
-
-    /**
-     * Add part to the location nodes list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addBaseLocation()
-    {
-        parent::addBaseLocation();
-
-        $this->addLocationNode('Backup/Restore', $this->buildURL('db_backup'));
     }
 }

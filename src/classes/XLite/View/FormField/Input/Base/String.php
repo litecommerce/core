@@ -35,8 +35,11 @@ namespace XLite\View\FormField\Input\Base;
  */
 abstract class String extends \XLite\View\FormField\Input\AInput
 {
+    /**
+     * Widget param names
+     */
     const PARAM_DEFAULT_VALUE = 'defaultValue';
-    const PARAM_MAX_SIZE      = 'maxSize';
+    const PARAM_MAX_LENGTH    = 'maxlength';
 
     /**
      * Define widget params
@@ -51,7 +54,7 @@ abstract class String extends \XLite\View\FormField\Input\AInput
 
         $this->widgetParams += array(
             self::PARAM_DEFAULT_VALUE => new \XLite\Model\WidgetParam\String('Default value', ''),
-            self::PARAM_MAX_SIZE      => new \XLite\Model\WidgetParam\Int('Maximum size', $this->getDefaultMaxSize()),
+            self::PARAM_MAX_LENGTH    => new \XLite\Model\WidgetParam\Int('Maximum length', $this->getDefaultMaxSize()),
         );
     }
 
@@ -64,9 +67,13 @@ abstract class String extends \XLite\View\FormField\Input\AInput
      */
     protected function getCommonAttributes()
     {
-        return parent::getCommonAttributes() + array(
-            'maxlength' => $this->getParam(self::PARAM_MAX_SIZE),
-        );
+        $list = parent::getCommonAttributes();
+
+        if ($this->getParam(static::PARAM_MAX_LENGTH)) {
+            $list['maxlength'] = $this->getParam(static::PARAM_MAX_LENGTH);
+        }
+
+        return $list;
     }
 
     /**
@@ -92,13 +99,13 @@ abstract class String extends \XLite\View\FormField\Input\AInput
     {
         $result = parent::checkFieldValidity();
 
-        if ($result && strlen($result) > $this->getParam(self::PARAM_MAX_SIZE)) {
+        if ($result && strlen($result) > $this->getParam(self::PARAM_MAX_LENGTH)) {
             $result = false;
             $this->errorMessage = \XLite\Core\Translation::lbl(
-                'The value of X should not be longer than Y',
+                'The value of the X field should not be longer than Y',
                 array(
                     'name' => $this->getLabel(),
-                    'max'  => $this->getParam(self::PARAM_MAX_SIZE),
+                    'max'  => $this->getParam(self::PARAM_MAX_LENGTH),
                 )
             );
         }
@@ -117,7 +124,7 @@ abstract class String extends \XLite\View\FormField\Input\AInput
     {
         $rules = parent::assembleValidationRules();
 
-        $rules[] = 'maxSize[' . $this->getParam(self::PARAM_MAX_SIZE) . ']';
+        $rules[] = 'maxSize[' . $this->getParam(self::PARAM_MAX_LENGTH) . ']';
 
         return $rules;
     }

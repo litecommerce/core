@@ -26,7 +26,7 @@
        If you find that the site is inoperative, please try to do the following#)}:
      </div>
 
-     {displayInheritedViewListContent(#actions#)}
+     <list name="actions" type="inherited" />
 
      <div class="description last-message">
        {t(#Please save the soft reset and hard reset links so that you can use them later in case the website crash happens#)}

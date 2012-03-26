@@ -50,7 +50,6 @@ class Switcher extends \XLite\View\Button\AButton
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'button/js/switcher.js';
 
         return $list;
@@ -119,8 +118,6 @@ class Switcher extends \XLite\View\Button\AButton
      */
     protected function getTitle()
     {
-        $label = $this->getParam(self::PARAM_ENABLED) ? 'Disable' : 'Enable';
-
-        return \XLite\Core\Translation::lbl($label);
+        return $this->getParam(self::PARAM_ENABLED) ? 'Disable' : 'Enable';
     }
 }

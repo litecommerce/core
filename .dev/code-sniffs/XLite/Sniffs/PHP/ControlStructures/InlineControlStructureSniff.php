@@ -98,7 +98,7 @@ class XLite_Sniffs_PHP_ControlStructures_InlineControlStructureSniff extends XLi
 
 			$hasEqual = $phpcsFile->findNext(T_EQUAL, $tokens[$stackPtr]['parenthesis_opener'], $tokens[$stackPtr]['parenthesis_closer']);
 			if ($hasEqual !== false) {
-				$phpcsFile->addError($this->getReqPrefix('REQ.PHP.2.5.7') . 'Запрещено использовать присваивание в управляющих структурах', $stackPtr);
+				$phpcsFile->addError($this->getReqPrefix('REQ.PHP.2.5.7') . 'п≈п╟п©я─п╣я┴п╣п╫п╬ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п©я─п╦я│п╡п╟п╦п╡п╟п╫п╦п╣ п╡ я┐п©я─п╟п╡п╩я▐я▌я┴п╦я┘ я│я┌я─я┐п╨я┌я┐я─п╟я┘', $stackPtr);
 			}
         }
 

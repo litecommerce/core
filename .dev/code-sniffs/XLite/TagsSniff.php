@@ -104,11 +104,25 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 	protected $docBlock = 'unknown';
 
     protected $allowedParamTypes = array(
-        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'null', 'object', 'resource', 'callback',
+        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'null', 'object', 'resource', 'callback', 'self',
     );
 
     protected $allowedReturnTypes = array(
-        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'void', 'object', 'resource', 'callback',
+        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'void', 'object', 'resource', 'callback', 'self',
+    );
+
+    protected $modulesLCL = array(
+        'CDev/Coupons',
+        'CDev/Egoods',
+        'CDev/ProductAdvisor',
+        'CDev/VolumeDiscounts',
+        'CDev/Wholesale',
+    );
+
+    protected $modulesGPL = array(
+        'CDev/DrupalConnector',
+        'CDev/GoogleAnalytics',
+        'CDev/XMLSitemapDrupal',
     );
 
     /**
@@ -641,7 +655,9 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 		            $bYear = '2011';
     		        $eYear = @date('Y');
         		    $text = 'Copyright (c) ' . (($bYear == $eYear) ? $bYear : $bYear . '-' . $eYear) . ' Creative Development LLC <info@cdev.ru>. All rights reserved';
-            		if ($content !== $text) {
+                    $eYear2 = $eYear - 1;
+                    $text2 = 'Copyright (c) ' . (($bYear == $eYear2) ? $bYear : $bYear . '-' . $eYear2) . ' Creative Development LLC <info@cdev.ru>. All rights reserved';
+            		if ($content !== $text && $content !== $text2) {
                 		$error = 'Content of the @copyright tag must be in the form "' . $text . '"';
 	                	$this->currentFile->addError($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'copyright')) . $error, $errorPos);
 	    	        }
@@ -658,17 +674,40 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
     protected function processLicense($errorPos)
     {
         $license = $this->commentParser->getLicense();
+        $error = null;
+
         if ($license !== null) {
+
             $value   = $license->getValue();
             $comment = $license->getComment();
-			$content = $value . ' ' . $comment;
+            $content = $value . ' ' . $comment;
+
 			if (empty($content)) {
                 $error = "Content missing for @license tag in " . $this->docBlock ." comment";
                 $this->currentFile->addError($this->getReqPrefix($this->reqCodeEmpty) . ' ' . $error, $errorPos);
 
-            } elseif ($content !== 'http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)') {
-                $error = 'Content of the @license tag must be in the form "http://www.qtmsoft.com/xpayments_eula.html X-Payments license agreement"';
-                $this->currentFile->addError($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'license')) . $error, $errorPos);
+            } else {
+
+                preg_match('/^.*\/(CDev\/[^\/]+)\/.*$/', $this->currentFile->getFilename(), $match);
+                $module = (isset($match[1]) ? $match[1] : null);
+
+                if (in_array($module, $this->modulesLCL)) {
+                    $error = $content != 'LiteCommerce Module License (Commercial EULA)'
+                        ? 'Content of the @license tag for module "' . $module . '" must be in the form "LiteCommerce Module License (Commercial EULA)"'
+                        : null;
+
+                } elseif (in_array($module, $this->modulesGPL)) {
+                    $error = $content != 'http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)'
+                        ? 'Content of the @license tag for module "' . $module . '" must be in the form "http://www.gnu.org/licenses/gpl-2.0.html GNU General Pubic License (GPL 2.0)"'
+                        : null;
+    
+                } elseif ($content != 'http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)') {
+                    $error = 'Content of the @license tag must be in the form "http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)"';
+                }
+
+                if ($error) {
+                    $this->currentFile->addError($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'license')) . $error, $errorPos);
+                }
 			}
         }
 
@@ -1013,7 +1052,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
         $types = array_map('trim', explode('|', $rawType));
         if (4 < count($types)) {
             $this->currentFile->addError(
-				$this->getReqPrefix('REQ.PHP.3.5.17') . 'Число вариантов типов @' . $tag . ' больше 4',
+				$this->getReqPrefix('REQ.PHP.3.5.17') . 'Number of types @' . $tag . ' tag is greater than 4',
 				$errorPos
 			);
         }
@@ -1036,7 +1075,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 				$result = $r;
 
 			} else {
-				$result = 'Тип "' . $type . '" запрещен для использования в @' . $tag;
+				$result = 'Type "' . $type . '" is forbidden for @' . $tag;
 			}
 
 			break;

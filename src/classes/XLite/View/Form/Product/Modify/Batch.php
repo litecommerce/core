@@ -59,7 +59,6 @@ class Batch extends \XLite\View\Form\Product\Modify\AModify
         return 'update';
     }
 
-
     /**
      * Get validator
      *
@@ -89,9 +88,7 @@ class Batch extends \XLite\View\Form\Product\Modify\AModify
     protected function getDataValidator()
     {
         $data = new \XLite\Core\Validator\HashArray();
-
-        $data->addPair('price', new \XLite\Core\Validator\Float(), null, static::t('Price'))
-            ->setRange(0);
+        $data->addPair('price', new \XLite\Core\Validator\Float(), null, 'Price')->setRange(0);
 
         return $data;
     }

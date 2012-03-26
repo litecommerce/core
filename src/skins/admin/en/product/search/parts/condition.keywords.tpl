@@ -13,7 +13,7 @@
  *}
 
 <tr>
-  <td class="table-label">{t(#Search for pattern#)}</td>
+  <td class="table-label">{t(#Pattern search#)}</td>
   <td style="width:10px;height:10px;"></td>
   <td style="height:10px;"><input type="text" size="30" name="substring" value="{getCondition(#substring#):r}" /></td>
 </tr>

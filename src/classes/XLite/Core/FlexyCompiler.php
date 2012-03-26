@@ -565,25 +565,25 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 if ($this->findAttr($i + 1, 'if', $pos) && (0 !== strcasecmp($token['name'], 'widget'))) {
                     if ($this->findClosingTag($i, $pos1)) {
                         $expr = $this->flexyCondition($this->getTokenText($pos + 1));
-                        $this->subst($token['start'], 0, self::PHP_OPEN . ' if (' . $expr . '): ' . self::PHP_CLOSE);
+                        $this->subst($token['start'], 0, static::PHP_OPEN . ' if (' . $expr . '): ' . static::PHP_CLOSE);
                         $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], '');
-                        $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], '>' . self::PHP_OPEN . ' endif; ' . self::PHP_CLOSE);
+                        $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], '>' . static::PHP_OPEN . ' endif; ' . static::PHP_CLOSE);
                     }
 
                 } elseif ($this->findAttr($i+1, "iff", $pos)) {
                     $expr = $this->flexyCondition($this->getTokenText($pos + 1));
-                    $this->subst($token['start'], 0, self::PHP_OPEN . " if ($expr){" . self::PHP_CLOSE);
+                    $this->subst($token['start'], 0, static::PHP_OPEN . " if ($expr){" . static::PHP_CLOSE);
                     $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], '');
-                    $this->subst($this->tokens[$i]['end']-1, $this->tokens[$i]['end'], '>' . self::PHP_OPEN . ' }' . self::PHP_CLOSE);
+                    $this->subst($this->tokens[$i]['end']-1, $this->tokens[$i]['end'], '>' . static::PHP_OPEN . ' }' . static::PHP_CLOSE);
 
                 } elseif ($this->findAttr($i + 1, "foreach", $pos)) {
                     if ($this->findClosingTag($i, $pos1)) {
                         list($expr,$k,$forvar) = $this->flexyForeach($this->getTokenText($pos+1));
                         $exprNumber = $forvar . 'ArraySize';
                         $exprCounter = $forvar . 'ArrayPointer';
-                        $this->subst($token['start'], 0, self::PHP_OPEN . " \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach (\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE);
+                        $this->subst($token['start'], 0, static::PHP_OPEN . " \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach (\$_foreach_var as $k){ \$this->$exprCounter++; " . static::PHP_CLOSE);
                         $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], '');
-                        $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], ">\n" . self::PHP_OPEN . " } \$this->$forvar = \$$forvar; " . self::PHP_CLOSE);
+                        $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], ">\n" . static::PHP_OPEN . " } \$this->$forvar = \$$forvar; " . static::PHP_CLOSE);
 
                     } else {
                         $this->error('No closing tag for foreach');
@@ -614,34 +614,12 @@ class FlexyCompiler extends \XLite\Base\Singleton
                     $this->subst(
                         $this->tokens[$pos]['start'],
                         $this->tokens[$pos]['end'],
-                        self::PHP_OPEN . ' if (' . $expr . ') { echo \'' . $boolAttribute . '="' . $boolAttribute . '"\'; } ' . self::PHP_CLOSE
+                        static::PHP_OPEN . ' if (' . $expr . ') { echo \'' . $boolAttribute . '="' . $boolAttribute . '"\'; } ' . static::PHP_CLOSE
                     );
                 }
 
-                if (!strcasecmp($token['name'], "widget")) {
-                    $attrs = array();
-                    // widget display code
-                    while (++$i<count($this->tokens)) {
-                        $token1 = $this->tokens[$i];
-                        if ($token1['type'] == "attribute") {
-                            $attr = $token1['name'];
-                            $attrs[$attr] = true;
-                        } else if ($token1['type'] == "attribute-value") {
-                            $attrs[$attr] = $this->getTokenText($i);
-                        } else {
-                            $i--;
-                            break;
-                        }
-                    }
-
-                    list($target, $module, $name) = $this->processWidgetAttrs($attrs);
-                    $code = $this->widgetDisplayCode($attrs, $target, $module, $name);
-                    if (empty($code)) {
-                        $this->subst($token['start'], $token['end'], '');
-                    } else {
-                        $this->subst($token['start'], $token['end'] - 1, self::PHP_OPEN . ' ' . $code . ' ?');
-                    }
-                }
+                $this->parseWidget($token, $i);
+                $this->parseList($token, $i);
             }
 
             if ($token['type'] == "flexy") {
@@ -720,22 +698,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
         }
 
         return 'array(' . implode(', ', $result) . ')';
-    }
-
-    function processWidgetAttrs(array &$attrs)
-    {
-        $target = isset($attrs['target']) ? $attrs['target'] : null;
-        $module = isset($attrs['module']) ? $attrs['module'] : null;
-
-        $name = isset($attrs['name']) ? $attrs['name'] : null;
-
-        if (isset($attrs['if'])) {
-            $attrs['IF'] = $attrs['if'];
-        }
-
-        $this->unsetAttributes($attrs, array('target', 'module', 'name', 'if'));
-
-        return array($target, $module, $name);
     }
 
     function widgetDisplayCode(array $attrs, $target, $module, $name)
@@ -935,17 +897,17 @@ class FlexyCompiler extends \XLite\Base\Singleton
             list($expr,$k,$forvar) = $this->flexyForeach(substr($str, 9));
             $exprNumber = "$forvar"."ArraySize";
             $exprCounter = "$forvar"."ArrayPointer";
-            return self::PHP_OPEN . " \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach (\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE;
+            return static::PHP_OPEN . " \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach (\$_foreach_var as $k){ \$this->$exprCounter++; " . static::PHP_CLOSE;
         }
         if (substr($str, 0, 4) == '{if:') {
             $expr = $this->flexyCondition(substr($str, 4));
-            return self::PHP_OPEN . " if ($expr){" . self::PHP_CLOSE;
+            return static::PHP_OPEN . " if ($expr){" . static::PHP_CLOSE;
         }
         if ($str == '{end:}') {
-            return self::PHP_OPEN . " }" . self::PHP_CLOSE;
+            return static::PHP_OPEN . " }" . static::PHP_CLOSE;
         }
         if ($str == '{else:}') {
-            return self::PHP_OPEN . " }else{ " . self::PHP_CLOSE;
+            return static::PHP_OPEN . " }else{ " . static::PHP_CLOSE;
         }
         if (substr($str, 0, 2) == "{*") {
             $str = '';
@@ -980,16 +942,25 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 //$expr = '\XLite\Core\Converter::formatPrice(' . $expr . ')';
                 break;
 
+            case ':s':
+                // Do nothing - silent
+                break;
+
             default:
                 $this->error("Unknown modifier '$str'");
         }
 
-        if ($this->condition) {
-            return self::PHP_OPEN . " if ($this->condition) echo $expr;" . self::PHP_CLOSE;
+        if (':s' !== $str) {
+            $expr = 'echo ' . $expr;
         }
 
-        return self::PHP_OPEN . " echo $expr;" . self::PHP_CLOSE;
+        if ($this->condition) {
+            $expr = 'if (' . $this->condition . ') ' . $expr;
+        }
+
+        return static::PHP_OPEN . ' ' . $expr . '; ' . static::PHP_CLOSE;
     }
+
     function flexyExpression(&$str)
     {
         $str = $this->removeBraces($str);
@@ -1060,7 +1031,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
             $method = (false !== ($dotPos = strrpos($token, '.'))) ? substr($token, $dotPos + 1) : $token;
             $field  = substr($str, 0, $dotPos);
 
-            if (self::TAG_ARRAY === $method) {
+            if (static::TAG_ARRAY === $method) {
                 $result = 'array';
             } else {
                 $result = '$this->' . ((false === $dotPos) ? '' : 'get' . (strrpos($field, '.') ? 'Complex' : '') . '(\'' . $field . '\')->') . $method;
@@ -1250,6 +1221,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
         }
     }
 
+    // {{{ New code
 
     /**
      * Flag
@@ -1284,15 +1256,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
         $compiled = LC_DIR_COMPILE . substr($original, $this->rootDirLength) . '.php';
 
         if (($this->checkTemplateStatus && !$this->isTemplateValid($original, $compiled)) || $force) {
-
-            // Create directory for compiled template (if not exists)
-            $dir = dirname($compiled);
-
-            if (!file_exists($dir)) {
-                \Includes\Utils\FileManager::mkdirRecursive($dir, 0755);
-            }
-
-            file_put_contents($compiled, $this->parse($original));
+            \Includes\Utils\FileManager::write($compiled, $this->parse($original));
 
             touch($compiled, filemtime($original));
         }
@@ -1312,7 +1276,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     protected function isTemplateValid($original, $compiled)
     {
-        return file_exists($compiled) && (filemtime($compiled) == filemtime($original));
+        return \Includes\Utils\FileManager::isExists($compiled) && (filemtime($compiled) == filemtime($original));
     }
 
     /**
@@ -1327,11 +1291,150 @@ class FlexyCompiler extends \XLite\Base\Singleton
     protected function init($file)
     {
         $this->file   = $file;
-        $this->source = file_get_contents($file);
+        $this->source = \Includes\Utils\FileManager::read($file);
 
         $this->urlRewrite = array(
             'images' => array($this, 'rewriteImageURL'),
         );
+    }
+
+    /**
+     * Parse the "<widget />" tag
+     *
+     * @param array   $token    Token data
+     * @param integer &$counter Counter
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function parseWidget(array $token, &$counter)
+    {
+        if (!strcasecmp($token['name'], 'widget')) {
+            $attrs = $this->parseTagAttrs($counter);
+            list($target, $module, $name) = $this->processWidgetAttrs($attrs);
+
+            $this->displayTag($token, $this->widgetDisplayCode($attrs, $target, $module, $name));
+        }
+    }
+
+    /**
+     * Parse the "<list />" tag
+     *
+     * @param array   $token    Token data
+     * @param integer &$counter Counter
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function parseList(array $token, &$counter)
+    {
+        if (!strcasecmp($token['name'], 'list')) {
+            $this->displayTag($token, $this->getListDisplayCode($this->parseTagAttrs($counter)));
+        }
+    }
+
+    /**
+     * Parse arguments for "<widget ... />" and "<list ... />" tags
+     *
+     * @param integer &$counter Counter
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function parseTagAttrs(&$counter)
+    {
+        $attrs = array();
+
+        while (++$counter < count($this->tokens)) {
+            $current = $this->tokens[$counter];
+
+            if ('attribute' === $current['type']) {
+                $attr = $current['name'];
+                $attrs[$attr] = true;
+
+            } elseif ('attribute-value' === $current['type']) {
+                $attrs[$attr] = $this->getTokenText($counter);
+
+            } else {
+                $counter--;
+                break;
+            }
+        }
+
+        return $attrs;
+    }
+
+    /**
+     * Display "<widget ... />" and "<list ... />" tags
+     *
+     * @param array  $token Token data
+     * @param string $code  Code to display
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function displayTag(array $token, $code)
+    {
+        if (!empty($code)) {
+            $code = static::PHP_OPEN . ' ' . $code . ' ?';
+            $token['end']--;
+        }
+
+        $this->subst($token['start'], $token['end'], $code);
+    }
+
+    /**
+     * Process widget attributes
+     *
+     * @param array $attrs Attributes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function processWidgetAttrs(array &$attrs)
+    {
+        $result = array();
+        $names  = array('target', 'module', 'name');
+
+        foreach ($names as $index) {
+            $result[] = \Includes\Utils\ArrayManager::getIndex($attrs, $index);
+        }
+
+        if (isset($attrs['if'])) {
+            $attrs['IF'] = $attrs['if'];
+        }
+
+        $this->unsetAttributes($attrs, array_merge($names, array('if')));
+
+        return $result;
+    }
+
+    /**
+     * Return code for the parsed "<list ... />" tag
+     *
+     * @param array $attrs All tag attributes
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function getListDisplayCode(array $attrs)
+    {
+        $type = ucfirst(\Includes\Utils\ArrayManager::getIndex($attrs, 'type'));
+        $name = \Includes\Utils\ArrayManager::getIndex($attrs, 'name');
+        $this->unsetAttributes($attrs, array('type', 'name'));
+
+        $args = '';
+        if (!empty($attrs)) {
+            $args .= ', ' . $this->getAttributesList($attrs);
+        }
+
+        return '$this->display' . $type . 'ViewListContent(' . $this->flexyAttribute($name) . $args. ');';
     }
 
     /**

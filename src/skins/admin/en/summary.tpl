@@ -96,7 +96,7 @@ function setVisible(element_id)
 		{if:v.error=##}<span class="success-message">OK</span>{end:}
 		{if:v.error=#cannot_create#}<span class="error-message">{t(#cannot create directory#)}</span>{end:}
 		{if:v.error=#cannot_chmod#}<span class="error-message">{t(#cannot set X permissions#,_ARRAY_(#X#^getDirPermissionStr(v.dir)))}</span>{end:}
-        {if:v.error=#wrong_owner#}<span class="error-message">{t(#incorrect owner for X directory#,_ARRAY_(#X#^v.dir))}</span>{end:}
+        {if:v.error=#wrong_owner#}<span class="error-message">{t(#Incorrect owner of X directory#,_ARRAY_(#X#^v.dir))}</span>{end:}
         {if:v.error=#cannot_chmod_subdirs#}<span class="error-message">{t(#subdirectories problems#)}</span>&nbsp;&nbsp;<a href="javascript: setVisible('details_{k}')" class="navigation-path"><b>{t(#details#)}</b>&nbsp;&gt;&gt</a>{end:}
 	</td>
 </tr>
@@ -117,7 +117,7 @@ function setVisible(element_id)
  		{if:v.error=##}<span class="success-message">OK</span>{end:}
 		{if:v.error=#does_not_exist#}<span class="error-message">{t(#file does not exist#)}</span>{end:}
 		{if:v.error=#cannot_chmod#}<span class="error-message">{t(#cannot set X permissions#,_ARRAY_(#X#^getDirPermissionStr(v.file)))}</span>{end:}
-    {if:v.error=#wrong_owner#}<span class="error-message">{t(#incorrect owner for X file#,_ARRAY_(#X#^v.file))}</span>{end:}
+    {if:v.error=#wrong_owner#}<span class="error-message">{t(#Incorrect owner of X file#,_ARRAY_(#X#^v.file))}</span>{end:}
 	</td>
 </tr>
 {end:}

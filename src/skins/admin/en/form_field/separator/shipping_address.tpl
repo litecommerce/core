@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 
-{getLabel()}
+{t(getLabel())}
 <div class="ship-as-bill">{showShipAsBillCheckbox():h}</div>
 <br /><hr />

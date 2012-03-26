@@ -44,7 +44,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     abstract protected function getModelObject();
 
-
     /**
      * Return current (or default) category object
      *
@@ -215,6 +214,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
                     $this->getCategoryURL($category),
                     $this->getLocationNodeSubnodes($category)
                 );
+
             } else {
                 break;
             }

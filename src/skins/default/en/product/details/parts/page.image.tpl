@@ -12,5 +12,5 @@
  * @ListChild (list="product.details.page", weight="20")
  *}
 <div IF="product.hasImage()" class="image">
-  {displayViewListContent(#product.details.page.image#)}
+  <list name="product.details.page.image" />
 </div>

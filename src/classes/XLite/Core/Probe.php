@@ -38,13 +38,17 @@ class Probe extends \XLite\Base\Singleton
     /**
      * Measure enviroment
      *
-     * @return void
+     * @param boolean $force Force run OPTIONAL
+     *
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function measure()
+    public function measure($force = false)
     {
-        if ($this->checkAccess()) {
+        $result = false;
+
+        if ($force || $this->checkAccess()) {
 
             set_time_limit(0);
 
@@ -57,7 +61,11 @@ class Probe extends \XLite\Base\Singleton
 
             \XLite\Core\Database::getEM()->persist($measure);
             \XLite\Core\Database::getEM()->flush();
+
+            $result = true;
         }
+
+        return $result;
     }
 
     /**

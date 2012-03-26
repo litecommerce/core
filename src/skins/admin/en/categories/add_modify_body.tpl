@@ -20,7 +20,7 @@
 
 <span IF="getRequestParamValue(#mode#)!=#modify#">{t(#Mandatory fields are marked with an asterisk#)} (<span class="star">*</span>).<br /><br /></span>
 
-<b>{t(#Note#)}:</b> {t(#Use navigation bar above this dialog to navigate through the catalog categories.#)}
+<b>{t(#Note#)}:</b> {t(#Use the navigation bar above this dialog to navigate through the catalog categories#)}.
 
 <hr />
 

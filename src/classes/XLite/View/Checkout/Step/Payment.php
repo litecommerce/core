@@ -65,11 +65,11 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      */
     public function getTitle()
     {
-        return static::t('Payment info');
+        return 'Payment info';
     }
 
     /**
-     * Check - step is complete or not
+     * Check if step is completed
      *
      * @return boolean
      * @see    ____func_see____
@@ -92,8 +92,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      */
     public function isInactiveButtonVisible()
     {
-        return $this->isCompleted()
-            && !$this->getStepsCollector()->isFutureStep($this);
+        return $this->isCompleted() && !$this->getStepsCollector()->isFutureStep($this);
     }
 
     /**
@@ -121,8 +120,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
 
         return $profile
             && $profile->getBillingAddress()
-            && $profile->getBillingAddress()
-                ->isCompleted(\XLite\Model\Address::BILLING);
+            && $profile->getBillingAddress()->isCompleted(\XLite\Model\Address::BILLING);
     }
 
     /**

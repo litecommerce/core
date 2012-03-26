@@ -14,7 +14,7 @@
 
   <table>
 
-    {displayViewListContent(#product.search.conditions#)}
+    <list name="product.search.conditions" />
 
   </table>
 

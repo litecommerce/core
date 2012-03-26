@@ -14,5 +14,5 @@
  *}
 
 <div IF="hasErrors(module)">
-  {displayNestedViewListContent(#cannot_enable#,_ARRAY_(#module#^module))}
+  <list name="cannot_enable" type="nested" module="{module}" />
 </div>

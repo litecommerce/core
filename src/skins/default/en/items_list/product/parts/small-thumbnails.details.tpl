@@ -11,5 +11,5 @@
  * @ListChild (list="itemsList.product.small_thumbnails.customer.info", weight="20")
  *}
 <div class="details">
-  {displayInheritedViewListContent(#details#,_ARRAY_(#product#^product))}
+  <list name="details" type="inherited" product="{product}" />
 </div>

@@ -14,15 +14,15 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Decorator
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.19
  */
 
 namespace Includes\Decorator\Utils;
@@ -30,9 +30,8 @@ namespace Includes\Decorator\Utils;
 /**
  * Operator
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class Operator extends \Includes\Decorator\Utils\AUtils
 {
@@ -41,14 +40,12 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      */
     const BASE_CLASS_SUFFIX = 'Abstract';
 
-
-    // ------------------------------ Classes tree -
+    // {{ Classes tree
 
     /**
      * Parse all PHP class files and create the graph
      *
      * @return \Includes\Decorator\DataStructure\Graph\Classes
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -70,8 +67,8 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
                 $parent = $index[$class];
 
                 // Decorator restriction (only for original classes repository)
-                // :NOTE: do not use the "===" in the second part
-                if ($parent->isDecorator() && self::STEP_FIRST == static::$step) {
+                // DO NOT use the "===" in the second part
+                if ($parent->isDecorator() && static::STEP_FIRST == static::$step) {
                     $parent->handleError('It\'s not allowed to extend a decorator', $node);
                 }
 
@@ -95,7 +92,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * Parse PHP files and return plain array with the class descriptors
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -121,7 +117,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * Get iterator for class files
      *
      * @return \Includes\Utils\FileFilter
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -133,14 +128,14 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         );
     }
 
+    // }}}
 
-    // ------------------------------ Modules graph -
+    // {{{ Modules graph
 
     /**
      * Check all module dependencies and create the graph
      *
      * @return \Includes\Decorator\DataStructure\Graph\Modules
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -181,7 +176,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * Get all active modules and return plain array with the module descriptors
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -200,7 +194,9 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         return $index;
     }
 
-    // ------------------------------ Decorator routines -
+    // }}}
+
+    // {{{ Decorator routines
 
     /**
      * Main decorator callback: build class decoration chains
@@ -208,7 +204,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -219,7 +214,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         list($decorators, $regular) = static::divideChildrenIntoGroups($node);
 
         // Do not perform any actions for classes which have no decorators
-        if ($decorators) {
+        if (!empty($decorators)) {
 
             // We do not need to re-plant first decorator:
             // it's already derived from current node
@@ -248,7 +243,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
             }
 
             // Rename base class to avoid coflicts with the top-level node
-            $node->setKey($node->getClass() . self::BASE_CLASS_SUFFIX);
+            $node->setKey($node->getClass() . static::BASE_CLASS_SUFFIX);
             $node->setLowLevelNodeFlag();
         }
     }
@@ -259,7 +254,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -291,7 +285,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node2 Node to compare (second)
      *
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -311,7 +304,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Node to get weight
      *
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -320,8 +312,9 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         return ($module = $node->getModuleName()) ? static::getModulesGraph()->getCriticalPath($module) : 0;
     }
 
+    // }}}
 
-    // ------------------------------ Cache writing -
+    // {{{ Cache writing
 
     /**
      * Write PHP class to the files
@@ -330,7 +323,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param \Includes\Decorator\DataStructure\Graph\Classes $parent Parent class node
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -341,8 +333,9 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         \Includes\Utils\FileManager::write(LC_DIR_CACHE_CLASSES . $node->getPath(), $node->getSource($parent));
     }
 
+    // }}}
 
-    // ------------------------------ Tags parsing -
+    // {{{ Tags parsing
 
     /**
      * Parse dockblock to get tags
@@ -351,7 +344,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param array  $tags    Tags to search OPTIONAL
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -372,7 +364,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param array $tags List of tags to search
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -389,7 +380,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param array $matches Data from preg_match_all()
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -436,7 +426,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @param string $value Value to parse
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -444,4 +433,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
     {
         return \Includes\Utils\Converter::parseQuery($value, '=', ',', '"\'');
     }
+
+    // }}}
 }

@@ -7,10 +7,24 @@ error_reporting(E_ALL | E_STRICT);
 
 set_include_path(
 	'/usr/local/share/pear'
+    . PATH_SEPARATOR . '/usr/share/php'
 	. PATH_SEPARATOR . get_include_path()
 );
 
 define('IS_INTERNAL_PROJECT', true);
+
+function xlite_cs_autoload($class)
+{
+    if (strpos($class, 'XLite_') === 0) {
+        $file = __DIR__ . '/code-sniffs/' . str_replace('_', '/', $class) . '.php';
+
+        if (file_exists($file)) {
+            require_once $file;
+        }
+    }
+}
+
+spl_autoload_register('xlite_cs_autoload');
 
 require_once 'PHP/CodeSniffer/CLI.php';
 

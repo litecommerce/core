@@ -45,14 +45,12 @@ class Layout extends \XLite\Base\Singleton
     const PATH_CONSOLE  = 'console';
     const PATH_MAIL     = 'mail';
 
-
     /**
      * Web URL output types
      */
     const WEB_PATH_OUTPUT_SHORT = 'sort';
     const WEB_PATH_OUTPUT_FULL  = 'full';
     const WEB_PATH_OUTPUT_URL   = 'url';
-
 
     /**
      * Current skin

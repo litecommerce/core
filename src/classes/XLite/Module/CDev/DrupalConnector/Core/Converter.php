@@ -45,7 +45,6 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      */
     const EMPTY_ACTION = '0';
 
-
     /**
      * Compose URL from target, action and additional params
      *
@@ -60,7 +59,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
-        if ('' == $target) {
+        if ('' === $target) {
             $target = \XLite::TARGET_DEFAULT;
         }
 
@@ -78,7 +77,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
         } else {
 
             // Drupal URL
-            $result = self::buildDrupalURL($target, $action, $params);
+            $result = static::buildDrupalURL($target, $action, $params);
 
         }
 
@@ -100,7 +99,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
     public static function buildDrupalPath($target = '', $action = '', array $params = array(), $node = self::DRUPAL_ROOT_NODE)
     {
         if (empty($action) && $params) {
-            $action = self::EMPTY_ACTION;
+            $action = static::EMPTY_ACTION;
         }
 
         $url = implode('/', array($node, $target, $action));
@@ -126,7 +125,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      */
     public static function buildDrupalURL($target = '', $action = '', array $params = array(), $node = self::DRUPAL_ROOT_NODE)
     {
-        return static::normalizeDrupalURL(self::buildDrupalPath($target, $action, $params, $node));
+        return static::normalizeDrupalURL(static::buildDrupalPath($target, $action, $params, $node));
     }
 
     /**

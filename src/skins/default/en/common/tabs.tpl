@@ -10,17 +10,15 @@
  * @since     1.0.0
  *}
 
-<h1 IF="isWrapperVisible()">{getTitle():h}</h1>
+<h1 IF="isWrapperVisible()">{t(getTitle())}</h1>
 
 <div class="tabbed-content-wrapper" IF="isWrapperVisible()">
-
   <div class="tabs-container">
-
     <div class="page-tabs">
 
       <ul>
         <li FOREACH="getTabs(),tabPage" class="tab{if:tabPage.selected}-current{end:}">
-          <a href="{tabPage.url:h}">{tabPage.title}</a>
+          <a href="{tabPage.url:h}">{t(tabPage.title)}</a>
         </li>
       </ul>
 
@@ -35,7 +33,6 @@
     </div>
 
   </div>
-
 </div>
 
 <div IF="!isWrapperVisible()">

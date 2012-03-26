@@ -38,7 +38,6 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Widget param names
      */
-
     const PARAM_MODEL_OBJECT      = 'modelObject';
     const PARAM_USE_BODY_TEMPLATE = 'useBodyTemplate';
 
@@ -48,7 +47,6 @@ abstract class AModel extends \XLite\View\Dialog
      * FIXME: keep this list synchronized with the classes,
      * derived from the \XLite\View\FormField\AFormField
      */
-
     const SCHEMA_CLASS      = 'class';
     const SCHEMA_VALUE      = \XLite\View\FormField\AFormField::PARAM_VALUE;
     const SCHEMA_REQUIRED   = \XLite\View\FormField\AFormField::PARAM_REQUIRED;
@@ -64,14 +62,12 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Session cell to store form data
      */
-
     const SAVED_FORMS     = 'savedForms';
     const SAVED_FORM_DATA = 'savedFormData';
 
     /**
      * Form sections
      */
-
     // Title for this section will not be dispalyed
     const SECTION_DEFAULT = 'default';
     // This section will not be displayed
@@ -80,16 +76,13 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Indexes in the "formFields" array
      */
-
     const SECTION_PARAM_WIDGET = 'sectionParamWidget';
     const SECTION_PARAM_FIELDS = 'sectionParamFields';
 
     /**
      * Name prefix of the methods to handle actions
      */
-
     const ACTION_HANDLER_PREFIX = 'performAction';
-
 
     /**
      * Current form object
@@ -99,7 +92,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @since 1.0.0
      */
     protected static $currentForm = null;
-
 
     /**
      * List of form fields
@@ -167,7 +159,6 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected $requestData = null;
 
-
     /**
      * shemaDefault
      *
@@ -213,7 +204,6 @@ abstract class AModel extends \XLite\View\Dialog
      */
     abstract protected function getFormClass();
 
-
     /**
      * Get instance to the current form object
      *
@@ -225,7 +215,6 @@ abstract class AModel extends \XLite\View\Dialog
     {
         return self::$currentForm;
     }
-
 
     /**
      * Save current form reference and sections list, and initialize the cache
@@ -312,6 +301,7 @@ abstract class AModel extends \XLite\View\Dialog
             $this->postprocessSuccessAction();
 
         } else {
+            $this->rollbackModel();
             $this->saveFormData($requestData);
             $this->postprocessErrorAction();
         }
@@ -798,6 +788,20 @@ abstract class AModel extends \XLite\View\Dialog
         }
 
         $this->setActionError();
+    }
+
+    /**
+     * Rollback model if data validation failed
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function rollbackModel()
+    {
+        if (\XLite\Core\Database::getEM()->contains($this->getModelObject())) {
+            \XLite\Core\Database::getEM()->refresh($this->getModelObject());
+        }
     }
 
     /**
@@ -1382,6 +1386,18 @@ abstract class AModel extends \XLite\View\Dialog
         $arguments['useBodyTemplate'] = false;
 
         return $arguments;
+    }
+
+    /**
+     * Get container class 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.18
+     */
+    protected function getContainerClass()
+    {
+        return 'model-properties';
     }
 
     /**

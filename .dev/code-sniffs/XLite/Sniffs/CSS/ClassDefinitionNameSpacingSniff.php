@@ -85,8 +85,8 @@ class XLite_Sniffs_CSS_ClassDefinitionNameSpacingSniff extends XLite_ReqCodesSni
 
                 continue;
             }
-			#TODO:  × ÐÒÏÃÅÓÓÅ ÒÁÂÏÔÙ ÏÐÒÅÄÅÌÉÔØÓÑ ÎÕÖÅÎ ÌÉ ÜÔÏÔ ÓÎÉÆÆ ×ÏÏÂÝÅ
-			#		ÅÓÌÉ ÄÁ, ÔÏ ÐÏÐÒÁ×ÉÔØ ÞÔÏÂÙ ÒÁÂÏÔÁÌ ÐÒÁ×ÉÌØÎÏ
+			#TODO:  Ð² Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐµ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»Ð¸Ñ‚ÑŒÑÑ Ð½ÑƒÐ¶ÐµÐ½ Ð»Ð¸ ÑÑ‚Ð¾Ñ‚ ÑÐ½Ð¸Ñ„Ñ„ Ð²Ð¾Ð¾Ð±Ñ‰Ðµ
+			#		ÐµÑÐ»Ð¸ Ð´Ð°, Ñ‚Ð¾ Ð¿Ð¾Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÑŒ Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ñ€Ð°Ð±Ð¾Ñ‚Ð°Ð» Ð¿Ñ€Ð°Ð²Ð¸Ð»ÑŒÐ½Ð¾
 
 			/*
             // We changed lines.
@@ -97,7 +97,7 @@ class XLite_Sniffs_CSS_ClassDefinitionNameSpacingSniff extends XLite_ReqCodesSni
                 if ($prev !== false
                     && in_array($tokens[$prev]['code'], $endTokens) === false
                 ) {
-                    $error = 'îÁÌÉÞÉÅ ÐÕÓÔÙÈ ÓÔÒÏË ÎÅÄÏÐÕÓÔÉÍÏ ÍÅÖÄÕ ÎÁÚ×ÁÎÉÑÍÉ ËÌÁÓÓÏ×';
+                    $error = 'ÐÐ°Ð»Ð¸Ñ‡Ð¸Ðµ Ð¿ÑƒÑÑ‚Ñ‹Ñ… ÑÑ‚Ñ€Ð¾Ðº Ð½ÐµÐ´Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ð¾ Ð¼ÐµÐ¶Ð´Ñƒ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸ÑÐ¼Ð¸ ÐºÐ»Ð°ÑÑÐ¾Ð²';
                     $phpcsFile->addError($this->getReqPrefix('?') . $error, ($i + 1));
                 }
                 break;

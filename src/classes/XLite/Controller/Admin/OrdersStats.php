@@ -45,6 +45,17 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     const P_TOTAL      = 'total';
     const P_PAID       = 'paid';
 
+    /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage orders');
+    }
 
     /**
      * getPageTemplate
@@ -194,32 +205,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     }
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return static::t('Order statistics');
-    }
-
-    /**
-     * Add part to the location nodes list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addBaseLocation()
-    {
-        parent::addBaseLocation();
-
-        $this->addLocationNode(static::t('Statistics'), $this->buildURL('orders_stats'));
-    }
-
-    /**
      * Collect statistics record
      *
      * @param string             $row   Row identificator
@@ -232,11 +217,11 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     protected function collectStatsRecord($row, $order)
     {
         foreach ($this->getStatsColumns() as $period) {
-
             if ($order->getDate() >= $this->getStartTime($period)) {
 
                 if ($this->isTotalsRow($row)) {
                     $this->stats[$row][$period] += $order->getTotal();
+
                 } else {
                     $this->stats[$row][$period] += 1;
                 }

@@ -54,7 +54,7 @@ class Order extends \XLite\Controller\Customer\Base\Order
             );
 
         } else {
-            $title = static::t('Order not found');
+            $title = 'Order not found';
         }
 
         return $title;

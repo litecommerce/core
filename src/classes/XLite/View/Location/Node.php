@@ -38,12 +38,10 @@ class Node extends \XLite\View\AView
     /**
      * Widget param names
      */
-
     const PARAM_NAME     = 'name';
     const PARAM_LINK     = 'list';
     const PARAM_SUBNODES = 'subnodes';
     const PARAM_IS_LAST  = 'last';
-
 
     /**
      * Static method to create nodes in controller classes
@@ -66,7 +64,6 @@ class Node extends \XLite\View\AView
             )
         );
     }
-
 
     /**
      * Check - node is last in nodes list or not
@@ -104,18 +101,10 @@ class Node extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_NAME     => new \XLite\Model\WidgetParam\String(
-                'Name', ''
-            ),
-            self::PARAM_LINK     => new \XLite\Model\WidgetParam\String(
-                'Link', ''
-            ),
-            self::PARAM_SUBNODES => new \XLite\Model\WidgetParam\Collection(
-                'Subnodes', array()
-            ),
-            self::PARAM_IS_LAST  => new \XLite\Model\WidgetParam\Bool(
-                'Is last?', false
-            ),
+            self::PARAM_NAME     => new \XLite\Model\WidgetParam\String('Name', ''),
+            self::PARAM_LINK     => new \XLite\Model\WidgetParam\String('Link', ''),
+            self::PARAM_SUBNODES => new \XLite\Model\WidgetParam\Collection('Subnodes', array()),
+            self::PARAM_IS_LAST  => new \XLite\Model\WidgetParam\Bool('Is last', false),
         );
     }
 

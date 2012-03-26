@@ -13,10 +13,10 @@
 <table cellspacing="0" class="items">
 
   <tr>
-    {displayViewListContent(#invoice.items.head#)}
+    <list name="invoice.items.head" />
   </tr>
   <tr class="last-row">
-    {displayViewListContent(#invoice.items.subhead#)}
+    <list name="invoice.items.subhead" />
   </tr>
   <tr class="separator">
     <td colspan="{getColumnsSpan()}"><img src="images/spacer.gif" alt="" /></td>
@@ -24,10 +24,10 @@
 
   {foreach:order.getItems(),index,item}
     <tr>
-      {displayViewListContent(#invoice.item#,_ARRAY_(#item#^item))}
+      <list name="invoice.item" item="{item}" />
     </tr>
     <tr>
-      {displayViewListContent(#invoice.subitem#,_ARRAY_(#item#^item))}
+      <list name="invoice.subitem" item="{item}" />
     </tr>
     <tr IF="!itemArrayPointer=itemArraySize" class="separator">
       <td colspan="{getColumnsSpan()}"><img src="images/spacer.gif" alt="" /></td>

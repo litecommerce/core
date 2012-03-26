@@ -85,7 +85,6 @@ class Classes extends \Includes\DataStructure\Graph
      */
     protected $isChanged;
 
-
     // ------------------------------ Constructor and common getters -
 
     /**
@@ -103,6 +102,23 @@ class Classes extends \Includes\DataStructure\Graph
         parent::__construct($key);
 
         $this->file = $file;
+    }
+
+    /**
+     * Add child node
+     *
+     * @param self $node Node to add
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function addChild(self $node)
+    {
+        parent::addChild($node);
+
+        $node->setParentClass($this->getClass());
     }
 
     /**
@@ -154,6 +170,20 @@ class Classes extends \Includes\DataStructure\Graph
     public function getParentClass()
     {
         return $this->getReflection()->parentClass;
+    }
+
+    /**
+     * Set name of parent class
+     *
+     * @param strng $class Class name to set
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function setParentClass($class)
+    {
+        $this->getReflection()->parentClass = $class;
     }
 
     /**
@@ -223,7 +253,6 @@ class Classes extends \Includes\DataStructure\Graph
         return $this->isDecorator() && ($children = $this->getChildren()) ? reset($children)->{__FUNCTION__}() : $this;
     }
 
-
     // ------------------------------ Methods to modify graph -
 
     /**
@@ -238,8 +267,9 @@ class Classes extends \Includes\DataStructure\Graph
      */
     public function setKey($key)
     {
-        // Preserve Reflection
-        $this->getReflection();
+        foreach ($this->getChildren() as $node) {
+            $node->setParentClass($key);
+        }
 
         parent::setKey($key);
 
@@ -272,7 +302,6 @@ class Classes extends \Includes\DataStructure\Graph
     {
         $this->isTopLevelNode = true;
     }
-
 
     // ------------------------------ Methods to get paths and source code -
 
@@ -474,7 +503,6 @@ class Classes extends \Includes\DataStructure\Graph
         return $this->tags;
     }
 
-
     // ------------------------------ Auxiliary methods -
 
     /**
@@ -491,7 +519,7 @@ class Classes extends \Includes\DataStructure\Graph
             $this->reflection = new \StdClass();
             $util = '\Includes\Decorator\Utils\Tokenizer';
 
-            if ($util::getDecoratorFlag()) {
+            if ($util::getDecoratorFlag() || !\Includes\Utils\Operator::checkIfClassExists($this->getClass())) {
                 $util = '\Includes\Decorator\Utils\Tokenizer';
 
                 $this->reflection->parentClass = $util::getParentClassName($this->getFile());
@@ -543,5 +571,25 @@ class Classes extends \Includes\DataStructure\Graph
     protected function prepareClassName($class)
     {
         return \Includes\Utils\Converter::trimLeadingChars($class, '\\');
+    }
+
+    /**
+     * For additional info
+     *
+     * @param self $node Current node
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function drawAdditional(self $node)
+    {
+        $result = parent::drawAdditional($node);
+
+        if ($node->getParentClass()) {
+            $result .= ' <i>(' . $node->getParentClass() . ')</i>';
+        }
+
+        return $result;
     }
 }

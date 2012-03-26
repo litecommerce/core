@@ -28,16 +28,18 @@
 namespace XLite\View\FormField\Select;
 
 /**
- * Category selector
+ * Categories selector
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
 class Categories extends \XLite\View\FormField\Select\Multiple
 {
+    /**
+     * Parameters
+     */
     const INDENT_STRING     = '-';
     const INDENT_MULTIPLIER = 3;
-
 
     /**
      * Return default options list
@@ -49,9 +51,9 @@ class Categories extends \XLite\View\FormField\Select\Multiple
     protected function getDefaultOptions()
     {
         $list = array();
+
         foreach(\XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoriesPlainList() as $category) {
-            $name = $this->getCategoryName($category) ?: 'N/A';
-            $list[$category['category_id']] = $this->getIndentationString($category) . $name;
+            $list[$category['category_id']] = $this->getIndentationString($category) . $this->getCategoryName($category);
         }
 
         return $list;
@@ -74,8 +76,6 @@ class Categories extends \XLite\View\FormField\Select\Multiple
     /**
      * Return translated category name
      *
-     * :KLUDGE: it's the hack to prevent execution of superflous queries
-     *
      * @param array $category Category data
      *
      * @return string
@@ -84,13 +84,6 @@ class Categories extends \XLite\View\FormField\Select\Multiple
      */
     protected function getCategoryName(array $category)
     {
-        $data = \Includes\Utils\ArrayManager::searchInArraysArray(
-            $category['translations'],
-            'code',
-            \XLite\Core\Session::getInstance()->getLanguage()->getCode()
-        );
-
-        return empty($data) ? null : $data['name'];
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($category['category_id'])->getName();
     }
-
 }

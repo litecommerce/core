@@ -41,7 +41,6 @@ abstract class APair extends \XLite\Core\Validator\AValidator
     const STRICT = 'strict';
     const SOFT   = 'soft';
 
-
     /**
      * Validation mode
      *

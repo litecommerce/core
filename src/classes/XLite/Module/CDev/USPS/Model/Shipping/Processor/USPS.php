@@ -18,7 +18,7 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -42,6 +42,16 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
     const LC_USPS_API_DOMESTIC = 'Domestic';
     const LC_USPS_API_INTL     = 'Intl';
 
+    
+    /**
+     * $newMethods is used to prevent duplicating methods in database 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.18
+     */
+    protected static $newMethods = array();
+
 
     /**
      * Unique processor Id
@@ -60,7 +70,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * @since 1.0.0
      */
     protected $apiType = null;
-
 
     // {{{
 
@@ -738,6 +747,7 @@ OUT;
     {
         $result = null;
 
+        // Check if method with $code exists in $availableMethods
         if (!empty($availableMethods) && is_array($availableMethods)) {
 
             foreach ($availableMethods as $method) {
@@ -747,6 +757,11 @@ OUT;
                     break;
                 }
             }
+        }
+
+        // If not found - check if this method available in database
+        if (!isset($result)) {
+            $result = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findOneByCode($code);
         }
 
         return $result;
@@ -763,17 +778,23 @@ OUT;
      */
     protected function addShippingMethod($postage)
     {
-        $method = new \XLite\Model\Shipping\Method();
-        $method->setProcessor($this->getProcessorId());
-        $method->setCarrier($this->getProcessorId());
-        $method->setCode($postage['CLASSID']);
-        $method->setEnabled(false);
+        // Check if method has alreaby been added in current session to prevent duplicates
+        if (!in_array($postage['CLASSID'], $this->newMethods)) {
+    
+            $method = new \XLite\Model\Shipping\Method();
+            $method->setProcessor($this->getProcessorId());
+            $method->setCarrier($this->getProcessorId());
+            $method->setCode($postage['CLASSID']);
+            $method->setEnabled(false);
 
-        $code = \XLite\Core\Config::getInstance()->General->defaultLanguage->getCode();
-        $method->getTranslation($code)->name = $postage['MailService'];
+            $code = \XLite\Core\Config::getInstance()->General->defaultLanguage->getCode();
+            $method->getTranslation($code)->name = $postage['MailService'];
 
-        \XLite\Core\Database::getEM()->persist($method);
-        \XLite\Core\Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->persist($method);
+            \XLite\Core\Database::getEM()->flush();
+
+            $this->newMethods[] = $postage['CLASSID'];
+        }
     }
 
     /**

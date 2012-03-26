@@ -14,5 +14,5 @@
  *}
 
 <div IF="hasWrongDependencies(module)" class="note dependencies">
-  {displayNestedViewListContent(#dependencies#,_ARRAY_(#module#^module))}
+  <list name="dependencies" type="nested" module="{module}" />
 </div>

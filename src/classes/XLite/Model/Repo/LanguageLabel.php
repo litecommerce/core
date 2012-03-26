@@ -55,7 +55,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
         array('name'),
     );
 
-    // {{{ defineCacheCells
+    // {{{ Cache routines
 
     /**
      * Define cache cells
@@ -67,8 +67,6 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
     protected function defineCacheCells()
     {
         $list = parent::defineCacheCells();
-
-        $list['all'] = array();
         $list['all_by_code'] = array();
 
         return $list;
@@ -76,7 +74,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 
     // }}}
 
-    // {{{ findLabelsByCode
+    // {{{ Search labels by code
 
     /**
      * Find labels by language code
@@ -89,13 +87,14 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      */
     public function findLabelsByCode($code = null)
     {
-        if (is_null($code)) {
+        if (!isset($code)) {
             $code = \XLite\Core\Session::getInstance()->getLanguage()->getCode();
         }
 
         $data = $this->getFromCache('all_by_code', array('code' => $code));
-        if (is_null($data)) {
-            $data = $this->defineLabelsByCodeQuery()->getResult();
+
+        if (!isset($data)) {
+            $data = $this->defineLabelsByCodeQuery($code)->getResult();
             $data = $this->postprocessLabelsByCode($data, $code);
             $this->saveToCache($data, 'all_by_code', array('code' => $code));
         }
@@ -106,11 +105,13 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
     /**
      * Define query builder for findLabelsByCode()
      *
+     * @param string $code Language code OPTIONAL
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function defineLabelsByCodeQuery()
+    protected function defineLabelsByCodeQuery($code)
     {
         return $this->createQueryBuilder();
     }
@@ -130,8 +131,13 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
         $result = array();
 
         foreach ($data as $row) {
-            $result[$row->getName()] = $row->getSoftTranslation($code)->getLabel();
+            $translation = $row->getTranslation($code, true);
+
+            if (isset($translation)) {
+                $result[$row->getName()] = $translation->getLabel();
+            }
         }
+
         ksort($result);
 
         return $result;

@@ -53,7 +53,6 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      */
     protected $internalError = false;
 
-
     /**
      * Get page title
      *
@@ -63,10 +62,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return static::t(
-            '"X product" options',
-            array('product' => $this->getItem()->getName())
-        );
+        return static::t('"X product" options', array('product' => $this->getItem()->getName()));
     }
 
     /**
@@ -94,7 +90,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      */
     public function getItem()
     {
-        if (is_null($this->item)) {
+        if (!isset($this->item)) {
             $this->item = false;
 
             if (
@@ -211,22 +207,19 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
                 && $this->getItem()->getProduct()->checkOptionsException($options)
             ) {
                 $this->getItem()->setProductOptions($options);
-
                 $this->updateCart();
 
-                \XLite\Core\TopMessage::addInfo('Options has been successfully changed');
+                \XLite\Core\TopMessage::addInfo('Options have been successfully changed');
 
                 $this->setSilenceClose();
 
             } else {
-
                 \XLite\Core\TopMessage::addError(
                     'The product options you have selected are not valid or fall into an exception.'
                     . ' Please select other product options'
                 );
 
                 $this->setInternalRedirect();
-
                 $this->internalError = true;
             }
         }

@@ -126,20 +126,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function getOptions()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Config')
-            ->findByCategoryAndVisible($this->page);
-    }
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'General settings';
+        return \XLite\Core\Database::getRepo('\XLite\Model\Config')->findByCategoryAndVisible($this->page);
     }
 
     /**
@@ -690,5 +677,55 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         return \Includes\SafeMode::getResetURL(true);
     }
 
+    /**
+     * Flag to has email error
+     *
+     * @return string
+     * @see    ____func_see____
+     */
+    public function hasTestEmailError()
+    {
+        return '' !== \XLite\Core\Session::getInstance()->test_email_error;
+    }
+
+    /**
+     * Return error test email sending
+     *
+     * @return string
+     * @see    ____func_see____
+     */
+    public function getTestEmailError()
+    {
+        $error = \XLite\Core\Session::getInstance()->test_email_error;
+
+        \XLite\Core\Session::getInstance()->test_email_error = '';
+
+        return $error;
+    }
+
     // }}}
+
+    /**
+     * Action to send test email notification
+     *
+     * @return void
+     * @see    ____func_see____
+     */
+    protected function doActionTestEmail()
+    {
+        $request = \XLite\Core\Request::getInstance();
+
+        $error = \XLite\Core\Mailer::getInstance()->sendTestEmail(
+            $request->test_from_email_address,
+            $request->test_to_email_address,
+            $request->test_email_body
+        );
+
+        \XLite\Core\Session::getInstance()->test_email_error = $error;
+
+        $this->setReturnURL(
+            $this->buildURL('settings', '', array('page' => 'Email'))
+        );
+    }
+
 }

@@ -41,7 +41,6 @@ class AddNewLabel extends \XLite\View\Button\Regular
     const PARAM_LANGUAGE = 'language';
     const PARAM_PAGE = 'page';
 
-
     /**
      * Define widget parameters
      *
@@ -57,9 +56,30 @@ class AddNewLabel extends \XLite\View\Button\Regular
             self::PARAM_LANGUAGE => new \XLite\Model\WidgetParam\String('Language code', null),
             self::PARAM_PAGE     => new \XLite\Model\WidgetParam\Int('Page index', 1),
         );
+    }
 
-        $this->widgetParams[self::PARAM_LABEL]->setValue('Add new label');
-        $this->widgetParams[self::PARAM_STYLE]->setValue('add-new-label');
+    /**
+     * getDefaultLabel
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultLabel()
+    {
+        return 'Add new label';
+    }
+
+    /**
+     * getDefaultStyle
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function getDefaultStyle()
+    {
+        return 'add-new-label';
     }
 
     /**

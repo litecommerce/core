@@ -17,7 +17,7 @@
   <table cellspacing="0" cellpadding="0" class="data-table items-list modules-list">
 
     <tr FOREACH="getPageData(),idx,module" class="module-{module.getModuleId()}{if:!module.getEnabled()} disabled{end:}">
-      {displayInheritedViewListContent(#columns#,_ARRAY_(#module#^module))}
+      <list name="columns" type="inherited" module="{module}" />
     </tr>
 
   </table>

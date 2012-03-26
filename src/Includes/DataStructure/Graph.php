@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,26 +13,25 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * 
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace Includes\DataStructure;
 
 /**
- * Graph
+ * Graph 
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.10
  */
 class Graph
 {
@@ -41,37 +40,32 @@ class Graph
      */
     const ROOT_NODE_KEY = '____ROOT____';
 
-
     /**
      * Node unique key
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $key;
 
     /**
      * Node children
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $children = array();
 
-
-    // ------------------------------ Constructor and common getters -
+    // {{{ Constructor and common getters
 
     /**
      * Constructor
      *
-     * @param string $key Node unique key
+     * @param string $key Node unique key OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -84,7 +78,6 @@ class Graph
      * Getter
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -97,7 +90,6 @@ class Graph
      * Getter
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -106,8 +98,9 @@ class Graph
         return $this->children;
     }
 
+    // }}}
 
-    // ------------------------------ Methods to modify graph -
+    // {{{ Methods to modify graph
 
     /**
      * Add child node
@@ -115,7 +108,6 @@ class Graph
      * @param self $node Node to add
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -130,7 +122,6 @@ class Graph
      * @param self $node Node to remove
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -152,7 +143,6 @@ class Graph
      * @param string $key Key to set
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -168,7 +158,6 @@ class Graph
      * @param self $newParent Replant to
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -178,16 +167,18 @@ class Graph
         $newParent->addChild($this);
     }
 
+    // }}}
 
-    // ------------------------------ Methods to iterate over the graph -
+    // {{{ Methods to iterate over the graph
 
     /**
      * Common method to iterate over the tree
      *
-     * @param callback $callback Callback to perform on each node
+     * @param callback $callback  Callback to perform on each node
+     * @param self     $parent    Parent node (this param is needed for recursion) OPTIONAL
+     * @param boolean  $isStarted Flag OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -242,13 +233,14 @@ class Graph
         return \Includes\Utils\ArrayManager::getIndex($this->findAll($key), 0, true);
     }
 
-    // ------------------------------ Integrity check -
+    // }}}
+
+    // {{{ Integrity check
 
     /**
      * Check graph integrity
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -256,17 +248,17 @@ class Graph
     {
     }
 
+    // }}}
 
-    // ------------------------------ Error handling -
+    // {{{ Error handling
 
     /**
      * Method to fire an error
      *
      * @param string $code Error code (or message)
-     * @param self   $node Node  Node caused the error
+     * @param self   $node Node  Node caused the error OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -279,10 +271,9 @@ class Graph
      * Prepare and return error message
      *
      * @param string $code Error code (or message)
-     * @param self   $node Node  Node caused the error
+     * @param self   $node Node  Node caused the error OPTIONAL
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -291,17 +282,17 @@ class Graph
         return $code . ' (' . $this->getKey() . ($node ? (', ' . $node->getKey()) : '') . ')';
     }
 
+    // }}}
 
-    // ------------------------------ Visualization -
+    // {{{ Visualization
 
     /**
      * Visualize tree
      *
-     * @param self $root   Root node of current level
-     * @param int  $offset Level offset
+     * @param self    $root   Root node of current level OPTIONAL
+     * @param integer $offset Level offset OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -316,10 +307,26 @@ class Graph
         foreach ($root->getChildren() as $child) {
 
             // Output
-            echo (str_repeat('|__', floor($offset / 2)) . $child->getKey() . '<br />');
+            echo (str_repeat('|__', floor($offset / 2)) . $child->getKey() . $this->drawAdditional($child) . '<br />');
 
             // Recursive call: next level
             $this->{__FUNCTION__}($child, $offset + 2);
         }
     }
+
+    /**
+     * For additional info
+     *
+     * @param self $node Current node
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function drawAdditional(self $node)
+    {
+        return '';
+    }
+
+    // }}}
 }

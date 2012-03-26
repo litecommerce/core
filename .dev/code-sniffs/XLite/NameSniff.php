@@ -40,13 +40,16 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'remember', 'remind', 'link', 'concat','split', 'round', 'depack', 'upload', 'hydrate', 'unload',
 		'download', 'deploy', 'construct', 'retrieve', 'print', 'increase', 'decrease', 'sum',
 		'drop', 'list', 'reverse', 'rand', 'extract', 'wake', 'sleep', 'mkdir', 'unlink', 'copy', 'chmod',
-		'complete', 'manage', 'upgrade', 'measure',
+		'complete', 'manage', 'upgrade', 'measure', 'draw', 'replant',
 
 		// FIXME - rename later
 		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout', 'display404',
 		// Method offsetSet() defined in Doctrine
         'offset',
         'forbid', 'alter', 'submit', 'invoke', 'optimize', 'escape',
+
+        // Add new verbs
+        'seek',
 	);
 
 	protected $cssPseudoClasses = array(
@@ -183,7 +186,9 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	 * @since   1.0.0
 	 */
 	protected function checkClassPath(array $words, $namespace) {
-		$paths = explode(PATH_SEPARATOR, XP_CLASSES_ROOT);
+		$paths = defined('XP_CLASSES_ROOT') ? explode(PATH_SEPARATOR, constant('XP_CLASSES_ROOT')) : array();
+        $paths[] = __DIR__ . '/../../../src/classes';
+        $paths[] = __DIR__ . '/../../../src';
 		
 		$fn = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $words) . '.php';
 		$avail_paths = array();

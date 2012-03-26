@@ -88,6 +88,38 @@ class Currency extends \XLite\Model\Base\I18n
     protected $e = 0;
 
     /**
+     * Currency symbol is displayed before the price
+     *
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="boolean")
+     */
+    protected $symbolBefore = true;
+
+    /**
+     * Decimal part delimiter
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="string", length="8")
+     */
+    protected $decimalDelimiter = '.';
+
+    /**
+     * Thousand delimier
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="string", length="8")
+     */
+    protected $thousandDelimiter = '';
+
+    /**
      * Orders
      *
      * @var   \Doctrine\Common\Collections\Collection
@@ -97,6 +129,18 @@ class Currency extends \XLite\Model\Base\I18n
      * @OneToMany (targetEntity="XLite\Model\Order", mappedBy="currency")
      */
     protected $orders;
+
+    /**
+     * Country
+     *
+     * @var   \XLite\Model\Country
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @OneToOne   (targetEntity="XLite\Model\Country", inversedBy="currency")
+     * @JoinColumn (name="country_code", referencedColumnName="code")
+     */
+    protected $country;
 
 
     /**
@@ -167,7 +211,7 @@ class Currency extends \XLite\Model\Base\I18n
      */
     public function formatValue($value)
     {
-        return \XLite\Logic\Math::getInstance()->formatValue($value, $this);
+        return implode('', $this->formatParts($value));
     }
 
     /**
@@ -197,4 +241,19 @@ class Currency extends \XLite\Model\Base\I18n
 
         parent::__construct($data);
     }
+
+    /**
+     * Format value as parts list
+     * 
+     * @param float $value Value
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function formatParts($value)
+    {
+        return \XLite\Logic\Math::getInstance()->formatParts($value, $this);
+    }
+
 }
