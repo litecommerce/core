@@ -816,6 +816,72 @@ class Marketplace extends \XLite\Base\Singleton
     }
 
     /**
+     * The certain request handler
+     *
+     * @param integer $ttl Data TTL OPTIONAL
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkAddonsKeys($ttl = self::TTL_LONG)
+    {
+        $repoModuleKey = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey');
+
+        $keys = array_unique(
+            \Includes\Utils\ArrayManager::getObjectsArrayFieldValues(
+                $repoModuleKey->findAll(),
+                'getKeyValue',
+                true
+            )
+        );
+
+        $result = $this->performActionWithTTL(
+            $ttl,
+            self::ACTION_CHECK_ADDON_KEY,
+            array(self::FIELD_KEY => $keys),
+            false
+        );
+
+        if (self::TTL_NOT_EXPIRED !== $result) {
+
+            $repoModule = \XLite\Core\Database::getRepo('\XLite\Model\Module');
+
+            foreach ($result as $key => $addonsInfo) {
+
+                $repoModuleKey->deleteInBatch($repoModuleKey->findBy(array('keyValue' => $key)));
+
+                foreach ($addonsInfo as $info) {
+
+                    $module = $repoModule->findOneBy(
+                        array(
+                            'author' => $info['author'],
+                            'name'   => $info['name'],
+                        )
+                    );
+
+                    if ($module) {
+
+                        $repoModuleKey->insert($info + array('keyValue' => $key));
+
+                        \XLite\Core\Database::getEM()->flush();
+
+                        // Clear cache for proper installation
+                        \XLite\Core\Marketplace::getInstance()->clearActionCache(\XLite\Core\Marketplace::ACTION_GET_ADDONS_LIST);
+
+                    } else {
+
+                        // No module has been found
+                    }
+                }
+            }
+        }
+
+        return (bool) $result;
+    }
+
+
+    /**
      * Parse response for certian action
      *
      * @param \PEAR2\HTTP\Request\Response $response Response to prepare
@@ -842,10 +908,15 @@ class Marketplace extends \XLite\Base\Singleton
     {
         $result = true;
 
-        foreach ($data as $module) {
-            $result = $result
-                && is_array($module)
-                && $this->validateAgainstSchema($module, $this->getSchemaResponseForCheckAddonKeyAction());
+        $schema = $this->getSchemaResponseForCheckAddonKeyAction();
+
+        foreach ($data as $key => $addons) {
+            foreach ($addons as $addon) {
+
+                $result = $result
+                    && is_array($addon)
+                    && $this->validateAgainstSchema($addon, $schema);
+            }
         }
 
         return $result;

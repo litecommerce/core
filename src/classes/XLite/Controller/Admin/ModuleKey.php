@@ -65,7 +65,9 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
         $key  = \XLite\Core\Request::getInstance()->key;
         $addonsInfo = \XLite\Core\Marketplace::getInstance()->checkAddonKey($key);
 
-        if ($addonsInfo) {
+        if ($addonsInfo && $addonsInfo[$key]) {
+
+            $addonsInfo = $addonsInfo[$key];
 
             $repo = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey');
 
@@ -104,7 +106,9 @@ class ModuleKey extends \XLite\Controller\Admin\AAdmin
                             'author' => $module->getAuthorName(),
                         )
                     );
+
                 } else {
+
                     $this->showError(
                             __FUNCTION__, 'Key is validated, but the module [' . implode(',', $info) . '] was not found'
                     );
