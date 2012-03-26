@@ -35,6 +35,16 @@ namespace XLite\Model\QueryBuilder;
  */
 abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
 {
+
+    /**
+     * Service flags 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.19
+     */
+    protected $flags = array();
+
     // {{{ Result helpers
 
     /**
@@ -168,5 +178,40 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
         return $result;
     }
 
+
     // }}}
+
+    // {{{ Service flags
+
+    /**
+     * Get service flag 
+     * 
+     * @param string $name Flag name
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function getFlag($name)
+    {
+        return isset($this->flags[$name]) ? $this->flags[$name] : null;
+    }
+
+    /**
+     * Set service flag 
+     * 
+     * @param string $name  Flag name
+     * @param mixed  $value Value OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function setFlag($name, $value = true)
+    {
+        $this->flags[$name] = $value;
+    }
+
+    // }}}
+
 }

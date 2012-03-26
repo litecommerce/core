@@ -253,6 +253,23 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     }
 
     /**
+     * Assign enabled condition for extenral query builders
+     * 
+     * @param \XLite\Model\QueryBuilder\AQueryBuilder $qb    External query builder
+     * @param string                                  $alias Product repository alias OPTIONAL
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function assignExternalEnabledCondition(\XLite\Model\QueryBuilder\AQueryBuilder $qb, $alias = 'p')
+    {
+        $this->addEnabledCondition($qb, $alias);
+
+        return $qb;
+    }
+
+    /**
      * Define import querty
      *
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
