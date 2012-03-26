@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<div class="top-controls">
+<div>
   <div class="form-panel users-search-panel">
 
     <form name="searchform" method="get" action="admin.php">

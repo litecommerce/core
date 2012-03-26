@@ -118,8 +118,8 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         $title = $this->getPageTitle();
 
         // Assign title variable if it's defined
-        if (isset($title)) {
-            $variables['title'] = $title;
+        if (!isset($title)) {
+            $variables['title'] = '';
         }
 
         $this->registerLCResources();
@@ -328,7 +328,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function getPageTitle()
     {
-        return $this->getViewer()->isTitleVisible() ? $this->getTitle() : '';
+        return $this->getViewer()->isTitleVisible() ? $this->getTitle() : null;
     }
 
     /**
