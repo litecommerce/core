@@ -174,6 +174,7 @@ url = "http://www.litecommerce.com/?q=api/"
 log_data = Off
 upgrade_step_time_limit = 240
 send_shop_domain = On
+; banner_url = "http://www.litecommerce.com/banners"
 
 ;
 ; Other options
