@@ -190,6 +190,28 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     }
 
     /**
+     * Returns set of fields to perform validation on
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function getFieldSet()
+    {
+        return array(
+            'name',
+            'description',
+            'meta_tags',
+            'meta_desc',
+            'meta_title',
+            'enabled',
+            'membership_id',
+            'clean_url',
+            'show_title',
+        );
+    }
+
+    /**
      * Validate values passed from the REQUEST for updating/creating category
      *
      * @param boolean $isNewObject Flag - is a data for a new category or for updaing existing category OPTIONAL
@@ -205,17 +227,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
         $data = array();
         $isValid = true;
 
-        $fieldsSet = array(
-            'name',
-            'description',
-            'meta_tags',
-            'meta_desc',
-            'meta_title',
-            'enabled',
-            'membership_id',
-            'clean_url',
-            'show_title',
-        );
+        $fieldsSet = $this->getFieldSet();
 
         if (!$isNewObject) {
             $data['category_id'] = intval($postedData['category_id']);
