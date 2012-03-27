@@ -37,12 +37,12 @@ div.tags div.tags-title {
 }
 
 div.top-controls {
-  background-color: #ededed;
   float: left;
+  background: #ededed url(../images/search-form-background.png) left bottom repeat-x;
 }
 
 div.top-controls.search-form {
-  padding: 30px;
+  padding: 30px 30px 50px 30px;
   height: 120px;
 }
 
@@ -52,7 +52,7 @@ div.top-controls.search-form div.substring {
 }
 
 div.top-controls.search-form button[type="submit"] {
-  background: #fff url(../../../images/search.png) no-repeat center center;
+  background: #fff url(../images/search-modules-background.png) no-repeat center center;
   margin: 0;
   padding: 0;
   width: 30px;
@@ -63,6 +63,8 @@ div.top-controls.search-form button[type="submit"] {
 
 div.top-controls.search-form button.enter-license-key {
   margin-top: 20px;
+  background: #EFF6FE url(../images/enter-license-key-background.png) 18px 8px no-repeat;
+  padding-left: 45px;
 }
 
 div.top-controls.search-form input#substring {
