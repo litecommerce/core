@@ -127,11 +127,7 @@ abstract class I18n extends \XLite\Model\AEntity
         $result = $this->getTranslation($code, true);
 
         if (!isset($result)) {
-            $result = $this->getTranslation(
-                \XLite::isAdminZone() 
-                ? static::$defaultLanguage 
-                : \XLite\Core\Config::getInstance()->General->default_language
-            );
+            $result = $this->getTranslation(static::$defaultLanguage);
 
             if (!$result->isPersistent() && ($tmp = $this->getTranslations()->first())) {
                 $result = $tmp;
