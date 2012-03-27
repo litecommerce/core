@@ -49,7 +49,10 @@ $parts = explode('\\', $decoratedClass);
 array_shift($parts);
 $parts = array_values($parts);
 
-if ('Module' == $parts[0]) {
+if (0 == count($parts)) {
+    $parts = array('XLite');
+
+} elseif ('Module' == $parts[0]) {
     $parts = array_slice($parts, 3);
 }
 

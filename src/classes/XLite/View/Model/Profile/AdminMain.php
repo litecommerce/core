@@ -263,7 +263,7 @@ class AdminMain extends \XLite\View\Model\AModel
                 break;
 
             case 'language':
-                $lng = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($value);
+                $lng = $value ? \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($value) : null;
                 $value = isset($lng) ? $lng->getName() : $value;
                 break;
 
@@ -330,7 +330,7 @@ class AdminMain extends \XLite\View\Model\AModel
     protected function getFormFieldsForSectionMain()
     {
         // Create new profile - password is required
-        if (!$this->getModelObject()->isPersistent()) {
+        if ($this->getModelObject() && !$this->getModelObject()->isPersistent()) {
             foreach (array('password', 'password_conf') as $field) {
                 if (isset($this->mainSchema[$field])) {
                     $this->mainSchema[$field][self::SCHEMA_REQUIRED] = true;
