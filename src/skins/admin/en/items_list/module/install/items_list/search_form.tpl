@@ -2,7 +2,7 @@
 
 {**
  * Module search form
- *  
+ *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -21,7 +21,12 @@
       <input FOREACH="getURLParams(),name,value" type="hidden" name="{name}" value="{value}" />
 
       <div class="substring">
-        <widget class="\XLite\View\FormField\Input\Text" fieldOnly=true fieldName="substring" value="{getParam(#substring#)}" defaultValue="{t(#Enter keywords#)}" />
+        <widget
+          class="\XLite\View\FormField\Input\Text"
+          fieldOnly=true
+          fieldName="substring"
+          value="{getParam(#substring#)}"
+          defaultValue="{t(#Search for modules#)}" />
         <widget class="\XLite\View\Button\Submit" label="" />
       </div>
 
@@ -35,7 +40,11 @@
   </div> *}
 
   <div class="action-buttons">
-    <widget class="\XLite\View\Button\Addon\EnterLicenseKey" style="main-button" IF="hasResults()" />
+    <widget
+      IF="hasResults()"
+      class="\XLite\View\Button\Addon\EnterLicenseKey"
+      style="main-button"
+      label="Enter license key..." />
   </div>
 
 </div>
