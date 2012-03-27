@@ -43,8 +43,7 @@
     <widget
       IF="hasResults()"
       class="\XLite\View\Button\Addon\EnterLicenseKey"
-      style="main-button"
-      label="Enter license key..." />
+      style="main-button" />
   </div>
 
 </div>
