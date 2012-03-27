@@ -9,6 +9,11 @@ $steps->Given('/^there are (\d+) products with enabled inventory$/', function(Fe
     $rows = $world->findAll('xpath', '//tr[contains(@class, "entity-")]');
 
     foreach ($rows as $row) {
+        $switcherClass = $row->find('css', '.input-checkbox-switcher')->getAttribute('class');
+        if (strpos($switcherClass, 'disabled') !== false){
+            continue;
+        }
+
         $quantity = $row->find('css', 'td.cell.qty');
 
         if (strpos($quantity->getAttribute('class'), 'infinity') !== false) {

@@ -94,14 +94,14 @@
 			<th>Max Time</th>
 		</tr>
 		<tr valign="top">
-			<xsl:variable name="allCount" select="count(/testResults/sampleResult)" />
-			<xsl:variable name="allFailureCount" select="count(/testResults/sampleResult[attribute::success='false'])" />
-			<xsl:variable name="allSuccessCount" select="count(/testResults/sampleResult[attribute::success='true'])" />
+			<xsl:variable name="allCount" select="count(/testResults/httpSample)" />
+			<xsl:variable name="allFailureCount" select="count(/testResults/httpSample[attribute::s='false'])" />
+			<xsl:variable name="allSuccessCount" select="count(/testResults/httpSample[attribute::s='true'])" />
 			<xsl:variable name="allSuccessPercent" select="$allSuccessCount div $allCount" />
-			<xsl:variable name="allTotalTime" select="sum(/testResults/sampleResult/@time)" />
+			<xsl:variable name="allTotalTime" select="sum(/testResults/httpSample/@t)" />
 			<xsl:variable name="allAverageTime" select="$allTotalTime div $allCount" />
 			<xsl:variable name="allMinTime">
-			<xsl:for-each select="/testResults/sampleResult/@time">
+			<xsl:for-each select="/testResults/httpSample/@t">
 				<xsl:sort data-type="number" />
 				<xsl:if test="position() = 1">
 					<xsl:value-of select="number(.)" />
@@ -109,7 +109,7 @@
 			</xsl:for-each>
 			</xsl:variable>
 			<xsl:variable name="allMaxTime">
-				<xsl:for-each select="/testResults/sampleResult/@time">
+				<xsl:for-each select="/testResults/httpSample/@t">
 					<xsl:sort data-type="number" order="descending" />
 					<xsl:if test="position() = 1">
 						<xsl:value-of select="number(.)" />
@@ -163,16 +163,16 @@
 			<th>Min Time</th>
 			<th>Max Time</th>
 		</tr>
-		<xsl:for-each select="/testResults/sampleResult[not(@label = preceding-sibling::sampleResult/@label)]">
-			<xsl:variable name="label" select="@label" />
-			<xsl:variable name="count" select="count(../sampleResult[@label = current()/@label])" />
-			<xsl:variable name="failureCount" select="count(../sampleResult[@label = current()/@label][attribute::success='false'])" />
-			<xsl:variable name="successCount" select="count(../sampleResult[@label = current()/@label][attribute::success='true'])" />
+		<xsl:for-each select="/testResults/httpSample[not(@lb = preceding-sibling::httpSample/@lb)]">
+			<xsl:variable name="label" select="@lb" />
+			<xsl:variable name="count" select="count(../httpSample[@lb = current()/@lb])" />
+			<xsl:variable name="failureCount" select="count(../httpSample[@lb = current()/@lb][attribute::s='false'])" />
+			<xsl:variable name="successCount" select="count(../httpSample[@lb = current()/@lb][attribute::s='true'])" />
 			<xsl:variable name="successPercent" select="$successCount div $count" />
-			<xsl:variable name="totalTime" select="sum(../sampleResult[@label = current()/@label]/@time)" />
+			<xsl:variable name="totalTime" select="sum(../httpSample[@lb = current()/@lb]/@t)" />
 			<xsl:variable name="averageTime" select="$totalTime div $count" />
 			<xsl:variable name="minTime">
-				<xsl:for-each select="../sampleResult[@label = current()/@label]/@time">
+				<xsl:for-each select="../httpSample[@lb = current()/@lb]/@t">
 					<xsl:sort data-type="number" />
 					<xsl:if test="position() = 1">
 						<xsl:value-of select="number(.)" />
@@ -180,7 +180,7 @@
 				</xsl:for-each>
 			</xsl:variable>
 			<xsl:variable name="maxTime">
-				<xsl:for-each select="../sampleResult[@label = current()/@label]/@time">
+				<xsl:for-each select="../httpSample[@lb = current()/@lb]/@t">
 					<xsl:sort data-type="number" order="descending" />
 					<xsl:if test="position() = 1">
 						<xsl:value-of select="number(.)" />
@@ -228,17 +228,17 @@
 </xsl:template>
 
 <xsl:template name="detail">
-	<xsl:variable name="allFailureCount" select="count(/testResults/sampleResult[attribute::success='false'])" />
+	<xsl:variable name="allFailureCount" select="count(/testResults/httpSample[attribute::s='false'])" />
 
 	<xsl:if test="$allFailureCount > 0">
 		<h2>Failure Detail</h2>
 
-		<xsl:for-each select="/testResults/sampleResult[not(@label = preceding::*/@label)]">
+		<xsl:for-each select="/testResults/httpSample[not(@lb = preceding::*/@lb)]">
 
-			<xsl:variable name="failureCount" select="count(../sampleResult[@label = current()/@label][attribute::success='false'])" />
+			<xsl:variable name="failureCount" select="count(../httpSample[@lb = current()/@lb][attribute::s='false'])" />
 
 			<xsl:if test="$failureCount > 0">
-				<h3><xsl:value-of select="@label" /></h3>
+				<h3><xsl:value-of select="@lb" /></h3>
 
 				<table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
 				<tr valign="top">
@@ -246,10 +246,10 @@
 					<th>Failure Message</th>
 				</tr>
 			
-				<xsl:for-each select="/testResults/sampleResult[@label = current()/@label][attribute::success='false']">
+				<xsl:for-each select="/testResults/httpSample[@lb = current()/@lb][attribute::s='false']">
 					<tr>
-						<td><xsl:value-of select="@responseCode" /> - <xsl:value-of select="@responseMessage" /></td>
-						<td><xsl:value-of select="assertionResult/@failureMessage" /></td>
+						<td><xsl:value-of select="@rc" /> - <xsl:value-of select="@rm" /></td>
+						<td><xsl:value-of select="@rm" /></td>
 					</tr>
 				</xsl:for-each>
 				

@@ -270,7 +270,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             100000,
             'check empty billing address form load'
         );
-        $this->assertElementNotPresent('css=.current .button-row button.disabled', 'same address disabled and address form loaded - main button is enabled');
+        $this->assertElementPresent('css=.current .button-row button.disabled', 'same address disabled and address form loaded - main button is enabled');
 
         $this->select(
             '//select[@id="billing_address_country"]',

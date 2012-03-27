@@ -309,6 +309,55 @@ TABLE
     }
 
     /**
+     * @Given /^I am on admin product page$/
+     * @throws Behat\Mink\Exception\ExpectationException
+     */
+    public function visitProductAdmin(){
+
+        $product = $this->getParameter('product');
+        if (!isset($product['id'])){
+            throw new \Behat\Mink\Exception\ExpectationException('Product not found', $this->getSession());
+        }
+
+        $url = $this->getSession()->getCurrentUrl();
+        if (strpos($url, 'admin.php?target=product&id='.$product['id']) === false){
+            $this->visit('admin.php?target=product&id='.$product['id']);
+        }
+    }
+
+    /**
+     * @Given /^I am on customer product page$/
+     * @throws Behat\Mink\Exception\ExpectationException
+     */
+    public function visitProductCustomer(){
+        $product = $this->getParameter('product');
+        if (!isset($product['id'])){
+            throw new \Behat\Mink\Exception\ExpectationException('Product not found', $this->getSession());
+        }
+
+        $url = $this->getSession()->getCurrentUrl();
+        if (strpos($url, 'store/product/0/product_id-'.$product['id']) === false){
+            $this->visit('store/product/0/product_id-'.$product['id']);
+        }
+
+    }
+
+    public function clearList(){
+        $buttons = $this->findAll('named', array(
+            'button', $this->getSession()->getSelectorsHandler()->xpathLiteral('Remove')
+        ), false);
+
+        if (!empty($buttons))
+            foreach($buttons as $button){
+                if (strpos($button->getAttribute('class'), 'mark') === 0){
+                    $button->click();
+                }
+            }
+
+        $this->pressButton('Save changes');
+    }
+
+    /**
      * Returns all added subcontexts.
      *
      * @return  array
