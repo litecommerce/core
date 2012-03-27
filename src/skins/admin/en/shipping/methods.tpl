@@ -10,10 +10,6 @@
  * @since     1.0.0
  *}
 
-<div class="right-panel">
-  <widget class="\XLite\View\EditorLanguageSelector" />
-</div>
-
 <script type="text/javascript">
 //<![CDATA[
 function onDeleteButton(method_id)

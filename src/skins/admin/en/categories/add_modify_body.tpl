@@ -12,10 +12,6 @@
 
 {*TODO: refactor it.*}
 
-<div class="right-panel">
-  <widget class="\XLite\View\EditorLanguageSelector" />
-</div>
-
 <p>
 
 <span IF="getRequestParamValue(#mode#)!=#modify#">{t(#Mandatory fields are marked with an asterisk#)} (<span class="star">*</span>).<br /><br /></span>

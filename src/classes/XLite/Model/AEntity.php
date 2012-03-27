@@ -33,7 +33,7 @@ namespace XLite\Model;
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class AEntity
+abstract class AEntity extends \XLite\Base\SuperClass
 {
     /**
      * Possible action by entity Repo
@@ -60,7 +60,6 @@ abstract class AEntity
      */
     protected static $methodNames = array();
 
-
     /**
      * Constructor
      *
@@ -72,7 +71,11 @@ abstract class AEntity
      */
     public function __construct(array $data = array())
     {
-        empty($data) ?: $this->map($data);
+        parent::__construct();
+
+        if (!empty($data)) {
+            $this->map($data);
+        }
     }
 
     /**

@@ -84,6 +84,18 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * getDefaultLanguage
+     *
+     * @return \XLite\Model\Language
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function getDefaultLanguage()
+    {
+        return \xLite\Core\Database::getRepo('\XLite\Model\Language')->findOneByCode(static::$defaultLanguage);
+    }
+
+    /**
      * Search labels
      *
      * @return void
@@ -158,27 +170,16 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         $language = \XLite\Core\Database::getRepo('\XLite\Model\Language')->find($id);
 
         if (!$language) {
-
             \XLite\Core\TopMessage::addError(
                 'The language you want to delete has not been found'
             );
 
-        } elseif (
-            $language->code == \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code
-        ) {
-
-            \XLite\Core\TopMessage::addError(
-                'The language you want to delete is the default application language and cannot be deleted'
-            );
-
-        } elseif ($language->code == \XLite\Core\Config::getInstance()->General->defaultLanguage->code) {
-
+        } elseif ($language->code == static::$defaultLanguage) {
             \XLite\Core\TopMessage::addError(
                 'The language you want to delete is the default interface language and cannot be deleted'
             );
 
         } else {
-
             $language->added = false;
             \XLite\Core\Database::getEM()->persist($language);
             \XLite\Core\Database::getEM()->flush();
@@ -211,7 +212,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 'The language has not been found'
             );
 
-        } elseif ($language->code == \XLite\Core\Config::getInstance()->General->defaultLanguage->code) {
+        } elseif ($language->code == static::$defaultLanguage) {
 
             \XLite\Core\TopMessage::addError(
                 'The default interface language cannot be disabled'
@@ -262,7 +263,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         if (is_array($current) && $current) {
             $this->saveLabels(
                 $current,
-                \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code
+                static::$defaultLanguage
             );
         }
         unset($current);
@@ -281,7 +282,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 $translateFail = true;
 
             } elseif (
-                \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code == $language
+                static::$defaultLanguage == $language
             ) {
 
                 \XLite\Core\TopMessage::addWarning(
@@ -392,8 +393,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     {
         $name = substr(\XLite\Core\Request::getInstance()->name, 0, 255);
         $label = \XLite\Core\Request::getInstance()->label;
-        $codeDefault = \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code;
-        $codeInterface = \XLite\Core\Config::getInstance()->General->defaultLanguage->code;
+        $codeDefault = $codeInterface = static::$defaultLanguage;
 
         if (!$name) {
 
@@ -452,8 +452,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     {
         $label = \XLite\Core\Request::getInstance()->label;
         $labelId = intval(\XLite\Core\Request::getInstance()->label_id);
-        $codeDefault = \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code;
-        $codeInterface = \XLite\Core\Config::getInstance()->General->defaultLanguage->code;
+        $codeDefault = $codeInterface = static::$defaultLanguage;
         $lbl = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->find($labelId);
 
         if (!$lbl) {
@@ -505,7 +504,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         $lng = \XLite\Core\Database::getRepo('\XLite\Model\Language')->find($lngId);
         $names = \XLite\Core\Request::getInstance()->name;
 
-        $codeDefault = \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code;
+        $codeDefault = static::$defaultLanguage;
 
         if (!$lng) {
 
@@ -540,7 +539,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                     )
                 );
 
-                \XLite\Core\Session::getInstance()->setLanguage($lng->code, 'customer');
+                \XLite\Core\Session::getInstance()->updateSessionLanguage();
             }
 
             \XLite\Core\TopMessage::addInfo('The language data has been saved');

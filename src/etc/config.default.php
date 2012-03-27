@@ -177,6 +177,12 @@ send_shop_domain = On
 ; banner_url = "http://www.litecommerce.com/banners"
 
 ;
+; Language options
+;
+[language]
+default = en
+
+;
 ; Other options
 ;
 [other]

@@ -229,17 +229,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
             $config->General->defaultState = \XLite\Core\Database::getRepo('XLite\Model\State')
                 ->findById($config->General->default_state, $config->General->default_custom_state);
 
-            // Get default language object
-            if (isset($config->General->default_language)) {
-                $config->General->defaultLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')
-                    ->findOneByCode($config->General->default_language);
-            }
-
-            if (!isset($config->General->defaultLanguage)) {
-                $config->General->defaultLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')
-                    ->getDefaultLanguage();
-            }
-
             // Type cast
             $config->General->minimal_order_amount = doubleval($config->General->minimal_order_amount);
             $config->General->maximal_order_amount = doubleval($config->General->maximal_order_amount);

@@ -295,8 +295,6 @@ XLite\Model\LanguageLabel:
   - { name: 'The language you want to add has already been added', translations: [{ code: en, label: 'The language you want to add has already been added' }] }
   - { name: 'The X language has been added successfully', translations: [{ code: en, label: 'The {{language}} language has been added successfully' }] }
   - { name: 'The language you want to delete has not been found', translations: [{ code: en, label: 'The language you want to delete has not been found' }] }
-  - { name: 'The language you want to delete is the default application language and cannot be deleted', translations: [{ code: en, label: 'The language you want to delete is the default application language and cannot be deleted' }] }
-  - { name: 'The language you want to delete is the default interface language and cannot be deleted', translations: [{ code: en, label: 'The language you want to delete is the default interface language and cannot be deleted' }] }
   - { name: 'The X language has been deleted successfully', translations: [{ code: en, label: 'The {{language}} language has been deleted successfully' }] }
   - { name: 'The language has not been found', translations: [{ code: en, label: 'The language has not been found' }] }
   - { name: 'The default interface language cannot be disabled', translations: [{ code: en, label: 'The default interface language cannot be disabled' }] }

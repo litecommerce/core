@@ -40,7 +40,6 @@ class EditLabel extends \XLite\View\AView
      */
     const PARAM_LABEL_ID = 'label_id';
 
-
     /**
      * Label (cache)
      *
@@ -110,21 +109,8 @@ class EditLabel extends \XLite\View\AView
      */
     public function isRequiredLanguage(\XLite\Model\Language $language)
     {
-        return $language->code == $this->getDefaultLanguage()->code;
+        return $language->code === static::$defaultLanguage;
     }
-
-    /**
-     * Get default language
-     *
-     * @return \XLite\Model\Language
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDefaultLanguage()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage();
-    }
-
 
     /**
      * Return widget default template

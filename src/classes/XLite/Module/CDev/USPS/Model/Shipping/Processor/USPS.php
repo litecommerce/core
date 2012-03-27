@@ -41,7 +41,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      */
     const LC_USPS_API_DOMESTIC = 'Domestic';
     const LC_USPS_API_INTL     = 'Intl';
-
     
     /**
      * $newMethods is used to prevent duplicating methods in database 
@@ -51,7 +50,6 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * @since 1.0.18
      */
     protected static $newMethods = array();
-
 
     /**
      * Unique processor Id
@@ -786,9 +784,7 @@ OUT;
             $method->setCarrier($this->getProcessorId());
             $method->setCode($postage['CLASSID']);
             $method->setEnabled(false);
-
-            $code = \XLite\Core\Config::getInstance()->General->defaultLanguage->getCode();
-            $method->getTranslation($code)->name = $postage['MailService'];
+            $method->setName($postage['MailService']);
 
             \XLite\Core\Database::getEM()->persist($method);
             \XLite\Core\Database::getEM()->flush();

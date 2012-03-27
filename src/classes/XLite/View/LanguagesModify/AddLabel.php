@@ -36,19 +36,7 @@ namespace XLite\View\LanguagesModify;
 class AddLabel extends \XLite\View\AView
 {
     /**
-     * Get application default language
-     *
-     * @return \XLite\Model\Language
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDefaultLanguage()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage();
-    }
-
-    /**
-     * Check - is requried language or not
+     * Check if language is requried or not
      *
      * @param \XLite\Model\Language $language Language_
      *
@@ -58,7 +46,7 @@ class AddLabel extends \XLite\View\AView
      */
     public function isRequiredLanguage(\XLite\Model\Language $language)
     {
-        return $language->code == $this->getDefaultLanguage()->code;
+        return $language->code === static::$defaultLanguage;
     }
 
     /**
