@@ -98,7 +98,7 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
     protected function getCurrentLanguage()
     {
         // DO NOT change call order here
-        if (!\XLite::isAdminZone() && drupal_multilingual()) {
+        if (!\XLite::isAdminZone() && function_exists('drupal_multilingual') && drupal_multilingual()) {
             global $language;
 
             if ($language instanceof \stdClass) {
