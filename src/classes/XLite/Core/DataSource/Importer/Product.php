@@ -214,6 +214,8 @@ abstract class Product extends \XLite\Base
     protected function createProduct(array $cell)
     {
         $product = new \XLite\Model\Product;
+        $product->setInventory($product->getInventory());
+        $product->getInventory()->setProduct($product);
         \XLite\Core\Database::getEM()->persist($product);
 
         return $product;
