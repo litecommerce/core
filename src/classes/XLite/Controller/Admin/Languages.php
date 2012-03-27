@@ -531,11 +531,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->persist($lng);
             \XLite\Core\Database::getEM()->flush();
 
-            if (
-                $lng->enabled
-                && \XLite\Core\Request::getInstance()->default
-                && \XLite\Core\Config::getInstance()->General->defaultLanguage->code != $lng->code
-            ) {
+            if ($lng->enabled && \XLite\Core\Request::getInstance()->default) {
                 \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                     array(
                         'name'     => 'default_language',
@@ -543,6 +539,8 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                         'value'    => $lng->code,
                     )
                 );
+
+                \XLite\Core\Session::getInstance()->setLanguage($lng->code, 'customer');
             }
 
             \XLite\Core\TopMessage::addInfo('The language data has been saved');

@@ -339,10 +339,6 @@ class Session extends \XLite\Base\Singleton
         if (!isset($this->language)) {
             $this->language = \XLite\Core\Database::getRepo('XLite\Model\Language')
                 ->findOneByCode($this->getCurrentLanguage());
-
-            if ($this->language) {
-                $this->language->detach();
-            }
         }
 
         return $this->language;
@@ -352,15 +348,19 @@ class Session extends \XLite\Base\Singleton
      * Set language
      *
      * @param string $language Language code
+     * @param string $zone     Admin/customer zone OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function setLanguage($language)
+    public function setLanguage($language, $zone = null)
     {
         $code = $this->session->language;
-        $zone = \XLite::isAdminZone() ? 'admin' : 'customer';
+
+        if (!isset($zone)) {
+            $zone = \XLite::isAdminZone() ? 'admin' : 'customer';
+        }
 
         if (!is_array($code)) {
             $code = array();
@@ -631,35 +631,22 @@ class Session extends \XLite\Base\Singleton
     protected function getCurrentLanguage()
     {
         $code = $this->session->language;
-
         $zone = \XLite::isAdminZone() ? 'admin' : 'customer';
 
         if (!is_array($code)) {
-
             $code = array();
         }
 
-        if (
-            isset($code[$zone])
-            && $code[$zone]
-        ) {
-            $language = \XLite\Core\Database::getRepo('XLite\Model\Language')
-                ->findOneByCode($code[$zone]);
+        if (!empty($code[$zone])) {
+            $language = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($code[$zone]);
 
-            if (
-                !$language
-                || $language->getStatus() != $language::ENABLED
-            ) {
+            if (!isset($language) || $language::ENABLED != $language->getStatus()) {
                 unset($code[$zone]);
             }
         }
 
-        if (
-            !isset($code[$zone])
-            || !$code[$zone]
-        ) {
+        if (empty($code[$zone])) {
             $this->setLanguage($this->defineCurrentLanguage());
-
             $code = $this->session->language;
         }
 
