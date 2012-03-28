@@ -35,6 +35,8 @@ namespace XLite\Core\EventDriver;
  */
 class AMQP extends \XLite\Core\EventDriver\AEventDriver
 {
+    const REDECLARE_TTL = 3600;
+
     /**
      * Connection
      *
@@ -150,6 +152,11 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
             $entity->setValue(time());
             \XLite\Core\Database::getEM()->persist($entity);
 
+            $this->declareQueue($name);
+
+        } elseif ($entity->getValue() + static::REDECLARE_TTL < time()) {
+
+            $entity->setValue(time());
             $this->declareQueue($name);
         }
     }
