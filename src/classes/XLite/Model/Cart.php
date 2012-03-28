@@ -82,6 +82,7 @@ class Cart extends \XLite\Model\Order
             if (!isset($cart)) {
                 $cart = new $className();
                 $cart->setStatus(self::STATUS_TEMPORARY);
+                $cart->setCurrency(\XLite::getInstance()->getCurrency());
 
                 \XLite\Core\Database::getEM()->persist($cart);
             }

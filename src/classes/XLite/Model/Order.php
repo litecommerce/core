@@ -857,9 +857,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function processSucceed()
     {
-        // Fix the currency in the order
-        $this->setCurrency(\XLite::getInstance()->getCurrency());
-
         // send email notification about initially placed order
         $status = $this->getStatus();
 

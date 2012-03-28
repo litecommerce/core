@@ -107,7 +107,7 @@ class Surcharge extends \XLite\View\AView
 
         $this->widgetParams += array(
             self::PARAM_SURCHARGE => new \XLite\Model\WidgetParam\Float('Surcharge', null),
-            self::PARAM_CURRENCY  => new \XLite\Model\WidgetParam\Object('Currency', \XLite::getInstance()->getCUrrency(), false, 'XLite\Model\Currency'),
+            self::PARAM_CURRENCY  => new \XLite\Model\WidgetParam\Object('Currency', \XLite::getInstance()->getCurrency(), false, 'XLite\Model\Currency'),
         );
     }
 

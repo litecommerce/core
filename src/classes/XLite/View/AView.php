@@ -1117,8 +1117,20 @@ abstract class AView extends \XLite\Core\Handler
             $parts['sign'] = '&minus;&#8197';
         }
 
+        $integer = false;
         foreach ($parts as $name => $value) {
-            $parts[$name] = '<span class="part-' . $name . '">' . $value . '</span>';
+            $class = 'part-' . $name;;
+            if ('integer' == $name) {
+                $integer = true;
+
+            } elseif ('symbol' == $name) {
+                $class .= ' ' . ($integer ? 'after' : 'before');
+                if (!$currency->getSymbol()) {
+                    $class .= ' code';
+                }
+            }
+            
+            $parts[$name] = '<span class="' . $class . '">' . $value . '</span>';
         }
 
         return implode('', $parts);

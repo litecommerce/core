@@ -20,3 +20,7 @@
   margin: 0px;
 }
 
+.surcharge .part-symbol.before.code { 
+  padding-right: 5px;
+}
+
