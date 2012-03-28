@@ -8,6 +8,9 @@
 # @link      http://www.litecommerce.com/
 # @since     1.0.0
 
+XLite\Model\Config:
+  - { name: display_prices_including_vat, category: 'CDev\VAT', type: checkbox, value: 'Y', orderby: 100, translations: [{ code: en, option_name: 'Display prices in catalog including VAT' }] }
+
 XLite\Model\LanguageLabel:
   - { name: "After you enable this tax it will be included in product prices", translations: [{ code: en, label: "After you enable this tax it will be included in product prices. This means that it will not be shown as separate surcharge during checkout." }] }
   - { name: 'Incl. X', translations: [{ code: en, label: 'Incl. {{name}}' }] }

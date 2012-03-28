@@ -58,9 +58,6 @@ class Tax extends \XLite\Logic\ALogic
      */
     public function getSearchPriceConbdition($priceField, $classesAlias)
     {
-        $zones = $this->getZonesList();
-        $memebrship = $this->getMembership();
-
         $cnd = $priceField;
 
         foreach ($this->getTaxes() as $tax) {
@@ -91,19 +88,7 @@ class Tax extends \XLite\Logic\ALogic
      */
     public function calculateProductPrice(\XLite\Model\Product $product, $price)
     {
-        $zones = $this->getZonesList();
-        $memebrship = $this->getMembership();
-
-        foreach ($this->getTaxes() as $tax) {
-            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
-            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
-
-            if ($included) {
-                $price -= $included->calculateProductPriceExcludingTax($product, $price);
-            }
-        }
-
-        return $price;
+        return $this->deductTaxFromPrice($product, $price);
     }
 
     /**
@@ -118,20 +103,9 @@ class Tax extends \XLite\Logic\ALogic
      */
     public function calculateProductNetPrice(\XLite\Model\Product $product, $price)
     {
-        $zones = $this->getZonesList();
-        $memebrship = $this->getMembership();
-
-        foreach ($this->getTaxes() as $tax) {
-            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
-            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
-
-            if ($included) {
-                $price -= $included->calculateProductPriceExcludingTax($product, $price);
-            }
-        }
-
-        return $price;
+        return $this->deductTaxFromPrice($product, $price);
     }
+
 
     /**
      * Calculate product-based included taxes
@@ -142,27 +116,76 @@ class Tax extends \XLite\Logic\ALogic
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function calculateProduct(\XLite\Model\Product $product)
+    public function calculateProduct(\XLite\Model\Product $product, $price = null)
     {
         $zones = $this->getZonesList();
-        $memebrship = $this->getMembership();
+        $membership = $this->getMembership();
+        $price = $this->deductTaxFromPrice($product, isset($price) ? $price : $product->getTaxableBasis());
 
         $taxes = array();
-        $price = $product->getTaxableBasis();
-        foreach ($this->getTaxes() as $tax) {
-            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
-            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
-            $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
 
-            if ($included) {
-                $price -= $included->calculateProductPriceExcludingTax($product, $price);
-            }
+        foreach ($this->getTaxes() as $tax) {
+
+            $rate = $tax->getFilteredRate($zones, $membership, $product->getClasses());
+
             if ($rate) {
                 $taxes[$tax->getName()] = $rate->calculateProductPriceIncludingTax($product, $price);
             }
         }
 
         return $taxes;
+    }
+
+    /**
+     * getDisplayPrice 
+     * 
+     * @param \XLite\Model\Product $product ____param_comment____
+     * @param mixed                $price   ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function getDisplayPrice(\XLite\Model\Product $product, $price)
+    {
+        $netPrice = $this->calculateProductPrice($product, $price);
+
+        if (\XLite\Core\Config::getInstance()->CDev->VAT->display_prices_including_vat) {
+
+            $taxes = $this->calculateProduct($product, $netPrice);
+
+            if (!empty($taxes)) {
+                foreach ($taxes as $tax) {
+                    $netPrice += $tax;
+                }
+            }
+        }
+
+        return $netPrice;
+    }
+
+    /**
+     * Calculate product net price
+     * 
+     * @param \XLite\Model\Product $product Product
+     * @param float                $price   Price
+     *  
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function deductTaxFromPrice(\XLite\Model\Product $product, $price)
+    {
+        foreach ($this->getTaxes() as $tax) {
+            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
+            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
+
+            if ($included) {
+                $price -= $included->calculateProductPriceExcludingTax($product, $price);
+            }
+        }
+
+        return $price;
     }
 
     /**

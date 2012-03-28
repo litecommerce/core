@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -25,73 +25,42 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\VAT;
+namespace XLite\Module\CDev\VAT\View;
 
 /**
- * Main
+ * Details 
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Main extends \XLite\Module\AModule
+abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage implements \XLite\Base\IDecorator
 {
     /**
-     * Author name
+     * Register CSS files
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAuthorName()
+    public function getCSSFiles()
     {
-        return 'Creative Development LLC';
+        $list = parent::getCSSFiles();
+        $list[] = 'modules/CDev/VAT/style.css';
+
+        return $list;
     }
 
     /**
-     * Module version
+     * Determine if we need to display product market price
      *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getMinorVersion()
-    {
-        return '4';
-    }
-
-    /**
-     * Module name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getModuleName()
-    {
-        return 'VAT';
-    }
-
-    /**
-     * Module description
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getDescription()
-    {
-        return 'This module enables taxes';
-    }
-
-    /**
-     * Determines if we need to show settings form link
+     * @param \XLite\Model\Product $product Current product
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function showSettingsForm()
+    protected function getPriceIncludingVATNote(\XLite\Model\Product $product)
     {
-        return true;
+        return 'incl.VAT';
     }
 }
