@@ -326,6 +326,12 @@ abstract class Product extends \XLite\Base
         if ($model->loadFromURL($image['url'], $this->isLoadImageToLocalFileSystem())) {
             $product->addImages($model);
             \XLite\Core\Database::getEM()->persist($model);
+
+        } else {
+            \XLite\Logger::getInstance()->log(
+                'The picture of the product (' . $image['url'] . ') was not imported.',
+                LOG_ERR
+            );
         }
 
         return $model;
