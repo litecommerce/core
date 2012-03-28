@@ -82,4 +82,16 @@ abstract class Main extends \XLite\Module\AModule
     {
         return 'This module enables taxes';
     }
+
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
+    }
 }

@@ -25,54 +25,42 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\VAT\Model;
+namespace XLite\Module\CDev\VAT\View;
 
 /**
- * Product
- * 
+ * Details 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
+abstract class Details extends \XLite\View\Product\Details\Customer\Page\APage implements \XLite\Base\IDecorator
 {
     /**
-     * Included tax list 
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $includedTaxList;
-
-    /**
-     * Return product list price
+     * Register CSS files
      *
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getListPrice()
-    {
-        return \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->getDisplayPrice($this, parent::getListPrice());
-    }
-
-    /**
-     * Get included tax list
-     *
-     * @param boolean $override Override calculation flag OPTIONAL
-     * 
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getIncludedTaxList($override = false)
+    public function getCSSFiles()
     {
-        if (!isset($this->includedTaxList) || $override) {
-            $this->includedTaxList = \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()
-                ->calculateProduct($this);
-        }
+        $list = parent::getCSSFiles();
+        $list[] = 'modules/CDev/VAT/style.css';
 
-        return $this->includedTaxList;
+        return $list;
+    }
+
+    /**
+     * Determine if we need to display product market price
+     *
+     * @param \XLite\Model\Product $product Current product
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPriceIncludingVATNote(\XLite\Model\Product $product)
+    {
+        return 'incl.VAT';
     }
 }
-

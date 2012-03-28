@@ -25,54 +25,42 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\VAT\Model;
+namespace XLite\Module\CDev\VAT\View;
 
 /**
- * Product
- * 
+ * Price widget 
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
+class Price extends \XLite\View\Price implements \XLite\Base\IDecorator
 {
     /**
-     * Included tax list 
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $includedTaxList;
-
-    /**
-     * Return product list price
+     * Determine if we need to display 'incl.VAT' note
      *
-     * @return float
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getListPrice()
+    protected function isVATApplicable()
     {
-        return \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->getDisplayPrice($this, parent::getListPrice());
+        $result = false;
+
+        $product = $this->getProduct();
+        $taxes = $product->getIncludedTaxList();
+
+        return !empty($taxes);
     }
 
     /**
-     * Get included tax list
+     * Determine if we need to display 'incl.VAT' note
      *
-     * @param boolean $override Override calculation flag OPTIONAL
-     * 
-     * @return array
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getIncludedTaxList($override = false)
+    protected function isDisplayedPriceIncludesVAT()
     {
-        if (!isset($this->includedTaxList) || $override) {
-            $this->includedTaxList = \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()
-                ->calculateProduct($this);
-        }
-
-        return $this->includedTaxList;
+        return \XLite\Core\Config::getInstance()->CDev->VAT->display_prices_including_vat;
     }
 }
-
