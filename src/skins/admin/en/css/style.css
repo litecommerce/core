@@ -1569,7 +1569,7 @@ div.model-form-buttons {
   min-width: 450px;
 }
 
-.model-properties ul.table li {
+.model-properties ul.table > li {
   background-image: none;
   clear: left;
 }
