@@ -40,7 +40,6 @@ class Options extends \XLite\View\AView
      */
     const PARAM_LNG_ID = 'lng_id';
 
-
     /**
      * Language (cache)
      *
@@ -49,7 +48,6 @@ class Options extends \XLite\View\AView
      * @since 1.0.0
      */
     protected $editLanguage = null;
-
 
     /**
      * Get language
@@ -61,9 +59,9 @@ class Options extends \XLite\View\AView
     public function getEditLanguage()
     {
         if (!isset($this->label)) {
-            if ($this->getParam(self::PARAM_LNG_ID)) {
+            if ($this->getParam(static::PARAM_LNG_ID)) {
                 $this->editLanguage = \XLite\Core\Database::getRepo('\XLite\Model\Language')
-                    ->find($this->getParam(self::PARAM_LNG_ID));
+                    ->find($this->getParam(static::PARAM_LNG_ID));
 
             } else {
                 $this->editLanguage = false;
@@ -71,30 +69,6 @@ class Options extends \XLite\View\AView
         }
 
         return $this->editLanguage;
-    }
-
-    /**
-     * Get default language (English)
-     *
-     * @return \XLite\Model\Language
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDefaultLanguage()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage();
-    }
-
-    /**
-     * Get default language for customer zone
-     *
-     * @return \XLite\Model\Language
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getInterfaceLanguage()
-    {
-        return \XLite\Core\Config::getInstance()->General->defaultLanguage;
     }
 
     /**
@@ -120,7 +94,7 @@ class Options extends \XLite\View\AView
      */
     public function canSwitch()
     {
-        return $this->getInterfaceLanguage()->code != $this->getEditLanguage()->code;
+        return \XLite\Core\Config::getInstance()->General->default_language !== $this->getEditLanguage()->getCode();
     }
 
     /**
@@ -132,8 +106,7 @@ class Options extends \XLite\View\AView
      */
     public function canDelete()
     {
-        return $this->canSwitch()
-            && $this->getEditLanguage()->code != $this->getDefaultLanguage()->code;
+        return $this->canSwitch() && static::$defaultLanguage !== $this->getEditLanguage()->getCode();
     }
 
     /**
@@ -185,8 +158,8 @@ class Options extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_LNG_ID => new \XLite\Model\WidgetParam\Int(
-                'Language id', \XLite\Core\Request::getInstance()->{self::PARAM_LNG_ID}
+            static::PARAM_LNG_ID => new \XLite\Model\WidgetParam\Int(
+                'Language id', \XLite\Core\Request::getInstance()->{static::PARAM_LNG_ID}
             ),
         );
     }
@@ -200,7 +173,6 @@ class Options extends \XLite\View\AView
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && $this->getEditLanguage();
+        return parent::isVisible() && $this->getEditLanguage();
     }
 }

@@ -192,4 +192,16 @@ class Language extends \XLite\Model\Base\I18n
 
         return $path;
     }
+
+    /**
+     * Get default language code
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSessionLanguageCode()
+    {
+        return $this->getCode();
+    }
 }

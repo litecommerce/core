@@ -307,7 +307,7 @@ class Session extends \XLite\Base\Singleton
 
             $formId->setSessionId($this->session->getId());
 
-            \Xlite\Core\Database::getEM()->persist($formId);
+            \XLite\Core\Database::getEM()->persist($formId);
 
             $this->lastFormId = $formId->getFormId();
         }
@@ -372,6 +372,31 @@ class Session extends \XLite\Base\Singleton
             $this->session->language = $code;
             $this->language = null;
         }
+    }
+
+    /**
+     * Update language in customer sessions
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function updateSessionLanguage()
+    {
+        $list = array();
+
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\SessionCell')->findByName('language') as $cell) {
+            $data = $cell->getValue() ?: array();
+
+            if (isset($data['customer'])) {
+                $data['customer'] = \XLite\Core\Config::getInstance()->General->default_language;
+                $cell->setValue($data);
+
+                $list[] = $cell;
+            }
+        }
+
+        \XLite\Core\Database::getRepo('\XLite\Model\SessionCell')->updateInBatch($list);
     }
 
     /**
@@ -662,46 +687,14 @@ class Session extends \XLite\Base\Singleton
      */
     protected function defineCurrentLanguage()
     {
-        $languages = array();
-
-        if (\XLite\Core\Auth::getInstance()->isLogged()) {
-
-            $languages[] = \XLite\Core\Auth::getInstance()->getProfile()->getLanguage();
+        if (!\XLite::isAdminZone()) {
+            $result = \Includes\Utils\ArrayManager::searchInObjectsArray(
+                \XLite\Core\Database::getRepo('XLite\Model\Language')->findActiveLanguages(),
+                'getCode',
+                \XLite\Core\Config::getInstance()->General->default_language
+            );
         }
 
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-
-            $tmp = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-
-            $languages = array_merge($languages, preg_replace('/^([a-z]{2}).+$/Ss', '$1', $tmp));
-        }
-
-        $languages[] = \XLite\Core\Config::getInstance()->General->defaultLanguage->getCode();
-
-        // Process query
-        $idx = 999999;
-
-        $found = false;
-
-        foreach (\XLite\Core\Database::getRepo('XLite\Model\Language')->findActiveLanguages() as $lng) {
-
-            if (!$found) {
-
-                $found = $lng->getCode();
-            }
-
-            $key = array_search($lng->getCode(), $languages);
-
-            if (
-                false !== $key
-                && $key < $idx
-            ) {
-                $idx = $key;
-
-                $found = $lng->getCode();
-            }
-        }
-
-        return $found ?: 'en';
+        return isset($result) ? $result->getCode() : static::$defaultLanguage;
     }
 }

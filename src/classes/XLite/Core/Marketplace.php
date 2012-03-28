@@ -148,11 +148,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function checkForUpdates($ttl = self::TTL_LONG)
     {
-        return $this->performActionWithTTL(
-            $ttl,
-            self::ACTION_CHECK_FOR_UPDATES,
-            $this->getCheckForUpdatesData()
-        );
+        return $this->performActionWithTTL($ttl, static::ACTION_CHECK_FOR_UPDATES, $this->getCheckForUpdatesData());
     }
 
     /**
@@ -167,20 +163,20 @@ class Marketplace extends \XLite\Base\Singleton
         $data = array();
 
         if ($this->isSendShopDomain()) {
-            $data[self::FIELD_SHOP_DOMAIN]
+            $data[static::FIELD_SHOP_DOMAIN]
                 = \Includes\Utils\ConfigParser::getOptions(array('host_details', 'http_host'));
         }
 
         $modules = \XLite\Core\Database::getRepo('XLite\Model\Module')->search($this->getCheckForUpdatesDataCnd());
 
         if ($modules) {
-            $data[self::FIELD_MODULES] = array();
+            $data[static::FIELD_MODULES] = array();
             foreach ($modules as $module) {
-                $data[self::FIELD_MODULES][] = array(
-                    self::FIELD_NAME   => $module->getName(),
-                    self::FIELD_AUTHOR => $module->getAuthor(),
-                    self::FIELD_VERSION_MAJOR  => $module->getMajorVersion(),
-                    self::FIELD_VERSION_MINOR  => $module->getMinorVersion(),
+                $data[static::FIELD_MODULES][] = array(
+                    static::FIELD_NAME   => $module->getName(),
+                    static::FIELD_AUTHOR => $module->getAuthor(),
+                    static::FIELD_VERSION_MAJOR  => $module->getMajorVersion(),
+                    static::FIELD_VERSION_MINOR  => $module->getMinorVersion(),
                 );
             }
         }
@@ -242,8 +238,8 @@ class Marketplace extends \XLite\Base\Singleton
     protected function getSchemaResponseForCheckForUpdatesAction()
     {
         return array(
-            self::FIELD_IS_UPGRADE_AVAILABLE  => FILTER_VALIDATE_BOOLEAN,
-            self::FIELD_ARE_UPDATES_AVAILABLE => FILTER_VALIDATE_BOOLEAN,
+            static::FIELD_IS_UPGRADE_AVAILABLE  => FILTER_VALIDATE_BOOLEAN,
+            static::FIELD_ARE_UPDATES_AVAILABLE => FILTER_VALIDATE_BOOLEAN,
         );
     }
 
@@ -262,9 +258,9 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getCores($ttl = self::TTL_LONG)
     {
-        $result = $this->performActionWithTTL($ttl, self::ACTION_GET_CORES);
+        $result = $this->performActionWithTTL($ttl, static::ACTION_GET_CORES);
 
-        if (self::TTL_NOT_EXPIRED !== $result) {
+        if (static::TTL_NOT_EXPIRED !== $result) {
             $this->clearUpgradeCell();
         }
 
@@ -315,16 +311,16 @@ class Marketplace extends \XLite\Base\Singleton
     protected function getSchemaResponseForGetCoresAction()
     {
         return array(
-            self::FIELD_VERSION => array(
+            static::FIELD_VERSION => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
                 'flags'   => FILTER_REQUIRE_ARRAY,
-                'options' => array('regexp' => self::REGEXP_VERSION),
+                'options' => array('regexp' => static::REGEXP_VERSION),
             ),
-            self::FIELD_REVISION_DATE => array(
+            static::FIELD_REVISION_DATE => array(
                 'filter'  => FILTER_VALIDATE_INT,
                 'options' => array('max_range' => time()),
             ),
-            self::FIELD_LENGTH => array(
+            static::FIELD_LENGTH => array(
                 'filter'  => FILTER_VALIDATE_INT,
                 'options' => array('min_range' => 0),
             ),
@@ -345,20 +341,20 @@ class Marketplace extends \XLite\Base\Singleton
         $result = array();
 
         foreach ($data as $core) {
-            $coreVersion = $core[self::FIELD_VERSION];
-            $coreVersionMajor = $coreVersion[self::FIELD_VERSION_MAJOR];
-            $coreVersionMinor = $coreVersion[self::FIELD_VERSION_MINOR];
+            $coreVersion = $core[static::FIELD_VERSION];
+            $coreVersionMajor = $coreVersion[static::FIELD_VERSION_MAJOR];
+            $coreVersionMinor = $coreVersion[static::FIELD_VERSION_MINOR];
 
             if (isset($result[$coreVersionMajor])) {
-                $currentVersion = $result[$coreVersionMajor][self::FIELD_VERSION];
-                $currentVersionMinor = $currentVersion[self::FIELD_VERSION_MINOR];
+                $currentVersion = $result[$coreVersionMajor][static::FIELD_VERSION];
+                $currentVersionMinor = $currentVersion[static::FIELD_VERSION_MINOR];
             }
 
             if (!isset($currentVersionMinor) || version_compare($currentVersionMinor, $coreVersionMinor, '<')) {
                 $result[$coreVersionMajor] = array(
                     $coreVersionMinor,
-                    $core[self::FIELD_REVISION_DATE],
-                    $core[self::FIELD_LENGTH]
+                    $core[static::FIELD_REVISION_DATE],
+                    $core[static::FIELD_LENGTH]
                 );
             }
         }
@@ -383,10 +379,10 @@ class Marketplace extends \XLite\Base\Singleton
     public function getCorePack($versionMajor, $versionMinor)
     {
         return $this->sendRequestToMarketplace(
-            self::ACTION_GET_CORE_PACK,
+            static::ACTION_GET_CORE_PACK,
             array(
-                self::FIELD_VERSION => $this->getVersionField($versionMajor, $versionMinor),
-                self::FIELD_GZIPPED => $this->canCompress(),
+                static::FIELD_VERSION => $this->getVersionField($versionMajor, $versionMinor),
+                static::FIELD_GZIPPED => $this->canCompress(),
             )
         );
     }
@@ -422,9 +418,9 @@ class Marketplace extends \XLite\Base\Singleton
     public function getCoreHash($versionMajor, $versionMinor)
     {
         return $this->sendRequestToMarketplace(
-            self::ACTION_GET_CORE_HASH,
+            static::ACTION_GET_CORE_HASH,
             array(
-                self::FIELD_VERSION => $this->getVersionField($versionMajor, $versionMinor),
+                static::FIELD_VERSION => $this->getVersionField($versionMajor, $versionMinor),
             )
         );
     }
@@ -472,9 +468,9 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function saveAddonsList($ttl = self::TTL_LONG)
     {
-        $result = $this->performActionWithTTL($ttl, self::ACTION_GET_ADDONS_LIST, array(), false);
+        $result = $this->performActionWithTTL($ttl, static::ACTION_GET_ADDONS_LIST, array(), false);
 
-        if (self::TTL_NOT_EXPIRED !== $result) {
+        if (static::TTL_NOT_EXPIRED !== $result) {
             \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateMarketplaceModules((array) $result);
             $this->clearUpgradeCell();
         }
@@ -534,16 +530,16 @@ class Marketplace extends \XLite\Base\Singleton
         foreach ($data as $module) {
 
             // Module key fields
-            $author = $this->getField($module, self::FIELD_AUTHOR);
-            $name   = $this->getField($module, self::FIELD_NAME);
+            $author = $this->getField($module, static::FIELD_AUTHOR);
+            $name   = $this->getField($module, static::FIELD_NAME);
 
             // Arrays passed in response
-            $version = $this->getField($module, self::FIELD_VERSION) ?: array();
-            $rating  = $this->getField($module, self::FIELD_RATING)  ?: array();
+            $version = $this->getField($module, static::FIELD_VERSION) ?: array();
+            $rating  = $this->getField($module, static::FIELD_RATING)  ?: array();
 
             // Module versions
-            $majorVersion = $this->getField($version, self::FIELD_VERSION_MAJOR);
-            $minorVersion = $this->getField($version, self::FIELD_VERSION_MINOR);
+            $majorVersion = $this->getField($version, static::FIELD_VERSION_MAJOR);
+            $minorVersion = $this->getField($version, static::FIELD_VERSION_MINOR);
 
             // Short names
             $key = $author . '_' . $name . '_' . $majorVersion;
@@ -556,22 +552,22 @@ class Marketplace extends \XLite\Base\Singleton
                     'name'            => $name,
                     'author'          => $author,
                     'fromMarketplace' => true,
-                    'rating'          => $this->getField($rating, self::FIELD_RATING_RATE),
-                    'votes'           => $this->getField($rating, self::FIELD_RATING_VOTES_COUNT),
-                    'downloads'       => $this->getField($module, self::FIELD_DOWNLOADS_COUNT),
-                    'price'           => $this->getField($module, self::FIELD_PRICE),
-                    'currency'        => $this->getField($module, self::FIELD_CURRENCY),
+                    'rating'          => $this->getField($rating, static::FIELD_RATING_RATE),
+                    'votes'           => $this->getField($rating, static::FIELD_RATING_VOTES_COUNT),
+                    'downloads'       => $this->getField($module, static::FIELD_DOWNLOADS_COUNT),
+                    'price'           => $this->getField($module, static::FIELD_PRICE),
+                    'currency'        => $this->getField($module, static::FIELD_CURRENCY),
                     'majorVersion'    => $majorVersion,
                     'minorVersion'    => $minorVersion,
-                    'revisionDate'    => $this->getField($module, self::FIELD_REVISION_DATE),
-                    'moduleName'      => $this->getField($module, self::FIELD_READABLE_NAME),
-                    'authorName'      => $this->getField($module, self::FIELD_READABLE_AUTHOR),
-                    'description'     => $this->getField($module, self::FIELD_DESCRIPTION),
-                    'iconURL'         => $this->getField($module, self::FIELD_ICON_URL),
-                    'pageURL'         => $this->getField($module, self::FIELD_PAGE_URL),
-                    'authorPageURL'   => $this->getField($module, self::FIELD_AUTHOR_PAGE_URL),
-                    'dependencies'    => (array) $this->getField($module, self::FIELD_DEPENDENCIES),
-                    'packSize'        => $this->getField($module, self::FIELD_LENGTH),
+                    'revisionDate'    => $this->getField($module, static::FIELD_REVISION_DATE),
+                    'moduleName'      => $this->getField($module, static::FIELD_READABLE_NAME),
+                    'authorName'      => $this->getField($module, static::FIELD_READABLE_AUTHOR),
+                    'description'     => $this->getField($module, static::FIELD_DESCRIPTION),
+                    'iconURL'         => $this->getField($module, static::FIELD_ICON_URL),
+                    'pageURL'         => $this->getField($module, static::FIELD_PAGE_URL),
+                    'authorPageURL'   => $this->getField($module, static::FIELD_AUTHOR_PAGE_URL),
+                    'dependencies'    => (array) $this->getField($module, static::FIELD_DEPENDENCIES),
+                    'packSize'        => $this->getField($module, static::FIELD_LENGTH),
                 );
 
             } else {
@@ -600,11 +596,11 @@ class Marketplace extends \XLite\Base\Singleton
     public function getAddonPack($moduleID, $key = null)
     {
         return $this->sendRequestToMarketplace(
-            self::ACTION_GET_ADDON_PACK,
+            static::ACTION_GET_ADDON_PACK,
             array(
-                self::FIELD_MODULE_ID => $moduleID,
-                self::FIELD_KEY       => $key,
-                self::FIELD_GZIPPED   => $this->canCompress(),
+                static::FIELD_MODULE_ID => $moduleID,
+                static::FIELD_KEY       => $key,
+                static::FIELD_GZIPPED   => $this->canCompress(),
 
             )
         );
@@ -641,10 +637,10 @@ class Marketplace extends \XLite\Base\Singleton
     public function getAddonInfo($moduleID, $key = null)
     {
         return $this->sendRequestToMarketplace(
-            self::ACTION_GET_ADDON_INFO,
+            static::ACTION_GET_ADDON_INFO,
             array(
-                self::FIELD_MODULE_ID => $moduleID,
-                self::FIELD_KEY       => $key,
+                static::FIELD_MODULE_ID => $moduleID,
+                static::FIELD_KEY       => $key,
             )
         );
     }
@@ -687,52 +683,52 @@ class Marketplace extends \XLite\Base\Singleton
     protected function getSchemaResponseForGetAddonInfoAction()
     {
         return array(
-            self::FIELD_VERSION => array(
+            static::FIELD_VERSION => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
                 'flags'   => FILTER_REQUIRE_ARRAY,
-                'options' => array('regexp' => self::REGEXP_VERSION),
+                'options' => array('regexp' => static::REGEXP_VERSION),
             ),
-            self::FIELD_REVISION_DATE => array(
+            static::FIELD_REVISION_DATE => array(
                 'filter'  => FILTER_VALIDATE_INT,
                 'options' => array('max_range' => time()),
             ),
-            self::FIELD_AUTHOR => array(
+            static::FIELD_AUTHOR => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
-                'options' => array('regexp' => self::REGEXP_WORD),
+                'options' => array('regexp' => static::REGEXP_WORD),
             ),
-            self::FIELD_NAME => array(
+            static::FIELD_NAME => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
-                'options' => array('regexp' => self::REGEXP_WORD),
+                'options' => array('regexp' => static::REGEXP_WORD),
             ),
-            self::FIELD_READABLE_AUTHOR => FILTER_SANITIZE_STRING,
-            self::FIELD_READABLE_NAME   => FILTER_SANITIZE_STRING,
-            self::FIELD_MODULE_ID => array(
+            static::FIELD_READABLE_AUTHOR => FILTER_SANITIZE_STRING,
+            static::FIELD_READABLE_NAME   => FILTER_SANITIZE_STRING,
+            static::FIELD_MODULE_ID => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
-                'options' => array('regexp' => self::REGEXP_HASH),
+                'options' => array('regexp' => static::REGEXP_HASH),
             ),
-            self::FIELD_DESCRIPTION => FILTER_SANITIZE_STRING,
-            self::FIELD_PRICE => FILTER_VALIDATE_FLOAT,
-            self::FIELD_CURRENCY => array(
+            static::FIELD_DESCRIPTION => FILTER_SANITIZE_STRING,
+            static::FIELD_PRICE => FILTER_VALIDATE_FLOAT,
+            static::FIELD_CURRENCY => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
-                'options' => array('regexp' => self::REGEXP_CURRENCY),
+                'options' => array('regexp' => static::REGEXP_CURRENCY),
             ),
-            self::FIELD_ICON_URL => FILTER_SANITIZE_URL,
-            self::FIELD_PAGE_URL => FILTER_SANITIZE_URL,
-            self::FIELD_AUTHOR_PAGE_URL => FILTER_SANITIZE_URL,
-            self::FIELD_RATING => array(
+            static::FIELD_ICON_URL => FILTER_SANITIZE_URL,
+            static::FIELD_PAGE_URL => FILTER_SANITIZE_URL,
+            static::FIELD_AUTHOR_PAGE_URL => FILTER_SANITIZE_URL,
+            static::FIELD_RATING => array(
                 'filter'  => FILTER_SANITIZE_NUMBER_FLOAT,
                 'flags'   => FILTER_REQUIRE_ARRAY | FILTER_FLAG_ALLOW_FRACTION,
             ),
-            self::FIELD_DEPENDENCIES => array(
+            static::FIELD_DEPENDENCIES => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
                 'flags'   => FILTER_REQUIRE_ARRAY,
-                'options' => array('regexp' => self::REGEXP_CLASS),
+                'options' => array('regexp' => static::REGEXP_CLASS),
             ),
-            self::FIELD_DOWNLOADS_COUNT => array(
+            static::FIELD_DOWNLOADS_COUNT => array(
                 'filter'  => FILTER_VALIDATE_INT,
                 'options' => array('min_range' => 0),
             ),
-            self::FIELD_LENGTH => array(
+            static::FIELD_LENGTH => array(
                 'filter'  => FILTER_VALIDATE_INT,
                 'options' => array('min_range' => 0),
             ),
@@ -756,10 +752,10 @@ class Marketplace extends \XLite\Base\Singleton
     public function getAddonHash($moduleID, $key = null)
     {
         return $this->sendRequestToMarketplace(
-            self::ACTION_GET_ADDON_HASH,
+            static::ACTION_GET_ADDON_HASH,
             array(
-                self::FIELD_MODULE_ID => $moduleID,
-                self::FIELD_KEY       => $key,
+                static::FIELD_MODULE_ID => $moduleID,
+                static::FIELD_KEY       => $key,
             )
         );
     }
@@ -808,9 +804,9 @@ class Marketplace extends \XLite\Base\Singleton
     public function checkAddonKey($key)
     {
         return $this->sendRequestToMarketplace(
-            self::ACTION_CHECK_ADDON_KEY,
+            static::ACTION_CHECK_ADDON_KEY,
             array(
-                self::FIELD_KEY => $key,
+                static::FIELD_KEY => $key,
             )
         );
     }
@@ -838,21 +834,18 @@ class Marketplace extends \XLite\Base\Singleton
 
         $result = $this->performActionWithTTL(
             $ttl,
-            self::ACTION_CHECK_ADDON_KEY,
-            array(self::FIELD_KEY => $keys),
+            static::ACTION_CHECK_ADDON_KEY,
+            array(static::FIELD_KEY => $keys),
             false
         );
 
-        if (self::TTL_NOT_EXPIRED !== $result) {
-
+        if (static::TTL_NOT_EXPIRED !== $result) {
             $repoModule = \XLite\Core\Database::getRepo('\XLite\Model\Module');
 
-            foreach ($result as $key => $addonsInfo) {
-
+            foreach ((array) $result as $key => $addonsInfo) {
                 $repoModuleKey->deleteInBatch($repoModuleKey->findBy(array('keyValue' => $key)));
 
                 foreach ($addonsInfo as $info) {
-
                     $module = $repoModule->findOneBy(
                         array(
                             'author' => $info['author'],
@@ -861,16 +854,12 @@ class Marketplace extends \XLite\Base\Singleton
                     );
 
                     if ($module) {
-
                         $repoModuleKey->insert($info + array('keyValue' => $key));
-
-                        \XLite\Core\Database::getEM()->flush();
 
                         // Clear cache for proper installation
                         \XLite\Core\Marketplace::getInstance()->clearActionCache(\XLite\Core\Marketplace::ACTION_GET_ADDONS_LIST);
 
                     } else {
-
                         // No module has been found
                     }
                 }
@@ -879,7 +868,6 @@ class Marketplace extends \XLite\Base\Singleton
 
         return (bool) $result;
     }
-
 
     /**
      * Parse response for certian action
@@ -932,17 +920,17 @@ class Marketplace extends \XLite\Base\Singleton
     protected function getSchemaResponseForCheckAddonKeyAction()
     {
         return array(
-            self::FIELD_AUTHOR => array(
+            static::FIELD_AUTHOR => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
-                'options' => array('regexp' => self::REGEXP_WORD),
+                'options' => array('regexp' => static::REGEXP_WORD),
             ),
-            self::FIELD_NAME => array(
+            static::FIELD_NAME => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
-                'options' => array('regexp' => self::REGEXP_WORD),
+                'options' => array('regexp' => static::REGEXP_WORD),
             ),
-            self::FIELD_KEY_TYPE => array(
+            static::FIELD_KEY_TYPE => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
-                'options' => array('regexp' => self::REGEXP_NUMBER),
+                'options' => array('regexp' => static::REGEXP_NUMBER),
             ),
         );
     }
@@ -971,13 +959,13 @@ class Marketplace extends \XLite\Base\Singleton
     protected function getSchemaResponseForError()
     {
         return array(
-            self::FIELD_ERROR_CODE => array(
+            static::FIELD_ERROR_CODE => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
-                'options' => array('regexp' => self::REGEXP_WORD),
+                'options' => array('regexp' => static::REGEXP_WORD),
             ),
-            self::FIELD_ERROR_MESSAGE => array(
+            static::FIELD_ERROR_MESSAGE => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
-                'options' => array('regexp' => self::REGEXP_WORD),
+                'options' => array('regexp' => static::REGEXP_WORD),
             ),
         );
     }
@@ -999,7 +987,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getHostingScore($ttl = self::TTL_LONG)
     {
-        return $this->performActionWithTTL($ttl, self::ACTION_GET_HOSTING_SCORE);
+        return $this->performActionWithTTL($ttl, static::ACTION_GET_HOSTING_SCORE);
     }
 
     /**
@@ -1120,8 +1108,8 @@ class Marketplace extends \XLite\Base\Singleton
     protected function getRequestCommonData()
     {
         return array(
-            self::FIELD_SHOP_ID => md5(\Includes\Utils\ConfigParser::getOptions(array('host_details', 'http_host'))),
-            self::FIELD_VERSION_CORE_CURRENT => $this->getVersionField(
+            static::FIELD_SHOP_ID => md5(\Includes\Utils\ConfigParser::getOptions(array('host_details', 'http_host'))),
+            static::FIELD_VERSION_CORE_CURRENT => $this->getVersionField(
                 \XLite::getInstance()->getMajorVersion(),
                 \XLite::getInstance()->getMinorVersion()
             ),
@@ -1151,8 +1139,8 @@ class Marketplace extends \XLite\Base\Singleton
             $this->doErrorAction($errorBlock, $data);
 
             $result = 'Error code ('
-                . $errorBlock[self::FIELD_ERROR_CODE] . '): '
-                . $errorBlock[self::FIELD_ERROR_MESSAGE];
+                . $errorBlock[static::FIELD_ERROR_CODE] . '): '
+                . $errorBlock[static::FIELD_ERROR_MESSAGE];
         }
 
         return $result;
@@ -1170,11 +1158,11 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function doErrorAction(array $error, array $data)
     {
-        if (self::ERROR_CODE_REFUND === $error[self::FIELD_ERROR_CODE]) {
+        if (static::ERROR_CODE_REFUND === $error[static::FIELD_ERROR_CODE]) {
 
             // Refunded Module license key must be removed from shop
             $key = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey')
-                ->findOneBy(array('keyValue' => $data[self::FIELD_KEY]));
+                ->findOneBy(array('keyValue' => $data[static::FIELD_KEY]));
 
             if ($key) {
 
@@ -1290,7 +1278,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function performActionWithTTL($ttl, $action, array $data = array(), $saveInTmpVars = true)
     {
-        $result = self::TTL_NOT_EXPIRED;
+        $result = static::TTL_NOT_EXPIRED;
 
         list($cellTTL, $cellData) = $this->getActionCacheVars($action);
 
@@ -1363,8 +1351,8 @@ class Marketplace extends \XLite\Base\Singleton
     protected function getVersionField($versionMajor, $versionMinor)
     {
         return array(
-            self::FIELD_VERSION_MAJOR => $versionMajor,
-            self::FIELD_VERSION_MINOR => $versionMinor,
+            static::FIELD_VERSION_MAJOR => $versionMajor,
+            static::FIELD_VERSION_MINOR => $versionMinor,
         );
     }
 

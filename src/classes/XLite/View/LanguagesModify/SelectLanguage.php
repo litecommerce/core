@@ -44,7 +44,6 @@ class SelectLanguage extends \XLite\View\AView
      */
     protected $translateLanguage = null;
 
-
     /**
      * Get added languages
      *
@@ -68,7 +67,7 @@ class SelectLanguage extends \XLite\View\AView
      */
     public function isInterfaceLanguage(\XLite\Model\Language $language)
     {
-        return \XLite\Core\Config::getInstance()->General->defaultLanguage->code == $language->code;
+        return static::$defaultLanguage == $language->code;
     }
 
     /**
@@ -87,18 +86,6 @@ class SelectLanguage extends \XLite\View\AView
     }
 
     /**
-     * Get application default language
-     *
-     * @return \XLite\Model\Language
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDefaultLanguage()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage();
-    }
-
-    /**
      * Check - specified language can been selected or not
      *
      * @param \XLite\Model\Language $language Language
@@ -109,7 +96,7 @@ class SelectLanguage extends \XLite\View\AView
      */
     public function canSelect(\XLite\Model\Language $language)
     {
-        return $language->code != $this->getDefaultLanguage()->code
+        return $language->code !== static::$defaultLanguage
             && (!$this->getTranslatedLanguage() || $language->code != $this->getTranslatedLanguage()->code);
     }
 
@@ -124,10 +111,7 @@ class SelectLanguage extends \XLite\View\AView
      */
     public function canDelete(\XLite\Model\Language $language)
     {
-        return !in_array(
-            $language->code,
-            array($this->getDefaultLanguage()->code, \XLite\Core\Config::getInstance()->General->defaultLanguage->code)
-        );
+        return $language->code !== static::$defaultLanguage;
     }
 
     /**

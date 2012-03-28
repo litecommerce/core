@@ -85,14 +85,16 @@ class Controller extends \XLite\View\AView
     /**
      * Show current page and, optionally, footer
      *
+     * @param string $template Template file name OPTIONAL
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function display()
+    public function display($template = null)
     {
         if (!$this->isSilent()) {
-            $this->displayPage();
+            $this->displayPage($template);
         }
 
         if ($this->isDumpStarted()) {
@@ -286,24 +288,26 @@ class Controller extends \XLite\View\AView
     /**
      * displayPage
      *
+     * @param string $template Template file name OPTIONAL
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function displayPage()
+    protected function displayPage($template = null)
     {
         // Send page headers first
         static::sendHeaders();
 
         if ($this->useDefaultDisplayMode()) {
             // Display widget content inside some CMS content
-            $this->getContentWidget()->display();
+            $this->getContentWidget()->display($template);
 
         } else {
             // Display widget in standalone display mode
             $this->prepareContent();
 
-            parent::display();
+            parent::display($template);
         }
     }
 

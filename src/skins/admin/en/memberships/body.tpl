@@ -9,11 +9,8 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<p>{t(#Use this section to review the list of existing membership levels and add new ones#)}.</p>
 
-<div class="right-panel">
-  <widget class="\XLite\View\EditorLanguageSelector" />
-</div>
+<p>{t(#Use this section to review the list of existing membership levels and add new ones#)}.</p>
 
 <form IF="getMemberships()" action="admin.php" method="post" name="update_membership_form">
   <input type="hidden" name="target" value="memberships" />

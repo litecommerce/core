@@ -10,10 +10,6 @@
  * @since     1.0.0
  *}
 
-<div class="right-panel">
-  <widget class="\XLite\View\EditorLanguageSelector" />
-</div>
-
 <form IF="getOptions()" action="admin.php" method="post" name="update_option_groups_form">
   <input type="hidden" name="target" value="product" />
   <input type="hidden" name="action" value="update_option_groups" />

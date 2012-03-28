@@ -226,7 +226,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
             $data['orderby'] = abs(intval($data['orderby']));
             $data['enabled'] = isset($data['enabled']) && $data['enabled'];
 
-            $group->setEditLanguageCode($this->getCurrentLanguage());
             $group->map($data);
 
             $result = true;
@@ -437,7 +436,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
                 unset($data['modifiers']);
             }
 
-            $option->setEditLanguageCode($this->getCurrentLanguage());
             $option->map($data);
 
             \XLite\Core\Database::getEM()->persist($option);
