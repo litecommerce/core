@@ -54,15 +54,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
     protected $defaultOrderBy = 'code';
 
     /**
-     * Global default language (cache)
-     *
-     * @var   \XLite\Model\Language
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $defaultLanguage = null;
-
-    /**
      * Alternative record identifiers
      *
      * @var   array
@@ -72,48 +63,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
     protected $alternativeIdentifier = array(
         array('code'),
     );
-
-    // {{{
-
-    /**
-     * Get languages query
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getLanguagesQuery()
-    {
-        $query = array(
-            \XLite\Core\Config::getInstance()->General->defaultLanguage->getCode(),
-            $this->getDefaultLanguage()->getCode(),
-        );
-
-        return array_unique($query);
-    }
-
-    /**
-     * Get global default language
-     *
-     * @return string Language code
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDefaultLanguage()
-    {
-        if (!isset($this->defaultLanguage)) {
-            $this->defaultLanguage = \XLite\Core\Database::getRepo('\XLite\Model\Language')
-                ->findOneByCode('en');
-
-            if (!$this->defaultLanguage) {
-                // TODO - add throw exception
-            }
-        }
-
-        return $this->defaultLanguage;
-    }
-
-    // }}}
 
     // {{{ defineCacheCells
 
@@ -127,9 +76,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
     protected function defineCacheCells()
     {
         $list = parent::defineCacheCells();
-
         $list['all'] = array();
-
         $list['status'] = array(
             self::ATTRS_CACHE_CELL => array('status'),
         );
@@ -185,6 +132,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
     public function findActiveLanguages()
     {
         $data = $this->getFromCache('status', array('status' => \XLite\Model\Language::ENABLED));
+
         if (!isset($data)) {
             $data = $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getResult();
             $this->saveToCache($data, 'status', array('status' => \XLite\Model\Language::ENABLED));

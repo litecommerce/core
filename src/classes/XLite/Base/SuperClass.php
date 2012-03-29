@@ -36,6 +36,27 @@ namespace XLite\Base;
 abstract class SuperClass
 {
     /**
+     * Default store language
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.19
+     */
+    protected static $defaultLanguage;
+
+    /**
+     * So called static constructor
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public static function __constructStatic()
+    {
+        static::$defaultLanguage = \Includes\Utils\ConfigParser::getOptions(array('language', 'default'));
+    }
+
+    /**
      * Language label translation short method
      *
      * @param string $name      Label name

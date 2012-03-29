@@ -519,9 +519,7 @@ class Classes extends \Includes\DataStructure\Graph
             $this->reflection = new \StdClass();
             $util = '\Includes\Decorator\Utils\Tokenizer';
 
-            if ($util::getDecoratorFlag()) {
-                $util = '\Includes\Decorator\Utils\Tokenizer';
-
+            if ($util::getDecoratorFlag() || !\Includes\Utils\Operator::checkIfClassExists($this->getClass())) {
                 $this->reflection->parentClass = $util::getParentClassName($this->getFile());
                 $this->reflection->interfaces  = $util::getInterfaces($this->getFile());
                 $this->reflection->docComment  = $util::getDockBlock($this->getFile());
@@ -529,13 +527,7 @@ class Classes extends \Includes\DataStructure\Graph
                 $this->reflection->isAbstract  = $util::getFlag($this->getFile(), T_ABSTRACT);
                 $this->reflection->isInterface = (bool) $util::getInterfaceName($this->getFile());
 
-                // :KLUDGE: the "StaticRoutines" plugin support
-                $this->reflection->hasStaticConstructor = $util::hasMethod(
-                    $this->getFile(),
-                    \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD
-                );
-
-            } elseif (\Includes\Utils\Operator::checkIfClassExists($this->getClass())) {
+            } else {
                 $reflection = new \ReflectionClass($this->getClass());
 
                 $this->reflection->parentClass = ($class = $reflection->getParentClass()) ? $class->getName() : null;
@@ -544,15 +536,16 @@ class Classes extends \Includes\DataStructure\Graph
                 $this->reflection->isFinal     = $reflection->isFinal();
                 $this->reflection->isAbstract  = $reflection->isAbstract();
                 $this->reflection->isInterface = $reflection->isInterface();
-
-                // :KLUDGE: the "StaticRoutines" plugin support
-                $this->reflection->hasStaticConstructor = $reflection->hasMethod(
-                    \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD
-                );
             }
 
             $this->reflection->parentClass = $this->prepareClassName($this->reflection->parentClass);
             $this->reflection->interfaces  = array_map(array($this, 'prepareClassName'), $this->reflection->interfaces);
+
+            // KLUDGE: the "StaticRoutines" plugin support
+            $this->reflection->hasStaticConstructor = $util::hasMethod(
+                $this->getFile(),
+                \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD
+            );
         }
 
         return $this->reflection;

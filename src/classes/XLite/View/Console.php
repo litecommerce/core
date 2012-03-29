@@ -38,11 +38,13 @@ class Console extends \XLite\View\AView
     /**
      * Attempts to display widget using its template
      *
+     * @param string $template Template file name OPTIONAL
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function display()
+    public function display($template = null)
     {
     }
 

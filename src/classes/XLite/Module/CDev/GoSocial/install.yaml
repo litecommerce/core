@@ -155,7 +155,7 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: 'Account name of the user to follow after sending a Tweet (optional)'
-        option_comment: 'Twitter will suggest customers to follow this user once they have sent a Tweet using the Tweet button.'
+        option_comment: 'Twitter will suggest that customers follow this user once they have sent a Tweet using the Tweet button.'
   - name: tweet_hashtag
     category: 'CDev\GoSocial'
     type: text

@@ -54,7 +54,7 @@ class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDecorator
 
             } else {
                 // sale value is percent
-                $data->addPair('salePriceValue', new \XLite\Core\Validator\Integer(), null, 'Percent off')->setRange(0, 100);
+                $data->addPair('salePriceValue', new \XLite\Core\Validator\Integer(), null, 'Percent off')->setRange(1, 100);
             }
         }
     }

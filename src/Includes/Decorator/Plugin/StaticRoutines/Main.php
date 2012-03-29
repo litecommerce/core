@@ -70,11 +70,9 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function addStaticConstructorCall(
-        \Includes\Decorator\DataStructure\Graph\Classes $node,
-        \Includes\Decorator\DataStructure\Graph\Classes $parent = null
-    ) {
-        if ($this->checkForStaticConstructor($node) && !($parent && $this->checkForStaticConstructor($parent))) {
+    public function addStaticConstructorCall(\Includes\Decorator\DataStructure\Graph\Classes $node)
+    {
+        if ($this->checkForStaticConstructor($node)) {
             $this->writeCallToSourceFile($node);
         }
     }

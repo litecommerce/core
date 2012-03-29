@@ -38,43 +38,6 @@ namespace XLite\Model\Base;
 abstract class I18n extends \XLite\Model\AEntity
 {
     /**
-     * Languages query
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $languagesQuery = null;
-
-    /**
-     * Edit language code
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $editLanguage;
-
-    /**
-     * Get languages query
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getLanguagesQuery()
-    {
-        if (!isset(static::$languagesQuery)) {
-            static::$languagesQuery = array_fill_keys(
-                \XLite\Core\Database::getRepo('\XLite\Model\Language')->getLanguagesQuery(),
-                false
-            );
-        }
-
-        return static::$languagesQuery;
-    }
-
-    /**
      * Constructor
      *
      * @param array $data Entity properties OPTIONAL
@@ -119,37 +82,34 @@ abstract class I18n extends \XLite\Model\AEntity
     /**
      * Get translation
      *
-     * @param string $code Language code OPTIONAL
+     * @param string  $code             Language code OPTIONAL
+     * @param boolean $allowEmptyResult Flag OPTIONAL
      *
      * @return \XLite\Model\Base\Translation
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTranslation($code = null)
+    public function getTranslation($code = null, $allowEmptyResult = false)
     {
         if (!isset($code)) {
-            $code = $this->getDefaultLanguageCode();
+            $code = $this->getSessionLanguageCode();
         }
 
-        $result = null;
+        $result = \Includes\Utils\ArrayManager::searchInObjectsArray(
+            $this->getTranslations()->toArray(),
+            'getCode',
+            $code
+        );
 
-        foreach ($this->getTranslations() as $t) {
-            if ($t->getCode() == $code) {
-                $result = $t;
-                break;
-            }
-        }
+        if (!isset($result) && !$allowEmptyResult) {
+            $class  = $this instanceof \Doctrine\ORM\Proxy\Proxy ? get_parent_class($this) : get_class($this);
+            $class .= 'Translation';
 
-        if (!$result) {
-            $className = $this instanceof \Doctrine\ORM\Proxy\Proxy
-                ? get_parent_class($this) . 'Translation'
-                : get_called_class() . 'Translation';
-            $result = new $className();
+            $result = new $class();
             $result->setOwner($this);
             $result->setCode($code);
-            $this->addTranslations($result);
-        }
-
+        }   
+        
         return $result;
     }
 
@@ -164,56 +124,17 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     public function getSoftTranslation($code = null)
     {
-        $result = null;
-
-        if (!isset($code)) {
-            $code = $this->editLanguage ?: $this->getDefaultLanguageCode();
-        }
-
-        $translations = $this->getTranslations();
-        $result = \Includes\Utils\ArrayManager::searchInObjectsArray($translations->toArray(), 'getCode', $code);
+        $result = $this->getTranslation($code, true);
 
         if (!isset($result)) {
-            $availLangs = static::getLanguagesQuery();
+            $result = $this->getTranslation(static::$defaultLanguage);
 
-            foreach ($translations as $object) {
-                if (isset($availLangs[$object->getCode()])) {
-                    $result = $object;
-                    break;
-                }
-            }
-
-            if (!isset($result)) {
-                $result = $translations->first();
-
-                // DO NOT use isset() here
-                if (!$result) {
-                    $class  = $this instanceof \Doctrine\ORM\Proxy\Proxy ? get_parent_class($this) : get_class($this);
-                    $class .= 'Translation';
-
-                    $result = new $class();
-                    $result->setOwner($this);
-                    $result->setCode($code);
-                    $this->addTranslations($result);
-                }
+            if (!$result->isPersistent() && ($tmp = $this->getTranslations()->first())) {
+                $result = $tmp;
             }
         }
 
         return $result;
-    }
-
-    /**
-     * Set edit language code
-     *
-     * @param string $code Language code OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function setEditLanguageCode($code = null)
-    {
-        $this->editLanguage = $code;
     }
 
     /**
@@ -228,7 +149,7 @@ abstract class I18n extends \XLite\Model\AEntity
     public function hasTranslation($code = null)
     {
         if (!isset($code)) {
-            $code = $this->getDefaultLanguageCode();
+            $code = $this->getSessionLanguageCode();
         }
 
         $result = false;
@@ -277,7 +198,6 @@ abstract class I18n extends \XLite\Model\AEntity
         }
     }
 
-
     /**
      * Get default language code
      *
@@ -285,7 +205,7 @@ abstract class I18n extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultLanguageCode()
+    protected function getSessionLanguageCode()
     {
         return \XLite\Core\Session::getInstance()->getLanguage()->getCode();
     }

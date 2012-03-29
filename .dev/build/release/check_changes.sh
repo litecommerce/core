@@ -70,7 +70,7 @@ echo -e "The modules changed from $REVISION_FROM to HEAD:\n"
 
 # Generate module names list
 cd $ROOT_DIR/classes/XLite/Module/CDev
-MODULE_NAMES=`find . -type d -depth 1 | sed 's/\.\///'`
+MODULE_NAMES=`find . -maxdepth 1 -type d | sed 's/\.\///'`
 
 cd $ROOT_DIR
 

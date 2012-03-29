@@ -80,7 +80,7 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public static function addInfo($text, array $arguments = array(), $code = null)
     {
-        return static::getInstance()->add($text, $arguments, $code, self::INFO);
+        return static::getInstance()->add($text, $arguments, $code, static::INFO);
     }
 
     /**
@@ -96,7 +96,7 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public static function addWarning($text, array $arguments = array(), $code = null)
     {
-        return static::getInstance()->add($text, $arguments, $code, self::WARNING);
+        return static::getInstance()->add($text, $arguments, $code, static::WARNING);
     }
 
     /**
@@ -112,7 +112,7 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public static function addError($text, array $arguments = array(), $code = null)
     {
-        return static::getInstance()->add($text, $arguments, $code, self::ERROR);
+        return static::getInstance()->add($text, $arguments, $code, static::ERROR);
     }
 
 
@@ -141,15 +141,15 @@ class TopMessage extends \XLite\Base\Singleton
             }
 
             if (!in_array($type, $this->types)) {
-                $type = self::INFO;
+                $type = static::INFO;
             }
 
             // To prevent duplicated messages
             // :TODO: use "array_unique()" instead
             $this->messages[$type . md5($text)] = array(
-                self::FIELD_TEXT => $text,
-                self::FIELD_TYPE => $type,
-                self::FIELD_AJAX => $ajax,
+                static::FIELD_TEXT => $text,
+                static::FIELD_TYPE => $type,
+                static::FIELD_AJAX => $ajax,
             );
 
             \XLite\Core\Session::getInstance()->topMessages = $this->messages;
@@ -215,7 +215,7 @@ class TopMessage extends \XLite\Base\Singleton
         }
 
         foreach ($messages as $i => $message) {
-            if (!$message[self::FIELD_AJAX]) {
+            if (!$message[static::FIELD_AJAX]) {
                 unset($messages[$i]);
             }
         }
@@ -292,7 +292,7 @@ class TopMessage extends \XLite\Base\Singleton
         }
 
         foreach ($messages as $i => $message) {
-            if ($message[self::FIELD_AJAX]) {
+            if ($message[static::FIELD_AJAX]) {
                 unset($messages[$i]);
             }
         }

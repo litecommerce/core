@@ -1,0 +1,19 @@
+language: php
+
+php: 
+  - 5.3
+  - 5.4
+
+branches:
+  only:
+    - master
+    - develop
+
+env:
+  - BEHAT_PARAMS="formatter[name]=progress"
+
+before_script:
+  - wget -nc http://getcomposer.org/composer.phar
+  - php composer.phar install
+
+script: bin/behat

@@ -86,8 +86,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
             ? new \XLite\Model\Category()
             : parent::getCategory();
 
-        $category->setEditLanguageCode($this->getCurrentLanguage());
-
         return $category;
     }
 
@@ -131,16 +129,11 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
         $properties = $this->validateCategoryData(true);
 
         if ($properties) {
-
             $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->insert(
                 array('parent_id' => $this->getCategoryId()) + $properties
             );
 
-            $category->setEditLanguageCode($this->getCurrentLanguage());
-            \XLite\Core\Database::getRepo('\XLite\Model\Category')->update(
-                $category,
-                $properties
-            );
+            \XLite\Core\Database::getRepo('\XLite\Model\Category')->update($category, $properties);
 
             $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $category->getCategoryId())));
         }

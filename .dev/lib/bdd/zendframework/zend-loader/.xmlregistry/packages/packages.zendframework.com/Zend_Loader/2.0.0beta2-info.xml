@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd" packagerversion="2.0.0">
+ <name>Zend_Loader</name>
+ <channel>packages.zendframework.com</channel>
+ <summary>Package Zend_Loader summary.\n\n&quot; . &quot;Package detailed description here (found in README)</summary>
+ <description/>
+ <lead>
+  <name>Your Name</name>
+  <user>handle</user>
+  <email>handle@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2011-12-20</date>
+ <time>21:56:39</time>
+ <version>
+  <release>2.0.0beta2</release>
+  <api>2.0.0beta2</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+ <notes>Package  Zend_Loader release notes for version 0.1.0.
+
+Package Zend_Loader API release notes for version 0.1.0.</notes>
+ <contents>
+  <dir name="/">
+   <file role="php" name="php/Zend/Loader/StandardAutoloader.php"/>
+   <file role="php" name="php/Zend/Loader/SplAutoloader.php"/>
+   <file role="php" name="php/Zend/Loader/ShortNameLocator.php"/>
+   <file role="php" name="php/Zend/Loader/PrefixPathMapper.php"/>
+   <file role="php" name="php/Zend/Loader/PrefixPathLoader.php"/>
+   <file role="php" name="php/Zend/Loader/PluginSpecBroker.php"/>
+   <file role="php" name="php/Zend/Loader/PluginClassLocator.php"/>
+   <file role="php" name="php/Zend/Loader/PluginClassLoader.php"/>
+   <file role="php" name="php/Zend/Loader/PluginBroker.php"/>
+   <file role="php" name="php/Zend/Loader/Pluggable.php"/>
+   <file role="php" name="php/Zend/Loader/ModuleAutoloader.php"/>
+   <file role="php" name="php/Zend/Loader/LocatorAware.php"/>
+   <file role="php" name="php/Zend/Loader/LazyLoadingBroker.php"/>
+   <file role="php" name="php/Zend/Loader/Exception/SecurityException.php"/>
+   <file role="php" name="php/Zend/Loader/Exception/RuntimeException.php"/>
+   <file role="php" name="php/Zend/Loader/Exception/PluginLoaderException.php"/>
+   <file role="php" name="php/Zend/Loader/Exception/MissingResourceNamespaceException.php"/>
+   <file role="php" name="php/Zend/Loader/Exception/InvalidPathException.php"/>
+   <file role="php" name="php/Zend/Loader/Exception/InvalidArgumentException.php"/>
+   <file role="php" name="php/Zend/Loader/Exception/DomainException.php"/>
+   <file role="php" name="php/Zend/Loader/Exception/BadMethodCallException.php"/>
+   <file role="php" name="php/Zend/Loader/Exception.php"/>
+   <file role="php" name="php/Zend/Loader/ClassMapAutoloader.php"/>
+   <file role="php" name="php/Zend/Loader/Broker.php"/>
+   <file role="php" name="php/Zend/Loader/AutoloaderFactory.php"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>2.0.0a1</min>
+   </pearinstaller>
+  </required>
+  <optional>
+   <package>
+    <name>Zend_Stdlib</name>
+    <channel>packages.zendframework.com</channel>
+   </package>
+  </optional>
+ </dependencies>
+ <phprelease/>
+</package>

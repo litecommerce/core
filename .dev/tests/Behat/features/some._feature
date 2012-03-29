@@ -1,0 +1,20 @@
+Feature: Search
+  In order to see a word definition
+  As a website user
+  I need to be able to search for a word
+
+  @mink:selenium
+  Scenario: Searching for a page that does exist
+    Given I am on "http://en.wikipedia.org/wiki/Main_Page"
+    When I fill in "searchInput" with "Behavior Driven Development"
+    And I press "search"
+    Then I should see "agile software development"
+
+  @mink:selenium
+  Scenario: Searching for a page that does NOT exist
+    Given I am on "http://en.wikipedia.org/wiki/Main_Page"
+    When I fill in "search" with "Glory Driven Development"
+    And I press "search"
+    Then I should see "Search results"
+
+    

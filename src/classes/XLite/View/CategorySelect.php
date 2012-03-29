@@ -27,7 +27,6 @@
 
 namespace XLite\View;
 
-
 /**
  * Category selector
  *
@@ -102,8 +101,6 @@ class CategorySelect extends \XLite\View\AView
     /**
      * Return translated category name
      *
-     * :KLUDGE: it's the hack to prevent execution of superflous queries
-     *
      * @param array $category Category data
      *
      * @return string
@@ -112,13 +109,7 @@ class CategorySelect extends \XLite\View\AView
      */
     protected function getCategoryName(array $category)
     {
-        $data = \Includes\Utils\ArrayManager::searchInArraysArray(
-            $category['translations'],
-            'code',
-            \XLite\Core\Session::getInstance()->getLanguage()->getCode()
-        );
-
-        return empty($data) ? 'N/A' : $data['name'];
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($category['category_id'])->getName();
     }
 
     /**

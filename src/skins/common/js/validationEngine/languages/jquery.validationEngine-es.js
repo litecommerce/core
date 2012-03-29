@@ -1,3 +1,4 @@
+﻿
 (function($){
     $.fn.validationEngineLanguage = function(){
     };
@@ -6,9 +7,9 @@
             $.validationEngineLanguage.allRules = {
                 "required": { // Add your regex rules here, you can take telephone as an example
                     "regex": "none",
-                    "alertText": "* Este campo es requerido",
-                    "alertTextCheckboxMultiple": "* Por favor selecciona una opción",
-                    "alertTextCheckboxe": "* Este checkbox está requerido"
+                    "alertText": "* Este campo es obligatorio",
+                    "alertTextCheckboxMultiple": "* Por favor seleccione una opción",
+                    "alertTextCheckboxe": "* Este checkbox es obligatorio"
                 },
                 "minSize": {
                     "regex": "none",
@@ -17,7 +18,7 @@
                 },
 				"groupRequired": {
                     "regex": "none",
-                    "alertText": "* You must fill one of the following fields"
+                    "alertText": "* Debe de rellenar al menos uno de los siguientes campos"
                 },
                 "maxSize": {
                     "regex": "none",
@@ -26,11 +27,11 @@
                 },
 		        "min": {
                     "regex": "none",
-                    "alertText": "* Valor mínimo es "
+                    "alertText": "* El valor mínimo es "
                 },
                 "max": {
                     "regex": "none",
-                    "alertText": "* Valor máximo es "
+                    "alertText": "* El valor máximo es "
                 },
 		        "past": {
                     "regex": "none",
@@ -39,7 +40,7 @@
                 "future": {
                     "regex": "none",
                     "alertText": "* Fecha posterior a "
-                },
+                },	
                 "maxCheckbox": {
                     "regex": "none",
                     "alertText": "* Se ha excedido el número de opciones permitidas"
@@ -52,6 +53,10 @@
                 "equals": {
                     "regex": "none",
                     "alertText": "* Los campos no coinciden"
+                },
+                "creditCard": {
+                    "regex": "none",
+                    "alertText": "* La tarjeta de crédito no es válida"
                 },
                 "phone": {
                     // credit: jquery.h5validate.js / orefalo
@@ -73,8 +78,8 @@
                     "alertText": "* No es un valor decimal válido"
                 },
                 "date": {
-                    "regex": /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/,
-                    "alertText": "* Fecha inválida, por favor utilize el formato AAAA-MM-DD"
+                    "regex": /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/,
+                    "alertText": "* Fecha inválida, por favor utilize el formato DD/MM/AAAA"
                 },
                 "ipv4": {
                 	"regex": /^((([01]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))[.]){3}(([0-1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))$/,
@@ -118,7 +123,7 @@
                     "alertText": "* Por favor entrar HELLO"
                 }
             };
-
+            
         }
     };
     $.validationEngineLanguage.newLang();

@@ -50,7 +50,6 @@ class TopLinks extends \XLite\View\AView
         return $list;
     }
 
-
     /**
      * Return widget directory
      *
@@ -98,4 +97,84 @@ class TopLinks extends \XLite\View\AView
     {
         return true;
     }
+
+    // {{{ Language-related routines
+
+    /**
+     * Check if language selector is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function isLanguageSelectorVisible()
+    {
+        return 1 < count($this->getActiveLanguages());
+    }
+
+    /**
+     * Return list of all active languages
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function getActiveLanguages()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->findActiveLanguages();
+    }
+
+    /**
+     * Link to change language
+     *
+     * @param \XLite\Model\Language $language Language to set
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function getChangeLanguageLink(\XLite\Model\Language $language)
+    {
+        $result = '#';
+
+        if (!$this->isLanguageSelected($language)) {
+            $result = $this->buildURL(
+                $this->getTarget(),
+                'change_language',
+                array('language' => $language->getCode()) + $this->getAllParams()
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * Link CSS class
+     *
+     * @param \XLite\Model\Language $language Current language
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function getChangeLanguageLinkClass(\XLite\Model\Language $language)
+    {
+        return $this->isLanguageSelected($language) ? 'text' : '';
+    }
+
+    /**
+     * Check if language is selected
+     *
+     * @param \XLite\Model\Language $language Language to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function isLanguageSelected(\XLite\Model\Language $language)
+    {
+        return $language->getCode() === \XLite\Core\Session::getInstance()->getLanguage()->getCode();
+    }
+
+    // }}}
 }

@@ -976,6 +976,7 @@ button.bright:active
   background-position: center -72px;
 }
 
+/* FIXME
 button.switch-state {
   background: transparent url(../images/tri_button.png) no-repeat left top;
   padding: 0px;
@@ -996,6 +997,7 @@ button.switch-state div {
   padding: 5px 12px 2px 7px;
   border-left: none;
 }
+*/
 
 button.switch-state div img {
   background: transparent url(../images/switch.png) no-repeat left top;
