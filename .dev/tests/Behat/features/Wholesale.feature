@@ -1,12 +1,12 @@
 # @resource product
 Feature: Wholesale
-
+    @javascript
     Background:
         Given I am logged in as admin
         And there is product
         Given I am on admin product page
         And I follow "Wholesale pricing"
-
+    @javascript
     Scenario: Wholesale table create validation
         When I press "New tier"
         And I fill in "new[-1][quantityRangeBegin]" with "-3"
@@ -14,7 +14,7 @@ Feature: Wholesale
         And I press "Save changes"
         Then I should see "Minimum value is 0"
         And I should see "Minimum value is 1"
-
+    @javascript
     Scenario: Wholesale table create
         When I press "New tier"
         And I fill in "new[-1][quantityRangeBegin]" with "3"
@@ -23,7 +23,7 @@ Feature: Wholesale
         Then I should see "1 entity has been created"
         And I should see "from 3"
         And I should see "$ 1.00"
-
+    @javascript
     Scenario: Simple wholesale table
         When i create tiers:
             | range | price | membership |
@@ -37,7 +37,7 @@ Feature: Wholesale
             | 3-6     | 8.00  | 20% |
             | 7-9     | 5.00  | 50% |
             | 10 more | 3.00  | 70% |
-
+    @javascript
     Scenario: Wholesale with minimum quantity
         When i create tiers:
             | range | price | membership |
@@ -53,7 +53,7 @@ Feature: Wholesale
             | 4-6     | 8.00  |          |
             | 7-9     | 5.00  | 37% |
             | 10 more | 3.00  | 62% |
-
+    @javascript
     Scenario: Wholesale with low stock
        When i create tiers:
            | range | price | membership |
@@ -68,7 +68,7 @@ Feature: Wholesale
        And I should see "Out of stock"
        And I should not see price table
 
-
+    @javascript
     Scenario: Wholesale with memberhsip
         When i create tiers:
             | range | price | membership |
