@@ -46,7 +46,7 @@ class AMQPService extends \XLite\Controller\Console\AConsole
     {
         if (\XLite\Core\EventDriver\AMQP::isValid()) {
             $driver = new \XLite\Core\EventDriver\AMQP;
-            foreach (\XLite\Core\EventListener::GetInstance()->getEvents() as $name) {
+            foreach (\XLite\Core\EventListener::getInstance()->getEvents() as $name) {
                 $this->printContent($name . ' ... ');
                 if ($driver->declareQueue($name)) {
                     $this->printContent('done');
@@ -56,6 +56,38 @@ class AMQPService extends \XLite\Controller\Console\AConsole
                 }
 
                 $this->printContent(PHP_EOL);
+            }
+        }
+    }
+
+    /**
+     * Remove all queues 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function doActionRemoveQueues()
+    {
+        if (\XLite\Core\EventDriver\AMQP::isValid()) {
+            $driver = new \XLite\Core\EventDriver\AMQP;
+            foreach (\XLite\Core\EventListener::getInstance()->getEvents() as $name) {
+                $this->printContent($name . ' ... ');
+                $result = false;
+                try {
+                    $driver->getChannel()->queue_delete($name);
+                    $result = true;
+
+                } catch (\Exception $e) {
+                    $driver->getChannel(true);
+                }
+
+                if ($result) {
+                    $this->printContent('done' . PHP_EOL);
+
+                } else {
+                    $this->printContent('failed' . PHP_EOL);
+                }
             }
         }
     }

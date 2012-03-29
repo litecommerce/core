@@ -113,13 +113,15 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
     /**
      * Get channel
      *
+     * @param boolean $reset Reset flag OPTIONAL
+     *
      * @return \AMQPChannel
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getChannel()
+    public function getChannel($reset = false)
     {
-        if (!$this->channel) {
+        if (!$this->channel || $reset) {
             require_once LC_DIR_LIB . 'AMQP' . LC_DS . 'amqp.inc';
 
             try {
