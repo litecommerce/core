@@ -771,17 +771,36 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder object
      * @param string                     $alias        Entity alias OPTIONAL
      *
-     * @return void
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         if (!\XLite::isAdminZone()) {
-            $alias = $alias ?: $queryBuilder->getRootAlias();
-            $queryBuilder->andWhere($alias . '.enabled = :enabled')
-                ->setParameter('enabled', true);
+            $this->assignEnabledCondition($queryBuilder, $alias);
         }
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Assign enabled condition 
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder
+     * @param string                     $alias        Alias OPTIONAL
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function assignEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
+    {
+        $alias = $alias ?: $queryBuilder->getRootAlias();
+        $queryBuilder->andWhere($alias . '.enabled = :enabled')
+            ->setParameter('enabled', true);
+
+        return $queryBuilder;
     }
 
     /**
