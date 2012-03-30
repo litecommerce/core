@@ -120,7 +120,7 @@ class Tax extends \XLite\Logic\ALogic
     {
         $zones = $this->getZonesList();
         $membership = $this->getMembership();
-        $price = $this->deductTaxFromPrice($product, isset($price) ? $price : $product->getTaxableBasis());
+        //$price = $this->deductTaxFromPrice($product, isset($price) ? $price : $product->getTaxableBasis());
 
         $taxes = array();
 
@@ -271,7 +271,7 @@ class Tax extends \XLite\Logic\ALogic
     {
         $address = null;
 
-        $addressObj = $this->getProfile()->getBillingAddress();
+        $addressObj = $this->getProfile()->getShippingAddress();
 
         if ($addressObj) {
 
@@ -282,6 +282,19 @@ class Tax extends \XLite\Logic\ALogic
                 'state'   => $addressObj->getState()->getStateId(),
                 'zipcode' => $addressObj->getZipcode(),
                 'country' => $addressObj->getCountry() ? $addressObj->getCountry()->getCode() : '',
+            );
+        }
+
+        if (!isset($address)) {
+
+            // Anonymous address
+            $config = \XLite\Core\Config::getInstance()->Shipping;
+            $address = array(
+                'address' => $config->anonymous_address,
+                'city'    => $config->anonymous_city,
+                'state'   => $config->anonymous_state,
+                'zipcode' => $config->anonymous_zipcode,
+                'country' => $config->anonymous_country,
             );
         }
 
