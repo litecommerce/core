@@ -15,6 +15,6 @@
  <li IF="participateSale(product)" class="sale-banner">
    <div class="sale-banner-block">
      <div class="text">{t(#sale#)}</div>
-     <div class="percent">{getSalePercent(product)}% off</div>
+     <div class="percent">{t(#percent X off#,_ARRAY_(#percent#^getSalePercent(product))):h}</div>
    </div>
  </li>
