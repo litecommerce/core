@@ -46,10 +46,13 @@ class Price extends \XLite\View\Price implements \XLite\Base\IDecorator
     {
         $result = false;
 
-        $product = $this->getProduct();
-        $taxes = $product->getIncludedTaxList();
+        if (\XLite\Core\Config::getInstance()->CDev->VAT->display_inc_vat_label) {
+            $product = $this->getProduct();
+            $taxes = $product->getIncludedTaxList();
+            $result = !empty($taxes);
+        }
 
-        return !empty($taxes);
+        return $result;
     }
 
     /**
