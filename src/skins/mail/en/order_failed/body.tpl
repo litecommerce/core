@@ -11,9 +11,9 @@
  *}
 <html>
 <body>
-Dear {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}!
+{t(#Dear X#,_ARRAY_(#firstname#^order.profile.billing_address.firstname,#lastname#^order.profile.billing_address.lastname)):h}
 <p>
-Your order # {order.order_id:r} has failed or been declined by the shop administration.<br>
+{t(#Your order has failed#,_ARRAY_(#id#^order.order_id))}<br>
 <p>
 <widget class="\XLite\View\Invoice" order="{order}" />
 <p>

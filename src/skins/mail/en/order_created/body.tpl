@@ -11,10 +11,9 @@
  *}
 <html>
 <body>
-Dear {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}!
+{t(#Dear X#,_ARRAY_(#firstname#^order.profile.billing_address.firstname,#lastname#^order.profile.billing_address.lastname)):h}
 <p>
-Thank you for your order made with our shopping system.<br>
-Please come back soon!
+{t(#Thank you for your order#):h}
 <p>
 <widget class="\XLite\View\Invoice" order="{order}" />
 <p>

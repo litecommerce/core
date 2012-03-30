@@ -38,6 +38,15 @@ namespace XLite\Model\Base;
 abstract class I18n extends \XLite\Model\AEntity
 {
     /**
+     * Current entity language
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.20
+     */
+    protected $editLanguage;
+
+    /**
      * Constructor
      *
      * @param array $data Entity properties OPTIONAL
@@ -51,6 +60,22 @@ abstract class I18n extends \XLite\Model\AEntity
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
+    }
+
+    /**
+     * Set current entity language
+     *
+     * @param string $code Code to set
+     *
+     * @return self
+     * @see    ____func_see____
+     * @since  1.0.20
+     */
+    public function setEditLanguage($code)
+    {
+        $this->editLanguage = $code;
+
+        return $this;
     }
 
     /**
@@ -92,7 +117,7 @@ abstract class I18n extends \XLite\Model\AEntity
     public function getTranslation($code = null, $allowEmptyResult = false)
     {
         if (!isset($code)) {
-            $code = $this->getSessionLanguageCode();
+            $code = $this->editLanguage ?: $this->getSessionLanguageCode();
         }
 
         $result = \Includes\Utils\ArrayManager::searchInObjectsArray(

@@ -456,38 +456,38 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         $lbl = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->find($labelId);
 
         if (!$lbl) {
-
             \XLite\Core\TopMessage::addError('The edited language has not been found');
 
         } elseif (!isset($label[$codeDefault]) || !$label[$codeDefault]) {
-
             \XLite\Core\TopMessage::addError(
                 'The text label has not been modified, because its translation to the default application language has not been specified'
             );
 
         } elseif (!isset($label[$codeInterface]) || !$label[$codeInterface]) {
-
             \XLite\Core\TopMessage::addError(
                 'The text label has not been modified, because its translation to the default interface language has not been specified'
             );
 
         } else {
+            $objects = array('insert' => array(), 'delete' => array());
+            
+            foreach ($label as $code => $text) {
+                if (!empty($text)) {
+                    $translation = $lbl->getTranslation($code);
+                    $translation->setLabel($text);
 
-            foreach ($label as $code => $l) {
-                if ($l) {
-                    $lbl->getTranslation($code)->label = $l;
-                    \XLite\Core\Database::getEM()->persist($lbl->getTranslation($code));
-
+                    $objects['insert'][] = $translation;
+                    
                 } elseif ($lbl->hasTranslation($code)) {
-                    \XLite\Core\Database::getEM()->remove($lbl->getTranslation($code));
-                }
+                    $objects['delete'][] = $lbl->getTranslation($code);
+                }   
             }
 
-            \XLite\Core\Database::getEM()->flush();
-
             \XLite\Core\Translation::getInstance()->reset();
-
             \XLite\Core\TopMessage::addInfo('The text label has been modified successfully');
+
+            \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->insertInBatch($objects['insert']);
+            \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->deleteInBatch($objects['delete']);
         }
     }
 
@@ -562,17 +562,23 @@ class Languages extends \XLite\Controller\Admin\AAdmin
             array_keys($values)
         );
 
+        $list = array();
+
         foreach ($labels as $label) {
-            if (isset($values[$label->label_id])) {
-                if (strlen($values[$label->label_id])) {
-                    $label->getTranslation($code)->label = $values[$label->label_id];
+            if (!empty($values[$label->getLabelId()])) {
+                $label->setEditLanguage($code)->setLabel($values[$label->getLabelId()]);
+                $list[] = $label;
 
-                } elseif ($label->hasTranslation($code)) {
-                    \XLite\Core\Database::getEM()->remove($label->getTranslation($code));
-                }
-            }
-        }
+            } elseif ($label->hasTranslation($code)) {
+                $translation = $label->getTranslation($code);
+                $label->getTranslations()->removeElement($translation);
+                \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabelTranslation')->delete($translation, false);
+                $list[] = $label;
+            }   
+        }   
 
-        \XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Translation::getInstance()->reset();
+        
+        \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->updateInBatch($list);
     }
 }

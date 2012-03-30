@@ -154,6 +154,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
 
         $this->domains = array();
         $this->lastLanguage = null;
+        $this->getRepo()->cleanCache();
     }
 
     /**
