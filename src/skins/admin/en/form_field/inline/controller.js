@@ -2,8 +2,8 @@
 
 /**
  * Inline form field common controller
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -18,8 +18,10 @@ CommonForm.elementControllers.push(
       // Field properties and methods
 
       var field = jQuery(this);
+      var obj = this;
 
       this.viewValuePattern = '.view';
+
       var line = field.parents('.line').eq(0);
       var row = line.get(0);
       var inputs = jQuery('.field :input', this);
@@ -66,13 +68,14 @@ CommonForm.elementControllers.push(
         if (input) {
           if (input.is('select')) {
             var elm = input.get(0);
+
             result = elm.options[elm.selectedIndex].text;
 
           } else {
             result = input.val();
           }
         }
-        
+
         return result;
       }
 
@@ -93,6 +96,8 @@ CommonForm.elementControllers.push(
       // Input blur effect (initialize save fields group)
       inputs.blur(
         function () {
+          obj.sanitize();
+
           var result = !jQuery(this.form).validationEngine('validateField', '#' + this.id);
 
           if (result && row) {
@@ -212,9 +217,8 @@ CommonForm.elementControllers.push(
         // Save line fields into views
         row.saveFields = function()
         {
-          jQuery('.inline-field', this).each( 
+          jQuery('.inline-field', this).each(
             function () {
-              this.sanitize();
               this.saveField();
             }
           );
