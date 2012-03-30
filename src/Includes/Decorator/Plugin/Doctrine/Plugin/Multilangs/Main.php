@@ -63,7 +63,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * @see    ____func_see____
      * @since  1.0.0
      *
-     * @OneToMany (targetEntity="____TRANSLATION_CLASS____", mappedBy="owner", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="____TRANSLATION_CLASS____", mappedBy="owner", cascade={"all"})
      */
     protected \$translations;
 CODE;
