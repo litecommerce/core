@@ -349,7 +349,7 @@ class Rate extends \XLite\Model\AEntity
      */
     public function calculateProductPriceExcludingTax(\XLite\Model\Product $product, $price)
     {
-        return $this->getProductBasis($product)
+        return $price
             ? $this->calculateValueExcludingTax($price)
             : 0;
     }
@@ -382,7 +382,7 @@ class Rate extends \XLite\Model\AEntity
      */
     public function calculateProductPriceIncludingTax(\XLite\Model\Product $product, $price)
     {
-        return $this->getProductBasis($product)
+        return $price
             ? $this->calculateValueIncludingTax($price)
             : 0;
     }

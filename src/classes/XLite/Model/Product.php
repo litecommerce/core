@@ -278,7 +278,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Get price
+     * Get price: modules should never overwrite this method
      *
      * @return float
      * @see    ____func_see____
@@ -287,6 +287,43 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Get clear price: this price can be overwritten by modules
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getClearPrice()
+    {
+        return $this->getPrice();
+    }
+
+    /**
+     * Get net price: this price can be modified (but not overwritten) by modules
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getNetPrice($price = null)
+    {
+        return \XLite\Logic\Price::getInstance()->applyPriceModifiers('productNetPrice', isset($price) ? $price : $this->getClearPrice(), $this);
+    }
+
+    /**
+     * Get display price: this price can be modified (but not overwritten) by modules.
+     * This price is used to display in the catalog
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getDisplayPrice($price = null)
+    {
+        return \XLite\Logic\Price::getInstance()->applyPriceModifiers('productDisplayPrice', isset($price) ? $price : $this->getNetPrice(), $this);
     }
 
     /**
@@ -355,18 +392,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
         }
 
         return $result;
-    }
-
-    /**
-     * Return product list price (price for customer interface)
-     *
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getListPrice()
-    {
-        return $this->getPrice();
     }
 
     /**
@@ -568,7 +593,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function getTaxableBasis()
     {
-        return $this->getPrice();
+        return $this->getNetPrice();
     }
 
     /**
