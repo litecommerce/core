@@ -148,7 +148,9 @@ class Tax extends \XLite\Logic\ALogic
      */
     public function getDisplayPrice(\XLite\Model\Product $product, $price)
     {
-        $netPrice = $this->calculateProductPrice($product, $price);
+        //$netPrice = $this->calculateProductPrice($product, $price);
+
+        $netPrice = $price;
 
         if (\XLite\Core\Config::getInstance()->CDev->VAT->display_prices_including_vat) {
 
@@ -164,6 +166,21 @@ class Tax extends \XLite\Logic\ALogic
         return $netPrice;
     }
 
+    public function getVATValue(\XLite\Model\Product $product, $price)
+    {
+        $taxes = $this->calculateProduct($product, $price);
+
+        $taxTotal = 0;
+
+        if (!empty($taxes)) {
+            foreach ($taxes as $tax) {
+                $taxTotal += $tax;
+            }
+        }
+
+        return $taxTotal;
+    }
+
     /**
      * Calculate product net price
      * 
@@ -174,7 +191,7 @@ class Tax extends \XLite\Logic\ALogic
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function deductTaxFromPrice(\XLite\Model\Product $product, $price)
+    public function deductTaxFromPrice(\XLite\Model\Product $product, $price)
     {
         foreach ($this->getTaxes() as $tax) {
             $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();

@@ -53,6 +53,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      */
     public function getListPrice()
     {
+        return 1;
         return \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->getDisplayPrice($this, parent::getListPrice());
     }
 
