@@ -668,43 +668,43 @@ XLite\Model\Payment\Method:
   - { service_name: COD, class: 'Model\Payment\Processor\Offline', orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
 XLite\Model\Country:
   - { country: Afghanistan, code3: AFG, code: AF, enabled: false, currency: { currency_id: 971 } }
-  - { country: Albania, code3: ALB, code: AL, currency: { currency_id: 8 }  }
-  - { country: Algeria, code3: DZA, code: DZ, currency: { currency_id: 12 }  }
+  - { country: Albania, code3: ALB, code: AL, currency: { currency_id: 8 } }
+  - { country: Algeria, code3: DZA, code: DZ, currency: { currency_id: 12 } }
   - { country: 'American Samoa', code3: ASM, code: AS, currency: { currency_id: 840 } }
-  - { country: Andorra, code3: AND, code: AD, currency: { currency_id: 978 }  }
+  - { country: Andorra, code3: AND, code: AD, currency: { currency_id: 978 } }
   - { country: Angola, code3: AGO, code: AO, currency: { currency_id: 973 } }
-  - { country: Anguilla, code3: AIA, code: AI, currency: { currency_id: 951 }  }
+  - { country: Anguilla, code3: AIA, code: AI, currency: { currency_id: 951 } }
   - { country: Antarctica, code3: ATA, code: AQ }
-  - { country: 'Antigua and Barbuda', code3: ATG, code: AG, currency: { currency_id: 951 }  }
-  - { country: Argentina, code3: ARG, code: AR, currency: { currency_id: 32 }  }
-  - { country: Armenia, code3: ARM, code: AM, currency: { currency_id: 51 }  }
-  - { country: Aruba, code3: ABW, code: AW, currency: { currency_id: 533 }  }
-  - { country: Australia, code3: AUS, code: AU, currency: { currency_id: 36 }  }
+  - { country: 'Antigua and Barbuda', code3: ATG, code: AG, currency: { currency_id: 951 } }
+  - { country: Argentina, code3: ARG, code: AR, currency: { currency_id: 32 } }
+  - { country: Armenia, code3: ARM, code: AM, currency: { currency_id: 51 } }
+  - { country: Aruba, code3: ABW, code: AW, currency: { currency_id: 533 } }
+  - { country: Australia, code3: AUS, code: AU, currency: { currency_id: 36 } }
   - { country: Austria, code3: AUT, code: AT, currency: { currency_id: 978 }, eu_member: true }
   - { country: Azerbaijan, code3: AZE, code: AZ, currency: { currency_id: 944 } }
   - { country: Bahamas, code3: BHS, code: BS, currency: { currency_id: 44 } }
-  - { country: Bahrain, code3: BHR, code: BH, currency: { currency_id: 48 }  }
-  - { country: Bangladesh, code3: BGD, code: BD, currency: { currency_id: 50 }  }
-  - { country: Barbados, code3: BRB, code: BB, currency: { currency_id: 52 }  }
-  - { country: Belarus, code3: BLR, code: BY, currency: { currency_id: 974 }  }
-  - { country: Belgium, code3: BEL, code: BE, currency: { currency_id: 978 } , eu_member: true }
-  - { country: Belize, code3: BLZ, code: BZ, currency: { currency_id: 84 }  }
-  - { country: Benin, code3: BEN, code: BJ, currency: { currency_id: 952 }  }
-  - { country: Bermuda, code3: BMU, code: BM, currency: { currency_id: 60 }  }
-  - { country: Bhutan, code3: BTN, code: BT, currency: { currency_id: 356 }  }
+  - { country: Bahrain, code3: BHR, code: BH, currency: { currency_id: 48 } }
+  - { country: Bangladesh, code3: BGD, code: BD, currency: { currency_id: 50 } }
+  - { country: Barbados, code3: BRB, code: BB, currency: { currency_id: 52 } }
+  - { country: Belarus, code3: BLR, code: BY, currency: { currency_id: 974 } }
+  - { country: Belgium, code3: BEL, code: BE, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Belize, code3: BLZ, code: BZ, currency: { currency_id: 84 } }
+  - { country: Benin, code3: BEN, code: BJ, currency: { currency_id: 952 } }
+  - { country: Bermuda, code3: BMU, code: BM, currency: { currency_id: 60 } }
+  - { country: Bhutan, code3: BTN, code: BT, currency: { currency_id: 356 } }
   - { country: Bolivia, code: BO, currency: { currency_id: 68 } }
   - { country: 'Bosnia and Herzegowina', code: BA, currency: { currency_id: 977 } }
-  - { country: Botswana, code3: BWA, code: BW, currency: { currency_id: 72 }  }
+  - { country: Botswana, code3: BWA, code: BW, currency: { currency_id: 72 } }
   - { country: 'Bouvet Island', code3: BVT, code: BV }
-  - { country: Brazil, code3: BRA, code: BR, currency: { currency_id: 986 }  }
-  - { country: 'British Indian Ocean Territory', code3: IOT, code: IO, currency: { currency_id: 840 }  }
+  - { country: Brazil, code3: BRA, code: BR, currency: { currency_id: 986 } }
+  - { country: 'British Indian Ocean Territory', code3: IOT, code: IO, currency: { currency_id: 840 } }
   - { country: 'British Virgin Islands', code: VG, currency: { currency_id: 840 } }
   - { country: 'Brunei Darussalam', code3: BRN, code: BN, currency: { currency_id: 96 } }
   - { country: Bulgaria, code3: BGR, code: BG, currency: { currency_id: 975 }, eu_member: true }
-  - { country: 'Burkina Faso', code3: BFA, code: BF, currency: { currency_id: 952 }  }
-  - { country: Burundi, code3: BDI, code: BI, currency: { currency_id: 108 }  }
+  - { country: 'Burkina Faso', code3: BFA, code: BF, currency: { currency_id: 952 } }
+  - { country: Burundi, code3: BDI, code: BI, currency: { currency_id: 108 } }
   - { country: Cambodia, code3: KHM, code: KH, currency: { currency_id: 116 } }
-  - { country: Cameroon, code3: CMR, code: CM, currency: { currency_id: 950 }  }
+  - { country: Cameroon, code3: CMR, code: CM, currency: { currency_id: 950 } }
   - country: Canada
     code3: CAN
     code: CA
@@ -723,28 +723,28 @@ XLite\Model\Country:
       - { state: Quebec, code: QC }
       - { state: Saskatchewan, code: SK }
       - { state: Yukon, code: YT }
-  - { country: 'Cape Verde', code3: CPV, code: CV, currency: { currency_id: 132 }  }
-  - { country: 'Cayman Islands', code3: CYM, code: KY, currency: { currency_id: 136 }  }
-  - { country: 'Central African Republic', code3: CAF, code: CF, currency: { currency_id: 950 }  }
-  - { country: Chad, code3: TCD, code: TD, currency: { currency_id: 950 }  }
-  - { country: Chile, code3: CHL, code: CL, currency: { currency_id: 152 }  }
+  - { country: 'Cape Verde', code3: CPV, code: CV, currency: { currency_id: 132 } }
+  - { country: 'Cayman Islands', code3: CYM, code: KY, currency: { currency_id: 136 } }
+  - { country: 'Central African Republic', code3: CAF, code: CF, currency: { currency_id: 950 } }
+  - { country: Chad, code3: TCD, code: TD, currency: { currency_id: 950 } }
+  - { country: Chile, code3: CHL, code: CL, currency: { currency_id: 152 } }
   - { country: China, code3: CHN, code: CN, currency: { currency_id: 156 } }
   - { country: 'Christmas Island', code3: CXR, code: CX }
   - { country: 'Cocos (Keeling) Islands', code3: CCK, code: CC, currency: { currency_id: 36 } }
-  - { country: Colombia, code3: COL, code: CO, currency: { currency_id: 170 }  }
-  - { country: Comoros, code3: COM, code: KM, currency: { currency_id: 174 }  }
+  - { country: Colombia, code3: COL, code: CO, currency: { currency_id: 170 } }
+  - { country: Comoros, code3: COM, code: KM, currency: { currency_id: 174 } }
   - { country: 'Congo, Democratic Republic of', code3: COG, code: CD, currency: { currency_id: 976 } }
   - { country: 'Cook Islands', code3: COK, code: CK, currency: { currency_id: 554 } }
-  - { country: 'Costa Rica', code3: CRI, code: CR, currency: { currency_id: 188 }  }
+  - { country: 'Costa Rica', code3: CRI, code: CR, currency: { currency_id: 188 } }
   - { country: 'Cote D''ivoire', code: CI, currency: { currency_id: 950 } }
-  - { country: Croatia, code3: HRV, code: HR, currency: { currency_id: 191 }  }
-  - { country: Cuba, code3: CUB, code: CU, currency: { currency_id: 192 }  }
-  - { country: Cyprus, code3: CYP, code: CY, currency: { currency_id: 978 } , eu_member: true }
-  - { country: 'Czech Republic', code3: CZE, code: CZ, currency: { currency_id: 203 }  }
-  - { country: Denmark, code3: DNK, code: DK, currency: { currency_id: 208 } , eu_member: true }
+  - { country: Croatia, code3: HRV, code: HR, currency: { currency_id: 191 } }
+  - { country: Cuba, code3: CUB, code: CU, currency: { currency_id: 192 } }
+  - { country: Cyprus, code3: CYP, code: CY, currency: { currency_id: 978 }, eu_member: true }
+  - { country: 'Czech Republic', code3: CZE, code: CZ, currency: { currency_id: 203 } }
+  - { country: Denmark, code3: DNK, code: DK, currency: { currency_id: 208 }, eu_member: true }
   - { country: Djibouti, code3: DJI, code: DJ, currency: { currency_id: 262 } }
   - { country: Dominica, code3: DMA, code: DM, currency: { currency_id: 951 } }
-  - { country: 'Dominican Republic', code3: DOM, code: DO, currency: { currency_id: 214 }  }
+  - { country: 'Dominican Republic', code3: DOM, code: DO, currency: { currency_id: 214 } }
   - { country: 'East Timor', code: TP, currency: { currency_id: 840 } }
   - { country: Ecuador, code3: ECU, code: EC, currency: { currency_id: 840 } }
   - { country: Egypt, code3: EGY, code: EG, currency: { currency_id: 818 } }
@@ -755,129 +755,129 @@ XLite\Model\Country:
   - { country: Ethiopia, code3: ETH, code: ET, currency: { currency_id: 230 } }
   - { country: 'Falkland Islands (Malvinas)', code3: FLK, code: FK, currency: { currency_id: 238 } }
   - { country: 'Faroe Islands', code3: FRO, code: FO, currency: { currency_id: 208 } }
-  - { country: Fiji, code3: FJI, code: FJ, currency: { currency_id: 242 }  }
-  - { country: Finland, code3: FIN, code: FI, currency: { currency_id: 978 } , enabled: false }
-  - { country: France, code3: FRA, code: FR, currency: { currency_id: 978 } , eu_member: true }
+  - { country: Fiji, code3: FJI, code: FJ, currency: { currency_id: 242 } }
+  - { country: Finland, code3: FIN, code: FI, currency: { currency_id: 978 }, enabled: false }
+  - { country: France, code3: FRA, code: FR, currency: { currency_id: 978 }, eu_member: true }
   - { country: 'French Guiana', code3: GUF, code: GF, currency: { currency_id: 978 } }
-  - { country: 'French Polynesia', code3: PYF, code: PF, currency: { currency_id: 953 }  }
+  - { country: 'French Polynesia', code3: PYF, code: PF, currency: { currency_id: 953 } }
   - { country: 'French Southern Territories', code3: ATF, code: TF, currency: { currency_id: 978 } }
-  - { country: Gabon, code3: GAB, code: GA, currency: { currency_id: 950 }  }
+  - { country: Gabon, code3: GAB, code: GA, currency: { currency_id: 950 } }
   - { country: Gambia, code3: GMB, code: GM, currency: { currency_id: 270 } }
-  - { country: Georgia, code3: GEO, code: GE, currency: { currency_id: 981 }  }
+  - { country: Georgia, code3: GEO, code: GE, currency: { currency_id: 981 } }
   - { country: Germany, code3: DEU, code: DE, currency: { currency_id: 978 }, eu_member: true }
   - { country: Ghana, code3: GHA, code: GH, currency: { currency_id: 936 } }
-  - { country: Gibraltar, code3: GIB, code: GI, currency: { currency_id: 292 }  }
+  - { country: Gibraltar, code3: GIB, code: GI, currency: { currency_id: 292 } }
   - { country: Greece, code3: GRC, code: GR, currency: { currency_id: 978 }, eu_member: true }
   - { country: Greenland, code3: GRL, code: GL, currency: { currency_id: 208 } }
-  - { country: Grenada, code3: GRD, code: GD, currency: { currency_id: 951 }  }
+  - { country: Grenada, code3: GRD, code: GD, currency: { currency_id: 951 } }
   - { country: Guadeloupe, code3: GLP, code: GP, currency: { currency_id: 978 } }
   - { country: Guam, code3: GUM, code: GU, currency: { currency_id: 840 } }
-  - { country: Guatemala, code3: GTM, code: GT, currency: { currency_id: 320 }  }
-  - { country: Guinea, code3: GIN, code: GN, currency: { currency_id: 324 }  }
-  - { country: Guinea-Bissau, code3: GNB, code: GW, currency: { currency_id: 952 }  }
-  - { country: Guyana, code3: GUY, code: GY, currency: { currency_id: 328 }  }
-  - { country: Haiti, code3: HTI, code: HT, currency: { currency_id: 332 }  }
+  - { country: Guatemala, code3: GTM, code: GT, currency: { currency_id: 320 } }
+  - { country: Guinea, code3: GIN, code: GN, currency: { currency_id: 324 } }
+  - { country: Guinea-Bissau, code3: GNB, code: GW, currency: { currency_id: 952 } }
+  - { country: Guyana, code3: GUY, code: GY, currency: { currency_id: 328 } }
+  - { country: Haiti, code3: HTI, code: HT, currency: { currency_id: 332 } }
   - { country: 'Heard and McDonald Islands', code: HM, currency: { currency_id: 36 } }
   - { country: Honduras, code3: HND, code: HN, currency: { currency_id: 340 } }
-  - { country: 'Hong Kong', code3: HKG, code: HK, currency: { currency_id: 344 }  }
+  - { country: 'Hong Kong', code3: HKG, code: HK, currency: { currency_id: 344 } }
   - { country: Hungary, code3: HUN, code: HU, currency: { currency_id: 348 }, eu_member: true }
-  - { country: Iceland, code3: ISL, code: IS, currency: { currency_id: 352 }  }
-  - { country: India, code3: IND, code: IN, currency: { currency_id: 356 }  }
-  - { country: Indonesia, code3: IDN, code: ID, currency: { currency_id: 360 }  }
-  - { country: Iraq, code3: IRQ, code: IQ, currency: { currency_id: 368 }  }
-  - { country: Ireland, code3: IRL, code: IE, currency: { currency_id: 978 } , eu_member: true }
+  - { country: Iceland, code3: ISL, code: IS, currency: { currency_id: 352 } }
+  - { country: India, code3: IND, code: IN, currency: { currency_id: 356 } }
+  - { country: Indonesia, code3: IDN, code: ID, currency: { currency_id: 360 } }
+  - { country: Iraq, code3: IRQ, code: IQ, currency: { currency_id: 368 } }
+  - { country: Ireland, code3: IRL, code: IE, currency: { currency_id: 978 }, eu_member: true }
   - { country: 'Islamic Republic of Iran', code: IR, currency: { currency_id: 364 } }
-  - { country: Israel, code3: ISR, code: IL, currency: { currency_id: 376 }  }
-  - { country: Italy, code3: ITA, code: IT, currency: { currency_id: 978 } , eu_member: true }
-  - { country: Jamaica, code3: JAM, code: JM, currency: { currency_id: 388 }  }
-  - { country: Japan, code3: JPN, code: JP, currency: { currency_id: 392 }  }
-  - { country: Jordan, code3: JOR, code: JO, currency: { currency_id: 400 }  }
-  - { country: Kazakhstan, code3: KAZ, code: KZ, currency: { currency_id: 398 }  }
-  - { country: Kenya, code3: KEN, code: KE, currency: { currency_id: 404 }  }
+  - { country: Israel, code3: ISR, code: IL, currency: { currency_id: 376 } }
+  - { country: Italy, code3: ITA, code: IT, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Jamaica, code3: JAM, code: JM, currency: { currency_id: 388 } }
+  - { country: Japan, code3: JPN, code: JP, currency: { currency_id: 392 } }
+  - { country: Jordan, code3: JOR, code: JO, currency: { currency_id: 400 } }
+  - { country: Kazakhstan, code3: KAZ, code: KZ, currency: { currency_id: 398 } }
+  - { country: Kenya, code3: KEN, code: KE, currency: { currency_id: 404 } }
   - { country: Kiribati, code3: KIR, code: KI, currency: { currency_id: 36 } }
   - { country: "Democratic People's Republic of Korea", code: KP, currency: { currency_id: 408 } }
   - { country: 'Korea, Republic of', code3: KOR, code: KR, currency: { currency_id: 410 } }
-  - { country: Kuwait, code3: KWT, code: KW, currency: { currency_id: 414 }  }
-  - { country: Kyrgyzstan, code3: KGZ, code: KG, currency: { currency_id: 417 }  }
+  - { country: Kuwait, code3: KWT, code: KW, currency: { currency_id: 414 } }
+  - { country: Kyrgyzstan, code3: KGZ, code: KG, currency: { currency_id: 417 } }
   - { country: Laos, code: LA, currency: { currency_id: 418 } }
-  - { country: Latvia, code3: LVA, code: LV, currency: { currency_id: 428 } , eu_member: true }
-  - { country: Lebanon, code3: LBN, code: LB, currency: { currency_id: 422 }  }
-  - { country: Lesotho, code3: LSO, code: LS, currency: { currency_id: 426 }  }
-  - { country: Liberia, code3: LBR, code: LR, currency: { currency_id: 430 }  }
+  - { country: Latvia, code3: LVA, code: LV, currency: { currency_id: 428 }, eu_member: true }
+  - { country: Lebanon, code3: LBN, code: LB, currency: { currency_id: 422 } }
+  - { country: Lesotho, code3: LSO, code: LS, currency: { currency_id: 426 } }
+  - { country: Liberia, code3: LBR, code: LR, currency: { currency_id: 430 } }
   - { country: 'Libyan Arab Jamahiriya', code3: LBY, code: LY, currency: { currency_id: 434 } }
-  - { country: Liechtenstein, code3: LIE, code: LI, currency: { currency_id: 756 }  }
-  - { country: Lithuania, code3: LTU, code: LT, currency: { currency_id: 440 } , eu_member: true }
-  - { country: Luxembourg, code3: LUX, code: LU, currency: { currency_id: 978 } , eu_member: true }
+  - { country: Liechtenstein, code3: LIE, code: LI, currency: { currency_id: 756 } }
+  - { country: Lithuania, code3: LTU, code: LT, currency: { currency_id: 440 }, eu_member: true }
+  - { country: Luxembourg, code3: LUX, code: LU, currency: { currency_id: 978 }, eu_member: true }
   - { country: Macau, code: MO, currency: { currency_id: 446 } }
-  - { country: Macedonia, code: MK, currency: { currency_id: 807 }  }
-  - { country: Madagascar, code3: MDG, code: MG, currency: { currency_id: 969 }  }
-  - { country: Malawi, code3: MWI, code: MW, currency: { currency_id: 454 }  }
-  - { country: Malaysia, code3: MYS, code: MY, currency: { currency_id: 458 }  }
-  - { country: Maldives, code3: MDV, code: MV, currency: { currency_id: 462 }  }
-  - { country: Mali, code3: MLI, code: ML, currency: { currency_id: 952 }  }
-  - { country: Malta, code3: MLT, code: MT, currency: { currency_id: 978 } , eu_member: true }
-  - { country: 'Marshall Islands', code3: MHL, code: MH, currency: { currency_id: 840 }  }
+  - { country: Macedonia, code: MK, currency: { currency_id: 807 } }
+  - { country: Madagascar, code3: MDG, code: MG, currency: { currency_id: 969 } }
+  - { country: Malawi, code3: MWI, code: MW, currency: { currency_id: 454 } }
+  - { country: Malaysia, code3: MYS, code: MY, currency: { currency_id: 458 } }
+  - { country: Maldives, code3: MDV, code: MV, currency: { currency_id: 462 } }
+  - { country: Mali, code3: MLI, code: ML, currency: { currency_id: 952 } }
+  - { country: Malta, code3: MLT, code: MT, currency: { currency_id: 978 }, eu_member: true }
+  - { country: 'Marshall Islands', code3: MHL, code: MH, currency: { currency_id: 840 } }
   - { country: Martinique, code3: MTQ, code: MQ, currency: { currency_id: 978 } }
-  - { country: Mauritania, code3: MRT, code: MR, currency: { currency_id: 478 }  }
-  - { country: Mauritius, code3: MUS, code: MU, currency: { currency_id: 480 }  }
+  - { country: Mauritania, code3: MRT, code: MR, currency: { currency_id: 478 } }
+  - { country: Mauritius, code3: MUS, code: MU, currency: { currency_id: 480 } }
   - { country: Mayotte, code3: MYT, code: YT, currency: { currency_id: 978 } }
-  - { country: Mexico, code3: MEX, code: MX, currency: { currency_id: 484 }  }
+  - { country: Mexico, code3: MEX, code: MX, currency: { currency_id: 484 } }
   - { country: Micronesia, code: FM, currency: { currency_id: 840 } }
   - { country: 'Moldova, Republic of', code3: MDA, code: MD, currency: { currency_id: 498 } }
-  - { country: Monaco, code3: MCO, code: MC, currency: { currency_id: 978 } , eu_member: true }
-  - { country: Mongolia, code3: MNG, code: MN, currency: { currency_id: 496 }  }
+  - { country: Monaco, code3: MCO, code: MC, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Mongolia, code3: MNG, code: MN, currency: { currency_id: 496 } }
   - { country: Montenegro, code: ME, currency: { currency_id: 978 }, eu_member: true }
-  - { country: Montserrat, code3: MSR, code: MS, currency: { currency_id: 951 }  }
-  - { country: Morocco, code3: MAR, code: MA, currency: { currency_id: 504 }  }
+  - { country: Montserrat, code3: MSR, code: MS, currency: { currency_id: 951 } }
+  - { country: Morocco, code3: MAR, code: MA, currency: { currency_id: 504 } }
   - { country: Mozambique, code3: MOZ, code: MZ, currency: { currency_id: 943 } }
-  - { country: Namibia, code3: NAM, code: NA, currency: { currency_id: 516 }  }
+  - { country: Namibia, code3: NAM, code: NA, currency: { currency_id: 516 } }
   - { country: Nauru, code3: NRU, code: NR, currency: { currency_id: 36 } }
-  - { country: Nepal, code3: NPL, code: NP, currency: { currency_id: 524 }  }
-  - { country: Netherlands, code3: NLD, code: NL, currency: { currency_id: 978 } , eu_member: true }
+  - { country: Nepal, code3: NPL, code: NP, currency: { currency_id: 524 } }
+  - { country: Netherlands, code3: NLD, code: NL, currency: { currency_id: 978 }, eu_member: true }
   - { country: 'Netherlands Antilles', code3: ANT, code: AN, currency: { currency_id: 978 } }
-  - { country: 'New Caledonia', code3: NCL, code: NC, currency: { currency_id: 953 }  }
-  - { country: 'New Zealand', code3: NZL, code: NZ, currency: { currency_id: 554 }  }
-  - { country: Nicaragua, code3: NIC, code: NI, currency: { currency_id: 558 }  }
-  - { country: Niger, code3: NER, code: NE, currency: { currency_id: 952 }  }
-  - { country: Nigeria, code3: NGA, code: NG, currency: { currency_id: 566 }  }
+  - { country: 'New Caledonia', code3: NCL, code: NC, currency: { currency_id: 953 } }
+  - { country: 'New Zealand', code3: NZL, code: NZ, currency: { currency_id: 554 } }
+  - { country: Nicaragua, code3: NIC, code: NI, currency: { currency_id: 558 } }
+  - { country: Niger, code3: NER, code: NE, currency: { currency_id: 952 } }
+  - { country: Nigeria, code3: NGA, code: NG, currency: { currency_id: 566 } }
   - { country: Niue, code3: NIU, code: NU, currency: { currency_id: 554 } }
   - { country: 'Norfolk Island', code3: NFK, code: NF, currency: { currency_id: 36 } }
   - { country: 'Northern Mariana Islands', code3: MNP, code: MP, currency: { currency_id: 840 } }
-  - { country: Norway, code3: NOR, code: NO, currency: { currency_id: 578 }  }
-  - { country: Oman, code3: OMN, code: OM, currency: { currency_id: 512 }  }
-  - { country: Pakistan, code3: PAK, code: PK, currency: { currency_id: 586 }  }
-  - { country: Palau, code3: PLW, code: PW, currency: { currency_id: 840 }  }
-  - { country: Panama, code3: PAN, code: PA, currency: { currency_id: 590 }  }
-  - { country: 'Papua New Guinea', code3: PNG, code: PG, currency: { currency_id: 598 }  }
-  - { country: Paraguay, code3: PRY, code: PY, currency: { currency_id: 600 }  }
-  - { country: Peru, code3: PER, code: PE, currency: { currency_id: 604 }  }
-  - { country: Philippines, code3: PHL, code: PH, currency: { currency_id: 608 }  }
+  - { country: Norway, code3: NOR, code: NO, currency: { currency_id: 578 } }
+  - { country: Oman, code3: OMN, code: OM, currency: { currency_id: 512 } }
+  - { country: Pakistan, code3: PAK, code: PK, currency: { currency_id: 586 } }
+  - { country: Palau, code3: PLW, code: PW, currency: { currency_id: 840 } }
+  - { country: Panama, code3: PAN, code: PA, currency: { currency_id: 590 } }
+  - { country: 'Papua New Guinea', code3: PNG, code: PG, currency: { currency_id: 598 } }
+  - { country: Paraguay, code3: PRY, code: PY, currency: { currency_id: 600 } }
+  - { country: Peru, code3: PER, code: PE, currency: { currency_id: 604 } }
+  - { country: Philippines, code3: PHL, code: PH, currency: { currency_id: 608 } }
   - { country: Pitcairn, code3: PCN, code: PN, currency: { currency_id: 554 } }
-  - { country: Poland, code3: POL, code: PL, currency: { currency_id: 985 } , eu_member: true }
-  - { country: Portugal, code3: PRT, code: PT, currency: { currency_id: 978 } , eu_member: true }
+  - { country: Poland, code3: POL, code: PL, currency: { currency_id: 985 }, eu_member: true }
+  - { country: Portugal, code3: PRT, code: PT, currency: { currency_id: 978 }, eu_member: true }
   - { country: 'Puerto Rico', code3: PRI, code: PR, currency: { currency_id: 840 } }
-  - { country: Qatar, code3: QAT, code: QA, currency: { currency_id: 634 }  }
+  - { country: Qatar, code3: QAT, code: QA, currency: { currency_id: 634 } }
   - { country: Reunion, code: RE, currency: { currency_id: 978 } }
   - { country: Romania, code3: ROU, code: RO, currency: { currency_id: 946 }, eu_member: true }
   - { country: 'Russian Federation', code3: RUS, code: RU, currency: { currency_id: 643 }, symbolBefore: false }
-  - { country: Rwanda, code3: RWA, code: RW, currency: { currency_id: 646 }  }
-  - { country: 'Saint Lucia', code3: LCA, code: LC, currency: { currency_id: 951 }  }
-  - { country: Samoa, code3: WSM, code: WS, currency: { currency_id: 882 }  }
-  - { country: 'San Marino', code3: SMR, code: SM, currency: { currency_id: 978 }  }
-  - { country: 'Sao Tome and Principe', code3: STP, code: ST, currency: { currency_id: 678 }  }
-  - { country: 'Saudi Arabia', code3: SAU, code: SA, currency: { currency_id: 682 }  }
-  - { country: Senegal, code3: SEN, code: SN, currency: { currency_id: 952 }  }
-  - { country: Serbia, code3: SRB, code: RS, currency: { currency_id: 941 }  }
-  - { country: Seychelles, code3: SYC, code: SC, currency: { currency_id: 690 }  }
-  - { country: 'Sierra Leone', code3: SLE, code: SL, currency: { currency_id: 694 }  }
-  - { country: Singapore, code3: SGP, code: SG, currency: { currency_id: 702 }  }
-  - { country: Slovakia, code3: SVK, code: SK, currency: { currency_id: 978 } , eu_member: true }
-  - { country: Slovenia, code3: SVN, code: SI, currency: { currency_id: 978 } , eu_member: true }
-  - { country: 'Solomon Islands', code3: SLB, code: SB, currency: { currency_id: 90 }  }
-  - { country: Somalia, code3: SOM, code: SO, currency: { currency_id: 706 }  }
-  - { country: 'South Africa', code3: ZAF, code: ZA, currency: { currency_id: 710 }  }
-  - { country: Spain, code3: ESP, code: ES, currency: { currency_id: 978 } , eu_member: true }
-  - { country: 'Sri Lanka', code3: LKA, code: LK, currency: { currency_id: 144 }  }
+  - { country: Rwanda, code3: RWA, code: RW, currency: { currency_id: 646 } }
+  - { country: 'Saint Lucia', code3: LCA, code: LC, currency: { currency_id: 951 } }
+  - { country: Samoa, code3: WSM, code: WS, currency: { currency_id: 882 } }
+  - { country: 'San Marino', code3: SMR, code: SM, currency: { currency_id: 978 } }
+  - { country: 'Sao Tome and Principe', code3: STP, code: ST, currency: { currency_id: 678 } }
+  - { country: 'Saudi Arabia', code3: SAU, code: SA, currency: { currency_id: 682 } }
+  - { country: Senegal, code3: SEN, code: SN, currency: { currency_id: 952 } }
+  - { country: Serbia, code3: SRB, code: RS, currency: { currency_id: 941 } }
+  - { country: Seychelles, code3: SYC, code: SC, currency: { currency_id: 690 } }
+  - { country: 'Sierra Leone', code3: SLE, code: SL, currency: { currency_id: 694 } }
+  - { country: Singapore, code3: SGP, code: SG, currency: { currency_id: 702 } }
+  - { country: Slovakia, code3: SVK, code: SK, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Slovenia, code3: SVN, code: SI, currency: { currency_id: 978 }, eu_member: true }
+  - { country: 'Solomon Islands', code3: SLB, code: SB, currency: { currency_id: 90 } }
+  - { country: Somalia, code3: SOM, code: SO, currency: { currency_id: 706 } }
+  - { country: 'South Africa', code3: ZAF, code: ZA, currency: { currency_id: 710 } }
+  - { country: Spain, code3: ESP, code: ES, currency: { currency_id: 978 }, eu_member: true }
+  - { country: 'Sri Lanka', code3: LKA, code: LK, currency: { currency_id: 144 } }
   - { country: 'St. Helena', code: SH, currency: { currency_id: 654 } }
   - { country: 'St. Kitts And Nevis', code: KN, currency: { currency_id: 951 } }
   - { country: 'St. Pierre and Miquelon', code: PM, currency: { currency_id: 978 } }
@@ -885,26 +885,26 @@ XLite\Model\Country:
   - { country: Sudan, code3: SDN, code: SD, currency: { currency_id: 938 } }
   - { country: Suriname, code3: SUR, code: SR, currency: { currency_id: 968 } }
   - { country: 'Svalbard and Jan Mayen', code3: SJM, code: SJ, currency: { currency_id: 978 } }
-  - { country: Swaziland, code3: SWZ, code: SZ, currency: { currency_id: 748 }  }
+  - { country: Swaziland, code3: SWZ, code: SZ, currency: { currency_id: 748 } }
   - { country: Sweden, code3: SWE, code: SE, currency: { currency_id: 752 }, eu_member: true }
-  - { country: Switzerland, code3: CHE, code: CH, currency: { currency_id: 756 }  }
+  - { country: Switzerland, code3: CHE, code: CH, currency: { currency_id: 756 } }
   - { country: 'Syrian Arab Republic', code3: SYR, code: SY, currency: { currency_id: 760 } }
   - { country: Taiwan, code: TW, currency: { currency_id: 901 } }
-  - { country: Tajikistan, code3: TJK, code: TJ, currency: { currency_id: 972 }  }
+  - { country: Tajikistan, code3: TJK, code: TJ, currency: { currency_id: 972 } }
   - { country: 'Tanzania, United Republic of', code3: TZA, code: TZ, currency: { currency_id: 834 } }
-  - { country: Thailand, code3: THA, code: TH, currency: { currency_id: 764 }  }
+  - { country: Thailand, code3: THA, code: TH, currency: { currency_id: 764 } }
   - { country: Togo, code3: TGO, code: TG, currency: { currency_id: 952 } }
   - { country: Tokelau, code3: TKL, code: TK, currency: { currency_id: 554 } }
-  - { country: Tonga, code3: TON, code: TO, currency: { currency_id: 776 }  }
-  - { country: 'Trinidad and Tobago', code3: TTO, code: TT, currency: { currency_id: 780 }  }
-  - { country: Tunisia, code3: TUN, code: TN, currency: { currency_id: 788 }  }
+  - { country: Tonga, code3: TON, code: TO, currency: { currency_id: 776 } }
+  - { country: 'Trinidad and Tobago', code3: TTO, code: TT, currency: { currency_id: 780 } }
+  - { country: Tunisia, code3: TUN, code: TN, currency: { currency_id: 788 } }
   - { country: Turkey, code3: TUR, code: TR, currency: { currency_id: 949 } }
   - { country: Turkmenistan, code3: TKM, code: TM, currency: { currency_id: 934 } }
-  - { country: 'Turks and Caicos Islands', code3: TCA, code: TC, currency: { currency_id: 840 }  }
+  - { country: 'Turks and Caicos Islands', code3: TCA, code: TC, currency: { currency_id: 840 } }
   - { country: Tuvalu, code3: TUV, code: TV, currency: { currency_id: 36 } }
-  - { country: Uganda, code3: UGA, code: UG, currency: { currency_id: 800 }  }
-  - { country: Ukraine, code3: UKR, code: UA, currency: { currency_id: 980 }  }
-  - { country: 'United Arab Emirates', code3: ARE, code: AE, currency: { currency_id: 784 }  }
+  - { country: Uganda, code3: UGA, code: UG, currency: { currency_id: 800 } }
+  - { country: Ukraine, code3: UKR, code: UA, currency: { currency_id: 980 } }
+  - { country: 'United Arab Emirates', code3: ARE, code: AE, currency: { currency_id: 784 } }
   - country: 'United Kingdom'
     code3: GBR
     code: GB
@@ -1105,16 +1105,16 @@ XLite\Model\Country:
       - { state: Wisconsin, code: WI }
       - { state: Wyoming, code: WY }
   - { country: 'USA Virgin Islands', code3: VGB, code: VI, currency: { currency_id: 840 } }
-  - { country: Uruguay, code3: URY, code: UY, currency: { currency_id: 858 }  }
-  - { country: Uzbekistan, code3: UZB, code: UZ, currency: { currency_id: 860 }  }
-  - { country: Vanuatu, code3: VUT, code: VU, currency: { currency_id: 548 }  }
+  - { country: Uruguay, code3: URY, code: UY, currency: { currency_id: 858 } }
+  - { country: Uzbekistan, code3: UZB, code: UZ, currency: { currency_id: 860 } }
+  - { country: Vanuatu, code3: VUT, code: VU, currency: { currency_id: 548 } }
   - { country: 'Vatican City State', code: VA, currency: { currency_id: 978 } }
   - { country: Venezuela, code: VE, currency: { currency_id: 937 } }
   - { country: 'Viet Nam', code3: VNM, code: VN, currency: { currency_id: 704 } }
   - { country: 'Wallis And Futuna Islands', code: WF, currency: { currency_id: 953 } }
   - { country: 'Western Sahara', code3: ESH, code: EH }
-  - { country: Yemen, code3: YEM, code: YE, currency: { currency_id: 886 }  }
-  - { country: Zambia, code3: ZMB, code: ZM, currency: { currency_id: 894 }  }
+  - { country: Yemen, code3: YEM, code: YE, currency: { currency_id: 886 } }
+  - { country: Zambia, code3: ZMB, code: ZM, currency: { currency_id: 894 } }
   - { country: Zimbabwe, code3: ZWE, code: ZW, currency: { currency_id: 932 } }
 XLite\Model\Order\Modifier:
   - { class: '\XLite\Logic\Order\Modifier\Shipping', weight: 100 }
