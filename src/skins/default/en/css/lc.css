@@ -1840,7 +1840,7 @@ form.estimator .main,
   height: 100%;
 }
 
-.estimate-methods ul li span {
+.estimate-methods ul li span.value {
   white-space: nowrap;
   float: right;
 }
