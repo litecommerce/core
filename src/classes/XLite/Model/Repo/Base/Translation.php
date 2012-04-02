@@ -47,13 +47,11 @@ class Translation extends \XLite\Model\Repo\ARepo
      */
     public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
-        $data['code'] = (isset($data['code']) && $data['code'])
-            ? $data['code']
-            : \XLite\Model\Base\Translation::DEFAULT_LANGUAGE;
+        if (empty($data['code'])) {
+            $data['code'] = \XLite\Model\Base\Translation::DEFAULT_LANGUAGE;
+        }
 
-        return $parent
-            ? $parent->getTranslation($data['code'])
-            : parent::findOneByRecord($data, $parent);
+        return isset($parent) ? $parent->getTranslation($data['code']) : parent::findOneByRecord($data, $parent);
     }
 
     /**

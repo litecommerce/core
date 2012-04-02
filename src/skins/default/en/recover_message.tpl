@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 
-<p IF="link_mailed">{t(#The confirmation URL link was mailed to email#,_ARRAY_(#email#^email)}</p>
-<p IF="!link_mailed">{t(#The email with your account information was mailed to email#,_ARRAY_(#email#^email)}</p>
+<p IF="link_mailed">{t(#The confirmation URL link was mailed to email#,_ARRAY_(#email#^email))}</p>
+<p IF="!link_mailed">{t(#The email with your account information was mailed to email#,_ARRAY_(#email#^email))}</p>
 <br />

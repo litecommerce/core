@@ -278,8 +278,6 @@ XLite\Model\LanguageLabel:
   - { name: 'The language you want to add has already been added', translations: [{ code: en, label: 'The language you want to add has already been added' }] }
   - { name: 'The X language has been added successfully', translations: [{ code: en, label: 'The {{language}} language has been added successfully' }] }
   - { name: 'The language you want to delete has not been found', translations: [{ code: en, label: 'The language you want to delete has not been found' }] }
-  - { name: 'The language you want to delete is the default application language and cannot be deleted', translations: [{ code: en, label: 'The language you want to delete is the default application language and cannot be deleted' }] }
-  - { name: 'The language you want to delete is the default interface language and cannot be deleted', translations: [{ code: en, label: 'The language you want to delete is the default interface language and cannot be deleted' }] }
   - { name: 'The X language has been deleted successfully', translations: [{ code: en, label: 'The {{language}} language has been deleted successfully' }] }
   - { name: 'The language has not been found', translations: [{ code: en, label: 'The language has not been found' }] }
   - { name: 'The default interface language cannot be disabled', translations: [{ code: en, label: 'The default interface language cannot be disabled' }] }
@@ -470,6 +468,11 @@ XLite\Model\LanguageLabel:
   - { name: 'Select a country or a state from a list, specify the zone', translations: [{ code: en, label: 'Select a country or a state from a list, specify the zone where the country or state should be listed and click on the "Apply" button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.' }] }
   - { name: 'If you store product images in the database, they are included in the SQL dump file', translations: [{ code: en, label: 'If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back such images up you need to download them directly from the server.' }] }
   - { name: 'You can choose if to download your database data', translations: [{ code: en, label: 'You can choose if to download your database data (SQL dump) directly to your local computer by clicking on the "Download SQL file" button or to save database data to a file on the web server ("var/backup/sqldump.sql.php") by clicking on the "Create SQL file" button#)}.<br />If you choose the second option, you can download the file from the server later on and delete it from the server by clicking on the "Delete SQL file" button.' }] }
+  - { name: 'Dear X', translations: [{ code: en, label: 'Dear {{firstname}} {{lastname}}!' }] }
+  - { name: 'Thank you for your order', translations: [{ code: en, label: 'Thank you for your order made with our shopping system.<br />Please come back soon!' }] }
+  - { name: 'Your order has failed', translations: [{ code: en, label: 'Your order #{{id}} has failed or been declined by the shop administration.' }] }
+  - { name: 'Your order has been processed', translations: [{ code: en, label: 'Your order #{{id}} has been processed.' }] }
+  - { name: 'percent X off', translations: [{ code: en, label: '{{percent}}% off' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

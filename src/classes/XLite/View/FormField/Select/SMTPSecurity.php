@@ -45,6 +45,7 @@ class SMTPSecurity extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
+            ''    => 'No',
             'ssl' => 'SSL',
             'tls' => 'TLS',
         );

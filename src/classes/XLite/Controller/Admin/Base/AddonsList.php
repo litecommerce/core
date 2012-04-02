@@ -48,5 +48,8 @@ abstract class AddonsList extends \XLite\Controller\Admin\AAdmin
 
         // Download data from marketplace
         \XLite\Core\Marketplace::getInstance()->saveAddonsList();
+
+        // Download data from marketplace
+        \XLite\Core\Marketplace::getInstance()->checkAddonsKeys();
     }
 }

@@ -1338,9 +1338,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getCurrentLanguage()
     {
-        $instance = \XLite\Core\Session::getInstance();
-
-        return $instance->editLanguage ?: $instance->getLanguage()->getCode();
+        return \XLite\Core\Session::getInstance()->getLanguage()->getCode();
     }
 
     /**
@@ -1359,7 +1357,6 @@ abstract class AController extends \XLite\Core\Handler
 
             if (isset($language) && $language->getEnabled()) {
                 \XLite\Core\Session::getInstance()->setLanguage($language->getCode());
-                // \XLite\Core\Session::getInstance()->editLanguage = $language->getCode();
             }
         }
 

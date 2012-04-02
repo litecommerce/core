@@ -403,6 +403,7 @@ JS;
             $typePart = $typeKeysPart = '';
         }
 
+        $this->browser->type($path, '');
         $this->browser->type($path, $typePart);
         $this->focus($path);
         $this->browser->typeKeys($path,$typeKeysPart);

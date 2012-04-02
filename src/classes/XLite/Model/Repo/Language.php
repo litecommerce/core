@@ -54,15 +54,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
     protected $defaultOrderBy = 'code';
 
     /**
-     * Global default language (cache)
-     *
-     * @var   \XLite\Model\Language
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $defaultLanguage = null;
-
-    /**
      * Alternative record identifiers
      *
      * @var   array
@@ -72,48 +63,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
     protected $alternativeIdentifier = array(
         array('code'),
     );
-
-    // {{{
-
-    /**
-     * Get languages query
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getLanguagesQuery()
-    {
-        $query = array(
-            \XLite\Core\Config::getInstance()->General->defaultLanguage->getCode(),
-            $this->getDefaultLanguage()->getCode(),
-        );
-
-        return array_unique($query);
-    }
-
-    /**
-     * Get global default language
-     *
-     * @return string Language code
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDefaultLanguage()
-    {
-        if (!isset($this->defaultLanguage)) {
-            $this->defaultLanguage = \XLite\Core\Database::getRepo('\XLite\Model\Language')
-                ->findOneByCode('en');
-
-            if (!$this->defaultLanguage) {
-                // TODO - add throw exception
-            }
-        }
-
-        return $this->defaultLanguage;
-    }
-
-    // }}}
 
     // {{{ defineCacheCells
 

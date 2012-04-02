@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,103 +13,48 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * 
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace Includes;
 
 /**
  * Autoloader
- * NOTE - this class is abstract due to prevent its instantiation
  *
- * @package    XLite
- * @see        ____class_see____
- * @since      1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class Autoloader
 {
     /**
      * List of registered autoload functions
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $functions = array(
         '__lc_autoload',
         '__lc_autoload_includes',
     );
 
-
     /**
      * The directory where LC classes are located
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $lcAutoloadDir = LC_DIR_CACHE_CLASSES;
-
-    /**
-     * Register the autoload function for the Doctrine library
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function registerDoctrineAutoloader()
-    {
-        require_once (LC_DIR_LIB . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
-
-        $loader = new \Doctrine\Common\ClassLoader('Doctrine', rtrim(LC_DIR_LIB, LC_DS));
-        $loader->register();
-
-        $loader = new \Doctrine\Common\ClassLoader('Symfony', rtrim(LC_DIR_LIB, LC_DS));
-        $loader->register();
-    }
-
-    /**
-     * Register the autoload function for the modules libraries
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
-     */
-    protected static function registerModulesLibrariesAutoloader()
-    {
-        $pattern = LC_DIR_CLASSES . 'XLite' . LC_DS . 'Module' . LC_DS . '*' . LC_DS . '*' . LC_DS . 'lib' . LC_DS . '*';
-        foreach (glob($pattern) as $path) {
-            if (is_dir($path)) {
-                $loader = new \Doctrine\Common\ClassLoader(basename($path), dirname($path));
-                $loader->register();
-            }
-        }
-    }
-
-    /**
-     * Autoloader for PEAR2
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function registerPEARAutolader()
-    {
-        require_once (LC_DIR_LIB . 'PEAR2' . LC_DS . 'Autoload.php');
-    }
-
 
     /**
      * Main LC autoloader
@@ -117,7 +62,6 @@ abstract class Autoloader
      * @param string $class name of the class to load
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -137,7 +81,8 @@ abstract class Autoloader
          *
          * May be that issue is related: http://bugs.php.net/50731
          */
-        $class = ltrim($class, '\\');       
+        $class = ltrim($class, '\\');
+
         if (0 === strpos($class, LC_NAMESPACE)) {
             include_once (static::$lcAutoloadDir . str_replace('\\', LC_DS, $class) . '.php');
         }
@@ -149,13 +94,13 @@ abstract class Autoloader
      * @param string $class name of the class to load
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function __lc_autoload_includes($class)
     {
         $class = ltrim($class, '\\');
+
         if (0 === strpos($class, LC_NAMESPACE_INCLUDES)) {
             include_once (LC_DIR_ROOT . str_replace('\\', LC_DS, $class) . '.php');
         }
@@ -167,7 +112,6 @@ abstract class Autoloader
      * @param string $method function name
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -186,7 +130,6 @@ abstract class Autoloader
      * Register autoload functions
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -231,4 +174,53 @@ abstract class Autoloader
     {
         static::$lcAutoloadDir = LC_DIR_CLASSES;
     }
+
+    /**
+     * Register the autoload function for the Doctrine library
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function registerDoctrineAutoloader()
+    {
+        require_once (LC_DIR_LIB . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
+
+        $loader = new \Doctrine\Common\ClassLoader('Doctrine', rtrim(LC_DIR_LIB, LC_DS));
+        $loader->register();
+
+        $loader = new \Doctrine\Common\ClassLoader('Symfony', rtrim(LC_DIR_LIB, LC_DS));
+        $loader->register();
+    }
+
+    /**
+     * Autoloader for PEAR2
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function registerPEARAutolader()
+    {
+        require_once (LC_DIR_LIB . 'PEAR2' . LC_DS . 'Autoload.php');
+    }
+
+    /**
+     * Register the autoload function for the modules libraries
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected static function registerModulesLibrariesAutoloader()
+    {
+        $pattern = LC_DIR_CLASSES . 'XLite' . LC_DS . 'Module' . LC_DS . '*' . LC_DS . '*' . LC_DS . 'lib' . LC_DS . '*';
+        foreach (glob($pattern) as $path) {
+            if (is_dir($path)) {
+                $loader = new \Doctrine\Common\ClassLoader(basename($path), dirname($path));
+                $loader->register();
+            }
+        }
+    }
+
 }

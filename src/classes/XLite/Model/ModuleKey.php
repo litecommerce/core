@@ -90,4 +90,17 @@ class ModuleKey extends \XLite\Model\AEntity
      * @Column (type="fixedstring", length="64")
      */
     protected $keyValue;
+
+    /**
+     * Flag if the key is binded to batch or module.
+     * 0 - it is a module key
+     * 1 - it is a batch  key
+     *
+     * @var integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $keyType = 0;
 }

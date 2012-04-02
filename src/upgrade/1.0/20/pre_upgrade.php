@@ -35,8 +35,11 @@ return function()
             'You can choose if to download your database data' => 'You can choose if to download your database data (SQL dump) directly to your local computer by clicking on the "Download SQL file" button or to save database data to a file on the web server ("var/backup/sqldump.sql.php") by clicking on the "Create SQL file" button#)}.<br />If you choose the second option, you can download the file from the server later on and delete it from the server by clicking on the "Delete SQL file" button.',
         ),
         'update' => array(
+
         ),
         'delete' => array(
+            'The language you want to delete is the default application language and cannot be deleted',
+            'The language you want to delete is the default interface language and cannot be deleted',
         ),
     );
 
@@ -109,4 +112,52 @@ return function()
     foreach ($objects as $method => $labels) {
         \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->{$method . 'InBatch'}($labels);
     }
+
+    // Update config options
+
+    /*$config = array(
+        'insert' => array(
+        ),
+        'update' => array(
+        ),
+        'delete' => array(
+            'General' => array(
+                'default_language' => null,
+            ),
+        ),
+    );
+
+    $objects = array();
+
+    foreach ($config as $method => $tmp) {
+        foreach ($tmp as $category => $data) {
+            foreach ($data as $name => $value) {
+                $object = \XLite\Core\Database::getRepo('\XLite\Model\Config')->findOneBy(array('name' => $name, 'category' => $category));
+                if (isset($object)) {
+                    if($method == 'update'){
+                        list($oldLabel, $newLabel) = $value;
+
+                        if ($object->getOptionName() === $oldLabel) {
+                            $object->setOptionName($newLabel);
+                        }
+
+                    }
+
+                } elseif ('insert' === $method) {
+                    $object = new \XLite\Model\Config();
+                    $object->setCategory($category);
+                    $object->setName($name);
+
+                }
+
+                if (isset($object)) {
+                    $objects[$method][] = $object;
+                }
+            }
+        }
+    }
+
+    foreach ($objects as $method => $config) {
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->{$method . 'InBatch'}($config);
+    }*/
 };

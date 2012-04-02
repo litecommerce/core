@@ -90,7 +90,6 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
 
     /**
      * Get current language
-     * FIXME
      *
      * @return string Language code
      * @see    ____func_see____
@@ -98,24 +97,20 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
      */
     protected function getCurrentLanguage()
     {
-        global $language;
+        // DO NOT change call order here
+        if (!\XLite::isAdminZone() && function_exists('drupal_multilingual') && drupal_multilingual()) {
+            global $language;
 
-        $result = null;
+            if ($language instanceof \stdClass) {
+                $object = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($language->language);
 
-        if (
-            isset($language)
-            && is_object($language)
-            && $language instanceof \stdClass
-        ) {
-            $lng = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($language->language);
-            if ($lng && $lng->getStatus() == \XLite\Model\Language::ENABLED) {
-                $result = $language->language;
-                $lng->detach();
+                // DO NOT use "===" here
+                if (isset($object) && \XLite\Model\Language::ENABLED == $object->getStatus()) {
+                    $result = $object->getCode();
+                }
             }
         }
 
-        return isset($result)
-            ? $result
-            : parent::getCurrentLanguage();
+        return isset($result) ? $result : parent::getCurrentLanguage();
     }
 }

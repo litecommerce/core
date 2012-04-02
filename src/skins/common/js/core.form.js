@@ -54,6 +54,8 @@ function CommonForm(form)
   form.submit(
     function(event)
     {
+      jQuery('input', this).trigger('sanitize');
+
       if (this.isBgSubmitting) {
         return false;
       }
@@ -848,11 +850,11 @@ CommonElement.prototype.isChanged = function(onlyVisible)
       || isElement(this.element, 'select')
       || isElement(this.element, 'textarea')
     ) {
-      return !this.isEqualValues(this.element.initialValue, this.element.value);
+      return !this.isEqualValues(this.element.initialValue, this.element.value, jQuery(this.element));
     }
 
     if (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['checkbox', 'radio'])) {
-      return !this.isEqualValues(this.element.initialValue, this.element.checked);
+      return !this.isEqualValues(this.element.initialValue, this.element.checked, jQuery(this.element));
     }
   }
 
