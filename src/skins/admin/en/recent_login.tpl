@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * "Recent login" page
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,10 +9,11 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <table width="80%" class="data-table">
 <tr>
-  <th style="width:150px;">Date</th>
-  <th>Logged as</th>
+  <th style="width:150px;">{t(#Date#)}</th>
+  <th>{t(#Logged as#)}</th>
 </tr>
 {if:recentAdmins}
   <tr FOREACH="recentAdmins,recentAdmin" class="{getRowClass(idx,##,#highlight#)}">

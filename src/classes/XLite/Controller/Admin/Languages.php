@@ -212,7 +212,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 'The language has not been found'
             );
 
-        } elseif ($language->code == static::$defaultLanguage) {
+        } elseif ($language->code == static::$defaultLanguage && $language->enabled) {
 
             \XLite\Core\TopMessage::addError(
                 'The default interface language cannot be disabled'
