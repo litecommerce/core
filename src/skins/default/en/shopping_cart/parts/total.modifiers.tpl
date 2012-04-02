@@ -19,7 +19,7 @@
     <strong class="list-owner">{surcharge.name}:</strong>
   {end:}
   {if:surcharge.available}
-    <span class="value"><widget class="XLite\View\Surcharge" surcharge="{surcharge}" currency="{cart.getCurrency()}" /></span>
+    <span class="value"><widget class="XLite\View\Surcharge" surcharge="{surcharge.cost}" currency="{cart.getCurrency()}" /></span>
   {else:}
     <span>{t(#n/a#)}</span>
   {end:}
