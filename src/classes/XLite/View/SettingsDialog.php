@@ -45,7 +45,6 @@ class SettingsDialog extends \XLite\View\SimpleDialog
     public static function getAllowedTargets()
     {
         $list = parent::getAllowedTargets();
-
         $list[] = 'settings';
         $list[] = 'module';
 

@@ -15,37 +15,51 @@ var stateSelectors = [];
 
 function StateSelector(countrySelectorId, stateSelectorId, stateInputId)
 {
-    this.countrySelectBox = jQuery('#' + countrySelectorId);
+  var o = this;
+
+  if (stateSelectorId) {
     this.stateSelectBox = jQuery('#' + stateSelectorId);
+
+    if (this.stateSelectBox) {
+      this.stateSelectBoxValue = this.stateSelectBox.val();
+
+      this.stateSelectBox.change(
+        function(event) {
+          return o.changeState(this.value);
+        }
+      );
+
+      this.stateSelectBox.getParentBlock = function() {
+        return o.getParentBlock(this);
+      }
+    }
+  }
+
+  if (stateInputId) {
     this.stateInputBox = jQuery('#' + stateInputId);
 
-    this.stateSelectBoxValue = this.stateSelectBox.val();
-    this.stateInputBoxValue = this.stateInputBox.val();
+    if (this.stateInputBox) {
+      this.stateInputBoxValue = this.stateInputBox.val();
 
-    // Event handlers
-    var o = this;
-
-    this.countrySelectBox.change(
-        function(event) {
-            return o.changeCountry(this.value);
-        }
-    );
-
-    this.stateSelectBox.change(
-        function(event) {
-            return o.changeState(this.value);
-        }
-    );
-
-    this.stateSelectBox.getParentBlock = function() {
+      this.stateInputBox.getParentBlock = function() {
         return o.getParentBlock(this);
+      }
     }
+  }
 
-    this.stateInputBox.getParentBlock = function() {
-        return o.getParentBlock(this);
+  if (countrySelectorId) {
+    this.countrySelectBox = jQuery('#' + countrySelectorId);
+
+    if (this.countrySelectBox) {
+      this.countrySelectBox.change(
+        function(event) {
+          return o.changeCountry(this.value);
+        }
+      );
+
+      this.countrySelectBox.change();
     }
-
-    this.countrySelectBox.change();
+  }
 }
 
 StateSelector.prototype.countrySelectBox = null;
@@ -55,70 +69,82 @@ StateSelector.prototype.stateSavedValue = null;
 
 StateSelector.prototype.getParentBlock = function(selector)
 {
-    var block = selector.closest('li');
+  var block = selector.closest('li');
 
-    if (!block.length) {
-        block = selector.closest('div');
-    }
+  if (!block.length) {
+    block = selector.closest('div');
+  }
 
-    return block;
+  return block;
 }
 
 StateSelector.prototype.changeState = function(state)
 {
+  if (this.stateInputBox) {
     if (-1 == state) {
-        this.stateInputBox.getParentBlock().show();
+      this.stateInputBox.getParentBlock().show();
     } else {
-        this.stateInputBox.getParentBlock().hide();
+      this.stateInputBox.getParentBlock().hide();
     }
+  }
 }
 
 StateSelector.prototype.changeCountry = function(country)
 {
+  if (this.stateSelectBox) {
     if (statesList[country]) {
+      this.removeOptions();
+      this.addStates(statesList[country]);
 
-        this.removeOptions();
-        this.addStates(statesList[country]);
-
-        this.stateSelectBox.getParentBlock().show();
-        this.stateSelectBox.change();
+      this.stateSelectBox.getParentBlock().show();
+      this.stateSelectBox.change();
 
     } else {
-
-        this.stateSelectBox.getParentBlock().hide();
-        this.stateInputBox.getParentBlock().show();
+      this.stateSelectBox.getParentBlock().hide();
+      this.stateInputBox.getParentBlock().show();
     }
+  }
 }
 
 StateSelector.prototype.removeOptions = function()
 {
+  if (this.stateSelectBox) {
     var s = this.stateSelectBox.get(0);
 
-    this.stateSavedValue = this.stateSelectBox.val();
+    if (this.stateSelectBox.val()) {
+      this.stateSavedValue = this.stateSelectBox.val();
+    }
 
     for (var i = s.options.length - 1; i >= 0; i--) {
-        s.options[i] = null;
+      s.options[i] = null;
     }
+  }
 }
 
 StateSelector.prototype.addDefaultOptions = function()
 {
+  if (this.stateSelectBox) {
     this.stateSelectBox.get(0).options[0] = new Option('Select one...', '');
-//    this.stateSelectBox.get(0).options[1] = new Option('Other', '-1');
+    // this.stateSelectBox.get(0).options[1] = new Option('Other', '-1');
+  }
 }
 
 StateSelector.prototype.addStates = function(states)
 {
+  if (this.stateSelectBox) {
     this.addDefaultOptions();
 
     var s = this.stateSelectBox.get(0);
     var added = s.options.length;
 
     if (states) {
-        for (var i = 0; i < states.length; i++) {
-            s.options[i + added] = new Option(states[i].state, states[i].id);
-        }
+      for (var i = 0; i < states.length; i++) {
+        s.options[i + added] = new Option(states[i].state, states[i].id);
+      }
     }
 
-    this.stateSelectBox.val(this.stateSavedValue);
+    if (this.stateSavedValue) {
+      this.stateSelectBox.val(this.stateSavedValue);
+    }
+  }
 }

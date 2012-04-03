@@ -82,11 +82,13 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
     {
         // show recover message if email is valid
         if ($this->requestRecoverPassword($this->get('email'))) {
-            $this->set('mode', 'recoverMessage'); // redirect to passwordMessage mode
-            $this->set('link_mailed', true); // redirect to passwordMessage mode
+
+            $this->setReturnURL($this->buildURL('recover_password', '', array('mode' => 'recoverMessage', 'link_mailed' => 1)));
 
         } else {
-            $this->set('valid', false);
+
+            $this->setReturnURL($this->buildURL('recover_password', '', array('valid' => 0)));
+
             \XLite\Core\TopMessage::addError('There is no user with specified email address');
         }
     }
@@ -101,8 +103,10 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
     protected function doActionConfirm()
     {
         if (!is_null($this->get('email')) && \XLite\Core\Request::getInstance()->request_id) {
+
             if ($this->doPasswordRecovery($this->get('email'), \XLite\Core\Request::getInstance()->request_id)) {
-                \XLite\Core\Request::getInstance()->mode = 'recoverMessage';
+
+                $this->setReturnURL($this->buildURL('recover_password', '', array('mode' => 'recoverMessage')));
             }
         }
     }
