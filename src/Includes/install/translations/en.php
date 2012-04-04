@@ -247,7 +247,7 @@ LiteCommerce Installation Wizard
   '[replicated report]' => '[replicated report]',
   'Report generation failed.' => 'Report generation failed.',
   'Technical problems report' => 'Technical problems report',
-  'ask_send_report_text' => 'Our testing has detected some problems. The report with the test results will be sent to our support HelpDesk, so that we could analyze and fix the problems. To monitor this issue, please login to your <a href="https://secure.qtmsoft.com/" target="_blank">HelpDesk</a>. If you do not have a HelpDesk account, you can <a href="https://secure.qtmsoft.com/customer.php?area=login&amp;target=register" target="_blank">create one here</a>.
+  'ask_send_report_text' => 'Our testing has detected some problems. The report with the test results will be sent to our support HelpDesk, so that we could analyze and fix the problems. To monitor this issue, please specify your email in the field below, then use this email to login to your <a href="https://secure.qtmsoft.com/" target="_blank">HelpDesk</a>. If you do not have a HelpDesk account, you can <a href="https://secure.qtmsoft.com/customer.php?area=login&amp;target=register" target="_blank">create one here</a>.
 <br /><br />You can find more information about LiteCommerce software at <a href="http://litecommerce.com/faqs.html" target="_blank"><u>LiteCommerce FAQs</u></a> page.',
   'See details' => 'See details',
   'Hide details' => 'Hide details',
