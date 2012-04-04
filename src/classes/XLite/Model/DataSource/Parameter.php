@@ -36,22 +36,8 @@ namespace XLite\Model\DataSource;
  * @Entity
  * @Table  (name="data_source_parameters")
  */
-class Parameter extends \XLite\Model\AEntity
+class Parameter extends \XLite\Model\Base\NameValue
 {
-
-    /**
-     * Unique Data source parameter id
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.17
-     *
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column (type="uinteger")
-     */
-    protected $id;
-
     /**
      * DataSource (relation)
      *
@@ -64,53 +50,4 @@ class Parameter extends \XLite\Model\AEntity
      */
     protected $dataSource;
 
-    /**
-     * Parameter name 
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
-     *
-     * @Column (type="string", length="255")
-     */
-    protected $name;
-
-    /**
-     * Serialized parameter value representation
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
-     *
-     * @Column (type="string", length="1024")
-     */
-    protected $value;
-
-    /**
-     * Get parameter value
-     *
-     * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.17
-     */
-    public function getValue()
-    {
-        $value = @unserialize($this->value);
-
-        return false === $value ? $this->value : $value;
-    }
-
-    /**
-     * Set parameter value
-     *
-     * @param mixed $value Parameter value
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.17
-     */
-    public function setValue($value)
-    {
-        $this->value = is_scalar($value) ? serialize($value) : $value;
-    }
 }

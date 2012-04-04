@@ -95,6 +95,8 @@ class DataSource extends \XLite\Model\AEntity
         parent::__construct($data);
     }
 
+    // {{{ Parameters operations
+
     /**
      * Get Parameter object identified by its name
      * 
@@ -155,6 +157,10 @@ class DataSource extends \XLite\Model\AEntity
         $param->setValue($value);
     }
 
+    // }}}
+
+    // {{{ Data source
+
     /**
      * Get data source based on model shop type
      * 
@@ -190,6 +196,8 @@ class DataSource extends \XLite\Model\AEntity
 
         return $result;
     }
+
+    // }}}
 
 }
 
