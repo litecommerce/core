@@ -11,4 +11,5 @@
  *
  * @ListChild (list="head", weight="300")
  *}
+
 <meta http-equiv="Content-Style-Type" content="text/css" />
