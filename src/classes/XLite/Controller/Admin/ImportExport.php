@@ -99,7 +99,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      */
     protected $importCell;
 
-    // {{{ Tabs
+    // {{{ Pages
 
     /**
      * Get pages sections
@@ -110,10 +110,11 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      */
     public function getPages()
     {
-        return array(
-            'import' => 'Import',
-            'export' => 'Export',
-        );
+        $list = parent::getPages();
+        $list['import'] = 'Import';
+        $list['export'] = 'Export';
+
+        return $list;
     }
 
     /**
@@ -123,12 +124,13 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
-        return array(
-            'import' => 'import_export/import.tpl',
-            'export' => 'import_export/export.tpl',
-        );
+        $list = parent::getPageTemplates();
+        $list['import'] = 'import_export/import.tpl';
+        $list['export'] = 'import_export/export.tpl';
+
+        return $list;
     }
 
     // }}}

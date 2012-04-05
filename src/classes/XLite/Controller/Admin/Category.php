@@ -44,6 +44,8 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     public $params = array('target', 'category_id', 'mode');
 
+    // {{{ Pages
+
     /**
      * Get pages sections
      *
@@ -53,9 +55,10 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     public function getPages()
     {
-        return array(
-            'category_modify' => ($this->getCategory()->getCategoryId()) ? 'Modify category' : 'Add new category'
-        );
+        $list = parent::getPages();
+        $list['category_modify'] = $this->getCategory()->isPersistent() ? 'Modify category' : 'Add new category';
+
+        return $list;
     }
 
     /**
@@ -65,13 +68,16 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
-        return array(
-            'category_modify' => 'categories/add_modify_body.tpl',
-            'default'         => 'categories/add_modify_body.tpl',
-        );
+        $list = parent::getPageTemplates();
+        $list['category_modify'] = 'categories/add_modify_body.tpl';
+        $list['default']         = 'categories/add_modify_body.tpl';
+
+        return $list;
     }
+
+    // }}}
 
     /**
      * Return current (or default) category object

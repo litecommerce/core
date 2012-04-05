@@ -152,6 +152,8 @@ class Converter extends \XLite\Base\Singleton
                . (empty($target) ? '' : '\\' . self::convertToCamelCase($target));
     }
 
+    // {{{ URL routines
+
     /**
      * Compose URL from target, action and additional params
      *
@@ -166,26 +168,21 @@ class Converter extends \XLite\Base\Singleton
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
-        $url = isset($interface) ? $interface : \XLite::getInstance()->getScript();
+        $result = null;
 
-        $urlParams = array();
-
-        if ($target) {
-            $urlParams['target'] = $target;
+        if (LC_USE_CLEAN_URLS && !\XLite::isAdminZone()) {
+            $result = static::buildCleanURL($target, $action, $params);
+        }   
+        
+        if (!isset($result)) {
+            if (!isset($interface)) {
+                $interface = \XLite::getInstance()->getScript();
+            }   
+            
+            $result = \Includes\Utils\Converter::buildURL($target, $action, $params, $interface);
         }
-
-        if ($action) {
-            $urlParams['action'] = $action;
-        }
-
-        $params = $urlParams + $params;
-
-        if (!empty($params)) {
-            uksort($params, array(get_called_class(), 'sortURLParams'));
-            $url .= '?' . http_build_query($params);
-        }
-
-        return $url;
+        
+        return $result;
     }
 
     /**
@@ -203,6 +200,48 @@ class Converter extends \XLite\Base\Singleton
     {
         return \XLite::getInstance()->getShopURL(static::buildURL($target, $action, $params));
     }
+
+    /**
+     * Compose clean URL
+     *
+     * @param string $target Page identifier OPTIONAL
+     * @param string $action Action to perform OPTIONAL
+     * @param array  $params additional params OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public static function buildCleanURL($target = '', $action = '', array $params = array())
+    {
+        $result = null;
+        $urlParams = array();
+
+        if ('category' === $target && !empty($params['category_id'])) {
+            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($params['category_id']);
+
+            if (isset($category) && $category->getCleanURL()) {
+                $urlParams[0] = $category->getCleanURL();
+            }
+        }
+
+        if ('product' === $target && !empty($params['product_id'])) {
+            $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($params['product_id']);
+
+            if (isset($product) && $product->getCleanURL()) {
+                $urlParams[1] = $product->getCleanURL() . '.html';
+            }
+        }
+
+        if (!empty($urlParams)) {
+            $result  = \Includes\Utils\ConfigParser::getOptions(array('host_details', 'web_dir_wo_slash'));
+            $result .= '/' . implode('/', $urlParams);
+        }
+
+        return $result;
+    }
+
+    // }}}
 
     /**
      * Convert to one-dimensional array
@@ -431,21 +470,6 @@ class Converter extends \XLite\Base\Singleton
 
             self::$isLocaleSet = true;
         }
-    }
-
-    /**
-     * Sort URL parameters (callback)
-     *
-     * @param string $a First parameter
-     * @param string $b Second parameter
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function sortURLParams($a, $b)
-    {
-        return ('target' == $b || ('action' == $b && 'target' != $a)) ? 1 : 0;
     }
 
     /**

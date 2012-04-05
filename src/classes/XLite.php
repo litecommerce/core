@@ -116,7 +116,7 @@ class XLite extends \XLite\Base
      */
     public static function isAdminZone()
     {
-        return self::$adminZone;
+        return static::$adminZone;
     }
 
     /**
@@ -142,20 +142,20 @@ class XLite extends \XLite\Base
      */
     public static function getController()
     {
-        if (!isset(self::$controller)) {
-            $class = self::getControllerClass();
+        if (!isset(static::$controller)) {
+            $class = static::getControllerClass();
             if (!\XLite\Core\Operator::isClassExists($class)) {
-                \XLite\Core\Request::getInstance()->target = self::TARGET_DEFAULT;
+                \XLite\Core\Request::getInstance()->target = static::TARGET_DEFAULT;
                 \XLite\Logger::getInstance()->log('Controller class ' . $class . ' not found!', LOG_ERR);
-                \XLite\Core\Request::getInstance()->target = self::TARGET_404;
-                $class = self::getControllerClass();
+                \XLite\Core\Request::getInstance()->target = static::TARGET_404;
+                $class = static::getControllerClass();
             }
 
-            self::$controller = new $class(\XLite\Core\Request::getInstance()->getData());
-            self::$controller->init();
+            static::$controller = new $class(\XLite\Core\Request::getInstance()->getData());
+            static::$controller->init();
         }
 
-        return self::$controller;
+        return static::$controller;
     }
 
     /**
@@ -171,7 +171,7 @@ class XLite extends \XLite\Base
     public static function setController($controller = null)
     {
         if (is_null($controller) || $controller instanceof \XLite\Controller\AController) {
-            self::$controller = $controller;
+            static::$controller = $controller;
         }
     }
 
@@ -185,7 +185,7 @@ class XLite extends \XLite\Base
     protected static function getTarget()
     {
         if (empty(\XLite\Core\Request::getInstance()->target)) {
-            \XLite\Core\Request::getInstance()->target = self::TARGET_DEFAULT;
+            \XLite\Core\Request::getInstance()->target = static::TARGET_DEFAULT;
         }
 
         return \XLite\Core\Request::getInstance()->target;
@@ -200,7 +200,7 @@ class XLite extends \XLite\Base
      */
     protected static function getControllerClass()
     {
-        return \XLite\Core\Converter::getControllerClass(self::getTarget());
+        return \XLite\Core\Converter::getControllerClass(static::getTarget());
     }
 
     /**
@@ -240,7 +240,7 @@ class XLite extends \XLite\Base
      */
     public function getScript()
     {
-        return self::isAdminZone() ? self::ADMIN_SELF : self::CART_SELF;
+        return static::isAdminZone() ? static::ADMIN_SELF : static::CART_SELF;
     }
 
     /**
@@ -354,10 +354,10 @@ class XLite extends \XLite\Base
     public function run($adminZone = false)
     {
         // Set current area
-        self::$adminZone = (bool)$adminZone;
+        static::$adminZone = (bool)$adminZone;
 
         // Clear some data
-        self::clearDataOnStartup();
+        static::clearDataOnStartup();
 
         // Initialize logger
         \XLite\Logger::getInstance();
@@ -370,7 +370,7 @@ class XLite extends \XLite\Base
             // Set skin for console interface
             \XLite\Core\Layout::getInstance()->setConsoleSkin();
 
-        } elseif (true === self::$adminZone) {
+        } elseif (true === static::$adminZone) {
 
             // Set skin for admin interface
             \XLite\Core\Layout::getInstance()->setAdminSkin();
@@ -390,7 +390,7 @@ class XLite extends \XLite\Base
     {
         if (!isset($this->currentCurrency)) {
             $this->currentCurrency = \XLite\Core\Database::getRepo('XLite\Model\Currency')
-                ->find(\XLite\Core\Config::getInstance()->General->shop_currency ?: self::SHOP_CURRENCY_DEFAULT);
+                ->find(\XLite\Core\Config::getInstance()->General->shop_currency ?: static::SHOP_CURRENCY_DEFAULT);
         }
 
         return $this->currentCurrency;
@@ -417,7 +417,7 @@ class XLite extends \XLite\Base
      */
     protected function clearDataOnStartup()
     {
-        self::$controller = null;
+        static::$controller = null;
         \XLite\Model\CachingFactory::clearCache();
     }
 

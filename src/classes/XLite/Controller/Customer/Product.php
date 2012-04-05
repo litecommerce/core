@@ -44,7 +44,6 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     protected $params = array('target', 'product_id');
 
-
     /**
      * Check whether the title is to be displayed in the content area
      *
@@ -133,7 +132,20 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     protected function getProductId()
     {
-        return intval(\XLite\Core\Request::getInstance()->product_id);
+        $productID = \XLite\Core\Request::getInstance()->product_id;
+
+        if (!isset($productID)) {
+            $cleanURL = \XLite\Core\Request::getInstance()->clean_url_prod;
+
+            if (!empty($cleanURL)) {
+                $product   = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanURL($cleanURL);
+                $productID = isset($product) ? $product->getProductId() : false;
+
+                \XLite\Core\Request::getInstance()->product_id = $productID;
+            }
+        }           
+        
+        return $productID;
     }
 
     /**

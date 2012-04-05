@@ -83,6 +83,9 @@ http_host = ""
 https_host = ""
 web_dir = ""
 
+[clean_urls]
+enabled = off
+default_separator = "-"
 
 ;
 ; -----------------

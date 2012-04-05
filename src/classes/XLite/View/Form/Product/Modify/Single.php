@@ -101,6 +101,6 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
         $data->addPair('description', new \XLite\Core\Validator\String(), null, 'Full description');
         $data->addPair('meta_tags', new \XLite\Core\Validator\String(), null, 'Meta keywords');
         $data->addPair('meta_desc', new \XLite\Core\Validator\String(), null, 'Meta description');
-        $data->addPair('clean_url', new \XLite\Core\Validator\String(), null, 'Clean URL');
+        $data->addPair('cleanURL', new \XLite\Core\Validator\String\RegExp(true, '/^[\w-]+$/S'), null, 'Clean URL');
     }
 }

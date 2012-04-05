@@ -109,7 +109,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
         return $result;
     }
 
-    // {{{ Tabs
+    // {{{ Pages
 
     /**
      * Get pages sections
@@ -120,9 +120,10 @@ class Order extends \XLite\Controller\Admin\AAdmin
      */
     public function getPages()
     {
-        return array(
-            'default' => 'General info',
-        );
+        $list = parent::getPages();
+        $list['default'] = 'General info';
+
+        return $list;
     }
 
     /**
@@ -132,13 +133,13 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
-        return array(
-            'default' => 'order/info.tpl',
-        );
+        $list = parent::getPageTemplates();
+        $list['default'] = 'order/info.tpl';
+
+        return $list;
     }
 
     // }}}
-
 }

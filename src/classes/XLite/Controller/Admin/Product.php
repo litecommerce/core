@@ -44,6 +44,8 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     public $params = array('target', 'id', 'page', 'backURL');
 
+    // {{{ Pages
+
     /**
      * Get pages sections
      *
@@ -53,18 +55,15 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     public function getPages()
     {
-        $pages = array(
-            'info'  => 'Product info',
-        );
+        $list = parent::getPages();
+        $list['info'] = 'Product info';
 
         if (!$this->isNew()) {
-            $pages += array(
-                'images'    => 'Product images',
-                'inventory' => 'Inventory tracking',
-            );
+            $list['images']    = 'Product images';
+            $list['inventory'] = 'Inventory tracking';
         }
 
-        return $pages;
+        return $list;
     }
 
     /**
@@ -74,22 +73,21 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
-        $tpls = array(
-            'info'      => 'product/info.tpl',
-            'default'   => 'product/info.tpl',
-        );
+        $list = parent::getPageTemplates();
+        $list['info']    = 'product/info.tpl';
+        $list['default'] = 'product/info.tpl';
 
         if (!$this->isNew()) {
-            $tpls += array(
-                'images'    => 'product/product_images.tpl',
-                'inventory' => 'product/inventory.tpl',
-            );
+            $list['images']    = 'product/product_images.tpl';
+            $list['inventory'] = 'product/inventory.tpl';
         }
 
-        return $tpls;
+        return $list;
     }
+
+    // }}}
 
     /**
      * Alias
@@ -147,7 +145,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
         $categoryId = parent::getCategoryId();
 
         if (empty($categoryId) && !$this->isNew()) {
-
             $categoryId = $this->getProduct()->getCategoryId();
         }
 
@@ -239,6 +236,8 @@ class Product extends \XLite\Controller\Admin\AAdmin
         return array('classes' => $data);
     }
 
+    // {{{ Clean URL routines
+
     /**
      * Set error
      *
@@ -252,7 +251,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
     {
         \XLite\Core\TopMessage::addError(
             'The "{{clean_url}}" clean URL is already defined',
-            array('clean_url' => $data['clean_url'])
+            array('clean_url' => $cleanURL)
         );
     }
 
@@ -281,6 +280,28 @@ class Product extends \XLite\Controller\Admin\AAdmin
         return $result;
     }
 
+    /**
+     * Generate clean URL
+     *
+     * @param string $name Product name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    protected function generateCleanURL($name)
+    {
+        $result = null;
+
+        if (isset($name)) {
+            $separator = \Includes\Utils\ConfigParser::getOptions(array('clean_urls', 'default_separator'));
+            $result    = strtolower(preg_replace('/\W+/S', $separator ?: '-', $name));
+        }
+
+        return $result;
+    }
+
+    // }}}
 
     /**
      * doActionModify
@@ -305,7 +326,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionAdd()
     {
-        $form = new \XLite\View\Form\Product\Modify\Single;
+        $form = new \XLite\View\Form\Product\Modify\Single();
         $requestData = $form->getRequestData();
 
         if ($form->getValidationMessage()) {
@@ -345,7 +366,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        $form = new \XLite\View\Form\Product\Modify\Single;
+        $form = new \XLite\View\Form\Product\Modify\Single();
         $requestData = $form->getRequestData();
 
         if ($form->getValidationMessage()) {
@@ -356,7 +377,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
 
             // Clear all category associates
             \XLite\Core\Database::getRepo('\XLite\Model\CategoryProducts')->deleteInBatch(
-                $product->getCategoryProducts()
+                $product->getCategoryProducts()->toArray()
             );
 
             $product->getClasses()->clear();
@@ -473,15 +494,36 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     protected function getPostedData($field = null)
     {
-        $value = parent::getPostedData($field);
+        $result = parent::getPostedData($field);
 
-        if ('arrivalDate' == $field) {
-            $value = intval(strtotime($value)) ?: time();
+        foreach (array('arrivalDate', 'cleanURL') as $name) {
+            $value = isset($field) 
+                ? ($name === $field ? $result : null) 
+                : \Includes\Utils\ArrayManager::getIndex($result, $name);
 
-        } elseif (!isset($field) && isset($value['arrivalDate'])) {
-            $value['arrivalDate'] = intval(strtotime($value['arrivalDate'])) ?: time();
+            switch ($name) {
+                case 'arrivalDate':
+                    $value = strtotime($value) ?: time();
+                    break;
+
+                case 'cleanURL':
+                    if (parent::getPostedData('autogenerateCleanURL')) {
+                        $value = $this->generateCleanURL(parent::getPostedData('name'));
+                    }
+                    break;
+
+                default:
+                    // ...
+            }
+
+            if (isset($field)) {
+                $result = $value;
+
+            } else {
+                $result[$name] = $value;
+            }
         }
 
-        return $value;
+        return $result;
     }
 }

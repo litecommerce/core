@@ -54,7 +54,6 @@ abstract class AController extends \XLite\Core\Handler
      */
     const RETURN_URL = 'returnURL';
 
-
     /**
      * Object to keep action status
      *
@@ -81,7 +80,6 @@ abstract class AController extends \XLite\Core\Handler
      * @since 1.0.0
      */
     protected $params = array('target');
-
 
     /**
      * Validity flag
@@ -144,8 +142,11 @@ abstract class AController extends \XLite\Core\Handler
         return \Includes\Utils\Converter::convertFromCamelCase(lcfirst(array_pop($parts)));
     }
 
+    // {{{ Pages
+
     /**
      * Get current page
+     * FIXME: to revise
      *
      * @return string
      * @see    ____func_see____
@@ -153,10 +154,22 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getPage()
     {
-        $page = $this->page;
+        $page  = $this->page;
         $pages = $this->getPages();
 
         return $page && isset($pages[$page]) ? $page : key($pages);
+    }
+
+    /**
+     * getPages
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPages()
+    {
+        return array();
     }
 
     /**
@@ -171,17 +184,7 @@ abstract class AController extends \XLite\Core\Handler
         return array();
     }
 
-    /**
-     * getPages
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPages()
-    {
-        return array();
-    }
+    // }}}
 
     /**
      * Get controlelr parameters
@@ -709,7 +712,20 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getCategoryId()
     {
-        return intval(\XLite\Core\Request::getInstance()->category_id) ?: $this->getRootCategoryId();
+        $categoryID = \XLite\Core\Request::getInstance()->category_id;
+
+        if (!isset($categoryID)) {
+            $cleanURL = \XLite\Core\Request::getInstance()->clean_url_cat;
+
+            if (!empty($cleanURL)) {
+                $category   = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findOneByCleanURL($cleanURL);
+                $categoryID = isset($category) ? $category->getCategoryId() : false;
+
+                \XLite\Core\Request::getInstance()->category_id = $categoryID;
+            }
+        }
+
+        return $categoryID ?: $this->getRootCategoryId();
     }
 
     /**
