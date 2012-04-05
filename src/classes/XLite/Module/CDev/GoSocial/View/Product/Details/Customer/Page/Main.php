@@ -45,7 +45,6 @@ abstract class Main extends \XLite\View\Product\Details\Customer\Page\Main imple
     public function getMetaTags()
     {
         $list = parent::getMetaTags();
-
         $list[] = $this->getProduct()->getOpenGraphMetaTags();
 
         return $list;
@@ -61,7 +60,6 @@ abstract class Main extends \XLite\View\Product\Details\Customer\Page\Main imple
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules/CDev/GoSocial/product.css';
 
         return $list;
@@ -77,12 +75,9 @@ abstract class Main extends \XLite\View\Product\Details\Customer\Page\Main imple
     public function getNamespaces()
     {
         $list = parent::getNamespaces();
-
         $list['og'] = 'http://ogp.me/ns#';
         $list['fb'] = 'http://www.facebook.com/2008/fbml';
 
         return $list;
     }
-
 }
-

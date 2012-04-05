@@ -11,6 +11,7 @@
  *
  * @ListChild (list="head", weight="1300")
  *}
+
 <script type="text/javascript">
 var xliteConfig = {
   script:   '{getScript():h}',

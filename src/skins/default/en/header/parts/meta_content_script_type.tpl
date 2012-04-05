@@ -11,4 +11,5 @@
  *
  * @ListChild (list="head", weight="400")
  *}
+
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
