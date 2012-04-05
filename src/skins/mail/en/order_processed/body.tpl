@@ -13,7 +13,7 @@
 <body>
 {t(#Dear X#,_ARRAY_(#firstname#^order.profile.billing_address.firstname,#lastname#^order.profile.billing_address.lastname)):h}
 <p>
-{t(#Your order has been processed#,_ARRAY_(#id#^order.order_id)):h} {t(#Thank you for your order#):h}
+{t(#Your order has been processed#,_ARRAY_(#id#^order.order_id)):h} {t(#Thank you for your order FOOTER#):h}
 <p>
 <widget class="\XLite\View\Invoice" order="{order}" />
 <p>
