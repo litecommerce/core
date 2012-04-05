@@ -84,7 +84,7 @@ class Header extends \XLite\View\Container
      */
     protected function getTitle()
     {
-        return \XLite::getController()->getPageTitle() ?: $this->getDefaultTitle;
+        return \XLite::getController()->getPageTitle() ?: $this->getDefaultTitle();
     }
 
     /**

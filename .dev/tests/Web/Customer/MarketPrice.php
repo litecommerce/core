@@ -462,8 +462,8 @@ class XLite_Web_Customer_MarketPrice extends XLite_Web_Customer_ACustomer
         $this->skipCoverage();
         $this->open('store/category/0/category_id-' . $this->product->getCategory()->getCategoryId());
         $this->click('css=.category-products ul.display-modes li.list-type-' . $type . ' a');
-        $this->waitForCondition('selenium.isElementPresent("css=.blockUI.block-wait")', 30000, 'Awaiting for progess bar displaying failed');
-        $this->waitForCondition('!selenium.isElementPresent("css=.blockUI.block-wait")', 30000, 'Awaiting for progess bar hiding failed');
+        $this->waitForLocalCondition("jQuery('.list-type-$type'.selected).length > 0", 30000, "Waiting for type switch to $type");
+
 
         $isPresent = 'table' !== $type;
         $selector  = '.products-' . $type . ' ' . $this->getListEntrySelector() . ' div.product-list-market-price';
