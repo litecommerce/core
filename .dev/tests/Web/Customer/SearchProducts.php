@@ -215,7 +215,14 @@ return;
 
         $this->currentMode = $mode;
 
-        $this->clickAndWaitForAjaxProgress('//a[@class="' . $mode . '"]');
+        $sleep = $this->setSleep(0);
+
+        $this->click('//a[@class="' . $mode . '"]');
+
+        $this->waitForLocalCondition("jQuery('.list-type-$mode'.selected).length > 0", 30000, "Waiting for type switch to $mode");
+
+        $this->setSleep($sleep);
+        //$this->clickAndWaitForAjaxProgress('//a[@class="' . $mode . '"]');
     }
 
     protected function setVisible($part)

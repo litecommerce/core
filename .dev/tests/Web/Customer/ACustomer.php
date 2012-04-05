@@ -250,9 +250,11 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
      * @access protected
      * @since  1.0.0
      */
-    protected function waitForAjaxProgress()
+    protected function waitForAjaxProgress($listSelector = null)
     {
-        $listSelector = $this->getListSelector();
+        if ($listSelector == null){
+            $listSelector = $this->getListSelector();
+        }
 
         // wait until the progress bar appears
         // it is commented due to the fact that sometimes the progress bar disappers faster than selenium checks whether it is visible
