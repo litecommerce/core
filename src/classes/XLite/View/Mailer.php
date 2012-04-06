@@ -142,6 +142,15 @@ class Mailer extends \XLite\View\AView
     protected $images = array();
 
     /**
+     * Image parser
+     *
+     * @var   null|\XLite\Model\MailImageParser
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $imageParser = null;
+
+    /**
      * Error message set by PHPMailer class
      *
      * @var   string
@@ -232,14 +241,14 @@ class Mailer extends \XLite\View\AView
 
         file_put_contents($fname, $this->get('body'));
 
-        $imageParser = new \XLite\Model\MailImageParser();
+        $this->imageParser = new \XLite\Model\MailImageParser();
 
-        $imageParser->webdir = \XLite::getInstance()->getShopURL();
+        $this->imageParser->webdir = \XLite::getInstance()->getShopURL();
 
-        $imageParser->parse($fname);
+        $this->imageParser->parse($fname);
 
-        $this->set('body', $imageParser->result);
-        $this->set('images', $imageParser->images);
+        $this->set('body', $this->imageParser->result);
+        $this->set('images', $this->imageParser->images);
 
         ob_start();
 
@@ -303,6 +312,8 @@ class Mailer extends \XLite\View\AView
 
             $this->templatesSkin = null;
         }
+
+        $this->imageParser->unlinkImages();
 
         $this->errorInfo = $this->mail->ErrorInfo;
     }
@@ -401,7 +412,7 @@ class Mailer extends \XLite\View\AView
 
                 // Append to $attachment array
                 $this->mail->AddEmbeddedImage(
-                    $image['data'],
+                    $image['path'],
                     $image['name'] . '@mail.lc',
                     $image['name'],
                     'base64',

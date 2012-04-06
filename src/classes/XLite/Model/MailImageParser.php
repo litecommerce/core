@@ -193,11 +193,14 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
 
                 fclose($fd);
 
+                $path = tempnam(LC_DIR_COMPILE, 'mailimage');
+                file_put_contents($path, $image);
+
                 $info = getimagesize($img);
 
                 $this->images[$img] = array(
                     'name' => basename($img),
-                    'data' => $image,
+                    'path' => $path,
                     'mime' => $info['mime']
                 );
 
@@ -211,5 +214,20 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
         }
 
         return 'cid:' . $this->images[$img]['name'] . '@mail.lc';
+    }
+
+    /**
+     * Removes any images that were parsed
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function unlinkImages()
+    {
+        foreach ($this->images as $image) {
+
+            \Includes\Utils\FileManager::deleteFile($image['path']);
+        }
     }
 }
