@@ -16,7 +16,14 @@ CommonElement.prototype.handlers.push(
       return 0 < this.$element.filter('select.multiselect').length;
     },
     handler: function () {
-      this.$element.multiselect();
+      var options = { minWidth: 300, header: false, selectedList: 2 };
+      if (this.$element.data('text')) {
+        options.selectedText = this.$element.data('text');
+      }
+      if (this.$element.data('header')) {
+        options.header = true;
+      }
+      this.$element.multiselect(options);
     }
   }
 );

@@ -14,7 +14,7 @@
   {if:hasOptionGroups()}
     {foreach:getOptions(),optionGroupIdx,optionGroup}
       <optgroup {getOptionGroupAttributesCode(optionGroupIdx,optionGroup):h}>
-        {foreach:optionGroup,optionValue,optionLabel}
+        {foreach:optionGroup.options,optionValue,optionLabel}
           <option {getOptionAttributesCode(optionValue):h}>{t(optionLabel)}</option>
         {end:}
       </optgroup>

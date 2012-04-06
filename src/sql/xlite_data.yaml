@@ -1129,8 +1129,8 @@ XLite\Model\Task:
   - { owner: 'XLite\Core\Task\Probe' }
   - { owner: 'XLite\Core\Task\EventListener' }
 XLite\Model\Role:
-  - { translations: [{ code: en, name: Administrator }], permissions: [ { code: root access, translations: [{ code: en, name: Root access }] } ] }
+  - { translations: [{ code: en, name: Administrator }], permissions: [ { code: root access, section: All, translations: [{ code: en, name: Root access }] } ] }
 XLite\Model\Role\Permission:
-  - { code: manage catalog, translations: [{ code: en, name: Manage catalog }] }
-  - { code: manage users, translations: [{ code: en, name: Manage users }] }
-  - { code: manage orders, translations: [{ code: en, name: Manage orders }] }
+  - { code: manage catalog, section: Catalog, translations: [{ code: en, name: Manage catalog }] }
+  - { code: manage users, section: Users, translations: [{ code: en, name: Manage users }] }
+  - { code: manage orders, section: Sales, translations: [{ code: en, name: Manage orders }] }

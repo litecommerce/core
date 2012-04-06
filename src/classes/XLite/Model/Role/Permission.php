@@ -40,9 +40,6 @@ class Permission extends \XLite\Model\Base\I18n
 {
     const ROOT_ACCESS = 'root access';
 
-    const CORE_OWNER = 'Core';
-
-
     /**
      * ID 
      * 
@@ -68,7 +65,7 @@ class Permission extends \XLite\Model\Base\I18n
     protected $code;
 
     /**
-     * Owner
+     * Section
      *
      * @var   string
      * @see   ____var_see____
@@ -76,7 +73,7 @@ class Permission extends \XLite\Model\Base\I18n
      *
      * @Column (type="string", length="128")
      */
-    protected $owner = self::CORE_OWNER;
+    protected $section;
 
     /**
      * Roles
@@ -120,39 +117,5 @@ class Permission extends \XLite\Model\Base\I18n
     public function getPublicName()
     {
         return $this->getName() ?: $this->getCode();
-    }
-
-    /**
-     * Get owner model
-     * 
-     * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.19
-     */
-    public function getOwnerModel()
-    {
-        $owner = null;
-
-        $parts = explode('\\', $this->getOwner());
-        if (2 === count($parts)) {
-            $owner = \XLite\Core\Database::getRepo('XLite\Model\Module')
-                ->findOneBy(array('author' => $parts[0], 'name' => $parts[1]));
-        }
-
-        return $owner;
-    }
-
-    /**
-     * Get owner name 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.19
-     */
-    public function getOwnerName()
-    {
-        $model = $this->getOwnerModel();
-
-        return $model ? $model->getModuleName() : 'Core';
     }
 }
