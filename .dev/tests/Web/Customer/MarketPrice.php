@@ -462,7 +462,7 @@ class XLite_Web_Customer_MarketPrice extends XLite_Web_Customer_ACustomer
         $this->skipCoverage();
         $this->open('store/category/0/category_id-' . $this->product->getCategory()->getCategoryId());
         $this->click('css=.category-products ul.display-modes li.list-type-' . $type . ' a');
-        $this->waitForLocalCondition("jQuery('.list-type-$type'.selected).length > 0", 30000, "Waiting for type switch to $type");
+        $this->waitForLocalCondition("jQuery('.list-type-$type.selected').length > 0", 30000, "Waiting for type switch to $type");
 
 
         $isPresent = 'table' !== $type;
