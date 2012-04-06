@@ -73,7 +73,7 @@ button.ui-state-default span.ui-icon {
   padding-right: 19px;
   border: 0px none;
   margin-bottom: 6px;
-  font-style: normal;
+  font-weight: normal;
 }
 
 .ui-multiselect-checkboxes li.ui-multiselect-optgroup-label a {
@@ -83,12 +83,13 @@ button.ui-state-default span.ui-icon {
   padding-left: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
+  color: #456583;
 }
 
 .ui-multiselect-checkboxes .ui-state-hover {
-  border: 0px none;
+  border-color: #83a8c7;
   background: #83a8c7 none;
-  font-style: normal;
+  font-weight: normal;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px;
