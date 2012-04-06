@@ -52,13 +52,14 @@ button.ui-state-default span.ui-icon {
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
   border-radius: 0px;
+  background: #fff none;
 }
 
 .ui-multiselect-checkboxes {
   background: #fff none;
 }
 
-.ui-multiselect-checkboxes .ui-widget-header {
+.ui-multiselect-menu .ui-widget-header {
   background: transparent none;
 }
 
