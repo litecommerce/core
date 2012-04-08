@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<widget class="XLite\View\Surcharge" surcharge="{modifier.getAbsoluteValue()}" />
+<widget class="XLite\View\Surcharge" surcharge="{modifier.getAbsoluteValue()}" purpose="product.options.modifier" />
