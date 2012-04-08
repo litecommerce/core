@@ -142,6 +142,15 @@ class Mailer extends \XLite\View\AView
     protected $images = array();
 
     /**
+     * Image parser
+     *
+     * @var   null|\XLite\Model\MailImageParser
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $imageParser = null;
+
+    /**
      * Error message set by PHPMailer class
      *
      * @var   string
@@ -232,14 +241,14 @@ class Mailer extends \XLite\View\AView
 
         file_put_contents($fname, $this->get('body'));
 
-        $imageParser = new \XLite\Model\MailImageParser();
+        $this->imageParser = new \XLite\Model\MailImageParser();
 
-        $imageParser->webdir = \XLite::getInstance()->getShopURL();
+        $this->imageParser->webdir = \XLite::getInstance()->getShopURL();
 
-        $imageParser->parse($fname);
+        $this->imageParser->parse($fname);
 
-        $this->set('body', $imageParser->result);
-        $this->set('images', $imageParser->images);
+        $this->set('body', $this->imageParser->result);
+        $this->set('images', $this->imageParser->images);
 
         ob_start();
 
@@ -256,6 +265,12 @@ class Mailer extends \XLite\View\AView
         if ('' !== $output) {
 
             \XLite\Logger::getInstance()->log('Mailer echoed: "' . $output . '". Error: ' . $this->mail->ErrorInfo);
+        }
+
+        // Check if there is any error during mail composition. Log it.
+        if ($this->mail->IsError()) {
+
+            \XLite\Logger::getInstance()->log('Compose mail error: ' . $this->mail->ErrorInfo);
         }
 
         if (file_exists($fname)) {
@@ -279,20 +294,21 @@ class Mailer extends \XLite\View\AView
 
             if (!isset($this->mail)) {
 
-                \XLite\Logger::getInstance()->log('Mail FAILED: not initialized inner mailer');
+                \XLite\Logger::getInstance()->log('Send mail FAILED: not initialized inner mailer');
             }
 
             ob_start();
 
-            $result = $this->mail->Send();
+            $this->mail->Send();
 
             $error = ob_get_contents();
 
             ob_end_clean();
 
-            if (!$result) {
+            // Check if there are any error during mail sending
+            if ($this->mail->isError()) {
 
-                \XLite\Logger::getInstance()->log('Mail FAILED: ' . $this->mail->ErrorInfo . ' : [' . $error . ']');
+                \XLite\Logger::getInstance()->log('Send mail FAILED: ' . $this->mail->ErrorInfo . ' : [' . $error . ']');
             }
         }
 
@@ -303,6 +319,8 @@ class Mailer extends \XLite\View\AView
 
             $this->templatesSkin = null;
         }
+
+        $this->imageParser->unlinkImages();
 
         $this->errorInfo = $this->mail->ErrorInfo;
     }
@@ -401,7 +419,7 @@ class Mailer extends \XLite\View\AView
 
                 // Append to $attachment array
                 $this->mail->AddEmbeddedImage(
-                    $image['data'],
+                    $image['path'],
                     $image['name'] . '@mail.lc',
                     $image['name'],
                     'base64',

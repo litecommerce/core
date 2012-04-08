@@ -11,4 +11,5 @@
  *
  * @ListChild (list="head", weight="800")
  *}
+
 <meta http-equiv="X-UA-Compatible" content="IE=9" />

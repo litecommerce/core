@@ -212,7 +212,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 'The language has not been found'
             );
 
-        } elseif ($language->code == static::$defaultLanguage) {
+        } elseif ($language->code == static::$defaultLanguage && $language->enabled) {
 
             \XLite\Core\TopMessage::addError(
                 'The default interface language cannot be disabled'
@@ -396,25 +396,21 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         $codeDefault = $codeInterface = static::$defaultLanguage;
 
         if (!$name) {
-
             \XLite\Core\TopMessage::addError(
                 'The text label has not been added, because its name has not been specified'
             );
 
         } elseif (\XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findOneByName($name)) {
-
             \XLite\Core\TopMessage::addError(
                 'The text label has not been added, because such a text label already exists'
             );
 
         } elseif (!isset($label[$codeDefault]) || !$label[$codeDefault]) {
-
             \XLite\Core\TopMessage::addError(
                 'The text label has not been added, because its translation to the default application language has not been specified'
             );
 
         } elseif (!isset($label[$codeInterface]) || !$label[$codeInterface]) {
-
             \XLite\Core\TopMessage::addError(
                 'The text label has not been added, because its translation to the default interface language has not been specified'
             );
@@ -422,19 +418,15 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         } else {
 
             $lbl = new \XLite\Model\LanguageLabel();
-            $lbl->name = $name;
-            \XLite\Core\Database::getEM()->persist($lbl);
-            \XLite\Core\Database::getEM()->flush();
+            $lbl->setName($name);
 
-            foreach ($label as $code => $l) {
-                if ($l) {
-                    $lbl->getTranslation($code)->label = $l;
+            foreach ($label as $code => $text) {
+                if (!empty($text)) {
+                    $lbl->setEditLanguage($code)->setLabel($text);
                 }
             }
 
-            \XLite\Core\Database::getEM()->persist($lbl);
-            \XLite\Core\Database::getEM()->flush();
-
+            \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->insert($lbl);
             \XLite\Core\Translation::getInstance()->reset();
 
             \XLite\Core\TopMessage::addInfo('The text label has been added successfully');

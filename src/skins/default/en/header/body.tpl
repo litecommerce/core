@@ -10,6 +10,6 @@
  * @since     1.0.0
  *}
 
-<head {foreach:getHeadAttributes(),k,v} {k}="{v}"{end:}>
+<head{foreach:getHeadAttributes(),k,v} {k}="{v}"{end:}>
   <list name="head" />
 </head>

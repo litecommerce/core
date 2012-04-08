@@ -1,8 +1,8 @@
 # vim: set ts=2 sw=2 sts=2 et:
-# 
+#
 # New data
-#  
-# @author    Creative Development LLC <info@cdev.ru> 
+#
+# @author    Creative Development LLC <info@cdev.ru>
 # @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
@@ -10,7 +10,7 @@
 
 XLite\Model\LanguageLabel:
   - { name: 'Dear X', translations: [{ code: en, label: 'Dear {{firstname}} {{lastname}}!' }] }
-  - { name: 'Thank you for your order', translations: [{ code: en, label: 'Thank you for your order made with our shopping system.<br />Please come back soon!' }] }
+  - { name: 'Thank you for your order FOOTER', translations: [{ code: en, label: 'Thank you for your order made with our shopping system.<br />Please come back soon!' }] }
   - { name: 'Your order has failed', translations: [{ code: en, label: 'Your order #{{id}} has failed or been declined by the shop administration.' }] }
   - { name: 'Your order has been processed', translations: [{ code: en, label: 'Your order #{{id}} has been processed.' }] }
   - { name: 'percent X off', translations: [{ code: en, label: '{{percent}}% off' }] }

@@ -137,10 +137,10 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
         $this->visit(self::$clientUrl);
         if ($this->isPageContainsText('Log in')){
             $this->clickLink('Log in');
-            $this->fillField('edit-name', 'master');
+            $this->fillField('edit-name', $user);
             $this->fillField('pass', $password);
             $this->pressButton('Log in');
-            sleep(2);
+            $this->waitForText('Log out');
         }
 
         if(!$this->isPageContainsText('Log out')){
@@ -273,6 +273,21 @@ class FeatureContext extends \Behat\Mink\Behat\Context\MinkContext implements Cl
 
     }
 
+    public function waitForText($text, $timeout = 60000){
+        $i = 0;
+        $period = 500;
+        while($i < $timeout){
+            if ($this->isPageContainsText($text)){
+                return;
+            }
+            $i += $period;
+            usleep($period * 1000);
+        }
+        if (!$this->isPageContainsText($text)){
+            throw new \Behat\Mink\Exception\ExpectationException("Wait for $text timed out after $timeout ms", $this->getSession());
+        }
+    }
+
     /**
      * @Given /^I pass checkout$/
      */
@@ -349,7 +364,7 @@ TABLE
 
         if (!empty($buttons))
             foreach($buttons as $button){
-                if (strpos($button->getAttribute('class'), 'mark') === 0){
+                if (strpos($button->getAttribute('class'), 'mark') === false){
                     $button->click();
                 }
             }
