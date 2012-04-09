@@ -280,6 +280,14 @@ class Database extends \XLite\Base\Singleton
             ->getDatabasePlatform()
             ->registerDoctrineTypeMapping('int', 'uinteger');
 
+        // Money
+        if (!\Doctrine\DBAL\Types\Type::hasType('money')) {
+            \Doctrine\DBAL\Types\Type::addType('money', 'XLite\Core\ColumnType\Money');
+        }
+        $em->getConnection()
+            ->getDatabasePlatform()
+            ->registerDoctrineTypeMapping('decimal', 'money');
+
         // Varbinary
         if (!\Doctrine\DBAL\Types\Type::hasType('varbinary')) {
             \Doctrine\DBAL\Types\Type::addType('varbinary', 'XLite\Core\ColumnType\VarBinary');
@@ -287,7 +295,25 @@ class Database extends \XLite\Base\Singleton
         $em->getConnection()
             ->getDatabasePlatform()
             ->registerDoctrineTypeMapping('varbinary', 'varbinary');
+
+        // Register annotation class loader
+        \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array(get_called_class(), 'loadAnnotationClass'));
     }
+
+    /**
+     * Load annotation class 
+     * 
+     * @param string $class Short class name
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public static function loadAnnotationClass($class)
+    {
+        return \XLite\Core\Operator::isClassExists($class) && class_exists($class);
+    }
+
 
     /**
      * Get cache driver
@@ -432,10 +458,7 @@ class Database extends \XLite\Base\Singleton
 
         // Set metadata driver
         $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
-        $chain->addDriver(
-            $this->configuration->newDefaultAnnotationDriver(LC_DIR_CACHE_MODEL),
-            'XLite\Model'
-        );
+        $chain->addDriver($this->createAnnotationDriver(LC_DIR_CACHE_MODEL), 'XLite\Model');
 
         $iterator = new \RecursiveDirectoryIterator(
             LC_DIR_CACHE_CLASSES . 'XLite' . LC_DS . 'Module',
@@ -458,7 +481,7 @@ class Database extends \XLite\Base\Singleton
                         && \Includes\Utils\FileManager::isDir($dir2->getPathName() . LC_DS . 'Model')
                     ) {
                         $chain->addDriver(
-                            $this->configuration->newDefaultAnnotationDriver($dir2->getPathName() . LC_DS . 'Model'),
+                            $this->createAnnotationDriver($dir2->getPathName() . LC_DS . 'Model'),
                             'XLite\Module\\' . $dir->getBaseName() . '\\' . $dir2->getBaseName() . '\Model'
                         );
                     }
@@ -1645,5 +1668,22 @@ OUT;
     protected function setCharset()
     {
         static::$em->getConnection()->setCharset(self::DB_CONNECTION_CHARSET);
+    }
+
+    /**
+     * Create annotation driver 
+     * 
+     * @param string $path Path
+     *  
+     * @return \Doctrine\ORM\Mapping\Driver\AnnotationDriver
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function createAnnotationDriver($path)
+    {
+        $reader = new \Doctrine\Common\Annotations\AnnotationReader();
+        $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
+
+        return new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, array($path));
     }
 }

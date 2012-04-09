@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,49 +13,113 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.19
  */
 
 namespace XLite\Logic;
 
 /**
- * Price mdification logic
- *
+ * Price 
+ * 
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.19
  */
 class Price extends \XLite\Logic\ALogic
 {
-    protected $productNetPriceModifiers = array();
-    protected $productDisplayPriceModifiers = array();
-    protected $orderItemPriceModifiers = array();
+    /**
+     * Modifiers 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.19
+     */
+    protected $modifiers;
 
-    protected function registerPriceModifier($modifierType, $methodName, $weight = 0)
+    /**
+     * Apply price modifiers
+     * 
+     * @param \XLite\Model\AEntity $model     Model
+     * @param string               $method    Model's getter
+     * @param array                $behaviors Behaviors OPTIONAL
+     * @param string               $purpose   Purpose OPTIONAL
+     *  
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function apply(\XLite\Model\AEntity $model, $method, array $behaviors = array(), $purpose = 'net')
     {
-        $reestrName = lcfirst(\XLite\Core\Converter::getInstance()->convertToCamelCase($modifierType) . 'Modifiers');
+        $property = lcfirst(substr($method, 3));
+        $value = $model->$method();
 
-        $this->{$reestrName}[$methodName] = $weight;
+        $modifiers = $this->prepareModifiers($this->getModifiers(), $behaviors, $purpose);
+        foreach ($modifiers as $modifier) {
+            $value = $modifier->apply($value, $model, $property, $behaviors, $purpose);
+        }
+
+        return $value;
     }
 
-    public function applyPriceModifiers($modifierType, $price, $contextObj)
+    /**
+     * Get modifiers 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function getModifiers()
     {
-        $reestrName = lcfirst(\XLite\Core\Converter::getInstance()->convertToCamelCase($modifierType) . 'Modifiers');
+        if (!isset($this->modifiers)) {
+            $this->modifiers = $this->defineModifiers();
+        }
 
-        foreach ($this->{$reestrName} as $methodName => $weight) {
-            if (method_exists($this, $methodName)) {
-                $price += $this->{$methodName}($price, $contextObj);
+        return $this->modifiers;
+    }
+
+    /**
+     * Define modifiers 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function defineModifiers()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\MoneyModificator')->findActive();
+    }
+
+    /**
+     * Prepare modifiers 
+     * 
+     * @param array  $modifiers Modifiers list
+     * @param array  $behaviors Behaviors
+     * @param string $purpose   Purpose
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function prepareModifiers(array $modifiers, array $behaviors, $purpose)
+    {
+        foreach($modifiers as $i => $modifier) {
+            if (
+                ($modifier->getPurpose() && $modifier->getPurpose() != $purpose)
+                || ($modifier->getBehavior() && !in_array($modifier->getBehavior(), $behaviors))
+            ) {
+                unset($modifiers[$i]);
             }
         }
 
-        return $price;
+        return $modifiers;
     }
 }
+
