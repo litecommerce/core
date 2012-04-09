@@ -267,6 +267,12 @@ class Mailer extends \XLite\View\AView
             \XLite\Logger::getInstance()->log('Mailer echoed: "' . $output . '". Error: ' . $this->mail->ErrorInfo);
         }
 
+        // Check if there is any error during mail composition. Log it.
+        if ($this->mail->IsError()) {
+
+            \XLite\Logger::getInstance()->log('Compose mail error: ' . $this->mail->ErrorInfo);
+        }
+
         if (file_exists($fname)) {
 
             unlink($fname);
@@ -288,20 +294,21 @@ class Mailer extends \XLite\View\AView
 
             if (!isset($this->mail)) {
 
-                \XLite\Logger::getInstance()->log('Mail FAILED: not initialized inner mailer');
+                \XLite\Logger::getInstance()->log('Send mail FAILED: not initialized inner mailer');
             }
 
             ob_start();
 
-            $result = $this->mail->Send();
+            $this->mail->Send();
 
             $error = ob_get_contents();
 
             ob_end_clean();
 
-            if (!$result) {
+            // Check if there are any error during mail sending
+            if ($this->mail->isError()) {
 
-                \XLite\Logger::getInstance()->log('Mail FAILED: ' . $this->mail->ErrorInfo . ' : [' . $error . ']');
+                \XLite\Logger::getInstance()->log('Send mail FAILED: ' . $this->mail->ErrorInfo . ' : [' . $error . ']');
             }
         }
 
