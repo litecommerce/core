@@ -114,23 +114,20 @@ class Math extends \XLite\Logic\ALogic
             $parts['sign'] = '-';
         }
 
-        $symbolBefore = $currency->getSymbolBefore();
-        $symbol = $currency->getSymbol();
-        if (!$symbol) {
-            $symbol = strtoupper($currency->getCode());
-            $symbolBefore = true;
-        }
-        if ($symbolBefore) {
-            $parts['symbol'] = $symbol;
+        if (!$currency->getPrefix() && !$currency->getSuffix()) {
+            $parts['prefix'] = $currency->getCode();
+
+        } elseif ($currency->getPrefix()) {
+            $parts['prefix'] = $currency->getPrefix();
         }
 
-        $parts['integer'] = floor(abs($value));
+        $parts['integer'] = number_format(floor(abs($value)), 0, '', $currency->getThousandDelimiter());
 
         $parts['decimalDelimiter'] = $currency->getDecimalDelimiter();
         $parts['decimal'] = substr(strval(abs($value) * pow(10, $currency->getE())), -1 * $currency->getE());
 
-        if (!$symbolBefore) {
-            $parts['symbol'] = $symbol;
+        if ($currency->getSuffix()) {
+            $parts['suffix'] = $currency->getSuffix();
         }
 
         return $parts;

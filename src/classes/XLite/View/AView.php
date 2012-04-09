@@ -1088,19 +1088,8 @@ abstract class AView extends \XLite\Core\Handler
             $parts['sign'] = '&minus;&#8197';
         }
 
-        $integer = false;
         foreach ($parts as $name => $value) {
-            $class = 'part-' . $name;;
-            if ('integer' == $name) {
-                $integer = true;
-
-            } elseif ('symbol' == $name) {
-                $class .= ' ' . ($integer ? 'after' : 'before');
-                if (!$currency->getSymbol()) {
-                    $class .= ' code';
-                }
-            }
-            
+            $class = 'part-' . $name;
             $parts[$name] = '<span class="' . $class . '">' . $value . '</span>';
         }
 
@@ -1836,18 +1825,6 @@ abstract class AView extends \XLite\Core\Handler
     protected function isDeveloperMode()
     {
         return LC_DEVELOPER_MODE;
-    }
-
-    /**
-     * Return currency symbol
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCurrencySymbol()
-    {
-        return \XLite::getInstance()->getCurrency()->getSymbol();
     }
 
     // }}}
