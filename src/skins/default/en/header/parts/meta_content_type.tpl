@@ -11,4 +11,5 @@
  *
  * @ListChild (list="head", weight="200")
  *}
+
 <meta http-equiv="Content-Type" content="text/html; charset={getCharset():h}" />

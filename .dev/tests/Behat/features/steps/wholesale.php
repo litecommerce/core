@@ -44,6 +44,12 @@ $steps->When('/^i create tiers:$/', function(FeatureContext $world, \Behat\Gherk
     $world->pressButton('Save changes');
 });
 
+$steps->When('/^I set user membership to "([^"]*)"$/', function(FeatureContext $world, $membership){
+    $world->visit('admin.php?target=profile');
+    $world->selectOption('membership_id', $membership);
+    $world->pressButton('Update');
+});
+
 $steps->Given('/^I set minimum quantity to (\d+)$/', function(FeatureContext $world, $qty) {
     $world->clickLink('Wholesale pricing');
     $world->clickLink('Minimum purchase quantity');
@@ -91,4 +97,6 @@ $steps->Given('/^I should not see price table$/', function(FeatureContext $world
     $world->assertElementNotOnPage('.wholesale-price-header');
     $world->assertElementNotOnPage('.wholesale-prices-product-block');
 });
+
+
 
