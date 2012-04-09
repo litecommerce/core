@@ -521,7 +521,7 @@ return;
             );
 
             $this->click("css=$linkSelector");
-            $this->waitForLocalCondition("jQuery('.list-type-$m'.selected).length > 0", 30000, "Waiting for type switch to $m");
+            $this->waitForLocalCondition("jQuery('.list-type-$m.selected').length > 0", 30000, "Waiting for type switch to $m");
             //$this->waitForAjaxProgress();
 
             $this->assertElementPresent(

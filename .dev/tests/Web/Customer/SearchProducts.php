@@ -219,7 +219,7 @@ return;
 
         $this->click('//a[@class="' . $mode . '"]');
 
-        $this->waitForLocalCondition("jQuery('.list-type-$mode'.selected).length > 0", 30000, "Waiting for type switch to $mode");
+        $this->waitForLocalCondition("jQuery('.list-type-$mode.selected').length > 0", 30000, "Waiting for type switch to $mode");
 
         $this->setSleep($sleep);
         //$this->clickAndWaitForAjaxProgress('//a[@class="' . $mode . '"]');
