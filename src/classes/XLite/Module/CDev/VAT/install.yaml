@@ -8,6 +8,14 @@
 # @link      http://www.litecommerce.com/
 # @since     1.0.0
 
+XLite\Model\MoneyModificator:
+  - class: XLite\Module\CDev\VAT\Logic\IncludedVAT
+    validator: isApply
+    purpose: net
+  - class: XLite\Module\CDev\VAT\Logic\ExcludedVAT
+    validator: isApply
+    purpose: display
+
 XLite\Model\Config:
   - { name: display_prices_including_vat, category: 'CDev\VAT', type: checkbox, value: 'Y', orderby: 100, translations: [{ code: en, option_name: 'Display prices in catalog including VAT' }] }
   - { name: display_inc_vat_label, category: 'CDev\VAT', type: checkbox, value: 'Y', orderby: 110, translations: [{ code: en, option_name: 'Display ''inc/ex VAT'' labels next to prices', option_comment: 'If this option is ticked all prices in the catalog will be shown with ''inc VAT'' or ''ex VAT'' label depending on whether included VAT into the price or not. If you choose do not display this label, you have to place information about it somewhere on the catalog pages as it must be clear for customers.' }] }

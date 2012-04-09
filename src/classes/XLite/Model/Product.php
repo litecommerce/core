@@ -68,7 +68,14 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="decimal", precision=14, scale=4)
+     * @Column (
+     *      type="money",
+     *      options={
+     *          @XLite\Core\Doctrine\Annotation\Behavior (list={"taxable"}),
+     *          @XLite\Core\Doctrine\Annotation\Purpose (name="net", source="clear"),
+     *          @XLite\Core\Doctrine\Annotation\Purpose (name="display", source="net")
+     *      }
+     *  )
      */
     protected $price = 0.0000;
 
@@ -299,31 +306,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     public function getClearPrice()
     {
         return $this->getPrice();
-    }
-
-    /**
-     * Get net price: this price can be modified (but not overwritten) by modules
-     *
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getNetPrice($price = null)
-    {
-        return \XLite\Logic\Price::getInstance()->applyPriceModifiers('productNetPrice', isset($price) ? $price : $this->getClearPrice(), $this);
-    }
-
-    /**
-     * Get display price: this price can be modified (but not overwritten) by modules.
-     * This price is used to display in the catalog
-     *
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDisplayPrice($price = null)
-    {
-        return \XLite\Logic\Price::getInstance()->applyPriceModifiers('productDisplayPrice', isset($price) ? $price : $this->getNetPrice(), $this);
     }
 
     /**
