@@ -462,8 +462,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function prepareCndCategoryId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder->innerJoin('p.categoryProducts', 'cp')
-            ->innerJoin('cp.category', 'c')
+        $queryBuilder->linkInner('p.categoryProducts', 'cp')
+            ->linkInner('cp.category', 'c')
             ->addOrderBy('cp.orderby');
 
         if (empty($this->currentSearchCnd->{self::P_SEARCH_IN_SUBCATS})) {

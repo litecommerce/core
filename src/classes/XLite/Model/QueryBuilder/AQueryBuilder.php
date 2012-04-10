@@ -45,6 +45,15 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      */
     protected $flags = array();
 
+    /**
+     * Linked joins 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.21
+     */
+    protected $joins = array();
+
     // {{{ Result helpers
 
     /**
@@ -214,4 +223,56 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
 
     // }}}
 
+    // {{{ Query builder helpers
+
+    /**
+     * Link association as inner join
+     * 
+     * @param string $join  The relationship to join
+     * @param string $alias The alias of the join OPTIONAL
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function linkInner($join, $alias = null)
+    {
+        if (!$alias) {
+            list($main, $alias) = explode('.', $join, 2);
+        }
+
+        if (!in_array($alias, $this->joins)) {
+            $this->innerJoin($join, $alias);
+            $this->joins[] = $alias;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Link association as left join
+     *
+     * @param string $join  The relationship to join
+     * @param string $alias The alias of the join OPTIONAL
+     *
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function linkLeft($join, $alias = null)
+    {
+        if (!$alias) {
+            list($main, $alias) = explode('.', $join, 2);
+        }
+
+        if (!in_array($alias, $this->joins)) {
+            $this->leftJoin($join, $alias);
+            $this->joins[] = $alias;
+        }
+
+        return $this;
+    }
+
+
+    // }}}
 }
