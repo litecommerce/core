@@ -79,7 +79,7 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
         $status = $request->cart_order_id ? $transaction::STATUS_SUCCESS : $transaction::STATUS_FAILED;
 
         // Checking MD5. /Secret/Account/OrderId/Total cost/
-        $orderId = 'test' === $this->getSetting('mode') ? 1 : $this->getOrder()->getOrderId();
+        $orderId = 'test' === $this->getSetting('mode') ? 1 : $request->order_number;
 
         $calculated = $this->getSetting('secret')
             . $this->getSetting('account')
