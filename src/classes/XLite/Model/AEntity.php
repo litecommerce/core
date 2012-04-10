@@ -256,7 +256,7 @@ abstract class AEntity extends \XLite\Base\SuperClass
      */
     public function isPersistent()
     {
-        return (bool) $this->{'get' . $this->getMethodName($this->getRepository()->getPrimaryKeyField())}();
+        return (bool) $this->getUniqueIdentifier();
     }
 
     /**
@@ -268,9 +268,7 @@ abstract class AEntity extends \XLite\Base\SuperClass
      */
     public function getUniqueIdentifier()
     {
-        $method = 'get' . $this->getMethodName($this->getRepository()->getPrimaryKeyField());
-
-        return $this->$method();
+        return $this->{'get' . $this->getMethodName($this->getRepository()->getPrimaryKeyField())}();
     }
 
     /**

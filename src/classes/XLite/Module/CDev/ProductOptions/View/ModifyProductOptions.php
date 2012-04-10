@@ -40,7 +40,6 @@ class ModifyProductOptions extends \XLite\View\AView
      */
     const PARAM_PRODUCT = 'product';
 
-
     /**
      * Option groups list (cache)
      *
@@ -97,10 +96,10 @@ class ModifyProductOptions extends \XLite\View\AView
             'product',
             '',
             array(
-                'page'     => 'product_options',
-                'id'       => $this->getProductId(),
-                'groupId'  => $option->getGroupId(),
-                'language' => \XLite\Core\Request::getInstance()->language,
+                'page'       => 'product_options',
+                'product_id' => $this->getProductId(),
+                'groupId'    => $option->getGroupId(),
+                'language'   => \XLite\Core\Request::getInstance()->language,
             )
         );
     }
@@ -115,7 +114,6 @@ class ModifyProductOptions extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules/CDev/ProductOptions/style.css';
 
         return $list;

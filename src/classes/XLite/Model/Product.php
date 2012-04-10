@@ -40,7 +40,7 @@ namespace XLite\Model;
  *          @Index (name="sku", columns={"sku"}),
  *          @Index (name="weight", columns={"weight"}),
  *          @Index (name="free_shipping", columns={"free_shipping"}),
- *          @Index (name="clean_url", columns={"clean_url"}),
+ *          @Index (name="cleanURL", columns={"cleanURL"}),
  *          @Index (name="customerArea", columns={"enabled","arrivalDate"})
  *      }
  * )
@@ -125,7 +125,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      *
      * @Column (type="string", length="255", nullable=false)
      */
-    protected $clean_url = '';
+    protected $cleanURL = '';
 
     /**
      * Custom javascript code

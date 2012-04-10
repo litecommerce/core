@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,28 +13,40 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.21
  */
 
-namespace XLite\View\Form\Product\Modify;
+namespace XLite\View\Form\Category\Modify;
 
 /**
- * Details
+ * Single 
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.21
  */
-class Single extends \XLite\View\Form\Product\Modify\Base\Single
+class Single extends \XLite\View\Form\Category\Modify\AModify
 {
+    /**
+     * getDefaultTarget
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTarget()
+    {
+        return 'category';
+    }
+
     /**
      * getDefaultAction
      *
@@ -48,15 +60,19 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
     }
 
     /**
-     * Ability to add the 'enctype="multipart/form-data"' form attribute
+     * getDefaultParams
      *
-     * @return boolean
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isMultipart()
+    protected function getDefaultParams()
     {
-        return true;
+        $list = parent::getDefaultParams();
+        $list['category_id'] = $this->getCategoryId();
+        $list['parent_id'] = $this->getParentCategoryId();
+
+        return $list;
     }
 
     /**
@@ -64,7 +80,7 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      *
      * @return \XLite\Core\Validator\HashArray
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.21
      */
     protected function getValidator()
     {
@@ -81,28 +97,17 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      *
      * @return null
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.21
      */
-    protected function setDataValidators(&$data)
+    protected function setDataValidators($data)
     {
-        $data->addPair('sku', new \XLite\Core\Validator\String(), null, 'SKU');
-        $data->addPair('name', new \XLite\Core\Validator\String(true), null, 'Product Name');
-        $data->addPair('price', new \XLite\Core\Validator\Float(), null, 'Price')->setRange(0);
-        $data->addPair('weight', new \XLite\Core\Validator\Float(), null, 'Weight')->setRange(0);
-        $data->addPair('free_shipping', new \XLite\Core\Validator\Enum\Boolean(), null, 'Shippable');
-        $data->addPair('enabled', new \XLite\Core\Validator\Enum\Boolean(), null, 'Available for sale');
-        $data->addPair('meta_title', new \XLite\Core\Validator\String(), null, 'Product page title');
-        $data->addPair('brief_description', new \XLite\Core\Validator\String(), null, 'Brief description');
-        $data->addPair('description', new \XLite\Core\Validator\String(), null, 'Full description');
+        $data->addPair('name', new \XLite\Core\Validator\String(true), null, 'Category name');
+        $data->addPair('show_title', new \XLite\Core\Validator\Enum\Boolean(), null, 'Category title');
+        $data->addPair('description', new \XLite\Core\Validator\String(), null, 'Description');
+        $data->addPair('enabled', new \XLite\Core\Validator\Enum\Boolean(), null, 'Availability');
+        $data->addPair('meta_title', new \XLite\Core\Validator\String(), null, 'Meta title');
         $data->addPair('meta_tags', new \XLite\Core\Validator\String(), null, 'Meta keywords');
         $data->addPair('meta_desc', new \XLite\Core\Validator\String(), null, 'Meta description');
-
-        $data->addPair(
-            'category_ids',
-            new \XLite\Core\Validator\PlainArray(),
-            \XLite\Core\Validator\Pair\APair::SOFT,
-            'Category'
-        )->setValidator(new \XLite\Core\Validator\Integer());
 
         $data->addPair(
             'cleanURL',

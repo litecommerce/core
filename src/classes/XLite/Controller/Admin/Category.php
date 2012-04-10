@@ -44,6 +44,36 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     public $params = array('target', 'category_id', 'mode');
 
+    // {{{ Abstract method implementations
+
+    /**
+     * Check if we need to create new product or modify an existsing one
+     *
+     * NOTE: this function is public since it's neede for widgets
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isNew()
+    {
+        return !$this->getCategory()->isPersistent();
+    }
+
+    /**
+     * Return class name for the controller main form
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    protected function getFormClass()
+    {
+        return '\XLite\View\Form\Category\Modify\Single';
+    }
+
+    // }}}
+
     // {{{ Pages
 
     /**
@@ -71,13 +101,28 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     protected function getPageTemplates()
     {
         $list = parent::getPageTemplates();
-        $list['category_modify'] = 'categories/add_modify_body.tpl';
-        $list['default']         = 'categories/add_modify_body.tpl';
+        $list['category_modify'] =
+        $list['default']         = 'categories/modify/body.tpl';
 
         return $list;
     }
 
     // }}}
+
+    // {{{ Data management
+
+    /**
+     * Check current category
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function isRoot()
+    {
+        // DO NOT use "===" here
+        return $this->getCategory()->getCategoryId() == $this->getRootCategoryId();
+    }
 
     /**
      * Return current (or default) category object
@@ -88,11 +133,31 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     public function getCategory()
     {
-        $category = ('add_child' === \XLite\Core\Request::getInstance()->mode)
-            ? new \XLite\Model\Category()
-            : parent::getCategory();
+        $category = parent::getCategory();
+
+        if (!isset($category)) {
+            $category = new \XLite\Model\Category();
+        }
 
         return $category;
+    }
+
+    /**
+     * Return ID for parent category
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function getParentCategoryId()
+    {
+        $result = intval(\XLite\Core\Request::getInstance()->parent_id);
+
+        if (0 >= $result) {
+            $result = $this->getRootCategoryId();
+        }
+
+        return $result;
     }
 
     /**
@@ -105,8 +170,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     public function hasImage()
     {
-        return 'add_child' !== \XLite\Core\Request::getInstance()->mode
-            && $this->getRootCategoryId() !== $this->getCategoryId();
+        return !$this->isNew() && !$this->isRoot();
     }
 
     /**
@@ -118,144 +182,76 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     public function getTitle()
     {
-        return ('add_child' === \XLite\Core\Request::getInstance()->mode)
-            ? 'Add category'
-            : parent::getCategory()->getName();
+        return $this->isNew() ? 'Add category' : $this->getCategory()->getName();
     }
 
+    // }}}
+
+    // {{{ Clean URL routines
+
     /**
-     * doActionAddChild
+     * Check if specified clean URL is unique or not
+     *
+     * @param string $cleanURL Clean URL
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkCleanURL($cleanURL)
+    {
+        $result = empty($cleanURL);
+
+        if (!$result) {
+            $entity = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findOneByCleanURL($cleanURL);
+            // DO NOT use "===" here
+            $result = !isset($entity) || $entity->getCategoryId() == $this->getCategoryId();
+
+            if (!$result) {
+                $this->setCleanURLError($cleanURL);
+            }
+        }
+
+        return $result;
+    }
+
+    // }}}
+
+    // {{{ Action handlers
+
+    /**
+     * doActionAdd
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionAddChild()
+    protected function doActionAdd()
     {
-        $properties = $this->validateCategoryData(true);
+        $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->insert(
+            array('parent_id' => $this->getParentCategoryId()) + $this->getPostedData()
+        );
 
-        if ($properties) {
-            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->insert(
-                array('parent_id' => $this->getCategoryId()) + $properties
-            );
-
-            \XLite\Core\Database::getRepo('\XLite\Model\Category')->update($category, $properties);
+        if (isset($category)) {
+            \XLite\Core\TopMessage::addInfo('New category has been added successfully');
 
             $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $category->getCategoryId())));
         }
     }
 
     /**
-     * doActionModify
+     * doActionUpdate
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionModify()
+    protected function doActionUpdate()
     {
-        $properties = $this->validateCategoryData();
+        \XLite\Core\Database::getRepo('\XLite\Model\Category')->update($this->getCategory(), $this->getPostedData());
 
-        if ($properties) {
-
-            \XLite\Core\Database::getRepo('\XLite\Model\Category')
-                ->update($this->getCategory(), $properties);
-
-            $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $properties['category_id'])));
-        }
+        \XLite\Core\TopMessage::addInfo('Category has been successfully updated');
     }
 
-    /**
-     * Validate values passed from the REQUEST for updating/creating category
-     *
-     * @param boolean $isNewObject Flag - is a data for a new category or for updaing existing category OPTIONAL
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function validateCategoryData($isNewObject = false)
-    {
-        $postedData = \XLite\Core\Request::getInstance()->getData();
-
-        $data = array();
-        $isValid = true;
-
-        $fieldsSet = array(
-            'name',
-            'description',
-            'meta_tags',
-            'meta_desc',
-            'meta_title',
-            'enabled',
-            'membership_id',
-            'clean_url',
-            'show_title',
-        );
-
-        if (!$isNewObject) {
-            $data['category_id'] = intval($postedData['category_id']);
-        }
-
-        foreach ($fieldsSet as $field) {
-
-            if (isset($postedData[$field])) {
-                $data[$field] = $postedData[$field];
-            }
-
-            // 'Clean URL' is optional field and must be a unique
-            if ('clean_url' === $field && isset($data['clean_url'])) {
-
-                $data['clean_url'] = $this->sanitizeCleanURL($data['clean_url']);
-
-                if (
-                    !empty($data['clean_url'])
-                    && !$this->isCleanURLUnique($data['clean_url'], (!$isNewObject ? $data['category_id'] : null))
-                ) {
-
-                    \XLite\Core\TopMessage::addError(
-                        'The Clean URL you specified is already in use. Please specify another Clean URL'
-                    );
-
-                    $isValid = false;
-                }
-
-            } elseif ('name' === $field) {
-                // 'Name' is a mandatory field
-
-                if (!isset ($data['name']) || 0 == strlen(trim($data['name']))) {
-
-                    \XLite\Core\TopMessage::addError(
-                        'Not empty category name must be specified'
-                    );
-
-                    $isValid = false;
-                }
-
-            } elseif ('enabled' === $field) {
-                // 'Enabled' field value must be either 0 or 1
-                $data['enabled'] = ((isset($data['enabled']) && $data['enabled'] == '1') ? 1 : 0);
-            }
-        }
-
-        return $isValid ? $data : false;
-    }
-
-    /**
-     * Check - specified clean URL unique or not
-     *
-     * @param string  $cleanURL   Clean URL
-     * @param integer $categoryId Category Id OPTIONAL
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isCleanURLUnique($cleanURL, $categoryId = null)
-    {
-        $result = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneByCleanURL($cleanURL);
-
-        return !isset($result)
-            || (!is_null($categoryId) && intval($categoryId) == intval($result->getCategoryId()));
-    }
+    // }}}
 }

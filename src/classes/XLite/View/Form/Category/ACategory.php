@@ -22,52 +22,17 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.16
+ * @since     1.0.21
  */
 
-namespace XLite\View\ItemsList\Model\Product;
+namespace XLite\View\Form\Category;
 
 /**
- * Abstract product-base list
- * 
+ * ACategory 
+ *
  * @see   ____class_see____
- * @since 1.0.16
+ * @since 1.0.21
  */
-abstract class AProduct extends \XLite\View\ItemsList\Model\Table
+abstract class ACategory extends \XLite\View\Form\AForm
 {
-    /**
-     * Define repository name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function defineRepositoryName()
-    {
-        return 'XLite\Model\Product';
-    }
-
-    /**
-     * Get list name suffixes
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getListNameSuffixes()
-    {
-        return array('products');
-    }
-
-    /**
-     * Get container class
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getContainerClass()
-    {
-        return parent::getContainerClass() . ' products';
-    }
 }

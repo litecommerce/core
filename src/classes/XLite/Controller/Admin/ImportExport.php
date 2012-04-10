@@ -204,7 +204,7 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
             'enabled'          => array('type' => static::TYPE_BOOLEAN),
             'weight'           => array('type' => static::TYPE_FLOAT),
             'freeShipping'     => array('type' => static::TYPE_BOOLEAN),
-            'cleanUrl'         => array('type' => static::TYPE_STRING, 'length' => 255),
+            'cleanURL'         => array('type' => static::TYPE_STRING, 'length' => 255),
             'arrivalDate'      => array('type' => static::TYPE_DATE),
         );
     }

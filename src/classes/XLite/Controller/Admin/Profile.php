@@ -59,7 +59,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
         return 'Edit profile';
     }
 
-
     /**
      * Check if current page is accessible
      *
@@ -83,7 +82,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
     {
         return self::getRegisterMode() === \XLite\Core\Request::getInstance()->mode;
     }
-
 
     /**
      * Alias
@@ -196,11 +194,10 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDelete()
     {
-        $userLogin = $this->getProfile()->getLogin();
         $result = $this->getModelForm()->performAction('delete');
 
         // Send notification to the user
-        \XLite\Core\Mailer::sendProfileDeletedAdminNotification($userLogin);
+        \XLite\Core\Mailer::sendProfileDeletedAdminNotification($this->getProfile()->getLogin());
 
         $this->setReturnURL($this->buildURL('profile_list'));
     }

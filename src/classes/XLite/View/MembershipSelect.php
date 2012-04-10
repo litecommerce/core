@@ -43,7 +43,6 @@ class MembershipSelect extends \XLite\View\FormField
     const PARAM_ALL_OPTION = 'allOption';
     const PARAM_PENDING_OPTION = 'pendingOption';
 
-
     /**
      * Get active memberships
      *
@@ -81,10 +80,10 @@ class MembershipSelect extends \XLite\View\FormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FIELD_NAME     => new \XLite\Model\WidgetParam\String('Field', 'membership', false),
-            self::PARAM_VALUE          => new \XLite\Model\WidgetParam\String('Value', '%', false),
-            self::PARAM_ALL_OPTION     => new \XLite\Model\WidgetParam\Bool('Display All option', false, false),
-            self::PARAM_PENDING_OPTION => new \XLite\Model\WidgetParam\Bool('Display Pending option', false, false)
+            static::PARAM_FIELD_NAME     => new \XLite\Model\WidgetParam\String('Field', 'membership', false),
+            static::PARAM_VALUE          => new \XLite\Model\WidgetParam\String('Value', '%', false),
+            static::PARAM_ALL_OPTION     => new \XLite\Model\WidgetParam\Bool('Display All option', false, false),
+            static::PARAM_PENDING_OPTION => new \XLite\Model\WidgetParam\Bool('Display Pending option', false, false),
         );
     }
 }

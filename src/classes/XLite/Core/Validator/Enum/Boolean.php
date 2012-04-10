@@ -33,7 +33,7 @@ namespace XLite\Core\Validator\Enum;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Boolean extends \XLite\Core\Validator\Enum
+class Boolean extends \XLite\Core\Validator\Enum\AEnum
 {
     /**
      * Constructor
@@ -44,8 +44,6 @@ class Boolean extends \XLite\Core\Validator\Enum
      */
     public function __construct()
     {
-        parent::__construct();
-
         $this->list[] = '1';
         $this->list[] = '0';
     }

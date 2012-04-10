@@ -88,7 +88,7 @@
   class="\XLite\View\Button\Regular"
   id="modify-root"
   label="{t(#Modify root category (the front shop page)#)}"
-  jsCode="self.location='{buildURL(#category#,##,_ARRAY_(#category_id#^getRootCategoryId(),#mode#^#modify#))}'" />
+  jsCode="self.location='{buildURL(#category#,##,_ARRAY_(#category_id#^getRootCategoryId()))}'" />
 
 <br />
 <br />
@@ -98,7 +98,6 @@
   <input type="hidden" name="target" value="categories" />
   <input type="hidden" name="category_id" value="{category.getCategoryId()}" />
   <input type="hidden" name="action" value="update" />
-  <input type="hidden" name="mode" />
 
   <table class="category-data">
 
@@ -183,12 +182,12 @@
 
 function onAddChildClick(category_id)
 {
-	document.location = "admin.php?target=category&category_id=" + category_id + "&mode=add_child";
+	  document.location = "admin.php?target=category&parent_id=" + category_id;
 }
 
 function onModifyClick(category_id)
 {
-    document.location = "admin.php?target=category&category_id=" + category_id + "&mode=modify";
+    document.location = "admin.php?target=category&category_id=" + category_id;
 }
 
 </script>

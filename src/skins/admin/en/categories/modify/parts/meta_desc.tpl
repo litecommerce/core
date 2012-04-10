@@ -1,14 +1,21 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Item name
- *
+ * Category meta description
+ *  
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
- * @ListChild (list="itemsList.product.modify.common.admin.columns", weight="30")
+ * @since     1.0.21
+ *
+ * @ListChild (list="category.modify.list", weight="900")
  *}
 
-<td><a class="name" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.getProductId()))}">{if:product.getName()}{product.getName():h}{else:}N/A{end:}</a></td>
+<tr>
+  <td>{t(#Meta description#)}</td>
+  <td class="star"></td>
+  <td>
+    <input type="text" name="{getNamePostedData(#metaDesc#)}" value="{category.getMetaDesc()}" size="50" />
+  </td>
+</tr>

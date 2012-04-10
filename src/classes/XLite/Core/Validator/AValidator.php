@@ -76,6 +76,7 @@ abstract class AValidator
     {
         $exception = new \XLite\Core\Validator\Exception($message);
         $exception->setLabelArguments($arguments);
+
         if (isset($pathItem)) {
             $exception->addPathItem($pathItem);
         }

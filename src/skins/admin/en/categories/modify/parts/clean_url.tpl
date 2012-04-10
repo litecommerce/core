@@ -1,24 +1,24 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Product element
- *
+ * Category clean URL
+ *  
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
+ * @since     1.0.21
  *
- * @ListChild (list="product.modify.list", weight="1040")
+ * @ListChild (list="category.modify.list", weight="1000")
  *}
 
-<tr>
-  <td class="name-attribute">{t(#Clean URL#)}</td>
+<tr IF="!isRoot()">
+  <td>{t(#Clean URL#)}</td>
   <td class="star"></td>
-  <td class="value-attribute">
-    <input type="text" name="{getNamePostedData(#cleanURL#)}" value="{product.getCleanURL()}" size="50" id="cleanURLBox" />
+  <td>
+    <input type="text" name="{getNamePostedData(#cleanURL#)}" value="{category.getCleanURL()}" size="50" id="cleanURLBox" />
     <p />
-    <input type="checkbox" name="{getNamePostedData(#autogenerateCleanURL#)}" value="{#1#}" checked="{product.getCleanURL()}" id="autogenerateFlag" />
+    <input type="checkbox" name="{getNamePostedData(#autogenerateCleanURL#)}" value="1" checked="{category.getCleanURL()}" id="autogenerateFlag" />
     <label for="autogenerateFlag" class="note">{t(#Autogenerate Clean URL#)}</label>
   </td>
 </tr>

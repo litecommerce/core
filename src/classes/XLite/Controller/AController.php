@@ -712,20 +712,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getCategoryId()
     {
-        $categoryID = \XLite\Core\Request::getInstance()->category_id;
-
-        if (!isset($categoryID)) {
-            $cleanURL = \XLite\Core\Request::getInstance()->clean_url_cat;
-
-            if (!empty($cleanURL)) {
-                $category   = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findOneByCleanURL($cleanURL);
-                $categoryID = isset($category) ? $category->getCategoryId() : false;
-
-                \XLite\Core\Request::getInstance()->category_id = $categoryID;
-            }
-        }
-
-        return $categoryID ?: $this->getRootCategoryId();
+        return \XLite\Core\Request::getInstance()->category_id;
     }
 
     /**

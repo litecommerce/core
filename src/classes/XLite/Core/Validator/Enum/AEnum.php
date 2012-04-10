@@ -22,52 +22,42 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.16
+ * @since     1.0.21
  */
 
-namespace XLite\View\ItemsList\Model\Product;
+namespace XLite\Core\Validator\Enum;
 
 /**
- * Abstract product-base list
- * 
+ * AEnum 
+ *
  * @see   ____class_see____
- * @since 1.0.16
+ * @since 1.0.21
  */
-abstract class AProduct extends \XLite\View\ItemsList\Model\Table
+abstract class AEnum extends \XLite\Core\Validator\Scalar
 {
     /**
-     * Define repository name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
+     * Items list 
+     * 
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 1.0.0
      */
-    protected function defineRepositoryName()
-    {
-        return 'XLite\Model\Product';
-    }
+    protected $list = array();
 
     /**
-     * Get list name suffixes
+     * Validate
      *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getListNameSuffixes()
-    {
-        return array('products');
-    }
-
-    /**
-     * Get container class
+     * @param mixed $data Data
      *
-     * @return string
+     * @return void
+     * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
-     * @since  1.0.15
+     * @since  1.0.0
      */
-    protected function getContainerClass()
+    public function validate($data)
     {
-        return parent::getContainerClass() . ' products';
+        if (!in_array($data, $this->list)) {
+            throw $this->throwError('Unallowed value');
+        }
     }
 }

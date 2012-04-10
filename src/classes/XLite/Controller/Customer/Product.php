@@ -134,8 +134,8 @@ class Product extends \XLite\Controller\Customer\Catalog
     {
         $productID = \XLite\Core\Request::getInstance()->product_id;
 
-        if (!isset($productID)) {
-            $cleanURL = \XLite\Core\Request::getInstance()->clean_url_prod;
+        if (LC_USE_CLEAN_URLS && !isset($productID)) {
+            $cleanURL = \XLite\Core\Request::getInstance()->cleanURLProd;
 
             if (!empty($cleanURL)) {
                 $product   = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanURL($cleanURL);

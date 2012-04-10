@@ -42,7 +42,6 @@ class Category extends \XLite\View\AView
      */
     const WEB_LC_ROOT = '{{WEB_LC_ROOT}}';
 
-
     /**
      * Return list of targets allowed for this widget
      *
@@ -109,7 +108,7 @@ class Category extends \XLite\View\AView
     protected function getWebPreprocessingTags()
     {
         return array(
-            self::WEB_LC_ROOT,
+            static::WEB_LC_ROOT,
         );
     }
 

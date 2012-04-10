@@ -42,7 +42,6 @@ class Converter extends \XLite\Base\Singleton
     const MEGABYTE = 1048576;
     const KILOBYTE = 1024;
 
-
     /**
      * Method name translation records
      *

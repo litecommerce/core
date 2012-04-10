@@ -146,6 +146,31 @@ abstract class ACustomer extends \XLite\Controller\AController
     // }}}
 
     /**
+     * Return current category Id
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCategoryId()
+    {
+        $categoryID = parent::getCategoryId();
+
+        if (LC_USE_CLEAN_URLS && !isset($categoryID)) {
+            $cleanURL = \XLite\Core\Request::getInstance()->cleanURLCat;
+
+            if (!empty($cleanURL)) {
+                $category   = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findOneByCleanURL($cleanURL);
+                $categoryID = isset($category) ? $category->getCategoryId() : false;
+
+                \XLite\Core\Request::getInstance()->category_id = $categoryID;
+            }
+        }
+
+        return $categoryID ?: $this->getRootCategoryId();
+    }
+
+    /**
      * Return cart instance
      *
      * @return \XLite\Model\Order

@@ -52,7 +52,6 @@ abstract class Handler extends \XLite\Base
     const PARAM_AJAX_TARGET = 'target';
     const PARAM_AJAX_WIDGET = 'widget';
 
-
     /**
      * Widget params
      *

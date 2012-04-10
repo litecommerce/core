@@ -33,17 +33,8 @@ namespace XLite\Core\Validator;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Enum extends \XLite\Core\Validator\Scalar
+class Enum extends \XLite\Core\Validator\Enum\AEnum
 {
-    /**
-     * Items list 
-     * 
-     * @var   \Doctrine\Common\Collections\ArrayCollection
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $list;
-
     /**
      * Constructor
      * 
@@ -51,37 +42,8 @@ class Enum extends \XLite\Core\Validator\Scalar
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function __construct()
+    public function __construct(array $list)
     {
-        $this->list = new \Doctrine\Common\Collections\ArrayCollection;
-    }
-
-    /**
-     * Get list 
-     * 
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getList()
-    {
-        return $this->list;
-    }
-
-    /**
-     * Validate
-     *
-     * @param mixed $data Data
-     *
-     * @return void
-     * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function validate($data)
-    {
-        if (!$this->list->contains($data)) {
-            throw $this->throwError('Value is forbidden');
-        }
+        $this->list = $list;
     }
 }

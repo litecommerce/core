@@ -43,7 +43,6 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
     const STATUS_SUCCESS = 'success';
     const STATUS_FAILED  = 'failed';
 
-
     /**
      * data
      *
@@ -55,7 +54,6 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
         'status' => self::STATUS_ERROR,
         'data'   => '',
     );
-
 
     /**
      * Remove product class

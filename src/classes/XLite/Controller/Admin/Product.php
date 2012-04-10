@@ -33,7 +33,7 @@ namespace XLite\Controller\Admin;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Product extends \XLite\Controller\Admin\AAdmin
+class Product extends \XLite\Controller\Admin\Base\Catalog
 {
     /**
      * FIXME- backward compatibility
@@ -42,7 +42,37 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @see   ____var_see____
      * @since 1.0.0
      */
-    public $params = array('target', 'id', 'page', 'backURL');
+    public $params = array('target', 'id', 'product_id', 'page', 'backURL');
+
+    // {{{ Abstract method implementations
+
+    /**
+     * Check if we need to create new product or modify an existsing one
+     *
+     * NOTE: this function is public since it's neede for widgets
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isNew()
+    {
+        return !$this->getProduct()->isPersistent();
+    }
+
+    /**
+     * Return class name for the controller main form
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    protected function getFormClass()
+    {
+        return '\XLite\View\Form\Product\Modify\Single';
+    }
+
+    // }}}
 
     // {{{ Pages
 
@@ -89,6 +119,8 @@ class Product extends \XLite\Controller\Admin\AAdmin
 
     // }}}
 
+    // {{{ Data management
+
     /**
      * Alias
      *
@@ -98,9 +130,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     public function getProduct()
     {
-        if (!$this->isNew()) {
-            $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->getProductId());
-        }
+        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->getProductId());
 
         if (!isset($result)) {
             $result = new \XLite\Model\Product();
@@ -162,23 +192,13 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     public function getProductId()
     {
-        return isset(\XLite\Core\Request::getInstance()->id)
-            ? intval(\XLite\Core\Request::getInstance()->id)
-            : intval(\XLite\Core\Request::getInstance()->product_id);
-    }
+        $result = intval(\XLite\Core\Request::getInstance()->product_id);
 
-    /**
-     * Check if we need to create new product or modify an existsing one
-     *
-     * NOTE: this function is public since it's neede for widgets
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isNew()
-    {
-        return 0 >= $this->getProductId();
+        if (0 >= $result) {
+            $result = intval(\XLite\Core\Request::getInstance()->id);
+        }
+
+        return $result;
     }
 
     /**
@@ -197,7 +217,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
         foreach ((array) $this->getPostedData('category_ids') as $categoryId) {
             $data[] = new \XLite\Model\CategoryProducts(
                 array(
-                    'id'  => $product->getProductId(),
+                    'product_id'  => $product->getProductId(),
                     'category_id' => $categoryId,
                     'category'    => \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($categoryId),
                     'product'     => $product,
@@ -236,25 +256,37 @@ class Product extends \XLite\Controller\Admin\AAdmin
         return array('classes' => $data);
     }
 
-    // {{{ Clean URL routines
-
     /**
-     * Set error
+     * Get posted data
      *
-     * @param string $cleanURL Clean URL
+     * @param string $field Name of the field to retrieve OPTIONAL
      *
-     * @return boolean
+     * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function setCleanURLError($cleanURL)
+    protected function getPostedData($field = null)
     {
-        \XLite\Core\TopMessage::addError(
-            'The "{{clean_url}}" clean URL is already defined',
-            array('clean_url' => $cleanURL)
-        );
+        $result = parent::getPostedData($field);
+
+        if (!isset($field) || 'arrivalDate' === $field) {
+            $value = strtotime(parent::getPostedData('arrivalDate')) ?: time();
+
+            if (isset($field)) {
+                $result = $value;
+
+            } else {
+                $result['arrivalDate'] = $value;
+            }
+        }
+
+        return $result;
     }
 
+    // }}}
+
+    // {{{ Clean URL routines
+    
     /**
      * Check if specified clean URL is unique or not
      *
@@ -265,13 +297,14 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @since  1.0.0
      */
     protected function checkCleanURL($cleanURL)
-    {
+    {   
         $result = empty($cleanURL);
-
+        
         if (!$result) {
-            $entity = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByCleanURL($cleanURL);
-            $result = !isset($entity) || $entity->getProductId() === $this->getProductId();
-
+            $entity = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanURL($cleanURL);
+            // DO NOT use "===" here
+            $result = !isset($entity) || $entity->getProductId() == $this->getProductId();
+            
             if (!$result) {
                 $this->setCleanURLError($cleanURL);
             }
@@ -280,42 +313,9 @@ class Product extends \XLite\Controller\Admin\AAdmin
         return $result;
     }
 
-    /**
-     * Generate clean URL
-     *
-     * @param string $name Product name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.21
-     */
-    protected function generateCleanURL($name)
-    {
-        $result = null;
-
-        if (isset($name)) {
-            $separator = \Includes\Utils\ConfigParser::getOptions(array('clean_urls', 'default_separator'));
-            $result    = strtolower(preg_replace('/\W+/S', $separator ?: '-', $name));
-        }
-
-        return $result;
-    }
-
     // }}}
 
-    /**
-     * doActionModify
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionModify()
-    {
-        if ($this->checkCleanURL($this->getPostedData('clean_url'))) {
-            $this->isNew() ? $this->doActionAdd() : $this->doActionUpdate();
-        }
-    }
+    // {{{ Action handlers
 
     /**
      * doActionAdd
@@ -326,34 +326,25 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionAdd()
     {
-        $form = new \XLite\View\Form\Product\Modify\Single();
-        $requestData = $form->getRequestData();
+        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert($this->getPostedData());
 
-        if ($form->getValidationMessage()) {
-            \XLite\Core\TopMessage::addError($form->getValidationMessage());
+        if (isset($product)) {
+            $inventory = new \XLite\Model\Inventory();
+            $inventory->setProduct($product);
 
-        } else {
-            // Insert record into main table
-            $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert($this->getPostedData());
+            // Create associations (categories and images)
+            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
+                $product,
+                $this->getCategoryProducts($product)
+                + array(
+                    'inventory' => $inventory,
+                )
+            );
 
-            if ($product) {
-                $inventory = new \XLite\Model\Inventory();
-                $inventory->setProduct($product);
+            \XLite\Core\TopMessage::addInfo('New product has been added successfully');
 
-                // Create associations (categories and images)
-                \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
-                    $product,
-                    $this->getCategoryProducts($product)
-                    + array(
-                        'inventory' => $inventory,
-                    )
-                );
-
-                \XLite\Core\TopMessage::addInfo('New product has been added successfully');
-
-                // Add the ID of created product to the return URL
-                $this->setReturnURL($this->buildURL('product', '', array('id' => $product->getProductId())));
-            }
+            // Add the ID of created product to the return URL
+            $this->setReturnURL($this->buildURL('product', '', array('product_id' => $product->getProductId())));
         }
     }
 
@@ -366,29 +357,23 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        $form = new \XLite\View\Form\Product\Modify\Single();
-        $requestData = $form->getRequestData();
+        $product = $this->getProduct();
 
-        if ($form->getValidationMessage()) {
-            \XLite\Core\TopMessage::addError($form->getValidationMessage());
+        // Clear all category associates
+        \XLite\Core\Database::getRepo('\XLite\Model\CategoryProducts')->deleteInBatch(
+            $product->getCategoryProducts()->toArray()
+        );
 
-        } else {
-            $product = $this->getProduct();
+        $product->getClasses()->clear();
+        $data = $this->getCategoryProducts($product) + $this->getClasses($product) + $this->getPostedData();
 
-            // Clear all category associates
-            \XLite\Core\Database::getRepo('\XLite\Model\CategoryProducts')->deleteInBatch(
-                $product->getCategoryProducts()->toArray()
-            );
+        // Update all data
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')->update($product, $data);
 
-            $product->getClasses()->clear();
-            $data = $this->getCategoryProducts($product) + $this->getClasses($product) + $this->getPostedData();
-
-            // Update all data
-            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update($product, $data);
-
-            \XLite\Core\TopMessage::addInfo('Product info has been updated successfully');
-        }
+        \XLite\Core\TopMessage::addInfo('Product info has been updated successfully');
     }
+
+    // TODO: refactor
 
     /**
      * Delete detailed image
@@ -483,47 +468,5 @@ class Product extends \XLite\Controller\Admin\AAdmin
         \XLite\Core\Database::getEM()->flush();
     }
 
-    /**
-     * Get posted data
-     *
-     * @param string $field Name of the field to retrieve OPTIONAL
-     *
-     * @return mixed
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getPostedData($field = null)
-    {
-        $result = parent::getPostedData($field);
-
-        foreach (array('arrivalDate', 'cleanURL') as $name) {
-            $value = isset($field) 
-                ? ($name === $field ? $result : null) 
-                : \Includes\Utils\ArrayManager::getIndex($result, $name);
-
-            switch ($name) {
-                case 'arrivalDate':
-                    $value = strtotime($value) ?: time();
-                    break;
-
-                case 'cleanURL':
-                    if (parent::getPostedData('autogenerateCleanURL')) {
-                        $value = $this->generateCleanURL(parent::getPostedData('name'));
-                    }
-                    break;
-
-                default:
-                    // ...
-            }
-
-            if (isset($field)) {
-                $result = $value;
-
-            } else {
-                $result[$name] = $value;
-            }
-        }
-
-        return $result;
-    }
+    // }}}
 }
