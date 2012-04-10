@@ -1254,6 +1254,36 @@ function doUpdateConfig(&$params, $silentMode = false)
 }
 
 /**
+ * Modify main .htaccess file
+ *
+ * @param array   &$params    Database access data and other parameters
+ * @param boolean $silentMode Flag OPTIONAL
+ *
+ * @return boolean
+ * @see    ____func_see____
+ * @since  1.0.21
+ */
+function doUpdateMainHtaccess(&$params, $silentMode = false)
+{
+    if (!empty($params['xlite_web_dir'])) {
+
+        if (!$silentMode) {
+            echo '<br /><b>' . xtr('Updating .htaccess...') . '</b><br>';
+        }
+
+        $util = '\Includes\Utils\FileManager';
+
+        $util::replace(
+            $util::getDir($util::getDir(__DIR__)) . LC_DS . '.htaccess', 
+            '\1RewriteBase ' . $params['xlite_web_dir'],
+            '/^(\s*)#\s*RewriteBase\s+____WEB_DIR____\s*$/mi'
+        );
+    }
+
+    return true;
+}
+
+/**
  * Prepare to remove a cache of classes
  *
  * @param array $params Database access data and other parameters
@@ -3338,7 +3368,7 @@ function module_install_dirs(&$params)
 {
     global $error, $lcSettings;
 
-    $result = doUpdateConfig($params, true);
+    $result = doUpdateConfig($params, true) && doUpdateMainHtaccess($params);
 
     if ($result) {
 
