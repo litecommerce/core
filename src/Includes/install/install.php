@@ -1032,6 +1032,20 @@ function checkPhpPhar(&$errorMsg, &$value)
     if (!extension_loaded('Phar')) {
         $errorMsg = xtr('Phar extension is not loaded');
         $result = false;
+
+    } else {
+
+        $info = get_info();
+
+        if (!empty($info['phar_ext_ver'])) {
+            $value = trim($info['phar_ext_ver']);
+            if (version_compare($value, '2.0.1') < 0) {
+                $errorMsg = xtr('Phar extension v.2.0.1 or later required to get upgrades and install modules. Otherwise this features may not work properly.');
+                $result = false;
+            }
+        } else {
+            $value = 'unknown version';
+        }
     }
 
     return $result;
@@ -2009,7 +2023,8 @@ function get_info()
             'no_mem_limit'    => true,
             'commands_exists' => false,
             'php_ini_path_forbidden' => false,
-            'pdo_drivers'     => false
+            'pdo_drivers'     => false,
+            'phar_ext_ver'    => '',
         );
 
     } else {
@@ -2053,6 +2068,10 @@ function get_info()
 
         if (preg_match("/PDO drivers.*<\/td><td([^>]*)>([^<]*)/i", $line, $match)) {
             $info['pdo_drivers'] = $match[2];
+        }
+
+        if (preg_match('/Phar EXT version.*<\/td><td([^>]*)>([^<]*)/i', $line, $match)) {
+            $info['phar_ext_ver'] = $match[2];
         }
     }
 

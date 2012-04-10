@@ -153,7 +153,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             . "/div[@class='tabs']"
             . "/ul[@class='tabs primary']"
             . "/li[@class='active']"
-            . "/a[contains(text(), 'Description')]",
+            . "/span[contains(text(), 'Description')]",
             'check for "Description" tab'
         );
 
