@@ -216,25 +216,29 @@ class Converter extends \XLite\Base\Singleton
         $result = null;
         $urlParams = array();
 
-        if ('category' === $target && !empty($params['category_id'])) {
-            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($params['category_id']);
-
-            if (isset($category) && $category->getCleanURL()) {
-                $urlParams[0] = $category->getCleanURL();
+        if ('product' === $target && !empty($params['product_id'])) {
+            $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($params['product_id']);
+                
+            if (isset($product) && $product->getCleanURL()) {
+                $urlParams[] = $product->getCleanURL() . '.html';
             }
         }
 
-        if ('product' === $target && !empty($params['product_id'])) {
-            $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($params['product_id']);
+        if (('category' === $target || ('product' === $target && !empty($urlParams))) && !empty($params['category_id'])) {
+            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($params['category_id']);
 
-            if (isset($product) && $product->getCleanURL()) {
-                $urlParams[1] = $product->getCleanURL() . '.html';
+            if (isset($category) && $category->getCleanURL()) {
+                foreach (array_reverse($category->getPath()) as $node) {
+                    if ($node->getCleanURL()) {
+                        $urlParams[] = $node->getCleanURL();
+                    }
+                }
             }
         }
 
         if (!empty($urlParams)) {
             $result  = \Includes\Utils\ConfigParser::getOptions(array('host_details', 'web_dir_wo_slash'));
-            $result .= '/' . implode('/', $urlParams);
+            $result .= '/' . implode('/', array_reverse($urlParams));
         }
 
         return $result;

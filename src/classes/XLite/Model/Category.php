@@ -349,6 +349,18 @@ class Category extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Get category path
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function getPath()
+    {
+        return $this->getRepository()->getCategoryPath($this->getCategoryId());
+    }
+
+    /**
      * Gets full path to the category as a string: <parent category>/.../<category name>
      *
      * @return string
@@ -359,7 +371,7 @@ class Category extends \XLite\Model\Base\I18n
     {
         $path = array();
 
-        foreach ($this->getRepository()->getCategoryPath($this->getCategoryId()) as $category) {
+        foreach ($this->getPath() as $category) {
             $path[] = $category->getName();
         }
 

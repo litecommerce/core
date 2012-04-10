@@ -18,7 +18,6 @@ DirectoryIndex cart.php
   RewriteBase /~vvs/xlite/src/
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^([a-z0-9-]+)(/)?$ cart.php?target=category&clean_url_cat=$1 [NC] [L]
-  RewriteRule ^([a-z0-9-]+)/([a-z0-9-]+)\.htm(l)?$ cart.php?target=product&clean_url_prod=$2&clean_url_cat=$1 [NC] [L]
-  RewriteRule ^([a-z0-9-]+)\.htm(l)?$ cart.php?target=product&clean_url_prod=$1 [NC] [L]
+  RewriteRule ^(([/_a-z0-9-]+)/)?([_a-z0-9-]+)(/)?$ cart.php?target=category&cleanURLCat=$3 [NC] [L]
+  RewriteRule ^((([/_a-z0-9-]+)/)?([_a-z0-9-]+)/)?([_a-z0-9-]+)\.htm(l)?$ cart.php?target=product&cleanURLProd=$5&cleanURLCat=$4 [NC] [L]
 </IfModule>
