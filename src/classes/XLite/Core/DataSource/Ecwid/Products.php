@@ -218,15 +218,16 @@ class Products extends \XLite\Core\DataSource\Base\Products
     protected function normalizeProduct(array $data)
     {
         $product = array(
-            'id'          => $data['id'],
-            'categories'  => array(),
-            'images'      => array(),
-            'url'         => $data['url'],
-            'price'       => doubleval($data['price']),
-            'name'        => $data['name'],
-            'description' => empty($data['description']) ? '' : $data['description'],
-            'sku'         => empty($data['sku']) ? '' : $data['sku'],
-            'quantity'    => empty($data['quantity']) ? 0 : intval($data['quantity']),
+            'id'           => $data['id'],
+            'categories'   => array(),
+            'images'       => array(),
+            'url'          => $data['url'],
+            'price'        => doubleval($data['price']),
+            'name'         => $data['name'],
+            'description'  => empty($data['description']) ? '' : $data['description'],
+            'sku'          => empty($data['sku']) ? '' : $data['sku'],
+            'quantity'     => empty($data['quantity']) ? 0 : intval($data['quantity']),
+            'optionGroups' => array(),
         );
 
         if (!empty($data['imageUrl'])) {
@@ -253,6 +254,35 @@ class Products extends \XLite\Core\DataSource\Base\Products
 
         if (!empty($data['categories']) && is_array($data['categories'])) {
             $product['categories'] = $data['categories'];
+        }
+
+        if (!empty($data['options']) && is_array($data['options'])) {
+            foreach ($data['options'] as $option) {
+                $opt = array(
+                    'name'    => $option['name'],
+                    'options' => array(),
+                );
+
+                if (!empty($option['choices']) && is_array($option['choices'])) {
+                    foreach ($option['choices'] as $choice) {
+                        $opt['options'][] = array(
+                            'name'      => $choice['text'],
+                            'modifiers' => array(
+                                'price' => array(
+                                    'type'  => 'ABSOLUTE' == $choice['priceModifierType'] ? '$' : '%',
+                                    'value' => $choice['priceModifier'],
+                                ),
+                                'weight' => array(
+                                    'type'  => '$',
+                                    'value' => 0,
+                                ),
+                            ),
+                        );
+                    }
+                }
+
+                $product['optionGroups'][] = $opt;
+            }
         }
 
         return $product;

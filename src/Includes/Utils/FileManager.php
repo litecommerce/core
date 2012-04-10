@@ -408,7 +408,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param integer $flags Some optional flags OPTIONAL
      * @param integer $mode  Permisions to set OPTIONAL
      *
-     * @return integer
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */

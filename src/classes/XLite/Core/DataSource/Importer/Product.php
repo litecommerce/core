@@ -36,6 +36,21 @@ namespace XLite\Core\DataSource\Importer;
 abstract class Product extends \XLite\Base
 {
     /**
+     * Product fields 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.21
+     */
+    protected $productFields = array(
+        'sku'         => 'sku',
+        'name'        => 'name',
+        'description' => 'description',
+        'price'       => 'price',
+        'amount'      => 'quantity',
+    );
+
+    /**
      * Collection 
      * 
      * @var   \XLite\Core\DataSource\Base\Products
@@ -233,14 +248,19 @@ abstract class Product extends \XLite\Base
      */
     protected function update(\XLite\Model\Product $product, array $cell)
     {
-        $product->setSku($cell['sku']);
-        $product->setName($cell['name']);
-        $product->setDescription($cell['description']);
-        $product->setPrice($cell['price']);
-        $product->setAmount($cell['quantity']);
+        foreach ($this->productFields as $field => $name) {
+            if (isset($cell[$name])) {
+                $product->$field = $cell[$name];
+            }
+        }
 
-        $this->updateImages($product, $cell['images']);
-        $this->updateCategories($product, $cell['categories']);
+        if (isset($cell['images'])) {
+            $this->updateImages($product, $cell['images']);
+        }
+
+        if (isset($cell['categories'])) {
+            $this->updateCategories($product, $cell['categories']);
+        }
     }
 
     // }}}
