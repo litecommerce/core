@@ -13,6 +13,6 @@
  *}
 
 {if:isVATApplicable()}
-<li IF="isDisplayedPriceIncludesVAT()" class="vat-price"><span class="vat-note-product-price">{t(#incl.VAT#)}</span></li>
-<li IF="!isDisplayedPriceIncludesVAT()" class="vat-price"><span class="vat-note-product-price">{t(#excl.VAT#)}</span></li>
+<li IF="isDisplayedPriceIncludingVAT()" class="vat-price"><span class="vat-note-product-price">{t(#incl.VAT#,_ARRAY_(#name#^getVATName()))}</span></li>
+<li IF="!isDisplayedPriceIncludingVAT()" class="vat-price"><span class="vat-note-product-price">{t(#excl.VAT#,_ARRAY_(#name#^getVATName()))}</span></li>
 {end:}
