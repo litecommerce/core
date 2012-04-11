@@ -18,7 +18,7 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -79,13 +79,13 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
     public function calculate()
     {
         $zones = $this->getZonesList();
-        $memebrship = $this->getMembership();
+        $membership = $this->getMembership();
 
         // Shipping cost VAT
         $modifier = $this->order->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
         $taxes = array();
         if ($modifier && $modifier->getSelectedRate() && $modifier->getSelectedRate()->getMethod()) {
-            $taxes = $this->getShippingTaxRates($modifier->getSelectedRate(), $zones, $memebrship);
+            $taxes = $this->getShippingTaxRates($modifier->getSelectedRate(), $zones, $membership);
         }
 
         foreach ($this->getTaxes() as $tax) {
@@ -95,7 +95,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
 
             foreach ($this->getTaxableItems() as $item) {
                 $product = $item->getProduct();
-                $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
+                $rate = $tax->getFilteredRate($zones, $membership, $product->getClasses());
                 if ($rate) {
                     if (!isset($rates[$rate->getId()])) {
                         $rates[$rate->getId()] = array(
@@ -137,13 +137,13 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * 
      * @param \XLite\Model\Shipping\Rate $rate       Shipping rate
      * @param array                      $zones      Zones list
-     * @param \XLite\Model\Membership    $memebrship Membership OPTIONAL
+     * @param \XLite\Model\Membership    $membership Membership OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.8
      */
-    protected function getShippingTaxRates(\XLite\Model\Shipping\Rate $rate, array $zones, \XLite\Model\Membership $memebrship = null)
+    protected function getShippingTaxRates(\XLite\Model\Shipping\Rate $rate, array $zones, \XLite\Model\Membership $membership = null)
     {
         $method = $rate->getMethod();
 
@@ -152,7 +152,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
         foreach ($this->getTaxes() as $tax) {
             $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
             $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $method->getClasses());
-            $r = $tax->getFilteredRate($zones, $memebrship, $method->getClasses());
+            $r = $tax->getFilteredRate($zones, $membership, $method->getClasses());
 
             if ($included) {
                 $price -= $included->calculateValueExcludingTax($price);
@@ -257,6 +257,19 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
                 'state'   => $addressObj->getState()->getStateId(),
                 'zipcode' => $addressObj->getZipcode(),
                 'country' => $addressObj->getCountry() ? $addressObj->getCountry()->getCode() : '',
+            );
+        }
+
+        if (!isset($address)) {
+
+            // Anonymous address
+            $config = \XLite\Core\Config::getInstance()->Shipping;
+            $address = array(
+                'address' => $config->anonymous_address,
+                'city'    => $config->anonymous_city,
+                'state'   => $config->anonymous_state,
+                'zipcode' => $config->anonymous_zipcode,
+                'country' => $config->anonymous_country,
             );
         }
 
