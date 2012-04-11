@@ -47,7 +47,7 @@ class ExcludedVAT extends \XLite\Logic\ALogic
      * @see    ____func_see____
      * @since  1.0.19
      */
-    public function isApply(\XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
+    static public function isApply(\XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
     {
         return \XLite\Core\Config::getInstance()->CDev->VAT->display_prices_including_vat;
     }
@@ -65,7 +65,7 @@ class ExcludedVAT extends \XLite\Logic\ALogic
      * @see    ____func_see____
      * @since  1.0.19
      */
-    public function modifyMoney($value, \XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
+    static public function modifyMoney($value, \XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
     {
         return \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->getVATValue($model, $value) + $value;
     }

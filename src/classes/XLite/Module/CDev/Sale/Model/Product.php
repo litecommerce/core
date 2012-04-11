@@ -203,7 +203,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getListPrice()
+    public function getClearPrice()
     {
         return $this->getSalePrice();
     }
