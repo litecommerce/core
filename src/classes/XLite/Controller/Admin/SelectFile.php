@@ -48,6 +48,19 @@ class SelectFile extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL()
+            || \XLite\Core\Auth::getInstance()->isAdmin();
+    }
+
+    /**
      * getModelFormClass
      *
      * @return string
