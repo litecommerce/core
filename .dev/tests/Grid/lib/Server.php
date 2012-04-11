@@ -12,17 +12,20 @@ require_once 'RemoteCommand.php';
 
 class Server extends Ec2Client
 {
+    public $ami;
     public $instance_id;
     public $public_dns;
     public $private_dns;
 
-    function __construct($instance_id){
+    function __construct($ami, $instance_id){
         $this->instance_id = $instance_id;
+        $this->ami = $ami;
     }
 
     static function boot($ami, $options = array()){
         $class = get_called_class();
-        return new $class(self::launch($ami, $options));
+
+        return new $class($ami, self::launch($ami, $options));
     }
 
 /**
