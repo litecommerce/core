@@ -455,6 +455,18 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Get net price
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function getNetPrice()
+    {
+        return $this->netPrice;
+    }
+
+    /**
      * Set price
      *
      * @param float $price Price
