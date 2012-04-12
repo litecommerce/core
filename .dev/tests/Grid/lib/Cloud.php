@@ -18,7 +18,7 @@ class Cloud
      */
     public $hub;
     /**
-     * @var Server[]
+     * @var RemoteControl[]
      */
     public $farms = array();
     /**

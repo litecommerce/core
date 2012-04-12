@@ -357,6 +357,16 @@ TABLE
 
     }
 
+    public function createProductClasses(\Behat\Gherkin\Node\TableNode $table){
+        $rows = $table->getHash();
+        $this->visit('admin.php?target=product_classes');
+        foreach($rows as $row){
+            $this->clickLink('New product class');
+            $this->fillField('postedData[new_name]', $row['class']);
+            $this->fillField('postedData[new_name]', "\13");
+        }
+    }
+
     public function clearList(){
         $buttons = $this->findAll('named', array(
             'button', $this->getSession()->getSelectorsHandler()->xpathLiteral('Remove')
