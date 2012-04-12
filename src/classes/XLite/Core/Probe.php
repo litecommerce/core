@@ -101,6 +101,8 @@ class Probe extends \XLite\Base\Singleton
         }
         fclose($fp);
 
+        @unlink($fname);
+
         return microtime(true) - $time;
     }
 

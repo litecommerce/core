@@ -273,6 +273,23 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
         return $this;
     }
 
+    /**
+     * Get IN () condition
+     * 
+     * @param array  $data   Data
+     * @param string $prefix Parameter prefix OPTIONAL
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function getInCondition(array $data, $prefix = 'id')
+    {
+        $keys = \XLite\Core\Database::buildInCondition($this, $data, $prefix);
+
+        return implode(', ', $keys);
+    }
 
     // }}}
+
 }
