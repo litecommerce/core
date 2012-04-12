@@ -161,7 +161,7 @@ abstract class ACustomer extends \XLite\Controller\AController
 
             if (!empty($cleanURL)) {
                 $category   = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findOneByCleanURL($cleanURL);
-                $categoryID = isset($category) ? $category->getCategoryId() : false;
+                $categoryID = $this->category_id = isset($category) ? $category->getCategoryId() : false;
 
                 \XLite\Core\Request::getInstance()->category_id = $categoryID;
             }

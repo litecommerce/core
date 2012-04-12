@@ -83,7 +83,7 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function setDataValidators(&$data)
+    protected function setDataValidators($data)
     {
         $data->addPair('sku', new \XLite\Core\Validator\String(), null, 'SKU');
         $data->addPair('name', new \XLite\Core\Validator\String(true), null, 'Product Name');

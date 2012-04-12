@@ -139,7 +139,7 @@ class Product extends \XLite\Controller\Customer\Catalog
 
             if (!empty($cleanURL)) {
                 $product   = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanURL($cleanURL);
-                $productID = isset($product) ? $product->getProductId() : false;
+                $productID = $this->product_id = isset($product) ? $product->getProductId() : false;
 
                 \XLite\Core\Request::getInstance()->product_id = $productID;
             }
