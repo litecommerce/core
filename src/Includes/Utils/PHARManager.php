@@ -95,9 +95,10 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      */
     public static function unpack($file, $dir)
     {
+        $dir = \Includes\Utils\FileManager::getCanonicalDir($dir) . pathinfo($file, PATHINFO_FILENAME);
+
         try {
             $phar   = new \PharData($file);
-            $dir    = \Includes\Utils\FileManager::getCanonicalDir($dir) . pathinfo($file, PATHINFO_FILENAME);
             $result = $phar->extractTo($dir, null, true);
 
         } catch (\Exception $exception) {
@@ -105,7 +106,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
             \XLite\Upgrade\Logger::getInstance()->logError($exception->getMessage());
         }
 
-        return $result ? $dir : null;
+        return array($dir, $result);
     }
 
     // }}}

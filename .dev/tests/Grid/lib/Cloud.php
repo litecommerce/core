@@ -8,6 +8,7 @@
  */
 
 require_once 'Hub.php';
+require_once 'RemoteControl.php';
 require_once 'LcServer.php';
 
 class Cloud
@@ -17,7 +18,7 @@ class Cloud
      */
     public $hub;
     /**
-     * @var Server[]
+     * @var RemoteControl[]
      */
     public $farms = array();
     /**
