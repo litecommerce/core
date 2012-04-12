@@ -281,6 +281,7 @@ abstract class AEntry
                 \Includes\Utils\FileManager::deleteFile($this->repositoryPath);
 
             } elseif ($this->isUnpacked()) {
+                \Includes\Utils\FileManager::deleteFile($this->getCurrentVersionHashesFilePath());
                 \Includes\Utils\FileManager::unlinkRecursive($this->repositoryPath);
             }
         }
@@ -486,7 +487,7 @@ abstract class AEntry
 
                     if (isset($hashesForUpgrade[$path])) {
                         // File has been modified (by user, or by LC Team, see the third param)
-                        if ($fileHash !== $hash || $hashesForUpgrade[$path] !== $hash) {
+                        if ($fileHash !== $hashesForUpgrade[$path]) {
                             $this->updateFile($path, $isTestMode, $fileHash !== $hash);
                         }
 
@@ -511,7 +512,11 @@ abstract class AEntry
 
         // Add new files
         foreach ($hashesForUpgrade as $path => $hash) {
-            $this->addFile($path, $isTestMode, $this->manageFile($path, 'isFile'));
+            $this->addFile(
+                $path,
+                $isTestMode,
+                $this->manageFile($path, 'isFile') && $this->manageFile($path, 'getHash') !== $hash
+            );
         }
 
         // Clear some data
