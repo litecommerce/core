@@ -258,15 +258,16 @@ abstract class AEntry
      * Set repository path
      *
      * @param string  $path            Path to set
+     * @param boolean $preventCheck    Flag OPTIONAL
      * @param boolean $preventDeletion Flag OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function setRepositoryPath($path, $preventDeletion = false)
+    public function setRepositoryPath($path, $preventCheck = false, $preventDeletion = false)
     {
-        if (!empty($path)) {
+        if (!empty($path) && !$preventCheck) {
             $path = \Includes\Utils\FileManager::getRealPath($path);
 
             if (empty($path) || !\Includes\Utils\FileManager::isReadable($path)) {
@@ -326,7 +327,7 @@ abstract class AEntry
      */
     public function setUpgraded()
     {
-        $this->setRepositoryPath(LC_DIR_ROOT, true);
+        $this->setRepositoryPath(LC_DIR_ROOT, false, true);
 
         if (!isset($this->postRebuildHelpers)) {
             $this->postRebuildHelpers = $this->getHelpers('post_rebuild');
@@ -357,10 +358,10 @@ abstract class AEntry
         if ($this->isDownloaded()) {
 
             // Extract archive files into a new directory
-            $dir = \Includes\Utils\PHARManager::unpack($this->getRepositoryPath(), LC_DIR_TMP);
+            list($dir, $result) = \Includes\Utils\PHARManager::unpack($this->getRepositoryPath(), LC_DIR_TMP);
+            $this->setRepositoryPath($dir, true, !$result);
 
-            if ($dir) {
-                $this->setRepositoryPath($dir);
+            if ($result) {
                 $this->addFileInfoMessage('Entry "{{' . self::TOKEN_ENTRY . '}}" archive is unpacked', $dir, true);
             }
         }

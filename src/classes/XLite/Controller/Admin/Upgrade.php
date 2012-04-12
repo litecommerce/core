@@ -332,6 +332,12 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             if (!$this->runStep('unpackAll')) {
                 $this->showError(__FUNCTION__, 'not all archives were unpacked');
 
+                \XLite\Core\TopMessage::addError(
+                    'Try to unpack them manually, and click <a href="' 
+                    . $this->buildURL('upgrade', 'check_integrity') 
+                    . '">this link</a>'
+                );
+
             } elseif ($this->isNextStepAvailable()) {
                 $this->setReturnURL($this->buildURL('upgrade', 'check_integrity', $this->getActionParamsCommon()));
 
