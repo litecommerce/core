@@ -81,8 +81,7 @@ class Cart extends \XLite\Model\Order
 
             if (!isset($cart)) {
                 $cart = new $className();
-                $cart->setStatus(self::STATUS_TEMPORARY);
-                $cart->setCurrency(\XLite::getInstance()->getCurrency());
+                $cart->initializeCart();
 
                 \XLite\Core\Database::getEM()->persist($cart);
             }
@@ -112,6 +111,8 @@ class Cart extends \XLite\Model\Order
             if (time() - static::RENEW_PERIOD > $cart->getLastRenewDate()) {
                 $cart->renew();
             }
+
+            $cart->renewSoft();
 
             \XLite\Core\Session::getInstance()->order_id = $cart->getOrderId();
 
@@ -268,4 +269,16 @@ class Cart extends \XLite\Model\Order
             && !$this->isMaxOrderAmountError();
     }
 
+    /**
+     * Initialize new cart 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    protected function initializeCart()
+    {
+        $this->setStatus(self::STATUS_TEMPORARY);
+        $this->reinitialieCurrency();
+    }
 }

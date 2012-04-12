@@ -1535,6 +1535,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     {
         $this->resetSurcharges();
 
+        $this->reinitialieCurrency();
+
         $this->calculateInitialValues();
 
         foreach ($this->getModifiers() as $modifier) {
@@ -1567,6 +1569,46 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $this->calculate();
 
         $this->setLastRenewDate(time());
+    }
+
+    /**
+     * Soft renew
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function renewSoft()
+    {
+        $this->reinitialieCurrency();
+    }
+
+    /**
+     * Reinitialie currency 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    protected function reinitialieCurrency()
+    {
+        $currency = $this->defineCurrency();
+
+        if (!$this->getCurrency() || $this->getCurrency() != $currency) {
+            $this->setCurrency($currency);
+        }
+    }
+
+    /**
+     * Define order currency 
+     * 
+     * @return \XLite\Model\Currency
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    protected function defineCurrency()
+    {
+        return \XLite::getInstance()->getCurrency();
     }
 
     /**
