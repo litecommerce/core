@@ -280,9 +280,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      */
     protected function createIndexFile($path, $code)
     {
-        $list = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')
-            ->findLabelsByCode($code);
-
+        $list = $this->getRepo()->findLabelsByCode($code);
         $list[self::SERVICE_LBL] = self::SERVICE_VALUE;
 
         $result = false;
@@ -348,9 +346,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      */
     protected function createIndexFileBin($path, $code)
     {
-        $list = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')
-            ->findLabelsByCode($code);
-
+        $list = $this->getRepo()->findLabelsByCode($code);
         $list[self::SERVICE_LBL] = self::SERVICE_VALUE;
 
         $result = false;
