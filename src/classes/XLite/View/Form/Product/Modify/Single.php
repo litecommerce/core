@@ -69,7 +69,8 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
     protected function getValidator()
     {
         $validator = parent::getValidator();
-        $this->setDataValidators($validator->addPair('postedData', new \XLite\Core\Validator\HashArray()));
+        $tmp = $validator->addPair('postedData', new \XLite\Core\Validator\HashArray());
+        $this->setDataValidators($tmp);
 
         return $validator;
     }
@@ -83,7 +84,7 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function setDataValidators($data)
+    protected function setDataValidators(&$data)
     {
         $data->addPair('sku', new \XLite\Core\Validator\String(), null, 'SKU');
         $data->addPair('name', new \XLite\Core\Validator\String(true), null, 'Product Name');

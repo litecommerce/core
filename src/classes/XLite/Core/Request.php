@@ -169,7 +169,7 @@ class Request extends \XLite\Base\Singleton
     }
 
     /**
-     * Check - is secure connection or not
+     * Check for secure connection
      *
      * @return boolean
      * @see    ____func_see____
@@ -177,12 +177,7 @@ class Request extends \XLite\Base\Singleton
      */
     public function isHTTPS()
     {
-        return (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1'))
-            || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')
-            || (
-                isset($_SERVER['REMOTE_ADDR'])
-                && \XLite::getInstance()->getOptions(array('host_details', 'remote_addr')) == $_SERVER['REMOTE_ADDR']
-            );
+        return \Includes\Utils\URLManager::isHTTPS();
     }
 
     /**

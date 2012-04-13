@@ -71,15 +71,18 @@ abstract class URLManager extends \Includes\Utils\AUtils
      */
     public static function getShopURL(
         $url = '',
-        $isSecure = false,
+        $isSecure = null,
         array $params = array(),
         $output = self::URL_OUTPUT_FULL
     ) {
+        if (!isset($isSecure)) {
+            $isSecure = static::isHTTPS();
+        }
+
         $hostDetails = \Includes\Utils\ConfigParser::getOptions('host_details');
-
         $host = $hostDetails['http' . ($isSecure ? 's' : '') . '_host'];
-        if ($host) {
 
+        if ($host) {
             $proto = ($isSecure ? 'https' : 'http') . '://';
 
             if ('/' != substr($url, 0, 1)) {
@@ -95,12 +98,25 @@ abstract class URLManager extends \Includes\Utils\AUtils
                 $url .= (false !== strpos($url, '?') ? '&' : '?') . $name . '=' . $value;
             }
 
-            if (self::URL_OUTPUT_FULL == $output) {
+            if (static::URL_OUTPUT_FULL == $output) {
                 $url = $proto . $host . $url;
             }
         }
 
         return $url;
+    }
+
+    /**
+     * Check for secure connection
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public static function isHTTPS()
+    {
+        return (isset($_SERVER['HTTPS']) && ('on' === strtolower($_SERVER['HTTPS']) || '1' == $_SERVER['HTTPS']))
+            || (isset($_SERVER['SERVER_PORT']) && '443' == $_SERVER['SERVER_PORT']);
     }
 
     /**
@@ -125,8 +141,7 @@ abstract class URLManager extends \Includes\Utils\AUtils
      */
     public static function getCurrentURL()
     {
-        return (\XLite\Core\Request::getInstance()->isHTTPS() ? 'https' : 'http')
-            . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        return 'http' . (static::isHTTPS() ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 
     /**
@@ -141,7 +156,6 @@ abstract class URLManager extends \Includes\Utils\AUtils
     public static function isValidURLHost($str)
     {
         $urlData = parse_url('http://' . $str . '/path');
-
         $host = $urlData['host'] . (isset($urlData['port']) ? ':' . $urlData['port'] : '');
         
         return ($host == $str);

@@ -255,14 +255,15 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @param string  $url    Relative URL OPTIONAL
      * @param boolean $secure Flag to use HTTPS OPTIONAL
+     * @param array   $params Optional URL params OPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getShopURL($url = '', $secure = false)
+    public function getShopURL($url = '', $secure = null, array $params = array())
     {
-        return \XLite::getInstance()->getShopURL($url, $secure);
+        return \XLite::getInstance()->getShopURL($url, $secure, $params);
     }
 
     /**

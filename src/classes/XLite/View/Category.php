@@ -122,7 +122,8 @@ class Category extends \XLite\View\AView
     protected function getWebPreprocessingURL()
     {
         // Get URL of shop. If the HTTPS is used then it should be cleaned from ?xid=<xid> construction
-        $url = \Xlite::getInstance()->getShopURL(null, \XLite\Core\Request::getInstance()->isHTTPS());
+        $url = \Xlite::getInstance()->getShopURL();
+
         // We are cleaning URL from unnecessary here <xid> construction
         $url = preg_replace('/(\?.*)/', '', $url);
 

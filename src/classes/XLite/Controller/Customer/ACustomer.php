@@ -188,14 +188,19 @@ abstract class ACustomer extends \XLite\Controller\AController
      *
      * @param string  $url    Relative URL OPTIONAL
      * @param boolean $secure Flag to use HTTPS OPTIONAL
+     * @param array   $params Optional URL params OPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getShopURL($url = '', $secure = false)
+    public function getShopURL($url = '', $secure = null, array $params = array())
     {
-        return parent::getShopURL($url, \XLite\Core\Config::getInstance()->Security->full_customer_security ?: $secure);
+        if (!isset($secure) && \XLite\Core\Config::getInstance()->Security->full_customer_security) {
+            $secure = true;
+        }
+
+        return parent::getShopURL($url, $secure, $params);
     }
 
     /**
