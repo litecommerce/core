@@ -55,4 +55,5 @@ class RemoteControl extends Server
             $app['cloud']->hub->micro_farm->download('/var/www/selenium-screenshots/*', $app['log_dir'] . '/screenshots', $options);
         }
     }
+
 }

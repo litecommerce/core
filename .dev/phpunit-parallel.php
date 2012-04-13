@@ -101,7 +101,7 @@ class TestRunner
     function __construct()
     {
         $this->tests = self::getTests();
-        $this->tests = array_merge($this->tests, self::getFeatures());
+        //$this->tests = array_merge($this->tests, self::getFeatures());
         $this->resources = new ResourcePool();
         array_map(function (TestTask $test)
         {

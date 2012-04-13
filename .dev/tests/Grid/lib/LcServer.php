@@ -57,10 +57,11 @@ class LcServer extends Server
         $options = $app['server_options'];
 
         $code = $this->run("cd .dev; sudo ./phpunit-parallel.php --build --clients-count " . ($app['farms_count']) . "; cat /tmp/phpunit.txt", $options);
-        $this->download('/tmp/phpunit*.txt', $app['log_dir'], $options);
+        $this->download('/tmp/*.txt', $app['log_dir'], $options);
         //$server->download('/tmp/phpunit*.xml', $app['log_dir'], $options);
         $this->run('cd /tmp; sudo chown $USER TEST-*.xml; for f in TEST-*.xml; do mv $f phpunit.${f#TEST-}; done', $options);
-        $this->download('/tmp/phpunit.*.xml', $app['log_dir'], $options);
+        $this->download('/tmp/*.xml', $app['log_dir'], $options);
+        $this->download('/tmp/*.txt', $app['log_dir'], $options);
 
         RemoteControl::get_screenshots($app);
     }
