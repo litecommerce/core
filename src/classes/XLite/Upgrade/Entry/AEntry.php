@@ -258,15 +258,16 @@ abstract class AEntry
      * Set repository path
      *
      * @param string  $path            Path to set
+     * @param boolean $preventCheck    Flag OPTIONAL
      * @param boolean $preventDeletion Flag OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function setRepositoryPath($path, $preventDeletion = false)
+    public function setRepositoryPath($path, $preventCheck = false, $preventDeletion = false)
     {
-        if (!empty($path)) {
+        if (!empty($path) && !$preventCheck) {
             $path = \Includes\Utils\FileManager::getRealPath($path);
 
             if (empty($path) || !\Includes\Utils\FileManager::isReadable($path)) {
@@ -280,6 +281,7 @@ abstract class AEntry
                 \Includes\Utils\FileManager::deleteFile($this->repositoryPath);
 
             } elseif ($this->isUnpacked()) {
+                \Includes\Utils\FileManager::deleteFile($this->getCurrentVersionHashesFilePath());
                 \Includes\Utils\FileManager::unlinkRecursive($this->repositoryPath);
             }
         }
@@ -326,7 +328,7 @@ abstract class AEntry
      */
     public function setUpgraded()
     {
-        $this->setRepositoryPath(LC_DIR_ROOT, true);
+        $this->setRepositoryPath(LC_DIR_ROOT, false, true);
 
         if (!isset($this->postRebuildHelpers)) {
             $this->postRebuildHelpers = $this->getHelpers('post_rebuild');
@@ -357,10 +359,10 @@ abstract class AEntry
         if ($this->isDownloaded()) {
 
             // Extract archive files into a new directory
-            $dir = \Includes\Utils\PHARManager::unpack($this->getRepositoryPath(), LC_DIR_TMP);
+            list($dir, $result) = \Includes\Utils\PHARManager::unpack($this->getRepositoryPath(), LC_DIR_TMP);
+            $this->setRepositoryPath($dir, true, !$result);
 
-            if ($dir) {
-                $this->setRepositoryPath($dir);
+            if ($result) {
                 $this->addFileInfoMessage('Entry "{{' . self::TOKEN_ENTRY . '}}" archive is unpacked', $dir, true);
             }
         }
@@ -485,7 +487,7 @@ abstract class AEntry
 
                     if (isset($hashesForUpgrade[$path])) {
                         // File has been modified (by user, or by LC Team, see the third param)
-                        if ($fileHash !== $hash || $hashesForUpgrade[$path] !== $hash) {
+                        if ($fileHash !== $hashesForUpgrade[$path]) {
                             $this->updateFile($path, $isTestMode, $fileHash !== $hash);
                         }
 
@@ -510,7 +512,11 @@ abstract class AEntry
 
         // Add new files
         foreach ($hashesForUpgrade as $path => $hash) {
-            $this->addFile($path, $isTestMode, $this->manageFile($path, 'isFile'));
+            $this->addFile(
+                $path,
+                $isTestMode,
+                $this->manageFile($path, 'isFile') && $this->manageFile($path, 'getHash') !== $hash
+            );
         }
 
         // Clear some data
