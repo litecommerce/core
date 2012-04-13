@@ -75,6 +75,13 @@ if (!empty($requirements) && is_array($requirements)) {
 <br />
 <br />
 
+<div class="section-title"><?php echo xtr('Email (optional):'); ?></div>
+
+<input type="text" name="user_email" value="" size="30" />
+
+<br />
+<br />
+
 <div class="section-title"><?php echo xtr('Additional comments'); ?></div>
 
 <textarea name="user_note" class="report-notes" rows="4" cols="70"></textarea>

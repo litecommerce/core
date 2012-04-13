@@ -580,7 +580,7 @@ abstract class AView extends \XLite\Core\Handler
         return array(
             array('getCommonFiles', 100, \XLite::COMMON_INTERFACE),
             array('getResources', 300, null),
-            array('getThemeFiles', \XLite::isAdminZone() ? 200 : 400, null),
+            array('getThemeFiles', 400, null),
         );
     }
 
@@ -996,8 +996,8 @@ abstract class AView extends \XLite\Core\Handler
     protected function getInheritedListName($part)
     {
         return $this->getListName() ? $this->getListName() . '.' . $part : $part;
-    }   
-    
+    }
+
     /**
      * Get a inherited view list
      *

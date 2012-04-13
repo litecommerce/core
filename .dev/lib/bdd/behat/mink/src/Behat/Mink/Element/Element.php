@@ -4,6 +4,8 @@ namespace Behat\Mink\Element;
 
 use Behat\Mink\Session;
 
+use Behat\Mink\Element\NodeElement;
+
 /*
  * This file is part of the Behat\Mink.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
@@ -50,7 +52,12 @@ abstract class Element implements ElementInterface
     }
 
     /**
-     * @see     Behat\Mink\Element\ElementInterface::find()
+     * Finds first element with specified selector.
+     *
+     * @param   string  $selector   selector engine name
+     * @param   string  $locator    selector locator
+     *
+     * @return  Behat\Mink\Element\NodeElement|null
      */
     public function find($selector, $locator)
     {

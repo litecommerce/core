@@ -11,4 +11,5 @@
  *
  * @ListChild (list="head", weight="1400")
  *}
+
 <script FOREACH="getJSResources(),file" type="text/javascript" src="{file.url}"></script>

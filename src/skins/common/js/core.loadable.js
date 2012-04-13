@@ -337,7 +337,9 @@ ALoadable.prototype.shade = function()
   }
 
   if (this.shadeWidget)  {
-    this.getShadeBase().block(
+    var shade = this.getShadeBase();
+
+    shade.block(
       {
         message: '<div></div>',
         css: {
@@ -353,25 +355,25 @@ ALoadable.prototype.shade = function()
       }
     );
 
-    jQuery('.blockElement')
+    jQuery('.blockElement', shade)
       .css({padding: '', border: '', margin: '', textAlign: '', color: '', backgroundColor: '', cursor: ''})
       .addClass('block-wait');
 
-    jQuery('.blockOverlay')
+    jQuery('.blockOverlay', shade)
       .css({padding: '', border: '', margin: '', textAlign: '', color: '', backgroundColor: '', cursor: ''});
 
-    if (this.getShadeBase().height() < jQuery('.blockMsg').outerHeight() + 5) {
-      jQuery('.blockMsg').addClass('mini-block-wait');
+    if (shade.height() < (jQuery('.blockMsg', shade).outerHeight() + 5)) {
+      jQuery('.blockMsg', shade).addClass('mini-block-wait');
     }
 
-    if (this.getShadeBase().height() < jQuery('.blockMsg').outerHeight()) {
-      jQuery('.blockMsg div').remove();
+    if (shade.height() < jQuery('.blockMsg', shade).outerHeight()) {
+      jQuery('.blockMsg div', shade).remove();
     }
 
-    jQuery('.blockMsg').css(
+    jQuery('.blockMsg', shade).css(
       {
-        'top':  Math.round((this.getShadeBase().height() - jQuery('.blockMsg').outerHeight()) / 2) + 'px',
-        'left': Math.round((this.getShadeBase().width() - jQuery('.blockMsg').outerWidth()) / 2) + 'px'
+        'top':  Math.round((shade.height() - jQuery('.blockMsg', shade).outerHeight()) / 2) + 'px',
+        'left': Math.round((shade.width() - jQuery('.blockMsg', shade).outerWidth()) / 2) + 'px'
       }
     );
 

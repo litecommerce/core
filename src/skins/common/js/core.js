@@ -459,6 +459,60 @@ window.core = {
         }
       }
     );
+  },
+
+  stringToNumber: function(number, dDelim, tDelim)
+  {
+    number = number.replace(new RegExp(tDelim, 'g'), '');
+
+    var a = number.split(dDelim);
+
+    return parseFloat(a[0] + '.' + a[1]);
+  },
+
+  numberToString: function(number, dDelim, tDelim)
+  {
+    number = number.toString();
+    /*
+      Author: Robert Hashemian
+      http://www.hashemian.com/
+
+      You can use this code in any manner so long as the author's name,
+      Web address and this disclaimer is kept intact.
+     ********************************************************/
+
+    var a = number.split('.');
+    var x = a[0]; // decimal
+    var y = a[1]; // fraction
+    var z = "";
+
+    if (typeof(x) != "undefined") {
+      // reverse the digits. regexp works from left to right.
+      for (var i = x.length - 1; i >= 0; i--) {
+        z += x.charAt(i);
+      }
+
+      // add separators. but undo the trailing one, if there
+      z = z.replace(/(\d{3})/g, "$1" + tDelim);
+
+      if (z.slice(-tDelim.length) == tDelim){
+        z = z.slice(0, -tDelim.length);
+      }
+
+      x = "";
+
+      // reverse again to get back the number
+      for ( i = z.length - 1; i >= 0; i--) {
+        x += z.charAt(i);
+      }
+
+      // add the fraction back in, if it was there
+      if (typeof(y) != "undefined" && y.length > 0) {
+        x += dDelim + y;
+      }
+    }
+
+    return x;
   }
 
 };

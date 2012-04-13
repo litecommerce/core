@@ -50,7 +50,7 @@ class phpucJTLInput extends phpucAbstractInput
         $this->addRule(
             new phpucInputRule(
                 'Time',
-                '//testResults/sampleResult/@time',
+                '//testResults/httpSample/@t',
                 self::MODE_COUNT
             )
         );
@@ -111,16 +111,16 @@ class JTLLineChart extends phpucLineChart {
 	}
 
 	public function getTimeData($xpath) {
-		$nodes = $xpath->query('//testResults/sampleResult');
+		$nodes = $xpath->query('//testResults/httpSample');
 		$data = array();
 		foreach ($nodes as $node) {
-			$threadName = preg_replace('/ \d+-\d+$/S', '', $node->attributes->getNamedItem('threadName')->nodeValue);
+			$threadName = preg_replace('/ \d+-\d+$/S', '', $node->attributes->getNamedItem('tn')->nodeValue);
 			if ($threadName != $this->threadName)
 				continue;
 
-			$label = $node->attributes->getNamedItem('label')->nodeValue;
-			$len = intval($node->attributes->getNamedItem('time')->nodeValue);
-			$time = $node->attributes->getNamedItem('timeStamp')->nodeValue;
+			$label = $node->attributes->getNamedItem('lb')->nodeValue;
+			$len = intval($node->attributes->getNamedItem('t')->nodeValue);
+			$time = $node->attributes->getNamedItem('ts')->nodeValue;
 
 			if (!isset($data[$label]))
 				$data[$label] = array();
@@ -186,11 +186,11 @@ class PrevJTLLineChart extends phpucLineChart {
 
 	protected function calculateAvgTime(DOMXPath $xpath)
 	{
-    	$nodes = $xpath->query('//testResults/sampleResult');
+    	$nodes = $xpath->query('//testResults/httpSample');
         $sum = 0;
         $cnt = 0;
         foreach ($nodes as $node) {
-            $sum += intval($node->attributes->getNamedItem('time')->nodeValue);
+            $sum += intval($node->attributes->getNamedItem('t')->nodeValue);
             $cnt++;
         }
 
@@ -258,9 +258,9 @@ class HistoryJTLLineChart extends phpucLineChart {
 	public function processXPath(DOMXPath $xpath) {
 		$data = array();
 
-		foreach ($xpath->query('//testResults/sampleResult') as $node) {
-			$label = $node->attributes->getNamedItem('label')->nodeValue;
-			$len = intval($node->attributes->getNamedItem('time')->nodeValue);
+		foreach ($xpath->query('//testResults/httpSample') as $node) {
+			$label = $node->attributes->getNamedItem('lb')->nodeValue;
+			$len = intval($node->attributes->getNamedItem('t')->nodeValue);
 
 			if (!isset($data[$label])) {
 				$data[$label] = array(
@@ -298,7 +298,7 @@ $xpath = new DOMXPath($dom);
 
 $input->processLog($xpath);
 
-$nodes = $xpath->query('//testResults/sampleResult/@threadName');
+$nodes = $xpath->query('//testResults/httpSample/@tn');
 $threadNames = array();
 foreach ($nodes as $node) {
 	$name = preg_replace('/ \d+-\d+$/S', '', $node->nodeValue);

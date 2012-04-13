@@ -11,6 +11,7 @@
  *
  * @ListChild (list="head")
  *}
+
 {foreach:getMetaResources(),meta}
-{meta:h}
+  {meta:h}
 {end:}

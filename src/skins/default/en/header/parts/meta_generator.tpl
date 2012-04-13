@@ -11,4 +11,5 @@
  *
  * @ListChild (list="head", weight="500")
  *}
+
 <meta name="Generator" content="Litecommerce 3 (http://litecommerce.com)" />

@@ -141,6 +141,9 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
     {
         $attributes = parent::getCommonAttributes();
 
+        $attributes['data-decimal-delim']  = \XLite\Core\Config::getInstance()->General->decimal_delim;
+        $attributes['data-thousand-delim'] = \XLite\Core\Config::getInstance()->General->thousand_delim;
+
         $e = $this->getE();
         if (isset($e)) {
             $attributes['data-e'] = $e;
@@ -151,7 +154,7 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
 
     /**
      * Get mantis
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.15
