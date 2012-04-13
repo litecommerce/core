@@ -124,18 +124,6 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
     }
 
     /**
-     * Getter for Field-only flag
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultParamFieldOnly()
-    {
-        return true;
-    }
-
-    /**
      * Define widget params
      *
      * @return void

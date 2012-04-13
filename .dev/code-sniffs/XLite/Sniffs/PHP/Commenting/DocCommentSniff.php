@@ -65,7 +65,7 @@ class XLite_Sniffs_PHP_Commenting_DocCommentSniff extends XLite_ReqCodesSniff
 
         if ($tokens[$stackPtr]['content'] !== "/**\n") {
             $phpcsFile->addError(
-                $this->getReqPrefix('REQ.PHP.4.1.3') . 'Первая строка комментария содерждит только символы "/**"',
+                $this->getReqPrefix('REQ.PHP.4.1.3') . 'п÷п╣я─п╡п╟я▐ я│я┌я─п╬п╨п╟ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦я▐ я│п╬п╢п╣я─п╤п╢п╦я┌ я┌п╬п╩я▄п╨п╬ я│п╦п╪п╡п╬п╩я▀ "/**"',
                 $stackPtr
             );
         }
@@ -74,7 +74,7 @@ class XLite_Sniffs_PHP_Commenting_DocCommentSniff extends XLite_ReqCodesSniff
             if (preg_match('/^([ ]*) \*\s/Ss', $tokens[$i]['content'], $match)) {
                 if (strlen($match[1]) + 1 !== $column) {
                    $phpcsFile->addError(
-						$this->getReqPrefix('REQ.PHP.4.1.28') . 'Все строки комментария должены иметь одинаковый уровень отступа',
+						$this->getReqPrefix('REQ.PHP.4.1.28') . 'п▓я│п╣ я│я┌я─п╬п╨п╦ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦я▐ п╢п╬п╩п╤п╣п╫я▀ п╦п╪п╣я┌я▄ п╬п╢п╦п╫п╟п╨п╬п╡я▀п╧ я┐я─п╬п╡п╣п╫я▄ п╬я┌я│я┌я┐п©п╟',
                         $i
                     );
                 }
@@ -82,7 +82,7 @@ class XLite_Sniffs_PHP_Commenting_DocCommentSniff extends XLite_ReqCodesSniff
             } else {
 
                $phpcsFile->addError(
-					$this->getReqPrefix('REQ.PHP.4.1.4') . 'Все строки, кроме первой и последней, начинаются с " * "',
+					$this->getReqPrefix('REQ.PHP.4.1.4') . 'п▓я│п╣ я│я┌я─п╬п╨п╦, п╨я─п╬п╪п╣ п©п╣я─п╡п╬п╧ п╦ п©п╬я│п╩п╣п╢п╫п╣п╧, п╫п╟я┤п╦п╫п╟я▌я┌я│я▐ я│ " * "',
                     $i
                 );
             }
@@ -90,13 +90,13 @@ class XLite_Sniffs_PHP_Commenting_DocCommentSniff extends XLite_ReqCodesSniff
 
         if (!preg_match('/^([ ]*) \*\/$/Ss', $tokens[$end]['content'], $match)) {
             $phpcsFile->addError(
-                $this->getReqPrefix('REQ.PHP.4.1.5') . 'Комментарий заканчивается строчкой " */"',
+                $this->getReqPrefix('REQ.PHP.4.1.5') . 'п п╬п╪п╪п╣п╫я┌п╟я─п╦п╧ п╥п╟п╨п╟п╫я┤п╦п╡п╟п╣я┌я│я▐ я│я┌я─п╬я┤п╨п╬п╧ " */"',
                 $end
             );
 
         } elseif (strlen($match[1]) + 1 !== $column) {
            $phpcsFile->addError(
-                $this->getReqPrefix('REQ.PHP.4.1.28') . 'Все строки комментария должены иметь одинаковый уровень отступа',
+                $this->getReqPrefix('REQ.PHP.4.1.28') . 'п▓я│п╣ я│я┌я─п╬п╨п╦ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦я▐ п╢п╬п╩п╤п╣п╫я▀ п╦п╪п╣я┌я▄ п╬п╢п╦п╫п╟п╨п╬п╡я▀п╧ я┐я─п╬п╡п╣п╫я▄ п╬я┌я│я┌я┐п©п╟',
                 $end
             );
 		}

@@ -613,7 +613,11 @@ abstract class AFormField extends \XLite\View\AView
      */
     protected function callFormMethod($method, array $args = array())
     {
-        return call_user_func_array(array(\XLite\View\Model\AModel::getCurrentForm(), $method), $args);
+        $form = \XLite\View\Model\AModel::getCurrentForm();
+
+        return $form
+            ? call_user_func_array(array($form, $method), $args)
+            : null;
     }
 
     /**

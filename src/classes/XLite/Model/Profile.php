@@ -275,6 +275,17 @@ class Profile extends \XLite\Model\AEntity
     protected $addresses;
 
     /**
+     * Roles
+     *
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @manyToMany (targetEntity="XLite\Model\Role", mappedBy="profiles", cascade={"merge","detach"})
+     */
+    protected $roles;
+
+    /**
      * The count of orders placed by the user
      *
      * @var   integer
@@ -605,6 +616,7 @@ class Profile extends \XLite\Model\AEntity
     public function __construct(array $data = array())
     {
         $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->roles     = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }
@@ -699,4 +711,31 @@ class Profile extends \XLite\Model\AEntity
     {
         \XLite\Core\TopMessage::addError('Specified e-mail address is already used by other user.');
     }
+
+    // {{{ Roles
+
+    /**
+     * Check - specified permission is allowed or not
+     *
+     * @param string $code Permission code
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function isPermissionAllowed($code)
+    {
+        $allowed = false;
+
+        foreach ($this->getRoles() as $role) {
+            if ($role->isPermissionAllowed($code)) {
+                $allowed = true;
+                break;
+            }
+        }
+
+        return $allowed;
+    }
+
+    // }}}
 }

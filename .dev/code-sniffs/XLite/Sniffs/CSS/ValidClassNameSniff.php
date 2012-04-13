@@ -80,7 +80,7 @@ class XLite_Sniffs_CSS_ValidClassNameSniff extends XLite_ReqCodesSniff
 					// found class name
 					$good_classname = preg_replace('/[^a-z\d]/', '-', strtolower($tokens[$i]['content']));
 					if ($tokens[$i]['content'] != $good_classname) {
- 		               $error = "éÍÅÎÁ ËÌÁÓÓÏ× ÐÉÛÕÔÓÑ × ÎÉÖÎÅÍ ÒÅÇÉÓÔÒÅ, ÓÏ ÚÎÁËÏÍ ÔÉÒÅ × ËÁÞÅÓÔ×Å ÒÁÚÄÅÌÉÔÅÌÑ ÓÌÏ×Á. òÅËÏÍÅÎÄÕÅÔÓÑ: " . $good_classname . ", ÎÁÊÄÅÎÏ " . $tokens[$i]['content'];
+ 		               $error = "Ð˜Ð¼ÐµÐ½Ð° ÐºÐ»Ð°ÑÑÐ¾Ð² Ð¿Ð¸ÑˆÑƒÑ‚ÑÑ Ð² Ð½Ð¸Ð¶Ð½ÐµÐ¼ Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ðµ, ÑÐ¾ Ð·Ð½Ð°ÐºÐ¾Ð¼ Ñ‚Ð¸Ñ€Ðµ Ð² ÐºÐ°Ñ‡ÐµÑÑ‚Ð²Ðµ Ñ€Ð°Ð·Ð´ÐµÐ»Ð¸Ñ‚ÐµÐ»Ñ ÑÐ»Ð¾Ð²Ð°. Ð ÐµÐºÐ¾Ð¼ÐµÐ½Ð´ÑƒÐµÑ‚ÑÑ: " . $good_classname . ", Ð½Ð°Ð¹Ð´ÐµÐ½Ð¾ " . $tokens[$i]['content'];
         		       $phpcsFile->addError($this->getReqPrefix('REQ.CSS.1.0.4') . $error, $i);
 					}
                 }

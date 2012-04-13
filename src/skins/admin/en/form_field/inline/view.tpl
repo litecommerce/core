@@ -10,4 +10,4 @@
  * @since     1.0.15
  *}
 
-{getViewValue()}
+{getViewValue():h}

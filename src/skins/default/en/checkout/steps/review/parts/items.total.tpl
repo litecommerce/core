@@ -13,7 +13,7 @@
  *}
 <hr />
 
-<div class="total">
+<div class="total clearfix">
   {t(#Total#)}:
-  <span>{formatPrice(cart.getTotal(),cart.getCurrency())}</span>
+  <span class="value"><widget class="XLite\View\Surcharge" surcharge="{cart.getTotal()}" currency="{cart.getCurrency()}" /></span>
 </div>

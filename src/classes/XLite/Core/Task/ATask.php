@@ -135,7 +135,7 @@ abstract class ATask extends \XLite\Base
 
             $this->runStep();
 
-            if ($this->lastStep) {
+            if ($this->isLastStep()) {
                 $this->finalizeTask();
 
             } else {
@@ -156,6 +156,18 @@ abstract class ATask extends \XLite\Base
      */
     protected function prepareStep()
     {
+    }
+
+    /**
+     * Check - current step is last or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function isLastStep()
+    {
+        return $this->lastStep;
     }
 
     /**

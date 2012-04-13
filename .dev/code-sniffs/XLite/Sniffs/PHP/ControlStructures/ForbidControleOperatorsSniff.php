@@ -58,14 +58,14 @@ class XLite_Sniffs_PHP_ControlStructures_ForbidControleOperatorsSniff extends XL
 		if ($tokens[$stackPtr]['code'] == T_CONTINUE) {
             $phpcsFile->addWarning(
                 $this->getReqPrefix('WRN.PHP.2.5.4')
-                . 'Использование ' . $tokens[$stackPtr]['content'] . ' не рекомендовано',
+                . 'п≤я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣ ' . $tokens[$stackPtr]['content'] . ' п╫п╣ я─п╣п╨п╬п╪п╣п╫п╢п╬п╡п╟п╫п╬',
                 $stackPtr
             );
 
 		} elseif ($tokens[$stackPtr]['code'] == T_BREAK && T_SWITCH != end($tokens[$stackPtr]['conditions'])) {
             $phpcsFile->addWarning(
    	            $this->getReqPrefix('WRN.PHP.2.5.4')
-       	        . 'Использование ' . $tokens[$stackPtr]['content'] . ' не рекомендовано',
+       	        . 'п≤я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣ ' . $tokens[$stackPtr]['content'] . ' п╫п╣ я─п╣п╨п╬п╪п╣п╫п╢п╬п╡п╟п╫п╬',
            	    $stackPtr
            );
 		}
