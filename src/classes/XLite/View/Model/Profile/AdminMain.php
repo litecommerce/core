@@ -130,6 +130,11 @@ class AdminMain extends \XLite\View\Model\AModel
             self::SCHEMA_LABEL    => 'Pending membership',
             self::SCHEMA_REQUIRED => false,
         ),
+        'roles' => array(
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\CheckboxList\Roles',
+            self::SCHEMA_LABEL    => 'Roles',
+            self::SCHEMA_REQUIRED => false,
+        ),
     );
 
     /**
@@ -258,7 +263,7 @@ class AdminMain extends \XLite\View\Model\AModel
                 break;
 
             case 'language':
-                $lng = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($value);
+                $lng = $value ? \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($value) : null;
                 $value = isset($lng) ? $lng->getName() : $value;
                 break;
 
@@ -325,7 +330,7 @@ class AdminMain extends \XLite\View\Model\AModel
     protected function getFormFieldsForSectionMain()
     {
         // Create new profile - password is required
-        if (!$this->getModelObject()->isPersistent()) {
+        if ($this->getModelObject() && !$this->getModelObject()->isPersistent()) {
             foreach (array('password', 'password_conf') as $field) {
                 if (isset($this->mainSchema[$field])) {
                     $this->mainSchema[$field][self::SCHEMA_REQUIRED] = true;
@@ -347,6 +352,14 @@ class AdminMain extends \XLite\View\Model\AModel
     {
         if ($this->isRegisterMode()) {
             unset($this->accessSchema['pending_membership_id']);
+        }
+
+        if (
+            !\XLite\Core\Auth::getInstance()->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS)
+            || !$this->getModelObject()
+            || !$this->getModelObject()->isAdmin()
+        ) {
+            unset($this->accessSchema['roles']);
         }
 
         return $this->getFieldsBySchema($this->accessSchema);
@@ -377,6 +390,32 @@ class AdminMain extends \XLite\View\Model\AModel
     {
         if (isset($data['password'])) {
             $data['password'] = \XLite\Core\Auth::encryptPassword($data['password']);
+        }
+
+        if (isset($data['roles']) && is_array($data['roles'])) {
+
+            $model = $this->getModelObject();
+
+            // Remove old links
+            foreach ($model->getRoles() as $role) {
+                $role->getProfiles()->removeElement($model);
+            }
+            $model->getRoles()->clear();
+
+            // Add new links
+            foreach ($data['roles'] as $rid => $tmp) {
+                if ($tmp) {
+                    $role = \XLite\Core\Database::getRepo('XLite\Model\Role')->find($rid);
+                    if ($role) {
+                        $model->addRoles($role);
+                        $role->addProfiles($model);
+                    }
+                }
+            }
+        }
+
+        if (isset($data['roles'])) {
+            unset($data['roles']);
         }
 
         parent::setModelProperties($data);

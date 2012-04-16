@@ -40,9 +40,9 @@ class XLite_Sniffs_PHP_Formatting_ForbidFunctionsSniff extends XLite_ReqCodesSni
 	 * @since  1.0.0
 	 */
 	protected $forbidFunctions = array(
-		'php_version'   => 'éÓÐÏÌØÚÕÊÔÅ ËÏÎÓÔÁÎÔÕ PHP_VERSION',
-		'php_uname'     => 'éÓÐÏÌØÚÕÊÔÅ ËÏÎÓÔÁÎÔÕ PHP_OS',
-		'php_sapi_name' => 'éÓÐÏÌØÚÕÊÔÅ ËÏÎÓÔÁÎÔÕ PHP_SAPI',
+		'php_version'   => 'Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¹Ñ‚Ðµ ÐºÐ¾Ð½ÑÑ‚Ð°Ð½Ñ‚Ñƒ PHP_VERSION',
+		'php_uname'     => 'Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¹Ñ‚Ðµ ÐºÐ¾Ð½ÑÑ‚Ð°Ð½Ñ‚Ñƒ PHP_OS',
+		'php_sapi_name' => 'Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¹Ñ‚Ðµ ÐºÐ¾Ð½ÑÑ‚Ð°Ð½Ñ‚Ñƒ PHP_SAPI',
 	);
 
     /**
@@ -73,7 +73,7 @@ class XLite_Sniffs_PHP_Formatting_ForbidFunctionsSniff extends XLite_ReqCodesSni
 
 	    	$phpcsFile->addError(
            		$this->getReqPrefix('REQ.PHP.3.18.1')
-        	    . 'éÓÐÏÌØÚÏ×ÁÎÉÅ ' . $tokens[$stackPtr]['content'] . '() ÚÁÐÒÅÝÅÎÏ (' . $this->forbidFunctions[$tokens[$stackPtr]['content']] . ')',
+        	    . 'Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸Ðµ ' . $tokens[$stackPtr]['content'] . '() Ð·Ð°Ð¿Ñ€ÐµÑ‰ÐµÐ½Ð¾ (' . $this->forbidFunctions[$tokens[$stackPtr]['content']] . ')',
     	        $stackPtr
 	        );
 		}

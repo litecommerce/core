@@ -72,7 +72,7 @@ class XLite_Sniffs_CSS_Commenting_DocCommentSniff extends XLite_ReqCodesSniff
 
         if ($tokens[$stackPtr]['content'] !== "/**\n") {
             $phpcsFile->addError(
-                $this->getReqPrefix('REQ.CSS.4.0.3') . 'Первая строка комментария содерждит только символы "/**"',
+                $this->getReqPrefix('REQ.CSS.4.0.3') . 'п÷п╣я─п╡п╟я▐ я│я┌я─п╬п╨п╟ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦я▐ я│п╬п╢п╣я─п╤п╢п╦я┌ я┌п╬п╩я▄п╨п╬ я│п╦п╪п╡п╬п╩я▀ "/**"',
                 $stackPtr
             );
         }
@@ -81,7 +81,7 @@ class XLite_Sniffs_CSS_Commenting_DocCommentSniff extends XLite_ReqCodesSniff
             if (preg_match('/^([\s]*)\*.*$/Ss', $tokens[$i]['content'], $match)) {
                 if (strlen($match[1]) !== $column) {
                    $phpcsFile->addError(
-						$this->getReqPrefix('REQ.CSS.4.1.7') . 'Все строки комментария должены иметь одинаковый уровень отступа',
+						$this->getReqPrefix('REQ.CSS.4.1.7') . 'п▓я│п╣ я│я┌я─п╬п╨п╦ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦я▐ п╢п╬п╩п╤п╣п╫я▀ п╦п╪п╣я┌я▄ п╬п╢п╦п╫п╟п╨п╬п╡я▀п╧ я┐я─п╬п╡п╣п╫я▄ п╬я┌я│я┌я┐п©п╟',
                         $i
                     );
                 }
@@ -89,7 +89,7 @@ class XLite_Sniffs_CSS_Commenting_DocCommentSniff extends XLite_ReqCodesSniff
             } else {
 
                $phpcsFile->addError(
-					$this->getReqPrefix('REQ.CSS.4.0.4') . 'Все строки, кроме первой и последней, начинаются с " * "',
+					$this->getReqPrefix('REQ.CSS.4.0.4') . 'п▓я│п╣ я│я┌я─п╬п╨п╦, п╨я─п╬п╪п╣ п©п╣я─п╡п╬п╧ п╦ п©п╬я│п╩п╣п╢п╫п╣п╧, п╫п╟я┤п╦п╫п╟я▌я┌я│я▐ я│ " * "',
                     $i
                 );
             }
@@ -97,7 +97,7 @@ class XLite_Sniffs_CSS_Commenting_DocCommentSniff extends XLite_ReqCodesSniff
 
         if (!preg_match('/^([ ]*) \*\/$/Ss', $tokens[$end]['content'], $match)) {
             $phpcsFile->addError(
-                $this->getReqPrefix('REQ.CSS.4.0.5') . 'Комментарий заканчивается строчкой " */"',
+                $this->getReqPrefix('REQ.CSS.4.0.5') . 'п п╬п╪п╪п╣п╫я┌п╟я─п╦п╧ п╥п╟п╨п╟п╫я┤п╦п╡п╟п╣я┌я│я▐ я│я┌я─п╬я┤п╨п╬п╧ " */"',
                 $end
             );
 
@@ -105,7 +105,7 @@ class XLite_Sniffs_CSS_Commenting_DocCommentSniff extends XLite_ReqCodesSniff
 
 		if (trim(str_replace("*", $tokens[$end-1]['content'], "")) != '') {
            $phpcsFile->addError(
-                $this->getReqPrefix('REQ.CSS.4.1.7') . 'Комментарий к файлу должен иметь строку с пустым комментарием после себя',
+                $this->getReqPrefix('REQ.CSS.4.1.7') . 'п п╬п╪п╪п╣п╫я┌п╟я─п╦п╧ п╨ я└п╟п╧п╩я┐ п╢п╬п╩п╤п╣п╫ п╦п╪п╣я┌я▄ я│я┌я─п╬п╨я┐ я│ п©я┐я│я┌я▀п╪ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦п╣п╪ п©п╬я│п╩п╣ я│п╣п╠я▐',
                 $end
             );
 		}

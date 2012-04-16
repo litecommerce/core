@@ -77,7 +77,7 @@ class XLite_Sniffs_PHP_Formatting_MultilineBracketsSniff extends XLite_ReqCodesS
 		if ($column !== $close['column']) {
             $phpcsFile->addError(
                 $this->getReqPrefix('REQ.PHP.2.6.2')
-                . 'Закрывающая скобка должна быть выравнена по открывающей скобке либо по функции, к которому относится выражение',
+                . 'п≈п╟п╨я─я▀п╡п╟я▌я┴п╟я▐ я│п╨п╬п╠п╨п╟ п╢п╬п╩п╤п╫п╟ п╠я▀я┌я▄ п╡я▀я─п╟п╡п╫п╣п╫п╟ п©п╬ п╬я┌п╨я─я▀п╡п╟я▌я┴п╣п╧ я│п╨п╬п╠п╨п╣ п╩п╦п╠п╬ п©п╬ я└я┐п╫п╨я├п╦п╦, п╨ п╨п╬я┌п╬я─п╬п╪я┐ п╬я┌п╫п╬я│п╦я┌я│я▐ п╡я▀я─п╟п╤п╣п╫п╦п╣',
                 $tokens[$stackPtr]['parenthesis_closer']
             );
 		}
@@ -92,7 +92,7 @@ class XLite_Sniffs_PHP_Formatting_MultilineBracketsSniff extends XLite_ReqCodesS
 		if (!preg_match("/^[ ]*\n[ ]*/Ss", $str)) {
             $phpcsFile->addError(
                 $this->getReqPrefix('REQ.PHP.2.6.4')
-                . 'Первое выражение в многострочной комбинации должно начинаться с новой строки',
+                . 'п÷п╣я─п╡п╬п╣ п╡я▀я─п╟п╤п╣п╫п╦п╣ п╡ п╪п╫п╬пЁп╬я│я┌я─п╬я┤п╫п╬п╧ п╨п╬п╪п╠п╦п╫п╟я├п╦п╦ п╢п╬п╩п╤п╫п╬ п╫п╟я┤п╦п╫п╟я┌я▄я│я▐ я│ п╫п╬п╡п╬п╧ я│я┌я─п╬п╨п╦',
                 $pos + 1
             );
 		}
@@ -144,7 +144,7 @@ class XLite_Sniffs_PHP_Formatting_MultilineBracketsSniff extends XLite_ReqCodesS
 
 	            $phpcsFile->addError(
     	            $this->getReqPrefix('REQ.PHP.2.6.5')
-        	        . 'Второе и последующие выражения переносятся с логическими операторами',
+        	        . 'п▓я┌п╬я─п╬п╣ п╦ п©п╬я│п╩п╣п╢я┐я▌я┴п╦п╣ п╡я▀я─п╟п╤п╣п╫п╦я▐ п©п╣я─п╣п╫п╬я│я▐я┌я│я▐ я│ п╩п╬пЁп╦я┤п╣я│п╨п╦п╪п╦ п╬п©п╣я─п╟я┌п╬я─п╟п╪п╦',
             	    $expPos
 	            );
 			}

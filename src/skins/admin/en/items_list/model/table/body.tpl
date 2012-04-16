@@ -12,7 +12,7 @@
 
 <table class="list" cellspacing="0">
 
-  <thead>
+  <thead IF="isTableHeaderVisible()">
     <tr>
       <th FOREACH="getColumns(),column" class="{getHeadClass(column)}">
         <widget template="items_list//model/table/parts/head.cell.tpl" />

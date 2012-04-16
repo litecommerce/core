@@ -35,6 +35,25 @@ namespace XLite\Model\QueryBuilder;
  */
 abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
 {
+
+    /**
+     * Service flags 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.19
+     */
+    protected $flags = array();
+
+    /**
+     * Linked joins 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.21
+     */
+    protected $joins = array();
+
     // {{{ Result helpers
 
     /**
@@ -168,5 +187,109 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
         return $result;
     }
 
+
     // }}}
+
+    // {{{ Service flags
+
+    /**
+     * Get service flag 
+     * 
+     * @param string $name Flag name
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function getFlag($name)
+    {
+        return isset($this->flags[$name]) ? $this->flags[$name] : null;
+    }
+
+    /**
+     * Set service flag 
+     * 
+     * @param string $name  Flag name
+     * @param mixed  $value Value OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function setFlag($name, $value = true)
+    {
+        $this->flags[$name] = $value;
+    }
+
+    // }}}
+
+    // {{{ Query builder helpers
+
+    /**
+     * Link association as inner join
+     * 
+     * @param string $join  The relationship to join
+     * @param string $alias The alias of the join OPTIONAL
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function linkInner($join, $alias = null)
+    {
+        if (!$alias) {
+            list($main, $alias) = explode('.', $join, 2);
+        }
+
+        if (!in_array($alias, $this->joins)) {
+            $this->innerJoin($join, $alias);
+            $this->joins[] = $alias;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Link association as left join
+     *
+     * @param string $join  The relationship to join
+     * @param string $alias The alias of the join OPTIONAL
+     *
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function linkLeft($join, $alias = null)
+    {
+        if (!$alias) {
+            list($main, $alias) = explode('.', $join, 2);
+        }
+
+        if (!in_array($alias, $this->joins)) {
+            $this->leftJoin($join, $alias);
+            $this->joins[] = $alias;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get IN () condition
+     * 
+     * @param array  $data   Data
+     * @param string $prefix Parameter prefix OPTIONAL
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function getInCondition(array $data, $prefix = 'id')
+    {
+        $keys = \XLite\Core\Database::buildInCondition($this, $data, $prefix);
+
+        return implode(', ', $keys);
+    }
+
+    // }}}
+
 }

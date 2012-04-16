@@ -59,7 +59,7 @@ class XLite_Sniffs_PHP_DisallowGlobalSniff extends XLite_ReqCodesSniff
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
 
-        $error = 'Использование глобальных переменных запрещено';
+        $error = 'п≤я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣ пЁп╩п╬п╠п╟п╩я▄п╫я▀я┘ п©п╣я─п╣п╪п╣п╫п╫я▀я┘ п╥п╟п©я─п╣я┴п╣п╫п╬';
         $phpcsFile->addError($this->getReqPrefix('REQ.PHP.3.7.1') . $error, $stackPtr);
 
     }//end process()

@@ -11,6 +11,7 @@
  *
  * @ListChild (list="top_links.storefront", weight="300")
  *}
-
-<li IF="!getCustomerZoneWarning()"><a class="close-storefront-link" href="{buildURL(#storefront#,#close#,_ARRAY_(#returnURL#^getURL()))}">{t(#Close storefront#)}</a></li>
-<li IF="getCustomerZoneWarning()"><a class="open-storefront-link" href="{buildURL(#storefront#,#open#,_ARRAY_(#returnURL#^getURL()))}">{t(#Open storefront#)}</a></li>
+{if:checkCommonACL()}
+  <li IF="!getCustomerZoneWarning()"><a class="close-storefront-link" href="{buildURL(#storefront#,#close#,_ARRAY_(#returnURL#^getURL()))}">{t(#Close storefront#)}</a></li>
+  <li IF="getCustomerZoneWarning()"><a class="open-storefront-link" href="{buildURL(#storefront#,#open#,_ARRAY_(#returnURL#^getURL()))}">{t(#Open storefront#)}</a></li>
+{end:}

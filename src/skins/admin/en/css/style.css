@@ -819,7 +819,7 @@ table.form input[type="text"]
   white-space: normal;
 }
 
-.settings ul.table .table-label label {
+.settings .model-properties ul.table div.table-label label {
   width: auto;
 }
 
@@ -1243,7 +1243,8 @@ table.data-table td.table-id-column
   font-weight: normal;
 }
 
-.profile-form input,
+.profile-form input[type="text"],
+.profile-form input[type="password"],
 .profile-form select
 {
   width: 300px;
@@ -1565,14 +1566,13 @@ div.model-form-buttons {
   clear: left;
 }
 
-ul.default-table {
+.model-properties ul.table {
   list-style: none;
   min-width: 450px;
 }
 
-ul.default-table li {
+.model-properties ul.table > li {
   background-image: none;
-  float: left;
   clear: left;
 }
 
@@ -1580,7 +1580,7 @@ div.table-label {
   float: left;
 }
 
-ul.default-table div.table-label label {
+.model-properties ul.table div.table-label label {
   width: 80px;
 }
 
@@ -1604,6 +1604,27 @@ div.table-value input[type="password"],
 div.table-value select
 {
   width: 250px;
+}
+
+div.table-value input[type="checkbox"] {
+  margin: 0px;
+  vertical-align: middle;
+}
+
+div.table-value .checkbox-list {
+  max-height: 100px;
+  overflow: auto;
+  padding-right: 25px;
+}
+
+div.table-value .checkbox-list li {
+  padding: 0px;
+  padding-bottom: 5px;
+  white-space: nowrap;
+}
+
+div.table-value .checkbox-list label {
+  margin-left: 5px;
 }
 
 div.table-value .input-text-integer input,
