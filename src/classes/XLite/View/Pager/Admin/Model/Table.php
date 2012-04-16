@@ -146,6 +146,20 @@ class Table extends \XLite\View\Pager\Admin\Model\AModel
     }
 
     /**
+     * Chec - items per page box visible or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isItemsPerPageVisible()
+    {
+        $min = min($this->getItemsPerPageRanges());
+
+        return $min < $this->getItemsTotal();
+    }
+
+    /**
      * Check - range is selected or not
      * 
      * @param integer $range Range

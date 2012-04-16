@@ -463,6 +463,9 @@ abstract class Storage extends \XLite\Model\AEntity
                 \Includes\Utils\FileManager::deleteFile($path);
                 $path = null;
             }
+
+        } else {
+            \XLite\Logger::getInstance()->log('The file was not loaded', LOG_ERR);
         }
 
         return !empty($path);
@@ -499,6 +502,10 @@ abstract class Storage extends \XLite\Model\AEntity
                     $this->setStorageType(static::STORAGE_RELATIVE);
 
                 } else {
+                    \XLite\Logger::getInstance()->log(
+                        '\'' . $path . '\' file could not be copied to a new location \'' . $newPath . '\'.',
+                        LOG_ERR
+                    );
                     $result = false;
                 }
 
@@ -508,6 +515,10 @@ abstract class Storage extends \XLite\Model\AEntity
 
         } else {
             $result = false;
+        }
+
+        if ($result && $basename) {
+            $this->setFileName($basename);
         }
 
         return $result && $this->savePath($path);
@@ -536,11 +547,26 @@ abstract class Storage extends \XLite\Model\AEntity
 
                 if ($result) {
                     $tmp = LC_DIR_TMP . $name;
-                    $result = \Includes\Utils\FileManager::write($tmp, $file) ? $this->loadFromLocalFile($tmp) : false;
+                    $result = \Includes\Utils\FileManager::write($tmp, $file);
+                    if ($result) {
+                        $result = $this->loadFromLocalFile($tmp);
+
+                    } else {
+                        \XLite\Logger::getInstance()->log(
+                            'Unable to write data to file \'' . $tmp . '\'.',
+                            LOG_ERR
+                        );
+                    }
 
                     if ($result) {
                         \Includes\Utils\FileManager::deleteFile($tmp);
                     }
+
+                } else {
+                    \XLite\Logger::getInstance()->log(
+                        'Unable to get at the contents of \'' . $url . '\'.',
+                        LOG_ERR
+                    );
                 }
 
             } else {
@@ -676,7 +702,9 @@ abstract class Storage extends \XLite\Model\AEntity
 
         $pathToRemove = $this->getPath();
         $this->setPath($savePath);
-        $this->setFileName(basename($this->getPath()));
+        if (!$this->getFileName()) {
+            $this->setFileName(basename($this->getPath()));
+        }
 
         $result = $this->renew() && $this->updatePathByMIME();
         $result = $result && $this->checkSecurity();
@@ -799,7 +827,14 @@ abstract class Storage extends \XLite\Model\AEntity
                 $path = $this->getPath();
 
             } else {
-                \Includes\Utils\FileManager::write(tempnam(LC_DIR_TMP, 'analyse_file'), $this->getBody());
+                $path = tempnam(LC_DIR_TMP, 'analyse_file');
+                if (!\Includes\Utils\FileManager::write($path, $this->getBody())) {
+                    \XLite\Logger::getInstance()->log(
+                        'Unable to write data to file \'' . $path . '\'.',
+                        LOG_ERR
+                    );
+                    $path = false;
+                }
                 $isTempFile = true;
             }
 

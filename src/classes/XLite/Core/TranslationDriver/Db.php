@@ -87,16 +87,4 @@ class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
         $this->translations = array();
         $this->getRepo()->cleanCache();
     }
-
-    /**
-     * Alias
-     *
-     * @return \XLite\Model\Repo\LanguageLabel
-     * @see    ____func_see____
-     * @since  1.0.19
-     */
-    protected function getRepo()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel');
-    }
 }

@@ -63,7 +63,7 @@ class XLite_Sniffs_PHP_Formatting_LongArraySniff extends XLite_ReqCodesSniff
 		) {
 	        $phpcsFile->addError(
     	        $this->getReqPrefix('REQ.PHP.3.13.1')
-        	    . '$HTTP_*_VARS использовать запрещено',
+        	    . '$HTTP_*_VARS п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╥п╟п©я─п╣я┴п╣п╫п╬',
             	$stackPtr
 	        );
 		}

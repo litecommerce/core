@@ -508,7 +508,19 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function isVisible()
     {
-        return $this->checkTarget() && $this->checkMode();
+        return $this->checkTarget() && $this->checkMode() && $this->checkACL();
+    }
+
+    /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function checkACL()
+    {
+        return true;
     }
 
     /**
@@ -1045,10 +1057,43 @@ abstract class AView extends \XLite\Core\Handler
             $currency = \XLite::getInstance()->getCurrency();
         }
 
-        $symbol = $currency->getSymbol() ?: (strtoupper($currency->getCode()) . ' ');
-        $sign   = 0 <= $value ? '' : '&minus;&#8197';
+        $parts = $currency->formatParts($value);
 
-        return $sign . $symbol . $currency->formatValue(abs($value));
+        if (isset($parts['sign']) && '-' == $parts['sign']) {
+            $parts['sign'] = '&minus;&#8197';
+        }
+
+        return implode('', $parts);
+    }
+
+    /**
+     * Format price as HTML block
+     * 
+     * @param float                 $value    Value
+     * @param \XLite\Model\Currency $currency Currency OPTIONAL
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function formatPriceHTML($value, \XLite\Model\Currency $currency = null)
+    {
+        if (!isset($currency)) {
+            $currency = \XLite::getInstance()->getCurrency();
+        }
+
+        $parts = $currency->formatParts($value);
+
+        if (isset($parts['sign']) && '-' == $parts['sign']) {
+            $parts['sign'] = '&minus;&#8197';
+        }
+
+        foreach ($parts as $name => $value) {
+            $class = 'part-' . $name;
+            $parts[$name] = '<span class="' . $class . '">' . $value . '</span>';
+        }
+
+        return implode('', $parts);
     }
 
     /**
@@ -1780,18 +1825,6 @@ abstract class AView extends \XLite\Core\Handler
     protected function isDeveloperMode()
     {
         return LC_DEVELOPER_MODE;
-    }
-
-    /**
-     * Return currency symbol
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCurrencySymbol()
-    {
-        return \XLite::getInstance()->getCurrency()->getSymbol();
     }
 
     // }}}

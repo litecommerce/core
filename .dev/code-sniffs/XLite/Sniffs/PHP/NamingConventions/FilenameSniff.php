@@ -82,7 +82,7 @@ class XLite_Sniffs_PHP_NamingConventions_FilenameSniff extends XLite_NameSniff
         foreach ($nameBits as $bit) {
             $res = $this->checkCamelWord($bit);
             if ($res == -2) {
-                $error = "þÁÓÔØ '" . $bit. "' ÉÚ ÓÌÏ×Á '" .$fn . "' ÎÅ ×ÁÌÉÄÎÁ É ×ÏÚÍÏÖÎÏ Ñ×ÌÑÅÔÓÑ ÁÂÂÒÅ×ÉÁÔÕÒÏÊ, Ï ËÏÔÏÒÏÊ ×ÁÌÉÄÁÔÏÒ ÎÅ ÚÎÁÅÔ. áÂÂÒÅ×ÉÁÔÕÒÁ ÄÏÌÖÎÁ ÂÙÔØ ÚÁÒÅÇÅÓÔÒÉÒÏ×ÁÎÁ × ÍÁÓÓÉ×Å abbrs.";
+                $error = "Ð§Ð°ÑÑ‚ÑŒ '" . $bit. "' Ð¸Ð· ÑÐ»Ð¾Ð²Ð° '" .$fn . "' Ð½Ðµ Ð²Ð°Ð»Ð¸Ð´Ð½Ð° Ð¸ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð°Ð±Ð±Ñ€ÐµÐ²Ð¸Ð°Ñ‚ÑƒÑ€Ð¾Ð¹, Ð¾ ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¹ Ð²Ð°Ð»Ð¸Ð´Ð°Ñ‚Ð¾Ñ€ Ð½Ðµ Ð·Ð½Ð°ÐµÑ‚. ÐÐ±Ð±Ñ€ÐµÐ²Ð¸Ð°Ñ‚ÑƒÑ€Ð° Ð´Ð¾Ð»Ð¶Ð½Ð° Ð±Ñ‹Ñ‚ÑŒ Ð·Ð°Ñ€ÐµÐ³ÐµÑÑ‚Ñ€Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð° Ð² Ð¼Ð°ÑÑÐ¸Ð²Ðµ abbrs.";
                 $phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.2.1') . $error, $stackPtr);
 
             } elseif ($res < 0) {
@@ -92,7 +92,7 @@ class XLite_Sniffs_PHP_NamingConventions_FilenameSniff extends XLite_NameSniff
         }
 
 		if (substr($fn, -4) != '.php') {
-			$error = "æÁÊÌ '" . $fn. "' ÉÍÅÅÔ ÒÁÓÛÉÒÅÎÉÅ, ÏÔÌÉÞÎÏÅ ÏÔ .php";
+			$error = "Ð¤Ð°Ð¹Ð» '" . $fn. "' Ð¸Ð¼ÐµÐµÑ‚ Ñ€Ð°ÑÑˆÐ¸Ñ€ÐµÐ½Ð¸Ðµ, Ð¾Ñ‚Ð»Ð¸Ñ‡Ð½Ð¾Ðµ Ð¾Ñ‚ .php";
 			$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.8.2') . $error, $stackPtr);
 		}
 	}

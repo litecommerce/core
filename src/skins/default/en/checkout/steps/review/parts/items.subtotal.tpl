@@ -11,14 +11,14 @@
  * @ListChild (list="checkout.review.selected.items", weight="10")
  * @ListChild (list="checkout.review.inactive.items", weight="10")
  *}
-<div class="items-row">
+<div class="items-row clearfix">
   {t(#_X items_ in bag#,_ARRAY_(#count#^cart.countQuantity())):h}
-  <span class="price{if:cart.getItemsIncludeSurchargesTotals()} modified-subtotal{end:}">{formatPrice(cart.getSubtotal(),cart.getCurrency())}</span>
+  <span class="price{if:cart.getItemsIncludeSurchargesTotals()} modified-subtotal{end:}"><widget class="XLite\View\Surcharge" surcharge="{cart.getSubtotal()}" currency="{cart.getCurrency()}" /></span>
   <div IF="cart.getItemsIncludeSurchargesTotals()" class="including-modifiers" style="display: none;">
     <table class="including-modifiers" cellspacing="0">
       <tr FOREACH="cart.getItemsIncludeSurchargesTotals(),row">
         <td class="name">{t(#Including X#,_ARRAY_(#name#^row.surcharge.getName()))}:</td>
-        <td class="value">{formatPrice(row.cost,cart.getCurrency())}</td>
+        <td class="value"><widget class="XLite\View\Surcharge" surcharge="{row.cost}" currency="{cart.getCurrency()}" /></td>
       </tr>
     </table>
   </div>

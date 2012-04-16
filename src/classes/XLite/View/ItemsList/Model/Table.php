@@ -173,6 +173,26 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
+     * Check - table header is visible or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.20
+     */
+    protected function isTableHeaderVisible()
+    {
+        $result = false;
+        foreach ($this->getColumns() as $column) {
+            if (!empty($column['name'])) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Get main column
      *
      * @return array
@@ -425,7 +445,11 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
      */
     protected function getContainerClass()
     {
-        return parent::getContainerClass() . ' items-list-table';
+        $class = parent::getContainerClass()
+            . ' items-list-table'
+            . ($this->isTableHeaderVisible() ? ' no-thead' : '');
+
+        return trim($class);
     }
 
     /**

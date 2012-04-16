@@ -434,7 +434,7 @@ class XLite_Tests_AllTests
                 if (
                     preg_match($pattern, $filePath, $matches)
                     && !empty($matches[1])
-                    && !preg_match('/' . $ds . '(\w+Abstract|A[A-Z]\w+)\.php$/Ss', $filePath)
+                    && !preg_match('/' . $ds . '(\w+Abstract|A[A-Z][a-z]\w+)\.php$/Ss', $filePath)
                     && !preg_match('/' . $ds . '(?:scripts|skins)' . $ds . '/Ss', $filePath)
                 ) {
 

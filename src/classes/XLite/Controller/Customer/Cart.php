@@ -317,6 +317,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
             $item = new \XLite\Model\OrderItem();
 
+            $item->setOrder($this->getCart());
             $item->setProduct($product);
 
             // We make amount correction if there is no such product with additional specifications
@@ -329,6 +330,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
             } else {
 
+                $item->setOrder(null);
                 $item = null;
             }
         }

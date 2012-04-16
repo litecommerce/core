@@ -70,9 +70,9 @@ class XLite_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff extends XLite_ReqCo
         if ($tokens[$next]['code'] !== T_CLOSE_TAG) {
             $found = (($tokens[$next]['line'] - $tokens[$stackPtr]['line']) - 1);
             if ($found !== 1) {
-                $error = "ïÂÑÚÁÔÅÌØÎÏ ÎÁÌÉÞÉÅ ÐÕÓÔÏÊ ÓÔÒÏËÉ ÐÏÓÌÅ ÚÁËÒÙ×ÁÀÝÅÊ ÆÉÇÕÒÎÏÊ ÓËÏÂËÉ ÏÐÉÓÁÎÉÑ Ó×ÏÊÓÔ× ËÌÁÓÓÁ.";
+                $error = "ÐžÐ±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾ Ð½Ð°Ð»Ð¸Ñ‡Ð¸Ðµ Ð¿ÑƒÑÑ‚Ð¾Ð¹ ÑÑ‚Ñ€Ð¾ÐºÐ¸ Ð¿Ð¾ÑÐ»Ðµ Ð·Ð°ÐºÑ€Ñ‹Ð²Ð°ÑŽÑ‰ÐµÐ¹ Ñ„Ð¸Ð³ÑƒÑ€Ð½Ð¾Ð¹ ÑÐºÐ¾Ð±ÐºÐ¸ Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ñ ÑÐ²Ð¾Ð¹ÑÑ‚Ð² ÐºÐ»Ð°ÑÑÐ°.";
 				if ($found > 1)
-					$error .= " îÁÊÄÅÎÏ $found ÓÔÒÏË(É)";
+					$error .= " ÐÐ°Ð¹Ð´ÐµÐ½Ð¾ $found ÑÑ‚Ñ€Ð¾Ðº(Ð¸)";
                 $phpcsFile->addError($this->getReqPrefix('REQ.CSS.?') . $error, $stackPtr);
             }
         }
@@ -83,12 +83,12 @@ class XLite_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff extends XLite_ReqCo
 
             $num   = ($tokens[$stackPtr]['line'] - $tokens[$prev]['line'] - 1);
 			if ($num > 0) {
-				$error = "îÅÄÏÐÕÓÔÉÍÏ ÎÁÌÉÞÉÅ ÐÕÓÔÙÈ ÓÔÒÏË ÐÅÒÅÄ ÚÁËÒÙ×ÁÀÝÅÊ ÓËÏÂËÏÊ. îÁÊÄÅÎÏ $num ÓÔÒÏË";
+				$error = "ÐÐµÐ´Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ð¾ Ð½Ð°Ð»Ð¸Ñ‡Ð¸Ðµ Ð¿ÑƒÑÑ‚Ñ‹Ñ… ÑÑ‚Ñ€Ð¾Ðº Ð¿ÐµÑ€ÐµÐ´ Ð·Ð°ÐºÑ€Ñ‹Ð²Ð°ÑŽÑ‰ÐµÐ¹ ÑÐºÐ¾Ð±ÐºÐ¾Ð¹. ÐÐ°Ð¹Ð´ÐµÐ½Ð¾ $num ÑÑ‚Ñ€Ð¾Ðº";
             	$phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.8') . $error, $stackPtr);
             }
 
 			if ($tokens[$stackPtr]['line'] === $tokens[$stackPtr-1]['line']) {
-				$error = "úÁËÒÙ×ÁÀÝÁÑ ÆÉÇÕÒÎÁÑ ÓËÏÂËÁ ÎÁ ÏÔÄÅÌØÎÏÊ ÓÔÒÏËÅ É ×ÙÒÏ×ÎÅÎÁ ÐÏ ÎÁÚ×ÁÎÉÀ ËÌÁÓÓÁ.";
+				$error = "Ð—Ð°ÐºÑ€Ñ‹Ð²Ð°ÑŽÑ‰Ð°Ñ Ñ„Ð¸Ð³ÑƒÑ€Ð½Ð°Ñ ÑÐºÐ¾Ð±ÐºÐ° Ð½Ð° Ð¾Ñ‚Ð´ÐµÐ»ÑŒÐ½Ð¾Ð¹ ÑÑ‚Ñ€Ð¾ÐºÐµ Ð¸ Ð²Ñ‹Ñ€Ð¾Ð²Ð½ÐµÐ½Ð° Ð¿Ð¾ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸ÑŽ ÐºÐ»Ð°ÑÑÐ°.";
             	$phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.8') . $error, $stackPtr);
 			}
         }

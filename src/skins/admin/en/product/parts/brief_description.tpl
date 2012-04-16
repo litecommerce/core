@@ -14,6 +14,6 @@
   <td class="name-attribute">{t(#Brief description#)}</td>
   <td class="star"></td>
   <td class="value-attribute">
-    <widget class="\XLite\View\FormField\Textarea\Advanced" fieldName="{getNamePostedData(#brief_description#)}" cols="45" rows="6" value="{product.brief_description:h}" />
+    <widget class="\XLite\View\FormField\Textarea\Advanced" fieldName="{getNamePostedData(#brief_description#)}" cols="45" rows="6" value="{product.brief_description:h}" fieldOnly="true" />
   </td>
 </tr>

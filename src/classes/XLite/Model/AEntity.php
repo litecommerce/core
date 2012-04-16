@@ -358,6 +358,27 @@ abstract class AEntity extends \XLite\Base\SuperClass
     }
 
     /**
+     * Call parent method safetly
+     * 
+     * @param string $property Property name
+     * @param string $class    Current class
+     * @param string $type     Method type (get or set) OPTIONAL
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    protected function callParentMethod($property, $class, $type = 'get')
+    {
+        $parent = get_parent_class($class);
+        $method = 'get' . $this->getMethodName($property);
+
+        return method_exists($parent, $method)
+            ? $parent::$method()
+            : $this->$property;
+    }
+
+    /**
      * Get method name
      * FIXME - to remove
      *

@@ -1,0 +1,18 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Upgrade dump
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+# @since     3.0.0
+
+XLite\Model\Task:
+  - { owner: 'XLite\Core\Task\EventListener' }
+XLite\Model\Role:
+  - { translations: [{ code: en, name: Administrator }], permissions: [ { code: root access, section: All, translations: [{ code: en, name: Root access }] } ] }
+XLite\Model\Role\Permission:
+  - { code: manage catalog, section: Catalog, translations: [{ code: en, name: Manage catalog }] }
+  - { code: manage users, section: Users, translations: [{ code: en, name: Manage users }] }
+  - { code: manage orders, section: Sales, translations: [{ code: en, name: Manage orders }] }

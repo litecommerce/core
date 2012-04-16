@@ -12,5 +12,5 @@
  *}
 <li class="total">
   <strong>{t(#Total#)}:</strong>
-  {formatPrice(cart.getTotal(),cart.getCurrency())}
+  <widget class="XLite\View\Surcharge" surcharge="{cart.getTotal()}" currency="{cart.getCurrency()}" />
 </li>
