@@ -36,8 +36,9 @@ class LcServer extends Server
                 'sudo /etc/init.d/mysql restart;' .
                 'sudo sed "s/_hostname_/' . $this->private_dns . '/g"  .dev/tests/config.template.php > src/etc/config.php;' .
                 'sudo sed "s/_hostname_/' . $this->private_dns . '/g"  .dev/loadtests/JMeterLoadTest.template.jmx > .dev/loadtests/JMeterLoadTest.jmx;' .
-                'sudo /etc/init.d/lc-startup -b master-dev;' .
-                'sed "s/_hostname_/' . $this->private_dns . '/g"  .dev/tests/local.template.php | sed "s/_grid_hub_/' . $app["cloud"]->hub->private_dns . '/g" | sed "s/_clients_count_/' . $app["farms_count"] . '/g" | sed "s/_screenshots_url_/' . $app['screenshots_url'] . '/g" > .dev/tests/local.php' .
+                'sudo sed "s/_hostname_/' . $this->private_dns . '/g"  .dev/tests/Behat/behat.template.yml | sed "s/_screenshots_url_/' . $app['screenshots_url'] . '/g" > .dev/tests/Behat/behat.yml;' .
+                'sudo /etc/init.d/lc-startup -b tests;' .
+                'sed "s/_hostname_/' . $this->private_dns . '/g"  .dev/tests/local.template.php | sed "s/_grid_hub_/' . $app["cloud"]->hub->private_dns . '/g" | sed "s/_clients_count_/' . $app["farms_count"] . '/g" | sed "s/_screenshots_url_/' . $app['screenshots_url'] . '/g" > .dev/tests/local.php;' .
                 'cd ../xlite_cms; git pull; cd modules/lc_connector; git pull; cd sites/all/themes/lc3_clean; git pull;', $options);
         print PHP_EOL . "Running dev_install";
 
