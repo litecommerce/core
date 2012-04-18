@@ -47,7 +47,6 @@ abstract class Converter extends \Includes\Utils\AUtils
      */
     protected static $byteMultipliers = array('b', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 
-
     /**
      * Generate query string
      *
@@ -75,21 +74,26 @@ abstract class Converter extends \Includes\Utils\AUtils
     /**
      * Parse arguments array
      *
-     * @param array  $args   Array to parse
-     * @param string $glue   Char to agglutinate "name" and "value"
-     * @param string $quotes Char to quote the "value" param
+     * @param array   $args     Array to parse
+     * @param string  $glue     Char to agglutinate "name" and "value"
+     * @param string  $quotes   Char to quote the "value" param
+     * @param boolean $hasParts Flag OPTIONAL
      *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function parseArgs(array $args, $glue = '=', $quotes = '')
+    public static function parseArgs(array $args, $glue = '=', $quotes = '', $hasParts = true)
     {
         $result = array();
 
         foreach ($args as $part) {
-            if (1 < count($tokens = explode($glue, trim($part)))) {
+
+            if (!$hasParts) {
+                $result[] = trim(trim($part), $quotes);
+
+            } elseif (1 < count($tokens = explode($glue, trim($part)))) {
                 $result[$tokens[0]] = trim($tokens[1], $quotes);
             }
         }
@@ -100,19 +104,20 @@ abstract class Converter extends \Includes\Utils\AUtils
     /**
      * Parse string into array
      *
-     * @param string $query     Query
-     * @param string $glue      Char to agglutinate "name" and "value"
-     * @param string $separator Char to agglutinate <"name", "value"> pairs
-     * @param string $quotes    Char to quote the "value" param
+     * @param string  $query     Query
+     * @param string  $glue      Char to agglutinate "name" and "value"
+     * @param string  $separator Char to agglutinate <"name", "value"> pairs
+     * @param string  $quotes    Char to quote the "value" param
+     * @param boolean $hasParts  Flag OPTIONAL
      *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function parseQuery($query, $glue = '=', $separator = '&', $quotes = '')
+    public static function parseQuery($query, $glue = '=', $separator = '&', $quotes = '', $hasParts = true)
     {
-        return static::parseArgs(explode($separator, $query), $glue, $quotes);
+        return static::parseArgs(explode($separator, $query), $glue, $quotes, $hasParts);
     }
 
     /**

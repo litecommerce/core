@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,36 +13,34 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Decorator
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * 
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace Includes\Decorator\DataStructure\Graph;
 
 /**
- * Classes
+ * Classes 
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Classes extends \Includes\DataStructure\Graph
 {
     /**
      * Reflection object
      *
-     * @var    \ReflectionClass
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \ReflectionClass
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $reflection;
 
@@ -58,34 +56,31 @@ class Classes extends \Includes\DataStructure\Graph
     /**
      * Flag for so called "low-level" nodes
      *
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $isLowLevelNode;
 
     /**
      * Flag for so called "top-level" stub nodes
      *
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $isTopLevelNode;
 
     /**
      * Flag to determine if node was changed (e.g. its key was modified)
      *
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $isChanged;
 
-    // ------------------------------ Constructor and common getters -
+    // {{{ Constructor and common getters
 
     /**
      * Constructor
@@ -110,7 +105,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $node Node to add
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -137,7 +131,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Getter for the flag
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -150,7 +143,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Getter for the flag
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -163,7 +155,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return name of parent class
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -175,7 +166,7 @@ class Classes extends \Includes\DataStructure\Graph
     /**
      * Set name of parent class
      *
-     * @param strng $class Class name to set
+     * @param string $class Class name to set
      *
      * @return void
      * @see    ____func_see____
@@ -190,7 +181,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return list of class implementing interfaces
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -205,7 +195,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $interface Name of interface to check
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -218,7 +207,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Check if class decorates another one
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -231,7 +219,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return name of the module where the class defined
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -244,7 +231,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return top-level child
      *
      * @return self
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -253,7 +239,9 @@ class Classes extends \Includes\DataStructure\Graph
         return $this->isDecorator() && ($children = $this->getChildren()) ? reset($children)->{__FUNCTION__}() : $this;
     }
 
-    // ------------------------------ Methods to modify graph -
+    // }}}
+
+    // {{{ Methods to modify graph
 
     /**
      * Set node key
@@ -261,7 +249,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $key Key to set
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -281,7 +268,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Mark node as "low-level"
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -294,7 +280,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Mark node as "top-level"
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -303,7 +288,9 @@ class Classes extends \Includes\DataStructure\Graph
         $this->isTopLevelNode = true;
     }
 
-    // ------------------------------ Methods to get paths and source code -
+    // }}}
+
+    // {{{ Methods to get paths and source code
 
     /**
      * Name of the origin class file 
@@ -321,7 +308,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Transform class name into the relative path
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -336,13 +322,12 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $parent Parent node OPTIONAL
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function getSource(self $parent = null)
     {
-        return $this->isChanged || $this->isDecorator()
+        return ($this->isChanged || $this->isDecorator())
             ? $this->getActualSource($parent)
             : ($this->isTopLevelNode() ? $this->getEmptySource($parent) : $this->getRegularSource());
     }
@@ -353,7 +338,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $parent Parent node OPTIONAL
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -378,7 +362,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param self $parent Parent node OPTIONAL
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -399,7 +382,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return source code for regular node
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -411,10 +393,9 @@ class Classes extends \Includes\DataStructure\Graph
     /**
      * Return actual parent class name
      *
-     * @param self $parent Node to get class name
+     * @param self $parent Node to get class name OPTIONAL
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -427,7 +408,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return namespace by class name
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -442,7 +422,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Return base part of the class name
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -457,7 +436,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Parse class name into parts
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -468,8 +446,9 @@ class Classes extends \Includes\DataStructure\Graph
         return array(array_pop($parts), $parts);
     }
 
+    // }}}
 
-    // ------------------------------ Tags -
+    // {{{ Tags
 
     /**
      * Get tag info
@@ -477,7 +456,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $name Tag name
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -490,7 +468,6 @@ class Classes extends \Includes\DataStructure\Graph
      * Parse and return all tags
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -498,18 +475,25 @@ class Classes extends \Includes\DataStructure\Graph
     {
         if (!isset($this->tags)) {
             $this->tags = \Includes\Decorator\Utils\Operator::getTags($this->getReflection()->docComment);
+
+            if (!empty($this->tags['lc_dependencies'][0])) {
+                $this->tags['lc_dependencies'] = \Includes\Utils\Converter::parseQuery(
+                    $this->tags['lc_dependencies'][0], null, ',', '"\'', false
+                );
+            }
         }
 
         return $this->tags;
     }
 
-    // ------------------------------ Auxiliary methods -
+    // }}}
+
+    // {{{ Auxiliary methods
 
     /**
      * Return the ReflectionClass object for the current node
      *
      * @return \ReflectionClass
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -557,7 +541,6 @@ class Classes extends \Includes\DataStructure\Graph
      * @param string $class Class name to prepare
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -585,4 +568,6 @@ class Classes extends \Includes\DataStructure\Graph
 
         return $result;
     }
+
+    // }}}
 }
