@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="admin.main.page", weight="30")
+ * @ListChild (list="admin.main", weight="50")
  *}
 <div id="footer">
   <list name="admin.main.page.footer" />

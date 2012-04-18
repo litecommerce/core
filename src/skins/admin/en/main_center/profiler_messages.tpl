@@ -10,4 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="admin.main", weight="10")
  *}
- <div IF="isDeveloperMode()" id="profiler-messages"></div>
+<div IF="isDeveloperMode()" id="profiler-messages"></div>

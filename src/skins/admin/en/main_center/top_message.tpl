@@ -10,5 +10,4 @@
  * @since     1.0.0
  * @ListChild (list="admin.main", weight="20")
  *}
-
 <widget class="\XLite\View\TopMessage" />

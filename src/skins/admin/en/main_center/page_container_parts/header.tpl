@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="admin.main.page", weight="20")
+ * @ListChild (list="admin.main.page.header_wrapper", weight="10")
  *}
 <div id="header">
   <list name="admin.main.page.header" />
