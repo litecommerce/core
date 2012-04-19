@@ -2,8 +2,8 @@
 
 /**
  * Top menu controller
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -21,13 +21,12 @@ jQuery().ready(
       if (selectedTab.length) {
 
         selectedTab.addClass('current');
-        jQuery('div', selectedTab).clone().attr('id','topMenuLine').appendTo('#header');
+        jQuery('div', selectedTab).clone().attr('id','topMenuLine').prependTo('#content');
 
         var paddingTop = parseInt(jQuery('#content').css('padding-top'));
         var menuHeight = parseInt(jQuery('#topMenuLine').css('height'));
 
         jQuery('#content')
-          .css('padding-top', paddingTop + menuHeight)
           .css('background-position', 'left ' + (paddingTop + menuHeight - 10) + 'px');
       }
 
