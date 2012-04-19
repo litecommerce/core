@@ -49,7 +49,7 @@ class IncludedVAT extends \XLite\Logic\ALogic
      */
     static public function isApply(\XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
     {
-        return true;
+        return in_array('taxable', $behaviors);
     }
 
     /**
@@ -67,7 +67,9 @@ class IncludedVAT extends \XLite\Logic\ALogic
      */
     static public function modifyMoney($value, \XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
     {
-        return \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->deductTaxFromPrice($model, $value);
+        $obj = ($model instanceOf \XLite\Model\OrderItem ? $model->getProduct() : $model); 
+
+        return \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->deductTaxFromPrice($obj, $value);
     }
 }
 
