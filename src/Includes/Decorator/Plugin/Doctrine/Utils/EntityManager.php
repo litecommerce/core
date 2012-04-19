@@ -215,6 +215,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
         $generator->setGenerateStubMethods(true);
         $generator->setNumSpaces(4);
         $generator->setClassToExtend('\XLite\Model\AEntity');
+        $generator->setBackupExisting(false);
 
         return $generator;
     }
