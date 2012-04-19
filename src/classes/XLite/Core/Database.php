@@ -42,7 +42,6 @@ class Database extends \XLite\Base\Singleton
     const SCHEMA_UPDATE = 'update';
     const SCHEMA_DELETE = 'delete';
 
-
     /**
      * DB schema file ident
      */
@@ -856,7 +855,7 @@ OUT;
      */
     public function loadFixturesFromYaml($path)
     {
-        $data = \Symfony\Component\Yaml\Yaml::load($path);
+        $data = \Symfony\Component\Yaml\Yaml::parse($path);
 
         $result = false;
 
@@ -892,7 +891,7 @@ OUT;
      */
     public function unloadFixturesFromYaml($path)
     {
-        $data = \Symfony\Component\Yaml\Yaml::load($path);
+        $data = \Symfony\Component\Yaml\Yaml::parse($path);
 
         $result = false;
 

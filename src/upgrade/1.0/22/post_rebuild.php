@@ -27,7 +27,6 @@
 
 return function()
 {
-    
     // Loading data to the database from yaml file
     $yamlFile = __DIR__ . LC_DS . 'post_rebuild.yaml';
 
@@ -39,7 +38,7 @@ return function()
     $yamlFile = __DIR__ . LC_DS . 'countries.yaml';
 
     if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
-        $data = \Symfony\Component\Yaml\Yaml::load($path);
+        $data = \Symfony\Component\Yaml\Yaml::parse($path);
 
         // Import new and update old currencies
         $repo = \XLite\Core\Database::getRepo('XLite\Model\Currency');
