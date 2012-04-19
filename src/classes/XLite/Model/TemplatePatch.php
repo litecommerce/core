@@ -51,7 +51,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11")
+     * @Column         (type="integer", length=11)
      */
     protected $patch_id;
 
@@ -62,7 +62,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="16")
+     * @Column (type="string", length=16)
      */
     protected $zone = 'customer';
 
@@ -73,7 +73,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="2")
+     * @Column (type="string", length=2)
      */
     protected $lang = '';
 
@@ -84,7 +84,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $tpl;
 
@@ -95,7 +95,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="8")
+     * @Column (type="string", length=8)
      */
     protected $patch_type = 'custom';
 
@@ -106,7 +106,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $xpath_query = '';
 
@@ -117,7 +117,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="16")
+     * @Column (type="string", length=16)
      */
     protected $xpath_insert_type = 'before';
 
@@ -139,7 +139,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $regexp_pattern = '';
 
@@ -161,7 +161,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="128")
+     * @Column (type="string", length=128)
      */
     protected $custom_callback = '';
 }

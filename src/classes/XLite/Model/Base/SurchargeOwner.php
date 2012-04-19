@@ -44,7 +44,7 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="decimal", precision="14", scale="4")
+     * @Column (type="decimal", precision=14, scale=4)
      */
     protected $total = 0.0000;
 
@@ -55,7 +55,7 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="decimal", precision="14", scale="4")
+     * @Column (type="decimal", precision=14, scale=4)
      */
     protected $subtotal = 0.0000;
 

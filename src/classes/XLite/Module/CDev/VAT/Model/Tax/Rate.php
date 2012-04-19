@@ -76,7 +76,7 @@ class Rate extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="1")
+     * @Column (type="fixedstring", length=1)
      */
     protected $type = self::TYPE_PERCENT;
 

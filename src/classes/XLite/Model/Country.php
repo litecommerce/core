@@ -50,7 +50,7 @@ class Country extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="50")
+     * @Column (type="string", length=50)
      */
     protected $country;
 
@@ -62,7 +62,7 @@ class Country extends \XLite\Model\AEntity
      * @since 1.0.0
      *
      * @Id
-     * @Column (type="fixedstring", length="2", unique=true)
+     * @Column (type="fixedstring", length=2, unique=true)
      */
     protected $code;
 
@@ -84,7 +84,7 @@ class Country extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="3")
+     * @Column (type="fixedstring", length=3)
      */
     protected $code3 = '';
 

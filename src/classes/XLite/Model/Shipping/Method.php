@@ -65,7 +65,7 @@ class Method extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $processor = '';
 
@@ -76,7 +76,7 @@ class Method extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $carrier = '';
 
@@ -87,7 +87,7 @@ class Method extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $code = '';
 

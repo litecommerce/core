@@ -69,7 +69,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length=32, nullable=false)
      */
     protected $discountType = self::SALE_DISCOUNT_TYPE_PRICE;
 

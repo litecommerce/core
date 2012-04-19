@@ -50,7 +50,7 @@ class MethodTranslation extends \XLite\Model\Base\Translation
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length=255, nullable=false)
      */
     protected $name = '';
 }

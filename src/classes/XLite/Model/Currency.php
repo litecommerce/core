@@ -61,7 +61,7 @@ class Currency extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="3", unique=true)
+     * @Column (type="fixedstring", length=3, unique=true)
      */
     protected $code;
 
@@ -72,7 +72,7 @@ class Currency extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="16")
+     * @Column (type="string", length=16)
      */
     protected $symbol;
 
@@ -83,7 +83,7 @@ class Currency extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $prefix = '';
 
@@ -94,7 +94,7 @@ class Currency extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $suffix = '';
 
@@ -115,7 +115,7 @@ class Currency extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="8")
+     * @Column (type="string", length=8)
      */
     protected $decimalDelimiter = '.';
 
@@ -126,7 +126,7 @@ class Currency extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="8")
+     * @Column (type="string", length=8)
      */
     protected $thousandDelimiter = '';
 

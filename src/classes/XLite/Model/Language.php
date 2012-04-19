@@ -73,7 +73,7 @@ class Language extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="2", unique=true)
+     * @Column (type="fixedstring", length=2, unique=true)
      */
     protected $code;
 
@@ -84,7 +84,7 @@ class Language extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="3", unique=true)
+     * @Column (type="fixedstring", length=3, unique=true)
      */
     protected $code3 = '';
 

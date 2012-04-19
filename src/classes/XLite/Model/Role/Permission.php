@@ -60,7 +60,7 @@ class Permission extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.17
      *
-     * @Column (type="fixedstring", length="32")
+     * @Column (type="fixedstring", length=32)
      */
     protected $code;
 
@@ -71,7 +71,7 @@ class Permission extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.17
      *
-     * @Column (type="string", length="128")
+     * @Column (type="string", length=128)
      */
     protected $section;
 

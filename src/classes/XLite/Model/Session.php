@@ -71,7 +71,7 @@ class Session extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="32")
+     * @Column (type="fixedstring", length=32)
      */
     protected $sid;
 

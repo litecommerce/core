@@ -77,7 +77,7 @@ class FormId extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $form_id;
 

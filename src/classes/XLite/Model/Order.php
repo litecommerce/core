@@ -140,7 +140,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $tracking = '';
 
@@ -173,7 +173,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="1")
+     * @Column (type="fixedstring", length=1)
      */
     protected $status = self::STATUS_INPROGRESS;
 

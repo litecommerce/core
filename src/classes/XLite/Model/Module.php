@@ -69,7 +69,7 @@ class Module extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $name;
 
@@ -80,7 +80,7 @@ class Module extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $author;
 

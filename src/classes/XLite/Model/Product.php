@@ -79,7 +79,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length=32, nullable=false)
      */
     protected $sku;
 
@@ -123,7 +123,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length=255, nullable=false)
      */
     protected $clean_url = '';
 

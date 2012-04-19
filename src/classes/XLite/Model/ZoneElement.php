@@ -61,7 +61,7 @@ class ZoneElement extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer", length=11, nullable=false)
      */
     protected $element_id;
 
@@ -72,7 +72,7 @@ class ZoneElement extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $element_value;
 
@@ -83,7 +83,7 @@ class ZoneElement extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="1")
+     * @Column (type="fixedstring", length=1)
      */
     protected $element_type;
 
