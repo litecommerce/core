@@ -343,16 +343,13 @@ class Classes extends \Includes\DataStructure\Graph
      */
     protected function getActualSource(self $parent = null)
     {
-        $this->getReflection()->docComment = $this->isLowLevelNode() 
-            ? '/**' . PHP_EOL . ' * MOVED' . PHP_EOL . ' */' 
-            : null;
-
         return \Includes\Decorator\Utils\Tokenizer::getSourceCode(
             $this->getFile(),
             $this->getActualNamespace(),
             $this->getClassBaseName(),
             $this->getActualParentClassName($parent),
-            $this->getReflection()->docComment
+            $this->getReflection()->docComment,
+            ($this->getReflection()->isAbstract || $this->getReflection()->isFinal) ? null : 'abstract'
         );
     }
 
@@ -369,7 +366,6 @@ class Classes extends \Includes\DataStructure\Graph
     {
         return '<?php' . PHP_EOL . PHP_EOL
             . (($namespace = $this->getActualNamespace()) ? ('namespace ' . $namespace . ';' . PHP_EOL . PHP_EOL) : '')
-            . (($comment = $this->getReflection()->docComment) ? ($comment . PHP_EOL) : '')
             . ($this->getReflection()->isFinal ? 'final '    : '')
             . ($this->getReflection()->isAbstract ? 'abstract ' : '')
             . ($this->getReflection()->isInterface ? 'interface' : 'class') . ' ' . $this->getClassBaseName()

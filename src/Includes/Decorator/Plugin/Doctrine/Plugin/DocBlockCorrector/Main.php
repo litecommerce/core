@@ -43,7 +43,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
  * @MappedSuperClass
  */';
 
-
     /**
      * Execute certain hook handler
      *
@@ -75,7 +74,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
             // Write changes to FS
             \Includes\Utils\FileManager::write(
                 $path = LC_DIR_CACHE_CLASSES . $node->getPath(),
-                \Includes\Decorator\Utils\Tokenizer::getSourceCode($path, null, null, null, self::DOC_BLOCK)
+                \Includes\Decorator\Utils\Tokenizer::getSourceCode($path, null, null, null, static::DOC_BLOCK)
             );
         }
     }
