@@ -25,15 +25,15 @@
  * @since     1.0.22
  */
 
-namespace XLite\Module\CDev\VAT\Logic;
+namespace XLite\Module\CDev\ProductOptions\Logic;
 
 /**
- * Display price modificator: add VAT to displayPrice
+ * Net price modificator: add option surcharge
  * 
  * @see   ____class_see____
- * @since 1.0.19
+ * @since 1.0.22
  */
-class ExcludedVAT extends \XLite\Logic\ALogic
+class OptionSurcharge extends \XLite\Logic\ALogic
 {
     /**
      * Check modificator - apply or not
@@ -49,7 +49,7 @@ class ExcludedVAT extends \XLite\Logic\ALogic
      */
     static public function isApply(\XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
     {
-        return in_array('taxable', $behaviors) && \XLite\Core\Config::getInstance()->CDev->VAT->display_prices_including_vat;
+        return $model instanceOf \XLite\Model\OrderItem;
     }
 
     /**
@@ -67,9 +67,14 @@ class ExcludedVAT extends \XLite\Logic\ALogic
      */
     static public function modifyMoney($value, \XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
     {
-        $obj = ($model instanceOf \XLite\Model\OrderItem ? $model->getProduct() : $model);
-    
-        return \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->getVATValue($obj, $value) + $value;
+        foreach ($model->getOptions() as $option) {
+
+            if ($option->getOption() && $option->getOption()->hasActiveSurcharge('price')) {
+                $value += $option->getOption()->getSurcharge('price')->getAbsoluteValue();
+            }
+        }
+
+        return $value;
     }
 }
 

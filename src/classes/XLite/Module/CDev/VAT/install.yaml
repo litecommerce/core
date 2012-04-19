@@ -12,9 +12,11 @@ XLite\Model\MoneyModificator:
   - class: XLite\Module\CDev\VAT\Logic\IncludedVAT
     validator: isApply
     purpose: net
+    position: 1000
   - class: XLite\Module\CDev\VAT\Logic\ExcludedVAT
     validator: isApply
     purpose: display
+    position: 1000
 
 XLite\Model\Config:
   - { name: display_prices_including_vat, category: 'CDev\VAT', type: checkbox, value: 'Y', orderby: 100, translations: [{ code: en, option_name: 'Display prices in catalog including VAT' }] }
