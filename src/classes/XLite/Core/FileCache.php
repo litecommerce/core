@@ -33,7 +33,7 @@ namespace XLite\Core;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class FileCache extends \Doctrine\Common\Cache\AbstractCache
+class FileCache extends \Doctrine\Common\Cache\CacheProvider
 {
     /**
      * Cache directory path
@@ -234,22 +234,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
-     * Get id + namespace
-     * 
-     * @param string $id Cell id
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function _getNamespacedId($id)
-    {
-        return (!$this->_namespace || strpos($id, $this->_namespace) === 0)
-            ? $id
-            : $this->_namespace . $id;
-    }
-
-    /**
      * Get cache cell by id
      *
      * @param string $id CEll id
@@ -258,7 +242,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function _doFetch($id)
+    protected function doFetch($id)
     {
         $path = $this->getPathById($id);
 
@@ -280,7 +264,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function _doContains($id)
+    protected function doContains($id)
     {
         $path = $this->getPathById($id);
 
@@ -298,7 +282,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function _doSave($id, $data, $lifeTime = 0)
+    protected function doSave($id, $data, $lifeTime = 0)
     {
         $lifeTime = strval(min(0, intval($lifeTime)));
 
@@ -317,7 +301,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function _doDelete($id)
+    protected function doDelete($id)
     {
         $path = $this->getPathById($id);
 
@@ -328,6 +312,30 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
         }
 
         return $result;
+    }
+
+    /**
+     * doFlush
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function doFlush()
+    {
+        return true;
+    }
+
+    /**
+     * doGetStats
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function doGetStats()
+    {
+        return array();
     }
 
     /**

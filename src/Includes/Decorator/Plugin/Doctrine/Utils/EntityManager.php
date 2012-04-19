@@ -207,7 +207,8 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      */
     protected static function getEntityGenerator()
     {
-        $generator = new \Includes\Decorator\Plugin\Doctrine\Utils\ModelGenerator();
+        $generator = new \Doctrine\ORM\Tools\EntityGenerator();
+        // \Includes\Decorator\Plugin\Doctrine\Utils\ModelGenerator();
         $generator->setGenerateAnnotations(true);
         $generator->setRegenerateEntityIfExists(false);
         $generator->setUpdateEntityIfExists(true);

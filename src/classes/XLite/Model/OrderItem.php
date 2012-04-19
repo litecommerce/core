@@ -42,8 +42,9 @@ namespace XLite\Model;
  *               @Index (name="amount", columns={"amount"})
  *          }
  * )
+ *
  * @InheritanceType       ("SINGLE_TABLE")
- * @DiscriminatorColumn   (name="object_type", type="string", length="16")
+ * @DiscriminatorColumn   (name="object_type", type="string", length=16)
  * @DiscriminatorMap      ({"product" = "XLite\Model\OrderItem"})
  */
 class OrderItem extends \XLite\Model\Base\SurchargeOwner

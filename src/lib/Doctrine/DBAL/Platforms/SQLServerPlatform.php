@@ -26,17 +26,43 @@ use Doctrine\DBAL\Schema\Index,
     Doctrine\DBAL\Schema\Table;
 
 /**
- * The MsSqlPlatform provides the behavior, features and SQL dialect of the
- * MySQL database platform.
+ * The SQLServerPlatform provides the behavior, features and SQL dialect of the
+ * Microsoft SQL Server database platform.
  *
  * @since 2.0
  * @author Roman Borschel <roman@code-factory.org>
  * @author Jonathan H. Wage <jonwage@gmail.com>
  * @author Benjamin Eberlei <kontakt@beberlei.de>
- * @todo Rename: MsSQLPlatform
  */
-class MsSqlPlatform extends AbstractPlatform
+class SQLServerPlatform extends AbstractPlatform
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function getDateDiffExpression($date1, $date2)
+    {
+        return 'DATEDIFF(day, ' . $date2 . ',' . $date1 . ')';
+    }
+
+    public function getDateAddDaysExpression($date, $days)
+    {
+        return 'DATEADD(day, ' . $days . ', ' . $date . ')';
+    }
+
+    public function getDateSubDaysExpression($date, $days)
+    {
+        return 'DATEADD(day, -1 * ' . $days . ', ' . $date . ')';
+    }
+
+    public function getDateAddMonthExpression($date, $months)
+    {
+        return 'DATEADD(month, ' . $months . ', ' . $date . ')';
+    }
+
+    public function getDateSubMonthExpression($date, $months)
+    {
+        return 'DATEADD(month, -1 * ' . $months . ', ' . $date . ')';
+    }
 
     /**
      * Whether the platform prefers identity columns for ID generation.
@@ -250,31 +276,55 @@ class MsSqlPlatform extends AbstractPlatform
     public function getAlterTableSQL(TableDiff $diff)
     {
         $queryParts = array();
+        $sql = array();
+        $columnSql = array();
+
         if ($diff->newName !== false) {
             $queryParts[] = 'RENAME TO ' . $diff->newName;
         }
 
         foreach ($diff->addedColumns AS $fieldName => $column) {
+            if ($this->onSchemaAlterTableAddColumn($column, $diff, $columnSql)) {
+                continue;
+            }
+
             $queryParts[] = 'ADD ' . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
         }
 
         foreach ($diff->removedColumns AS $column) {
+            if ($this->onSchemaAlterTableRemoveColumn($column, $diff, $columnSql)) {
+                continue;
+            }
+
             $queryParts[] = 'DROP COLUMN ' . $column->getQuotedName($this);
         }
 
         foreach ($diff->changedColumns AS $columnDiff) {
+            if ($this->onSchemaAlterTableChangeColumn($columnDiff, $diff, $columnSql)) {
+                continue;
+            }
+
             /* @var $columnDiff Doctrine\DBAL\Schema\ColumnDiff */
             $column = $columnDiff->column;
-            $queryParts[] = 'CHANGE ' . ($columnDiff->oldColumnName) . ' '
-                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
+            $queryParts[] = 'ALTER COLUMN ' .
+                    $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
         }
 
         foreach ($diff->renamedColumns AS $oldColumnName => $column) {
-            $queryParts[] = 'CHANGE ' . $oldColumnName . ' '
-                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
+            if ($this->onSchemaAlterTableRenameColumn($oldColumnName, $column, $diff, $columnSql)) {
+                continue;
+            }
+
+            $sql[] = "sp_RENAME '". $diff->name. ".". $oldColumnName . "' , '".$column->getQuotedName($this)."', 'COLUMN'";
+            $queryParts[] = 'ALTER COLUMN ' .
+                    $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
         }
 
-        $sql = array();
+        $tableSql = array();
+
+        if ($this->onSchemaAlterTable($diff, $tableSql)) {
+            return array_merge($tableSql, $columnSql);
+        }
 
         foreach ($queryParts as $query) {
             $sql[] = 'ALTER TABLE ' . $diff->name . ' ' . $query;
@@ -282,7 +332,7 @@ class MsSqlPlatform extends AbstractPlatform
 
         $sql = array_merge($sql, $this->_getAlterTableIndexForeignKeySQL($diff));
 
-        return $sql;
+        return array_merge($sql, $tableSql, $columnSql);
     }
 
     /**
@@ -306,7 +356,8 @@ class MsSqlPlatform extends AbstractPlatform
      */
     public function getListTablesSQL()
     {
-        return "SELECT name FROM sysobjects WHERE type = 'U' ORDER BY name";
+        // "sysdiagrams" table must be ignored as it's internal SQL Server table for Database Diagrams
+        return "SELECT name FROM sysobjects WHERE type = 'U' AND name != 'sysdiagrams' ORDER BY name";
     }
 
     /**
@@ -314,7 +365,7 @@ class MsSqlPlatform extends AbstractPlatform
      */
     public function getListTableColumnsSQL($table, $database = null)
     {
-        return 'exec sp_columns @table_name = ' . $table;
+        return "exec sp_columns @table_name = '" . $table . "'";
     }
 
     /**
@@ -547,8 +598,7 @@ class MsSqlPlatform extends AbstractPlatform
      */
     public function getDateTimeTypeDeclarationSQL(array $fieldDeclaration)
     {
-        // 6 - microseconds precision length
-        return 'DATETIME2(6)';
+        return 'DATETIME';
     }
 
     /**
@@ -556,7 +606,7 @@ class MsSqlPlatform extends AbstractPlatform
      */
     public function getDateTypeDeclarationSQL(array $fieldDeclaration)
     {
-        return 'DATE';
+        return 'DATETIME';
     }
 
     /**
@@ -564,7 +614,7 @@ class MsSqlPlatform extends AbstractPlatform
      */
     public function getTimeTypeDeclarationSQL(array $fieldDeclaration)
     {
-        return 'TIME(0)';
+        return 'DATETIME';
     }
 
     /**
@@ -579,23 +629,16 @@ class MsSqlPlatform extends AbstractPlatform
      * Adds an adapter-specific LIMIT clause to the SELECT statement.
      *
      * @param string $query
-     * @param mixed $limit
-     * @param mixed $offset
+     * @param integer $limit
+     * @param integer $offset
      * @link http://lists.bestpractical.com/pipermail/rt-devel/2005-June/007339.html
      * @return string
      */
     protected function doModifyLimitQuery($query, $limit, $offset = null)
     {
         if ($limit > 0) {
-            $count = intval($limit);
-            $offset = intval($offset);
-
-            if ($offset < 0) {
-                throw new DBALException("LIMIT argument offset=$offset is not valid");
-            }
-
             if ($offset == 0) {
-                $query = preg_replace('/^SELECT\s/i', 'SELECT TOP ' . $count . ' ', $query);
+                $query = preg_replace('/^(SELECT\s(DISTINCT\s)?)/i', '\1TOP ' . $limit . ' ', $query);
             } else {
                 $orderby = stristr($query, 'ORDER BY');
 
@@ -607,18 +650,24 @@ class MsSqlPlatform extends AbstractPlatform
 
                 // Remove ORDER BY clause from $query
                 $query = preg_replace('/\s+ORDER BY(.*)/', '', $query);
-
-                // Add ORDER BY clause as an argument for ROW_NUMBER()
-                $query = "SELECT ROW_NUMBER() OVER ($over) AS \"doctrine_rownum\", * FROM ($query) AS inner_tbl";
+                $query = preg_replace('/^SELECT\s/', '', $query);
 
                 $start = $offset + 1;
-                $end = $offset + $count;
+                $end = $offset + $limit;
 
-                $query = "WITH outer_tbl AS ($query) SELECT * FROM outer_tbl WHERE \"doctrine_rownum\" BETWEEN $start AND $end";
+                $query = "SELECT * FROM (SELECT ROW_NUMBER() OVER ($over) AS \"doctrine_rownum\", $query) AS doctrine_tbl WHERE \"doctrine_rownum\" BETWEEN $start AND $end";
             }
         }
 
         return $query;
+    }
+
+    /**
+     * @override
+     */
+    public function supportsLimitOffset()
+    {
+        return false;
     }
 
     /**
@@ -661,7 +710,23 @@ class MsSqlPlatform extends AbstractPlatform
      */
     public function getDateTimeFormatString()
     {
-        return 'Y-m-d H:i:s.u';
+        return 'Y-m-d H:i:s.000';
+    }
+
+    /**
+     * @override
+     */
+    public function getDateFormatString()
+    {
+        return 'Y-m-d H:i:s.000';
+    }
+
+    /**
+     * @override
+     */
+    public function getTimeFormatString()
+    {
+        return 'Y-m-d H:i:s.000';
     }
 
     /**
@@ -701,12 +766,9 @@ class MsSqlPlatform extends AbstractPlatform
             'real' => 'float',
             'double' => 'float',
             'double precision' => 'float',
-            'date' => 'date',
             'datetimeoffset' => 'datetimetz',
-            'datetime2' => 'datetime',
             'smalldatetime' => 'datetime',
             'datetime' => 'datetime',
-            'time' => 'time',
             'char' => 'string',
             'varchar' => 'string',
             'text' => 'text',
@@ -714,7 +776,7 @@ class MsSqlPlatform extends AbstractPlatform
             'nvarchar' => 'string',
             'ntext' => 'text',
             'binary' => 'text',
-            'varbinary' => 'text',
+            'varbinary' => 'blob',
             'image' => 'text',
         );
     }
@@ -781,18 +843,23 @@ class MsSqlPlatform extends AbstractPlatform
     }
 
     /**
-     * Quotes a string so that it can be safely used as a table or column name,
-     * even if it is a reserved word of the platform.
-     *
-     * NOTE: Just because you CAN use quoted identifiers doesn't mean
-     * you SHOULD use them.  In general, they end up causing way more
-     * problems than they solve.
-     *
-     * @param string $str           identifier name to be quoted
-     * @return string               quoted identifier string
+     * {@inheritDoc}
      */
-    public function quoteIdentifier($str)
+    public function quoteSingleIdentifier($str)
     {
-        return "[" . $str . "]";
+        return "[" . str_replace("]", "][", $str) . "]";
+    }
+
+    public function getTruncateTableSQL($tableName, $cascade = false)
+    {
+        return 'TRUNCATE TABLE '.$tableName;
+    }
+
+    /**
+     * Gets the SQL Snippet used to declare a BLOB column type.
+     */
+    public function getBlobTypeDeclarationSQL(array $field)
+    {
+        return 'VARBINARY(MAX)';
     }
 }

@@ -19,19 +19,20 @@
 
 namespace Doctrine\DBAL\Schema;
 
+use Doctrine\DBAL\Event\SchemaIndexDefinitionEventArgs;
+use Doctrine\DBAL\Events;
+
 /**
- * xxx
+ * SQL Server Schema Manager
  *
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
  * @author      Juozas Kaziukenas <juozas@juokaz.com>
- * @version     $Revision$
  * @since       2.0
  */
-class MsSqlSchemaManager extends AbstractSchemaManager
+class SQLServerSchemaManager extends AbstractSchemaManager
 {
-
     /**
      * @override
      */
@@ -55,7 +56,7 @@ class MsSqlSchemaManager extends AbstractSchemaManager
         $default = $tableColumn['COLUMN_DEF'];
 
         while ($default != ($default2 = preg_replace("/^\((.*)\)$/", '$1', $default))) {
-            $default = $default2;
+            $default = trim($default2, "'");
         }
 
         $length = (int) $tableColumn['LENGTH'];
@@ -119,9 +120,28 @@ class MsSqlSchemaManager extends AbstractSchemaManager
             );
         }
 
+        $eventManager = $this->_platform->getEventManager();
+
         $indexes = array();
         foreach ($result AS $indexKey => $data) {
-            $indexes[$indexKey] = new Index($data['name'], $data['columns'], $data['unique'], $data['primary']);
+            $index = null;
+            $defaultPrevented = false;
+
+            if (null !== $eventManager && $eventManager->hasListeners(Events::onSchemaIndexDefinition)) {
+                $eventArgs = new SchemaIndexDefinitionEventArgs($data, $tableName, $this->_conn);
+                $eventManager->dispatchEvent(Events::onSchemaIndexDefinition, $eventArgs);
+
+                $defaultPrevented = $eventArgs->isDefaultPrevented();
+                $index = $eventArgs->getIndex();
+            }
+
+            if (!$defaultPrevented) {
+                $index = new Index($data['name'], $data['columns'], $data['unique'], $data['primary']);
+            }
+
+            if ($index) {
+                $indexes[$indexKey] = $index;
+            }
         }
 
         return $indexes;
@@ -169,4 +189,28 @@ class MsSqlSchemaManager extends AbstractSchemaManager
         return new View($view['name'], null);
     }
 
+    /**
+     * List the indexes for a given table returning an array of Index instances.
+     *
+     * Keys of the portable indexes list are all lower-cased.
+     *
+     * @param string $table The name of the table
+     * @return Index[] $tableIndexes
+     */
+    public function listTableIndexes($table)
+    {
+        $sql = $this->_platform->getListTableIndexesSQL($table, $this->_conn->getDatabase());
+
+        try {
+            $tableIndexes = $this->_conn->fetchAll($sql);
+        } catch(\PDOException $e) {
+            if ($e->getCode() == "IMSSP") {
+                return array();
+            } else {
+                throw $e;
+            }
+        }
+
+        return $this->_getPortableTableIndexesList($tableIndexes, $table);
+    }
 }
