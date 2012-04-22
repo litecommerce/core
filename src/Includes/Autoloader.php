@@ -48,15 +48,6 @@ abstract class Autoloader
     );
 
     /**
-     * The directory where LC classes are located
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $lcAutoloadDir = LC_DIR_CACHE_CLASSES;
-
-    /**
      * Main LC autoloader
      *
      * @param string $class name of the class to load
@@ -83,8 +74,9 @@ abstract class Autoloader
          */
         $class = ltrim($class, '\\');
 
-        if (0 === strpos($class, LC_NAMESPACE)) {
-            include_once (static::$lcAutoloadDir . str_replace('\\', LC_DS, $class) . '.php');
+        // Workaround for Doctrine 2 proxies
+        if (0 === strpos($class, LC_NAMESPACE) && false === strpos($class, \Doctrine\Common\Persistence\Proxy::MARKER)) {
+            include_once (LC_DIR_CACHE_CLASSES . str_replace('\\', LC_DS, $class) . '.php');
         }
     }
 
@@ -150,32 +142,6 @@ abstract class Autoloader
     }
 
     /**
-     * Return path ot the autoloader current dir
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getLCAutoloadDir()
-    {
-        return static::$lcAutoloadDir;
-    }
-
-    /**
-     * Switch autoload directory from var/run/classes/ to classes/
-     *
-     * @param string $dir New autoload directory
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function switchLCAutoloadDir()
-    {
-        static::$lcAutoloadDir = LC_DIR_CLASSES;
-    }
-
-    /**
      * Register the autoload function for the Doctrine library
      *
      * @return void
@@ -185,11 +151,16 @@ abstract class Autoloader
     protected static function registerDoctrineAutoloader()
     {
         require_once (LC_DIR_LIB . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
+        require_once (LC_DIR_LIB . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'Persistence' . LC_DS . 'Proxy.php');
 
         $loader = new \Doctrine\Common\ClassLoader('Doctrine', rtrim(LC_DIR_LIB, LC_DS));
         $loader->register();
 
         $loader = new \Doctrine\Common\ClassLoader('Symfony', rtrim(LC_DIR_LIB, LC_DS));
+        $loader->register();
+
+        // Workaround for Doctrine 2 proxies
+        $loader = new \Doctrine\Common\ClassLoader('Proxy', rtrim(LC_DIR_CACHE_PROXY, LC_DS));
         $loader->register();
     }
 
@@ -222,5 +193,4 @@ abstract class Autoloader
             }
         }
     }
-
 }

@@ -388,6 +388,20 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * Wrapper
+     *
+     * @param mixed $id Entity identifier
+     *
+     * @return \XLite\Model\AEntity
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function find($id)
+    {
+        return isset($id) ? parent::find($id) : null;
+    }
+
+    /**
      * Find entities by id's list
      *
      * @param array $ids Id's list

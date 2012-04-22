@@ -298,4 +298,18 @@ abstract class Converter extends \Includes\Utils\AUtils
     {
         return trim(preg_replace('/[\r\n]+/', '', ((string)$value)));
     }
+
+    /**
+     * Get non-decorated class name
+     *
+     * @param string $class Class name to prepare
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public static function getPureClassName($class)
+    {
+        return preg_replace('/' . \Includes\Decorator\Utils\Operator::BASE_CLASS_SUFFIX . '$/S', '', $class);
+    }
 }

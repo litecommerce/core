@@ -44,7 +44,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function executeHookHandlerStepSecond()
+    public function executeHookHandlerBeforeDecorate()
     {
         // Create model proxy classes (first step of cache generation)
         \Includes\Decorator\Plugin\Doctrine\Utils\EntityManager::generateModels();

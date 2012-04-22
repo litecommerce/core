@@ -513,8 +513,9 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         static::cleanupCache();
         static::showStepInfo();
 
-        // Load classes from "classes" (do not use cache)
-        \Includes\Autoloader::switchLcAutoloadDir();
+        // Copy classes from "classes"
+        static::showStepMessage('Copy classes to cache...');
+        \Includes\Utils\FileManager::copyRecursive(LC_DIR_CLASSES, LC_DIR_CACHE_CLASSES);
 
         // Main procedure: build decorator chains
         static::showStepMessage('Building classes tree...');

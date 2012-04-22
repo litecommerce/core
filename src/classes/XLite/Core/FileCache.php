@@ -29,6 +29,7 @@ namespace XLite\Core;
 
 /**
  * File system cache
+ * FIXME: must be completely refactored
  *
  * @see   ____class_see____
  * @since 1.0.0
@@ -129,6 +130,23 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
     }
 
     /**
+     * getNamespacedId
+     *
+     * @param string $id ____param_comment____
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function getNamespacedId($id)
+    {
+        $namespaceCacheKey = sprintf(static::DOCTRINE_NAMESPACE_CACHEKEY, $this->getNamespace());
+        $namespaceVersion  = ($this->doContains($namespaceCacheKey)) ? $this->doFetch($namespaceCacheKey) : 1;
+
+        return sprintf('%s[%s][%s]', $this->getNamespace(), $id, $namespaceVersion);
+    }
+
+    /**
      * Delete by prefix 
      * 
      * @param string $prefix Prefix
@@ -141,7 +159,7 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
     {
         $deleted = array();
 
-        $prefix = $this->_getNamespacedId($prefix);
+        $prefix = $this->getNamespacedId($prefix);
 
         $list = glob($this->path . LC_DS . $prefix . '*.php');
 

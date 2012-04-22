@@ -424,7 +424,7 @@ class Database extends \XLite\Base\Singleton
      */
     public function connect()
     {
-        $this->configuration = new \Doctrine\ORM\Configuration;
+        $this->configuration = new \Doctrine\ORM\Configuration();
 
         // Setup cache
         $this->setDoctrineCache();
@@ -1506,23 +1506,22 @@ OUT;
     /**
      * Detect custom repository class name by entity class name
      *
-     * @param string $entityClass Entity class name
+     * @param string $class Entity class name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function detectCustomRepositoryClassName($entityClass)
+    protected function detectCustomRepositoryClassName($class)
     {
-        $class = str_replace('\Model\\', '\Model\Repo\\', $entityClass);
+        $class = \Includes\Utils\Converter::getPureClassName($class);
+        $class = \Includes\Utils\Converter::prepareClassName(str_replace('\Model\\', '\Model\Repo\\', $class), false);
 
         if (!\XLite\Core\Operator::isClassExists($class)) {
-            if (preg_match('/\wTranslation$/Ss', $entityClass)) {
-                $class = '\XLite\Model\Repo\Base\Translation';
+            $class = '\XLite\Model\Repo\Base\\' . (preg_match('/\wTranslation$/Ss', $class) ? 'Translation' : 'Common');
 
-            } else {
-                $class = '\XLite\Model\Repo\Base\Common';
-            }
+        } elseif (\Includes\Pattern\Factory::getClassHandler($class)->isAbstract()) {
+            $class = null;
         }
 
         return $class;

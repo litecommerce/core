@@ -420,7 +420,11 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      */
     protected static function replaceDockblock($token)
     {
-        static::replaceClassRelatedToken(T_DOC_COMMENT, $token, false);
+        list(, $start, $end) = static::findTokensByIndexFromOffset(array(T_DOC_COMMENT), T_CLASS, false);
+
+        if (isset($start)) {
+            static::replaceTokens($start, $end, static::prepareTokens(array($token)));
+        }
     }
 
     /**
@@ -434,6 +438,15 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      */
     protected static function replaceClassType($token)
     {
+        list(, $start, ) = static::findTokensByIndexFromOffset(array(T_ABSTRACT, T_FINAL), T_CLASS, false);
+
+        if (!isset($start)) {
+            list(, , $start) = static::findTokensByIndexFromOffset(array(T_WHITESPACE), T_CLASS, false);
+
+            if (isset($start)) {
+                static::replaceTokens($start, $start, static::prepareTokens(array($token, ' ')));
+            }
+        }
     }
 
     /**

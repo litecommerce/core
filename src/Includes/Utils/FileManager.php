@@ -224,21 +224,24 @@ abstract class FileManager extends \Includes\Utils\AUtils
     /**
      * Prepare file path
      *
-     * @param string $dir Dir to prepare
+     * @param string  $dir   Dir to prepare
+     * @param boolean $check Flag OPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getCanonicalDir($dir)
+    public static function getCanonicalDir($dir, $check = true)
     {
-        $path = null;
-
-        if (static::isDir($dir) && ($path = static::getRealPath($dir))) {
-            $path = \Includes\Utils\Converter::trimTrailingChars($path,  LC_DS) . LC_DS;
+        if ($check) {
+            $dir = static::getRealPath($dir);
         }
 
-        return $path ?: null;
+        if (!$check || (!empty($dir) && static::isDir($dir))) {
+            $dir = \Includes\Utils\Converter::trimTrailingChars($dir,  LC_DS) . LC_DS;
+        }
+
+        return $dir ?: null;
     }
 
     /**
