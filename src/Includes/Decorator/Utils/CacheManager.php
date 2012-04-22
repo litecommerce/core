@@ -516,26 +516,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         // Copy classes from "classes"
         static::showStepMessage('Copy classes to cache...');
         \Includes\Utils\FileManager::copyRecursive(LC_DIR_CLASSES, LC_DIR_CACHE_CLASSES);
+        static::showStepInfo();
 
         // Main procedure: build decorator chains
         static::showStepMessage('Building classes tree...');
-        $tree = static::getClassesTree();
-        static::showStepInfo();
-
-        // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_DECORATE);
-
-        // Main procedure: build decorator chains
-        static::showStepMessage('Decorate classes...');
-        $tree->walkThrough(array('\Includes\Decorator\Utils\Operator', 'decorateClass'));
-        static::showStepInfo();
-
-        // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_WRITE);
-
-        // Write class files to FS
-        static::showStepMessage('Writing class files to the cache...');
-        $tree->walkThrough(array('\Includes\Decorator\Utils\Operator', 'writeClassFile'));
+        static::getClassesTree();
         static::showStepInfo();
 
         // Invoke plugins
@@ -554,6 +539,22 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     public static function executeStepHandler2()
     {
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_DECORATE);
+
+        // Main procedure: build decorator chains
+        static::showStepMessage('Decorate classes...');
+        static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'decorateClass'));
+        static::showStepInfo();
+
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_WRITE);
+
+        // Write class files to FS
+        static::showStepMessage('Writing class files to the cache...');
+        static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'writeClassFile'), true);
+        static::showStepInfo();
+
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_SECOND);
     }

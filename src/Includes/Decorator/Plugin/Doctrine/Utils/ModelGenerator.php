@@ -169,11 +169,6 @@ public function <methodName>()
     public function generate(array $metadatas, $outputDirectory)
     {
         foreach ($metadatas as $metadata) {
-            if ('XLite\Module\CDev\FeaturedProducts\Model\Category' === $metadata->name) {
-                var_dump($metadata);die;
-            }
-
-
             $this->writeEntityClass($metadata, $outputDirectory);
         }
     }

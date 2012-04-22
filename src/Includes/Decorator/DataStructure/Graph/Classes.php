@@ -467,6 +467,23 @@ class Classes extends \Includes\DataStructure\Graph
     }
 
     /**
+     * Setter
+     *
+     * @param string $name  Tag name
+     * @param array  $value Value to set
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function setTag($name, array $value)
+    {
+        $this->getTags();
+
+        $this->tags[$name] = $value;
+    }
+
+    /**
      * Parse and return all tags
      *
      * @return array

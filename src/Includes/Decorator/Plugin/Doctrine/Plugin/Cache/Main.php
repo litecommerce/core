@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,16 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * 
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace Includes\Decorator\Plugin\Doctrine\Plugin\Cache;
@@ -30,37 +30,28 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\Cache;
 /**
  * Routines for Doctrine library
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
+    // {{{ Hook handlers
+
     /**
      * Execute certain hook handler
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function executeHookHandlerStepFirst()
+    public function executeHookHandlerStepSecond()
     {
-        if ($driver = $this->getDoctrineCacheDriver()) {
+        $driver = \XLite\Core\Database::getCacheDriverByOptions(\Includes\Utils\ConfigParser::getOptions('cache'));
+
+        if (isset($driver)) {
             $driver->deleteAll();
         }
     }
 
-    /**
-     * Get cache driver
-     *
-     * @return \Doctrine\Common\Cache\AbstractCache
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDoctrineCacheDriver()
-    {
-        return \XLite\Core\Database::getCacheDriverByOptions(\Includes\Utils\ConfigParser::getOptions('cache'));
-    }
+    // }}}
 }
