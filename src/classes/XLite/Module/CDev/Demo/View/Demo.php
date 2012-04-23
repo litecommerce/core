@@ -28,12 +28,15 @@
 namespace XLite\Module\CDev\Demo\View;
 
 /**
- * Abstract widget
+ * Demo panel widget
  *
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="admin.main.page.header_wrapper", zone="admin", weight="1")
+ * @ListChild (list="layout.main", zone="customer", weight="1")
  */
-abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
+class Demo extends \XLite\View\AView
 {
     /**
      * Get additional header
@@ -67,26 +70,32 @@ body {
     text-align: center;
     z-index: 90000;
 }
+
+#topMenu {
+    top: 74px;
+}
+
+#top-links {
+    top: 34px;
+}
+
+#header .sw-version {
+    top: 46px;
+}
+
 -->
 </style>
 HTML;
     }
 
-    /**
-     * Compile and display a template
-     *
-     * @param string $template Template file name OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
     public function display($template = null)
     {
-        if (\XLite::isAdminZone() && 'main.tpl' === basename($this->getTemplateFile($template))) {
-            echo (self::getAdditionalHeader());
-        }
-
-        parent::display($template);
+        echo(static::getAdditionalHeader());
     }
+
+    protected function getDefaultTemplate()
+    {
+        return null;
+    }
+
 }

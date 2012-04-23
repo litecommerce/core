@@ -32,9 +32,43 @@ class Cloud
     public static $instance;
 
     /**
+     * @var Jmeter
+     */
+    public  $jmeter;
+
+    /**
      * @var Server
      */
     public $micro_farm;
+
+    public function start_hub($app){
+        print PHP_EOL . "Starting a new EC2 Instance...";
+        $this->hub = Hub::boot_and_acquire_dns($app['hub_ami'], array('keypair_name' => $app['keypair_name'], 'type' => 't1.micro' /*$app['grid_instance_type']*/));
+        $this->hub->start($app);
+    }
+    public function shutdown_hub(){
+        if ($this->hub){
+            $this->hub->shutdown();
+            $this->hub = null;
+            $this->save();
+        }
+    }
+
+    public function start_rc($app){
+        RemoteControl::boot_farms($app);
+        RemoteControl::start_farms($app);
+    }
+
+    public function shutdown_rc(){
+        $farms = $this->farms;
+        foreach ($farms as $key => $farm) {
+            print PHP_EOL . "Shutting down EC2 Instance " . $farm->public_dns . "...";
+            $farm->shutdown();
+            unset($this->farms[$key]);
+        }
+        $this->save();
+    }
+
 
     public static function getInstance(){
         if (self::$instance)

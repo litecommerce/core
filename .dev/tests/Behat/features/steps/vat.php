@@ -11,12 +11,14 @@
 
 
 $steps->Given('/^I deleted all rates$/', function(FeatureContext $world) {
+    throw new \Behat\Behat\Exception\PendingException();
     while($delete = $world->find('css', '.rate-remove')){
         $delete->click();
     }
 });
 
 $steps->Given('/^VAT is enabled$/', function(FeatureContext $world) {
+    throw new \Behat\Behat\Exception\PendingException();
     if ($world->find('css', '.button.disabled')){
         $world->pressButton('Tax disabled');
     }
@@ -26,7 +28,7 @@ $steps->Given('/^VAT is enabled$/', function(FeatureContext $world) {
 });
 
 $steps->Given('/^there are products with classes:$/', function(FeatureContext $world, \Behat\Gherkin\Node\TableNode $table) {
-
+    throw new \Behat\Behat\Exception\PendingException();
     $world->createProductClasses($table);
 
     $rows = $table->getHash();
@@ -45,11 +47,11 @@ $steps->Given('/^there are products with classes:$/', function(FeatureContext $w
         }
         throw new \Behat\Mink\Exception\ExpectationException('Product ' .$row['name'] . ' not found', $world->getSession());
     }
-    throw new \Behat\Behat\Exception\PendingException();
+
 });
 
 $steps->When('/^I create rates:$/', function(FeatureContext $world, \Behat\Gherkin\Node\TableNode $table) {
-
+    throw new \Behat\Behat\Exception\PendingException();
     $rows = $table->getHash();
     $i = 0;
     foreach($rows as $row){
@@ -84,6 +86,7 @@ $steps->Given('/^I should see "([^"]*)" label$/', function(FeatureContext $world
 });
 
 $steps->Given('/^I should see "([^"]*)" price$/', function(FeatureContext $world, $price) {
+    throw new \Behat\Behat\Exception\PendingException();
     $world->visitProductCustomer();
     $world->assertElementContains('.price.product-price', $price);
 });

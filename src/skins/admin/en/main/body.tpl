@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-{displayViewListContent(#main#)}
+<list name="main" />

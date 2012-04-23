@@ -12,4 +12,4 @@
  * @ListChild (list="head", weight="1000")
  *}
 
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{getFavicon()}" type="image/x-icon" />

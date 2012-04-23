@@ -34,7 +34,7 @@ task('clear', function($app)
 
 task('parallel_boot', 'clear', 'setup', 'ec2:check_settings', 'grid:start_hub', 'server:start');
 
-task('parallel', 'parallel_boot', 'rc:start', 'server:test_parallel', 'grid:shutdown');
+task('parallel', 'parallel_boot', 'grid:start_rc', 'server:test_parallel', 'grid:shutdown');
 
 task('apigen', 'parallel_boot', 'server:apigen', 'grid:shutdown');
 
@@ -172,13 +172,22 @@ group("server", function()
 
 group("grid", function()
 {
-    task("start_hub", "hub:start", function($app)
+    task("start_hub", "setup", function($app)
     {
+        $app['cloud']->start_hub($app);
         wait_for_service($app['cloud']->hub->public_dns, 4444, $app['launch_timeout']);
     });
 
-    task("start_rc", "rc:start", function($app)
+
+    desc("Open Selenium Grid Hub Console in a browser.");
+    task("hub_console", "setup", function($app)
     {
+        $app['cloud']->hub->console();
+    });
+
+    task("start_rc", function($app)
+    {
+        $app['cloud']->start_rc($app);
         Ec2Client::authorize_port(22);
         Ec2Client::authorize_port(4444);
         Ec2Client::authorize_port(5900);
@@ -190,14 +199,29 @@ group("grid", function()
     });
 
     desc("Shutdown EC2 Instance used to run Selenium Hub.");
-    task("shutdown", 'setup', "hub:shutdown", "server:shutdown", "rc:shutdown", function ($app)
+    task("shutdown", 'setup', "server:shutdown", function ($app)
     {
-        $app['cloud'] = Cloud::getInstance();
-        $app['cloud']->save();
+        $app['cloud']->shutdown_hub();
+        $app['cloud']->shutdown_rc();
     });
 
     desc("Start Selenium Grid.");
-    task("start_all", "start_hub", "start_rc", "server:config");
+    task("start_all", "start_hub", "start_rc", "server:start");
+
+    desc("View Selenium Grid Hub logs.");
+    task('logs', "setup", function($app)
+    {
+        $app['cloud']->hub->run("tail -200f " . $app['selenium_grid_path'] . "/log/hub.log", array('keypair' => $app['keypair']));
+    });
+
+    desc("Visualize what is happening in Remote Control Farms with VNC");
+    task('view', "setup", function($app)
+    {
+        foreach ($app['cloud']->farms as $farm) {
+            exec("vncviewer " . $farm->public_dns . " >> /dev/null &");
+        }
+    });
+
 
     desc("Display information about current Selenium Grid");
     task("info", 'setup', function($app)
@@ -236,75 +260,6 @@ group("grid", function()
 
 });
 
-###### Hub Recipes ######
-group("hub", function()
-{
-    desc("Shutdown EC2 Instance used to run Selenium Hub.");
-    task("shutdown", "setup", function($app)
-    {
-        if ($app['cloud']->hub) {
-            print PHP_EOL . "Shutting down EC2 Instance " . $app['cloud']->hub->public_dns . "...";
-            $app['cloud']->hub->shutdown();
-            $app['cloud']->hub = null;
-            $app['cloud']->save();
-        }
-    });
-
-    desc("Start Selenium Grid Hub.");
-    task("start", "setup", function($app)
-    {
-        print PHP_EOL . "Starting a new EC2 Instance...";
-        $hub = Hub::boot_and_acquire_dns($app['hub_ami'], array('keypair_name' => $app['keypair_name'], 'type' => 't1.micro' /*$app['grid_instance_type']*/));
-        $app['cloud']->hub = $hub;
-        $hub->start($app);
-    });
-
-    desc("Open Selenium Grid Hub Console in a browser.");
-    task("console", "setup", function($app)
-    {
-        exec("firefox " . $app['cloud']->hub->console_url);
-    });
-
-    desc("View Selenium Grid Hub logs.");
-    task('logs', "setup", function($app)
-    {
-        $app['cloud']->hub->run("tail -200f " . $app['selenium_grid_path'] . "/log/hub.log", array('keypair' => $app['keypair']));
-    });
-
-});
-
-
-###### Remote Control Recipes ######
-group("rc", function()
-{
-    desc("Start Remote Controls for <farms count> farms.");
-    task('start', "setup", function($app)
-    {
-        RemoteControl::boot_farms($app);
-        RemoteControl::start_farms($app);
-    });
-
-    desc("Shutdown all EC2 Instances used to run Selenium Grid Remote Controls.");
-    task("shutdown", "setup", function($app)
-    {
-        foreach ($app['cloud']->farms as $key => $farm) {
-            print PHP_EOL . "Shutting down EC2 Instance " . $farm->public_dns . "...";
-            $farm->shutdown();
-            unset($app['cloud']->farms[$key]);
-        }
-        $app['cloud']->save();
-    });
-
-
-    desc("Visualize what is happening in Remote Control Farms with VNC");
-    task('view', "setup", function($app)
-    {
-        foreach ($app['cloud']->farms as $farm) {
-            exec("vncviewer " . $farm->public_dns . " >> /dev/null &");
-        }
-    });
-
-});
 
 ###### Settings Recipes ######
 group("ec2", function()
