@@ -231,3 +231,27 @@ table.data.empty-data tr.head {
 .vat-help-textformError .formErrorContent {
   width: 450px;
 }
+
+.vat-options {
+  padding-top: 20px;
+}
+
+.vat-options-block {
+  padding-bottom: 5px;
+  padding-left: 4px;
+  padding-top: 10px;
+}
+
+.vat-options .table-label {
+  font-size: 16px;
+  line-height: 24px;
+  color: #456583;
+}
+
+.vat-options .table-value {
+  width: 285px;
+}
+
+.vat-options .tooltip-main {
+  float: right;
+}

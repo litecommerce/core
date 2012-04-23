@@ -45,14 +45,30 @@ class Price extends \XLite\View\Price implements \XLite\Base\IDecorator
     protected function isVATApplicable()
     {
         $result = false;
+        $optionValue = \XLite\Core\Config::getInstance()->CDev->VAT->display_inc_vat_label;
 
-        if (\XLite\Core\Config::getInstance()->CDev->VAT->display_inc_vat_label) {
+        if (
+            ('P' == $optionValue && in_array(\XLite\Core\Request::getInstance()->target, $this->getProductTargets()))
+            || 'Y' == $optionValue
+        ) {
             $product = $this->getProduct();
             $taxes = $product->getIncludedTaxList();
             $result = !empty($taxes);
         }
 
         return $result;
+    }
+
+    /**
+     * Get targets of product pages
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function getProductTargets()
+    {
+        return array('product', 'quick_look');
     }
 
     /**
