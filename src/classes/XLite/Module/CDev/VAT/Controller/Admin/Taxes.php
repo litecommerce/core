@@ -113,6 +113,34 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
             \XLite\Core\TopMessage::addError('The name of the tax has not been preserved, because that is not filled');
         }
 
+        $optionNames = array(
+            'display_prices_including_vat',
+            'display_inc_vat_label',
+        );
+
+        foreach ($optionNames as $optionName) {
+
+            $optionValue = !empty(\XLite\Core\Request::getInstance()->$optionName)
+                ? \XLite\Core\Request::getInstance()->$optionName
+                : 'N';
+
+            if ('display_inc_vat_label' == $optionName) {
+                $allowedOptionValues = array(
+                    \XLite\Module\CDev\VAT\View\FormField\LabelModeSelector::DO_NOT_DISPLAY,
+                    \XLite\Module\CDev\VAT\View\FormField\LabelModeSelector::PRODUCT_DETAILS,
+                    \XLite\Module\CDev\VAT\View\FormField\LabelModeSelector::ALL_CATALOG,
+                );
+                $optionValue = in_array($optionValue, $allowedOptionValues) ? $optionValue : $allowedOptionValues[0];
+            }
+
+            $optionData = array(
+                'name'     => $optionName,
+                'category' => 'CDev\\VAT',
+                'value'    => $optionValue,
+            );
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption($optionData);
+        }
+
         // Set VAT base properties
         $vatMembership = \XLite\Core\Request::getInstance()->vatMembership;
         $vatMembership = $vatMembership
