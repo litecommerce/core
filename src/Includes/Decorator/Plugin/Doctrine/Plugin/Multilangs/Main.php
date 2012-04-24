@@ -146,21 +146,20 @@ CODE;
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function executeHookHandlerBeforeDecorate()
+    public function executeHookHandler()
     {
         // It's the metadata collected by Doctrine
         foreach ($this->getMetadata() as $main) {
+            $node = static::getClassesTree()->find($main->name);
 
             // Process only certain classes
-            if (is_subclass_of($main->name, '\XLite\Model\Base\I18n') && !$main->isMappedSuperclass) {
-                $translation = $this->getTranslationClass($main);
+            if (
+                is_subclass_of($node->getClass(), '\XLite\Model\Base\I18n') 
+                && !$node->isTopLevelNode() 
+                && !$node->isDecorator()
+            ) {
+                $translation = $this->getTranslationClass($main) ?: $this->getTranslationClassDefault($main);
 
-                // If the "translation" field is not added manually
-                if (empty($translation)) {
-                    $translation = $this->getTranslationClassDefault($main);
-                }
-
-                // It may be empty for the decorating classes
                 if (!empty($translation)) {
                     $this->addReplacement($main, 'translation', $this->getTranslationSubstitutes($main, $translation));
 
@@ -236,7 +235,9 @@ CODE;
         $class = null;
 
         if (property_exists($main, 'associationMappings') && isset($main->associationMappings['translations'])) {
-            $class = $this->getMetadata($main->associationMappings['translations']['targetEntity']);
+            $class = $this->getMetadata(
+                \Includes\Utils\Converter::getPureClassName($main->associationMappings['translations']['targetEntity'])
+            );
         }
 
         return $class;
@@ -351,8 +352,8 @@ CODE;
     protected function getOwnerSubstitutes(\Doctrine\ORM\Mapping\ClassMetadata $main)
     {
         return array(
-            '____OWNER_CLASS____'   => $main->name,
-            '____MAIN_CLASS____'    => $main->name,
+            '____OWNER_CLASS____'   => \Includes\Utils\Converter::getPureClassName($main->name),
+            '____MAIN_CLASS____'    => \Includes\Utils\Converter::getPureClassName($main->name),
             '____MAIN_CLASS_ID____' => array_shift($main->identifier),
         );
     }

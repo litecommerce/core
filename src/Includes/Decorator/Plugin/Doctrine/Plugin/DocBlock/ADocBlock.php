@@ -1,0 +1,102 @@
+<?php
+// vim: set ts=4 sw=4 sts=4 et:
+
+/**
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
+ */
+
+namespace Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock;
+
+/**
+ * ADocBlock 
+ *
+ * @see   ____class_see____
+ * @since 1.0.22
+ */
+abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
+{
+    /**
+     * Return DocBlock string
+     *
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    abstract protected function getDocBlockToRewrite(\Includes\Decorator\DataStructure\Graph\Classes $node);
+
+    /**
+     * Execute certain hook handler
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function executeHookHandler()
+    {
+        static::getClassesTree()->walkThrough(array($this, 'correctTags'));
+    }
+
+    /**
+     * Check and correct (if needed) class doc block comment
+     *
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function correctTags(\Includes\Decorator\DataStructure\Graph\Classes $node)
+    {
+        if ($this->checkRewriteCondition($node)) {
+            $path = LC_DIR_CACHE_CLASSES . $node->getPath();
+        
+            \Includes\Utils\FileManager::write(
+                $path,
+                \Includes\Decorator\Utils\Tokenizer::getSourceCode(
+                    $path,
+                    null,
+                    null,
+                    null,
+                    $this->getDocBlockToRewrite($node),
+                    $node->isDecorator() ? 'abstract' : null
+                )   
+            );
+        }
+    }
+
+    /**
+     * Condition to check for rewrite
+     *
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function checkRewriteCondition(\Includes\Decorator\DataStructure\Graph\Classes $node)
+    {
+        return is_subclass_of($node->getClass(), '\XLite\Model\AEntity');
+    }
+}

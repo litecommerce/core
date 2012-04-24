@@ -78,26 +78,9 @@ class Classes extends \Includes\DataStructure\Graph
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $isChanged;
+    protected $isChanged = false;
 
     // {{{ Constructor and common getters
-
-    /**
-     * Constructor
-     *
-     * @param string $key  Node unique key OPTIONAL
-     * @param string $file File name OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function __construct($key = self::ROOT_NODE_KEY, $file = null)
-    {
-        parent::__construct($key);
-
-        $this->file = $file;
-    }
 
     /**
      * Add child node
@@ -246,22 +229,26 @@ class Classes extends \Includes\DataStructure\Graph
     /**
      * Set node key
      *
-     * @param string $key Key to set
+     * @param string  $key     Key to set
+     * @param boolean $setFlag Flag OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function setKey($key)
+    public function setKey($key, $setFlag = false)
     {
         foreach ($this->getChildren() as $node) {
             $node->setParentClass($key);
         }
 
+        $this->moveClassFile($key);
+
         parent::setKey($key);
 
-        // Set flag
-        $this->isChanged = true;
+        if ($setFlag) {
+            $this->isChanged = true;
+        }
     }
 
     /**
@@ -294,26 +281,31 @@ class Classes extends \Includes\DataStructure\Graph
 
     /**
      * Name of the origin class file 
+     *
+     * @param string $class Class name OPTIONAL
+     * @param string $dir   Dir to file OPTIONAL
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getFile()
+    public function getFile($class = null, $dir = LC_DIR_CACHE_CLASSES)
     {
-        return $this->file;
+        return $dir . $this->getPath($class);
     }
 
     /**
      * Transform class name into the relative path
      *
+     * @param string $class Class name OPTIONAL
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPath()
+    public function getPath($class = null)
     {
-        return \Includes\Utils\Converter::getClassFile($this->getClass());
+        return \Includes\Utils\Converter::getClassFile($class ?: $this->getClass());
     }
 
     /**
@@ -344,9 +336,6 @@ class Classes extends \Includes\DataStructure\Graph
     protected function getActualSource(self $parent = null)
     {
         // Change DOCBlock and clear tags
-        $this->getReflection()->docComment = $this->isLowLevelNode() 
-            ? '/**' . PHP_EOL . ' * MOVED' . PHP_EOL . ' */' 
-            : null;
         $this->clearTags();
 
         $code = \Includes\Decorator\Utils\Tokenizer::getSourceCode(
@@ -354,7 +343,8 @@ class Classes extends \Includes\DataStructure\Graph
             $this->getActualNamespace(),
             $this->getClassBaseName(),
             $this->getActualParentClassName($parent),
-            $this->getReflection()->docComment
+            $this->getReflection()->docComment,
+            ($this->isLowLevelNode() || $this->isDecorator()) ? 'abstract' : null
         );
 
         return $code;
@@ -538,7 +528,7 @@ class Classes extends \Includes\DataStructure\Graph
             $this->reflection = new \StdClass();
             $util = '\Includes\Decorator\Utils\Tokenizer';
 
-            if ($util::getDecoratorFlag() || !\Includes\Utils\Operator::checkIfClassExists($this->getClass())) {
+            if ($util::getDecoratorFlag()) {
                 $this->reflection->parentClass = $util::getParentClassName($this->getFile());
                 $this->reflection->interfaces  = $util::getInterfaces($this->getFile());
                 $this->reflection->docComment  = $util::getDockBlock($this->getFile());
@@ -602,6 +592,27 @@ class Classes extends \Includes\DataStructure\Graph
         }
 
         return $result;
+    }
+
+    /**
+     * Move/copy class file
+     *
+     * @param string $class New class name
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function moveClassFile($class)
+    {
+        if (!$this->isRoot() && !$this->isRoot($class)) {
+            if ($this->getClass()) {
+                \Includes\Utils\FileManager::move($this->getFile(), $this->getFile($class));
+
+            } else {
+                \Includes\Utils\FileManager::copy($this->getFile($class, LC_DIR_CLASSES), $this->getFile($class));
+            }
+        }
     }
 
     // }}}

@@ -48,6 +48,16 @@ abstract class Autoloader
     );
 
     /**
+     * The directory where LC classes are located
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
+    protected static $lcAutoloadDir = LC_DIR_CACHE_CLASSES;
+
+    /**
      * Main LC autoloader
      *
      * @param string $class name of the class to load
@@ -76,7 +86,7 @@ abstract class Autoloader
 
         // Workaround for Doctrine 2 proxies
         if (0 === strpos($class, LC_NAMESPACE) && false === strpos($class, \Doctrine\Common\Persistence\Proxy::MARKER)) {
-            include_once (LC_DIR_CACHE_CLASSES . str_replace('\\', LC_DS, $class) . '.php');
+            include_once (static::$lcAutoloadDir . str_replace('\\', LC_DS, $class) . '.php');
         }
     }
 
@@ -192,5 +202,31 @@ abstract class Autoloader
                 $loader->register();
             }
         }
+    }
+
+    /**
+     * Switch autoload directory from var/run/classes/ to classes/
+     *
+     * @param string $dir New autoload directory
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function switchLCAutoloadDir()
+    {
+        static::$lcAutoloadDir = LC_DIR_CLASSES;
+    }
+
+    /**
+     * Return path ot the autoloader current dir
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getLCAutoloadDir()
+    {
+        return static::$lcAutoloadDir;
     }
 }

@@ -44,7 +44,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function executeHookHandlerStepSecond()
+    public function executeHookHandler()
     {
         $driver = \XLite\Core\Database::getCacheDriverByOptions(\Includes\Utils\ConfigParser::getOptions('cache'));
 

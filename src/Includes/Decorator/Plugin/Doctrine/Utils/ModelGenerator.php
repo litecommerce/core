@@ -653,6 +653,10 @@ public function <methodName>()
         $methods = array();
 
         foreach ($metadata->fieldMappings as $fieldMapping) {
+            if (isset($fieldMapping['inherited'])) {
+                continue;
+            }
+
             if ( ! isset($fieldMapping['id']) || ! $fieldMapping['id'] || $metadata->generatorType == ClassMetadataInfo::GENERATOR_TYPE_NONE) {
                 if ($code = $this->_generateEntityStubMethod($metadata, 'set', $fieldMapping['fieldName'], $fieldMapping['type'])) {
                     $methods[] = $code;
@@ -665,6 +669,10 @@ public function <methodName>()
         }
 
         foreach ($metadata->associationMappings as $associationMapping) {
+            if (isset($associationMapping['inherited'])) {
+                continue;
+            }
+
             if ($associationMapping['type'] & ClassMetadataInfo::TO_ONE) {
                 $nullable = $this->_isAssociationIsNullable($associationMapping) ? 'null' : null;
                 if ($code = $this->_generateEntityStubMethod($metadata, 'set', $associationMapping['fieldName'], $associationMapping['targetEntity'], $nullable)) {

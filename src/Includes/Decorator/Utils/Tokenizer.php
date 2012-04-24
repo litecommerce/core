@@ -92,6 +92,15 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
         'addCodeToClassBody',
     );
 
+    /**
+     * Flag
+     *
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.22
+     */
+    protected static $isPrepared = false;
+
     // {{{ Common access method
 
     /**
@@ -115,7 +124,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
         }
 
         // Prepare tokens
-        static::reset($path, static::getDecoratorFlag() || !LC_DEVELOPER_MODE || 'getFullClassName' !== $method);
+        static::reset($path, !LC_DEVELOPER_MODE || 'getFullClassName' !== $method);
 
         return call_user_func_array(array('static', $method), $args);
     }
@@ -208,7 +217,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      */
     protected static function getFlag($token)
     {
-        list(, $start, ) = static::findTokensByIndexFromOffset(array(T_CLASS), $token, false);
+        list(, $start, ) = static::findTokensByIndexFromOffset(array($token), T_CLASS, false);
 
         return isset($start);
     }
@@ -222,7 +231,9 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      */
     protected static function getDockBlock()
     {
-        return static::getClassRelatedValue(T_DOC_COMMENT);
+        list($tokens, ,) = static::findTokensByIndexFromOffset(array(T_DOC_COMMENT), T_CLASS, false);
+
+        return empty($tokens) ? null : static::composeTokens($tokens);
     }
 
     /**
@@ -548,15 +559,19 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
     protected static function reset($path, $prepare = true)
     {
         if ($path !== static::$path) {
-            static::$path   = $path;
             static::$tokens = token_get_all(\Includes\Utils\FileManager::read($path, LC_DEVELOPER_MODE));
+            static::$count  = count(static::$tokens);
 
-            if ($prepare) {
-                static::$tokens = static::prepareTokens(static::$tokens);
-            }
-
-            static::$count = count(static::$tokens);
+            static::$isPrepared = false;
         }
+
+        if ($prepare && !static::$isPrepared) {
+            static::$tokens = static::prepareTokens(static::$tokens);
+
+            static::$isPrepared = true;
+        }
+
+        static::$path = $path;
     }
 
     /**

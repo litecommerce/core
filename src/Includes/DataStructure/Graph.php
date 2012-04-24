@@ -71,7 +71,7 @@ class Graph
      */
     public function __construct($key = self::ROOT_NODE_KEY)
     {
-        $this->key = $key;
+        $this->setKey($key);
     }
 
     /**
@@ -96,6 +96,20 @@ class Graph
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Check for root node
+     *
+     * @param string $key Key to check OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function isRoot($key = null)
+    {
+        return static::ROOT_NODE_KEY === ($key ?: $this->getKey());
     }
 
     // }}}

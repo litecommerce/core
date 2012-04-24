@@ -219,7 +219,7 @@ abstract class Operator extends \Includes\Utils\AUtils
 
         if (!$result) {
             $result = \Includes\Utils\FileManager::isFileReadable(
-                LC_DIR_CACHE_CLASSES . \Includes\Utils\Converter::getClassFile($name)
+                 \Includes\Autoloader::getLCAutoloadDir() . \Includes\Utils\Converter::getClassFile($name)
             );
         }
 

@@ -40,8 +40,6 @@ class Main extends \Includes\Decorator\Plugin\PHPCache\Plugin\APlugin
      */
     const CLEAR_FUNCTION = 'apc_clear_cache';
 
-    // {{{ Hook handlers
-
     /**
      * Execute certain hook handle
      *
@@ -49,12 +47,10 @@ class Main extends \Includes\Decorator\Plugin\PHPCache\Plugin\APlugin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function executeHookHandlerStepSecond()
+    public function executeHookHandler()
     {
         if (function_exists(static::CLEAR_FUNCTION)) {
             call_user_func(static::CLEAR_FUNCTION);
         }
     }
-
-    // }}}
 }

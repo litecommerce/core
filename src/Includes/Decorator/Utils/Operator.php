@@ -106,7 +106,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
             if ($class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path)) {
 
                 // File contains a class declaration: create node (descriptor)
-                $node = new \Includes\Decorator\DataStructure\Graph\Classes($class, $path);
+                $node = new \Includes\Decorator\DataStructure\Graph\Classes($class);
 
                 // Check parent class (so called optional dependencies for modules)
                 $dependencies = $node->getTag('lc_dependencies');
@@ -239,8 +239,15 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
                 $parent = $child;
             }
 
+            // Save value
+            $baseClass = $node->getClass();
+
+            // Rename base class to avoid coflicts with the top-level node
+            $node->setKey($node->getClass() . static::BASE_CLASS_SUFFIX, true);
+            $node->setLowLevelNodeFlag();
+
             // Special top-level node: stub class with empty body
-            $topNode = new \Includes\Decorator\DataStructure\Graph\Classes($node->getClass(), $node->getFile());
+            $topNode = new \Includes\Decorator\DataStructure\Graph\Classes($baseClass);
             $topNode->setTopLevelNodeFlag();
 
             // Add this stub node as a child to the last decorator in the chain
@@ -250,10 +257,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
             foreach ($regular as $child) {
                 $child->replant($node, $topNode);
             }
-
-            // Rename base class to avoid coflicts with the top-level node
-            $node->setKey($node->getClass() . static::BASE_CLASS_SUFFIX);
-            $node->setLowLevelNodeFlag();
         }
     }
 

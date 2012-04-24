@@ -40,8 +40,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     const PATTERN = '/^XLite\\\(Module\\\[\w]+\\\[\w]+\\\)Controller(\\\[\w\\\]*)$/Ss';
 
-    // {{{ Hook handlers
-
     /**
      * Execute certain hook handler
      *
@@ -49,14 +47,10 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function executeHookHandlerStepFirst()
+    public function executeHookHandler()
     {
         static::getClassesTree()->walkThrough(array($this, 'changeControllerClass'));
     }
-
-    // }}}
-
-    // {{{ Auxiliary methods
 
     /**
      * Change class name for "module controllers"
@@ -71,7 +65,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     public function changeControllerClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
         if ($this->isModuleController($node)) {
-            $node->setKey($this->prepareModuleControllerClass($node));
+            $node->setKey($this->prepareModuleControllerClass($node), true);
         }
     }
 
@@ -102,6 +96,4 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     {
         return preg_replace(static::PATTERN, 'XLite\\\\Controller$2', $node->getClass());
     }
-
-    // }}}
 }

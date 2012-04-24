@@ -40,8 +40,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     const STATIC_CONSTRUCTOR_METHOD = '__constructStatic';
 
-    // {{{ Hook handlers
-
     /**
      * Execute certain hook handler
      *
@@ -49,21 +47,16 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function executeHookHandlerStepSecond()
+    public function executeHookHandler()
     {
         static::getClassesTree()->walkThrough(array($this, 'addStaticConstructorCall'));
     }
-
-    // }}}
-
-    // {{{ Auxiliary methods
 
     /**
      * Add static constructor calls
      * NOTE: method is public since it's used as a callback in external class
      *
-     * @param \Includes\Decorator\DataStructure\Graph\Classes $node   Current node
-     * @param \Includes\Decorator\DataStructure\Graph\Classes $parent Current node parent
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
      * @see    ____func_see____
@@ -96,19 +89,17 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function writeCallToSourceFile(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        $content = \Includes\Utils\FileManager::read($path = LC_DIR_CACHE_CLASSES . $node->getPath());
+        $path = LC_DIR_CACHE_CLASSES . $node->getPath();
 
+        $content  = \Includes\Utils\FileManager::read($path);
         $content .= PHP_EOL . '// Call static constructor' . PHP_EOL;
         $content .= '\\' . $node->getClass() . '::' . static::STATIC_CONSTRUCTOR_METHOD . '();';
 
         \Includes\Utils\FileManager::write($path, $content);
     }
-
-    // }}}
 }

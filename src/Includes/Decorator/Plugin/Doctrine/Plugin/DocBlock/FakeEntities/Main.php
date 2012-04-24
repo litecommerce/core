@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace Includes\Decorator\Plugin\Doctrine\Plugin\ProxyGenerator;
+namespace Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\FakeEntities;
 
 /**
  * Main 
@@ -33,36 +33,33 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\ProxyGenerator;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
+class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\ADocBlock
 {
     /**
-     * Execute certain hook handle
+     * Condition to check for rewrite
      *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function executeHookHandler()
-    {
-        if (!$this->areProxiesExist()) {
-
-            // Create the proxies folder
-            \Includes\Utils\FileManager::mkdirRecursive(LC_DIR_CACHE_PROXY);
-
-            // Create model proxy classes (second step of cache generation)
-            \Includes\Decorator\Plugin\Doctrine\Utils\EntityManager::generateProxies();
-        }
-    }
-
-    /**
-     * Check if proxy classes are already generated
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.22
      */
-    protected function areProxiesExist()
+    protected function checkRewriteCondition(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        return \Includes\Utils\FileManager::isDirReadable(LC_DIR_CACHE_PROXY);
+        return parent::checkRewriteCondition($node) && $node->isDecorator();
+    }
+
+    /**
+     * Return DocBlock string
+     *
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function getDocBlockToRewrite(\Includes\Decorator\DataStructure\Graph\Classes $node)
+    {
+        return '/**' . PHP_EOL . ' * @Entity' . PHP_EOL . ' */';
     }
 }

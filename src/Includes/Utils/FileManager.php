@@ -483,8 +483,41 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function copy($pathFrom, $pathTo, $overwrite = true)
     {
-        return (!$overwrite && static::isFile($pathTo))
-            ?: static::mkdirRecursive(static::getDir($pathTo)) && copy($pathFrom, $pathTo);
+        $result = false;
+
+        if (!$overwrite && static::isFile($pathTo)) {
+            $result = true;
+
+        } elseif (static::isFile($pathFrom)) {
+            $result = static::mkdirRecursive(static::getDir($pathTo)) && copy($pathFrom, $pathTo);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Move file
+     *
+     * @param string  $pathFrom  File path (from)
+     * @param string  $pathTo    File path (to)
+     * @param boolean $overwrite Flag OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public static function move($pathFrom, $pathTo, $overwrite = true)
+    {
+        $result = false;
+
+        if (!$overwrite && static::isFile($pathTo)) {
+            $result = true;
+
+        } elseif (static::isFile($pathFrom)) {
+            $result = static::mkdirRecursive(static::getDir($pathTo)) && rename($pathFrom, $pathTo);
+        }
+
+        return $result;
     }
 
     /**
