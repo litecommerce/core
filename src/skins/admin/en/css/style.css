@@ -1627,7 +1627,8 @@ div.table-value .checkbox-list label {
 }
 
 div.table-value .input-text-integer input,
-div.table-value .input-text-float input
+div.table-value .input-text-float input,
+div.table-value .input-text-price input
 {
   text-align: right;
   width: 80px;
