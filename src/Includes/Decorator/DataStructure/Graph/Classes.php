@@ -343,9 +343,11 @@ class Classes extends \Includes\DataStructure\Graph
      */
     protected function getActualSource(self $parent = null)
     {
+        // Change DOCBlock and clear tags
         $this->getReflection()->docComment = $this->isLowLevelNode() 
             ? '/**' . PHP_EOL . ' * MOVED' . PHP_EOL . ' */' 
             : null;
+        $this->clearTags();
 
         return \Includes\Decorator\Utils\Tokenizer::getSourceCode(
             $this->getFile(),
@@ -484,6 +486,20 @@ class Classes extends \Includes\DataStructure\Graph
         }
 
         return $this->tags;
+    }
+
+    /**
+     * Clear all tags
+     *
+     * @param boolean $reversible Flag OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function clearTags($reversible = false)
+    {
+        $this->tags = $reversible ? null : array();
     }
 
     // }}}
