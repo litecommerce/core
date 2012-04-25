@@ -13,41 +13,44 @@
 jQuery(document).ready(
   function () {
     jQuery('li.permissions select').multiselect({
-      create: function (event, ui) {
-        var rootId;
-        jQuery(event.target.options).each(
-          function () {
-            if (jQuery(this).data('isRoot')) {
-              rootId = this.value;
-            }
-          }
-        );
-
-        if (rootId) {
-          var inp = jQuery('.ui-multiselect-menu').find(':checkbox[value="' + rootId + '"]');
-          inp.change(
+      open: function (event, ui) {
+        if ('undefined' == typeof(event.target.minicontrollerAssigned)) {
+          var rootId;
+          jQuery(event.target.options).each(
             function () {
-              var box = jQuery(this).parents('.ui-multiselect-menu').eq(0).find(':checkbox').not('[value="' + rootId + '"]');
-              if (this.checked) {
-                box.each(
-                  function () {
-                    this.prevCheckesState = this.checked;
-                    this.checked = true;
-                  }
-                ).attr('disabled', 'disabled');
-
-              } else {
-                box.each(
-                  function () {
-                    this.checked = 'undexfined' == typeof(this.prevCheckesState) ? false : this.prevCheckesState;
-                  }
-                ).removeAttr('disabled');
+              if (jQuery(this).data('isRoot')) {
+                rootId = this.value;
               }
             }
           );
-          inp.change();
-        }
 
+          if (rootId) {
+            var inp = jQuery('.ui-multiselect-menu').find(':checkbox[value="' + rootId + '"]');
+            inp.change(
+              function () {
+                var box = jQuery(this).parents('.ui-multiselect-menu').eq(0).find(':checkbox').not('[value="' + rootId + '"]');
+                if (this.checked) {
+                  box.each(
+                    function () {
+                      this.prevCheckesState = this.checked;
+                      this.checked = true;
+                    }
+                  ).attr('disabled', 'disabled');
+
+                } else {
+                  box.each(
+                    function () {
+                      this.checked = 'undexfined' == typeof(this.prevCheckesState) ? false : this.prevCheckesState;
+                    }
+                  ).removeAttr('disabled');
+                }
+              }
+            );
+            inp.change();
+          }
+
+          event.target.minicontrollerAssigned = true;
+        }
       }
     });
   }

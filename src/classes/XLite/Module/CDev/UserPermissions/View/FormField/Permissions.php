@@ -53,7 +53,7 @@ class Permissions extends \XLite\View\FormField\Select\CheckboxList\ACheckboxLis
      */
     public function getJSFiles()
     {
-        $list[] = parent::getJSFiles();
+        $list = parent::getJSFiles();
 
         $list[] = 'modules/CDev/UserPermissions/role/permissions.js';
 
