@@ -12,10 +12,8 @@
  *}
 
 <script type="text/javascript">
-<!--
 var xliteConfig = {
   script:   '{getScript():h}',
   language: '{currentLanguage.getCode()}'
 };
--->
 </script>
