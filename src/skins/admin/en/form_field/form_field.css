@@ -28,6 +28,10 @@ input[type="text"].form_field_error {
   font-size: 0.9em;
 }
 
+button.ui-multiselect {
+  margin: 0px;
+}
+
 button.ui-multiselect,
 button.ui-multiselect.ui-state-hover,
 button.ui-multiselect.ui-state-active

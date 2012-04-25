@@ -36,6 +36,31 @@ namespace XLite\Module\CDev\UserPermissions\View\FormField;
 class Permissions extends \XLite\View\FormField\Select\CheckboxList\ACheckboxList
 {
     /**
+     * Root permission
+     * 
+     * @var   \XLite\Model\Role\Permission
+     * @see   ____var_see____
+     * @since 1.0.22
+     */
+    protected $root;
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list[] = parent::getJSFiles();
+
+        $list[] = 'modules/CDev/UserPermissions/role/permissions.js';
+
+        return $list;
+    }
+
+    /**
      * Return default options list
      *
      * @return array
@@ -61,4 +86,40 @@ class Permissions extends \XLite\View\FormField\Select\CheckboxList\ACheckboxLis
         return $list;
     }
 
+    /**
+     * Get option attributes
+     *
+     * @param mixed $value Value
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function getOptionAttributes($value)
+    {
+        $list = parent::getOptionAttributes($value);
+
+        if ($value == $this->getRootPermission()->getId()) {
+            $list['data-isRoot'] = '1';
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get root permission 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function getRootPermission()
+    {
+        if (!isset($this->root)) {
+            $this->root = \XLite\Core\Database::getRepo('XLite\Model\Role\Permission')
+                ->findOneBy(array('code' => \XLite\Model\Role\Permission::ROOT_ACCESS));
+        }
+
+        return $this->root;
+    }
 }
