@@ -224,23 +224,20 @@ body
 }
 
 #page-container {
-  min-height: 100%;
   position: relative;
   vertical-align: top;
   width: 100%;
+  margin: 0 auto;
+  padding-bottom: 70px;
 }
 
 #header {
   width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
-#footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+#page-wrapper
+{
+  min-height: 95%;
 }
 
 /* safari and opera need this */
@@ -256,7 +253,7 @@ body
 
 #content-header
 {
-  margin-top: -10px;
+  margin-top: 0px;
   padding-top: 10px;
 }
 
@@ -300,7 +297,7 @@ body
 
 .sw-version .current
 {
-  color: #7f90A0;
+  color: #8f8f8f;
   margin-right: 10px;
   float: left;
   font-size: 12px;
@@ -349,22 +346,29 @@ li.updates-note a {
 
 #footer
 {
+  position: relative;
+  margin-top: -70px;
+  height: 70px;
+  clear: both;
+}
+
+#footer
+{
   padding-top: 10px;
   border-top: solid 1px #e6e6e6;
-  height: 60px;
 }
 
 #footer .left
 {
   float: left;
-  width: 50%;
+  width: 70%;
   text-align: left;
 }
 
 #footer .right
 {
   float: right;
-  width: 50%;
+  width: 30%;
   text-align: right;
 }
 
@@ -375,15 +379,10 @@ li.updates-note a {
 #content
 {
   background: url(../images/content_top_bg.gif) repeat-x top left;
-  padding: 80px 0 60px 0;
+  padding: 0px 0px 60px 0px;
 }
 
-#content-header
-{
-  border-top: 1px solid #dfe5e8;
-}
-
-div.noscript
+.noscript
 {
   width: 500px;
   color: #f00;
@@ -1628,7 +1627,8 @@ div.table-value .checkbox-list label {
 }
 
 div.table-value .input-text-integer input,
-div.table-value .input-text-float input
+div.table-value .input-text-float input,
+div.table-value .input-text-price input
 {
   text-align: right;
   width: 80px;
