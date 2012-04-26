@@ -57,6 +57,18 @@ abstract class SuperClass
     }
 
     /**
+     * Getter
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public static function getDefaultLanguage()
+    {
+        return static::$defaultLanguage;
+    }
+
+    /**
      * Language label translation short method
      *
      * @param string $name      Label name
