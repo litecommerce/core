@@ -330,7 +330,9 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function createQueryBuilder($alias = null)
     {
-        $alias = $alias ?: $this->getDefaultAlias();
+        if (!isset($alias)) {
+            $alias = $this->getDefaultAlias();
+        }
 
         $qb = $this->getQueryBuilder()
             ->select($alias)

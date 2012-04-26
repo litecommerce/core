@@ -148,14 +148,15 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
      * @param string $alias Table alias OPTIONAL
+     * @param string $code  Language code OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function createQueryBuilder($alias = null)
+    public function createQueryBuilder($alias = null, $code = null)
     {
-        $queryBuilder = parent::createQueryBuilder($alias);
+        $queryBuilder = parent::createQueryBuilder($alias, $code);
 
         $alias = $alias ?: $queryBuilder->getRootAlias();
         $this->addEnabledCondition($queryBuilder, $alias);

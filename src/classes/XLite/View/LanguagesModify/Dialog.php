@@ -212,7 +212,7 @@ class Dialog extends \XLite\View\Dialog
         $languages = \XLite\Core\Database::getRepo('\XLite\Model\Language')->findAddedLanguages();
 
         foreach ($languages as $k => $l) {
-            if ($l->code === static::$defaultLanguage) {
+            if ($l->code === static::getDefaultLanguage()) {
                 unset($languages[$k]);
                 break;
             }
@@ -269,7 +269,7 @@ class Dialog extends \XLite\View\Dialog
      */
     public function getLabelDefaultValue(\XLite\Model\LanguageLabel $label)
     {
-        return $label->getTranslation(static::$defaultLanguage)->label;
+        return $label->getTranslation(static::getDefaultLanguage())->getLabel();
     }
 
     /**
@@ -284,7 +284,7 @@ class Dialog extends \XLite\View\Dialog
     public function getTranslation(\XLite\Model\LanguageLabel $label)
     {
         return $this->getTranslatedLanguage()
-            ? $label->getTranslation($this->getTranslatedLanguage()->code)->label
+            ? $label->getTranslation($this->getTranslatedLanguage()->code)->getLabel()
             : '';
     }
 

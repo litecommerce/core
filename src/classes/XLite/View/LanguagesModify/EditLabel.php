@@ -109,7 +109,7 @@ class EditLabel extends \XLite\View\AView
      */
     public function isRequiredLanguage(\XLite\Model\Language $language)
     {
-        return $language->code === static::$defaultLanguage;
+        return $language->code === static::getDefaultLanguage();
     }
 
     /**

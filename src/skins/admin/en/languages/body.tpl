@@ -21,7 +21,7 @@
 
   <div class="form-panel languages-search-panel">
 
-    <input type="text" name="name" value="{getSearchSubstring()}" class="big" lang="{defaultLanguage.code}" xml:lang="{defaultLanguage.code}" />
+    <input type="text" name="name" value="{getSearchSubstring()}" class="big" lang="{defaultLanguageObject.code}" xml:lang="{defaultLanguageObject.code}" />
 
     <widget class="\XLite\View\Button\Submit" label="{t(#Search#)}" style="main-button" />
 
@@ -40,14 +40,14 @@
   <div class="language-translate-panel">
     <div class="left">
       <div class="language">
-        <img IF="defaultLanguage.flagURL" src="{defaultLanguage.flagURL}" alt="{defaultLanguage.name}" />
-        {t(#X labels#,_ARRAY_(#language#^defaultLanguage.name))}
+        <img IF="defaultLanguageObject.flagURL" src="{defaultLanguageObject.flagURL}" alt="{defaultLanguageObject.name}" />
+        {t(#X labels#,_ARRAY_(#language#^defaultLanguageObject.name))}
         <span class="separator">{t(#translate to#)}:</span>
       </div>
       <div class="options">
         <a
           href="javascript:void(0);"
-          onclick="javascript: return openLanguageOptions(this, {defaultLanguage.lng_id}, '{language}', {getPage()});">
+          onclick="javascript: return openLanguageOptions(this, {defaultLanguageObject.lng_id}, '{language}', {getPage()});">
           {t(#Language options#)}
         </a>
       </div>
@@ -134,8 +134,8 @@
       <textarea
         name="current[{label.label_id}]"
         {if:isTranslatedLanguageSelected()} class="left"{end:}
-        lang="{defaultLanguage.code}"
-        xml:lang="{defaultLanguage.code}">{getLabelDefaultValue(label)}</textarea>
+        lang="{defaultLanguageObject.code}"
+        xml:lang="{defaultLanguageObject.code}">{getLabelDefaultValue(label)}</textarea>
 
       <textarea
         IF="isTranslatedLanguageSelected()"

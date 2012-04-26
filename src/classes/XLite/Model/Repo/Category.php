@@ -86,15 +86,16 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
      * @param string  $alias       Table alias OPTIONAL
+     * @param string  $code        Language code OPTIONAL
      * @param boolean $excludeRoot Do not include root category into the search result OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function createQueryBuilder($alias = null, $excludeRoot = true)
+    public function createQueryBuilder($alias = null, $code = null, $excludeRoot = true)
     {
-        $queryBuilder = parent::createQueryBuilder($alias);
+        $queryBuilder = parent::createQueryBuilder($alias, $code);
 
         $this->addEnabledCondition($queryBuilder, $alias);
         $this->addOrderByCondition($queryBuilder, $alias);
