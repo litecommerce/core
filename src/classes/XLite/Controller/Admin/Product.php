@@ -408,7 +408,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
     {
         // Clear all category associates
         \XLite\Core\Database::getRepo('\XLite\Model\CategoryProducts')->deleteInBatch(
-            $product->getCategoryProducts()
+            $product->getCategoryProducts()->toArray()
         );
 
         $product->getClasses()->clear();
