@@ -35,6 +35,9 @@ namespace XLite\Model\Repo;
  */
 class EventTask extends \XLite\Model\Repo\ARepo
 {
+    /**
+     * Query limit
+     */
     const QUERY_LIMIT = 10;
 
     /**
@@ -60,11 +63,10 @@ class EventTask extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  1.0.19
      */
-    protected function defineFindQuery()
+    protected function defineFindQuery($limit)
     {
         return $this->createQueryBuilder('e')
             ->setMaxResults($limit)
             ->orderBy('e.id', 'asc');
     }
 }
-

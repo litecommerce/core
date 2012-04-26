@@ -1,0 +1,1091 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Translation data (FR)
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2012 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+# @since     1.0.19
+
+XLite\Model\Language:
+  directives: { addModel: 'XLite\Model\LanguageTranslation' }
+  - { code: 'fr', translations: [{ code: 'fr', name: 'Français' }] }
+
+XLite\Model\Config:
+  directives: { addModel: 'XLite\Model\ConfigTranslation' }
+  - { name: 'admin_presentation', category: 'General', translations: [{ code: 'fr', option_name: 'Paramètres de la zone d''Administrateur' }] }
+  - { name: 'admin_security', category: 'Security', translations: [{ code: 'fr', option_name: 'Utilisez HTTPS dans la zone d''administrateur' }] }
+  - { name: 'anonymous', category: 'Shipping', translations: [{ code: 'fr', option_name: 'Adresse de livraison client par défaut' }] }
+  - { name: 'anonymous_address', category: 'Shipping', translations: [{ code: 'fr', option_name: 'Ligne d''adresse' }] }
+  - { name: 'anonymous_city', category: 'Shipping', translations: [{ code: 'fr', option_name: 'Ville' }] }
+  - { name: 'anonymous_country', category: 'Shipping', translations: [{ code: 'fr', option_name: 'Pays' }] }
+  - { name: 'anonymous_custom_state', category: 'Shipping', translations: [{ code: 'fr', option_name: 'Autre état (spécifiez)' }] }
+  - { name: 'anonymous_state', category: 'Shipping', translations: [{ code: 'fr', option_name: 'Etat' }] }
+  - { name: 'anonymous_zipcode', category: 'Shipping', translations: [{ code: 'fr', option_name: 'Code postal' }] }
+  - { name: 'bestsellers_menu', category: 'CDev\Bestsellers', translations: [{ code: 'fr', option_name: 'Afficher la liste des meilleures ventes dans' }] }
+  - { name: 'category_changefreq', category: 'CDev\XMLSitemap', translations: [{ code: 'fr', option_name: 'Changer la fréquence d''actualisation de page Catégorie' }] }
+  - { name: 'category_priority', category: 'CDev\XMLSitemap', translations: [{ code: 'fr', option_name: 'Priorité à la page Catégorie', option_comment: 'La valeur doit être comprise entre 0 et 1.' }] }
+  - { name: 'check_templates_status', category: 'Performance', translations: [{ code: 'fr', option_name: 'Vérifier l''état des modèles lors de l''exécution' }] }
+  - { name: 'cli_key', category: 'Security', translations: [{ code: 'fr', option_name: 'Clé de mode CLI' }] }
+  - { name: 'company_address', category: 'Company', translations: [{ code: 'fr', option_name: 'Adresse' }] }
+  - { name: 'company_contacts', category: 'Company', translations: [{ code: 'fr', option_name: 'Contacts' }] }
+  - { name: 'company_fax', category: 'Company', translations: [{ code: 'fr', option_name: 'Fax' }] }
+  - { name: 'company_identity', category: 'Company', translations: [{ code: 'fr', option_name: 'Identité' }] }
+  - { name: 'company_name', category: 'Company', translations: [{ code: 'fr', option_name: 'Nom commercial' }] }
+  - { name: 'company_phone', category: 'Company', translations: [{ code: 'fr', option_name: 'Téléphone' }] }
+  - { name: 'company_website', category: 'Company', translations: [{ code: 'fr', option_name: 'Site Web de la société' }] }
+  - { name: 'customer_presentation', category: 'General', translations: [{ code: 'fr', option_name: 'Paramètres de l''espace client' }] }
+  - { name: 'customer_security', category: 'Security', translations: [{ code: 'fr', option_name: 'Utilisez HTTPS dans la zone client (pour les pages de connexion, de profil et pages de validation des commandes)' }] }
+  - { name: 'date_format', category: 'General', translations: [{ code: 'fr', option_name: 'Format de date' }] }
+  - { name: 'decimal_delim', category: 'General', translations: [{ code: 'fr', option_name: 'Séparateur décimal de devise' }] }
+  - { name: 'default_country', category: 'General', translations: [{ code: 'fr', option_name: 'Pays par défaut dans le formulaire d''inscription' }] }
+  - { name: 'default_offline_payment', category: 'Payments', translations: [{ code: 'fr', option_name: 'La méthode de paiement pour les commandes où les totaux sont de zéro' }] }
+  - { name: 'default_purchase_limit', category: 'General', translations: [{ code: 'fr', option_name: 'Limite d''achat par défaut' }] }
+  - { name: 'default_select_payment', category: 'Payments', translations: [{ code: 'fr', option_name: 'Méthode de paiement par défaut' }] }
+  - { name: 'default_zipcode', category: 'General', translations: [{ code: 'fr', option_name: 'Code postal dans le formulaire d''inscription par défaut' }] }
+  - { name: 'direct_product_url', category: 'General', translations: [{ code: 'fr', option_name: 'Autoriser l''accès par URL direct aux produits des catégories désactivées' }] }
+  - { name: 'display_check_number', category: 'General', translations: [{ code: 'fr', option_name: 'Afficher le numéro de chèque pour méthode de paiement eCheck' }] }
+  - { name: 'drupal_root_url', category: 'CDev\DrupalConnector', translations: [{ code: 'fr', option_name: 'URL racine de l''installation Drupal' }] }
+  - { name: 'enable_anon_checkout', category: 'General', translations: [{ code: 'fr', option_name: 'Autoriser la vérification sans inscription' }] }
+  - { name: 'enable_init_order_notif', category: 'Email', translations: [{ code: 'fr', option_name: 'Envoyer les détails de commande au service commercial après le passage de commande' }] }
+  - { name: 'enable_init_order_notif_customer', category: 'Email', translations: [{ code: 'fr', option_name: 'Envoyer les détails de commande aux clients après le passage des commandes' }] }
+  - { name: 'fb_admins', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Administrateurs de Facebook', option_comment: 'La liste des ID utilisateur Facebook des administrateurs de page au format séparé par des virgules. Incluez au moins votre ID utilisateur Facebook.' }] }
+  - { name: 'fb_app_id', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Application Facebook ID', option_comment: 'ID d''application Facebook Platform qui gère les pages de votre site. Vous pouvez obtenir cet ID en visitant la page à l''adresse <a href=https://developers.facebook.com/apps/> https://developers.facebook.com/apps/ </a> <br /><br /> Il vous faut spécifier ce champ: <li>de faire vos statistiques du site apparaître dans le tableau de bord de Facebook Insights </li><li> pour permettre une interface modérateur sur Facebook où les commentaires de toutes les pages de produits peuvent être facilement modérés ensemble </li></ul>' }] }
+  - { name: 'fb_app_namespace', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Espace de nommage de l''Application Facebook', option_comment: 'Précisez l''espace de noms de l''application même que vous avez entré lorsque la configuration de votre application Facebook Plateforme.' }] }
+  - { name: 'fb_comments_num_posts', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Nombre de messages à afficher sur l''onglet par défaut' }] }
+  - { name: 'fb_comments_use', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Afficher l''onglet Facebook Commentaires sur les pages des produits', option_comment: 'Pour modérer les commentaires, indiquez votre ID utilisateur Facebook dans le champ Facebook Administrateurs ci-dessous. <br /> Pour activer l''interface modérateur sur Facebook où les commentaires de toutes les pages de produits peuvent être facilement modérées ensemble, indiquez votre ID App Facebook dans le champ Facebook Application ID ci-dessous.' }] }
+  - { name: 'fb_like_layout', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Style de mise en page', option_comment: 'Il y a trois options: <ul><li>standard - elle affiche le texte sociale à la droite du bouton et des photos de profil des amis ci-dessous</li><li>bouton - il affiche le nombre total de ''J''aime" à la droite du bouton</li><li>boîte - elle affiche le nombre total de "J''aime" ci-dessus le bouton.</li></ul>' }] }
+  - { name: 'fb_like_send_button', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Afficher le bouton Envoyer ainsi que le bouton J''aime', option_comment: 'Le bouton Envoyer permet à un client d''envoyer un message avec un lien à votre page produit à un groupe Facebook dont il/elle appartient ou à un ami sur Facebook.' }] }
+  - { name: 'fb_like_show_faces', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Afficher les images du profil ci-dessous le bouton "J''aime"', option_comment: 'Images de profil apparaissent dans le style de présentation standard seulement.' }] }
+  - { name: 'fb_like_use', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Afficher le bouton J''aime sur les pages des produits', option_comment: 'Le bouton J''aime permet client de partager vos pages de produits avec des amis sur Facebook.' }] }
+  - { name: 'fb_like_verb', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Le verbe à afficher dans le bouton J''aime' }] }
+  - { name: 'featured_products_look', category: 'CDev\FeaturedProducts', translations: [{ code: 'fr', option_name: 'Présentation des produits vedettes' }] }
+  - { name: 'form_id_protection', category: 'Security', translations: [{ code: 'fr', option_name: 'Activer le système de protection des formes d''administrateur' }] }
+  - { name: 'full_customer_security', category: 'Security', translations: [{ code: 'fr', option_name: 'Zone client entièrement sur HTTPS' }] }
+  - { name: 'ga_account', category: 'CDev\GoogleAnalytics', translations: [{ code: 'fr', option_name: 'Propriété Web ID' }] }
+  - { name: 'ga_tracking_type', category: 'CDev\GoogleAnalytics', translations: [{ code: 'fr', option_name: 'Ce que vous suivez' }] }
+  - { name: 'gosocial_sep_1', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Paramètres de l''application Facebook' }] }
+  - { name: 'gosocial_sep_2', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Paramètres de bouton J''aime dans Facebook' }] }
+  - { name: 'gosocial_sep_21', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Paramètres de commentaires Facebook' }] }
+  - { name: 'gosocial_sep_3', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Paramètres de bouton Tweet' }] }
+  - { name: 'gosocial_sep_4', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Paramètres de bouton Google+  ' }] }
+  - { name: 'gplus_use', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Afficher le bouton Google+ sur les pages des produits' }] }
+  - { name: 'location_address', category: 'Company', translations: [{ code: 'fr', option_name: 'Adresse' }] }
+  - { name: 'location_city', category: 'Company', translations: [{ code: 'fr', option_name: 'Ville' }] }
+  - { name: 'location_country', category: 'Company', translations: [{ code: 'fr', option_name: 'Pays' }] }
+  - { name: 'location_custom_state', category: 'Company', translations: [{ code: 'fr', option_name: 'Autre état (spécifiez)' }] }
+  - { name: 'location_state', category: 'Company', translations: [{ code: 'fr', option_name: 'Etat' }] }
+  - { name: 'location_zipcode', category: 'Company', translations: [{ code: 'fr', option_name: 'Code postal' }] }
+  - { name: 'login_lifetime', category: 'General', translations: [{ code: 'fr', option_name: 'Jours de stockage des données de dernière connexion' }] }
+  - { name: 'logoff_clear_cart', category: 'Security', translations: [{ code: 'fr', option_name: 'Vider le panier lors de la déconnexion des clients' }] }
+  - { name: 'maximal_order_amount', category: 'General', translations: [{ code: 'fr', option_name: 'Total maximal autorisé de la commande' }] }
+  - { name: 'minify_resources', category: 'CDev\DrupalConnector', translations: [{ code: 'fr', option_name: 'Diminuer ressources JS et CSS des dans le style Drupal 6.x' }] }
+  - { name: 'minimal_order_amount', category: 'General', translations: [{ code: 'fr', option_name: 'Total minimal autorisé de la commande' }] }
+  - { name: 'number_of_bestsellers', category: 'CDev\Bestsellers', translations: [{ code: 'fr', option_name: 'Nombre de produits dans la liste des meilleures ventes' }] }
+  - { name: 'operation_presentation', category: 'General', translations: [{ code: 'fr', option_name: 'Opération et maintenance' }] }
+  - { name: 'order_starting_number', category: 'General', translations: [{ code: 'fr', option_name: 'Numéro de commande initial' }] }
+  - { name: 'orders_department', category: 'Company', translations: [{ code: 'fr', option_name: 'E-mail du service commercial' }] }
+  - { name: 'orders_per_page', category: 'General', translations: [{ code: 'fr', option_name: 'Commandes par page' }] }
+  - { name: 'product_changefreq', category: 'CDev\XMLSitemap', translations: [{ code: 'fr', option_name: 'Changer la fréquence d''actualisation de page de produit' }] }
+  - { name: 'product_priority', category: 'CDev\XMLSitemap', translations: [{ code: 'fr', option_name: 'Priorité à la page de produit', option_comment: 'La valeur doit être comprise entre 0 et 1.' }] }
+  - { name: 'products_per_page', category: 'General', translations: [{ code: 'fr', option_name: 'Produits par page dans catégories' }] }
+  - { name: 'products_per_page_admin', category: 'General', translations: [{ code: 'fr', option_name: 'Produits par page' }] }
+  - { name: 'proxy', category: 'Security', translations: [{ code: 'fr', option_name: 'Proxy HTTPS' }] }
+  - { name: 'recent_orders', category: 'General', translations: [{ code: 'fr', option_name: 'Quantité de commandes dans la liste des dernières commandes' }] }
+  - { name: 'redirect_to_cart', category: 'General', translations: [{ code: 'fr', option_name: 'Rediriger les clients vers le panier lors de l''ajout d''un produit' }] }
+  - { name: 'sale_enabled', category: 'CDev\Sale', translations: [{ code: 'fr', option_name: 'Afficher les "Produits en vente" bloc dans le magasin' }] }
+  - { name: 'sale_max_count_in_block', category: 'CDev\Sale', translations: [{ code: 'fr', option_name: 'Le nombre maximum de produits à afficher dans les "Produits à la vente" bloc', option_comment: 'Le nombre maximum de produits à afficher dans les produits sur le bloc vente. Définissez zéro pour afficher tous les produits dans le bloc. Drupal paramètres de bloc peuvent remplacer cette option (lorsque le module DrupalConnector est activé).' }] }
+  - { name: 'sale_menu', category: 'CDev\Sale', translations: [{ code: 'fr', option_name: 'Afficher la page "Produits en vente" bloc', option_comment: 'Drupal paramètres de bloc peuvent remplacer cette option (lorsque le module DrupalConnector est activé).' }] }
+  - { name: 'shop_closed', category: 'General', translations: [{ code: 'fr', option_name: 'Cochez pour fermer le magasin temporairement' }] }
+  - { name: 'shop_currency', category: 'General', translations: [{ code: 'fr', option_name: 'Devise de magasin' }] }
+  - { name: 'show_thumbnails', category: 'General', translations: [{ code: 'fr', option_name: 'Afficher les vignettes dans la liste des produits' }] }
+  - { name: 'site_administrator', category: 'Company', translations: [{ code: 'fr', option_name: 'E-mail de l''administrateur du site' }] }
+  - { name: 'smtp_password', category: 'Email', translations: [{ code: 'fr', option_name: 'Mot de passe' }] }
+  - { name: 'smtp_security', category: 'Email', translations: [{ code: 'fr', option_name: 'Connection sécurisée' }] }
+  - { name: 'smtp_server', category: 'Email', translations: [{ code: 'fr', option_name: 'Serveur SMTP' }] }
+  - { name: 'smtp_server_port', category: 'Email', translations: [{ code: 'fr', option_name: 'Port SMTP' }] }
+  - { name: 'smtp_server_url', category: 'Email', translations: [{ code: 'fr', option_name: 'Serveur SMTP' }] }
+  - { name: 'smtp_username', category: 'Email', translations: [{ code: 'fr', option_name: 'Nom de l''utilisateur' }] }
+  - { name: 'start_year', category: 'Company', translations: [{ code: 'fr', option_name: 'Année où le magasin a commencé à fonctionner' }] }
+  - { name: 'subcategories_look', category: 'General', translations: [{ code: 'fr', option_name: 'Format de la liste des catégories' }] }
+  - { name: 'support_department', category: 'Company', translations: [{ code: 'fr', option_name: 'E-mail de HelpDesk/service Support' }] }
+  - { name: 'thousand_delim', category: 'General', translations: [{ code: 'fr', option_name: 'Séparateur des milliers de devise' }] }
+  - { name: 'time_format', category: 'General', translations: [{ code: 'fr', option_name: 'Format de l''heure' }] }
+  - { name: 'time_zone', category: 'General', translations: [{ code: 'fr', option_name: 'Fuseau horaire' }] }
+  - { name: 'tweet_hashtag', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Hashtag pour montrer dans le bouton Tweet et dans le texte de statut tweet (facultatif)' }] }
+  - { name: 'tweet_recommend', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Nom du compte de l''utilisateur à suivre après l''envoi d''un Tweet (facultatif)', option_comment: 'Twitter proposera aux clients de suivre cet utilisateur dès qu''ils ont envoyé un Tweet en utilisant le bouton Tweet.' }] }
+  - { name: 'tweet_show_count', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Afficher la boîte de comptage avec le bouton Tweet', option_comment: 'La boîte de comptage indique combien de fois la page du produit a été tweetée.' }] }
+  - { name: 'tweet_use', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Afficher le bouton Tweet sur ​​les pages des produits', option_comment: 'Le bouton Tweet permet aux clients de partager facilement vos pages de produits avec leurs followers sur Twitter.' }] }
+  - { name: 'tweet_via', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Nom du compte de l''utilisateur d''attribuer le Tweet (facultatif)' }] }
+  - { name: 'unit_presentation', category: 'General', translations: [{ code: 'fr', option_name: 'Unités de mesure' }] }
+  - { name: 'use_smtp', category: 'Email', translations: [{ code: 'fr', option_name: 'Utiliser serveur SMTP' }] }
+  - { name: 'use_smtp_auth', category: 'Email', translations: [{ code: 'fr', option_name: 'Utiliser l''authentification' }] }
+  - { name: 'users_department', category: 'Company', translations: [{ code: 'fr', option_name: 'E-mail de service de relations client' }] }
+  - { name: 'users_per_page', category: 'General', translations: [{ code: 'fr', option_name: 'Utilisateurs par page' }] }
+  - { name: 'weight_symbol', category: 'General', translations: [{ code: 'fr', option_name: 'Symbole de poids' }] }
+  - { name: 'weight_unit', category: 'General', translations: [{ code: 'fr', option_name: 'Unité de poids ' }] }
+  - { name: 'welcome_changefreq', category: 'CDev\XMLSitemap', translations: [{ code: 'fr', option_name: 'Changer la fréquence d''actualisation de page d''accueil' }] }
+  - { name: 'welcome_priority', category: 'CDev\XMLSitemap', translations: [{ code: 'fr', option_name: 'Priorité à la page d''accueil', option_comment: 'La valeur doit être comprise entre 0 et 1.' }] }
+
+XLite\Model\LanguageLabel:
+  directives: { addModel: 'XLite\Model\LanguageLabelTranslation' }
+  - { name: '_X items_ in bag', translations: [{ code: 'fr', label: '<a href="#">{{count}} articles</a> dans le panier' }] }
+  - { name: '-- No categories --', translations: [{ code: 'fr', label: '-- Aucune catégorie --' }] }
+  - { name: '"X product" options', translations: [{ code: 'fr', label: '"{{product}}" options' }] }
+  - { name: 'A new customer? Enter your e-mail', translations: [{ code: 'fr', label: 'Vous êtes un nouveau client? Entrez votre e-mail' }] }
+  - { name: 'Absolute', translations: [{ code: 'fr', label: 'Absolu' }] }
+  - { name: 'Access information', translations: [{ code: 'fr', label: 'Données d''accès' }] }
+  - { name: 'Access level', translations: [{ code: 'fr', label: 'Niveau d''accès' }] }
+  - { name: 'Account', translations: [{ code: 'fr', label: 'Compte' }] }
+  - { name: 'Account details', translations: [{ code: 'fr', label: 'Informations de compte' }] }
+  - { name: 'Account settings', translations: [{ code: 'fr', label: 'Paramètres du compte' }] }
+  - { name: 'Account summary', translations: [{ code: 'fr', label: 'Sommaire du compte' }] }
+  - { name: 'Active', translations: [{ code: 'fr', label: 'Actif' }] }
+  - { name: 'Add', translations: [{ code: 'fr', label: 'Ajouter' }] }
+  - { name: 'Add category', translations: [{ code: 'fr', label: 'Ajouter une catégorie' }] }
+  - { name: 'Add child', translations: [{ code: 'fr', label: 'Ajouter enfant' }] }
+  - { name: 'Add featured products', translations: [{ code: 'fr', label: 'Ajouter des produits recommandés' }] }
+  - { name: 'Add file', translations: [{ code: 'fr', label: 'Ajouter un fichier' }] }
+  - { name: 'Add image', translations: [{ code: 'fr', label: 'Ajouter une image' }] }
+  - { name: 'Add language', translations: [{ code: 'fr', label: 'Ajouter une langue' }] }
+  - { name: 'Add markup', translations: [{ code: 'fr', label: 'Ajouter une marge' }] }
+  - { name: 'Add new', translations: [{ code: 'fr', label: 'Ajouter un nouvel (une nouvelle)' }] }
+  - { name: 'Add new address', translations: [{ code: 'fr', label: 'Ajouter une nouvelle adresse' }] }
+  - { name: 'Add new country', translations: [{ code: 'fr', label: 'Ajouter un nouveau pays' }] }
+  - { name: 'Add new exception', translations: [{ code: 'fr', label: 'Ajouter une nouvelle exception' }] }
+  - { name: 'Add new label', translations: [{ code: 'fr', label: 'Ajouter un nouveau label' }] }
+  - { name: 'Add new language', translations: [{ code: 'fr', label: 'Ajouter une nouvelle langue' }] }
+  - { name: 'Add new membership level', translations: [{ code: 'fr', label: 'Ajouter un nouveau groupe' }] }
+  - { name: 'Add new option', translations: [{ code: 'fr', label: 'Ajouter une nouvelle option' }] }
+  - { name: 'Add new option group', translations: [{ code: 'fr', label: 'Ajouter un nouveau groupe d''options' }] }
+  - { name: 'Add new state', translations: [{ code: 'fr', label: 'Ajouter un nouvel état' }] }
+  - { name: 'Add Product', translations: [{ code: 'fr', label: 'Ajouter un produit' }] }
+  - { name: 'Add product', translations: [{ code: 'fr', label: 'Ajouter un produit' }] }
+  - { name: 'Add shipping method', translations: [{ code: 'fr', label: 'Ajouter un mode de transport ' }] }
+  - { name: 'Add subcategory', translations: [{ code: 'fr', label: 'Ajouter une sous-catégorie' }] }
+  - { name: 'Add to Bag', translations: [{ code: 'fr', label: 'Ajouter au panier' }] }
+  - { name: 'Add to cart', translations: [{ code: 'fr', label: 'Ajouter au panier' }] }
+  - { name: 'Add user', translations: [{ code: 'fr', label: 'Ajouter un utilisateur' }] }
+  - { name: 'Add zone', translations: [{ code: 'fr', label: 'Ajouter une zone' }] }
+  - { name: 'Add-ons', translations: [{ code: 'fr', label: 'Modules' }] }
+  - { name: 'add-ons found', translations: [{ code: 'fr', label: 'Modules trouvés' }] }
+  - { name: 'Add/update options', translations: [{ code: 'fr', label: 'Ajouter/mettre à jour des options' }] }
+  - { name: 'added by _X_', translations: [{ code: 'fr', label: 'ajouté par <a href="{{url}}">{{name}}</a>' }] }
+  - { name: 'added by X', translations: [{ code: 'fr', label: 'ajouté par {{name}}' }] }
+  - { name: 'Address', translations: [{ code: 'fr', label: 'Adresse' }] }
+  - { name: 'Address book', translations: [{ code: 'fr', label: 'Carnet d''adresses' }] }
+  - { name: 'Address details', translations: [{ code: 'fr', label: 'Détails de l''adresse' }] }
+  - { name: 'Address pattern', translations: [{ code: 'fr', label: 'Modèle d''adresse' }] }
+  - { name: 'Administration Zone', translations: [{ code: 'fr', label: 'Zone d''administration' }] }
+  - { name: 'Administrator', translations: [{ code: 'fr', label: 'Administrateur' }] }
+  - { name: 'Administrator panel', translations: [{ code: 'fr', label: 'Panneau admin' }] }
+  - { name: 'Administrator Zone settings', translations: [{ code: 'fr', label: 'Paramètres de la Zone d''Administrateur' }] }
+  - { name: 'After you enable this tax it will be included in product prices', translations: [{ code: 'fr', label: 'Après avoir activé  cette taxe, elle sera comprise dans les prix des produits' }] }
+  - { name: 'All', translations: [{ code: 'fr', label: 'Tous' }] }
+  - { name: 'All add-ons', translations: [{ code: 'fr', label: 'Tous modules' }] }
+  - { name: 'All membership levels', translations: [{ code: 'fr', label: 'Tous groupes' }] }
+  - { name: 'All shipping methods', translations: [{ code: 'fr', label: 'Tous modes de transport' }] }
+  - { name: 'All shipping zones', translations: [{ code: 'fr', label: 'Toutes zones de livraison' }] }
+  - { name: 'All time', translations: [{ code: 'fr', label: 'Tout le temps' }] }
+  - { name: 'Alphabetically', translations: [{ code: 'fr', label: 'Par ordre alphabétique' }] }
+  - { name: 'Already have an account?', translations: [{ code: 'fr', label: 'Vous êtes déjà inscrit?' }] }
+  - { name: 'Already installed', translations: [{ code: 'fr', label: 'Déjà installé' }] }
+  - { name: 'Alternative text', translations: [{ code: 'fr', label: 'Texte alternatif' }] }
+  - { name: 'Alternatively, upload file sqldump.sql.php to the var/backup/ sub-directory click on the "Restore from server" button', translations: [{ code: 'fr', label: 'Sinon, téléchargez le fichier nommé sqldump.sql.php vers sous-répertoire var / backup / de votre installation LiteCommerce sur le serveur Web et cliquez sur le bouton " Restaurer du serveur ". Après la restauration, vous pouvez supprimer le fichier du serveur en cliquant sur le bouton " Supprimer le bouton SQL fichier " ci-dessus.' }] }
+  - { name: 'Amount: high to low', translations: [{ code: 'fr', label: 'Nombre: ordre décroissant' }] }
+  - { name: 'Amount: low to high', translations: [{ code: 'fr', label: 'Nombre: ordre croissant' }] }
+  - { name: 'and', translations: [{ code: 'fr', label: 'et' }] }
+  - { name: 'Another state', translations: [{ code: 'fr', label: 'Autre état' }] }
+  - { name: 'Any membership level', translations: [{ code: 'fr', label: 'Tous groupes' }] }
+  - { name: 'Any product class', translations: [{ code: 'fr', label: 'Toutes classes de produits' }] }
+  - { name: 'Any zone', translations: [{ code: 'fr', label: 'Toutes zones' }] }
+  - { name: 'Apply destination', translations: [{ code: 'fr', label: 'Appliquer la destination' }] }
+  - { name: 'Apply price', translations: [{ code: 'fr', label: 'Appliquer le prix' }] }
+  - { name: 'Are you sure you want to continue?', translations: [{ code: 'fr', label: 'Continuer?' }] }
+  - { name: 'Are you sure you want to delete the selected user?', translations: [{ code: 'fr', label: 'Supprimer l''utilisateur?' }] }
+  - { name: 'Are you sure you want to disable this add-on?', translations: [{ code: 'fr', label: 'Désactiver le module?' }] }
+  - { name: 'Are you sure you want to enable this add-on?', translations: [{ code: 'fr', label: 'Activer le module?' }] }
+  - { name: 'Are you sure you want to uninstall this add-on?', translations: [{ code: 'fr', label: 'Désinstaller le module?' }] }
+  - { name: 'Are you sure?', translations: [{ code: 'fr', label: 'Etes-vous sûr?' }] }
+  - { name: 'Arrival date', translations: [{ code: 'fr', label: 'Date d''arrivée' }] }
+  - { name: 'Ask.com', translations: [{ code: 'fr', label: 'Ask.com' }] }
+  - { name: 'Assigned classes', translations: [{ code: 'fr', label: 'Classes attribuées' }] }
+  - { name: 'Attachment is not deleted', translations: [{ code: 'fr', label: 'La pièce jointe n''est pas supprimée' }] }
+  - { name: 'Attachments', translations: [{ code: 'fr', label: 'Pièce jointe' }] }
+  - { name: 'Attachments have been updated successfully', translations: [{ code: 'fr', label: 'Les pièces jointes sont mises à jour avec succès' }] }
+  - { name: 'Australia Post settings', translations: [{ code: 'fr', label: 'Paramètres D''Australia Post' }] }
+  - { name: 'Authentication', translations: [{ code: 'fr', label: 'Authentification' }] }
+  - { name: 'Author', translations: [{ code: 'fr', label: 'Auteur' }] }
+  - { name: 'Availability', translations: [{ code: 'fr', label: 'Disponibilité' }] }
+  - { name: 'Available for sale', translations: [{ code: 'fr', label: 'Disponible à la vente' }] }
+  - { name: 'Back to file select', translations: [{ code: 'fr', label: 'Retour à la sélection de fichier' }] }
+  - { name: 'Back up database', translations: [{ code: 'fr', label: 'Sauvegarder la base de données' }] }
+  - { name: 'Backup', translations: [{ code: 'fr', label: 'Sauvegarde' }] }
+  - { name: 'Backup/Restore', translations: [{ code: 'fr', label: 'Sauvegarder/restaurer' }] }
+  - { name: 'Based on these patterns, different shipping rate formulas can be defined for different order weight and price ranges and quantities of items. Ranges cannot overlap.', translations: [{ code: 'fr', label: 'Après ces modèles, différentes formules tarifaires de livraison peuvent être définies pour des poids différents, des gammes de prix et des quantités d''éléments pour des commandes différentes. Les gammes ne peuvent pas se chevaucher.' }] }
+  - { name: 'BEGIN - END of TOTAL', translations: [{ code: 'fr', label: 'de' }] }
+  - { name: 'Benchmark completed in ', translations: [{ code: 'fr', label: 'Test de performance est fait en' }] }
+  - { name: 'Bestsellers', translations: [{ code: 'fr', label: 'Best-sellers' }] }
+  - { name: 'Billing address', translations: [{ code: 'fr', label: 'Adresse de facturation' }] }
+  - { name: 'Billing address is not defined yet', translations: [{ code: 'fr', label: 'Adresse de facturation n''est pas encore définie' }] }
+  - { name: 'Bing', translations: [{ code: 'fr', label: 'Bing' }] }
+  - { name: 'Brief description', translations: [{ code: 'fr', label: 'Description brève' }] }
+  - { name: 'Brief descrption', translations: [{ code: 'fr', label: 'Description brève' }] }
+  - { name: 'Browse server', translations: [{ code: 'fr', label: 'Parcourir le serveur' }] }
+  - { name: 'Buy more', translations: [{ code: 'fr', label: 'Acheter plus' }] }
+  - { name: 'by', translations: [{ code: 'fr', label: 'par' }] }
+  - { name: 'Cache rebuild is already started, please wait', translations: [{ code: 'fr', label: 'La reconstruction du cache est déjà commencée, attendez, s''il vous plaît' }] }
+  - { name: 'Calculate rates', translations: [{ code: 'fr', label: 'Calculer les taux' }] }
+  - { name: 'Can''t connect to the Modules Marketplace server', translations: [{ code: 'fr', label: 'Impossible de se connecter au serveur du marché des modules' }] }
+  - { name: 'Cancel', translations: [{ code: 'fr', label: 'Annuler' }] }
+  - { name: 'cannot set X permissions', translations: [{ code: 'fr', label: 'impossible de définir {{X}} permissions' }] }
+  - { name: 'Cannot set X permissions for subdirectories:', translations: [{ code: 'fr', label: 'Impossible de définir {{X}} permissions pour les sous-répertoires:' }] }
+  - { name: 'Cart is empty', translations: [{ code: 'fr', label: 'Le panier est vide' }] }
+  - { name: 'Catalog', translations: [{ code: 'fr', label: 'Catalogue' }] }
+  - { name: 'Categories', translations: [{ code: 'fr', label: 'Catégories' }] }
+  - { name: 'Category', translations: [{ code: 'fr', label: 'Catégorie' }] }
+  - { name: 'Category name', translations: [{ code: 'fr', label: 'Nom de catégorie' }] }
+  - { name: 'Category page title', translations: [{ code: 'fr', label: 'Titre de la page de catégorie' }] }
+  - { name: 'Change', translations: [{ code: 'fr', label: 'Changer' }] }
+  - { name: 'Change address', translations: [{ code: 'fr', label: 'Changer l''adresse' }] }
+  - { name: 'Change method', translations: [{ code: 'fr', label: 'Changer le mode' }] }
+  - { name: 'Change options', translations: [{ code: 'fr', label: 'Changer les options' }] }
+  - { name: 'Change payment info', translations: [{ code: 'fr', label: 'Changer l''info sur le paiement' }] }
+  - { name: 'Change shipping info', translations: [{ code: 'fr', label: 'Changer l''info de livraison' }] }
+  - { name: 'Check all', translations: [{ code: 'fr', label: 'Cocher tout' }] }
+  - { name: 'Checking integrity, please wait...', translations: [{ code: 'fr', label: 'Vérification de l''intégrité, attendez s''il vous plaît ...' }] }
+  - { name: 'Checkout', translations: [{ code: 'fr', label: 'Valider la commande' }] }
+  - { name: 'Choose file', translations: [{ code: 'fr', label: 'Choisir le fichier' }] }
+  - { name: 'Choose method', translations: [{ code: 'fr', label: 'Choisir la méthode' }] }
+  - { name: 'Choose shipping method', translations: [{ code: 'fr', label: 'Choisir mode de transport' }] }
+  - { name: 'City', translations: [{ code: 'fr', label: 'Ville' }] }
+  - { name: 'Clean URL', translations: [{ code: 'fr', label: 'URL propre' }] }
+  - { name: 'Clear bag', translations: [{ code: 'fr', label: 'Vider le panier' }] }
+  - { name: 'Clear cart', translations: [{ code: 'fr', label: 'Vider le panier' }] }
+  - { name: 'Click here to access/add subcategories', translations: [{ code: 'fr', label: 'Cliquez ici pour accéder aux/ajouter les sous-catégories' }] }
+  - { name: 'Click here to view states of country', translations: [{ code: 'fr', label: 'Cliquez ici pour voir les États du pays' }] }
+  - { name: 'Close', translations: [{ code: 'fr', label: 'Fermer' }] }
+  - { name: 'Close storefront', translations: [{ code: 'fr', label: 'Fermer le magasin' }] }
+  - { name: 'Code', translations: [{ code: 'fr', label: 'Code' }] }
+  - { name: 'Company', translations: [{ code: 'fr', label: 'Société' }] }
+  - { name: 'Company name', translations: [{ code: 'fr', label: 'Nom d''entreprise' }] }
+  - { name: 'Completed', translations: [{ code: 'fr', label: 'Complet' }] }
+  - { name: 'Component', translations: [{ code: 'fr', label: 'Elément' }] }
+  - { name: 'Configure your store', translations: [{ code: 'fr', label: 'Configurer votre magasin' }] }
+  - { name: 'Confirm deletion', translations: [{ code: 'fr', label: 'Confirmer l''effacement' }] }
+  - { name: 'Confirm password', translations: [{ code: 'fr', label: 'Confirmez le mot de passe' }] }
+  - { name: 'Congratulations! Your order has been placed successfully', translations: [{ code: 'fr', label: 'Félicitations! Votre commande est passé. <br />Merci d''avoir utiliser notre magasin. Une notification de la commande vient d''être envoyée à  votre e-mail. <br />Votre commande sera traitée selon les conditions de livraison.' }] }
+  - { name: 'Contacts', translations: [{ code: 'fr', label: 'Contact' }] }
+  - { name: 'Continue', translations: [{ code: 'fr', label: 'Configurer votre magasin' }] }
+  - { name: 'Continue shopping', translations: [{ code: 'fr', label: 'Continuer le shopping' }] }
+  - { name: 'Continue...', translations: [{ code: 'fr', label: 'Continuer...' }] }
+  - { name: 'Copy file to local server', translations: [{ code: 'fr', label: 'Copier le fichier au serveur local' }] }
+  - { name: 'Core version: ', translations: [{ code: 'fr', label: 'Version de base:' }] }
+  - { name: 'Countries', translations: [{ code: 'fr', label: 'Pays' }] }
+  - { name: 'Country', translations: [{ code: 'fr', label: 'Pays' }] }
+  - { name: 'Create', translations: [{ code: 'fr', label: 'Créer' }] }
+  - { name: 'Create account', translations: [{ code: 'fr', label: 'Créer un compte' }] }
+  - { name: 'Create an account for later use', translations: [{ code: 'fr', label: 'Créer un compte pour simplifier les achats' }] }
+  - { name: 'Create category', translations: [{ code: 'fr', label: 'Créer une catégorie' }] }
+  - { name: 'Create new account', translations: [{ code: 'fr', label: 'Créer un nouveau compte' }] }
+  - { name: 'Create SQL file', translations: [{ code: 'fr', label: 'Créer un fichier SQL' }] }
+  - { name: 'Created', translations: [{ code: 'fr', label: 'Créé' }] }
+  - { name: 'Customer', translations: [{ code: 'fr', label: 'Client' }] }
+  - { name: 'Customer note', translations: [{ code: 'fr', label: 'Remarque du client' }] }
+  - { name: 'Customer Zone settings', translations: [{ code: 'fr', label: 'Paramètres d''espace client' }] }
+  - { name: 'Data have been deleted successfully', translations: [{ code: 'fr', label: 'Les données sont supprimées avec succès' }] }
+  - { name: 'Data have been saved successfully', translations: [{ code: 'fr', label: 'Les données sont sauvegardées avec succès' }] }
+  - { name: 'Database backup created successfully', translations: [{ code: 'fr', label: 'Base de données sauvegardée est créée avec succès' }] }
+  - { name: 'Date', translations: [{ code: 'fr', label: 'Date' }] }
+  - { name: 'Declined', translations: [{ code: 'fr', label: 'Refusé' }] }
+  - { name: 'Default', translations: [{ code: 'fr', label: 'Par défaut' }] }
+  - { name: 'Default for customer zone and can not disabled or deleted', translations: [{ code: 'fr', label: 'Zone par défault pour client, elle ne peut pas être désactivée ou effacée' }] }
+  - { name: 'Default for customer zone and cannot be disabled or deleted', translations: [{ code: 'fr', label: 'Zone par défaut pour client, elle ne peut pas être désactivée ou supprimée' }] }
+  - { name: 'Default zone (all addresses)', translations: [{ code: 'fr', label: 'Zone par défaut (toutes les adresses)' }] }
+  - { name: 'Define classes', translations: [{ code: 'fr', label: 'Définir les classes' }] }
+  - { name: 'Delete', translations: [{ code: 'fr', label: 'Effacer' }] }
+  - { name: 'Delete all', translations: [{ code: 'fr', label: 'Effacer tout' }] }
+  - { name: 'Delete item', translations: [{ code: 'fr', label: 'Enlever Article' }] }
+  - { name: 'Delete Language', translations: [{ code: 'fr', label: 'Effacer la langue' }] }
+  - { name: 'Delete profile', translations: [{ code: 'fr', label: 'Supprimer profil' }] }
+  - { name: 'Delete selected', translations: [{ code: 'fr', label: 'Supprimer la sélection' }] }
+  - { name: 'Delete selected profile', translations: [{ code: 'fr', label: 'Supprimer le profil sélectionné' }] }
+  - { name: 'Delete SQL file', translations: [{ code: 'fr', label: 'Supprimer le fichier SQL' }] }
+  - { name: 'Delete the image', translations: [{ code: 'fr', label: 'Supprimer l''image' }] }
+  - { name: 'Delete this address?', translations: [{ code: 'fr', label: 'Effacer l''adresse?' }] }
+  - { name: 'Delivery', translations: [{ code: 'fr', label: 'Livraison' }] }
+  - { name: 'Delivery methods', translations: [{ code: 'fr', label: 'Modes de livraison' }] }
+  - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: 'fr', label: 'Selon la dimension de votre fichier de données, l''importation peut prendre un certain temps.' }] }
+  - { name: 'Description', translations: [{ code: 'fr', label: 'Description' }] }
+  - { name: 'Descriptions of various rate types are provided below', translations: [{ code: 'fr', label: 'Les descriptions des types de taux différents sont fournies ci-dessous:' }] }
+  - { name: 'Destination zone', translations: [{ code: 'fr', label: 'Zone de destination' }] }
+  - { name: 'details', translations: [{ code: 'fr', label: 'détails' }] }
+  - { name: 'Details', translations: [{ code: 'fr', label: 'Détails' }] }
+  - { name: 'Directories and files permissions', translations: [{ code: 'fr', label: 'Répertoires et permissions des fichiers' }] }
+  - { name: 'Disable', translations: [{ code: 'fr', label: 'Désactiver' }] }
+  - { name: 'Disabled', translations: [{ code: 'fr', label: 'Désactivé' }] }
+  - { name: 'disabled', translations: [{ code: 'fr', label: 'désactivé' }] }
+  - { name: 'Disabled language can not be set as default for customer zone', translations: [{ code: 'fr', label: 'Langue désactivée ne peut pas être mise comme une langue par défault pour la zone du client' }] }
+  - { name: 'Disabled language cannot be set as default for customer zone', translations: [{ code: 'fr', label: 'La langue désactivé ne peut pas être définie par défaut pour la zone des clients' }] }
+  - { name: 'Display type', translations: [{ code: 'fr', label: 'Afficher le type' }] }
+  - { name: 'Do you really want to delete selected items?', translations: [{ code: 'fr', label: 'Voulez-vous vraiment supprimer les éléments sélectionnés?' }] }
+  - { name: 'Download SQL file', translations: [{ code: 'fr', label: 'Télécharger le fichier SQL' }] }
+  - { name: 'Downloading updates', translations: [{ code: 'fr', label: 'Télécharger les mises à jour' }] }
+  - { name: 'Downloading updates, please wait...', translations: [{ code: 'fr', label: 'Téléchargement des mises à jour, attendez s''il vous plaît... ' }] }
+  - { name: 'downloads', translations: [{ code: 'fr', label: 'Téléchargements' }] }
+  - { name: 'Drag and drop me to the bag', translations: [{ code: 'fr', label: 'Sélectionner et glisser dans le panier' }] }
+  - { name: 'Drop items here to shop', translations: [{ code: 'fr', label: 'Déposer des articles ici pour acheter' }] }
+  - { name: 'During the import was recorded X errors. You can get them by downloading the log files.', translations: [{ code: 'fr', label: 'Pendant l''importation {{count}} erreurs ont éte enregistrées. Vous pouvez les obtenir par <a href="{{url}}"> téléchargement </ a> d''importations des journaux.' }] }
+  - { name: 'During the period', translations: [{ code: 'fr', label: 'Pendant la période de' }] }
+  - { name: 'E-mail', translations: [{ code: 'fr', label: 'E-mail' }] }
+  - { name: 'E-mail is not defined yet', translations: [{ code: 'fr', label: 'E-mail n''est pas encore défini' }] }
+  - { name: 'Edit charges for:', translations: [{ code: 'fr', label: 'Modifier les frais pour:' }] }
+  - { name: 'Edit label', translations: [{ code: 'fr', label: 'Éditer le label' }] }
+  - { name: 'Edit profile', translations: [{ code: 'fr', label: 'Editer Profil' }] }
+  - { name: 'Email', translations: [{ code: 'fr', label: 'Email' }] }
+  - { name: 'Email &amp; password', translations: [{ code: 'fr', label: 'Email &amp; mot de passe' }] }
+  - { name: 'Email address', translations: [{ code: 'fr', label: 'Adresse e-mail' }] }
+  - { name: 'Enable', translations: [{ code: 'fr', label: 'Activer' }] }
+  - { name: 'Enabled', translations: [{ code: 'fr', label: 'Activé' }] }
+  - { name: 'enabled', translations: [{ code: 'fr', label: 'activé' }] }
+  - { name: 'Enter a correct email', translations: [{ code: 'fr', label: 'Entrez e-mail correcte' }] }
+  - { name: 'Enter a negative number', translations: [{ code: 'fr', label: 'Entrez un nombre négatif' }] }
+  - { name: 'Enter a number', translations: [{ code: 'fr', label: 'Entrez un nombre' }] }
+  - { name: 'Enter a positive number', translations: [{ code: 'fr', label: 'Entrez un nombre positif' }] }
+  - { name: 'Enter an integer', translations: [{ code: 'fr', label: 'Entrez un nombre entier' }] }
+  - { name: 'Enter keywords', translations: [{ code: 'fr', label: 'Entrez les mots clés' }] }
+  - { name: 'Enter license key', translations: [{ code: 'fr', label: 'Entrer la clé de licence' }] }
+  - { name: 'Enter shipping address', translations: [{ code: 'fr', label: 'Entrez l''adresse de livraison' }] }
+  - { name: 'Environment', translations: [{ code: 'fr', label: 'Environnement' }] }
+  - { name: 'Environment info', translations: [{ code: 'fr', label: 'Informations d''environnement' }] }
+  - { name: 'Error', translations: [{ code: 'fr', label: 'Erreur' }] }
+  - { name: 'Estimate shipping cost', translations: [{ code: 'fr', label: 'Estimer frais de livraison' }] }
+  - { name: 'Estimated for', translations: [{ code: 'fr', label: 'Estimation pour' }] }
+  - { name: 'Examples', translations: [{ code: 'fr', label: 'Exemples' }] }
+  - { name: 'Exception', translations: [{ code: 'fr', label: 'Exception' }] }
+  - { name: 'Expand the functionality of your store by installing and using add-on modules', translations: [{ code: 'fr', label: 'Développer les fonctionnalités de votre magasin par l''installation et l''utilisation des modules' }] }
+  - { name: 'Export', translations: [{ code: 'fr', label: 'Exportation' }] }
+  - { name: 'Export products', translations: [{ code: 'fr', label: 'Exporter les produits' }] }
+  - { name: 'Failed', translations: [{ code: 'fr', label: 'Échoué' }] }
+  - { name: 'Failed to add detailed image', translations: [{ code: 'fr', label: 'Impossible d''ajouter l''image détaillée' }] }
+  - { name: 'Failed to add the attachment', translations: [{ code: 'fr', label: 'Impossible d''ajouter la pièce jointe' }] }
+  - { name: 'Failed to add the attachment. The file download is forbidden', translations: [{ code: 'fr', label: 'Impossible d''ajouter la pièce jointe. Le téléchargement du fichier est interdit.' }] }
+  - { name: 'Failed/Declined', translations: [{ code: 'fr', label: 'Échouées/Déclinées' }] }
+  - { name: 'Featured products', translations: [{ code: 'fr', label: 'Produits recommandés' }] }
+  - { name: 'Field is required!', translations: [{ code: 'fr', label: 'Champ est obligatoire' }] }
+  - { name: 'File size exceeds the maximum size', translations: [{ code: 'fr', label: 'La dimension du fichier dépasse la dimension maximale ({{size}})' }] }
+  - { name: 'File title', translations: [{ code: 'fr', label: 'Titre du fichier' }] }
+  - { name: 'Find us on Facebook', translations: [{ code: 'fr', label: 'Nous trouver sur Facebook' }] }
+  - { name: 'Firstname', translations: [{ code: 'fr', label: 'Prénom' }] }
+  - { name: 'Flat markup ($)', translations: [{ code: 'fr', label: 'Marge fixe' }] }
+  - { name: 'Flat shipping charge (flat)', translations: [{ code: 'fr', label: 'Frais d''expédition fixes (flat)' }] }
+  - { name: 'Flat shipping charge per item ordered (per item)', translations: [{ code: 'fr', label: 'Frais d''expédition fixes par article commandé (par article)' }] }
+  - { name: 'Flat shipping charge per X ordered (per Y)', translations: [{ code: 'fr', label: 'Frais d''expédition fixes par {{X}} commandés (par {{Y}})' }] }
+  - { name: 'For real-time shipping methods (USPS, UPS, Intershipper):', translations: [{ code: 'fr', label: 'Pour les méthodes d''expédition en temps réel (USPS, UPS, Intershipper):' }] }
+  - { name: 'Forgot password?', translations: [{ code: 'fr', label: 'Mot de passe oublié?' }] }
+  - { name: 'Free', translations: [{ code: 'fr', label: 'Gratuit' }] }
+  - { name: 'Free add-ons', translations: [{ code: 'fr', label: 'Modules gratuits' }] }
+  - { name: 'From', translations: [{ code: 'fr', label: 'A partir de' }] }
+  - { name: 'from local computer', translations: [{ code: 'fr', label: 'de l''ordinateur local' }] }
+  - { name: 'from local server', translations: [{ code: 'fr', label: 'du serveur local' }] }
+  - { name: 'from URL', translations: [{ code: 'fr', label: 'de l''URL' }] }
+  - { name: 'Full description', translations: [{ code: 'fr', label: 'Description complète' }] }
+  - { name: 'Full name', translations: [{ code: 'fr', label: 'Nom complet' }] }
+  - { name: 'General', translations: [{ code: 'fr', label: 'Général' }] }
+  - { name: 'General info', translations: [{ code: 'fr', label: 'Informations générales' }] }
+  - { name: 'General Settings', translations: [{ code: 'fr', label: 'Configuration Générale' }] }
+  - { name: 'General settings', translations: [{ code: 'fr', label: 'Configuration générale' }] }
+  - { name: 'Go to checkout', translations: [{ code: 'fr', label: 'Passer à la caisse' }] }
+  - { name: 'Google', translations: [{ code: 'fr', label: 'Google' }] }
+  - { name: 'Grand total', translations: [{ code: 'fr', label: 'Total' }] }
+  - { name: 'Greetings, X', translations: [{ code: 'fr', label: 'Bienvenue, {{name}}' }] }
+  - { name: 'Grid', translations: [{ code: 'fr', label: 'Grille' }] }
+  - { name: 'Group options', translations: [{ code: 'fr', label: 'Groupe d''options' }] }
+  - { name: 'Hard reset URL (disables all modules and runs application)', translations: [{ code: 'fr', label: 'Redémarrage d''URL à froid (désactive tous les modules et exécute l''application)' }] }
+  - { name: 'Hello, user', translations: [{ code: 'fr', label: 'Bonjour, {{name}}' }] }
+  - { name: 'Help Zone', translations: [{ code: 'fr', label: 'Aide' }] }
+  - { name: 'Help zone', translations: [{ code: 'fr', label: 'Aide' }] }
+  - { name: 'Hide', translations: [{ code: 'fr', label: 'Cacher' }] }
+  - { name: 'Home', translations: [{ code: 'fr', label: 'Accueil' }] }
+  - { name: 'How to back up your store database', translations: [{ code: 'fr', label: 'Comment faire une sauvegarde de la base de données de votre magasin' }] }
+  - { name: 'How to define shipping rates', translations: [{ code: 'fr', label: 'Comment définir les tarifs d''expédition' }] }
+  - { name: 'How to define shipping zones', translations: [{ code: 'fr', label: 'Comment définir les zones de transport' }] }
+  - { name: 'How to restore your LiteCommerce database', translations: [{ code: 'fr', label: 'Comment restaurer la base de données de votre LiteCommerce' }] }
+  - { name: 'HTML title (''title'' tag)', translations: [{ code: 'fr', label: 'Titre HTML (''title'' tag)' }] }
+  - { name: 'HTTPS check', translations: [{ code: 'fr', label: 'Vérification d''HTTPS' }] }
+  - { name: 'I accept Terms and Conditions', translations: [{ code: 'fr', label: 'J''accepte <a href="{{URL}}">Terms & Conditions</a>' }] }
+  - { name: 'Identity', translations: [{ code: 'fr', label: 'Identité' }] }
+  - { name: 'If the product is assigned to multiple classes, only the first tax rate with the highest priority will be applied to it.', translations: [{ code: 'fr', label: 'Lorsque un produit appartient à plusieurs classes, le taux d''imposition de la priorité la plus haute lui sera appliqué.' }] }
+  - { name: 'If you already have an account, you can authenticate yourself by filling in the form below. The fields which are marked with * are mandatory', translations: [{ code: 'fr', label: 'Si vous avez déjà un compte, vous pouvez vous identifier en remplissant le formulaire ci-dessous. Les champs qui sont marqués de * sont obligatoires.' }] }
+  - { name: 'If you choose the second option, you can download the file from the server later on and delete it from the server by clicking on the ''Delete SQL file'' button.', translations: [{ code: 'fr', label: 'Si vous choisissez la deuxième option, vous pouvez télécharger le fichier du serveur plus tard et le supprimer en cliquant sur le bouton "Supprimer fichier SQL".' }] }
+  - { name: 'If you do not have an account, you can easily', translations: [{ code: 'fr', label: 'Si vous n''avez pas de compte vous pouvez' }] }
+  - { name: 'If you don''t have a moneybookers account yet, please sign up for a free moneybookers account at: http://www.moneybookers.com', translations: [{ code: 'fr', label: 'Si vous n''avez pas de compte Moneybookers, veuillez bien vous inscrire au compte gratuit Moneybookers à l''adresse: http://www.moneybookers.com' }] }
+  - { name: 'If you have a license key for a commercial module, you can enter it here to register the purchase of the appropriate module.', translations: [{ code: 'fr', label: 'Si vous avez une clé de licence pour un module commercial, vous pouvez l''entrer ici pour enregistrer ce module.' }] }
+  - { name: 'If you have a plugin in the .tar format, you can install it by uploading it here', translations: [{ code: 'fr', label: 'Si vous avez un plugin dans le format .tar, Vous pouvez l''installer en le téléchargeant ici.' }] }
+  - { name: 'If you store product images in the database, they are included in the SQL dump file', translations: [{ code: 'fr', label: 'Si vous stockez les images de produits dans la base de données, elles seront incluses dans le fichier dump SQL. Si les images de produits sont situées dans le système de fichiers, elles ne sont pas incluses. Pour sauvegarder de telles images il vous faut les télécharger directement du serveur.' }] }
+  - { name: 'Image', translations: [{ code: 'fr', label: 'Image' }] }
+  - { name: 'Image border will not be displayed in customer''s frontend', translations: [{ code: 'fr', label: 'Les bords de l''image ne ​​seront pas affichés sur l''interface des clients' }] }
+  - { name: 'Image X', translations: [{ code: 'fr', label: 'Image #{{index}}' }] }
+  - { name: 'Import', translations: [{ code: 'fr', label: 'Importation' }] }
+  - { name: 'Import / Export', translations: [{ code: 'fr', label: 'Importer/Exporter' }] }
+  - { name: 'Import from file', translations: [{ code: 'fr', label: 'Importer du fichier' }] }
+  - { name: 'Import in progress', translations: [{ code: 'fr', label: 'L''importation est en cours' }] }
+  - { name: 'Import mechanism does not know the field of X and it can not be imported', translations: [{ code: 'fr', label: 'Le mécanisme d''importation ne connaît pas le champ de ''{{name}} et il ne peut pas être importé' }] }
+  - { name: 'Import/Export', translations: [{ code: 'fr', label: 'Importer/Exporter' }] }
+  - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: 'fr', label: 'L''importation va écraser les informations existantes des produits. Cette opération ne peut pas être annulée.' }] }
+  - { name: 'In category', translations: [{ code: 'fr', label: 'Dans la catégorie' }] }
+  - { name: 'in description', translations: [{ code: 'fr', label: 'dans la description' }] }
+  - { name: 'In stock', translations: [{ code: 'fr', label: 'en stock' }] }
+  - { name: 'in title', translations: [{ code: 'fr', label: 'dans le titre' }] }
+  - { name: 'Inactive', translations: [{ code: 'fr', label: 'Inactifs' }] }
+  - { name: 'Including X', translations: [{ code: 'fr', label: 'Y compris {{name}}' }] }
+  - { name: 'Incompleted', translations: [{ code: 'fr', label: 'Incomplet' }] }
+  - { name: 'Incorrect owner of X directory', translations: [{ code: 'fr', label: 'propriétaire incorrect de répertoire {{X}}' }] }
+  - { name: 'Incorrect owner of X file', translations: [{ code: 'fr', label: 'propriétaire incorrect de fichier {{X}}' }] }
+  - { name: 'InnoDB engine support enabled', translations: [{ code: 'fr', label: 'Le support d''InnoDB est présent' }] }
+  - { name: 'Install add-on', translations: [{ code: 'fr', label: 'Installer module' }] }
+  - { name: 'Install updates', translations: [{ code: 'fr', label: 'Installer les mises à jour' }] }
+  - { name: 'Installation directory', translations: [{ code: 'fr', label: 'Répertoire d''installation' }] }
+  - { name: 'Installing updates, please wait...', translations: [{ code: 'fr', label: 'Installation des mises à jour, attendez s''il vous plaît ...' }] }
+  - { name: 'Invalid login or password', translations: [{ code: 'fr', label: 'Identifiant ou mot de passe non valide' }] }
+  - { name: 'invalid module ID passed: "{{moduleId}}"', translations: [{ code: 'fr', label: 'un ID invalide du module est passé: "{{moduleId}}"' }] }
+  - { name: 'Inventory status', translations: [{ code: 'fr', label: 'Statut de l''inventaire' }] }
+  - { name: 'Inventory tracking', translations: [{ code: 'fr', label: 'Suivi de l''inventaire' }] }
+  - { name: 'Inventory tracking for this product is', translations: [{ code: 'fr', label: 'Suivi de l''inventaire de ce produit est' }] }
+  - { name: 'Invoice X', translations: [{ code: 'fr', label: 'Facture #{{id}}' }] }
+  - { name: 'is available', translations: [{ code: 'fr', label: 'est disponible' }] }
+  - { name: 'Item description', translations: [{ code: 'fr', label: 'Description de l''article' }] }
+  - { name: 'Item has been deleted from cart', translations: [{ code: 'fr', label: 'Larticle est supprimé du panier' }] }
+  - { name: 'items', translations: [{ code: 'fr', label: 'articles' }] }
+  - { name: 'Items', translations: [{ code: 'fr', label: 'Articles' }] }
+  - { name: 'items available', translations: [{ code: 'fr', label: 'articles disponibles' }] }
+  - { name: 'Items per page', translations: [{ code: 'fr', label: 'articles par page' }] }
+  - { name: 'Items range', translations: [{ code: 'fr', label: 'gamme d''articles' }] }
+  - { name: 'jpg file type', translations: [{ code: 'fr', label: 'jpg type de fichier' }] }
+  - { name: 'Label name', translations: [{ code: 'fr', label: 'Nom du label' }] }
+  - { name: 'Language labels', translations: [{ code: 'fr', label: 'Étiquettes de langue ' }] }
+  - { name: 'Language name in X', translations: [{ code: 'fr', label: 'Nom de la langue en {{language}}' }] }
+  - { name: 'Language options', translations: [{ code: 'fr', label: 'Options de la langue' }] }
+  - { name: 'Last logged in', translations: [{ code: 'fr', label: 'Dernière visite' }] }
+  - { name: 'Last login', translations: [{ code: 'fr', label: 'Dernière visite' }] }
+  - { name: 'Lastname', translations: [{ code: 'fr', label: 'Nom' }] }
+  - { name: 'less', translations: [{ code: 'fr', label: 'de remise' }] }
+  - { name: 'List', translations: [{ code: 'fr', label: 'Liste' }] }
+  - { name: 'List of states', translations: [{ code: 'fr', label: 'Liste des états' }] }
+  - { name: 'Litecommerce', translations: [{ code: 'fr', label: 'Litecommerce' }] }
+  - { name: 'LiteCommerce online store builder', translations: [{ code: 'fr', label: 'Litecommerce, constructeur des magasins en ligne' }] }
+  - { name: 'LiteCommerce shopping cart software', translations: [{ code: 'fr', label: 'Logiciel d''achat Litecommerce' }] }
+  - { name: 'LiteCommerce version', translations: [{ code: 'fr', label: 'Version de LiteCommerce' }] }
+  - { name: 'Log in', translations: [{ code: 'fr', label: 'Se connecter' }] }
+  - { name: 'Log off', translations: [{ code: 'fr', label: 'Déconnextion' }] }
+  - { name: 'Log out', translations: [{ code: 'fr', label: 'Se déconnecter' }] }
+  - { name: 'Logged in!', translations: [{ code: 'fr', label: 'Vous êtes connecté!' }] }
+  - { name: 'Login', translations: [{ code: 'fr', label: 'Connexion' }] }
+  - { name: 'Login here', translations: [{ code: 'fr', label: 'Connectez-vous ici' }] }
+  - { name: 'Login history', translations: [{ code: 'fr', label: 'Historique des connexions' }] }
+  - { name: 'Low limit notification for this product is', translations: [{ code: 'fr', label: 'Notification sur le nombre minimal de ce produit' }] }
+  - { name: 'Low limit quantity', translations: [{ code: 'fr', label: 'Nombre minimal' }] }
+  - { name: 'Low stock', translations: [{ code: 'fr', label: 'Quantité limitée' }] }
+  - { name: 'Maintenance', translations: [{ code: 'fr', label: 'Maintenance' }] }
+  - { name: 'Maintenance and operation', translations: [{ code: 'fr', label: 'Opération et maintenance' }] }
+  - { name: 'Make back-up of your store database', translations: [{ code: 'fr', label: 'Sauvegarder la base de données de votre magasin' }] }
+  - { name: 'Manage add-ons', translations: [{ code: 'fr', label: 'Gérer les modules' }] }
+  - { name: 'Manage categories', translations: [{ code: 'fr', label: 'Gérer les catégories' }] }
+  - { name: 'Manage customer and administrator accounts', translations: [{ code: 'fr', label: 'Gérer les comptes des clients et administrateur' }] }
+  - { name: 'Manage orders placed at your store', translations: [{ code: 'fr', label: 'Gérer les commandes passées dans votre magasin' }] }
+  - { name: 'Manage your product inventory', translations: [{ code: 'fr', label: 'Gérer votre stock de produits' }] }
+  - { name: 'Mandatory fields are marked with an asterisk', translations: [{ code: 'fr', label: 'Les champs obligatoires sont marqués d''un astérisque' }] }
+  - { name: 'Manually defined shipping methods', translations: [{ code: 'fr', label: 'Méthodes d''expédition définies manuellement' }] }
+  - { name: 'Mark, the search engines you want to inform of the structure of your site using the site map', translations: [{ code: 'fr', label: 'Marquer les moteurs de recherche que vous souhaitez informer sur la structure de votre site via le plan du site' }] }
+  - { name: 'Market price', translations: [{ code: 'fr', label: 'Prix du marché' }] }
+  - { name: 'Marketplace', translations: [{ code: 'fr', label: 'Marché' }] }
+  - { name: 'Marketplace [check_addon_key]: the "{{url}}" URL requested', translations: [{ code: 'fr', label: 'Marché [check_addon_key]: le "{{url}}" URL requise' }] }
+  - { name: 'Marketplace [check_for_updates]: the "{{url}}" URL requested', translations: [{ code: 'fr', label: 'Marché [check_for_updates]: le "{{url}}" URL requise' }] }
+  - { name: 'Marketplace [check_for_updates]: valid response received', translations: [{ code: 'fr', label: 'Marché [check_for_updates]: réponse valide reçue' }] }
+  - { name: 'Marketplace [get_hosting_score]: response has an invalid format', translations: [{ code: 'fr', label: 'Marché [get_hosting_score]: réponse a un format invalide' }] }
+  - { name: 'Marketplace [get_hosting_score]: the "{{url}}" URL requested', translations: [{ code: 'fr', label: 'Marché [get_hosting_score]: le "{{url}}" URL requise' }] }
+  - { name: 'Markup per item ($)', translations: [{ code: 'fr', label: 'Marge par article ($)' }] }
+  - { name: 'Markup per weight unit ($)', translations: [{ code: 'fr', label: 'Marge par unités de poids' }] }
+  - { name: 'Maximum size of the file to upload is N', translations: [{ code: 'fr', label: 'La taille maximale du fichier à télécharger est {{N}}.' }] }
+  - { name: 'Membership', translations: [{ code: 'fr', label: 'Groupe' }] }
+  - { name: 'Membership access', translations: [{ code: 'fr', label: 'Accès d''adhésion' }] }
+  - { name: 'Membership levels', translations: [{ code: 'fr', label: 'Niveaux d''adhésion' }] }
+  - { name: 'Membership name', translations: [{ code: 'fr', label: 'Nom d''adhésion' }] }
+  - { name: 'Meta description', translations: [{ code: 'fr', label: 'Méta description' }] }
+  - { name: 'Meta keywords', translations: [{ code: 'fr', label: 'Méta-mots clés' }] }
+  - { name: 'Methods', translations: [{ code: 'fr', label: 'Méthodes' }] }
+  - { name: 'Modify', translations: [{ code: 'fr', label: 'Modifier' }] }
+  - { name: 'Modify category', translations: [{ code: 'fr', label: 'Modifier la catégorie' }] }
+  - { name: 'Modify option groups exceptions', translations: [{ code: 'fr', label: 'Modifier les exceptions des groupes d''options' }] }
+  - { name: 'Modify root category (the front shop page)', translations: [{ code: 'fr', label: 'Modifier la catégorie racine (la page principale du magasin)' }] }
+  - { name: 'Module has been successfully installed', translations: [{ code: 'fr', label: 'Le module a été installé avec succès' }] }
+  - { name: 'module version "{{module_version}}" is not equal to the core one ("{{core_version}}")', translations: [{ code: 'fr', label: 'la version du module "{{module_version}}" n''est pas égale à celle du noyau ("{{core_version}}")' }] }
+  - { name: 'Modules Marketplace', translations: [{ code: 'fr', label: 'Marché des modules' }] }
+  - { name: 'More add-ons', translations: [{ code: 'fr', label: 'Plus de modules' }] }
+  - { name: 'More details', translations: [{ code: 'fr', label: 'Plus d''informations' }] }
+  - { name: 'Most Popular', translations: [{ code: 'fr', label: 'Les plus populaires' }] }
+  - { name: 'Most Rated', translations: [{ code: 'fr', label: 'Les mieux notés' }] }
+  - { name: 'Move', translations: [{ code: 'fr', label: 'Déplacer' }] }
+  - { name: 'ms', translations: [{ code: 'fr', label: 'ms' }] }
+  - { name: 'My account', translations: [{ code: 'fr', label: 'Mon compte' }] }
+  - { name: 'MySQL server', translations: [{ code: 'fr', label: 'Serveur MySQL' }] }
+  - { name: 'N items found', translations: [{ code: 'fr', label: '{{n}} articles trouvés' }] }
+  - { name: 'N items total', translations: [{ code: 'fr', label: '{{n}} articles' }] }
+  - { name: 'n/a', translations: [{ code: 'fr', label: 'non-disponible' }] }
+  - { name: 'Name', translations: [{ code: 'fr', label: 'Nom' }] }
+  - { name: 'Name of purchaser', translations: [{ code: 'fr', label: 'Nom de l''acheteur' }] }
+  - { name: 'Name: A-Z', translations: [{ code: 'fr', label: 'Nom: A-Z' }] }
+  - { name: 'Name: Z-A', translations: [{ code: 'fr', label: 'Nom: Z-A' }] }
+  - { name: 'Native language name', translations: [{ code: 'fr', label: 'Nom de la langue maternelle' }] }
+  - { name: 'never', translations: [{ code: 'fr', label: 'jamais' }] }
+  - { name: 'Never', translations: [{ code: 'fr', label: 'Jamais' }] }
+  - { name: 'New access key will also be sent to the Site administrator''s email address', translations: [{ code: 'fr', label: 'La nouvelle clé d''accès sera également envoyée à l''adresse de l''Administrateur du site' }] }
+  - { name: 'New product class', translations: [{ code: 'fr', label: 'Nouvelle classe de produit' }] }
+  - { name: 'New product has been added successfully', translations: [{ code: 'fr', label: 'Le nouveau produit est ajouté avec succès' }] }
+  - { name: 'New rate', translations: [{ code: 'fr', label: 'Nouveau taux' }] }
+  - { name: 'New user profile has been registered:', translations: [{ code: 'fr', label: 'Le nouveau profil d''utilisateur est enregistré:' }] }
+  - { name: 'New zone has been created successfully', translations: [{ code: 'fr', label: 'La zone nouvelle est crée avec succès' }] }
+  - { name: 'Newest', translations: [{ code: 'fr', label: 'Le plus récent' }] }
+  - { name: 'Next', translations: [{ code: 'fr', label: 'Suivant' }] }
+  - { name: 'Next page', translations: [{ code: 'fr', label: 'Page suivante' }] }
+  - { name: 'Next product', translations: [{ code: 'fr', label: 'Produit suivant' }] }
+  - { name: 'No', translations: [{ code: 'fr', label: 'Non' }] }
+  - { name: 'No featured products defined for this category', translations: [{ code: 'fr', label: 'Aucun produit recommandé est défini pour cette catégorie' }] }
+  - { name: 'No items found.', translations: [{ code: 'fr', label: 'Rien trouvé' }] }
+  - { name: 'No membership', translations: [{ code: 'fr', label: 'Aucune adhésion' }] }
+  - { name: 'No other languages defined', translations: [{ code: 'fr', label: 'Pas d''autres langues définies' }] }
+  - { name: 'No states found', translations: [{ code: 'fr', label: 'Aucun état trouvé' }] }
+  - { name: 'No tax rate defined', translations: [{ code: 'fr', label: 'Aucun taux de l''impôt défini' }] }
+  - { name: 'Non-administrator', translations: [{ code: 'fr', label: 'Non-administrateur' }] }
+  - { name: 'none', translations: [{ code: 'fr', label: 'aucun' }] }
+  - { name: 'None', translations: [{ code: 'fr', label: 'Aucun(e)' }] }
+  - { name: 'not all archives were unpacked', translations: [{ code: 'fr', label: 'pas toutes les archives ont été déballées' }] }
+  - { name: 'not all upgrade packs were downloaded', translations: [{ code: 'fr', label: 'pas tous paquets de mise à niveau ont été téléchargés' }] }
+  - { name: 'not available for sale', translations: [{ code: 'fr', label: 'pas disponible à la vente' }] }
+  - { name: 'Not finished', translations: [{ code: 'fr', label: 'Pas terminées' }] }
+  - { name: 'Not numeric', translations: [{ code: 'fr', label: 'Non numérique' }] }
+  - { name: 'not ready to download packs. Please, try again', translations: [{ code: 'fr', label: 'impossible de télécharger les paquets. Essayez encore une fois, s''il vous plaît' }] }
+  - { name: 'Note', translations: [{ code: 'fr', label: 'Note' }] }
+  - { name: 'Notes', translations: [{ code: 'fr', label: 'Notes' }] }
+  - { name: 'of', translations: [{ code: 'fr', label: 'de' }] }
+  - { name: 'Official website', translations: [{ code: 'fr', label: 'Site officiel' }] }
+  - { name: 'Online catalog structure set-up', translations: [{ code: 'fr', label: 'Configuration de la structure de votre catalogue en ligne' }] }
+  - { name: 'Open Graph meta tags', translations: [{ code: 'fr', label: 'méta-tag Open Graph' }] }
+  - { name: 'Open storefront', translations: [{ code: 'fr', label: 'Ouvrir le magasin' }] }
+  - { name: 'Operating system', translations: [{ code: 'fr', label: 'Système d''exploitation' }] }
+  - { name: 'Option group', translations: [{ code: 'fr', label: 'Groupe d''options' }] }
+  - { name: 'options', translations: [{ code: 'fr', label: 'options' }] }
+  - { name: 'Options have been successfully changed', translations: [{ code: 'fr', label: 'Les options sont modifiées avec succès' }] }
+  - { name: 'or', translations: [{ code: 'fr', label: 'ou' }] }
+  - { name: 'Order #', translations: [{ code: 'fr', label: 'Commande #' }] }
+  - { name: 'Order #X, Y', translations: [{ code: 'fr', label: 'Commande #{{id}}, {{date}}' }] }
+  - { name: 'Order date from', translations: [{ code: 'fr', label: 'Date des commandes à partir de' }] }
+  - { name: 'Order date through', translations: [{ code: 'fr', label: 'Date des commandes jusqu''à' }] }
+  - { name: 'Order id', translations: [{ code: 'fr', label: 'ID de commande' }] }
+  - { name: 'Order review', translations: [{ code: 'fr', label: 'Commande' }] }
+  - { name: 'Order statistics', translations: [{ code: 'fr', label: 'Les statistiques des commandes' }] }
+  - { name: 'Order status', translations: [{ code: 'fr', label: 'Etat de commande' }] }
+  - { name: 'Order X', translations: [{ code: 'fr', label: 'Commande #{{id}}' }] }
+  - { name: 'Orders', translations: [{ code: 'fr', label: 'Commandes' }] }
+  - { name: 'Other', translations: [{ code: 'fr', label: 'Autre' }] }
+  - { name: 'Other items', translations: [{ code: 'fr', label: 'Autres articles' }] }
+  - { name: 'Out of stock', translations: [{ code: 'fr', label: 'En rupture de stock' }] }
+  - { name: 'Pack it', translations: [{ code: 'fr', label: 'Emportez' }] }
+  - { name: 'Page', translations: [{ code: 'fr', label: 'Page' }] }
+  - { name: 'Page not found', translations: [{ code: 'fr', label: 'Page non trouvée' }] }
+  - { name: 'Pages', translations: [{ code: 'fr', label: 'Pages' }] }
+  - { name: 'Paid', translations: [{ code: 'fr', label: 'Payées' }] }
+  - { name: 'Parent category', translations: [{ code: 'fr', label: 'Catégorie mère' }] }
+  - { name: 'Password', translations: [{ code: 'fr', label: 'Mot de passe' }] }
+  - { name: 'Pattern search', translations: [{ code: 'fr', label: 'Modèle de recherche' }] }
+  - { name: 'Payment info', translations: [{ code: 'fr', label: 'Informations de paiement' }] }
+  - { name: 'Payment method', translations: [{ code: 'fr', label: 'Méthode de paiement' }] }
+  - { name: 'Payment methods', translations: [{ code: 'fr', label: 'Méthodes de paiement' }] }
+  - { name: 'Payment transactions', translations: [{ code: 'fr', label: 'Opérations de paiement' }] }
+  - { name: 'pdf file type', translations: [{ code: 'fr', label: 'extension de fichier PDF' }] }
+  - { name: 'Pending', translations: [{ code: 'fr', label: 'En suspens' }] }
+  - { name: 'Pending membership', translations: [{ code: 'fr', label: 'En attentente de l''adhésion' }] }
+  - { name: 'Per item markup ($)', translations: [{ code: 'fr', label: 'Marge par article ($)' }] }
+  - { name: 'per page', translations: [{ code: 'fr', label: 'par page' }] }
+  - { name: 'Per weight unit markup ($)', translations: [{ code: 'fr', label: 'Marge par unité de poids ($)' }] }
+  - { name: 'Percent', translations: [{ code: 'fr', label: 'Pour cent' }] }
+  - { name: 'Percent markup', translations: [{ code: 'fr', label: 'Marge de pourcentage' }] }
+  - { name: 'Percent off', translations: [{ code: 'fr', label: 'Pour cent de réduction' }] }
+  - { name: 'Perform order search', translations: [{ code: 'fr', label: 'Trouver les commandes' }] }
+  - { name: 'Performance', translations: [{ code: 'fr', label: 'Performance' }] }
+  - { name: 'Personal info', translations: [{ code: 'fr', label: 'Informations personnelles' }] }
+  - { name: 'Phone', translations: [{ code: 'fr', label: 'Téléphone' }] }
+  - { name: 'Pick address from address book', translations: [{ code: 'fr', label: 'Servez-vous des adresses du carnet d''adresses' }] }
+  - { name: 'Place order', translations: [{ code: 'fr', label: 'Passer la commande' }] }
+  - { name: 'Place order X', translations: [{ code: 'fr', label: 'Passer la commande: {{total}}' }] }
+  - { name: 'Please enable JavaScript in your web browser.', translations: [{ code: 'fr', label: 'Veuillez activer JavaScript dans votre navigateur Web.' }] }
+  - { name: 'Please identify yourself', translations: [{ code: 'fr', label: 'Identifiez-vous, s''il vous plaît' }] }
+  - { name: 'Please note that some of these modules are definitely incompatible with the upcoming upgrade and will be disabled in order to prevent the system crash', translations: [{ code: 'fr', label: 'Note: certains de ces modules sont incompatibles avec la mise à niveau à venir et seront désactivés pour prévenir la panne du système.' }] }
+  - { name: 'Please run the benchmark test in order to estimate your server performance', translations: [{ code: 'fr', label: 'Lancez le test de référence afin d''estimer les performances de votre serveur, s''il vous plaît.' }] }
+  - { name: 'Please select one', translations: [{ code: 'fr', label: 'Veuillez choisir' }] }
+  - { name: 'Please specify a pattern to find the required labels', translations: [{ code: 'fr', label: 'Spécifiez un modèle pour rechercher des labels requis, s''il vous plat' }] }
+  - { name: 'Please specify text labels for each language', translations: [{ code: 'fr', label: 'Spécifiez les labels de texte à  chacune langue, s''il vous plaît. Si vous ne spécifiez pas une valeur à  une langue, le {{language}} label sera utilisé' }] }
+  - { name: 'Pos', translations: [{ code: 'fr', label: 'Pos' }] }
+  - { name: 'Pos.', translations: [{ code: 'fr', label: 'Pos.' }] }
+  - { name: 'Pos.:', translations: [{ code: 'fr', label: 'Pos.:' }] }
+  - { name: 'Position', translations: [{ code: 'fr', label: 'Position' }] }
+  - { name: 'Prev', translations: [{ code: 'fr', label: 'Préc' }] }
+  - { name: 'Previous page', translations: [{ code: 'fr', label: 'Page précédente' }] }
+  - { name: 'Previous product', translations: [{ code: 'fr', label: 'Produit précédent' }] }
+  - { name: 'Price', translations: [{ code: 'fr', label: 'Prix' }] }
+  - { name: 'Price modifier', translations: [{ code: 'fr', label: 'Modificateur des prix' }] }
+  - { name: 'Price: high to low', translations: [{ code: 'fr', label: 'Prix: d''élevé à bas' }] }
+  - { name: 'Price: low to high', translations: [{ code: 'fr', label: 'Prix: de bas à élevé ' }] }
+  - { name: 'Price: Not a numeric', translations: [{ code: 'fr', label: 'Prix: non numérique' }] }
+  - { name: 'Print invoice', translations: [{ code: 'fr', label: 'Imprimer la facture' }] }
+  - { name: 'Priority', translations: [{ code: 'fr', label: 'Priorité' }] }
+  - { name: 'Processed', translations: [{ code: 'fr', label: 'Traitée' }] }
+  - { name: 'Processed/Completed', translations: [{ code: 'fr', label: 'Traitées/Exécutées' }] }
+  - { name: 'Product added to bag', translations: [{ code: 'fr', label: 'Produit ajouté au panier' }] }
+  - { name: 'Product class', translations: [{ code: 'fr', label: 'Classe de produit' }] }
+  - { name: 'Product classes', translations: [{ code: 'fr', label: 'Classes des produits' }] }
+  - { name: 'Product has been added to cart', translations: [{ code: 'fr', label: 'Le produit est ajouté au panier' }] }
+  - { name: 'Product images', translations: [{ code: 'fr', label: 'Images du produit' }] }
+  - { name: 'Product info', translations: [{ code: 'fr', label: 'Info Produit' }] }
+  - { name: 'Product info has been updated successfully', translations: [{ code: 'fr', label: 'Les informations sur le produit sont actualisées avec succès' }] }
+  - { name: 'Product is out of stock', translations: [{ code: 'fr', label: 'En rupture de stock' }] }
+  - { name: 'Product Name', translations: [{ code: 'fr', label: 'Nom du Produit' }] }
+  - { name: 'Product name', translations: [{ code: 'fr', label: 'Nom du produit' }] }
+  - { name: 'Product on sale', translations: [{ code: 'fr', label: 'Produit en vente' }] }
+  - { name: 'Product options', translations: [{ code: 'fr', label: 'Options des produits' }] }
+  - { name: 'Product page title', translations: [{ code: 'fr', label: 'Titre de la page de produit' }] }
+  - { name: 'Product prices are defined including this tax calculated for', translations: [{ code: 'fr', label: 'Les prix des produits sont définis y compris cet impôt calculé pour' }] }
+  - { name: 'Product SKU', translations: [{ code: 'fr', label: 'Numéro de référence du produit' }] }
+  - { name: 'Product Title', translations: [{ code: 'fr', label: 'Titre du produit' }] }
+  - { name: 'Products', translations: [{ code: 'fr', label: 'Produits' }] }
+  - { name: 'Products in bag', translations: [{ code: 'fr', label: 'Produits dans le panier' }] }
+  - { name: 'Products with low inventory', translations: [{ code: 'fr', label: 'Produits de stocks en baisse' }] }
+  - { name: 'Profile has been created successfully', translations: [{ code: 'fr', label: 'Le profil est créé avec succès' }] }
+  - { name: 'Profile has been deleted successfully', translations: [{ code: 'fr', label: 'Le profil est créé avec succès' }] }
+  - { name: 'Profile has been updated successfully', translations: [{ code: 'fr', label: 'Le profil est mis à jour avec succès' }] }
+  - { name: 'Profile settings', translations: [{ code: 'fr', label: 'Paramètres du profil' }] }
+  - { name: 'Properties', translations: [{ code: 'fr', label: 'Сaractéristiques' }] }
+  - { name: 'proxy', translations: [{ code: 'fr', label: 'proxy HTTPS' }] }
+  - { name: 'Purchase', translations: [{ code: 'fr', label: 'Acheter' }] }
+  - { name: 'Purchase order number', translations: [{ code: 'fr', label: 'Numéro de commande' }] }
+  - { name: 'Put up selected for sale', translations: [{ code: 'fr', label: 'Mettre les produits sélectionnés en vente' }] }
+  - { name: 'Qty', translations: [{ code: 'fr', label: 'Qté' }] }
+  - { name: 'Qty.', translations: [{ code: 'fr', label: 'Qté.' }] }
+  - { name: 'Quantity', translations: [{ code: 'fr', label: 'Quantité' }] }
+  - { name: 'Quantity in stock', translations: [{ code: 'fr', label: 'Quantité en stock' }] }
+  - { name: 'Queued', translations: [{ code: 'fr', label: 'En file d''attente' }] }
+  - { name: 'Rate', translations: [{ code: 'fr', label: 'Taux' }] }
+  - { name: 'Rates', translations: [{ code: 'fr', label: 'Taux' }] }
+  - { name: 'Rates / Conditions', translations: [{ code: 'fr', label: 'Tarifs / Conditions' }] }
+  - { name: 'Raw online rate (on-line rate)', translations: [{ code: 'fr', label: 'Prix en ligne' }] }
+  - { name: 'Re-build cache', translations: [{ code: 'fr', label: 'Reconstruire le cache' }] }
+  - { name: 'Re-generate access key', translations: [{ code: 'fr', label: 'Régénérer la clé d''accés' }] }
+  - { name: 'Recent orders', translations: [{ code: 'fr', label: 'Commandes récentes' }] }
+  - { name: 'Recover password', translations: [{ code: 'fr', label: 'Récupérer le mot de passe' }] }
+  - { name: 'Register', translations: [{ code: 'fr', label: 'S''inscrire' }] }
+  - { name: 'register here', translations: [{ code: 'fr', label: 'Inscrivez-vous ici' }] }
+  - { name: 'Registered', translations: [{ code: 'fr', label: 'Inscrits' }] }
+  - { name: 'Remove', translations: [{ code: 'fr', label: 'Supprimer' }] }
+  - { name: 'required', translations: [{ code: 'fr', label: 'requis' }] }
+  - { name: 'Required field X is not defined or empty', translations: [{ code: 'fr', label: 'Le champ obligatoire ''{{name}}'' n''est pas défini ou vide. Le produit n''a pas été créé' }] }
+  - { name: 'Rerun benchmark', translations: [{ code: 'fr', label: 'Relancer test de performance' }] }
+  - { name: 'Restore', translations: [{ code: 'fr', label: 'Restaurer' }] }
+  - { name: 'Restore database', translations: [{ code: 'fr', label: 'Restaurer la base de données' }] }
+  - { name: 'Restore from server', translations: [{ code: 'fr', label: 'Restaurer du serveur' }] }
+  - { name: 'Return to admin interface.', translations: [{ code: 'fr', label: 'Retourner à l''interface d''administration' }] }
+  - { name: 'Review statistics on various aspects of your store''s operation', translations: [{ code: 'fr', label: 'Examiner les statistiques sur divers aspects du fonctionnement de votre magasin' }] }
+  - { name: 'Root category', translations: [{ code: 'fr', label: 'Catégorie racine' }] }
+  - { name: 'Root Level', translations: [{ code: 'fr', label: 'Niveau racine' }] }
+  - { name: 'Root level', translations: [{ code: 'fr', label: '[Root level]' }] }
+  - { name: 'Run benchmark', translations: [{ code: 'fr', label: 'Lancer le test de performances' }] }
+  - { name: 'Safe mode', translations: [{ code: 'fr', label: 'Mode sans échec' }] }
+  - { name: 'Safe mode access key', translations: [{ code: 'fr', label: 'Clé d''accès pour le mode sans échec' }] }
+  - { name: 'Sale', translations: [{ code: 'fr', label: 'Vente' }] }
+  - { name: 'Sale price', translations: [{ code: 'fr', label: 'Prix de vente' }] }
+  - { name: 'Sales', translations: [{ code: 'fr', label: 'Ventes' }] }
+  - { name: 'Sales tax', translations: [{ code: 'fr', label: 'Taxe de vente' }] }
+  - { name: 'Save', translations: [{ code: 'fr', label: 'Sauvegarder' }] }
+  - { name: 'Save as new', translations: [{ code: 'fr', label: 'Sauvegarder comme un nouveau' }] }
+  - { name: 'Save changes', translations: [{ code: 'fr', label: 'Enregistrer les changements' }] }
+  - { name: 'Save zone details', translations: [{ code: 'fr', label: 'Sauvegarder les détails de la zone' }] }
+  - { name: 'Search', translations: [{ code: 'fr', label: 'Rechercher' }] }
+  - { name: 'Search for orders', translations: [{ code: 'fr', label: 'Rechercher commandes' }] }
+  - { name: 'Search for products', translations: [{ code: 'fr', label: 'Recherche de produits' }] }
+  - { name: 'Search for users', translations: [{ code: 'fr', label: 'Rechercher utilisateurs' }] }
+  - { name: 'Search for users that are', translations: [{ code: 'fr', label: 'Rechercher les utilisateurs qui' }] }
+  - { name: 'Search in subcategories', translations: [{ code: 'fr', label: 'Rechercher dans les sous-catégories' }] }
+  - { name: 'Search product', translations: [{ code: 'fr', label: 'Rechercher produit' }] }
+  - { name: 'Search profiles', translations: [{ code: 'fr', label: 'Rechercher profil' }] }
+  - { name: 'Search result', translations: [{ code: 'fr', label: 'Résultat de la recherche' }] }
+  - { name: 'Search results', translations: [{ code: 'fr', label: 'Résultats de la recherche' }] }
+  - { name: 'Security', translations: [{ code: 'fr', label: 'Sécurité' }] }
+  - { name: 'Select a country or a state from a list, specify the zone', translations: [{ code: 'fr', label: 'Sélectionnez un pays ou un Etat dans liste, spécifiez la zone où le pays ou l''Etat doivent être listés et cliquez sur le bouton "Appliquer". Pour sélectionner plus d''un pays / Etat, maintenez la touche CTRL en faisant la sélection. Zone ou Etat peut appartenir à une seule zone.' }] }
+  - { name: 'Select country', translations: [{ code: 'fr', label: 'Sélectionner un pays' }] }
+  - { name: 'Select language', translations: [{ code: 'fr', label: 'Choisir une langue' }] }
+  - { name: 'Select language to edit', translations: [{ code: 'fr', label: 'Choisir la langue à  éditer' }] }
+  - { name: 'Select one', translations: [{ code: 'fr', label: 'Choisir un...' }] }
+  - { name: 'Select one...', translations: [{ code: 'fr', label: 'Choisir un...' }] }
+  - { name: 'Select the membership level and area. for which product prices, including VAT, are defined by the shop administrator', translations: [{ code: 'fr', label: 'Sélectionnez le niveau des membres et la zone où les prix des produits, y compris la TVA, sont définis par l''administrateur du magasin' }] }
+  - { name: 'Set', translations: [{ code: 'fr', label: 'Trié' }] }
+  - { name: 'Set the sale price', translations: [{ code: 'fr', label: 'Définir le prix de vente' }] }
+  - { name: 'Set this language as default for customer zone', translations: [{ code: 'fr', label: 'Définir cette langue par défaut pour la zone des clients' }] }
+  - { name: 'Settings', translations: [{ code: 'fr', label: 'Paramètres' }] }
+  - { name: 'Shippable', translations: [{ code: 'fr', label: 'Livrable' }] }
+  - { name: 'Shipping', translations: [{ code: 'fr', label: 'Expédition' }] }
+  - { name: 'Shipping & Taxes', translations: [{ code: 'fr', label: 'Frais d''expédition & Taxes' }] }
+  - { name: 'SHIPPING = flat + ITEMS*per_item + WEIGHT*per_weight + SUBTOTAL*(% of subtotal)/100;', translations: [{ code: 'fr', label: 'Expédition = taux forfaitaire + Articles*par_article + POIDS*par_{{X}} + TOTAL PARTIEL*(% de total partiel)/100;' }] }
+  - { name: 'SHIPPING = raw on-line_rate + flat + ITEMS*per_item + WEIGHT*per_weight + SUBTOTAL*(% of subtotal)/100;', translations: [{ code: 'fr', label: 'Expédition = raw on-line_rate + taux forfaitaire + Articles*par_article + POIDS*par_{{X}} + TOTAL PARTIEL*(% de total partiel)/100;' }] }
+  - { name: 'Shipping address', translations: [{ code: 'fr', label: 'Adresse de livraison' }] }
+  - { name: 'Shipping address is not completly defined yet', translations: [{ code: 'fr', label: 'L''adresse d''expédition n''est pas encore complètement définie' }] }
+  - { name: 'Shipping address is not defined', translations: [{ code: 'fr', label: 'L''adresse de livraison n''est pas définie' }] }
+  - { name: 'Shipping address is not defined yet', translations: [{ code: 'fr', label: 'L''adresse de livraison n''est pas encore définie' }] }
+  - { name: 'Shipping charge based on percentage of order subtotal (% of subtotal)', translations: [{ code: 'fr', label: 'Frais d''expédition basés sur le pourcentage du total partiel d''ordre (% du total partiel)' }] }
+  - { name: 'Shipping cost', translations: [{ code: 'fr', label: 'Frais d''expédition' }] }
+  - { name: 'Shipping info', translations: [{ code: 'fr', label: 'Information d''expédition' }] }
+  - { name: 'Shipping markup has been created successfully', translations: [{ code: 'fr', label: 'La majoration d''expédition est créée avec succès' }] }
+  - { name: 'Shipping markups have been updated', translations: [{ code: 'fr', label: 'Les majorations d''expédition sont mises à jour' }] }
+  - { name: 'Shipping method', translations: [{ code: 'fr', label: 'Méthode d''expédition' }] }
+  - { name: 'Shipping method has been added', translations: [{ code: 'fr', label: 'Les méthodes d''expédition sont ajoutées' }] }
+  - { name: 'Shipping methods', translations: [{ code: 'fr', label: 'Méthodes d''expédition' }] }
+  - { name: 'Shipping methods are not available', translations: [{ code: 'fr', label: 'Les méthodes d''expédition ne sont pas disponible' }] }
+  - { name: 'Shipping methods have been updated', translations: [{ code: 'fr', label: 'Les modes d''expédition sont actualisées' }] }
+  - { name: 'Shipping rates', translations: [{ code: 'fr', label: 'Tarifs d''expédition' }] }
+  - { name: 'Shipping rates are comprised of several components (rate types) and calculated according to the following generic patterns', translations: [{ code: 'fr', label: 'Les tarifs d''expédition sont composés de quelques éléments (types de taux) et sont calculés selon les modèles génériques suivants:' }] }
+  - { name: 'Shipping settings', translations: [{ code: 'fr', label: 'Options d''expédition' }] }
+  - { name: 'Shipping zones', translations: [{ code: 'fr', label: 'Zones d''expédition' }] }
+  - { name: 'Shopping bag', translations: [{ code: 'fr', label: 'Panier' }] }
+  - { name: 'Show all labels', translations: [{ code: 'fr', label: 'Montrer tous les labels' }] }
+  - { name: 'Show filter options', translations: [{ code: 'fr', label: 'Montrer options de filtre' }] }
+  - { name: 'Sign in notification', translations: [{ code: 'fr', label: 'Notification d''enregistrement' }] }
+  - { name: 'Sign out', translations: [{ code: 'fr', label: 'Se déconnecter' }] }
+  - { name: 'Size', translations: [{ code: 'fr', label: 'Taille' }] }
+  - { name: 'SKU', translations: [{ code: 'fr', label: 'Réf.' }] }
+  - { name: 'SKU: a-z', translations: [{ code: 'fr', label: 'Réf.: a-z' }] }
+  - { name: 'SKU: z-a', translations: [{ code: 'fr', label: 'Réf.: z-a' }] }
+  - { name: 'SMTP server', translations: [{ code: 'fr', label: 'Serveur SMTP' }] }
+  - { name: 'Soft reset URL (disables only unsafe modules and runs application)', translations: [{ code: 'fr', label: 'URL réinitialisation partielle (désactive uniquement les modules dangereux et exécute l''application )' }] }
+  - { name: 'Some products could have been imported incorrectly', translations: [{ code: 'fr', label: 'Certains produits pourraient avoir été importés incorrectement. Veuillez vérifier votre catalogue. Trouvez les indentifiants des produits qui auraient pu été importés de manière incorrecte dans le fichier journal d''importation disponible au lien ci-dessus.' }] }
+  - { name: 'Sort by', translations: [{ code: 'fr', label: 'Trier par' }] }
+  - { name: 'Specified e-mail address is already used by other user.', translations: [{ code: 'fr', label: 'L''URL pour réinitialisation partielle (désactive seulement les modules dangereux et exécute l''application)' }] }
+  - { name: 'State', translations: [{ code: 'fr', label: 'Etat' }] }
+  - { name: 'States', translations: [{ code: 'fr', label: 'Etats' }] }
+  - { name: 'States have been deleted successfully', translations: [{ code: 'fr', label: 'Les états ont été supprimés avec succès' }] }
+  - { name: 'States have been updated successfully', translations: [{ code: 'fr', label: 'L''Etat (les Etats) a (ont) été mis à jour avec succès' }] }
+  - { name: 'Statistics', translations: [{ code: 'fr', label: 'Statistiques' }] }
+  - { name: 'Status', translations: [{ code: 'fr', label: 'Statut' }] }
+  - { name: 'Store is closed', translations: [{ code: 'fr', label: 'Magasin fermé' }] }
+  - { name: 'Store is opened', translations: [{ code: 'fr', label: 'Magasin  ouvert' }] }
+  - { name: 'Store Maintenance', translations: [{ code: 'fr', label: 'Maintenance du magasin' }] }
+  - { name: 'Storefront', translations: [{ code: 'fr', label: 'Magasin' }] }
+  - { name: 'Subcategories', translations: [{ code: 'fr', label: 'Souscatégories' }] }
+  - { name: 'Submit', translations: [{ code: 'fr', label: 'Soumettre' }] }
+  - { name: 'Substring', translations: [{ code: 'fr', label: 'Sous-chaîne' }] }
+  - { name: 'Subtotal', translations: [{ code: 'fr', label: 'Total partiel' }] }
+  - { name: 'Subtotal range', translations: [{ code: 'fr', label: 'Gamme du total partiel' }] }
+  - { name: 'Successfully imported X new products', translations: [{ code: 'fr', label: '{{new}} produits nouveaux sont importés avec succès' }] }
+  - { name: 'Successfully imported X new products and upgraded Y old products', translations: [{ code: 'fr', label: '{{new}} nouveaux produits sont importés et {{old}} vieux produits sont mis à jour avec succès' }] }
+  - { name: 'Successfully upgraded Y old products', translations: [{ code: 'fr', label: '{{old}} vieux produits sont mis à jour avec succès' }] }
+  - { name: 'Table', translations: [{ code: 'fr', label: 'Table' }] }
+  - { name: 'Tax', translations: [{ code: 'fr', label: 'Taxe' }] }
+  - { name: 'Tax disabled', translations: [{ code: 'fr', label: 'Taxe désactivée' }] }
+  - { name: 'Tax enabled', translations: [{ code: 'fr', label: 'Taxe activée' }] }
+  - { name: 'Tax has been disabled successfully', translations: [{ code: 'fr', label: 'La taxe est désactivée avec succès' }] }
+  - { name: 'Tax has been enabled successfully', translations: [{ code: 'fr', label: 'La taxe est activée avec succès' }] }
+  - { name: 'Tax rates have been updated successfully', translations: [{ code: 'fr', label: 'Les taux d''imposition sont mises à jour avec succès' }] }
+  - { name: 'Tax title', translations: [{ code: 'fr', label: 'Titre de la taxe' }] }
+  - { name: 'Taxes', translations: [{ code: 'fr', label: 'Taxes' }] }
+  - { name: 'Text', translations: [{ code: 'fr', label: 'Texte' }] }
+  - { name: 'Text labels have been deleted', translations: [{ code: 'fr', label: 'Les labels du texte sont effacés' }] }
+  - { name: 'Text labels have been updated successfully', translations: [{ code: 'fr', label: 'Les labels du texte sont actualisés avec succès' }] }
+  - { name: 'Text labels have not been deleted: no text labels have been found or specified', translations: [{ code: 'fr', label: 'Les labels du texte ne sont pas effacés: aucun labels du texte est trouvé ou specifié' }] }
+  - { name: 'Text labels have not been updated successfully: the default application language has been set as the translation language', translations: [{ code: 'fr', label: 'Les labels du texte ne sont pas actualisés: la langue d''application par défaut est fixée comme la langue de traduction' }] }
+  - { name: 'Text labels have not been updated successfully: the translation language has not been found', translations: [{ code: 'fr', label: 'Les labels du texte ne sont pas actualisés: la langue à  traduire n''est pas trouvée' }] }
+  - { name: 'Text labels have not been updated successfully: the translation language has not been specified', translations: [{ code: 'fr', label: 'Les labels du texte ne sont pas actualisés: la langue à  traduire n''est pas spécifiée' }] }
+  - { name: 'Thank you for registering a customer account, your profile has been created successfully', translations: [{ code: 'fr', label: 'Merci d''avoir enregistré un compte client, votre profil est créé avec succès. <br />Comme un client enregistré vous pouvez profiter de mode de paiement simplifié et revoir l''historique des commandes <br /><br /> Une confirmation d''inscription avec les détails de votre compte vient d''être envoyéé à  votre adresse e-mail. <b>{profile.login}</b> address.<br />Veuillez bien utiliser votre adress e-mail et le mot de passe spécifié chaque fois quand vous passez une commande dans notre magasin.<br /><br />Vous êtes connecté. Soyez le bienvenue pour continuer le shopping.' }] }
+  - { name: 'Thank you for registering at LiteCommerce', translations: [{ code: 'fr', label: 'Merci pour vous être enregistré sur {{LiteCommerce}}' }] }
+  - { name: 'Thank you for using LiteCommerce services', translations: [{ code: 'fr', label: 'Merci pour avoir utiliser les services de {{LiteCommerce}}' }] }
+  - { name: 'Thank you for your order', translations: [{ code: 'fr', label: 'Merci pour votre commande' }] }
+  - { name: 'The attachment has been added successfully', translations: [{ code: 'fr', label: 'Le fichier joint est ajouté avec succès' }] }
+  - { name: 'The benchmark evaluates server environment', translations: [{ code: 'fr', label: 'Le test de performances évalue l''environnement du serveur, à  savoir: <br />1. Sous-système de fichier - la vitesse de lecture et écriture.<br />2. Serveur de base de données - la vitesse de calcul, la vitesse de lecture et écriture des données sur la base de données.<br />3. Capacités de calcul - la vitesse de calcul et échange des données dans la mémoire.<br /><span>La durée totale est la somme du temps, pris par chacun de ces tests.</span>' }] }
+  - { name: 'The changes will be applied to all selected products', translations: [{ code: 'fr', label: 'Les modifications seront appliquées à tous les produits sélectionnés' }] }
+  - { name: 'The confirmation URL link was mailed to email', translations: [{ code: 'fr', label: 'L''URL de confirmation est envoyé à  l'' {{email}}' }] }
+  - { name: 'The default interface language cannot be disabled', translations: [{ code: 'fr', label: 'La langue de l''interface par défaut ne peut pas être désactivée' }] }
+  - { name: 'The detailed image has been added successfully', translations: [{ code: 'fr', label: 'L''image détaillée est ajoutée avec succès' }] }
+  - { name: 'The detailed image has been deleted', translations: [{ code: 'fr', label: 'L''image détaillée est supprimée' }] }
+  - { name: 'The detailed images have been updated successfully', translations: [{ code: 'fr', label: 'Les images détaillées sont mises à jour avec succès' }] }
+  - { name: 'The edited language has not been found', translations: [{ code: 'fr', label: 'La langue en édition n''a pas été trouvée' }] }
+  - { name: 'The email with your account information was mailed to email', translations: [{ code: 'fr', label: 'L''e-mail avec vos informations de compte est envoyé à  {{email}}. Nous vous encourageons à  vous authentifier à  nouveau pour vérifier les données reçues.' }] }
+  - { name: 'The exceptions have been updated successfully', translations: [{ code: 'fr', label: 'Les exceptions sont mises à jour avec succès' }] }
+  - { name: 'The file was not loaded because of a failure on the server', translations: [{ code: 'fr', label: 'Le fichier n''a pas été chargé à cause d''une panne sur le serveur' }] }
+  - { name: 'The following add-on(s) must be enabled', translations: [{ code: 'fr', label: 'Le module suivant (s) doit être activé' }] }
+  - { name: 'The following categories were selected to be removed', translations: [{ code: 'fr', label: 'Les catégories suivantes sont sélectionnées pour être enlevées' }] }
+  - { name: 'The following dependent add-ons will be disabled  automatically', translations: [{ code: 'fr', label: 'Les modules complémentaires suivants seront automatiquement désactivés' }] }
+  - { name: 'The image has been updated', translations: [{ code: 'fr', label: 'L''image est mise à jour' }] }
+  - { name: 'The importing starts immediately upon selecting the data file. No additional confirmation prompts will appear.', translations: [{ code: 'fr', label: 'L''importation commence immédiatement après la sélection du fichier de données. Aucun message de confirmation supplémentaire apparaîtra.' }] }
+  - { name: 'The language data has been saved', translations: [{ code: 'fr', label: 'Les données de la langue viennent d''être sauvegardées' }] }
+  - { name: 'The language has not been found', translations: [{ code: 'fr', label: 'La langue n''a pas été trouvée' }] }
+  - { name: 'The language is disabled', translations: [{ code: 'fr', label: 'La langue est désactivée' }] }
+  - { name: 'The language is enabled', translations: [{ code: 'fr', label: 'La langue est activée' }] }
+  - { name: 'The language you want to add has already been added', translations: [{ code: 'fr', label: 'La langue que vous voulez ajouter a déjà  été ajoutée' }] }
+  - { name: 'The language you want to add has not been found', translations: [{ code: 'fr', label: 'La langue que vous voulez ajouter n''a pas été trouvée' }] }
+  - { name: 'The language you want to delete has not been found', translations: [{ code: 'fr', label: 'La langue que vous souhaitez supprimer n''a pas été trouvée' }] }
+  - { name: 'The language you want to delete is the default application language and cannot be deleted', translations: [{ code: 'fr', label: 'La langue que vous voulez supprimer est la langue de l''application par défaut et ne peut pas être supprimée' }] }
+  - { name: 'The language you want to delete is the default interface language and cannot be deleted', translations: [{ code: 'fr', label: 'La langue que vous voulez supprimer est la langue de l''interface par défaut et ne peut pas être supprimée' }] }
+  - { name: 'The module has been partially uninstalled', translations: [{ code: 'fr', label: 'Le module est partiellement désinstallé' }] }
+  - { name: 'The module has been uninstalled successfully', translations: [{ code: 'fr', label: 'Le module est désinstallé avec succès' }] }
+  - { name: 'The module to uninstall has not been found', translations: [{ code: 'fr', label: 'Le module de désinstallation n''a pas été trouvé' }] }
+  - { name: 'The modules have been updated', translations: [{ code: 'fr', label: 'Les modules sont actualisés' }] }
+  - { name: 'The name of the edited language in the default application language has not been specified', translations: [{ code: 'fr', label: 'Le nom de la langue en édition dans la langue d''application par défaut n''a pas été spécifié' }] }
+  - { name: 'The product option group has been added successfully', translations: [{ code: 'fr', label: 'Le groupe d''options du produit est ajouté avec succès' }] }
+  - { name: 'The product option group has been updated successfully', translations: [{ code: 'fr', label: 'Le groupe d''options du produit est mis à jour avec succès' }] }
+  - { name: 'The product option groups have been updated successfully', translations: [{ code: 'fr', label: 'Les groupes d''options de produits sont mis à jour avec succès' }] }
+  - { name: 'The product option groups have not been successfully updated', translations: [{ code: 'fr', label: 'Les groupes d''options de produits n''ont pas été correctement misent à jour' }] }
+  - { name: 'The requested page could not be found.', translations: [{ code: 'fr', label: 'La page demandée est introuvable' }] }
+  - { name: 'The restoration procedure is irreversible and erases all data tables from your store database. It is highly recommended that you back your present database data up before restoring one of the previous states from a back-up.', translations: [{ code: 'fr', label: 'La procédure de restauration est irréversible et efface toutes les tables de données de base de votre magasin. Il est fortement recommandé de sauvegarder vos données de la base de données actuelle avant de restauration.' }] }
+  - { name: 'The same as shipping', translations: [{ code: 'fr', label: 'La même que celle d''expédition' }] }
+  - { name: 'The selected shipping markups have been deleted successfully', translations: [{ code: 'fr', label: 'Les marges d''expédition sélectionnés sont supprimées avec succès' }] }
+  - { name: 'The selected shipping method has been deleted successfully', translations: [{ code: 'fr', label: 'Le mode de transport choisi est effacé avec succès' }] }
+  - { name: 'The selected zones have been deleted successfully', translations: [{ code: 'fr', label: 'Les zones choisies sont effacées avec succès' }] }
+  - { name: 'The state has been added successfully', translations: [{ code: 'fr', label: 'L''Etat est ajouté avec succès' }] }
+  - { name: 'The string is different from that of the title number of columns - X instead of Y', translations: [{ code: 'fr', label: 'La ligne contient un nombre incorrect de colonnes - {{wrong}} au lieu de  {{right}} nécessaires' }] }
+  - { name: 'The text label has been added successfully', translations: [{ code: 'fr', label: 'Le label de texte est ajouté avec succès' }] }
+  - { name: 'The text label has been deleted', translations: [{ code: 'fr', label: 'Le label de texte est effacé' }] }
+  - { name: 'The text label has been modified successfully', translations: [{ code: 'fr', label: 'Le label de texte est modifié avec succès' }] }
+  - { name: 'The text label has not been added, because its name has not been specified', translations: [{ code: 'fr', label: 'Le label de texte n''est pas ajouté, car son nom n''est pas spécifié' }] }
+  - { name: 'The text label has not been added, because its translation to the default application language has not been specified', translations: [{ code: 'fr', label: 'Le label de texte n''a pas été ajouté, car sa traduction pour la langue de l''application par défaut n''a pas été spécifiée' }] }
+  - { name: 'The text label has not been added, because its translation to the default interface language has not been specified', translations: [{ code: 'fr', label: 'Le label de texte n''a pas été ajouté, car sa traduction pour la langue de l''interface par défaut n''a pas été spécifiée' }] }
+  - { name: 'The text label has not been added, because such a text label already exists', translations: [{ code: 'fr', label: 'Le label de texte n''a pas été ajouté, car le label de texte pareil existe déjà ' }] }
+  - { name: 'The text label has not been deleted: it has been either not found or not specified', translations: [{ code: 'fr', label: 'Le label de texte n''est pas effacé: il est soit pas trouvée ou non spécifié' }] }
+  - { name: 'The text label has not been modified, because its translation to the default application language has not been specified', translations: [{ code: 'fr', label: 'Le label de texte n''a pas été modifié, car sa traduction pour la langue de l''application par défaut n''a pas été spécifiée' }] }
+  - { name: 'The text label has not been modified, because its translation to the default interface language has not been specified', translations: [{ code: 'fr', label: 'Le label de texte n''a pas été modifié, car sa traduction pour la langue de l''interface par défaut n''a pas été spécifiée' }] }
+  - { name: 'The user profile has been deleted:', translations: [{ code: 'fr', label: 'Le profil de l''utilisateur est supprimé:' }] }
+  - { name: 'The value of the X field has an incorrect format', translations: [{ code: 'fr', label: 'La valeur de {{name}} a un format incorrect' }] }
+  - { name: 'The value of the X field must be greater than Y', translations: [{ code: 'fr', label: 'La valeur de champ {{name}} doit être supérieure à {{min}}' }] }
+  - { name: 'The value of the X field must be less than Y', translations: [{ code: 'fr', label: 'La valeur du champ X doit être inférieure à Y' }] }
+  - { name: 'The value of the X field should not be longer than Y', translations: [{ code: 'fr', label: 'La valeur de {{name}} ne doit pas être plus long que {{max}}' }] }
+  - { name: 'The value of X field must be greater less Y', translations: [{ code: 'fr', label: 'La valeur de champ {{name}} doit être inférieure à {{max}}' }] }
+  - { name: 'The X field is empty', translations: [{ code: 'fr', label: 'Le champ {{name}} est vide' }] }
+  - { name: 'The X language has been added successfully', translations: [{ code: 'fr', label: 'La langue  {{language}} est ajoutée avec succès' }] }
+  - { name: 'The X language has been deleted successfully', translations: [{ code: 'fr', label: 'La langue {{language}} est supprimée avec succès' }] }
+  - { name: 'The X language has been disabled successfully', translations: [{ code: 'fr', label: 'La langue {{language}} est désactivée avec succès' }] }
+  - { name: 'The X language has been enabled successfully', translations: [{ code: 'fr', label: 'La langue {{language}} est activée avec succès' }] }
+  - { name: 'The X module has been disabled in an abnormal way', translations: [{ code: 'fr', label: 'Le module {{module}} est désactivé de façon anormale' }] }
+  - { name: 'The X module has been installed incorrectly. Please see the logs for more information', translations: [{ code: 'fr', label: 'Le module {{module}} est installé incorrectement. Veuillez consulter les journaux pour plus d''informations' }] }
+  - { name: 'The X module has been installed successfully', translations: [{ code: 'fr', label: 'Le module {{module}} est installé avec succès' }] }
+  - { name: 'The X module has been installed with errors: the DB has not been modified correctly', translations: [{ code: 'fr', label: 'Le module {{module}} est installé avec des erreurs: la base de données n''a pas été correctement modifiée' }] }
+  - { name: 'The X module has been installed, but the module has a wrong module control class', translations: [{ code: 'fr', label: 'Le module {{module}} est installé, mais la classe de contrôleur du module est incorrecte' }] }
+  - { name: 'The X module has been uninstalled in an abnormal way', translations: [{ code: 'fr', label: 'Le module {{module}} est désinstallé de façon anormale' }] }
+  - { name: 'There are no categories', translations: [{ code: 'fr', label: 'Il n''ya pas de catégories' }] }
+  - { name: 'There are no markups selected', translations: [{ code: 'fr', label: 'Il n''y a pas de marges sélectionnées' }] }
+  - { name: 'There are no rates available for specified source/destination and/or package measurements/weight.', translations: [{ code: 'fr', label: 'Les taux pour expéditeur/destinataire spécifié et/ou dimensions/poids du colis ne sont pas disponible.' }] }
+  - { name: 'There is no user with specified email address', translations: [{ code: 'fr', label: 'Il n''y a pas d''utilisateur avec l''adresse spécifiée' }] }
+  - { name: 'There were no orders placed', translations: [{ code: 'fr', label: 'Pas de commandes passées' }] }
+  - { name: 'These components require your attention', translations: [{ code: 'fr', label: 'Ces éléments exigent votre attention' }] }
+  - { name: 'These components will be updated', translations: [{ code: 'fr', label: 'Ces éléments seront mises à jour' }] }
+  - { name: 'These modules may be incompatible with the upcoming upgrade. No guarantee that the store will operate correctly if the modules remain enabled. Please consider disabling the modules before proceeding to the next step', translations: [{ code: 'fr', label: 'Ces modules peuvent être incompatibles avec la prochaine mise à jour. Aucune garantie que le magasin fonctionnera correctement si les modules restent activés. Vous pourriez vouloir désactiver les modules avant de passer à l''étape suivante.' }] }
+  - { name: 'This address was used as a billing address during the recent purchase', translations: [{ code: 'fr', label: 'Cette adresse est utilisée comme une adresse de facturation lors de l''achat récent' }] }
+  - { name: 'This address was used as a shipping address during the recent purchase', translations: [{ code: 'fr', label: 'Cette adresse est utilisée comme une adresse d''expédition lors de l''achat récent' }] }
+  - { name: 'This component is added to the shipping rate regardless of the weight, price and number of items ordered.', translations: [{ code: 'fr', label: 'Cette composante est ajoutée au taux de d''expédition quel que soit le poids, prix et nombre d''articles commandés.' }] }
+  - { name: 'This component is automatically calculated by shipping add-on module and cannot be edited', translations: [{ code: 'fr', label: 'Cette composante est calculée automatiquement par le module d''expédition et ne peut pas être éditée.' }] }
+  - { name: 'This email address is used for an existing account. Enter another email address or sign in', translations: [{ code: 'fr', label: 'Cette adresse email est utilisée pour un compte existant. Entrez une autre adresse e-mail ou <a href="{{URL}}" class="log-in">connectez</a>' }] }
+  - { name: 'This field is required', translations: [{ code: 'fr', label: 'Ce champ est requis' }] }
+  - { name: 'This is a default zone which covers all addresses. It''s impossible to edit this zone''s countries, states etc', translations: [{ code: 'fr', label: 'C''est une zone par défaut, elle couvre toutes les adresses. Il est impossible d''éditer les pays, états, etc de cette zone' }] }
+  - { name: 'This is a demo store with powerful LiteCommerce engine inside', translations: [{ code: 'fr', label: 'C''est un magasin démo avec à  l''intérieur puissant moteur LiteCommerce, basé sur la technologie des modèles PHP5 intégrés avec base de données SQL.' }] }
+  - { name: 'This month', translations: [{ code: 'fr', label: 'Ce mois' }] }
+  - { name: 'This product has been added to your bag', translations: [{ code: 'fr', label: 'Ce produit est ajouté à  <a href="{{href}}">votre panier</a>' }] }
+  - { name: 'This product is out of stock or it has been disabled for sale', translations: [{ code: 'fr', label: '(!) Ce produit est épuisé ou il est désactivé pour la vente.' }] }
+  - { name: 'This section displays 10 top-selling products for today, this week and this month', translations: [{ code: 'fr', label: 'Cette section affiche 10 produits les plus vendus pour aujourd''hui, cette semaine, et ce mois.' }] }
+  - { name: 'This section displays order placement statistics', translations: [{ code: 'fr', label: 'Cette section affiche les statistiques de passage des commandes.' }] }
+  - { name: 'This site requires JavaScript to function properly.', translations: [{ code: 'fr', label: 'Ce site exige la mise en place JavaScript pour fonctionnement correct.' }] }
+  - { name: 'This tax is calculated based on customer''s billing address', translations: [{ code: 'fr', label: 'Cette taxe est calculée en fonction d''adresse de facturation du client' }] }
+  - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: 'fr', label: 'Ce nom d''utilisateur est utilisé pour un compte existant. Entrez un autre nom d''utilisateur ou <a href="{{URL}}" class="log-in">connectez-vous</a>' }] }
+  - { name: 'This week', translations: [{ code: 'fr', label: 'Cette semaine' }] }
+  - { name: 'This year', translations: [{ code: 'fr', label: 'Cette année' }] }
+  - { name: 'Through', translations: [{ code: 'fr', label: 'Jusqu''à' }] }
+  - { name: 'Thumbnail', translations: [{ code: 'fr', label: 'Vignette' }] }
+  - { name: 'Title', translations: [{ code: 'fr', label: 'Titre' }] }
+  - { name: 'To fix this problem, do the following: 3 points', translations: [{ code: 'fr', label: 'Pour régler ce problème, faites ce qui suit: <ul><li> vous assurez que votre fournisseur de service d''hébergement a permis le protocole HTTPS;</li><li>vérifiez vos paramètres HTTPS ("https_host" paramètre dans le fichier "etc/config. php" doit être valide);</li><li> rechargez cette page.</li></ul>' }] }
+  - { name: 'To get the format of the import data you can export your products to a file', translations: [{ code: 'fr', label: 'Pour obtenir le format de l''importation de données, vous pouvez <a href="{{url}}">exporter vos produits</a> dans un fichier et puis examiner le format de ce fichier.' }] }
+  - { name: 'To place the order please accept Terms and Conditions', translations: [{ code: 'fr', label: 'Pour passer la commande veuillez accepter les Conditions' }] }
+  - { name: 'To place the order please complete the previous steps first', translations: [{ code: 'fr', label: 'Pour passer la commande veuillez compléter les étapes précédentes' }] }
+  - { name: 'To recover your password, please type in the valid e-mail address you use as a login', translations: [{ code: 'fr', label: 'Pour récupérer votre mot de passe, veuillez entrer votre adresse e-mail que vous avez entré lors de votre inscription.' }] }
+  - { name: 'To restore the images stored in the file system you have to copy them from the archive to the LiteCommerce catalog', translations: [{ code: 'fr', label: 'Pour restaurer les images qui sont stockées dans le système de fichiers, vous devez les copier de l''archive au catalogue LiteCommerce, contenu dans la structure du catalogue.' }] }
+  - { name: 'Today', translations: [{ code: 'fr', label: 'Aujourd''hui' }] }
+  - { name: 'Top sellers', translations: [{ code: 'fr', label: 'Meilleures ventes' }] }
+  - { name: 'Top X products', translations: [{ code: 'fr', label: 'Top {{count}} produits' }] }
+  - { name: 'Total', translations: [{ code: 'fr', label: 'Total' }] }
+  - { name: 'translate to', translations: [{ code: 'fr', label: 'traduire en' }] }
+  - { name: 'Trying to access the shop at X', translations: [{ code: 'fr', label: 'En essayant d''accéder au magasin au <a href="{{url}}">{{url}}</a> ...' }] }
+  - { name: 'trying to install a non-marketplace module: "{{name}}"', translations: [{ code: 'fr', label: 'essayant d''installer un module non vérifié: "{{name}}"' }] }
+  - { name: 'trying to unpack non-downloaded archives', translations: [{ code: 'fr', label: 'essayant de décompresser les archives non téléchargées' }] }
+  - { name: 'Type', translations: [{ code: 'fr', label: 'Type' }] }
+  - { name: 'U.S.P.S. settings', translations: [{ code: 'fr', label: 'Paramètres d''U.S.P.S.' }] }
+  - { name: 'unable to add module entry to the installation list: "{{name}}"', translations: [{ code: 'fr', label: 'impossible d''ajouter le module dans la liste d''installation: "{{name}}"' }] }
+  - { name: 'unable to add module entry to the installation list: "{{path}}"', translations: [{ code: 'fr', label: 'impossible d''ajouter le module dans la liste d''installation: "{{path}}"' }] }
+  - { name: 'Unable to install module X because some modules, which it depends on, have not been installed or activated yet', translations: [{ code: 'fr', label: 'Impossible d''installer le module &quot;{{X}}&quot; parce que certains modules dont il dépend, n''ont pas été encore installés ou activés.' }] }
+  - { name: 'unable to install: not all archives were unpacked. Please, try again', translations: [{ code: 'fr', label: 'impossible d''installer: toutes les archives n''ont pas été ouvertes. Essayez encore une fois, s''il vous plaît.' }] }
+  - { name: 'unable to test files: not all archives were unpacked', translations: [{ code: 'fr', label: 'impossible de vérifier les fichiers: toutes les archives n''ont pas été ouvertes.' }] }
+  - { name: 'Uncheck all', translations: [{ code: 'fr', label: 'Tout décocher' }] }
+  - { name: 'Unexpected error: version value is not passed', translations: [{ code: 'fr', label: 'Une erreur inattendue: la valeur de la version n''est pas passée' }] }
+  - { name: 'Uninstall', translations: [{ code: 'fr', label: 'Désinstaller' }] }
+  - { name: 'Units of measurement', translations: [{ code: 'fr', label: 'Unités de mesure' }] }
+  - { name: 'unknown', translations: [{ code: 'fr', label: 'inconnu' }] }
+  - { name: 'Unpacking archives, please wait...', translations: [{ code: 'fr', label: 'Décompression de l''archive, attendez, s''il vous plaît...' }] }
+  - { name: 'Unset', translations: [{ code: 'fr', label: 'Inactifs' }] }
+  - { name: 'Update', translations: [{ code: 'fr', label: 'Actualiser' }] }
+  - { name: 'Update exceptions', translations: [{ code: 'fr', label: 'Actualiser les exceptions' }] }
+  - { name: 'Update module', translations: [{ code: 'fr', label: 'Mettre le module à jour' }] }
+  - { name: 'Update product', translations: [{ code: 'fr', label: 'Actualiser le produit' }] }
+  - { name: 'Update profile', translations: [{ code: 'fr', label: 'Actualiser le profil' }] }
+  - { name: 'Updates are available', translations: [{ code: 'fr', label: 'Les mises à jour sont disponibles' }] }
+  - { name: 'Updates for the LC core and/or installed modules are available', translations: [{ code: 'fr', label: 'Il y a des mises à jour des modules installés et/ou de noyau LC' }] }
+  - { name: 'Updates for your version', translations: [{ code: 'fr', label: 'Mises à jour pour votre version' }] }
+  - { name: 'Upgrade', translations: [{ code: 'fr', label: 'Mettre à jour' }] }
+  - { name: 'Upgrade core', translations: [{ code: 'fr', label: 'Mettre à jour le noyau' }] }
+  - { name: 'Upgrade to version', translations: [{ code: 'fr', label: 'Mettre à niveau vers la version' }] }
+  - { name: 'Upload', translations: [{ code: 'fr', label: 'Télécharger' }] }
+  - { name: 'Upload add-on', translations: [{ code: 'fr', label: 'Télécharger le module' }] }
+  - { name: 'Upload and restore', translations: [{ code: 'fr', label: 'Télécharger et restaurer' }] }
+  - { name: 'Upload file', translations: [{ code: 'fr', label: 'Télécharger fichier' }] }
+  - { name: 'Use the category name', translations: [{ code: 'fr', label: 'Utiliser le nom de la catégorie' }] }
+  - { name: 'Use the navigation bar above this dialog to navigate through the catalog categories', translations: [{ code: 'fr', label: 'Utilisez la barre de navigation au dessus de cette boîte de dialogue pour naviguer dans les catégories du catalogue.' }] }
+  - { name: 'Use this component to add an extra charge for every item ordered.', translations: [{ code: 'fr', label: 'Utilisez ce composant pour ajouter des frais supplémentaires pour chaque article commandé.' }] }
+  - { name: 'Use this component to adjust shipping rates according to order subtotals.', translations: [{ code: 'fr', label: 'Utilisez ce composant pour ajuster les taux d''expédition en fonction de sous-totaux de commande.' }] }
+  - { name: 'Use this component to specify weight-based charges.', translations: [{ code: 'fr', label: 'Utilisez ce composant pour spécifier les frais liés au poids.' }] }
+  - { name: 'Use this section to back the database of your online store up. Please note that the database backup procedure can take up to several minutes.', translations: [{ code: 'fr', label: 'Utilisez cette section pour sauvegarder la base de données de votre magasin en ligne. Note: la procédure de sauvegarde de bases de données peut prendre jusqu''à plusieurs minutes.' }] }
+  - { name: 'Use this section to define shipping rates calculation rules', translations: [{ code: 'fr', label: 'Utilisez cette section pour définir les règles de calcul des tarifs d''expédition.' }] }
+  - { name: 'Use this section to define shipping zones.', translations: [{ code: 'fr', label: 'Utilisez cette section pour définir les zones d''expédition.' }] }
+  - { name: 'Use this section to define your store''s shipping methods.', translations: [{ code: 'fr', label: 'Utilisez cette section pour définir les méthodes d''expédition de votre magasin.' }] }
+  - { name: 'Use this section to manage the list of existing countries. This list is used in the shipping settings and calculations, and in the registration form at the Customer Front-end.', translations: [{ code: 'fr', label: 'Utilisez cette section pour gérer la liste des pays existants. Cette liste est utilisée dans les paramètres et calculs d''expédition, et dans le formulaire d''inscription à l''interface des clients.' }] }
+  - { name: 'Use this section to manage the lists of counties, provinces, regions and states of different countries. The lists are used in shipping settings and calculations, and in the registration form at the Customer Front-end.', translations: [{ code: 'fr', label: 'Utilisez cette section pour gérer les listes de comtés, provinces, régions et états de différents pays. Les listes sont utilisées dans les paramètres d''expédition, dans les calculs , et dans le formulaire d''inscription à l''interface des clients.' }] }
+  - { name: 'Use this section to restore the database of your online store. Please note that the database restoration procedure can take up to several minutes', translations: [{ code: 'fr', label: 'Utilisez cette section pour restaurer la base de votre magazin en ligne. Note: la procédure de rétablissement de la base de données peut prendre jusqu''à plusieurs minutes.' }] }
+  - { name: 'Use this section to review the list of existing membership levels and add new ones', translations: [{ code: 'fr', label: 'Utilisez cette section pour examiner la liste des niveaux d''adhésion existants et en ajouter de nouveaux' }] }
+  - { name: 'User membership', translations: [{ code: 'fr', label: 'Groupe' }] }
+  - { name: 'User profile is deleted', translations: [{ code: 'fr', label: 'Le profil d''utilisateur est supprimé' }] }
+  - { name: 'User profile is modified', translations: [{ code: 'fr', label: 'Profil de l''utilisateur est modifié' }] }
+  - { name: 'User type', translations: [{ code: 'fr', label: 'Type d''utilisateur' }] }
+  - { name: 'User X is logged in', translations: [{ code: 'fr', label: 'L''utilisateur <strong>{{login}}</strong> s''est connecté' }] }
+  - { name: 'Users', translations: [{ code: 'fr', label: 'Utilisateurs' }] }
+  - { name: 'Validate key', translations: [{ code: 'fr', label: 'Valider la clé' }] }
+  - { name: 'Value', translations: [{ code: 'fr', label: 'Valeur' }] }
+  - { name: 'VAT', translations: [{ code: 'fr', label: 'TVA' }] }
+  - { name: 'Version', translations: [{ code: 'fr', label: 'Vesrion' }] }
+  - { name: 'Version change', translations: [{ code: 'fr', label: 'Changement de version' }] }
+  - { name: 'View cart', translations: [{ code: 'fr', label: 'Voir le panier' }] }
+  - { name: 'View logs', translations: [{ code: 'fr', label: 'Voir le journal' }] }
+  - { name: 'View profile', translations: [{ code: 'fr', label: 'Voir le profil' }] }
+  - { name: 'Visit storefront', translations: [{ code: 'fr', label: 'Visiter l''interface clientèle' }] }
+  - { name: 'Warning', translations: [{ code: 'fr', label: 'Attention' }] }
+  - { name: 'Warning: this operation can not be reverted!', translations: [{ code: 'fr', label: 'Attention: cette opération ne peut pas être annulée!' }] }
+  - { name: 'Web server', translations: [{ code: 'fr', label: 'Serveur Web' }] }
+  - { name: 'Weight', translations: [{ code: 'fr', label: 'Poids' }] }
+  - { name: 'Weight modifier', translations: [{ code: 'fr', label: 'Modificateur de poids' }] }
+  - { name: 'Weight range', translations: [{ code: 'fr', label: 'Gamme de poids' }] }
+  - { name: 'Welcome to LiteCommerce', translations: [{ code: 'fr', label: 'Bienvenue à  LiteCommerce' }] }
+  - { name: 'What is benchmark?', translations: [{ code: 'fr', label: 'Test de performance c''est quoi?' }] }
+  - { name: 'When the export is completed, you will be prompted to download the product data file', translations: [{ code: 'fr', label: 'Quand l''exportation est terminée, vous serez invité à télécharger le fichier de données de produits.' }] }
+  - { name: 'Wrong method_id specifed', translations: [{ code: 'fr', label: 'Incorrect method_id est spécifié' }] }
+  - { name: 'X bytes', translations: [{ code: 'fr', label: '{{value}} octets' }] }
+  - { name: 'X days', translations: [{ code: 'fr', label: '{{days}} jour(s)' }] }
+  - { name: 'X field is required', translations: [{ code: 'fr', label: '{{field}}'' champ est requis' }] }
+  - { name: 'X GB', translations: [{ code: 'fr', label: '{{value}} GB' }] }
+  - { name: 'X hours', translations: [{ code: 'fr', label: '{{hours}} heure(s)' }] }
+  - { name: 'X image unable to load', translations: [{ code: 'fr', label: 'Impossible de charger l''image {{url}}' }] }
+  - { name: 'X item(s)', translations: [{ code: 'fr', label: '{{count}} article(s)' }] }
+  - { name: 'X items', translations: [{ code: 'fr', label: '{{count}} articles' }] }
+  - { name: 'X items available', translations: [{ code: 'fr', label: '{{count}} articles disponibles' }] }
+  - { name: 'X items in bag', translations: [{ code: 'fr', label: '{{count}} articles dans le panier' }] }
+  - { name: 'X kB', translations: [{ code: 'fr', label: '{{value}} kB' }] }
+  - { name: 'X labels', translations: [{ code: 'fr', label: '{{language}} labels' }] }
+  - { name: 'X Language (Code: Y)', translations: [{ code: 'fr', label: '{{language}} Langue (Code: {{code}})' }] }
+  - { name: 'X MB', translations: [{ code: 'fr', label: '{{value}} MB' }] }
+  - { name: 'X minutes', translations: [{ code: 'fr', label: '{{minutes}} minute(s)' }] }
+  - { name: 'X module settings', translations: [{ code: 'fr', label: '{{name}} ({{author}}) paramètres du module' }] }
+  - { name: 'X months', translations: [{ code: 'fr', label: '{{months}} mois' }] }
+  - { name: 'X orders', translations: [{ code: 'fr', label: '<span>{{count}}</span> commandes' }] }
+  - { name: 'X products found', translations: [{ code: 'fr', label: '{{count}} produits trouvés' }] }
+  - { name: 'X results found', translations: [{ code: 'fr', label: '{{count}} résultats trouvés' }] }
+  - { name: 'X seconds', translations: [{ code: 'fr', label: '{{seconds}} seconde(s)' }] }
+  - { name: 'X years', translations: [{ code: 'fr', label: '{{years}} année(s)' }] }
+  - { name: 'XML parser', translations: [{ code: 'fr', label: 'Analyseur XML' }] }
+  - { name: 'XML sitemap', translations: [{ code: 'fr', label: 'Sitemap XML' }] }
+  - { name: 'XML sitemap URL: X', translations: [{ code: 'fr', label: 'URL de sitemap XML: X' }] }
+  - { name: 'Yahoo!', translations: [{ code: 'fr', label: 'Yahoo!' }] }
+  - { name: 'Yandex', translations: [{ code: 'fr', label: 'Yandex' }] }
+  - { name: 'Yes', translations: [{ code: 'fr', label: 'Oui' }] }
+  - { name: 'You are going to delete the X language', translations: [{ code: 'fr', label: 'Vous allez supprimer {{langue}} langue. Cette opération est irréversible. Etes-vous sûr de vouloir continuer?' }] }
+  - { name: 'You can choose if to download your database data', translations: [{ code: 'fr', label: 'Vous pouvez choisir de télécharger vos données de bases de données (SQL dump) directement sur votre ordinateur local en cliquant sur le bouton "Télécharger fichier SQL", ou sauvegarder la base des données dans un fichier sur le serveur Web (''var / backup / sqldump.sql.php'') en cliquant sur ​​le bouton "Créer un fichier SQL".' }] }
+  - { name: 'You can upload the database data directly from your local computer', translations: [{ code: 'fr', label: 'Vous pouvez télécharger la base de données directement de votre ordinateur local en cliquant sur le bouton "Parcourir", choisissant un fichier de vidage SQL et en cliquant sur "Envoyer et restaurer" bouton. Bien que cette méthode est plus pratique, il a une limitation de taille de fichier de {{N}}.' }] }
+  - { name: 'You have selected to delete your profile. Please, confirm you want to proceed', translations: [{ code: 'fr', label: 'Vous avez choisi de supprimer votre profil. S''il vous plaît, confirmez que vous souhaitez poursuivre' }] }
+  - { name: 'You need Phar extension for PHP on your server to download modules from Modules Marketplace', translations: [{ code: 'fr', label: 'Il vous faut avoir l''extension Phar pour PHP sur votre serveur pour télécharger les modules du marché des modules' }] }
+  - { name: 'you save', translations: [{ code: 'fr', label: 'Remise' }] }
+  - { name: 'Your account information will be e-mailed to you shortly.', translations: [{ code: 'fr', label: 'Les informations de votre compte seront envoyées à votre e-mail sous peu.' }] }
+  - { name: 'Your cart', translations: [{ code: 'fr', label: 'Votre panier' }] }
+  - { name: 'Your products will be exported as a CSV file.', translations: [{ code: 'fr', label: 'Vos produits seront exportés au format CSV.' }] }
+  - { name: 'Your profile has been modified. You can check your account after you log in to the site', translations: [{ code: 'fr', label: 'Votre profil est modifié. Vous pouvez vérifier votre compte après en vous connectant au site de {{url}}' }] }
+  - { name: 'Your shopping bag - X items', translations: [{ code: 'fr', label: 'Votre panier - {{count}} articles' }] }
+  - { name: 'Your shopping bag is empty', translations: [{ code: 'fr', label: 'Votre panier est vide' }] }
+  - { name: 'Your shopping cart is empty', translations: [{ code: 'fr', label: 'Votre panier est vide' }] }
+  - { name: 'Your store is currently unable to calculate taxes', translations: [{ code: 'fr', label: 'Votre magasin est incapable de calculer les taxes maintenant' }] }
+  - { name: 'Zero cannot be used', translations: [{ code: 'fr', label: 'Zéro ne peut pas être utilisé' }] }
+  - { name: 'Zip code', translations: [{ code: 'fr', label: 'Code postal' }] }
+  - { name: 'Zip/postal code masks', translations: [{ code: 'fr', label: 'Code postal/masques des codes postals' }] }
+  - { name: 'Zone', translations: [{ code: 'fr', label: 'Zone' }] }
+  - { name: 'Zone details have been updated successfully', translations: [{ code: 'fr', label: 'Les détails de la zone sont actualisés avec succès' }] }
+  - { name: 'Zone name', translations: [{ code: 'fr', label: 'Nom de la zone' }] }
+  - { name: 'Zones', translations: [{ code: 'fr', label: 'Zones' }] }
+  - { name: 'It is impossible to delete or create user accounts because your store currently works as an integration with Drupal and shares users with Drupal. Deleting/creating user accounts is possible via Drupal administrator interface.', translations: [{ code: 'fr', label: 'Il est impossible de supprimer ou de créer des comptes utilisateurs, car votre magasin fonctionne actuellement comme une intégration avec Drupal et il a les utilisateurs en commun avec Drupal. Suppression/création des comptes utilisateurs est possible via l''interface administrateur de Drupal.' }] }
+  - { name: 'Unknown', translations: [{ code: 'fr', label: 'Inconnu' }] }
+  - { name: 'Quantity: high to low', translations: [{ code: 'fr', label: 'Quantité: ordre décroissant' }] }
+  - { name: 'Quantity: low to high', translations: [{ code: 'fr', label: 'Quantité: ordre croissant' }] }
+  - { name: 'Comments', translations: [{ code: 'fr', label: 'Commentaires' }] }
+  - { name: 'ABA routing number', translations: [{ code: 'fr', label: 'Code d''acheminement ABA' }] }
+  - { name: 'Bank Account Number', translations: [{ code: 'fr', label: 'Numéro de Compte Bancaire' }] }
+  - { name: 'Type of Account', translations: [{ code: 'fr', label: 'Type de compte ' }] }
+  - { name: 'Name of bank at which account is maintained', translations: [{ code: 'fr', label: 'Nom de la banque où le compte est établi' }] }
+  - { name: 'Name under which the account is maintained at the bank', translations: [{ code: 'fr', label: 'Тom du titulaire de compte' }] }
+  - { name: 'Check number', translations: [{ code: 'fr', label: 'Numéro de chèque' }] }
+  - { name: 'Checking', translations: [{ code: 'fr', label: 'Compte courant' }] }
+  - { name: 'Savings', translations: [{ code: 'fr', label: 'Compte d''épargne' }] }
+  - { name: 'Re-order', translations: [{ code: 'fr', label: 'Commander à nouveau' }] }
+  - { name: 'Order ID', translations: [{ code: 'fr', label: 'ID de commande' }] }
+  - { name: 'The X language has been added and enabled successfully', translations: [{ code: 'fr', label: 'La langue {{language}} a été ajouté et activé avec succès' }] }
+  - { name: 'Visit add-on''s page', translations: [{ code: 'fr', label: 'La description du module' }] }
+  - { name: 'Can''t be disabled. The module is required by:', translations: [{ code: 'fr', label: 'Impossible de désactiver. Le module est utilisé par:' }] }
+  - { name: 'Site map successfully registred on X', translations: [{ code: 'fr', label: 'Le plan du site est enregistré avec succès dans {{engine}} ​​' }] }
+  - { name: 'Site map has not been registred in X', translations: [{ code: 'fr', label: 'Le plan du site n''est pas enregistré dans {{engine}}' }] }
+  - { name: 'Incl. X', translations: [{ code: 'fr', label: 'Y compris {{name}}' }] }
+  - { name: '- out of stock -', translations: [{ code: 'fr', label: '- en rupture de stock -' }] }
+  - { name: 'Product is out of stock!', translations: [{ code: 'fr', label: 'Le produit est en rupture de stock!' }] }
+  - { name: 'The option combination you selected', translations: [{ code: 'fr', label: 'Combinaison d''options choisie' }] }
+  - { name: 'is not available. Please make another choice.', translations: [{ code: 'fr', label: 'n''est pas disponible. Faitez un autre choix, s''il vous plaît.' }] }
+  - { name: 'Selected options', translations: [{ code: 'fr', label: 'Options choisies' }] }
+  - { name: 'Referer', translations: [{ code: 'fr', label: 'Referé' }] }
+  - { name: 'Added', translations: [{ code: 'fr', label: 'Ajouté' }] }
+  - { name: 'Language', translations: [{ code: 'fr', label: 'Langue' }] }
+  - { name: 'Orders count', translations: [{ code: 'fr', label: 'Nombre de commandes' }] }
+  - { name: 'Account status', translations: [{ code: 'fr', label: 'Statut du compte' }] }
+  - { name: 'Admin', translations: [{ code: 'fr', label: 'Administrateur' }] }
+  - { name: 'Back to order list', translations: [{ code: 'fr', label: 'Retour à la liste des commandes' }] }
+  - { name: 'Order', translations: [{ code: 'fr', label: 'Commande' }] }
+  - { name: 'Order details', translations: [{ code: 'fr', label: 'Détails de la commande' }] }
+  - { name: 'Username verified. The password will be sent to your e-mail after the order is placed', translations: [{ code: 'fr', label: 'Nom d''utilisateur vérifiée. Le mot de passe sera envoyé à votre adresse e-mail après la commande est passée' }] }
+  - { name: 'License key has been successfully verified for "{{name}}" module by "{{author}}" author', translations: [{ code: 'fr', label: 'La clé de licence a été vérifiée avec succès pour module "{{name}}"  par auteur "{{auteur}}"' }] }
+  - { name: 'Response from marketplace is not received', translations: [{ code: 'fr', label: 'Réponse de marché n''est pas reçue' }] }
+  - { name: 'Response from marketplace: ', translations: [{ code: 'fr', label: 'Réponse de marché:' }] }
+  - { name: 'All products on sale', translations: [{ code: 'fr', label: 'Tous produits en vente' }] }
+  - { name: 'Old price', translations: [{ code: 'fr', label: 'Ancien prix' }] }
+  - { name: 'Search for modules', translations: [{ code: 'fr', label: 'Le nom du module souhaité' }] }
+  - { name: 'Warning! There is not enough product items in stock to process the order', translations: [{ code: 'fr', label: 'Attention! Il n''y a pas assez de points produits en stock pour traiter l''ordre' }] }
+  - { name: 'Dear', translations: [{ code: 'fr', label: 'cher' }] }
+  - { name: 'Products information has been successfully updated', translations: [{ code: 'fr', label: 'Produits d''information a été mis à jour' }] }
+  - { name: 'Are you sure you wish to delete the selected zones?', translations: [{ code: 'fr', label: 'Etes-vous sûr de vouloir supprimer les zones sélectionnées?' }] }
+  - { name: 'It is impossible to edit some user profile fields because your store currently works as an integration with Drupal and shares users with Drupal. Modifying these fields is possible via Drupal administrator interface.', translations: [{ code: 'fr', label: 'Il est impossible de modifier certains champs du profil utilisateur, car votre magasin travaille actuellement comme une intégration avec Drupal et les utilisateurs des actions avec Drupal. La modification de ces champs est possible via l''interface administrateur de Drupal.' }] }
+  - { name: 'Test email configuration', translations: [{ code: 'fr', label: 'Configuration de la messagerie d''essai' }] }
+  - { name: 'From email', translations: [{ code: 'fr', label: 'De email' }] }
+  - { name: 'To email', translations: [{ code: 'fr', label: 'Pour envoyer un courriel' }] }
+  - { name: 'Email body', translations: [{ code: 'fr', label: 'corps de l''email' }] }
+  - { name: 'Send test email', translations: [{ code: 'fr', label: 'Envoyer un email de test' }] }
+  - { name: 'not installed', translations: [{ code: 'fr', label: 'pas installé' }] }
+  - { name: 'Install', translations: [{ code: 'fr', label: 'Installer' }] }

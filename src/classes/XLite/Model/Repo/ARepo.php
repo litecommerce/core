@@ -836,6 +836,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             $addModel
             && !$entity
             && !\XLite\Core\Database::getInstance()->getFixturesLoadingOption('isAddModel')
+            && !\XLite\Core\Database::getInstance()->getFixturesLoadingOption('addParent')
         ) {
             return $result;
         }

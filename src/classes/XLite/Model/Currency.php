@@ -221,7 +221,7 @@ class Currency extends \XLite\Model\Base\I18n
      */
     public function formatValue($value)
     {
-        return $this->roundValue($value);
+        return \XLite\Logic\Math::getInstance()->formatValue($value, $this);
     }
 
     /**

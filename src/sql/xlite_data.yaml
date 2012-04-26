@@ -12,6 +12,15 @@ XLite\Model\Config:
   directives: { insert: true }
   - { name: admin_presentation, category: General, type: separator, orderby: 400, translations: [{ code: en, option_name: 'Administrator Zone settings' }] }
   - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone' }] }
+  - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address' }] }
+  - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line' }] }
+  - { name: anonymous_country, category: Shipping, type: country, orderby: 50, value: US, translations: [{ code: en, option_name: Country }] }
+  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State }] }
+  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Another state (specify)' }] }
+  - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City }] }
+  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code' }] }
+  - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime' }] }
+  - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key' }] }
   - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address }] }
   - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts }] }
   - { name: company_fax, category: Company, type: 'XLite\View\FormField\Input\Text\Phone', orderby: 420, translations: [{ code: en, option_name: Fax }] }
@@ -23,6 +32,7 @@ XLite\Model\Config:
   - { name: date_format, category: General, type: 'XLite\View\FormField\Select\DateFormat', orderby: 660, value: '%b %e, %Y', translations: [{ code: en, option_name: 'Date format' }] }
   - { name: decimal_delim, category: General, type: 'XLite\View\FormField\Select\DecimalPart', orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal separator' }] }
   - { name: default_country, category: General, type: country, orderby: 310, value: US, translations: [{ code: en, option_name: 'Default country in the registration form' }] }
+  - { name: default_language, category: General, orderby: 330, value: en }
   - { name: default_offline_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Payment method to be assumed in case of zero order totals' }] }
   - { name: default_purchase_limit, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 293, value: 9999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Default purchase limit' }] }
   - { name: default_select_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Default payment method' }] }
@@ -56,6 +66,7 @@ XLite\Model\Config:
   - { name: recent_orders, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 440, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'The number of orders in the recent order list' }] }
   - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product' }] }
   - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to close the shop temporarily' }] }
+  - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency' }] }
   - { name: show_thumbnails, category: General, type: checkbox, orderby: 230, value: Y, translations: [{ code: en, option_name: 'Show thumbnails in product list' }] }
   - { name: site_administrator, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail' }] }
   - { name: smtp_password, category: Email, type: text, orderby: 160, translations: [{ code: en, option_name: Password }] }
@@ -78,17 +89,7 @@ XLite\Model\Config:
   - { name: version, category: Version, value: xlite_3_0_x }
   - { name: weight_symbol, category: General, type: text, orderby: 620, value: lbs, translations: [{ code: en, option_name: 'Weight symbol' }] }
   - { name: weight_unit, category: General, type: 'XLite\View\FormField\Select\WeightUnit', orderby: 610, value: lbs, translations: [{ code: en, option_name: 'Weight unit' }] }
-  - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency' }] }
-  - { name: default_language, category: General, orderby: 330, value: en }
-  - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address' }] }
-  - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line' }] }
-  - { name: anonymous_country, category: Shipping, type: country, orderby: 50, value: US, translations: [{ code: en, option_name: Country }] }
-  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State }] }
-  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Another state (specify)' }] }
-  - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City }] }
-  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code' }] }
-  - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime' }] }
-  - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key' }] }
+
 XLite\Model\Category:
   - { category_id: 1, show_title: false, translations: [{ code: en, name: 'Catalog' }] }
 XLite\Model\Currency:
