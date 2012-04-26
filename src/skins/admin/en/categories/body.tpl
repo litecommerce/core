@@ -17,7 +17,7 @@
   <tr>
 
     <td IF="category.hasImage()">
-      <widget template="categories/parts/image.tpl" image="{category.getImage()}" />
+      <img src="{category.image.getURL()}" width="{category.image.getWidth()}" height="{category.image.getHeight()}" alt="" />
     </td>
 
     <td>

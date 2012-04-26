@@ -82,7 +82,7 @@ abstract class URLManager extends \Includes\Utils\AUtils
         }
 
         if (!isset($output)) {
-            $output = static::::URL_OUTPUT_FULL;
+            $output = static::URL_OUTPUT_FULL;
         }
 
         $hostDetails = \Includes\Utils\ConfigParser::getOptions('host_details');
