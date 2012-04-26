@@ -77,14 +77,15 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
      * @param string $alias Table alias OPTIONAL
+     * @param string $code  Language code OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function createQueryBuilder($alias = null)
+    public function createQueryBuilder($alias = null, $code = null)
     {
-        return $this->prepareOptionsAvailabilityCondition(parent::createQueryBuilder($alias));
+        return $this->prepareOptionsAvailabilityCondition(parent::createQueryBuilder($alias, $code));
     }
 
     /**
@@ -436,7 +437,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
      */
     protected function defineAllOptionsQuery()
     {
-        return $this->createQueryBuilder();
+        return $this->createQueryBuilder(null, \XLite\Base\Superclass::getDefaultLanguage());
     }
 
     /**

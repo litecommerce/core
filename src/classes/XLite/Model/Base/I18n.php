@@ -152,7 +152,7 @@ abstract class I18n extends \XLite\Model\AEntity
         $result = $this->getTranslation($code, true);
 
         if (!isset($result)) {
-            $result = $this->getTranslation(static::$defaultLanguage);
+            $result = $this->getTranslation(static::getDefaultLanguage());
 
             if (!$result->isPersistent() && ($tmp = $this->getTranslations()->first())) {
                 $result = $tmp;

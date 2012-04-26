@@ -8,6 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
+ * @ListChild (list="admin.main.page.content.center", weight="10")
  *}
 <widget template="noscript.tpl" />
 
@@ -18,8 +19,6 @@
 {*** TODO: will be moved to the dashboard side bar
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}" />
 ***}
-
-<widget target="main" template="common/dialog.tpl" body="menu.tpl" />
 
 <widget name="categoriesWidget" target="categories" template="common/dialog.tpl" body="categories/body.tpl" IF="!mode=#delete#" />
 <widget module="CDev\FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/CDev/FeaturedProducts/featured_products.tpl" IF="{namedWidgets.categoriesWidget.visible}" />

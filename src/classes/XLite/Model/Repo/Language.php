@@ -64,6 +64,25 @@ class Language extends \XLite\Model\Repo\Base\I18n
         array('code'),
     );
 
+    /**
+     * Create a new QueryBuilder instance that is prepopulated for this entity name
+     *
+     * @param string $alias Table alias OPTIONAL
+     * @param string $code  Language code OPTIONAL
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function createQueryBuilder($alias = null, $code = null)
+    {
+        if (!isset($code)) {
+            $code = \XLite\Base\Superclass::getDefaultLanguage();
+        }
+
+        return parent::createQueryBuilder($alias, $code);
+    }
+
     // {{{ defineCacheCells
 
     /**
@@ -98,6 +117,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
     public function findAllLanguages()
     {
         $data = $this->getFromCache('all');
+
         if (!isset($data)) {
             $data = $this->defineAllLanguagesQuery()->getResult();
             $this->saveToCache($data, 'all');
@@ -124,6 +144,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Find all active languages
+     * NOTE: do not cache this result in a persistent cache
      *
      * @return array
      * @see    ____func_see____
@@ -131,14 +152,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      */
     public function findActiveLanguages()
     {
-        $data = $this->getFromCache('status', array('status' => \XLite\Model\Language::ENABLED));
-
-        if (!isset($data)) {
-            $data = $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getResult();
-            $this->saveToCache($data, 'status', array('status' => \XLite\Model\Language::ENABLED));
-        }
-
-        return $data;
+        return $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getResult();
     }
 
     /**

@@ -655,7 +655,9 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 		            $bYear = '2011';
     		        $eYear = @date('Y');
         		    $text = 'Copyright (c) ' . (($bYear == $eYear) ? $bYear : $bYear . '-' . $eYear) . ' Creative Development LLC <info@cdev.ru>. All rights reserved';
-            		if ($content !== $text) {
+                    $eYear2 = $eYear - 1;
+                    $text2 = 'Copyright (c) ' . (($bYear == $eYear2) ? $bYear : $bYear . '-' . $eYear2) . ' Creative Development LLC <info@cdev.ru>. All rights reserved';
+            		if ($content !== $text && $content !== $text2) {
                 		$error = 'Content of the @copyright tag must be in the form "' . $text . '"';
 	                	$this->currentFile->addError($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'copyright')) . $error, $errorPos);
 	    	        }
@@ -1050,7 +1052,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
         $types = array_map('trim', explode('|', $rawType));
         if (4 < count($types)) {
             $this->currentFile->addError(
-				$this->getReqPrefix('REQ.PHP.3.5.17') . 'Число вариантов типов @' . $tag . ' больше 4',
+				$this->getReqPrefix('REQ.PHP.3.5.17') . 'Number of types @' . $tag . ' tag is greater than 4',
 				$errorPos
 			);
         }
@@ -1073,7 +1075,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 				$result = $r;
 
 			} else {
-				$result = 'Тип "' . $type . '" запрещен для использования в @' . $tag;
+				$result = 'Type "' . $type . '" is forbidden for @' . $tag;
 			}
 
 			break;

@@ -52,5 +52,8 @@ class Hub extends Server
         $this->micro_farm->shutdown();
         parent::shutdown();
     }
+    function console(){
+        exec("firefox " . $this->console_url);
+    }
 
 }

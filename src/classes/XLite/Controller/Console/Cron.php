@@ -45,6 +45,24 @@ class Cron extends \XLite\Controller\Console\AConsole
     protected $timeLimit = 600;
 
     /**
+     * Memory limit (bytes)
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $memoryLimit = 4000000;
+
+    /**
+     * Memory limit from memory_limit PHP setting (bytes)
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $memoryLimitIni;
+
+    /**
      * Sleep time
      *
      * @var   integer
@@ -52,6 +70,15 @@ class Cron extends \XLite\Controller\Console\AConsole
      * @since 1.0.0
      */
     protected $sleepTime = 3;
+
+    /**
+     * Start time 
+     * 
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.19
+     */
+    protected $startTime;
 
     /**
      * Preprocessor for no-action
@@ -62,37 +89,70 @@ class Cron extends \XLite\Controller\Console\AConsole
      */
     protected function doNoAction()
     {
-        $time = time();
+        $this->startTime = time();
+        $this->startMemory = memory_get_usage(true);
+        $this->memoryLimitIni = \XLite\Core\COnverter::convertShortSize(ini_get('memory_limit') ?: '16M');
 
         foreach (\XLite\Core\Database::getRepo('XLite\Model\Task')->getCurrentQuery() as $task) {
             $task = $task[0];
             $runner = $task->getOwnerInstance();
-            $silence = !$runner->getTitle();
-            if ($runner && $runner->isReady()) {
-                if (!$silence) {
-                    $this->printContent($runner->getTitle() . ' ... ');
-                }
-
-                $runner->run();
-
-                if (!$silence) {
-                    $message = $runner->getMessage();
-                    if ($message) {
-                        $this->printContent($runner->getMessage());
-                    }
-                }
+            if ($runner) {
+                $this->runRunner($runner);
             }
-
-            if (!$silence) {
-                $this->printContent(PHP_EOL);
-            }
-            \XLite\Core\Database::getEM()->flush();
 
             sleep($this->sleepTime);
 
-            if (time() - $time > $this->timeLimit) {
+            if (!$this->checkThreadResource()) {
+                $time = gmdate('H:i:s', time() - $this->startTime);
+                $memory = \XLite\Core\Converter::formatFileSize(memory_get_usage(true));
+                $this->printContent('Step is interrupted (time: ' . $time . '; memory usage: ' . $memory. ')');
+
                 break;
             }
         }
+    }
+
+    /**
+     * Check thread resource 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function checkThreadResource()
+    {
+        return time() - $this->startTime < $this->timeLimit
+            && $this->memoryLimitIni - memory_get_usage(true) > $this->memoryLimit;
+    }
+
+    /**
+     * Run runner 
+     * 
+     * @param \XLite\Core\Task\ATask $runner Runner
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function runRunner(\XLite\Core\Task\ATask $runner)
+    {
+        $silence = !$runner->getTitle();
+        if ($runner && $runner->isReady()) {
+            if (!$silence) {
+                $this->printContent($runner->getTitle() . ' ... ');
+            }
+
+            $runner->run();
+
+            if (!$silence) {
+                $this->printContent($runner->getMessage() ?: 'done');
+            }
+        }
+
+        if (!$silence) {
+            $this->printContent(PHP_EOL);
+        }
+
+        \XLite\Core\Database::getEM()->flush();
     }
 }

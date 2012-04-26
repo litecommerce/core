@@ -126,7 +126,7 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
 			if (count($classes) > 0 && !isset($cache[$phpcsFile->getFilename()])) {
 				$cache[$phpcsFile->getFilename()] = true;
 
-				$error = 'Один файл может содержать объявление только одного класса';
+				$error = 'п·п╢п╦п╫ я└п╟п╧п╩ п╪п╬п╤п╣я┌ я│п╬п╢п╣я─п╤п╟я┌я▄ п╬п╠я┼я▐п╡п╩п╣п╫п╦п╣ я┌п╬п╩я▄п╨п╬ п╬п╢п╫п╬пЁп╬ п╨п╩п╟я│я│п╟';
 				foreach ($classes as $c) {
 					$phpcsFile->addError(
 						$this->getReqPrefix('REQ.PHP.3.4.4') . $error,
@@ -151,7 +151,7 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
 			true
 		);
 
-		$error = 'Размещение дополнительно кода в файле с классом не рекомендуется';
+		$error = 'п═п╟п╥п╪п╣я┴п╣п╫п╦п╣ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫п╬ п╨п╬п╢п╟ п╡ я└п╟п╧п╩п╣ я│ п╨п╩п╟я│я│п╬п╪ п╫п╣ я─п╣п╨п╬п╪п╣п╫п╢я┐п╣я┌я│я▐';
 
 		if ($posPrev !== false) {
             $phpcsFile->addWarning(
@@ -181,7 +181,7 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
 					$funcPos = $phpcsFile->findNext(T_FUNCTION, $stackPtr + 1, $pos - 1);
 					if ($funcPos !== false) {
 			            $phpcsFile->addError(
-            			    $this->getReqPrefix('REQ.PHP.3.4.5') . 'Переменные класса должны быть определены до определения методов',
+            			    $this->getReqPrefix('REQ.PHP.3.4.5') . 'п÷п╣я─п╣п╪п╣п╫п╫я▀п╣ п╨п╩п╟я│я│п╟ п╢п╬п╩п╤п╫я▀ п╠я▀я┌я▄ п╬п©я─п╣п╢п╣п╩п╣п╫я▀ п╢п╬ п╬п©я─п╣п╢п╣п╩п╣п╫п╦я▐ п╪п╣я┌п╬п╢п╬п╡',
 			                $pos
             			);
 					}
@@ -192,13 +192,13 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
 					$posProtected = $phpcsFile->findNext(T_PROTECTED, $prevEOL + 1, $pos - 1);
 					if ($posPrivate === false && $posPublic === false && $posProtected === false) {
                         $phpcsFile->addError(
-                            $this->getReqPrefix('REQ.PHP.3.4.6') . 'Использование определения области видимости обязательно',
+                            $this->getReqPrefix('REQ.PHP.3.4.6') . 'п≤я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣ п╬п©я─п╣п╢п╣п╩п╣п╫п╦я▐ п╬п╠п╩п╟я│я┌п╦ п╡п╦п╢п╦п╪п╬я│я┌п╦ п╬п╠я▐п╥п╟я┌п╣п╩я▄п╫п╬',
                             $pos
                         );
 
  					} elseif ($posPrivate) {
                         $phpcsFile->addError(
-                            $this->getReqPrefix('REQ.PHP.3.4.8') . 'Использование области видимости private запрещено',
+                            $this->getReqPrefix('REQ.PHP.3.4.8') . 'п≤я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣ п╬п╠п╩п╟я│я┌п╦ п╡п╦п╢п╦п╪п╬я│я┌п╦ private п╥п╟п©я─п╣я┴п╣п╫п╬',
                             $pos
                         );
 
@@ -207,7 +207,7 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
 
 					if ($posPublic !== false) {
                         $phpcsFile->addWarning(
-                            $this->getReqPrefix('WRN.PHP.3.4.2') . 'Не рекомендуется использовать public переменные класса',
+                            $this->getReqPrefix('WRN.PHP.3.4.2') . 'п²п╣ я─п╣п╨п╬п╪п╣п╫п╢я┐п╣я┌я│я▐ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ public п©п╣я─п╣п╪п╣п╫п╫я▀п╣ п╨п╩п╟я│я│п╟',
                             $pos
                         );
 					}

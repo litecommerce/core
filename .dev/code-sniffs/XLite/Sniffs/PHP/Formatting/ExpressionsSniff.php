@@ -91,7 +91,7 @@ class XLite_Sniffs_PHP_Formatting_ExpressionsSniff extends XLite_ReqCodesSniff
 			$rq = array();
             $phpcsFile->addError(
                 $this->getReqPrefix($rc)
-                . 'Законченое выражение должно отделяться одним пробелом справа',
+                . 'п≈п╟п╨п╬п╫я┤п╣п╫п╬п╣ п╡я▀я─п╟п╤п╣п╫п╦п╣ п╢п╬п╩п╤п╫п╬ п╬я┌п╢п╣п╩я▐я┌я▄я│я▐ п╬п╢п╫п╦п╪ п©я─п╬п╠п╣п╩п╬п╪ я│п©я─п╟п╡п╟',
                 $prev
             );
 		}
@@ -102,7 +102,7 @@ class XLite_Sniffs_PHP_Formatting_ExpressionsSniff extends XLite_ReqCodesSniff
 			if ($tokens[$next + 1]['code'] !== T_COLON) {
 	            $phpcsFile->addError(
     	            $this->getReqPrefix($rc)
-        	        . 'Законченое выражение должно отделяться одним пробелом слева',
+        	        . 'п≈п╟п╨п╬п╫я┤п╣п╫п╬п╣ п╡я▀я─п╟п╤п╣п╫п╦п╣ п╢п╬п╩п╤п╫п╬ п╬я┌п╢п╣п╩я▐я┌я▄я│я▐ п╬п╢п╫п╦п╪ п©я─п╬п╠п╣п╩п╬п╪ я│п╩п╣п╡п╟',
             	    $next
 	            );
 			}

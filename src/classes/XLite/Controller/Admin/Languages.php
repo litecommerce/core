@@ -90,9 +90,9 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.19
      */
-    public function getDefaultLanguage()
+    public function getDefaultLanguageObject()
     {
-        return \xLite\Core\Database::getRepo('\XLite\Model\Language')->findOneByCode(static::$defaultLanguage);
+        return \xLite\Core\Database::getRepo('\XLite\Model\Language')->findOneByCode(static::getDefaultLanguage());
     }
 
     /**
@@ -174,7 +174,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 'The language you want to delete has not been found'
             );
 
-        } elseif ($language->code == static::$defaultLanguage) {
+        } elseif ($language->code == static::getDefaultLanguage()) {
             \XLite\Core\TopMessage::addError(
                 'The language you want to delete is the default interface language and cannot be deleted'
             );
@@ -212,7 +212,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 'The language has not been found'
             );
 
-        } elseif ($language->code == static::$defaultLanguage && $language->enabled) {
+        } elseif ($language->code == static::getDefaultLanguage() && $language->enabled) {
 
             \XLite\Core\TopMessage::addError(
                 'The default interface language cannot be disabled'
@@ -263,7 +263,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         if (is_array($current) && $current) {
             $this->saveLabels(
                 $current,
-                static::$defaultLanguage
+                static::getDefaultLanguage()
             );
         }
         unset($current);
@@ -282,7 +282,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 $translateFail = true;
 
             } elseif (
-                static::$defaultLanguage == $language
+                static::getDefaultLanguage() == $language
             ) {
 
                 \XLite\Core\TopMessage::addWarning(
@@ -393,7 +393,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     {
         $name = substr(\XLite\Core\Request::getInstance()->name, 0, 255);
         $label = \XLite\Core\Request::getInstance()->label;
-        $codeDefault = $codeInterface = static::$defaultLanguage;
+        $codeDefault = $codeInterface = static::getDefaultLanguage();
 
         if (!$name) {
             \XLite\Core\TopMessage::addError(
@@ -444,7 +444,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     {
         $label = \XLite\Core\Request::getInstance()->label;
         $labelId = intval(\XLite\Core\Request::getInstance()->label_id);
-        $codeDefault = $codeInterface = static::$defaultLanguage;
+        $codeDefault = $codeInterface = static::getDefaultLanguage();
         $lbl = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->find($labelId);
 
         if (!$lbl) {
@@ -496,7 +496,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         $lng = \XLite\Core\Database::getRepo('\XLite\Model\Language')->find($lngId);
         $names = \XLite\Core\Request::getInstance()->name;
 
-        $codeDefault = static::$defaultLanguage;
+        $codeDefault = static::getDefaultLanguage();
 
         if (!$lng) {
 

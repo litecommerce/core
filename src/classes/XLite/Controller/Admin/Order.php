@@ -45,6 +45,18 @@ class Order extends \XLite\Controller\Admin\AAdmin
     protected $params = array('target', 'order_id', 'page');
 
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage orders');
+    }
+
+    /**
      * Check if current page is accessible
      *
      * @return boolean

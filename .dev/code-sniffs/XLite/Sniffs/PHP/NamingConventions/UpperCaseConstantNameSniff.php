@@ -57,6 +57,7 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
         'FILTER_FLAG_ALLOW_FRACTION',
         'PATHINFO_EXTENSION', 'UPLOAD_ERR_OK', 'FILE_APPEND',
         'SORT_NUMERIC',
+        'T_FINAL', 'T_ABSTRACT',
         // Defined in Drupal:
         'MENU_VISIBLE_IN_BREADCRUMB',
         'USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL', 'USER_REGISTER_VISITORS', 'CSS_DEFAULT', 'JS_DEFAULT',
@@ -185,7 +186,7 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
 		}
 
 		if (substr($constName, 0, 3) !== 'LC_') {
-			$error = 'Constant ' . $constName . ' has not prefix LC_';
+			$error = 'Constant ' . $constName . ' has no prefix LC_';
 			$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.6.3') . $error, $stackPtr);
 		}
 

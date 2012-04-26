@@ -858,7 +858,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 			# cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes/lc3/logo.png
 		fi
 
-		sed_cmd="$SED_EXT 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info"
+		sed_cmd="$SED_EXT 's/lc_dir_default = .*/lc_dir_default = .\/litecommerce/' modules/lc_connector/lc_connector.info"
 		eval "$sed_cmd"
 
 		if [ "${TEST_MODE}" ]; then
@@ -930,9 +930,9 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a "${_is_drupal_dir_exists}" ];
 		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
 
 		# Move LiteCommerce into LC Connector module directory
-		mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} modules/lc_connector/
+		mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} .
 
-		cd modules/lc_connector/${LITECOMMERCE_DIRNAME}
+		cd ${LITECOMMERCE_DIRNAME}
 
 		if [ "${TEST_MODE}" = "" -a "${DEMO_VERSION}" = "" ]; then
 			# Add DrupalConnector module

@@ -42,6 +42,12 @@
   vertical-align: top;
 }
 
+.modules-list.data-table th,
+  .modules-list.data-table td
+{
+  padding: 20px 10px;
+}
+
 .modules-list tr td.icon {
   width: 100px;
 }
@@ -102,7 +108,6 @@
 }
 
 .modules-list .actions li {
-  display: inline;
   border-width: 1px;
   border-top-style: solid;
   border-bottom-style: solid;
@@ -112,6 +117,8 @@
   vertical-align: middle;
   padding: 6px 5px 6px 9px;
   margin: 0px;
+  float: left;
+  height: 16px;
 }
 
 .modules-list .actions li,
@@ -156,10 +163,6 @@
   margin-right: 3px;
 }
 
-.modules-list .actions li * {
-  vertical-align: middle;
-}
-
 .modules-list .disabled .actions li {
   background-color: #f5f5f5;
 }
@@ -167,10 +170,20 @@
 .modules-list .actions li input {
   margin-right: 3px;
   margin-bottom: 2px;
+  margin-top: 1px;
+  display: inline-block;
+  position: absolute;
+  width: auto;
+  left: 0px;
+  top: 0px;
 }
 
 .modules-list .actions li label {
   padding-bottom: 2px;
+  position: relative;
+  float: left;
+  padding-left: 20px;
+  line-height: 16px;
 }
 
 .modules-list .actions .uninstall img {

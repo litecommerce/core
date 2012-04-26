@@ -143,8 +143,9 @@ class Database extends \XLite\Base\Singleton
      * @since 1.0.0
      */
     protected $fixturesLoadingOptions = array(
-        'insert'   => false,
-        'addModel' => null,
+        'insert'    => false,
+        'addModel'  => null,
+        'addParent' => true,
     );
 
     /**
@@ -827,7 +828,7 @@ OUT;
      */
     public function getFixturesLoadingOption($name)
     {
-        return isset($this->fixturesLoadingOptions[$name]) ? $this->fixturesLoadingOptions[$name] : null;
+        return \Includes\Utils\ArrayManager::getIndex($this->fixturesLoadingOptions, $name, true);
     }
 
     /**
@@ -867,7 +868,6 @@ OUT;
 
                 if ($repo) {
                     $rows = $this->detectDirectives($rows);
-
                     $result += $repo->loadFixtures($rows);
 
                     static::$em->flush();
@@ -1409,11 +1409,16 @@ OUT;
     protected function detectDirectives(array $rows)
     {
         if (isset($rows['directives'])) {
-            $this->fixturesLoadingOptions['insert'] = isset($rows['directives']['insert'])
-                && $rows['directives']['insert'];
+            $this->fixturesLoadingOptions['insert'] = !empty($rows['directives']['insert']);
+
             if (isset($rows['directives']['addModel'])) {
                 $this->fixturesLoadingOptions['addModel'] = $rows['directives']['addModel'];
             }
+
+            if (isset($rows['directives']['addParent'])) {
+                $this->fixturesLoadingOptions['addParent'] = (bool) $rows['directives']['addParent'];
+            }
+
             unset($rows['directives']);
         }
 
@@ -1429,8 +1434,9 @@ OUT;
      */
     protected function resetDirectives()
     {
-        $this->fixturesLoadingOptions['insert'] = false;
-        $this->fixturesLoadingOptions['addModel'] = null;
+        $this->fixturesLoadingOptions['insert']    = false;
+        $this->fixturesLoadingOptions['addModel']  = null;
+        $this->fixturesLoadingOptions['addParent'] = true;
     }
 
     /**

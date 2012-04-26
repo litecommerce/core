@@ -7,6 +7,7 @@
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
 # @since     1.0.0
+
 XLite\Model\Config:
   - name: userid
     category: CDev\USPS
@@ -115,6 +116,7 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: GXG package contains a gift
+
 XLite\Model\Shipping\Method:
   - processor: usps
     carrier: usps
@@ -188,7 +190,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Parcel Post<sup>&reg;</sup>"
-
   - processor: usps
     carrier: usps
     code: D-6-0ad5d2eee20df55237775cdbba88f08d
@@ -197,7 +198,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Media Mail<sup>&reg;</sup>"
-
   - processor: usps
     carrier: usps
     code: D-7-c8dd11cc1d74e162f1121d5728912a49
@@ -206,7 +206,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Library Mail"
-
   - processor: usps
     carrier: usps
     code: D-13-7a1205f7adff85380ac46194dbbf7c69
@@ -215,7 +214,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Express Mail<sup>&reg;</sup> Flat Rate Envelope"
-
   - processor: usps
     carrier: usps
     code: D-16-ec5c444f98d0ac3052bedd838676ba7a
@@ -224,7 +222,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Priority Mail<sup>&reg;</sup> Flat Rate Envelope"
-
   - processor: usps
     carrier: usps
     code: D-17-11149f37e41162928389b3a9b69ba838
@@ -233,7 +230,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Priority Mail<sup>&reg;</sup> Medium Flat Rate Box"
-
   - processor: usps
     carrier: usps
     code: D-22-4636ea44070fe0328ca84a6058d0693d
@@ -242,7 +238,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Priority Mail<sup>&reg;</sup> Large Flat Rate Box"
-
   - processor: usps
     carrier: usps
     code: D-23-9c5382d59274c057917f836694814909
@@ -251,7 +246,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Express Mail<sup>&reg;</sup> Sunday/Holiday Delivery"
-
   - processor: usps
     carrier: usps
     code: D-25-1296527ede3b1f548a8fbc5bfe2daf61
@@ -260,7 +254,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Express Mail<sup>&reg;</sup> Sunday/Holiday Delivery Flat Rate Envelope"
-
   - processor: usps
     carrier: usps
     code: D-27-4977b486ce1f033727860d613116c349
@@ -269,7 +262,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Express Mail<sup>&reg;</sup> Flat Rate Envelope Hold For Pickup"
-
   - processor: usps
     carrier: usps
     code: D-28-5985bdb713ab4484a4b77047f0535ee7
@@ -278,7 +270,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Priority Mail<sup>&reg;</sup> Small Flat Rate Box"
-
   - processor: usps
     carrier: usps
     code: D-29-c9260e8936dc7aa84160eddd0ff641ee
@@ -287,7 +278,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Priority Mail<sup>&reg;</sup> Padded Flat Rate Envelope"
-
   - processor: usps
     carrier: usps
     code: D-30-d9f563792d32ac08c2e3522f9e7be579
@@ -296,7 +286,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Express Mail<sup>&reg;</sup> Legal Flat Rate Envelope"
-
   - processor: usps
     carrier: usps
     code: D-31-ec27f41f0b749432826eaac58bdb07ab
@@ -305,7 +294,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Express Mail<sup>&reg;</sup> Legal Flat Rate Envelope Hold For Pickup"
-
   - processor: usps
     carrier: usps
     code: D-32-aaac4d83a8b1d33878261e1fea8ae3cd
@@ -314,7 +302,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Express Mail<sup>&reg;</sup> Sunday/Holiday Delivery Legal Flat Rate Envelope"
-
   - processor: usps
     carrier: usps
     code: D-38-1e1c35199e570b9b03263b4089165aa1
@@ -323,7 +310,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Priority Mail<sup>&reg;</sup> Gift Card Flat Rate Envelope"
-
   - processor: usps
     carrier: usps
     code: D-40-b2ebe743e84e1cb86a924f02927c5ca3
@@ -332,7 +318,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Priority Mail<sup>&reg;</sup> Window Flat Rate Envelope"
-
   - processor: usps
     carrier: usps
     code: D-42-8fcf3a9ba972ae8f8f9ef311cd2f5179
@@ -341,7 +326,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Priority Mail<sup>&reg;</sup> Small Flat Rate Envelope"
-
   - processor: usps
     carrier: usps
     code: D-44-d74bbcf5659cb5b67b319f7f6bcda381
@@ -350,7 +334,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Priority Mail<sup>&reg;</sup> Legal Flat Rate Envelope"
-
   - processor: usps
     carrier: usps
     code: I-1-735bf98ee9fbdf9dbb374920def99049
@@ -359,7 +342,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Express Mail<sup>&reg;</sup> International"
-
   - processor: usps
     carrier: usps
     code: I-2-216a7410e3bdbc83b77893db92179ad8
@@ -368,7 +350,6 @@ XLite\Model\Shipping\Method:
     translations:
       - code: en
         name: "U.S.P.S. Priority Mail<sup>&reg;</sup> International"
-
   - processor: usps
     carrier: usps
     code: I-4-148660649e3ab57432f8501789bd290d

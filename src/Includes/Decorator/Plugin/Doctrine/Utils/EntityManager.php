@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,49 +13,45 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes_Decorator_Utils
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * 
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace Includes\Decorator\Plugin\Doctrine\Utils;
 
 /**
- * EntityManager
+ * EntityManager 
  *
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctrine
 {
     /**
      * Entity manager
      *
-     * @var    Doctrine\ORM\EntityManager
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \Doctrine\ORM\EntityManager
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $handler;
 
     /**
      * Model classes metadata
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $metadata;
-
 
     /**
      * Return all classes metadata
@@ -63,14 +59,12 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @param string $class Class name OPTIONAL
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function getAllMetadata($class = null)
     {
         if (!isset(static::$metadata)) {
-
             static::$metadata = array();
 
             // Create hash array to quick access its elements
@@ -86,7 +80,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * Generate models
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -99,7 +92,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * Generate proxies
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -112,7 +104,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * Retur DSN as params array
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -125,10 +116,9 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * Set metadata driver for Doctrine config
      * FIXME: to revise
      *
-     * @param \Doctrine\ORM\Configuration $config config object
+     * @param \Doctrine\ORM\Configuration $config Config object
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -146,7 +136,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
         );
 
         foreach ($iterator as $dir) {
-
             if (\Includes\Utils\FileManager::isDir($dir->getPathName())) {
                 $iterator2 = new \RecursiveDirectoryIterator($dir->getPathName(), \FilesystemIterator::SKIP_DOTS);
 
@@ -171,8 +160,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     /**
      * Return the Doctrine config object
      *
-     * @return Doctrine\ORM\Configuration
-     * @access protected
+     * @return \Doctrine\ORM\Configuration
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -196,8 +184,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     /**
      * Return instance of the entity manager
      *
-     * @return Doctrine\ORM\EntityManager
-     * @access protected
+     * @return \Doctrine\ORM\EntityManager
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -215,7 +202,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * Return the Doctrine tools
      *
      * @return \Doctrine\ORM\Tools\EntityGenerator
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */

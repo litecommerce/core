@@ -12,4 +12,4 @@
  * @ListChild (list="top_links.account", weight="300")
  *}
 
-<li><a href="{buildURL(#recent_login#)}">{t(#Login history#)}</a></li>
+<li IF="checkLoginHistoryACL()"><a href="{buildURL(#recent_login#)}">{t(#Login history#)}</a></li>

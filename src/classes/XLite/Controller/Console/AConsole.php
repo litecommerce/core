@@ -64,7 +64,7 @@ abstract class AConsole extends \XLite\Controller\AController
     public function handleRequest()
     {
         if ($this->checkAccess() && \XLite\Core\Request::getInstance()->help) {
-            print ($this->getHelp());
+            $this->printContent($this->getHelp());
 
         } else {
 
@@ -79,7 +79,7 @@ abstract class AConsole extends \XLite\Controller\AController
 
                 $this->printContent(
                     PHP_EOL . 'Execution time: '
-                    . date('H:i:s', floor($duration) - intval(date('Z')))
+                    . gmdate('H:i:s', floor($duration))
                     . '.' . sprintf('%04d', $micro * 10000) . ' sec.'
                     . PHP_EOL
                 );
@@ -210,7 +210,9 @@ abstract class AConsole extends \XLite\Controller\AController
      */
     protected function printContent($str)
     {
-        print ($str);
+        if (\XLite\Core\Request::getInstance()->isCLI()) {
+            print ($str);
+        }
     }
 
     /**

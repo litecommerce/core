@@ -60,6 +60,20 @@ class Profile extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL()
+            || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage users')
+            || ($this->getProfile() && $this->getProfile()->getProfileId() == \XLite\Core\Auth::getInstance()->getProfile()->getProfileId());
+    }
+
+    /**
      * Check if current page is accessible
      *
      * @return boolean

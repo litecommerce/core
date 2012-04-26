@@ -1489,7 +1489,15 @@ function doCreateAdminAccount(&$params, $silentMode = false)
     $profile->setAccessLevel(100);
     $profile->enable();
 
+    $role = \XLite\Core\Database::getRepo('XLite\Model\Role')->findOneByName('Administrator');
+
+    $profile->addRoles($role);
+ 
     $profile->create();
+ 
+    $role->addProfiles($profile);
+    \XLite\Core\Database::getEM()->persist($role);
+    \XLite\Core\Database::getEM()->flush();
 
     if ($silentMode) {
         ob_end_clean();

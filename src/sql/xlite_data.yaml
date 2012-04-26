@@ -12,6 +12,15 @@ XLite\Model\Config:
   directives: { insert: true }
   - { name: admin_presentation, category: General, type: separator, orderby: 400, translations: [{ code: en, option_name: 'Administrator Zone settings' }] }
   - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone' }] }
+  - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address' }] }
+  - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line' }] }
+  - { name: anonymous_country, category: Shipping, type: country, orderby: 50, value: US, translations: [{ code: en, option_name: Country }] }
+  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State }] }
+  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Another state (specify)' }] }
+  - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City }] }
+  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code' }] }
+  - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime' }] }
+  - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key' }] }
   - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address }] }
   - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts }] }
   - { name: company_fax, category: Company, type: 'XLite\View\FormField\Input\Text\Phone', orderby: 420, translations: [{ code: en, option_name: Fax }] }
@@ -23,6 +32,7 @@ XLite\Model\Config:
   - { name: date_format, category: General, type: 'XLite\View\FormField\Select\DateFormat', orderby: 660, value: '%b %e, %Y', translations: [{ code: en, option_name: 'Date format' }] }
   - { name: decimal_delim, category: General, type: 'XLite\View\FormField\Select\DecimalPart', orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal separator' }] }
   - { name: default_country, category: General, type: country, orderby: 310, value: US, translations: [{ code: en, option_name: 'Default country in the registration form' }] }
+  - { name: default_language, category: General, orderby: 330, value: en }
   - { name: default_offline_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Payment method to be assumed in case of zero order totals' }] }
   - { name: default_purchase_limit, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 293, value: 9999, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Default purchase limit' }] }
   - { name: default_select_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Default payment method' }] }
@@ -56,6 +66,7 @@ XLite\Model\Config:
   - { name: recent_orders, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 440, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'The number of orders in the recent order list' }] }
   - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product' }] }
   - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to close the shop temporarily' }] }
+  - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency' }] }
   - { name: show_thumbnails, category: General, type: checkbox, orderby: 230, value: Y, translations: [{ code: en, option_name: 'Show thumbnails in product list' }] }
   - { name: site_administrator, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail' }] }
   - { name: smtp_password, category: Email, type: text, orderby: 160, translations: [{ code: en, option_name: Password }] }
@@ -78,196 +89,169 @@ XLite\Model\Config:
   - { name: version, category: Version, value: xlite_3_0_x }
   - { name: weight_symbol, category: General, type: text, orderby: 620, value: lbs, translations: [{ code: en, option_name: 'Weight symbol' }] }
   - { name: weight_unit, category: General, type: 'XLite\View\FormField\Select\WeightUnit', orderby: 610, value: lbs, translations: [{ code: en, option_name: 'Weight unit' }] }
-  - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency' }] }
-  - { name: default_language, category: General, orderby: 330, value: en }
-  - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address' }] }
-  - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line' }] }
-  - { name: anonymous_country, category: Shipping, type: country, orderby: 50, value: US, translations: [{ code: en, option_name: Country }] }
-  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State }] }
-  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Another state (specify)' }] }
-  - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City }] }
-  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code' }] }
-  - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime' }] }
-  - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key' }] }
+
 XLite\Model\Category:
   - { category_id: 1, show_title: false, translations: [{ code: en, name: 'Catalog' }] }
 XLite\Model\Currency:
   directives: { insert: true }
-  - { currency_id: 20, code: ADP, e: 2, translations: [{ code: en, name: 'Andorran Pesseta' }] }
-  - { currency_id: 784, code: AED, e: 2, translations: [{ code: en, name: 'UAE Dirtham' }] }
-  - { currency_id: 4, code: AFA, e: 2, translations: [{ code: en, name: Afghani }] }
-  - { currency_id: 8, code: ALL, e: 2, translations: [{ code: en, name: Lek }] }
-  - { currency_id: 51, code: AMD, translations: [{ code: en, name: 'Armenian Dram' }] }
-  - { currency_id: 532, code: ANG, e: 2, translations: [{ code: en, name: 'Netherlands Antillian Guilder' }] }
-  - { currency_id: 24, code: AON, e: 2, translations: [{ code: en, name: Kwanza }] }
-  - { currency_id: 32, code: ARS, e: 2, translations: [{ code: en, name: 'Argentine Peso' }] }
-  - { currency_id: 40, code: ATS, e: 2, translations: [{ code: en, name: 'Austrian Shilling' }] }
-  - { currency_id: 36, code: AUD, e: 2, translations: [{ code: en, name: 'Australian Dollar' }] }
-  - { currency_id: 533, code: AWG, e: 2, translations: [{ code: en, name: 'Aruban Guilder' }] }
-  - { currency_id: 31, code: AZM, e: 2, translations: [{ code: en, name: 'Azerbaijanian Manat' }] }
-  - { currency_id: 977, code: BAM, e: 2, translations: [{ code: en, name: 'Convertible Marks' }] }
-  - { currency_id: 52, code: BBD, e: 2, translations: [{ code: en, name: 'Barbados Dollar' }] }
-  - { currency_id: 50, code: BDT, e: 2, translations: [{ code: en, name: 'Bangladesh Taka' }] }
-  - { currency_id: 56, code: BEF, e: 2, translations: [{ code: en, name: 'Belgium Franc' }] }
-  - { currency_id: 100, code: BGL, e: 2, translations: [{ code: en, name: 'Bulgarian Lev' }] }
-  - { currency_id: 48, code: BHD, e: 3, translations: [{ code: en, name: 'Bahraini dinar' }] }
-  - { currency_id: 108, code: BIF, translations: [{ code: en, name: 'Burundi Franc' }] }
-  - { currency_id: 60, code: BMD, e: 2, translations: [{ code: en, name: 'Bermudian Dollar' }] }
-  - { currency_id: 96, code: BND, e: 2, translations: [{ code: en, name: 'Brunei Dollar' }] }
-  - { currency_id: 68, code: BOB, e: 2, translations: [{ code: en, name: Boliviano }] }
-  - { currency_id: 986, code: BRL, e: 2, translations: [{ code: en, name: 'Brazilian Real' }] }
-  - { currency_id: 64, code: BTN, e: 2, translations: [{ code: en, name: Ngultrum }] }
-  - { currency_id: 72, code: BWP, e: 2, translations: [{ code: en, name: 'Botswana Pula' }] }
-  - { currency_id: 974, code: BYR, translations: [{ code: en, name: 'Belarussian Rouble' }] }
-  - { currency_id: 84, code: BZD, e: 2, translations: [{ code: en, name: 'Belize Dollar' }] }
-  - { currency_id: 124, code: CAD, e: 2, translations: [{ code: en, name: 'Canadian Dollar' }] }
-  - { currency_id: 976, code: CDF, e: 2, translations: [{ code: en, name: 'Franc Congolais' }] }
-  - { currency_id: 756, code: CHF, e: 2, translations: [{ code: en, name: 'Swiss Franc' }] }
-  - { currency_id: 152, code: CLP, translations: [{ code: en, name: 'Chilean Peso' }] }
-  - { currency_id: 156, code: CNY, e: 1, translations: [{ code: en, name: 'Chinese Renminbi Yuan' }] }
-  - { currency_id: 170, code: COP, translations: [{ code: en, name: 'Colombian Peso' }] }
-  - { currency_id: 188, code: CRC, e: 2, translations: [{ code: en, name: 'Cost Rican Colon' }] }
-  - { currency_id: 192, code: CUP, e: 2, translations: [{ code: en, name: 'Cuban Peso' }] }
-  - { currency_id: 132, code: CVE, e: 2, translations: [{ code: en, name: 'Cape Verde Escudo' }] }
-  - { currency_id: 196, code: CYP, e: 2, translations: [{ code: en, name: 'Cypprus Pound' }] }
-  - { currency_id: 203, code: CZK, e: 2, translations: [{ code: en, name: 'Czech Koruna' }] }
-  - { currency_id: 276, code: DEM, e: 2, translations: [{ code: en, name: 'Deutsche Mark' }] }
-  - { currency_id: 262, code: DJF, translations: [{ code: en, name: 'Djibouti Franc' }] }
-  - { currency_id: 208, code: DKK, e: 2, translations: [{ code: en, name: 'Danish Krone' }] }
-  - { currency_id: 214, code: DOP, e: 2, translations: [{ code: en, name: 'Dominican Peso' }] }
-  - { currency_id: 12, code: DZD, e: 2, translations: [{ code: en, name: 'Algerian Dinar' }] }
-  - { currency_id: 233, code: EEK, e: 2, translations: [{ code: en, name: Kroon }] }
-  - { currency_id: 818, code: EGP, e: 2, translations: [{ code: en, name: 'Egyptian Pound' }] }
-  - { currency_id: 232, code: ERN, e: 2, translations: [{ code: en, name: Nakfa }] }
-  - { currency_id: 230, code: ETB, e: 2, translations: [{ code: en, name: 'Ethiopian Birr' }] }
-  - { currency_id: 978, code: EUR, e: 2, translations: [{ code: en, name: EURO }] }
-  - { currency_id: 246, code: FIM, e: 2, translations: [{ code: en, name: 'Finnish Markka' }] }
-  - { currency_id: 242, code: FJD, e: 2, translations: [{ code: en, name: 'Fiji Dollar' }] }
-  - { currency_id: 238, code: FKP, e: 2, translations: [{ code: en, name: 'Falkland Islands Pound' }] }
-  - { currency_id: 250, code: FRF, e: 2, translations: [{ code: en, name: 'French Franc' }] }
-  - { currency_id: 826, code: GBP, symbol: £, e: 2, translations: [{ code: en, name: 'Pound Sterling' }] }
-  - { currency_id: 981, code: GEL, e: 2, translations: [{ code: en, name: Lari }] }
-  - { currency_id: 288, code: GHC, e: 2, translations: [{ code: en, name: 'Ghana Cedi' }] }
-  - { currency_id: 292, code: GIP, e: 2, translations: [{ code: en, name: 'Gilbraltar Pound' }] }
-  - { currency_id: 270, code: GMD, e: 2, translations: [{ code: en, name: Dalasi }] }
-  - { currency_id: 324, code: GNF, translations: [{ code: en, name: 'Guinea Franc' }] }
-  - { currency_id: 320, code: GTQ, e: 2, translations: [{ code: en, name: Quetzal }] }
-  - { currency_id: 624, code: GWP, e: 2, translations: [{ code: en, name: 'Guinea-Bissau Peso' }] }
-  - { currency_id: 328, code: GYD, e: 2, translations: [{ code: en, name: 'Guyana Dollar' }] }
-  - { currency_id: 344, code: HKD, e: 2, translations: [{ code: en, name: 'Hong Kong Dollar' }] }
-  - { currency_id: 340, code: HNL, e: 2, translations: [{ code: en, name: Lempira }] }
-  - { currency_id: 191, code: HRK, e: 2, translations: [{ code: en, name: 'Croatian Kuna' }] }
-  - { currency_id: 332, code: HTG, e: 2, translations: [{ code: en, name: Gourde }] }
-  - { currency_id: 348, code: HUF, e: 2, translations: [{ code: en, name: 'Hungary Forint' }] }
-  - { currency_id: 360, code: IDR, translations: [{ code: en, name: 'Indonesian Rupiah' }] }
-  - { currency_id: 372, code: IEP, e: 2, translations: [{ code: en, name: 'Irish Punt' }] }
-  - { currency_id: 376, code: ILS, e: 2, translations: [{ code: en, name: 'New Israeli Sheqel' }] }
-  - { currency_id: 356, code: INR, e: 2, translations: [{ code: en, name: 'Indian Ruppe' }] }
-  - { currency_id: 368, code: IQD, translations: [{ code: en, name: 'Iraqi Dinar' }] }
-  - { currency_id: 364, code: IRR, translations: [{ code: en, name: 'Iranian Rial' }] }
-  - { currency_id: 352, code: ISK, translations: [{ code: en, name: 'Iceland Krona' }] }
-  - { currency_id: 380, code: ITL, e: 2, translations: [{ code: en, name: 'Italian Lira' }] }
-  - { currency_id: 388, code: JMD, e: 2, translations: [{ code: en, name: 'Jamaican Dollar' }] }
-  - { currency_id: 400, code: JOD, e: 3, translations: [{ code: en, name: 'Jordanian Dinar' }] }
-  - { currency_id: 392, code: JPY, translations: [{ code: en, name: 'Japanese Yen' }] }
-  - { currency_id: 404, code: KES, e: 2, translations: [{ code: en, name: 'Kenyan Shilling' }] }
-  - { currency_id: 417, code: KGS, e: 2, translations: [{ code: en, name: Son }] }
-  - { currency_id: 174, code: KMF, translations: [{ code: en, name: 'Comoro Franc' }] }
-  - { currency_id: 408, code: KPW, translations: [{ code: en, name: 'North Korean Won' }] }
-  - { currency_id: 410, code: KRW, translations: [{ code: en, name: 'South Korean Won' }] }
-  - { currency_id: 414, code: KWD, e: 3, translations: [{ code: en, name: 'Kuwaiti Dinar' }] }
-  - { currency_id: 136, code: KYD, e: 2, translations: [{ code: en, name: 'Cayman Islands Dollar' }] }
-  - { currency_id: 398, code: KZT, e: 2, translations: [{ code: en, name: Tenge }] }
-  - { currency_id: 418, code: LAK, translations: [{ code: en, name: Kip }] }
-  - { currency_id: 422, code: LBP, translations: [{ code: en, name: 'Lebanese Pound' }] }
-  - { currency_id: 144, code: LKR, e: 2, translations: [{ code: en, name: 'Sri Lanka Rupee' }] }
-  - { currency_id: 430, code: LRD, e: 2, translations: [{ code: en, name: 'Liberian Dollar' }] }
-  - { currency_id: 426, code: LSL, e: 2, translations: [{ code: en, name: Loti }] }
-  - { currency_id: 440, code: LTL, e: 2, translations: [{ code: en, name: 'Lithuanian Litus' }] }
-  - { currency_id: 442, code: LUF, e: 2, translations: [{ code: en, name: 'Luxembourg Franc' }] }
-  - { currency_id: 428, code: LVL, e: 2, translations: [{ code: en, name: 'Latvian Lats' }] }
-  - { currency_id: 434, code: LYD, e: 3, translations: [{ code: en, name: 'Libyan Dinar' }] }
-  - { currency_id: 504, code: MAD, e: 2, translations: [{ code: en, name: 'Moroccan Dirtham' }] }
-  - { currency_id: 498, code: MDL, e: 2, translations: [{ code: en, name: 'Moldovan Leu' }] }
-  - { currency_id: 450, code: MGF, e: 2, translations: [{ code: en, name: 'Malagasy Franc' }] }
-  - { currency_id: 807, code: MKD, e: 2, translations: [{ code: en, name: Denar }] }
-  - { currency_id: 104, code: MMK, translations: [{ code: en, name: Kyat }] }
-  - { currency_id: 496, code: MNT, e: 2, translations: [{ code: en, name: Tugrik }] }
-  - { currency_id: 446, code: MOP, e: 1, translations: [{ code: en, name: Pataca }] }
-  - { currency_id: 478, code: MRO, translations: [{ code: en, name: Ouguiya }] }
-  - { currency_id: 470, code: MTL, e: 2, translations: [{ code: en, name: 'Maltese Lira' }] }
-  - { currency_id: 480, code: MUR, e: 2, translations: [{ code: en, name: 'Mauritius Rupee' }] }
-  - { currency_id: 462, code: MVR, e: 2, translations: [{ code: en, name: Rufiyaa }] }
-  - { currency_id: 454, code: MWK, e: 2, translations: [{ code: en, name: 'Malawian kwacha' }] }
-  - { currency_id: 484, code: MXN, e: 2, translations: [{ code: en, name: 'Mexican Peso' }] }
-  - { currency_id: 458, code: MYR, e: 2, translations: [{ code: en, name: 'Malasian Ringgit' }] }
-  - { currency_id: 508, code: MZM, e: 2, translations: [{ code: en, name: 'Mozambique Metical' }] }
-  - { currency_id: 516, code: NAD, e: 2, translations: [{ code: en, name: 'Namibia Dollar' }] }
-  - { currency_id: 566, code: NGN, e: 2, translations: [{ code: en, name: Naira }] }
-  - { currency_id: 558, code: NIO, e: 2, translations: [{ code: en, name: 'Cordoba Oro' }] }
-  - { currency_id: 528, code: NLG, e: 2, translations: [{ code: en, name: 'Dutch Guilder' }] }
-  - { currency_id: 578, code: NOK, e: 2, translations: [{ code: en, name: 'Norwegian Krone' }] }
-  - { currency_id: 524, code: NPR, e: 2, translations: [{ code: en, name: 'Nepalese Rupee' }] }
-  - { currency_id: 554, code: NZD, e: 2, translations: [{ code: en, name: 'New Zealand Dollar' }] }
-  - { currency_id: 512, code: OMR, e: 3, translations: [{ code: en, name: 'Rial Omani' }] }
-  - { currency_id: 590, code: PAB, e: 2, translations: [{ code: en, name: Balboa }] }
-  - { currency_id: 604, code: PEN, e: 2, translations: [{ code: en, name: 'Nuevo Sol' }] }
-  - { currency_id: 598, code: PGK, e: 2, translations: [{ code: en, name: Kina }] }
-  - { currency_id: 608, code: PHP, e: 2, translations: [{ code: en, name: 'Philippine Peso' }] }
-  - { currency_id: 586, code: PKR, e: 2, translations: [{ code: en, name: 'Pakistan Rupee' }] }
-  - { currency_id: 985, code: PLN, e: 2, translations: [{ code: en, name: 'Polish Zloty' }] }
-  - { currency_id: 620, code: PTE, e: 2, translations: [{ code: en, name: 'Portuguese Escudo' }] }
-  - { currency_id: 600, code: PYG, translations: [{ code: en, name: Guarani }] }
-  - { currency_id: 634, code: QAR, e: 2, translations: [{ code: en, name: 'Qatari Rial' }] }
-  - { currency_id: 642, code: ROL, e: 2, translations: [{ code: en, name: Leu }] }
-  - { currency_id: 941, code: RSD, e: 2, translations: [{ code: en, name: 'Serbian Dinar' }] }
-  - { currency_id: 810, code: RUR, e: 2, translations: [{ code: en, name: 'Russian Ruble' }] }
-  - { currency_id: 646, code: RWF, translations: [{ code: en, name: 'Rwanda Franc' }] }
-  - { currency_id: 682, code: SAR, e: 2, translations: [{ code: en, name: 'Saudi Riyal' }] }
-  - { currency_id: 90, code: SBD, e: 2, translations: [{ code: en, name: 'Solomon Islands Dollar' }] }
-  - { currency_id: 690, code: SCR, e: 2, translations: [{ code: en, name: 'Seychelles Rupee' }] }
-  - { currency_id: 736, code: SDD, e: 2, translations: [{ code: en, name: 'Sudanese Dinar' }] }
-  - { currency_id: 752, code: SEK, e: 2, translations: [{ code: en, name: 'Swedish Krona' }] }
-  - { currency_id: 702, code: SGD, e: 2, translations: [{ code: en, name: 'Singapore Dollar' }] }
-  - { currency_id: 654, code: SHP, e: 2, translations: [{ code: en, name: 'Saint Helena Pound' }] }
-  - { currency_id: 116, code: SHR, e: 2, translations: [{ code: en, name: Riel }] }
-  - { currency_id: 705, code: SIT, e: 2, translations: [{ code: en, name: Tolar }] }
-  - { currency_id: 703, code: SKK, e: 2, translations: [{ code: en, name: 'Slovak Koruna' }] }
-  - { currency_id: 694, code: SLL, translations: [{ code: en, name: Leone }] }
-  - { currency_id: 706, code: SOS, e: 2, translations: [{ code: en, name: 'Somali Shilling' }] }
-  - { currency_id: 740, code: SRG, e: 2, translations: [{ code: en, name: 'Suriname Guilder' }] }
-  - { currency_id: 678, code: STD, translations: [{ code: en, name: Dobra }] }
-  - { currency_id: 222, code: SVC, e: 2, translations: [{ code: en, name: 'El Salvador Colon' }] }
-  - { currency_id: 760, code: SYP, e: 2, translations: [{ code: en, name: 'Syrian Pound' }] }
-  - { currency_id: 748, code: SZL, e: 2, translations: [{ code: en, name: Lilangeni }] }
-  - { currency_id: 764, code: THB, e: 2, translations: [{ code: en, name: 'Thailand Baht' }] }
-  - { currency_id: 972, code: TJS, e: 2, translations: [{ code: en, name: Somoni }] }
-  - { currency_id: 795, code: TMM, e: 2, translations: [{ code: en, name: Manat }] }
-  - { currency_id: 788, code: TND, e: 3, translations: [{ code: en, name: 'Tunisian Dinar' }] }
-  - { currency_id: 776, code: TOP, e: 2, translations: [{ code: en, name: 'Pa''anga' }] }
-  - { currency_id: 626, code: TPE, e: 2, translations: [{ code: en, name: 'Timor Escudo' }] }
-  - { currency_id: 792, code: TRL, e: 2, translations: [{ code: en, name: 'Turkish Lira' }] }
-  - { currency_id: 780, code: TTD, e: 2, translations: [{ code: en, name: 'Trinidad and Tobago Dollar' }] }
-  - { currency_id: 901, code: TWD, e: 1, translations: [{ code: en, name: 'New Taiwan Dollar' }] }
-  - { currency_id: 834, code: TZS, e: 2, translations: [{ code: en, name: 'Tanzanian Shilling' }] }
-  - { currency_id: 980, code: UAH, e: 2, translations: [{ code: en, name: Hryvnia }] }
-  - { currency_id: 800, code: UGX, translations: [{ code: en, name: 'Uganda Shilling' }] }
-  - { currency_id: 840, code: USD, symbol: $, e: 2, translations: [{ code: en, name: 'US Dollar' }] }
-  - { currency_id: 858, code: UYU, e: 2, translations: [{ code: en, name: 'Peso Uruguayo' }] }
-  - { currency_id: 860, code: UZS, e: 2, translations: [{ code: en, name: 'Uzbekistan som' }] }
-  - { currency_id: 862, code: VEB, e: 2, translations: [{ code: en, name: Bolivar }] }
-  - { currency_id: 704, code: VND, translations: [{ code: en, name: 'Vietnamese Dong' }] }
-  - { currency_id: 548, code: VUV, translations: [{ code: en, name: Vatu }] }
-  - { currency_id: 882, code: WST, e: 2, translations: [{ code: en, name: Tala }] }
-  - { currency_id: 950, code: XAF, translations: [{ code: en, name: 'CFA Franc BEAC' }] }
-  - { currency_id: 951, code: XCD, e: 2, translations: [{ code: en, name: 'East Caribbean Dollar' }] }
-  - { currency_id: 952, code: XOF, translations: [{ code: en, name: 'CFA Franc BCEAO' }] }
-  - { currency_id: 953, code: XPF, translations: [{ code: en, name: 'CFP Franc' }] }
-  - { currency_id: 886, code: YER, translations: [{ code: en, name: 'Yemeni Rial' }] }
-  - { currency_id: 891, code: YUM, e: 2, translations: [{ code: en, name: 'Yugoslavian Dinar' }] }
-  - { currency_id: 710, code: ZAR, e: 2, translations: [{ code: en, name: 'South Africa Rand' }] }
-  - { currency_id: 894, code: ZMK, translations: [{ code: en, name: 'Zambian kwacha' }] }
-  - { currency_id: 716, code: ZWD, e: 2, translations: [{ code: en, name: 'Zimbabwe Dollar' }] }
+  - { currency_id: 784, code: AED, e: 2, symbol: د.إ, prefix: د.إ, translations: [{ code: en, name: 'UAE Dirtham' }] }
+  - { currency_id: 971, code: AFA, e: 2, symbol: ؋, prefix: ؋, translations: [{ code: en, name: Afghani }] }
+  - { currency_id: 8,   code: ALL, e: 2, symbol: L, prefix: L, translations: [{ code: en, name: Lek }] }
+  - { currency_id: 51,  code: AMD, e: 2, symbol: դր., prefix: դր., translations: [{ code: en, name: 'Armenian Dram' }] }
+  - { currency_id: 532, code: ANG, e: 2, symbol: ƒ, prefix: ƒ, translations: [{ code: en, name: 'Netherlands Antillian Guilder' }] }
+  - { currency_id: 973, code: AOA, e: 2, symbol: Kz, prefix: Kz, translations: [{ code: en, name: Kwanza }] }
+  - { currency_id: 32,  code: ARS, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Argentine Peso' }] }
+  - { currency_id: 36,  code: AUD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Australian Dollar' }] }
+  - { currency_id: 533, code: AWG, e: 2, symbol: ƒ, prefix: ƒ, translations: [{ code: en, name: 'Aruban Guilder' }] }
+  - { currency_id: 944, code: AZN, e: 2, symbol: m, prefix: m, translations: [{ code: en, name: 'Azerbaijanian Manat' }] }
+  - { currency_id: 977, code: BAM, e: 2, symbol: KM, prefix: KM, translations: [{ code: en, name: 'Convertible Marks' }] }
+  - { currency_id: 52,  code: BBD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Barbados Dollar' }] }
+  - { currency_id: 50,  code: BDT, e: 2, symbol: ৳, prefix: ৳, translations: [{ code: en, name: 'Bangladesh Taka' }] }
+  - { currency_id: 975, code: BGN, e: 2, symbol: лв, prefix: лв, translations: [{ code: en, name: 'Bulgarian Lev' }] }
+  - { currency_id: 48,  code: BHD, e: 3, symbol: .د.ب, prefix: .د.ب, translations: [{ code: en, name: 'Bahraini dinar' }] }
+  - { currency_id: 108, code: BIF, e: 0, symbol: ₣, prefix: ₣, translations: [{ code: en, name: 'Burundi Franc' }] }
+  - { currency_id: 60,  code: BMD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Bermudian Dollar' }] }
+  - { currency_id: 96,  code: BND, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Brunei Dollar' }] }
+  - { currency_id: 68,  code: BOB, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: Boliviano }] }
+  - { currency_id: 986, code: BRL, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Brazilian Real' }] }
+  - { currency_id: 44,  code: BSD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Bahamian dollar' }] }
+  - { currency_id: 64,  code: BTN, e: 2, symbol: Nu, prefix: Nu, translations: [{ code: en, name: Ngultrum }] }
+  - { currency_id: 72,  code: BWP, e: 2, symbol: P, prefix: P, translations: [{ code: en, name: 'Botswana Pula' }] }
+  - { currency_id: 974, code: BYR, e: 0, symbol: Br, suffix: Br, translations: [{ code: en, name: 'Belarussian Rouble' }] }
+  - { currency_id: 84,  code: BZD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Belize Dollar' }] }
+  - { currency_id: 124, code: CAD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Canadian Dollar' }] }
+  - { currency_id: 976, code: CDF, e: 2, symbol: ₣, prefix: ₣, translations: [{ code: en, name: 'Franc Congolais' }] }
+  - { currency_id: 756, code: CHF, e: 2, symbol: ₣, prefix: ₣, translations: [{ code: en, name: 'Swiss Franc' }] }
+  - { currency_id: 152, code: CLP, e: 0, symbol: $, prefix: $, translations: [{ code: en, name: 'Chilean Peso' }] }
+  - { currency_id: 156, code: CNY, e: 2, symbol: ¥, prefix: ¥, translations: [{ code: en, name: 'Chinese Renminbi Yuan' }] }
+  - { currency_id: 170, code: COP, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Colombian Peso' }] }
+  - { currency_id: 188, code: CRC, e: 2, symbol: ₡, prefix: ₡, translations: [{ code: en, name: 'Cost Rican Colon' }] }
+  - { currency_id: 192, code: CUP, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Cuban Peso' }] }
+  - { currency_id: 132, code: CVE, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Cape Verde Escudo' }] }
+  - { currency_id: 203, code: CZK, e: 2, symbol: Kč, prefix: Kč, translations: [{ code: en, name: 'Czech Koruna' }] }
+  - { currency_id: 262, code: DJF, e: 0, symbol: ₣, prefix: ₣, translations: [{ code: en, name: 'Djibouti Franc' }] }
+  - { currency_id: 208, code: DKK, e: 2, symbol: kr, prefix: kr, translations: [{ code: en, name: 'Danish Krone' }] }
+  - { currency_id: 214, code: DOP, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Dominican Peso' }] }
+  - { currency_id: 12,  code: DZD, e: 2, symbol: د.ج, prefix: د.ج, translations: [{ code: en, name: 'Algerian Dinar' }] }
+  - { currency_id: 818, code: EGP, e: 2, symbol: LE, prefix: LE, translations: [{ code: en, name: 'Egyptian Pound' }] }
+  - { currency_id: 232, code: ERN, e: 2, symbol: Nfk, prefix: Nfk, translations: [{ code: en, name: Nakfa }] }
+  - { currency_id: 230, code: ETB, e: 2, symbol: Br, prefix: Br, translations: [{ code: en, name: 'Ethiopian Birr' }] }
+  - { currency_id: 978, code: EUR, e: 2, symbol: €, prefix: €, translations: [{ code: en, name: Euro }] }
+  - { currency_id: 242, code: FJD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Fiji Dollar' }] }
+  - { currency_id: 238, code: FKP, e: 2, symbol: £, prefix: £, translations: [{ code: en, name: 'Falkland Islands Pound' }] }
+  - { currency_id: 826, code: GBP, e: 2, symbol: £, prefix: £, translations: [{ code: en, name: 'Pound Sterling' }] }
+  - { currency_id: 981, code: GEL, e: 2, symbol: ლ., prefix: ლ., translations: [{ code: en, name: Lari }] }
+  - { currency_id: 936, code: GHS, e: 2, symbol: ₵, prefix: ₵, translations: [{ code: en, name: 'Ghana Cedi' }] }
+  - { currency_id: 292, code: GIP, e: 2, symbol: £, prefix: £, translations: [{ code: en, name: 'Gilbraltar Pound' }] }
+  - { currency_id: 270, code: GMD, e: 2, symbol: D, prefix: D, translations: [{ code: en, name: Dalasi }] }
+  - { currency_id: 324, code: GNF, e: 0, symbol: ₣, prefix: ₣, translations: [{ code: en, name: 'Guinea Franc' }] }
+  - { currency_id: 320, code: GTQ, e: 2, symbol: Q, prefix: Q, translations: [{ code: en, name: Quetzal }] }
+  - { currency_id: 328, code: GYD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Guyana Dollar' }] }
+  - { currency_id: 344, code: HKD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Hong Kong Dollar' }] }
+  - { currency_id: 340, code: HNL, e: 2, symbol: L, prefix: L, translations: [{ code: en, name: Lempira }] }
+  - { currency_id: 191, code: HRK, e: 2, symbol: Kn, prefix: Kn, translations: [{ code: en, name: 'Croatian Kuna' }] }
+  - { currency_id: 332, code: HTG, e: 2, symbol: G, prefix: G, translations: [{ code: en, name: Gourde }] }
+  - { currency_id: 348, code: HUF, e: 2, symbol: ƒ, prefix: ƒ, translations: [{ code: en, name: 'Hungary Forint' }] }
+  - { currency_id: 360, code: IDR, e: 2, symbol: Rp, prefix: Rp, translations: [{ code: en, name: 'Indonesian Rupiah' }] }
+  - { currency_id: 376, code: ILS, e: 2, symbol: ₪, prefix: ₪, translations: [{ code: en, name: 'New Israeli Sheqel' }] }
+  - { currency_id: 356, code: INR, e: 2, symbol: ₹, prefix: ₹, translations: [{ code: en, name: 'Indian Ruppe' }] }
+  - { currency_id: 368, code: IQD, e: 3, symbol: ع.د, prefix: ع.د, translations: [{ code: en, name: 'Iraqi Dinar' }] }
+  - { currency_id: 364, code: IRR, e: 2, symbol: ﷼, prefix: ﷼, translations: [{ code: en, name: 'Iranian Rial' }] }
+  - { currency_id: 352, code: ISK, e: 0, symbol: kr, prefix: kr, translations: [{ code: en, name: 'Iceland Krona' }] }
+  - { currency_id: 388, code: JMD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Jamaican Dollar' }] }
+  - { currency_id: 400, code: JOD, e: 3, symbol: د.ا, prefix: د.ا, translations: [{ code: en, name: 'Jordanian Dinar' }] }
+  - { currency_id: 392, code: JPY, e: 0, symbol: ¥, prefix: ¥, translations: [{ code: en, name: 'Japanese Yen' }] }
+  - { currency_id: 404, code: KES, e: 2, symbol: KSh, prefix: KSh, translations: [{ code: en, name: 'Kenyan Shilling' }] }
+  - { currency_id: 417, code: KGS, e: 2, symbol: C, prefix: C, translations: [{ code: en, name: Son }] }
+  - { currency_id: 116, code: KHR, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Cambodian riel' }] }
+  - { currency_id: 174, code: KMF, e: 0, symbol: ₣, prefix: ₣, translations: [{ code: en, name: 'Comoro Franc' }] }
+  - { currency_id: 408, code: KPW, e: 2, symbol: ₩, prefix: ₩, translations: [{ code: en, name: 'North Korean Won' }] }
+  - { currency_id: 410, code: KRW, e: 0, symbol: ₩, prefix: ₩, translations: [{ code: en, name: 'South Korean Won' }] }
+  - { currency_id: 414, code: KWD, e: 3, symbol: د.ك, prefix: د.ك, translations: [{ code: en, name: 'Kuwaiti Dinar' }] }
+  - { currency_id: 136, code: KYD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Cayman Islands Dollar' }] }
+  - { currency_id: 398, code: KZT, e: 2, symbol: ₸, prefix: ₸, translations: [{ code: en, name: Tenge }] }
+  - { currency_id: 418, code: LAK, e: 2, symbol: ₭, prefix: ₭, translations: [{ code: en, name: Kip }] }
+  - { currency_id: 422, code: LBP, e: 2, symbol: .ل.ل, prefix: .ل.ل, translations: [{ code: en, name: 'Lebanese Pound' }] }
+  - { currency_id: 144, code: LKR, e: 2, symbol: Re, prefix: Re, translations: [{ code: en, name: 'Sri Lanka Rupee' }] }
+  - { currency_id: 430, code: LRD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Liberian Dollar' }] }
+  - { currency_id: 426, code: LSL, e: 2, symbol: L, prefix: L, translations: [{ code: en, name: Loti }] }
+  - { currency_id: 440, code: LTL, e: 2, symbol: Lt, prefix: Lt, translations: [{ code: en, name: 'Lithuanian Litus' }] }
+  - { currency_id: 428, code: LVL, e: 2, symbol: Ls, prefix: Ls, translations: [{ code: en, name: 'Latvian Lats' }] }
+  - { currency_id: 434, code: LYD, e: 3, symbol: ل.د, prefix: ل.د, translations: [{ code: en, name: 'Libyan Dinar' }] }
+  - { currency_id: 504, code: MAD, e: 2, symbol: د. م., prefix: د. م., translations: [{ code: en, name: 'Moroccan Dirtham' }] }
+  - { currency_id: 498, code: MDL, e: 2, symbol: L, prefix: L, translations: [{ code: en, name: 'Moldovan Leu' }] }
+  - { currency_id: 969, code: MGA, e: 0, symbol: Ar., prefix: Ar., translations: [{ code: en, name: 'Malagasy Ariary' }] }
+  - { currency_id: 807, code: MKD, e: 2, symbol: ден., prefix: ден., translations: [{ code: en, name: Denar }] }
+  - { currency_id: 104, code: MMK, e: 2, symbol: K, prefix: K, translations: [{ code: en, name: Kyat }] }
+  - { currency_id: 496, code: MNT, e: 2, symbol: ₮, prefix: ₮, translations: [{ code: en, name: Tugrik }] }
+  - { currency_id: 446, code: MOP, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: Pataca }] }
+  - { currency_id: 478, code: MRO, e: 0, symbol: UM, prefix: UM, translations: [{ code: en, name: Ouguiya }] }
+  - { currency_id: 480, code: MUR, e: 2, symbol: Re, prefix: Re, translations: [{ code: en, name: 'Mauritius Rupee' }] }
+  - { currency_id: 462, code: MVR, e: 2, symbol: Rf, prefix: Rf, translations: [{ code: en, name: Rufiyaa }] }
+  - { currency_id: 454, code: MWK, e: 2, symbol: K, prefix: K, translations: [{ code: en, name: 'Malawian kwacha' }] }
+  - { currency_id: 484, code: MXN, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Mexican Peso' }] }
+  - { currency_id: 458, code: MYR, e: 2, symbol: RM, prefix: RM, translations: [{ code: en, name: 'Malasian Ringgit' }] }
+  - { currency_id: 943, code: MZN, e: 2, symbol: MT, prefix: MT, translations: [{ code: en, name: 'Mozambique Metical' }] }
+  - { currency_id: 516, code: NAD, e: 2, symbol: N$, prefix: N$, translations: [{ code: en, name: 'Namibia Dollar' }] }
+  - { currency_id: 566, code: NGN, e: 2, symbol: ₦, prefix: ₦, translations: [{ code: en, name: Naira }] }
+  - { currency_id: 558, code: NIO, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Cordoba Oro' }] }
+  - { currency_id: 578, code: NOK, e: 2, symbol: kr, prefix: kr, translations: [{ code: en, name: 'Norwegian Krone' }] }
+  - { currency_id: 524, code: NPR, e: 2, symbol: Re, prefix: Re, translations: [{ code: en, name: 'Nepalese Rupee' }] }
+  - { currency_id: 554, code: NZD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'New Zealand Dollar' }] }
+  - { currency_id: 512, code: OMR, e: 3, symbol: ر.ع., prefix: ر.ع., translations: [{ code: en, name: 'Rial Omani' }] }
+  - { currency_id: 590, code: PAB, e: 2, symbol: 'B/.', prefix: 'B/.', translations: [{ code: en, name: Balboa }] }
+  - { currency_id: 604, code: PEN, e: 2, symbol: 'S/.', prefix: 'S/.', translations: [{ code: en, name: 'Nuevo Sol' }] }
+  - { currency_id: 598, code: PGK, e: 2, symbol: K, prefix: K, translations: [{ code: en, name: Kina }] }
+  - { currency_id: 608, code: PHP, e: 2, symbol: ₱, prefix: ₱, translations: [{ code: en, name: 'Philippine Peso' }] }
+  - { currency_id: 586, code: PKR, e: 2, symbol: Re, prefix: Re, translations: [{ code: en, name: 'Pakistan Rupee' }] }
+  - { currency_id: 985, code: PLN, e: 2, symbol: zł, prefix: zł, translations: [{ code: en, name: 'Polish Zloty' }] }
+  - { currency_id: 600, code: PYG, e: 0, symbol: ₲, prefix: ₲, translations: [{ code: en, name: Guarani }] }
+  - { currency_id: 634, code: QAR, e: 2, symbol: ر.ق, prefix: ر.ق, translations: [{ code: en, name: 'Qatari Rial' }] }
+  - { currency_id: 946, code: RON, e: 2, symbol: L, prefix: L, translations: [{ code: en, name: 'Romanian Leu' }] }
+  - { currency_id: 941, code: RSD, e: 2, symbol: дин., prefix: дин., translations: [{ code: en, name: 'Serbian Dinar' }] }
+  - { currency_id: 643, code: RUB, e: 2, symbol: р., suffix: р., translations: [{ code: en, name: 'Russian Ruble' }] }
+  - { currency_id: 646, code: RWF, e: 0, symbol: ₣, prefix: ₣, translations: [{ code: en, name: 'Rwanda Franc' }] }
+  - { currency_id: 682, code: SAR, e: 2, symbol: ر.س, prefix: ر.س, translations: [{ code: en, name: 'Saudi Riyal' }] }
+  - { currency_id: 90,  code: SBD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Solomon Islands Dollar' }] }
+  - { currency_id: 690, code: SCR, e: 2, symbol: Re, prefix: Re, translations: [{ code: en, name: 'Seychelles Rupee' }] }
+  - { currency_id: 938, code: SDG, e: 2, symbol: £, prefix: £, translations: [{ code: en, name: 'Sudanese Pound' }] }
+  - { currency_id: 752, code: SEK, e: 2, symbol: kr, prefix: kr, translations: [{ code: en, name: 'Swedish Krona' }] }
+  - { currency_id: 702, code: SGD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Singapore Dollar' }] }
+  - { currency_id: 654, code: SHP, e: 2, symbol: £, prefix: £, translations: [{ code: en, name: 'Saint Helena Pound' }] }
+  - { currency_id: 694, code: SLL, e: 2, symbol: Le, prefix: Le, translations: [{ code: en, name: Leone }] }
+  - { currency_id: 706, code: SOS, e: 2, symbol: S, prefix: S, translations: [{ code: en, name: 'Somali Shilling' }] }
+  - { currency_id: 968, code: SRD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Surinam Dollar' }] }
+  - { currency_id: 728, code: SSP, e: 2, symbol: SSP, prefix: SSP, translations: [{ code: en, name: 'South Sudanese Pound' }] }
+  - { currency_id: 678, code: STD, e: 2, symbol: Db, prefix: Db, translations: [{ code: en, name: Dobra }] }
+  - { currency_id: 222, code: SVC, e: 2, symbol: ₡, prefix: ₡, translations: [{ code: en, name: 'El Salvador Colon' }] }
+  - { currency_id: 760, code: SYP, e: 2, symbol: S£, prefix: S£, translations: [{ code: en, name: 'Syrian Pound' }] }
+  - { currency_id: 748, code: SZL, e: 2, symbol: L, prefix: L, translations: [{ code: en, name: Lilangeni }] }
+  - { currency_id: 764, code: THB, e: 2, symbol: ฿, prefix: ฿, translations: [{ code: en, name: 'Thailand Baht' }] }
+  - { currency_id: 972, code: TJS, e: 2, symbol: с., prefix: с., translations: [{ code: en, name: Somoni }] }
+  - { currency_id: 934, code: TMT, e: 2, symbol: m, prefix: m, translations: [{ code: en, name: 'Turkmenistan New Manat' }] }
+  - { currency_id: 788, code: TND, e: 3, symbol: د.ت, prefix: د.ت, translations: [{ code: en, name: 'Tunisian Dinar' }] }
+  - { currency_id: 776, code: TOP, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Pa''anga' }] }
+  - { currency_id: 949, code: TRY, e: 2, symbol: ₤, prefix: ₤, translations: [{ code: en, name: 'Turkish Lira' }] }
+  - { currency_id: 780, code: TTD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Trinidad and Tobago Dollar' }] }
+  - { currency_id: 901, code: TWD, e: 2, symbol: NT$, prefix: NT$, translations: [{ code: en, name: 'New Taiwan Dollar' }] }
+  - { currency_id: 834, code: TZS, e: 2, symbol: TSh, prefix: TSh, translations: [{ code: en, name: 'Tanzanian Shilling' }] }
+  - { currency_id: 980, code: UAH, e: 2, symbol: ₴, prefix: ₴, translations: [{ code: en, name: Hryvnia }] }
+  - { currency_id: 800, code: UGX, e: 2, symbol: USh, prefix: USh, translations: [{ code: en, name: 'Uganda Shilling' }] }
+  - { currency_id: 840, code: USD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'US Dollar' }] }
+  - { currency_id: 858, code: UYU, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'Peso Uruguayo' }] }
+  - { currency_id: 860, code: UZS, e: 2, symbol: сўм, prefix: сўм, translations: [{ code: en, name: 'Uzbekistan som' }] }
+  - { currency_id: 937, code: VEF, e: 2, symbol: Bs, prefix: Bs, translations: [{ code: en, name: 'Bolivar Fuerte' }] }
+  - { currency_id: 704, code: VND, e: 0, symbol: ₫, prefix: ₫, translations: [{ code: en, name: 'Vietnamese Dong' }] }
+  - { currency_id: 548, code: VUV, e: 0, symbol: Vt, prefix: Vt, translations: [{ code: en, name: Vatu }] }
+  - { currency_id: 882, code: WST, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: Tala }] }
+  - { currency_id: 950, code: XAF, e: 0, symbol: ₣, prefix: ₣, translations: [{ code: en, name: 'CFA Franc BEAC' }] }
+  - { currency_id: 951, code: XCD, e: 2, symbol: $, prefix: $, translations: [{ code: en, name: 'East Caribbean Dollar' }] }
+  - { currency_id: 952, code: XOF, e: 0, symbol: ₣, prefix: ₣, translations: [{ code: en, name: 'CFA Franc BCEAO' }] }
+  - { currency_id: 953, code: XPF, e: 0, symbol: ₣, prefix: ₣, translations: [{ code: en, name: 'CFP Franc' }] }
+  - { currency_id: 886, code: YER, e: 2, symbol: ﷼, prefix: ﷼, translations: [{ code: en, name: 'Yemeni Rial' }] }
+  - { currency_id: 710, code: ZAR, e: 2, symbol: R, prefix: R, translations: [{ code: en, name: 'South Africa Rand' }] }
+  - { currency_id: 894, code: ZMK, e: 2, symbol: K, prefix: K, translations: [{ code: en, name: 'Zambian kwacha' }] }
+  - { currency_id: 932, code: ZWL, e: 2, symbol: Z$, prefix: Z$, translations: [{ code: en, name: 'Zimbabwe Dollar' }] }
 XLite\Model\LanguageLabel:
   directives: { insert: true }
   - { name: Weight, translations: [{ code: en, label: Weight }, { code: de, label: Gewicht }] }
@@ -687,247 +671,263 @@ XLite\Model\Payment\Method:
   - { service_name: Echeck, class: 'Model\Payment\Processor\Check', orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }
   - { service_name: COD, class: 'Model\Payment\Processor\Offline', orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
 XLite\Model\Country:
-  directives: { insert: true }
-  - { country: Afghanistan, code3: AFG, code: AF, enabled: false }
-  - { country: Albania, code3: ALB, code: AL }
-  - { country: Algeria, code3: DZA, code: DZ }
-  - { country: 'American Samoa', code3: ASM, code: AS }
-  - { country: Andorra, code3: AND, code: AD }
-  - { country: Angola, code3: AGO, code: AO }
-  - { country: Anguilla, code3: AIA, code: AI }
-  - { country: Antarctica, code3: ATA, code: AQ }
-  - { country: 'Antigua and Barbuda', code3: ATG, code: AG }
-  - { country: Argentina, code3: ARG, code: AR }
-  - { country: Armenia, code3: ARM, code: AM }
-  - { country: Aruba, code3: ABW, code: AW }
-  - { country: Australia, code3: AUS, code: AU }
-  - { country: Austria, code3: AUT, code: AT, eu_member: true }
-  - { country: Azerbaijan, code3: AZE, code: AZ }
-  - { country: Bahamas, code3: BHS, code: BS }
-  - { country: Bahrain, code3: BHR, code: BH }
-  - { country: Bangladesh, code3: BGD, code: BD }
-  - { country: Barbados, code3: BRB, code: BB }
-  - { country: Belarus, code3: BLR, code: BY }
-  - { country: Belgium, code3: BEL, code: BE, eu_member: true }
-  - { country: Belize, code3: BLZ, code: BZ }
-  - { country: Benin, code3: BEN, code: BJ }
-  - { country: Bermuda, code3: BMU, code: BM }
-  - { country: Bhutan, code3: BTN, code: BT }
-  - { country: Bolivia, code: BO }
-  - { country: 'Bosnia and Herzegowina', code: BA }
-  - { country: Botswana, code3: BWA, code: BW }
-  - { country: 'Bouvet Island', code3: BVT, code: BV }
-  - { country: Brazil, code3: BRA, code: BR }
-  - { country: 'British Indian Ocean Territory', code3: IOT, code: IO }
-  - { country: 'British Virgin Islands', code: VG }
-  - { country: 'Brunei Darussalam', code3: BRN, code: BN }
-  - { country: Bulgaria, code3: BGR, code: BG, eu_member: true }
-  - { country: 'Burkina Faso', code3: BFA, code: BF }
-  - { country: Burundi, code3: BDI, code: BI }
-  - { country: Cambodia, code3: KHM, code: KH }
-  - { country: Cameroon, code3: CMR, code: CM }
+  - { country: Afghanistan,         id: 4,   code3: AFG, code: AF, currency: { currency_id: 971 } }
+  - { country: Åland Islands,       id: 248, code3: ALA, code: AX, currency: { currency_id: 978 } }
+  - { country: Albania,             id: 8,   code3: ALB, code: AL, currency: { currency_id: 8 } }
+  - { country: Algeria,             id: 12,  code3: DZA, code: DZ, currency: { currency_id: 12 } }
+  - { country: American Samoa,      id: 16,  code3: ASM, code: AS, currency: { currency_id: 840 } }
+  - { country: Andorra,             id: 20,  code3: AND, code: AD, currency: { currency_id: 978 } }
+  - { country: Angola,              id: 24,  code3: AGO, code: AO, currency: { currency_id: 973 } }
+  - { country: Anguilla,            id: 660, code3: AIA, code: AI, currency: { currency_id: 951 } }
+  - { country: Antarctica,          id: 10,  code3: ATA, code: AQ }
+  - { country: Antigua and Barbuda, id: 28,  code3: ATG, code: AG, currency: { currency_id: 951 } }
+  - { country: Argentina,  id: 32,  code3: ARG, code: AR, currency: { currency_id: 32 } }
+  - { country: Armenia,    id: 51,  code3: ARM, code: AM, currency: { currency_id: 51 } }
+  - { country: Aruba,      id: 533, code3: ABW, code: AW, currency: { currency_id: 533 } }
+  - { country: Australia,  id: 36,  code3: AUS, code: AU, currency: { currency_id: 36 } }
+  - { country: Austria,    id: 40,  code3: AUT, code: AT, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Azerbaijan, id: 31,  code3: AZE, code: AZ, currency: { currency_id: 944 } }
+  - { country: Bahamas,    id: 44,  code3: BHS, code: BS, currency: { currency_id: 44 } }
+  - { country: Bahrain,    id: 48,  code3: BHR, code: BH, currency: { currency_id: 48 } }
+  - { country: Bangladesh, id: 50,  code3: BGD, code: BD, currency: { currency_id: 50 } }
+  - { country: Barbados,   id: 52,  code3: BRB, code: BB, currency: { currency_id: 52 } }
+  - { country: Belarus,                            id: 112, code3: BLR, code: BY, currency: { currency_id: 974 } }
+  - { country: Belgium,                            id: 56,  code3: BEL, code: BE, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Belize,                             id: 84,  code3: BLZ, code: BZ, currency: { currency_id: 84 } }
+  - { country: Benin,                              id: 204, code3: BEN, code: BJ, currency: { currency_id: 952 } }
+  - { country: Bermuda,                            id: 60,  code3: BMU, code: BM, currency: { currency_id: 60 } }
+  - { country: Bhutan,                             id: 64,  code3: BTN, code: BT, currency: { currency_id: 356 } }
+  - { country: 'Bolivia, Plurinational State of',  id: 68,  code3: BOL, code: BO, currency: { currency_id: 68 } }
+  - { country: 'Bonaire, Sint Eustatius and Saba', id: 535, code3: BES, code: BQ, currency: { currency_id: 840 } }
+  - { country: Bosnia and Herzegowina,             id: 70,  code3: BIH, code: BA, currency: { currency_id: 977 } }
+  - { country: Botswana,                           id: 72,  code3: BWA, code: BW, currency: { currency_id: 72 } }
+  - { country: Bouvet Island,                  id: 74,  code3: BVT, code: BV, currency: { currency_id: 578 } }
+  - { country: Brazil,                         id: 76,  code3: BRA, code: BR, currency: { currency_id: 986 } }
+  - { country: British Indian Ocean Territory, id: 86,  code3: IOT, code: IO, currency: { currency_id: 840 } }
+  - { country: Brunei Darussalam,              id: 96,  code3: BRN, code: BN, currency: { currency_id: 96 } }
+  - { country: Bulgaria,                       id: 100, code3: BGR, code: BG, currency: { currency_id: 975 }, eu_member: true }
+  - { country: Burkina Faso,                   id: 854, code3: BFA, code: BF, currency: { currency_id: 952 } }
+  - { country: Burundi,                        id: 108, code3: BDI, code: BI, currency: { currency_id: 108 } }
+  - { country: Cambodia,                       id: 116, code3: KHM, code: KH, currency: { currency_id: 116 } }
+  - { country: Cameroon,                       id: 120, code3: CMR, code: CM, currency: { currency_id: 950 } }
   - country: Canada
+    id: 124
     code3: CAN
     code: CA
+    currency: { currency_id: 124 }
     states:
       - { state: Alberta, code: AB }
-      - { state: 'British Columbia', code: BC }
+      - { state: British Columbia, code: BC }
       - { state: Manitoba, code: MB }
-      - { state: 'New Brunswick', code: NB }
-      - { state: 'Newfoundland and Labrador', code: NF }
-      - { state: 'Nova Scotia', code: NS }
-      - { state: 'Northwest Territories', code: NT }
+      - { state: New Brunswick, code: NB }
+      - { state: Newfoundland and Labrador, code: NF }
+      - { state: Nova Scotia, code: NS }
+      - { state: Northwest Territories', code: NT }
       - { state: Nunavut, code: NU }
       - { state: Ontario, code: ON }
-      - { state: 'Prince Edward Island', code: PE }
+      - { state: Prince Edward Island, code: PE }
       - { state: Quebec, code: QC }
       - { state: Saskatchewan, code: SK }
       - { state: Yukon, code: YT }
-  - { country: 'Cape Verde', code3: CPV, code: CV }
-  - { country: 'Cayman Islands', code3: CYM, code: KY }
-  - { country: 'Central African Republic', code3: CAF, code: CF }
-  - { country: Chad, code3: TCD, code: TD }
-  - { country: Chile, code3: CHL, code: CL }
-  - { country: China, code3: CHN, code: CN }
-  - { country: 'Christmas Island', code3: CXR, code: CX }
-  - { country: 'Cocos (Keeling) Islands', code3: CCK, code: CC }
-  - { country: Colombia, code3: COL, code: CO }
-  - { country: Comoros, code3: COM, code: KM }
-  - { country: 'Congo, Democratic Republic of', code3: COG, code: CD }
-  - { country: 'Cook Islands', code3: COK, code: CK }
-  - { country: 'Costa Rica', code3: CRI, code: CR }
-  - { country: 'Cote D''ivoire', code: CI }
-  - { country: Croatia, code3: HRV, code: HR }
-  - { country: Cuba, code3: CUB, code: CU }
-  - { country: Cyprus, code3: CYP, code: CY, eu_member: true }
-  - { country: 'Czech Republic', code3: CZE, code: CZ }
-  - { country: Czechoslovakia, code: CS }
-  - { country: Denmark, code3: DNK, code: DK, eu_member: true }
-  - { country: Djibouti, code3: DJI, code: DJ }
-  - { country: Dominica, code3: DMA, code: DM }
-  - { country: 'Dominican Republic', code3: DOM, code: DO }
-  - { country: 'East Timor', code: TP }
-  - { country: Ecuador, code3: ECU, code: EC }
-  - { country: Egypt, code3: EGY, code: EG }
-  - { country: 'El Salvador', code3: SLV, code: SV }
-  - { country: 'Equatorial Guinea', code3: GNQ, code: GQ }
-  - { country: Eritrea, code3: ERI, code: ER }
-  - { country: Estonia, code3: EST, code: EE, eu_member: true }
-  - { country: Ethiopia, code3: ETH, code: ET }
-  - { country: 'Falkland Islands (Malvinas)', code3: FLK, code: FK }
-  - { country: 'Faroe Islands', code3: FRO, code: FO }
-  - { country: Fiji, code3: FJI, code: FJ }
-  - { country: Finland, code3: FIN, code: FI, enabled: false }
-  - { country: France, code3: FRA, code: FR, eu_member: true }
-  - { country: 'French Guiana', code3: GUF, code: GF }
-  - { country: 'French Polynesia', code3: PYF, code: PF }
-  - { country: 'French Southern Territories', code3: ATF, code: TF }
-  - { country: Gabon, code3: GAB, code: GA }
-  - { country: Gambia, code3: GMB, code: GM }
-  - { country: Georgia, code3: GEO, code: GE }
-  - { country: Germany, code3: DEU, code: DE, eu_member: true }
-  - { country: Ghana, code3: GHA, code: GH }
-  - { country: Gibraltar, code3: GIB, code: GI }
-  - { country: Greece, code3: GRC, code: GR, eu_member: true }
-  - { country: Greenland, code3: GRL, code: GL }
-  - { country: Grenada, code3: GRD, code: GD }
-  - { country: Guadeloupe, code3: GLP, code: GP }
-  - { country: Guam, code3: GUM, code: GU }
-  - { country: Guatemala, code3: GTM, code: GT }
-  - { country: Guinea, code3: GIN, code: GN }
-  - { country: Guinea-Bissau, code3: GNB, code: GW }
-  - { country: Guyana, code3: GUY, code: GY }
-  - { country: Haiti, code3: HTI, code: HT }
-  - { country: 'Heard and McDonald Islands', code: HM }
-  - { country: Honduras, code3: HND, code: HN }
-  - { country: 'Hong Kong', code3: HKG, code: HK }
-  - { country: Hungary, code3: HUN, code: HU, eu_member: true }
-  - { country: Iceland, code3: ISL, code: IS }
-  - { country: India, code3: IND, code: IN }
-  - { country: Indonesia, code3: IDN, code: ID }
-  - { country: Iraq, code3: IRQ, code: IQ }
-  - { country: Ireland, code3: IRL, code: IE, eu_member: true }
-  - { country: 'Islamic Republic of Iran', code: IR }
-  - { country: Israel, code3: ISR, code: IL }
-  - { country: Italy, code3: ITA, code: IT, eu_member: true }
-  - { country: Jamaica, code3: JAM, code: JM }
-  - { country: Japan, code3: JPN, code: JP }
-  - { country: Jordan, code3: JOR, code: JO }
-  - { country: Kazakhstan, code3: KAZ, code: KZ }
-  - { country: Kenya, code3: KEN, code: KE }
-  - { country: Kiribati, code3: KIR, code: KI }
-  - { country: Korea, code: KP }
-  - { country: 'Korea, Republic of', code3: KOR, code: KR }
-  - { country: Kuwait, code3: KWT, code: KW }
-  - { country: Kyrgyzstan, code3: KGZ, code: KG }
-  - { country: Laos, code: LA }
-  - { country: Latvia, code3: LVA, code: LV, eu_member: true }
-  - { country: Lebanon, code3: LBN, code: LB }
-  - { country: Lesotho, code3: LSO, code: LS }
-  - { country: Liberia, code3: LBR, code: LR }
-  - { country: 'Libyan Arab Jamahiriya', code3: LBY, code: LY }
-  - { country: Liechtenstein, code3: LIE, code: LI }
-  - { country: Lithuania, code3: LTU, code: LT, eu_member: true }
-  - { country: Luxembourg, code3: LUX, code: LU, eu_member: true }
-  - { country: Macau, code: MO }
-  - { country: Macedonia, code: MK }
-  - { country: Madagascar, code3: MDG, code: MG }
-  - { country: Malawi, code3: MWI, code: MW }
-  - { country: Malaysia, code3: MYS, code: MY }
-  - { country: Maldives, code3: MDV, code: MV }
-  - { country: Mali, code3: MLI, code: ML }
-  - { country: Malta, code3: MLT, code: MT, eu_member: true }
-  - { country: 'Marshall Islands', code3: MHL, code: MH }
-  - { country: Martinique, code3: MTQ, code: MQ }
-  - { country: Mauritania, code3: MRT, code: MR }
-  - { country: Mauritius, code3: MUS, code: MU }
-  - { country: Mayotte, code3: MYT, code: YT }
-  - { country: Mexico, code3: MEX, code: MX }
-  - { country: Micronesia, code: FM }
-  - { country: 'Moldova, Republic of', code3: MDA, code: MD }
-  - { country: Monaco, code3: MCO, code: MC, eu_member: true }
-  - { country: Mongolia, code3: MNG, code: MN }
-  - { country: Montserrat, code3: MSR, code: MS }
-  - { country: Morocco, code3: MAR, code: MA }
-  - { country: Mozambique, code3: MOZ, code: MZ }
-  - { country: Myanmar, code3: MMR, code: MM }
-  - { country: Namibia, code3: NAM, code: NA }
-  - { country: Nauru, code3: NRU, code: NR }
-  - { country: Nepal, code3: NPL, code: NP }
-  - { country: Netherlands, code3: NLD, code: NL, eu_member: true }
-  - { country: 'Netherlands Antilles', code3: ANT, code: AN }
-  - { country: 'New Caledonia', code3: NCL, code: NC }
-  - { country: 'New Zealand', code3: NZL, code: NZ }
-  - { country: Nicaragua, code3: NIC, code: NI }
-  - { country: Niger, code3: NER, code: NE }
-  - { country: Nigeria, code3: NGA, code: NG }
-  - { country: Niue, code3: NIU, code: NU }
-  - { country: 'Norfolk Island', code3: NFK, code: NF }
-  - { country: 'Northern Mariana Islands', code3: MNP, code: MP }
-  - { country: Norway, code3: NOR, code: NO }
-  - { country: Oman, code3: OMN, code: OM }
-  - { country: Pakistan, code3: PAK, code: PK }
-  - { country: Palau, code3: PLW, code: PW }
-  - { country: Panama, code3: PAN, code: PA }
-  - { country: 'Papua New Guinea', code3: PNG, code: PG }
-  - { country: Paraguay, code3: PRY, code: PY }
-  - { country: Peru, code3: PER, code: PE }
-  - { country: Philippines, code3: PHL, code: PH }
-  - { country: Pitcairn, code3: PCN, code: PN }
-  - { country: Poland, code3: POL, code: PL, eu_member: true }
-  - { country: Portugal, code3: PRT, code: PT, eu_member: true }
-  - { country: 'Puerto Rico', code3: PRI, code: PR }
-  - { country: Qatar, code3: QAT, code: QA }
-  - { country: Reunion, code: RE }
-  - { country: Romania, code3: ROU, code: RO, eu_member: true }
-  - { country: 'Russian Federation', code3: RUS, code: RU }
-  - { country: Rwanda, code3: RWA, code: RW }
-  - { country: 'Saint Lucia', code3: LCA, code: LC }
-  - { country: Samoa, code3: WSM, code: WS }
-  - { country: 'San Marino', code3: SMR, code: SM }
-  - { country: 'Sao Tome and Principe', code3: STP, code: ST }
-  - { country: 'Saudi Arabia', code3: SAU, code: SA }
-  - { country: Senegal, code3: SEN, code: SN }
-  - { country: Seychelles, code3: SYC, code: SC }
-  - { country: 'Sierra Leone', code3: SLE, code: SL }
-  - { country: Singapore, code3: SGP, code: SG }
-  - { country: Slovakia, code3: SVK, code: SK, eu_member: true }
-  - { country: Slovenia, code3: SVN, code: SI, eu_member: true }
-  - { country: 'Solomon Islands', code3: SLB, code: SB }
-  - { country: Somalia, code3: SOM, code: SO }
-  - { country: 'South Africa', code3: ZAF, code: ZA }
-  - { country: Spain, code3: ESP, code: ES, eu_member: true }
-  - { country: 'Sri Lanka', code3: LKA, code: LK }
-  - { country: 'St. Helena', code: SH }
-  - { country: 'St. Kitts And Nevis', code: KN }
-  - { country: 'St. Pierre and Miquelon', code: PM }
-  - { country: 'St. Vincent And The Greadines', code: VC }
-  - { country: Sudan, code3: SDN, code: SD }
-  - { country: Suriname, code3: SUR, code: SR }
-  - { country: 'Svalbard and Jan Mayen', code3: SJM, code: SJ }
-  - { country: Swaziland, code3: SWZ, code: SZ }
-  - { country: Sweden, code3: SWE, code: SE, eu_member: true }
-  - { country: Switzerland, code3: CHE, code: CH }
-  - { country: 'Syrian Arab Republic', code3: SYR, code: SY }
-  - { country: Taiwan, code: TW }
-  - { country: Tajikistan, code3: TJK, code: TJ }
-  - { country: 'Tanzania, United Republic of', code3: TZA, code: TZ }
-  - { country: Thailand, code3: THA, code: TH }
-  - { country: Togo, code3: TGO, code: TG }
-  - { country: Tokelau, code3: TKL, code: TK }
-  - { country: Tonga, code3: TON, code: TO }
-  - { country: 'Trinidad and Tobago', code3: TTO, code: TT }
-  - { country: Tunisia, code3: TUN, code: TN }
-  - { country: Turkey, code3: TUR, code: TR }
-  - { country: Turkmenistan, code3: TKM, code: TM }
-  - { country: 'Turks and Caicos Islands', code3: TCA, code: TC }
-  - { country: Tuvalu, code3: TUV, code: TV }
-  - { country: Uganda, code3: UGA, code: UG }
-  - { country: Ukraine, code3: UKR, code: UA }
-  - { country: 'United Arab Emirates', code3: ARE, code: AE }
-  - country: 'United Kingdom'
+  - { country: Cape Verde,                id: 132, code3: CPV, code: CV, currency: { currency_id: 132 } }
+  - { country: Cayman Islands,            id: 136, code3: CYM, code: KY, currency: { currency_id: 136 } }
+  - { country: Central African Republic,  id: 140, code3: CAF, code: CF, currency: { currency_id: 950 } }
+  - { country: Chad,                      id: 148, code3: TCD, code: TD, currency: { currency_id: 950 } }
+  - { country: Chile,                     id: 152, code3: CHL, code: CL, currency: { currency_id: 152 } }
+  - { country: China,                     id: 156, code3: CHN, code: CN, currency: { currency_id: 156 } }
+  - { country: Christmas Island,          id: 162, code3: CXR, code: CX, currency: { currency_id: 36 } }
+  - { country: 'Cocos (Keeling) Islands', id: 166, code3: CCK, code: CC, currency: { currency_id: 36 } }
+  - { country: Colombia,                  id: 170, code3: COL, code: CO, currency: { currency_id: 170 } }
+  - { country: Comoros,                   id: 174, code3: COM, code: KM, currency: { currency_id: 174 } }
+  - { country: Congo,                                   id: 178, code3: COG, code: CG, currency: { currency_id: 950 } }
+  - { country: 'Congo, the Democratic Republic of the', id: 180, code3: COD, code: CD, currency: { currency_id: 976 } }
+  - { country: Cook Islands,                            id: 184, code3: COK, code: CK, currency: { currency_id: 554 } }
+  - { country: Costa Rica,                              id: 188, code3: CRI, code: CR, currency: { currency_id: 188 } }
+  - { country: 'Côte d''Ivoire',                        id: 384, code3: CIV, code: CI, currency: { currency_id: 950 } }
+  - { country: Croatia,                                 id: 191, code3: HRV, code: HR, currency: { currency_id: 191 } }
+  - { country: Cuba,                                    id: 192, code3: CUB, code: CU, currency: { currency_id: 192 } }
+  - { country: Curaçao,                                 id: 531, code3: CUW, code: CW, currency: { currency_id: 532 } }
+  - { country: Cyprus,                                  id: 196, code3: CYP, code: CY, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Czech Republic,                          id: 203, code3: CZE, code: CZ, currency: { currency_id: 203 } }
+  - { country: Denmark,            id: 208, code3: DNK, code: DK, currency: { currency_id: 208 }, eu_member: true }
+  - { country: Djibouti,           id: 262, code3: DJI, code: DJ, currency: { currency_id: 262 } }
+  - { country: Dominica,           id: 212, code3: DMA, code: DM, currency: { currency_id: 951 } }
+  - { country: Dominican Republic, id: 214, code3: DOM, code: DO, currency: { currency_id: 214 } }
+  - { country: Ecuador,            id: 218, code3: ECU, code: EC, currency: { currency_id: 840 } }
+  - { country: Egypt,              id: 818, code3: EGY, code: EG, currency: { currency_id: 818 } }
+  - { country: El Salvador,        id: 222, code3: SLV, code: SV, currency: { currency_id: 222 } }
+  - { country: Equatorial Guinea,  id: 226, code3: GNQ, code: GQ, currency: { currency_id: 950 } }
+  - { country: Eritrea,            id: 232, code3: ERI, code: ER, currency: { currency_id: 232 } }
+  - { country: Estonia,            id: 233, code3: EST, code: EE, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Ethiopia,                      id: 231, code3: ETH, code: ET, currency: { currency_id: 230 } }
+  - { country: 'Falkland Islands (Malvinas)', id: 238, code3: FLK, code: FK, currency: { currency_id: 238 } }
+  - { country: Faroe Islands,                 id: 234, code3: FRO, code: FO, currency: { currency_id: 208 } }
+  - { country: Fiji,                          id: 242, code3: FJI, code: FJ, currency: { currency_id: 242 } }
+  - { country: Finland,                       id: 246, code3: FIN, code: FI, currency: { currency_id: 978 }, enabled: false }
+  - { country: France,                        id: 250, code3: FRA, code: FR, currency: { currency_id: 978 }, eu_member: true }
+  - { country: French Guiana,                 id: 254, code3: GUF, code: GF, currency: { currency_id: 978 } }
+  - { country: French Polynesia,              id: 258, code3: PYF, code: PF, currency: { currency_id: 953 } }
+  - { country: French Southern Territories,   id: 260, code3: ATF, code: TF, currency: { currency_id: 978 } }
+  - { country: Gabon,                         id: 266, code3: GAB, code: GA, currency: { currency_id: 950 } }
+  - { country: Gambia,     id: 270, code3: GMB, code: GM, currency: { currency_id: 270 } }
+  - { country: Georgia,    id: 268, code3: GEO, code: GE, currency: { currency_id: 981 } }
+  - { country: Germany,    id: 276, code3: DEU, code: DE, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Ghana,      id: 288, code3: GHA, code: GH, currency: { currency_id: 936 } }
+  - { country: Gibraltar,  id: 292, code3: GIB, code: GI, currency: { currency_id: 292 } }
+  - { country: Greece,     id: 300, code3: GRC, code: GR, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Greenland,  id: 304, code3: GRL, code: GL, currency: { currency_id: 208 } }
+  - { country: Grenada,    id: 308, code3: GRD, code: GD, currency: { currency_id: 951 } }
+  - { country: Guadeloupe, id: 312, code3: GLP, code: GP, currency: { currency_id: 978 } }
+  - { country: Guam,       id: 316, code3: GUM, code: GU, currency: { currency_id: 840 } }
+  - { country: Guatemala,                     id: 320, code3: GTM, code: GT, currency: { currency_id: 320 } }
+  - { country: Guernsey,                      id: 831, code3: GGY, code: GG, currency: { currency_id: 826 } }
+  - { country: Guinea,                        id: 324, code3: GIN, code: GN, currency: { currency_id: 324 } }
+  - { country: Guinea-Bissau,                 id: 624, code3: GNB, code: GW, currency: { currency_id: 952 } }
+  - { country: Guyana,                        id: 328, code3: GUY, code: GY, currency: { currency_id: 328 } }
+  - { country: Haiti,                         id: 332, code3: HTI, code: HT, currency: { currency_id: 332 } }
+  - { country: Heard and McDonald Islands,    id: 334, code3: HMD, code: HM, currency: { currency_id: 36 } }
+  - { country: Holy See (Vatican City State), id: 336, code3: VAT, code: VA, currency: { currency_id: 978 } }
+  - { country: Honduras,                      id: 340, code3: HND, code: HN, currency: { currency_id: 340 } }
+  - { country: Hong Kong,                     id: 344, code3: HKG, code: HK, currency: { currency_id: 344 } }
+  - { country: Hungary,                     id: 348, code3: HUN, code: HU, currency: { currency_id: 348 }, eu_member: true }
+  - { country: Iceland,                     id: 352, code3: ISL, code: IS, currency: { currency_id: 352 } }
+  - { country: India,                       id: 356, code3: IND, code: IN, currency: { currency_id: 356 } }
+  - { country: Indonesia,                   id: 360, code3: IDN, code: ID, currency: { currency_id: 360 } }
+  - { country: 'Iran, Islamic Republic of', id: 364, code3: IRN, code: IR, currency: { currency_id: 364 } }
+  - { country: Iraq,                        id: 368, code3: IRQ, code: IQ, currency: { currency_id: 368 } }
+  - { country: Ireland,                     id: 372, code3: IRL, code: IE, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Isle of Man,                 id: 833, code3: IMN, code: IM, currency: { currency_id: 826 } }
+  - { country: Israel,                      id: 376, code3: ISR, code: IL, currency: { currency_id: 376 } }
+  - { country: Italy,                       id: 380, code3: ITA, code: IT, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Jamaica,                                   id: 388, code3: JAM, code: JM, currency: { currency_id: 388 } }
+  - { country: Japan,                                     id: 392, code3: JPN, code: JP, currency: { currency_id: 392 } }
+  - { country: Jersey,                                    id: 832, code3: JEY, code: JE, currency: { currency_id: 826 } }
+  - { country: Jordan,                                    id: 400, code3: JOR, code: JO, currency: { currency_id: 400 } }
+  - { country: Kazakhstan,                                id: 398, code3: KAZ, code: KZ, currency: { currency_id: 398 } }
+  - { country: Kenya,                                     id: 404, code3: KEN, code: KE, currency: { currency_id: 404 } }
+  - { country: Kiribati,                                  id: 296, code3: KIR, code: KI, currency: { currency_id: 36 } }
+  - { country: 'Korea, Democratic People''s Republic of', id: 408, code3: PRK, code: KP, currency: { currency_id: 408 } }
+  - { country: 'Korea, Republic of',                      id: 410, code3: KOR, code: KR, currency: { currency_id: 410 } }
+  - { country: Kuwait,                                    id: 414, code3: KWT, code: KW, currency: { currency_id: 414 } }
+  - { country: Kyrgyzstan,                                id: 417, code3: KGZ, code: KG, currency: { currency_id: 417 } }
+  - { country: 'Lao People''s Democratic Republic', id: 418, code3: LAO, code: LA, currency: { currency_id: 418 } }
+  - { country: Latvia,                              id: 428, code3: LVA, code: LV, currency: { currency_id: 428 }, eu_member: true }
+  - { country: Lebanon,                             id: 422, code3: LBN, code: LB, currency: { currency_id: 422 } }
+  - { country: Lesotho,                             id: 426, code3: LSO, code: LS, currency: { currency_id: 426 } }
+  - { country: Liberia,                             id: 430, code3: LBR, code: LR, currency: { currency_id: 430 } }
+  - { country: Libya,                               id: 434, code3: LBY, code: LY, currency: { currency_id: 434 } }
+  - { country: Liechtenstein,                       id: 438, code3: LIE, code: LI, currency: { currency_id: 756 } }
+  - { country: Lithuania,                           id: 440, code3: LTU, code: LT, currency: { currency_id: 440 }, eu_member: true }
+  - { country: Luxembourg,                          id: 442, code3: LUX, code: LU, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Macao,                               id: 446, code3: MAC, code: MO, currency: { currency_id: 446 } }
+  - { country: Macedonia,        id: 807, code3: MKD, code: MK, currency: { currency_id: 807 } }
+  - { country: Madagascar,       id: 450, code3: MDG, code: MG, currency: { currency_id: 969 } }
+  - { country: Malawi,           id: 454, code3: MWI, code: MW, currency: { currency_id: 454 } }
+  - { country: Malaysia,         id: 458, code3: MYS, code: MY, currency: { currency_id: 458 } }
+  - { country: Maldives,         id: 462, code3: MDV, code: MV, currency: { currency_id: 462 } }
+  - { country: Mali,             id: 466, code3: MLI, code: ML, currency: { currency_id: 952 } }
+  - { country: Malta,            id: 470, code3: MLT, code: MT, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Marshall Islands, id: 584, code3: MHL, code: MH, currency: { currency_id: 840 } }
+  - { country: Martinique,       id: 474, code3: MTQ, code: MQ, currency: { currency_id: 978 } }
+  - { country: Mauritania,       id: 478, code3: MRT, code: MR, currency: { currency_id: 478 } }
+  - { country: Mauritius,                         id: 480, code3: MUS, code: MU, currency: { currency_id: 480 } }
+  - { country: Mayotte,                           id: 175, code3: MYT, code: YT, currency: { currency_id: 978 } }
+  - { country: Mexico,                            id: 484, code3: MEX, code: MX, currency: { currency_id: 484 } }
+  - { country: 'Micronesia, Federated States of', id: 583, code3: FSM, code: FM, currency: { currency_id: 840 } }
+  - { country: 'Moldova, Republic of',            id: 498, code3: MDA, code: MD, currency: { currency_id: 498 } }
+  - { country: Monaco,                            id: 492, code3: MCO, code: MC, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Mongolia,                          id: 496, code3: MNG, code: MN, currency: { currency_id: 496 } }
+  - { country: Montenegro,                        id: 499, code3: MNE, code: ME, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Montserrat,                        id: 500, code3: MSR, code: MS, currency: { currency_id: 951 } }
+  - { country: Morocco,                           id: 504, code3: MAR, code: MA, currency: { currency_id: 504 } }
+  - { country: Mozambique,    id: 508, code3: MOZ, code: MZ, currency: { currency_id: 943 } }
+  - { country: Myanmar,       id: 104, code3: MMR, code: MM, currency: { currency_id: 64 } }
+  - { country: Namibia,       id: 516, code3: NAM, code: NA, currency: { currency_id: 516 } }
+  - { country: Nauru,         id: 520, code3: NRU, code: NR, currency: { currency_id: 36 } }
+  - { country: Nepal,         id: 524, code3: NPL, code: NP, currency: { currency_id: 524 } }
+  - { country: Netherlands,   id: 528, code3: NLD, code: NL, currency: { currency_id: 978 }, eu_member: true }
+  - { country: New Caledonia, id: 540, code3: NCL, code: NC, currency: { currency_id: 953 } }
+  - { country: New Zealand,   id: 554, code3: NZL, code: NZ, currency: { currency_id: 554 } }
+  - { country: Nicaragua,     id: 558, code3: NIC, code: NI, currency: { currency_id: 558 } }
+  - { country: Niger,         id: 562, code3: NER, code: NE, currency: { currency_id: 952 } }
+  - { country: Nigeria,                           id: 566, code3: NGA, code: NG, currency: { currency_id: 566 } }
+  - { country: Niue,                              id: 570, code3: NIU, code: NU, currency: { currency_id: 554 } }
+  - { country: Norfolk Island,                    id: 574, code3: NFK, code: NF, currency: { currency_id: 36 } }
+  - { country: Northern Mariana Islands,          id: 580, code3: MNP, code: MP, currency: { currency_id: 840 } }
+  - { country: Norway,                            id: 578, code3: NOR, code: NO, currency: { currency_id: 578 } }
+  - { country: Oman,                              id: 512, code3: OMN, code: OM, currency: { currency_id: 512 } }
+  - { country: Pakistan,                          id: 586, code3: PAK, code: PK, currency: { currency_id: 586 } }
+  - { country: Palau,                             id: 585, code3: PLW, code: PW, currency: { currency_id: 840 } }
+  - { country: 'Palestinian Territory, Occupied', id: 275, code3: PSE, code: PS, currency: { currency_id: 400 } }
+  - { country: Panama,                            id: 591, code3: PAN, code: PA, currency: { currency_id: 590 } }
+  - { country: Papua New Guinea, id: 598, code3: PNG, code: PG, currency: { currency_id: 598 } }
+  - { country: Paraguay,         id: 600, code3: PRY, code: PY, currency: { currency_id: 600 } }
+  - { country: Peru,             id: 604, code3: PER, code: PE, currency: { currency_id: 604 } }
+  - { country: Philippines,      id: 608, code3: PHL, code: PH, currency: { currency_id: 608 } }
+  - { country: Pitcairn,         id: 612, code3: PCN, code: PN, currency: { currency_id: 554 } }
+  - { country: Poland,           id: 616, code3: POL, code: PL, currency: { currency_id: 985 }, eu_member: true }
+  - { country: Portugal,         id: 620, code3: PRT, code: PT, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Puerto Rico,      id: 630, code3: PRI, code: PR, currency: { currency_id: 840 } }
+  - { country: Qatar,            id: 634, code3: QAT, code: QA, currency: { currency_id: 634 } }
+  - { country: Réunion,          id: 638, code3: REU, code: RE, currency: { currency_id: 978 } }
+  - { country: Romania,                                        id: 642, code3: ROU, code: RO, currency: { currency_id: 946 }, eu_member: true }
+  - { country: Russian Federation,                             id: 643, code3: RUS, code: RU, currency: { currency_id: 643 } }
+  - { country: Rwanda,                                         id: 646, code3: RWA, code: RW, currency: { currency_id: 646 } }
+  - { country: Saint Barthélemy,                               id: 652, code3: BLM, code: BL, currency: { currency_id: 978 } }
+  - { country: 'Saint Helena, Ascension and Tristan da Cunha', id: 654, code3: SHN, code: SH, currency: { currency_id: 654 } }
+  - { country: Saint Kitts and Nevis,                          id: 659, code3: KNA, code: KN, currency: { currency_id: 951 } }
+  - { country: Saint Lucia,                                    id: 662, code3: LCA, code: LC, currency: { currency_id: 951 } }
+  - { country: Saint Martin,                                   id: 663, code3: MAF, code: MF, currency: { currency_id: 978 } }
+  - { country: Saint Pierre and Miquelon,                      id: 666, code3: SPM, code: PM, currency: { currency_id: 978 } }
+  - { country: Saint Vincent and the Grenadines,               id: 670, code3: VCT, code: VC, currency: { currency_id: 951 } }
+  - { country: Samoa,                 id: 882, code3: WSM, code: WS, currency: { currency_id: 882 } }
+  - { country: San Marino,            id: 674, code3: SMR, code: SM, currency: { currency_id: 978 } }
+  - { country: Sao Tome and Principe, id: 678, code3: STP, code: ST, currency: { currency_id: 678 } }
+  - { country: Saudi Arabia,          id: 682, code3: SAU, code: SA, currency: { currency_id: 682 } }
+  - { country: Senegal,               id: 686, code3: SEN, code: SN, currency: { currency_id: 952 } }
+  - { country: Serbia,                id: 688, code3: SRB, code: RS, currency: { currency_id: 941 } }
+  - { country: Seychelles,            id: 690, code3: SYC, code: SC, currency: { currency_id: 690 } }
+  - { country: Sierra Leone,          id: 694, code3: SLE, code: SL, currency: { currency_id: 694 } }
+  - { country: Singapore,             id: 702, code3: SGP, code: SG, currency: { currency_id: 702 } }
+  - { country: Sint Maarten,          id: 534, code3: SXM, code: SX, currency: { currency_id: 532 } }
+  - { country: Slovakia,                                     id: 703, code3: SVK, code: SK, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Slovenia,                                     id: 705, code3: SVN, code: SI, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Solomon Islands,                              id: 90,  code3: SLB, code: SB, currency: { currency_id: 90 } }
+  - { country: Somalia,                                      id: 706, code3: SOM, code: SO, currency: { currency_id: 706 } }
+  - { country: South Africa,                                 id: 710, code3: ZAF, code: ZA, currency: { currency_id: 710 } }
+  - { country: South Georgia and the South Sandwich Islands, id: 239, code3: SGS, code: GS, currency: { currency_id: 826 } }
+  - { country: South Sudan,                                  id: 728, code3: SSD, code: SS, currency: { currency_id: 728 } }
+  - { country: Spain,                                        id: 724, code3: ESP, code: ES, currency: { currency_id: 978 }, eu_member: true }
+  - { country: Sri Lanka,                                    id: 144, code3: LKA, code: LK, currency: { currency_id: 144 } }
+  - { country: Sudan,                                        id: 729, code3: SDN, code: SD, currency: { currency_id: 938 } }
+  - { country: Suriname,                       id: 740, code3: SUR, code: SR, currency: { currency_id: 968 } }
+  - { country: Svalbard and Jan Mayen,         id: 744, code3: SJM, code: SJ, currency: { currency_id: 978 } }
+  - { country: Swaziland,                      id: 748, code3: SWZ, code: SZ, currency: { currency_id: 748 } }
+  - { country: Sweden,                         id: 752, code3: SWE, code: SE, currency: { currency_id: 752 }, eu_member: true }
+  - { country: Switzerland,                    id: 756, code3: CHE, code: CH, currency: { currency_id: 756 } }
+  - { country: Syrian Arab Republic,           id: 760, code3: SYR, code: SY, currency: { currency_id: 760 } }
+  - { country: 'Taiwan, Province of China',    id: 158, code3: TWN, code: TW, currency: { currency_id: 901 } }
+  - { country: Tajikistan,                     id: 762, code3: TJK, code: TJ, currency: { currency_id: 972 } }
+  - { country: 'Tanzania, United Republic of', id: 834, code3: TZA, code: TZ, currency: { currency_id: 834 } }
+  - { country: Thailand,                       id: 764, code3: THA, code: TH, currency: { currency_id: 764 } }
+  - { country: Timor-Leste,              id: 626, code3: TLS, code: TL, currency: { currency_id: 840 } }
+  - { country: Togo,                     id: 768, code3: TGO, code: TG, currency: { currency_id: 952 } }
+  - { country: Tokelau,                  id: 772, code3: TKL, code: TK, currency: { currency_id: 554 } }
+  - { country: Tonga,                    id: 776, code3: TON, code: TO, currency: { currency_id: 776 } }
+  - { country: Trinidad and Tobago,      id: 780, code3: TTO, code: TT, currency: { currency_id: 780 } }
+  - { country: Tunisia,                  id: 788, code3: TUN, code: TN, currency: { currency_id: 788 } }
+  - { country: Turkey,                   id: 792, code3: TUR, code: TR, currency: { currency_id: 949 } }
+  - { country: Turkmenistan,             id: 795, code3: TKM, code: TM, currency: { currency_id: 934 } }
+  - { country: Turks and Caicos Islands, id: 796, code3: TCA, code: TC, currency: { currency_id: 840 } }
+  - { country: Tuvalu,                   id: 798, code3: TUV, code: TV, currency: { currency_id: 36 } }
+  - { country: Uganda,               id: 800, code3: UGA, code: UG, currency: { currency_id: 800 } }
+  - { country: Ukraine,              id: 804, code3: UKR, code: UA, currency: { currency_id: 980 } }
+  - { country: United Arab Emirates, id: 784, code3: ARE, code: AE, currency: { currency_id: 784 } }
+  - country: United Kingdom
+    id: 826
     code3: GBR
     code: GB
+    currency: { currency_id: 826 }
     eu_member: true
     states:
       - { state: Aberdeenshire, code: ABd }
@@ -945,13 +945,13 @@ XLite\Model\Country:
       - { state: Clackmannanshire, code: CL }
       - { state: Cleveland, code: CV }
       - { state: Clwyd, code: CW }
-      - { state: 'County Antrim', code: CAn }
-      - { state: 'County Armagh', code: CAr }
-      - { state: 'County Down', code: CDo }
-      - { state: 'County Durham', code: CDu }
-      - { state: 'County Fermanagh', code: CFm }
-      - { state: 'County Londonderry', code: CLd }
-      - { state: 'County Tyrone', code: CTy }
+      - { state: County Antrim, code: CAn }
+      - { state: County Armagh, code: CAr }
+      - { state: County Down, code: CDo }
+      - { state: County Durham, code: CDu }
+      - { state: County Fermanagh, code: CFm }
+      - { state: County Londonderry, code: CLd }
+      - { state: County Tyrone, code: CTy }
       - { state: Cornwall, code: COr }
       - { state: Cumbria, code: CU }
       - { state: Derbyshire, code: DB }
@@ -960,8 +960,8 @@ XLite\Model\Country:
       - { state: Dumfriesshire, code: DF }
       - { state: Dunbartonshire, code: DU }
       - { state: Dyfed, code: DY }
-      - { state: 'East Lothian', code: EL }
-      - { state: 'East Sussex', code: ES }
+      - { state: East Lothian, code: EL }
+      - { state: East Sussex, code: ES }
       - { state: Essex, code: EX }
       - { state: Fife, code: FI }
       - { state: Gloucestershire, code: GL }
@@ -971,22 +971,22 @@ XLite\Model\Country:
       - { state: Herefordshire, code: HE }
       - { state: Hertfordshire, code: HF }
       - { state: Inverness-shire, code: IS }
-      - { state: 'Isle of Arran', code: IsAr }
-      - { state: 'Isle of Barra', code: IsBa }
-      - { state: 'Isle of Benbecula', code: IsBe }
-      - { state: 'Isle of Bute', code: IsBu }
-      - { state: 'Isle of Canna', code: IsCa }
-      - { state: 'Isle of Coll', code: IsCo }
-      - { state: 'Isle of Colonsay', code: IsCl }
-      - { state: 'Isle of Cumbrae', code: IsCu }
-      - { state: 'Isle of Eigg', code: IsEg }
-      - { state: 'Isle of Gigha', code: IsGi }
-      - { state: 'Isle of Harris', code: IsHa }
-      - { state: 'Isle of Iona', code: IsIo }
-      - { state: 'Isle of Jura', code: IsJu }
-      - { state: 'Isle of Lewis', code: IsLw }
-      - { state: 'Isle of Mull', code: IsMu }
-      - { state: 'Isle of North Uist', code: IsNu }
+      - { state: Isle of Arran, code: IsAr }
+      - { state: Isle of Barra, code: IsBa }
+      - { state: Isle of Benbecula, code: IsBe }
+      - { state: Isle of Bute, code: IsBu }
+      - { state: Isle of Canna, code: IsCa }
+      - { state: Isle of Coll, code: IsCo }
+      - { state: Isle of Colonsay, code: IsCl }
+      - { state: Isle of Cumbrae, code: IsCu }
+      - { state: Isle of Eigg, code: IsEg }
+      - { state: Isle of Gigha, code: IsGi }
+      - { state: Isle of Harris, code: IsHa }
+      - { state: Isle of Iona, code: IsIo }
+      - { state: Isle of Jura, code: IsJu }
+      - { state: Isle of Lewis, code: IsLw }
+      - { state: Isle of Mull, code: IsMu }
+      - { state: Isle of North Uist, code: IsNu }
       - { state: Buckinghamshire, code: BKM }
       - { state: Cumberland, code: CUL }
       - { state: Huntingdonshire, code: HUN }
@@ -1033,40 +1033,42 @@ XLite\Model\Country:
       - { state: Peebles-shire, code: PEE }
       - { state: Perth, code: PER }
       - { state: Renfrewshire, code: Rn }
-      - { state: 'Ross and Cromarty', code: ROC }
+      - { state: Ross and Cromarty, code: ROC }
       - { state: Roxburghshire, code: ROX }
       - { state: Selkirkshire, code: SEL }
       - { state: Shetland, code: SHI }
       - { state: Stirlingshire, code: STI }
       - { state: Sutherland, code: SUT }
-      - { state: 'West Lothian', code: WLN }
+      - { state: West Lothian, code: WLN }
       - { state: Wigtownshire, code: WIG }
-      - { state: 'Isle of Rhum', code: IsRu }
-      - { state: 'Isle of Scalpay', code: IsSc }
-      - { state: 'Isle of Shetland', code: IsSh }
-      - { state: 'Isle of Skye', code: IsSk }
-      - { state: 'Isle of South Uist', code: IsSu }
-      - { state: 'Isle of Tiree', code: IsTi }
-      - { state: 'Isle of Wight', code: IsWi }
-      - { state: 'Isles of Scilly', code: IsScl }
+      - { state: Isle of Rhum, code: IsRu }
+      - { state: Isle of Scalpay, code: IsSc }
+      - { state: Isle of Shetland, code: IsSh }
+      - { state: Isle of Skye, code: IsSk }
+      - { state: Isle of South Uist, code: IsSu }
+      - { state: Isle of Tiree, code: IsTi }
+      - { state: Isle of Wight, code: IsWi }
+      - { state: Isles of Scilly, code: IsScl }
       - { state: London, code: LO }
       - { state: Merseyside, code: MER }
-      - { state: 'Mid Glamorgan', code: MG }
+      - { state: Mid Glamorgan, code: MG }
       - { state: Nairnshire, code: NA }
-      - { state: 'North Humberside', code: NHB }
-      - { state: 'North Yorkshire', code: NYK }
+      - { state: North Humberside, code: NHB }
+      - { state: North Yorkshire, code: NYK }
       - { state: Powys, code: PO }
-      - { state: 'South Glamorgan', code: SG }
-      - { state: 'South Humberside', code: SH }
-      - { state: 'South Yorkshire', code: SYK }
+      - { state: South Glamorgan, code: SG }
+      - { state: South Humberside, code: SH }
+      - { state: South Yorkshire, code: SYK }
       - { state: 'Tyne & Wear', code: TW }
-      - { state: 'West Glamorgan', code: WG }
-      - { state: 'West Midlands', code: WM }
-      - { state: 'West Sussex', code: WS }
-      - { state: 'West Yorkshire', code: WYK }
-  - country: 'United States'
+      - { state: West Glamorgan, code: WG }
+      - { state: West Midlands, code: WM }
+      - { state: West Sussex, code: WS }
+      - { state: West Yorkshire, code: WYK }
+  - country: United States
+    id: 840
     code3: USA
     code: US
+    currency: { currency_id: 840 }
     states:
       - { state: Alabama, code: AL }
       - { state: Alaska, code: AK }
@@ -1076,7 +1078,7 @@ XLite\Model\Country:
       - { state: Colorado, code: CO }
       - { state: Connecticut, code: CT }
       - { state: Delaware, code: DE }
-      - { state: 'District of Columbia', code: DC }
+      - { state: District of Columbia, code: DC }
       - { state: Florida, code: FL }
       - { state: Georgia, code: GA }
       - { state: Guam, code: GU }
@@ -1098,43 +1100,43 @@ XLite\Model\Country:
       - { state: Montana, code: MT }
       - { state: Nebraska, code: NE }
       - { state: Nevada, code: NV }
-      - { state: 'New Hampshire', code: NH }
-      - { state: 'New Jersey', code: NJ }
-      - { state: 'New Mexico', code: NM }
-      - { state: 'New York', code: NY }
-      - { state: 'North Carolina', code: NC }
-      - { state: 'North Dakota', code: ND }
+      - { state: New Hampshire, code: NH }
+      - { state: New Jersey, code: NJ }
+      - { state: New Mexico, code: NM }
+      - { state: New York, code: NY }
+      - { state: North Carolina, code: NC }
+      - { state: North Dakota', code: ND }
       - { state: Ohio, code: OH }
       - { state: Oklahoma, code: OK }
       - { state: Oregon, code: OR }
       - { state: Pennsylvania, code: PA }
-      - { state: 'Puerto Rico', code: PR }
-      - { state: 'Rhode Island', code: RI }
-      - { state: 'South Carolina', code: SC }
-      - { state: 'South Dakota', code: SD }
+      - { state: Puerto Rico, code: PR }
+      - { state: Rhode Island, code: RI }
+      - { state: South Carolina, code: SC }
+      - { state: South Dakota, code: SD }
       - { state: Tennessee, code: TN }
       - { state: Texas, code: TX }
       - { state: Utah, code: UT }
       - { state: Vermont, code: VT }
-      - { state: 'Virgin Islands', code: VI }
+      - { state: Virgin Islands, code: VI }
       - { state: Virginia, code: VA }
       - { state: Washington, code: WA }
-      - { state: 'West Virginia', code: WV }
+      - { state: West Virginia, code: WV }
       - { state: Wisconsin, code: WI }
       - { state: Wyoming, code: WY }
-  - { country: 'USA Virgin Islands', code3: VGB, code: VI }
-  - { country: Uruguay, code3: URY, code: UY }
-  - { country: Uzbekistan, code3: UZB, code: UZ }
-  - { country: Vanuatu, code3: VUT, code: VU }
-  - { country: 'Vatican City State', code: VA }
-  - { country: Venezuela, code: VE }
-  - { country: 'Viet Nam', code3: VNM, code: VN }
-  - { country: 'Wallis And Futuna Islands', code: WF }
-  - { country: 'Western Sahara', code3: ESH, code: EH }
-  - { country: Yemen, code3: YEM, code: YE }
-  - { country: Serbia, code3: SRB, code: RS }
-  - { country: Zambia, code3: ZMB, code: ZM }
-  - { country: Zimbabwe, code3: ZWE, code: ZW }
+  - { country: United States Minor Outlying Islands, id: 581, code3: UMI, code: UM, currency: { currency_id: 840 } }
+  - { country: Uruguay,                              id: 858, code3: URY, code: UY, currency: { currency_id: 858 } }
+  - { country: Uzbekistan,                           id: 860, code3: UZB, code: UZ, currency: { currency_id: 860 } }
+  - { country: Vanuatu,                              id: 548, code3: VUT, code: VU, currency: { currency_id: 548 } }
+  - { country: 'Venezuela, Bolivarian Republic of',  id: 862, code3: VEN, code: VE, currency: { currency_id: 937 } }
+  - { country: Viet Nam,                  id: 704, code3: VNM, code: VN, currency: { currency_id: 704 } }
+  - { country: 'Virgin Islands, British', id: 92,  code3: VGB, code: VG, currency: { currency_id: 840 } }
+  - { country: 'Virgin Islands, U.S.',    id: 850, code3: VIR, code: VI, currency: { currency_id: 840 } }
+  - { country: Wallis And Futuna Islands, id: 876, code3: WLF, code: WF, currency: { currency_id: 953 } }
+  - { country: Western Sahara,            id: 732, code3: ESH, code: EH, currency: { currency_id: 504 } }
+  - { country: Yemen,                     id: 887, code3: YEM, code: YE, currency: { currency_id: 886 } }
+  - { country: Zambia,                    id: 894, code3: ZMB, code: ZM, currency: { currency_id: 894 } }
+  - { country: Zimbabwe,                  id: 716, code3: ZWE, code: ZW, currency: { currency_id: 932 } }
 XLite\Model\Order\Modifier:
   - { class: '\XLite\Logic\Order\Modifier\Shipping', weight: 100 }
 XLite\Model\Shipping\Method:
@@ -1143,3 +1145,10 @@ XLite\Model\Zone:
   - { zone_name: 'Default zone (all addresses)', is_default: true }
 XLite\Model\Task:
   - { owner: 'XLite\Core\Task\Probe' }
+  - { owner: 'XLite\Core\Task\EventListener' }
+XLite\Model\Role:
+  - { translations: [{ code: en, name: Administrator }], permissions: [ { code: root access, section: All, translations: [{ code: en, name: Root access }] } ] }
+XLite\Model\Role\Permission:
+  - { code: manage catalog, section: Catalog, translations: [{ code: en, name: Manage catalog }] }
+  - { code: manage users, section: Users, translations: [{ code: en, name: Manage users }] }
+  - { code: manage orders, section: Sales, translations: [{ code: en, name: Manage orders }] }

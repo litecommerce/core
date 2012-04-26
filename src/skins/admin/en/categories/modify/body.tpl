@@ -14,7 +14,7 @@
 
 <widget class="XLite\View\Form\Category\Modify\Single" name="modify_form" />
 
-<table title="{t(#Product modify form#)}">
+<table title="{t(#Category modify form#)}">
   <list name="category.modify.list" />
 </table>
 

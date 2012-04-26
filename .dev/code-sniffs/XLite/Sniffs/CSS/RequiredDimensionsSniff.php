@@ -87,12 +87,12 @@ class XLite_Sniffs_CSS_RequiredDimensionsSniff extends XLite_NameSniff
 				$dim = $tokens[$i+1]['content'];
 
 				if (!in_array($dim, $this->allowedDims)) {
-                    $error = 'úÁÐÒÅÝÅÎÙ Ë ÉÓÐÏÌØÚÏ×ÁÎÉÀ ÒÁÚÍÅÒÎÏÓÔÉ, ËÒÏÍÅ px, em, ex, %';
+                    $error = 'Ð—Ð°Ð¿Ñ€ÐµÑ‰ÐµÐ½Ñ‹ Ðº Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸ÑŽ Ñ€Ð°Ð·Ð¼ÐµÑ€Ð½Ð¾ÑÑ‚Ð¸, ÐºÑ€Ð¾Ð¼Ðµ px, em, ex, %';
                     $phpcsFile->addError($this->getReqPrefix('REQ.CSS.3.0.1') . $error, $i);
 				} elseif (in_array($style, $this->relativeDimsStyles) && !in_array($dim, array('em', 'ex', '%'))) {
 
 					/* TODO - research
-                    $error = 'òÁÚÍÅÒÎÏÓÔØ ÛÒÉÆÔÁ ÔÒÅÂÕÅÔÓÑ ÚÁÄÁ×ÁÔØ × em/ex';
+                    $error = 'Ð Ð°Ð·Ð¼ÐµÑ€Ð½Ð¾ÑÑ‚ÑŒ ÑˆÑ€Ð¸Ñ„Ñ‚Ð° Ñ‚Ñ€ÐµÐ±ÑƒÐµÑ‚ÑÑ Ð·Ð°Ð´Ð°Ð²Ð°Ñ‚ÑŒ Ð² em/ex';
                     $phpcsFile->addError($this->getReqPrefix('REQ.CSS.3.0.1') . $error, $i);
 					*/
 					

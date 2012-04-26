@@ -138,13 +138,13 @@ class XLite_Sniffs_PHP_Commenting_FileCommentSniff extends XLite_TagsSniff
 
 		if ($tokens[$commentStart]['code'] !== T_COMMENT) {
 			$phpcsFile->addError(
-				$this->getReqPrefix('REQ.PHP.4.3.5') . 'Файл должен начинаться с однострочного комментария',
+				$this->getReqPrefix('REQ.PHP.4.3.5') . 'п╓п╟п╧п╩ п╢п╬п╩п╤п╣п╫ п╫п╟я┤п╦п╫п╟я┌я▄я│я▐ я│ п╬п╢п╫п╬я│я┌я─п╬я┤п╫п╬пЁп╬ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦я▐',
 				$commentStart
 			);
 
 		} elseif (!preg_match('/vim: set ts=\d sw=\d sts=\d et:/', $tokens[$commentStart]['content'])) {
             $phpcsFile->addError(
-                $this->getReqPrefix('REQ.PHP.4.3.5') . 'Файл должен начинаться с однострочного комментария с директивой для vim',
+                $this->getReqPrefix('REQ.PHP.4.3.5') . 'п╓п╟п╧п╩ п╢п╬п╩п╤п╣п╫ п╫п╟я┤п╦п╫п╟я┌я▄я│я▐ я│ п╬п╢п╫п╬я│я┌я─п╬я┤п╫п╬пЁп╬ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦я▐ я│ п╢п╦я─п╣п╨я┌п╦п╡п╬п╧ п╢п╩я▐ vim',
                 $commentStart
             );
 		}
