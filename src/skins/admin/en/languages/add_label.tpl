@@ -13,7 +13,7 @@
 
   <h2>{t(#Add new label#)}</h2>
 
-  {t(#Please specify text labels for each language#,_ARRAY_(#language#^defaultLanguage.name))}
+  {t(#Please specify text labels for each language#,_ARRAY_(#language#^defaultLanguageObject.name))}
 
   <form action="admin.php" method="post" name="add_label_form">
     
