@@ -41,7 +41,6 @@
 
   <div class="action-buttons">
     <widget
-      IF="hasResults()"
       class="\XLite\View\Button\Addon\EnterLicenseKey"
       style="main-button" />
   </div>
