@@ -1592,10 +1592,11 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     protected function reinitialieCurrency()
     {
-        $currency = $this->defineCurrency();
+        $new = $this->defineCurrency();
+        $old = $this->getCurrency();
 
-        if (!$this->getCurrency() || $this->getCurrency() != $currency) {
-            $this->setCurrency($currency);
+        if (empty($old) || (!empty($new) && $old->getCode() !== $new->getCode())) {
+            $this->setCurrency($new);
         }
     }
 

@@ -25,8 +25,21 @@
  * @since      1.0.0
  */
 
+/**
+ * XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout 
+ *
+ * @see   ____class_see____
+ * @since 1.0.22
+ */
 class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout extends XLite_Tests_Model_Payment_PaymentAbstract
 {
+    /**
+     * testMethod
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.22
+     */
     protected $testMethod = array(
         'service_name' => 'test',
         'class'        => 'Module\CDev\TwoCheckout\Model\Payment\Processor\TwoCheckout',
@@ -36,6 +49,13 @@ class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout ex
         'description'  => 'Description',
     );
 
+    /**
+     * testPay
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testPay()
     {
         $order = $this->getTestOrder();
@@ -119,6 +139,13 @@ HTML;
         $this->assertEquals($etalon, $c, 'check form');
     }
 
+    /**
+     * testGetInputTemplate
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetInputTemplate()
     {
         $order = $this->getTestOrder();
@@ -127,6 +154,13 @@ HTML;
         $this->assertNull($p->getInputTemplate(), 'check template');
     }
 
+    /**
+     * testGetSettingsWidget
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetSettingsWidget()
     {
         $order = $this->getTestOrder();
@@ -135,6 +169,13 @@ HTML;
         $this->assertEquals('modules/CDev/TwoCheckout/config.tpl', $p->getSettingsWidget(), 'check settings widget');
     }
 
+    /**
+     * testIsConfigured
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testIsConfigured()
     {
         $order = $this->getTestOrder();
@@ -167,6 +208,13 @@ HTML;
         $this->assertFalse($p->isConfigured($method), 'check configured status (false)');
     }
 
+    /**
+     * testGetOperationTypes
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetOperationTypes()
     {
         $method = $this->getTestMethod();
@@ -181,6 +229,13 @@ HTML;
         );
     }
 
+    /**
+     * testProcessReturn
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testProcessReturn()
     {
         $order = $this->getTestOrder();
@@ -196,7 +251,7 @@ HTML;
         \XLite\Core\Request::getInstance()->total = $order->getTotal();
 
         \XLite\Core\Request::getInstance()->key = strtoupper(md5(
-            'tango' . '260852' . $order->getOrderId() . $order->getTotal()
+            'tango' . '260852' . $order->getOrderId() . sprintf("%.2f", round((double)($order->getTotal()) + 0.00000000001, 2))
         ));
 
         $p->processReturn($t);
@@ -221,9 +276,14 @@ HTML;
             );
         }
     }
+    
     /**
-    * @return XLite\Model\Order
-    */
+     * getTestMethod
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     protected function getTestMethod()
     {
         $method = parent::getTestMethod();
@@ -278,6 +338,13 @@ HTML;
         return $method;
     }
 
+    /**
+     * checkTwoCheckoutConfigOptions
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     protected function checkTwoCheckoutConfigOptions()
     {
         if (empty($this->testConfig['two_checkout']['account'])) {

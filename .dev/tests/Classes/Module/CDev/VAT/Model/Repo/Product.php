@@ -55,17 +55,19 @@ class XLite_Tests_Module_CDev_VAT_Model_Repo_Product extends XLite_Tests_Model_A
         $rate->setTax($tax);
         \XLite\Core\Database::getEM()->flush();
 
-        $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate;
-        $rate->setValue(20);
-        $rate->setPosition(0);
         $memberships = \XLite\Core\Database::getRepo('XLite\Model\Membership')->findAll();
         $membership = array_shift($memberships);
+
+        $rate = new \XLite\Module\CDev\VAT\Model\Tax\Rate();
+        $rate->setValue(20);
+        $rate->setPosition(0);
         $rate->setMembership($membership);
-        $tax->setVATMembership($membership);
-        \XLite\Core\Database::getEM()->persist($rate);
-        $tax->addRates($rate);
         $rate->setTax($tax);
-        \XLite\Core\Database::getEM()->flush();
+
+        $tax->setVATMembership($membership);
+        $tax->addRates($rate);
+
+        \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax\Rate')->insert($rate);
 
         \XLite\Module\CDev\VAT\Logic\Product\Tax::resetInstance();
         $cnd = new \XLite\Core\CommonCell(

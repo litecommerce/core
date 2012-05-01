@@ -15,6 +15,12 @@
  * @since      1.0.0
  */
 
+/**
+ * XLite_Tests_Model_Repo_Zone 
+ *
+ * @see   ____class_see____
+ * @since 1.0.22
+ */
 class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
 {
 	/**

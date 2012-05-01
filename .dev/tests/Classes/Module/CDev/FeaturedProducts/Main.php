@@ -25,35 +25,75 @@
  * @since      1.0.0
  */
 
+/**
+ * XLite_Tests_Module_CDev_FeaturedProducts_Main 
+ *
+ * @see   ____class_see____
+ * @since 1.0.22
+ */
 class XLite_Tests_Module_CDev_FeaturedProducts_Main extends XLite_Tests_TestCase
 {
+    /**
+     * testGetModuleName
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetModuleName()
     {
         $main = $this->getMain();
         $this->assertEquals('Featured Products', $main::getModuleName(), 'Wrong module name');
     }
 
+    /**
+     * testGetDescription
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetDescription()
     {
         $main = $this->getMain();
         $this->assertEquals('Shows your best and most profitable products to customers.', $main::getDescription(), 'Wrong description');
     }
 
+    /**
+     * testGetVersion
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetVersion()
     {
         $main = $this->getMain();
-        $this->assertEquals('1.0.11', $main::getVersion(), 'Wrong version');
+        $this->assertEquals('1.0.12', $main::getVersion(), 'Wrong version');
     }
 
+    /**
+     * testShowSettingsForm
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testShowSettingsForm()
     {
         $main = $this->getMain();
         $this->assertTrue($main::showSettingsForm(), 'Wrong flag to show settings form');
     }
 
+    /**
+     * getMain
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     protected function getMain()
     {
         return 'XLite\Module\CDev\FeaturedProducts\Main';
     }
-
 }
