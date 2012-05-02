@@ -35,75 +35,27 @@ return function()
         \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
     }
 
-    // Loading currencies and countries
-    $yamlFile = __DIR__ . LC_DS . 'countries.yaml';
+    // Loading currencies
+    $yamlFile = __DIR__ . LC_DS . 'currencies.yaml';
 
     if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
-        $data = \Symfony\Component\Yaml\Yaml::load($path);
-
-        // Import new and update old currencies
-        $repo = \XLite\Core\Database::getRepo('XLite\Model\Currency');
-        foreach ($data['currencies'] as $cell) {
-            $currency = $repo->find($cell['currency_id']);
-
-            if (!$currency) {
-                $currency = new \XLite\Model\Currency;
-                $currency->setCurrencyId($cell['currency_id']);
-                \XLite\Core\Database::getEM()->persist($currency);
-            }
-
-            $currency->map(
-                array(
-                    'code'   => $cell['code'],
-                    'symbol' => $cell['symbol'],
-                    'prefix' => isset($cell['prefix']) ? $cell['prefix'] : '',
-                    'suffix' => isset($cell['suffix']) ? $cell['suffix'] : '',
-                )
-            );
-
-            foreach ($cell['translations'] as $t) {
-                $currency->getTranslation($t['code'])->setName($t['name']);
-            }
-        }
-        \XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
 
         // Remove obsolete currencies
-        foreach ($repo->findBy(array('prefix' => '', 'suffix' => '')) as $currency) {
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\Currency')->findBy(array('prefix' => '', 'suffix' => '')) as $currency) {
             \XLite\Core\Database::getEM()->remove($currency);
         }
         \XLite\Core\Database::getEM()->flush();
+    }
 
-        // Import new and update old countries
-        $repo = \XLite\Core\Database::getRepo('XLite\Model\Country');
-        foreach ($data['currencies'] as $cell) {
-            $country = $repo->findOneBy(array('code' => $cell['code']));
+    // Loading countries
+    $yamlFile = __DIR__ . LC_DS . 'countries.yaml';
 
-            if (!$country) {
-                $country = new \XLite\Model\Country;
-                $country->setCode($cell['code']);
-                \XLite\Core\Database::getEM()->persist($country);
-            }
-
-            $country->map(
-                array(
-                    'code3'   => isset($cell['code3']) ? $cell['code3'] : '',
-                    'id'      => $cell['id'],
-                    'country' => $cell['country'],
-                )
-            );
-
-            if (isset($cell['currency']) && !empty($cell['currency']['currency_id'])) {
-                $currency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find($cell['currency']['currency_id']);
-                if ($currency) {
-                    $country->setCurrency($currency);
-                    $currency->addCountries($country);
-                }
-            }
-        }
-        \XLite\Core\Database::getEM()->flush();
+    if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
+        \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
 
         // Remove obsolete currencies
-        $qb = $repo->createQueryBuilder('c')->andWhere('c.id IS NULL');
+        $qb = \XLite\Core\Database::getRepo('XLite\Model\Country')->createQueryBuilder('c')->andWhere('c.id IS NULL');
         foreach ($qb->getResult() as $country) {
             \XLite\Core\Database::getEM()->remove($country);
         }
