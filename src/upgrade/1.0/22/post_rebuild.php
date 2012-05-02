@@ -22,7 +22,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.20
+ * @since     1.0.22
  */
 
 return function()
@@ -54,7 +54,7 @@ return function()
     if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
         \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
 
-        // Remove obsolete currencies
+        // Remove obsolete countries
         $qb = \XLite\Core\Database::getRepo('XLite\Model\Country')->createQueryBuilder('c')->andWhere('c.id IS NULL');
         foreach ($qb->getResult() as $country) {
             \XLite\Core\Database::getEM()->remove($country);
