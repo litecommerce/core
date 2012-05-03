@@ -36,22 +36,27 @@ div.tags div.tags-title {
   text-transform: uppercase;
 }
 
-div.top-controls {
+.top-controls {
   float: left;
-  background: #ededed url(../images/search-form-background.png) left bottom repeat-x;
 }
 
-div.top-controls.search-form {
-  padding: 30px 30px 50px 30px;
-  height: 120px;
+.top-controls .addons-search-panel,
+  .top-controls .action-buttons
+{
+  background-color: #ededed;
+  padding: 20px;
 }
 
-div.top-controls.search-form div.substring {
+.top-controls .addons-search-panel {
+  margin-bottom: 25px;
+}
+
+.top-controls.search-form .substring {
   border: 1px solid #a3a3a3;
-  border-radius: 10px;
+  border-radius: 3px;
 }
 
-div.top-controls.search-form button[type="submit"] {
+.top-controls.search-form button[type="submit"] {
   background: #fff url(../images/search-modules-background.png) no-repeat center center;
   margin: 0;
   padding: 0;
@@ -61,13 +66,13 @@ div.top-controls.search-form button[type="submit"] {
   border-radius: 0 10px 10px 0;
 }
 
-div.top-controls.search-form button.enter-license-key {
-  margin-top: 20px;
-  background: #EFF6FE url(../images/enter-license-key-background.png) 18px 8px no-repeat;
+.top-controls.search-form button.enter-license-key {
+  margin: 12px 0px 0px 54px;
+  background: #eff6fe url(../images/enter-license-key-background.png) 18px 8px no-repeat;
   padding-left: 45px;
 }
 
-div.top-controls.search-form input#substring {
+.top-controls.search-form input#substring {
   border: 0;
   padding: 4px 7px;
   vertical-align: middle;
@@ -75,8 +80,13 @@ div.top-controls.search-form input#substring {
   font-size: 13px;
   font-style: italic;
   color: #a5a5a5;
-  border-radius: 10px 0 0 10px;
-  width: 230px;
+  width: 260px;
+}
+
+.top-controls .action-buttons .activate-text {
+  color: #51799a;
+  font-size: 16px;
+  margin: 0px 0px 0px 29px;
 }
 
 .modules-list .price,

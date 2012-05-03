@@ -302,6 +302,7 @@ XLite\Model\LanguageLabel:
   - { name: Search, translations: [{ code: en, label: Search }, { code: de, label: Suche }] }
   - { name: 'Show all labels', translations: [{ code: en, label: 'Show all labels' }] }
   - { name: 'N items found', translations: [{ code: en, label: '{{n}} items found' }] }
+  - { name: 'No modules found for search_string', translations: [{ code: en, label: 'No modules found for "<em>{{search_string}}</em>"' }] }
   - { name: 'Language options', translations: [{ code: en, label: 'Language options' }] }
   - { name: 'X labels', translations: [{ code: en, label: '{{language}} labels' }] }
   - { name: 'translate to', translations: [{ code: en, label: 'translate to' }] }

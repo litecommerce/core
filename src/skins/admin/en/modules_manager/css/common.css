@@ -271,3 +271,19 @@
 .icon-container .addon-icon.addon-disabled-note {
   text-align: center;
 }
+
+.main-text {
+  margin: 35px 0px 0px 287px;
+}
+
+.main-text .no-modules-found {
+  font-size: 24px;
+  
+}
+
+.main-text .clarify-text {
+  margin: 9px 0px 0px 60px;
+  font-size: 16px;
+  color: #51799a;
+}
+

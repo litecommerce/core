@@ -40,6 +40,7 @@
   </div> *}
 
   <div class="action-buttons">
+    <div class="activate-text">{t(#Activate your paid module license#)}</div>
     <widget
       class="\XLite\View\Button\Addon\EnterLicenseKey"
       style="main-button" />
