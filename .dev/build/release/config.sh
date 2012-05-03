@@ -70,6 +70,9 @@ CDev/VAT
 CDev/USPS
 CDev/XMLSitemap
 CDev/XMLSitemapDrupal
+CDev/DeTranslation
+CDev/FrTranslation
+CDev/RuTranslation
 "
 
 # LiteCommerce paid modules which should be packed as separate distributives
