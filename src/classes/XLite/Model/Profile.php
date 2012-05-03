@@ -727,11 +727,16 @@ class Profile extends \XLite\Model\AEntity
     {
         $allowed = false;
 
-        foreach ($this->getRoles() as $role) {
-            if ($role->isPermissionAllowed($code)) {
-                $allowed = true;
-                break;
+        if (0 < count($this->getRoles())) {
+            foreach ($this->getRoles() as $role) {
+                if ($role->isPermissionAllowed($code)) {
+                    $allowed = true;
+                    break;
+                }
             }
+
+        } elseif (0 == \XLite\Core\Database::getRepo('XLite\Model\Role')->count()) {
+            $allowed = true;
         }
 
         return $allowed;
