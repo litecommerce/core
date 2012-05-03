@@ -62,4 +62,19 @@ return function()
         \XLite\Core\Database::getEM()->flush();
     }
 
+    // Update admin roles
+    $permission = \XLite\Core\Database::getRepo('XLite\Model\Role\Permission')
+        ->findOneBy(array('code' => \XLite\Model\Role\Permission::ROOT_ACCESS));
+    $role = $permission->getRoles()->first();
+    if ($role) {
+        $admins = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+            ->findBy(array('access_level' => \XLite\Core\Auth::getInstance()->getAdminAccessLevel()));
+        foreach ($admins as $admin) {
+            if (!$admin->getRoles()->contains($role)) {
+                $role->addProfiles($admin);
+                $admin->addRoles($role);
+            }
+        }
+        \XLite\Core\Database::getEM()->flush();
+    }
 };
