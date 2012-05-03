@@ -327,7 +327,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $oldStatus;
+    protected $oldStatus = self::STATUS_INPROGRESS;
 
     /**
      * Modifiers (cache)
@@ -1184,7 +1184,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Has unpaid total?
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.17
@@ -1573,7 +1573,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Soft renew
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.21
@@ -1584,8 +1584,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Reinitialie currency 
-     * 
+     * Reinitialie currency
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.21
@@ -1601,8 +1601,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Define order currency 
-     * 
+     * Define order currency
+     *
      * @return \XLite\Model\Currency
      * @see    ____func_see____
      * @since  1.0.21
