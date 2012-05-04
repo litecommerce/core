@@ -39,7 +39,33 @@ return function()
     $yamlFile = __DIR__ . LC_DS . 'currencies.yaml';
 
     if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
-        \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
+        $data = \Symfony\Component\Yaml\Yaml::load($yamlFile);
+
+        // Import new and update old currencies
+        $repo = \XLite\Core\Database::getRepo('XLite\Model\Currency');
+        foreach ($data['XLite\Model\Currency'] as $cell) {
+            $currency = $repo->findOneBy(array('code' => $cell['code']));
+
+            if (!$currency) {
+                $currency = new \XLite\Model\Currency;
+                $currency->setCurrencyId($cell['currency_id']);
+                \XLite\Core\Database::getEM()->persist($currency);
+            }
+
+            $currency->map(
+                array(
+                    'code'        => $cell['code'],
+                    'symbol'      => $cell['symbol'],
+                    'prefix'      => isset($cell['prefix']) ? $cell['prefix'] : '',
+                    'suffix'      => isset($cell['suffix']) ? $cell['suffix'] : '',
+                )
+            );
+
+            foreach ($cell['translations'] as $t) {
+                $currency->getTranslation($t['code'])->setName($t['name']);
+            }
+        }
+        \XLite\Core\Database::getEM()->flush();
 
         // Remove obsolete currencies
         foreach (\XLite\Core\Database::getRepo('XLite\Model\Currency')->findBy(array('prefix' => '', 'suffix' => '')) as $currency) {
