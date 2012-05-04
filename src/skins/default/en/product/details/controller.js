@@ -345,14 +345,14 @@ ProductDetailsView.prototype.selectImage = function(pos)
 
     jQuery('.image .product-photo img', this.base)
       .hide()
-      .attr('src',    middle.attr('src'))
-      .attr('width',  middle.attr('width'))
-      .attr('height', middle.attr('height'))
+      .attr('src', middle.attr('src'))
+      .width(middle.width())
+      .height(middle.height())
       .show();
 
     // Center align images
-    var shiftX = Math.max(0, parseInt(jQuery('.image .product-photo', this.base).css('width')) - middle.attr('width'));
-    var shiftY = Math.max(0, parseInt(jQuery('.image .product-photo', this.base).css('height')) - middle.attr('height'));
+    var shiftX = Math.max(0, jQuery('.image .product-photo', this.base).width() - middle.width());
+    var shiftY = Math.max(0, jQuery('.image .product-photo', this.base).height() - middle.height());
 
     if (this.zoomWidget) {
 
