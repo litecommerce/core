@@ -256,7 +256,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
         if ($profiles) {
             foreach ($profiles as $profile) {
                 $profile->setAccessLevel($accessLevel);
-                $this->updateProfileRole($profile, $accessLevel);
+                $this->updateProfileRole($profile);
                 \XLite\Core\Database::getEM()->persist($profile);
             }
             \XLite\Core\Database::getEM()->flush();
