@@ -27,7 +27,6 @@
 
 return function()
 {
-    
     // Loading data to the database from yaml file
     $yamlFile = __DIR__ . LC_DS . 'post_rebuild.yaml';
 
@@ -112,5 +111,12 @@ return function()
             }
         }
         \XLite\Core\Database::getEM()->flush();
+    }
+
+    // Remove unused config options
+    $yamlFile = __DIR__ . LC_DS . 'obsolete_config_options.yaml';
+
+    if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
+        \XLite\Core\Database::getInstance()->unloadFixturesFromYaml($yamlFile);
     }
 };
