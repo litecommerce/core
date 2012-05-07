@@ -45,7 +45,6 @@ abstract class Minicart extends \XLite\View\Minicart implements \XLite\Base\IDec
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'modules/CDev/ProductOptions/minicart.js';
 
         return $list;
@@ -61,7 +60,6 @@ abstract class Minicart extends \XLite\View\Minicart implements \XLite\Base\IDec
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules/CDev/ProductOptions/minicart.css';
 
         return $list;

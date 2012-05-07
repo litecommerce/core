@@ -9,9 +9,10 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <ul class="product-options">
   <li FOREACH="getOptions(),option" class="product-option">
-    <strong class="subtitle">{option.getDisplayName():h}</strong>
+    <strong class="subtitle">{option.getDisplayName()}</strong>
     <widget template="{getTemplateNameByOption(option)}" option="{option}" />
   </li>
 </ul>
