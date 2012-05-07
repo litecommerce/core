@@ -624,18 +624,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get order currency
-     *
-     * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.8
-     */
-    public function getCurrency()
-    {
-        return isset($this->currency) ? $this->currency : \XLite::getInstance()->getCurrency();
-    }
-
-    /**
      * Get original profile
      *
      * @return \XLite\Model\Profile
@@ -1535,7 +1523,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     {
         $this->resetSurcharges();
 
-        $this->reinitialieCurrency();
+        $this->reinitializeCurrency();
 
         $this->calculateInitialValues();
 
@@ -1580,7 +1568,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function renewSoft()
     {
-        $this->reinitialieCurrency();
+        $this->reinitializeCurrency();
     }
 
     /**
@@ -1590,7 +1578,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @see    ____func_see____
      * @since  1.0.21
      */
-    protected function reinitialieCurrency()
+    protected function reinitializeCurrency()
     {
         $new = $this->defineCurrency();
         $old = $this->getCurrency();
