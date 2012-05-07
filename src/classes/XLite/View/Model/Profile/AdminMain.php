@@ -403,13 +403,11 @@ class AdminMain extends \XLite\View\Model\AModel
             $model->getRoles()->clear();
 
             // Add new links
-            foreach ($data['roles'] as $rid => $tmp) {
-                if ($tmp) {
-                    $role = \XLite\Core\Database::getRepo('XLite\Model\Role')->find($rid);
-                    if ($role) {
-                        $model->addRoles($role);
-                        $role->addProfiles($model);
-                    }
+            foreach ($data['roles'] as $rid) {
+                $role = \XLite\Core\Database::getRepo('XLite\Model\Role')->find($rid);
+                if ($role) {
+                    $model->addRoles($role);
+                    $role->addProfiles($model);
                 }
             }
         }
