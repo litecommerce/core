@@ -46,10 +46,20 @@ return function()
         foreach ($data['XLite\Model\Currency'] as $cell) {
             $currency = $repo->findOneBy(array('code' => $cell['code']));
 
+            $prev = null;
+
             if (!$currency) {
+                $prev = $repo->find($cell['currency_id']);
                 $currency = new \XLite\Model\Currency;
                 $currency->setCurrencyId($cell['currency_id']);
                 \XLite\Core\Database::getEM()->persist($currency);
+
+            } elseif ($cell['currency_id'] != $currency->getCurrencyId()) {
+                $prev = $repo->find($cell['currency_id']);
+            }
+
+            if ($prev) {
+                \XLite\Core\Database::getEM()->remove($prev);
             }
 
             $currency->map(
