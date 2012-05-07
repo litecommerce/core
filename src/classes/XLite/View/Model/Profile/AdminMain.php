@@ -358,6 +358,7 @@ class AdminMain extends \XLite\View\Model\AModel
             !\XLite\Core\Auth::getInstance()->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS)
             || !$this->getModelObject()
             || !$this->getModelObject()->isAdmin()
+            || 2 > \XLite\Core\Database::getRepo('XLite\Model\Role')->count()
         ) {
             unset($this->accessSchema['roles']);
         }
@@ -390,6 +391,26 @@ class AdminMain extends \XLite\View\Model\AModel
     {
         if (isset($data['password'])) {
             $data['password'] = \XLite\Core\Auth::encryptPassword($data['password']);
+        }
+
+        // Assign only role for admin
+        if (
+            isset($data['access_level'])
+            && \XLite\Core\Auth::getInstance()->getAdminAccessLevel() == $data['access_level']
+            && 1 == \XLite\Core\Database::getRepo('XLite\Model\Role')->count()
+        ) {
+            $rootRole = \XLite\Core\Database::getRepo('XLite\Model\Role')->findOneRoot();
+            if ($rootRole) {
+                $data['roles'] = array($rootRole->getId());
+            }
+        }
+
+        // Remove roles from non-admin
+        if (
+            isset($data['access_level'])
+            && \XLite\Core\Auth::getInstance()->getAdminAccessLevel() != $data['access_level']
+        ) {
+            $data['roles'] = array();
         }
 
         if (isset($data['roles']) && is_array($data['roles'])) {
