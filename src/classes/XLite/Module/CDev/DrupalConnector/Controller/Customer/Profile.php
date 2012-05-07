@@ -239,7 +239,6 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
             \XLite\Core\Database::getRepo('\XLite\Model\Profile')->findCustomersWithRoles($adminRoles),
             \XLite\Core\Auth::getInstance()->getAdminAccessLevel()
         );
-        $this->updateAdminRoles(\XLite\Core\Database::getRepo('\XLite\Model\Profile')->findCustomersWithRoles($adminRoles));
     }
 
     /**
