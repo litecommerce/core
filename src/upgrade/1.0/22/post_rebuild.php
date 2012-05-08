@@ -43,30 +43,48 @@ return function()
         // Import new and update old currencies
         $repo = \XLite\Core\Database::getRepo('XLite\Model\Currency');
         foreach ($data['XLite\Model\Currency'] as $cell) {
+            $new = false;
+            $flush = false;
             $currency = $repo->findOneBy(array('code' => $cell['code']));
 
             $prev = null;
 
             if (!$currency) {
+                $new = true;
                 $prev = $repo->find($cell['currency_id']);
                 $currency = new \XLite\Model\Currency;
-                $currency->setCurrencyId($cell['currency_id']);
-                \XLite\Core\Database::getEM()->persist($currency);
 
             } elseif ($cell['currency_id'] != $currency->getCurrencyId()) {
                 $prev = $repo->find($cell['currency_id']);
+                \XLite\Core\Database::getEM()->remove($currency);
+                $currency = new \XLite\Model\Currency;
+                $new = true;
+                $flush = true;
             }
 
             if ($prev) {
                 \XLite\Core\Database::getEM()->remove($prev);
+                $flush = true;
+            }
+
+            if ($flush) {
+                \XLite\Core\Database::getEM()->flush();
+            }
+
+            if ($new) {
+                $currency->setCurrencyId($cell['currency_id']);
+                \XLite\Core\Database::getEM()->persist($currency);
             }
 
             $currency->map(
                 array(
-                    'code'        => $cell['code'],
-                    'symbol'      => $cell['symbol'],
-                    'prefix'      => isset($cell['prefix']) ? $cell['prefix'] : '',
-                    'suffix'      => isset($cell['suffix']) ? $cell['suffix'] : '',
+                    'code'              => $cell['code'],
+                    'symbol'            => $cell['symbol'],
+                    'prefix'            => isset($cell['prefix']) ? $cell['prefix'] : '',
+                    'suffix'            => isset($cell['suffix']) ? $cell['suffix'] : '',
+                    'e'                 => isset($cell['e']) ? $cell['e'] : 0,
+                    'decimalDelimiter'  => isset($cell['decimalDelimiter']) ? $cell['decimalDelimiter'] : '.',
+                    'thousandDelimiter' => isset($cell['thousandDelimiter']) ? $cell['thousandDelimiter'] : '',
                 )
             );
 
