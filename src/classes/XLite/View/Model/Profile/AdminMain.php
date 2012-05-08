@@ -389,8 +389,13 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function setModelProperties(array $data)
     {
-        if (isset($data['password'])) {
+        if (!empty($data['password'])) {
+            // Encrypt password if if is not empty
             $data['password'] = \XLite\Core\Auth::encryptPassword($data['password']);
+
+        } elseif (isset($data['password'])) {
+            // Otherwise unset password to avoid passing empty password to the database
+            unset($data['password']);
         }
 
         // Assign only role for admin
@@ -487,7 +492,11 @@ class AdminMain extends \XLite\View\Model\AModel
 
             if ($data['password'] != $data['password_conf']) {
                 $result = false;
-                \XLite\Core\TopMessage::addError('Password and its confirmation do not match');
+                $this->addErrorMessage(
+                    'password',
+                    'Password and its confirmation do not match',
+                    $formFields[self::SECTION_MAIN]
+                );
             }
 
         } else {
