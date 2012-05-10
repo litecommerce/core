@@ -140,45 +140,6 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
     }
 
     /**
-     * testCleanCache
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function testCleanCache()
-    {
-        $cacheDriver = \XLite\Core\Database::getCacheDriver();
-
-        // Test cleanCache() with parameter
-        $cacheDriver->save('Model_Zone.data.all', array('test'));
-        $cacheDriver->save('Model_Zone.data.zone.33000.testcase', array('test'));
-        $cacheDriver->save('Model_Zone.data.zone.34000.testcase', array('test'));
-
-        \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache(33000);
-
-        $this->assertFalse($cacheDriver->contains('Model_Zone.data.all'), 'Model_Zone.all record was not removed');
-        $this->assertFalse($cacheDriver->contains('Model_Zone.data.zone.33000.testcase'), 'Model_Zone.zone.33000.testcase record was not removed');
-        $this->assertTrue($cacheDriver->contains('Model_Zone.data.zone.34000.testcase'), 'Model_Zone.zone.34000.testcase record was removed');
-
-        \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache(34000);
-
-        $this->assertFalse($cacheDriver->contains('Model_Zone.data.zone.34000.testcase'), 'Model_Zone.zone.34000.testcase record was not removed');
-
-        // Test cleanCache() without parameter
-        $cacheDriver->save('Model_Zone.data.all', array('test'));
-        $cacheDriver->save('Model_Zone.data.zone.33000.testcase', array('test'));
-        $cacheDriver->save('Model_Zone.data.zone.34000.testcase', array('test'));
-
-        \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache();
-
-        $this->assertFalse($cacheDriver->contains('Model_Zone.data.all'), 'Model_Zone.all record was not removed');
-        $this->assertFalse($cacheDriver->contains('Model_Zone.data.zone.33000.testcase'), 'Model_Zone.zone.33000.testcase record was not removed');
-        $this->assertFalse($cacheDriver->contains('Model_Zone.data.zone.34000.testcase'), 'Model_Zone.zone.34000.testcase record was not removed');
-    }
-
-    /**
      * testFindAllZones
      *
      * @return void

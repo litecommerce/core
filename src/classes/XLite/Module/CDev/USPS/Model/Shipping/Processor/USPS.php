@@ -49,7 +49,7 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor
      * @see   ____var_see____
      * @since 1.0.18
      */
-    protected static $newMethods = array();
+    protected $newMethods = array();
 
     /**
      * Unique processor Id
@@ -778,7 +778,7 @@ OUT;
     {
         // Check if method has alreaby been added in current session to prevent duplicates
         if (!in_array($postage['CLASSID'], $this->newMethods)) {
-    
+
             $method = new \XLite\Model\Shipping\Method();
             $method->setProcessor($this->getProcessorId());
             $method->setCarrier($this->getProcessorId());
