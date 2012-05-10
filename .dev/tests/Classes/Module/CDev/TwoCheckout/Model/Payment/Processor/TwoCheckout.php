@@ -50,6 +50,18 @@ class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout ex
     );
 
     /**
+     * Test config options
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.23
+     */
+    protected $testOptions = array(
+        'account' => 'testaccount',
+        'secret'  => 'secretword',
+    );
+
+    /**
      * testPay
      *
      * @return void
@@ -63,10 +75,8 @@ class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout ex
         $t = $order->getPaymentTransactions()->get(0);
         $method = $order->getPaymentMethod();
 
-        $this->checkTwoCheckoutConfigOptions();
-
         $this->query(
-            'UPDATE xlite_payment_method_settings SET value = "' . $this->testConfig['two_checkout']['account'] . '" WHERE method_id = ' . $method->getMethodId() . ' AND name = "account"',
+            'UPDATE xlite_payment_method_settings SET value = "' . $this->testOptions['account'] . '" WHERE method_id = ' . $method->getMethodId() . ' AND name = "account"',
             array()
         );
 
@@ -99,7 +109,7 @@ class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout ex
 <body onload="javascript: document.getElementById('form').submit();">
   <form method="post" id="form" name="payment_form" action="https://www.2checkout.com/checkout/spurchase">
     <fieldset style="display: none;">
-      <input type="hidden" name="sid" value="260852" />
+      <input type="hidden" name="sid" value="{$this->testOptions['account']}" />
       <input type="hidden" name="total" value="19.99" />
       <input type="hidden" name="cart_order_id" value="{$tid}" />
       <input type="hidden" name="merchant_order_id" value="{$oid}" />
@@ -114,15 +124,15 @@ class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout ex
       <input type="hidden" name="country" value="US" />
       <input type="hidden" name="email" value="rnd_tester@cdev.ru" />
       <input type="hidden" name="phone" value="0123456789" />
+      <input type="hidden" name="fixed" value="Y" />
+      <input type="hidden" name="id_type" value="1" />
+      <input type="hidden" name="sh_cost" value="0.00" />
       <input type="hidden" name="ship_name" value="Admin Admin" />
       <input type="hidden" name="ship_street_address" value="51 apt, 87 street" />
       <input type="hidden" name="ship_city" value="Edmond" />
       <input type="hidden" name="ship_state" value="OK" />
       <input type="hidden" name="ship_zip" value="73003" />
       <input type="hidden" name="ship_country" value="US" />
-      <input type="hidden" name="fixed" value="Y" />
-      <input type="hidden" name="id_type" value="1" />
-      <input type="hidden" name="sh_cost" value="0.00" />
       <input type="hidden" name="c_prod" value="1,1" />
       <input type="hidden" name="c_name" value="Planet Express Babydoll" />
       <input type="hidden" name="c_price" value="19.99" />
@@ -181,10 +191,8 @@ HTML;
         $order = $this->getTestOrder();
         $method = $order->getPaymentMethod();
 
-        $this->checkTwoCheckoutConfigOptions();
-
         $this->query(
-            'UPDATE xlite_payment_method_settings SET value = "' . $this->testConfig['two_checkout']['account'] . '" WHERE method_id = ' . $method->getMethodId() . ' AND name = "account"',
+            'UPDATE xlite_payment_method_settings SET value = "' . $this->testOptions['account'] . '" WHERE method_id = ' . $method->getMethodId() . ' AND name = "account"',
             array()
         );
 
@@ -249,10 +257,14 @@ HTML;
         \XLite\Core\Request::getInstance()->setRequestMethod('POST');
         \XLite\Core\Request::getInstance()->cart_order_id = $t->getTransactionId();
         \XLite\Core\Request::getInstance()->total = $order->getTotal();
+        \XLite\Core\Request::getInstance()->order_number = $order->getOrderId();
 
-        \XLite\Core\Request::getInstance()->key = strtoupper(md5(
-            'tango' . '260852' . $order->getOrderId() . sprintf("%.2f", round((double)($order->getTotal()) + 0.00000000001, 2))
-        ));
+        $keyStr = $this->testOptions['secret']
+            . $this->testOptions['account']
+            . $order->getOrderId()
+            . sprintf("%.2f", round((double)($order->getTotal()) + 0.00000000001, 2));
+
+        \XLite\Core\Request::getInstance()->key = strtoupper(md5($keyStr));
 
         $p->processReturn($t);
 
@@ -291,7 +303,7 @@ HTML;
         $s = new \XLite\Model\Payment\MethodSetting();
 
         $s->setName('account');
-        $s->setValue('260852');
+        $s->setValue($this->testOptions['account']);
 
         $method->addSettings($s);
         $s->setPaymentMethod($method);
@@ -299,7 +311,7 @@ HTML;
         $s = new \XLite\Model\Payment\MethodSetting();
 
         $s->setName('secret');
-        $s->setValue('tango');
+        $s->setValue($this->testOptions['secret']);
 
         $method->addSettings($s);
         $s->setPaymentMethod($method);
@@ -336,19 +348,5 @@ HTML;
         \XLite\Core\Database::getEM()->flush();
 
         return $method;
-    }
-
-    /**
-     * checkTwoCheckoutConfigOptions
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.22
-     */
-    protected function checkTwoCheckoutConfigOptions()
-    {
-        if (empty($this->testConfig['two_checkout']['account'])) {
-            $this->markTestSkipped('Account for testing 2Checkout.com module is not specified');
-        }
     }
 }
