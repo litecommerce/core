@@ -19,9 +19,10 @@
 class XLite_Tests_Model_Country extends XLite_Tests_TestCase
 {
     protected $entityData = array(
-        'country'   => 'test country',
-        'code'      => 'ZZ',
-        'enabled'   => false,
+        'country' => 'test country',
+        'code'    => 'ZZ',
+        'id'      => 999,
+        'enabled' => false,
     );
 
     /**

@@ -83,25 +83,21 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
                 if ($m) {
                     $duplicate = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder()
                        ->andWhere('translations.name = :name', 'm.membership_id != :id')
-                       ->setParameter('name', $row['membership'])
+                       ->setParameter('name', $row['name'])
                        ->setParameter('id', $id)
                        ->setMaxResults(1)
                        ->getSingleResult();
 
                     if (!is_null($duplicate)) {
                         \XLite\Core\TopMessage::addWarning(
-                            '"' . $row['membership'] . '" ' . ' membership name is already in use. '
+                            '"' . $row['name'] . '" ' . ' membership name is already in use. '
                             . 'Please specify another name for this membership level'
                         );
 
                     } else {
-                        $m->getTranslation($code)->setName($row['membership']);
+
+                        \XLite\Core\Database::getRepo('\XLite\Model\Membership')->update($m, $row);
                     }
-
-                    $m->setOrderby(intval($row['orderby']));
-                    $m->setActive(isset($row['active']) && '1' == $row['active']);
-
-                    \XLite\Core\Database::getEM()->persist($m);
 
                     $flag = true;
 
@@ -130,7 +126,9 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
         $ids = \XLite\Core\Request::getInstance()->deleted_memberships;
 
         if (is_array($ids) && $ids) {
+
             list($keys, $data) = \XLite\Core\Database::prepareArray($ids, 'id');
+
             $list = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder()
                 ->where('m.membership_id IN (' . implode(', ', $keys) . ')')
                 ->setParameters($data)
@@ -139,6 +137,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
             foreach ($list as $m) {
                 \XLite\Core\Database::getEM()->remove($m);
             }
+
             \XLite\Core\Database::getEM()->flush();
 
             // TODO - remove membership id from profiles
@@ -159,20 +158,15 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
         if (!is_array($data)) {
             // TODO - add top message
 
-        } elseif (!isset($data['membership']) || !$data['membership']) {
+        } elseif (!isset($data['name']) || !$data['name']) {
             // TODO - add top message
 
-        } elseif (\XLite\Core\Database::getRepo('\XLite\Model\Membership')->findOneByName($data['membership'], false)) {
+        } elseif (\XLite\Core\Database::getRepo('\XLite\Model\Membership')->findOneByName($data['name'], false)) {
             // TODO - add top message
 
         } else {
-            $code = $this->getCurrentLanguage();
-            $membership = new \XLite\Model\Membership();
-            $membership->setOrderby(intval($data['orderby']));
-            $membership->getTranslation($code)->setName($data['membership']);
 
-            \XLite\Core\Database::getEM()->persist($membership);
-            \XLite\Core\Database::getEM()->flush();
+            \XLite\Core\Database::getRepo('\XLite\Model\Membership')->insert($data);
         }
     }
 }

@@ -72,4 +72,17 @@ class Membership extends \XLite\Model\Base\I18n
      * @Column (type="boolean")
      */
     protected $active = true;
+
+
+    /**
+     * Get name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getName()
+    {
+        return $this->getSoftTranslation()->getName();
+    }
 }

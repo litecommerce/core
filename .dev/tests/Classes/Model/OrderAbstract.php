@@ -98,19 +98,42 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
         return $order;
     }
 
-    protected function tearDown(){
+    /**
+     * tearDown
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function tearDown()
+    {
         xdebug_stop_code_coverage(false);
-        if (!empty($this->orders))
-            foreach($this->orders as $order)
+
+        if (!empty($this->orders)) {
+            foreach($this->orders as $order) {
                 $this->clearEntity($order);
-        if ($this->order)
+            }
+        }
+
+        if ($this->order) {
             $this->clearEntity($this->order);
+        }
+
         $this->order = null;
         xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);
+
         parent::tearDown();
     }
 
-    static function tearDownAfterClass(){
+    /**
+     * tearDownAfterClass
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    static function tearDownAfterClass()
+    {
         \XLite\Core\Database::getEM()->flush();
     }
 

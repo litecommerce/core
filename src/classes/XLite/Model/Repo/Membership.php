@@ -88,13 +88,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      */
     public function findAllMemberships()
     {
-        $data = $this->getFromCache('all');
-        if (!isset($data)) {
-            $data = $this->defineAllMembershipsQuery()->getResult();
-            $this->saveToCache($data, 'all');
-        }
-
-        return $data;
+        return $this->defineAllMembershipsQuery()->getResult();
     }
 
     /**

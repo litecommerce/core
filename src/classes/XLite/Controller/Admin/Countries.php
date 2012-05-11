@@ -92,11 +92,13 @@ class Countries extends \XLite\Controller\Admin\AAdmin
 
     /**
      * action 'add'
+     * FIXME: Action is temporary disabled until Countries list will be refactored to allow add/edit all country fields
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
+    /*
     protected function doActionAdd()
     {
         if (empty(\XLite\Core\Request::getInstance()->code)) {
@@ -127,6 +129,7 @@ class Countries extends \XLite\Controller\Admin\AAdmin
             }
         }
     }
+     */
 
     /**
      * action 'delete'

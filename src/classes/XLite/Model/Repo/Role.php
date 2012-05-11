@@ -76,6 +76,18 @@ class Role extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
+     * Find one root-based role
+     * 
+     * @return \XLite\Model\Role
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
+    public function findOneRoot()
+    {
+        return $this->defineFindOneRootQuery()->getSingleResult();
+    }
+
+    /**
      * Define query for findOneByName() method
      * 
      * @param string $name Name
@@ -90,5 +102,20 @@ class Role extends \XLite\Model\Repo\Base\I18n
             ->andWhere('translations.name = :name')
             ->setParameter('name', $name)
             ->setMaxResults(1);
+    }
+
+    /**
+     * Define query for findOneRoot() method
+     * 
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
+    protected function defineFindOneRootQuery()
+    {
+        return $this->createQueryBuilder('r')
+            ->linkInner('r.permissions')
+            ->andWhere('permissions.code = :root')
+            ->setParameter('root', \XLite\Model\Role\Permission::ROOT_ACCESS);
     }
 }

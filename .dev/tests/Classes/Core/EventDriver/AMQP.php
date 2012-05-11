@@ -19,16 +19,22 @@ class XLite_Tests_Core_EventDriver_AMQP extends XLite_Tests_TestCase
 {
     public function testIsValid()
     {
+        $this->markTestSkipped('Skipped due to E:41209');
+
         $this->assertTrue(\XLite\Core\EventDriver\AMQP::isValid(), 'RabbitMQ is running');
     }
 
     public function testGetCode()
     {
+        $this->markTestSkipped('Skipped due to E:41209');
+
         $this->assertEquals('amqp', \XLite\Core\EventDriver\AMQP::getCode(), 'check driver code');
     }
 
     public function testFire()
     {
+        $this->markTestSkipped('Skipped due to E:41209');
+
         $driver = new \XLite\Core\EventDriver\AMQP;
         $driver->fire('test', array(1, 2, 3));
         $driver->fire('test2', array(4, 5, 6));

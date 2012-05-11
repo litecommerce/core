@@ -106,7 +106,7 @@ class Options extends \XLite\View\AView
      */
     public function canDelete()
     {
-        return $this->canSwitch() && static::$defaultLanguage !== $this->getEditLanguage()->getCode();
+        return $this->canSwitch() && static::getDefaultLanguage() !== $this->getEditLanguage()->getCode();
     }
 
     /**

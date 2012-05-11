@@ -695,6 +695,6 @@ class Session extends \XLite\Base\Singleton
             );
         }
 
-        return isset($result) ? $result->getCode() : static::$defaultLanguage;
+        return isset($result) ? $result->getCode() : static::getDefaultLanguage();
     }
 }

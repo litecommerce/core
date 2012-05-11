@@ -9,11 +9,12 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <ul class="selected-options">
   {foreach:item.getOptions(),option}
     <li IF="!isOptionEmpty(option)">
-      <span>{option.getActualName():h}:</span>
-      {option.getActualValue():h}{if:!optionArrayPointer=optionArraySize}, {end:}
+      <span>{option.getActualName()}:</span>
+      {option.getActualValue()}{if:!optionArrayPointer=optionArraySize}, {end:}
     </li>
   {end:}
 </ul>

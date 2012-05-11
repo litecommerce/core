@@ -48,7 +48,10 @@ class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     public function setBlockContent(array &$data, \stdClass $block)
     {
         // Check if current block is an LC one
-        if ($blockInfo = \XLite\Module\CDev\DrupalConnector\Drupal\Model::getInstance()->getBlock($block->delta)) {
+        if (
+            'block' == $block->module
+            && $blockInfo = \XLite\Module\CDev\DrupalConnector\Drupal\Model::getInstance()->getBlock($block->delta)
+        ) {
 
             // Trying to get widget from LC
             if ($widget = $this->getHandler()->getWidget($blockInfo['lc_class'], $blockInfo['options'])) {

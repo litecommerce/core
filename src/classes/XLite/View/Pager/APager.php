@@ -75,15 +75,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     protected $pagesCount;
 
     /**
-     * Number of items per page (cached value)
-     *
-     * @var   integer
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $itemsPerPage;
-
-    /**
      * Cached pages
      *
      * @var   array
@@ -223,7 +214,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function getList()
     {
-        return $this->getParam(self::PARAM_LIST);
+        return $this->getParam(static::PARAM_LIST);
     }
 
     /**
@@ -236,8 +227,8 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     protected function getItemsTotal()
     {
         return min(
-            $this->getParam(self::PARAM_ITEMS_COUNT),
-            $this->getMaxItemsCount() ?: $this->getParam(self::PARAM_ITEMS_COUNT) + 1
+            $this->getParam(static::PARAM_ITEMS_COUNT),
+            $this->getMaxItemsCount() ?: $this->getParam(static::PARAM_ITEMS_COUNT) + 1
         );
     }
 
@@ -250,7 +241,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function getMaxItemsCount()
     {
-        return intval($this->getParam(self::PARAM_MAX_ITEMS_COUNT));
+        return intval($this->getParam(static::PARAM_MAX_ITEMS_COUNT));
     }
 
     /**
@@ -302,18 +293,12 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function getItemsPerPage()
     {
-        if (!isset($this->itemsPerPage)) {
+        $current = $this->getParam(static::PARAM_ITEMS_PER_PAGE);
 
-            $current = $this->getParam(self::PARAM_ITEMS_PER_PAGE);
-
-            $this->itemsPerPage = max(
-                min($this->getItemsPerPageMax(), $current),
-                max($this->getItemsPerPageMin(), $current)
-            );
-
-        }
-
-        return $this->itemsPerPage;
+        return max(
+            min($this->getItemsPerPageMax(), $current),
+            max($this->getItemsPerPageMin(), $current)
+        );
     }
 
     /**
@@ -328,25 +313,25 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PAGE_ID => new \XLite\Model\WidgetParam\Int(
+            static::PARAM_PAGE_ID => new \XLite\Model\WidgetParam\Int(
                 'Page ID', 0
             ),
-            self::PARAM_ITEMS_COUNT => new \XLite\Model\WidgetParam\Int(
+            static::PARAM_ITEMS_COUNT => new \XLite\Model\WidgetParam\Int(
                 'Items number', 0
             ),
-            self::PARAM_ONLY_PAGES => new \XLite\Model\WidgetParam\Bool(
+            static::PARAM_ONLY_PAGES => new \XLite\Model\WidgetParam\Bool(
                 'Only display pages list', false
             ),
-            self::PARAM_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Int(
+            static::PARAM_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Int(
                 'Items per page', $this->getItemsPerPageDefault(), true
             ),
-            self::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
+            static::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
                 'Show pagination', true, true
             ),
-            self::PARAM_LIST => new \XLite\Model\WidgetParam\Object(
+            static::PARAM_LIST => new \XLite\Model\WidgetParam\Object(
                 'List object', null, false, '\XLite\View\ItemsList\AItemsList'
             ),
-            self::PARAM_MAX_ITEMS_COUNT => new \XLite\Model\WidgetParam\Int(
+            static::PARAM_MAX_ITEMS_COUNT => new \XLite\Model\WidgetParam\Int(
                 'Maximum number of items to display in the list', 0 
             ),
         );
@@ -363,8 +348,8 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     {
         parent::defineRequestParams();
 
-        $this->requestParams[] = self::PARAM_PAGE_ID;
-        $this->requestParams[] = self::PARAM_ITEMS_PER_PAGE;
+        $this->requestParams[] = static::PARAM_PAGE_ID;
+        $this->requestParams[] = static::PARAM_ITEMS_PER_PAGE;
     }
 
     /**
@@ -378,7 +363,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function buildURLByPageId($pageId)
     {
-        return $this->getList()->getActionURL(array(self::PARAM_PAGE_ID => $pageId));
+        return $this->getList()->getActionURL(array(static::PARAM_PAGE_ID => $pageId));
     }
 
     /**
@@ -628,7 +613,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     protected function getPageId()
     {
         if (!isset($this->currentPageId)) {
-            $this->currentPageId = min($this->getParam(self::PARAM_PAGE_ID), $this->getPagesCount() - 1);
+            $this->currentPageId = min($this->getParam(static::PARAM_PAGE_ID), $this->getPagesCount() - 1);
         }
 
         return $this->currentPageId;
@@ -691,7 +676,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function isItemsPerPageVisible()
     {
-        return !$this->getParam(self::PARAM_ONLY_PAGES);
+        return !$this->getParam(static::PARAM_ONLY_PAGES);
     }
 
     /**
@@ -703,7 +688,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function isItemsPerPageSelectorVisible()
     {
-        return $this->getParam(self::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR);
+        return $this->getParam(static::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR);
     }
 
     /**

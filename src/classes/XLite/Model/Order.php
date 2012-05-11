@@ -327,7 +327,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $oldStatus;
+    protected $oldStatus = self::STATUS_INPROGRESS;
 
     /**
      * Modifiers (cache)
@@ -621,18 +621,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         }
 
         return $items;
-    }
-
-    /**
-     * Get order currency
-     *
-     * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.8
-     */
-    public function getCurrency()
-    {
-        return isset($this->currency) ? $this->currency : \XLite::getInstance()->getCurrency();
     }
 
     /**
@@ -1184,7 +1172,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Has unpaid total?
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.17
@@ -1535,7 +1523,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     {
         $this->resetSurcharges();
 
-        $this->reinitialieCurrency();
+        $this->reinitializeCurrency();
 
         $this->calculateInitialValues();
 
@@ -1573,35 +1561,36 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Soft renew
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.21
      */
     public function renewSoft()
     {
-        $this->reinitialieCurrency();
+        $this->reinitializeCurrency();
     }
 
     /**
-     * Reinitialie currency 
-     * 
+     * Reinitialie currency
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.21
      */
-    protected function reinitialieCurrency()
+    protected function reinitializeCurrency()
     {
-        $currency = $this->defineCurrency();
+        $new = $this->defineCurrency();
+        $old = $this->getCurrency();
 
-        if (!$this->getCurrency() || $this->getCurrency() != $currency) {
-            $this->setCurrency($currency);
+        if (empty($old) || (!empty($new) && $old->getCode() !== $new->getCode())) {
+            $this->setCurrency($new);
         }
     }
 
     /**
-     * Define order currency 
-     * 
+     * Define order currency
+     *
      * @return \XLite\Model\Currency
      * @see    ____func_see____
      * @since  1.0.21
