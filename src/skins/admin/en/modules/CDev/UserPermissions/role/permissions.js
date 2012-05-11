@@ -40,7 +40,9 @@ jQuery(document).ready(
                 } else {
                   box.each(
                     function () {
-                      this.checked = 'undexfined' == typeof(this.prevCheckesState) ? false : this.prevCheckesState;
+                      if ('undefined' != typeof(this.prevCheckesState)) {
+                        this.checked = this.prevCheckesState;
+                      }
                     }
                   ).removeAttr('disabled');
                 }
