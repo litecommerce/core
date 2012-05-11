@@ -116,13 +116,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      */
     public function findActiveMemberships()
     {
-        $data = $this->getFromCache('active', array('active' => true));
-        if (!isset($data)) {
-            $data = $this->defineActiveMembershipsQuery()->getResult();
-            $this->saveToCache($data, 'active', array('active' => true));
-        }
-
-        return $data;
+        return $this->defineActiveMembershipsQuery()->getResult();
     }
 
     /**
