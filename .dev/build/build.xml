@@ -18,6 +18,7 @@
         <property name="installDir" location="${buildDir}/src" />
         <property name="label" value="manual" />
         <property name="lcRoot" location="${installDir}" />
+        <property name="lcDir" location="${installDir}/litecommerce" />
         <property name="varRunClasses" value="${installDir}/var/run/classes" />
     </target>
 
@@ -72,7 +73,7 @@
         <echo message="Prepare deployed repositories" />
         <copy file="/u/xcart/etc/config.local-cc.php" tofile="${buildDir}/.dev/build/config.local.php" />
         <copy file="${buildDir}/.dev/tests/local-cc.php" tofile="${buildDir}/.dev/tests/local.php" />
-        <exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce">
+        <exec executable="php" dir="${lcDir}">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
         </exec>
     </target>
@@ -84,10 +85,10 @@
         <exec executable="git" dir="${buildDir}/.dev/lib/apigen">
             <arg line="submodule update --init" />
         </exec>
-        <exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce/classes">
+        <exec executable="php" dir="${lcDir}/classes">
             <arg line="${buildDir}/.dev/lib/apigen/apigen.php --config ${buildDir}/.dev/build/apigen.neon --template-config ${buildDir}/.dev/lib/apigen/templates/default/config.neon" />
         </exec>
-        <move file="${installDir}/modules/lc_connector/litecommerce/classes/api" tofile="${buildDir}/api" />
+        <move file="${lcDir}/classes/api" tofile="${buildDir}/api" />
     </target>
 
     <target name="tests" depends="prepare-db,phpunit" />
@@ -102,7 +103,7 @@
 
 
     <target name="prepare-db">
-        <copy file="/u/xcart/etc/config.local-cc.php" tofile="${installDir}/modules/lc_connector/litecommerce/etc/config.local.php" />
+        <copy file="/u/xcart/etc/config.local-cc.php" tofile="${lcDir}/etc/config.local.php" />
         <!-- Replace SQL data by the demo data (for testing) -->
         <exec executable="php" dir="${lcRoot}" failonerror="on">
             <arg value="${lcRoot}/restoredb" />
@@ -111,23 +112,23 @@
         </exec>
         <!-- Rebuild cache: first pass -->
         <exec executable="${php53}" dir="${installDir}">
-            <arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
+            <arg value="${lcDir}/cart.php" />
         </exec>
         <!-- Rebuild cache: second pass -->
         <exec executable="${php53}" dir="${installDir}">
-            <arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
+            <arg value="${lcDir}/cart.php" />
         </exec>
         <!-- Rebuild cache: third pass -->
         <exec executable="${php53}" dir="${installDir}">
-            <arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
+            <arg value="${lcDir}/cart.php" />
         </exec>
         <!-- Rebuild cache: fourth pass -->
         <exec executable="${php53}" dir="${installDir}">
-            <arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
+            <arg value="${lcDir}/cart.php" />
         </exec>
         <!-- Rebuild cache: fifth pass -->
         <exec executable="${php53}" dir="${installDir}">
-            <arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
+            <arg value="${lcDir}/cart.php" />
         </exec>
     </target>
 
@@ -136,7 +137,7 @@
             <arg value="--report=full" />
             <arg value="--standard=${sourceDir}/.dev/code-sniffs/XLite" />
             <arg value="--ignore=.dev,src/etc,src/var" />
-            <arg value="${installDir}/modules/lc_connector/litecommerce/classes" />
+            <arg value="${lcDir}/classes" />
         </exec>
     </target>
 
@@ -178,7 +179,7 @@
 
     <target name="plint">
         <echo message="Run PHPlint" />
-        <exec executable="${sourceDir}/.dev/phpl.sh" dir="${installDir}/modules/lc_connector/litecommerce" failonerror="true" output="${buildDir}/reports/plint.html" />
+        <exec executable="${sourceDir}/.dev/phpl.sh" dir="${lcDir}" failonerror="true" output="${buildDir}/reports/plint.html" />
     </target>
 
     <target name="analysis" depends="phpdepend,phpmd,copy-paste-detect,git-stat" />

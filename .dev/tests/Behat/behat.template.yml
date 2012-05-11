@@ -1,0 +1,12 @@
+default:
+  context:
+    parameters:
+      default_session: selenium
+      javascript_session:   selenium
+      client_url: xlite_cms/
+      admin_url: xlite/src/
+      base_url: http://_hostname_/
+      screenshots_path: /var/www/selenium-screenshots
+      screenshots_url: _screenshots_url_
+      selenium:
+        speed: 0

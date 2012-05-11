@@ -64,7 +64,7 @@ class XLite_Sniffs_CSS_Commenting_InlineCommentSniff extends XLite_ReqCodesSniff
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['content']{0} === '#' || $tokens[$stackPtr]['content']{0} === '//') {
-            $error  = 'Можно использовать комментарии только вида /* ... */';
+            $error  = 'п°п╬п╤п╫п╬ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╨п╬п╪п╪п╣п╫я┌п╟я─п╦п╦ я┌п╬п╩я▄п╨п╬ п╡п╦п╢п╟ /* ... */';
             $phpcsFile->addError($this->getReqPrefix('REQ.CSS.4.0.1') . $error, $stackPtr);
         }
 

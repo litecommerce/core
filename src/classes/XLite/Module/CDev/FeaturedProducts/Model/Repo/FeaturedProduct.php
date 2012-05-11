@@ -89,8 +89,11 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
      */
     protected function defineByCategoryIdQuery($categoryId)
     {
-        return $this->createQueryBuilder()
+        $qb = $this->createQueryBuilder('f')
+            ->innerJoin('f.product', 'p')
             ->andWhere('f.category = :categoryId')
             ->setParameter('categoryId', $categoryId);
+
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->assignExternalEnabledCondition($qb, 'p');
     }
 }

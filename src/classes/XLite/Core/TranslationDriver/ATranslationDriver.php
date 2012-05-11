@@ -65,4 +65,15 @@ abstract class ATranslationDriver extends \XLite\Base
      */
     abstract public function reset();
 
+    /**
+     * Alias
+     *
+     * @return \XLite\Model\Repo\LanguageLabel
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function getRepo()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel');
+    }
 }

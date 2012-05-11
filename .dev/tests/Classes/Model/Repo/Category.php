@@ -15,6 +15,12 @@
  * @since      1.0.0
  */
 
+/**
+ * XLite_Tests_Model_Repo_Category 
+ *
+ * @see   ____class_see____
+ * @since 1.0.22
+ */
 class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
 {
     /**
@@ -120,8 +126,8 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
         );
 
         $this->assertEquals(
-            'SELECT c, translations FROM XLite\Model\Category c LEFT JOIN c.translations'
-            . ' translations WHERE c.category_id <> :rootId ORDER BY c.pos ASC, c.lpos ASC',
+            'SELECT c FROM XLite\Model\Category c LEFT JOIN c.translations translations '
+            . 'WITH translations.code = :lng WHERE c.category_id <> :rootId ORDER BY c.pos ASC, c.lpos ASC',
             $qb->getDQL(),
             'Generated a wrong DQL'
         );

@@ -46,3 +46,7 @@
   width: 30px;
   text-align: right;
 }
+
+.items-list .button-container {
+  float: left;
+}

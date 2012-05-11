@@ -36,6 +36,18 @@ namespace XLite\Controller\Admin\Base;
 abstract class Catalog extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage catalog');
+    }
+
+    /**
      * Return current (or default) category object
      *
      * @return \XLite\Model\Category

@@ -327,7 +327,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $oldStatus;
+    protected $oldStatus = self::STATUS_INPROGRESS;
 
     /**
      * Modifiers (cache)
@@ -624,18 +624,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get order currency
-     *
-     * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.8
-     */
-    public function getCurrency()
-    {
-        return isset($this->currency) ? $this->currency : \XLite::getInstance()->getCurrency();
-    }
-
-    /**
      * Get original profile
      *
      * @return \XLite\Model\Profile
@@ -857,9 +845,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function processSucceed()
     {
-        // Fix the currency in the order
-        $this->setCurrency(\XLite::getInstance()->getCurrency());
-
         // send email notification about initially placed order
         $status = $this->getStatus();
 
@@ -1187,7 +1172,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Has unpaid total?
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.17
@@ -1538,6 +1523,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     {
         $this->resetSurcharges();
 
+        $this->reinitializeCurrency();
+
         $this->calculateInitialValues();
 
         foreach ($this->getModifiers() as $modifier) {
@@ -1570,6 +1557,47 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $this->calculate();
 
         $this->setLastRenewDate(time());
+    }
+
+    /**
+     * Soft renew
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function renewSoft()
+    {
+        $this->reinitializeCurrency();
+    }
+
+    /**
+     * Reinitialie currency
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    protected function reinitializeCurrency()
+    {
+        $new = $this->defineCurrency();
+        $old = $this->getCurrency();
+
+        if (empty($old) || (!empty($new) && $old->getCode() !== $new->getCode())) {
+            $this->setCurrency($new);
+        }
+    }
+
+    /**
+     * Define order currency
+     *
+     * @return \XLite\Model\Currency
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    protected function defineCurrency()
+    {
+        return \XLite::getInstance()->getCurrency();
     }
 
     /**

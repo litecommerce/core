@@ -83,7 +83,7 @@ class XLite_Sniffs_PHP_Functions_AnonFunctionCallSignatureSniff extends XLite_Re
 		) {
 			$phpcsFile->addError(
 				$this->getReqPrefix('REQ.PHP.2.7.2')
-				. 'Вызов функции через переменную с ее именем должен комментироваться',
+				. 'п▓я▀п╥п╬п╡ я└я┐п╫п╨я├п╦п╦ я┤п╣я─п╣п╥ п©п╣я─п╣п╪п╣п╫п╫я┐я▌ я│ п╣п╣ п╦п╪п╣п╫п╣п╪ п╢п╬п╩п╤п╣п╫ п╨п╬п╪п╪п╣п╫я┌п╦я─п╬п╡п╟я┌я▄я│я▐',
 				$stackPtr
 			);
 		}

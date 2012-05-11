@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 // vim: set ts=4 sw=4 sts=4 et:
 
@@ -31,7 +32,7 @@ if ('cli' != PHP_SAPI) {
 
 require_once (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'top.inc.php');
 
-XLite::getInstance()->run(true)->getViewer()->display();
+\XLite::getInstance()->run(true)->getViewer()->display();
 
 echo PHP_EOL;
 

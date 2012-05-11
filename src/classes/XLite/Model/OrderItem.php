@@ -181,6 +181,20 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Set order 
+     * 
+     * @param \XLite\Model\Order $order Order OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function setOrder(\XLite\Model\Order $order = null)
+    {
+        $this->order = $order;
+    }
+
+    /**
      * Clone order item object. The product only is set additionally
      * since the order could be different and should be set manually
      *

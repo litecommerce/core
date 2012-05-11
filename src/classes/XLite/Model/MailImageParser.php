@@ -156,8 +156,10 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
     {
         $img = substr($this->source, $start, $end-$start);
 
-        if (strcasecmp(substr($img, 0, 5), 'http:')) {
-
+        if (
+            strcasecmp(substr($img, 0, 5), 'http:') !== 0
+            && strcasecmp(substr($img, 0, 6), 'https:') !== 0
+        ) {
             $img = $this->webdir . $img; // relative URL
         }
 

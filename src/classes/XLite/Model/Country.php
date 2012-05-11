@@ -67,6 +67,17 @@ class Country extends \XLite\Model\AEntity
     protected $code;
 
     /**
+     * Country code (ISO 3166-1 numeric)
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $id;
+
+    /**
      * Country code (ISO 3166-1 alpha-3)
      *
      * @var   string
@@ -99,6 +110,18 @@ class Country extends \XLite\Model\AEntity
      * @OrderBy   ({"state" = "ASC"})
      */
     protected $states;
+
+    /**
+     * Currency
+     *
+     * @var   \XLite\Model\Currency
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @ManyToOne (targetEntity="XLite\Model\Currency", inversedBy="countries")
+     * @JoinColumn (name="currency_id", referencedColumnName="currency_id")
+     */
+    protected $currency;
 
 
     /**

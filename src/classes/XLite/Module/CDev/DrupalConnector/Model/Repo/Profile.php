@@ -134,14 +134,16 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
     {
         $qb = $this->createQueryBuilder();
 
-        $qb ->leftJoin('p.drupalRoles', 'dr')
-            ->andWhere(
-                $qb->expr()->notIn(
-                    'dr.drupal_role_id',
-                    $roles
-                )
-            )
-            ->andWhere('p.access_level = :accessLevel')
+        if ($roles) {
+            $qb ->leftJoin('p.drupalRoles', 'dr')
+                ->andWhere(
+                    $qb->expr()->notIn(
+                        'dr.drupal_role_id',
+                        $roles
+                    )
+                );
+        }
+        $qb->andWhere('p.access_level = :accessLevel')
             ->andWhere('p.cms_name = :cmsName')
             ->andWhere('p.cms_profile_id > 0')
             ->setParameter('accessLevel', \XLite\Core\Auth::getInstance()->getAdminAccessLevel())
@@ -182,14 +184,19 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
     {
         $qb = $this->createQueryBuilder();
 
-        $qb ->leftJoin('p.drupalRoles', 'dr')
-            ->andWhere(
-                $qb->expr()->In(
-                    'dr.drupal_role_id',
-                    $roles
-                )
-            )
-            ->andWhere(
+        if ($roles) {
+            $qb->leftJoin('p.drupalRoles', 'dr')
+                ->andWhere(
+                    $qb->expr()->In(
+                        'dr.drupal_role_id',
+                        $roles
+                    )
+                );
+
+        } else {
+            $qb->andWhere('1 = 0');
+        }
+        $qb->andWhere(
                 $qb->expr()->Not('p.access_level = :accessLevel')
             )
             ->andWhere('p.cms_name = :cmsName')

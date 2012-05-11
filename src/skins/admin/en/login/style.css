@@ -9,80 +9,98 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
-div.login-page {
-  width: 960px !important;
+.login-page {
+  width: 600px !important;
   margin: 0 auto;
 }
 
-div.login-page #content-header {
+.login-page #content-header {
   border: none;
 }
 
-div.login-page #header .logo {
+.login #header .logo {
   background-image: url("../images/logo_admin.png");
-  height: 70px;
-  width: 82px;
+  height: 81px;
+  width: 92px;
 }
 
-div.login-page #header, #menu {
+.login #header,
+  #menu
+{
   background: transparent none;
 }
 
-div.login-page #header .sw-version {
-  left: 100px;
+.login #header {
+  width: 600px !important;
+  margin: 0 auto;
+  position: relative;
 }
 
-div.login-page h1 {
-  margin: 30px 0 0 100px;
+.login #header .sw-version {
+  left: 115px;
+  top: 25px;
+}
+
+.login #header-wrapper {
+  background-color: #f0f0f0;
+  padding: 0px 0px 20px 0px;
+  border-bottom: solid 1px #e5e5e5;
+}
+
+.login-page #main {
+  margin-left: 0px;
+}
+
+.login h1 {
+  margin: 0px 0px 0px 100px;
+  padding: 43px 0px 0px 12px;
   font-family: Arial,Verdana,sans-serif;
   font-size: 36px;
+  color: #456583;
 }
 
-div.login-page #content {
+.login-page #content {
   background: transparent none;
   border-top: 0 none;
-  padding-top: 135px;
 }
 
-div.login-box-wrapper {
+.login-box-wrapper {
   width: 100%;
 }
 
-div.login-box {
-  background: url("../images/keyhole_icon.png") no-repeat 100% 20px transparent;
-  margin: 0 auto;
+.login-box {
+  background: url("../images/keyhole_icon.png") no-repeat 90% 20px transparent;
   padding-right: 110px;
-  width: 470px;
   min-height: 200px;
 }
 
-div.login-box h2 {
+.login-box h2 {
   font-family: Arial,Helvetica,sans-serif;
 }
 
-div.login-box table tr td,
-div.login-box table tr th
+.login-box table tr td,
+.login-box table tr th
 {
   padding: 5px 20px 5px 0;
   text-align: left;
   font-weight: normal;
 }
 
-div.login-box table tr th {
+.login-box table tr th {
   font-size: 16px;
   color: #456583;
 }
 
-div.login-page .forgot-password {
+.login-page .forgot-password {
   text-align: right;
   float: right;
   margin-top: 20px;
 }
 
-div.login-page .forgot-password a {
+.login-page .forgot-password a {
   text-decoration: underline;
 }
 
-div.login-box input {
+.login-box input {
   width: 285px;
 }

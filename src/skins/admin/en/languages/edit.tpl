@@ -11,7 +11,7 @@
  *}
 <div class="edit-label-dialog label-dialog">
   <h2>{t(#Edit label#)}</h2>
-  {t(#Please specify text labels for each language#,_ARRAY_(#language#^defaultLanguage.name))}
+  {t(#Please specify text labels for each language#,_ARRAY_(#language#^defaultLanguageObject.name))}
   <form action="admin.php" method="post" name="edit_label_form">
     <input type="hidden" name="target" value="languages" />
     <input type="hidden" name="action" value="edit" />

@@ -79,7 +79,7 @@ class XLite_Sniffs_CSS_LowerCaseHTMLTagsSniff extends XLite_ReqCodesSniff
                 if ($tokens[$i]['code'] === T_STRING && $tokens[$i-1]['code'] !== T_STRING_CONCAT && $tokens[$i-1]['code'] !== T_HASH) {
 					// found html tag
 					if ($tokens[$i]['content'] != strtolower($tokens[$i]['content'])) {
- 		               $error = "éÍÅÎÁ HTML-ÔÜÇÏ× ÐÉÛÕÔÓÑ × ÎÉÖÎÅÍ ÒÅÇÉÓÔÒÅ. îÕÖÎÏ: " . strtolower($tokens[$i]['content']) . ", ÎÁÊÄÅÎÏ: " . $tokens[$i]['content'];
+ 		               $error = "Ð˜Ð¼ÐµÐ½Ð° HTML-Ñ‚ÑÐ³Ð¾Ð² Ð¿Ð¸ÑˆÑƒÑ‚ÑÑ Ð² Ð½Ð¸Ð¶Ð½ÐµÐ¼ Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ðµ. ÐÑƒÐ¶Ð½Ð¾: " . strtolower($tokens[$i]['content']) . ", Ð½Ð°Ð¹Ð´ÐµÐ½Ð¾: " . $tokens[$i]['content'];
         		       $phpcsFile->addError($this->getReqPrefix('REQ.CSS.1.0.1') . $error, $i);
 					}
                 }

@@ -93,13 +93,13 @@ class XLite_Sniffs_PHP_Functions_FunctionDeclarationSniff extends XLite_ReqCodes
 			$methodType = $phpcsFile->findNext(array(T_PRIVATE, T_PROTECTED, T_PUBLIC), $prevEOL + 1, $stackPtr - 1);
 			if ($methodType === false) {
     	        $phpcsFile->addError(
-					$this->getReqPrefix('REQ.PHP.3.5.1') . 'Методы класса должны всегда определять свою область видимости',
+					$this->getReqPrefix('REQ.PHP.3.5.1') . 'п°п╣я┌п╬п╢я▀ п╨п╩п╟я│я│п╟ п╢п╬п╩п╤п╫я▀ п╡я│п╣пЁп╢п╟ п╬п©я─п╣п╢п╣п╩я▐я┌я▄ я│п╡п╬я▌ п╬п╠п╩п╟я│я┌я▄ п╡п╦п╢п╦п╪п╬я│я┌п╦',
 					$stackPtr
 				);
 
 			} elseif ($tokens[$methodType]['code'] == T_PRIVATE) {
                 $phpcsFile->addError(
-                    $this->getReqPrefix('REQ.PHP.3.5.16') . 'Методы класса с областью видимости private запрещены',
+                    $this->getReqPrefix('REQ.PHP.3.5.16') . 'п°п╣я┌п╬п╢я▀ п╨п╩п╟я│я│п╟ я│ п╬п╠п╩п╟я│я┌я▄я▌ п╡п╦п╢п╦п╪п╬я│я┌п╦ private п╥п╟п©я─п╣я┴п╣п╫я▀',
                     $stackPtr
                 );
 			}
@@ -117,7 +117,7 @@ class XLite_Sniffs_PHP_Functions_FunctionDeclarationSniff extends XLite_ReqCodes
 
 				if (!$isInternal) {
 		            $phpcsFile->addWarning(
-    		            $this->getReqPrefix('WRN.PHP.3.5.1') . 'Функции в глобальной области видимости крайне не приветствуются',
+    		            $this->getReqPrefix('WRN.PHP.3.5.1') . 'п╓я┐п╫п╨я├п╦п╦ п╡ пЁп╩п╬п╠п╟п╩я▄п╫п╬п╧ п╬п╠п╩п╟я│я┌п╦ п╡п╦п╢п╦п╪п╬я│я┌п╦ п╨я─п╟п╧п╫п╣ п╫п╣ п©я─п╦п╡п╣я┌я│я┌п╡я┐я▌я┌я│я▐',
         		        $stackPtr
             		);
 				}
@@ -160,14 +160,14 @@ class XLite_Sniffs_PHP_Functions_FunctionDeclarationSniff extends XLite_ReqCodes
 						|| $tokens[$isDefault + 1]['code'] !== T_WHITESPACE || $tokens[$isDefault + 1]['content'] !== ' '
 					) {
     	                $phpcsFile->addError(
-        	                $this->getReqPrefix('REQ.PHP.3.5.14') . 'Аргументы со значениями по-умолчанию должны отделяться от значений по-умолчанию комбинацией знаков пробел + равенство + пробел',
+        	                $this->getReqPrefix('REQ.PHP.3.5.14') . 'п░я─пЁя┐п╪п╣п╫я┌я▀ я│п╬ п╥п╫п╟я┤п╣п╫п╦я▐п╪п╦ п©п╬-я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╢п╬п╩п╤п╫я▀ п╬я┌п╢п╣п╩я▐я┌я▄я│я▐ п╬я┌ п╥п╫п╟я┤п╣п╫п╦п╧ п©п╬-я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╨п╬п╪п╠п╦п╫п╟я├п╦п╣п╧ п╥п╫п╟п╨п╬п╡ п©я─п╬п╠п╣п╩ + я─п╟п╡п╣п╫я│я┌п╡п╬ + п©я─п╬п╠п╣п╩',
             	            $isDefault
                 	    );
 					}
 
 				} elseif ($defaultFound) {
 	                $phpcsFile->addError(
-    	                $this->getReqPrefix('REQ.PHP.3.5.3') . 'Аргументы функций со значениями по умолчанию должны находиться в конце списка аргументов',
+    	                $this->getReqPrefix('REQ.PHP.3.5.3') . 'п░я─пЁя┐п╪п╣п╫я┌я▀ я└я┐п╫п╨я├п╦п╧ я│п╬ п╥п╫п╟я┤п╣п╫п╦я▐п╪п╦ п©п╬ я┐п╪п╬п╩я┤п╟п╫п╦я▌ п╢п╬п╩п╤п╫я▀ п╫п╟я┘п╬п╢п╦я┌я▄я│я▐ п╡ п╨п╬п╫я├п╣ я│п©п╦я│п╨п╟ п╟я─пЁя┐п╪п╣п╫я┌п╬п╡',
         	            $lastPos + 2
             	    );
 				}
@@ -188,7 +188,7 @@ class XLite_Sniffs_PHP_Functions_FunctionDeclarationSniff extends XLite_ReqCodes
 		$isClass = $phpcsFile->findPrevious(array(T_CLASS, T_INTERFACE), $tokens[$stackPtr]['scope_opener']);
         if ($return === false && $str && !$isClass) {
 	        $phpcsFile->addError(
-    	        $this->getReqPrefix('REQ.PHP.3.5.4') . 'Функции всегда должны возвращать значение, если это возможно в принципе',
+    	        $this->getReqPrefix('REQ.PHP.3.5.4') . 'п╓я┐п╫п╨я├п╦п╦ п╡я│п╣пЁп╢п╟ п╢п╬п╩п╤п╫я▀ п╡п╬п╥п╡я─п╟я┴п╟я┌я▄ п╥п╫п╟я┤п╣п╫п╦п╣, п╣я│п╩п╦ я█я┌п╬ п╡п╬п╥п╪п╬п╤п╫п╬ п╡ п©я─п╦п╫я├п╦п©п╣',
         	    $stackPtr
         	);
         }
@@ -205,7 +205,7 @@ class XLite_Sniffs_PHP_Functions_FunctionDeclarationSniff extends XLite_ReqCodes
 			&& $tokens[$nextNWS]['line'] > $tokens[$tokens[$stackPtr]['scope_opener']]['line'] + 2
 		) {
             $phpcsFile->addError(
-                $this->getReqPrefix('REQ.PHP.3.5.6') . 'Тело функции начинается на следующей строке после открывающей фигурной скобки или через 1 пустую строку',
+                $this->getReqPrefix('REQ.PHP.3.5.6') . 'п╒п╣п╩п╬ я└я┐п╫п╨я├п╦п╦ п╫п╟я┤п╦п╫п╟п╣я┌я│я▐ п╫п╟ я│п╩п╣п╢я┐я▌я┴п╣п╧ я│я┌я─п╬п╨п╣ п©п╬я│п╩п╣ п╬я┌п╨я─я▀п╡п╟я▌я┴п╣п╧ я└п╦пЁя┐я─п╫п╬п╧ я│п╨п╬п╠п╨п╦ п╦п╩п╦ я┤п╣я─п╣п╥ 1 п©я┐я│я┌я┐я▌ я│я┌я─п╬п╨я┐',
                 $stackPtr
             );
 		}
@@ -309,7 +309,7 @@ class XLite_Sniffs_PHP_Functions_FunctionDeclarationSniff extends XLite_ReqCodes
 		$ws = $tokens[$tokens[$stackPtr]['parenthesis_opener'] + 1];
 		if ($ws['code'] !== T_WHITESPACE && $ws['content'] !== "\n") {
             $phpcsFile->addError(
-                $this->getReqPrefix('REQ.PHP.3.5.8') . 'Строка с именем функции должна обрываться после открывающей скобки',
+                $this->getReqPrefix('REQ.PHP.3.5.8') . 'п║я┌я─п╬п╨п╟ я│ п╦п╪п╣п╫п╣п╪ я└я┐п╫п╨я├п╦п╦ п╢п╬п╩п╤п╫п╟ п╬п╠я─я▀п╡п╟я┌я▄я│я▐ п©п╬я│п╩п╣ п╬я┌п╨я─я▀п╡п╟я▌я┴п╣п╧ я│п╨п╬п╠п╨п╦',
                 $stackPtr
             );
 		}
@@ -317,7 +317,7 @@ class XLite_Sniffs_PHP_Functions_FunctionDeclarationSniff extends XLite_ReqCodes
 		$prevCode = $phpcsFile->findPrevious(T_WHITESPACE, $tokens[$stackPtr]['parenthesis_closer'] - 1, null, true);
 		if ($tokens[$prevCode]['line'] === $tokens[$tokens[$stackPtr]['parenthesis_closer']]['line']) {
             $phpcsFile->addError(
-                $this->getReqPrefix('REQ.PHP.3.5.9') . 'Закрывающая скобка должна быть на новой строке',
+                $this->getReqPrefix('REQ.PHP.3.5.9') . 'п≈п╟п╨я─я▀п╡п╟я▌я┴п╟я▐ я│п╨п╬п╠п╨п╟ п╢п╬п╩п╤п╫п╟ п╠я▀я┌я▄ п╫п╟ п╫п╬п╡п╬п╧ я│я┌я─п╬п╨п╣',
                 $stackPtr
             );
 		}

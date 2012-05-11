@@ -152,11 +152,35 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
 
         if ($properties) {
 
+            $properties['membership'] = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->find($properties['membership']);
+
             \XLite\Core\Database::getRepo('\XLite\Model\Category')
                 ->update($this->getCategory(), $properties);
 
             $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $properties['category_id'])));
         }
+    }
+
+    /**
+     * Returns set of fields to perform validation on
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function getFieldSet()
+    {
+        return array(
+            'name',
+            'description',
+            'meta_tags',
+            'meta_desc',
+            'meta_title',
+            'enabled',
+            'membership',
+            'clean_url',
+            'show_title',
+        );
     }
 
     /**
@@ -175,17 +199,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
         $data = array();
         $isValid = true;
 
-        $fieldsSet = array(
-            'name',
-            'description',
-            'meta_tags',
-            'meta_desc',
-            'meta_title',
-            'enabled',
-            'membership_id',
-            'clean_url',
-            'show_title',
-        );
+        $fieldsSet = $this->getFieldSet();
 
         if (!$isNewObject) {
             $data['category_id'] = intval($postedData['category_id']);

@@ -20,6 +20,7 @@
 
 .items-list-table table.list {
   width: auto;
+  clear: both;
 }
 
 .items-list-table table.list thead {

@@ -48,7 +48,7 @@ class Product extends \XLite\Model\QueryBuilder\AQueryBuilder
     /**
      * Join inventory procedure
      *
-     * @return void
+     * @return \XLite\Model\QueryBuilder\Product
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -60,6 +60,8 @@ class Product extends \XLite\Model\QueryBuilder\AQueryBuilder
 
             $this->hasJoinedInventory = true;
         }
+
+        return $this;
     }
 
     /**

@@ -151,7 +151,13 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function getFormBlock(array $form)
     {
-        return !$this->isNewBlock($form) && ($block = $this->getBlock($form['delta']['#value'])) ? $block : null;
+        return (
+            'block' == $form['module']['#value']
+            && !$this->isNewBlock($form)
+            && ($block = $this->getBlock($form['delta']['#value']))
+            )
+            ? $block
+            : null;
     }
 
     /**
@@ -625,11 +631,13 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function alterBlockInfo(array &$blocks, $theme, array $codeBlocks)
     {
-        foreach ($blocks['block'] as $delta => $data) {
-            $settings = block_custom_block_get($delta);
+        if (isset($blocks['block']) && is_array($blocks['block'])) {
+            foreach ($blocks['block'] as $delta => $data) {
+                $settings = block_custom_block_get($delta);
 
-            if (!empty($settings['lc_class'])) {
-                $blocks['block'][$delta]['cache'] = DRUPAL_NO_CACHE;
+                if (!empty($settings['lc_class'])) {
+                    $blocks['block'][$delta]['cache'] = DRUPAL_NO_CACHE;
+                }
             }
         }
     }

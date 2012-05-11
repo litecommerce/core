@@ -30,7 +30,7 @@ class RemoteControl extends Server
         for ($i = 0; $i < $app['farms_count']; $i++) {
             print PHP_EOL . "Starting a new EC2 Instance...";
             try {
-                $farm = Server::boot_and_acquire_dns($app['hub_ami'], array('keypair_name' => $app['keypair_name'], 'type' => $app['grid_instance_type']));
+                $farm = RemoteControl::boot_and_acquire_dns($app['hub_ami'], array('keypair_name' => $app['keypair_name'], 'type' => $app['grid_instance_type']));
                 $cloud->farms[] = $farm;
                 $cloud->save();
                 print PHP_EOL . "Started new Remote Control farm at " . $farm->public_dns . PHP_EOL;
@@ -42,7 +42,6 @@ class RemoteControl extends Server
         Ec2Client::authorize_port(5900);
         Ec2Client::authorize_port(6000);
     }
-
     static function get_screenshots($app)
     {
         if (!file_exists($app['log_dir'] . '/screenshots'))
@@ -56,4 +55,5 @@ class RemoteControl extends Server
             $app['cloud']->hub->micro_farm->download('/var/www/selenium-screenshots/*', $app['log_dir'] . '/screenshots', $options);
         }
     }
+
 }

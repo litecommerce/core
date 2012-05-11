@@ -79,7 +79,7 @@ class XLite_Sniffs_CSS_SingleSpaceSeparatedPropertiesSniff extends XLite_NameSni
 		for ( $i = $start; $i < $end; $i++ ) {
 			if ($tokens[$i]['code'] === T_WHITESPACE) {
 				if ($tokens[$i+1]['column'] - $tokens[$i]['column'] > 1) {
-					$error = 'åÓÌÉ Õ Ó×ÏÊÓÔ×Á ÎÅÓËÏÌØËÏ ÚÎÁÞÅÎÉÊ, ÎÅÏÂÈÏÄÉÍÏ ÒÁÚÄÅÌÉÔØ ÉÈ ÏÄÉÎÁÒÎÙÍÉ ÐÒÏÂÅÌÁÍÉ.';
+					$error = 'Ð•ÑÐ»Ð¸ Ñƒ ÑÐ²Ð¾Ð¹ÑÑ‚Ð²Ð° Ð½ÐµÑÐºÐ¾Ð»ÑŒÐºÐ¾ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ð¹, Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ð¾ Ñ€Ð°Ð·Ð´ÐµÐ»Ð¸Ñ‚ÑŒ Ð¸Ñ… Ð¾Ð´Ð¸Ð½Ð°Ñ€Ð½Ñ‹Ð¼Ð¸ Ð¿Ñ€Ð¾Ð±ÐµÐ»Ð°Ð¼Ð¸.';
 					$phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.10') . $error, $i);
 				}
 			}

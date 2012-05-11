@@ -74,7 +74,29 @@ class Currency extends \XLite\Model\Base\I18n
      *
      * @Column (type="string", length="16")
      */
-    protected $symbol = '';
+    protected $symbol;
+
+    /**
+     * Prefix
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="string", length="32")
+     */
+    protected $prefix = '';
+
+    /**
+     * Suffix
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="string", length="32")
+     */
+    protected $suffix = '';
 
     /**
      * Number of digits after the decimal separator.
@@ -83,9 +105,30 @@ class Currency extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="integer")
+     * @Column (type="smallint")
      */
     protected $e = 0;
+
+    /**
+     * Decimal part delimiter
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="string", length="8")
+     */
+    protected $decimalDelimiter = '.';
+
+    /**
+     * Thousand delimier
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="string", length="8")
+     */
+    protected $thousandDelimiter = '';
 
     /**
      * Orders
@@ -97,6 +140,17 @@ class Currency extends \XLite\Model\Base\I18n
      * @OneToMany (targetEntity="XLite\Model\Order", mappedBy="currency")
      */
     protected $orders;
+
+    /**
+     * Countries
+     *
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\Country", mappedBy="currency", cascade={"all"})
+     */
+    protected $countries;
 
 
     /**
@@ -193,8 +247,24 @@ class Currency extends \XLite\Model\Base\I18n
      */
     public function __construct(array $data = array())
     {
-        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orders    = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->countries = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }
+
+    /**
+     * Format value as parts list
+     * 
+     * @param float $value Value
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function formatParts($value)
+    {
+        return \XLite\Logic\Math::getInstance()->formatParts($value, $this);
+    }
+
 }

@@ -130,6 +130,11 @@ class AdminMain extends \XLite\View\Model\AModel
             self::SCHEMA_LABEL    => 'Pending membership',
             self::SCHEMA_REQUIRED => false,
         ),
+        'roles' => array(
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\CheckboxList\Roles',
+            self::SCHEMA_LABEL    => 'Roles',
+            self::SCHEMA_REQUIRED => false,
+        ),
     );
 
     /**
@@ -258,7 +263,7 @@ class AdminMain extends \XLite\View\Model\AModel
                 break;
 
             case 'language':
-                $lng = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($value);
+                $lng = $value ? \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($value) : null;
                 $value = isset($lng) ? $lng->getName() : $value;
                 break;
 
@@ -325,7 +330,7 @@ class AdminMain extends \XLite\View\Model\AModel
     protected function getFormFieldsForSectionMain()
     {
         // Create new profile - password is required
-        if (!$this->getModelObject()->isPersistent()) {
+        if ($this->getModelObject() && !$this->getModelObject()->isPersistent()) {
             foreach (array('password', 'password_conf') as $field) {
                 if (isset($this->mainSchema[$field])) {
                     $this->mainSchema[$field][self::SCHEMA_REQUIRED] = true;
@@ -347,6 +352,15 @@ class AdminMain extends \XLite\View\Model\AModel
     {
         if ($this->isRegisterMode()) {
             unset($this->accessSchema['pending_membership_id']);
+        }
+
+        if (
+            !\XLite\Core\Auth::getInstance()->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS)
+            || !$this->getModelObject()
+            || !$this->getModelObject()->isAdmin()
+            || 2 > \XLite\Core\Database::getRepo('XLite\Model\Role')->count()
+        ) {
+            unset($this->accessSchema['roles']);
         }
 
         return $this->getFieldsBySchema($this->accessSchema);
@@ -375,8 +389,57 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function setModelProperties(array $data)
     {
-        if (isset($data['password'])) {
+        if (!empty($data['password'])) {
+            // Encrypt password if if is not empty
             $data['password'] = \XLite\Core\Auth::encryptPassword($data['password']);
+
+        } elseif (isset($data['password'])) {
+            // Otherwise unset password to avoid passing empty password to the database
+            unset($data['password']);
+        }
+
+        // Assign only role for admin
+        if (
+            isset($data['access_level'])
+            && \XLite\Core\Auth::getInstance()->getAdminAccessLevel() == $data['access_level']
+            && 1 == \XLite\Core\Database::getRepo('XLite\Model\Role')->count()
+        ) {
+            $rootRole = \XLite\Core\Database::getRepo('XLite\Model\Role')->findOneRoot();
+            if ($rootRole) {
+                $data['roles'] = array($rootRole->getId());
+            }
+        }
+
+        // Remove roles from non-admin
+        if (
+            isset($data['access_level'])
+            && \XLite\Core\Auth::getInstance()->getAdminAccessLevel() != $data['access_level']
+        ) {
+            $data['roles'] = array();
+        }
+
+        if (isset($data['roles']) && is_array($data['roles'])) {
+
+            $model = $this->getModelObject();
+
+            // Remove old links
+            foreach ($model->getRoles() as $role) {
+                $role->getProfiles()->removeElement($model);
+            }
+            $model->getRoles()->clear();
+
+            // Add new links
+            foreach ($data['roles'] as $rid) {
+                $role = \XLite\Core\Database::getRepo('XLite\Model\Role')->find($rid);
+                if ($role) {
+                    $model->addRoles($role);
+                    $role->addProfiles($model);
+                }
+            }
+        }
+
+        if (isset($data['roles'])) {
+            unset($data['roles']);
         }
 
         parent::setModelProperties($data);
@@ -429,7 +492,11 @@ class AdminMain extends \XLite\View\Model\AModel
 
             if ($data['password'] != $data['password_conf']) {
                 $result = false;
-                \XLite\Core\TopMessage::addError('Password and its confirmation do not match');
+                $this->addErrorMessage(
+                    'password',
+                    'Password and its confirmation do not match',
+                    $formFields[self::SECTION_MAIN]
+                );
             }
 
         } else {

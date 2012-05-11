@@ -330,7 +330,9 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function createQueryBuilder($alias = null)
     {
-        $alias = $alias ?: $this->getDefaultAlias();
+        if (!isset($alias)) {
+            $alias = $this->getDefaultAlias();
+        }
 
         $qb = $this->getQueryBuilder()
             ->select($alias)
@@ -836,6 +838,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             $addModel
             && !$entity
             && !\XLite\Core\Database::getInstance()->getFixturesLoadingOption('isAddModel')
+            && !\XLite\Core\Database::getInstance()->getFixturesLoadingOption('addParent')
         ) {
             return $result;
         }
@@ -919,6 +922,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
                 $assoc = array(
                     'many'         => $isMany,
+                    'many2many'    => \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_MANY == $fData['type'],
                     'getter'       => 'get' . $fCamelCase,
                     'setter'       => ($isMany ? 'add' : 'set') . $fCamelCase,
                     'identifiers'  => array(),
@@ -939,7 +943,13 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                 if ($fData['mappedBy']) {
                     $mappedCamelCase = \XLite\Core\Converter::convertToCamelCase($fData['mappedBy']);
                     $assoc['mappedGetter'] = 'get' . $mappedCamelCase;
-                    $assoc['mappedSetter'] = 'set' . $mappedCamelCase;
+
+                    if ($assoc['many2many']) {
+                        $assoc['mappedSetter'] = 'add' . $mappedCamelCase;
+
+                    } else {
+                        $assoc['mappedSetter'] = 'set' . $mappedCamelCase;
+                    }
                 }
 
                 $assocs[$f] = $assoc;
@@ -1756,12 +1766,18 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function linkLoadedEntity(\XLite\Model\AEntity $entity, \XLite\Model\AEntity $parent, array $parentAssoc)
     {
-        // Add entity to parent
-        $parent->$parentAssoc['setter']($entity);
+        if (
+            !$parentAssoc['many']
+            || !$entity->getUniqueIdentifier()
+            || !$parent->$parentAssoc['getter']()->contains($entity)
+        ) {
+            // Add entity to parent
+            $parent->$parentAssoc['setter']($entity);
 
-        // Add parent to entity
-        if ($parentAssoc['mappedSetter']) {
-            $entity->$parentAssoc['mappedSetter']($parent);
+            // Add parent to entity
+            if ($parentAssoc['mappedSetter']) {
+                $entity->$parentAssoc['mappedSetter']($parent);
+            }
         }
     }
 

@@ -71,7 +71,7 @@ class XLite_Sniffs_PHP_Formatting_IsEqualSniff extends XLite_ReqCodesSniff
 			return;
 
         $phpcsFile->addWarning(
-	        $this->getReqPrefix('WRN.PHP.2.8.2') . 'При сравнении всегда ставьте константы слева',
+	        $this->getReqPrefix('WRN.PHP.2.8.2') . 'п÷я─п╦ я│я─п╟п╡п╫п╣п╫п╦п╦ п╡я│п╣пЁп╢п╟ я│я┌п╟п╡я▄я┌п╣ п╨п╬п╫я│я┌п╟п╫я┌я▀ я│п╩п╣п╡п╟',
             $stackPtr
         );
     }

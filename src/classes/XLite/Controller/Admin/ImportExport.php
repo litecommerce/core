@@ -99,6 +99,18 @@ class ImportExport extends \XLite\Controller\Admin\AAdmin
      */
     protected $importCell;
 
+    /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage catalog');
+    }
+
     // {{{ Tabs
 
     /**

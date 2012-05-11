@@ -46,6 +46,18 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     const P_PAID       = 'paid';
 
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage orders');
+    }
+
+    /**
      * getPageTemplate
      *
      * @return void
@@ -161,21 +173,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
         }
 
         return $this->stats;
-    }
-
-    /**
-     * Get currency from request
-     *
-     * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.2
-     */
-    public function getCurrency()
-    {
-        return \XLite\Core\Request::getInstance()->currency
-            ? \XLite\Core\Database::getRepo('XLite\Model\Currency')
-                ->findOneBy(array('currency_id' => \XLite\Core\Request::getInstance()->currency))
-            : \XLite::getInstance()->getCurrency();
     }
 
     /**

@@ -67,7 +67,7 @@ class XLite_Sniffs_PHP_Formatting_ReturnSniff extends XLite_ReqCodesSniff
 
             $phpcsFile->addError(
                 $this->getReqPrefix('REQ.PHP.2.11.1')
-                . 'Перед return должна быть одна пустая строка',
+                . 'п÷п╣я─п╣п╢ return п╢п╬п╩п╤п╫п╟ п╠я▀я┌я▄ п╬п╢п╫п╟ п©я┐я│я┌п╟я▐ я│я┌я─п╬п╨п╟',
                 $stackPtr
             );
 		}
@@ -101,7 +101,7 @@ class XLite_Sniffs_PHP_Formatting_ReturnSniff extends XLite_ReqCodesSniff
 					foreach ($returns as $rPos) {
 		            	$phpcsFile->addWarning(
     		    	        $this->getReqPrefix('WRN.PHP.2.11.1')
-        			        . 'Рекомендуется иметь 1 return на 1 функцию',
+        			        . 'п═п╣п╨п╬п╪п╣п╫п╢я┐п╣я┌я│я▐ п╦п╪п╣я┌я▄ 1 return п╫п╟ 1 я└я┐п╫п╨я├п╦я▌',
     	    	    	    $rPos
 		        	    );
 					}

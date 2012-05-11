@@ -142,6 +142,9 @@ abstract class Autoloader
         // Doctrine
         static::registerDoctrineAutoloader();
 
+        // Modules libraries
+        static::registerModulesLibrariesAutoloader();
+
         // PEAR2
         static::registerPEARAutolader();
     }
@@ -201,4 +204,23 @@ abstract class Autoloader
     {
         require_once (LC_DIR_LIB . 'PEAR2' . LC_DS . 'Autoload.php');
     }
+
+    /**
+     * Register the autoload function for the modules libraries
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected static function registerModulesLibrariesAutoloader()
+    {
+        $pattern = LC_DIR_CLASSES . 'XLite' . LC_DS . 'Module' . LC_DS . '*' . LC_DS . '*' . LC_DS . 'lib' . LC_DS . '*';
+        foreach (glob($pattern) as $path) {
+            if (is_dir($path)) {
+                $loader = new \Doctrine\Common\ClassLoader(basename($path), dirname($path));
+                $loader->register();
+            }
+        }
+    }
+
 }

@@ -148,14 +148,15 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
      * @param string $alias Table alias OPTIONAL
+     * @param string $code  Language code OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function createQueryBuilder($alias = null)
+    public function createQueryBuilder($alias = null, $code = null)
     {
-        $queryBuilder = parent::createQueryBuilder($alias);
+        $queryBuilder = parent::createQueryBuilder($alias, $code);
 
         $alias = $alias ?: $queryBuilder->getRootAlias();
         $this->addEnabledCondition($queryBuilder, $alias);
@@ -250,6 +251,23 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     public function getImportIterator()
     {
         return $this->defineImportQuery()->iterate();
+    }
+
+    /**
+     * Assign enabled condition for extenral query builders
+     * 
+     * @param \XLite\Model\QueryBuilder\AQueryBuilder $qb    External query builder
+     * @param string                                  $alias Product repository alias OPTIONAL
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function assignExternalEnabledCondition(\XLite\Model\QueryBuilder\AQueryBuilder $qb, $alias = 'p')
+    {
+        $this->addEnabledCondition($qb, $alias);
+
+        return $qb;
     }
 
     /**
@@ -445,8 +463,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function prepareCndCategoryId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder->innerJoin('p.categoryProducts', 'cp')
-            ->innerJoin('cp.category', 'c')
+        $queryBuilder->linkInner('p.categoryProducts', 'cp')
+            ->linkInner('cp.category', 'c')
             ->addOrderBy('cp.orderby');
 
         if (empty($this->currentSearchCnd->{self::P_SEARCH_IN_SUBCATS})) {
@@ -754,17 +772,36 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder object
      * @param string                     $alias        Entity alias OPTIONAL
      *
-     * @return void
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         if (!\XLite::isAdminZone()) {
-            $alias = $alias ?: $queryBuilder->getRootAlias();
-            $queryBuilder->andWhere($alias . '.enabled = :enabled')
-                ->setParameter('enabled', true);
+            $this->assignEnabledCondition($queryBuilder, $alias);
         }
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Assign enabled condition 
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder
+     * @param string                     $alias        Alias OPTIONAL
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function assignEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
+    {
+        $alias = $alias ?: $queryBuilder->getRootAlias();
+        $queryBuilder->andWhere($alias . '.enabled = :enabled')
+            ->setParameter('enabled', true);
+
+        return $queryBuilder;
     }
 
     /**

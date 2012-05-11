@@ -96,10 +96,10 @@ class XLite_Sniffs_CSS_IndentationSniff extends XLite_ReqCodesSniff
 
             $expectedIndent = ($indentLevel * 2);
             if ($expectedIndent > 0 && strpos($tokens[$i]['content'], $phpcsFile->eolChar) !== false) {
-                $error = 'Наличие пустых строк недопустимо в описаниях свойств';
+                $error = 'п²п╟п╩п╦я┤п╦п╣ п©я┐я│я┌я▀я┘ я│я┌я─п╬п╨ п╫п╣п╢п╬п©я┐я│я┌п╦п╪п╬ п╡ п╬п©п╦я│п╟п╫п╦я▐я┘ я│п╡п╬п╧я│я┌п╡';
                 $phpcsFile->addError($this->getReqPrefix('?') . $error, $i);
             } else if ($foundIndent !== $expectedIndent && $tokens[$i+1]['code'] !== T_OPEN_CURLY_BRACKET && $tokens[$i+1]['code'] !== T_CLOSE_CURLY_BRACKET) {
-                $error = "Неправильная величина отступа. Необходимо $expectedIndent пробела, найдено $foundIndent";
+                $error = "п²п╣п©я─п╟п╡п╦п╩я▄п╫п╟я▐ п╡п╣п╩п╦я┤п╦п╫п╟ п╬я┌я│я┌я┐п©п╟. п²п╣п╬п╠я┘п╬п╢п╦п╪п╬ $expectedIndent п©я─п╬п╠п╣п╩п╟, п╫п╟п╧п╢п╣п╫п╬ $foundIndent";
                 $phpcsFile->addError($this->getReqPrefix('REQ.CSS.2.0.1') . $error, $i);
             }
 
