@@ -15,6 +15,6 @@
   <td>{t(#Membership#)}</td>
   <td class="star">*</td>
   <td>
-    <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership_id" value="{category.membership}" />
+    <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership" value="{category.membership.getMembershipId()}" />
   </td>
 </tr>

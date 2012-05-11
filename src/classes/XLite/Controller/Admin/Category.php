@@ -152,6 +152,8 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
 
         if ($properties) {
 
+            $properties['membership'] = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->find($properties['membership']);
+
             \XLite\Core\Database::getRepo('\XLite\Model\Category')
                 ->update($this->getCategory(), $properties);
 
@@ -161,7 +163,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
 
     /**
      * Returns set of fields to perform validation on
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.17
@@ -175,7 +177,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
             'meta_desc',
             'meta_title',
             'enabled',
-            'membership_id',
+            'membership',
             'clean_url',
             'show_title',
         );
