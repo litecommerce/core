@@ -10,8 +10,8 @@
  * @since     1.0.0
  *}
 <select {if:!nonFixed}class="fixed-select"{end:} name="{getParam(#field#)}">
-  <option value="%" IF="{getParam(#allOption#)}" selected="{isSelected(#%#,value)}">{t(#All membership levels#)}</option>
-  <option value="" selected="{isSelected(##,value)}">{t(#No membership#)}</option>
+  <option value="%" IF="{getParam(#allOption#)}" selected="{isSelected(#%#,getParam(#value#))}">{t(#All membership levels#)}</option>
+  <option value="" selected="{isSelected(##,getParam(#value#))}">{t(#No membership#)}</option>
   <option value="pending_membership" IF="{getParam(#pendingOption#)}" selected="{isSelected(#pending_membership#,getParam(#value#))}">{t(#Pending membership#)}</option>
   <option FOREACH="getMemberships(),membership" value="{membership.getMembershipId()}" selected="{isSelected(membership.getMembershipId(),getParam(#value#))}">{membership.getName()}</option>
 </select>

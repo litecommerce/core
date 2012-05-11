@@ -15,6 +15,17 @@
   <td>{t(#Membership#)}</td>
   <td class="star">*</td>
   <td>
-    <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership" value="{category.membership.getMembershipId()}" />
+    <widget
+      IF="!category.getMembership()"
+      class="\XLite\View\MembershipSelect"
+      template="common/select_membership.tpl"
+      field="membership"
+      value="0" />
+    <widget
+      IF="category.getMembership()"
+      class="\XLite\View\MembershipSelect"
+      template="common/select_membership.tpl"
+      field="membership"
+      value="{category.membership.getMembershipId()}" />
   </td>
 </tr>
