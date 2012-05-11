@@ -47,7 +47,6 @@ XLite\Model\Config:
   - { name: 'direct_product_url', category: 'General', translations: [{ code: 'de', option_name: 'Direkter URL-Zugriff zu den Artikeln der deaktivierten Kategorien' }] }
   - { name: 'display_check_number', category: 'General', translations: [{ code: 'de', option_name: 'Die Prüfzahl für die eCheck-Zahlungsart zeigen' }] }
   - { name: 'drupal_root_url', category: 'CDev\DrupalConnector', translations: [{ code: 'de', option_name: 'JS und CSS Ressourcen in der Drupal 6.x Art herabsetzen' }] }
-  - { name: 'enable_anon_checkout', category: 'General', translations: [{ code: 'de', option_name: 'Anonymer Checkout aktivieren' }] }
   - { name: 'enable_init_order_notif', category: 'Email', translations: [{ code: 'de', option_name: 'Die Bestelldaten zum Vertrieb, nach der Auftragserteilung, mailen' }] }
   - { name: 'enable_init_order_notif_customer', category: 'Email', translations: [{ code: 'de', option_name: 'Die Bestelldaten zu den Kunden, nach der Auftragserteilung, mailen' }] }
   - { name: 'fb_admins', category: 'CDev\GoSocial', translations: [{ code: 'de', option_name: 'Facebook-Administratoren', option_comment: 'Die durch Komma getrennte Liste der Facebooknutzer-ID der Seitenadministratoren. Tragen Sie mindest Ihre Facebook-ID ein.' }] }
@@ -84,7 +83,6 @@ XLite\Model\Config:
   - { name: 'minimal_order_amount', category: 'General', translations: [{ code: 'de', option_name: 'Minimale erlaubte Gesamtsumme' }] }
   - { name: 'number_of_bestsellers', category: 'CDev\Bestsellers', translations: [{ code: 'de', option_name: 'Die Produktmenge in der Bestsellerliste' }] }
   - { name: 'operation_presentation', category: 'General', translations: [{ code: 'de', option_name: 'Verwaltung und Betrieb' }] }
-  - { name: 'order_starting_number', category: 'General', translations: [{ code: 'de', option_name: 'Initiale Bestellnummer' }] }
   - { name: 'orders_department', category: 'Company', translations: [{ code: 'de', option_name: 'Verkaufsabteilung EMail' }] }
   - { name: 'orders_per_page', category: 'General', translations: [{ code: 'de', option_name: 'Bestellungen pro Seite' }] }
   - { name: 'product_changefreq', category: 'CDev\XMLSitemap', translations: [{ code: 'de', option_name: 'Die Häufigkeit für die Produktlseite ändern' }] }
@@ -99,7 +97,6 @@ XLite\Model\Config:
   - { name: 'sale_menu', category: 'CDev\Sale', translations: [{ code: 'de', option_name: 'Anzeige des Blocks "Güterangebot" in', option_comment: 'Die Einstellungen des Drupal-Blocks können diese Option  überschreiben (wenn der Drupal-Verbinder Modul aktiviert ist)' }] }
   - { name: 'shop_closed', category: 'General', translations: [{ code: 'de', option_name: 'Markieren, um den Shop vorübergehend zu schließen' }] }
   - { name: 'shop_currency', category: 'General', translations: [{ code: 'de', option_name: 'Shopwährung' }] }
-  - { name: 'show_thumbnails', category: 'General', translations: [{ code: 'de', option_name: 'Miniaturansichten in der Produktliste zeigen' }] }
   - { name: 'site_administrator', category: 'Company', translations: [{ code: 'de', option_name: 'Webseitenverwalter-E-Mail' }] }
   - { name: 'smtp_password', category: 'Email', translations: [{ code: 'de', option_name: 'Passwort' }] }
   - { name: 'smtp_security', category: 'Email', translations: [{ code: 'de', option_name: 'Sichere Verbindung' }] }

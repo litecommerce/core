@@ -16,3 +16,5 @@ XLite\Model\Role\Permission:
   - { code: manage catalog, section: Catalog, translations: [{ code: en, name: Manage catalog }] }
   - { code: manage users, section: Users, translations: [{ code: en, name: Manage users }] }
   - { code: manage orders, section: Sales, translations: [{ code: en, name: Manage orders }] }
+XLite\Model\LanguageLabel:
+  - { name: 'No modules found for search_string', translations: [{ code: en, label: 'No modules found for "<em>{{search_string}}</em>"' }] }

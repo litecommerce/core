@@ -325,7 +325,7 @@ class Database extends \XLite\Base\Singleton
      */
     public static function getCacheDriver()
     {
-        return self::$cacheDriver;
+        return static::$cacheDriver;
     }
 
     /**
@@ -382,7 +382,7 @@ class Database extends \XLite\Base\Singleton
      */
     public static function buildInCondition(\Doctrine\ORM\QueryBuilder $qb, array $data, $prefix = 'arr')
     {
-        list($keys, $data) = self::prepareArray($data, $prefix);
+        list($keys, $data) = static::prepareArray($data, $prefix);
 
         foreach ($data as $k => $v) {
             $qb->setParameter($k, $v);
@@ -606,7 +606,7 @@ OUT;
         $result = array();
 
         // Get database platform
-        $platform = self::getEM()->getConnection()->getDatabasePlatform();
+        $platform = static::getEM()->getConnection()->getDatabasePlatform();
 
         // Get array of SQL queries which are described of DB schema
         $schema = $this->getDBSchema();
@@ -638,10 +638,10 @@ OUT;
         $result = array();
 
         // Get LiteCommerce table names
-        $tableNames = self::$em->getConnection()->getSchemaManager()->listTableNames();
+        $tableNames = static::$em->getConnection()->getSchemaManager()->listTableNames();
 
         // Get connection to the database
-        $dbConnection = self::$em->getConnection();
+        $dbConnection = static::$em->getConnection();
 
         // Begin transaction to avoid data inconsistency
         $dbConnection->beginTransaction();
@@ -732,7 +732,7 @@ OUT;
     public function updateDBSchema()
     {
         return $this->executeQueries(
-            $this->getDBSchema($this->isDBEmpty() ? self::SCHEMA_CREATE : self::SCHEMA_UPDATE)
+            $this->getDBSchema($this->isDBEmpty() ? static::SCHEMA_CREATE : static::SCHEMA_UPDATE)
         );
     }
 
@@ -745,7 +745,7 @@ OUT;
      */
     public function dropDBSchema()
     {
-        return $this->executeQueries($this->getDBSchema(self::SCHEMA_DELETE));
+        return $this->executeQueries($this->getDBSchema(static::SCHEMA_DELETE));
     }
 
     /**
@@ -800,15 +800,15 @@ OUT;
         $rawSchemas = null;
         $postprocessMethod = null;
 
-        if (self::SCHEMA_CREATE == $mode) {
+        if (static::SCHEMA_CREATE == $mode) {
             $rawSchemas = $tool->getCreateSchemaSql($this->getAllMetadata());
             $postprocessMethod = 'postprocessCreateSchema';
 
-        } elseif (self::SCHEMA_UPDATE == $mode) {
+        } elseif (static::SCHEMA_UPDATE == $mode) {
             $rawSchemas = $tool->getUpdateSchemaSql($this->getAllMetadata());
             $postprocessMethod = 'postprocessUpdateSchema';
 
-        } elseif (self::SCHEMA_DELETE == $mode) {
+        } elseif (static::SCHEMA_DELETE == $mode) {
             $rawSchemas = $tool->getDropSchemaSql($this->getAllMetadata());
             $postprocessMethod = 'postprocessDropSchema';
         }
@@ -1184,7 +1184,7 @@ OUT;
 
         $sql = array();
         foreach ($tableNames as $tableName) {
-            $sql[] = self::$em->getConnection()->getDatabasePlatform()->getTruncateTableSQL($tableName);
+            $sql[] = static::$em->getConnection()->getDatabasePlatform()->getTruncateTableSQL($tableName);
         }
 
         return $this->executeQueries($sql);
@@ -1267,7 +1267,7 @@ OUT;
             $v = preg_replace('/^(PRIMARY KEY \()([^,\)]+)/Ss', '$1`$2`', $v);
             $v = preg_replace('/^(PRIMARY KEY \(.+,)([^`,\)]+)/Ss', '$1`$2`', $v);
 
-            $v = self::SCHEMA_FILE_IDENT . preg_replace('/^([a-z][\w\d_]+) ([A-Z]+)/Ss', '`$1` $2', $v);
+            $v = static::SCHEMA_FILE_IDENT . preg_replace('/^([a-z][\w\d_]+) ([A-Z]+)/Ss', '`$1` $2', $v);
 
             $parts[$k] = $v;
         }
@@ -1411,7 +1411,7 @@ OUT;
     protected function getAllMetadata()
     {
         $entities = array();
-        foreach (self::$em->getMetadataFactory()->getAllMetadata() as $md) {
+        foreach (static::$em->getMetadataFactory()->getAllMetadata() as $md) {
             if (!$md->isMappedSuperclass) {
                 $entities[] = $md;
             }
@@ -1471,11 +1471,11 @@ OUT;
      */
     protected function setDoctrineCache()
     {
-        self::$cacheDriver = self::getCacheDriverByOptions(\XLite::getInstance()->getOptions('cache'));
+        static::$cacheDriver = static::getCacheDriverByOptions(\XLite::getInstance()->getOptions('cache'));
 
-        $this->configuration->setMetadataCacheImpl(self::$cacheDriver);
-        $this->configuration->setQueryCacheImpl(self::$cacheDriver);
-        $this->configuration->setResultCacheImpl(self::$cacheDriver);
+        $this->configuration->setMetadataCacheImpl(static::$cacheDriver);
+        $this->configuration->setQueryCacheImpl(static::$cacheDriver);
+        $this->configuration->setResultCacheImpl(static::$cacheDriver);
     }
 
     /**
@@ -1512,7 +1512,7 @@ OUT;
         $dsnList['path'] = 'mysql:' . implode(';', $dsnString);
         $dsnList['user'] = $options['username'];
         $dsnList['password'] = $options['password'];
-        $dsnList['charset'] = self::DB_CONNECTION_CHARSET;
+        $dsnList['charset'] = static::DB_CONNECTION_CHARSET;
 
         if ('pdo_mysql' == $dsnList['driver']) {
             $dsnList['driverClass'] = '\XLite\Core\PDOMySqlDriver';
@@ -1673,7 +1673,7 @@ OUT;
      */
     protected function setCharset()
     {
-        static::$em->getConnection()->setCharset(self::DB_CONNECTION_CHARSET);
+        static::$em->getConnection()->setCharset(static::DB_CONNECTION_CHARSET);
     }
 
     /**

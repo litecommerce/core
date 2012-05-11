@@ -15,8 +15,13 @@
  * @since      1.0.18
  */
 
-class XLite_Tests_Module_Qualiteam_EcwidAggregator_Core_PartnerStores
-extends XLite_Tests_TestCase
+/**
+ * XLite_Tests_Module_Qualiteam_EcwidAggregator_Core_PartnerStores 
+ *
+ * @see   ____class_see____
+ * @since 1.0.22
+ */
+class XLite_Tests_Module_Qualiteam_EcwidAggregator_Core_PartnerStores extends XLite_Tests_TestCase
 {
     
     /**
@@ -48,6 +53,8 @@ extends XLite_Tests_TestCase
      */
     public function testPartnerStores()
     {
+        $this->markTestSkipped('Module was removed');
+
         $stores = new \XLite\Module\Qualiteam\EcwidAggregator\Core\PartnerStores(true);
 
         $this->assertGreaterThan(0, $stores->count(), 'Test stores collection mustn\'t be empty');

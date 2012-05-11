@@ -372,7 +372,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function getWarningMessage()
     {
-        return $this->isPHARAvailable() 
+        return $this->isPHARAvailable()
             ? 'Can\'t connect to the Modules Marketplace server'
             : 'You need Phar extension for PHP on your server to download modules from Modules Marketplace';
     }
@@ -534,7 +534,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
                 , '/'
             )
         );
-        
+
         // Remove 'api' directory
         $apiURL = preg_replace('/\?q=.+/Ss', '', $apiURL);
         $apiURL = preg_replace('/\/api$/Ss', '/', $apiURL);

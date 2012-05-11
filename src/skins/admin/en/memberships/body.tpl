@@ -26,18 +26,28 @@
       <th><input type="checkbox" class="column-selector" /></th>
     </tr>
 
-    <tr FOREACH="getMemberships(),membership_id,membership">
+    <tr FOREACH="getMemberships(),m">
       <td>
-        <input type="text" name="update_memberships[{membership_id}][orderby]" value="{membership.orderby}" class="orderby" />
+        <input type="text" name="update_memberships[{m.getMembershipId()}][orderby]" value="{m.getOrderby()}" class="orderby" />
       </td>
       <td class="extender">
-        <input type="text" name="update_memberships[{membership_id}][membership]" value="{membership.name}" />
+        <input type="text" name="update_memberships[{m.getMembershipId()}][name]" value="{m.getName()}" />
       </td>
       <td class="center">
-        <input type="checkbox" name="update_memberships[{membership_id}][active]" value="1" checked="{membership.active}"/>
+        <widget
+          class="\XLite\View\FormField\Input\Checkbox"
+          fieldOnly="true"
+          fieldName="update_memberships[{m.getMembershipId()}][active]"
+          value="1"
+          isChecked="{m.getActive()}" />
       </td>
       <td class="center">
-        <input type="checkbox" name="deleted_memberships[]" value="{membership_id}" />
+        <widget
+          class="\XLite\View\FormField\Input\Checkbox"
+          fieldOnly="true"
+          fieldName="deleted_memberships[]"
+          value="{m.getMembershipId()}"
+          isChecked="false" />
       </td>
     </tr>
 
@@ -71,7 +81,7 @@
 
     <li>
       <label for="membership">{t(#Membership name#)}</label>
-      <input id="membership" type="text" name="new_membership[membership]" value="" class="field-required" />
+      <input id="membership" type="text" name="new_membership[name]" value="" class="field-required" />
     </li>
 
   </ul>

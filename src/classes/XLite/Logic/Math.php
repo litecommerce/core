@@ -124,7 +124,7 @@ class Math extends \XLite\Logic\ALogic
         $parts['integer'] = number_format(floor(abs($value)), 0, '', $currency->getThousandDelimiter());
 
         $parts['decimalDelimiter'] = $currency->getDecimalDelimiter();
-        $parts['decimal'] = substr(strval(abs($value) * pow(10, $currency->getE())), -1 * $currency->getE());
+        $parts['decimal'] = substr(strval(abs($value != 0 ? $value : 1) * pow(10, $currency->getE())), -1 * $currency->getE());
 
         if ($currency->getSuffix()) {
             $parts['suffix'] = $currency->getSuffix();

@@ -270,8 +270,8 @@ class Cart extends \XLite\Model\Order
     }
 
     /**
-     * Initialize new cart 
-     * 
+     * Initialize new cart
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.21

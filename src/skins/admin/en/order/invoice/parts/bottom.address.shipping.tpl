@@ -13,16 +13,16 @@
 <td class="ship" IF="order.profile&order.profile.getShippingAddress()&getShippingModifier()&shippingModifier.getMethod()">
   <strong>{t(#Shipping address#)}</strong>
   <p>
-    {order.profile.shipping_address.title} {order.profile.shipping_address.firstname:h} {order.profile.shipping_address.lastname:h}
+    {order.profile.shipping_address.title} {order.profile.shipping_address.firstname} {order.profile.shipping_address.lastname}
   </p>
 
   <p>
-    {order.profile.shipping_address.street:h}<br />
-    {order.profile.shipping_address.city:h}, {order.profile.shipping_address.state.state:h}, {order.profile.shipping_address.zipcode:h}<br />
-    {order.profile.shipping_address.country.country:h}
+    {order.profile.shipping_address.street}<br />
+    {order.profile.shipping_address.city}, {order.profile.shipping_address.state.state}, {order.profile.shipping_address.zipcode}<br />
+    {order.profile.shipping_address.country.country}
   </p>
 
   <p IF="order.profile.shipping_address.phone" class="last">
-    {t(#Phone#)}: {order.profile.shipping_address.phone:h}
+    {t(#Phone#)}: {order.profile.shipping_address.phone}
   </p>
 </td>

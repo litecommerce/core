@@ -25,8 +25,21 @@
  * @since      1.0.0
  */
 
+/**
+ * XLite_Tests_Model_Payment_Method 
+ *
+ * @see   ____class_see____
+ * @since 1.0.22
+ */
 class XLite_Tests_Model_Payment_Method extends XLite_Tests_Model_Payment_PaymentAbstract
 {
+    /**
+     * testCreate
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testCreate()
     {
         $method = $this->getTestMethod();
@@ -39,6 +52,13 @@ class XLite_Tests_Model_Payment_Method extends XLite_Tests_Model_Payment_Payment
         }
     }
 
+    /**
+     * testUpdate
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testUpdate()
     {
         $method = $this->getTestMethod();
@@ -55,6 +75,13 @@ class XLite_Tests_Model_Payment_Method extends XLite_Tests_Model_Payment_Payment
         $this->assertFalse($method->getEnabled(), 'check new enabled status');
     }
 
+    /**
+     * testDelete
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testDelete()
     {
         $method = $this->getTestMethod();
@@ -70,6 +97,13 @@ class XLite_Tests_Model_Payment_Method extends XLite_Tests_Model_Payment_Payment
         $this->assertNull($method, 'check removed method');
     }
 
+    /**
+     * testGetProcessor
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetProcessor()
     {
         $method = $this->getTestMethod();
@@ -81,6 +115,13 @@ class XLite_Tests_Model_Payment_Method extends XLite_Tests_Model_Payment_Payment
         $this->assertEquals('XLite\Model\Payment\Processor\CreditCard', get_class($method->getProcessor()), 'check class #2');
     }
 
+    /**
+     * testSetClass
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testSetClass()
     {
         $method = $this->getTestMethod();
@@ -100,6 +141,13 @@ class XLite_Tests_Model_Payment_Method extends XLite_Tests_Model_Payment_Payment
         $this->assertEquals('Model\Payment\Processor\CreditCard', $method->getClass(), 'check class #5');
     }
 
+    /**
+     * testGetSetting
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetSetting()
     {
         $method = $this->getTestMethod();
@@ -111,6 +159,13 @@ class XLite_Tests_Model_Payment_Method extends XLite_Tests_Model_Payment_Payment
         $this->assertEquals('', $method->getSetting('t1'), 'check empty setting');
     }
 
+    /**
+     * testSetSetting
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testSetSetting()
     {
         $method = $this->getTestMethod();
@@ -120,6 +175,13 @@ class XLite_Tests_Model_Payment_Method extends XLite_Tests_Model_Payment_Payment
         $this->assertEquals('2', $method->getSetting('t1'), 'check get setting');
     }
 
+    /**
+     * testTransactions
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testTransactions()
     {
         $order = $this->getTestOrder();
@@ -131,21 +193,22 @@ class XLite_Tests_Model_Payment_Method extends XLite_Tests_Model_Payment_Payment
         $this->assertEquals(1, count($method->getTransactions()), 'check transactions count');
     }
 
+    /**
+     * testTranslations
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testTranslations()
     {
-
         $method = $this->getTestMethod();
 
         $this->assertEquals('Test', $method->getTranslation()->getName(), 'check default name');
 
-        $method->getTranslation('de')->setName('Test de');
+        $method->setEditLanguage('de')->setName('Test de');
 
-        \XLite\Core\Database::getEM()->persist($method);
-        \XLite\Core\Database::getEM()->flush();
-
-        $this->assertEquals('Test', $method->getTranslation()->getName(), 'check default name #2');
-        $this->assertEquals('Test de', $method->getTranslation('de')->getName(), 'check de name');
+        $this->assertEquals('Test de', $method->getName(), 'check German name');
+        $this->assertEquals('Test', $method->setEditLanguage($method::getDefaultLanguage())->getName(), 'check default name');
     }
-
-
 }

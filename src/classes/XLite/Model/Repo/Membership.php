@@ -88,13 +88,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      */
     public function findAllMemberships()
     {
-        $data = $this->getFromCache('all');
-        if (!isset($data)) {
-            $data = $this->defineAllMembershipsQuery()->getResult();
-            $this->saveToCache($data, 'all');
-        }
-
-        return $data;
+        return $this->defineAllMembershipsQuery()->getResult();
     }
 
     /**
@@ -122,13 +116,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      */
     public function findActiveMemberships()
     {
-        $data = $this->getFromCache('active', array('active' => true));
-        if (!isset($data)) {
-            $data = $this->defineActiveMembershipsQuery()->getResult();
-            $this->saveToCache($data, 'active', array('active' => true));
-        }
-
-        return $data;
+        return $this->defineActiveMembershipsQuery()->getResult();
     }
 
     /**

@@ -30,6 +30,9 @@ namespace XLite\Module\CDev\AuthorizeNet\Model\Payment\Processor;
 /**
  * Authorize.Net SIM processor
  *
+ * Find the latest API document here:
+ * http://www.authorize.net/support/SIM_guide.pdf
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -246,32 +249,32 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
         $status = 1 == $request->x_response_code ? $transaction::STATUS_SUCCESS : $transaction::STATUS_FAILED;
 
         if (isset($request->x_response_reason_text)) {
-            $this->getOrder()->setDetail('response', $request->x_response_reason_text, 'Response');
+            $this->setDetail('response', $request->x_response_reason_text, 'Response');
             $this->transaction->setNote($request->x_response_reason_text);
 
         } elseif (isset($this->err[$request->x_response_reason_code])) {
-            $this->getOrder()->setDetail('response', $this->err[$request->x_response_reason_code], 'Response');
+            $this->setDetail('response', $this->err[$request->x_response_reason_code], 'Response');
             $this->transaction->setNote($this->err[$request->x_response_reason_code]);
         }
 
         if ($request->x_auth_code) {
-            $this->getOrder()->setDetail('authCode', $request->x_auth_code, 'Auth code');
+            $this->setDetail('authCode', $request->x_auth_code, 'Auth code');
         }
 
         if ($request->x_trans_id) {
-            $this->getOrder()->setDetail('transId', $request->x_trans_id, 'Transaction ID');
+            $this->setDetail('transId', $request->x_trans_id, 'Transaction ID');
         }
 
         if ($request->x_response_subcode) {
-            $this->getOrder()->setDetail('responseSubcode', $request->x_response_subcode, 'Response subcode');
+            $this->setDetail('responseSubcode', $request->x_response_subcode, 'Response subcode');
         }
 
         if (isset($request->x_avs_code) && isset($this->avserr[$request->x_avs_code])) {
-            $this->getOrder()->setDetail('avs', $this->avserr[$request->x_avs_code], 'AVS status');
+            $this->setDetail('avs', $this->avserr[$request->x_avs_code], 'AVS status');
         }
 
         if (isset($request->x_CVV2_Resp_Code) && isset($this->cvverr[$request->x_CVV2_Resp_Code])) {
-            $this->getOrder()->setDetail('cvv', $this->cvverr[$request->x_CVV2_Resp_Code], 'CVV status');
+            $this->setDetail('cvv', $this->cvverr[$request->x_CVV2_Resp_Code], 'CVV status');
         }
 
         if (!$this->checkTotal($request->x_amount)) {
@@ -311,7 +314,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
 
     /**
      * Returns the list of settings available for this payment processor
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.5
@@ -366,12 +369,8 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
             $string
         );
 
-        $bState = $this->getOrder()->getProfile()->getBillingAddress()->getState()->getCode()
-            ? $this->getOrder()->getProfile()->getBillingAddress()->getState()->getCode()
-            : 'n/a';
-
-        $sState = $this->getOrder()->getProfile()->getShippingAddress()->getState()->getCode()
-            ? $this->getOrder()->getProfile()->getShippingAddress()->getState()->getCode()
+        $bState = $this->getProfile()->getBillingAddress()->getState()->getCode()
+            ? $this->getProfile()->getBillingAddress()->getState()->getCode()
             : 'n/a';
 
         switch ($this->getSetting('type')) {
@@ -383,7 +382,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
                 $type = 'AUTH_CAPTURE';
         }
 
-        return array(
+        $fields = array(
             'x_test_request'  => $this->getSetting('test') ? 'TRUE' : 'FALSE',
             'x_login'         => $this->getSetting('login'),
             'x_type'          => $type,
@@ -394,28 +393,38 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
             'x_amount'        => round($this->transaction->getValue(), 2),
             'x_currency_code' => $this->getSetting('currency'),
             'x_method'        => 'CC',
-            'x_first_name'    => $this->getOrder()->getProfile()->getBillingAddress()->getFirstname(),
-            'x_last_name'     => $this->getOrder()->getProfile()->getBillingAddress()->getLastname(),
-            'x_phone'         => $this->getOrder()->getProfile()->getBillingAddress()->getPhone(),
-            'x_email'         => $this->getOrder()->getProfile()->getLogin(),
-            'x_cust_id'       => $this->getOrder()->getProfile()->getLogin(),
-            'x_address'       => $this->getOrder()->getProfile()->getBillingAddress()->getStreet(),
-            'x_city'          => $this->getOrder()->getProfile()->getBillingAddress()->getCity(),
+
+            'x_first_name'    => $this->getProfile()->getBillingAddress()->getFirstname(),
+            'x_last_name'     => $this->getProfile()->getBillingAddress()->getLastname(),
+            'x_phone'         => $this->getProfile()->getBillingAddress()->getPhone(),
+            'x_email'         => $this->getProfile()->getLogin(),
+            'x_cust_id'       => $this->getProfile()->getLogin(),
+            'x_address'       => $this->getProfile()->getBillingAddress()->getStreet(),
+            'x_city'          => $this->getProfile()->getBillingAddress()->getCity(),
             'x_state'         => $bState,
-            'x_zip'           => $this->getOrder()->getProfile()->getBillingAddress()->getZipcode(),
-            'x_country'       => $this->getOrder()->getProfile()->getBillingAddress()->getCountry()->getCountry(),
-            'x_ship_to_first_name' => $this->getOrder()->getProfile()->getShippingAddress()->getFirstname(),
-            'x_ship_to_last_name'  => $this->getOrder()->getProfile()->getShippingAddress()->getLastname(),
-            'x_ship_to_address'    => $this->getOrder()->getProfile()->getShippingAddress()->getStreet(),
-            'x_ship_to_city'       => $this->getOrder()->getProfile()->getShippingAddress()->getCity(),
-            'x_ship_to_state'      => $sState,
-            'x_ship_to_zip'        => $this->getOrder()->getProfile()->getShippingAddress()->getZipcode(),
-            'x_ship_to_country'    => $this->getOrder()->getProfile()->getShippingAddress()->getCountry()->getCountry(),
-            'x_invoice_num'        => $this->transaction->getTransactionId(),
-            'x_relay_response'     => 'TRUE',
-            'x_relay_url'          => $this->getReturnURL('x_invoice_num'),
-            'x_customer_ip'        => $this->getClientIP(),
+            'x_zip'           => $this->getProfile()->getBillingAddress()->getZipcode(),
+            'x_country'       => $this->getProfile()->getBillingAddress()->getCountry()->getCountry(),
+
+            'x_invoice_num'         => $this->transaction->getTransactionId(),
+            'x_relay_response'      => 'TRUE',
+            'x_relay_url'           => $this->getReturnURL('x_invoice_num'),
+            'x_customer_ip'         => $this->getClientIP(),
         );
+
+        if ($shippingAddress = $this->getProfile()->getShippingAddress()) {
+
+            $fields += array(
+                'x_ship_to_first_name'  => $shippingAddress->getFirstname(),
+                'x_ship_to_last_name'   => $shippingAddress->getLastname(),
+                'x_ship_to_address'     => $shippingAddress->getStreet(),
+                'x_ship_to_city'        => $shippingAddress->getCity(),
+                'x_ship_to_state'       => $shippingAddress->getState()->getCode()
+                    ? $shippingAddress->getState()->getCode()
+                    : 'n/a',
+                'x_ship_to_zip'         => $shippingAddress->getZipcode(),
+                'x_ship_to_country'     => $shippingAddress->getCountry()->getCountry(),
+            );
+        }
     }
 
     /**

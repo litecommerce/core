@@ -1766,12 +1766,18 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function linkLoadedEntity(\XLite\Model\AEntity $entity, \XLite\Model\AEntity $parent, array $parentAssoc)
     {
-        // Add entity to parent
-        $parent->$parentAssoc['setter']($entity);
+        if (
+            !$parentAssoc['many']
+            || !$entity->getUniqueIdentifier()
+            || !$parent->$parentAssoc['getter']()->contains($entity)
+        ) {
+            // Add entity to parent
+            $parent->$parentAssoc['setter']($entity);
 
-        // Add parent to entity
-        if ($parentAssoc['mappedSetter']) {
-            $entity->$parentAssoc['mappedSetter']($parent);
+            // Add parent to entity
+            if ($parentAssoc['mappedSetter']) {
+                $entity->$parentAssoc['mappedSetter']($parent);
+            }
         }
     }
 

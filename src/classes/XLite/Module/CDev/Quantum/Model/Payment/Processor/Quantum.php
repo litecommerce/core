@@ -30,6 +30,9 @@ namespace XLite\Module\CDev\Quantum\Model\Payment\Processor;
 /**
  * QuantumGateway QGWdatabase Engine payment processor
  *
+ * Find the latest API document here:
+ * http://www.quantumgateway.com/files/QGWdbeAPI.pdf
+ *
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -63,6 +66,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
         $request = \XLite\Core\Request::getInstance();
 
         if ($request->isPost() && isset($request->trans_result)) {
+            
             $status = 'APPROVED' == $request->trans_result
                 ? $transaction::STATUS_SUCCESS
                 : $transaction::STATUS_FAILED;
@@ -80,12 +84,14 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
 
             // MD5 hash checking
             if ($status == $transaction::STATUS_SUCCESS && isset($request->md5_hash)) {
+
                 $hash = md5(
                     strval($this->getSetting('hash'))
                     . $this->getSetting('login')
                     . $request->transID
                     . $request->amount
                 );
+
                 if ($hash != $request->md5_hash) {
                     $status = $transaction::STATUS_FAILED;
                     $this->setDetail('hash_checking', 'failed', 'MD5 hash checking');
@@ -133,7 +139,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      */
     protected function getFormFields()
     {
-        return array(
+        $fields = array(
             'gwlogin'                  => $this->getSetting('login'),
             'post_return_url_approved' => $this->getReturnURL('ID'),
             'post_return_url_declined' => $this->getReturnURL('ID'),
@@ -151,16 +157,6 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
                 : '',
             'BCUST_EMAIL' => $this->getProfile()->getLogin(),
 
-            'SFNAME'   => $this->getProfile()->getShippingAddress()->getFirstname(),
-            'SLNAME'   => $this->getProfile()->getShippingAddress()->getLastname(),
-            'SADDR1'   => $this->getProfile()->getShippingAddress()->getStreet(),
-            'SCITY'    => $this->getProfile()->getShippingAddress()->getCity(),
-            'SSTATE'   => $this->getProfile()->getShippingAddress()->getState()->getState(),
-            'SZIP1'    => $this->getProfile()->getShippingAddress()->getZipcode(),
-            'SCOUNTRY' => $this->getProfile()->getShippingAddress()->getCountry()
-                ? $this->getProfile()->getShippingAddress()->getCountry()->getCode()
-                : '',
-
             'PHONE'               => $this->getProfile()->getBillingAddress()->getPhone(),
             'trans_method'        => 'CC',
             'ResponseMethod'      => 'POST',
@@ -170,6 +166,23 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
             'invoice_description' => $this->getInvoiceDescription(),
             'MAXMIND'             => '1',
         );
+
+        if ($shippingAddress = $this->getProfile()->getShippingAddress()) {
+
+            $fields += array(
+                'SFNAME'    => $shippingAddress->getFirstname(),
+                'SLNAME'    => $shippingAddress->getLastname(),
+                'SADDR1'    => $shippingAddress->getStreet(),
+                'SCITY'     => $shippingAddress->getCity(),
+                'SSTATE'    => $shippingAddress->getState()->getState(),
+                'SZIP1'     => $shippingAddress->getZipcode(),
+                'SCOUNTRY'  => $shippingAddress->getCountry()
+                    ? $shippingAddress->getCountry()->getCode()
+                    : '',
+            );
+        }
+
+        return $fields;
     }
 
     /**

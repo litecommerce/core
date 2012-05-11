@@ -245,6 +245,8 @@ class Address extends \XLite\View\Model\AModel
                         $this->address->setProfile($profile);
                     }
                 }
+
+                $this->address->setZipcode(\XLite\Core\Config::getInstance()->General->default_zipcode);
             }
         }
 

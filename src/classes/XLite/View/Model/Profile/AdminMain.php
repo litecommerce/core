@@ -358,6 +358,7 @@ class AdminMain extends \XLite\View\Model\AModel
             !\XLite\Core\Auth::getInstance()->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS)
             || !$this->getModelObject()
             || !$this->getModelObject()->isAdmin()
+            || 2 > \XLite\Core\Database::getRepo('XLite\Model\Role')->count()
         ) {
             unset($this->accessSchema['roles']);
         }
@@ -388,8 +389,33 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function setModelProperties(array $data)
     {
-        if (isset($data['password'])) {
+        if (!empty($data['password'])) {
+            // Encrypt password if if is not empty
             $data['password'] = \XLite\Core\Auth::encryptPassword($data['password']);
+
+        } elseif (isset($data['password'])) {
+            // Otherwise unset password to avoid passing empty password to the database
+            unset($data['password']);
+        }
+
+        // Assign only role for admin
+        if (
+            isset($data['access_level'])
+            && \XLite\Core\Auth::getInstance()->getAdminAccessLevel() == $data['access_level']
+            && 1 == \XLite\Core\Database::getRepo('XLite\Model\Role')->count()
+        ) {
+            $rootRole = \XLite\Core\Database::getRepo('XLite\Model\Role')->findOneRoot();
+            if ($rootRole) {
+                $data['roles'] = array($rootRole->getId());
+            }
+        }
+
+        // Remove roles from non-admin
+        if (
+            isset($data['access_level'])
+            && \XLite\Core\Auth::getInstance()->getAdminAccessLevel() != $data['access_level']
+        ) {
+            $data['roles'] = array();
         }
 
         if (isset($data['roles']) && is_array($data['roles'])) {
@@ -403,13 +429,11 @@ class AdminMain extends \XLite\View\Model\AModel
             $model->getRoles()->clear();
 
             // Add new links
-            foreach ($data['roles'] as $rid => $tmp) {
-                if ($tmp) {
-                    $role = \XLite\Core\Database::getRepo('XLite\Model\Role')->find($rid);
-                    if ($role) {
-                        $model->addRoles($role);
-                        $role->addProfiles($model);
-                    }
+            foreach ($data['roles'] as $rid) {
+                $role = \XLite\Core\Database::getRepo('XLite\Model\Role')->find($rid);
+                if ($role) {
+                    $model->addRoles($role);
+                    $role->addProfiles($model);
                 }
             }
         }
@@ -468,7 +492,11 @@ class AdminMain extends \XLite\View\Model\AModel
 
             if ($data['password'] != $data['password_conf']) {
                 $result = false;
-                \XLite\Core\TopMessage::addError('Password and its confirmation do not match');
+                $this->addErrorMessage(
+                    'password',
+                    'Password and its confirmation do not match',
+                    $formFields[self::SECTION_MAIN]
+                );
             }
 
         } else {

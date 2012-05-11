@@ -29,7 +29,12 @@
 
     {* :TODO: move JS to controller *}
     <select name="priceFilter" onchange="javascript: location.replace(this.value);">
-      <option FOREACH="getPriceFilterOptions(),name,label" value="{getActionURL(_ARRAY_(#priceFilter#^name))}" selected="{isSelected(getParam(#priceFilter#),name)}">{t(label)}</option>
+      <option
+        FOREACH="getPriceFilterOptions(),name,label"
+        value="{getActionURL(_ARRAY_(#priceFilter#^name))}"
+        selected="{isSelected(getParam(#priceFilter#),name)}">
+        {t(label)}
+      </option>
     </select>
 
   </div>

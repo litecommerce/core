@@ -56,7 +56,7 @@ class Membership extends \XLite\View\FormField\Select\Regular
     {
         $list = array();
         foreach (\XLite\Core\Database::getRepo('\XLite\Model\Membership')->findActiveMemberships() as $m) {
-            $list[$m->membership_id] = $m->name;
+            $list[$m->membership_id] = $m->getName();
         }
 
         return $list;
