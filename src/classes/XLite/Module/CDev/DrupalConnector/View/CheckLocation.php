@@ -111,7 +111,7 @@ class CheckLocation extends \XLite\View\AView
 
                     // Generate top message
                     \XLite\Core\TopMessage::getInstance()->addWarning(
-                        'It has been detected that LiteCommerce is installed within LC Connector module directory. It is strongly recommended to move LiteCommerce directory from that location due to the issue described <a href="http://www.facebook.com/litecommerce/posts/440928792599823">here</a>. Detailed instruction: <a href="https://github.com/litecommerce/core/wiki/Moving-LiteCommerce-subdirectory-to-the-Drupal-directory" target="new">here</a>. If you find it difficult to follow the instruction please contact <a href="mailto:xlite@litecommerce.com">xlite@litecommerce.com</a> or create a ticket at <a href="http://bt.litecommerce.com/">Bugtracker</a>.'
+                        'Warning: LiteCommerce is installed within the "LC Connector" module directory. It is strongly recommended to move LiteCommerce directory from that location to avoid the problem, described <a href="http://www.facebook.com/litecommerce/posts/440928792599823">here</a>. You can find the instructions on how to do it <a href="https://github.com/litecommerce/core/wiki/Moving-LiteCommerce-subdirectory-to-the-Drupal-directory" target="new">here</a>. If you find it difficult to follow the instruction yourself, please contact <a href="mailto:xlite@litecommerce.com">xlite@litecommerce.com</a> or create a ticket at <a href="http://bt.litecommerce.com/">Bugtracker</a>.'
                     );
 
                 } else {
