@@ -14,3 +14,8 @@
   width: 400px;
 }
 
+.roles table.list tbody .unremovable .input-field-wrapper.switcher .widget {
+  background-position: 0px -32px;
+  cursor: auto;
+}
+

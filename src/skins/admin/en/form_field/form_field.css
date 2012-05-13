@@ -105,6 +105,10 @@ button.ui-state-default span.ui-icon {
   padding-left: 11px;
 }
 
+.ui-multiselect-checkboxes .ui-state-hover span {
+  color: #fff;
+}
+
 .ui-multiselect-checkboxes label input {
   top: 2px;
 }

@@ -49,15 +49,4 @@ class RoleTranslation extends \XLite\Model\Base\Translation
      */
     protected $name = '';
 
-    /**
-     * Description
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.17
-     *
-     * @Column (type="text")
-     */
-    protected $description = '';
-
 }

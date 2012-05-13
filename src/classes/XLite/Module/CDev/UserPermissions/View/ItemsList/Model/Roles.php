@@ -52,6 +52,22 @@ class Roles extends \XLite\View\ItemsList\Model\Table
     }
 
     /**
+     * Get a list of JavaScript files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'modules/CDev/UserPermissions/roles/controller.js';
+
+        return $list;
+    }
+
+    /**
      * Define columns structure
      *
      * @return array
@@ -212,25 +228,6 @@ class Roles extends \XLite\View\ItemsList\Model\Table
     protected function preprocessName($value, array $column, \XLite\Model\Role $role)
     {
         return $value ?: $role->getPublicName();
-    }
-
-    /**
-     * Get left actions tempaltes
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getLeftActions()
-    {
-        $list = parent::getLeftActions();
-
-        $key = array_search('items_list/model/table/parts/switcher.tpl', $list);
-        if (false !== $key) {
-            $list[$key] = 'modules/CDev/UserPermissions/roles/switcher.tpl';
-        }
-
-        return $list;
     }
 
     /**

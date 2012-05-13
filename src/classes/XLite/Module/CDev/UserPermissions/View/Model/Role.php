@@ -56,10 +56,6 @@ class Role extends \XLite\View\Model\AModel
             self::SCHEMA_CLASS    => 'XLite\Module\CDev\UserPermissions\View\FormField\Permissions',
             self::SCHEMA_LABEL    => 'Permissions',
         ),
-        'description' => array(
-            self::SCHEMA_CLASS    => 'XLite\View\FormField\Textarea\Simple',
-            self::SCHEMA_LABEL    => 'Description',
-        ),
     );
 
     /**
@@ -85,6 +81,7 @@ class Role extends \XLite\View\Model\AModel
     {
         if ($this->getModelObject()->isPermanentRole()) {
             unset($this->schemaDefault['enabled']);
+            $this->schemaDefault['permissions'][self::SCHEMA_CLASS] = 'XLite\View\FormField\Label';
         }
 
         return $this->getFieldsBySchema($this->schemaDefault);
@@ -163,28 +160,31 @@ class Role extends \XLite\View\Model\AModel
 
         $model = $this->getModelObject();
 
-        // Remove old links
-        foreach ($model->getPermissions() as $perm) {
-            $perm->getRoles()->removeElement($model);
-        }
-        $model->getPermissions()->clear();
+        if (!$model->isPermanentRole()) {
 
-        $permanent = \XLite\Core\Database::getRepo('XLite\Model\Role')->getPermanentRole();
-        if ($permanent->getId() == $model->getId()) {
-            $root = \XLite\Core\Database::getRepo('XLite\Model\Role\Permission')->findOneBy(
-                array('code' => \XLite\Model\Role\Permission::ROOT_ACCESS)
-            );
-            if ($root && !in_array($root->getId(), $permissions)) {
-                $permissions[] = $root->getId();
+            // Remove old links
+            foreach ($model->getPermissions() as $perm) {
+                $perm->getRoles()->removeElement($model);
             }
-        }
+            $model->getPermissions()->clear();
 
-        // Add new links
-        foreach ($permissions as $pid) {
-            $permission = \XLite\Core\Database::getRepo('XLite\Model\Role\Permission')->find($pid);
-            if ($permission) {
-                $model->addPermissions($permission);
-                $permission->addRoles($model);
+            $permanent = \XLite\Core\Database::getRepo('XLite\Model\Role')->getPermanentRole();
+            if ($permanent->getId() == $model->getId()) {
+                $root = \XLite\Core\Database::getRepo('XLite\Model\Role\Permission')->findOneBy(
+                    array('code' => \XLite\Model\Role\Permission::ROOT_ACCESS)
+                );
+                if ($root && !in_array($root->getId(), $permissions)) {
+                    $permissions[] = $root->getId();
+                }
+            }
+
+            // Add new links
+            foreach ($permissions as $pid) {
+                $permission = \XLite\Core\Database::getRepo('XLite\Model\Role\Permission')->find($pid);
+                if ($permission) {
+                    $model->addPermissions($permission);
+                    $permission->addRoles($model);
+                }
             }
         }
     }
@@ -204,6 +204,22 @@ class Role extends \XLite\View\Model\AModel
         } else {
             \XLite\Core\TopMessage::addInfo('The role has been added');
         }
+    }
+
+    /**
+     * Retrieve property from the model object
+     *
+     * @param mixed $name Field/property name
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModelObjectValue($name)
+    {
+        return ('permissions' == $name && $this->getModelObject()->isPermanentRole())
+            ? 'Root access'
+            : parent::getModelObjectValue($name);
     }
 
 }
