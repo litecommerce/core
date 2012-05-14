@@ -355,6 +355,8 @@ class Mailer extends \XLite\Base\Singleton
      */
     public static function sendProcessOrderCustomer(\XLite\Model\Order $order)
     {
+        static::setMailInterface(\XLite::CUSTOMER_INTERFACE);
+
         if ($order->getProfile()) {
             static::compose(
                 \XLite\Core\Config::getInstance()->Company->site_administrator,
