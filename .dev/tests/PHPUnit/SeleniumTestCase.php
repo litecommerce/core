@@ -559,9 +559,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         // Delay before each test
         sleep(3);
 
-        $this->baseURL = rtrim(SELENIUM_SOURCE_URL, '/') . '/';
-
-        $this->setBrowserUrl($this->baseURL);
+        $this->setCustomerURL();
 
         if (!defined('DEPLOYMENT_TEST')) {
 
@@ -571,6 +569,46 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             \XLite\Core\Session::getInstance()->restart();
         }
         $this->startTime = microtime(true);
+    }
+
+    /**
+     * Set main URL to admin area
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function setAdminURL()
+    {
+        $this->baseURL = rtrim(SELENIUM_SOURCE_URL_ADMIN, '/') . '/';
+
+        $this->setBrowserURL($this->baseURL);
+    }
+
+    /**
+     * Set main URL to customer area
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function setCustomerURL()
+    {
+        $this->baseURL = rtrim(SELENIUM_SOURCE_URL, '/') . '/';
+
+        $this->setBrowserUrl($this->baseURL);
+    }
+
+    protected function openShortCustomerAndWait($shortURL)
+    {
+        return $this->openAndWait(rtrim(SELENIUM_SOURCE_URL, '/') . '/' . $shortURL);
+    }
+
+    protected function openShortAdminAndWait($shortURL)
+    {
+        return $this->openAndWait(rtrim(SELENIUM_SOURCE_URL_ADMIN, '/') . '/' . $shortURL);
     }
 
     /**

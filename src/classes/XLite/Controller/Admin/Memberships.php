@@ -123,25 +123,21 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDelete()
     {
+        \XLite\Core\Database::getRepo('\XLite\Model\Membership')->deleteInBatchById($this->getMembershipIdsToDelete());
+    }
+
+    /**
+     * Define memberships identificators array to remove
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getMembershipIdsToDelete()
+    {
         $ids = \XLite\Core\Request::getInstance()->deleted_memberships;
 
-        if (is_array($ids) && $ids) {
-
-            list($keys, $data) = \XLite\Core\Database::prepareArray($ids, 'id');
-
-            $list = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder()
-                ->where('m.membership_id IN (' . implode(', ', $keys) . ')')
-                ->setParameters($data)
-                ->getResult();
-
-            foreach ($list as $m) {
-                \XLite\Core\Database::getEM()->remove($m);
-            }
-
-            \XLite\Core\Database::getEM()->flush();
-
-            // TODO - remove membership id from profiles
-        }
+        return (is_array($ids) && $ids) ? array_flip(\Includes\Utils\ArrayManager::filter($ids, function ($value) {return $value !== '';})) : array();
     }
 
     /**
