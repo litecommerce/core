@@ -129,6 +129,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
         $properties = $this->validateCategoryData(true);
 
         if ($properties) {
+
             $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->insert(
                 array('parent_id' => $this->getCategoryId()) + $properties
             );
@@ -151,8 +152,6 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
         $properties = $this->validateCategoryData();
 
         if ($properties) {
-
-            $properties['membership'] = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->find($properties['membership']);
 
             \XLite\Core\Database::getRepo('\XLite\Model\Category')
                 ->update($this->getCategory(), $properties);
@@ -243,6 +242,10 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
             } elseif ('enabled' === $field) {
                 // 'Enabled' field value must be either 0 or 1
                 $data['enabled'] = ((isset($data['enabled']) && $data['enabled'] == '1') ? 1 : 0);
+
+            } elseif ('membership' === $field) {
+
+                $data['membership'] = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->find($data['membership']);
             }
         }
 
