@@ -48,7 +48,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $this->assertTrue(0 < $order->getOrderId(), 'check order id');
 
-        foreach ($this->testOrder as $k => $v) {
+        foreach ($order as $k => $v) {
             $m = 'get' . \XLite\Core\Converter::convertToCamelCase($k);
             $this->assertEquals($v, $order->$m(), 'Check test order: ' . $k);
         }

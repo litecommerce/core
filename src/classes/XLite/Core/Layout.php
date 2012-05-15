@@ -505,8 +505,8 @@ class Layout extends \XLite\Base\Singleton
     }
 
     /**
-     * Get current template info 
-     * 
+     * Get current template info
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -597,6 +597,7 @@ class Layout extends \XLite\Base\Singleton
     protected function prepareResourceURL($url, $outputType)
     {
         if ($url && self::WEB_PATH_OUTPUT_SHORT != $outputType) {
+
             $type = self::WEB_PATH_OUTPUT_FULL == $outputType
                 ? \Includes\Utils\URLManager::URL_OUTPUT_SHORT
                 : \Includes\Utils\URLManager::URL_OUTPUT_FULL;
@@ -605,7 +606,8 @@ class Layout extends \XLite\Base\Singleton
                 $url,
                 \XLite\Core\Request::getInstance()->isHTTPS(),
                 array(),
-                $type
+                $type,
+                false
             );
         }
 

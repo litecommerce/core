@@ -376,7 +376,11 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 'Payment for orders not over. Please complete payment of order.'
             );
 
-            $this->setReturnURL($this->buildURL('order_list'));
+            $this->setReturnURL(
+                $this->buildURL(
+                    \XLite\Core\Auth::getInstance()->isLogged() ? 'order_list' : ''
+                )
+            );
 
         } else {
 

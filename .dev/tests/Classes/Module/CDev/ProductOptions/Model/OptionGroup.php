@@ -25,10 +25,30 @@
  * @since      1.0.0
  */
 
+/**
+ * XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup 
+ *
+ * @see   ____class_see____
+ * @since 1.0.22
+ */
 class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tests_TestCase
 {
+    /**
+     * product
+     *
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 1.0.22
+     */
     protected $product;
 
+    /**
+     * testGroup
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.22
+     */
     protected $testGroup = array(
         'name'      => 'Test name',
         'fullname'  => 'Test full name',
@@ -40,12 +60,26 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
         'enabled'   => true,
     );
 
+    /**
+     * testOption
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.22
+     */
     protected $testOption = array(
         'name'      => 'Test option name',
         'orderby'   => 11,
         'enabled'   => true,
     );
 
+    /**
+     * setUp
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -53,6 +87,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
         \XLite\Core\Database::getEM()->clear();
     }
 
+    /**
+     * testCreate
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testCreate()
     {
         $group = $this->getTestGroup();
@@ -78,6 +119,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
 
     }
 
+    /**
+     * testUpdate
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testUpdate()
     {
         $group = $this->getTestGroup();
@@ -105,6 +153,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
         $this->assertEquals(2, count($group->getOptions()), 'Check options count');
     }
 
+    /**
+     * testDelete
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testDelete()
     {
         $group = $this->getTestGroup();
@@ -120,6 +175,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
         $this->assertNull($group, 'Check removed group');
     }
 
+    /**
+     * testMultilanguage
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testMultilanguage()
     {
         $group = $this->getTestGroup();
@@ -157,6 +219,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
         $this->assertEquals(2, count($list), 'check translations length again');
     }
 
+    /**
+     * testSetType
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testSetType()
     {
         $group = $this->getTestGroup();
@@ -169,6 +238,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
         $this->assertNotEquals($oldViewType, $group->getViewType(), 'Check view type change');
     }
 
+    /**
+     * testSetViewType
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testSetViewType()
     {
         $group = $this->getTestGroup();
@@ -182,6 +258,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
 
     }
 
+    /**
+     * testGetDisplayName
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetDisplayName()
     {
         $group = $this->getTestGroup();
@@ -202,6 +285,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
         $this->assertEquals('n1', $group->getDisplayName(), 'Get display name from name');
     }
 
+    /**
+     * testGetActiveOptions
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetActiveOptions()
     {
         $group = $this->getTestGroup();
@@ -233,6 +323,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
         $this->assertNotEquals($option->getOptionId(), $options[0]->getOptionId(), 'check option id');
     }
 
+    /**
+     * testGetDefaultOption
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetDefaultOption()
     {
         $group = $this->getTestGroup();
@@ -270,6 +367,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
         $this->assertNull($group->getDefaultOption(), 'check empty default option');
     }
 
+    /**
+     * testGetDefaultPlainValue
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetDefaultPlainValue()
     {
         $group = $this->getTestGroup();
@@ -316,6 +420,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
         $this->assertNull($group->getDefaultPlainValue(), 'check empty options list');
     }
 
+    /**
+     * getProduct
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     protected function getProduct()
     {
         if (!isset($this->product)) {
@@ -341,6 +452,13 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
         return $this->product;
     }
 
+    /**
+     * getTestGroup
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     protected function getTestGroup()
     {
         $group = new XLite\Module\CDev\ProductOptions\Model\OptionGroup();

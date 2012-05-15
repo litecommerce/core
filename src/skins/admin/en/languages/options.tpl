@@ -22,11 +22,11 @@
     <ul class="form">
 
       <li class="default">
-        <label>{t(#Language name in X#,_ARRAY_(#language#^defaultLanguage.name))}:</label>
-        <input type="text" name="name[{defaultLanguage.code}]" value="{getTranslation(defaultLanguage)}" style="background-image: url({defaultLanguage.flagURL});" lang="{defaultLanguage.code}" xml:lang="{defaultLanguage.code}" />
+        <label>{t(#Language name in X#,_ARRAY_(#language#^defaultLanguageObject.name))}:</label>
+        <input type="text" name="name[{defaultLanguageObject.code}]" value="{getTranslation(defaultLanguageObject)}" style="background-image: url({defaultLanguageObject.flagURL});" lang="{defaultLanguageObject.code}" xml:lang="{defaultLanguageObject.code}" />
       </li>
 
-      <li IF="!editLanguage.code=defaultLanguage.code" class="native">
+      <li IF="!editLanguage.code=defaultLanguageObject.code" class="native">
         <label>{t(#Native language name#)}:</label>
         <input type="text" name="name[{editLanguage.code}]" value="{getTranslation(editLanguage)}" style="background-image: url({editLanguage.flagURL});" lang="{editLanguage.code}" xml:lang="{editLanguage.code}" />
       </li>

@@ -124,4 +124,18 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
 
     // }}}
 
+    // {{{ Action handlers
+
+    /**
+     * doActionViewLicense
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function doActionViewLicense()
+    {
+    }
+
+    // }}}
 }

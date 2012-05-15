@@ -38,7 +38,7 @@
 
 <widget target="order" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
 
-<widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="Countries">
+<widget target="countries" template="common/dialog.tpl" body="countries.tpl">
 
 <widget target="update_inventory" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 

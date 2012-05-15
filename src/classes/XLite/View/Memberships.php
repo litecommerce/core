@@ -61,22 +61,7 @@ class Memberships extends \XLite\View\Dialog
      */
     public function getMemberships()
     {
-        $list = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findAllMemberships();
-
-        // TODO - add linked profiles calculataion
-
-        $language = \XLite::getController()->getCurrentLanguage();
-
-        $result = array();
-        foreach ($list as $m) {
-            $result[$m->membership_id] = array(
-                'name'    => $m->getSoftTranslation($language)->name,
-                'orderby' => $m->orderby,
-                'active'  => $m->active,
-            );
-        }
-
-        return $result;
+        return \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findAllMemberships();
     }
 
     /**
@@ -103,7 +88,8 @@ class Memberships extends \XLite\View\Dialog
         $orderby = 0;
 
         foreach ($this->getMemberships() as $m) {
-            $orderby = max($orderby, $m['orderby'] + 1);
+
+            $orderby = max($orderby, $m->getOrderby()) + 1;
         }
 
         return $orderby;

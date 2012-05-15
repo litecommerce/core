@@ -71,8 +71,8 @@ class Login extends \XLite\Controller\Admin\Login implements \XLite\Base\IDecora
         $this->set('password', $this->demoPassword);
         $this->set(
             'additional_note', 
-            '<center>(login: ' . $this->demoLogin . ', password: ' . $this->demoPassword . ')</center>'
+            '<div style=\'width: 490px; text-align: center;\'>(login: ' . $this->demoLogin . ', password: ' . $this->demoPassword . ')</div>'
         );
-        $this->set('additional_header', \XLite\Module\CDev\Demo\View\AView::getAdditionalHeader());
+        $this->set('additional_header', \XLite\Module\CDev\Demo\View\Demo::getAdditionalHeader());
     }
 }

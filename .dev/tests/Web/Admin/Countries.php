@@ -36,15 +36,15 @@ class XLite_Web_Admin_Countries extends XLite_Web_Admin_AAdmin
      */
     const UPDATE_BUTTON = '//span[text()="Update"]/../../button[@type="submit" and @class="main-button"]';
     const DELETE_BUTTON = '//span[text()="Delete selected"]/../../button[@type="button"]';
-    const ADD_BUTTON    = '//span[text()="Add new"]/../../button[@type="submit"]';
+    //const ADD_BUTTON    = '//span[text()="Add new"]/../../button[@type="submit"]';
 
 
 
     /**
      * Add form inputs
      */
-    const ADD_CODE      = '//input[@type="text" and @name="code" and @value=""]';
-    const ADD_COUNTRY   = '//input[@type="text" and @name="country" and @value=""]';
+    //const ADD_CODE      = '//input[@type="text" and @name="code" and @value=""]';
+    //const ADD_COUNTRY   = '//input[@type="text" and @name="country" and @value=""]';
 
 
 
@@ -60,6 +60,7 @@ class XLite_Web_Admin_Countries extends XLite_Web_Admin_AAdmin
             'No ZW label!'
         );
 
+        /*
         $this->type(self::ADD_CODE, 'ZZ');
         $this->type(self::ADD_COUNTRY, 'Test country');
 
@@ -69,17 +70,18 @@ class XLite_Web_Admin_Countries extends XLite_Web_Admin_AAdmin
             $this->getCountryLabel('ZZ'),
             'No ZZ label!'
         );
+         */
 
-        $this->type('//input[@type="text" and @name="countries[ZZ][country]"]', 'Test country2');
+        $this->type('//input[@type="text" and @name="countries[ZW][country]"]', 'Test country2');
 
         $this->clickAndWait(self::UPDATE_BUTTON);
 
         $this->assertElementPresent(
-            '//input[@type="text" and @value="Test country2" and @name="countries[ZZ][country]"]',
-            'No update for ZZ label'
+            '//input[@type="text" and @value="Test country2" and @name="countries[ZW][country]"]',
+            'No update for ZW label'
         );
 
-        $this->check('//input[@type="checkbox" and @name="delete_countries[]" and @value="ZZ"]');
+        $this->check('//input[@type="checkbox" and @name="delete_countries[]" and @value="ZW"]');
 
         $this->clickAndWait(self::DELETE_BUTTON);
 

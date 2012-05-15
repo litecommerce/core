@@ -9,9 +9,10 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <select name="product_options[{option.getGroupId()}]">
   <option FOREACH="option.getActiveOptions(),opt" value="{opt.getOptionId()}" selected="{isOptionSelected(opt)}" >
-    {opt.getName():h}
+    {opt.getName()}
     <widget class="\XLite\Module\CDev\ProductOptions\View\ProductOptionModifier" option="{opt}" />
   </option>
 </select>

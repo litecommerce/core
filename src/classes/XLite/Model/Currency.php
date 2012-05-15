@@ -148,7 +148,7 @@ class Currency extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\Country", mappedBy="currencies", cascade={"all"})
+     * @OneToMany (targetEntity="XLite\Model\Country", mappedBy="currency", cascade={"all"})
      */
     protected $countries;
 
@@ -221,7 +221,7 @@ class Currency extends \XLite\Model\Base\I18n
      */
     public function formatValue($value)
     {
-        return $this->roundValue($value);
+        return \XLite\Logic\Math::getInstance()->formatValue($value, $this);
     }
 
     /**

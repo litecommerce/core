@@ -119,18 +119,6 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
             'weight' => 0x01,
         );
 
-        $data[] = array(
-            'zone' => 'Atlantida',
-            'address'  => array(
-                'country' => 'FR',
-                'state'   => 'NY',
-                'city'    => 'New York',
-                'zipcode' => '10134',
-                'address' => 'Some address',
-            ),
-            'weight' => 0,
-        );
-
         foreach ($data as $i => $dt) {
 
             $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findOneBy(array('zone_name' => $dt['zone']));
@@ -322,10 +310,6 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         $this->assertNotNull($zone, 'check zone');
 
         $this->assertTrue($zone->hasZoneElements(), 'zone #20 (New York zone) is empty');
-
-        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findOneBy(array('zone_name' => 'Atlantida'));
-        $this->assertNotNull($zone, 'check zone');
-        $this->assertFalse($zone->hasZoneElements(), 'zone #50 (Atlantida) is not empty');
 
         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(1);
         $this->assertNotNull($zone, 'check zone');

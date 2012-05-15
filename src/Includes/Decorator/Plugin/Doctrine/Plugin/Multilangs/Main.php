@@ -109,8 +109,8 @@ CODE;
     {
         \$translation = \$this->getTranslation();
 
-        if (!\$translation->isPersistent()) {
-             \$this->addTranslations(\$translation);
+        if (!\$this->hasTranslation(\$translation->getCode())) {
+            \$this->addTranslations(\$translation);
         }
 
         return \$translation->____SETTER____(\$value);

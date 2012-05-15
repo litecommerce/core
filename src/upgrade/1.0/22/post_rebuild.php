@@ -22,7 +22,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.20
+ * @since     1.0.22
  */
 
 return function()
@@ -34,29 +34,57 @@ return function()
         \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
     }
 
-    // Loading currencies and countries
-    $yamlFile = __DIR__ . LC_DS . 'countries.yaml';
+    // Loading currencies
+    $yamlFile = __DIR__ . LC_DS . 'currencies.yaml';
 
     if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
         $data = \Symfony\Component\Yaml\Yaml::parse($path);
 
         // Import new and update old currencies
         $repo = \XLite\Core\Database::getRepo('XLite\Model\Currency');
-        foreach ($data['currencies'] as $cell) {
-            $currency = $repo->find($cell['currency_id']);
+        foreach ($data['XLite\Model\Currency'] as $cell) {
+            $new = false;
+            $flush = false;
+            $currency = $repo->findOneBy(array('code' => $cell['code']));
+
+            $prev = null;
 
             if (!$currency) {
+                $new = true;
+                $prev = $repo->find($cell['currency_id']);
                 $currency = new \XLite\Model\Currency;
+
+            } elseif ($cell['currency_id'] != $currency->getCurrencyId()) {
+                $prev = $repo->find($cell['currency_id']);
+                \XLite\Core\Database::getEM()->remove($currency);
+                $currency = new \XLite\Model\Currency;
+                $new = true;
+                $flush = true;
+            }
+
+            if ($prev) {
+                \XLite\Core\Database::getEM()->remove($prev);
+                $flush = true;
+            }
+
+            if ($flush) {
+                \XLite\Core\Database::getEM()->flush();
+            }
+
+            if ($new) {
                 $currency->setCurrencyId($cell['currency_id']);
                 \XLite\Core\Database::getEM()->persist($currency);
             }
 
             $currency->map(
                 array(
-                    'code'   => $cell['code'],
-                    'symbol' => $cell['symbol'],
-                    'prefix' => isset($cell['prefix']) ? $cell['prefix'] : '',
-                    'suffix' => isset($cell['suffix']) ? $cell['suffix'] : '',
+                    'code'              => $cell['code'],
+                    'symbol'            => $cell['symbol'],
+                    'prefix'            => isset($cell['prefix']) ? $cell['prefix'] : '',
+                    'suffix'            => isset($cell['suffix']) ? $cell['suffix'] : '',
+                    'e'                 => isset($cell['e']) ? $cell['e'] : 0,
+                    'decimalDelimiter'  => isset($cell['decimalDelimiter']) ? $cell['decimalDelimiter'] : '.',
+                    'thousandDelimiter' => isset($cell['thousandDelimiter']) ? $cell['thousandDelimiter'] : '',
                 )
             );
 
@@ -67,46 +95,46 @@ return function()
         \XLite\Core\Database::getEM()->flush();
 
         // Remove obsolete currencies
-        foreach ($repo->findBy(array('prefix' => '', 'suffix' => '')) as $currency) {
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\Currency')->findBy(array('prefix' => '', 'suffix' => '')) as $currency) {
             \XLite\Core\Database::getEM()->remove($currency);
         }
         \XLite\Core\Database::getEM()->flush();
+    }
 
-        // Import new and update old countries
-        $repo = \XLite\Core\Database::getRepo('XLite\Model\Country');
-        foreach ($data['currencies'] as $cell) {
-            $country = $repo->findOneBy(array('code' => $cell['code']));
+    // Loading countries
+    $yamlFile = __DIR__ . LC_DS . 'countries.yaml';
 
-            if (!$country) {
-                $country = new \XLite\Model\Country;
-                $country->setCode($cell['code']);
-                \XLite\Core\Database::getEM()->persist($country);
-            }
+    if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
+        \XLite\Core\Database::getInstance()->loadFixturesFromYaml($yamlFile);
 
-            $country->map(
-                array(
-                    'code3'   => isset($cell['code3']) ? $cell['code3'] : '',
-                    'id'      => $cell['id'],
-                    'country' => $cell['country'],
-                )
-            );
-
-            if (isset($cell['currency']) && !empty($cell['currency']['currency_id'])) {
-                $currency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find($cell['currency']['currency_id']);
-                if ($currency) {
-                    $country->setCurrency($currency);
-                    $currency->addCountries($country);
-                }
-            }
-        }
-        \XLite\Core\Database::getEM()->flush();
-
-        // Remove obsolete currencies
-        $qb = $repo->createQueryBuilder('c')->andWhere('c.id IS NULL');
+        // Remove obsolete countries
+        $qb = \XLite\Core\Database::getRepo('XLite\Model\Country')->createQueryBuilder('c')->andWhere('c.id IS NULL');
         foreach ($qb->getResult() as $country) {
             \XLite\Core\Database::getEM()->remove($country);
         }
         \XLite\Core\Database::getEM()->flush();
     }
 
+    // Update admin roles
+    $permission = \XLite\Core\Database::getRepo('XLite\Model\Role\Permission')
+        ->findOneBy(array('code' => \XLite\Model\Role\Permission::ROOT_ACCESS));
+    $role = $permission->getRoles()->first();
+    if ($role) {
+        $admins = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+            ->findBy(array('access_level' => \XLite\Core\Auth::getInstance()->getAdminAccessLevel()));
+        foreach ($admins as $admin) {
+            if (!$admin->getRoles()->contains($role)) {
+                $role->addProfiles($admin);
+                $admin->addRoles($role);
+            }
+        }
+        \XLite\Core\Database::getEM()->flush();
+    }
+
+    // Remove unused config options
+    $yamlFile = __DIR__ . LC_DS . 'obsolete_config_options.yaml';
+
+    if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
+        \XLite\Core\Database::getInstance()->unloadFixturesFromYaml($yamlFile);
+    }
 };

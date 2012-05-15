@@ -44,7 +44,7 @@ namespace XLite\Model;
 class MembershipTranslation extends \XLite\Model\Base\Translation
 {
     /**
-     * Memebership name
+     * Membership name
      *
      * @var   string
      * @see   ____var_see____

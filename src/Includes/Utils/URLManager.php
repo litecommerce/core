@@ -59,10 +59,11 @@ abstract class URLManager extends \Includes\Utils\AUtils
     /**
      * Return full URL for the resource
      *
-     * @param string $url      URL part to add OPTIONAL
-     * @param bool   $isSecure Use HTTP or HTTPS OPTIONAL
-     * @param array  $params   URL parameters OPTIONAL
-     * @param string $output   URL output type OPTIONAL
+     * @param string  $url       URL part to add          OPTIONAL
+     * @param boolean $isSecure  Use HTTP or HTTPS        OPTIONAL
+     * @param array   $params    URL parameters           OPTIONAL
+     * @param string  $output    URL output type          OPTIONAL
+     * @param boolean $isSession Use session ID parameter OPTIONAL
      *
      * @return string
      * @access public
@@ -73,9 +74,12 @@ abstract class URLManager extends \Includes\Utils\AUtils
         $url = '',
         $isSecure = false,
         array $params = array(),
-        $output = self::URL_OUTPUT_FULL
+        $output = null,
+        $isSession = null
     ) {
         $hostDetails = \Includes\Utils\ConfigParser::getOptions('host_details');
+
+        $output = is_null($output) ? self::URL_OUTPUT_FULL : $output;
 
         $host = $hostDetails['http' . ($isSecure ? 's' : '') . '_host'];
         if ($host) {
@@ -86,7 +90,9 @@ abstract class URLManager extends \Includes\Utils\AUtils
                 $url = $hostDetails['web_dir_wo_slash'] . '/' . $url;
             }
 
-            if ($isSecure) {
+            $isSession = is_null($isSession) ? $isSecure : $isSession;
+
+            if ($isSession) {
                 $session = \XLite\Core\Session::getInstance();
                 $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
             }
@@ -130,10 +136,10 @@ abstract class URLManager extends \Includes\Utils\AUtils
     }
 
     /**
-     * Check if provided string is a valid host part of URL 
-     * 
+     * Check if provided string is a valid host part of URL
+     *
      * @param string $str Host string
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.7
@@ -143,7 +149,7 @@ abstract class URLManager extends \Includes\Utils\AUtils
         $urlData = parse_url('http://' . $str . '/path');
 
         $host = $urlData['host'] . (isset($urlData['port']) ? ':' . $urlData['port'] : '');
-        
+
         return ($host == $str);
     }
 }
