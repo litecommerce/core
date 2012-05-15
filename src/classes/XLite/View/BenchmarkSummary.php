@@ -33,7 +33,7 @@ namespace XLite\View;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="main", weight="300")
+ * @ListChild (list="main", weight="300", zone="admin")
  */
 class BenchmarkSummary extends \XLite\View\AView
 {
