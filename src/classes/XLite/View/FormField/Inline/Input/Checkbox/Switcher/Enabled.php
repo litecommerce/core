@@ -36,15 +36,6 @@ namespace XLite\View\FormField\Inline\Input\Checkbox\Switcher;
 class Enabled extends \XLite\View\FormField\Inline\Input\Checkbox\Switcher
 {
     /**
-     * Short name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.15
-     */
-    protected $shortName = 'enabled';
-
-    /**
      * Preprocess value forsave
      *
      * @param mixed $value Value

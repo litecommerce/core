@@ -110,9 +110,9 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
         $data = \XLite\Core\Request::getInstance()->data;
         if ($data && is_array($data)) {
+            $repository = \XLite\Core\Database::getRepo('XLite\Module\CDev\FileAttachments\Model\Product\Attachment');
             foreach ($data as $id => $row) {
-                $attachment = \XLite\Core\Database::getRepo('XLite\Module\CDev\FileAttachments\Model\Product\Attachment')
-                    ->find($id);
+                $attachment = $repository->find($id);
 
                 if ($attachment) {
                     $attachment->map($row);

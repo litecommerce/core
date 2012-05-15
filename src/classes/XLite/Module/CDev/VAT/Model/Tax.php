@@ -180,7 +180,7 @@ class Tax extends \XLite\Model\Base\I18n
     /**
      * Set VAT base zone 
      * 
-     * @param \XLite\Model\Zone $zone Zone
+     * @param \XLite\Model\Zone $zone Zone OPTIONAL
      *  
      * @return void
      * @see    ____func_see____

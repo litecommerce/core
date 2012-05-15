@@ -38,7 +38,7 @@ class Ecwid extends ADataSource
     /**
      * How long can make a request to Ecwid API (seconds).
      */
-    const RATE_LIMIT = 2.8;
+    const RATE_LIMIT = 0.36;
 
     /**
      * Temporary vaiable name 
@@ -153,10 +153,12 @@ class Ecwid extends ADataSource
      */
     public function callApi($apiMethod, $params = array())
     {
+        $time = microtime(true);
         $lastTime = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getVar(static::TMP_VAR_NAME);
 
-        if ($lastTime && $lastTime + static::RATE_LIMIT > time()) {
-            sleep(ceil(($lastTime + static::RATE_LIMIT) - time()));
+        if ($lastTime && $lastTime + static::RATE_LIMIT > $time) {
+            $delay = ($lastTime + static::RATE_LIMIT) - $time;
+            usleep(round($delay * 1000000));
         }
 
         $url = 'http://app.ecwid.com/api/v1/'
@@ -166,12 +168,12 @@ class Ecwid extends ADataSource
 
         $bouncer = new \XLite\Core\HTTP\Request($url);
 
-        $bouncer->requestTimeout = 5;
+        $bouncer->requestTimeout = 60;
         $response = $bouncer->sendRequest();
 
         $result = null;
 
-        \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->setVar(static::TMP_VAR_NAME, time());
+        \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->setVar(static::TMP_VAR_NAME, microtime(true));
 
         if (200 == $response->code) {
             $result = json_decode($response->body, true);

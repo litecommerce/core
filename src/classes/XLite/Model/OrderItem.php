@@ -504,6 +504,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
                 $available = false;
 
             } else {
+
+                // The product goes again, because it can be initialized specifically for the current order item.
+                $product = $this->getProduct();
                 $this->setPrice($product->getPrice());
                 $this->setName($product->getName());
                 $this->setSKU($product->getSKU());

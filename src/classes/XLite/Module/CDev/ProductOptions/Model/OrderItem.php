@@ -262,21 +262,16 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
     {
         $options = array();
 
-        $isValidOptions = true;
-
         if ($this->getProduct()->hasOptions()) {
-
             foreach ($this->getOptions() as $option) {
                 $options[] = $option->getOptionId();
             }
-
-            if (!empty($options)) {
-                $isValidOptions = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException')
-                    ->checkOptions($options);
-            }
         }
 
-        return parent::isValid() && $isValidOptions;
+        $repository = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException');
+
+        return parent::isValid()
+            && (!$options || $repository->checkOptions($options));
     }
 
     /**

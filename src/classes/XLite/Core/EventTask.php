@@ -74,7 +74,7 @@ class EventTask extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  1.0.19
      */
-    protected function getDriver()
+    public function getDriver()
     {
         if (!isset($this->driver)) {
             $driver = \XLite::GetInstance()->getOptions(array('other', 'event_driver')) ?: 'auto';

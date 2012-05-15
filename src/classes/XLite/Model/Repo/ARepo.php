@@ -1792,4 +1792,27 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         return array();
     }
+
+    /**
+     * Assign calculated field 
+     * 
+     * @param \XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder Query builder
+     * @param string                                  $name         Field name
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function assignCalculatedField(\XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder, $name)
+    {
+        $uname = ucfirst($name);
+        $method = 'defineCalculated' . $uname . 'DQL';
+        if (method_exists($this, $method) && !$queryBuilder->getFlag('calculated.' . $name)) {
+            $alias = $alias ?: $queryBuilder->getRootAlias();
+            $queryBuilder->addSelect($this->$method($queryBuilder, $alias) . ' calculated' . $uname);
+            $queryBuilder->setFlag('calculated.' . $name, true);
+        }
+
+        return $queryBuilder;
+    }
 }

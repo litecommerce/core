@@ -80,6 +80,18 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
     }
 
     /**
+     * Current driver is blocking
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function isBlocking()
+    {
+        return true;
+    }
+
+    /**
      * Fire event
      *
      * @param string $name      Event name

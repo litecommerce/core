@@ -1096,13 +1096,14 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Check if field is valid and (if needed) set an error message
      *
-     * @param array $data Current section data
+     * @param array  $data    Current section data
+     * @param string $section Current section name
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function validateFields(array $data)
+    protected function validateFields(array $data, $section)
     {
         foreach ($data[self::SECTION_PARAM_FIELDS] as $field) {
             list($flag, $message) = $field->validate();
@@ -1125,7 +1126,7 @@ abstract class AModel extends \XLite\View\Dialog
             $this->errorMessages = array();
 
             foreach ($this->getFormFields() as $section => $data) {
-                $this->validateFields($data);
+                $this->validateFields($data, $section);
             }
         }
 

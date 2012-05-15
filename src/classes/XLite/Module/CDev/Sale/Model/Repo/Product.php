@@ -69,6 +69,7 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      * @param array                      $value        Condition data
+     * @param boolean                    $countOnly    Count only flag
      *
      * @return void
      * @see    ____func_see____
@@ -97,8 +98,7 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
             );
         }
 
-        $queryBuilder
-            ->andWhere('p.participateSale = :participateSale')
+        $queryBuilder->andWhere('p.participateSale = :participateSale')
             ->andWhere($cnd)
             ->setParameter('participateSale', $value)
             ->setParameter('discountTypePercent', \XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PERCENT)
@@ -107,34 +107,27 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
     }
 
     /**
-     * Prepare certain search condition
+     * Define calculated price definition DQL
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param array                      $value        Condition data
-     * @param boolean                    $countOnly    "Count only" flag. Do not need to add "order by" clauses if only count is needed.
+     * @param \XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder Query builder
+     * @param string                                  $alias        Main alias
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.22
      */
-    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value, $countOnly)
+    protected function defineCalculatedPriceDQL(\XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder, $alias)
     {
-        if (!$countOnly) {
-            list($sort, $order) = $value;
+        $dql = parent::defineCalculatedPriceDQL($queryBuilder, $alias);
 
-            if ('p.price' === $sort && !\XLite::isAdminZone()) {
+        $queryBuilder->SetParameter('saleDiscountTypePercent', \XLite\Model\Product::SALE_DISCOUNT_TYPE_PERCENT);
 
-                $queryBuilder->addSelect(
-                    'if(p.participateSale != 1 , p.price, p.salePriceValueCalculated) salePriceValueCalculated'
-                );
-
-                $queryBuilder->addOrderBy('salePriceValueCalculated', $order);
-
-            } else {
-
-                parent::prepareCndOrderBy($queryBuilder, $value, $countOnly);
-            }
-        }
+        return 'IF(' . $alias . '.participateSale = 1,'
+            . ' IF(' . $alias . '.discountType = :saleDiscountTypePercent,'
+            . ' ' . $dql . ' * (1 - ' . $alias . '.salePriceValue / 100),'
+            . ' ' . $alias . '.salePriceValue'
+            . '),'
+            . ' ' . $dql . ')';
     }
 
     // }}}

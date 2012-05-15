@@ -90,7 +90,8 @@ class Sitemap extends \XLite\Controller\Customer\ACustomer
         print ($content);
 
         $this->silent = true;
-        die(0);
+
+        die (0);
     }
 
     /**

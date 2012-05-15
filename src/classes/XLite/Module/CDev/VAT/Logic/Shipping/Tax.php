@@ -41,14 +41,14 @@ class Tax extends \XLite\Logic\ALogic
     /**
      * Calculate rate cost
      * 
-     * @param \XLite\Model\Shipping\Rate $rate Rate
-     * @param float                      $price   Price
+     * @param \XLite\Model\Shipping\Rate $rate  Rate
+     * @param float                      $price Price
      *  
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function calculatRateCost(\XLite\Model\Shipping\Rate $rate, $price)
+    public function calculateRateCost(\XLite\Model\Shipping\Rate $rate, $price)
     {
         $zones = $this->getZonesList();
         $memebrship = $this->getMembership();
@@ -69,8 +69,8 @@ class Tax extends \XLite\Logic\ALogic
     /**
      * Calculate rate net cost
      * 
-     * @param \XLite\Model\Shipping\Rate $rate Rate
-     * @param float                      $price   Price
+     * @param \XLite\Model\Shipping\Rate $rate  Rate
+     * @param float                      $price Price
      *  
      * @return float
      * @see    ____func_see____

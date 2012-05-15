@@ -38,9 +38,9 @@ class Single extends \XLite\View\Form\Product\Modify\Single implements \XLite\Ba
     /**
      * Set validators pairs for products data
      *
-     * @param mixed $data Data
+     * @param mixed &$data Data
      *
-     * @return null
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
