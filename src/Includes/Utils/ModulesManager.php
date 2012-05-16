@@ -189,6 +189,43 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         return static::getAbsoluteDir($author, $name) . 'install.yaml';
     }
 
+    /**
+     * Check if file is related to a module
+     *
+     * @param string  $file          File name
+     * @param boolean $checkIfExists Flag OPTIONAL
+     * @param string  $module        Module name OPTIONAL
+     * @param array   $dirs          Available paths
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function isModuleFile($file, $checkIfExists = false, $module = '', array $dirs = array())
+    {
+        $result = false;
+
+        if (!empty($module)) {
+            $module = call_user_func_array(array('static', 'getRelativeDir'), explode('\\', $module));
+        }
+
+        if (empty($dirs)) {
+            $dirs = array(LC_DIR_MODULES, LC_DIR_CACHE_MODULES);
+        }
+
+        foreach ($dirs as $dir) {
+            $path = $dir . $module;
+
+            if (\Includes\Utils\FileManager::getRelativePath($file, $path)) {
+                $result = !$checkIfExists || \Includes\Utils\FileManager::isExists($file);
+
+                break;
+            }
+        }
+
+        return $result;
+    }
+
     // }}}
 
     // {{{ Methods to access installed module main class
@@ -407,6 +444,27 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
 
         $dependencies = array_diff_key($dependencies, static::$activeModules);
         array_walk_recursive($dependencies, array('static', 'disableModule'));
+
+        // http://bugtracker.litecommerce.com/view.php?id=41330
+        static::excludeMutualModules();
+    }
+
+    /**
+     * Disable so called "mutual exclusive" modules
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected static function excludeMutualModules()
+    {
+        $list = array();
+
+        foreach (static::$activeModules as $module => $data) {
+            $list = array_merge_recursive($list, static::callModuleMethod($module, 'getMutualModulesList'));
+        }
+
+        array_walk_recursive($list, array('static', 'disableModule'));
     }
 
     // }}}

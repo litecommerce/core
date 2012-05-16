@@ -94,4 +94,19 @@ abstract class Main extends \XLite\Module\AModule
     {
         return true;
     }
+
+    /**
+     * Return list of mutually exclusive modules
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function getMutualModulesList()
+    {
+        $list = parent::getMutualModulesList();
+        $list[] = 'SpurIT\SEConnector';
+
+        return $list;
+    }
 }
