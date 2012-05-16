@@ -67,19 +67,19 @@ class Modules extends \Includes\DataStructure\Graph
      */
     public function getDependencies()
     {
-        return call_user_func(array($this->getModuleClass(), 'getDependencies'));
+        return \Includes\Utils\ModulesManager::callModuleMethod($this->getActualName(), 'getDependencies');
     }
 
     /**
-     * Return name of the module main class
+     * Return list of mutually exclusive modules
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.24
      */
-    protected function getModuleClass()
+    public function getMutualModulesList()
     {
-        return \Includes\Utils\ModulesManager::getClassNameByModuleName($this->getActualName());
+        return \Includes\Utils\ModulesManager::callModuleMethod($this->getActualName(), 'getMutualModulesList');
     }
 
     // }}}

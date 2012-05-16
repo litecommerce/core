@@ -44,19 +44,14 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getFixtures()
+    public static function getFixtures($check = true)
     {
         $list = array();
 
         if (\Includes\Utils\FileManager::isFileReadable(static::getFixturesFilePath())) {
             foreach (parse_ini_file(static::getFixturesFilePath(), false) as $file) {
 
-                // :FIXME: is it needed?
-                if (!\Includes\Utils\FileManager::isFile($file)) {
-                    $file = LC_DIR_ROOT . $file;
-                }
-
-                if (\Includes\Utils\FileManager::isFileReadable($file)) {
+                if (!$check || \Includes\Utils\FileManager::isFileReadable($file)) {
                     $list[] = $file;
                 }
             }
@@ -92,8 +87,8 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      */
     public static function addFixtureToList($path)
     {
-        $list = static::getFixtures();
-        $list[] = LC_DIR_ROOT . (preg_match('/^(?:sql|classes)/Ss', $path) ? $path : substr($path, strlen(LC_DIR) + 1));
+        $list = static::getFixtures(false);
+        $list[] = (\Includes\Utils\ModulesManager::isModuleFile($path) ? LC_DIR_COMPILE : LC_DIR_ROOT) . $path; 
 
         static::saveFile($list);
     }
