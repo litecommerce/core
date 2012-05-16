@@ -94,7 +94,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Profile", cascade={"persist"})
+     * @OneToOne   (targetEntity="XLite\Model\Profile", cascade={"all"})
      * @JoinColumn (name="profile_id", referencedColumnName="profile_id")
      */
     protected $profile;

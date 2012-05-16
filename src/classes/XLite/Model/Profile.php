@@ -201,7 +201,7 @@ class Profile extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @OneToOne  (targetEntity="XLite\Model\Order")
+     * @OneToOne   (targetEntity="XLite\Model\Order")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
      */
     protected $order;
