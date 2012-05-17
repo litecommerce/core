@@ -27,7 +27,7 @@
 
 class XLite_Web_Module_CDev_Sale_Admin_ProductDetails extends XLite_Web_Admin_AAdmin
 {
-    function testNewProduct(){
+    public function testNewProduct(){
 
         $productName = 'Sale_product';
         $productPrice = 100;
@@ -41,26 +41,28 @@ class XLite_Web_Module_CDev_Sale_Admin_ProductDetails extends XLite_Web_Admin_AA
 
         $this->logIn();
         foreach($examples as $example){
-            #Click new product
+            //Click new product
             $this->openAndWait("admin.php?target=add_product");
 
-            #Product name/price
+            //Product name/price
             $this->type("css=input[name='postedData[name]']", $productName);
             $this->type("css=input[name='postedData[price]']", $productPrice);
-            #Check Sale
+            //Check Sale
             $this->click("css=#participate-sale");
-            #Sale fields
+            //Sale fields
             if (isset($example['sale_price'])){
-                $this->typeKeys("css=#sale-price-value-sale_price", $example['sale_price']);
+                $this->type("css=#sale-price-value-sale_price", $example['sale_price']);
             }
             else{
                 $this->click("css=#sale-price-percent-off");
-                $this->typeKeys("css=#sale-price-value-sale_percent", $example['percent']);
+                $this->type("css=#sale-price-value-sale_percent", $example['percent']);
             }
-            #Click save
+
+            //Click save
             $this->clickAndWait("css=.main-button");
             $this->assertElementContainsText('css=#status-messages',$example['message']);
-            #If product name in title
+
+            //If product name in title
             if ($example['expected_title']){
                 $this->assertElementContainsText("css=#page-title", $example['expected_title']);
                 #Check customer page
@@ -73,83 +75,105 @@ class XLite_Web_Module_CDev_Sale_Admin_ProductDetails extends XLite_Web_Admin_AA
 
     }
 
-    function testEditProduct(){
+    public function testEditProduct()
+    {
         $productName = 'Sale_product';
+
         $productPrice = 100;
+
         $examples = array(
             array('sale_price' => '-10', 'message' => 'Minimum limit is broken'),
             array('percent' => '10000', 'message' => 'Maximum limit is broken'),
             array('percent' => '-10', 'message' => 'Minimum limit is broken'),
             array('percent' => '0', 'message' => 'Minimum limit is broken'),
-            array('sale_price' => '0', 'message' => 'New product has been added successfully')
+            array('sale_price' => '0', 'message' => 'Product info has been updated successfully', 'check' => true)
         );
 
         $this->logIn();
-        foreach($examples as $example){
-            #Click edit product
-            $this->openAndWait("admin.php?target=product_list");
-            $this->select("css=.page-length", '100');
 
-            $this->waitForLocalCondition(
-                'jQuery("tbody.lines tr.line").length > 30',
-                30000,
-                'Wait 100 items per page'
-            );
+        foreach($examples as $example) {
 
+            //Click edit product
+            $this->openAndWait("admin.php?target=product_list&itemsPerPage=100");
             $this->clickAndWait("//a[text()='$productName']");
 
-            #Check Sale
-            $this->click("css=#participate-sale");
-            #Sale fields
+            //Check Sale
+            if (!$this->isChecked("css=#participate-sale")) {
+
+                $this->click("css=#participate-sale");
+            }
+            //Sale fields
             if (isset($example['sale_price'])){
-                $this->typeKeys("css=#sale-price-value-sale_price", $example['sale_price']);
-            }
-            else{
+
+                $this->type("css=#sale-price-value-sale_price", $example['sale_price']);
+
+            } else {
+
                 $this->check("css=#sale-price-percent-off");
-                $this->typeKeys("css=#sale-price-value-sale_percent", $example['percent']);
+                $this->type("css=#sale-price-value-sale_percent", $example['percent']);
             }
-            #Click save
+
+            //Click save
             $this->clickAndWait("css=.main-button");
             $this->assertElementContainsText('css=#status-messages',$example['message']);
-            #Check customer page
-            $this->checkCustomerPage($productName, $productPrice, $example);
+
+            //If product name in title
+            if (isset($example['check'])) {
+
+                $this->checkCustomerPage($productName, $productPrice, $example);
+            }
         }
     }
-    private function checkCustomerPage($name, $price, $example){
-        $this->openAndWait("admin.php?target=product_list");
-        $this->clickAndWait("//a[text()='$name']");
-        $url = $this->getLocation();
-        $parts = explode("=", $url);
-        $id = $parts[count($parts) - 1];
-        $this->openAndWait(DRUPAL_SITE_PATH."store/product//product_id-".$id);
 
-        if (isset($example['sale_price'])){
+    private function checkCustomerPage($name, $price, $example)
+    {
+        $this->openAndWait("admin.php?target=product_list&itemsPerPage=100");
+        $this->clickAndWait("//a[text()='$name']");
+
+        $url = $this->getLocation();
+
+        $parts = explode("=", $url);
+
+        $id = $parts[count($parts) - 1];
+
+        $this->openShortCustomerAndWait("store/product/0/product_id-" . $id);
+
+        if (isset($example['sale_price'])) {
+
             $salePrice = $example['sale_price'];
-            $percent = (($price - $salePrice) * 100) / $salePrice;
-            $youSave = $price - $salePrice;
-        }
-        else{
-            $percent = $example['percent'];
-            $youSave = ($price * $percent) / 100;
+            $percent   = (int)((($price - $salePrice) * 100) / $price);
+            $youSave   = $price - $salePrice;
+
+        } else {
+
+            $percent   = $example['percent'];
+            $youSave   = ($price * $percent) / 100;
             $salePrice = $price - $youSave;
         }
-        #should see:
-        if ($salePrice > $price){
-            #Old price = $price
-            #you save = price - sale price
-            $this->assertElementContainsText(".sale-label-product-details", "Old price: $price , you save $youSave");
-            #New price = sale price
-            $this->assertElementContainsText(".product-price", $salePrice);
-            #%off
-            $this->assertElementPresent(".sale-banner");
-            $this->assertElementContainsText(".percent", "$percent% off");
-        }
-        else{
-            #Price = $price
-            $this->assertElementContainsText(".product-price", $price);
-            #no banner
-            $this->assertElementNotPresent(".sale-banner");
-        }
 
+        $price   = sprintf('%01.2f', $price);
+        $youSave = sprintf('%01.2f', $youSave);
+
+        //should see:
+        if ($salePrice < $price){
+            //Old price = $price
+            //you save = price - sale price
+            $this->assertElementContainsText("css=.sale-label-product-details", "Old price: $$price , you save $$youSave");
+
+            //New price = sale price
+            $this->assertElementContainsText("css=.product-price", $salePrice);
+
+            //%off
+            $this->assertElementPresent("css=.sale-banner");
+            $this->assertElementContainsText("css=.percent", "$percent% off");
+
+        } else {
+
+            //Price = $price
+            $this->assertElementContainsText("css=.product-price", $price);
+
+            //no banner
+            $this->assertElementNotPresent("css=.sale-banner");
+        }
     }
 }

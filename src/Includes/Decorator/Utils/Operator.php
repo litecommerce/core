@@ -164,8 +164,14 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
                 // It's the (<module_name>) list
                 foreach ($dependencies as $module) {
 
-                    // Case 1 (with dependencies)
-                    $index[$module]->addChild($node);
+                    // Module from the dependencies may be disbaled,
+                    // or included into the mutual modules list
+                    // of some other module(s)
+                    if (isset($index[$module])) {
+
+                        // Case 1 (with dependencies)
+                        $index[$module]->addChild($node);
+                    }
                 }
 
             } else {

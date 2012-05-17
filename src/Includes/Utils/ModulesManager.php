@@ -189,6 +189,23 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         return static::getAbsoluteDir($author, $name) . 'install.yaml';
     }
 
+    /**
+     * Get module by file name
+     *
+     * @param string $file File name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function getFileModule($file)
+    {
+        $pattern = '/classes' . LC_DS_QUOTED . 'XLite' . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED 
+            . '(\w+)' . LC_DS_QUOTED . '(\w+)' . LC_DS_QUOTED . '/Si';
+
+        return preg_match($pattern, $file, $matches) ? ($matches[1] . '\\' . $matches[2]) : null;
+    }
+
     // }}}
 
     // {{{ Methods to access installed module main class
@@ -407,6 +424,27 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
 
         $dependencies = array_diff_key($dependencies, static::$activeModules);
         array_walk_recursive($dependencies, array('static', 'disableModule'));
+
+        // http://bugtracker.litecommerce.com/view.php?id=41330
+        static::excludeMutualModules();
+    }
+
+    /**
+     * Disable so called "mutual exclusive" modules
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected static function excludeMutualModules()
+    {
+        $list = array();
+
+        foreach (static::$activeModules as $module => $data) {
+            $list = array_merge_recursive($list, static::callModuleMethod($module, 'getMutualModulesList'));
+        }
+
+        array_walk_recursive($list, array('static', 'disableModule'));
     }
 
     // }}}

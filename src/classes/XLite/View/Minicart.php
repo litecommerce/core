@@ -45,7 +45,6 @@ class Minicart extends \XLite\View\SideBarBox
     /**
      * Allowed display modes
      */
-    const DISPLAY_MODE_VERTICAL   = 'vertical';
     const DISPLAY_MODE_HORIZONTAL = 'horizontal';
 
     /**
@@ -62,7 +61,6 @@ class Minicart extends \XLite\View\SideBarBox
      * @since 1.0.0
      */
     protected $displayModes = array(
-        self::DISPLAY_MODE_VERTICAL   => 'Vertical',
         self::DISPLAY_MODE_HORIZONTAL => 'Horizontal',
     );
 
@@ -121,7 +119,7 @@ class Minicart extends \XLite\View\SideBarBox
      */
     protected function getDir()
     {
-        return 'mini_cart' . LC_DS . $this->getParam(self::PARAM_DISPLAY_MODE);
+        return 'mini_cart/' . $this->getParam(self::PARAM_DISPLAY_MODE);
     }
 
     /**
@@ -189,7 +187,7 @@ class Minicart extends \XLite\View\SideBarBox
 
         $this->widgetParams += array(
             self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\Set(
-                'Display mode', self::DISPLAY_MODE_VERTICAL, true, $this->displayModes
+                'Display mode', self::DISPLAY_MODE_HORIZONTAL, true, $this->displayModes
             ),
         );
     }
