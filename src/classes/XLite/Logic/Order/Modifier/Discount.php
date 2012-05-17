@@ -66,4 +66,66 @@ abstract class Discount extends \XLite\Logic\Order\Modifier\ADiscount
     }
 
     // }}}
+
+    /**
+     * Distribute discount among the ordered products
+     * 
+     * @param float  $discountTotal Discount value
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function distributeDiscount($discountTotal)
+    {
+        // Get order items
+        $orderItems = $this->getOrderItems();
+
+        // Order currency
+        $currency = $this->getOrder()->getCurrency();
+
+        // Initialize service variables
+        $subtotal = 0;
+        $distributedSum = 0;
+        $lastItemKey = null;
+
+        // Calculate sum of subtotals of all items
+        foreach ($orderItems as $key => $item) {
+            $subtotal += $item->getSubtotal();
+        }
+
+        foreach ($orderItems as $key => $item) {
+
+            // Calculate item discount value
+            $discountValue = $currency->roundValue(($item->getSubtotal() / $subtotal) * $discountTotal);
+
+            // Set discounted subtotal for item
+            $item->setDiscountedSubtotal($item->getSubtotal() - $discountValue);
+
+            // Update distributed discount value
+            $distributedSum += $discountValue;
+
+            // Remember last used item
+            $lastItemKey = $key;
+        }
+
+        if ($distributedSum != $discountTotal) {
+            // Correct last item's discount
+            $orderItems[$lastItemKey]->setDiscountedSubtotal(
+                $orderItems[$lastItemKey]->getDiscountedSubtotal() + $discountTotal - $distributedSum
+            );
+        }
+    }
+
+    /**
+     * Returns order items
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getOrderItems()
+    {
+        return $this->getOrder()->getItems();
+    }
 }
