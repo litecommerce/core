@@ -92,6 +92,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
             
             $sum = 0;
             $rates = array();
+            $taxId = $tax->getId();
 
             foreach ($this->getTaxableItems() as $item) {
                 $product = $item->getProduct();
@@ -104,27 +105,27 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
                         );
                     }
 
-                    $rates[$rate->getId()]['base'] += $item->getSubtotal();
+                    $rates[$rate->getId()]['base'] += $item->getDiscountedSubtotal();
                 }
             }
 
             foreach ($rates as $rate) {
-                if (isset($taxes[$tax->getId()]) && $taxes[$tax->getId()]['rate']->getId() == $rate['rate']->getId()) {
-                    $rate['base'] += $this->order->getCurrency()->roundValue($taxes[$tax->getId()]['base']);
-                    unset($taxes[$tax->getId()]);
+                if (isset($taxes[$taxId]) && $taxes[$taxId]['rate']->getId() == $rate['rate']->getId()) {
+                    $rate['base'] += $this->order->getCurrency()->roundValue($taxes[$taxId]['base']);
+                    unset($taxes[$taxId]);
                 }
 
                 $sum += $rate['rate']->calculateValueIncludingTax($rate['base']);
             }
 
             // Add shipping cost VAT
-            if (isset($taxes[$tax->getId()])) {
-                $sum += $taxes[$tax->getId()]['rate']->calculateValueIncludingTax($taxes[$tax->getId()]['base']);
+            if (isset($taxes[$taxId])) {
+                $sum += $taxes[$taxId]['rate']->calculateValueIncludingTax($taxes[$taxId]['base']);
             }
 
             if ($sum) {
                 $this->addOrderSurcharge(
-                    $this->code . '.' . $tax->getId(),
+                    $this->code . '.' . $taxId,
                     $sum,
                     false
                 );

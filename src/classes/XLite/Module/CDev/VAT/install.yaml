@@ -29,4 +29,4 @@ XLite\Model\LanguageLabel:
   - { name: "Select the membership level and area. for which product prices, including VAT, are defined by the shop administrator", translations: [{ code: en, label: "Select the membership level and area, for which product prices, including VAT, are defined by the shop administrator. The included VAT will be subtracted and then recalculated for customers from other locations or having a different membership level.<br /><br />If your prices are defined excluding VAT, select the membership level and the area with a 0% VAT rate defined below (or with no applicable rate)." }] }
 
 XLite\Model\Order\Modifier:
-  - { class: '\XLite\Module\CDev\VAT\Logic\Order\Modifier\Tax', weight: 200 }
+  - { class: '\XLite\Module\CDev\VAT\Logic\Order\Modifier\Tax', weight: 1000 }

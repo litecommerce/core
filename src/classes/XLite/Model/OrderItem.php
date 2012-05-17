@@ -126,6 +126,16 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     protected $itemNetPrice;
 
+    /**
+     * Item discounted subtotal 
+     *
+     * @var   float
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="decimal", precision="14", scale="4")
+     */
+    protected $discountedSubtotal = 0;
 
     /**
      * Item quantity
@@ -542,6 +552,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         $subtotal = $this->calculateNetSubtotal();
 
         $this->setSubtotal($subtotal);
+        $this->setDiscountedSubtotal($subtotal);
         $this->setTotal($subtotal);
     }
 
