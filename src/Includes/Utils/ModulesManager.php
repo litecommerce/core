@@ -190,40 +190,20 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     }
 
     /**
-     * Check if file is related to a module
+     * Get module by file name
      *
-     * @param string  $file          File name
-     * @param boolean $checkIfExists Flag OPTIONAL
-     * @param string  $module        Module name OPTIONAL
-     * @param array   $dirs          Available paths
+     * @param string $file File name
      *
-     * @return boolean
+     * @return string
      * @see    ____func_see____
      * @since  1.0.24
      */
-    public static function isModuleFile($file, $checkIfExists = false, $module = '', array $dirs = array())
+    public static function getFileModule($file)
     {
-        $result = false;
+        $pattern = '/classes' . LC_DS_QUOTED . 'XLite' . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED 
+            . '(\w+)' . LC_DS_QUOTED . '(\w+)' . LC_DS_QUOTED . '/Si';
 
-        if (!empty($module)) {
-            $module = call_user_func_array(array('static', 'getRelativeDir'), explode('\\', $module));
-        }
-
-        if (empty($dirs)) {
-            $dirs = array(LC_DIR_MODULES, LC_DIR_CACHE_MODULES);
-        }
-
-        foreach ($dirs as $dir) {
-            $path = $dir . $module;
-
-            if (\Includes\Utils\FileManager::getRelativePath($file, $path)) {
-                $result = !$checkIfExists || \Includes\Utils\FileManager::isExists($file);
-
-                break;
-            }
-        }
-
-        return $result;
+        return preg_match($pattern, $file, $matches) ? ($matches[1] . '\\' . $matches[2]) : null;
     }
 
     // }}}
