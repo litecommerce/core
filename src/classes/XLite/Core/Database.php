@@ -384,9 +384,7 @@ class Database extends \XLite\Base\Singleton
     {
         list($keys, $data) = static::prepareArray($data, $prefix);
 
-        foreach ($data as $k => $v) {
-            $qb->setParameter($k, $v);
-        }
+        $qb->setParameters($data);
 
         return $keys;
     }

@@ -41,8 +41,11 @@ decorate(
     // previous method call
     arguments.callee.previousMethod.apply(this, arguments);
 
-    var participateSale = 0 != jQuery('input[name="postedData[salePriceValue]"]').val()
-      || 'sale_percent' != jQuery('input[name="postedData[discountType]"]:checked').val();
+    var value = jQuery('input[name="postedData[salePriceValue]"]').val();
+
+    var participateSale = 'sale_percent' == jQuery('input[name="postedData[discountType]"]:checked').val()
+      ? ((value > 0) && (value <= 100))
+      : (value >= 0);
 
     jQuery('input[name*="select"]', jQuery(selector)).each(function (index, elem) {
 
