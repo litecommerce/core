@@ -86,7 +86,9 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
             . "/div[@class='internal-popup items-list']"
             . "/ul"
             . "/li"
-            . "/div[@class='item-price' and contains(text(), 'x 1']"
+            . "/div[@class='item-price']"
+
+            // . "/div[@class='item-price' and contains(text(), '&times; 1')]" // FIXME: add the quantity checking here 
             . "/span[@class='surcharge']"
             . "/span[@class='surcharge-cell']"
             . "/span[@class='part-integer' and text()='" . intval($product->getPrice()) . "']"
@@ -149,7 +151,8 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
             . "/div[@class='internal-popup items-list']"
             . "/ul"
             . "/li"
-            . "/div[@class='item-price' and contains(text(), 'x 1']"
+            . "/div[@class='item-price']"
+            // . "/div[@class='item-price' and contains(text(), '&times; 1')]" // FIXME: add the quantity checking here
             . "/span[@class='surcharge']"
             . "/span[@class='surcharge-cell']"
             . "/span[@class='part-integer' and text()='" . intval($product->getPrice()) . "']"
@@ -219,7 +222,8 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
             . "/div[@class='internal-popup items-list']"
             . "/ul"
             . "/li"
-            . "/div[@class='item-price' and contains(text(), 'x 1']"
+            . "/div[@class='item-price']"
+            // . "/div[@class='item-price' and contains(text(), '&times; 1')]" // FIXME: add the quantity checking here
             . "/span[@class='surcharge']"
             . "/span[@class='surcharge-cell']"
             . "/span[@class='part-integer' and text()='" . intval($product->getPrice()) . "']"
