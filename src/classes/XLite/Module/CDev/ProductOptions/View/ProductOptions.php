@@ -198,6 +198,6 @@ class ProductOptions extends \XLite\View\AView
     protected function isVisible()
     {
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)->hasOptions();
+            && 0 < count($this->getOptions());
     }
 }
