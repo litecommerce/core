@@ -37,9 +37,9 @@ class Login extends \XLite\Controller\Customer\Login implements \XLite\Base\IDec
 {
     /**
      * Do not display any messages when logging in routine is called in Drupal interface
-     * 
+     *
      * @param mixed $result Result of log in procedure
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -47,4 +47,20 @@ class Login extends \XLite\Controller\Customer\Login implements \XLite\Base\IDec
     protected function addLoginFailedMessage($result)
     {
     }
+
+    /**
+     * Log out
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionLogoff()
+    {
+        // Remove the user profile which is loaded by user_load() Drupal function
+        unset($GLOBALS['user']);
+
+        parent::doActionLogoff();
+    }
+
 }
