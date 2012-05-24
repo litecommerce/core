@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\VAT\View;
  * @see   ____class_see____
  * @since 1.0.5
  *
- * LC_Dependencies ("CDev\ProductOptions")
+ * @LC_Dependencies ("CDev\ProductOptions")
  */
 class ProductOptionModifier extends \XLite\Module\CDev\ProductOptions\View\ProductOptionModifier implements \XLite\Base\IDecorator
 {

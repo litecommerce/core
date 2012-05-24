@@ -508,18 +508,20 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
             $filter = new \Includes\Utils\FileFilter($path, '/.*\.php$/Si');
 
             foreach ($filter->getIterator() as $path => $data) {
-                $class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
+
+                // DO NOT call "getInterfaces()" after the "getFullClassName()"
+                // DO NOT use reflection to get interfaces
+                $intefaces = \Includes\Decorator\Utils\Tokenizer::getInterfaces($path);
+                $class     = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
+
                 $reflectionClass = new \ReflectionClass($class);
 
-                if (
-                    $class
-                    && is_subclass_of($class, '\XLite\Model\AEntity')
-                    && !$reflectionClass->isAbstract()
-                ) {
+                if ($class && is_subclass_of($class, '\XLite\Model\AEntity') && !$reflectionClass->isAbstract()) {
                     $class = ltrim($class, '\\');
-                    $len = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
+                    $len   = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
 
-                    if (in_array('XLite\Base\IDecorator', class_implements($class))) {
+                    // DO NOT remove leading backslash in interface name
+                    if (in_array('\XLite\Base\IDecorator', $intefaces)) {
                         $parent   = \Includes\Decorator\Utils\Tokenizer::getParentClassName($path);
                         $metadata = \XLite\Core\Database::getEM()->getClassMetadata($parent);
                         $table    = substr($metadata->getTableName(), $len);
