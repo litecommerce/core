@@ -267,7 +267,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
                 break;
 
             case 'lite_version':
-                $return = \XLite\Core\Config::getInstance()->Version->version;
+                $return = \XLite::getInstance()->getVersion();
                 break;
 
             case 'libcurl':
