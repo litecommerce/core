@@ -520,4 +520,18 @@ OUT;
     }
 
     // }}}
+
+    /**
+     * Check - need use secure protocol or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function needSecure()
+    {
+        return parent::needSecure()
+            || (!\XLite\Core\Request::getInstance()->isHTTPS()) && \XLite\Core\Config::getInstance()->Security->admin_security;
+    }
+
 }
