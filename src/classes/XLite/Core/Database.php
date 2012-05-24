@@ -149,6 +149,17 @@ class Database extends \XLite\Base\Singleton
     );
 
     /**
+     * List of LC tags
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
+    protected $nonDoctrineTags = array(
+        'LC_Dependencies',
+    );
+
+    /**
      * Get entity manager
      *
      * @return \Doctrine\ORM\EntityManager
@@ -424,17 +435,14 @@ class Database extends \XLite\Base\Singleton
      */
     public function connect()
     {
-        $this->configuration = new \Doctrine\ORM\Configuration;
+        $this->configuration = new \Doctrine\ORM\Configuration();
 
         // Setup cache
         $this->setDoctrineCache();
 
         // Set metadata driver
         $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
-        $chain->addDriver(
-            $this->configuration->newDefaultAnnotationDriver(LC_DIR_CACHE_MODEL),
-            'XLite\Model'
-        );
+        $chain->addDriver($this->createAnnotationDriver(LC_DIR_CACHE_MODEL), 'XLite\Model');
 
         $iterator = new \RecursiveDirectoryIterator(
             LC_DIR_CACHE_CLASSES . 'XLite' . LC_DS . 'Module',
@@ -457,7 +465,7 @@ class Database extends \XLite\Base\Singleton
                         && \Includes\Utils\FileManager::isDir($dir2->getPathName() . LC_DS . 'Model')
                     ) {
                         $chain->addDriver(
-                            $this->configuration->newDefaultAnnotationDriver($dir2->getPathName() . LC_DS . 'Model'),
+                            $this->createAnnotationDriver($dir2->getPathName() . LC_DS . 'Model'),
                             'XLite\Module\\' . $dir->getBaseName() . '\\' . $dir2->getBaseName() . '\Model'
                         );
                     }
@@ -1649,5 +1657,25 @@ OUT;
     protected function setCharset()
     {
         static::$em->getConnection()->setCharset(static::DB_CONNECTION_CHARSET);
+    }
+
+    /**
+     * Create annotation driver 
+     * 
+     * @param string $path Path
+     *  
+     * @return \Doctrine\ORM\Mapping\Driver\AnnotationDriver
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function createAnnotationDriver($path)
+    {
+        $reader = new \Doctrine\Common\Annotations\AnnotationReader();
+        $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
+
+        // Register tags
+        array_walk($this->nonDoctrineTags, array($reader, 'addGlobalIgnoredName'));    
+
+        return new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, array($path));
     }
 }
