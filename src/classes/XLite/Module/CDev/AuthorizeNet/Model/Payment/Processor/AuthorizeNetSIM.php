@@ -425,6 +425,8 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
                 'x_ship_to_country'     => $shippingAddress->getCountry()->getCountry(),
             );
         }
+
+        return $fields;
     }
 
     /**
