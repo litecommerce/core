@@ -149,6 +149,17 @@ class Database extends \XLite\Base\Singleton
     );
 
     /**
+     * List of LC tags
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
+    protected $nonDoctrineTags = array(
+        'LC_Dependencies',
+    );
+
+    /**
      * Get entity manager
      *
      * @return \Doctrine\ORM\EntityManager
@@ -450,7 +461,7 @@ class Database extends \XLite\Base\Singleton
      */
     public function connect()
     {
-        $this->configuration = new \Doctrine\ORM\Configuration;
+        $this->configuration = new \Doctrine\ORM\Configuration();
 
         // Setup cache
         $this->setDoctrineCache();
@@ -1687,6 +1698,9 @@ OUT;
     {
         $reader = new \Doctrine\Common\Annotations\AnnotationReader();
         $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
+
+        // Register tags
+        array_walk($this->nonDoctrineTags, array($reader, 'addGlobalIgnoredName'));    
 
         return new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, array($path));
     }
