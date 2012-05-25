@@ -135,7 +135,7 @@ class MoneyModificator extends \XLite\Model\AEntity
         $class = $this->getClass();
         $validationMethod = $this->getValidator();
         $calculateMethod = $this->getModificator();
-        if (!$validationMethod || $class::$validationMethod($model, $property, $behaviors, $purpose)) {
+        if (class_exists($class) && (!$validationMethod || $class::$validationMethod($model, $property, $behaviors, $purpose))) {
             $value = $class::$calculateMethod($value, $model, $property, $behaviors, $purpose);
         }
 

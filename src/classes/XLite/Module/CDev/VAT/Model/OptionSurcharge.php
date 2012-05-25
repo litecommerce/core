@@ -50,6 +50,8 @@ class OptionSurcharge extends \XLite\Module\CDev\ProductOptions\Model\OptionSurc
 
         $product = $this->getOption()->getGroup()->getProduct();
 
+        $value = \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->deductTaxFromPrice($product, $value);
+
         if (\XLite\Core\Config::getInstance()->CDev->VAT->display_prices_including_vat) {
             $value += \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->getVATValue($product, $value);
         }
