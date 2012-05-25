@@ -1704,21 +1704,4 @@ OUT;
 
         return new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, array($path));
     }
-
-    /**
-     * Create annotation driver 
-     * 
-     * @param string $path Path
-     *  
-     * @return \Doctrine\ORM\Mapping\Driver\AnnotationDriver
-     * @see    ____func_see____
-     * @since  1.0.19
-     */
-    protected function createAnnotationDriver($path)
-    {
-        $reader = new \Doctrine\Common\Annotations\AnnotationReader();
-        $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
-
-        return new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, array($path));
-    }
 }
