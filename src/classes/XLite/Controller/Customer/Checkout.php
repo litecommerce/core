@@ -334,7 +334,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
         }
 
-        $this->updateCart();
+        // Commented out in connection with E:0041438
+        //$this->updateCart();
     }
 
     /**
@@ -441,7 +442,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
         \XLite\Core\Session::getInstance()->last_order_id = $this->getCart()->getOrderId();
         unset(\XLite\Core\Session::getInstance()->order_id);
 
-        $this->updateCart();
+        // Commented out in connection with E:0041438
+        //$this->updateCart();
 
         // anonymous checkout: logoff
         if ($isAnonymous && \XLite\Core\Auth::getInstance()->getProfile()) {

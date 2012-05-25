@@ -668,9 +668,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function getNetSubtotal()
     {
-        $this->calculateNetSubtotal();
-
-        return $this->getItemNetPrice() * $this->getAmount();
+        return $this->calculateNetSubtotal();
     }
 
     /**
