@@ -127,7 +127,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     protected $itemNetPrice;
 
     /**
-     * Item discounted subtotal 
+     * Item discounted subtotal
      *
      * @var   float
      * @see   ____var_see____
@@ -199,10 +199,10 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Set order 
-     * 
+     * Set order
+     *
      * @param \XLite\Model\Order $order Order OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.19
@@ -233,7 +233,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Get item clear price. This value is used as a base item price for calculation of netPrice
-     * 
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.22
@@ -245,7 +245,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Get item price
-     * 
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.22
@@ -256,8 +256,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get item net price 
-     * 
+     * Get item net price
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.22
@@ -269,7 +269,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Return false if order is fixed in the database (i.e. order is placed) and true if order is still used as "cart"
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.22
@@ -291,7 +291,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     public function resetSurcharges()
     {
         foreach ($this->getSurcharges() as $surcharge) {
-            
+
             \XLite\Core\Database::getEM()->remove($surcharge);
         }
 
@@ -336,9 +336,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function getProduct()
     {
-        return (in_array(get_called_class(), array('XLite\Model\OrderItem', 'XLite\Model\Proxy\XLiteModelOrderItemProxy')) && $this->getObject())
-            ? $this->getObject()
-            : $this->getDeletedProduct();
+        return $this->isDeleted() ? $this->getDeletedProduct() : $this->getObject();
     }
 
     /**
@@ -519,7 +517,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function isValid()
     {
-        return 0 < $this->getAmount();
+        return (!$this->isDeleted()) && (0 < $this->getAmount());
     }
 
     /**
@@ -625,6 +623,21 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
             'object_type' => self::PRODUCT_TYPE,
             'object_id'   => $this->getProduct()->getId(),
         );
+    }
+
+    /**
+     * 'IsDeleted' flag
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isDeleted()
+    {
+        return !(in_array(
+            get_called_class(),
+            array('XLite\Model\OrderItem', 'XLite\Model\Proxy\XLiteModelOrderItemProxy')
+        ) && (bool)$this->getObject());
     }
 
     /**
