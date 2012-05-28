@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\VAT\Model;
  * @see   ____class_see____
  * @since 1.0.5
  *
- * LC_Dependencies ("CDev\ProductOptions")
+ * @LC_Dependencies ("CDev\ProductOptions")
  */
 class OptionSurcharge extends \XLite\Module\CDev\ProductOptions\Model\OptionSurcharge implements \XLite\Base\IDecorator
 {
