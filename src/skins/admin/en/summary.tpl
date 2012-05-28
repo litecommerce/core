@@ -34,7 +34,7 @@ function setVisible(element_id)
 </tr>	
 
 <tr>
-  <td class="setting-name">{t(#LiteCommerce version#)}:</td>
+  <td class="setting-name">{t(#LiteCommerce core version#)}:</td>
   <td>{lite_version:h}{if:answeredVersion}&nbsp;&nbsp;({t(#verified version#)}: {if:answeredVersionError}<span class="star">{t(#unknown#)}</span>{else:}{answeredVersion}{end:}){end:}</td>
 </tr>
 

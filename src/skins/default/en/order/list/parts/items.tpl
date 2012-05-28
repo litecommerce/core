@@ -27,7 +27,7 @@
               location="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id,#profile_id#^profile.profile_id))}"
               />
           </li>
-          <li class="reorder">
+          <li IF="showReorder(order)" class="reorder">
             <widget
               class="\XLite\View\Button\Link"
               label="Re-order"

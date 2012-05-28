@@ -110,7 +110,7 @@ class XLite_Tests_Module_CDev_TwoCheckout_Model_Payment_Processor_TwoCheckout ex
   <form method="post" id="form" name="payment_form" action="https://www.2checkout.com/checkout/spurchase">
     <fieldset style="display: none;">
       <input type="hidden" name="sid" value="{$this->testOptions['account']}" />
-      <input type="hidden" name="total" value="19.99" />
+      <input type="hidden" name="total" value="{$amount}" />
       <input type="hidden" name="cart_order_id" value="{$tid}" />
       <input type="hidden" name="merchant_order_id" value="{$oid}" />
       <input type="hidden" name="pay_method" value="CC" />

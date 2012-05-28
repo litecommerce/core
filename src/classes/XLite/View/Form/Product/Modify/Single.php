@@ -69,10 +69,24 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
     protected function getValidator()
     {
         $validator = parent::getValidator();
+
         $data = $validator->addPair('postedData', new \XLite\Core\Validator\HashArray());
+
         $this->setDataValidators($data);
 
         return $validator;
+    }
+
+    /**
+     * Get product identificator from request
+     *
+     * @return integer Product identificator
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getProductId()
+    {
+        return \XLite\Core\Request::getInstance()->id;
     }
 
     /**
@@ -86,14 +100,12 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      */
     protected function setDataValidators(&$data)
     {
-        $data->addPair('sku', new \XLite\Core\Validator\String(), null, 'SKU');
+        $data->addPair('sku', new \XLite\Core\Validator\SKU($this->getProductId()), null, 'SKU');
         $data->addPair('name', new \XLite\Core\Validator\String(true), null, 'Product Name');
         $data->addPair('category_ids', new \XLite\Core\Validator\PlainArray(), \XLite\Core\Validator\Pair\APair::SOFT, 'Category')
             ->setValidator(new \XLite\Core\Validator\Integer());
-        $data->addPair('price', new \XLite\Core\Validator\Float(), null, 'Price')
-            ->setRange(0);
-        $data->addPair('weight', new \XLite\Core\Validator\Float(), null, 'Weight')
-            ->setRange(0);
+        $data->addPair('price', new \XLite\Core\Validator\Float(), null, 'Price')->setRange(0);
+        $data->addPair('weight', new \XLite\Core\Validator\Float(), null, 'Weight')->setRange(0);
         $data->addPair('free_shipping', new \XLite\Core\Validator\Enum\Boolean(), null, 'Shippable');
         $data->addPair('enabled', new \XLite\Core\Validator\Enum\Boolean(), null, 'Available for sale');
         $data->addPair('meta_title', new \XLite\Core\Validator\String(), null, 'Product page title');

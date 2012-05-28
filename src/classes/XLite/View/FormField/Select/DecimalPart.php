@@ -45,7 +45,6 @@ class DecimalPart extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
-            ''  => 'No fractional part',
             '.' => '.',
             ',' => ',',
         );

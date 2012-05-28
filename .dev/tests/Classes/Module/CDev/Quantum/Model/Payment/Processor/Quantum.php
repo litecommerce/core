@@ -97,13 +97,6 @@ class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XL
       <input type="hidden" name="BSTATE" value="Oklahoma" />
       <input type="hidden" name="BCOUNTRY" value="US" />
       <input type="hidden" name="BCUST_EMAIL" value="rnd_tester@cdev.ru" />
-      <input type="hidden" name="SFNAME" value="Admin" />
-      <input type="hidden" name="SLNAME" value="Admin" />
-      <input type="hidden" name="SADDR1" value="51 apt, 87 street" />
-      <input type="hidden" name="SCITY" value="Edmond" />
-      <input type="hidden" name="SSTATE" value="Oklahoma" />
-      <input type="hidden" name="SZIP1" value="73003" />
-      <input type="hidden" name="SCOUNTRY" value="US" />
       <input type="hidden" name="PHONE" value="0123456789" />
       <input type="hidden" name="trans_method" value="CC" />
       <input type="hidden" name="ResponseMethod" value="POST" />
@@ -112,6 +105,13 @@ class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XL
       <input type="hidden" name="invoice_num" value="$oid" />
       <input type="hidden" name="invoice_description" value="Order #$oid; transaction: $tid" />
       <input type="hidden" name="MAXMIND" value="1" />
+      <input type="hidden" name="SFNAME" value="Admin" />
+      <input type="hidden" name="SLNAME" value="Admin" />
+      <input type="hidden" name="SADDR1" value="51 apt, 87 street" />
+      <input type="hidden" name="SCITY" value="Edmond" />
+      <input type="hidden" name="SSTATE" value="Oklahoma" />
+      <input type="hidden" name="SZIP1" value="73003" />
+      <input type="hidden" name="SCOUNTRY" value="US" />
     </fieldset>
     <noscript>
       If you are not redirected within 3 seconds, please <input type="submit" value="press here" />.

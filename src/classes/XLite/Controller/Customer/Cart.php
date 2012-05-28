@@ -481,7 +481,10 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
         foreach ($order->getItems() as $item) {
 
-            $this->addItem($item->cloneEntity());
+            if (!$item->isDeleted()) {
+
+                $this->addItem($item->cloneEntity());
+            }
         }
 
         // Update cart
