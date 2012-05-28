@@ -58,16 +58,14 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
     {
         $postedData = \XLite\Core\Request::getInstance()->getData();
 
-        $newMethod = new \XLite\Model\Shipping\Method();
+        $data = array(
+            'position'  => intval($postedData['position']),
+            'processor' => 'offline',
+            'enabled' => 1,
+            'name' => $postedData['name'],
+        );
 
-        $newMethod->setPosition(intval($postedData['position']));
-        $newMethod->setProcessor('offline');
-
-        $code = $this->getCurrentLanguage();
-        $newMethod->getTranslation($code)->name = $postedData['name'];
-
-        \XLite\Core\Database::getEM()->persist($newMethod);
-        \XLite\Core\Database::getEM()->flush();
+        $newMethod = \XLite\Core\Database::getRepo('\XLite\Model\Shipping\Method')->insert($data);
 
         \XLite\Core\TopMessage::addInfo('Shipping method has been added');
     }
