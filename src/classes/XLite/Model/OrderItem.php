@@ -517,7 +517,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function isValid()
     {
-        return (!$this->isDeleted()) && (0 < $this->getAmount());
+        return (!$this->isDeleted()) && (0 < $this->getAmount()) && $this->getProduct()->isAvailable();
     }
 
     /**
