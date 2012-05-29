@@ -461,7 +461,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
             if (isset($this->drivers[0]) && $this->drivers[0]->getSessionId()) {
                 try {
-                    $location = preg_replace('/[\/\\&\?:]/Ss', '-', $this->getLocation());
+                    $location = preg_replace('/[^\w]/Ss', '-', $this->getLocation());
                     $location = preg_replace('/-+/Ss', '-', $location);
                     $html = $this->getHtmlSource();
                     $trace = array();
