@@ -136,9 +136,9 @@ abstract class AOrderList extends \XLite\View\Dialog
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function checkIsDeleted(\XLite\Model\OrderItem $item, $data)
+    public function checkIsAvailableToOrder(\XLite\Model\OrderItem $item, $data)
     {
-        return $data === $item->isDeleted();
+        return $data !== $item->isValid();
     }
 
     /**
@@ -206,6 +206,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      */
     protected function showReorder(\XLite\Model\Order $order)
     {
-        return (bool)\Includes\Utils\ArrayManager::findValue($order->getItems(), array($this, 'checkIsDeleted'), false);
+        return (bool)\Includes\Utils\ArrayManager::findValue($order->getItems(), array($this, 'checkIsAvailableToOrder'), false);
     }
 }
