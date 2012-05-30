@@ -69,6 +69,18 @@ class Payment extends \XLite\View\Checkout\Step\AStep
     }
 
     /**
+     * Check - step is enabled (true) or skipped (false)
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isEnabled()
+    {
+        return parent::isEnabled() && (!$this->getCart()->isPayed());
+    }
+
+    /**
      * Check if step is completed
      *
      * @return boolean
@@ -164,10 +176,10 @@ class Payment extends \XLite\View\Checkout\Step\AStep
     }
 
     /**
-     * Prepare payment method icon 
-     * 
+     * Prepare payment method icon
+     *
      * @param string $icon Icon local path
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0

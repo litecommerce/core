@@ -145,9 +145,9 @@ class Steps extends \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isDisabledStep(\XLite\View\Checkout\Step\AStep $step)
+    public function isEnabledStep(\XLite\View\Checkout\Step\AStep $step)
     {
-        return $step->isDisabled();
+        return $step->isEnabled();
     }
 
     /**

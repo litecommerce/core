@@ -77,7 +77,7 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      */
     public function isCompleted()
     {
-        return $this->isDisabled()
+        return !$this->isEnabled()
             || (
                 $this->getCart()->getProfile()
                 && $this->getCart()->getProfile()->getShippingAddress()
@@ -155,15 +155,15 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
     }
 
     /**
-     * Check - step is disabled or not
+     * Check - step is enabled (true) or skipped (false)
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isDisabled()
+    public function isEnabled()
     {
-        return parent::isDisabled() || !$this->isShippingEnabled();
+        return parent::isEnabled() && $this->isShippingEnabled();
     }
 
     /**
