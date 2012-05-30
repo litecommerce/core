@@ -403,7 +403,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getProductsCount()
     {
-        return count($this->getProducts());
+        return $this->getProducts(null, true);
     }
 
     /**
