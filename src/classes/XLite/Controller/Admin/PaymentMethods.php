@@ -62,29 +62,28 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
             // TODO - add top message
 
         } else {
-            $code = $this->getCurrentLanguage();
-            $flag = false;
+
+            $methods = array();
 
             foreach ($data as $id => $row) {
                 $m = \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->find($id);
 
                 if ($m) {
-                    $m->getTranslation($code)->setName($row['name']);
-                    $m->getTranslation($code)->setDescription($row['description']);
+                    $m->setName($row['name']);
+                    $m->setDescription($row['description']);
                     $m->setOrderby(intval($row['orderby']));
                     $m->setEnabled(isset($row['enabled']) && '1' == $row['enabled']);
 
-                    \XLite\Core\Database::getEM()->persist($m);
-
-                    $flag = true;
+                    $methods[] = $m;
 
                 } else {
                     // TODO - add top message
                 }
             }
 
-            if ($flag) {
-                \XLite\Core\Database::getEM()->flush();
+            if (!empty($methods)) {
+                \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->updateInBatch($methods);
+                \XLite\Core\TopMessage::addInfo('Payment methods have been updated');
             }
         }
     }
