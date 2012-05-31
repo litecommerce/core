@@ -108,7 +108,10 @@ class Cart extends \XLite\Model\Order
 
             \XLite\Core\Database::getEM()->flush();
 
-            if (time() - static::RENEW_PERIOD > $cart->getLastRenewDate()) {
+            if (
+                \XLite\Model\Order::STATUS_TEMPORARY == $cart->getStatus()
+                || ((time() - static::RENEW_PERIOD) > $cart->getLastRenewDate())
+            )  {
                 $cart->renew();
             }
 
