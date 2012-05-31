@@ -138,7 +138,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      */
     public function checkIsAvailableToOrder(\XLite\Model\OrderItem $item, $data)
     {
-        return $data !== $item->isValid();
+        return $data !== $item->isValidToClone();
     }
 
     /**

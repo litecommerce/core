@@ -481,7 +481,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
         foreach ($order->getItems() as $item) {
 
-            if ($item->isValid()) {
+            if ($item->isValidToClone()) {
 
                 $this->addItem($item->cloneEntity());
             }
