@@ -378,8 +378,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $result = false;
 
         if ($newItem->isValid()) {
-
             $this->addItemError = null;
+            $newItem->setOrder($this);
 
             $item = $this->getItemByItem($newItem);
 
@@ -387,7 +387,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
                 $item->setAmount($item->getAmount() + $newItem->getAmount());
 
             } else {
-                $this->addNewItem($newItem);
+                $this->addItems($newItem);
             }
 
             $result = true;
@@ -1053,21 +1053,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         }
 
         return $result;
-    }
-
-    /**
-     * Create new cart item
-     *
-     * @param \XLite\Model\OrderItem $item New item
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addNewItem(\XLite\Model\OrderItem $item)
-    {
-        $item->setOrder($this);
-        $this->addItems($item);
     }
 
     // {{{ Payment method and transactions
