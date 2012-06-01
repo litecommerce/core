@@ -166,7 +166,7 @@ class Controller extends \XLite\View\AView
             $classes[] = 'two-sidebars';
 
         } elseif ($first || $second) {
-            $classes[] = 'sidebar';
+            $classes[] = 'one-sidebar';
 
         } else {
             $classes[] = 'no-sidebars';
