@@ -475,8 +475,8 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Get front URL 
-     * 
+     * Get front URL
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15
@@ -579,8 +579,8 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Get arrival date 
-     * 
+     * Get arrival date
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
@@ -601,10 +601,10 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Set arrival date 
-     * 
+     * Set arrival date
+     *
      * @param integer $date Arrival date
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -617,8 +617,8 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Prepare creation date 
-     * 
+     * Prepare creation date
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -651,6 +651,52 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     {
         $this->setUpdateDate(time());
     }
+
+    /**
+     * Assert the SKU before Persist
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     *
+     * @PrePersist
+     */
+    public function assertPersistSKU()
+    {
+        $productSKU = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBySku($this->getSku());
+
+        if ($productSKU && $productSKU->getId() !== $this->getId()) {
+
+            throw new \InvalidArgumentException(
+                "Field 'SKU' must be unique"
+            );
+        }
+    }
+
+    /**
+     * Assert the SKU before update
+     *
+     * @param  \Doctrine\ORM\Event\PreUpdateEventArgs $eventArgs
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     *
+     * @PreUpdate
+     */
+    public function assertUpdateSKU(\Doctrine\ORM\Event\PreUpdateEventArgs $eventArgs)
+    {
+        if ($eventArgs->hasChangedField('sku')) {
+
+            $productSKU = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBySku($eventArgs->getNewValue());
+
+            if ($productSKU && $productSKU->getId() !== $this->getId()) {
+
+                $eventArgs->setNewValue($eventArgs->getOldValue());
+            }
+        }
+    }
+
 
     /**
      * Return certain Product <--> Category association

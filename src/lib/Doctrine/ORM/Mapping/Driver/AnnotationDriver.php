@@ -400,7 +400,10 @@ class AnnotationDriver implements Driver
         if (isset($classAnnotations['Doctrine\ORM\Mapping\HasLifecycleCallbacks'])) {
             foreach ($class->getMethods() as $method) {
                 // filter for the declaring class only, callbacks from parents will already be registered.
-                if ($method->isPublic() && $method->getDeclaringClass()->getName() == $class->name) {
+                if (
+                    $method->isPublic()
+                    && ($method->getDeclaringClass()->getName() == $class->name || $method->getDeclaringClass()->getName(). 'Abstract' == $class->name)
+                ) {
                     $annotations = $this->_reader->getMethodAnnotations($method);
 
                     // Compatibility with Doctrine Common 3.x
@@ -499,15 +502,15 @@ class AnnotationDriver implements Driver
                     new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS),
                     \RecursiveIteratorIterator::LEAVES_ONLY
                 ),
-                '/^.+\\' . $this->_fileExtension . '$/i', 
+                '/^.+\\' . $this->_fileExtension . '$/i',
                 \RecursiveRegexIterator::GET_MATCH
             );
-            
+
             foreach ($iterator as $file) {
                 $sourceFile = realpath($file[0]);
-                
+
                 require_once $sourceFile;
-                
+
                 $includedFiles[] = $sourceFile;
             }
         }
