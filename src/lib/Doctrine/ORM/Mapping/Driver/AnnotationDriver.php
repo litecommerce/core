@@ -400,9 +400,11 @@ class AnnotationDriver implements Driver
         if (isset($classAnnotations['Doctrine\ORM\Mapping\HasLifecycleCallbacks'])) {
             foreach ($class->getMethods() as $method) {
                 // filter for the declaring class only, callbacks from parents will already be registered.
+
+                // TODO: refactor to get lifecycle callbacks from *Abstract class
                 if (
                     $method->isPublic()
-                    && ($method->getDeclaringClass()->getName() == $class->name || $method->getDeclaringClass()->getName(). 'Abstract' == $class->name)
+                    && ($method->getDeclaringClass()->getName() == $class->name || $method->getDeclaringClass()->getName() == $class->name . 'Abstract')
                 ) {
                     $annotations = $this->_reader->getMethodAnnotations($method);
 

@@ -676,23 +676,25 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Assert the SKU before update
      *
-     * @param  \Doctrine\ORM\Event\PreUpdateEventArgs $eventArgs
-     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      *
      * @PreUpdate
      */
-    public function assertUpdateSKU(\Doctrine\ORM\Event\PreUpdateEventArgs $eventArgs)
+    public function assertUpdateSKU()
     {
-        if ($eventArgs->hasChangedField('sku')) {
+        $changeSet = \XLite\Core\Database::getEM()->getUnitOfWork()->getEntityChangeSet($this);
 
-            $productSKU = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBySku($eventArgs->getNewValue());
+        if (!empty($changeSet['sku'])) {
+
+            list($new, $old) = $changeSet['sku'];
+
+            $productSKU = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBySku($this->getSku());
 
             if ($productSKU && $productSKU->getId() !== $this->getId()) {
 
-                $eventArgs->setNewValue($eventArgs->getOldValue());
+                $this->setSku($old);
             }
         }
     }
