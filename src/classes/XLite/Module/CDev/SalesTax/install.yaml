@@ -9,4 +9,4 @@
 # @since     1.0.0
 
 XLite\Model\Order\Modifier:
-  - { class: '\XLite\Module\CDev\SalesTax\Logic\Order\Modifier\Tax', weight: 300 }
+  - { class: '\XLite\Module\CDev\SalesTax\Logic\Order\Modifier\Tax', weight: 1100 }

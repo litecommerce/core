@@ -18,7 +18,7 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -104,12 +104,19 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="decimal", precision="14", scale="4")
+     * @Column (
+     *      type="money",
+     *      options={
+     *          @XLite\Core\Doctrine\Annotation\Behavior (list={"taxable"}),
+     *          @XLite\Core\Doctrine\Annotation\Purpose (name="net", source="clear"),
+     *          @XLite\Core\Doctrine\Annotation\Purpose (name="display", source="net")
+     *      }
+     *  )
      */
     protected $price;
 
     /**
-     * Net price
+     * Item net price
      *
      * @var   float
      * @see   ____var_see____
@@ -117,7 +124,18 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
-    protected $netPrice;
+    protected $itemNetPrice;
+
+    /**
+     * Item discounted subtotal
+     *
+     * @var   float
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="decimal", precision="14", scale="4")
+     */
+    protected $discountedSubtotal = 0;
 
     /**
      * Item quantity
@@ -181,10 +199,10 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Set order 
-     * 
+     * Set order
+     *
      * @param \XLite\Model\Order $order Order OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.19
@@ -214,6 +232,56 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Get item clear price. This value is used as a base item price for calculation of netPrice
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function getClearPrice()
+    {
+        return $this->getProduct()->getClearPrice();
+    }
+
+    /**
+     * Get item price
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function getItemPrice()
+    {
+        return $this->isOrderOpen() ? $this->getClearPrice() : $this->getPrice();
+    }
+
+    /**
+     * Get item net price
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function getItemNetPrice()
+    {
+        return $this->isOrderOpen() ? $this->getNetPrice() : $this->itemNetPrice;
+    }
+
+    /**
+     * Return false if order is fixed in the database (i.e. order is placed) and true if order is still used as "cart"
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function isOrderOpen()
+    {
+        $order = $this->getOrder();
+
+        return method_exists($order, 'hasCartStatus') && $order->hasCartStatus();
+    }
+
+    /**
      * Reset surcharges list
      *
      * @return void
@@ -223,7 +291,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     public function resetSurcharges()
     {
         foreach ($this->getSurcharges() as $surcharge) {
-            
+
             \XLite\Core\Database::getEM()->remove($surcharge);
         }
 
@@ -268,9 +336,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function getProduct()
     {
-        return (in_array(get_called_class(), array('XLite\Model\OrderItem', 'XLite\Model\Proxy\XLiteModelOrderItemProxy')) && $this->getObject())
-            ? $this->getObject()
-            : $this->getDeletedProduct();
+        return $this->isDeleted() ? $this->getDeletedProduct() : $this->getObject();
     }
 
     /**
@@ -451,7 +517,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function isValid()
     {
-        return 0 < $this->getAmount();
+        return (!$this->isDeleted()) && (0 < $this->getAmount()) && $this->getProduct()->isAvailable();
     }
 
     /**
@@ -467,8 +533,8 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     {
         $this->price = $price;
 
-        if (!isset($this->netPrice)) {
-            $this->setNetPrice($price);
+        if (!isset($this->itemNetPrice)) {
+            $this->setItemNetPrice($price);
         }
     }
 
@@ -484,6 +550,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         $subtotal = $this->calculateNetSubtotal();
 
         $this->setSubtotal($subtotal);
+        $this->setDiscountedSubtotal($subtotal);
         $this->setTotal($subtotal);
     }
 
@@ -504,10 +571,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
                 $available = false;
 
             } else {
-
-                // The product goes again, because it can be initialized specifically for the current order item.
-                $product = $this->getProduct();
-                $this->setPrice($product->getPrice());
+                $this->setPrice($product->getDisplayPrice());
                 $this->setName($product->getName());
                 $this->setSKU($product->getSKU());
             }
@@ -562,6 +626,21 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * 'IsDeleted' flag
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isDeleted()
+    {
+        return !(in_array(
+            get_called_class(),
+            array('XLite\Model\OrderItem', 'XLite\Model\Proxy\XLiteModelOrderItemProxy')
+        ) && (bool)$this->getObject());
+    }
+
+    /**
      * Calculate item total
      *
      * @return float
@@ -588,9 +667,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function calculateNetSubtotal()
     {
-        $this->setNetPrice($this->defineNetPrice());
+        $this->setItemNetPrice($this->defineNetPrice());
 
-        return $this->getOrder()->getCurrency()->roundValue($this->getNetPrice()) * $this->getAmount();
+        return $this->getOrder()->getCurrency()->roundValue($this->getItemNetPrice()) * $this->getAmount();
     }
 
     /**
@@ -602,9 +681,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function getNetSubtotal()
     {
-        $this->calculateNetSubtotal();
-
-        return $this->getNetPrice() * $this->getAmount();
+        return $this->calculateNetSubtotal();
     }
 
     /**
@@ -616,7 +693,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     protected function defineNetPrice()
     {
-        return $this->getPrice();
+        return $this->getProduct()->getNetPrice();
     }
 
     /**
@@ -632,7 +709,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
 
             $this->dumpProduct = new \XLite\Model\Product();
 
-            $this->dumpProduct->setPrice($this->getPrice());
+            $this->dumpProduct->setPrice($this->getItemPrice());
             $this->dumpProduct->setName($this->getName());
             $this->dumpProduct->setSku($this->getSku());
         }
@@ -689,6 +766,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     protected function resetItemState()
     {
         $this->price = 0;
+        $this->itemNetPrice = 0;
         $this->name = '';
         $this->sku = '';
     }

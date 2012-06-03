@@ -18,7 +18,7 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -28,21 +28,13 @@
 namespace XLite\Module\CDev\VAT\Logic\Product;
 
 /**
- * Tax business logic
+ * Product tax business logic
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Tax extends \XLite\Logic\ALogic
+class Tax extends \XLite\Module\CDev\VAT\Logic\ATax
 {
-    /**
-     * Taxes (cache)
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.13
-     */
-    protected $taxes;
 
     // {{{ Product search
 
@@ -56,11 +48,8 @@ class Tax extends \XLite\Logic\ALogic
      * @see    ____func_see____
      * @since  1.0.8
      */
-    public function getSearchPriceConbdition($priceField, $classesAlias)
+    public function getSearchPriceCondition($priceField, $classesAlias)
     {
-        $zones = $this->getZonesList();
-        $memebrship = $this->getMembership();
-
         $cnd = $priceField;
 
         foreach ($this->getTaxes() as $tax) {
@@ -80,30 +69,57 @@ class Tax extends \XLite\Logic\ALogic
     // {{{ Calculation
 
     /**
-     * Calculate product price
+     * Calculate product-based included taxes
      * 
      * @param \XLite\Model\Product $product Product
+     * @param float                $price   Price OPTIONAL
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function calculateProductTaxes(\XLite\Model\Product $product, $price = null)
+    {
+        $zones = $this->getZonesList();
+        $membership = $this->getMembership();
+
+        $taxes = array();
+
+        foreach ($this->getTaxes() as $tax) {
+
+            $rate = $tax->getFilteredRate($zones, $membership, $product->getClasses());
+
+            if ($rate) {
+                $taxes[$tax->getName()] = $rate->calculateProductPriceIncludingTax($product, $price);
+            }
+        }
+
+        return $taxes;
+    }
+
+    /**
+     * Calculate VAT value for specified product and price
+     * 
+     * @param \XLite\Model\Product $product Product model object
      * @param float                $price   Price
      *  
      * @return float
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.21
      */
-    public function calculateProductPrice(\XLite\Model\Product $product, $price)
+    public function getVATValue(\XLite\Model\Product $product, $price)
     {
-        $zones = $this->getZonesList();
-        $memebrship = $this->getMembership();
+        $taxes = $this->calculateProductTaxes($product, $price);
 
-        foreach ($this->getTaxes() as $tax) {
-            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
-            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
+        $taxTotal = 0;
 
-            if ($included) {
-                $price -= $included->calculateProductPriceExcludingTax($product, $price);
+        if (!empty($taxes)) {
+            foreach ($taxes as $tax) {
+                $taxTotal += $tax;
             }
         }
 
-        return $price;
+        return $taxTotal;
     }
 
     /**
@@ -116,11 +132,8 @@ class Tax extends \XLite\Logic\ALogic
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function calculateProductNetPrice(\XLite\Model\Product $product, $price)
+    public function deductTaxFromPrice(\XLite\Model\Product $product, $price)
     {
-        $zones = $this->getZonesList();
-        $memebrship = $this->getMembership();
-
         foreach ($this->getTaxes() as $tax) {
             $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
             $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
@@ -131,138 +144,6 @@ class Tax extends \XLite\Logic\ALogic
         }
 
         return $price;
-    }
-
-    /**
-     * Calculate product-based included taxes
-     * 
-     * @param \XLite\Model\Product $product Product
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function calculateProduct(\XLite\Model\Product $product)
-    {
-        $zones = $this->getZonesList();
-        $memebrship = $this->getMembership();
-
-        $taxes = array();
-        $price = $product->getTaxableBasis();
-        foreach ($this->getTaxes() as $tax) {
-            $includedZones = $tax->getVATZone() ? array($tax->getVATZone()->getZoneId()) : array();
-            $included = $tax->getFilteredRate($includedZones, $tax->getVATMembership(), $product->getClasses());
-            $rate = $tax->getFilteredRate($zones, $memebrship, $product->getClasses());
-
-            if ($included) {
-                $price -= $included->calculateProductPriceExcludingTax($product, $price);
-            }
-            if ($rate) {
-                $taxes[$tax->getName()] = $rate->calculateProductPriceIncludingTax($product, $price);
-            }
-        }
-
-        return $taxes;
-    }
-
-    /**
-     * Get taxes 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getTaxes()
-    {
-        if (!isset($this->taxes)) {
-            $this->taxes = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->findActive();
-        }
-
-        return $this->taxes;
-    }
-
-    /**
-     * Get zones list 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getZonesList()
-    {
-        $address = $this->getAddress();
-
-        $zones = $address ? \XLite\Core\Database::getRepo('XLite\Model\Zone')->findApplicableZones($address) : array();
-
-        foreach ($zones as $i => $zone) {
-            $zones[$i] = $zone->getZoneId();
-        }
-
-        return $zones;
-    }
-
-    /**
-     * Get membership 
-     * 
-     * @return \XLite\Model\Membership
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getMembership()
-    {
-        return $this->getProfile()->getMembership();
-    }
-
-    /**
-     * Get profile 
-     * 
-     * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getProfile()
-    {
-        return \XLite\Core\Auth::getInstance()->getProfile() ?: $this->getDefaultProfile();
-    }
-
-    /**
-     * Get default profile if user is not authorized
-     * 
-     * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultProfile()
-    {
-        return new \XLite\Model\Profile;
-    }
-
-    /**
-     * Get address for zone calculator
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getAddress()
-    {
-        $address = null;
-
-        $addressObj = $this->getProfile()->getBillingAddress();
-
-        if ($addressObj) {
-
-            // Profile is exists
-            $address = array(
-                'address' => $addressObj->getStreet(),
-                'city'    => $addressObj->getCity(),
-                'state'   => $addressObj->getState()->getStateId(),
-                'zipcode' => $addressObj->getZipcode(),
-                'country' => $addressObj->getCountry() ? $addressObj->getCountry()->getCode() : '',
-            );
-        }
-
-        return $address;
     }
 
     // }}}

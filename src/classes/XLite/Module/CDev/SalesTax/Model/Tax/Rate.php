@@ -110,7 +110,7 @@ class Rate extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Zone", cascade={"all"})
+     * @ManyToOne  (targetEntity="XLite\Model\Zone")
      * @JoinColumn (name="zone_id", referencedColumnName="zone_id")
      */
     protected $zone;
@@ -122,7 +122,7 @@ class Rate extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\ProductClass", cascade={"all"})
+     * @ManyToOne  (targetEntity="XLite\Model\ProductClass")
      * @JoinColumn (name="product_class_id", referencedColumnName="id")
      */
     protected $productClass;
@@ -134,7 +134,7 @@ class Rate extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Membership", cascade={"all"})
+     * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
      */
     protected $membership;

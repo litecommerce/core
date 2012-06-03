@@ -481,14 +481,17 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
         foreach ($order->getItems() as $item) {
 
-            $this->addItem($item->cloneEntity());
+            if ($item->isValid()) {
+
+                $this->addItem($item->cloneEntity());
+            }
         }
 
         // Update cart
         $this->updateCart();
 
         // Set return URL
-        $this->setURLToReturn();
+        $this->setReturnURL($this->buildURL('cart'));
     }
 
 

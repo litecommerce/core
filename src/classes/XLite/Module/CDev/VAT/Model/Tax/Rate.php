@@ -18,7 +18,7 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -110,7 +110,7 @@ class Rate extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Zone", cascade={"all"})
+     * @ManyToOne  (targetEntity="XLite\Model\Zone")
      * @JoinColumn (name="zone_id", referencedColumnName="zone_id")
      */
     protected $zone;
@@ -122,7 +122,7 @@ class Rate extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\ProductClass", cascade={"all"})
+     * @ManyToOne  (targetEntity="XLite\Model\ProductClass")
      * @JoinColumn (name="product_class_id", referencedColumnName="id")
      */
     protected $productClass;
@@ -134,7 +134,7 @@ class Rate extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Membership", cascade={"all"})
+     * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
      */
     protected $membership;
@@ -242,7 +242,7 @@ class Rate extends \XLite\Model\AEntity
      * 
      * @param array $items ____param_comment____
      *  
-     * @return void
+     * @return float
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -359,7 +359,7 @@ class Rate extends \XLite\Model\AEntity
      */
     public function calculateProductPriceExcludingTax(\XLite\Model\Product $product, $price)
     {
-        return $this->getProductBasis($product)
+        return $price
             ? $this->calculateValueExcludingTax($price)
             : 0;
     }
@@ -392,7 +392,7 @@ class Rate extends \XLite\Model\AEntity
      */
     public function calculateProductPriceIncludingTax(\XLite\Model\Product $product, $price)
     {
-        return $this->getProductBasis($product)
+        return $price
             ? $this->calculateValueIncludingTax($price)
             : 0;
     }

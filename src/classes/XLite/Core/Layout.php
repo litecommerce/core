@@ -494,10 +494,6 @@ class Layout extends \XLite\Base\Singleton
                         'web'  => static::PATH_SKIN . '/' . $skin . ($locale ? '/' . $locale : ''),
                     );
                 }
-
-                if (1 < count($locales)) {
-                    $locales = array(array_pop($locales));
-                }
             }
         }
 
