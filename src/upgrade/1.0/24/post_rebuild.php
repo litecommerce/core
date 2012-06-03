@@ -50,4 +50,16 @@ return function()
         }
         \XLite\Core\Database::getEM()->flush();
     }
+
+    // Change shop_currency from obsolete code to USD
+    $currency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find(\XLite\Core\Config::getInstance()->General->shop_currency);
+    if (!$currency) {
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            array(
+                'category' => 'General',
+                'name'     => 'shop_currency',
+                'value'    => 840,
+            )
+        );
+    }
 };
