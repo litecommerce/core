@@ -1,0 +1,32 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Fixtures
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+# @since     1.0.0
+
+XLite\Model\Payment\Method:
+  - service_name: 'Qiwi'
+    class: 'Module\CDev\Qiwi\Model\Payment\Processor\Qiwi'
+    translations:
+      - code: en
+        name: 'Qiwi payment method integration'
+    settings:
+      - name: login
+      - name: password
+      - name: prefix
+        value: xlite
+      - name: lifetime
+        value: 48
+      - name: check_agt
+        value: 1
+
+XLite\Model\LanguageLabel:
+  directives: { addModel: 'XLite\Model\LanguageLabelTranslation' }
+  - { name: 'Login id', translations: [{ code: 'ru', label: 'ID в системе' }] }
+  - { name: 'Order id prefix', translations: [{ code: 'ru', label: 'Префикс транзакций' }] }
+  - { name: 'Order lifetime in hours', translations: [{ code: 'ru', label: 'Время жизни счёта (в часах)' }] }
+  - { name: 'Check whether customer''s mobile phone is registered', translations: [{ code: 'ru', label: 'Проверять, зарегистрирован ли пользователь' }] }
