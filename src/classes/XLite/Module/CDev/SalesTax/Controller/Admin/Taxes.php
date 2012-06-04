@@ -169,7 +169,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
         }
 
         \XLite\Core\TopMessage::addInfo('Tax rates have been updated successfully');
-        \Xlite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -202,7 +202,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
             \XLite\Core\TopMessage::addError('Tax rate has not been deleted successfully');
         }
 
-        \Xlite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**

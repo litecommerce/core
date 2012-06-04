@@ -365,15 +365,21 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function isAvailable()
     {
-        $result = true;
+        return \XLite::isAdminZone() || $this->isPublicAvailable();
+    }
 
-        if (!\XLite::isAdminZone()) {
-            $result = $this->getEnabled()
-                && (!$this->getArrivalDate() || time() > $this->getArrivalDate())
-                && !$this->getInventory()->isOutOfStock();
-        }
-
-        return $result;
+    /**
+     * Check prodyct availability for public usage (customer interface)
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
+    public function isPublicAvailable()
+    {
+        return $this->getEnabled()
+            && (!$this->getArrivalDate() || time() > $this->getArrivalDate())
+            && !$this->getInventory()->isOutOfStock();
     }
 
     /**

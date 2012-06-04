@@ -226,7 +226,7 @@ class Products extends \XLite\Core\DataSource\Base\Products
             'name'         => $data['name'],
             'description'  => empty($data['description']) ? '' : $data['description'],
             'sku'          => empty($data['sku']) ? '' : $data['sku'],
-            'quantity'     => empty($data['quantity']) ? 0 : intval($data['quantity']),
+            'quantity'     => empty($data['quantity']) ? \XLite\Model\Inventory::AMOUNT_DEFAULT_INV_TRACK : intval($data['quantity']),
             'optionGroups' => array(),
         );
 

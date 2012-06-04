@@ -287,7 +287,7 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      */
     protected function getFormattedPrice($price)
     {
-        return sprintf("%.2f", round((double)($price) + 0.00000000001, 2));
+        return sprintf('%.2f', round((double)($price) + 0.00000000001, 2));
     }
 
 
@@ -345,12 +345,14 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
             $product = $item->getProduct();
 
             $i++;
-            $suffix = $i == 0 ? '' : ('_' . $i);
+            $suffix = 0 == $i ? '' : ('_' . $i);
 
-            $fields['c_prod' . $suffix]         = $product->getProductId() . ',' . $item->getAmount();
-            $fields['c_name' . $suffix]         = substr($product->getName(), 0, 127);
-            $fields['c_price' . $suffix]        = $this->getFormattedPrice($item->getPrice());
-            $fields['c_description' . $suffix]  = strip_tags(substr(($product->getCommonDescription() ? : $product->getName()), 0, 254));
+            $description = $product->getCommonDescription() ?: $product->getName();
+
+            $fields['c_prod' . $suffix]        = $product->getProductId() . ',' . $item->getAmount();
+            $fields['c_name' . $suffix]        = substr($product->getName(), 0, 127);
+            $fields['c_price' . $suffix]       = $this->getFormattedPrice($item->getPrice());
+            $fields['c_description' . $suffix] = strip_tags(substr(($description), 0, 254));
         }
 
         return $fields;

@@ -44,14 +44,11 @@ abstract class ItemsListForm extends \XLite\View\StickyPanel\Product\Admin\AAdmi
      */
     protected function getButtons()
     {
-        return array_merge(
-            array(
-                $this->getWidget(
-                    array('disabled' => true,),
-                    'XLite\Module\CDev\Sale\View\SaleSelectedButton'
-                )
-            ),
-            parent::getButtons()
+        $widget = $this->getWidget(
+            array('disabled' => true),
+            'XLite\Module\CDev\Sale\View\SaleSelectedButton'
         );
+
+        return array_merge(array($widget), parent::getButtons());
     }
 }

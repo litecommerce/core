@@ -61,10 +61,11 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
         $sword = \XLite\Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers::getPlatformSecretWord();
         $sword = md5($sword);
 
+        $platformId = \XLite\Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers::getPlatformCustomerID();
         $request = new \XLite\Core\HTTP\Request(
             'https://www.moneybookers.com/app/email_check.pl'
             . '?email=' . urlencode($email)
-            . '&cust_id=' . \XLite\Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers::getPlatformCustomerID()
+            . '&cust_id=' . $platformId
             . '&password=' . $sword
         );
         $response = $request->sendRequest();
@@ -98,7 +99,12 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\TopMessage::getInstance()->add('E-mail address is valid');
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->add('E-mail address is not valid', array(), null, \XLite\Core\TopMessage::ERROR);
+            \XLite\Core\TopMessage::getInstance()->add(
+                'E-mail address is not valid',
+                array(),
+                null,
+                \XLite\Core\TopMessage::ERROR
+            );
         }
     }
 
@@ -125,7 +131,10 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
             && \XLite\Core\Config::getInstance()->CDev->Moneybookers->id
         ) {
             \XLite\Core\Mailer::sendMoneybookersActivation();
-            \XLite\Core\TopMessage::getInstance()->add('You have sent a request for activation on the X.', array('date' => date('m.d.Y')));
+            \XLite\Core\TopMessage::getInstance()->add(
+                'You have sent a request for activation on the X.',
+                array('date' => date('m.d.Y'))
+            );
         }
     }
 
@@ -144,11 +153,12 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
             . md5(\XLite\Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers::getPlatformSecretWord())
         );
 
+        $platformId = \XLite\Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers::getPlatformCustomerID();
         $request = new \XLite\Core\HTTP\Request(
             'https://www.moneybookers.com/app/secret_word_check.pl'
             . '?secret=' . $secret
             . '&email=' . urlencode(\XLite\Core\Config::getInstance()->CDev->Moneybookers->email)
-            . '&cust_id=' . \XLite\Module\CDev\Moneybookers\Model\Payment\Processor\Moneybookers::getPlatformCustomerID()
+            . '&cust_id=' . $platformId
         );
         $response = $request->sendRequest();
 
@@ -166,7 +176,8 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
         } elseif ('VELOCITY_CHECK_EXCEEDED' == $response->body) {
 
             \XLite\Core\TopMessage::getInstance()->add(
-                'Maximum number of checks for a particular user has been reached (currently set to 3 per user per hour)',
+                'Maximum number of checks for a particular user has been reached'
+                . ' (currently set to 3 per user per hour)',
                 array(),
                 null,
                 \XLite\Core\TopMessage::ERROR
@@ -182,7 +193,12 @@ class MoneybookersSettings extends \XLite\Controller\Admin\AAdmin
             );
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->add('Secret word is not valid', array(), null, \XLite\Core\TopMessage::ERROR);
+            \XLite\Core\TopMessage::getInstance()->add(
+                'Secret word is not valid',
+                array(),
+                null,
+                \XLite\Core\TopMessage::ERROR
+            );
         }
     }
 

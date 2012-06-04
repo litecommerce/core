@@ -82,6 +82,8 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
         foreach ($this->getResult() as $idx => $item) {
             $result[$idx] = is_object($item) ? $item : $item[0];
         }
+
+        return $result;
     }
 
     /**

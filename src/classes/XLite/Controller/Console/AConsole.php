@@ -71,6 +71,7 @@ abstract class AConsole extends \XLite\Controller\AController
             set_time_limit(0);
 
             $this->actionTime = microtime(true);
+            \XLite\Core\Session::getInstance();
             parent::handleRequest();
 
             if (!$this->pureOutput) {

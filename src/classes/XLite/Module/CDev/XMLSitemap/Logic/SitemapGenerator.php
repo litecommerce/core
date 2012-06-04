@@ -117,8 +117,8 @@ class SitemapGenerator extends \XLite\Base\Singleton
      */
     public function isGenerated()
     {
-       return 0 < count(glob(LC_DIR_DATA . 'xmlsitemap.*.xml'));
-     }
+        return 0 < count(glob(LC_DIR_DATA . 'xmlsitemap.*.xml'));
+    }
 
     // {{{ Generate sitemaps
 
@@ -257,7 +257,8 @@ class SitemapGenerator extends \XLite\Base\Singleton
             \Includes\Utils\FileManager::mkdir(LC_DIR_DATA);
             if (!\Includes\Utils\FileManager::isExists(LC_DIR_DATA)) {
                 \XLite\Logger::getInstance()->log(
-                    'The directory ' . LC_DIR_DATA . ' can not be created. Check the permissions to create directories.',
+                    'The directory ' . LC_DIR_DATA . ' can not be created.'
+                    . ' Check the permissions to create directories.',
                     LOG_ERR
                 );
             }

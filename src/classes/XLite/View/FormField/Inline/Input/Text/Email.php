@@ -25,24 +25,28 @@
  * @since     1.0.15
  */
 
-namespace XLite\View\FormField\Inline\Input\Text\Product;
+namespace XLite\View\FormField\Inline\Input\Text;
 
 /**
- * Product name
+ * Email
  * 
  * @see   ____class_see____
  * @since 1.0.15
  */
-class Name extends \XLite\View\FormField\Inline\Input\Text
+class Email extends \XLite\View\FormField\Inline\Base\Single
 {
+
     /**
-     * Short name
+     * Define form field
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.15
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
      */
-    protected $shortName = 'name';
+    protected function defineFieldClass()
+    {
+        return 'XLite\View\FormField\Input\Text\Email';
+    }
 
     /**
      * Get container class
@@ -53,7 +57,7 @@ class Name extends \XLite\View\FormField\Inline\Input\Text
      */
     protected function getContainerClass()
     {
-        return trim(parent::getContainerClass() . ' product-name');
+        return parent::getContainerClass() . ' inline-email';
     }
 
 }
