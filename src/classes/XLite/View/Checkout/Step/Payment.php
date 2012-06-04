@@ -92,7 +92,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
         return $this->getCart()->getProfile()
             && $this->getCart()->getProfile()->getBillingAddress()
             && $this->getCart()->getProfile()->getBillingAddress()->isCompleted(\XLite\Model\Address::BILLING)
-            && $this->getCart()->getPaymentMethod();
+            && ($this->getCart()->isPayed() || $this->getCart()->getPaymentMethod());
     }
 
     /**
