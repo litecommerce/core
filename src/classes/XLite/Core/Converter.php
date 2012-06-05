@@ -205,7 +205,7 @@ class Converter extends \XLite\Base\Singleton
      *
      * @param string $target Page identifier OPTIONAL
      * @param string $action Action to perform OPTIONAL
-     * @param array  $params additional params OPTIONAL
+     * @param array  $params Additional params OPTIONAL
      *
      * @return string
      * @see    ____func_see____
@@ -236,12 +236,112 @@ class Converter extends \XLite\Base\Singleton
             }
         }
 
+        static::buildCleanURLHook($target, $action, $params, $urlParams);
+
         if (!empty($urlParams)) {
             $result  = \Includes\Utils\ConfigParser::getOptions(array('host_details', 'web_dir_wo_slash'));
             $result .= '/' . implode('/', array_reverse($urlParams));
         }
 
         return $result;
+    }
+
+    /**
+     * Parse clean URL (<rest>/<last>/<url>(?:\.<ext="htm">(?:l)))
+     *
+     * @param string $url  Main part of a clean URL
+     * @param string $last First part before the "url" OPTIONAL
+     * @param string $rest Part before the "url" and "last" OPTIONAL
+     * @param string $ext  Extension OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function parseCleanUrl($url, $last = '', $rest = '', $ext = '')
+    {
+        $target = null;
+        $params = array();
+
+        foreach (static::getCleanURLBook($url, $last, $rest, $ext) as $possibleTarget => $class) {
+            $entity = \XLite\Core\Database::getRepo($class)->findOneByCleanURL($url);
+
+            if (isset($entity)) {
+                $target = $possibleTarget;
+                $params[$entity->getUniqueIdentifierName()] = $entity->getUniqueIdentifier();
+            }
+        }
+
+        static::parseCleanURLHook($url, $last, $rest, $ext, $target, $params);
+
+        return array($target, $params);
+    }
+
+    /**
+     * Getter
+     *
+     * @param string $url  Main part of a clean URL
+     * @param string $last First part before the "url" OPTIONAL
+     * @param string $rest Part before the "url" and "last" OPTIONAL
+     * @param string $ext  Extension OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected static function getCleanURLBook($url, $last = '', $rest = '', $ext = '')
+    {
+        $list = array(
+            'product'  => '\XLite\Model\Product',
+            'category' => '\XLite\Model\Category',
+        );
+
+        if ('htm' === $ext) {
+            unset($list['category']);
+        }
+
+        return $list;
+    }
+
+    /**
+     * Hook for modules
+     *
+     * @param string $target     Page identifier
+     * @param string $action     Action to perform
+     * @param array  $params     Additional params
+     * @param array  &$urlParams Params to prepare
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected static function buildCleanURLHook($target, $action, array $params, array &$urlParams)
+    {
+    }
+
+    /**
+     * Hook for modules
+     *
+     * @param string $url  Main part of a clean URL
+     * @param string $last First part before the "url"
+     * @param string $rest Part before the "url" and "last"
+     * @param string $ext  Extension
+     * @param string $target Target
+     * @param array  $params Additional params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected static function parseCleanURLHook($url, $last, $rest, $ext, &$target, array &$params)
+    {
+        if ('product' === $target && !empty($last)) {
+            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findByCleanURL($last);
+
+            if (isset($category)) {
+                $params['category_id'] = $category->getCategoryId();
+            }
+        }
     }
 
     // }}}

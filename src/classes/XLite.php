@@ -185,7 +185,7 @@ class XLite extends \XLite\Base
     protected static function getTarget()
     {
         if (empty(\XLite\Core\Request::getInstance()->target)) {
-            \XLite\Core\Request::getInstance()->target = static::TARGET_DEFAULT;
+            \XLite\Core\Request::getInstance()->target = static::dispatchRequest();
         }
 
         return \XLite\Core\Request::getInstance()->target;
@@ -421,8 +421,48 @@ class XLite extends \XLite\Base
         \XLite\Model\CachingFactory::clearCache();
     }
 
+    // {{{ Clean URLs support
 
-    // ------------------------------ Application versions -
+    /**
+     * Dispatch request
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected static function dispatchRequest()
+    {
+        $result = static::TARGET_DEFAULT;
+
+        if (LC_USE_CLEAN_URLS && isset(\XLite\Core\Request::getInstance()->url)) {
+            $result = static::getTargetByCleanURL();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return target by clean URL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected static function getTargetByCleanURL()
+    {
+        $tmp = \XLite\Core\Request::getInstance();
+        list($target, $params) = \XLite\Core\Converter::parseCleanUrl($tmp->url, $tmp->last, $tmp->rest, $tmp->ext);
+
+        if (!empty($target)) {
+            $tmp->mapRequest($params);
+        }
+
+        return $target;
+    }
+
+    // }}}
+
+    // {{{ Application versions
 
     /**
      * Get application version
@@ -474,4 +514,6 @@ class XLite extends \XLite\Base
     {
         return version_compare($this->getMajorVersion(), $version, $operator);
     }
+
+    // }}}
 }

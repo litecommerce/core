@@ -154,20 +154,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      */
     public function getCategoryId()
     {
-        $categoryID = parent::getCategoryId();
-
-        if (LC_USE_CLEAN_URLS && !isset($categoryID)) {
-            $cleanURL = \XLite\Core\Request::getInstance()->cleanURLCat;
-
-            if (!empty($cleanURL)) {
-                $category   = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findOneByCleanURL($cleanURL);
-                $categoryID = $this->category_id = isset($category) ? $category->getCategoryId() : false;
-
-                \XLite\Core\Request::getInstance()->category_id = $categoryID;
-            }
-        }
-
-        return $categoryID ?: $this->getRootCategoryId();
+        return parent::getCategoryId() ?: $this->getRootCategoryId();
     }
 
     /**

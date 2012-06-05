@@ -348,37 +348,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
 
 
-    // -----> FIXME - to revise
-
-    /**
-     * Check controller access
-     * FIXME - do not uncomment: this will break the "runFrontController()" functionality
-     * TODO  - code must be refactored
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isAllowed()
-    {
-        return true;
-
-        /*$oldController = $this->getController();
-
-        $this->getApplication()->setController();
-        $controller = \XLite\Model\CachingFactory::getObjectFromCallback(
-            __METHOD__ . '-' . \XLite\Core\Request::getInstance()->target,
-            $this->getApplication(),
-            'getController'
-        );
-
-        $result = $controller->checkAccess()
-            && $this->getViewer()->checkVisibility();
-
-        $this->getApplication()->setController($oldController);
-
-        return $result;*/
-    }
+    // -----> TODO - to revise
 
     /**
      * Get Clean URL
@@ -517,23 +487,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
             'cms_profile_id' => intval($cmsUserId),
             'cms_name'       => $this->getCMSName(),
         );
-    }
-
-    /**
-     * getProfileWhereCondition
-     * TODO: remove this method
-     *
-     * @param integer $cmsUserId CMS user Id
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getProfileWhereCondition($cmsUserId)
-    {
-        return \Includes\Utils\Converter::buildQuery(
-            $this->getProfileDBFields($cmsUserId), '=', ' AND ', '\''
-        ) . ' AND order_id = \'0\'';
     }
 
     /**

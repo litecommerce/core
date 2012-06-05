@@ -132,20 +132,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     protected function getProductId()
     {
-        $productID = \XLite\Core\Request::getInstance()->product_id;
-
-        if (LC_USE_CLEAN_URLS && !isset($productID)) {
-            $cleanURL = \XLite\Core\Request::getInstance()->cleanURLProd;
-
-            if (!empty($cleanURL)) {
-                $product   = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanURL($cleanURL);
-                $productID = $this->product_id = isset($product) ? $product->getProductId() : false;
-
-                \XLite\Core\Request::getInstance()->product_id = $productID;
-            }
-        }           
-        
-        return $productID;
+        return \XLite\Core\Request::getInstance()->product_id;
     }
 
     /**

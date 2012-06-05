@@ -358,11 +358,8 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             $path = \Includes\Utils\URLManager::getShopURL('admin.php' . $this->getAdminAreaURLArgs());
             $options['external'] = true;
 
-        } else {
-            $url = $this->getHandler()->getDrupalCleanURL($path, $options);
-            if ($url) {
-                $path = $url;
-            }
+        } elseif ($url = $this->getHandler()->getDrupalCleanURL($path, $options)) {
+            $path = $url;
         }
     }
 
@@ -379,11 +376,8 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function translateInboundURL(&$path, $originalPath, $pathLanguage)
     {
-        if ($path) {
-            $url = $this->getHandler()->getURLByCleanURL($path);
-            if ($url) {
-                $path = $url;
-            }
+        if ($path && ($url = $this->getHandler()->getURLByCleanURL($path))) {
+            $path = $url;
         }
     }
 
