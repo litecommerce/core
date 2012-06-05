@@ -197,7 +197,11 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/table[@class='selected-products']"
             . "/tbody"
             . "/tr"
-            . "/td[@class='item-price' and text()='$" . number_format(round($product->getPrice(), 2), 2) . "']",
+            // . "/td[@class='item-price' and text()='$" . number_format(round($product->getPrice(), 2), 2) . "']",
+            . "/td[@class='item-price']"
+            . "/span[@class='surcharge']"
+            . "/span[@class='surcharge-cell']"
+            . "/span[@class='part-integer' and text()='" . intval($product->getPrice()) . "']",
             'check item price'
         );
 
@@ -233,7 +237,12 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/tbody"
             . "/tr"
             . "/td[@class='item-subtotal']"
-            . "/span[@class='subtotal' and text()='" . $this->formatPrice($product->getPrice()) . "']",
+            //. "/span[@class='subtotal' and text()='" . $this->formatPrice($product->getPrice()) . "']",
+            . "/span[@class='subtotal']"
+            . "/span[@class='surcharge']"
+            . "/span[@class='surcharge-cell']"
+            . "/span[@class='part-integer' and text()='" . intval($product->getPrice()) . "']",
+
             'check item subtotal'
         );
 
@@ -353,11 +362,11 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/div"
             . "/span[@class='quantity-box-container']"
             . "/input[@type='text']",
-            '3'
+            '12'
         );
 
         $this->waitForLocalCondition(
-            'jQuery("h1#page-title").html().search(/ 3 items/) != -1',
+            'jQuery("h1#page-title").html().search(/ 12 items/) != -1',
             30000,
             'check quantity update'
         );
@@ -588,7 +597,11 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/table[@class='selected-products']"
             . "/tbody"
             . "/tr"
-            . "/td[@class='item-price' and text()='$" . number_format(round($price, 2), 2) . "']",
+            //. "/td[@class='item-price' and text()='$" . number_format(round($price, 2), 2) . "']",
+            . "/td[@class='item-price']"
+            . "/span[@class='surcharge']"
+            . "/span[@class='surcharge-cell']"
+            . "/span[@class='part-integer' and text()='" . intval($product->getPrice()) . "']",
             'check new item price'
         );
     }
@@ -616,7 +629,11 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/table[@class='selected-products']"
             . "/tbody"
             . "/tr"
-            . "/td[@class='item-price' and text()='$" . number_format(round($price, 2), 2) . "']",
+            //. "/td[@class='item-price' and text()='$" . number_format(round($price, 2), 2) . "']",
+            . "/td[@class='item-price']"
+            . "/span[@class='surcharge']"
+            . "/span[@class='surcharge-cell']"
+            . "/span[@class='part-integer' and text()='" . intval($product->getPrice()) . "']",
             'check new item price'
         );
     }

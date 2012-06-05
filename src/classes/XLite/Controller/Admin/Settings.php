@@ -272,7 +272,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
                 break;
 
             case 'lite_version':
-                $return = \XLite\Core\Config::getInstance()->Version->version;
+                $return = \XLite::getInstance()->getVersion();
                 break;
 
             case 'libcurl':
@@ -690,7 +690,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function hasTestEmailError()
     {
-        return '' !== \XLite\Core\Session::getInstance()->test_email_error;
+        return '' !== (string)\XLite\Core\Session::getInstance()->test_email_error;
     }
 
     /**
@@ -701,7 +701,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function getTestEmailError()
     {
-        $error = \XLite\Core\Session::getInstance()->test_email_error;
+        $error = (string)\XLite\Core\Session::getInstance()->test_email_error;
 
         \XLite\Core\Session::getInstance()->test_email_error = '';
 

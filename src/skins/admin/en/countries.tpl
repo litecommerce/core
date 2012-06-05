@@ -66,6 +66,7 @@
 </table>
 </form>
 
+{* FIXME: Action is temporary disabled until Countries list will be refactored to allow add/edit all country fields
 <p>
 
 <a name="add_section"></a>
@@ -119,3 +120,5 @@ function opera_click() {
 -->
 </script>
 {end:}
+
+*}

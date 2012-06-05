@@ -260,7 +260,7 @@ body
 #main
 {
   margin: 15px 25px 25px 25px;
-  min-width: 640px;
+  min-width: 950px;
 }
 
 #sub-section
@@ -1627,8 +1627,9 @@ div.table-value .checkbox-list label {
 }
 
 div.table-value .input-text-integer input,
-div.table-value .input-text-float input,
-div.table-value .input-text-price input
+  div.table-value .input-text-float input,
+  div.table-value .input-text-price input,
+  div.table-value .input-text-symbol input
 {
   text-align: right;
   width: 80px;

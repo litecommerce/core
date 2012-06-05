@@ -68,7 +68,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '1';
+        return '2';
     }
 
     /**
@@ -159,7 +159,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     protected static function getProductPrice(\XLite\Model\Product $product)
     {
-        return $product->getListPrice();
+        return $product->getDisplayPrice();
     }
 
     /**

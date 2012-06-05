@@ -151,7 +151,13 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function getFormBlock(array $form)
     {
-        return !$this->isNewBlock($form) && ($block = $this->getBlock($form['delta']['#value'])) ? $block : null;
+        return (
+            'block' == $form['module']['#value']
+            && !$this->isNewBlock($form)
+            && ($block = $this->getBlock($form['delta']['#value']))
+            )
+            ? $block
+            : null;
     }
 
     /**

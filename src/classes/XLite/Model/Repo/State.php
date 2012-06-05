@@ -207,9 +207,17 @@ class State extends \XLite\Model\Repo\ARepo
      */
     public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
-        return isset($data['country_code']) && isset($data['code'])
-            ? $this->findOneByCountryAndCode($data['country_code'], $data['code'])
-            : parent::findOneByRecord($data, $parent);
+        if (isset($data['country_code']) && isset($data['code'])) {
+            $result = $this->findOneByCountryAndCode($data['country_code'], $data['code']);
+
+        } elseif ($parent && $parent instanceOf \XLite\Model\Country) {
+            $result = $this->findOneByCountryAndCode($parent->getCode(), $data['code']);
+
+        } else {
+            $result = parent::findOneByRecord($data, $parent);
+        }
+
+        return $result;
     }
 
     /**

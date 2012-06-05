@@ -9,11 +9,12 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <ul>
   <li FOREACH="option.getOptions(),opt">
     <input type="radio" id="product_option_{opt.getOptionId()}" name="product_options[{option.getGroupId()}]" value="{opt.getOptionId()}" checked="{isOptionSelected(opt)}" />
     <label for="product_option_{opt.getOptionId()}">
-      {opt.getName():h}
+      {opt.getName()}
       <widget class="\XLite\Module\CDev\ProductOptions\View\ProductOptionModifier" option="{opt}" />
     </label>
   </li>

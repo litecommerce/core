@@ -48,7 +48,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $this->assertTrue(0 < $order->getOrderId(), 'check order id');
 
-        foreach ($this->testOrder as $k => $v) {
+        foreach ($order as $k => $v) {
             $m = 'get' . \XLite\Core\Converter::convertToCamelCase($k);
             $this->assertEquals($v, $order->$m(), 'Check test order: ' . $k);
         }
@@ -482,32 +482,40 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
     public function testIsMinOrderAmountError()
     {
+        $minAmountBackup = \XLite\Core\Config::getInstance()->General->minimal_order_amount;
+
         $order = $this->getTestOrder();
+        $subtotal = $order->getSubtotal();
 
-        $price = \XLite\Core\Config::getInstance()->General->minimal_order_amount - 1;
-        $order->getItems()->get(0)->setPrice($price);
-        $order->calculate();
-        $this->assertTrue($order->isMinOrderAmountError(), 'is error');
+        \XLite\Core\Config::getInstance()->General->minimal_order_amount = $subtotal - 1;
+        $this->assertFalse($order->isMinOrderAmountError(), 'Wrong result: true (#1)');
 
-        $price = \XLite\Core\Config::getInstance()->General->minimal_order_amount + 1;
-        $order->getItems()->get(0)->setPrice($price);
-        $order->calculate();
-        $this->assertFalse($order->isMinOrderAmountError(), 'is not error');
+        \XLite\Core\Config::getInstance()->General->minimal_order_amount = $subtotal;
+        $this->assertFalse($order->isMinOrderAmountError(), 'Wrong result: true (#2)');
+
+        \XLite\Core\Config::getInstance()->General->minimal_order_amount = $subtotal + 1;
+        $this->assertTrue($order->isMinOrderAmountError(), 'Wrong result: false (#3)');
+
+        \XLite\Core\Config::getInstance()->General->minimal_order_amount = $minAmountBackup;
     }
 
     public function testIsMaxOrderAmountError()
     {
+        $maxAmountBackup = \XLite\Core\Config::getInstance()->General->maximal_order_amount;
+
         $order = $this->getTestOrder();
+        $subtotal = $order->getSubtotal();
 
-        $price = \XLite\Core\Config::getInstance()->General->maximal_order_amount + 1;
-        $order->getItems()->get(0)->setPrice($price);
-        $order->calculate();
-        $this->assertTrue($order->isMaxOrderAmountError(), 'is error');
+        \XLite\Core\Config::getInstance()->General->maximal_order_amount = $subtotal - 1;
+        $this->assertTrue($order->isMaxOrderAmountError(), 'Wrong result: false (#1)');
 
-        $price = \XLite\Core\Config::getInstance()->General->maximal_order_amount - 1;
-        $order->getItems()->get(0)->setPrice($price);
-        $order->calculate();
-        $this->assertFalse($order->isMaxOrderAmountError(), 'is not error');
+        \XLite\Core\Config::getInstance()->General->maximal_order_amount = $subtotal;
+        $this->assertFalse($order->isMaxOrderAmountError(), 'Wrong result: true (#2)');
+
+        \XLite\Core\Config::getInstance()->General->maximal_order_amount = $subtotal + 1000;
+        $this->assertFalse($order->isMaxOrderAmountError(), 'Wrong result: true (#3)');
+
+        \XLite\Core\Config::getInstance()->General->maximal_order_amount = $maxAmountBackup;
     }
 
     public function testIsProcessed()

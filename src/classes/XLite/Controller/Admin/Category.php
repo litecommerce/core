@@ -161,8 +161,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     }
 
     /**
-     * Return TRUE if category can have image
-     * Return FALSE if category cannot have image (new or root one)
+     * Check if category has an image
      *
      * @return boolean
      * @see    ____func_see____
@@ -185,6 +184,35 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
         return $this->isNew() ? 'Add category' : $this->getCategory()->getName();
     }
 
+    /**
+     * Get posted data
+     *
+     * @param string $field Name of the field to retrieve OPTIONAL
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPostedData($field = null)
+    {
+        $result = parent::getPostedData($field);
+
+        if (!isset($field) || 'membership' === $field) {
+            $membership = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->find(
+                isset($field) ? $result : $result['membership']
+            );
+
+            if (isset($field)) {
+                $result = $membership;
+
+            } else {
+                $result['membership'] = $membership;
+            }
+        }
+
+        return $result;
+    }
+
     // }}}
 
     // {{{ Clean URL routines
@@ -204,6 +232,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
 
         if (!$result) {
             $entity = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findOneByCleanURL($cleanURL);
+
             // DO NOT use "===" here
             $result = !isset($entity) || $entity->getCategoryId() == $this->getCategoryId();
 

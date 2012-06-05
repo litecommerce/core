@@ -56,7 +56,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '16';
+        return '18';
     }
 
     /**
@@ -93,5 +93,20 @@ abstract class Main extends \XLite\Module\AModule
     public static function showSettingsForm()
     {
         return true;
+    }
+
+    /**
+     * Return list of mutually exclusive modules
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function getMutualModulesList()
+    {
+        $list = parent::getMutualModulesList();
+        $list[] = 'SpurIT\SEConnector';
+
+        return $list;
     }
 }

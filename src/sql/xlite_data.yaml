@@ -38,7 +38,6 @@ XLite\Model\Config:
   - { name: default_select_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Default payment method' }] }
   - { name: default_zipcode, category: General, type: text, orderby: 320, translations: [{ code: en, option_name: 'Default zip/postal code in the registration form' }] }
   - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method' }] }
-  - { name: enable_anon_checkout, category: General, type: checkbox, orderby: 270, value: Y, translations: [{ code: en, option_name: 'Enable anonymous checkout' }] }
   - { name: enable_init_order_notif, category: Email, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'E-mail order details to the sales department after order placement' }] }
   - { name: enable_init_order_notif_customer, category: Email, type: checkbox, value: N, translations: [{ code: en, option_name: 'E-mail order details to customers after order placement' }] }
   - { name: form_id_protection, category: Security, type: checkbox, orderby: 90, value: Y, translations: [{ code: en, option_name: 'Enable admin forms protection system' }] }
@@ -59,7 +58,6 @@ XLite\Model\Config:
   - { name: operation_presentation, category: General, type: separator, orderby: 100, translations: [{ code: en, option_name: 'Maintenance and operation' }] }
   - { name: orders_department, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 480, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Sales department e-mail' }] }
   - { name: orders_per_page, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 430, value: 30, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Orders per page' }] }
-  - { name: order_starting_number, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 460, value: 1, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Initial order number' }] }
   - { name: products_per_page, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 250, value: 10, widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per category listing page' }] }
   - { name: products_per_page_admin, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 410, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per page' }] }
   - { name: proxy, category: Security, type: text, orderby: 25, translations: [{ code: en, option_name: 'HTTPS proxy' }] }
@@ -67,7 +65,6 @@ XLite\Model\Config:
   - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product' }] }
   - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to close the shop temporarily' }] }
   - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency' }] }
-  - { name: show_thumbnails, category: General, type: checkbox, orderby: 230, value: Y, translations: [{ code: en, option_name: 'Show thumbnails in product list' }] }
   - { name: site_administrator, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail' }] }
   - { name: smtp_password, category: Email, type: text, orderby: 160, translations: [{ code: en, option_name: Password }] }
   - { name: smtp_security, category: Email, type: 'XLite\View\FormField\Select\SMTPSecurity', orderby: 170, value: no, translations: [{ code: en, option_name: 'Secure connection' }] }
@@ -302,6 +299,7 @@ XLite\Model\LanguageLabel:
   - { name: Search, translations: [{ code: en, label: Search }, { code: de, label: Suche }] }
   - { name: 'Show all labels', translations: [{ code: en, label: 'Show all labels' }] }
   - { name: 'N items found', translations: [{ code: en, label: '{{n}} items found' }] }
+  - { name: 'No modules found for search_string', translations: [{ code: en, label: 'No modules found for "<em>{{search_string}}</em>"' }] }
   - { name: 'Language options', translations: [{ code: en, label: 'Language options' }] }
   - { name: 'X labels', translations: [{ code: en, label: '{{language}} labels' }] }
   - { name: 'translate to', translations: [{ code: en, label: 'translate to' }] }

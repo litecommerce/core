@@ -16,6 +16,17 @@
   <td>{t(#Membership#)}</td>
   <td class="star"></td>
   <td>
-    <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="{getNamePostedData(#membership_id#)}" value="{category.getMembership()}" />
+    <widget
+      IF="!category.getMembership()"
+      class="\XLite\View\MembershipSelect"
+      template="common/select_membership.tpl"
+      field="{getNamePostedData(#membership#)}"
+      value="0" />
+    <widget
+      IF="category.getMembership()"
+      class="\XLite\View\MembershipSelect"
+      template="common/select_membership.tpl"
+      field="{getNamePostedData(#membership#)}"
+      value="{category.membership.getMembershipId()}" />
   </td>
 </tr>

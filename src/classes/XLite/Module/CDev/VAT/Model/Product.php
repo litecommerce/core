@@ -18,7 +18,7 @@
  * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -28,7 +28,7 @@
 namespace XLite\Module\CDev\VAT\Model;
 
 /**
- * Product
+ * Product model
  * 
  * @see   ____class_see____
  * @since 1.0.0
@@ -44,18 +44,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      */
     protected $includedTaxList;
 
-    /**
-     * Return product list price
-     *
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getListPrice()
-    {
-        return \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()
-            ->calculateProductPrice($this, parent::getListPrice());
-    }
 
     /**
      * Get included tax list
@@ -70,7 +58,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     {
         if (!isset($this->includedTaxList) || $override) {
             $this->includedTaxList = \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()
-                ->calculateProduct($this);
+                ->calculateProductTaxes($this);
         }
 
         return $this->includedTaxList;

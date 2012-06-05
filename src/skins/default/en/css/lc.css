@@ -1303,10 +1303,9 @@ table.list-body-list td
 }
 
 /**
- * MINICART and WISHLIST widgets
+ * MINICART widgets
  */
 
-.lc-wishlist,
 .lc-minicart
 {
   color: #6999c4;
@@ -1318,34 +1317,24 @@ table.list-body-list td
   cursor: pointer;
 }
 
-.lc-wishlist,
 .lc-minicart
 {
   width: auto;
 }
 
-.lc-wishlist:hover,
 .lc-minicart:hover
 {
   background-color: white;
 }
 
-.lc-wishlist.empty,
 .lc-minicart.empty
 {
   cursor: auto;
 }
 
-.lc-wishlist.empty:hover,
 .lc-minicart.empty:hover
 {
   background-color: #eff8fe;
-}
-.lc-wishlist
-{
-  background-image: url(../images/wishlist.png);
-  background-repeat: no-repeat;
-  background-position: 19px 17px;
 }
 
 .lc-minicart
@@ -1371,14 +1360,6 @@ table.list-body-list td
 .lc-minicart .minicart-items-text
 {
   font-size: 11px;
-}
-
-.lc-wishlist .wishlist-text
-{
-  font-size: 14px;
-  margin: 0 20px 0 58px;
-  text-transform: uppercase;
-  padding: 20px 0 0;
 }
 
 .lc-minicart .items-list {

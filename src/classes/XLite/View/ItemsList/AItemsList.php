@@ -374,7 +374,19 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected function getEmptyListTemplate()
     {
-        return self::getDir() . LC_DS . $this->getEmptyListFile();
+        return $this->getEmptyListDir() . LC_DS . $this->getEmptyListFile();
+    }
+
+    /**
+     * Return "empty list" catalog
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getEmptyListDir()
+    {
+        return self::getDir();
     }
 
     /**

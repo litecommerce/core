@@ -17,7 +17,7 @@
 
   <widget class="\XLite\View\Checkout\ShippingAddress" />
 
-  {if:!isAnonymous()}
+  {if:isDisplayAddressButton()}
     <hr />
 
     <div class="save">

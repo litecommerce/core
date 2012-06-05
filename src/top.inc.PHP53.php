@@ -53,6 +53,7 @@ define('LC_DIR_MODULES',       LC_DIR_CLASSES . LC_NAMESPACE . LC_DS . 'Module' 
 define('LC_DIR_COMPILE',       LC_DIR_VAR . 'run' . LC_DS);
 define('LC_DIR_CACHE_CLASSES', LC_DIR_COMPILE . 'classes' . LC_DS);
 define('LC_DIR_CACHE_SKINS',   LC_DIR_COMPILE . 'skins' . LC_DS);
+define('LC_DIR_CACHE_MODULES', LC_DIR_CACHE_CLASSES . LC_NAMESPACE . LC_DS . 'Module' . LC_DS);
 define('LC_DIR_CACHE_MODEL',   LC_DIR_CACHE_CLASSES . LC_NAMESPACE . LC_DS . 'Model' . LC_DS);
 define('LC_DIR_CACHE_PROXY',   LC_DIR_CACHE_MODEL . 'Proxy' . LC_DS);
 define('LC_DIR_BACKUP',        LC_DIR_VAR . 'backup' . LC_DS);

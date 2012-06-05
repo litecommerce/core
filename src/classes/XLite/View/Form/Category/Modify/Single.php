@@ -108,6 +108,7 @@ class Single extends \XLite\View\Form\Category\Modify\AModify
         $data->addPair('meta_title', new \XLite\Core\Validator\String(), null, 'Meta title');
         $data->addPair('meta_tags', new \XLite\Core\Validator\String(), null, 'Meta keywords');
         $data->addPair('meta_desc', new \XLite\Core\Validator\String(), null, 'Meta description');
+        $data->addPair('membership', new \XLite\Core\Validator\String(), null, 'Membership');
 
         $data->addPair(
             'cleanURL',

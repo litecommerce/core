@@ -310,6 +310,20 @@ abstract class Handler extends \XLite\Base
     // {{{ Methods to work with the received data
 
     /**
+     * getRequestDataByPrefixArray
+     *
+     * @param string $prefix Index in the request array
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getRequestDataByPrefixArray($prefix)
+    {
+        return (array) \XLite\Core\Request::getInstance()->$prefix;
+    }
+ 
+    /**
      * getRequestDataByPrefix
      *
      * @param string $prefix Index in the request array
@@ -321,7 +335,7 @@ abstract class Handler extends \XLite\Base
      */
     protected function getRequestDataByPrefix($prefix, $field = null)
     {
-        return \Includes\Utils\ArrayManager::getIndex((array) \XLite\Core\Request::getInstance()->$prefix, $field);
+        return \Includes\Utils\ArrayManager::getIndex($this->getRequestDataByPrefixArray($prefix), $field);
     }
 
     /**

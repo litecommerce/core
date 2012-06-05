@@ -277,7 +277,11 @@ class Main extends \XLite\View\Model\Profile\AProfile
 
             if ($data['password'] != $data['password_conf']) {
                 $result = false;
-                \XLite\Core\TopMessage::addError('Password and its confirmation do not match');
+                $this->addErrorMessage(
+                    'password',
+                    'Password and its confirmation do not match',
+                    $formFields[self::SECTION_MAIN]
+                );
             }
         }
 

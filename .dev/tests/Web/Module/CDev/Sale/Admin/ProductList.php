@@ -28,14 +28,15 @@
 class XLite_Web_Module_CDev_Sale_Admin_ProductList extends XLite_Web_Admin_AAdmin
 {
 
-
-    function testPutOnSale()
+    public function testPutOnSale()
     {
         $this->logIn();
 
-        $this->open('admin.php?target=product_list');
-        #Check checkboxes
+        $this->open('admin.php?target=product_list&itemsPerPage=100');
+        //Check checkboxes
+
         $products = $this->getProducts();
+
         foreach ($products as $product) {
             $this->click("//input[@name='select[" . $product->getId() . "]']");
         }
@@ -43,50 +44,56 @@ class XLite_Web_Module_CDev_Sale_Admin_ProductList extends XLite_Web_Admin_AAdmi
         $success = 'Products information has been successfully updated';
         $min = 'Minimum limit is broken';
         $max = 'Maximum limit is broken';
-        $examples = array(
-            array('percent' => 1000, 'price' => 'old', 'message' => $max),
-            array('percent' => -10, 'price' => 'old', 'message' => $min),
-            array('percent' => 0, 'price' => 'old', 'message' => $success),
-            array('percent' => 50, 'price' => '50%', 'message' => $success),
 
-            array('sale_price' => -10, 'price' => 'old', 'message' => $min),
-            array('sale_price' => 1000, 'price' => 'old', 'message' => $success),
-            array('sale_price' => 0, 'price' => 0, 'message' => $success),
-            array('sale_price' => 1, 'price' => 1, 'message' => $success),
+        $examples = array(
+            array('percent' => 1000, 'price' => 'old', 'message' => $max, 'description' => '#1'),
+            array('percent' => -10, 'price' => 'old', 'message' => $min, 'description' => '#2'),
+            array('percent' => 0, 'price' => 'old', 'message' => $min, 'description' => '#3'),
+            array('percent' => 50, 'price' => '50', 'message' => $success, 'description' => '#4'),
+
+            array('sale_price' => -10, 'price' => 'old', 'message' => $min, 'description' => '#5'),
+            array('sale_price' => 1000, 'price' => 1000, 'message' => $success, 'description' => '#6'),
+            array('sale_price' => 0, 'price' => '0', 'message' => $success, 'description' => '#7'),
+            array('sale_price' => 1, 'price' => 1, 'message' => $success, 'description' => '#8'),
         );
-        #iteration:
+        //iteration:
 
         foreach ($examples as $example) {
-            #Click Put on sale
+            //Click Put on sale
             $this->click('css=.sale-selected-button');
+            sleep(6);
             $this->waitForPopUpDialog();
-            #Data
+
+            //Data
             if (isset($example['sale_price'])) {
                 $this->type('css=#sale-price-value-sale_price', $example['sale_price']);
-            }
-            else {
+            } else {
                 $this->click('css=#sale-price-percent-off');
                 sleep(1);
                 $this->type('css=#sale-price-value-sale_percent', $example['percent']);
             }
-            #Click save
+
+            //Click save
             $this->click('css=.ui-dialog.popup button.action span');
             sleep(1);
-            #check sale and msg
+
+            //check sale and msg
             $this->waitForLocalCondition(
                 'jQuery(":contains(\''.$example['message'].'\')").length > 0',
                 10000,
-                'Message is not present'
+                'Message is not present for ' . $example['description']
             );
+
             //$this->waitForTextPresent($example['message']);
 
             foreach ($products as $product) {
+
                 $this->assertElementPresent('css=#product-sale-label-' . $product->getId());
-                if ($example['price'] !== 'old') {
-                    $this->assertJqueryNotPresent('#product-sale-label-' . $product->getId() . ' .product-name-sale-label-disabled', 'No sale label');
-                }
-                else {
-                    $this->assertJqueryPresent('#product-sale-label-' . $product->getId() . ' .product-name-sale-label-disabled', 'Sale label is shown');
+
+                if ($example['price'] === 'old') {
+                    $this->assertJqueryPresent('#product-sale-label-' . $product->getId() . '.product-name-sale-label-disabled', 'Sale label is shown '. $example['description']);
+                } else {
+                    $this->assertJqueryNotPresent('#product-sale-label-' . $product->getId() . '.product-name-sale-label-disabled', 'No sale label ' . $example['description']);
                 }
             }
         }

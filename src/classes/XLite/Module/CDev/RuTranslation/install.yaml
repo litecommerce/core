@@ -47,7 +47,6 @@ XLite\Model\Config:
   - { name: 'direct_product_url', category: 'General', translations: [{ code: 'ru', option_name: 'Разрешить прямой доступ по URL к продуктам в выключеных категориях' }] }
   - { name: 'display_check_number', category: 'General', translations: [{ code: 'ru', option_name: 'Показывать номер чека для метода оплаты eCheck' }] }
   - { name: 'drupal_root_url', category: 'CDev\DrupalConnector', translations: [{ code: 'ru', option_name: 'Корневой URL установки Drupal' }] }
-  - { name: 'enable_anon_checkout', category: 'General', translations: [{ code: 'ru', option_name: 'Разрешить оплату без регистрации' }] }
   - { name: 'enable_init_order_notif', category: 'Email', translations: [{ code: 'ru', option_name: 'Отправлять данные о заказе на E-mail отдела продаж, после размещения заказа' }] }
   - { name: 'enable_init_order_notif_customer', category: 'Email', translations: [{ code: 'ru', option_name: 'Отправлять данные о заказе на E-mail клиента, после размещения заказа' }] }
   - { name: 'fb_admins', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Администраторы Facebook', option_comment: 'Список идентификаторов пользователей администраторов страниц Facebook, разделенный запятыми. Включите, по крайней мере, свой собственный Facebook ID.' }] }
@@ -84,7 +83,6 @@ XLite\Model\Config:
   - { name: 'minimal_order_amount', category: 'General', translations: [{ code: 'ru', option_name: 'Минимальная сумма заказа' }] }
   - { name: 'number_of_bestsellers', category: 'CDev\Bestsellers', translations: [{ code: 'ru', option_name: 'Количество продуктов в списке лидеров продаж' }] }
   - { name: 'operation_presentation', category: 'General', translations: [{ code: 'ru', option_name: 'Обслуживание и работа' }] }
-  - { name: 'order_starting_number', category: 'General', translations: [{ code: 'ru', option_name: 'Начинать нумерацию заказов с' }] }
   - { name: 'orders_department', category: 'Company', translations: [{ code: 'ru', option_name: 'E-mail отдела продаж' }] }
   - { name: 'orders_per_page', category: 'General', translations: [{ code: 'ru', option_name: 'Заказов на страницу' }] }
   - { name: 'product_changefreq', category: 'CDev\XMLSitemap', translations: [{ code: 'ru', option_name: 'Частота обновления для страницы Продуктов' }] }
@@ -99,7 +97,6 @@ XLite\Model\Config:
   - { name: 'sale_menu', category: 'CDev\Sale', translations: [{ code: 'ru', option_name: 'Отображать блок "Продукты на распродаже" в', option_comment: 'Настройки блока  Drupal могут изменить эту опцию (когда модуль DrupalConnector включен).' }] }
   - { name: 'shop_closed', category: 'General', translations: [{ code: 'ru', option_name: 'Временно закрыть магазин' }] }
   - { name: 'shop_currency', category: 'General', translations: [{ code: 'ru', option_name: 'Валюта магазина' }] }
-  - { name: 'show_thumbnails', category: 'General', translations: [{ code: 'ru', option_name: 'Показывать кртинки в списке продуктов' }] }
   - { name: 'site_administrator', category: 'Company', translations: [{ code: 'ru', option_name: 'E-mail администратора сайта' }] }
   - { name: 'smtp_password', category: 'Email', translations: [{ code: 'ru', option_name: 'Пароль' }] }
   - { name: 'smtp_security', category: 'Email', translations: [{ code: 'ru', option_name: 'Безопастное соединение' }] }

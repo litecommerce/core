@@ -171,6 +171,10 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             $data['password_conf'] = $data['password'];
         }
 
+        if (!isset($data['roles'])) {
+            $data['roles'] = isset($user->roles) ? $user->roles : array();
+        }
+
         return $data;
     }
 

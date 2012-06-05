@@ -112,10 +112,10 @@
       </th>
     </tr>
 
-    <tbody IF="category&category.hasSubcategories()">
+    <tbody IF="category&category.getChildren()">
 
     <tr
-      FOREACH="category.getSubcategories(),id,cat"
+      FOREACH="category.getChildren(),id,cat"
       class="{getRowClass(id,##,#highlight#)}"
       onmouseover="javascript:jQuery('.hidden-{cat.getCategoryId()}').show()"
       onmouseout="javascript:jQuery('.hidden-{cat.getCategoryId()}').hide()">

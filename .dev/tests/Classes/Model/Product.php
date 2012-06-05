@@ -203,14 +203,6 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 
     }
 
-    public function testgetListPrice()
-    {
-        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00007'));
-
-        $this->assertNotNull($p, 'check product');
-        $this->assertEquals($p->getPrice(), $p->getListPrice(), 'check taxed price (equals taxed price)');
-    }
-
     public function testhasImage()
     {
         $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00000'));

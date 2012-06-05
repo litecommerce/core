@@ -247,7 +247,7 @@ class Profile extends \XLite\Model\AEntity
      * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
-     * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
+     * @JoinColumn (name="membership_id", referencedColumnName="membership_id", onDelete="SET NULL")
      */
     protected $membership;
 
@@ -259,7 +259,7 @@ class Profile extends \XLite\Model\AEntity
      * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
-     * @JoinColumn (name="pending_membership_id", referencedColumnName="membership_id")
+     * @JoinColumn (name="pending_membership_id", referencedColumnName="membership_id", onDelete="SET NULL")
      */
     protected $pending_membership;
 
@@ -702,7 +702,7 @@ class Profile extends \XLite\Model\AEntity
 
     /**
      * Add error top message 'Email already exists...'
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -727,11 +727,16 @@ class Profile extends \XLite\Model\AEntity
     {
         $allowed = false;
 
-        foreach ($this->getRoles() as $role) {
-            if ($role->isPermissionAllowed($code)) {
-                $allowed = true;
-                break;
+        if (0 < count($this->getRoles())) {
+            foreach ($this->getRoles() as $role) {
+                if ($role->isPermissionAllowed($code)) {
+                    $allowed = true;
+                    break;
+                }
             }
+
+        } elseif (0 == \XLite\Core\Database::getRepo('XLite\Model\Role')->count()) {
+            $allowed = true;
         }
 
         return $allowed;
