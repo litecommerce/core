@@ -85,7 +85,7 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      */
     protected function getProductId()
     {
-        return \XLite\Core\Request::getInstance()->id;
+        return \XLite\Core\Request::getInstance()->product_id;
     }
 
     /**

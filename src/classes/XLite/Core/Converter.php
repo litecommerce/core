@@ -336,7 +336,7 @@ class Converter extends \XLite\Base\Singleton
     protected static function parseCleanURLHook($url, $last, $rest, $ext, &$target, array &$params)
     {
         if ('product' === $target && !empty($last)) {
-            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findByCleanURL($last);
+            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findOneByCleanURL($last);
 
             if (isset($category)) {
                 $params['category_id'] = $category->getCategoryId();

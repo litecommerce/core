@@ -36,7 +36,7 @@ namespace XLite\Controller\Admin;
 class Product extends \XLite\Controller\Admin\Base\Catalog
 {
     /**
-     * FIXME- backward compatibility
+     * Backward compatibility
      *
      * @var   array
      * @see   ____var_see____
@@ -314,6 +314,7 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
         
         if (!$result) {
             $entity = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanURL($cleanURL);
+
             // DO NOT use "===" here
             $result = !isset($entity) || $entity->getProductId() == $this->getProductId();
             
