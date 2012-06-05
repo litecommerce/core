@@ -21,5 +21,5 @@ DirectoryIndex cart.php
   RewriteRule (^|/)\. - [F]
   RewriteRule ^((([/_a-z0-9-]+)/)?([_a-z0-9-]+)/)?([_a-z0-9-]+)(\.(htm)(l)?)?$ cart.php?url=$5&last=$4&rest=$3&ext=$7 [NC] [L]
 
-  RewriteBase /~vvs/xlite/src
+  RewriteBase ____WEB_DIR____
 </IfModule>
