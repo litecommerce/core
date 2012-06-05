@@ -45,6 +45,14 @@ class Payment extends \XLite\View\Checkout\Step\AStep
     protected $modifier;
 
     /**
+     * Flag if the cart has been already payed (cache)
+     *
+     * @var boolean
+     */
+    protected $isPayedCart;
+
+
+    /**
      * Get step name
      *
      * @return string
@@ -77,7 +85,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      */
     public function isEnabled()
     {
-        return parent::isEnabled() && (!$this->getCart()->isPayed());
+        return parent::isEnabled() && (!$this->isPayedCart());
     }
 
     /**
@@ -89,10 +97,12 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      */
     public function isCompleted()
     {
-        return $this->getCart()->getProfile()
-            && $this->getCart()->getProfile()->getBillingAddress()
-            && $this->getCart()->getProfile()->getBillingAddress()->isCompleted(\XLite\Model\Address::BILLING)
-            && ($this->getCart()->isPayed() || $this->getCart()->getPaymentMethod());
+        return !$this->isEnabled()
+            || ($this->getCart()->getProfile()
+                && $this->getCart()->getProfile()->getBillingAddress()
+                && $this->getCart()->getProfile()->getBillingAddress()->isCompleted(\XLite\Model\Address::BILLING)
+                && $this->getCart()->getPaymentMethod()
+            );
     }
 
     /**
@@ -187,5 +197,22 @@ class Payment extends \XLite\View\Checkout\Step\AStep
     protected function preparePaymentMethodIcon($icon)
     {
         return \XLite\Core\Layout::getInstance()->getResourceWebPath($icon, \XLite\Core\Layout::WEB_PATH_OUTPUT_URL);
+    }
+
+    /**
+     * Return flag if the cart has been already payed
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isPayedCart()
+    {
+        if (!isset($this->isPayedCart)) {
+
+            $this->isPayedCart = $this->getCart()->isPayed();
+        }
+
+        return $this->isPayedCart;
     }
 }
