@@ -25,7 +25,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Model\Address;
+namespace XLite\View\Model\Currency;
 
 /**
  * Currency model widget
@@ -48,67 +48,7 @@ class Currency extends \XLite\View\Model\AModel
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $addressSchema = array(
-        'title' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Title',
-            self::SCHEMA_LABEL    => 'Title',
-            self::SCHEMA_REQUIRED => false,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-title',
-        ),
-        'firstname' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Firstname',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-firstname',
-        ),
-        'lastname' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Lastname',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-lastname',
-        ),
-        'street' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Address',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-street',
-        ),
-        'country_code' => array(
-            self::SCHEMA_CLASS => '\XLite\View\FormField\Select\Country',
-            self::SCHEMA_LABEL => 'Country',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-country',
-        ),
-        'state_id' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\State',
-            self::SCHEMA_LABEL    => 'State',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-state',
-        ),
-        'custom_state' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'State',
-            self::SCHEMA_REQUIRED => false,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-customer-state',
-        ),
-        'city' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'City',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-city',
-        ),
-        'zipcode' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Zip code',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-zipcode',
-        ),
-        'phone' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Phone',
-            self::SCHEMA_REQUIRED => true,
-            \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-phone',
-        ),
+    protected $currencySchema = array(
     );
 
     /**
@@ -121,23 +61,15 @@ class Currency extends \XLite\View\Model\AModel
     protected $currency = null;
 
     /**
-     * getAddressSchema
+     * getCurrencySchema
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getAddressSchema()
+    public function getCurrencySchema()
     {
-        $result = array();
-
-        $addressId = $this->getAddressId();
-
-        foreach ($this->addressSchema as $key => $data) {
-            $result[$addressId . '_' . $key] = $data;
-        }
-
-        return $result;
+        return $this->currencySchema;
     }
 
     /**
@@ -149,12 +81,7 @@ class Currency extends \XLite\View\Model\AModel
      */
     public function getFormFieldsForSectionDefault()
     {
-        $result = $this->getFieldsBySchema($this->getAddressSchema());
-
-        // For country <-> state syncronization
-        $this->setStateSelectorIds($result);
-
-        return $result;
+        return $this->getFieldsBySchema($this->getCurrencySchema());
     }
 
     /**
@@ -166,7 +93,7 @@ class Currency extends \XLite\View\Model\AModel
      */
     protected function getHead()
     {
-        return 'Currency management page';
+        return 'Currency';
     }
 
     protected function getRequestCurrencyId()
