@@ -115,7 +115,7 @@ class Tax extends \XLite\Model\Base\I18n
     }
 
     /**
-     * Get filtered rates by zones and membership
+     * Get filtered rates by zones, membership and product classes
      *
      * @param array                                   $zones          Zone id list
      * @param \XLite\Model\Membership                 $membership     Membership OPTIONAL
@@ -143,7 +143,7 @@ class Tax extends \XLite\Model\Base\I18n
     }
 
     /**
-     * Get filtered rate by zones and membership
+     * Get filtered rate by zones, membership and product classes
      *
      * @param array                                   $zones          Zone id list
      * @param \XLite\Model\Membership                 $membership     Membership OPTIONAL
