@@ -35,6 +35,15 @@
 
   </table>
 
+  <div class="vat-options">
+    <div class="vat-options-block">
+      <widget class="\XLite\View\FormField\Input\Checkbox" fieldName="display_prices_including_vat" isChecked="{config.CDev.VAT.display_prices_including_vat=#Y#}" label="{t(#Display prices in catalog including VAT#)}" />
+    </div>
+    <div class="vat-options-block">
+      <widget class="\XLite\Module\CDev\VAT\View\FormField\LabelModeSelector" fieldName="display_inc_vat_label" value="{config.CDev.VAT.display_inc_vat_label}" label="{t(#Display 'inc/ex VAT' labels next to prices#)}" help="{t(#If this option is ticked all prices in the catalog will be shown with 'inc VAT' or 'ex VAT' label depending on whether included VAT into the price or not. If you choose do not display this label, you have to place information about it somewhere on the catalog pages as it must be clear for customers.#)}" />
+    </div>
+  </div>
+
   <div class="vat-base">
     <p>{t(#Product prices are defined including this tax calculated for#)}:</p>
     <div>

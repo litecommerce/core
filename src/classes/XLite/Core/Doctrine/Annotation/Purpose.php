@@ -22,37 +22,35 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.19
  */
 
-namespace XLite\Module\CDev\VAT\Model;
+namespace XLite\Core\Doctrine\Annotation;
 
 /**
- * Order item
+ * Purpose
  * 
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.19
  */
-class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
+class Purpose extends \Doctrine\Common\Annotations\Annotation
 {
     /**
-     * Define net price
-     *
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
+     * Purpose name 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.19
      */
-    protected function defineNetPrice()
-    {
-        $price = parent::defineNetPrice();
+    public $name;
 
-        if ($this->getProduct()) {
-            $price = \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()
-                ->calculateProductNetPrice($this->getProduct(), $price);
-            $price = round($price, \XLite\Logic\Math::STORE_PRECISION);
-        }
-
-        return $price;
-    }
+    /**
+     * Purpose source (default - base property)
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.19
+     */
+    public $source;
 }
 

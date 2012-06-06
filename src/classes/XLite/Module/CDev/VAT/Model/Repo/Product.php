@@ -18,7 +18,7 @@
  * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -36,7 +36,7 @@ namespace XLite\Module\CDev\VAT\Model\Repo;
 class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorator
 {
     /**
-     * Assign prica range-based search condition
+     * Assign price range-based search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder
      * @param float                      $min          Minimum
@@ -52,8 +52,10 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
             parent::assignPriceRangeCondition($queryBuilder, $min, $max);
 
         } else {
+
             $queryBuilder->leftJoin('p.classes', 'classes', 'WITH');
-            $cnd = \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->getSearchPriceConbdition('p.price', 'classes');
+            $cnd = \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()
+                ->getSearchPriceCondition('p.price', 'classes');
 
             if (isset($min)) {
                 $queryBuilder->andWhere($cnd . ' > :minPrice')

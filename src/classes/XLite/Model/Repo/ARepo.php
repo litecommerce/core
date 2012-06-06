@@ -412,7 +412,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function findByIds(array $ids)
+    public function findByIds(array $ids, $prefix = 'arr')
     {
         if (1 < count($this->_class->identifier)) {
             // TODO - add throw exception
@@ -422,7 +422,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         if ($ids) {
             $qb = $this->createQueryBuilder();
-            $keys = \XLite\Core\Database::buildInCondition($qb, $ids);
+            $keys = \XLite\Core\Database::buildInCondition($qb, $ids, $prefix);
             $alias = $this->getMainAlias($qb);
             $qb->andWhere($alias . '.' . $this->_class->identifier[0] . ' IN (' . implode(', ', $keys) . ')');
 
@@ -581,7 +581,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         if ($flush) {
             $this->flushChanges();
-        }   
+        }
     }
 
     /**
@@ -704,7 +704,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         return $entity;
     }
- 
+
     /**
      * Update single entity
      *

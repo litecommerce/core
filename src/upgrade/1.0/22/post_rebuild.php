@@ -89,7 +89,11 @@ return function()
             );
 
             foreach ($cell['translations'] as $t) {
-                $currency->getTranslation($t['code'])->setName($t['name']);
+                $translation = $currency->getTranslation($t['code']);
+                $translation->setName($t['name']);
+                if (!$translation->getLabelId()) {
+                    \XLite\Core\Database::getEM()->persist($translation);
+                }
             }
         }
         \XLite\Core\Database::getEM()->flush();

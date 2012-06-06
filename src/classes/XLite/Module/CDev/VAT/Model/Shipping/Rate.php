@@ -18,7 +18,7 @@
  * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -35,7 +35,6 @@ namespace XLite\Module\CDev\VAT\Model\Shipping;
  */
 class Rate extends \XLite\Model\Shipping\Rate implements \XLite\Base\IDecorator
 {
-
     /**
      * Get total rate
      *
@@ -48,10 +47,9 @@ class Rate extends \XLite\Model\Shipping\Rate implements \XLite\Base\IDecorator
         $total = parent::getTotalRate();
 
         if (!\XLite::isAdminZone() && $this->getMethod()) {
-            $total = \XLite\Module\CDev\VAT\Logic\Shipping\Tax::getInstance()->calculatRateCost($this, $total);
+            $total = \XLite\Module\CDev\VAT\Logic\Shipping\Tax::getInstance()->calculateRateCost($this, $total);
         }
 
         return $total;
     }
-
 }

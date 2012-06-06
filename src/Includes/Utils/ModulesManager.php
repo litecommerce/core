@@ -189,6 +189,23 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         return static::getAbsoluteDir($author, $name) . 'install.yaml';
     }
 
+    /**
+     * Get module by file name
+     *
+     * @param string $file File name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function getFileModule($file)
+    {
+        $pattern = '/classes' . LC_DS_QUOTED . 'XLite' . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED 
+            . '(\w+)' . LC_DS_QUOTED . '(\w+)' . LC_DS_QUOTED . '/Si';
+
+        return preg_match($pattern, $file, $matches) ? ($matches[1] . '\\' . $matches[2]) : null;
+    }
+
     // }}}
 
     // {{{ Methods to access installed module main class
@@ -407,6 +424,27 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
 
         $dependencies = array_diff_key($dependencies, static::$activeModules);
         array_walk_recursive($dependencies, array('static', 'disableModule'));
+
+        // http://bugtracker.litecommerce.com/view.php?id=41330
+        static::excludeMutualModules();
+    }
+
+    /**
+     * Disable so called "mutual exclusive" modules
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected static function excludeMutualModules()
+    {
+        $list = array();
+
+        foreach (static::$activeModules as $module => $data) {
+            $list = array_merge_recursive($list, static::callModuleMethod($module, 'getMutualModulesList'));
+        }
+
+        array_walk_recursive($list, array('static', 'disableModule'));
     }
 
     // }}}
@@ -470,18 +508,20 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
             $filter = new \Includes\Utils\FileFilter($path, '/.*\.php$/Si');
 
             foreach ($filter->getIterator() as $path => $data) {
-                $class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
+
+                // DO NOT call "getInterfaces()" after the "getFullClassName()"
+                // DO NOT use reflection to get interfaces
+                $intefaces = \Includes\Decorator\Utils\Tokenizer::getInterfaces($path);
+                $class     = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
+
                 $reflectionClass = new \ReflectionClass($class);
 
-                if (
-                    $class
-                    && is_subclass_of($class, '\XLite\Model\AEntity')
-                    && !$reflectionClass->isAbstract()
-                ) {
+                if ($class && is_subclass_of($class, '\XLite\Model\AEntity') && !$reflectionClass->isAbstract()) {
                     $class = ltrim($class, '\\');
-                    $len = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
+                    $len   = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
 
-                    if (in_array('XLite\Base\IDecorator', class_implements($class))) {
+                    // DO NOT remove leading backslash in interface name
+                    if (in_array('\XLite\Base\IDecorator', $intefaces)) {
                         $parent   = \Includes\Decorator\Utils\Tokenizer::getParentClassName($path);
                         $metadata = \XLite\Core\Database::getEM()->getClassMetadata($parent);
                         $table    = substr($metadata->getTableName(), $len);

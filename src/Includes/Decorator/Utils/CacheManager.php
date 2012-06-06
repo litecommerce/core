@@ -458,6 +458,9 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         // Write indicator files and show the message
         static::startStep($step);
 
+        // Enable output (if needed)
+        static::setFastCGITimeoutEcho();
+
         // Perform step-specific actions
         \Includes\Utils\Operator::executeWithCustomMaxExecTime(
             \Includes\Utils\ConfigParser::getOptions(array('decorator', 'time_limit')),
@@ -741,6 +744,26 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         foreach (static::$cacheDirs as $dir) {
             \Includes\Utils\FileManager::unlinkRecursive($dir);
             static::checkPermissions($dir);
+        }
+    }
+
+    // }}}
+
+    // {{{ Fix for the FastCGI timeout (http://bt.litecommerce.com/view.php?id=41139)
+
+    /**
+     * Set output per tick(s)
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected static function setFastCGITimeoutEcho()
+    {
+        if (\Includes\Utils\ConfigParser::getOptions(array('decorator', 'use_output'))) {
+            declare(ticks = 10000);
+
+            register_tick_function(array('\Includes\Utils\Operator', 'showMessage'), '.', false);
         }
     }
 

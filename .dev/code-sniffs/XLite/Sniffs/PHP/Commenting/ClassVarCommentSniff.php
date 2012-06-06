@@ -122,6 +122,16 @@ class XLite_Sniffs_PHP_Commenting_ClassVarCommentSniff extends XLite_TagsSniff
             'required'       => false,
             'allow_multiple' => false,
             'order_text'     => 'follows @Column',
+        ),
+        'XLite\Core\Doctrine\Annotation\Behavior' => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @Column',
+		),
+        'XLite\Core\Doctrine\Annotation\Purpose' => array(
+            'required'       => false,
+            'allow_multiple' => true,
+            'order_text'     => 'follows @Column',
 		),
 	);
 

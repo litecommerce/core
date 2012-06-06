@@ -127,6 +127,21 @@ abstract class AOrderList extends \XLite\View\Dialog
     }
 
     /**
+     * Check if the product of the order item is deleted one in the store
+     *
+     * @param \XLite\Model\OrderItem $item
+     * @param boolean                $data
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkIsAvailableToOrder(\XLite\Model\OrderItem $item, $data)
+    {
+        return $data !== $item->isValidToClone();
+    }
+
+    /**
      * Return title
      *
      * @return string
@@ -178,5 +193,19 @@ abstract class AOrderList extends \XLite\View\Dialog
         );
 
         return $params + $this->getWidgetKeys();
+    }
+
+    /**
+     * Check if the re-order button is shown
+     *
+     * @param \XLite\Model\Order $order
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function showReorder(\XLite\Model\Order $order)
+    {
+        return (bool)\Includes\Utils\ArrayManager::findValue($order->getItems(), array($this, 'checkIsAvailableToOrder'), false);
     }
 }

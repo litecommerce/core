@@ -18,7 +18,7 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -110,7 +110,7 @@ class Rate extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Zone", cascade={"all"})
+     * @ManyToOne  (targetEntity="XLite\Model\Zone")
      * @JoinColumn (name="zone_id", referencedColumnName="zone_id")
      */
     protected $zone;
@@ -122,7 +122,7 @@ class Rate extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\ProductClass", cascade={"all"})
+     * @ManyToOne  (targetEntity="XLite\Model\ProductClass")
      * @JoinColumn (name="product_class_id", referencedColumnName="id")
      */
     protected $productClass;
@@ -134,7 +134,7 @@ class Rate extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Membership", cascade={"all"})
+     * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
      */
     protected $membership;
@@ -202,143 +202,10 @@ class Rate extends \XLite\Model\AEntity
             && (2 == func_num_args() || !$this->getProductClass() || ($productClasses && $productClasses->contains($this->getProductClass())));
     }
 
-    // {{{ Calculation
-
-    /**
-     * Calculate 
-     * 
-     * @param array $items Items
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function calculate(array $items)
-    {
-        $cost = 0;
-        $list = array();
-
-        if ($this->getBasis($items) && $this->getQuantity($items)) {
-            list($cost, $list) = $this->getType() == static::TYPE_PERCENT
-                ? $this->calculateIncludePercent($items)
-                : $this->calculateIncludeAbsolute($items);
-        }
-
-        return array($cost, $list);
-    }
-
-    /**
-     * getBasis 
-     * 
-     * @param array $items ____param_comment____
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getBasis(array $items)
-    {
-        $basis = 0;
-
-        foreach ($items as $item) {
-            $basis += $item->getTaxableBasis() * $item->getAmount();
-        }
-
-        return $basis;
-    }
-
-    /**
-     * Get product taxable basis 
-     * 
-     * @param \XLite\Model\Product $product Product
-     *  
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getProductBasis(\XLite\Model\Product $product)
-    {
-        return $product->getTaxableBasis();
-    }
-
-    /**
-     * getQuantity 
-     * 
-     * @param array $items ____param_comment____
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getQuantity(array $items)
-    {
-        $quantity = 0;
-
-        foreach ($items as $item) {
-            $quantity += $item->getAmount();
-        }
-
-        return $quantity;
-    }
-
-    /**
-     * calculateIncludePercent 
-     * 
-     * @param array $items ____param_comment____
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function calculateIncludePercent(array $items)
-    {
-        $base = $this->getBasis($items);
-
-        $cost = $base - $base / (100 + $this->getValue()) * 100;
-
-        $list = array();
-
-        foreach ($items as $item) {
-            $list[] = array(
-                'item' => $item,
-                'cost' => $item->getTaxableBasis() - $item->getTaxableBasis() / (100 + $this->getValue()) * 100,
-            );
-        }
-
-        return array($cost, $list);
-    }
-
-    /**
-     * calculateIncludeAbsolute 
-     * 
-     * @param array $items ____param_comment____
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function calculateIncludeAbsolute(array $items)
-    {
-        $cost = $this->getValue() * $this->getQuantity();
-
-        $list = array();
-
-        foreach ($items as $item) {
-            $list[] = array(
-                'item' => $item,
-                'cost' => $item->getAmount() * $this->getValue(),
-            );
-        }
-
-        return array($cost, $list);
-    }
-
-    // }}}
-
     // {{{ Product price calculation
 
     /**
-     * Calculate pure product price (excluding tax)
+     * Calculate and return tax rate value for price which includes tax rate
      *
      * @param \XLite\Model\Product $product Product
      * @param float                $price   Price
@@ -349,7 +216,7 @@ class Rate extends \XLite\Model\AEntity
      */
     public function calculateProductPriceExcludingTax(\XLite\Model\Product $product, $price)
     {
-        return $this->getProductBasis($product)
+        return $price
             ? $this->calculateValueExcludingTax($price)
             : 0;
     }
@@ -382,7 +249,7 @@ class Rate extends \XLite\Model\AEntity
      */
     public function calculateProductPriceIncludingTax(\XLite\Model\Product $product, $price)
     {
-        return $this->getProductBasis($product)
+        return $price
             ? $this->calculateValueIncludingTax($price)
             : 0;
     }
@@ -476,22 +343,6 @@ class Rate extends \XLite\Model\AEntity
     {
         return $this->getType() == self::TYPE_PERCENT
             ? $priceField . ' - ' . $priceField . ' / ' . ((100 + $this->getValue()) / 100)
-            : $this->getValue();
-    }
-
-    /**
-     * Get include tax formula 
-     * 
-     * @param string $priceField Product price field
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.8
-     */
-    public function getIncludeTaxFormula($priceField)
-    {
-        return $this->getType() == self::TYPE_PERCENT
-            ? $priceField . ' * ' . ($this->getValue() / 100)
             : $this->getValue();
     }
 

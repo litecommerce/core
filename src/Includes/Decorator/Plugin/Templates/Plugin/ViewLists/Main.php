@@ -47,6 +47,11 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     const PARAM_TAG_LIST_CHILD_CONTROLLER = 'controller';
 
     /**
+     * Temporary index to use in templates hash
+     */
+    const PREPARED_SKIN_NAME = '____PREPARED____';
+
+    /**
      * List of PHP classes with the "ListChild" tags
      *
      * @var   array
@@ -173,8 +178,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * Prepare list childs templates-based
      *
-     * :FIXME: must be completely refactored
-     *
      * @param array $list List
      *
      * @return array
@@ -185,72 +188,55 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     {
         \XLite::getInstance()->initModules();
 
-        // Get substitutional skins
-        $customerSkins = \XLite\Core\Layout::getInstance()->getSkins(\XLite::CUSTOMER_INTERFACE);
-        $adminSkins = \XLite\Core\Layout::getInstance()->getSkins(\XLite::ADMIN_INTERFACE);
-        $mailSkins = \XLite\Core\Layout::getInstance()->getSkins(\XLite::MAIL_INTERFACE);
-        $allSkins = array_merge($customerSkins, $adminSkins, $mailSkins);
+        $skins = array();
+        $hasSubstSkins = false;
 
-        // Proceed if system has substitutional skins
-        if (3 < count($allSkins)) {
+        foreach (\XLite\Core\Layout::getInstance()->getSkinsAll() as $interface => $path) {
+            $skins[$interface] = \XLite\Core\Layout::getInstance()->getSkins($interface);
 
-            // Create empty hash
-            $hash = array(
-                \XLite::CUSTOMER_INTERFACE => array_combine(
-                    $customerSkins,
-                    array_fill(0, count($customerSkins), array())
-                ),
-                \XLite::ADMIN_INTERFACE    => array_combine(
-                    $adminSkins,
-                    array_fill(0, count($adminSkins), array())
-                ),
-                \XLite::MAIL_INTERFACE     => array_combine(
-                    $mailSkins,
-                    array_fill(0, count($mailSkins), array())
-                ),
-            );
+            if (!$hasSubstSkins) {
+                $hasSubstSkins = 1 < count($skins[$interface]);
+            }
+        }
 
-            // Build skins / templates hash
+        if ($hasSubstSkins) {
+            $patterns = $hash = array();
+
+            foreach ($skins as $interface => $data) {
+                $patterns[$interface] = array();
+            
+                foreach ($data as $skin) {
+                    $patterns[$interface][] = preg_quote($skin, '/');
+                }
+
+                $patterns[$interface] = '/^(' . implode('|', $patterns[$interface]) . ')' . preg_quote(LC_DS, '/') . '/US';
+            }
+
             foreach ($list as $index => $item) {
-                $skin = preg_replace('/^(\w+).+$/Ss', '$1', substr($item['path'], strlen(LC_DIR_SKINS)));
-                if (
-                    (!in_array($skin, $customerSkins) && $item['zone'] == \XLite::CUSTOMER_INTERFACE)
-                    || (!in_array($skin, $adminSkins) && $item['zone'] == \XLite::ADMIN_INTERFACE)
-                    || (!in_array($skin, $mailSkins) && $item['zone'] == \XLite::MAIL_INTERFACE)
-                    || (!in_array($skin, $allSkins))
-                ) {
-                    unset($list[$index]);
+                $path = \Includes\Utils\FileManager::getRelativePath($item['path'], LC_DIR_SKINS);
 
-                } else {
-                    $list[$index]['skin'] = $skin;
-
-                    if (isset($hash[$item['zone']])) {
-                        $hash[$item['zone']][$skin][$item['tpl']] = $index;
-                    }
+                if (preg_match($patterns[$item['zone']], $path, $matches)) {
+                    $hash[$item['zone']][$matches[1]][$item['tpl']][] = $index;
                 }
             }
 
-            // Remove templates from dependent skins
-            foreach ($hash as $interface => $skins) {
-                $order = \XLite\Core\Layout::getInstance()->getSkins($interface);
-                foreach ($order as $skin) {
-                    foreach ($skins[$skin] as $tpl => $index) {
-                        $inherited = isset($list[$index]) && in_array($list[$index]['path'], static::$inheritedTemplates);
-                        foreach ($skins as $otherSkin => $otherTpls) {
-                            if ($otherSkin != $skin && isset($otherTpls[$tpl])) {
+            foreach ($hash as $interface => &$data) {
+                $data[static::PREPARED_SKIN_NAME] = array();
 
-                                if ($inherited) {
-                                    $inherited = in_array($list[$otherTpls[$tpl]]['path'], static::$inheritedTemplates);
-
-                                } else {
-                                    unset($list[$otherTpls[$tpl]]);
-                                }
-                            }
+                foreach (array_reverse($skins[$interface]) as $skin) {
+                    if (!empty($data[$skin])) {
+                        foreach ($data[$skin] as $tpl => $indexes) {
+                            $data[static::PREPARED_SKIN_NAME][$tpl] = $indexes;
                         }
                     }
-                    unset($skins[$skin]);
                 }
             }
+
+            $index = \Includes\Utils\ArrayManager::getArraysArrayFieldValues($hash, static::PREPARED_SKIN_NAME);
+            $index = call_user_func_array('array_merge', $index);
+            $index = call_user_func_array('array_merge', $index);
+
+            $list = \Includes\Utils\ArrayManager::filterByKeys($list, array_values($index));
         }
 
         return $list;
