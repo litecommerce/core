@@ -32,6 +32,8 @@ namespace XLite\Core\Doctrine\Annotation;
  * 
  * @see   ____class_see____
  * @since 1.0.19
+ *
+ * @Annotation
  */
 class Purpose extends \Doctrine\Common\Annotations\Annotation
 {
@@ -53,4 +55,3 @@ class Purpose extends \Doctrine\Common\Annotations\Annotation
      */
     public $source;
 }
-

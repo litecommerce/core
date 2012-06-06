@@ -112,7 +112,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      *          @XLite\Core\Doctrine\Annotation\Purpose  (name="net", source="clear"),
      *          @XLite\Core\Doctrine\Annotation\Purpose  (name="display", source="net")
      *      }
-     *  )
+     * )
      */
     protected $price;
 
@@ -134,7 +134,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="decimal", precision="14", scale="4")
+     * @Column (type="decimal", precision=14, scale=4)
      */
     protected $discountedSubtotal = 0;
 
