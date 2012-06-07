@@ -168,19 +168,20 @@ class Converter extends \XLite\Base\Singleton
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
         $result = null;
+        $cuFlag = LC_USE_CLEAN_URLS && !\XLite::isAdminZone();
 
-        if (LC_USE_CLEAN_URLS && !\XLite::isAdminZone()) {
+        if ($cuFlag) {
             $result = static::buildCleanURL($target, $action, $params);
-        }   
-        
+        }
+
         if (!isset($result)) {
-            if (!isset($interface)) {
+            if (!isset($interface) && !$cuFlag) {
                 $interface = \XLite::getInstance()->getScript();
-            }   
-            
+            }
+
             $result = \Includes\Utils\Converter::buildURL($target, $action, $params, $interface);
         }
-        
+
         return $result;
     }
 
@@ -221,6 +222,8 @@ class Converter extends \XLite\Base\Singleton
                 
             if (isset($product) && $product->getCleanURL()) {
                 $urlParams[] = $product->getCleanURL() . '.html';
+
+                unset($params['product_id']);
             }
         }
 
@@ -234,13 +237,23 @@ class Converter extends \XLite\Base\Singleton
                     }
                 }
             }
+
+            if (!empty($urlParams)) {
+                unset($params['category_id']);
+            }
         }
 
         static::buildCleanURLHook($target, $action, $params, $urlParams);
 
         if (!empty($urlParams)) {
+            unset($params['target']);
+
             $result  = \Includes\Utils\ConfigParser::getOptions(array('host_details', 'web_dir_wo_slash'));
             $result .= '/' . implode('/', array_reverse($urlParams));
+
+            if (!empty($params)) {
+                $result .= '?' . http_build_query($params);
+            }
         }
 
         return $result;

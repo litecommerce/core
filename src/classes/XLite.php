@@ -72,6 +72,15 @@ class XLite extends \XLite\Base
     protected static $adminZone = false;
 
     /**
+     * URL type flag
+     *
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
+    protected static $cleanURL = false;
+
+    /**
      * Called controller
      *
      * @var   \XLite\Controller\AController
@@ -117,6 +126,18 @@ class XLite extends \XLite\Base
     public static function isAdminZone()
     {
         return static::$adminZone;
+    }
+
+    /**
+     * Check if clean URL used
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function isCleanURL()
+    {
+        return static::$cleanURL;
     }
 
     /**
@@ -455,6 +476,8 @@ class XLite extends \XLite\Base
 
         if (!empty($target)) {
             $tmp->mapRequest($params);
+
+            static::$cleanURL = true;
         }
 
         return $target;

@@ -313,7 +313,6 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Handles the request.
      * Parses the request variables if necessary. Attempts to call the specified action function
-     * FIXME - simplify
      *
      * @return void
      * @see    ____func_see____
@@ -1029,7 +1028,7 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Preprocessor for no-action ren
+     * Preprocessor for no-action run
      *
      * @return void
      * @see    ____func_see____

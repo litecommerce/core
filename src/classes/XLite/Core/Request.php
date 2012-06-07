@@ -35,6 +35,9 @@ namespace XLite\Core;
  */
 class Request extends \XLite\Base\Singleton
 {
+    /**
+     * Current method
+     */
     const METHOD_CLI = 'cli';
 
     /**
@@ -75,7 +78,7 @@ class Request extends \XLite\Base\Singleton
                 }
 
             } else {
-                $data = array_merge($_GET, $_POST, $_COOKIE);
+                $data = array_merge($this->getGetData(false), $this->getPostData(false), $this->getCookieData(false));
             }
         }
 
@@ -92,6 +95,48 @@ class Request extends \XLite\Base\Singleton
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * Return data from the $_GET global variable
+     *
+     * @param boolean $prepare Flag OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getGetData($prepare = true)
+    {
+        return $prepare ? $this->prepare($_GET) : $_GET;
+    }
+
+    /**
+     * Return data from the $_POST global variable
+     *
+     * @param boolean $prepare Flag OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getPostData($prepare = true)
+    {
+        return $prepare ? $this->prepare($_POST) : $_POST;
+    }
+
+    /**
+     * Return data from the $_COOKIE global variable
+     *
+     * @param boolean $prepare Flag OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getCookieData($prepare = true)
+    {
+        return $prepare ? $this->prepare($_COOKIE) : $_COOKIE;
     }
 
     /**
