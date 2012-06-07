@@ -35,12 +35,14 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Product")
  * @Table  (name="products",
+ *      uniqueConstraints={
+ *          @UniqueConstraint (name="cleanURL", columns={"cleanURL"})
+ *      },
  *      indexes={
  *          @Index (name="price", columns={"price"}),
  *          @Index (name="sku", columns={"sku"}),
  *          @Index (name="weight", columns={"weight"}),
  *          @Index (name="free_shipping", columns={"free_shipping"}),
- *          @Index (name="cleanURL", columns={"cleanURL"}),
  *          @Index (name="customerArea", columns={"enabled","arrivalDate"})
  *      }
  * )
@@ -130,9 +132,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255", nullable=true)
      */
-    protected $cleanURL = '';
+    protected $cleanURL;
 
     /**
      * Custom javascript code

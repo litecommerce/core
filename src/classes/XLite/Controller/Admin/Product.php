@@ -72,6 +72,18 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
         return '\XLite\View\Form\Product\Modify\Single';
     }
 
+    /**
+     * Return entity
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getEntityInfo()
+    {
+        return array('\XLite\Model\Product', 'getProductId');
+    }
+
     // }}}
 
     // {{{ Pages
@@ -289,37 +301,6 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
 
             } else {
                 $result['arrivalDate'] = $value;
-            }
-        }
-
-        return $result;
-    }
-
-    // }}}
-
-    // {{{ Clean URL routines
-    
-    /**
-     * Check if specified clean URL is unique or not
-     *
-     * @param string $cleanURL Clean URL
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function checkCleanURL($cleanURL)
-    {   
-        $result = empty($cleanURL);
-        
-        if (!$result) {
-            $entity = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanURL($cleanURL);
-
-            // DO NOT use "===" here
-            $result = !isset($entity) || $entity->getProductId() == $this->getProductId();
-            
-            if (!$result) {
-                $this->setCleanURLError($cleanURL);
             }
         }
 

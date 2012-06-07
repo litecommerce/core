@@ -63,15 +63,13 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     abstract protected function getFormClass();
 
     /**
-     * Check if specified clean URL is unique or not
+     * Return entity
      *
-     * @param string $cleanURL Clean URL
-     *
-     * @return boolean
+     * @return array
      * @see    ____func_see____
-     * @since  1.0.21
+     * @since  1.0.24
      */
-    abstract protected function checkCleanURL($cleanURL);
+    abstract protected function getEntityInfo();
 
     /**
      * Add new entity
@@ -165,23 +163,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Set error
-     *
-     * @param string $cleanURL Clean URL
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function setCleanURLError($cleanURL)
-    {
-        \XLite\Core\TopMessage::addError(
-            'The "{{clean_url}}" clean URL is already defined',
-            array('clean_url' => $cleanURL)
-        );
-    }
-
-    /**
      * Generate clean URL
      *
      * @param string $name Product name
@@ -200,6 +181,49 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
         }
 
         return $result;
+    }
+
+    /**
+     * Check if specified clean URL is unique or not
+     *
+     * @param string $cleanURL Clean URL
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkCleanURL($cleanURL)
+    {
+        if (!($result = empty($cleanURL))) {
+            list($class, $method) = $this->getEntityInfo();
+
+            $repo   = \XLite\Core\Database::getRepo($class);
+            $entity = $repo->findOneByCleanURL(substr($cleanURL, 0, $repo->getFieldInfo('cleanURL', 'length')));
+
+            // DO NOT use "===" here
+            if (!($result = !isset($entity) || $entity->getUniqueIdentifier() == $this->$method())) {
+                $this->setCleanURLError($cleanURL);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Set error
+     *
+     * @param string $cleanURL Clean URL
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function setCleanURLError($cleanURL)
+    {
+        \XLite\Core\TopMessage::addError(
+            'The "{{clean_url}}" clean URL is already defined',
+            array('clean_url' => $cleanURL)
+        );
     }
 
     // }}}
