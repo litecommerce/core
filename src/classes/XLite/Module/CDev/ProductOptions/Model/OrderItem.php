@@ -188,6 +188,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @see    ____func_see____
      * @since  1.0.0
      */
+    /*
     public function getPrice()
     {
         $price = parent::getPrice();
@@ -203,6 +204,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 
         return $price;
     }
+     */
 
     /**
      * Get weight

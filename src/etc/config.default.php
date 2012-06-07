@@ -159,6 +159,7 @@ substitutional_skins_cache = off
 time_limit = 240
 use_tokenizer = Off
 disable_software_reset = Off
+use_output = Off
 
 ;
 ; Error handling options

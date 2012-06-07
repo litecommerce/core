@@ -154,7 +154,7 @@ class Category extends \XLite\Model\Base\I18n
      * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
-     * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
+     * @JoinColumn (name="membership_id", referencedColumnName="membership_id", onDelete="SET NULL")
      */
     protected $membership;
 
@@ -192,7 +192,7 @@ class Category extends \XLite\Model\Base\I18n
      * @OrderBy({"pos" = "ASC"})
      */
     protected $children;
-    
+
     /**
      * Parent category
      *
@@ -403,7 +403,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getProductsCount()
     {
-        return count($this->getProducts());
+        return $this->getProducts(null, true);
     }
 
     /**

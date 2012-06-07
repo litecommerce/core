@@ -342,7 +342,7 @@ class Xlite_WebDriverTestCase extends PHPUnit_Framework_TestCase
     public static function suite($className){
         if (defined('NO_RESTORE'))
             return new PHPUnit_Framework_TestSuite($className);
-        
+
         return new XLite_Tests_TestSuite($className);
     }
 }

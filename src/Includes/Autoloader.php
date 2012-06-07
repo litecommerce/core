@@ -214,11 +214,14 @@ abstract class Autoloader
      */
     protected static function registerModulesLibrariesAutoloader()
     {
-        $pattern = LC_DIR_CLASSES . 'XLite' . LC_DS . 'Module' . LC_DS . '*' . LC_DS . '*' . LC_DS . 'lib' . LC_DS . '*';
-        foreach (glob($pattern) as $path) {
-            if (is_dir($path)) {
-                $loader = new \Doctrine\Common\ClassLoader(basename($path), dirname($path));
-                $loader->register();
+        $files = glob(LC_DIR_CLASSES . 'XLite' . LC_DS . 'Module' . LC_DS . '*' . LC_DS . '*' . LC_DS . 'lib' . LC_DS . '*');
+
+        if (is_array($files)) {
+            foreach ($files as $path) {
+                if (is_dir($path)) {
+                    $loader = new \Doctrine\Common\ClassLoader(basename($path), dirname($path));
+                    $loader->register();
+                }
             }
         }
     }

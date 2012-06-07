@@ -18,7 +18,7 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -378,8 +378,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $result = false;
 
         if ($newItem->isValid()) {
-
             $this->addItemError = null;
+            $newItem->setOrder($this);
 
             $item = $this->getItemByItem($newItem);
 
@@ -387,7 +387,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
                 $item->setAmount($item->getAmount() + $newItem->getAmount());
 
             } else {
-                $this->addNewItem($newItem);
+                $this->addItems($newItem);
             }
 
             $result = true;
@@ -953,8 +953,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
         if (!$transaction) {
             $transaction = $this->hasUnpaidTotal() || 0 == count($this->getPaymentTransactions())
-                ? $this->assignLastPaymentMethod()
-                : $this->getPaymentTransactions()->last();
+            ? $this->assignLastPaymentMethod()
+            : $this->getPaymentTransactions()->last();
         }
 
         return $transaction ? $transaction->getPaymentMethod() : null;
@@ -1053,21 +1053,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         }
 
         return $result;
-    }
-
-    /**
-     * Create new cart item
-     *
-     * @param \XLite\Model\OrderItem $item New item
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addNewItem(\XLite\Model\OrderItem $item)
-    {
-        $item->setOrder($this);
-        $this->addItems($item);
     }
 
     // {{{ Payment method and transactions

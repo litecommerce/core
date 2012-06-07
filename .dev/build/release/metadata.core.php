@@ -31,7 +31,7 @@ if (!isset($options['v'])) {
 	echo '-v argument is not defined' . PHP_EOL;
 	exit (1);
 
-} elseif (!preg_match('/^(\d+\.\d+)\.(\d+)$/Ss', $options['v'], $match)) {
+} elseif (!preg_match('/^(\d+\.\d+)\.(\d+)(RC)?$/Ss', $options['v'], $match)) {
     echo '-v argument has wrong format' . PHP_EOL;
     exit (2);
 }

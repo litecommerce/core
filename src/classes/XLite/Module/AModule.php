@@ -178,6 +178,18 @@ abstract class AModule
     }
 
     /**
+     * Return list of mutually exclusive modules
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function getMutualModulesList()
+    {
+        return array();
+    }
+
+    /**
      * Get module major version
      *
      * @return string

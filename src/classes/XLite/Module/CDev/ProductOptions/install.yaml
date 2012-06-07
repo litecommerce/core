@@ -8,6 +8,12 @@
 # @link      http://www.litecommerce.com/
 # @since     1.0.0
 
+XLite\Model\MoneyModificator:
+  - class: XLite\Module\CDev\ProductOptions\Logic\OptionSurcharge
+    validator: isApply
+    purpose: net
+    position: 100
+
 XLite\Model\LanguageLabel:
   - { name: '"X product" options', translations: [{ code: en, label: '"{{product}}" options' }] }
   - { name: 'Selected options', translations: [{ code: en, label: 'Selected options' }] }

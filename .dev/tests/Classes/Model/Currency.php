@@ -80,7 +80,7 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
         $this->assertEquals($o, $c->getOrders()->get(0), 'check order');
 
         try {
-            $this->getTestCurrency();
+            $this->getTestCurrency(true);
             $this->fail('check code unique failed');
 
         } catch (\PDOException $e) {
@@ -106,15 +106,12 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
         $c->setName('Test 2');
         $c->setCode('ZZZ');
 
-        \XLite\Core\Database::getEM()->persist($c);
-        \XLite\Core\Database::getEM()->flush();
+        $c->update();
 
-        \XLite\Core\Database::getEM()->clear();
+        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find($c->getCurrencyId());
 
-        $c = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find($c->getCurrencyId());
-
-        $this->assertEquals('Test 2', $c->getName(), 'check new name');
-        $this->assertEquals('ZZZ', $c->getCode(), 'check new code');
+        $this->assertEquals('Test 2', $c2->getName(), 'check new name');
+        $this->assertEquals('ZZZ', $c2->getCode(), 'check new code');
     }
 
     /**
@@ -236,11 +233,10 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
 
     protected function setUp()
     {
-        parent::setUp();
-        $c = \XLite\Core\Database::getRepo("XLite\Model\Currency")->find(999);
-        if ($c) {
-            \XLite\Core\Database::getEM()->remove($c);
-            \XLite\Core\Database::getEM()->flush();
+        try {
+            parent::setUp();
+        } catch (\Doctrine\Common\Annotations\AnnotationException $e) {
+            echo 'Exception';
         }
         $this->currency = $this->getTestCurrency();
     }
@@ -259,14 +255,15 @@ class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
      * @see    ____func_see____
      * @since  1.0.13
      */
-    protected function getTestCurrency()
+    protected function getTestCurrency($forceCreate = false)
     {
-        $c = new \XLite\Model\Currency();
+        $c = \XLite\Core\Database::getRepo("XLite\Model\Currency")->find(999);
 
-        $c->map($this->testData);
-
-        \XLite\Core\Database::getEM()->persist($c);
-        \XLite\Core\Database::getEM()->flush();
+        if ($forceCreate || !$c) {
+            $c = new \XLite\Model\Currency();
+            $c->map($this->testData);
+            $c->update();
+        }
 
         return $c;
     }
