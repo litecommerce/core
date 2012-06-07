@@ -86,6 +86,10 @@ abstract class Converter extends \Includes\Utils\AUtils
      */
     public static function parseArgs(array $args, $glue = '=', $quotes = '', $hasParts = true)
     {
+        if (!isset($glue)) {
+            $glue = '=';
+        }
+
         $result = array();
 
         foreach ($args as $part) {
