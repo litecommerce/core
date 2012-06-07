@@ -149,6 +149,20 @@ abstract class XLite_Tests_Module_CDev_VAT_Model_ATax extends XLite_Tests_TestCa
         self::prepareData();
     }
 
+    /**
+     * tearDownAfterClass 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function tearDownAfterClass()
+    {
+        parent::tearDownAfterClass();
+
+        parent::doRestoreDb();
+    }
+
 
     /**
      * prepareData 
