@@ -402,11 +402,15 @@ class AdminMain extends \XLite\View\Model\AModel
         if (
             isset($data['access_level'])
             && \XLite\Core\Auth::getInstance()->getAdminAccessLevel() == $data['access_level']
-            && 1 == \XLite\Core\Database::getRepo('XLite\Model\Role')->count()
+            && $this->needSetRootAccess($this->getModelObject())
         ) {
             $rootRole = \XLite\Core\Database::getRepo('XLite\Model\Role')->findOneRoot();
             if ($rootRole) {
-                $data['roles'] = array($rootRole->getId());
+                if (!is_array($data['roles'])) {
+                    $data['roles'] = array();
+                }
+
+                $data['roles'][] = $rootRole->getId();
             }
         }
 
@@ -442,6 +446,38 @@ class AdminMain extends \XLite\View\Model\AModel
         }
 
         parent::setModelProperties($data);
+    }
+
+    /**
+     * Check - need set root access or not
+     *
+     * @param \XLite\Model\Profile $profile Profile
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function needSetRootAccess(\XLite\Model\Profile $profile)
+    {
+        if ($profile->getProfileId()) {
+            $cnd = new \XLite\Core\CommonCell;
+            $cnd->permissions = \XLite\Model\Role\Permission::ROOT_ACCESS;
+            $onlyOneRootAdmin = false;
+            $i = 0;
+            foreach (\XLite\Core\Database::getRepo('XLite\Model\Profile')->search($cnd) as $p) {
+                $i++;
+                if ($profile->getProfileId() == $p->getProfileId()) {
+                    $onlyOneRootAdmin = true;
+                }
+            }
+
+            if ($i > 1) {
+                $onlyOneRootAdmin = false;
+            }
+        }
+
+        return 1 == \XLite\Core\Database::getRepo('XLite\Model\Role')->count()
+            || $onlyOneRootAdmin;
     }
 
     /**
