@@ -170,8 +170,11 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
         $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue($widgetType);
 
-        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_GRID);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
+
+        unset($this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]);
+        unset($this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]);
     }
 
     /**

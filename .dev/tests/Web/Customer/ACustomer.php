@@ -30,7 +30,7 @@
 require_once __DIR__ . '/../AWeb.php';
 
 /**
- * XLite_Web_Customer_ACustomer 
+ * XLite_Web_Customer_ACustomer
  *
  * @see   ____class_see____
  * @since 1.0.10
@@ -49,18 +49,7 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
      */
     protected function logIn($username = 'master', $password = 'master')
     {
-        $this->open('user');
-
-        if ($this->isLoggedIn()) {
-            $this->logOut(true);
-        }
-
-        $this->type('id=edit-name', $username);
-        $this->type('id=edit-pass', $password);
-
-        $this->submitAndWait('id=user-login');
-
-        $this->assertTrue($this->isLoggedIn(), 'Check that user is logged in successfully');
+        $this->logInCustomer($username, $password);
     }
 
     /**
@@ -219,7 +208,7 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
     protected function getPaymentMethodIdByName($name)
     {
         $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => $name));
-        
+
         if (!$pmethod) {
             $this->fail($name . ' payment method is not found');
         }

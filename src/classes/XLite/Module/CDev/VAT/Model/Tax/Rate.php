@@ -212,143 +212,10 @@ class Rate extends \XLite\Model\AEntity
         return $result;
     }
 
-    // {{{ Calculation
-
-    /**
-     * Calculate 
-     * 
-     * @param array $items Items
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function calculate(array $items)
-    {
-        $cost = 0;
-        $list = array();
-
-        if ($this->getBasis($items) && $this->getQuantity($items)) {
-            list($cost, $list) = $this->getType() == static::TYPE_PERCENT
-                ? $this->calculateIncludePercent($items)
-                : $this->calculateIncludeAbsolute($items);
-        }
-
-        return array($cost, $list);
-    }
-
-    /**
-     * getBasis 
-     * 
-     * @param array $items ____param_comment____
-     *  
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getBasis(array $items)
-    {
-        $basis = 0;
-
-        foreach ($items as $item) {
-            $basis += $item->getTaxableBasis() * $item->getAmount();
-        }
-
-        return $basis;
-    }
-
-    /**
-     * Get product taxable basis 
-     * 
-     * @param \XLite\Model\Product $product Product
-     *  
-     * @return float
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getProductBasis(\XLite\Model\Product $product)
-    {
-        return $product->getTaxableBasis();
-    }
-
-    /**
-     * getQuantity 
-     * 
-     * @param array $items ____param_comment____
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getQuantity(array $items)
-    {
-        $quantity = 0;
-
-        foreach ($items as $item) {
-            $quantity += $item->getAmount();
-        }
-
-        return $quantity;
-    }
-
-    /**
-     * calculateIncludePercent 
-     * 
-     * @param array $items ____param_comment____
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function calculateIncludePercent(array $items)
-    {
-        $base = $this->getBasis($items);
-
-        $cost = $base - $base / (100 + $this->getValue()) * 100;
-
-        $list = array();
-
-        foreach ($items as $item) {
-            $list[] = array(
-                'item' => $item,
-                'cost' => $item->getTaxableBasis() - $item->getTaxableBasis() / (100 + $this->getValue()) * 100,
-            );
-        }
-
-        return array($cost, $list);
-    }
-
-    /**
-     * calculateIncludeAbsolute 
-     * 
-     * @param array $items ____param_comment____
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function calculateIncludeAbsolute(array $items)
-    {
-        $cost = $this->getValue() * $this->getQuantity();
-
-        $list = array();
-
-        foreach ($items as $item) {
-            $list[] = array(
-                'item' => $item,
-                'cost' => $item->getAmount() * $this->getValue(),
-            );
-        }
-
-        return array($cost, $list);
-    }
-
-    // }}}
-
     // {{{ Product price calculation
 
     /**
-     * Calculate pure product price (excluding tax)
+     * Calculate and return tax rate value for price which includes tax rate
      *
      * @param \XLite\Model\Product $product Product
      * @param float                $price   Price
@@ -486,22 +353,6 @@ class Rate extends \XLite\Model\AEntity
     {
         return $this->getType() == self::TYPE_PERCENT
             ? $priceField . ' - ' . $priceField . ' / ' . ((100 + $this->getValue()) / 100)
-            : $this->getValue();
-    }
-
-    /**
-     * Get include tax formula 
-     * 
-     * @param string $priceField Product price field
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.8
-     */
-    public function getIncludeTaxFormula($priceField)
-    {
-        return $this->getType() == self::TYPE_PERCENT
-            ? $priceField . ' * ' . ($this->getValue() / 100)
             : $this->getValue();
     }
 

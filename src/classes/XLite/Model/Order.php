@@ -378,8 +378,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $result = false;
 
         if ($newItem->isValid()) {
-
             $this->addItemError = null;
+            $newItem->setOrder($this);
 
             $item = $this->getItemByItem($newItem);
 
@@ -387,7 +387,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
                 $item->setAmount($item->getAmount() + $newItem->getAmount());
 
             } else {
-                $this->addNewItem($newItem);
+                $this->addItems($newItem);
             }
 
             $result = true;
@@ -1055,21 +1055,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         return $result;
     }
 
-    /**
-     * Create new cart item
-     *
-     * @param \XLite\Model\OrderItem $item New item
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addNewItem(\XLite\Model\OrderItem $item)
-    {
-        $item->setOrder($this);
-        $this->addItems($item);
-    }
-
     // {{{ Payment method and transactions
 
     /**
@@ -1089,8 +1074,11 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         }
 
         if (!isset($paymentMethod) || $this->getFirstOpenPaymentTransaction()) {
+
             $transaction = $this->getFirstOpenPaymentTransaction();
+
             if ($transaction) {
+
                 $this->getPaymentTransactions()->removeElement($transaction);
                 $transaction->getPaymentMethod()->getTransactions()->removeElement($transaction);
                 \XLite\Core\Database::getEM()->remove($transaction);
@@ -1258,22 +1246,26 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             $value = min($value, $this->getOpenTotal());
         }
 
-        $transaction = new \XLite\Model\Payment\Transaction();
+        // Do not add 0 or <0 transactions. This is for a "Payment not required" case.
+        if ($value > 0) {
 
-        $transaction->setPaymentMethod($method);
-        $method->addTransactions($transaction);
+            $transaction = new \XLite\Model\Payment\Transaction();
 
-        \XLite\Core\Database::getEM()->persist($method);
+            $transaction->setPaymentMethod($method);
+            $method->addTransactions($transaction);
 
-        $this->addPaymentTransactions($transaction);
-        $transaction->setOrder($this);
+            \XLite\Core\Database::getEM()->persist($method);
 
-        $transaction->setMethodName($method->getServiceName());
-        $transaction->setMethodLocalName($method->getName());
-        $transaction->setStatus($transaction::STATUS_INITIALIZED);
-        $transaction->setValue($value);
+            $this->addPaymentTransactions($transaction);
+            $transaction->setOrder($this);
 
-        \XLite\Core\Database::getEM()->persist($transaction);
+            $transaction->setMethodName($method->getServiceName());
+            $transaction->setMethodLocalName($method->getName());
+            $transaction->setStatus($transaction::STATUS_INITIALIZED);
+            $transaction->setValue($value);
+
+            \XLite\Core\Database::getEM()->persist($transaction);
+        }
     }
 
     // }}}
