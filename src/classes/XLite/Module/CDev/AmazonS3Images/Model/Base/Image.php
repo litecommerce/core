@@ -64,7 +64,7 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
     /**
      * Set S3 forbid 
      * 
-     * @param boolean $flag Flag
+     * @param boolean $flag Flag OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
@@ -99,8 +99,8 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
     /**
      * Read output
      *
-     * @param integer $start  Start popsition
-     * @param integer $length Length
+     * @param integer $start  Start popsition OPTIONAL
+     * @param integer $length Length OPTIONAL
      *
      * @return boolean
      * @see    ____func_see____
@@ -116,7 +116,7 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
                     $body = isset($length) ? substr($body, $start, $length) : substr($body, $start);
                 }
                 $result = true;
-                print $body;
+                print ($body);
             }
 
         } else {

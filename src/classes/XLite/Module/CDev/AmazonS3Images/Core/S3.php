@@ -65,33 +65,6 @@ class S3 extends \XLite\Base\Singleton
     protected $urlPrefix;
 
     /**
-     * Constructor
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
-     */
-    protected function __construct()
-    {
-        require_once LC_DIR_CLASSES . '/XLite/Module/CDev/AmazonS3Images/lib/S3.php';
-
-        $config = \XLite\Core\Config::getInstance()->CDev->AmazonS3Images;
-
-        $this->client = new \S3($config->access_key, $config->secret_key);
-        \S3::setExceptions(true);
-
-        try {
-            if (!$this->client->getBucketLocation($config->bucket)) {
-                $this->client->putBucket($config->bucket);
-            }
-            $this->valid = true;
-
-        } catch (\S3Exception $e) {
-            \XLite\Logger::getInstance()->registerException($e);
-        }
-    }
-
-    /**
      * Check valid status
      * 
      * @return boolean
@@ -207,7 +180,10 @@ class S3 extends \XLite\Base\Singleton
     {
         $result = false;
         try {
-            $result = $this->client->deleteObject(\XLite\Core\Config::getInstance()->CDev->AmazonS3Images->bucket, $path);
+            $result = $this->client->deleteObject(
+                \XLite\Core\Config::getInstance()->CDev->AmazonS3Images->bucket,
+                $path
+            );
 
         } catch (\S3Exception $e) {
             $result = false;
@@ -251,7 +227,11 @@ class S3 extends \XLite\Base\Singleton
     public function isExists($path)
     {
         try {
-            $result = $this->client->getObjectInfo(\XLite\Core\Config::getInstance()->CDev->AmazonS3Images->bucket, $path, false);
+            $result = $this->client->getObjectInfo(
+                \XLite\Core\Config::getInstance()->CDev->AmazonS3Images->bucket,
+                $path,
+                false
+            );
 
         } catch (\S3Exception $e) {
             $result = false;
@@ -290,6 +270,33 @@ class S3 extends \XLite\Base\Singleton
         }
 
         return $path;
+    }
+
+    /**
+     * Constructor
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function __construct()
+    {
+        require_once LC_DIR_CLASSES . '/XLite/Module/CDev/AmazonS3Images/lib/S3.php';
+
+        $config = \XLite\Core\Config::getInstance()->CDev->AmazonS3Images;
+
+        $this->client = new \S3($config->access_key, $config->secret_key);
+        \S3::setExceptions(true);
+
+        try {
+            if (!$this->client->getBucketLocation($config->bucket)) {
+                $this->client->putBucket($config->bucket);
+            }
+            $this->valid = true;
+
+        } catch (\S3Exception $e) {
+            \XLite\Logger::getInstance()->registerException($e);
+        }
     }
 
 }

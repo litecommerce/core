@@ -112,22 +112,26 @@ class Migrate extends \XLite\View\AView
     }
 
     /**
-     * Check - migrate started or not
+     * Get migration process started code
      *
-     * @return boolean
+     * @return string
      * @see    ____func_see____
      * @since  1.0.19
      */
-    protected function isMigrateStarted()
+    protected function getMigrateStarted()
     {
         $result = false;
 
-        $repo = \XLite\Core\Database::getRepo('XLite\Model\TmpVar');
-        if (
-            $repo->findOneBy(array('name' => 'migrateFromS3Info'))
-            || $repo->findOneBy(array('name' => 'migrateToS3Info'))
-        ) {
-            $result = 100 != $this->getPercentMigrate();
+        $state = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getEventState('migrateFromS3');
+        if ($state && (0 < $state['position'] ||  0 == $state['lenght'])) {
+            $result = 'migrateFromS3';
+        }
+
+        if (!$result) {
+            $state = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getEventState('migrateToS3');
+            if ($state && (0 < $state['position'] ||  0 == $state['lenght'])) {
+                $result = 'migrateToS3';
+            }
         }
 
         return $result;
@@ -144,22 +148,20 @@ class Migrate extends \XLite\View\AView
     {
         $percent = 0;
 
-        $info = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->findOneBy(array('name' => 'migrateFromS3Info'));
+        $info = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getEventState('migrateFromS3');
 
         if ($info) {
-            $rec = unserialize($info->getValue());
-            if (0 < $rec['length']) {
-                $percent = min(100, round($rec['position'] / $rec['length'] * 100));
+            if (0 < $info['length']) {
+                $percent = min(100, round($info['position'] / $info['length'] * 100));
             }
         }
 
         if (!$info || 100 == $percent) {
-            $info = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->findOneBy(array('name' => 'migrateToS3Info'));
+            $info = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getEventState('migrateToS3');
 
             if ($info) {
-                $rec = unserialize($info->getValue());
-                if (0 < $rec['length']) {
-                    $percent = min(100, round($rec['position'] / $rec['length'] * 100));
+                if (0 < $info['length']) {
+                    $percent = min(100, round($info['position'] / $info['length'] * 100));
                 }
             }
         }
@@ -209,7 +211,7 @@ class Migrate extends \XLite\View\AView
      */
     protected function isMigrateFromS3Visible()
     {
-        return !$this->isMigrateStarted() && $this->hasS3Images();
+        return !$this->getMigrateStarted() && $this->hasS3Images();
     }
 
     // }}}
@@ -246,7 +248,7 @@ class Migrate extends \XLite\View\AView
      */
     protected function isMigrateToS3Visible()
     {
-        return !$this->isMigrateStarted() && $this->hasNoS3Images();
+        return !$this->getMigrateStarted() && $this->hasNoS3Images();
     }
 
     // }}}

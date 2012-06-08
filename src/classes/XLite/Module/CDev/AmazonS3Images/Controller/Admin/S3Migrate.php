@@ -44,15 +44,7 @@ class S3Migrate extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionMigrateToS3()
     {
-        $info = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->findOneBy(array('name' => 'migrateToS3Info'));
-        if (!$info) {
-            $info = new \XLite\Model\TmpVar;
-            $info->setName('migrateToS3Info');
-            \XLite\Core\Database::getEM()->persist($info);
-        }
-        $info->setValue(serialize(array('position' => 0, 'length' => 0)));
-        \XLite\Core\Database::getEM()->flush();
-
+        \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->initializeEventState('migrateToS3');
         \XLite\Core\EventTask::migrateToS3();
     }
 
@@ -65,15 +57,7 @@ class S3Migrate extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionMigrateFromS3()
     {
-        $info = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->findOneBy(array('name' => 'migrateFromS3Info'));
-        if (!$info) {
-            $info = new \XLite\Model\TmpVar;
-            $info->setName('migrateFromS3Info');
-            \XLite\Core\Database::getEM()->persist($info);
-        }
-        $info->setValue(serialize(array('position' => 0, 'length' => 0)));
-        \XLite\Core\Database::getEM()->flush();
-
+        \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->initializeEventState('migrateFromS3');
         \XLite\Core\EventTask::migrateFromS3();
     }
 }

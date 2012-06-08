@@ -33,59 +33,58 @@ namespace XLite\Module\CDev\AmazonS3Images\Core\EventListener;
  * @see   ____class_see____
  * @since 1.0.19
  */
-class MigrateFromS3 extends \XLite\Core\EventListener\AEventListener
+class MigrateFromS3 extends \XLite\Core\EventListener\Base\Countable
 {
-    const CHUNK_LENGTH = 100;
+    const CHUNK_LENGTH = 50;
 
     /**
-     * Handle event (internal, after checking)
+     * Get event name
      *
-     * @param string $name      Event name
-     * @param array  $arguments Event arguments OPTIONAL
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
+    protected function getEventName()
+    {
+        return 'migrateFromS3';
+    }
+
+    /**
+     * Process item
+     *
+     * @param mixed $item Item
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  1.0.19
+     * @since  1.0.23
      */
-    public function handleEvent($name, array $arguments)
+    protected function processItem($item)
     {
-        if (0 < $this->getLength() && \XLite\Module\CDev\AmazonS3Images\Core\S3::getInstance()->isValid()) {
+        $result = false;
 
-            $info = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->findOneBy(array('name' => 'migrateFromS3Info'));
-            if (!$info) {
-                $info = new \XLite\Model\TmpVar;
-                $info->setName('migrateFromS3Info');
-                \XLite\Core\Database::getEM()->persist($info);
-            }
-            $rec = $info->getValue() ? unserialize($info->getValue()) : array('position' => 0, 'length' => 0);
+        $path = tempnam(LC_DIR_TMP, 'migrate_file');
+        file_put_contents($path, $item->getBody());
 
-            if (0 == $rec['length']) {
-                $rec['length'] = $this->getLength();
-            }
-
-            foreach ($this->getChunk() as $image) {
-                $path = tempnam(LC_DIR_TMP, 'migrate_file');
-                file_put_contents($path, $image->getBody());
-
-                if (file_exists($path)) {
-                    $image->setS3Forbid(true);
-                    if ($image->loadFromLocalFile($path, $image->getFileName() ?: basename($image->getPath()))) {
-                        $rec['position']++;
-                        $info->setValue(serialize($rec));
-                        \XLite\Core\Database::getEM()->flush();
-                    }
-                    unlink($path);
-                }
-            }
-
-            \XLite\Core\Database::getEM()->flush();
-
-            if (0 < $this->getLength()) {
-                \XLite\Core\EventTask::migrateFromS3();
-            }
+        if (file_exists($path)) {
+            $item->setS3Forbid(true);
+            $result = $item->loadFromLocalFile($path, $item->getFileName() ?: basename($item->getPath()));
+            unlink($path);
         }
 
-        return true;
+        return $result;
+    }
+
+    /**
+     * Check step valid state
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
+    protected function isStepValid()
+    {
+        return parent::isStepValid()
+            && \XLite\Module\CDev\AmazonS3Images\Core\S3::getInstance()->isValid();
     }
 
     /**
@@ -107,13 +106,13 @@ class MigrateFromS3 extends \XLite\Core\EventListener\AEventListener
     }
 
     /**
-     * Get images chunk 
-     * 
+     * Get items
+     *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.19
+     * @since  1.0.23
      */
-    protected function getChunk()
+    protected function getItems()
     {
         $chunk = array();
 

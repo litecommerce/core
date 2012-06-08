@@ -38,10 +38,12 @@
     </p>
   </div>
 
-  <div IF="isMigrateStarted()" class="migrate-progress">
-    <h3>{t(#Migration is in progress#)}</h3>
-    <div class="bar" data-percent="{getPercentMigrate()}" title="{getPercentMigrate()}%"></div>
-    <p class="refresh">{t(#Refresh the page to update the migration status#)}</p>
+  <div IF="getMigrateStarted()" class="migrate-progress">
+    {if:#migrateFromS3#=getMigrateStarted()}
+      <widget class="XLite\View\EventTaskProgress" event="{getMigrateStarted()}" title="{t(#Migration is in progress#)}" blockingNote="{t(#Images are being moved to the file system on your server. Now you can leave this page and open it later to check the progress.#)}" nonBlockingNote="{t(#Images are being moved to the file system on your server. If you leave this page the process will be put on hold until you open it in your browser again.#)}" />
+    {else:}
+      <widget class="XLite\View\EventTaskProgress" event="{getMigrateStarted()}" title="{t(#Migration is in progress#)}" blockingNote="{t(#Images are being moved to Amazon S3 servers. Now you can leave this page and open it later to check the progress.#)}" nonBlockingNote="{t(#Images are being moved to Amazon S3 servers. If you leave this page the process will be put on hold until you open it in your browser again.#)}" />
+    {end:}
   </div>
 
 </div>
