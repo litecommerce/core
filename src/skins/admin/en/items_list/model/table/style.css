@@ -40,7 +40,6 @@
   border-bottom: 1px solid #e9e9e9;
   padding: 8px 12px 6px;
   line-height: 30px;
-  height: 48px;
   white-space: nowrap;
 }
 
@@ -64,21 +63,31 @@
   vertical-align: middle;
 }
 
-.items-list-table table.list tbody td.actions {
+.items-list-table table.list tbody td.actions .separator {
+  display: inline-block;
+  width: 3px;
+  height: 20px;
   background-image: url(images/line-separator.png);
-  background-repeat: no-repeat;
-  text-align: center;
+  background-repeat: repeat-y;
+  background-position: top left;
 }
 
 .items-list-table table.list tbody td.actions.left {
-  background-position: right 15px;
-  padding-right: 6px;
+  padding-right: 0px;
   padding-left: 7px;
 }
 
+.items-list-table table.list tbody td.actions.left .separator {
+  margin-left: 6px;
+}
+
 .items-list-table table.list tbody td.actions.right {
-  background-position: left 15px;
+  padding-left: 0px;
   padding-right: 6px;
+}
+
+.items-list-table table.list tbody td.actions.right .separator {
+  margin-right: 12px;
 }
 
 .items-list-table table.list tbody td.actions .action {

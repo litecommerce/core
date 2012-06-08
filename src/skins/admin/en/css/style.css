@@ -975,6 +975,38 @@ button.bright:active
   background-position: center -72px;
 }
 
+button.link {
+  border-style: none;
+  background: transparent none;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+button.link span {
+  color: #154e9c;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+button.link[disabled="disabled"],
+button.link.disabled
+{
+  background: transparent none;
+}
+
+button.link[disabled="disabled"] span,
+button.link.disabled span
+{
+  color: #8f8f8f;
+  text-decoration: none;
+  cursor: default;
+}
+
+
+
+
 /* FIXME
 button.switch-state {
   background: transparent url(../images/tri_button.png) no-repeat left top;
@@ -1778,18 +1810,66 @@ form.list-form {
 
 form.list-form .sticky-panel .panel-cell {
   display: inline-block;
-  padding-left: 10px;
+  padding: 0px;
 }
 
-form.list-form .sticky-panel .panel-cell.first {
-  padding-left: 0px;
+form.list-form .sticky-panel .panel-cell > button {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+form.list-form .sticky-panel div.cancel,
+form.list-form .sticky-panel div.additional
+{
+  display: block;
 }
 
 form.list-form .sticky-panel a.cancel {
-  text-decoration: underline;
+  text-indent: -5000px;
+  display: block;
+  background: transparent url(../images/icon_cancel.png) no-repeat left top;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 3px;
+  left: 5px;
 }
 
 form.list-form .sticky-panel a.cancel.disabled {
-  color: #8f8f8f;
-  text-decoration: none;
+  opacity: .5;
+  cursor: text;
+}
+
+form.list-form .sticky-panel.has-add-buttons .box {
+  padding-right: 47px;
+}
+
+form.list-form .sticky-panel.has-add-buttons .additional {
+  position: absolute;
+  top: 4px;
+  right: -26px;
+  width: 58px;
+  height: 68px;
+  background: transparent url(../images/button_more_arrow.png) no-repeat left top;
+  -moz-border-radius: 0px 5px 5px 0px;
+  -webkit-border-radius: 0px 5px 5px 0px;
+  border-radius: 0px 5px 5px 0px;
+  overflow: visible;
+}
+
+form.list-form .sticky-panel.has-add-buttons .additional .additional-buttons {
+  position: absolute;
+  top: 10px;
+  left: 43px;
+  display: none;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #cadce8;
+  background: #fff none;
+  padding: 15px;
+}
+
+form.list-form .sticky-panel.has-add-buttons .additional:hover .additional-buttons {
+  display: block;
 }

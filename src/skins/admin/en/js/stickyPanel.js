@@ -14,15 +14,26 @@ jQuery().ready(
     jQuery('.sticky-panel').each(
       function () {
 
+        var box = jQuery(this);
+
         // Options
-        var duration = 400;
-        var easing = 'linear';
-        var delay = 0;
-        var bottomPadding = 25;
-        var parentContainerLock = true;
+        var options = box.data('options') || {};
+
+        var defaultOptions = {
+          bottomPadding:       25,
+          parentContainerLock: true
+        };
+
+        jQuery.each(
+          defaultOptions,
+          function (key, value) {
+            if ('undefined' == typeof(options[key])) {
+              options[key] = value;
+            }
+          }
+        );
 
         // Assemble variables
-        var box = jQuery(this);
         var panel = box.find('.box').eq(0);
         box.height(panel.outerHeight());
 
@@ -62,17 +73,19 @@ jQuery().ready(
           var boxScrollTop = box.offset().top;
           var docScrollTop = doc.scrollTop();
           var windowHeight = jQuery(window).height();
-          var diff = windowHeight - boxScrollTop + docScrollTop - panelHeight - bottomPadding;
+          var diff = windowHeight - boxScrollTop + docScrollTop - panelHeight - options.bottomPadding;
 
           if (0 > diff) {
-            if (parentContainerLock && parentContainerTop > (boxScrollTop + diff)) {
-              diff = parentContainerTop - boxScrollTop;
+            if (options.parentContainerLock && parentContainerTop > (boxScrollTop + diff)) {
+              panel.css({position: 'absolute', top: parentContainerTop - boxScrollTop});
+
+            } else if ('fixed' != panel.css('position')) {
+              panel.css({position: 'fixed', top: windowHeight - panelHeight - options.bottomPadding});
             }
 
-            panel.delay(delay).animate({top: diff}, duration, easing);
-
           } else if (panel.css('top') != '0px') {
-            panel.delay(delay).animate({top: 0}, duration, easing);
+            panel.css({position: 'absolute', top: 0});
+ 
           }
         }
 
