@@ -209,7 +209,7 @@ abstract class AAdmin extends \XLite\Controller\AController
         $request = \XLite\Core\Request::getInstance();
         $result = true;
 
-        if (\Xlite\Core\Config::getInstance()->Security->form_id_protection) {
+        if (\XLite\Core\Config::getInstance()->Security->form_id_protection) {
 
             if (!isset($request->xlite_form_id) || !$request->xlite_form_id) {
                 $result = false;
@@ -520,4 +520,18 @@ OUT;
     }
 
     // }}}
+
+    /**
+     * Check - need use secure protocol or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function needSecure()
+    {
+        return parent::needSecure()
+            || (!\XLite\Core\Request::getInstance()->isHTTPS()) && \XLite\Core\Config::getInstance()->Security->admin_security;
+    }
+
 }

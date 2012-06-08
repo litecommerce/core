@@ -106,7 +106,13 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      */
     protected function doActionRegisterBasic()
     {
-        return $this->getModelFormPart(self::SECTIONS_MAIN)->performAction('create');
+        $result = $this->getModelFormPart(self::SECTIONS_MAIN)->performAction('create');
+
+        if ($result && $this->getModelForm()->getModelObject()->getProfileId()) {
+            $this->updateProfileRole($this->getModelForm()->getModelObject());
+        }
+
+        return $result;
     }
 
     /**
@@ -118,7 +124,13 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      */
     protected function doActionUpdateBasic()
     {
-        return $this->getModelFormPart(self::SECTIONS_MAIN)->performAction('update');
+        $result = $this->getModelFormPart(self::SECTIONS_MAIN)->performAction('update');
+
+        if ($result) {
+            $this->updateProfileRole($this->getModelForm()->getModelObject());
+        }
+
+        return $result;
     }
 
     /**
@@ -239,14 +251,47 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function updateAccessLevel($profiles, $accessLevel)
+    protected function updateAccessLevel(array $profiles, $accessLevel)
     {
         if ($profiles) {
             foreach ($profiles as $profile) {
                 $profile->setAccessLevel($accessLevel);
+                $this->updateProfileRole($profile);
                 \XLite\Core\Database::getEM()->persist($profile);
             }
             \XLite\Core\Database::getEM()->flush();
         }
+    }
+
+    /**
+     * Update profile role 
+     * 
+     * @param \XLite\Model\Profile $profile Profile
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
+    protected function updateProfileRole(\XLite\Model\Profile $profile)
+    {
+        $rootRole = \XLite\Core\Database::getRepo('XLite\Model\Role')->findOneRoot();
+        if (\XLite\Core\Auth::getInstance()->getAdminAccessLevel() == $profile->getAccessLevel()) {
+
+            // Add root role
+            if ($rootRole && !$profile->getRoles()->contains($rootRole)) {
+                $profile->addRoles($rootRole);
+                $rootRole->addProfiles($profile);
+            }
+
+        } else {
+
+            // Remove root role
+            if ($rootRole && $profile->getRoles()->contains($rootRole)) {
+                $profile->getRoles()->removeElement($rootRole);
+                $rootRole->getProfiles()->removeElement($profile);
+            }
+        }
+
+        \XLite\Core\Database::getEM()->flush();
     }
 }

@@ -176,21 +176,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     }
 
     /**
-     * Get currency from request
-     *
-     * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.2
-     */
-    public function getCurrency()
-    {
-        return \XLite\Core\Request::getInstance()->currency
-            ? \XLite\Core\Database::getRepo('XLite\Model\Currency')
-                ->findOneBy(array('currency_id' => \XLite\Core\Request::getInstance()->currency))
-            : \XLite::getInstance()->getCurrency();
-    }
-
-    /**
      * Get data
      *
      * @return array
@@ -208,7 +193,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * Collect statistics record
      *
      * @param string             $row   Row identificator
-     * @param \Xlite\Model\Order $order Order
+     * @param \XLite\Model\Order $order Order
      *
      * @return void
      * @see    ____func_see____
@@ -233,7 +218,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     /**
      * Process statistics record
      *
-     * @param \Xlite\Model\Order $order Order
+     * @param \XLite\Model\Order $order Order
      *
      * @return void
      * @see    ____func_see____

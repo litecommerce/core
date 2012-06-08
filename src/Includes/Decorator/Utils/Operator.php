@@ -105,8 +105,17 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
             // Use PHP Tokenizer to search class declaration
             if ($class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path)) {
 
-                // File contains a class declaration: add node (descriptor) to the index
-                $index[$class] = new \Includes\Decorator\DataStructure\Graph\Classes($class, $path);
+                // File contains a class declaration: create node (descriptor)
+                $node = new \Includes\Decorator\DataStructure\Graph\Classes($class, $path);
+
+                // Check parent class (so called optional dependencies for modules)
+                $dependencies = $node->getTag('lc_dependencies');
+
+                if (empty($dependencies) || \Includes\Utils\ModulesManager::areActiveModules($dependencies)) {
+
+                    // Node is valid: add to the index
+                    $index[$class] = $node;
+                }
             }
         }
 
@@ -155,8 +164,14 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
                 // It's the (<module_name>) list
                 foreach ($dependencies as $module) {
 
-                    // Case 1 (with dependencies)
-                    $index[$module]->addChild($node);
+                    // Module from the dependencies may be disbaled,
+                    // or included into the mutual modules list
+                    // of some other module(s)
+                    if (isset($index[$module])) {
+
+                        // Case 1 (with dependencies)
+                        $index[$module]->addChild($node);
+                    }
                 }
 
             } else {

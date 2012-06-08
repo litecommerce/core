@@ -68,7 +68,14 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="decimal", precision=14, scale=4)
+     * @Column (
+     *      type="money",
+     *      options={
+     *          @XLite\Core\Doctrine\Annotation\Behavior (list={"taxable"}),
+     *          @XLite\Core\Doctrine\Annotation\Purpose (name="net", source="clear"),
+     *          @XLite\Core\Doctrine\Annotation\Purpose (name="display", source="net")
+     *      }
+     *  )
      */
     protected $price = 0.0000;
 
@@ -278,7 +285,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Get price
+     * Get price: modules should never overwrite this method
      *
      * @return float
      * @see    ____func_see____
@@ -287,6 +294,18 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Get clear price: this price can be overwritten by modules
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getClearPrice()
+    {
+        return $this->getPrice();
     }
 
     /**
@@ -346,27 +365,21 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function isAvailable()
     {
-        $result = true;
-
-        if (!\XLite::isAdminZone()) {
-            $result = $this->getEnabled()
-                && (!$this->getArrivalDate() || time() > $this->getArrivalDate())
-                && !$this->getInventory()->isOutOfStock();
-        }
-
-        return $result;
+        return \XLite::isAdminZone() || $this->isPublicAvailable();
     }
 
     /**
-     * Return product list price (price for customer interface)
-     *
-     * @return float
+     * Check prodyct availability for public usage (customer interface)
+     * 
+     * @return boolean
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.23
      */
-    public function getListPrice()
+    public function isPublicAvailable()
     {
-        return $this->getPrice();
+        return $this->getEnabled()
+            && (!$this->getArrivalDate() || time() > $this->getArrivalDate())
+            && !$this->getInventory()->isOutOfStock();
     }
 
     /**
@@ -568,7 +581,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function getTaxableBasis()
     {
-        return $this->getPrice();
+        return $this->getNetPrice();
     }
 
     /**

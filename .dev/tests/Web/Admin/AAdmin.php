@@ -43,19 +43,7 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
      */
     protected function logIn($user = 'rnd_tester@cdev.ru', $password = 'master')
     {
-        $this->open('admin.php');
-
-        if ($this->isLoggedIn()) {
-            return;
-            //$this->logOut(true);
-        }
-
-        $this->type("//input[@name='login' and @type='text']", $user);
-        $this->type("//input[@name='password' and @type='password']", $password);
-
-        $this->click("//button[@class='main-button' and @type='submit']");
-
-        $this->waitForPageToLoad(30000);
+        $this->logInAdmin($user, $password);
     }
 
     /**
@@ -135,9 +123,7 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
     {
         parent::setUp();
 
-        $this->baseURL = rtrim(SELENIUM_SOURCE_URL_ADMIN, '/') . '/';
-
-        $this->setBrowserURL($this->baseURL);
+        $this->setAdminURL();
     }
 
     protected function waitForAJAXProgress()

@@ -12,7 +12,6 @@
 
 .share {
   position: relative;
-  height: 70px;
 }
 
 .share .bar {
@@ -20,10 +19,16 @@
   width: 113px;
 }
 
-.share .bar .twitter-share-button {
+.share .bar .twitter-share-button,
+.share .bar .gplus
+{
   margin-bottom: 15px;
 }
 
 .share .fb-like {
   float: left;
+}
+
+.share .clear {
+  clear: both;
 }

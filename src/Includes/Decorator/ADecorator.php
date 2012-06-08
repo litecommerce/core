@@ -46,7 +46,6 @@ abstract class ADecorator
 
     const LAST_STEP   = self::STEP_FIFTH;
 
-
     /**
      * Current step
      *
@@ -74,7 +73,6 @@ abstract class ADecorator
      */
     protected static $modulesGraph;
 
-
     /**
      * Return classes tree
      * 
@@ -87,7 +85,6 @@ abstract class ADecorator
     public static function getClassesTree($create = true)
     {
         if (!isset(static::$classesTree) && $create) {
-
             if (\Includes\Utils\FileManager::isFileReadable(static::getClassesHashPath())) {
                 $data = unserialize(\Includes\Utils\FileManager::read(static::getClassesHashPath()));
                 static::$classesTree = array_pop($data);
@@ -125,7 +122,7 @@ abstract class ADecorator
      */
     public static function getClassesDir()
     {
-        return (self::STEP_FIRST === static::$step) ? LC_DIR_CLASSES : LC_DIR_CACHE_CLASSES;
+        return (static::STEP_FIRST == static::$step) ? LC_DIR_CLASSES : LC_DIR_CACHE_CLASSES;
     }
 
     /**

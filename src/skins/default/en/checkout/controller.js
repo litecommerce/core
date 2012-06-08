@@ -344,6 +344,23 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       }
     );
 
+/**
+ * Place order button should work only once.
+ * After clicking the button is disabled and form submits only once.
+ */
+    jQuery('form.place button[type="submit"].bright', this.base)
+      .click(
+        function (event) {
+          jQuery(this)
+            .addClass('disabled')
+            .attr('disabled', 'disabled')
+            .closest('form.place')
+            .submit();
+
+          return false;
+        }
+      );
+
     jQuery('.review-step.current .button-row button', this.base)
       .click(
         function(event) {

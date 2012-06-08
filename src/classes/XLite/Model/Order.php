@@ -18,7 +18,7 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
@@ -327,7 +327,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $oldStatus;
+    protected $oldStatus = self::STATUS_INPROGRESS;
 
     /**
      * Modifiers (cache)
@@ -378,8 +378,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $result = false;
 
         if ($newItem->isValid()) {
-
             $this->addItemError = null;
+            $newItem->setOrder($this);
 
             $item = $this->getItemByItem($newItem);
 
@@ -387,7 +387,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
                 $item->setAmount($item->getAmount() + $newItem->getAmount());
 
             } else {
-                $this->addNewItem($newItem);
+                $this->addItems($newItem);
             }
 
             $result = true;
@@ -621,18 +621,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         }
 
         return $items;
-    }
-
-    /**
-     * Get order currency
-     *
-     * @return \XLite\Model\Currency
-     * @see    ____func_see____
-     * @since  1.0.8
-     */
-    public function getCurrency()
-    {
-        return isset($this->currency) ? $this->currency : \XLite::getInstance()->getCurrency();
     }
 
     /**
@@ -965,8 +953,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
         if (!$transaction) {
             $transaction = $this->hasUnpaidTotal() || 0 == count($this->getPaymentTransactions())
-                ? $this->assignLastPaymentMethod()
-                : $this->getPaymentTransactions()->last();
+            ? $this->assignLastPaymentMethod()
+            : $this->getPaymentTransactions()->last();
         }
 
         return $transaction ? $transaction->getPaymentMethod() : null;
@@ -1067,21 +1055,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         return $result;
     }
 
-    /**
-     * Create new cart item
-     *
-     * @param \XLite\Model\OrderItem $item New item
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addNewItem(\XLite\Model\OrderItem $item)
-    {
-        $item->setOrder($this);
-        $this->addItems($item);
-    }
-
     // {{{ Payment method and transactions
 
     /**
@@ -1101,8 +1074,11 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         }
 
         if (!isset($paymentMethod) || $this->getFirstOpenPaymentTransaction()) {
+
             $transaction = $this->getFirstOpenPaymentTransaction();
+
             if ($transaction) {
+
                 $this->getPaymentTransactions()->removeElement($transaction);
                 $transaction->getPaymentMethod()->getTransactions()->removeElement($transaction);
                 \XLite\Core\Database::getEM()->remove($transaction);
@@ -1184,7 +1160,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Has unpaid total?
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.17
@@ -1270,22 +1246,26 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             $value = min($value, $this->getOpenTotal());
         }
 
-        $transaction = new \XLite\Model\Payment\Transaction();
+        // Do not add 0 or <0 transactions. This is for a "Payment not required" case.
+        if ($value > 0) {
 
-        $transaction->setPaymentMethod($method);
-        $method->addTransactions($transaction);
+            $transaction = new \XLite\Model\Payment\Transaction();
 
-        \XLite\Core\Database::getEM()->persist($method);
+            $transaction->setPaymentMethod($method);
+            $method->addTransactions($transaction);
 
-        $this->addPaymentTransactions($transaction);
-        $transaction->setOrder($this);
+            \XLite\Core\Database::getEM()->persist($method);
 
-        $transaction->setMethodName($method->getServiceName());
-        $transaction->setMethodLocalName($method->getName());
-        $transaction->setStatus($transaction::STATUS_INITIALIZED);
-        $transaction->setValue($value);
+            $this->addPaymentTransactions($transaction);
+            $transaction->setOrder($this);
 
-        \XLite\Core\Database::getEM()->persist($transaction);
+            $transaction->setMethodName($method->getServiceName());
+            $transaction->setMethodLocalName($method->getName());
+            $transaction->setStatus($transaction::STATUS_INITIALIZED);
+            $transaction->setValue($value);
+
+            \XLite\Core\Database::getEM()->persist($transaction);
+        }
     }
 
     // }}}
@@ -1535,7 +1515,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     {
         $this->resetSurcharges();
 
-        $this->reinitialieCurrency();
+        $this->reinitializeCurrency();
 
         $this->calculateInitialValues();
 
@@ -1573,35 +1553,36 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
     /**
      * Soft renew
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.21
      */
     public function renewSoft()
     {
-        $this->reinitialieCurrency();
+        $this->reinitializeCurrency();
     }
 
     /**
-     * Reinitialie currency 
-     * 
+     * Reinitialie currency
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.21
      */
-    protected function reinitialieCurrency()
+    protected function reinitializeCurrency()
     {
-        $currency = $this->defineCurrency();
+        $new = $this->defineCurrency();
+        $old = $this->getCurrency();
 
-        if (!$this->getCurrency() || $this->getCurrency() != $currency) {
-            $this->setCurrency($currency);
+        if (empty($old) || (!empty($new) && $old->getCode() !== $new->getCode())) {
+            $this->setCurrency($new);
         }
     }
 
     /**
-     * Define order currency 
-     * 
+     * Define order currency
+     *
      * @return \XLite\Model\Currency
      * @see    ____func_see____
      * @since  1.0.21

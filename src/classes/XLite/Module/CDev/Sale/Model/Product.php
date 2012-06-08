@@ -97,11 +97,12 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      */
     protected $salePriceValueCalculated = 0;
 
-
     /**
-     * Get discountType
-     *
-     * @return string $discountType
+     * Get discount type 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.23
      */
     public function getDiscountType()
     {
@@ -111,8 +112,10 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * Calculate "Sale percent off" value.
      * Based on "salePriceValue" and "discountType" fields values
-     *
+     * 
      * @return float
+     * @see    ____func_see____
+     * @since  1.0.23
      */
     public function getSalePercent()
     {
@@ -126,7 +129,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
             case self::SALE_DISCOUNT_TYPE_PRICE:
                 $price = $this->getPrice();
-                $percent = ($price > 0)
+                $percent = (0 < $price)
                     ? (($price - $this->getSalePriceValue()) / $price * 100)
                     : 0;
                 break;
@@ -140,19 +143,21 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * Return sale product price
      *
+     * @param float $value Base OPTIONAL
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getSalePrice()
+    public function getSalePrice($value = null)
     {
-        $salePrice = $price = $this->getPrice();
+        $salePrice = $price = isset($value) ? $value : $this->getPrice();
 
         if ($this->getParticipateSale()) {
             switch ($this->getDiscountType()) {
 
                 case self::SALE_DISCOUNT_TYPE_PERCENT:
-                    $salePrice = $price * ( 1 - $this->getSalePriceValue()/100);
+                    $salePrice = $price * (1 - $this->getSalePriceValue() / 100);
                     break;
 
                 case self::SALE_DISCOUNT_TYPE_PRICE:
@@ -203,9 +208,9 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getListPrice()
+    public function getClearPrice()
     {
-        return $this->getSalePrice();
+        return $this->getSalePrice(parent::getListPrice());
     }
 
     /**

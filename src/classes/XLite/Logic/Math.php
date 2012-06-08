@@ -84,13 +84,11 @@ class Math extends \XLite\Logic\ALogic
      */
     public function formatValue($value, \XLite\Model\Currency $currency)
     {
-        $config = \XLite\Core\Config::getInstance();
-
         return number_format(
             $this->roundByCurrency($value, $currency),
-            $config->General->decimal_delim ? $currency->getE() : 0,
-            $config->General->decimal_delim,
-            $config->General->thousand_delim
+            $currency->getE(),
+            $currency->getDecimalDelimiter(),
+            $currency->getThousandDelimiter()
         );
     }
 
@@ -123,8 +121,10 @@ class Math extends \XLite\Logic\ALogic
 
         $parts['integer'] = number_format(floor(abs($value)), 0, '', $currency->getThousandDelimiter());
 
-        $parts['decimalDelimiter'] = $currency->getDecimalDelimiter();
-        $parts['decimal'] = substr(strval(abs($value) * pow(10, $currency->getE())), -1 * $currency->getE());
+        if (0 < $currency->getE()) {
+            $parts['decimalDelimiter'] = $currency->getDecimalDelimiter();
+            $parts['decimal'] = substr(strval(abs($value != 0 ? $value : 1) * pow(10, $currency->getE())), -1 * $currency->getE());
+        }
 
         if ($currency->getSuffix()) {
             $parts['suffix'] = $currency->getSuffix();

@@ -700,11 +700,7 @@ class Cell extends \XLite\Base\Singleton
     protected function manageEntryPackages($isUnpack)
     {
         foreach ($this->getEntries() as $entry) {
-            $result = $isUnpack ? $entry->unpack() : $entry->download();
-
-            if (!$result) {
-                break;
-            }
+            $isUnpack ? $entry->unpack() : $entry->download();
         }
 
         return $isUnpack ? $this->isUnpacked() : $this->isDownloaded();

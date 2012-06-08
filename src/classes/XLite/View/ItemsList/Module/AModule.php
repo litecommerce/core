@@ -46,13 +46,13 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Check if the module is installed
-     *                                 
+     *
      * @param \XLite\Model\Module $module Module to check
-     *                                          
-     * @return boolean                          
-     * @see    ____func_see____                 
-     * @since  1.0.0                            
-     */                                         
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     abstract protected function isInstalled(\XLite\Model\Module $module);
 
     /**
@@ -77,6 +77,18 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     protected function getDir()
     {
         return parent::getDir() . '/module';
+    }
+
+    /**
+     * Return "empty list" catalog
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getEmptyListDir()
+    {
+        return $this->getDir();
     }
 
     /**
@@ -461,4 +473,17 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     }
 
     // }}}
+
+    /**
+     * Get search substring value
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getSearchSubstring()
+    {
+        return \XLite\Core\Request::getInstance()->substring;
+    }
+
 }

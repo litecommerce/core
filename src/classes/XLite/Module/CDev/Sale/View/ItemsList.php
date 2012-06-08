@@ -50,9 +50,10 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
 
         if ($this->participateSale($product)) {
 
+            $label = intval($product->getSalePercent()) . '% '
+                . \XLite\Core\Translation::getInstance()->translate('off');
             $labels += array(
-                'orange sale-price' => intval($product->getSalePercent()) . '% '
-                    . \XLite\Core\Translation::getInstance()->translate('off')
+                'orange sale-price' => $label,
             );
         }
 
@@ -93,7 +94,7 @@ abstract class ItemsList extends \XLite\View\ItemsList\Product\Customer\ACustome
     /**
      * Return collection result from the mixed one.
      *
-     * @param  mixed $data
+     * @param mixed $data Data
      *
      * @return mixed
      * @see    ____func_see____

@@ -330,7 +330,9 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function createQueryBuilder($alias = null)
     {
-        $alias = $alias ?: $this->getDefaultAlias();
+        if (!isset($alias)) {
+            $alias = $this->getDefaultAlias();
+        }
 
         $qb = $this->getQueryBuilder()
             ->select($alias)
@@ -396,7 +398,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function findByIds(array $ids)
+    public function findByIds(array $ids, $prefix = 'arr')
     {
         if (1 < count($this->_class->identifier)) {
             // TODO - add throw exception
@@ -406,7 +408,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         if ($ids) {
             $qb = $this->createQueryBuilder();
-            $keys = \XLite\Core\Database::buildInCondition($qb, $ids);
+            $keys = \XLite\Core\Database::buildInCondition($qb, $ids, $prefix);
             $alias = $this->getMainAlias($qb);
             $qb->andWhere($alias . '.' . $this->_class->identifier[0] . ' IN (' . implode(', ', $keys) . ')');
 
@@ -565,7 +567,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         if ($flush) {
             $this->flushChanges();
-        }   
+        }
     }
 
     /**
@@ -688,7 +690,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         return $entity;
     }
- 
+
     /**
      * Update single entity
      *
@@ -836,6 +838,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             $addModel
             && !$entity
             && !\XLite\Core\Database::getInstance()->getFixturesLoadingOption('isAddModel')
+            && !\XLite\Core\Database::getInstance()->getFixturesLoadingOption('addParent')
         ) {
             return $result;
         }
@@ -1763,12 +1766,18 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function linkLoadedEntity(\XLite\Model\AEntity $entity, \XLite\Model\AEntity $parent, array $parentAssoc)
     {
-        // Add entity to parent
-        $parent->$parentAssoc['setter']($entity);
+        if (
+            !$parentAssoc['many']
+            || !$entity->getUniqueIdentifier()
+            || !$parent->$parentAssoc['getter']()->contains($entity)
+        ) {
+            // Add entity to parent
+            $parent->$parentAssoc['setter']($entity);
 
-        // Add parent to entity
-        if ($parentAssoc['mappedSetter']) {
-            $entity->$parentAssoc['mappedSetter']($parent);
+            // Add parent to entity
+            if ($parentAssoc['mappedSetter']) {
+                $entity->$parentAssoc['mappedSetter']($parent);
+            }
         }
     }
 
@@ -1782,5 +1791,28 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected function getDetailedForeignKeys()
     {
         return array();
+    }
+
+    /**
+     * Assign calculated field 
+     * 
+     * @param \XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder Query builder
+     * @param string                                  $name         Field name
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function assignCalculatedField(\XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder, $name)
+    {
+        $uname = ucfirst($name);
+        $method = 'defineCalculated' . $uname . 'DQL';
+        if (method_exists($this, $method) && !$queryBuilder->getFlag('calculated.' . $name)) {
+            $alias = $alias ?: $queryBuilder->getRootAlias();
+            $queryBuilder->addSelect($this->$method($queryBuilder, $alias) . ' calculated' . $uname);
+            $queryBuilder->setFlag('calculated.' . $name, true);
+        }
+
+        return $queryBuilder;
     }
 }

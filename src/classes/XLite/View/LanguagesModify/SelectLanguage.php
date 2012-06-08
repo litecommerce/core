@@ -67,7 +67,7 @@ class SelectLanguage extends \XLite\View\AView
      */
     public function isInterfaceLanguage(\XLite\Model\Language $language)
     {
-        return static::$defaultLanguage == $language->code;
+        return static::getDefaultLanguage() == $language->code;
     }
 
     /**
@@ -96,7 +96,7 @@ class SelectLanguage extends \XLite\View\AView
      */
     public function canSelect(\XLite\Model\Language $language)
     {
-        return $language->code !== static::$defaultLanguage
+        return $language->code !== static::getDefaultLanguage()
             && (!$this->getTranslatedLanguage() || $language->code != $this->getTranslatedLanguage()->code);
     }
 
@@ -111,7 +111,7 @@ class SelectLanguage extends \XLite\View\AView
      */
     public function canDelete(\XLite\Model\Language $language)
     {
-        return $language->code !== static::$defaultLanguage;
+        return $language->code !== static::getDefaultLanguage();
     }
 
     /**

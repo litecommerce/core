@@ -202,9 +202,9 @@ class Address extends \XLite\View\Model\AModel
      */
     public function getProfileId()
     {
-        return ($this->getRequestProfileId() && \Xlite\Core\Auth::getInstance()->isAdmin())
+        return ($this->getRequestProfileId() && \XLite\Core\Auth::getInstance()->isAdmin())
             ? $this->getRequestProfileId()
-            : \Xlite\Core\Auth::getInstance()->getProfile()->getProfileId();
+            : \XLite\Core\Auth::getInstance()->getProfile()->getProfileId();
     }
 
     /**
@@ -245,6 +245,8 @@ class Address extends \XLite\View\Model\AModel
                         $this->address->setProfile($profile);
                     }
                 }
+
+                $this->address->setZipcode(\XLite\Core\Config::getInstance()->General->default_zipcode);
             }
         }
 
@@ -390,13 +392,14 @@ class Address extends \XLite\View\Model\AModel
     /**
      * Check if fields are valid
      *
-     * @param array $data Current section data
+     * @param array  $data    Current section data
+     * @param string $section Current section name
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function validateFields(array $data)
+    protected function validateFields(array $data, $section)
     {
         $this->prepareDataToValidate($data);
 

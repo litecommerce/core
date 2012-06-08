@@ -159,7 +159,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $this->assertEquals(
             2,
-            $this->getJSExpression('jQuery(".product-details .tabs ul li a").length'),
+            $this->getJSExpression('jQuery(".product-details .tabs ul li span").length'),
             'check tabs length'
         );
 
@@ -421,6 +421,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
     {
         $product = $this->getActiveProduct();
         $product->getInventory()->setAmount(100);
+
+        \XLite\Core\Database::getEM()->persist($product);
         \XLite\Core\Database::getEM()->flush();
 
         $this->openAndWait('store/product//product_id-' . $product->getProductId());
@@ -509,7 +511,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity');
         $this->assertJqueryNotPresent('button.action.buy-more.disabled.add2cart-disabled', 'check enabled buy now button');
 
-        $this->typeKeys($quantitySelector, '146');
+        $this->typeKeys($quantitySelector, '991');
         $this->getJSExpression($qtyBlurOperation);
         $this->assertJqueryPresent($errorDivSelector, 'check maximum allowed quantity error');
         $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');

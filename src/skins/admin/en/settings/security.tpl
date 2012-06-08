@@ -39,52 +39,54 @@
 <script type="text/javascript">
 <!--
 /* uncheck & disable checkboxes */
-var customer_security_value = document.options_form.customer_security.checked;
-var full_customer_security_value = document.options_form.full_customer_security.checked;
-var admin_security_value = document.options_form.admin_security.checked;
+var customer_security_value = jQuery('input[name="customer_security"][type="checkbox"]').attr('checked');
+var full_customer_security_value = jQuery('input[name="full_customer_security"][type="checkbox"]').attr('checked');
+var admin_security_value = jQuery('input[name="admin_security"][type="checkbox"]').attr('checked');
 var httpsEnabled = false;
 
 function https_checkbox_click()
 {
     if (!httpsEnabled) {
-        document.options_form.customer_security.checked = false;
-        document.options_form.full_customer_security.disabled = true;
-        document.options_form.admin_security.checked = false;
-        document.getElementById("httpserror-message").style.cssText = "";
-        alert("No HTTPS is available. See the red message below.");
-    }
-    if (document.options_form.customer_security.checked == false) {
-        document.options_form.full_customer_security.checked = false;
-        document.options_form.full_customer_security.disabled = true;
-    }
-    if (document.options_form.customer_security.checked == true)
-        document.options_form.full_customer_security.disabled = false;
+      jQuery('input[name="customer_security"][type="checkbox"]').attr('checked', '');
+      jQuery('input[name="admin_security"][type="checkbox"]').attr('checked', '');
+      jQuery('input[name="full_customer_security"][type="checkbox"]').attr('disabled', 'disabled');
 
+      document.getElementById("httpserror-message").style.cssText = "";
+
+      alert("No HTTPS is available. See the red message below.");
+    }
+
+    if (jQuery('input[name="customer_security"][type="checkbox"]').attr('checked') == false) {
+      jQuery('input[name="full_customer_security"][type="checkbox"]').attr({'checked' : '', 'disabled' : 'disabled'});
+    } else {
+      jQuery('input[name="full_customer_security"][type="checkbox"]').attr('disabled', '');
+    }
 }
 
 function enableHTTPS()
 {
     httpsEnabled = true;
+    jQuery('input[name="customer_security"][type="checkbox"]').attr('checked', customer_security_value);
 
-    document.options_form.customer_security.checked = customer_security_value;
     if (customer_security_value)
-        document.options_form.full_customer_security.disabled = false;
+      jQuery('input[name="full_customer_security"][type="checkbox"]').attr('disabled', '');
     else
-        document.options_form.full_customer_security.disabled = true;
-    document.options_form.full_customer_security.checked = full_customer_security_value;
-    document.options_form.admin_security.checked = admin_security_value;
+      jQuery('input[name="full_customer_security"][type="checkbox"]').attr('disabled', 'disabled');
+
+    jQuery('input[name="full_customer_security"][type="checkbox"]').attr('checked', full_customer_security_value);
+    jQuery('input[name="admin_security"][type="checkbox"]').attr('checked', admin_security_value);
 
     document.getElementById("httpserror-message").style.cssText = "";
     document.getElementById("httpserror-message").innerHTML = "<span class='success-message'>Success</span>";
 }
 
-document.options_form.customer_security.checked = false;
-document.options_form.full_customer_security.checked = false;
-document.options_form.full_customer_security.disabled = true;
-document.options_form.admin_security.checked = false;
-document.options_form.customer_security.onclick = https_checkbox_click;
-document.options_form.full_customer_security.onclick = https_checkbox_click;
-document.options_form.admin_security.onclick = https_checkbox_click;
+jQuery('input[name="customer_security"][type="checkbox"]').attr('checked', '');
+jQuery('input[name="full_customer_security"][type="checkbox"]').attr({'checked': '', 'disabled': 'disabled'});
+jQuery('input[name="admin_security"][type="checkbox"]').attr('checked', '');
+
+jQuery(
+'input[name="customer_security"][type="checkbox"],input[name="full_customer_security"][type="checkbox"], input[name="admin_security"][type="checkbox"]'
+).click(https_checkbox_click);
 -->
 </script>
 
@@ -95,8 +97,8 @@ document.options_form.admin_security.onclick = https_checkbox_click;
     {t(#To fix this problem, do the following: 3 points#):h}
   </span>
 
-  <script type="text/javascript" src="{getShopURL(#https_check.php#,#1#)}"></script>
-<script>
+<script type="text/javascript" src="{getShopURL(#https_check.php#,#1#)}"></script>
+<script type="text/javascript">
 <!--
 if (!httpsEnabled) {
     document.getElementById('httpserror-message').style.cssText = '';

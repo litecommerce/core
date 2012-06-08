@@ -48,10 +48,15 @@ class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     public function setBlockContent(array &$data, \stdClass $block)
     {
         // Check if current block is an LC one
-        if ($blockInfo = \XLite\Module\CDev\DrupalConnector\Drupal\Model::getInstance()->getBlock($block->delta)) {
+        $blockInfo = \XLite\Module\CDev\DrupalConnector\Drupal\Model::getInstance()->getBlock($block->delta);
+        if (
+            'block' == $block->module
+            && $blockInfo
+        ) {
 
             // Trying to get widget from LC
-            if ($widget = $this->getHandler()->getWidget($blockInfo['lc_class'], $blockInfo['options'])) {
+            $widget = $this->getHandler()->getWidget($blockInfo['lc_class'], $blockInfo['options']);
+            if ($widget) {
 
                 // Check if widget is visible and its content is not empty
                 $data['content'] = ($widget->checkVisibility() && ($content = $widget->getContent())) ? $content : null;
@@ -64,8 +69,8 @@ class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Preprocess theme variables for a specific theme block
      *
-     * @param array  &$variables Data to modify
-     * @param string $class      LC widget class
+     * @param array  &$data Data to modify
+     * @param string $class LC widget class
      *
      * @return void
      * @see    ____func_see____

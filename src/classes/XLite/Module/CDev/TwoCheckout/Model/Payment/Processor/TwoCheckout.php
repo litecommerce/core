@@ -30,6 +30,9 @@ namespace XLite\Module\CDev\TwoCheckout\Model\Payment\Processor;
 /**
  * 2Checkout.com processor
  *
+ * Find the latest API document here:
+ * https://www.2checkout.com/documentation/Advanced_User_Guide.pdf
+ *
  * @see   ____class_see____
  * @since 1.0.11
  */
@@ -92,7 +95,7 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
 
             $status = $transaction::STATUS_FAILED;
 
-            $this->getOrder()->setDetail('verification', 'MD5 verification failed', 'Verification');
+            $this->setDetail('verification', 'MD5 verification failed', 'Verification');
 
             $this->transaction->setNote('MD5 verification failed');
         }
@@ -284,7 +287,7 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
      */
     protected function getFormattedPrice($price)
     {
-        return sprintf("%.2f", round((double)($price) + 0.00000000001, 2));
+        return sprintf('%.2f', round((double)($price) + 0.00000000001, 2));
     }
 
 
@@ -313,16 +316,22 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
             'country'               => $this->getCountryField($this->getProfile()->getBillingAddress()),
             'email'                 => $this->getProfile()->getLogin(),
             'phone'                 => $this->getProfile()->getBillingAddress()->getPhone(),
-            'ship_name'             => $this->getName($this->getProfile()->getShippingAddress()),
-            'ship_street_address'   => $this->getProfile()->getShippingAddress()->getStreet(),
-            'ship_city'             => $this->getProfile()->getShippingAddress()->getCity(),
-            'ship_state'            => $this->getShippingState(),
-            'ship_zip'              => $this->getProfile()->getShippingAddress()->getZipcode(),
-            'ship_country'          => $this->getCountryField($this->getProfile()->getShippingAddress()),
             'fixed'                 => 'Y',
             'id_type'               => '1',
             'sh_cost'               => $this->getFormattedPrice($this->getOrder()->getSurchargeSumByType('SHIPPING')),
         );
+
+        if ($shippingAddress = $this->getProfile()->getShippingAddress()) {
+
+            $fields += array(
+                'ship_name'             => $this->getName($shippingAddress),
+                'ship_street_address'   => $shippingAddress->getStreet(),
+                'ship_city'             => $shippingAddress->getCity(),
+                'ship_state'            => $this->getShippingState(),
+                'ship_zip'              => $shippingAddress->getZipcode(),
+                'ship_country'          => $this->getCountryField($shippingAddress),
+            );
+        }
 
         if ('test' === $this->getSetting('mode')) {
 
@@ -330,17 +339,20 @@ class TwoCheckout extends \XLite\Model\Payment\Base\WebBased
         }
 
         $i = -1;
+
         foreach ($this->getOrder()->getItems() as $item) {
 
             $product = $item->getProduct();
 
             $i++;
-            $suffix = $i == 0 ? '' : ('_' . $i);
+            $suffix = 0 == $i ? '' : ('_' . $i);
 
-            $fields['c_prod' . $suffix]         = $product->getProductId() . ',' . $item->getAmount();
-            $fields['c_name' . $suffix]         = substr($product->getName(), 0, 127);
-            $fields['c_price' . $suffix]        = $this->getFormattedPrice($item->getPrice());
-            $fields['c_description' . $suffix]  = strip_tags(substr(($product->getCommonDescription() ? : $product->getName()), 0, 254));
+            $description = $product->getCommonDescription() ?: $product->getName();
+
+            $fields['c_prod' . $suffix]        = $product->getProductId() . ',' . $item->getAmount();
+            $fields['c_name' . $suffix]        = substr($product->getName(), 0, 127);
+            $fields['c_price' . $suffix]       = $this->getFormattedPrice($item->getPrice());
+            $fields['c_description' . $suffix] = strip_tags(substr(($description), 0, 254));
         }
 
         return $fields;

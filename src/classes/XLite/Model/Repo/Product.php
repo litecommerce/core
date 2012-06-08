@@ -141,21 +141,22 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     public function searchResult(\Doctrine\ORM\QueryBuilder $qb)
     {
-        return $qb->getResult();
+        return $qb->getOnlyEntities();
     }
 
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
      * @param string $alias Table alias OPTIONAL
+     * @param string $code  Language code OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function createQueryBuilder($alias = null)
+    public function createQueryBuilder($alias = null, $code = null)
     {
-        $queryBuilder = parent::createQueryBuilder($alias);
+        $queryBuilder = parent::createQueryBuilder($alias, $code);
 
         $alias = $alias ?: $queryBuilder->getRootAlias();
         $this->addEnabledCondition($queryBuilder, $alias);
@@ -537,13 +538,19 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function assignPriceRangeCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $min, $max)
     {
+        $field = 'p.price';
+        if (!\XLite::isAdminZone() && (isset($min) || isset($max))) {
+            $this->assignCalculatedField($queryBuilder, 'price');
+            $field = 'calculatedPrice';
+        }
+
         if (isset($min)) {
-            $queryBuilder->andWhere('p.price > :minPrice')
+            $queryBuilder->andWhere($field . ' > :minPrice')
                 ->setParameter('minPrice', doubleval($min));
         }
 
         if (isset($max)) {
-            $queryBuilder->andWhere('p.price < :maxPrice')
+            $queryBuilder->andWhere($field . ' < :maxPrice')
                 ->setParameter('maxPrice', doubleval($max));
         }
     }
@@ -723,6 +730,10 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
             // FIXME - add aliases for sort modes
             if ('i.amount' === $sort) {
                 $queryBuilder->innerJoinInventory();
+
+            } elseif ('p.price' == $sort && !\XLite::isAdminZone()) {
+                $this->assignCalculatedField($queryBuilder, 'price');
+                $sort = 'calculatedPrice';
             }
 
             $queryBuilder->addOrderBy($sort, $order);
@@ -801,6 +812,66 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
             ->setParameter('enabled', true);
 
         return $queryBuilder;
+    }
+
+    /**
+     * Define calculated price definition DQL 
+     * 
+     * @param \XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder Query builder
+     * @param string                                  $alias        Main alias
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function defineCalculatedPriceDQL(\XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder, $alias)
+    {
+        return $alias . '.price';
+    }
+
+    /**
+     * Define calculated amount definition DQL
+     *
+     * @param \XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder Query builder
+     * @param string                                  $alias        Main alias
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function defineCalculatedAmountDQL(\XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder, $alias)
+    {
+        return 'i.amount';
+    }
+
+    /**
+     * Define calculated name definition DQL
+     *
+     * @param \XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder Query builder
+     * @param string                                  $alias        Main alias
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function defineCalculatedNameDQL(\XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder, $alias)
+    {
+        return 'translations.name';
+    }
+
+    /**
+     * Define calculated sku definition DQL
+     *
+     * @param \XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder Query builder
+     * @param string                                  $alias        Main alias
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function defineCalculatedSkuDQL(\XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder, $alias)
+    {
+        return $alias . '.sku';
     }
 
     /**

@@ -62,7 +62,7 @@ class Price extends \XLite\View\AView
      */
     protected function getListPrice()
     {
-        return $this->getProduct()->getListPrice();
+        return $this->getProduct()->getDisplayPrice();
     }
 
     /**

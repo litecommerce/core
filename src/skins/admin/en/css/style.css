@@ -224,23 +224,20 @@ body
 }
 
 #page-container {
-  min-height: 100%;
   position: relative;
   vertical-align: top;
   width: 100%;
+  margin: 0 auto;
+  padding-bottom: 70px;
 }
 
 #header {
   width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
-#footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+#page-wrapper
+{
+  min-height: 95%;
 }
 
 /* safari and opera need this */
@@ -256,14 +253,14 @@ body
 
 #content-header
 {
-  margin-top: -10px;
+  margin-top: 0px;
   padding-top: 10px;
 }
 
 #main
 {
   margin: 15px 25px 25px 25px;
-  min-width: 640px;
+  min-width: 950px;
 }
 
 #sub-section
@@ -300,7 +297,7 @@ body
 
 .sw-version .current
 {
-  color: #7f90A0;
+  color: #8f8f8f;
   margin-right: 10px;
   float: left;
   font-size: 12px;
@@ -349,22 +346,29 @@ li.updates-note a {
 
 #footer
 {
+  position: relative;
+  margin-top: -70px;
+  height: 70px;
+  clear: both;
+}
+
+#footer
+{
   padding-top: 10px;
   border-top: solid 1px #e6e6e6;
-  height: 60px;
 }
 
 #footer .left
 {
   float: left;
-  width: 50%;
+  width: 70%;
   text-align: left;
 }
 
 #footer .right
 {
   float: right;
-  width: 50%;
+  width: 30%;
   text-align: right;
 }
 
@@ -375,15 +379,10 @@ li.updates-note a {
 #content
 {
   background: url(../images/content_top_bg.gif) repeat-x top left;
-  padding: 80px 0 60px 0;
+  padding: 0px 0px 60px 0px;
 }
 
-#content-header
-{
-  border-top: 1px solid #dfe5e8;
-}
-
-div.noscript
+.noscript
 {
   width: 500px;
   color: #f00;
@@ -975,6 +974,38 @@ button.bright:active
 {
   background-position: center -72px;
 }
+
+button.link {
+  border-style: none;
+  background: transparent none;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+button.link span {
+  color: #154e9c;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+button.link[disabled="disabled"],
+button.link.disabled
+{
+  background: transparent none;
+}
+
+button.link[disabled="disabled"] span,
+button.link.disabled span
+{
+  color: #8f8f8f;
+  text-decoration: none;
+  cursor: default;
+}
+
+
+
 
 /* FIXME
 button.switch-state {
@@ -1628,7 +1659,9 @@ div.table-value .checkbox-list label {
 }
 
 div.table-value .input-text-integer input,
-div.table-value .input-text-float input
+  div.table-value .input-text-float input,
+  div.table-value .input-text-price input,
+  div.table-value .input-text-symbol input
 {
   text-align: right;
   width: 80px;
@@ -1777,18 +1810,66 @@ form.list-form {
 
 form.list-form .sticky-panel .panel-cell {
   display: inline-block;
-  padding-left: 10px;
+  padding: 0px;
 }
 
-form.list-form .sticky-panel .panel-cell.first {
-  padding-left: 0px;
+form.list-form .sticky-panel .panel-cell > button {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+form.list-form .sticky-panel div.cancel,
+form.list-form .sticky-panel div.additional
+{
+  display: block;
 }
 
 form.list-form .sticky-panel a.cancel {
-  text-decoration: underline;
+  text-indent: -5000px;
+  display: block;
+  background: transparent url(../images/icon_cancel.png) no-repeat left top;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 3px;
+  left: 5px;
 }
 
 form.list-form .sticky-panel a.cancel.disabled {
-  color: #8f8f8f;
-  text-decoration: none;
+  opacity: .5;
+  cursor: text;
+}
+
+form.list-form .sticky-panel.has-add-buttons .box {
+  padding-right: 47px;
+}
+
+form.list-form .sticky-panel.has-add-buttons .additional {
+  position: absolute;
+  top: 4px;
+  right: -26px;
+  width: 58px;
+  height: 68px;
+  background: transparent url(../images/button_more_arrow.png) no-repeat left top;
+  -moz-border-radius: 0px 5px 5px 0px;
+  -webkit-border-radius: 0px 5px 5px 0px;
+  border-radius: 0px 5px 5px 0px;
+  overflow: visible;
+}
+
+form.list-form .sticky-panel.has-add-buttons .additional .additional-buttons {
+  position: absolute;
+  top: 10px;
+  left: 43px;
+  display: none;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #cadce8;
+  background: #fff none;
+  padding: 15px;
+}
+
+form.list-form .sticky-panel.has-add-buttons .additional:hover .additional-buttons {
+  display: block;
 }

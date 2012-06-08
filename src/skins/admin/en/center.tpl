@@ -8,6 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
+ * @ListChild (list="admin.main.page.content.center", weight="10")
  *}
 <widget template="noscript.tpl" />
 
@@ -37,7 +38,7 @@
 
 <widget target="order" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
 
-<widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="Countries">
+<widget target="countries" template="common/dialog.tpl" body="countries.tpl">
 
 <widget target="update_inventory" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 

@@ -69,7 +69,10 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {
-        $id = empty($args['profile_id']) ? \XLite\Core\Request::getInstance()->profile_id : $args['profile_id'];
+        $id = empty($args['profile_id'])
+            ? \XLite\Core\Auth::getInstance()->getProfile()->getProfileId()
+            : $args['profile_id'];
+
         unset($args['profile_id']);
 
         list($path, $args) = parent::getPortalDrupalArgs($path, $args);
@@ -79,7 +82,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
         return array($path, $args);
     }
 
-    
+
     /**
      * Get ID of LC profile
      *

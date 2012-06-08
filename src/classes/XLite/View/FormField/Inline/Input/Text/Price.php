@@ -33,7 +33,7 @@ namespace XLite\View\FormField\Inline\Input\Text;
  * @see   ____class_see____
  * @since 1.0.15
  */
-abstract class Price extends \XLite\View\FormField\Inline\AInline
+class Price extends \XLite\View\FormField\Inline\Base\Single
 {
     /**
      * Register JS files
@@ -66,16 +66,18 @@ abstract class Price extends \XLite\View\FormField\Inline\AInline
     /**
      * Get view value
      *
+     * @param array $field Field
+     *
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getViewValue()
+    protected function getViewValue(array $field)
     {
-        $value = parent::getViewValue();
+        $value = parent::getViewValue($field);
         $sign = 0 <= $value ? '' : '&minus;&#8197';
 
-        return $sign . $this->getField()->getCurrency()->formatValue(abs($value));
+        return $sign . $field['widget']->getCurrency()->formatValue(abs($value));
     }
 
     /**
@@ -103,16 +105,43 @@ abstract class Price extends \XLite\View\FormField\Inline\AInline
     }
 
     /**
+     * Get currency 
+     * 
+     * @return \XLite\Model\Currency
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function getCurrency()
+    {
+        return $this->getSingleFieldAsWidget()->getCurrency();
+    }
+
+    /**
      * Get initial field parameters
+     *
+     * @param array $field Field data
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getFieldParams()
+    protected function getFieldParams(array $field)
     {
-        return parent::getFieldParams()
+        return parent::getFieldParams($field)
             + array(\XLite\View\FormField\Input\Text\Base\Numeric::PARAM_MOUSE_WHEEL_ICON => false);
+    }
+    /**
+     * Get field value from entity
+     *
+     * @param array $field Field
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function getFieldEntityValue(array $field)
+    {
+        return doubleval(parent::getFieldEntityValue($field));
     }
 
 }

@@ -108,25 +108,27 @@ error_reporting(E_ALL ^ E_NOTICE);
 // Load classes from "classes" (do not use cache)
 \Includes\Autoloader::switchLCAutoloadDir();
 
-$config = parse_ini_file('etc/config.default.php');
+$config = parse_ini_file('etc/config.default.php', true);
 
 if (file_exists('etc/config.php')) {
-    $config = array_replace_recursive($config, parse_ini_file('etc/config.php'));
+    $config = array_replace_recursive($config, parse_ini_file('etc/config.php', true));
 }
 
 if (file_exists('etc/config.local.php')) {
-    $config = array_replace_recursive($config, parse_ini_file('etc/config.local.php'));
+    $config = array_replace_recursive($config, parse_ini_file('etc/config.local.php', true));
 }
 
 if (R_INSTALL_SITEADMIN) {
 
     if (file_exists('etc/config.demo.php')) {
-        $config = array_replace_recursive($config, parse_ini_file('etc/config.demo.php'));
+        $config = array_replace_recursive($config, parse_ini_file('etc/config.demo.php', true));
 
     } else {
         die('etc/config.demo.php file required');
     }
 }
+
+$config = $config['database_details'];
 
 $config['hostspec'] .= empty($config['socket'])
    ? (empty($config['port']) ? '' : ':' . $config['port'])

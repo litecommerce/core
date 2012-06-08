@@ -201,13 +201,15 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
                 }
 
                 $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($c);
+
                 if ($country) {
                     $address->setCountry($country);
                 }
 
                 // State
                 $state = null;
-                if ($addr && isset($addr['state']) && $addr['state']) {
+
+                if ($addr && !empty($addr['state'])) {
                     $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($addr['state']);
 
                 } elseif (

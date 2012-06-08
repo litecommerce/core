@@ -9,59 +9,51 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-
-{* :TODO: divide into parts (lists) *}
-
 <div IF="isDeveloperMode()" id="profiler-messages"></div>
 
 <widget class="\XLite\View\TopMessage" />
 
-<div id="page-container"{if:!auth.isLogged()} class="login-page"{end:}>
+<div id="page-wrapper">
 
-  <div id="content">
+  <div id="header-wrapper">
+    <list name="admin.main.page.header_wrapper" />
 
-    <div id="content-header">
+    <div id="header">
 
-      <div id="main">
+      <list name="admin.main.page.header" />
 
-        <widget template="center.tpl" />
+    </div><!-- [/header] -->
+  </div><!-- [/header-wrapper] -->
 
-      </div><!-- [/main] -->
+  <div id="page-container"{if:!auth.isLogged()} class="login-page"{end:}>
 
-      <div id="sub-section"></div>
+    <div id="content">
+      <div id="content-header">
 
-    </div>
+        <div id="main">
 
-  </div><!-- [/content] -->
+          <list name="admin.main.page.content.center" />
 
+        </div><!-- [/main] -->
 
-  <div id="header">
+        <div id="sub-section"></div>
 
-    <div class="logo"></div>
+      </div>
+    </div><!-- [/content] -->
 
-    <div class="sw-version">
-      <span class="current" IF="!auth.isLogged()">{t(#LiteCommerce shopping cart software#)}</span>
-      <widget class="\XLite\View\CoreVersionTopLink" />
-    </div>
+  </div><!-- [/page-container] -->
 
-    <widget class="\XLite\View\TopMenu" />
-    <widget class="\XLite\View\TopLinks" />
-    <h1 IF="!auth.isLogged()">{t(#Administration Zone#)}</h1>
+</div><!-- [/page-wrapper] -->
 
-  </div><!-- [/header] -->
+<div id="footer">
 
+  <div class="left">
+    <widget class="\XLite\View\PoweredBy" />
+  </div>
 
-  <div id="footer">
+  <div class="right"></div>
 
-    <div class="left">
-      <widget class="\XLite\View\PoweredBy" />
-    </div>
+  <div class="clear"></div>
 
-    <div class="right">
-    </div>
+</div><!-- [/footer] -->
 
-    <div class="clear"></div>
-
-  </div><!-- [/footer] -->
-
-</div><!-- [/page-container] -->

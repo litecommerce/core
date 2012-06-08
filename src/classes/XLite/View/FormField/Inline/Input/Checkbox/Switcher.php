@@ -33,7 +33,7 @@ namespace XLite\View\FormField\Inline\Input\Checkbox;
  * @see   ____class_see____
  * @since 1.0.15
  */
-abstract class Switcher extends \XLite\View\FormField\Inline\AInline
+abstract class Switcher extends \XLite\View\FormField\Inline\Base\Single
 {
     /**
      * Define form field
@@ -62,13 +62,15 @@ abstract class Switcher extends \XLite\View\FormField\Inline\AInline
     /**
      * Get initial field parameters
      *
+     * @param array $field Field data
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getFieldParams()
+    protected function getFieldParams(array $field)
     {
-        return parent::getFieldParams() + array(
+        return parent::getFieldParams($field) + array(
             \XLite\View\FormField\Input\Checkbox::PARAM_IS_CHECKED => $this->getEntityValue(),
         );
     }

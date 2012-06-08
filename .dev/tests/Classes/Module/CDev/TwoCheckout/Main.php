@@ -25,36 +25,75 @@
  * @since      1.0.0
  */
 
+/**
+ * XLite_Tests_Module_CDev_TwoCheckout_Main 
+ *
+ * @see   ____class_see____
+ * @since 1.0.22
+ */
 class XLite_Tests_Module_CDev_TwoCheckout_Main extends XLite_Tests_TestCase
 {
+    /**
+     * testGetModuleName
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetModuleName()
     {
         $main = $this->getMain();
         $this->assertEquals('2Checkout.com', $main::getModuleName(), 'Wrong module name');
     }
 
+    /**
+     * testGetDescription
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetDescription()
     {
         $main = $this->getMain();
         $this->assertEquals('Enables taking credit card payments for your online store via 2Checkout.com payment gateway.', $main::getDescription(), 'Wrong description');
     }
 
+    /**
+     * testGetVersion
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testGetVersion()
     {
         $main = $this->getMain();
-        $this->assertEquals('1.0.2', $main::getVersion(), 'Wrong version');
+        $this->assertEquals('1.0.4', $main::getVersion(), 'Wrong version');
     }
 
+    /**
+     * testShowSettingsForm
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     public function testShowSettingsForm()
     {
         $main = $this->getMain();
         $this->assertFalse($main::showSettingsForm(), 'Wrong flag to show settings form');
     }
 
+    /**
+     * getMain
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
     protected function getMain()
     {
         return 'XLite\Module\CDev\TwoCheckout\Main';
     }
-
 }
-

@@ -55,6 +55,11 @@ abstract class AView extends \XLite\Core\Handler
     const REPLACE       = 'replace';
 
     /**
+     * Favicon resource short path
+     */
+    const FAVICON = 'favicon.ico';
+
+    /**
      * Widgets resources collector
      *
      * @var   array
@@ -428,6 +433,21 @@ abstract class AView extends \XLite\Core\Handler
     protected function getDefaultModes()
     {
         return array();
+    }
+
+    /**
+     * Return favicon resource path
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFavicon()
+    {
+        return \XLite\Singletons::$handler->layout->getResourceWebPath(
+            static::FAVICON,
+            \XLite\Core\Layout::WEB_PATH_OUTPUT_URL
+        );
     }
 
     /**
@@ -1068,10 +1088,10 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Format price as HTML block
-     * 
+     *
      * @param float                 $value    Value
      * @param \XLite\Model\Currency $currency Currency OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.19

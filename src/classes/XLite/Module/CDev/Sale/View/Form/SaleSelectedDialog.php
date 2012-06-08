@@ -79,9 +79,9 @@ class SaleSelectedDialog extends \XLite\View\Form\AForm
     /**
      * Set validators pairs for products data
      *
-     * @param mixed $data Data
+     * @param mixed &$data Data
      *
-     * @return null
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */

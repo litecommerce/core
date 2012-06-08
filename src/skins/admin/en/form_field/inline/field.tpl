@@ -10,4 +10,8 @@
  * @since     1.0.15
  *}
 
-{field.display()}
+{foreach:getFields(),f}
+  <div class="{getFieldClassName(f)}">
+    {f.widget.display()}
+  </div>
+{end:}

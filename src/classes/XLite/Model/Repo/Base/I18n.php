@@ -39,14 +39,15 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
      * @param string $alias Table alias OPTIONAL
+     * @param string $code  Language code OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function createQueryBuilder($alias = null)
+    public function createQueryBuilder($alias = null, $code = null)
     {
-        return $this->addTranslationsSubquery(parent::createQueryBuilder($alias), $alias);
+        return $this->addLanguageQuery(parent::createQueryBuilder($alias), $alias, $code);
     }
 
     /**
@@ -67,41 +68,19 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
         }
 
         if (!isset($code)) {
-            $code = \XLite\Core\Session::getInstance()->getLanguage()->code;
+            $code = \XLite\Core\Session::getInstance()->getLanguage()
+                ? \XLite\Core\Session::getInstance()->getLanguage()->getCode()
+                : 'en';
         }
 
         $queryBuilder
-            ->addSelect('translations')
-            ->innerJoin(
+            ->leftJoin(
                 $alias . '.translations',
                 'translations',
                 \Doctrine\ORM\Query\Expr\Join::WITH,
                 'translations.code = :lng'
             )
             ->setParameter('lng', $code);
-
-        return $queryBuilder;
-    }
-
-    /**
-     * Add translations subquery
-     *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder
-     * @param string                     $alias        Main model alias OPTIONAL
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function addTranslationsSubquery(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
-    {
-        if (!isset($alias)) {
-            $alias = $this->getMainAlias($queryBuilder);
-        }
-
-        $queryBuilder
-            ->addSelect('translations')
-            ->leftJoin($alias . '.translations', 'translations');
 
         return $queryBuilder;
     }

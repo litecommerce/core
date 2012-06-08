@@ -68,7 +68,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '6';
+        return '8';
     }
 
     /**
@@ -80,6 +80,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Enables taking credit card payments for your online store via AuthorizeNet payment gateway (Server Integration Method).';
+        return 'Enables taking credit card payments for your online store'
+            . ' via AuthorizeNet payment gateway (Server Integration Method).';
     }
 }

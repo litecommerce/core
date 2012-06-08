@@ -44,6 +44,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     const COLUMN_CREATE_CLASS  = 'createClass';
     const COLUMN_MAIN          = 'main';
     const COLUMN_SERVICE       = 'service';
+    const COLUMN_PARAMS        = 'params';
 
     /**
      * Columns (local cache)
@@ -144,6 +145,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
                 if (!isset($column[static::COLUMN_TEMPLATE]) && !isset($column[static::COLUMN_CLASS])) {
                     $column[static::COLUMN_TEMPLATE] = 'items_list/model/table/field.tpl';
                 }
+                $column[static::COLUMN_PARAMS] = isset($column[static::COLUMN_PARAMS]) ? $column[static::COLUMN_PARAMS] : array();
                 $this->columns[] = $column;
             }
 
@@ -273,37 +275,79 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     }
 
     /**
-     * Get field classes list (only inline-based form fields)
+     * Get field objects list (only inline-based form fields)
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getFieldClasses()
+    protected function getFieldObjects()
     {
         $list = array();
 
         foreach ($this->getColumns() as $column) {
+            $name = $column[static::COLUMN_CODE];
             if (
                 isset($column[static::COLUMN_CLASS])
                 && is_subclass_of($column[static::COLUMN_CLASS], 'XLite\View\FormField\Inline\AInline')
             ) {
-                $list[] = $column[static::COLUMN_CLASS];
+                $params = isset($column[static::COLUMN_PARAMS]) ? $column[static::COLUMN_PARAMS] : array();
+                $list[] = array(
+                    'class'      => $column[static::COLUMN_CLASS],
+                    'parameters' => array('fieldName' => $name, 'fieldParams' => $params),
+                );
             }
         }
 
         if ($this->isSwitchable()) {
-            $list[] = 'XLite\View\FormField\Inline\Input\Checkbox\Switcher\Enabled';
+            $list[] = $this->getSwitcherField();
         }
 
-        if (static::SORT_TYPE_INPUT == $this->getSortableType()) {
-            $list[] = 'XLite\View\FormField\Inline\Input\Text\Position\OrderBy';
+        if (static::SORT_TYPE_NONE != $this->getSortableType()) {
+            $list[] = $this->getSortField();
+        }
 
-        } elseif (static::SORT_TYPE_MOVE == $this->getSortableType()) {
-            $list[] = 'XLite\View\FormField\Inline\Input\Text\Position\Move';
+        foreach ($list as $i => $class) {
+            $list[$i] = new $class['class']($class['parameters']);
         }
 
         return $list;
+    }
+
+    /**
+     * Get switcher field 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function getSwitcherField()
+    {
+        return array(
+            'class'      => 'XLite\View\FormField\Inline\Input\Checkbox\Switcher\Enabled',
+            'parameters' => array('fieldName' => 'enabled'),
+        );
+    }
+
+    /**
+     * Get sort field 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function getSortField()
+    {
+        return static::SORT_TYPE_INPUT == $this->getSortableType()
+            ? array(
+                'class'      => 'XLite\View\FormField\Inline\Input\Text\Position\OrderBy',
+                'parameters' => array('fieldName' => 'position'),
+            )
+            :
+            array(
+                'class'      => 'XLite\View\FormField\Inline\Input\Text\Position\Move',
+                'parameters' => array(),
+            );
     }
 
     /**
@@ -318,12 +362,32 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
         $list = array();
 
         foreach ($this->getColumns() as $column) {
+            $name = $column[static::COLUMN_CODE];
+            $class = null;
             if (
                 isset($column[static::COLUMN_CREATE_CLASS])
                 && is_subclass_of($column[static::COLUMN_CREATE_CLASS], 'XLite\View\FormField\Inline\AInline')
             ) {
-                $list[] = $column[static::COLUMN_CREATE_CLASS];
+                $class = $column[static::COLUMN_CREATE_CLASS];
+
+            } elseif (
+                isset($column[static::COLUMN_CLASS])
+                && is_subclass_of($column[static::COLUMN_CLASS], 'XLite\View\FormField\Inline\AInline')
+            ) {
+                $class = $column[static::COLUMN_CLASS];
             }
+
+            if ($class) {
+                $params = isset($column[static::COLUMN_PARAMS]) ? $column[static::COLUMN_PARAMS] : array();
+                $list[] = array(
+                    'class'      => $column[static::COLUMN_CREATE_CLASS],
+                    'parameters' => array('fieldName' => $name, 'fieldParams' => $params),
+                );
+            }
+        }
+
+        foreach ($list as $i => $class) {
+            $list[$i] = new $class['class']($class['parameters']);
         }
 
         return $list;

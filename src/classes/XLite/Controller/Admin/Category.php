@@ -129,6 +129,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
         $properties = $this->validateCategoryData(true);
 
         if ($properties) {
+
             $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->insert(
                 array('parent_id' => $this->getCategoryId()) + $properties
             );
@@ -161,7 +162,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
 
     /**
      * Returns set of fields to perform validation on
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.17
@@ -175,7 +176,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
             'meta_desc',
             'meta_title',
             'enabled',
-            'membership_id',
+            'membership',
             'clean_url',
             'show_title',
         );
@@ -241,6 +242,10 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
             } elseif ('enabled' === $field) {
                 // 'Enabled' field value must be either 0 or 1
                 $data['enabled'] = ((isset($data['enabled']) && $data['enabled'] == '1') ? 1 : 0);
+
+            } elseif ('membership' === $field) {
+
+                $data['membership'] = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->find($data['membership']);
             }
         }
 

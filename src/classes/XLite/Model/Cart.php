@@ -108,7 +108,10 @@ class Cart extends \XLite\Model\Order
 
             \XLite\Core\Database::getEM()->flush();
 
-            if (time() - static::RENEW_PERIOD > $cart->getLastRenewDate()) {
+            if (
+                \XLite\Model\Order::STATUS_TEMPORARY == $cart->getStatus()
+                || ((time() - static::RENEW_PERIOD) > $cart->getLastRenewDate())
+            )  {
                 $cart->renew();
             }
 
@@ -270,8 +273,8 @@ class Cart extends \XLite\Model\Order
     }
 
     /**
-     * Initialize new cart 
-     * 
+     * Initialize new cart
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.21
@@ -279,6 +282,6 @@ class Cart extends \XLite\Model\Order
     protected function initializeCart()
     {
         $this->setStatus(self::STATUS_TEMPORARY);
-        $this->reinitialieCurrency();
+        $this->reinitializeCurrency();
     }
 }

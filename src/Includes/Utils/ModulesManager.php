@@ -51,7 +51,6 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     const MODULES_FILE_NAME = '.decorator.modules.ini.php';
 
-
     /**
      * List of active modules
      *
@@ -70,13 +69,12 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     protected static $quotedPaths;
 
-
     // {{{ Name convertion routines
 
     /**
      * Get class name by module name
      *
-     * @param string $moduleName module actual name
+     * @param string $moduleName Module actual name
      *
      * @return string
      * @see    ____func_see____
@@ -90,7 +88,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     /**
      * Retrieve module name from class name
      *
-     * @param string $className class name to parse
+     * @param string $className Class name to parse
      *
      * @return string
      * @see    ____func_see____
@@ -98,7 +96,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     public static function getModuleNameByClassName($className)
     {
-        return preg_match(self::CLASS_NAME_PATTERN, $className, $matches) ? $matches[1] : null;
+        return preg_match(static::CLASS_NAME_PATTERN, $className, $matches) ? $matches[1] : null;
     }
 
     /**
@@ -191,11 +189,28 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         return static::getAbsoluteDir($author, $name) . 'install.yaml';
     }
 
+    /**
+     * Get module by file name
+     *
+     * @param string $file File name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function getFileModule($file)
+    {
+        $pattern = '/classes' . LC_DS_QUOTED . 'XLite' . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED 
+            . '(\w+)' . LC_DS_QUOTED . '(\w+)' . LC_DS_QUOTED . '/Si';
+
+        return preg_match($pattern, $file, $matches) ? ($matches[1] . '\\' . $matches[2]) : null;
+    }
+
     // }}}
 
     // {{{ Methods to access installed module main class
 
-     /**
+    /**
      * Initialize active modules
      *
      * @return void
@@ -250,7 +265,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      *
      * @param string $author         Module author
      * @param string $name           Module name
-     * @param array  $additionalData Data to add to result
+     * @param array  $additionalData Data to add to result OPTIONAL
      *
      * @return array
      * @see    ____func_see____
@@ -326,7 +341,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     /**
      * Check if module is active
      *
-     * @param string|null $moduleName module name
+     * @param string|null $moduleName Module name
      *
      * @return boolean
      * @see    ____func_see____
@@ -335,6 +350,20 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     public static function isActiveModule($moduleName)
     {
         return (bool) \Includes\Utils\ArrayManager::getIndex(static::getActiveModules(), $moduleName, true);
+    }
+
+    /**
+     * Check if all modules are active
+     *
+     * @param array $moduleNames Module names
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function areActiveModules(array $moduleNames)
+    {
+        return array_filter(array_map(array('static', 'isActiveModule'), $moduleNames)) == $moduleNames;
     }
 
     /**
@@ -395,6 +424,27 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
 
         $dependencies = array_diff_key($dependencies, static::$activeModules);
         array_walk_recursive($dependencies, array('static', 'disableModule'));
+
+        // http://bugtracker.litecommerce.com/view.php?id=41330
+        static::excludeMutualModules();
+    }
+
+    /**
+     * Disable so called "mutual exclusive" modules
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected static function excludeMutualModules()
+    {
+        $list = array();
+
+        foreach (static::$activeModules as $module => $data) {
+            $list = array_merge_recursive($list, static::callModuleMethod($module, 'getMutualModulesList'));
+        }
+
+        array_walk_recursive($list, array('static', 'disableModule'));
     }
 
     // }}}
@@ -458,18 +508,20 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
             $filter = new \Includes\Utils\FileFilter($path, '/.*\.php$/Si');
 
             foreach ($filter->getIterator() as $path => $data) {
-                $class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
+
+                // DO NOT call "getInterfaces()" after the "getFullClassName()"
+                // DO NOT use reflection to get interfaces
+                $intefaces = \Includes\Decorator\Utils\Tokenizer::getInterfaces($path);
+                $class     = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path);
+
                 $reflectionClass = new \ReflectionClass($class);
 
-                if (
-                    $class
-                    && is_subclass_of($class, '\XLite\Model\AEntity')
-                    && !$reflectionClass->isAbstract()
-                ) {
+                if ($class && is_subclass_of($class, '\XLite\Model\AEntity') && !$reflectionClass->isAbstract()) {
                     $class = ltrim($class, '\\');
-                    $len = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
+                    $len   = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
 
-                    if (in_array('XLite\Base\IDecorator', class_implements($class))) {
+                    // DO NOT remove leading backslash in interface name
+                    if (in_array('\XLite\Base\IDecorator', $intefaces)) {
                         $parent   = \Includes\Decorator\Utils\Tokenizer::getParentClassName($path);
                         $metadata = \XLite\Core\Database::getEM()->getClassMetadata($parent);
                         $table    = substr($metadata->getTableName(), $len);
@@ -490,7 +542,10 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
                         }
 
                     } elseif (\XLite\Core\Database::getRepo($class)->canDisableTable()) {
-                        $tables[] = substr(\XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(), $len);
+                        $tables[] = substr(
+                            \XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(),
+                            $len
+                        );
                     }
                 }
             }
@@ -508,7 +563,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
      */
     protected static function getModulesFilePath()
     {
-        return LC_DIR_VAR . self::MODULES_FILE_NAME;
+        return LC_DIR_VAR . static::MODULES_FILE_NAME;
     }
 
     // }}}
@@ -587,6 +642,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
                     }
                 }
             }
+
         } else {
             $list = static::fetchModulesListFromDB();
         }
@@ -666,7 +722,10 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
         // Search for module
         $condition .= ' AND fromMarketplace = ?';
         $query      = 'SELECT moduleID FROM ' . $table . $condition . ' AND majorVersion = ? AND minorVersion = ?';
-        $moduleID   = \Includes\Utils\Database::fetchColumn($query, array($author, $name, 0, $majorVersion, $minorVersion));
+        $moduleID   = \Includes\Utils\Database::fetchColumn(
+            $query,
+            array($author, $name, 0, $majorVersion, $minorVersion)
+        );
 
         // If found in DB
         if ($moduleID) {
@@ -704,7 +763,7 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
             . '|' . $root
             . '|' . $root . LC_DS_QUOTED . 'Module' . LC_DS_QUOTED . '[a-zA-Z0-9]+'
             . '|' . $root . LC_DS_QUOTED . '[a-zA-Z0-9]+'
-            .')\.php$/Ss';
+            . ')\.php$/Ss';
     }
 
     /**
@@ -757,9 +816,9 @@ abstract class ModulesManager extends \Includes\Utils\AUtils
     /**
      * Return pattern to file path againist active modules list
      *
-     * @param string $rootPath  name of the root directory
-     * @param string $dir       name of the directory with modules
-     * @param string $extension file extension
+     * @param string $rootPath  Name of the root directory
+     * @param string $dir       Name of the directory with modules
+     * @param string $extension File extension
      *
      * @return string
      * @see    ____func_see____

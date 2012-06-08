@@ -11,8 +11,21 @@
  *}
 <div class="steps step-{getStepNumber()}">
 
-  <div FOREACH="getSteps(),stepKey,step" class="step {stepKey}-step {if:isCurrentStep(step)}current{else:}inactive{end:} {if:isDisabledStep(step)}disabled{end:} {if:isPreviousStep(step)}previous{end:} {if:hasLeftArrow(step)}left-arrow{end:} {if:hasRightArrow(step)}right-arrow{end:}">
-    <h2><img src="images/spacer.gif" class="arrow left" alt="" IF="hasLeftArrow(step)" /><span class="text">{t(step.getTitle())}</span><img src="images/spacer.gif" class="arrow right" alt="" IF="hasRightArrow(step)" /></h2>
+  <div
+    FOREACH="getSteps(),stepKey,step"
+    class="step
+      {stepKey}-step
+      {if:isCurrentStep(step)}current{else:}inactive{end:}
+      {if:!isEnabledStep(step)}disabled{end:}
+      {if:isPreviousStep(step)}previous{end:}
+      {if:hasLeftArrow(step)}left-arrow{end:}
+      {if:hasRightArrow(step)}right-arrow{end:}
+    ">
+    <h2>
+      <img src="images/spacer.gif" class="arrow left" alt="" IF="hasLeftArrow(step)" />
+      <span class="text">{t(step.getTitle())}</span>
+      <img src="images/spacer.gif" class="arrow right" alt="" IF="hasRightArrow(step)" />
+    </h2>
     <div class="step-box">{step.display()}</div>
   </div>
 
