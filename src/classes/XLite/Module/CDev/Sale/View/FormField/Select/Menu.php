@@ -45,8 +45,8 @@ class Menu extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
-            '1' => 'a side box',
-            '0' => 'the main column',
+            '1' => static::t('a side box'),
+            '0' => static::t('the main column'),
         );
     }
 }
