@@ -1,0 +1,28 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Product page styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.23
+ */
+
+ul.product-options li input {
+  display: none;
+}
+
+ul.product-options ul li {
+  list-style-type: disc;
+  color: #53769d;
+}
+
+ul.product-options ul {
+  padding-left: 20px;
+}
+
+ul.product-options ul li label {
+  vertical-align: middle;
+}

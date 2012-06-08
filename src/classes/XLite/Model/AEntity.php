@@ -138,6 +138,20 @@ abstract class AEntity extends \XLite\Base\SuperClass
     }
 
     /**
+     * Common isset
+     *
+     * @param string $name Property name
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __isset($name)
+    {
+        return !is_null($this->__get($name));
+    }
+
+    /**
      * Common unset
      *
      * @param string $name Property name

@@ -52,10 +52,10 @@ button.ui-state-default span.ui-icon {
   background: transparent url(../images/multiselect_arrows.png) no-repeat left 3px;
 }
 
-.ui-multiselect-menu {
-  -moz-border-radius: 0px;
-  -webkit-border-radius: 0px;
-  border-radius: 0px;
+.ui-multiselect-menu.ui-corner-all {
+  -moz-border-radius: 0px 0px 3px 3px;
+  -webkit-border-radius: 0px 0px 3px 3px;
+  border-radius: 0px 0px 3px 3px;
   background: #fff none;
 }
 
@@ -91,7 +91,9 @@ button.ui-state-default span.ui-icon {
   color: #456583;
 }
 
-.ui-multiselect-checkboxes .ui-state-hover {
+.ui-multiselect-menu .ui-state-hover,
+.ui-multiselect-single .ui-state-hover.ui-state-active
+{
   border-color: #83a8c7;
   background: #83a8c7 none;
   font-weight: normal;
@@ -99,6 +101,24 @@ button.ui-state-default span.ui-icon {
   -webkit-border-radius: 0px;
   border-radius: 0px;
 }
+
+.ui-multiselect-single .ui-state-active {
+  background: #eaf3fe none;
+  border-color: #eaf3fe;
+  font-weight: normal;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+}
+
+.ui-multiselect-checkboxes .ui-state-hover span {
+  color: #fff;
+}
+
+.ui-multiselect-single .ui-multiselect-checkboxes .ui-state-hover span {
+  color: #333;
+}
+
 
 .ui-multiselect-checkboxes label {
   line-height: 22px;
@@ -117,3 +137,40 @@ button.ui-state-default span.ui-icon {
   font-size: 14px;
   padding-left: 8px;
 }
+
+body div.ui-multiselect-with-filter {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding: 0px;
+}
+
+body div.ui-multiselect-with-filter .ui-widget-header {
+  border: 0px none;
+  background-color: #eaf3fe;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  border-bottom: 1px solid #bbc7d2;
+}
+
+body div.ui-multiselect-with-filter .ui-widget-header .ui-multiselect-filter {
+  color: #8f8f8f;
+  font-size: 13px;
+  padding-top: 5px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  float: none;
+}
+
+body div.ui-multiselect-with-filter .ui-widget-header .ui-multiselect-filter input {
+  font-size: 12px;
+  padding: 5px 3px 4px;
+  border-color: #949494;
+  width: 90%;
+}
+
+body div.ui-multiselect-with-filter .ui-widget-header .ui-helper-reset {
+  display: none;
+}
+

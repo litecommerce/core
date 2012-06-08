@@ -17,7 +17,7 @@
       <widget class="\XLite\Module\CDev\GoSocial\View\FormField\Select\UseCustomOpenGraph" fieldName="{getNamePostedData(#useCustomOG#)}" value="{product.getUseCustomOG()}" fieldOnly="true" />
     </div>
     <div{if:!product.useCustomOG} style="display: none;"{end:} class="og-textarea">
-      <widget class="\XLite\View\FormField\Textarea\Simple" fieldName="{getNamePostedData(#ogMeta#)}" cols="140" rows="8" value="{product.getOpenGraphMetaTags(false):h}" help="{t(#These Open Graph meta tags were generated automatically based on general product information.#)}" />
+      <widget class="\XLite\View\FormField\Textarea\Simple" fieldName="{getNamePostedData(#ogMeta#)}" cols="140" rows="8" value="{product.getOpenGraphMetaTags(false):h}" help="{t(#These Open Graph meta tags were generated automatically based on general product information.#)}" fieldOnly="true" />
       <div class="clear"></div>
     </div>
   </td>

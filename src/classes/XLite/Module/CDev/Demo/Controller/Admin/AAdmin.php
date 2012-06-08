@@ -119,11 +119,13 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
      */
     protected function forbidInDemoMode()
     {
-        if ($message = $this->getForbidInDemoModeMessage()) {
+        $message = $this->getForbidInDemoModeMessage();
+        if ($message) {
             \XLite\Core\TopMessage::addWarning($message);
         }
 
-        if ($url = $this->getForbidInDemoModeRedirectURL()) {
+        $url = $this->getForbidInDemoModeRedirectURL();
+        if ($url) {
             \Includes\Utils\Operator::redirect($url);
         }
     }
@@ -137,7 +139,9 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
      */
     protected function checkForDemoController()
     {
-        return in_array($class = \Includes\Utils\Converter::trimLeadingChars(get_class($this), '\\'), $this->demoControllers)
+        $class = \Includes\Utils\Converter::trimLeadingChars(get_class($this), '\\');
+
+        return in_array($class, $this->demoControllers)
             ? !$this->isDemoActionPermitted($class)
             : $this->isDemoActionForbidden($class);
     }

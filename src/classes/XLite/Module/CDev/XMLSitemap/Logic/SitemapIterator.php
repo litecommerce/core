@@ -100,7 +100,8 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
 
         } elseif ($this->position < $this->getCategoriesLength() + $this->getProductsLength() + 1) {
 
-            $data =  \XLite\Core\Database::getRepo('XLite\Model\Product')->findFrame($this->position - $this->getCategoriesLength() - 1, 1);
+            $data =  \XLite\Core\Database::getRepo('XLite\Model\Product')
+                ->findFrame($this->position - $this->getCategoriesLength() - 1, 1);
             $data = $this->assembleProductData($data[0]);
 
         }
@@ -284,7 +285,7 @@ class SitemapIterator extends \XLite\Base implements \SeekableIterator, \Countab
     protected function processPriority($priority)
     {
         $priority = is_numeric($priority) ? round(doubleval($priority), 1) : self::DEFAULT_PRIORITY;
-        if ($priority > 1 || $priority < 0) {
+        if (1 < $priority || 0 > $priority) {
             $priority = self::DEFAULT_PRIORITY;
         }
 

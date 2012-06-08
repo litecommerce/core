@@ -50,9 +50,7 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
     {
         list($sort, $order) = $cnd->{self::P_ORDER_BY};
 
-        return $this->getObjectOnlyResult(
-            $this->defineBestsellersQuery($cnd, $count, $cat)
-        );
+        return $this->defineBestsellersQuery($cnd, $count, $cat)->getOnlyEntities();
     }
 
     /**
@@ -71,8 +69,8 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
         list($sort, $order) = $cnd->{self::P_ORDER_BY};
 
         $qb = $this->createQueryBuilder()
-            ->innerJoin('p.order_items', 'o')
-            ->innerJoin('o.order', 'ord')
+            ->linkInner('p.order_items', 'o')
+            ->linkInner('o.order', 'ord')
             ->addSelect('sum(o.amount) as product_amount')
             ->andWhere('ord.status IN (:complete_status, :processed_status)')
             ->groupBy('o.object')
@@ -86,41 +84,12 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
         }
 
         if (0 < $cat) {
-            $qb->leftJoin('p.categoryProducts', 'cp')
-                ->leftJoin('cp.category', 'c');
+            $qb->linkLeft('p.categoryProducts', 'cp')
+                ->linkLeft('cp.category', 'c');
             \XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($qb, $cat);
         }
 
         return $qb;
     }
 
-    /**
-     * Returns query result with the object collection only
-     *
-     * @param \Doctrine\ORM\QueryBuilder $qb Query builder object
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getObjectOnlyResult($qb)
-    {
-        $result = array();
-
-        foreach ($qb->getResult() as $row) {
-
-            if (is_array($row)) {
-
-                $object = $row[0];
-
-                unset($row[0]);
-
-            }
-
-            $result[] = $object;
-
-        }
-
-        return $result;
-    }
 }

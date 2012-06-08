@@ -72,7 +72,7 @@ class IframeContent extends \XLite\Controller\Customer\ACustomer
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body onload="javascript: document.getElementById('payment_form').submit();">
-  <form method="$method" id="form" name="payment_form" action="$url">
+  <form method="$method" id="payment_form" name="payment_form" action="$url">
     <fieldset style="display: none;">
 $body
     </fieldset>
@@ -96,7 +96,7 @@ HTML;
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function assembleFormBody(\EMM\Model\IframeContent $content)
+    protected function assembleFormBody(\XLite\Model\IframeContent $content)
     {
         $inputs = array();
         foreach ($content->getData() as $name => $value) {

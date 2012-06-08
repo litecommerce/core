@@ -33,7 +33,7 @@ namespace XLite\View\FormField\Inline\Input\Text;
  * @see   ____class_see____
  * @since 1.0.15
  */
-abstract class Integer extends \XLite\View\FormField\Inline\AInline
+class Integer extends \XLite\View\FormField\Inline\Base\Single
 {
     /**
      * Register JS files
@@ -73,6 +73,20 @@ abstract class Integer extends \XLite\View\FormField\Inline\AInline
     protected function getContainerClass()
     {
         return parent::getContainerClass() . ' inline-integer';
+    }
+
+    /**
+     * Get field value from entity
+     *
+     * @param array $field Field
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function getFieldEntityValue(array $field)
+    {
+        return intval(parent::getFieldEntityValue($field));
     }
 
 }

@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<div class="{getContainerClass()}">
+<div {getContainerAttributesAsString():h}>
 
   <div IF="isHeaderVisible()" class="list-header">
     <div FOREACH="getTopActions(),tpl" class="button-container"><widget template="{tpl:h}" /></div>

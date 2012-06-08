@@ -33,7 +33,7 @@ namespace XLite\Core;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class ImageOperator extends \Xlite\Base\SuperClass
+class ImageOperator extends \XLite\Base\SuperClass
 {
     /**
      * Engine

@@ -93,13 +93,13 @@ class Collection extends \XLite\Base\SuperClass
      * Insert new node before a certain node
      *
      * @param string                $key  Node key to search
-     * @param \Xlite\Model\ListNode $node New node to insert
+     * @param \XLite\Model\ListNode $node New node to insert
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function insertBefore($key, \Xlite\Model\ListNode $node)
+    public function insertBefore($key, \XLite\Model\ListNode $node)
     {
         $current = $this->findByKey($key);
         $prev = $current->getPrev();
@@ -120,13 +120,13 @@ class Collection extends \XLite\Base\SuperClass
      * Insert new node after a certain node
      *
      * @param string                $key  Node key to search
-     * @param \Xlite\Model\ListNode $node New node to insert
+     * @param \XLite\Model\ListNode $node New node to insert
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function insertAfter($key, \Xlite\Model\ListNode $node)
+    public function insertAfter($key, \XLite\Model\ListNode $node)
     {
         $current = $this->findByKey($key);
         $next = $current->getNext();
@@ -146,13 +146,13 @@ class Collection extends \XLite\Base\SuperClass
     /**
      * Add new node to the end of list
      *
-     * @param \Xlite\Model\ListNode $node Node to add
+     * @param \XLite\Model\ListNode $node Node to add
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function add(\Xlite\Model\ListNode $node)
+    public function add(\XLite\Model\ListNode $node)
     {
         if ($this->isInitialized()) {
             $this->insertAfter($this->tail->getKey(), $node);
@@ -164,7 +164,7 @@ class Collection extends \XLite\Base\SuperClass
     /**
      * Return first element of the list
      *
-     * @return \Xlite\Model\ListNode
+     * @return \XLite\Model\ListNode
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -176,7 +176,7 @@ class Collection extends \XLite\Base\SuperClass
     /**
      * Return last element of the list
      *
-     * @return \Xlite\Model\ListNode
+     * @return \XLite\Model\ListNode
      * @see    ____func_see____
      * @since  1.0.0
      */

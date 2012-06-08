@@ -227,7 +227,10 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 '#attributes' => array('id' => $key),
             );
 
-            $extendedItemsList = is_subclass_of($widget->getProtectedWidget(), 'XLite\View\ItemsList\Product\Customer\ACustomer');
+            $extendedItemsList = is_subclass_of(
+                $widget->getProtectedWidget(),
+                'XLite\View\ItemsList\Product\Customer\ACustomer'
+            );
 
             // Translate native LC options into Drupal format
             foreach ($settings as $name => $param) {
@@ -238,22 +241,15 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                     '#default_value' => isset($block['options'][$name]) ? $block['options'][$name] : $param->value,
                 );
 
+                $extendedAttributes = array(
+                    \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_WIDTH,
+                    \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_HEIGHT,
+                );
                 if ('select' === $form[$key][$name]['#type']) {
                     $form[$key][$name]['#options'] = $param->options;
 
-                } else {
-                    if (
-                        $extendedItemsList
-                        && in_array(
-                            $name,
-                            array(
-                                \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_WIDTH,
-                                \XLite\View\ItemsList\Product\Customer\ACustomer::PARAM_ICON_MAX_HEIGHT
-                            )
-                        )
-                    ) {
-                        $form[$key][$name]['#description'] = t('recommended: !size', array('!size' => 110));
-                    }
+                } elseif ($extendedItemsList && in_array($name, $extendedAttributes)) {
+                    $form[$key][$name]['#description'] = t('recommended: !size', array('!size' => 110));
                 }
             }
 
@@ -621,7 +617,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Change block definition before saving to the database
      * 
-     * @param array  $blocks     A multidimensional array of blocks keyed by the defining module and delta
+     * @param array  &$blocks    A multidimensional array of blocks keyed by the defining module and delta
      * @param string $theme      The theme these blocks belong to
      * @param array  $codeBlocks The blocks as defined in hook_block_info()
      *  

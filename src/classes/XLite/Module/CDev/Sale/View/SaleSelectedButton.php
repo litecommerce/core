@@ -105,6 +105,6 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
      */
     protected function getClass()
     {
-        return parent::getClass() . ' action sale-selected-button';
+        return parent::getClass() . ' action link sale-selected-button';
     }
 }

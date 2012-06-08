@@ -16,7 +16,7 @@ CommonElement.prototype.handlers.push(
       return 0 < this.$element.filter('select.multiselect').length;
     },
     handler: function () {
-      var options = { minWidth: 300, header: false, selectedList: 2, height: 250 };
+      var options = { minWidth: this.$element.width(), header: false, selectedList: 2, height: 250 };
       if (this.$element.data('text')) {
         options.selectedText = this.$element.data('text');
       }
