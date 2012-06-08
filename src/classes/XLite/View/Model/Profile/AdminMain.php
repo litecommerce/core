@@ -418,17 +418,16 @@ class AdminMain extends \XLite\View\Model\AModel
             $data['roles'] = array();
         }
 
+        $model = $this->getModelObject();
+
+        // Remove old links
+        foreach ($model->getRoles() as $role) {
+            $role->getProfiles()->removeElement($model);
+        }
+        $model->getRoles()->clear();
+
+        // Add new links
         if (isset($data['roles']) && is_array($data['roles'])) {
-
-            $model = $this->getModelObject();
-
-            // Remove old links
-            foreach ($model->getRoles() as $role) {
-                $role->getProfiles()->removeElement($model);
-            }
-            $model->getRoles()->clear();
-
-            // Add new links
             foreach ($data['roles'] as $rid) {
                 $role = \XLite\Core\Database::getRepo('XLite\Model\Role')->find($rid);
                 if ($role) {
