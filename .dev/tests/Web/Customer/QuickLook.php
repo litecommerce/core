@@ -658,7 +658,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @access protected
      * @since  1.0.0
      */
-    protected function waitForAjaxProgress()
+    protected function waitForAjaxProgress($listSelector = null)
     {
         $this->waitForCondition('selenium.isElementPresent("css=.blockUI.block-wait")', 30000, 'Awaiting for progess bar displaying failed');
         $this->waitForCondition('!selenium.isElementPresent("css=.blockUI.block-wait")', 30000, 'Awaiting for progess bar hiding failed');

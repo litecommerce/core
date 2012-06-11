@@ -243,10 +243,17 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
             }
 
             $index = \Includes\Utils\ArrayManager::getArraysArrayFieldValues($hash, static::PREPARED_SKIN_NAME);
-            $index = call_user_func_array('array_merge', $index);
-            $index = call_user_func_array('array_merge', $index);
+            unset($hash);
 
-            $list = \Includes\Utils\ArrayManager::filterByKeys($list, array_values($index));
+            $ids = array();
+            foreach ($index as $interface => $tpls) {
+                foreach ($tpls as $tpl => $indexes) {
+                    $ids = array_merge($ids, $indexes);
+                }
+            }
+            unset($index);
+
+            $list = \Includes\Utils\ArrayManager::filterByKeys($list, $ids);
         }
 
         return $list;

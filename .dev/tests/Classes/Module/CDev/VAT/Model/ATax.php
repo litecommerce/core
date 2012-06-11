@@ -149,7 +149,6 @@ abstract class XLite_Tests_Module_CDev_VAT_Model_ATax extends XLite_Tests_TestCa
         self::prepareData();
     }
 
-
     /**
      * prepareData 
      * 
