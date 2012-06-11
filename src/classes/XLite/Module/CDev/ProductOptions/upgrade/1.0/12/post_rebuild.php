@@ -30,16 +30,21 @@ return function()
     // Insert price modifier
     $repo = \XLite\Core\Database::getRepo('XLite\Model\MoneyModificator');
 
-    $data = array(
-        'class'     => 'XLite\\Module\\CDev\\ProductOptions\\Logic\\OptionSurcharge',
-        'validator' => 'isApply',
-        'purpose'   => 'net',
-        'position'  => 100,
-    );
+    $isModifierExists = $repo->findOneBy(array('class' => 'XLite\\Module\\CDev\\ProductOptions\\Logic\\OptionSurcharge'));
 
-    $modifier = new \XLite\Model\MoneyModificator();
-    $modifier->map($data);
+    if (!$isModifierExists) {
 
-    \XLite\Core\Database::getEM()->persist($modifier);
-    \XLite\Core\Database::getEM()->flush();
+        $data = array(
+            'class'     => 'XLite\\Module\\CDev\\ProductOptions\\Logic\\OptionSurcharge',
+            'validator' => 'isApply',
+            'purpose'   => 'net',
+            'position'  => 100,
+        );
+
+        $modifier = new \XLite\Model\MoneyModificator();
+        $modifier->map($data);
+
+        \XLite\Core\Database::getEM()->persist($modifier);
+        \XLite\Core\Database::getEM()->flush();
+    }
 };
