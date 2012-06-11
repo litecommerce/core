@@ -151,7 +151,7 @@ class Address extends \XLite\View\Model\AModel
     {
         $result = $this->getFieldsBySchema($this->getAddressSchema());
 
-        // For country <-> state syncronization
+        // For country <-> state synchronization
         $this->setStateSelectorIds($result);
 
         return $result;

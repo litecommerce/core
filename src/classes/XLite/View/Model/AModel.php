@@ -583,7 +583,7 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Perform some operations when creating fiels list by schema
+     * Perform some operations when creating fields list by schema
      *
      * @param string $name Node name
      * @param array  $data Field description

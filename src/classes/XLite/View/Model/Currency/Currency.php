@@ -35,6 +35,9 @@ namespace XLite\View\Model\Currency;
  */
 class Currency extends \XLite\View\Model\AModel
 {
+    /**
+     * Default currency to use if no currency in request is provided
+     */
     const DEFAULT_CURRENCY = 'USD';
 
     /**
@@ -202,10 +205,57 @@ class Currency extends \XLite\View\Model\AModel
 
         if (isset($data['format'])) {
 
+            $data = $data + $this->getFormatInfo($data);
 
             unset($data['format']);
         }
 
         return $data;
     }
+
+    /**
+     * Return format value of currency for format selector (depends on thousand and decimal delimiters)
+     *
+     * @param array $data
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFormatInfo(array $data)
+    {
+        $result = array();
+
+        list(
+            $result['thousandDelimiter'],
+            $result['decimalDelimiter']
+        )= \XLite\View\FormField\Select\CurrencyFormat::getDelimiters($data['format']);
+
+        return $result;
+    }
+
+    /**
+     * Retrieve property from the model object
+     *
+     * @param mixed $name Field/property name
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModelObjectValue($name)
+    {
+        $value = parent::getModelObjectValue($name);
+
+        if ('format' == $name) {
+
+            $value = \XLite\View\FormField\Select\CurrencyFormat::getFormat(
+                $this->getModelObjectValue('thousandDelimiter'),
+                $this->getModelObjectValue('decimalDelimiter')
+            );
+        }
+
+        return $value;
+    }
+
 }

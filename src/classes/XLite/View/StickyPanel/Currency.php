@@ -45,13 +45,18 @@ class Currency extends \XLite\View\Base\FormStickyPanel
     protected function getButtons()
     {
         return array(
-            $this->getWidget(
+            'save' => $this->getWidget(
                 array(
                     'style'    => 'action submit',
                     'label'    => \XLite\Core\Translation::lbl('Save changes'),
                     'disabled' => false,
                 ),
                 'XLite\View\Button\Submit'
+            ),
+            'cancel' => $this->getWidget(
+                array(
+                    'template' => 'items_list/model/cancel.tpl',
+                )
             ),
         );
     }
