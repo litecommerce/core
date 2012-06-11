@@ -10,6 +10,16 @@
  * @since     1.0.0
  *}
 
-<widget class="\XLite\View\CurrencyViewInfo" />
-
-<widget class="\XLite\View\Model\Currency\Currency" />
+<div class="currency-view-info">
+  <ul class="currency-block">
+    <li class="title">{t(#Example#)}:</li>
+    <li class="currency">
+      <ul class="value-view">
+        <li class="prefix"></li>
+        <li class="format"></li>
+        <li class="suffix"></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+ 

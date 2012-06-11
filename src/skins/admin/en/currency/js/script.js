@@ -10,3 +10,32 @@
  * @since     1.0.0
  */
 
+function CurrencyManageForm()
+{
+  this.callback();
+}
+
+CurrencyManageForm.prototype.patternCurrencyViewInfo = '.currency-view-info *';
+
+CurrencyManageForm.prototype.callback = function ()
+{
+  var obj = this;
+
+  jQuery('#currency-id').change(function () {
+    document.location = URLHandler.buildURL({'target': 'currency', 'currency_id': jQuery(this).val()});
+  });
+
+  jQuery('#format').change(function() {
+    jQuery(obj.patternCurrencyViewInfo).trigger('formatCurrencyChange', [jQuery(this).val()]);
+  }).trigger('change');
+
+  jQuery('#prefix').change(function() {
+    jQuery(obj.patternCurrencyViewInfo).trigger('prefixCurrencyChange', [jQuery(this).val()]);
+  }).trigger('change');
+
+  jQuery('#suffix').change(function() {
+    jQuery(obj.patternCurrencyViewInfo).trigger('suffixCurrencyChange', [jQuery(this).val()]);
+  }).trigger('change');
+
+}
+

@@ -49,19 +49,19 @@ class Currency extends \XLite\View\Model\AModel
      */
     protected $currencySchema = array(
         'currency_id' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Currency',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\CurrencyRich',
             self::SCHEMA_LABEL    => 'Store currency',
             self::SCHEMA_REQUIRED => false,
         ),
         'name' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Name',
-            self::SCHEMA_REQUIRED => true,
+            self::SCHEMA_REQUIRED => false,
         ),
         'format' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\CurrencyFormat',
             self::SCHEMA_LABEL    => 'Format',
-            self::SCHEMA_REQUIRED => true,
+            self::SCHEMA_REQUIRED => false,
         ),
         'prefix' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',

@@ -25,76 +25,71 @@
  * @since     1.0.0
  */
 
-namespace XLite\Controller\Admin;
+namespace XLite\View;
 
 /**
- * Currency management page controller
+ * Currency management page widget
  *
  * @see   ____class_see____
  * @since 1.0.0
+ *
  */
-class Currency extends \XLite\Controller\Admin\AAdmin
+class CurrencyViewInfo extends \XLite\View\Dialog
 {
     /**
-     * init
+     * Return list of targets allowed for this widget
      *
-     * @return void
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function init()
+    public static function getAllowedTargets()
     {
+        $result = parent::getAllowedTargets();
+        $result[] = 'currency';
+
+        return $result;
     }
 
     /**
-     * Return the current page title (for the content area)
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/css/style.css';
+
+        return $list;
+    }
+
+    /**
+     * getJSFiles
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = $this->getDir() . '/js/script.js';
+
+        return $list;
+    }
+
+    /**
+     * Return templates directory name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTitle()
+    protected function getDir()
     {
-        return 'Currency';
-    }
-
-    /**
-     * Return currencies collection to use
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCurrencies()
-    {
-        if (!isset($this->currencies)) {
-            $this->currencies = \XLite\Core\Database::getRepo('XLite\Model\Currency')->findAll();
-        }
-
-        return $this->currencies;
-    }
-
-    /**
-     * Modify currency action
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionModify()
-    {
-        $this->getModelForm()->performAction('modify');
-    }
-
-    /**
-     * Class name for the \XLite\View\Model\ form
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getModelFormClass()
-    {
-        return '\XLite\View\Model\Currency\Currency';
+        return 'currency_view_info';
     }
 }

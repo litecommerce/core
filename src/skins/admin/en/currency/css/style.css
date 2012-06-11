@@ -22,3 +22,16 @@
 .model-properties div.default-section {
   float: none;
 }
+
+.currency-form .table-label label {
+  font-size: 14px;
+  color: #456583;
+}
+
+.currency-form .table-value {
+  padding-left: 15px;
+}
+
+.currency-form .table li.input {
+  padding: 10px 0px;
+}
