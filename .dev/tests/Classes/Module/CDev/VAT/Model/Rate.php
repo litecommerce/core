@@ -135,10 +135,10 @@ class XLite_Tests_Module_CDev_VAT_Model_Rate extends XLite_Tests_Module_CDev_VAT
         $price = 0;
         $this->assertEquals(0, round($rate->calculateProductPriceExcludingTax($product, $price), 2), 'Wrong price calculated (rate pos=10, price=0)');
 
-        $rate = $this->getTaxRate($tax, 30);
+        $rate = $this->getTaxRate($tax, 40);
 
         $price = 100;
-        $this->assertEquals(30, round($rate->calculateProductPriceExcludingTax($product, $price), 2), 'Wrong price calculated (rate pos=30, price=100)');
+        $this->assertEquals(11, round($rate->calculateProductPriceExcludingTax($product, $price), 2), 'Wrong price calculated (rate pos=40, price=100)');
 
         $price = 0;
         $this->assertEquals(0, round($rate->calculateProductPriceExcludingTax($product, $price), 2), 'Wrong price calculated (rate pos=30, price=0)');
@@ -193,10 +193,10 @@ class XLite_Tests_Module_CDev_VAT_Model_Rate extends XLite_Tests_Module_CDev_VAT
             'Wrong price field formula generated (percent)'
         );
 
-        $rate = $this->getTaxRate($tax, 30);
+        $rate = $this->getTaxRate($tax, 40);
 
         $this->assertEquals(
-            '30.0000',
+            '11.0000',
             $rate->getExcludeTaxFormula('p'),
             'Wrong price field formula generated (absolute)'
         );

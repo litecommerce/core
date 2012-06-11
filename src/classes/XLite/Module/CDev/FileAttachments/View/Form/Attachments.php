@@ -27,6 +27,12 @@
 
 namespace XLite\Module\CDev\FileAttachments\View\Form;
 
+/**
+ * Attachments form
+ * 
+ * @see   ____class_see____
+ * @since 1.0.23
+ */
 class Attachments extends \XLite\View\Form\Product\Modify\Base\Single
 {
     /**

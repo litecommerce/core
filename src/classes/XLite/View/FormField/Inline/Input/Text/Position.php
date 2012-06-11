@@ -33,7 +33,7 @@ namespace XLite\View\FormField\Inline\Input\Text;
  * @see   ____class_see____
  * @since 1.0.15
  */
-abstract class Position extends \XLite\View\FormField\Inline\AInline
+class Position extends \XLite\View\FormField\Inline\Base\Single
 {
     /**
      * Register CSS files
@@ -78,13 +78,15 @@ abstract class Position extends \XLite\View\FormField\Inline\AInline
     /**
      * Get initial field parameters
      *
+     * @param array $field Field data
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getFieldParams()
+    protected function getFieldParams(array $field)
     {
-        return parent::getFieldParams()
+        return parent::getFieldParams($field)
             + array(\XLite\View\FormField\Input\Text\Base\Numeric::PARAM_MOUSE_WHEEL_ICON => false);
     }
 

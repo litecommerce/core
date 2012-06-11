@@ -121,7 +121,11 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
                         $status = $transaction::STATUS_PENDING;
                         break;
 
+                    default:
+
                 }
+
+            default:
 
         }
 
@@ -156,7 +160,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
 
             $this->transaction->setStatus($transaction::STATUS_PENDING);
         }
-   }
+    }
 
     /**
      * Check - payment method is configured or not
@@ -323,7 +327,7 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
 
         settype($value, 'float');
 
-        $value = sprintf("%0.2f", $value);
+        $value = sprintf('%0.2f', $value);
 
         return $value;
     }

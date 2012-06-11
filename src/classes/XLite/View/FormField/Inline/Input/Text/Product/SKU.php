@@ -36,15 +36,6 @@ namespace XLite\View\FormField\Inline\Input\Text\Product;
 class SKU extends \XLite\View\FormField\Inline\Input\Text
 {
     /**
-     * Short name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.15
-     */
-    protected $shortName = 'SKU';
-
-    /**
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
@@ -63,25 +54,16 @@ class SKU extends \XLite\View\FormField\Inline\Input\Text
     /**
      * Get initial field parameters
      *
+     * @param array $field Field data
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getFieldParams()
+    protected function getFieldParams(array $field)
     {
-        return parent::getFieldParams() + array('maxlength' => 32);
+        return parent::getFieldParams($field) + array('maxlength' => 32);
     }
 
-    /**
-     * Get container class
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getContainerClass()
-    {
-        return trim(parent::getContainerClass() . ' product-sku');
-    }
 }
 

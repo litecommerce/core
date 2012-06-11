@@ -36,22 +36,21 @@ namespace XLite\Module\CDev\Sale\View;
 abstract class ItemsListForm extends \XLite\View\StickyPanel\Product\Admin\AAdmin implements \XLite\Base\IDecorator
 {
     /**
-     * Get buttons widgets
+     * Define additional buttons
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.15
+     * @since  1.0.24
      */
-    protected function getButtons()
+    protected function defineAdditionalButtons()
     {
-        return array_merge(
-            array(
-                $this->getWidget(
-                    array('disabled' => true,),
-                    'XLite\Module\CDev\Sale\View\SaleSelectedButton'
-                )
-            ),
-            parent::getButtons()
+        $list = parent::defineAdditionalButtons();
+
+        $list[] = $this->getWidget(
+            array('disabled' => true),
+            'XLite\Module\CDev\Sale\View\SaleSelectedButton'
         );
+
+        return $list;
     }
 }

@@ -22,50 +22,47 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.15
+ * @since     1.0.22
  */
 
-namespace XLite\View\FormField\Inline\Input\Text\Currency;
+namespace XLite\View\FormField\Input\Text;
 
 /**
- * Currency symbol
+ * TCP/IP port 
  * 
  * @see   ____class_see____
- * @since 1.0.15
+ * @since 1.0.22
  */
-class Symbol extends \XLite\View\FormField\Inline\Input\Text
+class TCPIPPort extends \XLite\View\FormField\Input\Text\Integer
 {
     /**
-     * Short name
+     * Get default maximum size
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.15
-     */
-    protected $shortName = 'symbol';
-
-    /**
-     * Get container class
-     *
-     * @return string
+     * @return integer
      * @see    ____func_see____
-     * @since  1.0.15
+     * @since  1.0.13
      */
-    protected function getContainerClass()
+    protected function getDefaultMaxSize()
     {
-        return trim(parent::getContainerClass() . ' currency-symbol');
+        return 5;
     }
 
     /**
-     * Get initial field parameters
+     * Assemble validation rules
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.15
+     * @since  1.0.13
      */
-    protected function getFieldParams()
+    protected function assembleValidationRules()
     {
-        return parent::getFieldParams() + array('maxlength' => 16);
+        $rules = parent::assembleValidationRules();
+
+        $rules[] = 'min[0]';
+        $rules[] = 'max[65535]';
+
+        return $rules;
     }
+
 }
 

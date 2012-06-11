@@ -19,6 +19,8 @@ function ItemsList(cell, URLParams, URLAJAXParams)
     return;
   }
 
+  this.container.get(0).itemsListController = this;
+
   this.cell = cell;
   this.URLParams = URLParams;
   this.URLAJAXParams = URLAJAXParams;

@@ -381,7 +381,7 @@ CommonForm.prototype.isChanged = function(onlyVisible)
 {
   return 0 < this.getElements().filter(
     function() {
-      return this.isChanged(onlyVisible);
+      return this.commonController ? this.commonController.isChanged(onlyVisible) : false;
     }
   ).length;
 }
@@ -850,11 +850,11 @@ CommonElement.prototype.isChanged = function(onlyVisible)
       || isElement(this.element, 'select')
       || isElement(this.element, 'textarea')
     ) {
-      return !this.isEqualValues(this.element.initialValue, this.element.value, jQuery(this.element));
+      return !this.isEqualValues(this.element.initialValue, this.element.value, this.$element);
     }
 
     if (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['checkbox', 'radio'])) {
-      return !this.isEqualValues(this.element.initialValue, this.element.checked, jQuery(this.element));
+      return !this.isEqualValues(this.element.initialValue, this.element.checked, this.$element);
     }
   }
 

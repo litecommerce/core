@@ -17,28 +17,25 @@ CommonForm.elementControllers.push(
 
       this.sanitizeValue = function (value, input)
       {
+        if (!input) {
+          input = jQuery(this);
+        }
+
         var e = input.data('e');
         var dDelim = input.data('decimal-delim');
         var tDelim = input.data('thousand-delim');
 
         value = core.stringToNumber(value, dDelim, tDelim);
 
-        if (0 < e) {
-
-          value = Math.round(value * Math.pow(10, e));
-
-          if (0 == value) {
-
-            value = '0' + '.' + (new Array(e + 1).join('0'));
-
-          } else {
-
-            value = value.toString();
-            value = value.substr(0, value.length - e) + '.' + value.substr(-1 * e);
+        if ('undefined' == typeof(e)) {
+          value = parseFloat(value);
+          if (isNaN(value)) {
+            value = 0;
           }
 
         } else {
-          value = Math.round(value);
+          var pow = Math.pow(10, e);
+          value = Math.round(value * pow) / pow;
         }
 
         return value;
