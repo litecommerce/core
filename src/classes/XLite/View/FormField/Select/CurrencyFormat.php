@@ -25,42 +25,38 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Currency;
+namespace XLite\View\FormField\Select;
 
 /**
- * Currency management page form
+ * Currency format selector
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Currency extends \XLite\View\Form\AForm
+class CurrencyFormat extends \XLite\View\FormField\Select\Regular
 {
     /**
-     * getDefaultParams
+     * Currency format variants
+     */
+    const FORMAT_SPACE_DOT      = '1 999.99';
+    const FORMAT_COMMA_DOT      = '1,999.99';
+    const FORMAT_SPACE_COMMA    = '1 999,99';
+    const FORMAT_DOT_COMMA      = '1.999,99';
+
+    /**
+     * Get default options list
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultParams()
+    protected function getDefaultOptions()
     {
-        $result = parent::getDefaultParams();
-
-        $result['target'] = \XLite\Core\Request::getInstance()->target;
-        $result['action'] = 'modify';
-
-        return $result;
-    }
-
-    /**
-     * getDefaultClassName
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultClassName()
-    {
-        return 'currency-form';
+        return array(
+            static::FORMAT_SPACE_DOT    => static::FORMAT_SPACE_DOT,
+            static::FORMAT_COMMA_DOT    => static::FORMAT_COMMA_DOT,
+            static::FORMAT_SPACE_COMMA  => static::FORMAT_SPACE_COMMA,
+            static::FORMAT_DOT_COMMA    => static::FORMAT_DOT_COMMA,
+        );
     }
 }

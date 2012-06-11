@@ -35,20 +35,41 @@ namespace XLite\View\Model\Currency;
  */
 class Currency extends \XLite\View\Model\AModel
 {
+    const DEFAULT_CURRENCY = 'USD';
+
     /**
-     * Schema of the address section
-     * TODO: move to the module where this field is required:
-     *   'address_type' => array(
-     *       self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\AddressType',
-     *       self::SCHEMA_LABEL    => 'Address type',
-     *       self::SCHEMA_REQUIRED => true,
-     *   ),
+     * Schema of the currency section
      *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
      */
     protected $currencySchema = array(
+        'currency_id' => array(
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Currency',
+            self::SCHEMA_LABEL    => 'Store currency',
+            self::SCHEMA_REQUIRED => false,
+        ),
+        'name' => array(
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
+            self::SCHEMA_LABEL    => 'Name',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'format' => array(
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\CurrencyFormat',
+            self::SCHEMA_LABEL    => 'Format',
+            self::SCHEMA_REQUIRED => true,
+        ),
+        'prefix' => array(
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
+            self::SCHEMA_LABEL    => 'Prefix',
+            self::SCHEMA_REQUIRED => false,
+        ),
+        'suffix' => array(
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
+            self::SCHEMA_LABEL    => 'Suffix',
+            self::SCHEMA_REQUIRED => false,
+        ),
     );
 
     /**
@@ -85,22 +106,24 @@ class Currency extends \XLite\View\Model\AModel
     }
 
     /**
-     * Returns widget head
+     * Return currency identificator from the request
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getHead()
-    {
-        return 'Currency';
-    }
-
     protected function getRequestCurrencyId()
     {
         return \XLite\Core\Request::getInstance()->currency_id;
     }
 
+    /**
+     * Return currency identificator for the current model of the form
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getCurrencyId()
     {
         return $this->getRequestCurrencyId() ?: null;
@@ -117,7 +140,14 @@ class Currency extends \XLite\View\Model\AModel
     {
         if (!isset($this->currency)) {
 
-            $this->currency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find($this->getCurrencyId());
+            if (is_null($this->getCurrencyId())) {
+
+                $this->currency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->findOneBy(array('code' => static::DEFAULT_CURRENCY));
+
+            } else {
+
+                $this->currency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find($this->getCurrencyId());
+            }
         }
 
         return $this->currency;
@@ -148,23 +178,34 @@ class Currency extends \XLite\View\Model\AModel
     }
 
     /**
-     * Return list of the "Button" widgets
+     * Return class of button panel widget
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getButtonPanelClass()
+    {
+        return 'XLite\View\StickyPanel\Currency';
+    }
+
+    /**
+     * prepareDataForMapping
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getFormButtons()
+    protected function prepareDataForMapping()
     {
-        $result = parent::getFormButtons();
+        $data = parent::prepareDataForMapping();
 
-        $result['submit'] = new \XLite\View\Button\Submit(
-            array(
-                \XLite\View\Button\AButton::PARAM_LABEL => $this->getSubmitButtonLabel(),
-                \XLite\View\Button\AButton::PARAM_STYLE => 'action',
-            )
-        );
+        if (isset($data['format'])) {
 
-        return $result;
+
+            unset($data['format']);
+        }
+
+        return $data;
     }
 }

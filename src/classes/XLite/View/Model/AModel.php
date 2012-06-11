@@ -545,6 +545,30 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
+     * Flag if the panel widget for buttons is used
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function useButtonPanel()
+    {
+        return !is_null($this->getButtonPanelClass());
+    }
+
+    /**
+     * Return class of button panel widget
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getButtonPanelClass()
+    {
+        return null;
+    }
+
+    /**
      * Add (if required) an additional part to the form name
      *
      * @param string $name Name to prepare
@@ -792,7 +816,7 @@ abstract class AModel extends \XLite\View\Dialog
 
     /**
      * Rollback model if data validation failed
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.18
@@ -1060,6 +1084,10 @@ abstract class AModel extends \XLite\View\Dialog
 
     /**
      * Return list of the "Button" widgets
+     * Do not use this method if you want sticky buttons panel.
+     * The sticky buttons panel class has the buttons definition already.
+     *
+     * TODO: Maybe we should move it to the StickyPanel classes family?
      *
      * @return array
      * @see    ____func_see____
@@ -1308,7 +1336,7 @@ abstract class AModel extends \XLite\View\Dialog
     {
         $data = $this->getRequestData();
 
-        // Remove fields in the $exludedFields list from the data for mapping
+        // Remove fields in the $excludedFields list from the data for mapping
         if (!empty($this->excludedFields)) {
             foreach ($data as $key => $value) {
                 if (in_array($key, $this->excludedFields)) {
@@ -1346,10 +1374,10 @@ abstract class AModel extends \XLite\View\Dialog
 
     /**
      * Display view sublist
-     * 
+     *
      * @param string $suffix    List usffix
      * @param array  $arguments List arguments
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.13
@@ -1362,7 +1390,7 @@ abstract class AModel extends \XLite\View\Dialog
             $class = $match[1] . '.' . $match[2] . '.' . $class;
         }
         $class = strtolower($class);
-        
+
         $list = 'crud.' . $class . '.' . $suffix;
 
         $arguments = $this->assembleViewSubListArguments($suffix, $arguments);
@@ -1371,11 +1399,11 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Assemble biew sublist arguments 
-     * 
+     * Assemble biew sublist arguments
+     *
      * @param string $suffix    List suffix
      * @param array  $arguments Arguments
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.13
@@ -1389,8 +1417,8 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Get container class 
-     * 
+     * Get container class
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.18
@@ -1401,12 +1429,12 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Get item class 
-     * 
+     * Get item class
+     *
      * @param integer                          $index  Item index
      * @param integer                          $length items list length
      * @param \XLite\View\FormField\AFormField $field  Current item
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.13

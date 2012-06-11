@@ -36,18 +36,6 @@ namespace XLite\Controller\Admin;
 class Currency extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getTitle()
-    {
-        return 'Currencies';
-    }
-
-    /**
      * init
      *
      * @return void
@@ -75,13 +63,26 @@ class Currency extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * doActionUpdate
+     * Modify currency action
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionUpdate()
+    protected function doActionModify()
     {
+        $this->getModelForm()->performAction('modify');
+    }
+
+    /**
+     * Class name for the \XLite\View\Model\ form
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModelFormClass()
+    {
+        return '\XLite\View\Model\Currency\Currency';
     }
 }

@@ -22,45 +22,38 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.15
  */
 
-namespace XLite\View\Form\Currency;
+namespace XLite\View\StickyPanel;
 
 /**
- * Currency management page form
+ * Panel for Currency management form.
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.1.0
  */
-class Currency extends \XLite\View\Form\AForm
+class Currency extends \XLite\View\Base\FormStickyPanel
 {
     /**
-     * getDefaultParams
+     * Get buttons widgets
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.15
      */
-    protected function getDefaultParams()
+    protected function getButtons()
     {
-        $result = parent::getDefaultParams();
-
-        $result['target'] = \XLite\Core\Request::getInstance()->target;
-        $result['action'] = 'modify';
-
-        return $result;
-    }
-
-    /**
-     * getDefaultClassName
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultClassName()
-    {
-        return 'currency-form';
+        return array(
+            $this->getWidget(
+                array(
+                    'style'    => 'action submit',
+                    'label'    => \XLite\Core\Translation::lbl('Save changes'),
+                    'disabled' => false,
+                ),
+                'XLite\View\Button\Submit'
+            ),
+        );
     }
 }
+

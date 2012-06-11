@@ -9,3 +9,16 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
+
+.model-properties {
+  margin-bottom: 100px;
+  width: 500px;
+}
+
+.model-properties .sticky-panel {
+  margin: 50px 0px 0px 150px;
+}
+
+.model-properties div.default-section {
+  float: none;
+}
