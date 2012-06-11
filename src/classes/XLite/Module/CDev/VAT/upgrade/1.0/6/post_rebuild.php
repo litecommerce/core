@@ -35,7 +35,8 @@ return function()
     }
 
     // Update weight of order modifier
-    $orderModifier = \XLite\Core\Database::getRepo('XLite\Model\Order\Modifier')->findOneBy('class' => '\\XLite\\Module\\CDev\\VAT\\Logic\\Order\\Modifier\\Tax');
+    $orderModifier = \XLite\Core\Database::getRepo('XLite\Model\Order\Modifier')
+        ->findOneBy(array('class' => '\\XLite\\Module\\CDev\\VAT\\Logic\\Order\\Modifier\\Tax'));
 
     $orderModifierData = array(
         'class'  => '\\XLite\\Module\\CDev\\VAT\\Logic\\Order\\Modifier\\Tax',
