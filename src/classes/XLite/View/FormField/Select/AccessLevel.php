@@ -57,7 +57,7 @@ class AccessLevel extends \XLite\View\FormField\Select\Regular
         $list = \XLite\Core\Auth::getInstance()->getUserTypesRaw();
 
         foreach ($list as $k => $v) {
-            $list[$i] = static::t($v);
+            $list[$k] = static::t($v);
         }
 
         return $list;
