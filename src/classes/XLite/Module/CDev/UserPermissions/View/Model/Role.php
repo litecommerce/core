@@ -156,6 +156,10 @@ class Role extends \XLite\View\Model\AModel
             unset($data['enabled']);
         }
 
+        if (!empty($data['name'])) {
+            $data['name'] = strip_tags($data['name']);
+        }
+
         parent::setModelProperties($data);
 
         $model = $this->getModelObject();
