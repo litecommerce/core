@@ -10,3 +10,27 @@
  * @since     1.0.0
  */
 
+.dialog-content.currency-view-info-dialog {
+  width: 200px;
+  float: right;
+  background-color: #f1f1f1;
+  padding: 25px;
+}
+
+.currency-view-info ul.value-view {
+  list-style: none;
+}
+
+.currency-view-info ul.value-view li {
+  float: left;
+  color: #333333;
+  font-size: 20px;
+}
+
+.currency-view-info li.title {
+  font-size: 16px;
+  color: #8f8f8f;
+  margin: 0px 0px 5px 0px;
+}
+
+

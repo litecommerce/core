@@ -84,6 +84,18 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
     }
 
     /**
+     * Return specific CSS class for dialog wrapper
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDialogCSSClass()
+    {
+        return 'dialog-content';
+    }
+
+    /**
      * Return current template
      *
      * @return string

@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+ 
+<widget class="\XLite\View\Model\Currency\Currency" />
 
 <widget class="\XLite\View\CurrencyViewInfo" />
-
-<widget class="\XLite\View\Model\Currency\Currency" />

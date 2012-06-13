@@ -29,13 +29,13 @@ CurrencyManageForm.prototype.callback = function ()
     jQuery(obj.patternCurrencyViewInfo).trigger('formatCurrencyChange', [jQuery(this).val()]);
   }).trigger('change');
 
-  jQuery('#prefix').change(function() {
+  jQuery('#prefix').keyup(function(event) {
     jQuery(obj.patternCurrencyViewInfo).trigger('prefixCurrencyChange', [jQuery(this).val()]);
-  }).trigger('change');
+  }).trigger('keyup');
 
-  jQuery('#suffix').change(function() {
+  jQuery('#suffix').keyup(function(event) {
     jQuery(obj.patternCurrencyViewInfo).trigger('suffixCurrencyChange', [jQuery(this).val()]);
-  }).trigger('change');
+  }).trigger('keyup');
 
 }
 

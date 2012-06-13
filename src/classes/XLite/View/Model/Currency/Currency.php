@@ -169,6 +169,18 @@ class Currency extends \XLite\View\Model\AModel
     }
 
     /**
+     * Return specific CSS class for dialog wrapper
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDialogCSSClass()
+    {
+        return parent::getDialogCSSClass() . ' currency-model-form-dialog';
+    }
+
+    /**
      * Return text for the "Submit" button
      *
      * @return string

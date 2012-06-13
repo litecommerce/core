@@ -92,4 +92,16 @@ class CurrencyViewInfo extends \XLite\View\Dialog
     {
         return 'currency_view_info';
     }
+
+    /**
+     * Return specific CSS class for dialog wrapper
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDialogCSSClass()
+    {
+        return parent::getDialogCSSClass() . ' currency-view-info-dialog';
+    }
 }
