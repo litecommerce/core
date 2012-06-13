@@ -28,9 +28,6 @@ ul.products.products-sidebar .product-list-market-price {
 }
 
 div.product-details-market-price {
-  display: inline-block;
-  margin-top: 10px;
-  margin-bottom: -15px;
 }
 
 div.product-details-market-price div.text {
