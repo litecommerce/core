@@ -35,9 +35,6 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Category")
  * @Table  (name="categories",
- *      uniqueConstraints={
- *          @UniqueConstraint (name="cleanURL", columns={"cleanURL"})
- *      },
  *      indexes={
  *          @Index (name="lpos", columns={"lpos"}),
  *          @Index (name="rpos", columns={"rpos"}),
@@ -45,7 +42,7 @@ namespace XLite\Model;
  *      }
  * )
  */
-class Category extends \XLite\Model\Base\I18n
+class Category extends \XLite\Model\Base\Catalog
 {
     /**
      * Node unique ID
@@ -92,17 +89,6 @@ class Category extends \XLite\Model\Base\I18n
      * @Column (type="boolean")
      */
     protected $enabled = true;
-
-    /**
-     * Node clean (SEO-friendly) URL
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="255", nullable=true)
-     */
-    protected $cleanURL;
 
     /**
      * Whether to display the category title, or not

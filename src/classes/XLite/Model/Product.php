@@ -35,9 +35,6 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Product")
  * @Table  (name="products",
- *      uniqueConstraints={
- *          @UniqueConstraint (name="cleanURL", columns={"cleanURL"})
- *      },
  *      indexes={
  *          @Index (name="price", columns={"price"}),
  *          @Index (name="sku", columns={"sku"}),
@@ -48,7 +45,7 @@ namespace XLite\Model;
  * )
  * @HasLifecycleCallbacks
  */
-class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrderItem
+class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOrderItem
 {
     /**
      * Product unique ID
@@ -124,17 +121,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @Column (type="boolean")
      */
     protected $free_shipping = false;
-
-    /**
-     * Clean URL
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="255", nullable=true)
-     */
-    protected $cleanURL;
 
     /**
      * Custom javascript code
