@@ -246,6 +246,21 @@ abstract class ArrayManager extends \Includes\Utils\AUtils
     /**
      * Sum some object property values
      *
+     * @param array  $array Array to use
+     * @param string $field Field to sum by
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function sumArraysArrayFieldValues(array $array, $field)
+    {
+        return array_sum(static::getArraysArrayFieldValues($array, $field));
+    }
+
+    /**
+     * Sum some object property values
+     *
      * @param array   $array    Array to use
      * @param string  $field    Field to sum by
      * @param boolean $isGetter Determines if the second param is a property name or a method OPTIONAL

@@ -44,7 +44,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     const DEC_POINT     = '.';
     const THOUSANDS_SEP = ' ';
 
-
     /**
      * List of executed queries
      *
@@ -88,7 +87,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $start_time = null;
+    protected $startTime;
 
     /**
      * Stop time
@@ -97,16 +96,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $stop_time = null;
-
-    /**
-     * Included files list
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $includedFiles = array();
+    protected $stopTime;
 
     /**
      * Included files total size
@@ -192,7 +182,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      */
     public static function isTemplatesProfilingEnabled()
     {
-        return self::$templatesProfilingEnabled;
+        return static::$templatesProfilingEnabled;
     }
 
 
@@ -248,27 +238,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     }
 
     /**
-     * Included files statistics sorting callback
-     *
-     * @param array $a File info 1
-     * @param array $b File info 2
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function sortCallback($a, $b)
-    {
-        $result = 0;
-
-        if ($a['size'] != $b['size']) {
-            $result = $a['size'] < $b['size'] ? 1 : -1;
-        }
-
-        return $result;
-    }
-
-    /**
      * Log SQL queries
      *
      * @param string $sql    Query
@@ -302,8 +271,8 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
 
         } */
 
-        if (!isset(self::$queries[$query])) {
-            self::$queries[$query] = array(
+        if (!isset(static::$queries[$query])) {
+            static::$queries[$query] = array(
                 'time' => array(),
                 'trace' => $this->getBackTrace(),
             );
@@ -322,8 +291,8 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      */
     public function setQueryTime($query)
     {
-        if (isset(self::$queries[$query])) {
-            self::$queries[$query]['time'][] = microtime(true) - $this->lastTime;
+        if (isset(static::$queries[$query])) {
+            static::$queries[$query]['time'][] = microtime(true) - $this->lastTime;
         }
     }
 
@@ -336,7 +305,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      */
     public function addMemoryPoint()
     {
-        self::$memoryPoints[] = array(
+        static::$memoryPoints[] = array(
             'memory' => memory_get_usage(),
             'trace' => $this->getBackTrace(),
         );
@@ -390,7 +359,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
                 'time'  => 0,
             );
 
-            if (self::$useXdebugStackTrace) {
+            if (static::$useXdebugStackTrace) {
                 xdebug_start_trace(
                     LC_DIR_VAR . 'log' . LC_DS . $timePoint . '.' . microtime(true),
                     XDEBUG_TRACE_COMPUTERIZED
@@ -398,8 +367,8 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
             }
 
         } elseif ($this->points[$timePoint]['open']) {
-
             $range = microtime(true) - $this->points[$timePoint]['start'];
+
             if ($additional) {
                 $this->points[$timePoint]['time'] += $range;
             } else {
@@ -407,16 +376,15 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
             }
             $this->points[$timePoint]['open'] = false;
 
-            if (self::$useXdebugStackTrace) {
+            if (static::$useXdebugStackTrace) {
                 @xdebug_stop_trace();
             }
 
         } else {
-
             $this->points[$timePoint]['start'] = microtime(true);
             $this->points[$timePoint]['open'] = true;
 
-            if (self::$useXdebugStackTrace) {
+            if (static::$useXdebugStackTrace) {
                 xdebug_start_trace(
                     LC_DIR_VAR . 'log' . LC_DS . $timePoint . '.' . microtime(true),
                     XDEBUG_TRACE_COMPUTERIZED
@@ -437,7 +405,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      */
     public function addMessage($message)
     {
-        $this->messages[] = '[' . number_format(microtime(true) - $this->start_time, 4) . ']: ' . $message;
+        $this->messages[] = '[' . number_format(microtime(true) - $this->startTime, 4) . ']: ' . $message;
     }
 
 
@@ -482,11 +450,11 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     protected function start($start)
     {
         $this->enabled = !empty($start);
-        $this->start_time = $_SERVER['REQUEST_TIME'];
-        self::$templatesProfilingEnabled = $this->enabled
+        $this->startTime = $_SERVER['REQUEST_TIME'];
+        static::$templatesProfilingEnabled = $this->enabled
             && \XLite::getInstance()->getOptions(array('profiler_details', 'process_widgets'));
 
-        self::$useXdebugStackTrace = function_exists('xdebug_start_trace')
+        static::$useXdebugStackTrace = function_exists('xdebug_start_trace')
             && \XLite::getInstance()->getOptions(array('profiler_details', 'xdebug_log_trace'));
     }
 
@@ -500,23 +468,11 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     protected function stop()
     {
         if ($this->enabled && !\XLite\Core\Request::getInstance()->isPopup) {
+            $this->stopTime = microtime(true);
 
-            $this->stop_time = microtime(true);
-
-            $this->includedFiles = array();
-            $this->includedFilesTotal = 0;
-
-            foreach (get_included_files() as $file) {
-                $size = intval(@filesize($file));
-                $this->includedFiles[] = array(
-                    'name' => $file,
-                    'size' => $size
-                );
-                $this->includedFilesTotal += $size;
-            }
-            $this->includedFilesCount = count($this->includedFiles);
-
-            usort($this->includedFiles, array($this, 'sortCallback'));
+            $files = get_included_files();
+            $this->includedFilesTotal = array_sum(array_map('filesize', $files));
+            $this->includedFilesCount = count($files);
 
             $this->display();
         }
@@ -532,10 +488,10 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     protected function display()
     {
         $totalQueriesTime = 0;
-        foreach (self::$queries as $q => $d) {
+        foreach (static::$queries as $q => $d) {
             $cnt = count($d['time']);
             $sum = array_sum($d['time']);
-            self::$queries[$q] = array(
+            static::$queries[$q] = array(
                 'count' => $cnt,
                 'max'   => empty($d['time']) ? 0 : max($d['time']),
                 'min'   => empty($d['time']) ? 0 : min($d['time']),
@@ -545,21 +501,21 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
             $totalQueriesTime += $sum;
         }
 
-        $execTime = number_format($this->stop_time - $this->start_time, 4, self::DEC_POINT, self::THOUSANDS_SEP);
-        $memoryPeak = round(memory_get_peak_usage() / 1024 / 1024, 3);
-        $totalQueries = count(self::$queries);
-        $totalQueriesTime = number_format($totalQueriesTime, 4, self::DEC_POINT, self::THOUSANDS_SEP);
-        $dbConnectTime = number_format($this->dbConnectTime, 4, self::DEC_POINT, self::THOUSANDS_SEP);
+        $execTime = number_format($this->stopTime - $this->startTime, 2, static::DEC_POINT, static::THOUSANDS_SEP);
+        $memoryPeak = round(memory_get_peak_usage() / 1024 / 1024, 1);
+        $totalQueries = count(static::$queries);
+        $totalQueriesTime = number_format($totalQueriesTime, 2, static::DEC_POINT, static::THOUSANDS_SEP);
+        $dbConnectTime = number_format($this->dbConnectTime, 2, static::DEC_POINT, static::THOUSANDS_SEP);
         $unitOfWorkSize = \XLite\Core\Database::getEM()->getUnitOfWork()->size();
 
-        $this->includedFilesTotal = round($this->includedFilesTotal / 1024, 3);
+        $this->includedFilesTotal = round($this->includedFilesTotal / 1024, 1);
 
         $html = <<<HTML
 <div class="inner-profiler">
 <table cellspacing="0" cellpadding="3" style="width: auto;">
     <tr>
         <td><strong>Execution time</strong></td>
-        <td>$execTime</td>
+        <td>$execTime sec.</td>
     </tr>
     <tr>
         <td><strong>Memory usage (peak)</strong></td>
@@ -623,7 +579,7 @@ HTML;
             }
         }
 
-        if (self::$queries) {
+        if (static::$queries) {
 
             $html = <<<HTML
 <br /><br />
@@ -640,9 +596,9 @@ HTML;
 
             $warnStyle = ' background-color: red; font-weight: bold;';
 
-            foreach (self::$queries as $query => $d) {
-                $timesLimit = (self::QUERY_LIMIT_TIMES < $d['count'] ? $warnStyle : '');
-                $durationLimit = (self::QUERY_LIMIT_DURATION < $d['max'] ? $warnStyle : '');
+            foreach (static::$queries as $query => $d) {
+                $timesLimit = (static::QUERY_LIMIT_TIMES < $d['count'] ? $warnStyle : '');
+                $durationLimit = (static::QUERY_LIMIT_DURATION < $d['max'] ? $warnStyle : '');
 
                 echo (
                     '<tr>' . "\n"
@@ -650,7 +606,7 @@ HTML;
                     . $d['count']
                     . '</td>'
                     . '<td style="vertical-align: top;' . $durationLimit . '">'
-                    . number_format($d['max'], 4, self::DEC_POINT, self::THOUSANDS_SEP)
+                    . number_format($d['max'], 4, static::DEC_POINT, static::THOUSANDS_SEP)
                     . '</td><td style="white-space: nowrap;">'
                     . $query . '<br />'
                     . implode(' << ', $d['trace'])
@@ -661,7 +617,7 @@ HTML;
             echo ('</table>');
         }
 
-        if (self::$memoryPoints) {
+        if (static::$memoryPoints) {
             $html = <<<HTML
 <table cellspacing="0" cellpadding="3" border="1" style="width: auto;">
     <caption style="font-weight: bold; text-align: left;">Memory points</caption>
@@ -674,10 +630,10 @@ HTML;
             echo ($html);
 
             $lastMem = 0;
-            foreach (self::$memoryPoints as $d) {
+            foreach (static::$memoryPoints as $d) {
                 $diff = $d['memory'] - $lastMem;
-                $m = number_format(round($d['memory'] / 1024 / 1024, 3), 3, self::DEC_POINT, self::THOUSANDS_SEP);
-                $md = number_format(round($diff / 1024 / 1024, 3), 3, self::DEC_POINT, self::THOUSANDS_SEP);
+                $m = number_format(round($d['memory'] / 1024 / 1024, 3), 3, static::DEC_POINT, static::THOUSANDS_SEP);
+                $md = number_format(round($diff / 1024 / 1024, 3), 3, static::DEC_POINT, static::THOUSANDS_SEP);
                 echo (
                     '<tr>'
                     . '<td>' . $m . '</td>'
@@ -705,7 +661,7 @@ HTML;
             foreach ($this->points as $name => $d) {
                 echo (
                     '<tr><td>'
-                    . number_format($d['time'], 4, self::DEC_POINT, self::THOUSANDS_SEP)
+                    . number_format($d['time'], 4, static::DEC_POINT, static::THOUSANDS_SEP)
                     . '</td><td>'
                     . $name
                     . '</td></tr>'
@@ -742,6 +698,6 @@ HTML;
             }
         }
 
-        return array_slice($trace, self::TRACE_BEGIN, self::TRACE_LENGTH);
+        return array_slice($trace, static::TRACE_BEGIN, static::TRACE_LENGTH);
     }
 }

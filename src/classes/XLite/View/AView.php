@@ -263,29 +263,17 @@ abstract class AView extends \XLite\Core\Handler
         $flag = isset($template);
 
         if ($flag || $this->checkVisibility()) {
+
             if (!$this->isCloned && !$flag) {
                 $this->initView();
             }
 
             // Body of the old includeCompiledFile() method
             $normalized = $this->getTemplateFile($template);
-            $compiled = \XLite\Singletons::$handler->flexy->prepare($normalized);
+            $compiled   = \XLite\Singletons::$handler->flexy->prepare($normalized);
 
-            $cnt = static::$profilerInfo['countDeep']++;
-            $cntLevel = static::$profilerInfo['countLevel']++;
-
-            if (static::$profilerInfo['isEnabled']) {
-                $timePoint = str_repeat('+', $cntLevel) . '[TPL ' . str_repeat('0', 4 - strlen((string)$cnt)) . $cnt . '] '
-                    . get_class($this) . ' :: ' . substr($template, strlen(LC_DIR_SKINS));
-                \XLite\Core\Profiler::getInstance()->log($timePoint);
-            }
-
-            if (static::$profilerInfo['markTemplates']) {
-                $template = substr($template, strlen(LC_DIR_SKINS));
-                $markTplText = get_class($this) . ' : ' . $template . ' (' . $cnt . ')'
-                    . ($this->viewListName ? ' [\'' . $this->viewListName . '\' list child]' : '');
-
-                echo ('<!-- ' . $markTplText . ' {' . '{{ -->');
+            if ($this->isLoggingNeeded()) {
+                $timePoint = $this->startLogging($normalized);
             }
 
             static::$profilerInfo['tail'][] = $normalized;
@@ -294,19 +282,14 @@ abstract class AView extends \XLite\Core\Handler
 
             array_pop(static::$profilerInfo['tail']);
 
-            if (static::$profilerInfo['markTemplates']) {
-                echo ('<!-- }}' . '} ' . $markTplText . ' -->');
-            }
-
-            if (static::$profilerInfo['isEnabled']) {
-                \XLite\Core\Profiler::getInstance()->log($timePoint);
-            }
-
             if (!$this->isCloned && !$flag) {
                 $this->closeView();
             }
 
-            static::$profilerInfo['countLevel']--;
+            if ($this->isLoggingNeeded()) {
+                $this->startLogging($normalized, $timePoint);
+                $this->endLogging($normalized, $timePoint);
+            }
         }
     }
 
@@ -381,6 +364,70 @@ abstract class AView extends \XLite\Core\Handler
         $value = parent::get($name);
 
         return isset($value) ? $value : \XLite::getController()->get($name);
+    }
+
+    /**
+     * Check if logging needed
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isLoggingNeeded()
+    {
+        return static::$profilerInfo['isEnabled'] || static::$profilerInfo['markTemplates'];
+    }
+
+    /**
+     * Used in ::display() method
+     *
+     * @param string $template  Template full path
+     * @param string $timePoint Text to log OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function startLogging($template, $timePoint = null)
+    {
+        $related = get_class($this) . ' : '
+            . \Includes\Utils\FileManager::getRelativePath($template, LC_DIR_SKINS);
+        
+        if (static::$profilerInfo['isEnabled']) {
+            if (empty($timePoint)) {
+                static::$profilerInfo['countLevel']++;
+                
+                $timePoint = str_repeat('+', static::$profilerInfo['countLevel']) . ' [TPL '
+                    . str_repeat('0', 4 - strlen((string) static::$profilerInfo['countDeep']++))
+                    . static::$profilerInfo['countDeep'] . '] ' . $related;
+            }       
+            
+            \XLite\Core\Profiler::getInstance()->log($timePoint);
+        }   
+        
+        if (static::$profilerInfo['markTemplates']) {
+            echo (
+                '<!-- ' . $related . ' (' . $cnt . ')'
+                . ($this->viewListName ? (' [\'' . $this->viewListName . '\' list child]') : '') . ' {' . '{{ -->'
+            );  
+        }   
+        
+        return $timePoint;
+    }
+
+    /**
+     * Used in ::display() method
+     *
+     * @param string $template  Template full path
+     * @param string $timePoint Text to log OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function endLogging($template, $timePoint = null)
+    {
+        static::$profilerInfo['countLevel']--;
     }
 
     /**
