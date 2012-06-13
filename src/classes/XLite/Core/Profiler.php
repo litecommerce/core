@@ -607,9 +607,9 @@ HTML;
                     . '</td>'
                     . '<td style="vertical-align: top;' . $durationLimit . '">'
                     . number_format($d['max'], 4, static::DEC_POINT, static::THOUSANDS_SEP)
-                    . '</td><td style="white-space: nowrap;">'
-                    . $query . '<br />'
-                    . implode(' << ', $d['trace'])
+                    . '</td><td>'
+                    . $query . LC_EOL . LC_EOL
+                    . implode(LC_EOL, $d['trace'])
                     . '</td></tr>' . "\n"
                 );
             }
@@ -687,14 +687,10 @@ HTML;
 
         foreach (debug_backtrace(false) as $l) {
             if (isset($l['file']) && isset($l['line'])) {
-                $trace[] = str_replace(
-                    array(LC_DIR_COMPILE, LC_DIR_ROOT),
-                    array('', ''),
-                    $l['file']
-                ) . ':' . $l['line'];
+                $trace[] = $l['file'] . ' : ' . $l['line'];
 
             } elseif (isset($l['function']) && isset($l['line'])) {
-                $trace[] = $l['function'] . '():' . $l['line'];
+                $trace[] = $l['function'] . '(): ' . $l['line'];
             }
         }
 
