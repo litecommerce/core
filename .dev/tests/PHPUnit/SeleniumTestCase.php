@@ -601,14 +601,80 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         $this->setBrowserUrl($this->baseURL);
     }
 
+    /**
+     * Open the customer area
+     *
+     * @param type $shortURL
+     * @return type
+     */
     protected function openShortCustomerAndWait($shortURL)
     {
         return $this->openAndWait(rtrim(SELENIUM_SOURCE_URL, '/') . '/' . $shortURL);
     }
 
+    /**
+     * Open the admin area
+     *
+     * @param type $shortURL
+     * @return type
+     */
     protected function openShortAdminAndWait($shortURL)
     {
         return $this->openAndWait(rtrim(SELENIUM_SOURCE_URL_ADMIN, '/') . '/' . $shortURL);
+    }
+
+    /**
+     * Login procedure to the admin area
+     *
+     * @param string $user     user name
+     * @param string $password user password
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function logInAdmin($user = 'rnd_tester@cdev.ru', $password = 'master')
+    {
+        $this->openShortAdminAndWait('admin.php');
+
+        if ($this->isLoggedIn()) {
+            return;
+            //$this->logOut(true);
+        }
+
+        $this->type("//input[@name='login' and @type='text']", $user);
+        $this->type("//input[@name='password' and @type='password']", $password);
+
+        $this->click("//button[@class='main-button' and @type='submit']");
+
+        $this->waitForPageToLoad(30000);
+    }
+
+    /**
+     * Log in to the customer area
+     *
+     * @param string $username ____param_comment____
+     * @param string $password ____param_comment____
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function logInCustomer($username = 'master', $password = 'master')
+    {
+        $this->openShortCustomerAndWait('user');
+
+        if ($this->isLoggedIn()) {
+            $this->logOut(true);
+        }
+
+        $this->type('id=edit-name', $username);
+        $this->type('id=edit-pass', $password);
+
+        $this->submitAndWait('id=user-login');
+
+        $this->assertTrue($this->isLoggedIn(), 'Check that user is logged in successfully');
     }
 
     /**

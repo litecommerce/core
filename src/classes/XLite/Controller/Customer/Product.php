@@ -45,6 +45,15 @@ class Product extends \XLite\Controller\Customer\Catalog
     protected $params = array('target', 'product_id');
 
     /**
+     * Product 
+     *
+     * @var   \XLite\Model\Product
+     * @see   ____var_see____
+     * @since 1.0.21
+     */
+    protected $product;
+
+    /**
      * Check whether the title is to be displayed in the content area
      *
      * @return boolean
@@ -107,9 +116,24 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     public function getProduct()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
+        if (!isset($this->product)) {
+            $this->product = $this->defineProduct();
+        }
+
+        return $this->product;
     }
 
+    /**
+     * Define product
+     *
+     * @return \XLite\Model\Product
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineProduct()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
+    }
 
     /**
      * Common method to determine current location

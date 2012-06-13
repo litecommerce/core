@@ -101,18 +101,17 @@ class Search extends \XLite\View\ItemsList\Model\Product\Admin\AAdmin
     {
         return array(
             'sku' => array(
-                static::COLUMN_NAME         => \XLite\Core\Translation::lbl('SKU'),
-                static::COLUMN_CREATE_CLASS => 'XLite\View\FormField\Inline\Input\Text\Product\SKU',
+                static::COLUMN_NAME   => \XLite\Core\Translation::lbl('SKU'),
             ),
             'name' => array(
-                static::COLUMN_NAME         => \XLite\Core\Translation::lbl('Product Name'),
-                static::COLUMN_LINK         => 'product',
-                static::COLUMN_CREATE_CLASS => 'XLite\View\FormField\Inline\Input\Text\Product\Name',
-                static::COLUMN_MAIN         => true,
+                static::COLUMN_NAME   => \XLite\Core\Translation::lbl('Product Name'),
+                static::COLUMN_LINK   => 'product',
+                static::COLUMN_MAIN   => true,
             ),
             'price' => array(
-                static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Price'),
-                static::COLUMN_CLASS => 'XLite\View\FormField\Inline\Input\Text\Price\Product',
+                static::COLUMN_NAME   => \XLite\Core\Translation::lbl('Price'),
+                static::COLUMN_CLASS  => 'XLite\View\FormField\Inline\Input\Text\Price',
+                static::COLUMN_PARAMS => array('min' => 0),
             ),
             'qty' => array(
                 static::COLUMN_NAME  => \XLite\Core\Translation::lbl('Qty'),

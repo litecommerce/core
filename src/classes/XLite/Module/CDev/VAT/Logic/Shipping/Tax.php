@@ -56,8 +56,8 @@ class Tax extends \XLite\Module\CDev\VAT\Logic\ATax
     /**
      * Calculate shipping net price
      * 
-     * @param \XLite\Model\Product $rate  Rate
-     * @param float                $price Price
+     * @param \XLite\Model\Shipping\Rate $rate  Rate
+     * @param float                      $price Price
      *  
      * @return float
      * @see    ____func_see____

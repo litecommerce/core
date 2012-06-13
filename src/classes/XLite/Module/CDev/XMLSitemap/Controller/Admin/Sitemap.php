@@ -91,10 +91,16 @@ class Sitemap extends \XLite\Controller\Admin\AAdmin
                     $request = new \XLite\Core\HTTP\Request($url);
                     $response = $request->sendRequest();
                     if (200 == $response->code) {
-                        \XLite\Core\TopMessage::addInfo('Site map successfully registred on X', array('engine' => $key));
+                        \XLite\Core\TopMessage::addInfo(
+                            'Site map successfully registred on X',
+                            array('engine' => $key)
+                        );
 
                     } else {
-                        \XLite\Core\TopMessage::addWarning('Site map has not been registred in X', array('engine' => $key));
+                        \XLite\Core\TopMessage::addWarning(
+                            'Site map has not been registred in X',
+                            array('engine' => $key)
+                        );
                     }
                 }
             }

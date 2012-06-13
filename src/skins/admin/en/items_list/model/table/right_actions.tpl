@@ -10,4 +10,5 @@
  * @since     1.0.15
  *}
 
+<div class="separator"></div>
 <div FOREACH="getRightActions(),tpl" class="{getActionCellClass(i,tpl)}"><widget template="{tpl:h}" /></div>

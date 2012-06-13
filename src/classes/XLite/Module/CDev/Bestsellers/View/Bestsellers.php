@@ -66,23 +66,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
 
     /**
-     * Define and set widget attributes; initialize widget
-     *
-     * @param array $params Widget params OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
-     */
-    public function __construct(array $params = array())
-    {
-        parent::__construct($params);
-
-        unset($this->sortByModes[self::SORT_BY_MODE_AMOUNT_ASC]);
-        unset($this->sortByModes[self::SORT_BY_MODE_AMOUNT_DESC]);
-    }
-
-    /**
      * Return list of targets allowed for this widget
      *
      * @return array
@@ -97,6 +80,23 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $result[] = 'category';
 
         return $result;
+    }
+
+    /**
+     * Define and set widget attributes; initialize widget
+     *
+     * @param array $params Widget params OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    public function __construct(array $params = array())
+    {
+        parent::__construct($params);
+
+        unset($this->sortByModes[self::SORT_BY_MODE_AMOUNT_ASC]);
+        unset($this->sortByModes[self::SORT_BY_MODE_AMOUNT_DESC]);
     }
 
     /**

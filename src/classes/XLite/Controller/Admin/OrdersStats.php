@@ -193,7 +193,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * Collect statistics record
      *
      * @param string             $row   Row identificator
-     * @param \Xlite\Model\Order $order Order
+     * @param \XLite\Model\Order $order Order
      *
      * @return void
      * @see    ____func_see____
@@ -218,7 +218,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     /**
      * Process statistics record
      *
-     * @param \Xlite\Model\Order $order Order
+     * @param \XLite\Model\Order $order Order
      *
      * @return void
      * @see    ____func_see____

@@ -94,15 +94,15 @@ abstract class AStep extends \XLite\View\AView
     }
 
     /**
-     * Check - step is disabled or not
+     * Check - step is enabled (true) or skipped (false)
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isDisabled()
+    public function isEnabled()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -160,7 +160,7 @@ abstract class AStep extends \XLite\View\AView
     {
         $path = 'checkout/steps/' . $this->getStepName() . '/';
 
-        if ($this->isDisabled()) {
+        if (!$this->isEnabled()) {
             $path .= 'disabled.tpl';
 
         } elseif ($this->isCurrent()) {

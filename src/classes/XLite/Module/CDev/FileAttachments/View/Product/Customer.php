@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\FileAttachments\View\Product;
  * @see   ____class_see____
  * @since 1.0.10
  *
- * @ListCHild (list="product.details.page.tab.description", weight="50")
+ * @ListChild (list="product.details.page.tab.description", weight="50")
  */
 class Customer extends \XLite\View\AView
 {

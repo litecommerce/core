@@ -162,13 +162,13 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     // {{{ Model processing
 
     /**
-     * Get field classes list (only inline-based form fields)
+     * Get field objects list (only inline-based form fields)
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
      */
-    abstract protected function getFieldClasses();
+    abstract protected function getFieldObjects();
 
     /**
      * Define repository name
@@ -366,8 +366,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     {
         $list = array();
 
-        foreach ($this->getCreateFieldClasses() as $class) {
-            $list[] = $this->getInlineField($class, $entity);
+        foreach ($this->getCreateFieldClasses() as $object) {
+            $list[] = $this->prepareInlineField($object, $entity);
         }
 
         return $list;
@@ -499,7 +499,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      */
     protected function isActiveModelProcessing()
     {
-        return $this->hasResults() && $this->getFieldClasses();
+        return $this->hasResults() && $this->getFieldObjects();
     }
 
     /**
@@ -513,7 +513,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     {
         $validated = true;
 
-        foreach ($this->getInlineFields() as $field) {
+        foreach ($this->prepareInlineFields() as $field) {
             $validated = $this->validateCell($field) && $validated;
         }
 
@@ -531,7 +531,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     {
         $count = 0;
 
-        foreach ($this->getInlineFields() as $field) {
+        foreach ($this->prepareInlineFields() as $field) {
             $count++;
             $this->saveCell($field);
         }
@@ -566,11 +566,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      */
     protected function validateCell(\XLite\View\FormField\Inline\AInline $inline, $key = null)
     {
-        $value = $inline->getFieldDataFromRequest($this->getRequestData(), $key);
-        if (isset($value)) {
-            $inline->getField()->setValue($value);
-        }
-        list($flag, $message) = $inline->getField()->validate();
+        $inline->setValueFromRequest($this->getRequestData(), $key);
+        list($flag, $message) = $inline->validate();
         if (!$flag) {
             $this->addErrorMessage($inline, $message);
         }
@@ -599,7 +596,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getInlineFields()
+    protected function prepareInlineFields()
     {
         if (!isset($this->inlineFields)) {
             $this->inlineFields = $this->defineInlineFields();
@@ -620,8 +617,9 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
         $list = array();
 
         foreach ($this->getPageData() as $entity) {
-            foreach ($this->getFieldClasses() as $class) {
-                $list[] = $this->getInlineField($class, $entity);
+            foreach ($this->getFieldObjects() as $object) {
+                $this->prepareInlineField($object, $entity);
+                $list[] = $object;
             }
         }
 
@@ -631,16 +629,16 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     /**
      * Get inline field
      *
-     * @param string               $class  Class
-     * @param \XLite\Model\AEntity $entity Entity
+     * @param \XLite\View\FormField\Inline\AInline $field  Field
+     * @param \XLite\Model\AEntity                 $entity Entity
      *
-     * @return \XLite\View\FormField\Inline\AInline
+     * @return void
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getInlineField($class, \XLite\Model\AEntity $entity)
+    protected function prepareInlineField(\XLite\View\FormField\Inline\AInline $field, \XLite\Model\AEntity $entity)
     {
-        return new $class(array('entity' => $entity, 'itemsList' => $this));
+        $field->setWidgetParams(array('entity' => $entity, 'itemsList' => $this));
     }
 
     // }}}
@@ -687,7 +685,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      */
     protected function addErrorMessage(\XLite\View\Inline\AInline $inline, $message)
     {
-        $this->errorMessages[] = $inline->getField()->getLabel() . ': ' . $message;
+        $this->errorMessages[] = $inline->getLabel() . ': ' . $message;
     }
 
     /**
@@ -895,6 +893,38 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
             . ' widgettarget-' . $this->getWidgetTarget()
             . ' sessioncell-' . $this->getSessionCell();
     }
+
+    /**
+     * Get container attributes 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
+    protected function getContainerAttributes()
+    {
+        return array(
+            'class' => $this->getContainerClass(),
+        );
+    }
+
+    /**
+     * Get container attributes as string 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
+    protected function getContainerAttributesAsString()
+    {
+        $list = array();
+        foreach ($this->getContainerAttributes() as $name => $value) {
+            $list[] = $name . '="' . func_htmlspecialchars($value) . '"';
+        }
+
+        return implode(' ', $list);
+    }
+
 
     // }}}
 

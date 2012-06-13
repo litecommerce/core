@@ -259,7 +259,7 @@ function doCheckRequirements()
 
     $checkRequirements['lc_php_disable_functions'] = array(
         'title'    => xtr('Disabled functions'),
-        'critical' => true,
+        'critical' => false,
     );
 
     $checkRequirements['lc_php_magic_quotes_runtime'] = array(
@@ -552,7 +552,7 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
     if (!empty($list)) {
         $result = false;
         $value = substr(@ini_get('disable_functions'), 0, 45) . '...';
-        $errorMsg = xtr('Disabled functions discovered (:funclist) that must be enabled', array(':funclist' => implode(', ', $list)));
+        $errorMsg = xtr('There are disabled functions (:funclist) that may be used by software in some cases and should be enabled', array(':funclist' => implode(', ', $list)));
 
     } else {
         $value = 'none';
@@ -2961,7 +2961,6 @@ function module_check_cfg()
             'section'      => 'B',
             'requirements' => array(
                 'lc_php_version',
-                'lc_php_disable_functions',
                 'lc_php_magic_quotes_runtime',
                 'lc_php_memory_limit',
                 'lc_docblocks_support',
@@ -2976,6 +2975,7 @@ function module_check_cfg()
             'error_msg'    => xtr('Non-critical dependency failed'),
             'section'      => 'B',
             'requirements' => array(
+                'lc_php_disable_functions',
                 'lc_php_file_uploads',
                 'lc_php_upload_max_filesize',
                 'lc_php_gdlib',

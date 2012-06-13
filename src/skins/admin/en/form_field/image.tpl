@@ -23,3 +23,8 @@
   objectId="{getObjectId()}"
   fileObject="{getFileObject()}"
   fileObjectId="{getFileObjectId()}" />
+
+{if:isRemoveButtonVisible()}
+  <input type="checkbox" name="imagesRemove[{getObject}][{getObjectId()}][{getFileObject()}][{getFileObjectId()}]" id="ir_{getObject}_{getObjectId()}_{getFileObject()}_{getFileObjectId()}" value="1" />
+  <label for="ir_{getObject}_{getObjectId()}_{getFileObject()}_{getFileObjectId()}">{t(getRemoveButtonLabel())}</label>
+{end:}

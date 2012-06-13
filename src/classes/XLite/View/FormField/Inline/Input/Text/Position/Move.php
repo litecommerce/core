@@ -36,15 +36,6 @@ namespace XLite\View\FormField\Inline\Input\Text\Position;
 class Move extends \XLite\View\FormField\Inline\Input\Text\Position
 {
     /**
-     * Short name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.15
-     */
-    protected $shortName = 'orderby';
-
-    /**
      * Register CSS files
      *
      * @return array
@@ -74,18 +65,6 @@ class Move extends \XLite\View\FormField\Inline\Input\Text\Position
         $list[] = 'form_field/inline/input/text/position/move.js';
 
         return $list;
-    }
-
-    /**
-     * Get field label
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getLabel()
-    {
-        return \XLite\Core\Translation::lbl('Position');
     }
 
     /**

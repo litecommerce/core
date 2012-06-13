@@ -197,9 +197,19 @@ class Rate extends \XLite\Model\AEntity
         \XLite\Model\Membership $membership = null,
         \Doctrine\Common\Collections\Collection $productClasses = null
     ) {
-        return (!$this->getZone() || in_array($this->getZone()->getZoneId(), $zones))
-            && (!$this->getMembership() || ($membership && $this->getMembership()->getMembershipId() == $membership->getMembershipId()))
-            && (2 == func_num_args() || !$this->getProductClass() || ($productClasses && $productClasses->contains($this->getProductClass())));
+
+        $result = !$this->getZone() || in_array($this->getZone()->getZoneId(), $zones);
+
+        if ($result && $this->getMembership()) {
+            $result = $membership && $this->getMembership()->getMembershipId() == $membership->getMembershipId();
+        }
+
+        if ($result && 2 < func_num_args()) {
+            $result = !$this->getProductClass()
+                || ($productClasses && $productClasses->contains($this->getProductClass()));
+        }
+
+        return $result;
     }
 
     // {{{ Product price calculation
