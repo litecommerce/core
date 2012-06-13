@@ -187,7 +187,7 @@ abstract class AModel extends \XLite\View\Dialog
     protected $excludedFields = array();
 
     /**
-     * This object will be used if another one is not pased
+     * This object will be used if another one is not passed
      *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____

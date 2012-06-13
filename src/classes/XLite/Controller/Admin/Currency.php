@@ -44,6 +44,21 @@ class Currency extends \XLite\Controller\Admin\AAdmin
      */
     public function init()
     {
+        if (isset(\XLite\Core\Request::getInstance()->currency_id)) {
+
+            $currency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find(\XLite\Core\Request::getInstance()->currency_id);
+
+            if ($currency) {
+
+                $shopCurrency = \XLite\Core\Database::getRepo('XLite\Model\Config')
+                    ->findOneBy(array('name' => 'shop_currency', 'category' => 'General'));
+
+                \XLite\Core\Database::getRepo('XLite\Model\Config')->update(
+                    $shopCurrency,
+                    array('value' => $currency->getCurrencyId())
+                );
+            }
+        }
     }
 
     /**

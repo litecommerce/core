@@ -49,9 +49,10 @@ class Currency extends \XLite\View\Model\AModel
      */
     protected $currencySchema = array(
         'currency_id' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\CurrencyRich',
-            self::SCHEMA_LABEL    => 'Store currency',
-            self::SCHEMA_REQUIRED => false,
+            self::SCHEMA_CLASS      => '\XLite\View\FormField\Select\CurrencyRich',
+            self::SCHEMA_LABEL      => 'Store currency',
+            self::SCHEMA_REQUIRED   => false,
+            self::SCHEMA_ATTRIBUTES => array('data-filter' => '1'),
         ),
         'name' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
@@ -109,31 +110,7 @@ class Currency extends \XLite\View\Model\AModel
     }
 
     /**
-     * Return currency identificator from the request
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getRequestCurrencyId()
-    {
-        return \XLite\Core\Request::getInstance()->currency_id;
-    }
-
-    /**
-     * Return currency identificator for the current model of the form
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCurrencyId()
-    {
-        return $this->getRequestCurrencyId() ?: null;
-    }
-
-    /**
-     * This object will be used if another one is not pased
+     * This object will be used if another one is not passed
      *
      * @return \XLite\Model\Currency
      * @see    ____func_see____
@@ -143,14 +120,8 @@ class Currency extends \XLite\View\Model\AModel
     {
         if (!isset($this->currency)) {
 
-            if (is_null($this->getCurrencyId())) {
-
-                $this->currency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->findOneBy(array('code' => static::DEFAULT_CURRENCY));
-
-            } else {
-
-                $this->currency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find($this->getCurrencyId());
-            }
+            $this->currency = \XLite\Core\Database::getRepo('XLite\Model\Currency')
+                ->find(\XLite\Core\Config::getInstance()->General->shop_currency);
         }
 
         return $this->currency;
