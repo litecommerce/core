@@ -157,7 +157,10 @@ class S3 extends \XLite\Base\Singleton
     public function read($path)
     {
         try {
-            $result = $this->client->getObject(\XLite\Core\Config::getInstance()->CDev->AmazonS3Images->bucket, $path);
+            $result = $this->client->getObject(
+                \XLite\Core\Config::getInstance()->CDev->AmazonS3Images->bucket,
+                $path
+            );
 
         } catch (\S3Exception $e) {
             $result = false;
@@ -184,6 +187,93 @@ class S3 extends \XLite\Base\Singleton
                 \XLite\Core\Config::getInstance()->CDev->AmazonS3Images->bucket,
                 $path
             );
+
+        } catch (\S3Exception $e) {
+            $result = false;
+            \XLite\Logger::getInstance()->registerException($e);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Delete directory
+     *
+     * @param string $path Short path
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function deleteDirectory($path)
+    {
+        $result = false;
+        try {
+            foreach ($this->readDirectory($path) as $k => $v) {
+                $this->client->deleteObject(\XLite\Core\Config::getInstance()->CDev->AmazonS3Images->bucket, $k);
+            }
+            $result = $this->delete($path);
+
+        } catch (\S3Exception $e) {
+            $result = false;
+            \XLite\Logger::getInstance()->registerException($e);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Read directory
+     *
+     * @param string $path Short path
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function readDirectory($path)
+    {
+        try {
+            $result = $this->client->getObject(
+                \XLite\Core\Config::getInstance()->CDev->AmazonS3Images->bucket,
+                $path
+            );
+
+        } catch (\S3Exception $e) {
+            $result = array();
+            \XLite\Logger::getInstance()->registerException($e);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check - path is directory or not
+     *
+     * @param string $path Short path
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function isDir($path)
+    {
+        $result = false;
+        try {
+            $result = $this->client->getObjectInfo(
+                \XLite\Core\Config::getInstance()->CDev->AmazonS3Images->bucket,
+                $path
+            );
+
+            if (is_array($result)) {
+                $result = $result['type'] == 'binary/octet-stream';
+
+            } else {
+                $result = (bool)$this->client->getBucket(
+                    \XLite\Core\Config::getInstance()->CDev->AmazonS3Images->bucket,
+                    $path
+                );
+            }
 
         } catch (\S3Exception $e) {
             $result = false;

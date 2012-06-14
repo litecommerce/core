@@ -44,6 +44,17 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
     const IMAGES_NAMESPACE = 'images';
 
     /**
+     * S3 icons cache
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="array", nullable=true)
+     */
+    protected $s3icons = array();
+
+    /**
      * AWS S3 client
      * 
      * @var   \XLite\Module\CDev\AmazonS3Images\Core\S3
@@ -271,6 +282,12 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
     {
         if (self::STORAGE_S3 == $this->getStorageType()) {
             $this->getS3()->delete($this->getStoragePath($path));
+            if ($this->getId()) {
+                $dir = $this->getStoragePath('icon/' . $this->getId());
+                if ($this->getS3()->isDir($dir)) {
+                    $this->getS3()->deleteDirectory($dir);
+                }
+            }
 
         } else {
             parent::removeFile($path);
@@ -377,6 +394,104 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
         return self::IMAGES_NAMESPACE
             . '/' . $this->getRepository()->getStorageName()
             . '/' . ($path ?: $this->getPath());
+    }
+
+    // }}}
+
+    // {{{ Resize icon
+
+    /**
+     * Get resized file system path
+     *
+     * @param string $size Size prefix
+     * @param string $name File name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getResizedPath($size, $name)
+    {
+        return $this->getS3()
+            ? $this->generateS3Path('icon/' . $this->getId() . '/' . $size . '.' . $this->getExtension())
+            : parent::getResizedPath($size, $name);
+    }
+
+    /**
+     * Get resized file public URL
+     *
+     * @param string $size Size prefix
+     * @param string $name File name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getResizedPublicURL($size, $name)
+    {
+        return $this->getS3()
+            ? $this->getS3()->getURL($this->getResizedPath($size, $name))
+            : parent::getResizedPublicURL($size, $name);
+    }
+
+    /**
+     * Check - resized icon is available or not
+     *
+     * @param string $path Resized image path
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isResizedIconAvailable($path)
+    {
+        $icons = $this->getS3Icons();
+
+        return ($this->getS3() && $icons)
+            ? !empty($icons[$path])
+            : parent::isResizedIconAvailable($path);
+    }
+
+    /**
+     * Resize icon
+     *
+     * @param integer $width  Destination width
+     * @param integer $height Destination height
+     * @param string  $path   Write path
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function resizeIcon($width, $height, $path)
+    {
+        $result = null;
+
+        if ($this->getS3()) {
+           $operator = new \XLite\Core\ImageOperator($this);
+            list($newWidth, $newHeight, $r) = $operator->resizeDown($width, $height);
+
+            if (false !== $r) {
+                $basename = $this->getFileName() ?: basename($this->getPath());
+                $headers = array(
+                    'Content-Type'        => $this->getMime(),
+                    'Content-Disposition' => 'inline; filename="' . $basename . '"',
+                );
+
+                if ($this->getS3()->write($path, $operator->getImage(), $headers)) {
+                    $icons = $this->getS3Icons();
+                    $icons[$path] = true;
+                    $this->setS3Icons($icons);
+                    \XLite\Core\Database::getEM()->flush();
+                    $result = array($newWidth, $newHeight);
+                }
+            }
+
+        } else {
+            $result = parent::resizeIcon($width, $height, $path);
+        }
+
+        return $result;
     }
 
     // }}}
