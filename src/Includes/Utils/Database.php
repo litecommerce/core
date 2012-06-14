@@ -336,32 +336,24 @@ abstract class Database extends \Includes\Utils\AUtils
     public static function setMetadataDriver(\Doctrine\ORM\Configuration $config)
     {
         $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
-        $path  = \Includes\Decorator\ADecorator::getClassesDir();
 
-        if (!\Includes\Decorator\ADecorator::isMergeModeAll()) {
-            $path .= 'XLite' . LC_DS . 'Model';
-        }
+        $chain->addDriver(
+            $config->newDefaultAnnotationDriver(\Includes\Decorator\ADecorator::getClassesDir()),
+            'XLite\Model'
+        );
 
-        $chain->addDriver($config->newDefaultAnnotationDriver($path), 'XLite\Model');
+        $filter = new \Includes\Utils\FileFilter(
+            \Includes\Decorator\ADecorator::getClassesDir() . 'XLite' . LC_DS . 'Module',
+            '|' . LC_DS . '(\w+)' . LC_DS . '(\w+)' . LC_DS . 'Model(?:' . LC_DS . ')?$|Si',
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
+        $filter = $filter->getIterator();
 
-        if (!\Includes\Decorator\ADecorator::isMergeModeAll()) {
-            $iterator = new \RecursiveDirectoryIterator(
-                $path . 'XLite' . LC_DS . 'Module',
-                \FilesystemIterator::SKIP_DOTS
+        foreach ($filter as $path => $data) {
+            $chain->addDriver(
+                $config->newDefaultAnnotationDriver($path),
+                'XLite\Module\\' . $filter->getMatches(1) . '\\' . $filter->getMatches(2) . '\Model'
             );
-
-            foreach ($iterator as $dir) {
-                $iterator2 = new \RecursiveDirectoryIterator($dir->getPathName(), \FilesystemIterator::SKIP_DOTS);
-
-                foreach ($iterator2 as $dir2) {
-                    if (\Includes\Utils\FileManager::isDir($dir2->getPathName() . LC_DS . 'Model')) {
-                        $chain->addDriver(
-                            $config->newDefaultAnnotationDriver($dir2->getPathName() . LC_DS . 'Model'),
-                            'XLite\Module\\' . $dir->getBaseName() . '\\' . $dir2->getBaseName() . '\Model'
-                        );
-                    }
-                }
-            }
         }
 
         $config->setMetadataDriverImpl($chain);

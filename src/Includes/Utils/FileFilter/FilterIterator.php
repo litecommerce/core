@@ -56,6 +56,14 @@ class FilterIterator extends \FilterIterator
      */
     protected $callbacks = array();
 
+    /**
+     * Matches from ::accept()
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
+    protected $matches = array();
 
     /**
      * Constructor
@@ -105,7 +113,7 @@ class FilterIterator extends \FilterIterator
     public function accept()
     {
         if (!($result = !isset($this->pattern))) {
-            $result = preg_match($this->pattern, $this->getPathname());
+            $result = preg_match($this->pattern, $this->getPathname(), $this->matches);
         }
 
         if (!empty($this->callbacks)) {
@@ -118,5 +126,19 @@ class FilterIterator extends \FilterIterator
         }
 
         return $result;
+    }
+
+    /**
+     * Return matches
+     *
+     * @param integer $index Index in matches OPTIONAL
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getMatches($index = null)
+    {
+        return \Includes\Utils\ArrayManager::getIndex($this->matches, $index);
     }
 }
