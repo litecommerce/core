@@ -73,7 +73,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '1';
+        return '2';
     }
 
     /**
@@ -109,9 +109,9 @@ abstract class Main extends \XLite\Module\AModule
                     'The X language has been added and enabled successfully',
                     array('language' => $language->getName()),
                     $language->getCode()
-                );  
-            }   
-            
+                );
+            }
+
             \XLite\Core\Translation::getInstance()->reset();
 
         } else {
