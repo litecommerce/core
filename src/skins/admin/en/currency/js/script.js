@@ -26,7 +26,10 @@ CurrencyManageForm.prototype.callback = function ()
   });
 
   jQuery('#format').change(function() {
-    jQuery(obj.patternCurrencyViewInfo).trigger('formatCurrencyChange', [jQuery(this).val()]);
+    jQuery(obj.patternCurrencyViewInfo).trigger(
+      'formatCurrencyChange',
+      [jQuery(this).val(), jQuery(this).data('e')]
+    );
   }).trigger('change');
 
   jQuery('#prefix').keyup(function(event) {

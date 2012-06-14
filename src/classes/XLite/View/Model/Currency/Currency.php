@@ -94,6 +94,11 @@ class Currency extends \XLite\View\Model\AModel
      */
     public function getCurrencySchema()
     {
+        $e = $this->getDefaultModelObject()->getE();
+
+        $this->currencySchema['format'][\XLite\View\FormField\Select\CurrencyFormat::PARAM_E] = $e;
+        $this->currencySchema['format'][static::SCHEMA_ATTRIBUTES] = array('data-e' => $e);
+
         return $this->currencySchema;
     }
 

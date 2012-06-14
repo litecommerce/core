@@ -13,13 +13,14 @@
 <div class="currency-view-info">
   <ul class="currency-block">
     <li class="title">{t(#Example#)}:</li>
-    <li class="currency">
+    <li class="currency currency-zero">
       <ul class="value-view">
         <li class="prefix"></li>
         <li class="format"></li>
         <li class="suffix"></li>
       </ul>
     </li>
+    <li class="clearfix"></li>
   </ul>
 </div>
- 
+

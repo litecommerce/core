@@ -36,12 +36,22 @@ namespace XLite\View\FormField\Select;
 class CurrencyFormat extends \XLite\View\FormField\Select\Regular
 {
     /**
+     * Parameters name for a widget
+     */
+    const PARAM_E = 'param_exp';
+
+    /**
+     * Exp. part replace element in format
+     */
+    const FORMAT_EXP = 'e';
+
+    /**
      * Currency format variants
      */
-    const FORMAT_SPACE_DOT      = '1 999.99';
-    const FORMAT_COMMA_DOT      = '1,999.99';
-    const FORMAT_SPACE_COMMA    = '1 999,99';
-    const FORMAT_DOT_COMMA      = '1.999,99';
+    const FORMAT_SPACE_DOT      = '1 999.e';
+    const FORMAT_COMMA_DOT      = '1,999.e';
+    const FORMAT_SPACE_COMMA    = '1 999,e';
+    const FORMAT_DOT_COMMA      = '1.999,e';
 
     /**
      * Default format
@@ -118,6 +128,55 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
     }
 
     /**
+     * Return formatted element string
+     *
+     * @param string $elem
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function formatElement($elem)
+    {
+        return 0 == $this->getE()
+            ? substr($elem, 0, -2)
+            : str_replace(static::FORMAT_EXP, str_repeat('9', $this->getE()), $elem);
+    }
+
+    /**
+     * Set widget params
+     *
+     * @param array $params Handler params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        foreach ($this->getWidgetParams() as $name => $param) {
+            if (static::PARAM_OPTIONS == $name) {
+                $param->setValue($this->getFormatOptions());
+                break;
+            }
+        }
+    }
+
+    /**
+     * Return exp. part number for a selector
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getE()
+    {
+        return $this->getParam(static::PARAM_E);
+    }
+
+    /**
      * Get default options list
      *
      * @return array
@@ -126,11 +185,44 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      */
     protected function getDefaultOptions()
     {
-        return array(
-            static::FORMAT_SPACE_DOT    => static::FORMAT_SPACE_DOT,
-            static::FORMAT_COMMA_DOT    => static::FORMAT_COMMA_DOT,
-            static::FORMAT_SPACE_COMMA  => static::FORMAT_SPACE_COMMA,
-            static::FORMAT_DOT_COMMA    => static::FORMAT_DOT_COMMA,
+        return array();
+    }
+
+    /**
+     * Get options list
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFormatOptions()
+    {
+        return array_unique(
+            array_map(
+                array($this, 'formatElement'),
+                array(
+                    static::FORMAT_SPACE_DOT => static::FORMAT_SPACE_DOT,
+                    static::FORMAT_COMMA_DOT => static::FORMAT_COMMA_DOT,
+                    static::FORMAT_SPACE_COMMA => static::FORMAT_SPACE_COMMA,
+                    static::FORMAT_DOT_COMMA => static::FORMAT_DOT_COMMA,
+                )
+            )
+        );
+    }
+
+    /**
+     * Define widget params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            static::PARAM_E => new \XLite\Model\WidgetParam\Int('Exp part', 2),
         );
     }
 }

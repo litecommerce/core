@@ -17,7 +17,13 @@ function CurrencyViewInfo()
 
 CurrencyViewInfo.prototype.callback = function ()
 {
-  jQuery('.currency-view-info .currency .format').bind('formatCurrencyChange', function(e, value) {jQuery(this).html(value);});
+  jQuery('.currency-view-info .currency.currency-zero .format').bind('formatCurrencyChange', function(e, value, exp) {
+    if (0 == exp) {
+      jQuery(this).html(value.replace(/[\.,]e/g, ''));
+    } else {
+      jQuery(this).html(value.replace(/e/g, new Array(exp + 1).join('0')));
+    }
+  });
 
   jQuery('.currency-view-info .currency .prefix').bind('prefixCurrencyChange', function(e, value) {jQuery(this).html(value);});
 
