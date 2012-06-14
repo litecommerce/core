@@ -151,6 +151,12 @@ auth_code = ""
 [performance]
 developer_mode = Off
 substitutional_skins_cache = off
+; How to merge PHP files in cache: off, all or by_namespace
+; Has no sense when the "developer_mode" is enabled
+merge_PHP_files_in_cache = off
+; How to merge PHP files in cache: off or by_view_list
+; Has no sense when the "developer_mode" is enabled
+merge_templates_in_cache = off
 
 ;
 ; Decorator options

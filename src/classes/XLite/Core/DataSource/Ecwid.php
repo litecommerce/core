@@ -33,7 +33,7 @@ namespace XLite\Core\DataSource;
  * @see   ____class_see____
  * @since 1.0.17
  */
-class Ecwid extends ADataSource
+class Ecwid extends \XLite\Core\DataSource\ADataSource
 {
     /**
      * How long can make a request to Ecwid API (seconds).

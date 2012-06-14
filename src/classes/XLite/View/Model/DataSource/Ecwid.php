@@ -33,7 +33,7 @@ namespace XLite\View\Model\DataSource;
  * @see   ____class_see____
  * @since 1.0.17
  */
-class Ecwid extends ADataSource
+class Ecwid extends \XLite\View\Model\DataSource\ADataSource
 {
 
     /**

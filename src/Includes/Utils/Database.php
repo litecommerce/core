@@ -325,6 +325,53 @@ abstract class Database extends \Includes\Utils\AUtils
     }
 
     /**
+     * Set metadata driver for Doctrine config
+     *
+     * @param \Doctrine\ORM\Configuration $config Config object
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function setMetadataDriver(\Doctrine\ORM\Configuration $config)
+    {
+        $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
+        $path  = \Includes\Decorator\ADecorator::getClassesDir();
+
+        if (!\Includes\Decorator\ADecorator::isMergeModeAll()) {
+            $path .= 'XLite' . LC_DS . 'Model';
+        }
+
+        $chain->addDriver($config->newDefaultAnnotationDriver($path), 'XLite\Model');
+
+        if (!\Includes\Decorator\ADecorator::isMergeModeAll()) {
+            $iterator = new \RecursiveDirectoryIterator(
+                $path . 'XLite' . LC_DS . 'Module',
+                \FilesystemIterator::SKIP_DOTS
+            );
+
+            foreach ($iterator as $dir) {
+                $iterator2 = new \RecursiveDirectoryIterator($dir->getPathName(), \FilesystemIterator::SKIP_DOTS);
+
+                foreach ($iterator2 as $dir2) {
+                    if (\Includes\Utils\FileManager::isDir($dir2->getPathName() . LC_DS . 'Model')) {
+                        $chain->addDriver(
+                            $config->newDefaultAnnotationDriver($dir2->getPathName() . LC_DS . 'Model'),
+                            'XLite\Module\\' . $dir->getBaseName() . '\\' . $dir2->getBaseName() . '\Model'
+                        );
+                    }
+                }
+            }
+        }
+
+        $config->setMetadataDriverImpl($chain);
+
+        // Set proxy settings
+        $config->setProxyDir(rtrim(LC_DIR_CACHE_PROXY, LC_DS));
+        $config->setProxyNamespace(LC_MODEL_PROXY_NS);
+    }
+
+    /**
      * Checks InnoDB support
      *
      * @return boolean

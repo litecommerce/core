@@ -42,7 +42,6 @@ class Database extends \XLite\Base\Singleton
     const SCHEMA_UPDATE = 'update';
     const SCHEMA_DELETE = 'delete';
 
-
     /**
      * DB schema file ident
      */
@@ -463,48 +462,11 @@ class Database extends \XLite\Base\Singleton
     {
         $this->configuration = new \Doctrine\ORM\Configuration();
 
+        \Includes\Utils\Database::setMetadataDriver($this->configuration);
+
         // Setup cache
         $this->setDoctrineCache();
 
-        // Set metadata driver
-        $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
-        $chain->addDriver($this->createAnnotationDriver(LC_DIR_CACHE_MODEL), 'XLite\Model');
-
-        $iterator = new \RecursiveDirectoryIterator(
-            LC_DIR_CACHE_CLASSES . 'XLite' . LC_DS . 'Module',
-            \FilesystemIterator::SKIP_DOTS
-        );
-
-        foreach ($iterator as $dir) {
-
-            if (
-                \Includes\Utils\FileManager::isDir($dir->getPathName())
-            ) {
-                $iterator2 = new \RecursiveDirectoryIterator(
-                    $dir->getPathName(),
-                    \FilesystemIterator::SKIP_DOTS
-                );
-
-                foreach ($iterator2 as $dir2) {
-                    if (
-                        \Includes\Utils\FileManager::isDir($dir2->getPathName())
-                        && \Includes\Utils\FileManager::isDir($dir2->getPathName() . LC_DS . 'Model')
-                    ) {
-                        $chain->addDriver(
-                            $this->createAnnotationDriver($dir2->getPathName() . LC_DS . 'Model'),
-                            'XLite\Module\\' . $dir->getBaseName() . '\\' . $dir2->getBaseName() . '\Model'
-                        );
-                    }
-                }
-            }
-        }
-
-
-        $this->configuration->setMetadataDriverImpl($chain);
-
-        // Set proxy settings
-        $this->configuration->setProxyDir(rtrim(LC_DIR_CACHE_PROXY, LC_DS));
-        $this->configuration->setProxyNamespace(LC_MODEL_PROXY_NS);
         $this->configuration->setAutoGenerateProxyClasses(false);
 
         // Register custom functions

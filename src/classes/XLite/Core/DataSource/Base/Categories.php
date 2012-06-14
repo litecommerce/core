@@ -34,7 +34,7 @@ namespace XLite\Core\DataSource\Base;
  * @see   ____class_see____
  * @since 1.0.17
  */
-abstract class Categories extends Collection
+abstract class Categories extends \XLite\Core\DataSource\Base\Collection
 {
     /**
      * Performs a basic validation over a collection of categories

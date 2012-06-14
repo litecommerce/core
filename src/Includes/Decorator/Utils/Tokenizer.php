@@ -485,12 +485,15 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      */
     protected static function addCodeToClassBody($code)
     {
-        // Search position of the class end
-        list(, , $start) = static::getBodyTokenData(T_CLASS);
+        if (!empty($code)) {
 
-        // Add new code
-        if (0 < $start) {
-            static::replaceTokens($start, $start, static::prepareTokens(array($code)));
+            // Search position of the class end
+            list(, , $start) = static::getBodyTokenData(T_CLASS);
+
+            // Add new code
+            if (0 < $start) {
+                static::replaceTokens($start, $start, static::prepareTokens(array($code)));
+            }
         }
 
         return static::composeTokens(static::$tokens);

@@ -113,51 +113,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     }
 
     /**
-     * Set metadata driver for Doctrine config
-     * FIXME: to revise
-     *
-     * @param \Doctrine\ORM\Configuration $config Config object
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function setMetadataDriver(\Doctrine\ORM\Configuration $config)
-    {
-        $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
-        $chain->addDriver(
-            $config->newDefaultAnnotationDriver(static::getClassesDir() . 'XLite' . LC_DS . 'Model'),
-            'XLite\Model'
-        );
-
-        $iterator = new \RecursiveDirectoryIterator(
-            static::getClassesDir() . 'XLite' . LC_DS . 'Module',
-            \FilesystemIterator::SKIP_DOTS
-        );
-
-        foreach ($iterator as $dir) {
-            if (\Includes\Utils\FileManager::isDir($dir->getPathName())) {
-                $iterator2 = new \RecursiveDirectoryIterator($dir->getPathName(), \FilesystemIterator::SKIP_DOTS);
-
-                foreach ($iterator2 as $dir2) {
-                    if (
-                        \Includes\Utils\FileManager::isDir($dir2->getPathName())
-                        && \Includes\Utils\FileManager::isDir($dir2->getPathName() . LC_DS . 'Model')
-                    ) {
-                        $chain->addDriver(
-                            $config->newDefaultAnnotationDriver($dir2->getPathName() . LC_DS . 'Model'),
-                            'XLite\Module\\' . $dir->getBaseName() . '\\' . $dir2->getBaseName() . '\Model'
-                        );
-                    }
-                }
-            }
-
-        }
-
-        $config->setMetadataDriverImpl($chain);
-    }
-
-    /**
      * Return the Doctrine config object
      *
      * @return \Doctrine\ORM\Configuration
@@ -168,11 +123,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     {
         $config = new \Doctrine\ORM\Configuration();
 
-        static::setMetadataDriver($config);
-
-        // Set proxy settings
-        $config->setProxyDir(rtrim(LC_DIR_CACHE_PROXY, LC_DS));
-        $config->setProxyNamespace(LC_MODEL_PROXY_NS);
+        \Includes\Utils\Database::setMetadataDriver($config);
 
         $cache = new \Doctrine\Common\Cache\ArrayCache();
         $config->setMetadataCacheImpl($cache);

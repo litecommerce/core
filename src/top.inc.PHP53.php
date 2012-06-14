@@ -75,13 +75,20 @@ if (isset($_COOKIE) && !empty($_COOKIE['no_xdebug_coverage']) && function_exists
 require_once (LC_DIR_INCLUDES . 'Autoloader.php');
 \Includes\Autoloader::registerAll();
 
+// So called "developer" mode. Set it to "false" in production mode!
+define('LC_DEVELOPER_MODE', (bool) \Includes\Utils\ConfigParser::getOptions(array('performance', 'developer_mode')));
+
+// This constants is needed for Autoloader and Decorator,
+// and also for \XLite\View\AView to properly display templates
+foreach (array('PHP' => 'PHP_files', 'TPL' => 'templates') as $constant => $option) {
+    $mergeMode = \Includes\Utils\ConfigParser::getOptions(array('performance', 'merge_' . $option . '_in_cache'));
+    define('LC_' . $constant . '_MERGE_MODE', empty($mergeMode) || LC_DEVELOPER_MODE ? false : $mergeMode);
+}
+
 // Fire the error if LC is not installed
 if (!defined('XLITE_INSTALL_MODE')) {
     \Includes\ErrorHandler::checkIsLCInstalled();
 }
-
-// So called "developer" mode. Set it to "false" in production mode!
-define('LC_DEVELOPER_MODE', (bool) \Includes\Utils\ConfigParser::getOptions(array('performance', 'developer_mode')));
 
 // Correct error handling mode
 ini_set('display_errors', LC_DEVELOPER_MODE);
@@ -92,7 +99,7 @@ set_exception_handler(array('\Includes\ErrorHandler', 'handleException'));
 
 @umask(0000);
 
-// :FIXME: to remove
+// FIXME: to remove
 require_once (LC_DIR_INCLUDES . 'prepend.php');
 
 // Safe mode

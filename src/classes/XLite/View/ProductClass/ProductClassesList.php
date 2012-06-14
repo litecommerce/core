@@ -35,7 +35,7 @@ namespace XLite\View\ProductClass;
  *
  * @ListChild (list="admin.center", zone="admin")
  */
-class ProductClassesList  extends AProductClass
+class ProductClassesList extends \XLite\View\ProductClass\AProductClass
 {
     /**
      * Return allowed targets
