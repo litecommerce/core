@@ -123,13 +123,13 @@ class Migrate extends \XLite\View\AView
         $result = false;
 
         $state = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getEventState('migrateFromS3');
-        if ($state && (0 < $state['position'] ||  0 == $state['lenght'])) {
+        if ($state && ((0 < $state['position'] && $state['position'] < $state['length']) || 0 == $state['length'])) {
             $result = 'migrateFromS3';
         }
 
         if (!$result) {
             $state = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getEventState('migrateToS3');
-            if ($state && (0 < $state['position'] ||  0 == $state['lenght'])) {
+            if ($state && ((0 < $state['position'] && $state['position'] < $state['length']) ||  0 == $state['length'])) {
                 $result = 'migrateToS3';
             }
         }

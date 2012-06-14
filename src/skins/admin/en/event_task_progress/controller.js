@@ -22,6 +22,7 @@ jQuery().ready(
       if (data && 'undefined' != typeof(data.percent)) {
         bar.progressbar('value', data.percent);
         bar.attr('title', data.percent + '%')
+        bar.trigger('changePercent');
         percent = data.percent;
       }
 
@@ -36,6 +37,9 @@ jQuery().ready(
           {},
           {timeout: 600000}
         );
+
+      } else {
+        bar.trigger('complete');
       }
     }
 
@@ -77,8 +81,12 @@ jQuery().ready(
             if (data && 'undefined' != typeof(data.percent)) {
               bar.progressbar('value', data.percent);
               bar.attr('title', data.percent + '%')
+              bar.trigger('changePercent');
               if (100 > data.percent) {
                 timer = setTimeout(function () { return o.updateProgressBar(); }, timerTTL);
+
+              } else {
+                bar.trigger('complete');
               }
 
             } else {

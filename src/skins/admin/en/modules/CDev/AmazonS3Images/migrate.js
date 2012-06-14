@@ -16,6 +16,11 @@ jQuery().ready(
       function () {
         jQuery(this).progressbar({value: jQuery(this).data('percent')});
       }
+    ).bind(
+      'complete',
+      function() {
+        self.location.reload();
+      }
     );
   }
 );
