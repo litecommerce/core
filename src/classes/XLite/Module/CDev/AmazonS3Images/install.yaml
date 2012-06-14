@@ -18,7 +18,7 @@ XLite\Model\Config:
         option_name: AWS access key
   - name: secret_key
     category: CDev\AmazonS3Images
-    type: 'XLite\View\FormField\Input\Password'
+    type: 'XLite\View\FormField\Input\Secure'
     orderby: 200
     value: ''
     translations:
