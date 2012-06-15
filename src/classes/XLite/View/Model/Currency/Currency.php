@@ -129,6 +129,31 @@ class Currency extends \XLite\View\Model\AModel
     }
 
     /**
+     * getDefaultFieldValue
+     *
+     * @param string $name Field name
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getDefaultFieldValue($name)
+    {
+        $value = parent::getDefaultFieldValue($name);
+
+        switch ($name) {
+
+            case 'trailing_zeroes':
+                $value = 1;
+                break;
+
+            default:
+        }
+
+        return $value;
+    }
+
+    /**
      * This object will be used if another one is not passed
      *
      * @return \XLite\Model\Currency
@@ -214,7 +239,7 @@ class Currency extends \XLite\View\Model\AModel
 
         \XLite\Core\Database::getRepo('XLite\Model\Config')->update(
             $trailingZeroes,
-            array('value' => "" !== $data['trailing_zeroes'])
+            array('value' => '1' == $data['trailing_zeroes'])
         );
 
         // We do not map "trailing zeroes" - it is a config option.
@@ -275,7 +300,7 @@ class Currency extends \XLite\View\Model\AModel
 
         } elseif ('trailing_zeroes' == $name) {
 
-            $value = 1 == \XLite\Core\Config::getInstance()->General->trailing_zeroes;
+            $value = ('' !== \XLite\Core\Config::getInstance()->General->trailing_zeroes);
         }
 
         return $value;
