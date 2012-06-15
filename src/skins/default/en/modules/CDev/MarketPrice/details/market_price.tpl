@@ -2,7 +2,7 @@
 
 {**
  * Market price (internal list element)
- *  
+ *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -13,4 +13,4 @@
  * @ListChild (list="product.details.quicklook.info.market_price.text", weight="100")
  *}
 
-{t(#Market price#)}: <span class="value">{formatPrice(product.getMarketPrice()):h}</span>
+{t(#Market price#)}: <span class="value">{formatPrice(product.getMarketPrice(),null,1):h}</span>

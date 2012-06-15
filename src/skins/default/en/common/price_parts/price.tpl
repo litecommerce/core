@@ -12,4 +12,4 @@
  * @ListChild (list="product.plain_price", weight="10")
  *}
 
-<li><span class="price product-price">{formatPrice(getListPrice()):h}</span></li>
+<li><span class="price product-price">{formatPrice(getListPrice(),null,1):h}</span></li>

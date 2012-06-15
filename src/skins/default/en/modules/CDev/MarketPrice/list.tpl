@@ -16,5 +16,5 @@
  *}
 
 <div IF="isShowMarketPrice(product)" class="product-list-market-price">
-  {formatPrice(product.getMarketPrice()):h}
+  {formatPrice(product.getMarketPrice(),null,1):h}
 </div>
