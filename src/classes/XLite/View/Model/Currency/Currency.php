@@ -48,6 +48,11 @@ class Currency extends \XLite\View\Model\AModel
      * @since 1.0.0
      */
     protected $currencySchema = array(
+        'trailing_zeroes' => array(
+            self::SCHEMA_CLASS      => '\XLite\View\FormField\Input\Checkbox',
+            self::SCHEMA_LABEL      => 'Hide trailing zeros in fractional part',
+            self::SCHEMA_REQUIRED   => false,
+        ),
         'currency_id' => array(
             self::SCHEMA_CLASS      => '\XLite\View\FormField\Select\CurrencyRich',
             self::SCHEMA_LABEL      => 'Store currency',
@@ -97,7 +102,16 @@ class Currency extends \XLite\View\Model\AModel
         $e = $this->getDefaultModelObject()->getE();
 
         $this->currencySchema['format'][\XLite\View\FormField\Select\CurrencyFormat::PARAM_E] = $e;
-        $this->currencySchema['format'][static::SCHEMA_ATTRIBUTES] = array('data-e' => $e);
+
+        $this->currencySchema['format'][static::SCHEMA_ATTRIBUTES] = array(
+            'data-e'            => $e,
+            'data-thousandPart' => \XLite\View\FormField\Select\CurrencyFormat::THOUSAND_PART,
+            'data-hundredsPart' => \XLite\View\FormField\Select\CurrencyFormat::HUNDRENDS_PART,
+            'data-delimiter'    => \XLite\View\FormField\Select\CurrencyFormat::FORMAT_DELIMITER,
+        );
+
+        $this->currencySchema['trailing_zeroes'][\XLite\View\FormField\Input\Checkbox::PARAM_IS_CHECKED]
+            = (1 == \XLite\Core\Config::getInstance()->General->trailing_zeroes);
 
         return $this->currencySchema;
     }
@@ -181,7 +195,9 @@ class Currency extends \XLite\View\Model\AModel
     }
 
     /**
-     * prepareDataForMapping
+     * Prepare request data for mapping into model object.
+     * Model object is provided with methods:
+     * prepareObjectForMapping <- getModelObject <- getDefaultModelObject (or getParam(self::PARAM_MODEL_OBJECT))
      *
      * @return array
      * @see    ____func_see____
@@ -191,8 +207,22 @@ class Currency extends \XLite\View\Model\AModel
     {
         $data = parent::prepareDataForMapping();
 
+        // Update trailing zeroes config option value
+        // TODO? move it to separated method ?
+        $trailingZeroes = \XLite\Core\Database::getRepo('XLite\Model\Config')
+            ->findOneBy(array('name' => 'trailing_zeroes', 'category' => 'General'));
+
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->update(
+            $trailingZeroes,
+            array('value' => "" !== $data['trailing_zeroes'])
+        );
+
+        // We do not map "trailing zeroes" - it is a config option.
+        unset($data['trailing_zeroes']);
+
         if (isset($data['format'])) {
 
+            // Data format is divided into thousand and decimal separator (or any other if it would be necessary)
             $data = $data + $this->getFormatInfo($data);
 
             unset($data['format']);
@@ -204,7 +234,8 @@ class Currency extends \XLite\View\Model\AModel
     /**
      * Return format value of currency for format selector (depends on thousand and decimal delimiters)
      *
-     * @param array $data
+     * @param array $data return the array of the following format:
+     *                    array('thousandDelimiter' => $thousandDelimiter, 'decimalDelimiter' => $decimalDelimiter)
      *
      * @return array
      * @see    ____func_see____
@@ -241,6 +272,10 @@ class Currency extends \XLite\View\Model\AModel
                 $this->getModelObjectValue('thousandDelimiter'),
                 $this->getModelObjectValue('decimalDelimiter')
             );
+
+        } elseif ('trailing_zeroes' == $name) {
+
+            $value = 1 == \XLite\Core\Config::getInstance()->General->trailing_zeroes;
         }
 
         return $value;

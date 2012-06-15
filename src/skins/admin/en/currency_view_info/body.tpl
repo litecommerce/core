@@ -17,6 +17,7 @@
       <ul class="value-view">
         <li class="prefix"></li>
         <li class="format"></li>
+        <li class="decimal"></li>
         <li class="suffix"></li>
       </ul>
     </li>

@@ -49,12 +49,24 @@
   font-size: 14px;
 }
 
-.model-properties .prefix-value input[type="text"],
-  .model-properties .suffix-value input[type="text"]
+.currency-form .prefix-value input[type="text"],
+  .currency-form .suffix-value input[type="text"]
 {
   width: 50px;
 }
 
-.model-properties .format-value select {
+.currency-form .format-value select {
   width: 100px;
+}
+
+.currency-form .trailing-zeroes-value {
+  padding-left: 0px;
+}
+
+.currency-form li.input-checkbox {
+  width: 120px;
+}
+
+.currency-form .trailing-zeroes-label {
+  float: right;
 }

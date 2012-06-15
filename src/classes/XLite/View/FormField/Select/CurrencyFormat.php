@@ -36,6 +36,13 @@ namespace XLite\View\FormField\Select;
 class CurrencyFormat extends \XLite\View\FormField\Select\Regular
 {
     /**
+     * Parts of number
+     */
+    const THOUSAND_PART     = '1';
+    const HUNDRENDS_PART    = '999';
+    const DECIMAL_PART      = '9';
+
+    /**
      * Parameters name for a widget
      */
     const PARAM_E = 'param_exp';
@@ -46,46 +53,20 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
     const FORMAT_EXP = 'e';
 
     /**
-     * Currency format variants
+     * Delimiter to exclude the separators
      */
-    const FORMAT_SPACE_DOT      = '1 999.e';
-    const FORMAT_COMMA_DOT      = '1,999.e';
-    const FORMAT_SPACE_COMMA    = '1 999,e';
-    const FORMAT_DOT_COMMA      = '1.999,e';
+    const FORMAT_DELIMITER = '|';
 
     /**
-     * Default format
-     */
-    const FORMAT_DEFAULT        = self::FORMAT_SPACE_DOT;
-
-    /**
-     * Format -> thousand, decimal delimiters associations
+     * Pairs of formats
      *
      * @var array
      */
-    protected static $delimiters = array(
-        self::FORMAT_SPACE_DOT    => array(' ', '.'),
-        self::FORMAT_COMMA_DOT    => array(',', '.'),
-        self::FORMAT_SPACE_COMMA  => array(' ', ','),
-        self::FORMAT_DOT_COMMA    => array('.', ','),
-    );
-
-    /**
-     * Thousand, decimal -> format associations
-     *
-     * @var array
-     */
-    protected static $formats = array(
-        ' ' => array(
-            '.' => self::FORMAT_SPACE_DOT,
-            ',' => self::FORMAT_SPACE_COMMA,
-        ),
-        '.' => array(
-            ',' => self::FORMAT_DOT_COMMA
-        ),
-        ',' => array(
-            '.' => self::FORMAT_COMMA_DOT
-        ),
+    protected $formatPairs = array(
+        array(' ', '.'),
+        array(',', '.'),
+        array(' ', ','),
+        array('.', ','),
     );
 
     /**
@@ -97,9 +78,9 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getDelimiters($format = self::FORMAT_DEFAULT)
+    public static function getDelimiters($format)
     {
-        return isset(static::$delimiters[$format]) ? static::$delimiters[$format] : static::$delimiters[static::FORMAT_DEFAULT];
+        return explode(static::FORMAT_DELIMITER, $format, 2);
     }
 
     /**
@@ -114,23 +95,13 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      */
     public static function getFormat($thousandDelimiter, $decimalDelimiter)
     {
-        $format = static::FORMAT_DEFAULT;
-
-        if (isset(static::$formats[$thousandDelimiter])) {
-
-            if (isset(static::$formats[$thousandDelimiter][$decimalDelimiter])) {
-
-                $format = static::$formats[$thousandDelimiter][$decimalDelimiter];
-            }
-        }
-
-        return $format;
+        return $thousandDelimiter . static::FORMAT_DELIMITER . $decimalDelimiter;
     }
 
     /**
      * Return formatted element string
      *
-     * @param string $elem
+     * @param array $elem
      *
      * @return string
      * @see    ____func_see____
@@ -138,9 +109,8 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
      */
     public function formatElement($elem)
     {
-        return 0 == $this->getE()
-            ? substr($elem, 0, -2)
-            : str_replace(static::FORMAT_EXP, str_repeat('9', $this->getE()), $elem);
+        return static::THOUSAND_PART . $elem[0] . static::HUNDRENDS_PART
+            . (0 == $this->getE() ? '' : $elem[1] . str_repeat(static::DECIMAL_PART, $this->getE()));
     }
 
     /**
@@ -162,6 +132,25 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
                 break;
             }
         }
+    }
+
+    /**
+     * Get format pairs array with the key
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPairs()
+    {
+        $pairs = array();
+
+        foreach ($this->formatPairs as $pair) {
+
+            $pairs[$pair[0] . static::FORMAT_DELIMITER . $pair[1]] = $pair;
+        }
+
+        return $pairs;
     }
 
     /**
@@ -200,12 +189,7 @@ class CurrencyFormat extends \XLite\View\FormField\Select\Regular
         return array_unique(
             array_map(
                 array($this, 'formatElement'),
-                array(
-                    static::FORMAT_SPACE_DOT => static::FORMAT_SPACE_DOT,
-                    static::FORMAT_COMMA_DOT => static::FORMAT_COMMA_DOT,
-                    static::FORMAT_SPACE_COMMA => static::FORMAT_SPACE_COMMA,
-                    static::FORMAT_DOT_COMMA => static::FORMAT_DOT_COMMA,
-                )
+                $this->getPairs()
             )
         );
     }

@@ -1327,7 +1327,13 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Prepare posted data for mapping to the object
+     * Prepare request data for mapping into model object.
+     * Model object is provided with methods:
+     * prepareObjectForMapping <- getModelObject <- getDefaultModelObject (or getParam(self::PARAM_MODEL_OBJECT))
+     *
+     * Use $this->excludeField($fieldName) method to remove unnecessary data from request.
+     *
+     * Call $this->excludeField() method in "performAction*" methods before parent::performAction* call.
      *
      * @return array
      * @see    ____func_see____

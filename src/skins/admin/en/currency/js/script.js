@@ -12,12 +12,12 @@
 
 function CurrencyManageForm()
 {
-  this.callback();
+  this.initialize();
 }
 
 CurrencyManageForm.prototype.patternCurrencyViewInfo = '.currency-view-info *';
 
-CurrencyManageForm.prototype.callback = function ()
+CurrencyManageForm.prototype.initialize = function ()
 {
   var obj = this;
 
@@ -28,17 +28,40 @@ CurrencyManageForm.prototype.callback = function ()
   jQuery('#format').change(function() {
     jQuery(obj.patternCurrencyViewInfo).trigger(
       'formatCurrencyChange',
-      [jQuery(this).val(), jQuery(this).data('e')]
+      [
+        jQuery(this).val(),
+        jQuery(this).data('e'),
+        jQuery(this).data('thousandPart'),
+        jQuery(this).data('hundredsPart'),
+        jQuery(this).data('delimiter')
+      ]
     );
-  }).trigger('change');
+  });
 
   jQuery('#prefix').keyup(function(event) {
     jQuery(obj.patternCurrencyViewInfo).trigger('prefixCurrencyChange', [jQuery(this).val()]);
-  }).trigger('keyup');
+  });
 
   jQuery('#suffix').keyup(function(event) {
     jQuery(obj.patternCurrencyViewInfo).trigger('suffixCurrencyChange', [jQuery(this).val()]);
-  }).trigger('keyup');
+  });
 
+  jQuery('#trailing-zeroes').bind(
+    'trailingZeroesClick',
+    function (event) {
+      jQuery(obj.patternCurrencyViewInfo).trigger('trailingZeroesClick',[jQuery(this).attr('checked')]);
+    }
+  ).click(function (event) {
+      jQuery(this).trigger('trailingZeroesClick');
+  });
+
+  jQuery(document).ready(function () {
+    jQuery('#format').trigger('change');
+
+    jQuery('#prefix, #suffix').trigger('keyup');
+
+    jQuery('#trailing-zeroes').trigger('trailingZeroesClick');
+  });
 }
 
+core.autoload(CurrencyManageForm);

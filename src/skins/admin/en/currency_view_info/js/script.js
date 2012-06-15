@@ -12,25 +12,45 @@
 
 function CurrencyViewInfo()
 {
-  this.callback();
+  this.initialize();
 }
 
-CurrencyViewInfo.prototype.callback = function ()
+CurrencyViewInfo.prototype.initialize = function ()
 {
-  jQuery('.currency-view-info .currency.currency-zero .format').bind('formatCurrencyChange', function(e, value, exp) {
-    if (0 == exp) {
-      jQuery(this).html(value.replace(/[\.,]e/g, ''));
-    } else {
-      jQuery(this).html(value.replace(/e/g, new Array(exp + 1).join('0')));
+  jQuery('.currency-view-info .currency.currency-zero .format').bind(
+    'formatCurrencyChange',
+    function(e, value, exp, thousand, hundreds, delimiter) {
+      var format = value.split(delimiter);
+
+      jQuery(this).html(thousand + format[0] + hundreds);
     }
-  });
+  );
+
+  jQuery('.currency-view-info .currency.currency-zero .decimal').bind(
+    'formatCurrencyChange',
+    function(e, value, exp, thousand, hundreds, delimiter) {
+      if (0 == exp) {
+        jQuery(this).html('');
+      } else {
+        var format = value.split(delimiter);
+
+        jQuery(this).html(format[1] + (new Array(exp + 1).join('0')));
+      }
+    }
+  ).bind(
+    'trailingZeroesClick',
+    function (e, value) {
+      if (value) {
+        jQuery(this).hide();
+      } else {
+        jQuery(this).show();
+      }
+    }
+  );
 
   jQuery('.currency-view-info .currency .prefix').bind('prefixCurrencyChange', function(e, value) {jQuery(this).html(value);});
 
   jQuery('.currency-view-info .currency .suffix').bind('suffixCurrencyChange', function(e, value) {jQuery(this).html(value);});
 }
 
-// View must be loaded before the currency manage form controller
 core.autoload(CurrencyViewInfo);
-
-core.autoload(CurrencyManageForm);
