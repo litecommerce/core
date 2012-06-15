@@ -371,7 +371,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->setReturnURL($this->buildURL('cart'));
 
-        } elseif (!$cart->isPayed()) {
+        } elseif ($cart->hasInprogressPayments()) {
 
             \XLite\Core\TopMessage::addInfo(
                 'Payment for orders not over. Please complete payment of order.'
