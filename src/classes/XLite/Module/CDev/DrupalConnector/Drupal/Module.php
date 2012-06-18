@@ -86,7 +86,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         if (\XLite\Core\Auth::getInstance()->isAdmin()) {
             $query .= '?' . \XLite\Core\Session::getInstance()->getName();
             $query .= '=' . \XLite\Core\Session::getInstance()->getId();
-            $query .= '&' . self::PARAM_DRUPAL_RETURN_URL;
+            $query .= '&' . static::PARAM_DRUPAL_RETURN_URL;
             $query .= '=' . urlencode(\Includes\Utils\URLManager::getCurrentURL());
         }
 
@@ -171,7 +171,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         // So called "landing link"
         $this->registerPortal(
-            self::LANDING_LINK_PATH, '\XLite\Controller\Admin\Main', 'LC admin area', MENU_NORMAL_ITEM
+            static::LANDING_LINK_PATH, '\XLite\Controller\Admin\Main', 'LC admin area', MENU_NORMAL_ITEM
         );
     }
 
@@ -354,15 +354,12 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function translateOutboundURL(&$path, array &$options, $originalPath)
     {
-        if (self::LANDING_LINK_PATH === $path) {
+        if (static::LANDING_LINK_PATH === $path) {
             $path = \Includes\Utils\URLManager::getShopURL('admin.php' . $this->getAdminAreaURLArgs());
             $options['external'] = true;
 
-        } else {
-            $url = $this->getHandler()->getDrupalCleanURL($path, $options);
-            if ($url) {
-                $path = $url;
-            }
+        } elseif ($url = $this->getHandler()->getDrupalCleanURL($path, $options)) {
+            $path = $url;
         }
     }
 
@@ -379,11 +376,8 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function translateInboundURL(&$path, $originalPath, $pathLanguage)
     {
-        if ($path) {
-            $url = $this->getHandler()->getURLByCleanURL($path);
-            if ($url) {
-                $path = $url;
-            }
+        if ($path && ($url = $this->getHandler()->getURLByCleanURL($path))) {
+            $path = $url;
         }
     }
 
