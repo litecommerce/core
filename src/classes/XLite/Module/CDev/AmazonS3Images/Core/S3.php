@@ -363,6 +363,36 @@ class S3 extends \XLite\Base\Singleton
     }
 
     /**
+     * Check settings 
+     * 
+     * @param string $accessKey AWS access key
+     * @param string $secretKey AWS secret key
+     * @param string $bucket    S3 bucket
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function checkSettings($accessKey, $secretKey, $bucket)
+    {
+        $valid = false;
+
+        $client = new \S3($accessKey, $secretKey);
+        \S3::setExceptions(true);
+
+        try {
+            if (!$client->getBucketLocation($bucket)) {
+                $client->putBucket($bucket);
+            }
+            $valid = true;
+
+        } catch (\Exception $e) {
+        }
+
+        return $valid;
+    }
+
+    /**
      * Constructor
      *
      * @return void
