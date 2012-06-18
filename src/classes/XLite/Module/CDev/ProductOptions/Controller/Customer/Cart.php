@@ -50,7 +50,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      *
      * @param \XLite\Model\Product $product Product class that is requested to add to cart
      *
-     * @return null|array
+     * @return array
      * @see    ____func_see____
      * @since  1.0.14
      */

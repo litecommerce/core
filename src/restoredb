@@ -177,6 +177,7 @@ $disabledModules = array();
 $disabledModules['CDev'] = array(
     'JoomlaConnector',
     'Taxes',
+    'Catalog'
 );
 
 if (!R_INSTALL_SITE && !R_INSTALL_SITEADMIN) {

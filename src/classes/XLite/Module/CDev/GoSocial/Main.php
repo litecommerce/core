@@ -80,7 +80,8 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Adds social media sharing functions like Facebook comments, OpenGraph meta tags and share buttons for product pages.';
+        return 'Adds social media sharing functions like Facebook comments,'
+            . ' OpenGraph meta tags and share buttons for product pages.';
     }
 
     /**

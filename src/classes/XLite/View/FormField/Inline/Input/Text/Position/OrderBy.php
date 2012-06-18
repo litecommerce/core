@@ -35,25 +35,4 @@ namespace XLite\View\FormField\Inline\Input\Text\Position;
  */
 class OrderBy extends \XLite\View\FormField\Inline\Input\Text\Position
 {
-    /**
-     * Short name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.15
-     */
-    protected $shortName = 'orderby';
-
-    /**
-     * Get field label
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getLabel()
-    {
-        return \XLite\Core\Translation::lbl('Position');
-    }
-
 }

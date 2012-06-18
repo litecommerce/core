@@ -195,7 +195,7 @@ OUT;
     /**
      * Perform a single step of user synchronization batch process
      * 
-     * @param array $context Batch process context data
+     * @param array &$context Batch process context data
      *  
      * @return void
      * @see    ____func_see____

@@ -16,7 +16,7 @@
     class="step
       {stepKey}-step
       {if:isCurrentStep(step)}current{else:}inactive{end:}
-      {if:isDisabledStep(step)}disabled{end:}
+      {if:!isEnabledStep(step)}disabled{end:}
       {if:isPreviousStep(step)}previous{end:}
       {if:hasLeftArrow(step)}left-arrow{end:}
       {if:hasRightArrow(step)}right-arrow{end:}

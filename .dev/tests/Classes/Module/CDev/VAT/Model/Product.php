@@ -41,12 +41,19 @@ class XLite_Tests_Module_CDev_VAT_Model_Product extends XLite_Tests_Module_CDev_
         $product = $this->getProduct();
 
         \XLite\Core\Config::getInstance()->Shipping->anonymous_country = 'US';
+        \XLite\Core\Config::updateInstance();
 
-        $taxes = $product->getIncludedTaxList();
+        $productTaxes = $product->getIncludedTaxList();
+
+        $this->assertTrue(is_array($productTaxes), 'Returned not an array');
+
+        foreach ($productTaxes as $k=>$v) {
+            $productTaxes[$k] = number_format(round($v, 2), 2);
+        }
 
         $this->assertEquals(
-            array('VAT' => 30),
-            $product->getIncludedTaxList(),
+            array('VAT' => 4.15),
+            $productTaxes,
             'Wrong taxes returned'
         );
    }

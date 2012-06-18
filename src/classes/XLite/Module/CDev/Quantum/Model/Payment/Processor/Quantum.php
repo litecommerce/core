@@ -139,25 +139,25 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      */
     protected function getFormFields()
     {
+        $billingAddress = $this->getProfile()->getBillingAddress();
+
         $fields = array(
             'gwlogin'                  => $this->getSetting('login'),
             'post_return_url_approved' => $this->getReturnURL('ID'),
             'post_return_url_declined' => $this->getReturnURL('ID'),
             'ID'                       => $this->transaction->getTransactionId(),
             'amount'                   => $this->transaction->getValue(),
-            'BADDR1'                   => $this->getProfile()->getBillingAddress()->getStreet(),
-            'BZIP1'                    => $this->getProfile()->getBillingAddress()->getZipcode(),
+            'BADDR1'                   => $billingAddress->getStreet(),
+            'BZIP1'                    => $billingAddress->getZipcode(),
 
-            'FNAME'       => $this->getProfile()->getBillingAddress()->getFirstname(),
-            'LNAME'       => $this->getProfile()->getBillingAddress()->getLastname(),
-            'BCITY'       => $this->getProfile()->getBillingAddress()->getCity(),
-            'BSTATE'      => $this->getProfile()->getBillingAddress()->getState()->getState(),
-            'BCOUNTRY'    => $this->getProfile()->getBillingAddress()->getCountry()
-                ? $this->getProfile()->getBillingAddress()->getCountry()->getCode()
-                : '',
+            'FNAME'       => $billingAddress->getFirstname(),
+            'LNAME'       => $billingAddress->getLastname(),
+            'BCITY'       => $billingAddress->getCity(),
+            'BSTATE'      => $billingAddress->getState()->getState(),
+            'BCOUNTRY'    => $billingAddress->getCountry() ? $billingAddress->getCountry()->getCode() : '',
             'BCUST_EMAIL' => $this->getProfile()->getLogin(),
 
-            'PHONE'               => $this->getProfile()->getBillingAddress()->getPhone(),
+            'PHONE'               => $billingAddress->getPhone(),
             'trans_method'        => 'CC',
             'ResponseMethod'      => 'POST',
             'cust_id'             => $this->getProfile()->getLogin(),
@@ -167,7 +167,8 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
             'MAXMIND'             => '1',
         );
 
-        if ($shippingAddress = $this->getProfile()->getShippingAddress()) {
+        $shippingaddress = $this->getProfile()->getShippingAddress();
+        if ($shippingAddress) {
 
             $fields += array(
                 'SFNAME'    => $shippingAddress->getFirstname(),

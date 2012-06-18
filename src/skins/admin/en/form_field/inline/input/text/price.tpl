@@ -10,5 +10,5 @@
  * @since     1.0.15
  *}
 
-<span class="symbol">{if:field.currency.getSymbol()}{field.currency.getSymbol():h}{else:}{field.currency.getCode()}{end:}</span>
-<span class="value">{getViewValue():h}</span>
+<span class="symbol">{if:currency.getSymbol()}{currency.getSymbol():h}{else:}{currency.getCode()}{end:}</span>
+<span class="value">{getViewValue(singleField):h}</span>

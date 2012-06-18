@@ -50,7 +50,7 @@ class SaleSelected extends \XLite\Controller\Admin\AAdmin
     /**
      * Set sale price parameters for products list
      *
-     * @return null
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */

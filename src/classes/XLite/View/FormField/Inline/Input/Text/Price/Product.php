@@ -36,24 +36,17 @@ namespace XLite\View\FormField\Inline\Input\Text\Price;
 class Product extends \XLite\View\FormField\Inline\Input\Text\Price
 {
     /**
-     * Short name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.15
-     */
-    protected $shortName = 'price';
-
-    /**
      * Get initial field parameters
+     *
+     * @param array $field Field data
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
      */
-    protected function getFieldParams()
+    protected function getFieldParams(array $field)
     {
-        return parent::getFieldParams() + array('min' => 0);
+        return parent::getFieldParams($field) + array('min' => 0);
     }
 
 }

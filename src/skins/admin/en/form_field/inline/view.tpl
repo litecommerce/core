@@ -10,4 +10,6 @@
  * @since     1.0.15
  *}
 
-{getViewValue():h}
+{foreach:getFields(),f}
+  {getViewValue(f):h}
+{end:}

@@ -20,15 +20,17 @@ CommonForm.elementControllers.push(
 
       widget.click(
         function () {
-          if (!input.attr('checked')) {
-            input.attr('checked', 'checked');
-            input.get(0).setAttribute('checked', 'checked');
+          if (!input.attr('disabled')) {
+            if (!input.attr('checked')) {
+              input.attr('checked', 'checked');
+              input.get(0).setAttribute('checked', 'checked');
 
-          } else {
-            input.removeAttr('checked');
+            } else {
+              input.removeAttr('checked');
+            }
+
+            input.change();
           }
-
-          input.change();
         }
       );
 

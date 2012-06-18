@@ -770,6 +770,28 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * Return info about model field
+     *
+     * @param string $field Field name
+     * @param string $param Data param OPTIONAL
+     *
+     * @return array|mixed
+     * @see ____func_see____
+     * @since 1.0.24
+     */
+    public function getFieldInfo($field, $param = null)
+    {
+        try {
+            $result = $this->getClassMetadata()->getFieldMapping($field);
+
+        } catch (\Doctrine\ORM\Mapping\MappingException $exception) {
+            $result = $this->getClassMetadata()->getAssociationMapping($field);
+        }
+
+        return \Includes\Utils\ArrayManager::getIndex($result, $param, isset($param));
+    }
+
+    /**
      * Find one by record
      *
      * @param array                $data   Record
@@ -1799,5 +1821,28 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected function getDetailedForeignKeys()
     {
         return array();
+    }
+
+    /**
+     * Assign calculated field 
+     * 
+     * @param \XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder Query builder
+     * @param string                                  $name         Field name
+     *  
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function assignCalculatedField(\XLite\Model\QueryBuilder\AQueryBuilder $queryBuilder, $name)
+    {
+        $uname = ucfirst($name);
+        $method = 'defineCalculated' . $uname . 'DQL';
+        if (method_exists($this, $method) && !$queryBuilder->getFlag('calculated.' . $name)) {
+            $alias = $alias ?: $queryBuilder->getRootAlias();
+            $queryBuilder->addSelect($this->$method($queryBuilder, $alias) . ' calculated' . $uname);
+            $queryBuilder->setFlag('calculated.' . $name, true);
+        }
+
+        return $queryBuilder;
     }
 }

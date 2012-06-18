@@ -102,7 +102,7 @@ abstract class XLite_Tests_Module_CDev_VAT_Model_ATax extends XLite_Tests_TestCa
         ),
         2 => array(
             'value' => 30,
-            'type' => 'a',
+            'type' => 'p',
             'position' => 30,
             'zone' => null,
             'productClass' => null,
@@ -110,7 +110,7 @@ abstract class XLite_Tests_Module_CDev_VAT_Model_ATax extends XLite_Tests_TestCa
         ),
         3 => array(
             'value' => 11,
-            'type' => 'p',
+            'type' => 'a',
             'position' => 40,
             'zone' => 1, // Tax-zone-1
             'productClass' => 0, // Tax-class-1
@@ -149,7 +149,6 @@ abstract class XLite_Tests_Module_CDev_VAT_Model_ATax extends XLite_Tests_TestCa
         self::prepareData();
     }
 
-
     /**
      * prepareData 
      * 
@@ -157,7 +156,7 @@ abstract class XLite_Tests_Module_CDev_VAT_Model_ATax extends XLite_Tests_TestCa
      * @see    ____func_see____
      * @since  1.0.24
      */
-    protected static function prepareData()
+    public static function prepareData()
     {
         // Prepare tax
         $taxes = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->findAll();
@@ -206,6 +205,27 @@ abstract class XLite_Tests_Module_CDev_VAT_Model_ATax extends XLite_Tests_TestCa
         $tax->setVATZone($zones[1]);
         $tax->setVATMembership(null);// $memberships[0]);
         $tax->setName('VAT');
+
+        // Switch on option 'Display "inc/ex VAT" labels next to prices'
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
+            array(
+                'name' => 'display_inc_vat_label',
+                'category' => 'CDev\\VAT',
+                'value' => 'Y',
+            )
+        );
+
+        // Switch on option 'Display "inc/ex VAT" labels next to prices'
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
+            array(
+                'name' => 'display_prices_including_vat',
+                'category' => 'CDev\\VAT',
+                'value' => 'Y',
+            )
+        );
+
+        \XLite\Core\Config::updateInstance();
+
 
         // Prepare product classes
         $classes = \XLite\Core\Database::getRepo('XLite\Model\ProductClass')->findAll();

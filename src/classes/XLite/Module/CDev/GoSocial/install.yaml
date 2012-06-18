@@ -178,6 +178,20 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: 'Display the Google+ button on product pages'
-
+  - name: gosocial_sep_5
+    category: 'CDev\GoSocial'
+    type: separator
+    orderby: 4000
+    translations:
+      - code: en
+        option_name: 'Pinterest button settings'
+  - name: pinterest_use
+    category: 'CDev\GoSocial'
+    type: checkbox
+    orderby: 4050
+    value: true
+    translations:
+      - code: en
+        option_name: 'Display the Pinterest button on product pages'
 XLite\Model\LanguageLabel:
   - { name: Tweet, translations: [{ code: en, label: 'Tweet' }] }

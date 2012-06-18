@@ -156,9 +156,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         } catch (\Doctrine\ORM\ORMException $e) {
 
             if ('The EntityManager is closed.' == $e->getMessage()) {
-
                 \XLite\Core\Database::getInstance()->startEntityManager();
-                xlite(true);
 
             } else {
                 throw $e;
@@ -572,10 +570,16 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doRestoreDb($path = null, $drop = true)
+    protected function doRestoreDb($path = null, $drop = true, $doNotAssert = false)
     {
         $message = '';
-        $this->assertTrue(xlite_restore_sql_from_backup($path, false, $drop, $message), $message);
+
+        $result = xlite_restore_sql_from_backup($path, false, $drop, $message);
+
+        if (!$doNotAssert) {
+            $this->assertTrue($result, $message);
+        }
+
         \Includes\Utils\FileManager::copyRecursive(LC_DIR . '/.dev/tests/images', LC_DIR_IMAGES);
     }
 
