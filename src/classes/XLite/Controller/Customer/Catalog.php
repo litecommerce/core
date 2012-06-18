@@ -45,6 +45,22 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     abstract protected function getModelObject();
 
     /**
+     * Define and set handler attributes; initialize handler
+     *
+     * @param array $params Handler params OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __construct(array $params = array())
+    {
+        parent::__construct($params);
+
+        $this->params[] = 'category_id';
+    }
+
+    /**
      * Return current (or default) category object
      *
      * @return \XLite\Model\Category

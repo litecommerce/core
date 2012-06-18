@@ -36,14 +36,20 @@ namespace XLite\Controller\Customer;
 class Product extends \XLite\Controller\Customer\Catalog
 {
     /**
-     * Controller parameters list
+     * Define and set handler attributes; initialize handler
      *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @param array $params Handler params OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    protected $params = array('target', 'product_id');
-
+    public function __construct(array $params = array())
+    {
+        parent::__construct($params);
+        
+        $this->params[] = 'product_id';
+    }
 
     /**
      * Check whether the title is to be displayed in the content area
