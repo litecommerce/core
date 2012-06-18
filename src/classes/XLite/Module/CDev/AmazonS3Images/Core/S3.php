@@ -125,7 +125,7 @@ class S3 extends \XLite\Base\Singleton
     public function copy($from, $to, array $httpHeaders = array())
     {
         $result = false;
-        if (file_exists($from)) {
+        if (\Includes\Utils\FileManager::isExists($from)) {
             try {
                 $result = $this->client->putObjectFile(
                     $from,

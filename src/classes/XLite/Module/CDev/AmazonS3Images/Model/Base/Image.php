@@ -258,6 +258,12 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
                         if ($this->savePath($s3Path)) {
                             $result = true;
                         }
+
+                    } else {
+                        \XLite\Logger::getInstance()->log(
+                            '[Amazon S3] The file \'' . $path . '\' was not copyed to \'' . $s3Path . '\'',
+                            LOG_ERR
+                        );
                     }
                 }
             }
