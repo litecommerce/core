@@ -11,4 +11,5 @@
  *
  * @ListChild (list="product.details.quicklook.info", weight="12")
  *}
-<a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-more-link">{t(#More details#)}</a>
+
+<a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^getCategoryId()))}" class="product-more-link">{t(#More details#)}</a>
