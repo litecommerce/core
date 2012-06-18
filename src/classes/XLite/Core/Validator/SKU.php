@@ -71,13 +71,10 @@ class SKU extends \XLite\Core\Validator\AValidator
      */
     public function validate($data)
     {
-        if (0 >= $this->productId) {
-            $this->throwSKUError();
-
-        } else {
+        if (\XLite\Model\Product::checkSKU($data)) {
             $entity = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBySku($this->sanitize($data));
 
-            if (isset($entity) && $entity->getProductId() !== $this->productId) {
+            if ($entity && (empty($this->productId) || $entity->getProductId() !== $this->productId)) {
                 $this->throwSKUError();
             }
         }
@@ -94,7 +91,7 @@ class SKU extends \XLite\Core\Validator\AValidator
      */
     public function sanitize($data)
     {
-        return strval($data);
+        return substr($data, 0, \XLite\Core\Database::getRepo('XLite\Model\Product')->getFieldInfo('sku', 'length'));
     }
 
     /**

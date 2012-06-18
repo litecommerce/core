@@ -14,6 +14,8 @@ XLite\Model\Language:
 
 XLite\Model\Config:
   directives: { addModel: 'XLite\Model\ConfigTranslation' }
+  - { name: 'add_on_mode', category: 'General', translations: [{ code: 'ru', option_name: 'Работать в режиме стола заказов' }] }
+  - { name: 'add_on_mode_page', category: 'General', translations: [{ code: 'ru', option_name: 'Главная страница режима стола заказов' }] }
   - { name: 'admin_presentation', category: 'General', translations: [{ code: 'ru', option_name: 'Параметры панели Администрирования' }] }
   - { name: 'admin_security', category: 'Security', translations: [{ code: 'ru', option_name: 'Использовать HTTPS в панели администрирования' }] }
   - { name: 'anonymous', category: 'Shipping', translations: [{ code: 'ru', option_name: 'Адрес покупателя по умолчанию' }] }
@@ -40,28 +42,29 @@ XLite\Model\Config:
   - { name: 'date_format', category: 'General', translations: [{ code: 'ru', option_name: 'Формат даты' }] }
   - { name: 'decimal_delim', category: 'General', translations: [{ code: 'ru', option_name: 'Разделитель дробной части валюты' }] }
   - { name: 'default_country', category: 'General', translations: [{ code: 'ru', option_name: 'Страна по умолчанию в регистрационной форме' }] }
-  - { name: 'default_offline_payment', category: 'Payments', translations: [{ code: 'ru', option_name: 'Метод оплаты используемый для заказов с нулевой суммой' }] }
+  - { name: 'default_offline_payment', category: 'Payments', translations: [{ code: 'ru', option_name: 'Метод оплаты, используемый для заказов с нулевой суммой' }] }
   - { name: 'default_purchase_limit', category: 'General', translations: [{ code: 'ru', option_name: 'Ограничение покупки по умолчанию' }] }
   - { name: 'default_select_payment', category: 'Payments', translations: [{ code: 'ru', option_name: 'Метод оплаты по умолчанию' }] }
   - { name: 'default_zipcode', category: 'General', translations: [{ code: 'ru', option_name: 'Почтовый индекс по умолчанию (регистрационная форма)' }] }
-  - { name: 'direct_product_url', category: 'General', translations: [{ code: 'ru', option_name: 'Разрешить прямой доступ по URL к продуктам в выключеных категориях' }] }
+  - { name: 'direct_product_url', category: 'General', translations: [{ code: 'ru', option_name: 'Разрешить прямой доступ по URL к товарам в выключеных категориях' }] }
   - { name: 'display_check_number', category: 'General', translations: [{ code: 'ru', option_name: 'Показывать номер чека для метода оплаты eCheck' }] }
   - { name: 'drupal_root_url', category: 'CDev\DrupalConnector', translations: [{ code: 'ru', option_name: 'Корневой URL установки Drupal' }] }
+  - { name: 'enable_anon_checkout', category: 'General', translations: [{ code: 'ru', option_name: 'Разрешить оплату без регистрации' }] }
   - { name: 'enable_init_order_notif', category: 'Email', translations: [{ code: 'ru', option_name: 'Отправлять данные о заказе на E-mail отдела продаж, после размещения заказа' }] }
-  - { name: 'enable_init_order_notif_customer', category: 'Email', translations: [{ code: 'ru', option_name: 'Отправлять данные о заказе на E-mail клиента, после размещения заказа' }] }
+  - { name: 'enable_init_order_notif_customer', category: 'Email', translations: [{ code: 'ru', option_name: 'Отправлять данные о заказе на E-mail клиента после размещения заказа' }] }
   - { name: 'fb_admins', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Администраторы Facebook', option_comment: 'Список идентификаторов пользователей администраторов страниц Facebook, разделенный запятыми. Включите, по крайней мере, свой собственный Facebook ID.' }] }
-  - { name: 'fb_app_id', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Facebook Application ID', option_comment: 'Facebook Platform application ID, который управляет страницами вашего сайта. Вы можете получить этот ID посетив страницу по адресу <a href=https://developers.facebook.com/apps/>https://developers.facebook.com/apps/</a><br /><br />Вам необходимо указать значение этого поля, чтобы:<ul><li>статистика вашего сайта появилась в панели Facebook Insights</li><li>включить интерфейс модератора в Facebook - позволяющий модерировать коментарии всех ваших продуктов одновременно</li></ul>' }] }
+  - { name: 'fb_app_id', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Facebook Application ID', option_comment: 'Facebook Platform application ID, который управляет страницами вашего сайта. Вы можете получить этот ID, посетив страницу по адресу <a href=https://developers.facebook.com/apps/>https://developers.facebook.com/apps/</a><br /><br />Вам необходимо указать значение этого поля, чтобы:<ul><li>статистика вашего сайта появилась в панели Facebook Insights</li><li>включить интерфейс модератора в Facebook - позволяющий модерировать коментарии всех ваших товаров одновременно</li></ul>' }] }
   - { name: 'fb_app_namespace', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Facebook Application Namespace', option_comment: 'Укажите то же самое пространство имен приложения, которое вы ввели при настройке вашего приложение Facebook Platform.' }] }
   - { name: 'fb_comments_num_posts', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Количество сообщений для отображения на вкладке по умолчанию' }] }
-  - { name: 'fb_comments_use', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Отображать вкладку Facebook Comments на странице продукта', option_comment: 'Для модерации коментариев укажите ваш Facebook User ID в поле Администраторы Facebook.<br />Для включения интерфейса модерации в Facebook''е, позволяющего модерировать все коментарии продуктов одновременно, укажите ваш ID приложения Facebook в поле Facebook Application ID.' }] }
+  - { name: 'fb_comments_use', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Отображать вкладку Facebook Comments на странице товара', option_comment: 'Для модерации коментариев укажите свой Facebook User ID в поле Администраторы Facebook.<br />Для включения интерфейса модерации в Facebook''е, позволяющего модерировать все коментарии товаров одновременно, укажите свой ID приложения Facebook в поле Facebook Application ID.' }] }
   - { name: 'fb_like_layout', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Стиль отображения', option_comment: 'Существует три варианта:<ul><li>standard - отображает социальный текст справа от кнопки под фотографией друга</li><li>button - показывает общее количество Like''ов справа от кнопки</li><li>box - показывает общее количество Like''ов над кнопкой.</li></ul>                                                                                                                                                                        ' }] }
-  - { name: 'fb_like_send_button', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Пказывать кнопку Send вместе с кнопкой Like', option_comment: 'Кнопка Send позволяет клиенту отправить сообщение с ссылкой на страницу продукта группе на Facebook к которой он принадлежит, или друзьям на Facebook.' }] }
+  - { name: 'fb_like_send_button', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Пказывать кнопку Send вместе с кнопкой Like', option_comment: 'Кнопка Send позволяет клиенту отправлять сообщение с ссылкой на страницу товара группе на Facebook, к которой он принадлежит, или друзьям на Facebook.' }] }
   - { name: 'fb_like_show_faces', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Показывать иконки профайлов под кнопкой Like', option_comment: 'Фотографии пользователей отображаются только в стандартном стиле.' }] }
-  - { name: 'fb_like_use', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Пказывать,  кнопку Like на страницах продуктов', option_comment: 'Кнопка Like позволяет клиенту обмениваться ссылками понравившихся продуктов с друзьями на Facebook.' }] }
+  - { name: 'fb_like_use', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Пказывать,  кнопку Like на страницах товаров', option_comment: 'Кнопка Like позволяет клиенту обмениваться ссылками понравившихся товаров с друзьями на Facebook.' }] }
   - { name: 'fb_like_verb', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Название кнопки Like' }] }
-  - { name: 'featured_products_look', category: 'CDev\FeaturedProducts', translations: [{ code: 'ru', option_name: 'Вид рекомендуемых продуктов' }] }
+  - { name: 'featured_products_look', category: 'CDev\FeaturedProducts', translations: [{ code: 'ru', option_name: 'Вид рекомендуемых товаров' }] }
   - { name: 'form_id_protection', category: 'Security', translations: [{ code: 'ru', option_name: 'Включить систему защиты веб-форм администраторской зоны' }] }
-  - { name: 'full_customer_security', category: 'Security', translations: [{ code: 'ru', option_name: 'Клиентская зона посностью на HTTPS' }] }
+  - { name: 'full_customer_security', category: 'Security', translations: [{ code: 'ru', option_name: 'Клиентская зона полностью на HTTPS' }] }
   - { name: 'ga_account', category: 'CDev\GoogleAnalytics', translations: [{ code: 'ru', option_name: 'Web Property ID' }] }
   - { name: 'ga_tracking_type', category: 'CDev\GoogleAnalytics', translations: [{ code: 'ru', option_name: 'Что отслеживается' }] }
   - { name: 'gosocial_sep_1', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Настройки приложения Facebook' }] }
@@ -69,7 +72,7 @@ XLite\Model\Config:
   - { name: 'gosocial_sep_21', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Параметры Facebook Comments' }] }
   - { name: 'gosocial_sep_3', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Настройки кнопки Tweet' }] }
   - { name: 'gosocial_sep_4', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Параметры кнопки Google +' }] }
-  - { name: 'gplus_use', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Показывать кнопку Google + на страницах продуктов' }] }
+  - { name: 'gplus_use', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Показывать кнопку Google + на страницах товаров' }] }
   - { name: 'location_address', category: 'Company', translations: [{ code: 'ru', option_name: 'Адрес' }] }
   - { name: 'location_city', category: 'Company', translations: [{ code: 'ru', option_name: 'Город' }] }
   - { name: 'location_country', category: 'Company', translations: [{ code: 'ru', option_name: 'Страна' }] }
@@ -81,22 +84,24 @@ XLite\Model\Config:
   - { name: 'maximal_order_amount', category: 'General', translations: [{ code: 'ru', option_name: 'Максимальная сумма заказа' }] }
   - { name: 'minify_resources', category: 'CDev\DrupalConnector', translations: [{ code: 'ru', option_name: 'Минимизировать JS и CSS ресурсы в стиле 6.x Drupal' }] }
   - { name: 'minimal_order_amount', category: 'General', translations: [{ code: 'ru', option_name: 'Минимальная сумма заказа' }] }
-  - { name: 'number_of_bestsellers', category: 'CDev\Bestsellers', translations: [{ code: 'ru', option_name: 'Количество продуктов в списке лидеров продаж' }] }
+  - { name: 'number_of_bestsellers', category: 'CDev\Bestsellers', translations: [{ code: 'ru', option_name: 'Количество товаров в списке лидеров продаж' }] }
   - { name: 'operation_presentation', category: 'General', translations: [{ code: 'ru', option_name: 'Обслуживание и работа' }] }
+  - { name: 'order_starting_number', category: 'General', translations: [{ code: 'ru', option_name: 'Начинать нумерацию заказов с' }] }
   - { name: 'orders_department', category: 'Company', translations: [{ code: 'ru', option_name: 'E-mail отдела продаж' }] }
   - { name: 'orders_per_page', category: 'General', translations: [{ code: 'ru', option_name: 'Заказов на страницу' }] }
-  - { name: 'product_changefreq', category: 'CDev\XMLSitemap', translations: [{ code: 'ru', option_name: 'Частота обновления для страницы Продуктов' }] }
-  - { name: 'product_priority', category: 'CDev\XMLSitemap', translations: [{ code: 'ru', option_name: 'Приоритет для страницы Продуктов', option_comment: ' Значение должно быть в пределах: от 0 до 1.' }] }
-  - { name: 'products_per_page', category: 'General', translations: [{ code: 'ru', option_name: 'Продуктов на странице категории' }] }
-  - { name: 'products_per_page_admin', category: 'General', translations: [{ code: 'ru', option_name: 'Продуктов на страницу' }] }
+  - { name: 'product_changefreq', category: 'CDev\XMLSitemap', translations: [{ code: 'ru', option_name: 'Частота обновления для страницы Товаров' }] }
+  - { name: 'product_priority', category: 'CDev\XMLSitemap', translations: [{ code: 'ru', option_name: 'Приоритет для страницы Товаров', option_comment: ' Значение должно быть в пределах: от 0 до 1.' }] }
+  - { name: 'products_per_page', category: 'General', translations: [{ code: 'ru', option_name: 'Товаров на странице категории' }] }
+  - { name: 'products_per_page_admin', category: 'General', translations: [{ code: 'ru', option_name: 'Товаров на страницу' }] }
   - { name: 'proxy', category: 'Security', translations: [{ code: 'ru', option_name: 'HTTPS прокси' }] }
   - { name: 'recent_orders', category: 'General', translations: [{ code: 'ru', option_name: 'Количество заказов в списке последних заказов' }] }
-  - { name: 'redirect_to_cart', category: 'General', translations: [{ code: 'ru', option_name: 'Перенаправлять клиента после добавления продукта в корзину ' }] }
-  - { name: 'sale_enabled', category: 'CDev\Sale', translations: [{ code: 'ru', option_name: 'Показывать "Продукты на распродаже" в магазине' }] }
-  - { name: 'sale_max_count_in_block', category: 'CDev\Sale', translations: [{ code: 'ru', option_name: 'Максимальное количество продуктов, которое будет отображаться в блоке "Продукты на распродаже"', option_comment: 'Максимальное количество продуктов, которые будут отображаться в блоке Продукты на распродаже. Установите нулевое значение, чтобы отобразить все продукты в блоке. Настройки блока Drupal могут изменить эту опцию (когда модуль DrupalConnector включен).' }] }
-  - { name: 'sale_menu', category: 'CDev\Sale', translations: [{ code: 'ru', option_name: 'Отображать блок "Продукты на распродаже" в', option_comment: 'Настройки блока  Drupal могут изменить эту опцию (когда модуль DrupalConnector включен).' }] }
+  - { name: 'redirect_to_cart', category: 'General', translations: [{ code: 'ru', option_name: 'Перенаправлять клиента после добавления товара в корзину ' }] }
+  - { name: 'sale_enabled', category: 'CDev\Sale', translations: [{ code: 'ru', option_name: 'Показывать "Товары на распродаже" в магазине' }] }
+  - { name: 'sale_max_count_in_block', category: 'CDev\Sale', translations: [{ code: 'ru', option_name: 'Максимальное количество товаров, которое будет отображаться в блоке "Товары на распродаже"', option_comment: 'Максимальное количество товаров, которые будут отображаться в блоке Товары на распродаже. Установите нулевое значение, чтобы отобразить все товары в блоке. Настройки блока Drupal могут изменить эту опцию (когда модуль DrupalConnector включен).' }] }
+  - { name: 'sale_menu', category: 'CDev\Sale', translations: [{ code: 'ru', option_name: 'Отображать блок "Товары на распродаже" в', option_comment: 'Настройки блока  Drupal могут изменить эту опцию (если модуль DrupalConnector включен).' }] }
   - { name: 'shop_closed', category: 'General', translations: [{ code: 'ru', option_name: 'Временно закрыть магазин' }] }
   - { name: 'shop_currency', category: 'General', translations: [{ code: 'ru', option_name: 'Валюта магазина' }] }
+  - { name: 'show_thumbnails', category: 'General', translations: [{ code: 'ru', option_name: 'Показывать кртинки в списке товаров' }] }
   - { name: 'site_administrator', category: 'Company', translations: [{ code: 'ru', option_name: 'E-mail администратора сайта' }] }
   - { name: 'smtp_password', category: 'Email', translations: [{ code: 'ru', option_name: 'Пароль' }] }
   - { name: 'smtp_security', category: 'Email', translations: [{ code: 'ru', option_name: 'Безопастное соединение' }] }
@@ -111,9 +116,9 @@ XLite\Model\Config:
   - { name: 'time_format', category: 'General', translations: [{ code: 'ru', option_name: 'Формат времени' }] }
   - { name: 'time_zone', category: 'General', translations: [{ code: 'ru', option_name: 'Временная зона' }] }
   - { name: 'tweet_hashtag', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Пказывать Hashtag в кнопке Tweet и в тексте статуса твита (опционально)' }] }
-  - { name: 'tweet_recommend', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Имя учетной записи пользователя, следования после отправки Tweet (опционально)', option_comment: ' Twitter будет предлагать клиентам следовать этому пользователю, когда они отправят твит при помощью кнопки Tweet.' }] }
-  - { name: 'tweet_show_count', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Показывать количество твитов в кнопке Tweet', option_comment: 'Поле счетчика показывает, сколько раз страница продукта была затвитана в Твиттере.' }] }
-  - { name: 'tweet_use', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Показывать кнопку Tweet на странице описания товара', option_comment: 'Кнопка Tweet позволяет пользователям легко и быстро обмениваться ссылками страницы продукта с их последователями в Twitter.' }] }
+  - { name: 'tweet_recommend', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Имя учетной записи пользователя для следования после отправки Tweet (опционально)', option_comment: ' Twitter будет предлагать клиентам следовать этому пользователю, когда они отправят твит при помощью кнопки Tweet.' }] }
+  - { name: 'tweet_show_count', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Показывать количество твитов в кнопке Tweet', option_comment: 'Поле счетчика показывает, сколько раз страница товара была затвитана в Твиттере.' }] }
+  - { name: 'tweet_use', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Показывать кнопку Tweet на странице описания товара', option_comment: 'Кнопка Tweet позволяет пользователям легко и быстро обмениваться ссылками на страницы товаров со своими последователями в Twitter.' }] }
   - { name: 'tweet_via', category: 'CDev\GoSocial', translations: [{ code: 'ru', option_name: 'Имя учетной записи пользователя, автора Tweet (опционально)' }] }
   - { name: 'unit_presentation', category: 'General', translations: [{ code: 'ru', option_name: 'Единица измерения' }] }
   - { name: 'use_smtp', category: 'Email', translations: [{ code: 'ru', option_name: 'Использовать SMTP сервер' }] }
@@ -124,12 +129,40 @@ XLite\Model\Config:
   - { name: 'weight_unit', category: 'General', translations: [{ code: 'ru', option_name: 'Единица веса' }] }
   - { name: 'welcome_changefreq', category: 'CDev\XMLSitemap', translations: [{ code: 'ru', option_name: 'Частота обновления для главной страницы' }] }
   - { name: 'welcome_priority', category: 'CDev\XMLSitemap', translations: [{ code: 'ru', option_name: 'Приоритет для главной страницы', option_comment: ' Значение должно быть в пределах: от 0 до 1.' }] }
+  - { name: 'ttl', category: 'CDev\Egoods', translations: [{ code: 'ru', option_name: 'Время жизни ссылки (дней)', option_comment: 'Укажите 0 для снятия ограничений' }] }
+  - { name: 'attempts_limit', category: 'CDev\Egoods', translations: [{ code: 'ru', option_name: 'Ограничение скачиваний (на 1 купленый товар)', option_comment: 'Укажите 0 для снятия ограничений' }] }
+  - { name: 'sep_product_advisor_na', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Параметры блока "Новые поступления"' }] }
+  - { name: 'na_enabled', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Включить блок "Новые поступления"' }] }
+  - { name: 'na_max_days', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Количество дней, в течение которых продукты считаются новыми', option_comment: 'Укажите значение отличное от нуля; иначе будет использовано стандартное значение 30 дней' }] }
+  - { name: 'na_max_count_in_full_list', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Максимальное количество товаров, которое будет отображаться в блоке "Новые поступления"', option_comment: 'Ограничивает общее количество товаров, которые могут быть показаны покупателю по ссылке "Все новые поступления". 0 - для снятия ограничений.' }] }
+  - { name: 'na_mark_with_label', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Отмечать новые продукты в каталоге', option_comment: 'Отмечает все новые товары во всех списках товаров (исключая "Новые поступления") отметкой "Новые!".' }] }
+  - { name: 'na_show_in_sidebar', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Показывать блок "Новые поступления" на боковой панели (иначе в центральной части)' }] }
+  - { name: 'na_max_count_in_block', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Максимальное число товаров в блоке "Новые поступления"', option_comment: 'Определяет максимальное число товаров, показываемых в блоке "Новые поступления". Укажите значение отличное от нуля; 3 товара отображаются по умолчанию. Указанное значение будет использовано в том случае, если оно меньше общего числа товаров в списке товаров. Параметры блока "Drupal" могут перекрывать эту опцию (если включен модуль "DrupalConnector")' }] }
+  - { name: 'na_from_current_category', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Показывать в блоке "Новые поступления" только товары из категории, просматриваемой покупателем', option_comment: 'Параметры блока "Drupal" могут перекрывать эту опцию (если включен модуль "DrupalConnector")' }] }
+  - { name: 'sep_product_advisor_cs', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Параметры блока "Скоро в продаже"' }] }
+  - { name: 'cs_enabled', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Включить блок "Скоро в продаже"' }] }
+  - { name: 'cs_mark_with_label', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Отмечать поступающие продукты в каталоге', option_comment: 'Отметить ожидаемые товары во всех списках товаров (исключая "Скоро в продаже") отметкой "Скоро...".' }] }
+  - { name: 'cs_display_date', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Показывать дату поступления в продажу на странице продукта' }] }
+  - { name: 'cs_from_current_category', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Показывать в блоке "Скоро в продаже" только товары из категории, просматриваемой покупателем', option_comment: 'Параметры блока "Drupal" могут перекрывать эту опцию (если включен модуль "DrupalConnector")' }] }
+  - { name: 'cs_show_in_sidebar', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Показывать блок "Скоро в продаже" на боковой панели (иначе в центральной части)', option_comment: 'Параметры блока "Drupal" могут перекрывать эту опцию (если включен модуль "DrupalConnector")' }] }
+  - { name: 'cs_max_count_in_block', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Максимальное число товаров в блоке "Скоро в продаже"', option_comment: 'Определяет максимальное количество товаров, отображаемоых в блоке "Скоро в продаже". Укажите значение отличное от нуля; иначе, используется значение по умолчанию - 3 продукта. Параметры блока "Drupal" могут перекрывать эту опцию (если включен модуль "DrupalConnector").' }] }
+  - { name: 'sep_product_advisor_rv', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Пареметры блока "Вы смотрели"' }] }
+  - { name: 'rv_enabled', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Показывать блок "Вы смотрели" в каталоге' }] }
+  - { name: 'rv_max_count_in_block', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Максимальное число товаров в блоке "Вы смотрели"', option_comment: 'Определяет максимальное количество товаров, отображаемых в блоке "Вы смотрели". 0 - для снятия ограничений. Параметры блока "Drupal" могут перекрывать эту опцию (если включен модуль "DrupalConnector").' }] }
+  - { name: 'sep_product_advisor_cbb', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Параметры блока "Покупатели, купившие этот товар, также купили"' }] }
+  - { name: 'cbb_enabled', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Показывать блок в каталоге' }] }
+  - { name: 'cbb_max_count_in_block', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Максимальное число товаров в блоке', option_comment: 'Определяет максимальное количество товаров, отображаемых в блоке "Покупатели, купившие этот товар, также купили". Укажите значение отличное от нуля; иначе, используется значение по умолчанию - 3 продукта. Параметры блока "Drupal" могут перекрывать эту опцию (если включен модуль "DrupalConnector").' }] }
+  - { name: 'sep_product_advisor_cvb', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Параметры блока "Покупатели, смотревшие этот товар, также купили"' }] }
+  - { name: 'cvb_enabled', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Показывать блок в каталоге' }] }
+  - { name: 'cvb_max_count_in_block', category: 'CDev\ProductAdvisor', translations: [{ code: 'ru', option_name: 'Максимальное число товаров в блоке', option_comment: 'Определяет максимальное количество товаров, отображаемых в блоке "Покупатели, смотревшие этот товар, также купили". Укажите значение отличное от нуля; иначе, используется значение по умолчанию - 3 продукта. Параметры блока "Drupal" могут перекрывать эту опцию (если включен модуль "DrupalConnector").' }] }
+  - { name: 'display_prices_including_vat', category: 'CDev\VAT', translations: [{ code: 'ru', option_name: 'Отображать в каталоге цены с учетом НДС' }] }
+  - { name: 'display_inc_vat_label', category: 'CDev\VAT', translations: [{ code: 'ru', option_name: 'Показывать метку "включая/без НДС" рядом с ценами', option_comment: 'Если эта опция включена, у каждой цены в каталоге будет значок "с НДС" или "без НДС", в зависимости от того, включен ли налог в цену или нет. Если вы не хотите, чтобы такой значок отображался рядом с ценами в каталоге, информацию об НДС нужно разместить на какой-нибудь другой странице каталога, т.к. покупателям должно быть понятно, включен налог в цену или нет.' }] }
 
 XLite\Model\LanguageLabel:
   directives: { addModel: 'XLite\Model\LanguageLabelTranslation' }
-  - { name: '_X items_ in bag', translations: [{ code: 'ru', label: '<a href="#">{{count}} продуктов</a> в корзине' }] }
+  - { name: '_X items_ in bag', translations: [{ code: 'ru', label: '<a href="#">{{count}} товаров</a> в корзине' }] }
   - { name: '-- No categories --', translations: [{ code: 'ru', label: '-- Нет категорий ---' }] }
-  - { name: '"X product" options', translations: [{ code: 'ru', label: 'Опции продукта "{{product}}"' }] }
+  - { name: '"X product" options', translations: [{ code: 'ru', label: 'Опции товара "{{product}}"' }] }
   - { name: 'A new customer? Enter your e-mail', translations: [{ code: 'ru', label: 'Впервые покупаете у нас? Укажите ваш e-mail' }] }
   - { name: 'Absolute', translations: [{ code: 'ru', label: 'Единица' }] }
   - { name: 'Access information', translations: [{ code: 'ru', label: 'Данные для доступа' }] }
@@ -142,7 +175,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Add', translations: [{ code: 'ru', label: 'Добавить' }] }
   - { name: 'Add category', translations: [{ code: 'ru', label: 'Добавить категорию' }] }
   - { name: 'Add child', translations: [{ code: 'ru', label: 'Добавить дочернюю категорию' }] }
-  - { name: 'Add featured products', translations: [{ code: 'ru', label: 'Добавить рекомендуемые продукты' }] }
+  - { name: 'Add featured products', translations: [{ code: 'ru', label: 'Добавить рекомендуемые товары' }] }
   - { name: 'Add file', translations: [{ code: 'ru', label: 'Добавить файл' }] }
   - { name: 'Add image', translations: [{ code: 'ru', label: 'Добавить изображение' }] }
   - { name: 'Add language', translations: [{ code: 'ru', label: 'Добавить язык' }] }
@@ -157,8 +190,8 @@ XLite\Model\LanguageLabel:
   - { name: 'Add new option', translations: [{ code: 'ru', label: 'Добавить новую опцию' }] }
   - { name: 'Add new option group', translations: [{ code: 'ru', label: 'Добавить новую группу опций' }] }
   - { name: 'Add new state', translations: [{ code: 'ru', label: 'Добавить новый штат' }] }
-  - { name: 'Add Product', translations: [{ code: 'ru', label: 'Добавить продукт' }] }
-  - { name: 'Add product', translations: [{ code: 'ru', label: 'Добавить продукт' }] }
+  - { name: 'Add Product', translations: [{ code: 'ru', label: 'Добавить товар' }] }
+  - { name: 'Add product', translations: [{ code: 'ru', label: 'Добавить товар' }] }
   - { name: 'Add shipping method', translations: [{ code: 'ru', label: 'Добавить метод доставки' }] }
   - { name: 'Add subcategory', translations: [{ code: 'ru', label: 'Добавить подкатегорию' }] }
   - { name: 'Add to Bag', translations: [{ code: 'ru', label: 'Добавить в корзину' }] }
@@ -177,8 +210,8 @@ XLite\Model\LanguageLabel:
   - { name: 'Administration Zone', translations: [{ code: 'ru', label: 'Панель управления' }] }
   - { name: 'Administrator', translations: [{ code: 'ru', label: 'Администратор' }] }
   - { name: 'Administrator panel', translations: [{ code: 'ru', label: 'Панель администратора' }] }
-  - { name: 'Administrator Zone settings', translations: [{ code: 'ru', label: 'Параметры Административной зоны' }] }
-  - { name: 'After you enable this tax it will be included in product prices', translations: [{ code: 'ru', label: 'После активации налог будет включен в цены продуктов' }] }
+  - { name: 'Administrator Zone settings', translations: [{ code: 'ru', label: 'Параметры зоны администратора' }] }
+  - { name: 'After you enable this tax it will be included in product prices', translations: [{ code: 'ru', label: 'После активации налог будет включен в цены товаров. Это означает, что он не будет показываться в виде дополнительной наценки во время оплаты.' }] }
   - { name: 'All', translations: [{ code: 'ru', label: 'Все' }] }
   - { name: 'All add-ons', translations: [{ code: 'ru', label: 'Все дополнения' }] }
   - { name: 'All membership levels', translations: [{ code: 'ru', label: 'Все группы' }] }
@@ -189,13 +222,13 @@ XLite\Model\LanguageLabel:
   - { name: 'Already have an account?', translations: [{ code: 'ru', label: 'Уже зарегистрировались у нас?' }] }
   - { name: 'Already installed', translations: [{ code: 'ru', label: 'Уже установлено' }] }
   - { name: 'Alternative text', translations: [{ code: 'ru', label: 'Альтернативный текст' }] }
-  - { name: 'Alternatively, upload file sqldump.sql.php to the var/backup/ sub-directory click on the "Restore from server" button', translations: [{ code: 'ru', label: 'Альтернативный способ: загрузите файл с именем sqldump.sql.php в директорию var/backup/ (поддиректорию директории, в которой установлен LiteCommerce на Веб сервере) и нажмите "Восстановить с сервера". После того, как процесс восстановления завершен, можно удалить файл, нажав  "Удалить SQL файл".' }] }
+  - { name: 'Alternatively, upload file sqldump.sql.php to the var/backup/ sub-directory click on the "Restore from server" button', translations: [{ code: 'ru', label: 'Альтернативный способ: загрузите файл с именем sqldump.sql.php в директорию var/backup/ (поддиректорию директории, в которой установлен LiteCommerce на Веб-сервере) и нажмите "Восстановить с сервера". После того, как процесс восстановления завершен, можно удалить файл, нажав  "Удалить SQL файл".' }] }
   - { name: 'Amount: high to low', translations: [{ code: 'ru', label: 'Количество:по убыванию' }] }
   - { name: 'Amount: low to high', translations: [{ code: 'ru', label: 'Количество:по возрастанию' }] }
   - { name: 'and', translations: [{ code: 'ru', label: 'и' }] }
   - { name: 'Another state', translations: [{ code: 'ru', label: 'Другое' }] }
   - { name: 'Any membership level', translations: [{ code: 'ru', label: 'Любая группа' }] }
-  - { name: 'Any product class', translations: [{ code: 'ru', label: 'Любой класс продуктов' }] }
+  - { name: 'Any product class', translations: [{ code: 'ru', label: 'Любой класс товаров' }] }
   - { name: 'Any zone', translations: [{ code: 'ru', label: 'Любая зона' }] }
   - { name: 'Apply destination', translations: [{ code: 'ru', label: 'Применить адрес' }] }
   - { name: 'Apply price', translations: [{ code: 'ru', label: 'Применить цену' }] }
@@ -220,7 +253,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Back up database', translations: [{ code: 'ru', label: 'Сохранить базу' }] }
   - { name: 'Backup', translations: [{ code: 'ru', label: 'Резервное копирование' }] }
   - { name: 'Backup/Restore', translations: [{ code: 'ru', label: 'Резервное копирование / Восстановление' }] }
-  - { name: 'Based on these patterns, different shipping rate formulas can be defined for different order weight and price ranges and quantities of items. Ranges cannot overlap.', translations: [{ code: 'ru', label: 'Различные варианты стоимости доставки могут быть рассчитаны по формуле на основе приведенных ниже интервалов включающих следующие параметры заказа: вес продуктов, цена продуктов и количество продуктов. Интервалы не могут пересекаться.' }] }
+  - { name: 'Based on these patterns, different shipping rate formulas can be defined for different order weight and price ranges and quantities of items. Ranges cannot overlap.', translations: [{ code: 'ru', label: 'Различные варианты стоимости доставки могут быть рассчитаны по формуле на основе приведенных ниже интервалов, включающих следующие параметры заказа: вес товаров, цены товаров и количество товаров. Интервалы не могут пересекаться.' }] }
   - { name: 'BEGIN - END of TOTAL', translations: [{ code: 'ru', label: '<span class="begin-record-number">{{begin}}</span>&ndash;<span class="end-record-number">{{end}}</span> из <span class="records-count">{{total}}</span>' }] }
   - { name: 'Benchmark completed in ', translations: [{ code: 'ru', label: 'Тест производительности выполнен за' }] }
   - { name: 'Bestsellers', translations: [{ code: 'ru', label: 'Лидеры продаж' }] }
@@ -232,7 +265,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Browse server', translations: [{ code: 'ru', label: 'На сервере' }] }
   - { name: 'Buy more', translations: [{ code: 'ru', label: 'Купить еще' }] }
   - { name: 'by', translations: [{ code: 'ru', label: 'от' }] }
-  - { name: 'Cache rebuild is already started, please wait', translations: [{ code: 'ru', label: 'Перестройка кэша уже запущена, пожалуйста подождите' }] }
+  - { name: 'Cache rebuild is already started, please wait', translations: [{ code: 'ru', label: 'Перестройка кэша уже запущена, пожалуйста, подождите' }] }
   - { name: 'Calculate rates', translations: [{ code: 'ru', label: 'Рассчитать стоимость' }] }
   - { name: 'Can''t connect to the Modules Marketplace server', translations: [{ code: 'ru', label: 'Невозможно подключиться к серверу Маркетплейс' }] }
   - { name: 'Cancel', translations: [{ code: 'ru', label: 'Отмена' }] }
@@ -251,7 +284,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Change payment info', translations: [{ code: 'ru', label: 'Изменить данные плательщика' }] }
   - { name: 'Change shipping info', translations: [{ code: 'ru', label: 'Изменить данные получателя' }] }
   - { name: 'Check all', translations: [{ code: 'ru', label: 'Отметить все' }] }
-  - { name: 'Checking integrity, please wait...', translations: [{ code: 'ru', label: 'Проверка целостности, пожалуйста подождите...' }] }
+  - { name: 'Checking integrity, please wait...', translations: [{ code: 'ru', label: 'Проверка целостности, пожалуйста, подождите...' }] }
   - { name: 'Checkout', translations: [{ code: 'ru', label: 'Оплата' }] }
   - { name: 'Choose file', translations: [{ code: 'ru', label: 'Выберите файл' }] }
   - { name: 'Choose method', translations: [{ code: 'ru', label: 'Выбрать метод' }] }
@@ -298,7 +331,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Declined', translations: [{ code: 'ru', label: 'Отклонен' }] }
   - { name: 'Default', translations: [{ code: 'ru', label: 'По умолчанию' }] }
   - { name: 'Default for customer zone and can not disabled or deleted', translations: [{ code: 'ru', label: 'Зона по умолчанию не может быть отключена или удалена' }] }
-  - { name: 'Default for customer zone and cannot be disabled or deleted', translations: [{ code: 'ru', label: 'Используется по умолчанию для клиентской зоны нельзя отключить или удалить' }] }
+  - { name: 'Default for customer zone and cannot be disabled or deleted', translations: [{ code: 'ru', label: 'Используется по умолчанию для клиентской зоны, нельзя отключить или удалить' }] }
   - { name: 'Default zone (all addresses)', translations: [{ code: 'ru', label: 'Зона по умлчанию (все адреса)' }] }
   - { name: 'Define classes', translations: [{ code: 'ru', label: 'Определить классы' }] }
   - { name: 'Delete', translations: [{ code: 'ru', label: 'Удалить' }] }
@@ -313,7 +346,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Delete this address?', translations: [{ code: 'ru', label: 'Удалить этот адрес?' }] }
   - { name: 'Delivery', translations: [{ code: 'ru', label: 'Доставка' }] }
   - { name: 'Delivery methods', translations: [{ code: 'ru', label: 'Методы доставки' }] }
-  - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: 'ru', label: 'В зависимости от размера фала, импорт может занимать продолжительное время.' }] }
+  - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: 'ru', label: 'В зависимости от размера файла, импорт может занимать продолжительное время.' }] }
   - { name: 'Description', translations: [{ code: 'ru', label: 'Описание' }] }
   - { name: 'Descriptions of various rate types are provided below', translations: [{ code: 'ru', label: 'Описания различных типов ставок приведены ниже:' }] }
   - { name: 'Destination zone', translations: [{ code: 'ru', label: 'Зона назначения' }] }
@@ -346,7 +379,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Enable', translations: [{ code: 'ru', label: 'Включить' }] }
   - { name: 'Enabled', translations: [{ code: 'ru', label: 'Включено' }] }
   - { name: 'enabled', translations: [{ code: 'ru', label: 'включено' }] }
-  - { name: 'Enter a correct email', translations: [{ code: 'ru', label: 'Введите корректный E-mail' }] }
+  - { name: 'Enter a correct email', translations: [{ code: 'ru', label: 'Введите верный E-mail' }] }
   - { name: 'Enter a negative number', translations: [{ code: 'ru', label: 'Введите отрицательное число' }] }
   - { name: 'Enter a number', translations: [{ code: 'ru', label: 'Введите чило' }] }
   - { name: 'Enter a positive number', translations: [{ code: 'ru', label: 'Введите положительное число' }] }
@@ -363,13 +396,13 @@ XLite\Model\LanguageLabel:
   - { name: 'Exception', translations: [{ code: 'ru', label: 'Исключение' }] }
   - { name: 'Expand the functionality of your store by installing and using add-on modules', translations: [{ code: 'ru', label: 'Установите и используйте дополнительные модули, чтобы расширить возможности своего магазина' }] }
   - { name: 'Export', translations: [{ code: 'ru', label: 'Экспорт' }] }
-  - { name: 'Export products', translations: [{ code: 'ru', label: 'Экспорт продуктов' }] }
+  - { name: 'Export products', translations: [{ code: 'ru', label: 'Экспорт товаров' }] }
   - { name: 'Failed', translations: [{ code: 'ru', label: 'Не прошел' }] }
-  - { name: 'Failed to add detailed image', translations: [{ code: 'ru', label: 'Неудалось добавить детальную картинку' }] }
-  - { name: 'Failed to add the attachment', translations: [{ code: 'ru', label: 'Неудалось добавить вложение.' }] }
-  - { name: 'Failed to add the attachment. The file download is forbidden', translations: [{ code: 'ru', label: 'Неудалось добавить вложение. Загрузка файла запрещена.' }] }
+  - { name: 'Failed to add detailed image', translations: [{ code: 'ru', label: 'Не удалось добавить детальную картинку' }] }
+  - { name: 'Failed to add the attachment', translations: [{ code: 'ru', label: 'Не удалось добавить вложение.' }] }
+  - { name: 'Failed to add the attachment. The file download is forbidden', translations: [{ code: 'ru', label: 'Не удалось добавить вложение. Загрузка файла запрещена.' }] }
   - { name: 'Failed/Declined', translations: [{ code: 'ru', label: 'Не прошел/Отклонен' }] }
-  - { name: 'Featured products', translations: [{ code: 'ru', label: 'Рекомендуемые продукты' }] }
+  - { name: 'Featured products', translations: [{ code: 'ru', label: 'Рекомендуемые товары' }] }
   - { name: 'Field is required!', translations: [{ code: 'ru', label: 'Обязательное поле' }] }
   - { name: 'File size exceeds the maximum size', translations: [{ code: 'ru', label: 'Превышен максимально допустимый размер файла {{size}}' }] }
   - { name: 'File title', translations: [{ code: 'ru', label: 'Название файла' }] }
@@ -413,14 +446,14 @@ XLite\Model\LanguageLabel:
   - { name: 'HTTPS check', translations: [{ code: 'ru', label: 'Проверка HTTPS' }] }
   - { name: 'I accept Terms and Conditions', translations: [{ code: 'ru', label: 'Я принимаю <a href="{{URL}}">Уcловия использования</a>' }] }
   - { name: 'Identity', translations: [{ code: 'ru', label: 'Идентификация' }] }
-  - { name: 'If the product is assigned to multiple classes, only the first tax rate with the highest priority will be applied to it.', translations: [{ code: 'ru', label: 'Если продукт входит в несколько классов, только первая ставка налога с наивысшим приоритетом будет применена к нему.' }] }
+  - { name: 'If the product is assigned to multiple classes, only the first tax rate with the highest priority will be applied to it.', translations: [{ code: 'ru', label: 'Если товар входит в несколько классов, только первая ставка налога с наивысшим приоритетом будет применена к нему.' }] }
   - { name: 'If you already have an account, you can authenticate yourself by filling in the form below. The fields which are marked with * are mandatory', translations: [{ code: 'ru', label: 'Если у вас уже есть учетная записть, вы можете подтвердить владение аккаунтом, заполнив форму ниже. Обязательные поля отмечены звездочкой.' }] }
   - { name: 'If you choose the second option, you can download the file from the server later on and delete it from the server by clicking on the ''Delete SQL file'' button.', translations: [{ code: 'ru', label: 'Если вы вибираете второй вариант, вы можете скачать файл с сервера позже и удалить его с сервера, нажав ''Удалить SQL файл''.' }] }
   - { name: 'If you do not have an account, you can easily', translations: [{ code: 'ru', label: 'Если у вас еще нет учетной записи, вы можете легко' }] }
   - { name: 'If you don''t have a moneybookers account yet, please sign up for a free moneybookers account at: http://www.moneybookers.com', translations: [{ code: 'ru', label: 'Если у вас еще нет аккаунта moneybookers, пожалуйста создайте бесплатный аккаунт: http://www.moneybookers.com' }] }
   - { name: 'If you have a license key for a commercial module, you can enter it here to register the purchase of the appropriate module.', translations: [{ code: 'ru', label: 'Если у вас есть лицензионный ключ к коммерческому модулю, введите его здесь для регистрации покупки модуля' }] }
-  - { name: 'If you have a plugin in the .tar format, you can install it by uploading it here', translations: [{ code: 'ru', label: 'Если у вас есть дополнение в .tar формате, вы можете установить его загрузив в этой форме.' }] }
-  - { name: 'If you store product images in the database, they are included in the SQL dump file', translations: [{ code: 'ru', label: 'Если в вашем магазине изображения хранятся в БД, они автоматически включаются в SQL дамп. Если изображения продуктов хранятся в файловой системе, они не входят в дамп. Для создания резервной копии изображений, их нужно скачать непосредственно с сервера.' }] }
+  - { name: 'If you have a plugin in the .tar format, you can install it by uploading it here', translations: [{ code: 'ru', label: 'Если у вас есть дополнение в .tar формате, вы можете установить его загрузив в этой форме' }] }
+  - { name: 'If you store product images in the database, they are included in the SQL dump file', translations: [{ code: 'ru', label: 'Если в вашем магазине изображения хранятся в БД, они автоматически включаются в SQL дамп. Если изображения товаров хранятся в файловой системе, они не входят в дамп. Для создания резервной копии изображений, их нужно скачать непосредственно с сервера.' }] }
   - { name: 'Image', translations: [{ code: 'ru', label: 'Изображение' }] }
   - { name: 'Image border will not be displayed in customer''s frontend', translations: [{ code: 'ru', label: 'Рамка изображенния не будет отображаться в клиентской части магазина' }] }
   - { name: 'Image X', translations: [{ code: 'ru', label: 'Изображение #{{index}}' }] }
@@ -430,7 +463,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Import in progress', translations: [{ code: 'ru', label: 'Выполняется импорт' }] }
   - { name: 'Import mechanism does not know the field of X and it can not be imported', translations: [{ code: 'ru', label: 'Неизвестное поле ''{{name}}'', значения этого поля не могут быть импортированы.' }] }
   - { name: 'Import/Export', translations: [{ code: 'ru', label: 'Импорт/Экспорт' }] }
-  - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: 'ru', label: 'В процессе импорта информация о существующих продуктах будет переписана. Эта операция необратима.' }] }
+  - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: 'ru', label: 'В процессе импорта информация о существующих товарах будет переписана. Эта операция необратима.' }] }
   - { name: 'In category', translations: [{ code: 'ru', label: 'В категории' }] }
   - { name: 'in description', translations: [{ code: 'ru', label: 'в описании' }] }
   - { name: 'In stock', translations: [{ code: 'ru', label: 'В наличии' }] }
@@ -449,7 +482,7 @@ XLite\Model\LanguageLabel:
   - { name: 'invalid module ID passed: "{{moduleId}}"', translations: [{ code: 'ru', label: 'передан неверный ID модуля: "{{moduleId}}"' }] }
   - { name: 'Inventory status', translations: [{ code: 'ru', label: 'Состояние запасов' }] }
   - { name: 'Inventory tracking', translations: [{ code: 'ru', label: 'Контроль остатков' }] }
-  - { name: 'Inventory tracking for this product is', translations: [{ code: 'ru', label: 'Контроль остатков этого продукта' }] }
+  - { name: 'Inventory tracking for this product is', translations: [{ code: 'ru', label: 'Контроль остатков этого товара' }] }
   - { name: 'Invoice X', translations: [{ code: 'ru', label: 'Счет №{{id}}' }] }
   - { name: 'is available', translations: [{ code: 'ru', label: 'доступна' }] }
   - { name: 'Item description', translations: [{ code: 'ru', label: 'Описание' }] }
@@ -519,7 +552,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Module has been successfully installed', translations: [{ code: 'ru', label: 'Модуль успешно установлен' }] }
   - { name: 'module version "{{module_version}}" is not equal to the core one ("{{core_version}}")', translations: [{ code: 'ru', label: 'версия модуля "{{module_version}}" не соответствует версии ядра ("{{core_version}}")' }] }
   - { name: 'Modules Marketplace', translations: [{ code: 'ru', label: 'Маркетплейс' }] }
-  - { name: 'More add-ons', translations: [{ code: 'ru', label: 'Ещё модули' }] }
+  - { name: 'More add-ons', translations: [{ code: 'ru', label: 'Ещё дополнения' }] }
   - { name: 'More details', translations: [{ code: 'ru', label: 'Подробнее' }] }
   - { name: 'Most Popular', translations: [{ code: 'ru', label: 'Наиболее популярные' }] }
   - { name: 'Most Rated', translations: [{ code: 'ru', label: 'Больше всего голосов' }] }
@@ -538,15 +571,15 @@ XLite\Model\LanguageLabel:
   - { name: 'never', translations: [{ code: 'ru', label: 'никогда' }] }
   - { name: 'Never', translations: [{ code: 'ru', label: 'Никогда' }] }
   - { name: 'New access key will also be sent to the Site administrator''s email address', translations: [{ code: 'ru', label: 'Новый код доступа будет также выслан на E-mail адрес администратора магазина' }] }
-  - { name: 'New product class', translations: [{ code: 'ru', label: 'Новый класс продукта' }] }
-  - { name: 'New product has been added successfully', translations: [{ code: 'ru', label: 'Новый продукт успешно добавлен' }] }
+  - { name: 'New product class', translations: [{ code: 'ru', label: 'Новый класс товара' }] }
+  - { name: 'New product has been added successfully', translations: [{ code: 'ru', label: 'Новый товар успешно добавлен' }] }
   - { name: 'New rate', translations: [{ code: 'ru', label: 'Новая ставка' }] }
   - { name: 'New user profile has been registered:', translations: [{ code: 'ru', label: 'Новый пользователь успешно зарегистрирован:' }] }
   - { name: 'New zone has been created successfully', translations: [{ code: 'ru', label: 'Новая зона успешно создана' }] }
   - { name: 'Newest', translations: [{ code: 'ru', label: 'Самые новые' }] }
   - { name: 'Next', translations: [{ code: 'ru', label: 'След' }] }
   - { name: 'Next page', translations: [{ code: 'ru', label: 'Следующая страница' }] }
-  - { name: 'Next product', translations: [{ code: 'ru', label: 'Следующий продукт' }] }
+  - { name: 'Next product', translations: [{ code: 'ru', label: 'Следующий товар' }] }
   - { name: 'No', translations: [{ code: 'ru', label: 'Нет' }] }
   - { name: 'No featured products defined for this category', translations: [{ code: 'ru', label: 'В данной категории нет рекомендуемых товаров' }] }
   - { name: 'No items found.', translations: [{ code: 'ru', label: 'Ничего найдено' }] }
@@ -562,7 +595,7 @@ XLite\Model\LanguageLabel:
   - { name: 'not available for sale', translations: [{ code: 'ru', label: 'не продается' }] }
   - { name: 'Not finished', translations: [{ code: 'ru', label: 'Незавершен' }] }
   - { name: 'Not numeric', translations: [{ code: 'ru', label: 'Не число' }] }
-  - { name: 'not ready to download packs. Please, try again', translations: [{ code: 'ru', label: 'невозможно загрузить пакеты обновления. Попробуйте еще раз' }] }
+  - { name: 'not ready to download packs. Please, try again', translations: [{ code: 'ru', label: 'Невозможно загрузить пакеты обновления. Попробуйте еще раз' }] }
   - { name: 'Note', translations: [{ code: 'ru', label: 'Примечание' }] }
   - { name: 'Notes', translations: [{ code: 'ru', label: 'Примечания' }] }
   - { name: 'of', translations: [{ code: 'ru', label: 'из' }] }
@@ -608,7 +641,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Per weight unit markup ($)', translations: [{ code: 'ru', label: 'Надбавка за единицу веса ($)' }] }
   - { name: 'Percent', translations: [{ code: 'ru', label: 'Процент' }] }
   - { name: 'Percent markup', translations: [{ code: 'ru', label: 'Процентная надбавка' }] }
-  - { name: 'Percent off', translations: [{ code: 'ru', label: 'Процентная скидка' }] }
+  - { name: 'Percent off', translations: [{ code: 'ru', label: 'Скидка' }] }
   - { name: 'Perform order search', translations: [{ code: 'ru', label: 'Поиск заказов' }] }
   - { name: 'Performance', translations: [{ code: 'ru', label: 'Производительность' }] }
   - { name: 'Personal info', translations: [{ code: 'ru', label: 'Персональные данные' }] }
@@ -619,7 +652,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Please enable JavaScript in your web browser.', translations: [{ code: 'ru', label: 'Пожалуйста, включите JavaScript в браузере.' }] }
   - { name: 'Please identify yourself', translations: [{ code: 'ru', label: 'Пожалуйста, войдите в систему' }] }
   - { name: 'Please note that some of these modules are definitely incompatible with the upcoming upgrade and will be disabled in order to prevent the system crash', translations: [{ code: 'ru', label: 'Некоторые модули полностью несовместимы с предстоящим обновлением и будут отключены во избежание отказа системы.' }] }
-  - { name: 'Please run the benchmark test in order to estimate your server performance', translations: [{ code: 'ru', label: 'Пожалуйста запустите тест чтобы оценить производительность вашего сервера' }] }
+  - { name: 'Please run the benchmark test in order to estimate your server performance', translations: [{ code: 'ru', label: 'Пожалуйста, запустите тест, чтобы оценить производительность вашего сервера' }] }
   - { name: 'Please select one', translations: [{ code: 'ru', label: 'Пожалуйста, выберите' }] }
   - { name: 'Please specify a pattern to find the required labels', translations: [{ code: 'ru', label: 'Пожалуйста, введите текст искомой метки' }] }
   - { name: 'Please specify text labels for each language', translations: [{ code: 'ru', label: 'Пожалуйста, задайте метки для каждого языка. Если вы не укажете значение для какого-либо языка, будет использовано значение {{language}} языка.' }] }
@@ -629,7 +662,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Position', translations: [{ code: 'ru', label: 'Позиция' }] }
   - { name: 'Prev', translations: [{ code: 'ru', label: 'Пред' }] }
   - { name: 'Previous page', translations: [{ code: 'ru', label: 'Предыдущая страница' }] }
-  - { name: 'Previous product', translations: [{ code: 'ru', label: 'Предыдущие продукт' }] }
+  - { name: 'Previous product', translations: [{ code: 'ru', label: 'Предыдущие товар' }] }
   - { name: 'Price', translations: [{ code: 'ru', label: 'Цена' }] }
   - { name: 'Price modifier', translations: [{ code: 'ru', label: 'Модификатор цены' }] }
   - { name: 'Price: high to low', translations: [{ code: 'ru', label: 'Цена: по убыванию' }] }
@@ -639,28 +672,28 @@ XLite\Model\LanguageLabel:
   - { name: 'Priority', translations: [{ code: 'ru', label: 'Приоритет' }] }
   - { name: 'Processed', translations: [{ code: 'ru', label: 'Обработан' }] }
   - { name: 'Processed/Completed', translations: [{ code: 'ru', label: 'Обработан/Завершен' }] }
-  - { name: 'Product added to bag', translations: [{ code: 'ru', label: 'Продукт добавлен в корзину' }] }
-  - { name: 'Product class', translations: [{ code: 'ru', label: 'Класс продукта' }] }
-  - { name: 'Product classes', translations: [{ code: 'ru', label: 'Классы продуктов' }] }
-  - { name: 'Product has been added to cart', translations: [{ code: 'ru', label: 'Продукт добавлен в корзину' }] }
-  - { name: 'Product images', translations: [{ code: 'ru', label: 'Изображения продукта' }] }
-  - { name: 'Product info', translations: [{ code: 'ru', label: 'Информация о продукте' }] }
-  - { name: 'Product info has been updated successfully', translations: [{ code: 'ru', label: 'Информация о продукте успешно изменена' }] }
+  - { name: 'Product added to bag', translations: [{ code: 'ru', label: 'Товар добавлен в корзину' }] }
+  - { name: 'Product class', translations: [{ code: 'ru', label: 'Класс товара' }] }
+  - { name: 'Product classes', translations: [{ code: 'ru', label: 'Классы товаров' }] }
+  - { name: 'Product has been added to cart', translations: [{ code: 'ru', label: 'Товар добавлен в корзину' }] }
+  - { name: 'Product images', translations: [{ code: 'ru', label: 'Изображения товара' }] }
+  - { name: 'Product info', translations: [{ code: 'ru', label: 'Информация о товаре' }] }
+  - { name: 'Product info has been updated successfully', translations: [{ code: 'ru', label: 'Информация о товаре успешно изменена' }] }
   - { name: 'Product is out of stock', translations: [{ code: 'ru', label: 'Нет в наличии' }] }
-  - { name: 'Product Name', translations: [{ code: 'ru', label: 'Название продукта' }] }
-  - { name: 'Product name', translations: [{ code: 'ru', label: 'Название продукта' }] }
-  - { name: 'Product on sale', translations: [{ code: 'ru', label: 'Продукт на распродаже' }] }
-  - { name: 'Product options', translations: [{ code: 'ru', label: 'Опции продукта' }] }
-  - { name: 'Product page title', translations: [{ code: 'ru', label: 'Заголовок страницы продукта' }] }
+  - { name: 'Product Name', translations: [{ code: 'ru', label: 'Название товара' }] }
+  - { name: 'Product name', translations: [{ code: 'ru', label: 'Название товара' }] }
+  - { name: 'Product on sale', translations: [{ code: 'ru', label: 'Товар на распродаже' }] }
+  - { name: 'Product options', translations: [{ code: 'ru', label: 'Опции товара' }] }
+  - { name: 'Product page title', translations: [{ code: 'ru', label: 'Заголовок страницы товара' }] }
   - { name: 'Product prices are defined including this tax calculated for', translations: [{ code: 'ru', label: 'Цены заданы с учетом налога, расчитанного для' }] }
-  - { name: 'Product SKU', translations: [{ code: 'ru', label: 'Код продукта' }] }
+  - { name: 'Product SKU', translations: [{ code: 'ru', label: 'Код товара' }] }
   - { name: 'Product Title', translations: [{ code: 'ru', label: 'Заголовок' }] }
-  - { name: 'Products', translations: [{ code: 'ru', label: 'Продукты' }] }
-  - { name: 'Products in bag', translations: [{ code: 'ru', label: 'Продуктов в корзине' }] }
-  - { name: 'Products with low inventory', translations: [{ code: 'ru', label: 'Продуктов с маленьким остатком' }] }
+  - { name: 'Products', translations: [{ code: 'ru', label: 'Товары' }] }
+  - { name: 'Products in bag', translations: [{ code: 'ru', label: 'Товары в корзине' }] }
+  - { name: 'Products with low inventory', translations: [{ code: 'ru', label: 'Товаров с маленьким остатком' }] }
   - { name: 'Profile has been created successfully', translations: [{ code: 'ru', label: 'Профиль успешно создан' }] }
   - { name: 'Profile has been deleted successfully', translations: [{ code: 'ru', label: 'Профиль успешно создан' }] }
-  - { name: 'Profile has been updated successfully', translations: [{ code: 'ru', label: 'Данные профайла успешно обновлены' }] }
+  - { name: 'Profile has been updated successfully', translations: [{ code: 'ru', label: 'Данные профиля успешно обновлены' }] }
   - { name: 'Profile settings', translations: [{ code: 'ru', label: 'Параметры профиля' }] }
   - { name: 'Properties', translations: [{ code: 'ru', label: 'Свойства' }] }
   - { name: 'proxy', translations: [{ code: 'ru', label: 'HTTPS прокси' }] }
@@ -685,12 +718,12 @@ XLite\Model\LanguageLabel:
   - { name: 'Registered', translations: [{ code: 'ru', label: 'Зарегистрирован' }] }
   - { name: 'Remove', translations: [{ code: 'ru', label: 'Удалить' }] }
   - { name: 'required', translations: [{ code: 'ru', label: 'обязательно' }] }
-  - { name: 'Required field X is not defined or empty', translations: [{ code: 'ru', label: 'Ошибка создания продукта. Обязательное поле ''{{name}}'' не определено или не заполено.' }] }
+  - { name: 'Required field X is not defined or empty', translations: [{ code: 'ru', label: 'Ошибка создания товара. Обязательное поле ''{{name}}'' не определено или не заполено.' }] }
   - { name: 'Rerun benchmark', translations: [{ code: 'ru', label: 'Перезапустить тест' }] }
   - { name: 'Restore', translations: [{ code: 'ru', label: 'Восстановление' }] }
   - { name: 'Restore database', translations: [{ code: 'ru', label: 'Восстановить базу' }] }
   - { name: 'Restore from server', translations: [{ code: 'ru', label: 'Восстановить с сервера' }] }
-  - { name: 'Return to admin interface.', translations: [{ code: 'ru', label: 'Вернуться в панель администрирования.' }] }
+  - { name: 'Return to admin interface.', translations: [{ code: 'ru', label: 'Вернуться в панель администрирования' }] }
   - { name: 'Review statistics on various aspects of your store''s operation', translations: [{ code: 'ru', label: 'Обзор статистических данных о различных аспектах работы магазина' }] }
   - { name: 'Root category', translations: [{ code: 'ru', label: 'Главная категория' }] }
   - { name: 'Root Level', translations: [{ code: 'ru', label: 'Корневой уровень' }] }
@@ -699,7 +732,8 @@ XLite\Model\LanguageLabel:
   - { name: 'Safe mode', translations: [{ code: 'ru', label: 'Безопасный режим' }] }
   - { name: 'Safe mode access key', translations: [{ code: 'ru', label: 'Ключ доступа к безопасному режиму' }] }
   - { name: 'Sale', translations: [{ code: 'ru', label: 'Распродажа' }] }
-  - { name: 'Sale price', translations: [{ code: 'ru', label: 'Цена на распродаже' }] }
+  - { name: 'sale', translations: [{ code: 'ru', label: 'Распродажа' }] }
+  - { name: 'Sale price', translations: [{ code: 'ru', label: 'Цена' }] }
   - { name: 'Sales', translations: [{ code: 'ru', label: 'Продажи' }] }
   - { name: 'Sales tax', translations: [{ code: 'ru', label: 'Налог с продаж' }] }
   - { name: 'Save', translations: [{ code: 'ru', label: 'Сохранить' }] }
@@ -708,11 +742,11 @@ XLite\Model\LanguageLabel:
   - { name: 'Save zone details', translations: [{ code: 'ru', label: 'Сохранить данные зоны' }] }
   - { name: 'Search', translations: [{ code: 'ru', label: 'Поиск' }] }
   - { name: 'Search for orders', translations: [{ code: 'ru', label: 'Поиск заказов' }] }
-  - { name: 'Search for products', translations: [{ code: 'ru', label: 'Поиск продуктов' }] }
+  - { name: 'Search for products', translations: [{ code: 'ru', label: 'Поиск товаров' }] }
   - { name: 'Search for users', translations: [{ code: 'ru', label: 'Поиск пользователей' }] }
   - { name: 'Search for users that are', translations: [{ code: 'ru', label: 'Поиск пользователей, которые' }] }
   - { name: 'Search in subcategories', translations: [{ code: 'ru', label: 'Включая подкатегории' }] }
-  - { name: 'Search product', translations: [{ code: 'ru', label: 'Продукты' }] }
+  - { name: 'Search product', translations: [{ code: 'ru', label: 'Товары' }] }
   - { name: 'Search profiles', translations: [{ code: 'ru', label: 'Пользователи' }] }
   - { name: 'Search result', translations: [{ code: 'ru', label: 'Результаты поиска' }] }
   - { name: 'Search results', translations: [{ code: 'ru', label: 'Результаты поиска' }] }
@@ -723,7 +757,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Select language to edit', translations: [{ code: 'ru', label: 'Выберите язык для редактирования' }] }
   - { name: 'Select one', translations: [{ code: 'ru', label: 'Выбрать...' }] }
   - { name: 'Select one...', translations: [{ code: 'ru', label: 'Выбрать...' }] }
-  - { name: 'Select the membership level and area. for which product prices, including VAT, are defined by the shop administrator', translations: [{ code: 'ru', label: 'Выберите группу и зону для которых цены включая НДС задаются администратором' }] }
+  - { name: 'Select the membership level and area. for which product prices, including VAT, are defined by the shop administrator', translations: [{ code: 'ru', label: 'Выберите группу и зону, для которой цены, включающие НДС, задаются администратором. Включенный НДС будет вычтен из цены для клиентов из других зон или входящих в группы, отличные от указанных.<br /><br />Если цены заданы без НДС, задайте группу и зону с 0% НДС ниже.' }] }
   - { name: 'Set', translations: [{ code: 'ru', label: 'Выбрано' }] }
   - { name: 'Set the sale price', translations: [{ code: 'ru', label: 'Установить цену распродажи' }] }
   - { name: 'Set this language as default for customer zone', translations: [{ code: 'ru', label: 'Сделать стандартным языком клиентской зоны' }] }
@@ -762,7 +796,7 @@ XLite\Model\LanguageLabel:
   - { name: 'SKU: z-a', translations: [{ code: 'ru', label: 'Код: я-а' }] }
   - { name: 'SMTP server', translations: [{ code: 'ru', label: 'SMTP сервер' }] }
   - { name: 'Soft reset URL (disables only unsafe modules and runs application)', translations: [{ code: 'ru', label: 'Мягкий сброс URL (выключает только небезопасные модули и запускает приложение)' }] }
-  - { name: 'Some products could have been imported incorrectly', translations: [{ code: 'ru', label: 'Некоторые продукты могли быть импортированы некорректно. Пожалуйста, проверте каталог. Найдите продукт по ID в файле лога импорта, доступного по указанной ссылке.' }] }
+  - { name: 'Some products could have been imported incorrectly', translations: [{ code: 'ru', label: 'Некоторые товары могли быть импортированы некорректно. Пожалуйста, проверьте каталог. Найдите товар по ID в файле лога импорта, доступного по указанной ссылке.' }] }
   - { name: 'Sort by', translations: [{ code: 'ru', label: 'Сортировать по' }] }
   - { name: 'Specified e-mail address is already used by other user.', translations: [{ code: 'ru', label: 'Указанный email адрес уже используется другим пользователем.' }] }
   - { name: 'State', translations: [{ code: 'ru', label: 'Штат' }] }
@@ -780,9 +814,9 @@ XLite\Model\LanguageLabel:
   - { name: 'Substring', translations: [{ code: 'ru', label: 'Подстрока' }] }
   - { name: 'Subtotal', translations: [{ code: 'ru', label: 'Сумма' }] }
   - { name: 'Subtotal range', translations: [{ code: 'ru', label: 'Интервал сумм' }] }
-  - { name: 'Successfully imported X new products', translations: [{ code: 'ru', label: 'Успешно импортировано {{new}} новых продуктов' }] }
-  - { name: 'Successfully imported X new products and upgraded Y old products', translations: [{ code: 'ru', label: 'Успешно импотировано {{new}} новых продуктов и обновлено {{old}} существующих' }] }
-  - { name: 'Successfully upgraded Y old products', translations: [{ code: 'ru', label: 'Успешно обновлено {{old}} существующих продуктов' }] }
+  - { name: 'Successfully imported X new products', translations: [{ code: 'ru', label: 'Успешно импортировано {{new}} новых товаров' }] }
+  - { name: 'Successfully imported X new products and upgraded Y old products', translations: [{ code: 'ru', label: 'Успешно импотировано {{new}} новых товаров и обновлено {{old}} существующих' }] }
+  - { name: 'Successfully upgraded Y old products', translations: [{ code: 'ru', label: 'Успешно обновлено {{old}} существующих товаров' }] }
   - { name: 'Table', translations: [{ code: 'ru', label: 'Таблица' }] }
   - { name: 'Tax', translations: [{ code: 'ru', label: 'Налог' }] }
   - { name: 'Tax disabled', translations: [{ code: 'ru', label: 'Выключен' }] }
@@ -805,14 +839,14 @@ XLite\Model\LanguageLabel:
   - { name: 'Thank you for your order', translations: [{ code: 'ru', label: 'Благодарим вас за заказ' }] }
   - { name: 'The attachment has been added successfully', translations: [{ code: 'ru', label: 'Прикрепляемый файл успешно добавлен' }] }
   - { name: 'The benchmark evaluates server environment', translations: [{ code: 'ru', label: 'Тест производительности оценивает серверную инфраструктуру, а именно:<br /> 1. Файловую подсистему - скорость чтения и записи. <br /> 2. Сервер баз данных - скорость вычислений, скорость чтения и записи данных. <br /> 3. Вычислительную мощность - скорость вычислений и обмена данными в памяти. <br /> <span>Общее время тестирования складывается из времени, затраченного на каждый их этих тестов. </span>' }] }
-  - { name: 'The changes will be applied to all selected products', translations: [{ code: 'ru', label: 'Изменения будут применены ко всем выделенным продуктам' }] }
+  - { name: 'The changes will be applied to all selected products', translations: [{ code: 'ru', label: 'Изменения будут применены ко всем выделенным товарам' }] }
   - { name: 'The confirmation URL link was mailed to email', translations: [{ code: 'ru', label: 'Для подтверждения перейдите по ссылке (URL), отправленной вам на {{email}}' }] }
   - { name: 'The default interface language cannot be disabled', translations: [{ code: 'ru', label: 'Язык интерфейса, используемый по умолчанию, не может быть отключен' }] }
   - { name: 'The detailed image has been added successfully', translations: [{ code: 'ru', label: 'Детальное изображение успешно добавлено' }] }
   - { name: 'The detailed image has been deleted', translations: [{ code: 'ru', label: 'Детальное изображение успешно удалено' }] }
   - { name: 'The detailed images have been updated successfully', translations: [{ code: 'ru', label: 'Детальное изображение успешно обновлено' }] }
   - { name: 'The edited language has not been found', translations: [{ code: 'ru', label: 'Редактируемый язык не найден' }] }
-  - { name: 'The email with your account information was mailed to email', translations: [{ code: 'ru', label: 'Информацией об аккаунте была выслана на {{email}}. Необходимо войти в систему для проверки полученной информации.' }] }
+  - { name: 'The email with your account information was mailed to email', translations: [{ code: 'ru', label: 'Информация об аккаунте была выслана на {{email}}. Необходимо войти в систему для проверки полученной информации.' }] }
   - { name: 'The exceptions have been updated successfully', translations: [{ code: 'ru', label: 'Исключения успешно обновлены' }] }
   - { name: 'The file was not loaded because of a failure on the server', translations: [{ code: 'ru', label: 'Файл не загружен из-за ошибки на сервере' }] }
   - { name: 'The following add-on(s) must be enabled', translations: [{ code: 'ru', label: 'Следующие модули должны быть включены' }] }
@@ -834,10 +868,10 @@ XLite\Model\LanguageLabel:
   - { name: 'The module to uninstall has not been found', translations: [{ code: 'ru', label: 'Модуль, который вы пытаетесь удалить, не найден' }] }
   - { name: 'The modules have been updated', translations: [{ code: 'ru', label: 'Модуль успешно обновлен' }] }
   - { name: 'The name of the edited language in the default application language has not been specified', translations: [{ code: 'ru', label: 'Имя редактируемого языка не указано в стандартном языке приложения' }] }
-  - { name: 'The product option group has been added successfully', translations: [{ code: 'ru', label: 'Группа опций продукта успешно добавлена' }] }
-  - { name: 'The product option group has been updated successfully', translations: [{ code: 'ru', label: 'Группа опций продукта успешно обновлена' }] }
-  - { name: 'The product option groups have been updated successfully', translations: [{ code: 'ru', label: 'Группы опций продукта успешно обновлены' }] }
-  - { name: 'The product option groups have not been successfully updated', translations: [{ code: 'ru', label: 'Группа опций продукта не была обновлена' }] }
+  - { name: 'The product option group has been added successfully', translations: [{ code: 'ru', label: 'Группа опций товара успешно добавлена' }] }
+  - { name: 'The product option group has been updated successfully', translations: [{ code: 'ru', label: 'Группа опций товара успешно обновлена' }] }
+  - { name: 'The product option groups have been updated successfully', translations: [{ code: 'ru', label: 'Группы опций товара успешно обновлены' }] }
+  - { name: 'The product option groups have not been successfully updated', translations: [{ code: 'ru', label: 'Группа опций товара не была обновлена' }] }
   - { name: 'The requested page could not be found.', translations: [{ code: 'ru', label: 'Запрошенная страница не найдена' }] }
   - { name: 'The restoration procedure is irreversible and erases all data tables from your store database. It is highly recommended that you back your present database data up before restoring one of the previous states from a back-up.', translations: [{ code: 'ru', label: 'Процедура восстановления необратима. Все текущие данные будут стерты и перезаписаны данными из архива. Настоятельно рекомендуется создать резервную копию текущей базы данных до начала процесса восстановления.' }] }
   - { name: 'The same as shipping', translations: [{ code: 'ru', label: 'Совпадает с адресом получателя' }] }
@@ -868,7 +902,7 @@ XLite\Model\LanguageLabel:
   - { name: 'The X language has been disabled successfully', translations: [{ code: 'ru', label: '{{language}} язык успешно отключен' }] }
   - { name: 'The X language has been enabled successfully', translations: [{ code: 'ru', label: '{{language}} язык успешно включен' }] }
   - { name: 'The X module has been disabled in an abnormal way', translations: [{ code: 'ru', label: 'Модуль {{module}} отключен аварийно' }] }
-  - { name: 'The X module has been installed incorrectly. Please see the logs for more information', translations: [{ code: 'ru', label: 'Модуль {{module}} установлен неправильно. Подробной информацию можно найти в логе установки' }] }
+  - { name: 'The X module has been installed incorrectly. Please see the logs for more information', translations: [{ code: 'ru', label: 'Модуль {{module}} установлен неправильно. Подробную информацию можно найти в логе установки' }] }
   - { name: 'The X module has been installed successfully', translations: [{ code: 'ru', label: 'Модуль {{module}} успешно установлен' }] }
   - { name: 'The X module has been installed with errors: the DB has not been modified correctly', translations: [{ code: 'ru', label: 'Модуль {{module}} установлен с ошибками: БД может содержать ошибки' }] }
   - { name: 'The X module has been installed, but the module has a wrong module control class', translations: [{ code: 'ru', label: 'Модуль {{module}} установлен, но класс контроллера модуля неверный' }] }
@@ -887,12 +921,12 @@ XLite\Model\LanguageLabel:
   - { name: 'This component is automatically calculated by shipping add-on module and cannot be edited', translations: [{ code: 'ru', label: 'Данный компонент автоматически расчитывается модулями доставки и не может быть изменен.' }] }
   - { name: 'This email address is used for an existing account. Enter another email address or sign in', translations: [{ code: 'ru', label: 'Указанный e-mail адрес уже зарегистрирован. Пожалуйста, укажите другой адрес или <a href="{{URL}}" class="log-in">войдите в систему</a>' }] }
   - { name: 'This field is required', translations: [{ code: 'ru', label: 'Обязательное поле' }] }
-  - { name: 'This is a default zone which covers all addresses. It''s impossible to edit this zone''s countries, states etc', translations: [{ code: 'ru', label: 'Это зона используется по умолчанию и содержит все возможные адреса. Страны и штаты входящие в эту зону изменить нельзя.' }] }
-  - { name: 'This is a demo store with powerful LiteCommerce engine inside', translations: [{ code: 'ru', label: 'Это демонстрационный магазин созданный на платформе LiteCommerce, основаной на технологии шаблонов PHP5, с интегрированной базой данных SQL.' }] }
+  - { name: 'This is a default zone which covers all addresses. It''s impossible to edit this zone''s countries, states etc', translations: [{ code: 'ru', label: 'Это зона используется по умолчанию и содержит все возможные адреса. Страны и штаты, входящие в эту зону, изменить нельзя.' }] }
+  - { name: 'This is a demo store with powerful LiteCommerce engine inside', translations: [{ code: 'ru', label: 'Это демонстрационный магазин, созданный на платформе LiteCommerce, основаной на технологии шаблонов PHP5, с интегрированной базой данных SQL.' }] }
   - { name: 'This month', translations: [{ code: 'ru', label: 'За этот месяц' }] }
-  - { name: 'This product has been added to your bag', translations: [{ code: 'ru', label: 'Этот продукт добавлен в <a href="{{href}}">вашу корзину</a>' }] }
-  - { name: 'This product is out of stock or it has been disabled for sale', translations: [{ code: 'ru', label: '(!) Продукт отсутствует на складе или снят с продажи.' }] }
-  - { name: 'This section displays 10 top-selling products for today, this week and this month', translations: [{ code: 'ru', label: 'Данная секция представляет 10 наиболее часто покупаемых продуктов на сегодняшний день, за текущую неделю и месяц.' }] }
+  - { name: 'This product has been added to your bag', translations: [{ code: 'ru', label: 'Этот товар добавлен в <a href="{{href}}">вашу корзину</a>' }] }
+  - { name: 'This product is out of stock or it has been disabled for sale', translations: [{ code: 'ru', label: '(!) Товар отсутствует на складе или снят с продажи.' }] }
+  - { name: 'This section displays 10 top-selling products for today, this week and this month', translations: [{ code: 'ru', label: 'Данная секция представляет 10 наиболее часто покупаемых товаров на сегодняшний день, за текущую неделю и месяц.' }] }
   - { name: 'This section displays order placement statistics', translations: [{ code: 'ru', label: 'В данной секции показана статистика размещения заказов.' }] }
   - { name: 'This site requires JavaScript to function properly.', translations: [{ code: 'ru', label: 'Для корректной работы данного сайта необходим JavaScript. Пожалуйста, включите поддержку JavaScript в своем браузере.' }] }
   - { name: 'This tax is calculated based on customer''s billing address', translations: [{ code: 'ru', label: 'Налоги рассчитаны по адресу плательщика' }] }
@@ -903,19 +937,19 @@ XLite\Model\LanguageLabel:
   - { name: 'Thumbnail', translations: [{ code: 'ru', label: 'Мини-изображение' }] }
   - { name: 'Title', translations: [{ code: 'ru', label: 'Обращение' }] }
   - { name: 'To fix this problem, do the following: 3 points', translations: [{ code: 'ru', label: 'Для решения данной проблемы:<ul><li>убедитесь, что хостинг поддерживает и предоставляет соединение по протоколу HTTPS;</li><li>проверте параметры HTTPS (параметр "https_host" в файле "etc/config.php" должен иметь правильное значение);</li><li>обновите эту страницу.</li></ul>' }] }
-  - { name: 'To get the format of the import data you can export your products to a file', translations: [{ code: 'ru', label: 'Определить формат файла импорта можно по файлу экспорта, <a href="{{url}}">экспортировав продукты</a> в файл и рассмотрев его формат. ' }] }
-  - { name: 'To place the order please accept Terms and Conditions', translations: [{ code: 'ru', label: 'Чтобы отправить заказ, необходимо принять Условия использования' }] }
+  - { name: 'To get the format of the import data you can export your products to a file', translations: [{ code: 'ru', label: 'Определить формат файла импорта можно по файлу экспорта, <a href="{{url}}">экспортировав товары</a> в файл и рассмотрев его формат' }] }
+  - { name: 'To place the order please accept Terms and Conditions', translations: [{ code: 'ru', label: 'Чтобы разместить заказ, необходимо принять Условия использования' }] }
   - { name: 'To place the order please complete the previous steps first', translations: [{ code: 'ru', label: 'Чтобы продолжить оформление заказа, необходимо завершить предыдущие шаги' }] }
   - { name: 'To recover your password, please type in the valid e-mail address you use as a login', translations: [{ code: 'ru', label: 'Для восстановления пароля, пожалуйста, введите свой e-mail адрес, используемый для входа в аккаунт.' }] }
   - { name: 'To restore the images stored in the file system you have to copy them from the archive to the LiteCommerce catalog', translations: [{ code: 'ru', label: 'Для восстановления изображений, хранящихся в файловой системе, необходимо скопировать их из архива в каталог LiteCommerce, принимая во внимание структуру каталога.' }] }
   - { name: 'Today', translations: [{ code: 'ru', label: 'Сегодня' }] }
   - { name: 'Top sellers', translations: [{ code: 'ru', label: 'Лидеры продаж' }] }
-  - { name: 'Top X products', translations: [{ code: 'ru', label: 'Топ {{count}} продуктов' }] }
+  - { name: 'Top X products', translations: [{ code: 'ru', label: 'Топ {{count}} товаров' }] }
   - { name: 'Total', translations: [{ code: 'ru', label: 'Всего' }] }
   - { name: 'translate to', translations: [{ code: 'ru', label: 'перевести на' }] }
   - { name: 'Trying to access the shop at X', translations: [{ code: 'ru', label: 'Попытка соединения с магазином <a href="{{url}}">{{url}}</a> ...' }] }
   - { name: 'trying to install a non-marketplace module: "{{name}}"', translations: [{ code: 'ru', label: 'попытка установить непроверенный модуль: "{{name}}"' }] }
-  - { name: 'trying to unpack non-downloaded archives', translations: [{ code: 'ru', label: 'попытка распаковать незагруженых архивов' }] }
+  - { name: 'trying to unpack non-downloaded archives', translations: [{ code: 'ru', label: 'попытка распаковать незагруженные архивы' }] }
   - { name: 'Type', translations: [{ code: 'ru', label: 'Тип' }] }
   - { name: 'U.S.P.S. settings', translations: [{ code: 'ru', label: 'Параметры U.S.P.S.' }] }
   - { name: 'unable to add module entry to the installation list: "{{name}}"', translations: [{ code: 'ru', label: 'невозможно добавить модуль в список установки: "{{name}}"' }] }
@@ -933,14 +967,14 @@ XLite\Model\LanguageLabel:
   - { name: 'Update', translations: [{ code: 'ru', label: 'Обновить' }] }
   - { name: 'Update exceptions', translations: [{ code: 'ru', label: 'Обновить исключения' }] }
   - { name: 'Update module', translations: [{ code: 'ru', label: 'Обновить модуль' }] }
-  - { name: 'Update product', translations: [{ code: 'ru', label: 'Обновить продукт' }] }
+  - { name: 'Update product', translations: [{ code: 'ru', label: 'Обновить товар' }] }
   - { name: 'Update profile', translations: [{ code: 'ru', label: 'Обновить профиль' }] }
   - { name: 'Updates are available', translations: [{ code: 'ru', label: 'Доступны обновления' }] }
   - { name: 'Updates for the LC core and/or installed modules are available', translations: [{ code: 'ru', label: 'Доступны обновления для модулей и/или ядра LC' }] }
-  - { name: 'Updates for your version', translations: [{ code: 'ru', label: 'Обновления для вашей версии' }] }
+  - { name: 'Updates for your version ({{version}})', translations: [{ code: 'ru', label: 'Обновления для вашей версии ({{version}})' }] }
   - { name: 'Upgrade', translations: [{ code: 'ru', label: 'Обновление' }] }
   - { name: 'Upgrade core', translations: [{ code: 'ru', label: 'Обновление ядра' }] }
-  - { name: 'Upgrade to version', translations: [{ code: 'ru', label: 'Обновить до версии' }] }
+  - { name: 'Upgrade to version {{version}}', translations: [{ code: 'ru', label: 'Обновить до версии {{version}}' }] }
   - { name: 'Upload', translations: [{ code: 'ru', label: 'Загрузить' }] }
   - { name: 'Upload add-on', translations: [{ code: 'ru', label: 'Загрузить дополнение' }] }
   - { name: 'Upload and restore', translations: [{ code: 'ru', label: 'Загрузить и восстановить' }] }
@@ -950,11 +984,11 @@ XLite\Model\LanguageLabel:
   - { name: 'Use this component to add an extra charge for every item ordered.', translations: [{ code: 'ru', label: 'Используйте этот компонент для добавления наценки для каждой единицы заказываемого товара.' }] }
   - { name: 'Use this component to adjust shipping rates according to order subtotals.', translations: [{ code: 'ru', label: 'Используйте этот компонент для изменения стоимости доставки в зависимости от суммы заказа.' }] }
   - { name: 'Use this component to specify weight-based charges.', translations: [{ code: 'ru', label: 'Используйте этот компонент для задания наценок в зависимости от веса заказа.' }] }
-  - { name: 'Use this section to back the database of your online store up. Please note that the database backup procedure can take up to several minutes.', translations: [{ code: 'ru', label: 'Используйте данную секцию для резервного копирования БД магазина. Примечание: созданиt резервной копии БД может занять продолжительное время.' }] }
-  - { name: 'Use this section to define shipping rates calculation rules', translations: [{ code: 'ru', label: 'Используйте эту секцию, чтобы определить правила расчета стоимости доставки.' }] }
+  - { name: 'Use this section to back the database of your online store up. Please note that the database backup procedure can take up to several minutes.', translations: [{ code: 'ru', label: 'Используйте данную секцию для резервного копирования БД магазина. Примечание: создание резервной копии БД может занять продолжительное время.' }] }
+  - { name: 'Use this section to define shipping rates calculation rules', translations: [{ code: 'ru', label: 'Используйте данную секцию, чтобы определить правила расчета стоимости доставки.' }] }
   - { name: 'Use this section to define shipping zones.', translations: [{ code: 'ru', label: 'Используйте данную секцию для определения зон доставки.' }] }
-  - { name: 'Use this section to define your store''s shipping methods.', translations: [{ code: 'ru', label: 'Используйте эту секцию для определения методов доставки, доступных в магазине.' }] }
-  - { name: 'Use this section to manage the list of existing countries. This list is used in the shipping settings and calculations, and in the registration form at the Customer Front-end.', translations: [{ code: 'ru', label: 'Используйте эту секцию для управления списком стран. Этот список используется при настройке способов доставки, расчете налогов, а так же в регистрационной форме магазина.' }] }
+  - { name: 'Use this section to define your store''s shipping methods.', translations: [{ code: 'ru', label: 'Используйте данную секцию для определения методов доставки, доступных в магазине.' }] }
+  - { name: 'Use this section to manage the list of existing countries. This list is used in the shipping settings and calculations, and in the registration form at the Customer Front-end.', translations: [{ code: 'ru', label: 'Используйте данную секцию для управления списком стран. Этот список используется при настройке способов доставки, расчете налогов, а так же в регистрационной форме магазина.' }] }
   - { name: 'Use this section to manage the lists of counties, provinces, regions and states of different countries. The lists are used in shipping settings and calculations, and in the registration form at the Customer Front-end.', translations: [{ code: 'ru', label: 'Используйте эту секция для управления списками графств, провинций, регионов и штатов разных стран. Этои списки используются при настройке способов доставки, расчете налогов, а так же в регистрационной форме магазина.' }] }
   - { name: 'Use this section to restore the database of your online store. Please note that the database restoration procedure can take up to several minutes', translations: [{ code: 'ru', label: 'Используйте данную секцию для восстановления БД магазина. Примечание: процедура восстановления может занять продолжительное время' }] }
   - { name: 'Use this section to review the list of existing membership levels and add new ones', translations: [{ code: 'ru', label: 'Используйте данную секцию для просмотра существующих и добавления новых групп' }] }
@@ -981,7 +1015,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Weight range', translations: [{ code: 'ru', label: 'Весовой диапазон' }] }
   - { name: 'Welcome to LiteCommerce', translations: [{ code: 'ru', label: 'Добро пожаловать в LiteCommerce' }] }
   - { name: 'What is benchmark?', translations: [{ code: 'ru', label: 'Что такое тест производительности?' }] }
-  - { name: 'When the export is completed, you will be prompted to download the product data file', translations: [{ code: 'ru', label: 'По завершении процесса экспортирования, вам будет предложено скачать файл с данными о продуктах' }] }
+  - { name: 'When the export is completed, you will be prompted to download the product data file', translations: [{ code: 'ru', label: 'По завершении процесса экспортирования, вам будет предложено скачать файл с данными о товарах' }] }
   - { name: 'Wrong method_id specifed', translations: [{ code: 'ru', label: 'Не выбран метод' }] }
   - { name: 'X bytes', translations: [{ code: 'ru', label: '{{value}} байт' }] }
   - { name: 'X days', translations: [{ code: 'ru', label: '{{days}} дней' }] }
@@ -992,7 +1026,7 @@ XLite\Model\LanguageLabel:
   - { name: 'X item(s)', translations: [{ code: 'ru', label: '{{count}} элемент(ов)' }] }
   - { name: 'X items', translations: [{ code: 'ru', label: '{{count}} элементов' }] }
   - { name: 'X items available', translations: [{ code: 'ru', label: '{{count}} доступно' }] }
-  - { name: 'X items in bag', translations: [{ code: 'ru', label: '{{count}} продуктов в корзине' }] }
+  - { name: 'X items in bag', translations: [{ code: 'ru', label: '{{count}} товара(ов) в корзине' }] }
   - { name: 'X kB', translations: [{ code: 'ru', label: '{{value}} КБ' }] }
   - { name: 'X labels', translations: [{ code: 'ru', label: '{{language}} метки' }] }
   - { name: 'X Language (Code: Y)', translations: [{ code: 'ru', label: '{{language}} Язык (Код: {{code}})' }] }
@@ -1000,8 +1034,8 @@ XLite\Model\LanguageLabel:
   - { name: 'X minutes', translations: [{ code: 'ru', label: '{{minutes}} минут' }] }
   - { name: 'X module settings', translations: [{ code: 'ru', label: '{{name}} ({{author}}) параметры модуля' }] }
   - { name: 'X months', translations: [{ code: 'ru', label: '{{months}} месяцев' }] }
-  - { name: 'X orders', translations: [{ code: 'ru', label: '<span>{{count}}</span> заказов' }] }
-  - { name: 'X products found', translations: [{ code: 'ru', label: '{{count}} продуктов найдено' }] }
+  - { name: 'X orders', translations: [{ code: 'ru', label: '<span>{{count}}</span> заказ(ов)' }] }
+  - { name: 'X products found', translations: [{ code: 'ru', label: '{{count}} товаров найдено' }] }
   - { name: 'X results found', translations: [{ code: 'ru', label: '{{count}} результатов найдено' }] }
   - { name: 'X seconds', translations: [{ code: 'ru', label: '{{seconds}} секунд' }] }
   - { name: 'X years', translations: [{ code: 'ru', label: '{{years}} год/лет' }] }
@@ -1013,15 +1047,15 @@ XLite\Model\LanguageLabel:
   - { name: 'Yes', translations: [{ code: 'ru', label: 'Да' }] }
   - { name: 'You are going to delete the X language', translations: [{ code: 'ru', label: 'Вы собираетесь удалить {{language}} язык. Эта операция необратима. Вы уверены, что хотите продолжить?' }] }
   - { name: 'You can choose if to download your database data', translations: [{ code: 'ru', label: 'Вы можете скачать базу данных (SQL дамп), непосредственно на свой локальный компьютер, нажав кнопку "Скачать SQL файл", или сохранить базу данных в файл на веб-сервере ("vаг/backup/sqldump.sql.php"), нажав кнопку "Создать SQL файл".<br />Если вы выбираете второй вариант, вы можете скачать файл с сервера позже и удалить его с сервера, нажав кнопку "Удалить SQL файл".' }] }
-  - { name: 'You can upload the database data directly from your local computer', translations: [{ code: 'ru', label: 'Вы можете загрузить базу данных непосредственно со своего локального компьютера, нажав кнопку "Обзор", выбрав файл дампа SQL и нажав кнопку "Загрузка и восстановление". Хотя этот метод удобнеев, он имеет ограничение по размеру файла {{N}}.' }] }
+  - { name: 'You can upload the database data directly from your local computer', translations: [{ code: 'ru', label: 'Вы можете загрузить базу данных непосредственно со своего локального компьютера, нажав кнопку "Обзор", выбрав файл дампа SQL и нажав кнопку "Загрузка и восстановление". Хотя этот метод удобнее, он имеет ограничение по размеру файла {{N}}.' }] }
   - { name: 'You have selected to delete your profile. Please, confirm you want to proceed', translations: [{ code: 'ru', label: 'Вы собираетесь удалить свой профиль. Пожалуйста, подтвердите удаление.' }] }
   - { name: 'You need Phar extension for PHP on your server to download modules from Modules Marketplace', translations: [{ code: 'ru', label: 'Вам нужно установить расширение Phar для PHP на вашем сервере чтобы устанавливать дополнения с Маркетплейс' }] }
   - { name: 'you save', translations: [{ code: 'ru', label: 'экономия' }] }
   - { name: 'Your account information will be e-mailed to you shortly.', translations: [{ code: 'ru', label: 'Данные о вашем акаунте будут скоро отправлены вам на E-mail.' }] }
   - { name: 'Your cart', translations: [{ code: 'ru', label: 'Корзина' }] }
-  - { name: 'Your products will be exported as a CSV file.', translations: [{ code: 'ru', label: 'Продукты будут экспортированы в CSV файл' }] }
+  - { name: 'Your products will be exported as a CSV file.', translations: [{ code: 'ru', label: 'Товары будут экспортированы в CSV файл' }] }
   - { name: 'Your profile has been modified. You can check your account after you log in to the site', translations: [{ code: 'ru', label: 'Ваш профиль изменен. Вы можете проверить свой аккаунт, перейдя по следующей ссылке {{url}}' }] }
-  - { name: 'Your shopping bag - X items', translations: [{ code: 'ru', label: 'Ваша корзина - {{count}} продуктов' }] }
+  - { name: 'Your shopping bag - X items', translations: [{ code: 'ru', label: 'Ваша корзина - {{count}} товаров' }] }
   - { name: 'Your shopping bag is empty', translations: [{ code: 'ru', label: 'Ваша корзина пуста' }] }
   - { name: 'Your shopping cart is empty', translations: [{ code: 'ru', label: 'Ваша корзина пуста' }] }
   - { name: 'Your store is currently unable to calculate taxes', translations: [{ code: 'ru', label: 'Ваш магазин не настроен для расчета налогов' }] }
@@ -1032,7 +1066,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Zone details have been updated successfully', translations: [{ code: 'ru', label: 'Данные о зоне успешно обновлены' }] }
   - { name: 'Zone name', translations: [{ code: 'ru', label: 'Название зоны' }] }
   - { name: 'Zones', translations: [{ code: 'ru', label: 'Зоны' }] }
-  - { name: 'It is impossible to delete or create user accounts because your store currently works as an integration with Drupal and shares users with Drupal. Deleting/creating user accounts is possible via Drupal administrator interface.', translations: [{ code: 'ru', label: 'Невозможно создавать и удалять пользователей т.к. магазин работает в режиме интеграции с Drupal''ом. Создание и удаление пользователей возможно, но через панель администрирования Drupal''а.' }] }
+  - { name: 'It is impossible to delete or create user accounts because your store currently works as an integration with Drupal and shares users with Drupal. Deleting/creating user accounts is possible via Drupal administrator interface.', translations: [{ code: 'ru', label: 'Невозможно создавать и удалять пользователей т.к. магазин работает в режиме интеграции с Drupal. Создание и удаление пользователей возможно, но через панель администрирования Drupal.' }] }
   - { name: 'Unknown', translations: [{ code: 'ru', label: 'Неизвестно' }] }
   - { name: 'Quantity: high to low', translations: [{ code: 'ru', label: 'Количество: по убыванию' }] }
   - { name: 'Quantity: low to high', translations: [{ code: 'ru', label: 'Количество: по возрастанию' }] }
@@ -1054,7 +1088,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Site map has not been registred in X', translations: [{ code: 'ru', label: 'Карта сайта не была зарегистрирована в {{engine}}' }] }
   - { name: 'Incl. X', translations: [{ code: 'ru', label: 'Вкл. {{name}}' }] }
   - { name: '- out of stock -', translations: [{ code: 'ru', label: '- нет в наличии -' }] }
-  - { name: 'Product is out of stock!', translations: [{ code: 'ru', label: 'Продукта нет в наличии!' }] }
+  - { name: 'Product is out of stock!', translations: [{ code: 'ru', label: 'Товара нет в наличии!' }] }
   - { name: 'The option combination you selected', translations: [{ code: 'ru', label: 'Выбранная комбинация опций' }] }
   - { name: 'is not available. Please make another choice.', translations: [{ code: 'ru', label: 'недоступна. Пожалуйста выберите другие опции.' }] }
   - { name: 'Selected options', translations: [{ code: 'ru', label: 'Выбраны опции' }] }
@@ -1067,22 +1101,130 @@ XLite\Model\LanguageLabel:
   - { name: 'Back to order list', translations: [{ code: 'ru', label: 'Назад к списку заказов' }] }
   - { name: 'Order', translations: [{ code: 'ru', label: 'Заказ' }] }
   - { name: 'Order details', translations: [{ code: 'ru', label: 'Подробная информация о заказе' }] }
-  - { name: 'Username verified. The password will be sent to your e-mail after the order is placed', translations: [{ code: 'ru', label: 'Проверка выполнена. Пароль будет отправлен на ваш e-mail адрес после того как будет размещен ваш заказ' }] }
+  - { name: 'Username verified. The password will be sent to your e-mail after the order is placed', translations: [{ code: 'ru', label: 'Проверка выполнена. Пароль будет отправлен на ваш e-mail адрес после того, как будет размещен ваш заказ' }] }
   - { name: 'License key has been successfully verified for "{{name}}" module by "{{author}}" author', translations: [{ code: 'ru', label: 'Лицензионный ключ был успешно проверен для модуля "{{name}}" автор "{{author}}"' }] }
   - { name: 'Response from marketplace is not received', translations: [{ code: 'ru', label: 'Не получен ответ от Маркетплейс' }] }
   - { name: 'Response from marketplace: ', translations: [{ code: 'ru', label: 'Ответ от Маркетплейс: ' }] }
-  - { name: 'All products on sale', translations: [{ code: 'ru', label: 'Все продукты на распродаже' }] }
+  - { name: 'All products on sale', translations: [{ code: 'ru', label: 'Все товары на распродаже' }] }
   - { name: 'Old price', translations: [{ code: 'ru', label: 'Старая цена' }] }
   - { name: 'Search for modules', translations: [{ code: 'ru', label: 'Введите название модуля' }] }
   - { name: 'Warning! There is not enough product items in stock to process the order', translations: [{ code: 'ru', label: 'Предупреждение! Недостаточно товаров на складе для обработки заказа' }] }
   - { name: 'Dear', translations: [{ code: 'ru', label: 'Уважаемый (ая)' }] }
-  - { name: 'Products information has been successfully updated', translations: [{ code: 'ru', label: 'Информация о продукте успешно обновлена' }] }
+  - { name: 'Products information has been successfully updated', translations: [{ code: 'ru', label: 'Информация о товаре успешно обновлена' }] }
   - { name: 'Are you sure you wish to delete the selected zones?', translations: [{ code: 'ru', label: 'Подтвердите удаление выбранных зон' }] }
   - { name: 'It is impossible to edit some user profile fields because your store currently works as an integration with Drupal and shares users with Drupal. Modifying these fields is possible via Drupal administrator interface.', translations: [{ code: 'ru', label: 'Невозможно изменить некоторые поля профиля пользователя, потому что ваш магазин в настоящее время работает в режиме интеграции с Drupal и использует данные пользователей Drupal. Изменение этих полей возможно только через интерфейс администратора Drupal.' }] }
   - { name: 'Test email configuration', translations: [{ code: 'ru', label: 'Проверка параметров электронной почты' }] }
-  - { name: 'From email', translations: [{ code: 'ru', label: 'e-mail отправителя' }] }
-  - { name: 'To email', translations: [{ code: 'ru', label: 'e-mail получателя' }] }
+  - { name: 'From email', translations: [{ code: 'ru', label: 'Е-mail отправителя' }] }
+  - { name: 'To email', translations: [{ code: 'ru', label: 'Е-mail получателя' }] }
   - { name: 'Email body', translations: [{ code: 'ru', label: 'Тело сообщения' }] }
   - { name: 'Send test email', translations: [{ code: 'ru', label: 'Отправить тестовое сообщение' }] }
   - { name: 'not installed', translations: [{ code: 'ru', label: 'не установлен' }] }
   - { name: 'Install', translations: [{ code: 'ru', label: 'Установить' }] }
+  - { name: 'Drupal frontend', translations: [{ code: 'ru', label: 'Клиентская часть Drupal' }] }
+  - { name: 'Return to Drupal', translations: [{ code: 'ru', label: 'Вернуться в Drupal' }] }
+  - { name: 'Username or e-mail', translations: [{ code: 'ru', label: 'Имя пользователя или адрес e-mail' }] }
+  - { name: 'View update log', translations: [{ code: 'ru', label: 'Посмотреть лог обновления' }] }
+  - { name: 'Do not close this page!', translations: [{ code: 'ru', label: 'Не закрывайте эту страницу!' }] }
+  - { name: 'Disable suspicious modules', translations: [{ code: 'ru', label: 'Отключить подозрительные модули' }] }
+  - { name: 'Disable all modules in the system', translations: [{ code: 'ru', label: 'Отключить все модули в системе' }] }
+  - { name: 'soft reset', translations: [{ code: 'ru', label: 'мягкий сброс' }] }
+  - { name: 'hard reset', translations: [{ code: 'ru', label: 'жесткий сброс' }] }
+  - { name: 'Restore last backup', translations: [{ code: 'ru', label: 'Восстановить последний архив' }] }
+  - { name: 'should be performed manually', translations: [{ code: 'ru', label: 'должен быть выполнен вручную' }] }
+  - { name: 'Updated components', translations: [{ code: 'ru', label: 'Обновленные компоненты' }] }
+  - { name: 'The upgrade is completed. Please, do not close this page until you check your web site and check that everything works properly', translations: [{ code: 'ru', label: 'Обновление завершено. Пожалуйста, не закрывайте эту страницу пока не проверите магазин и не удостоверитесь, что все работает правильно' }] }
+  - { name: 'Yes, I agree with License agreement', translations: [{ code: 'ru', label: 'Да, я принимаю Лицензионное соглашение' }] }
+  - { name: 'Logged as', translations: [{ code: 'ru', label: 'Вход как' }] }
+  - { name: 'Added to cart', translations: [{ code: 'ru', label: 'Добавлен в корзину' }] }
+  - { name: 'Click to unblock', translations: [{ code: 'ru', label: 'Кликните для разблокировки' }] }
+  - { name: 'Activate your paid module license', translations: [{ code: 'ru', label: 'Активировать лицензию' }] }
+  - { name: 'Promotions', translations: [{ code: 'ru', label: 'Продвижение' }] }
+  - { name: 'Discount', translations: [{ code: 'ru', label: 'Скидка' }] }
+  - { name: 'Coupons', translations: [{ code: 'ru', label: 'Купоны' }] }
+  - { name: 'Add discount', translations: [{ code: 'ru', label: 'Создать скидку' }] }
+  - { name: 'Volume discounts', translations: [{ code: 'ru', label: 'Оптовые скидки' }] }
+  - { name: 'New discount coupon', translations: [{ code: 'ru', label: 'Создать купон' }] }
+  - { name: 'Display prices in catalog including VAT', translations: [{ code: 'ru', label: 'Отображать в каталоге цены с учетом налога на добавленную стоимость' }] }
+  - { name: 'Display ''inc/ex VAT'' labels next to prices', translations: [{ code: 'ru', label: 'Показывать метку "включая/без НДС" рядом с ценами' }] }
+  - { name: 'On product details only', translations: [{ code: 'ru', label: 'Только на странице деталей продукта' }] }
+  - { name: 'On all catalog pages', translations: [{ code: 'ru', label: 'На всех страницах каталога' }] }
+  - { name: 'Secure connection cannot be established.', translations: [{ code: 'ru', label: 'Безопасное соединение не может быть установлено.' }] }
+  - { name: 'Have a discount coupon?', translations: [{ code: 'ru', label: 'Есть купон на скидку?' }] }
+  - { name: 'Enter coupon code', translations: [{ code: 'ru', label: 'Введите код купона' }] }
+  - { name: 'There is no such a coupon, please check the spelling: X', translations: [{ code: 'ru', label: 'Такой купон не найден, пожалуйста, проверьте написание: "{{code}}"' }] }
+  - { name: 'Date: newest first', translations: [{ code: 'ru', label: 'Дата: по возрастанию' }] }
+  - { name: 'Date: oldest first', translations: [{ code: 'ru', label: 'Дата: по убыванию' }] }
+  - { name: 'LiteCommerce core version', translations: [{ code: 'ru', label: 'Версия ядра LiteCommerce' }] }
+  - { name: 'Thank you for your order FOOTER', translations: [{ code: 'ru', label: 'Благодарим Вас за заказ в нашем магазине. Ждем Вас снова!' }] }
+  - { name: 'Get X off for order amount over Y', translations: [{ code: 'ru', label: 'Получите скидку {{X}} за заказы свыше {{Y}}' }] }
+  - { name: 'Have more coupons', translations: [{ code: 'ru', label: 'Есть еще купоны' }] }
+  - { name: 'Have more coupons?', translations: [{ code: 'ru', label: 'Есть еще купоны?' }] }
+  - { name: 'Limit number of uses', translations: [{ code: 'ru', label: 'Ограничение числа использований' }] }
+  - { name: 'Maximum number of uses', translations: [{ code: 'ru', label: 'Максимальное число использований' }] }
+  - { name: 'Maximum order subtotal must be greater than minimum order subtotal', translations: [{ code: 'ru', label: 'Максимальная сумма заказа должна быть больше минимальной суммы заказа' }] }
+  - { name: 'Maximum order subtotal the coupon can be applied to', translations: [{ code: 'ru', label: 'Максимальна сумма заказа, к которой может быть применен купон' }] }
+  - { name: 'Minimum order subtotal must be less than maximum order subtotal', translations: [{ code: 'ru', label: 'Минимальная сумма заказа должна быть меньше максимальной суммы заказа' }] }
+  - { name: 'Moneybookers Quick Checkout enables you to take direct payment from credit cards, debit cards and over 60 other local payment options in over 200 countries as well as the Moneybookers eWallet.', translations: [{ code: 'ru', label: '<strong>Moneybookers Quick Checkout</strong> позваляет принимать платежи по кредитным, дебетовым картам и более чем 60 другими платежными средствами, в том числе Moneybookers eWallet, <strong>напрямую</strong> в более чем 200 странах. Мы предлагаем лучшие цены на обслуживание, проверте сами на нашем сайте Moneybookers <a href=\"http://www.moneybookers.com/app/help.pl?s=m_fees\">www.moneybookers.com</a>' }] }
+  - { name: 'New arrivals', translations: [{ code: 'ru', label: 'Новые поступления' }] }
+  - { name: 'New!', translations: [{ code: 'ru', label: 'Новый!' }] }
+  - { name: 'No modules found for search_string', translations: [{ code: 'ru', label: 'Модулей не найдено \"<em>{{search_string}}</em>\"' }] }
+  - { name: 'Occurred X add product events', translations: [{ code: 'ru', label: 'Произошло добавление {{new}} товаров' }] }
+  - { name: 'Occurred X add product events and Y update product events', translations: [{ code: 'ru', label: 'Произошло добавление {{new}} товаров и обновление {{old}} товаров' }] }
+  - { name: 'Occurred Y update product events', translations: [{ code: 'ru', label: 'Произошло обновление {{old}} товаров' }] }
+  - { name: 'Period end date must be later than period start date', translations: [{ code: 'ru', label: 'Конец периода должен быть позже начала периода' }] }
+  - { name: 'Period start date must be sooner than period end date', translations: [{ code: 'ru', label: 'Начало периода должно быть раньше конца периода' }] }
+  - { name: 'Recently viewed', translations: [{ code: 'ru', label: 'Просмотренные' }] }
+  - { name: 'To have access to the International payment network of Moneybookers please register here for a free account if you don''t have one yet.', translations: [{ code: 'ru', label: 'Для получения доступа к международной платежной сети Moneybookers, пожалуйста, зарегистрируйтесь <a href=\"{{url}}\">здесь</a> для получения бесплатного аккаунта, если у вас его еще нет.' }] }
+  - { name: 'To use the coupon, your order subtotal must be at least X', translations: [{ code: 'ru', label: 'Для  использования этого купона сумма вашего заказа должна быть больше {{min}}' }] }
+  - { name: 'To use the coupon, your order subtotal must be between X and Y', translations: [{ code: 'ru', label: 'Для использования этого купона сумма вашего заказа должна быть в интервале {{min}} и {{max}}' }] }
+  - { name: 'To use the coupon, your order subtotal must not exceed Y', translations: [{ code: 'ru', label: 'Для использования этого купона сумма вашего заказа не должна превышать {{max}}' }] }
+  - { name: 'X product(s) has been created', translations: [{ code: 'ru', label: 'Было создано {{count}} продуктов' }] }
+  - { name: 'X product(s) has been removed', translations: [{ code: 'ru', label: 'Было удалено {{count}} продуктов' }] }
+  - { name: 'You have already used the coupon', translations: [{ code: 'ru', label: 'Вы уже воспользовались купоном' }] }
+  - { name: 'You have sent a request for activation on the X.', translations: [{ code: 'ru', label: 'Вы отправили запрос на активацию {{date}}. Процесс проверки использования Moneybookers Quick Checkout может занять до 72 часов. Мы свяжемся с Вами, когда процесс проверки будет завершен. После активации Moneybookers вы получите доступ к новому разделу в своей учетной записи Moneybookers, который называется Merchant Tools. Пожалуйста, выберите секретное слово (должно отличаться от пароля) здесь, а также введите его в следующем разделе для соединения с Moneybookers. Секретное слово является последним шагом в процессе активации и надежно шифрует ваши платежи. После успешной активации вы сможете использовать всеми возможностями системы Moneybookers.' }] }
+  - { name: 'Your order has been processed', translations: [{ code: 'ru', label: 'Ваш заказ #{{id}} был обработан.' }] }
+  - { name: 'Your order has failed', translations: [{ code: 'ru', label: 'Ваш заказ #{{id}} не прошел или был заблокирован администратором магазина. ' }] }
+  - { name: 'excl.VAT', translations: [{ code: 'ru', label: 'исключая.{{name}}' }] }
+  - { name: 'incl.VAT', translations: [{ code: 'ru', label: 'включая.{{name}}' }] }
+  - { name: 'percent X off', translations: [{ code: 'ru', label: 'скидка {{percent}}%' }] }
+  - { name: 'X entities has been created', translations: [{ code: 'ru', label: 'Создано {{count}} скидок' }] }
+  - { name: 'X entities has been removed', translations: [{ code: 'ru', label: 'Удалено {{count}} скидок' }] }
+  - { name: 'All customers', translations: [{ code: 'ru', label: 'Все покупатели' }] }
+  - { name: 'Comment', translations: [{ code: 'ru', label: 'Комментарий' }] }
+  - { name: 'This comment will be visisble to shop administrators only', translations: [{ code: 'ru', label: 'Коментарий доступен только администратору магазина' }] }
+  - { name: 'Discount type', translations: [{ code: 'ru', label: 'Тип скидки' }] }
+  - { name: 'Discount amount', translations: [{ code: 'ru', label: 'Сумма скидки' }] }
+  - { name: 'Active from', translations: [{ code: 'ru', label: 'Активен с' }] }
+  - { name: 'Active till', translations: [{ code: 'ru', label: 'Активен по' }] }
+  - { name: 'Subtotal range (begin)', translations: [{ code: 'ru', label: 'Интервал сумм (начало)' }] }
+  - { name: 'Subtotal range (end)', translations: [{ code: 'ru', label: 'Интервал сумм (конец)' }] }
+  - { name: 'Limit the number of uses', translations: [{ code: 'ru', label: 'Ограничить число использований' }] }
+  - { name: 'Memberships', translations: [{ code: 'ru', label: 'Группы пользователей' }] }
+  - { name: 'Date when customers can start using the coupon', translations: [{ code: 'ru', label: 'Дата начала действия' }] }
+  - { name: 'Date when the coupon expires', translations: [{ code: 'ru', label: 'Дата окончания действия' }] }
+  - { name: 'Minimum order subtotal the coupon can be applied to', translations: [{ code: 'ru', label: 'Минимальная сумма заказа' }] }
+  - { name: 'Coupon discount can be limited to these product classes', translations: [{ code: 'ru', label: 'Применение купона может быть ограничено следующими классами' }] }
+  - { name: 'Coupon discount can be limited to customers with these membership levels', translations: [{ code: 'ru', label: 'Применение купона может быть ограничено следующими группами пользователей' }] }
+  - { name: 'The maximum number of uses', translations: [{ code: 'ru', label: 'Максимальное число использований' }] }
+  - { name: 'Uses left', translations: [{ code: 'ru', label: 'Осталось использовать' }] }
+  - { name: 'Uses count', translations: [{ code: 'ru', label: 'Использован' }] }
+  - { name: 'Coupon code', translations: [{ code: 'ru', label: 'Код купона' }] }
+  - { name: 'X coupon(s) has been removed', translations: [{ code: 'ru', label: '{{count}} купон(ов) удалено' }] }
+  - { name: 'X coupon(s) has been created', translations: [{ code: 'ru', label: '{{count}} купон(ов) создано' }] }
+  - { name: 'The coupon has been added', translations: [{ code: 'ru', label: 'Купон добавлен' }] }
+  - { name: 'The coupon has been applied to your order', translations: [{ code: 'ru', label: 'Купон был успешно применен к вашему заказу' }] }
+  - { name: 'Coupon discount', translations: [{ code: 'ru', label: 'Скидка по купону' }] }
+  - { name: '$ off', translations: [{ code: 'ru', label: '$ cкидка' }] }
+  - { name: 'Coming soon', translations: [{ code: 'ru', label: 'Ожидаемые товары' }] }
+  - { name: 'All newest products', translations: [{ code: 'ru', label: 'Все новые товары' }] }
+  - { name: 'All upcoming products', translations: [{ code: 'ru', label: 'Все ожидаемые товары' }] }
+  - { name: 'Customers who bought this product also bought', translations: [{ code: 'ru', label: 'Покупатели, купившие этот товар также купили' }] }
+  - { name: 'Customers who viewed this product bought', translations: [{ code: 'ru', label: 'Покупатели, смотревшие этот товар также купили' }] }
+  - { name: 'An upgrade is a dangerous process that may result in a crashed website. It is strongly recommended to create a full back up of your shop (the code and the database) and download it to a local computer before proceeding to the next step.', translations: [{ code: 'ru', label: 'Обновление может привести к полной остановке работы магазина. Настоятельно рекомендуется создать полный архив своего магазина (все файлы и база даных) и сохранить его на локальном компьютере перед тем как перейти к следующему шагу.' }] }
+  - { name: 'After the upgrade is completed please check your website. If you find that the site is inoperative, please try to do the following', translations: [{ code: 'ru', label: 'После завершения обновления проверте своймагазин. Если в процессе этого обнаружены проблемы, попробуйте следующее' }] }
+  - { name: 'Please save the soft reset and hard reset links so that you can use them later in case the website crash happens', translations: [{ code: 'ru', label: 'Пожалуйста, сохраните указанные выше ссылки, чтобы их можно было использовать в случае возникновения проблем с магазином' }] }
+  - { name: 'Create a backup', translations: [{ code: 'ru', label: 'Создайте резервную копию магазина' }] }
+  - { name: 'Downloaded components', translations: [{ code: 'ru', label: 'Загруженные компоненты' }] }
+  - { name: 'If there are some critical errors occured you can do the following', translations: [{ code: 'ru', label: 'Если во время обновления возникли критические ошибки, вы можете сделать следующее' }] }
+  - { name: 'Loading...', translations: [{ code: 'ru', label: 'Загрузка...' }] }
+  - { name: 'If this option is ticked all prices in the catalog will be shown with ''inc VAT'' or ''ex VAT'' label depending on whether included VAT into the price or not. If you choose do not display this label, you have to place information about it somewhere on the cat', translations: [{ code: 'ru', label: 'Если эта опция включена, у каждой цены в каталоге будет значок "с НДС" или "без НДС", в зависимости от того, включен ли налог в цену или нет. Если вы не хотите, чтобы такой значок отображался рядом с ценами в каталоге, информацию об НДС нужно разместить на какой-нибудь другой странице каталога, т.к. покупателям должно быть понятно, включен налог в цену или нет.' }] }

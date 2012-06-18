@@ -35,9 +35,11 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Product")
  * @Table  (name="products",
+ *      uniqueConstraints={
+ *          @UniqueConstraint (name="sku", columns={"sku"})
+ *      },
  *      indexes={
  *          @Index (name="price", columns={"price"}),
- *          @Index (name="sku", columns={"sku"}),
  *          @Index (name="weight", columns={"weight"}),
  *          @Index (name="free_shipping", columns={"free_shipping"}),
  *          @Index (name="customerArea", columns={"enabled","arrivalDate"})
@@ -85,7 +87,7 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length="32", nullable=true)
      */
     protected $sku;
 
@@ -228,6 +230,19 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
      */
     protected $classes;
 
+    /**
+     * Check SKU
+     *
+     * @param string $sku String to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function checkSKU($sku)
+    {
+        return '' !== $sku && false !== $sku;
+    }
 
     /**
      * Constructor
@@ -619,7 +634,7 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
      *
      * @PrePersist
      */
-    public function prepareDate()
+    public function prepareBeforeCreate()
     {
         if (!$this->getDate()) {
             $this->setDate(time());
@@ -629,7 +644,7 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
             $this->setArrivalDate(time());
         }
 
-        $this->prepareUpdateDate();
+        $this->prepareBeforeUpdate();
     }
 
     /**
@@ -641,9 +656,13 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
      *
      * @PreUpdate
      */
-    public function prepareUpdateDate()
+    public function prepareBeforeUpdate()
     {
         $this->setUpdateDate(time());
+
+        if (!static::checkSKU($this->getSKU())) {
+            $this->setSKU(null);
+        }
     }
 
     /**
