@@ -418,7 +418,7 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      */
     protected function getResizedPath($size, $name)
     {
-        return $this->getS3()
+        return $this->isUseS3Icons()
             ? $this->generateS3Path('icon/' . $this->getId() . '/' . $size . '.' . $this->getExtension())
             : parent::getResizedPath($size, $name);
     }
@@ -435,7 +435,7 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      */
     protected function getResizedPublicURL($size, $name)
     {
-        return $this->getS3()
+        return $this->isUseS3Icons()
             ? $this->getS3()->getURL($this->getResizedPath($size, $name))
             : parent::getResizedPublicURL($size, $name);
     }
@@ -453,7 +453,7 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
     {
         $icons = $this->getS3Icons();
 
-        return ($this->getS3() && $icons)
+        return ($this->isUseS3Icons() && $icons)
             ? !empty($icons[$path])
             : parent::isResizedIconAvailable($path);
     }
@@ -473,7 +473,7 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
     {
         $result = null;
 
-        if ($this->getS3()) {
+        if ($this->isUseS3Icons()) {
            $operator = new \XLite\Core\ImageOperator($this);
             list($newWidth, $newHeight, $r) = $operator->resizeDown($width, $height);
 
@@ -498,6 +498,18 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
         }
 
         return $result;
+    }
+
+    /**
+     * Use S3 icons
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isUseS3Icons()
+    {
+        return static::STORAGE_S3 == $this->getStorageType() && $this->getS3();
     }
 
     // }}}
