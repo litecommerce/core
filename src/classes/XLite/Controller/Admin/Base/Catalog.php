@@ -130,10 +130,8 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     {
         $result = parent::getPostedData($field);
 
-        if (!isset($field) || 'cleanURL' === $field) {
-            $value = $this->generateCleanURL(
-                parent::getPostedData(parent::getPostedData('autogenerateCleanURL') ? 'name' : 'cleanURL')
-            );
+        if (parent::getPostedData('autogenerateCleanURL') && (!isset($field) || 'cleanURL' === $field)) {
+            $value = $this->generateCleanURL(parent::getPostedData('name'));
 
             if (isset($field)) {
                 $result = $value;
@@ -229,7 +227,17 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     protected function doActionModify()
     {
         $form = \Includes\Pattern\Factory::create($this->getFormClass());
-        \XLite\Core\Request::getInstance()->mapRequest($form->getRequestData());
+        $data = $form->getRequestData();
+        $util = '\Includes\Utils\ArrayManager';
+        $pref = $this->getPrefixPostedData();
+
+        \XLite\Core\Request::getInstance()->mapRequest(
+            array(
+                $pref => array(
+                    'cleanURL' => $util::getIndex($util::getIndex($data, $pref), 'cleanURL'),
+                )
+            )
+        );
 
         if ($form->getValidationMessage()) {
             \XLite\Core\TopMessage::addError($form->getValidationMessage());
