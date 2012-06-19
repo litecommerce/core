@@ -45,5 +45,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
     public function executeHookHandler()
     {
         \XLite\Core\Database::getInstance()->updateDBSchema();
+
+        die;
     }
 }

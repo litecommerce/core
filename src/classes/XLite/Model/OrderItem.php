@@ -108,9 +108,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * @Column (
      *      type="money",
      *      options={
-     *          @XLite\Core\Doctrine\Annotation\Behavior (list={"taxable"}),
-     *          @XLite\Core\Doctrine\Annotation\Purpose  (name="net", source="clear"),
-     *          @XLite\Core\Doctrine\Annotation\Purpose  (name="display", source="net")
+     *          @\XLite\Core\Doctrine\Annotation\Behavior (list={"taxable"}),
+     *          @\XLite\Core\Doctrine\Annotation\Purpose  (name="net", source="clear"),
+     *          @\XLite\Core\Doctrine\Annotation\Purpose  (name="display", source="net")
      *      }
      * )
      */

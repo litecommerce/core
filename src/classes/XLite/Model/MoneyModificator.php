@@ -69,7 +69,7 @@ class MoneyModificator extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.19
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $modificator = 'modifyMoney';
 
@@ -80,7 +80,7 @@ class MoneyModificator extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.19
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $validator = '';
 
@@ -102,7 +102,7 @@ class MoneyModificator extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.19
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $behavior = '';
 
@@ -113,7 +113,7 @@ class MoneyModificator extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.19
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $purpose = '';
 
