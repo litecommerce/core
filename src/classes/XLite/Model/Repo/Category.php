@@ -301,7 +301,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function defineFullTreeQuery($categoryId)
     {
-        $queryBuilder = $this->createQueryBuilder();
+        $queryBuilder = $this->createQueryBuilder()
+            ->addSelect('translations');
         $this->addSubTreeCondition($queryBuilder, $categoryId ?: $this->getRootCategoryId());
 
         return $queryBuilder;
