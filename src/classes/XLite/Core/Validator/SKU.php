@@ -73,7 +73,7 @@ class SKU extends \XLite\Core\Validator\AValidator
      */
     public function validate($data)
     {
-        if (!\XLite\Core\Converter::getInstance()->isEmptyString($data)) {
+        if (!\XLite\Core\Converter::isEmptyString($data)) {
             $entity = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBySku($this->sanitize($data));
 
             // DO NOT use "!==" here

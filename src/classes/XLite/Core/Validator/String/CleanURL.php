@@ -90,7 +90,7 @@ class CleanURL extends \XLite\Core\Validator\String\RegExp
      */
     public function validate($data)
     {
-        if (!\XLite\Core\Converter::getInstance()->isEmptyString($data)) {
+        if (!\XLite\Core\Converter::isEmptyString($data)) {
             parent::validate($data);
 
             $entity = \XLite\Core\Database::getRepo($this->class)->findOneByCleanURL($this->sanitize($data));

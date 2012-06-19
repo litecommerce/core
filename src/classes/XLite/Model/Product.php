@@ -646,7 +646,7 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
     {
         $this->setUpdateDate(time());
 
-        if (\XLite\Core\Converter::getInstance()->isEmptyString($this->getSKU())) {
+        if (\XLite\Core\Converter::isEmptyString($this->getSKU())) {
             $this->setSKU(null);
         }
     }

@@ -434,7 +434,7 @@ class Converter extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  1.0.24
      */
-    public function isEmptyString($string)
+    public static function isEmptyString($string)
     {
         return '' === $string || false === $string;
     }

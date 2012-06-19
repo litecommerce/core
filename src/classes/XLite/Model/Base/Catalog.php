@@ -61,7 +61,7 @@ abstract class Catalog extends \XLite\Model\Base\I18n
      */
     public function prepareBeforeSave()
     {
-        if (\XLite\Core\Converter::getInstance()->isEmptyString($this->getCleanURL())) {
+        if (\XLite\Core\Converter::isEmptyString($this->getCleanURL())) {
             $this->setCleanURL(null);
         }
     }
