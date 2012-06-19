@@ -398,10 +398,13 @@ class AdminMain extends \XLite\View\Model\AModel
             unset($data['password']);
         }
 
+        $model = $this->getModelObject();
+
         // Assign only role for admin
+        $isAdmin = (isset($data['access_level']) && \XLite\Core\Auth::getInstance()->getAdminAccessLevel() == $data['access_level'])
+            || ($model->getProfileId() && $model->isAdmin());
         if (
-            isset($data['access_level'])
-            && \XLite\Core\Auth::getInstance()->getAdminAccessLevel() == $data['access_level']
+            $isAdmin
             && $this->needSetRootAccess($this->getModelObject())
         ) {
             $rootRole = \XLite\Core\Database::getRepo('XLite\Model\Role')->findOneRoot();
@@ -421,8 +424,6 @@ class AdminMain extends \XLite\View\Model\AModel
         ) {
             $data['roles'] = array();
         }
-
-        $model = $this->getModelObject();
 
         // Remove old links
         foreach ($model->getRoles() as $role) {
