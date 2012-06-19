@@ -67,7 +67,11 @@ class MigrateFromS3 extends \XLite\Core\EventListener\Base\Countable
 
         if (file_exists($path)) {
             $item->setS3Forbid(true);
+            $localPath = $item->getStoragePath();
             $result = $item->loadFromLocalFile($path, $item->getFileName() ?: basename($item->getPath()));
+            if ($localPath) {
+                \XLite\Module\CDev\AmazonS3Images\Core\S3::getInstance()->delete($localPath);
+            }
             unlink($path);
         }
 

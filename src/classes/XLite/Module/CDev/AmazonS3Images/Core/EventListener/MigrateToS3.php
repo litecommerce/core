@@ -64,9 +64,13 @@ class MigrateToS3 extends \XLite\Core\EventListener\Base\Countable
         $path = tempnam(LC_DIR_TMP, 'migrate_file');
         file_put_contents($path, $item->getBody());
 
-        if (file_exists($path)) {
+        if (\Includes\Utils\FileManager::isExists($path)) {
+            $localPath = $item->isURL() ? null : $item->getStoragePath();
             $result = $item->loadFromLocalFile($path, $item->getFileName() ?: basename($item->getPath()));
-            unlink($path);
+            if ($result && $localPath && \Includes\Utils\FileManager::isExists($localPath)) {
+                \Includes\Utils\FileManager::deleteFile($localPath);
+            }
+            \Includes\Utils\FileManager::deleteFile($path);
         }
 
         return $result;

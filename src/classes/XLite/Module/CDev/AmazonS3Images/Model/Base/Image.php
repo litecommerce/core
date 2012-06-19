@@ -309,7 +309,7 @@ abstract class Image extends \XLite\Model\Base\Image implements \XLite\Base\IDec
      * @see    ____func_see____
      * @since  1.0.12
      */
-    protected function getStoragePath($path = null)
+    public function getStoragePath($path = null)
     {
         if (self::STORAGE_S3 == $this->getStorageType()) {
             $result = $this->generateS3Path($path);
