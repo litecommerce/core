@@ -30,8 +30,11 @@ jQuery().ready(
         core.post(
           URLHandler.buildURL({'target': 'event_task', 'action': 'run', 'event': eventName}),
           function(xhr, status, data, valid) {
-            if (xhr.readyState != 4 || xhr.status != 200 || !valid) {
+            if (xhr.readyState != 4 || xhr.status != 200) {
               core.showError('Event task runner internal error');
+
+            } else if (!valid) {
+              bar.trigger('error');
             }
           },
           {},

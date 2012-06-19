@@ -75,7 +75,18 @@ class MigrateFromS3 extends \XLite\Core\EventListener\Base\Countable
             unlink($path);
         }
 
-        return $result;
+        if (!$result) {
+            if (!isset($this->record['s3_error_count'])) {
+                $this->record['s3_error_count'] = 0;
+            }
+            $this->record['s3_error_count']++;
+            \XLite\Logger::getInstance()->log(
+                'Couldn\'t move image ' . $item->getPath() . ' (Amazon S3 to local file system)',
+                LOG_ERR
+            );
+        }
+
+        return true;
     }
 
     /**
@@ -128,6 +139,22 @@ class MigrateFromS3 extends \XLite\Core\EventListener\Base\Countable
         }
 
         return $chunk;
+    }
+
+    /**
+     * Finish task
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
+    protected function finishTask()
+    {
+        parent::finishTask();
+
+        if (isset($this->record['s3_error_count']) && 0 < $this->record['s3_error_count']) {
+            $this->errors[] = static::t('Couldn\'t move X images. See log for details.', array('count' => $this->record['s3_error_count']));
+        }
     }
 }
 

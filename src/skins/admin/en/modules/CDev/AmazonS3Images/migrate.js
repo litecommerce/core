@@ -14,12 +14,20 @@ jQuery().ready(
   function () {
     jQuery('.s3-migrate .bar').each(
       function () {
+        this.errorState = false;
         jQuery(this).progressbar({value: jQuery(this).data('percent')});
+      }
+    ).bind(
+      'error',
+      function() {
+        this.errorState = true;
       }
     ).bind(
       'complete',
       function() {
-        self.location.reload();
+        if (this.errorState) {
+          self.location.reload();
+        }
       }
     );
   }

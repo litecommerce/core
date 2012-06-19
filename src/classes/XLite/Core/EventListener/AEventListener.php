@@ -36,6 +36,15 @@ namespace XLite\Core\EventListener;
 abstract class AEventListener extends \XLite\Base\Singleton
 {
     /**
+     * Errors 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
+    protected $errors = array();
+
+    /**
      * Handle event (internal, after checking)
      *
      * @param string $name      Event name
@@ -75,6 +84,18 @@ abstract class AEventListener extends \XLite\Base\Singleton
     public static function checkEvent($name, array $arguments)
     {
         return true;
+    }
+
+    /**
+     * Get errors 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
 }

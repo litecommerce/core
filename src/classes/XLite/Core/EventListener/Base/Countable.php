@@ -94,6 +94,8 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      */
     public function handleEvent($name, array $arguments)
     {
+        $this->errors = array();
+
         $result = false;
 
         $this->initializeStep();
@@ -132,6 +134,8 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
     protected function initializeStep()
     {
         $this->record = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getEventState($this->getEventName());
+        $this->record['state'] = \XLite\Core\EventTask::STATE_IN_PROGRESS;
+        \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->setEventState($this->getEventName(), $this->record);
     }
 
     /**
@@ -143,7 +147,7 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      */
     protected function isStepValid()
     {
-        return !empty($this->record) && 0 < $this->getLength();
+        return !empty($this->record);
     }
 
     /**
@@ -169,6 +173,9 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      */
     protected function finishStep()
     {
+        $this->record['state'] = \XLite\Core\EventTask::STATE_STANDBY;
+        \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->setEventState($this->getEventName(), $this->record);
+
         $event = $this->getEventName();
         \XLite\Core\EventTask::$event();
     }
@@ -182,6 +189,8 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      */
     protected function finishTask()
     {
+        $this->record['state'] = \XLite\Core\EventTask::STATE_FINISHED;
+        \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->setEventState($this->getEventName(), $this->record);
     }    
 }
 
