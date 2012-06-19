@@ -36,6 +36,20 @@ namespace XLite\Module\CDev\AmazonS3Images\View\Model;
 abstract class Settings extends \XLite\View\Model\Settings implements \XLite\Base\IDecorator
 {
     /**
+     * Amazon S3 required settings 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
+    protected $amazonS3RequiredSettings = array(
+        'access_key',
+        'secret_key',
+        'bucket',
+        'server',
+    );
+
+    /**
      * Check if field is valid and (if needed) set an error message
      *
      * @param array  $data    Current section data
@@ -74,4 +88,20 @@ abstract class Settings extends \XLite\View\Model\Settings implements \XLite\Bas
             }
         }
     }
+
+    /**
+     * Check - option is required or not
+     *
+     * @param \XLite\Model\Config $option Option
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.13
+     */
+    protected function isOptionRequired(\XLite\Model\Config $option)
+    {
+        return parent::isOptionRequired($option)
+            || ('CDev\AmazonS3Images' == $option->getCategory() && in_array($option->getName(), $this->amazonS3RequiredSettings));
+    }
+
 }
