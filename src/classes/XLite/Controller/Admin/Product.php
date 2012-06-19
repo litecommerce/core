@@ -73,15 +73,15 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
     }
 
     /**
-     * Return entity
+     * Return entity class
      *
-     * @return array
+     * @return string
      * @see    ____func_see____
      * @since  1.0.24
      */
-    protected function getEntityInfo()
+    protected function getEntityClass()
     {
-        return array('\XLite\Model\Product', 'getProductId');
+        return '\XLite\Model\Product';
     }
 
     // }}}

@@ -63,13 +63,13 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     abstract protected function getFormClass();
 
     /**
-     * Return entity
+     * Return entity class
      *
-     * @return array
+     * @return string
      * @see    ____func_see____
      * @since  1.0.24
      */
-    abstract protected function getEntityInfo();
+    abstract protected function getEntityClass();
 
     /**
      * Add new entity
@@ -151,6 +151,19 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     // {{{ Clean URL routines
 
     /**
+     * Return maximum length of the "cleanURL" model field.
+     * Function is public since it's used in templates
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getCleanURLMaxLength()
+    {
+        return \XLite\Core\Database::getRepo($this->getEntityClass())->getFieldInfo('cleanURL', 'length');
+    }
+
+    /**
      * Generate clean URL
      *
      * @param string $name Product name
@@ -169,9 +182,8 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
 
             $suffix    = '';
             $increment = 1;
-            list($class, ) = $this->getEntityInfo();
             
-            while (\XLite\Core\Database::getRepo($class)->findOneByCleanURL($result . $suffix)) {
+            while (\XLite\Core\Database::getRepo($this->getEntityClass())->findOneByCleanURL($result . $suffix)) {
                 $suffix = $separator . $increment++;
             }   
             

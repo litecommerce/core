@@ -16,7 +16,7 @@
   <td class="name-attribute">{t(#Clean URL#)}</td>
   <td class="star"></td>
   <td class="value-attribute">
-    <input type="text" name="{getNamePostedData(#cleanURL#)}" value="{product.getCleanURL()}" size="50" id="cleanURLBox" />
+    <input type="text" name="{getNamePostedData(#cleanURL#)}" value="{product.getCleanURL()}" size="50" maxlength="{getCleanURLMaxLength()}" id="cleanURLBox" />
     <p />
     <input type="checkbox" name="{getNamePostedData(#autogenerateCleanURL#)}" value="{#1#}" checked="{product.getCleanURL()}" id="autogenerateFlag" />
     <label for="autogenerateFlag" class="note">{t(#Autogenerate Clean URL#)}</label>

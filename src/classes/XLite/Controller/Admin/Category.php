@@ -36,7 +36,7 @@ namespace XLite\Controller\Admin;
 class Category extends \XLite\Controller\Admin\Base\Catalog
 {
     /**
-     * FIXME- backward compatibility
+     * Backward compatibility
      *
      * @var   array
      * @see   ____var_see____
@@ -73,15 +73,15 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     }
 
     /**
-     * Return entity
+     * Return entity class
      *
-     * @return array
+     * @return string
      * @see    ____func_see____
      * @since  1.0.24
      */
-    protected function getEntityInfo()
+    protected function getEntityClass()
     {
-        return array('\XLite\Model\Category', 'getCategoryId');
+        return '\XLite\Model\Category';
     }
 
     // }}}
