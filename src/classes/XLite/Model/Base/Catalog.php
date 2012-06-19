@@ -45,7 +45,7 @@ abstract class Catalog extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255", unique=true, nullable=true)
+     * @Column (type="string", length=255, unique=true, nullable=true)
      */
     protected $cleanURL;
 
@@ -61,8 +61,7 @@ abstract class Catalog extends \XLite\Model\Base\I18n
      */
     public function prepareBeforeSave()
     {
-        // http://bugtracker.litecommerce.com/view.php?id=41562
-        if ('' === $this->getCleanURL() || false === $this->getCleanURL()) {
+        if (\XLite\Core\Converter::getInstance()->isEmptyString($this->getCleanURL())) {
             $this->setCleanURL(null);
         }
     }

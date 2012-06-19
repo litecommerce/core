@@ -61,6 +61,8 @@ abstract class APair extends \XLite\Core\Validator\AValidator
      */
     public function __construct($mode = self::STRICT)
     {
+        parent::__construct();
+
         $this->mode = $mode;
     }
 }

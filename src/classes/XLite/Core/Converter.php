@@ -426,6 +426,20 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
+     * Check for empty string
+     *
+     * @param string $string String to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function isEmptyString($string)
+    {
+        return '' === $string || false === $string;
+    }
+
+    /**
      * Return class name without backslashes
      *
      * @param \XLite_Base $obj Object to get class name from

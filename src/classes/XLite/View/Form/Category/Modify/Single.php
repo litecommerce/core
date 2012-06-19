@@ -70,7 +70,7 @@ class Single extends \XLite\View\Form\Category\Modify\AModify
     {
         $list = parent::getDefaultParams();
         $list['category_id'] = $this->getCategoryId();
-        $list['parent_id'] = $this->getParentCategoryId();
+        $list['parent_id']   = $this->getParentCategoryId();
 
         return $list;
     }
@@ -112,7 +112,7 @@ class Single extends \XLite\View\Form\Category\Modify\AModify
 
         $data->addPair(
             'cleanURL',
-            new \XLite\Core\Validator\String\RegExp(false, $this->getCleanURLPattern()),
+            new \XLite\Core\Validator\String\CleanURL(false, null, '\XLite\Model\Category', $this->getCategoryId()),
             null,
             'Clean URL'
         );

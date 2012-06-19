@@ -151,18 +151,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     // {{{ Clean URL routines
 
     /**
-     * For validation in forms
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.21
-     */
-    public function getCleanURLPattern()
-    {
-        return '/[\w' . static::CLEAN_URL_DEFAULT_SEPARATOR . ']+/S';
-    }
-
-    /**
      * Generate clean URL
      *
      * @param string $name Product name
@@ -178,31 +166,19 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
         if (isset($name)) {
             $separator = \Includes\Utils\ConfigParser::getOptions(array('clean_urls', 'default_separator'));
             $result   .= strtolower(preg_replace('/\W+/S', $separator ?: static::CLEAN_URL_DEFAULT_SEPARATOR, $name));
-        }
 
-        return $result;
-    }
-
-    /**
-     * Check if specified clean URL is unique or not
-     *
-     * @param string $cleanURL Clean URL
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function checkCleanURL($cleanURL)
-    {
-        if (!($result = empty($cleanURL))) {
-            list($class, $method) = $this->getEntityInfo();
-
-            $repo   = \XLite\Core\Database::getRepo($class);
-            $entity = $repo->findOneByCleanURL(substr($cleanURL, 0, $repo->getFieldInfo('cleanURL', 'length')));
-
-            // DO NOT use "===" here
-            if (!($result = !isset($entity) || $entity->getUniqueIdentifier() == $this->$method())) {
-                $this->setCleanURLError($cleanURL);
+            $suffix    = '';
+            $increment = 1;
+            list($class, ) = $this->getEntityInfo();
+            
+            while (\XLite\Core\Database::getRepo($class)->findOneByCleanURL($result . $suffix)) {
+                $suffix = $separator . $increment++;
+            }   
+            
+            if (!empty($suffix)) {
+                // DO NOT change call order
+                $this->setCleanURLWarning($result, $suffix);
+                $result .= $suffix;
             }
         }
 
@@ -210,19 +186,20 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Set error
+     * Set warning
      *
      * @param string $cleanURL Clean URL
+     * @param string $suffix   Suffix
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function setCleanURLError($cleanURL)
+    protected function setCleanURLWarning($cleanURL, $suffix)
     {
-        \XLite\Core\TopMessage::addError(
-            'The "{{clean_url}}" clean URL is already defined',
-            array('clean_url' => $cleanURL)
+        \XLite\Core\TopMessage::addWarning(
+            'Since the "{{clean_url}}" clean URL is already defined, the "{{suffix}}" suffix has been added to it',
+            array('clean_url' => $cleanURL, 'suffix' => $suffix)
         );
     }
 
@@ -239,19 +216,17 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionModify()
     {
-        if ($this->checkCleanURL($this->getPostedData('cleanURL'))) {
-            $form = \Includes\Pattern\Factory::create($this->getFormClass());
-            $form->getRequestData();
-        
-            if ($form->getValidationMessage()) {
-                \XLite\Core\TopMessage::addError($form->getValidationMessage());
+        $form = \Includes\Pattern\Factory::create($this->getFormClass());
+        \XLite\Core\Request::getInstance()->mapRequest($form->getRequestData());
+
+        if ($form->getValidationMessage()) {
+            \XLite\Core\TopMessage::addError($form->getValidationMessage());
             
-            } elseif ($this->isNew()) {
-                $this->doActionAdd(); 
+        } elseif ($this->isNew()) {
+            $this->doActionAdd(); 
             
-            } else {
-                $this->doActionUpdate();
-            }
+        } else {
+            $this->doActionUpdate();
         }
     }
 

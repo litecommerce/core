@@ -33,7 +33,7 @@ namespace XLite\Core\Validator;
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class AValidator
+abstract class AValidator extends \XLite\Base\SuperClass
 {
     /**
      * Validate
@@ -45,6 +45,18 @@ abstract class AValidator
      * @since  1.0.0
      */
     abstract public function validate($data);
+
+    /**
+     * Constructor
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * Sanitize

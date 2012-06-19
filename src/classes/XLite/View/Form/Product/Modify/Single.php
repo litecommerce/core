@@ -114,17 +114,17 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
         $data->addPair('meta_desc', new \XLite\Core\Validator\String(), null, 'Meta description');
 
         $data->addPair(
+            'cleanURL',
+            new \XLite\Core\Validator\String\CleanURL(false, null, '\XLite\Model\Product', $this->getProductId()),
+            null,
+            'Clean URL'
+        );
+
+        $data->addPair(
             'category_ids',
             new \XLite\Core\Validator\PlainArray(),
             \XLite\Core\Validator\Pair\APair::SOFT,
             'Category'
         )->setValidator(new \XLite\Core\Validator\Integer());
-
-        $data->addPair(
-            'cleanURL',
-            new \XLite\Core\Validator\String\RegExp(false, $this->getCleanURLPattern()),
-            null,
-            'Clean URL'
-        );
     }
 }

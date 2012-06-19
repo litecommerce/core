@@ -231,20 +231,6 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
     protected $classes;
 
     /**
-     * Check SKU
-     *
-     * @param string $sku String to check
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    public static function checkSKU($sku)
-    {
-        return '' !== $sku && false !== $sku;
-    }
-
-    /**
      * Constructor
      *
      * @param array $data Entity properties OPTIONAL
@@ -660,7 +646,7 @@ class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOr
     {
         $this->setUpdateDate(time());
 
-        if (!static::checkSKU($this->getSKU())) {
+        if (\XLite\Core\Converter::getInstance()->isEmptyString($this->getSKU())) {
             $this->setSKU(null);
         }
     }

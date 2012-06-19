@@ -38,12 +38,16 @@ class Enum extends \XLite\Core\Validator\Enum\AEnum
     /**
      * Constructor
      * 
+     * @param array $list List of allowe values OPTIONAL
+     *
      * @return void
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.24
      */
-    public function __construct(array $list)
+    public function __construct(array $list = array())
     {
+        parent::__construct();
+
         $this->list = $list;
     }
 }

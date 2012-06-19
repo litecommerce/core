@@ -55,6 +55,8 @@ class SKU extends \XLite\Core\Validator\AValidator
      */
     public function __construct($productId = null)
     {
+        parent::__construct();
+
         if (isset($productId)) {
             $this->productId = intval($productId);
         }
@@ -71,10 +73,11 @@ class SKU extends \XLite\Core\Validator\AValidator
      */
     public function validate($data)
     {
-        if (\XLite\Model\Product::checkSKU($data)) {
+        if (!\XLite\Core\Converter::getInstance()->isEmptyString($data)) {
             $entity = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBySku($this->sanitize($data));
 
-            if ($entity && (empty($this->productId) || $entity->getProductId() !== $this->productId)) {
+            // DO NOT use "!==" here
+            if ($entity && (empty($this->productId) || $entity->getProductId() != $this->productId)) {
                 $this->throwSKUError();
             }
         }
