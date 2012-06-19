@@ -35,11 +35,6 @@ namespace XLite\Controller\Admin\Base;
  */
 abstract class Catalog extends \XLite\Controller\Admin\AAdmin
 {
-    /**
-     * Use this char as separator, if the default one is not set in the config
-     */
-    const CLEAN_URL_DEFAULT_SEPARATOR = '-';
-
     // {{{ Abstract methods
 
     /**
@@ -175,8 +170,8 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
         $result = '';
 
         if (isset($name)) {
-            $separator = \Includes\Utils\ConfigParser::getOptions(array('clean_urls', 'default_separator'));
-            $result   .= strtolower(preg_replace('/\W+/S', $separator ?: static::CLEAN_URL_DEFAULT_SEPARATOR, $name));
+            $separator = \XLite\Core\Converter::getCleanURLSeparator();
+            $result   .= strtolower(preg_replace('/\W+/S', $separator, $name));
 
             $suffix    = '';
             $increment = 1;

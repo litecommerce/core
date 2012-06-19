@@ -125,10 +125,7 @@ class CleanURL extends \XLite\Core\Validator\String\RegExp
      */
     protected function getCleanURLPattern()
     {
-        return '/[\w' . (
-            \Includes\Utils\ConfigParser::getOptions(array('clean_urls', 'default_separator'))
-            ?: \XLite\Controller\Admin\Base\Catalog::CLEAN_URL_DEFAULT_SEPARATOR
-        ) . ']+/S';
+        return '/^' . \XLite\Core\Converter::getCleanURLAllowedCharsPattern() . '$/S';
     }
 
     /**

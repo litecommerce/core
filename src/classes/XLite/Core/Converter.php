@@ -43,6 +43,11 @@ class Converter extends \XLite\Base\Singleton
     const KILOBYTE = 1024;
 
     /**
+     * Use this char as separator, if the default one is not set in the config
+     */
+    const CLEAN_URL_DEFAULT_SEPARATOR = '-';
+
+    /**
      * Method name translation records
      *
      * @var   array
@@ -288,6 +293,36 @@ class Converter extends \XLite\Base\Singleton
         static::parseCleanURLHook($url, $last, $rest, $ext, $target, $params);
 
         return array($target, $params);
+    }
+
+    /**
+     * Return current separator for clean URLs
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function getCleanURLSeparator()
+    {
+        $result = \Includes\Utils\ConfigParser::getOptions(array('clean_urls', 'default_separator'));
+
+        if (empty($result) || !preg_match('/' . static::getCleanURLAllowedCharsPattern() . '/S', $result)) {
+            $result = static::CLEAN_URL_DEFAULT_SEPARATOR;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return pattern to check clean URLs
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function getCleanURLAllowedCharsPattern()
+    {
+        return '[\w_\-]+';
     }
 
     /**

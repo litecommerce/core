@@ -85,6 +85,10 @@ web_dir = ""
 
 [clean_urls]
 enabled = off
+; String with one or more chars.
+; It will be used to autogenerate clean URLs.
+; By default, only the "-" or "_" characters are allowed.
+; Empty string is also allowed.
 default_separator = "-"
 
 ;
