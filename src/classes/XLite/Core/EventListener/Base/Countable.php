@@ -94,6 +94,8 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
      */
     public function handleEvent($name, array $arguments)
     {
+        parent::handleEvent($name, $arguments);
+
         $this->errors = array();
 
         $result = false;
@@ -103,13 +105,7 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
         if ($this->isStepValid()) {
 
             $this->startStep();
-            $repo = \XLite\Core\Database::getRepo('XLite\Model\TmpVar');
-            foreach ($this->getItems() as $item) {
-                if ($this->processItem($item)) {
-                    $this->record['position']++;
-                    $repo->setEventState($this->getEventName(), $this->record);
-                }
-            }
+            $this->runCurrentStep();
 
             if ($this->record['length'] <= $this->record['position'] + 1) {
                 $this->finishTask();
@@ -165,6 +161,24 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
     }
 
     /**
+     * Run current step 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function runCurrentStep()
+    {
+        $repo = \XLite\Core\Database::getRepo('XLite\Model\TmpVar');
+        foreach ($this->getItems() as $item) {
+            if ($this->processItem($item)) {
+                $this->record['position']++;
+                $repo->setEventState($this->getEventName(), $this->record);
+            }
+        }
+    }
+
+    /**
      * Finish step 
      * 
      * @return void
@@ -177,7 +191,7 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
         \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->setEventState($this->getEventName(), $this->record);
 
         $event = $this->getEventName();
-        \XLite\Core\EventTask::$event();
+        \XLite\Core\EventTask::$event($this->arguments);
     }
 
     /**
