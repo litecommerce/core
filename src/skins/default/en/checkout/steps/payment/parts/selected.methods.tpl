@@ -10,7 +10,7 @@
  * @since     1.0.0
  * @ListChild (list="checkout.payment.selected", weight="10")
  *}
-<div class="methods">
+<div IF="!isPayedCart()" class="methods">
   <h3>{t(#Payment methods#)}</h3>
   <widget template="checkout/steps/payment/methods.tpl" />
 </div>
