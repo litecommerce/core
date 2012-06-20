@@ -48,9 +48,9 @@ CurrencyViewInfo.prototype.initialize = function ()
     }
   );
 
-  jQuery('.currency-view-info .currency .prefix').bind('prefixCurrencyChange', function(e, value) {jQuery(this).html(value);});
+  jQuery('.currency-view-info .currency .prefix').bind('prefixCurrencyChange', function(e, value) {jQuery(this).html(htmlspecialchars(value));});
 
-  jQuery('.currency-view-info .currency .suffix').bind('suffixCurrencyChange', function(e, value) {jQuery(this).html(value);});
+  jQuery('.currency-view-info .currency .suffix').bind('suffixCurrencyChange', function(e, value) {jQuery(this).html(htmlspecialchars(value));});
 }
 
 core.autoload(CurrencyViewInfo);
