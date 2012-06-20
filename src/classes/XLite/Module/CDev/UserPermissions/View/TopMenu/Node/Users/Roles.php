@@ -35,7 +35,7 @@ namespace XLite\Module\CDev\UserPermissions\View\TopMenu\Node\Users;
  *
  * @ListChild (list="menu.users", weight="300", zone="admin")
  */
-class Roles extends \XLite\View\TopMenu\Node\Users\AUsers
+class Roles extends \XLite\View\TopMenu\Node
 {
     /**
      * Define widget parameters
