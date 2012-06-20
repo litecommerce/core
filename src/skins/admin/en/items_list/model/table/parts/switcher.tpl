@@ -10,4 +10,4 @@
  * @since     1.0.15
  *}
 
-<widget class="XLite\View\FormField\Inline\Input\Checkbox\Switcher\Enabled" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" />
+<widget IF="getSwitcherField()" class="{switcherField.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" fieldName="enabled" fieldParams="{switcherField.parameters}" />

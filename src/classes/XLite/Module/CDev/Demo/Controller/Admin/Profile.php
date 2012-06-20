@@ -56,16 +56,24 @@ class Profile extends \XLite\Controller\Admin\Profile implements \XLite\Base\IDe
      */
     protected function getForbidInDemoModeRedirectURL()
     {
-        return 'delete' == \XLite\Core\Request::getInstance()->action
-            ? \XLite\Core\Converter::buildURL('users', '', array('mode' => 'search'))
-            : (
-                $this->getProfile()->getProfileId()
-                ? \XLite\Core\Converter::buildURL(
-                    'profile', 
-                    '', 
-                    array('profile_id' => $this->getProfile()->getProfileId())
-                )
-                : \XLite\Core\Converter::buildURL('profile', '', array('mode' => 'register'))
+        if ('delete' == \XLite\Core\Request::getInstance()->action) {
+
+            // Redirect for delete action
+            $url = \XLite\Core\Converter::buildURL('users', '', array('mode' => 'search'));
+
+        } elseif ($this->getProfile()->getProfileId()) {
+
+            // Redirect if profile found
+            $url = \XLite\Core\Converter::buildURL(
+                'profile',
+                '',
+                array('profile_id' => $this->getProfile()->getProfileId())
             );
+
+        } else {
+            $url = \XLite\Core\Converter::buildURL('profile', '', array('mode' => 'register'));
+        }
+
+        return $url;
     }
 }

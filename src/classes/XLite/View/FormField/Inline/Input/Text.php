@@ -33,7 +33,7 @@ namespace XLite\View\FormField\Inline\Input;
  * @see   ____class_see____
  * @since 1.0.15
  */
-abstract class Text extends \XLite\View\FormField\Inline\AInline
+class Text extends \XLite\View\FormField\Inline\Base\Single
 {
     /**
      * Define form field

@@ -35,9 +35,11 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Product")
  * @Table  (name="products",
+ *      uniqueConstraints={
+ *          @UniqueConstraint (name="sku", columns={"sku"})
+ *      },
  *      indexes={
  *          @Index (name="price", columns={"price"}),
- *          @Index (name="sku", columns={"sku"}),
  *          @Index (name="weight", columns={"weight"}),
  *          @Index (name="free_shipping", columns={"free_shipping"}),
  *          @Index (name="clean_url", columns={"clean_url"}),
@@ -86,7 +88,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length="32", nullable=true)
      */
     protected $sku;
 
@@ -240,6 +242,19 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     protected $classes;
 
+    /**
+     * Check SKU
+     *
+     * @param string $sku String to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function checkSKU($sku)
+    {
+        return '' !== $sku && false !== $sku;
+    }
 
     /**
      * Constructor
@@ -365,15 +380,21 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function isAvailable()
     {
-        $result = true;
+        return \XLite::isAdminZone() || $this->isPublicAvailable();
+    }
 
-        if (!\XLite::isAdminZone()) {
-            $result = $this->getEnabled()
-                && (!$this->getArrivalDate() || time() > $this->getArrivalDate())
-                && !$this->getInventory()->isOutOfStock();
-        }
-
-        return $result;
+    /**
+     * Check prodyct availability for public usage (customer interface)
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
+    public function isPublicAvailable()
+    {
+        return $this->getEnabled()
+            && (!$this->getArrivalDate() || time() > $this->getArrivalDate())
+            && !$this->getInventory()->isOutOfStock();
     }
 
     /**
@@ -625,7 +646,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      *
      * @PrePersist
      */
-    public function prepareDate()
+    public function prepareBeforeCreate()
     {
         if (!$this->getDate()) {
             $this->setDate(time());
@@ -635,7 +656,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
             $this->setArrivalDate(time());
         }
 
-        $this->prepareUpdateDate();
+        $this->prepareBeforeUpdate();
     }
 
     /**
@@ -647,9 +668,13 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      *
      * @PreUpdate
      */
-    public function prepareUpdateDate()
+    public function prepareBeforeUpdate()
     {
         $this->setUpdateDate(time());
+
+        if (!static::checkSKU($this->getSKU())) {
+            $this->setSKU(null);
+        }
     }
 
     /**

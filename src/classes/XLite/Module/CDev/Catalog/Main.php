@@ -25,75 +25,62 @@
  * @since     1.0.0
  */
 
-namespace XLite\Core\Validator;
+namespace XLite\Module\CDev\Catalog;
 
 /**
- * Product SKU
+ * Catalog module main class
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class SKU extends \XLite\Core\Validator\AValidator
+abstract class Main extends \XLite\Module\AModule
 {
-    protected $productId = null;
-
     /**
-     * Constructor
+     * Author name
      *
-     * @param integer|null $productid Product identificator
-     *
-     * @return void
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.10
      */
-    public function __construct($productId = null)
+    public static function getAuthorName()
     {
-        if (isset($productId)) {
-
-            $this->productId = (int) $productId;
-        }
-    }
-
-
-    /**
-     * Validate
-     *
-     * @param mixed $data Data
-     *
-     * @return void
-     * @throws \XLite\Core\Validator\Exception
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function validate($data)
-    {
-        $data = $this->sanitize($data);
-
-        $productSKU = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBySku($data);
-
-        if (
-            $productSKU
-            && (
-                isset($this->productId) && $productSKU->getProductId() !== $this->productId
-                || !isset($this->productId)
-            )
-        ) {
-            throw $this->throwError('SKU must be unique');
-        }
+        return 'Creative Development LLC';
     }
 
     /**
-     * Sanitize
+     * Module version
      *
-     * @param mixed $data Daa
-     *
-     * @return mixed
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.10
      */
-    public function sanitize($data)
+    public static function getMinorVersion()
     {
-        return (string)$data;
+        return '0';
     }
 
+    /**
+     * Module name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    public static function getModuleName()
+    {
+        return 'Catalog';
+    }
+
+    /**
+     * Module description
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    public static function getDescription()
+    {
+        return 'Disables checkout and makes your website a plain catalog'
+            . ' of products which customers can browse but can\'t buy online.';
+    }
 }

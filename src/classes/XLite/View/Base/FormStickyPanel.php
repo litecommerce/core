@@ -60,20 +60,54 @@ abstract class FormStickyPanel extends \XLite\View\Base\StickyPanel
      * Get cell class 
      * 
      * @param integer           $idx    Button index
+     * @param string            $name   Button name
      * @param \XLite\View\AView $button Button
      *  
      * @return string
      * @see    ____func_see____
      * @since  1.0.16
      */
-    protected function getCellClass($idx, \XLite\View\AView $button)
+    protected function getCellClass($idx, $name, \XLite\View\AView $button)
     {
-        $classes = array('panel-cell');
+        $classes = array('panel-cell', $name);
 
-        if (0 == $idx) {
+        if (1 == $idx) {
             $classes[] = 'first';
         }
 
+        if (count($this->getButtons()) == $idx) {
+            $classes[] = 'last';
+        }
+
+
         return implode(' ', $classes);
     }
+
+    /**
+     * Get subcell class (additional buttons)
+     *
+     * @param integer           $idx    Button index
+     * @param string            $name   Button name
+     * @param \XLite\View\AView $button Button
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getSubcellClass($idx, $name, \XLite\View\AView $button)
+    {
+        $classes = array('panel-subcell', $name);
+
+        if (1 == $idx) {
+            $classes[] = 'first';
+        }
+
+        if (count($this->getAdditionalButtons()) == $idx) {
+            $classes[] = 'last';
+        }
+
+
+        return implode(' ', $classes);
+    }
+
 }

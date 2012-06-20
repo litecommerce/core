@@ -31,7 +31,7 @@
           {if:column.template}
             <widget template="{column.template}" idx="{idx}" entity="{entity}" column="{column}" />
           {else:}
-            <widget class="{column.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" />
+            <widget class="{column.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" fieldName="{column.code}" fieldParams="{column.params}" />
           {end:}
           <list type="inherited" name="{getCellListNamePart(#cell#,column)}" column="{column}" entity="{entity}" />
         </td>

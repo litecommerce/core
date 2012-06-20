@@ -38,23 +38,28 @@ class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDecorator
     /**
      * Set validators pairs for products data. Sale structure.
      *
-     * @param mixed $data Data
+     * @param mixed &$data Data
      *
-     * @return null
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function setSaleDataValidators(&$data)
     {
         if ($this->getPostedData('participateSale')) {
+            switch ($this->getPostedData('discountType')) {
 
-            if (\XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PRICE == $this->getPostedData('discountType')) {
-                // sale value is price
-                $data->addPair('salePriceValue', new \XLite\Core\Validator\Float(), null, 'Sale price')->setRange(0);
+                case \XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PRICE:
+                    $data->addPair('salePriceValue', new \XLite\Core\Validator\Float(), null, 'Sale price')
+                        ->setRange(0);
+                    break;
 
-            } else {
-                // sale value is percent
-                $data->addPair('salePriceValue', new \XLite\Core\Validator\Integer(), null, 'Percent off')->setRange(1, 100);
+                case \XLite\Module\CDev\Sale\Model\Product::SALE_DISCOUNT_TYPE_PERCENT:
+                    $data->addPair('salePriceValue', new \XLite\Core\Validator\Integer(), null, 'Percent off')
+                        ->setRange(1, 100);
+                    break;
+
+                default:
             }
         }
     }

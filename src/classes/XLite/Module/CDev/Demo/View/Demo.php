@@ -47,7 +47,7 @@ class Demo extends \XLite\View\AView
      */
     public static function getAdditionalHeader()
     {
-        return <<<'HTML'
+        return <<<HTML
 <div class="demo-header">
 This LiteCommerce Admin zone demo has been created for illustrative purposes only. No changes made in the demo will be reflected in the Customer zone
 </div>
@@ -88,11 +88,27 @@ body {
 HTML;
     }
 
+    /**
+     * Display 
+     * 
+     * @param string $template Tempalte OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
     public function display($template = null)
     {
-        echo(static::getAdditionalHeader());
+        echo (static::getAdditionalHeader());
     }
 
+    /**
+     * Get default template 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
     protected function getDefaultTemplate()
     {
         return null;

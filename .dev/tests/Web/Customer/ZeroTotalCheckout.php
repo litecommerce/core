@@ -81,9 +81,11 @@ class XLite_Web_Customer_ZeroTotalCheckout extends XLite_Web_Customer_ACustomer
 
         $this->openAndWait('store/checkout');
 
-        $this->assertElementPresent("//div[@class='step-box' and text()='Payment is not required']");
+        $this->assertElementPresent("//div[@class='step-box']/p[text()='Billing address is not defined yet']");
 
-        // Change the product price to 1.00 (No "Payment is not required" block should be)
+        $this->fillShipping();
+
+        // Change the product price to 1.00 (No "Payment is not required" block should be visible)
         $this->openShortAdminAndWait('admin.php?target=product&id=' . $product->getProductId());
 
         $this->type('//input[@name="postedData[price]"]', '1');
@@ -92,7 +94,44 @@ class XLite_Web_Customer_ZeroTotalCheckout extends XLite_Web_Customer_ACustomer
 
         $this->openAndWait('store/checkout');
 
-        $this->assertElementNotPresent("//div[@class='step-box' and text()='Payment is not required']");
+        $this->assertElementPresent("//ul[@class='payments']");
+
     }
 
+    protected function fillShipping()
+    {
+        $this->typeKeys("//input[@id='create_profile_email']", 'test@test.ru');
+
+        $this->waitInlineProgress('#create_profile_email', 'email inline progress');
+
+        $this->typeKeys("//input[@id='shipping_address_name']", 'test name');
+
+        $this->typeKeys("//input[@id='shipping_address_street']", 'test street');
+
+        $this->typeKeys("//input[@id='shipping_address_city']", 'test city');
+
+        $this->typeKeys("//input[@id='shipping_address_zipcode']", '12345');
+
+        $this->waitForLocalCondition(
+            'jQuery("ul.shipping-rates").length == 1',
+            60000,
+            'No shipping rates table'
+        );
+
+        $this->click("//input[@id='method1']");
+
+        $this->waitForLocalCondition(
+            'jQuery(".shipping-step button.disabled").length == 0',
+            600000,
+            'Check shipping method'
+        );
+
+        $this->click("//button[@class='bright']");
+
+        $this->waitForLocalCondition(
+            'jQuery(".address-not-defined").length == 0',
+            30000,
+            'Billing address is not defined'
+        );
+    }
 }
