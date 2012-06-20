@@ -398,6 +398,14 @@ class AdminMain extends \XLite\View\Model\AModel
             unset($data['password']);
         }
 
+        if (
+            isset($data['roles'])
+            && (!\XLite\Core\Auth::getInstance()->isPermissionAllowed(\XLite\Model\Role\Permission::ROOT_ACCESS)
+            || (isset($data['access_level']) && \XLite\Core\Auth::getInstance()->getAdminAccessLevel() != $data['access_level']))
+        ) {
+            unset($data['roles']);
+        }
+
         $model = $this->getModelObject();
 
         // Assign only role for admin
@@ -409,7 +417,7 @@ class AdminMain extends \XLite\View\Model\AModel
         ) {
             $rootRole = \XLite\Core\Database::getRepo('XLite\Model\Role')->findOneRoot();
             if ($rootRole) {
-                if (!is_array($data['roles'])) {
+                if (!isset($data['roles'])) {
                     $data['roles'] = array();
                 }
 
@@ -417,22 +425,22 @@ class AdminMain extends \XLite\View\Model\AModel
             }
         }
 
-        // Remove roles from non-admin
         if (
-            isset($data['access_level'])
-            && \XLite\Core\Auth::getInstance()->getAdminAccessLevel() != $data['access_level']
+            isset($data['roles'])
+            || (isset($data['access_level']) && \XLite\Core\Auth::getInstance()->getAdminAccessLevel() != $data['access_level'])
+            || ($model->getProfileId() && !$model->isAdmin())
         ) {
-            $data['roles'] = array();
-        }
 
-        // Remove old links
-        foreach ($model->getRoles() as $role) {
-            $role->getProfiles()->removeElement($model);
+            // Remove old links
+            foreach ($model->getRoles() as $role) {
+                $role->getProfiles()->removeElement($model);
+            }
+            $model->getRoles()->clear();
         }
-        $model->getRoles()->clear();
 
         // Add new links
         if (isset($data['roles']) && is_array($data['roles'])) {
+            $data['roles'] = array_unique($data['roles']);
             foreach ($data['roles'] as $rid) {
                 $role = \XLite\Core\Database::getRepo('XLite\Model\Role')->find($rid);
                 if ($role) {
