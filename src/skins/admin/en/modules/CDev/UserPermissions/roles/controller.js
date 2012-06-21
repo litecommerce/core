@@ -12,6 +12,6 @@
 
 TableItemsList.prototype.listeners.unremovableRole = function(handler)
 {
-  jQuery('.unremovable .input-field-wrapper.switcher input', handler.container).attr('disabled', 'disabled');
+  jQuery('.permanent .input-field-wrapper.switcher input', handler.container).attr('disabled', 'disabled');
 }
 

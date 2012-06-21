@@ -193,11 +193,29 @@ class Roles extends \XLite\View\ItemsList\Model\Table
     {
         $classes = parent::defineLineClass($index, $entity);
 
+        if ($this->isPermanentRole($entity))  {
+            $classes[] = 'permanent';
+        }
+
         if ($this->isUnremovableRole($entity)) {
             $classes[] = 'unremovable';
         }
 
         return $classes;
+    }
+
+    /**
+     * Check - role is permanent or not
+     *
+     * @param \XLite\Model\Role $role Role
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function isPermanentRole(\XLite\Model\Role $role)
+    {
+        return $role->isPermanentRole();
     }
 
     /**
@@ -211,7 +229,8 @@ class Roles extends \XLite\View\ItemsList\Model\Table
      */
     protected function isUnremovableRole(\XLite\Model\Role $role)
     {
-        return $role->isPermanentRole();
+        return $role->isPermanentRole()
+            || \XLite\Core\Auth::getInstance()->getProfile()->GetRoles()->contains($role);
     }
 
     /**
@@ -260,7 +279,8 @@ class Roles extends \XLite\View\ItemsList\Model\Table
      */
     protected function removeEntity(\XLite\Model\AEntity $entity)
     {
-        return $entity->isPermanentRole() ? false : parent::removeEntity($entity);
+        return $this->isUnremovableRole($entity) ? false : parent::removeEntity($entity);
     }
+
 }
 
