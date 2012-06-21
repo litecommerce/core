@@ -42,7 +42,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @see   ____var_see____
      * @since 1.0.0
      */
-    public $params = array('target', 'id', 'page', 'backURL');
+    protected $params = array('target', 'id', 'product_id', 'page', 'backURL');
 
     /**
      * Check ACL permissions
