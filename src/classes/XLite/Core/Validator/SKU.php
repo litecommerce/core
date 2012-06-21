@@ -35,12 +35,19 @@ namespace XLite\Core\Validator;
  */
 class SKU extends \XLite\Core\Validator\AValidator
 {
-    protected $productId = null;
+    /**
+     * Product Id (saved)
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $productId;
 
     /**
      * Constructor
      *
-     * @param integer|null $productid Product identificator
+     * @param integer $productId Product identificator OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -49,11 +56,9 @@ class SKU extends \XLite\Core\Validator\AValidator
     public function __construct($productId = null)
     {
         if (isset($productId)) {
-
-            $this->productId = (int) $productId;
+            $this->productId = intval($productId);
         }
     }
-
 
     /**
      * Validate
@@ -61,39 +66,44 @@ class SKU extends \XLite\Core\Validator\AValidator
      * @param mixed $data Data
      *
      * @return void
-     * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function validate($data)
     {
-        $data = $this->sanitize($data);
+        if (\XLite\Model\Product::checkSKU($data)) {
+            $entity = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBySku($this->sanitize($data));
 
-        $productSKU = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBySku($data);
-
-        if (
-            $productSKU
-            && (
-                isset($this->productId) && $productSKU->getProductId() !== $this->productId
-                || !isset($this->productId)
-            )
-        ) {
-            throw $this->throwError('SKU must be unique');
+            if ($entity && (empty($this->productId) || $entity->getProductId() !== $this->productId)) {
+                $this->throwSKUError();
+            }
         }
     }
 
     /**
      * Sanitize
      *
-     * @param mixed $data Daa
+     * @param mixed $data Data
      *
-     * @return mixed
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function sanitize($data)
     {
-        return (string)$data;
+        return substr($data, 0, \XLite\Core\Database::getRepo('XLite\Model\Product')->getFieldInfo('sku', 'length'));
     }
 
+    /**
+     * Wrapper
+     *
+     * @return void
+     * @throws \XLite\Core\Validator\Exception
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function throwSKUError()
+    {
+        throw $this->throwError('SKU must be unique');
+    }
 }

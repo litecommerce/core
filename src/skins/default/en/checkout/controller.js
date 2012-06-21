@@ -549,15 +549,15 @@ CheckoutView.prototype.refreshState = function()
 
     // Payment step
 
-    // Payment methods is selected
-    var paymentMethodIsSelected = 1 == jQuery('ul.payments input:checked', this.base).length;
+    // Payment section is ready (payment method is selected or no payment is required)
+    var paymentIsReady = (jQuery('ul.payments').length > 0) ? (1 == jQuery('ul.payments input:checked', this.base).length) : true;
 
-    // Billing address is completed
+    // Billing address is ready (completed)
     isSameAddress = 1 == jQuery('.same-address #same_address:checked', this.base).length;
-    var billingAddressIsCompleted = isSameAddress
+    var billingAddressIsReady = isSameAddress
       || (0 < jQuery('form.billing-address ul.form :input', this.base).length && jQuery('form.billing-address', this.base).get(0).validate(true));
 
-    result = result && paymentMethodIsSelected && billingAddressIsCompleted;
+    result = result && paymentIsReady && billingAddressIsReady;
 
   } else if (box.hasClass('review-step')) {
 
