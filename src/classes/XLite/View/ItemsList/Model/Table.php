@@ -300,11 +300,19 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
         }
 
         if ($this->isSwitchable()) {
-            $list[] = $this->getSwitcherField();
+            $cell = $this->getSwitcherField();
+            $list[] = array(
+                'class'      => $cell['class'],
+                'parameters' => array('fieldName' => $cell['name'], 'fieldParams' => $cell['params']),
+            );
         }
 
         if (static::SORT_TYPE_NONE != $this->getSortableType()) {
-            $list[] = $this->getSortField();
+            $cell = $this->getSortField();
+            $list[] = array(
+                'class'      => $cell['class'],
+                'parameters' => array('fieldName' => $cell['name'], 'fieldParams' => $cell['params']),
+            );
         }
 
         foreach ($list as $i => $class) {
@@ -324,8 +332,9 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     protected function getSwitcherField()
     {
         return array(
-            'class'      => 'XLite\View\FormField\Inline\Input\Checkbox\Switcher\Enabled',
-            'parameters' => array('fieldName' => 'enabled'),
+            'class'  => 'XLite\View\FormField\Inline\Input\Checkbox\Switcher\Enabled',
+            'name'   => 'enabled',
+            'params' => array(),
         );
     }
 
@@ -340,13 +349,15 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     {
         return static::SORT_TYPE_INPUT == $this->getSortableType()
             ? array(
-                'class'      => 'XLite\View\FormField\Inline\Input\Text\Position\OrderBy',
-                'parameters' => array('fieldName' => 'position'),
+                'class'  => 'XLite\View\FormField\Inline\Input\Text\Position\OrderBy',
+                'name'   => 'position',
+                'params' => array(),
             )
             :
             array(
-                'class'      => 'XLite\View\FormField\Inline\Input\Text\Position\Move',
-                'parameters' => array(),
+                'class'  => 'XLite\View\FormField\Inline\Input\Text\Position\Move',
+                'name'   => 'position',
+                'params' => array(),
             );
     }
 

@@ -10,4 +10,4 @@
  * @since     1.0.15
  *}
 
-<widget IF="getSwitcherField()" class="{switcherField.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" fieldName="enabled" fieldParams="{switcherField.parameters}" />
+<widget IF="getSwitcherField()" class="{switcherField.class}" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" fieldName="{switcherField.name}" fieldParams="{switcherField.params}" />
