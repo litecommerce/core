@@ -59,6 +59,8 @@ abstract class AModel extends \XLite\View\Dialog
     const SCHEMA_OPTIONS = \XLite\View\FormField\Select\ASelect::PARAM_OPTIONS;
     const SCHEMA_IS_CHECKED = \XLite\View\FormField\Input\Checkbox::PARAM_IS_CHECKED;
 
+    const SCHEMA_MODEL_ATTRIBUTES = 'model_attributes';
+
     /**
      * Session cell to store form data
      */
@@ -583,6 +585,97 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
+     * Return model field name for a provided form field name
+     *
+     * @param string $name Name of form field
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModelFieldName($name)
+    {
+        return $name;
+    }
+
+    /**
+     * Return field mappings structure for the model
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFieldMappings()
+    {
+        if (!isset($this->fieldMappings)) {
+
+            // Collect metadata for fields of class and its translation class if there is one.
+            $metaData = \XLite\Core\Database::getEM()->getClassMetadata(get_class($this->getModelObject()));
+            $this->fieldMappings = $metaData->fieldMappings;
+
+            $metaDataTranslationClass = isset($metaData->associationMappings['translations'])
+                ? $metaData->associationMappings['translations']['targetEntity']
+                : false;
+
+            if ($metaDataTranslationClass) {
+
+                $metaDataTranslation = \XLite\Core\Database::getEM()->getClassMetadata($metaDataTranslationClass);
+                $this->fieldMappings += $metaDataTranslation->fieldMappings;
+            }
+        }
+
+        return $this->fieldMappings;
+    }
+
+    /**
+     * Return field mapping info for a given $name key
+     *
+     * @param string $name
+     *
+     * @return array|null
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFieldMapping($name)
+    {
+        $fieldMappings = $this->getFieldMappings();
+
+        $fieldName = $this->getModelFieldName($name);
+
+        return $fieldMappings[$fieldName] ?: null;
+    }
+
+    /**
+     * Return widget attributes that are collected from the model properties
+     *
+     * @param string $name
+     * @param array  $data
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModelAttributes($name, array $data)
+    {
+        $fieldMapping = $this->getFieldMapping($name);
+
+        $result = array();
+
+        if ($fieldMapping) {
+
+            foreach ($data[static::SCHEMA_MODEL_ATTRIBUTES] as $widgetAttribute => $modelAttribute) {
+
+                if (isset($fieldMapping[$modelAttribute])) {
+
+                    $result[$widgetAttribute] = $fieldMapping[$modelAttribute];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Perform some operations when creating fields list by schema
      *
      * @param string $name Node name
@@ -594,11 +687,23 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function getFieldSchemaArgs($name, array $data)
     {
-        if (!isset($data[self::SCHEMA_NAME])) {
-            $data[self::SCHEMA_NAME] = $this->composeFieldName($name);
+        if (!isset($data[static::SCHEMA_NAME])) {
+            $data[static::SCHEMA_NAME] = $this->composeFieldName($name);
         }
 
-        $data[self::SCHEMA_VALUE] = $this->getDefaultFieldValue($name);
+        $data[static::SCHEMA_VALUE] = $this->getDefaultFieldValue($name);
+
+        $data[static::SCHEMA_MODEL_ATTRIBUTES] = isset($data[static::SCHEMA_MODEL_ATTRIBUTES]) ? $data[static::SCHEMA_MODEL_ATTRIBUTES] : array();
+        $data[static::SCHEMA_ATTRIBUTES] = isset($data[static::SCHEMA_ATTRIBUTES]) ? $data[static::SCHEMA_ATTRIBUTES] : array();
+
+        if (is_subclass_of($data[static::SCHEMA_CLASS], 'XLite\View\FormField\Input\Base\String')) {
+
+            $data[static::SCHEMA_MODEL_ATTRIBUTES] += array(
+                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+            );
+        }
+
+        $data[static::SCHEMA_ATTRIBUTES] += isset($data[static::SCHEMA_MODEL_ATTRIBUTES]) ? $this->getModelAttributes($name, $data) : array();
 
         return $data;
     }

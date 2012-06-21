@@ -254,6 +254,20 @@ class Address extends \XLite\View\Model\AModel
     }
 
     /**
+     * Return model field name for a provided form field name
+     *
+     * @param string $name Name of form field
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModelFieldName($name)
+    {
+        return preg_replace('/^([^_]*_)(.*)$/', '\2', parent::getModelFieldName($name));
+    }
+
+    /**
      * Return name of web form widget class
      *
      * @return string
