@@ -693,16 +693,7 @@ abstract class AModel extends \XLite\View\Dialog
 
         $data[static::SCHEMA_VALUE] = $this->getDefaultFieldValue($name);
 
-        $data[static::SCHEMA_MODEL_ATTRIBUTES] = isset($data[static::SCHEMA_MODEL_ATTRIBUTES]) ? $data[static::SCHEMA_MODEL_ATTRIBUTES] : array();
-        $data[static::SCHEMA_ATTRIBUTES] = isset($data[static::SCHEMA_ATTRIBUTES]) ? $data[static::SCHEMA_ATTRIBUTES] : array();
-
-        if (is_subclass_of($data[static::SCHEMA_CLASS], 'XLite\View\FormField\Input\Base\String')) {
-
-            $data[static::SCHEMA_MODEL_ATTRIBUTES] += array(
-                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
-            );
-        }
-
+        $data[static::SCHEMA_ATTRIBUTES] = $data[static::SCHEMA_ATTRIBUTES] ? : array();
         $data[static::SCHEMA_ATTRIBUTES] += isset($data[static::SCHEMA_MODEL_ATTRIBUTES]) ? $this->getModelAttributes($name, $data) : array();
 
         return $data;
