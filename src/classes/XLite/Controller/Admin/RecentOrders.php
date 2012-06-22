@@ -56,7 +56,7 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      */
     public function handleRequest()
     {
-        if (!isset(\XLite\Core\Request::getInstance()->mode)) {
+        if (!isset(\XLite\Core\Request::getInstance()->mode) && !\XLite\Core\Request::getInstance()->{self::PARAM_ACTION}) {
             \XLite\Core\Request::getInstance()->{self::PARAM_ACTION} = 'search';
         }
 
