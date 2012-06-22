@@ -140,6 +140,20 @@ class Request extends \XLite\Base\Singleton
     }
 
     /**
+     * Return data from the $_SERVER global variable
+     *
+     * @param boolean $prepare Flag OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getServerData($prepare = true)
+    {
+        return $prepare ? $this->prepare($_SERVER) : $_SERVER;
+    }
+
+    /**
      * Return current request method
      *
      * @return string

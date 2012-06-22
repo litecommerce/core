@@ -396,4 +396,59 @@ abstract class ACustomer extends \XLite\Controller\AController
             || (!\XLite\Core\Request::getInstance()->isHTTPS()) && \XLite\Core\Config::getInstance()->Security->full_customer_security;
     }
 
+    // {{{ Clean URLs related routines
+
+    /**
+     * Preprocessor for no-action run
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doNoAction()
+    {
+        parent::doNoAction();
+
+        if (LC_USE_CLEAN_URLS && !$this->isAJAX() && !$this->isRedirectNeeded() && $this->isRedirectToCleanURLNeeded()) {
+            $this->performRedirectToCleanURL();
+        }
+    }
+
+    /**
+     * Check if redirect to clean URL is needed
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isRedirectToCleanURLNeeded()
+    {
+        return preg_match(
+            '/\/cart\.php/Si',
+            \Includes\Utils\ArrayManager::getIndex(\XLite\Core\Request::getInstance()->getServerData(), 'REQUEST_URI')
+        );
+    }
+
+    /**
+     * Redirect to clean URL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function performRedirectToCleanURL()
+    {
+        $data = \XLite\Core\Request::getInstance()->getGetData();
+
+        if (\XLite::TARGET_DEFAULT === ($target = $this->getTarget())) {
+            $target = '';
+
+        } else {
+            unset($data['target']);
+        }
+
+        $this->setReturnURL(\XLite\Core\Converter::buildFullURL($target, '', $data));
+    }
+
+    // }}}
 }

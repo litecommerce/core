@@ -160,7 +160,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Preprocessor for no-action ren
+     * Preprocessor for no-action run
      *
      * @return void
      * @see    ____func_see____
@@ -172,10 +172,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
 
         if (!$this->isAJAX()) {
             \XLite\Core\Session::getInstance()->productListURL = $this->getURL();
-
-            if (LC_USE_CLEAN_URLS && $this->isRedirectToCleanURLNeeded()) {
-                $this->performRedirectToCleanURL();
-            }
         }
     }
 
@@ -188,25 +184,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     protected function isRedirectToCleanURLNeeded()
     {
-        return !$this->isRedirectNeeded() && !\XLite::isCleanURL() && $this->getModelObject()->getCleanURL();
-    }
-
-    /**
-     * Redirect to clean URL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    protected function performRedirectToCleanURL()
-    {
-        $this->setReturnURL(
-            \XLite\Core\Converter::buildCleanURL(
-                $this->getTarget(), 
-                '',
-                \XLite\Core\Request::getInstance()->getGetData()
-            )
-        );
+        return parent::isRedirectToCleanURLNeeded() || (!\XLite::isCleanURL() && $this->getModelObject()->getCleanURL());
     }
 
     /**
