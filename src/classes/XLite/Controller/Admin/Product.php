@@ -291,20 +291,26 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
      */
     protected function getPostedData($field = null)
     {
-        $result = parent::getPostedData($field);
+        $value = parent::getPostedData($field);
 
-        if (!isset($field) || 'arrivalDate' === $field) {
-            $value = strtotime(parent::getPostedData('arrivalDate')) ?: time();
+        if (!isset($field)) {
 
-            if (isset($field)) {
-                $result = $value;
-
-            } else {
-                $result['arrivalDate'] = $value;
+            if (isset($value['arrivalDate'])) {
+                $value['arrivalDate'] = intval(strtotime($value['arrivalDate'])) ?: time();
             }
+
+            if (isset($value['sku']) && \XLite\Core\Converter::isEmptyString($value['sku'])) {
+                $value['sku'] = null;
+            }
+
+        } elseif ('arrivalDate' === $field) {
+            $value = intval(strtotime($value)) ?: time();
+
+        } elseif ('sku' === $field) {
+            $value = null;
         }
 
-        return $result;
+        return $value;
     }
 
     // }}}
