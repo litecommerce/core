@@ -73,15 +73,15 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
     }
 
     /**
-     * Return entity class
+     * Alias
      *
-     * @return string
+     * @return \XLite\Model\Product
      * @see    ____func_see____
      * @since  1.0.24
      */
-    protected function getEntityClass()
+    protected function getEntity()
     {
-        return '\XLite\Model\Product';
+        return $this->getProduct();
     }
 
     // }}}
@@ -365,6 +365,7 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
         );
 
         $product->getClasses()->clear();
+        $product->getCategoryProducts()->clear();
         $data = $this->getCategoryProducts($product) + $this->getClasses($product) + $this->getPostedData();
 
         // Update all data

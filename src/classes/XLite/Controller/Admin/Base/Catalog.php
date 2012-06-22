@@ -35,6 +35,11 @@ namespace XLite\Controller\Admin\Base;
  */
 abstract class Catalog extends \XLite\Controller\Admin\AAdmin
 {
+    /**
+     * Limit of iterations to generate clean URL
+     */
+    const CLEAN_URL_CHECK_LIMIT = 1000;
+
     // {{{ Abstract methods
 
     /**
@@ -58,13 +63,13 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     abstract protected function getFormClass();
 
     /**
-     * Return entity class
+     * Return entity object
      *
-     * @return string
+     * @return \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  1.0.24
      */
-    abstract protected function getEntityClass();
+    abstract protected function getEntity();
 
     /**
      * Add new entity
@@ -153,7 +158,7 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      */
     public function getCleanURLMaxLength()
     {
-        return \XLite\Core\Database::getRepo($this->getEntityClass())->getFieldInfo('cleanURL', 'length');
+        return \XLite\Core\Database::getRepo(get_class($this->getEntity()))->getFieldInfo('cleanURL', 'length');
     }
 
     /**
@@ -175,14 +180,24 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
 
             $suffix    = '';
             $increment = 1;
-            
-            while (\XLite\Core\Database::getRepo($this->getEntityClass())->findOneByCleanURL($result . $suffix)) {
+
+            $entity    = $this->getEntity();
+            $repo      = \XLite\Core\Database::getRepo(get_class($entity));
+    
+            while (
+                ($tmp = $repo->findOneByCleanURL($result . $suffix))
+                && $entity->getUniqueIdentifier() != $tmp->getUniqueIdentifier()
+                && $increment < static::CLEAN_URL_CHECK_LIMIT
+            ) {
                 $suffix = $separator . $increment++;
-            }   
-            
+            }
+    
             if (!empty($suffix)) {
-                // DO NOT change call order
-                $this->setCleanURLWarning($result, $suffix);
+
+                if ($entity->getCleanURL() !== ($result . $suffix)) {
+                    $this->setCleanURLWarning($result, $suffix);
+                }
+
                 $result .= $suffix;
             }
         }

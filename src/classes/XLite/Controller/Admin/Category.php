@@ -73,15 +73,15 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     }
 
     /**
-     * Return entity class
+     * Alias
      *
-     * @return string
+     * @return \XLite\Model\Category
      * @see    ____func_see____
      * @since  1.0.24
      */
-    protected function getEntityClass()
+    protected function getEntity()
     {
-        return '\XLite\Model\Category';
+        return $this->getCategory();
     }
 
     // }}}
