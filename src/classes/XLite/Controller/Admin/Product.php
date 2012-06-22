@@ -537,11 +537,21 @@ class Product extends \XLite\Controller\Admin\AAdmin
     {
         $value = parent::getPostedData($field);
 
-        if ('arrivalDate' == $field) {
+        if (!isset($field)) {
+
+            if (isset($value['arrivalDate'])) {
+                $value['arrivalDate'] = intval(strtotime($value['arrivalDate'])) ?: time();
+            }
+
+            if (isset($value['sku']) && \XLite\Core\Converter::isEmptyString($value['sku'])) {
+                $value['sku'] = null;
+            }
+
+        } elseif ('arrivalDate' === $field) {
             $value = intval(strtotime($value)) ?: time();
 
-        } elseif (!isset($field) && isset($value['arrivalDate'])) {
-            $value['arrivalDate'] = intval(strtotime($value['arrivalDate'])) ?: time();
+        } elseif ('sku' === $field) {
+            $value = null;
         }
 
         return $value;
