@@ -107,7 +107,7 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
             $this->startStep();
             $this->runCurrentStep();
 
-            if ($this->record['length'] <= $this->record['position'] + 1) {
+            if ($this->record['length'] <= $this->record['position']) {
                 $this->finishTask();
 
             } else {

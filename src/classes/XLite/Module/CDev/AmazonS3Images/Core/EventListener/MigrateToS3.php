@@ -127,12 +127,18 @@ class MigrateToS3 extends \XLite\Core\EventListener\Base\Countable
      */
     protected function getItems()
     {
+        $length = static::CHUNK_LENGTH;
         $chunk = array();
 
         foreach (\XLite\Model\Repo\Base\Image::getManagedRepositories() as $class) {
             if (0 < \XLite\Core\Database::getRepo($class)->countNoS3Images()) {
-                $chunk = \XLite\Core\Database::getRepo($class)->findNoS3Images(static::CHUNK_LENGTH);
-                break;
+                $chunk = array_merge($chunk, \XLite\Core\Database::getRepo($class)->findNoS3Images($length));
+                if (count($chunk) < $length) {
+                    $length = static::CHUNK_LENGTH - count($chunk);
+
+                } else {
+                    break;
+                }
             }
         }
 
