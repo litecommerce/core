@@ -45,9 +45,9 @@ class Title extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
-            'Mr.'  => 'Mr.',
-            'Ms.'  => 'Ms.',
-            'Mrs.' => 'Mrs.',
+            'Mr.'  => static::t('Mr.'),
+            'Ms.'  => static::t('Ms.'),
+            'Mrs.' => static::t('Mrs.'),
         );
     }
 }

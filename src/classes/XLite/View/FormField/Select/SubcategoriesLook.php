@@ -45,8 +45,8 @@ class SubcategoriesLook extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
-            'list'  => 'List',
-            'icons' => 'Icons',
+            'list'  => static::t('List'),
+            'icons' => static::t('Icons'),
         );
     }
 }

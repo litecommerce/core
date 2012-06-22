@@ -52,9 +52,9 @@ class LabelModeSelector extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
-            self::DO_NOT_DISPLAY  => 'Never',
-            self::PRODUCT_DETAILS => 'On product details only',
-            self::ALL_CATALOG     => 'On all catalog pages',
+            static::DO_NOT_DISPLAY  => static::t('Never'),
+            static::PRODUCT_DETAILS => static::t('On product details only'),
+            static::ALL_CATALOG     => static::t('On all catalog pages'),
         );
     }
 }

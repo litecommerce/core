@@ -45,8 +45,8 @@ class AddressType extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
-            'R' => 'Residential',
-            'C' => 'Commercial',
+            'R' => static::t('Residential'),
+            'C' => static::t('Commercial'),
         );
     }
 }
