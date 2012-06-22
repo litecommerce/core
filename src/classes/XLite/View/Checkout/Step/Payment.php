@@ -77,18 +77,6 @@ class Payment extends \XLite\View\Checkout\Step\AStep
     }
 
     /**
-     * Check - step is enabled (true) or skipped (false)
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isEnabled()
-    {
-        return parent::isEnabled() && (!$this->isPayedCart());
-    }
-
-    /**
      * Check if step is completed
      *
      * @return boolean
@@ -97,12 +85,10 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      */
     public function isCompleted()
     {
-        return !$this->isEnabled()
-            || ($this->getCart()->getProfile()
+        return $this->getCart()->getProfile()
                 && $this->getCart()->getProfile()->getBillingAddress()
                 && $this->getCart()->getProfile()->getBillingAddress()->isCompleted(\XLite\Model\Address::BILLING)
-                && $this->getCart()->getPaymentMethod()
-            );
+                && ($this->getCart()->getPaymentMethod() || $this->isPayedCart());
     }
 
     /**

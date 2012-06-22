@@ -1405,6 +1405,79 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * Call for Flexy modifier from AView class
+     *
+     * @param string $callMethod Name of method to call
+     * @param string $expr       Exression to modify
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function flexyModifierCall($callMethod, $expr)
+    {
+        $callMethod = 'flexyModifier' . ucfirst($callMethod);
+
+        return method_exists($this, $callMethod) ? $this->$callMethod($expr) : '';
+    }
+
+    /**
+     * nl2br modifier
+     *
+     * @param string $expr
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function flexyModifierNl2br($expr)
+    {
+        return nl2br($expr);
+    }
+
+    /**
+     * Trim modifier
+     *
+     * @param string $expr
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function flexyModifierTrim($expr)
+    {
+        return trim($expr);
+    }
+
+    /**
+     * LTrim modifier
+     *
+     * @param string $expr
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function flexyModifierLtrim($expr)
+    {
+        return ltrim($expr);
+    }
+
+    /**
+     * RTrim modifier
+     *
+     * @param string $expr
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function flexyModifierRtrim($expr)
+    {
+        return rtrim($expr);
+    }
+
+    /**
      * Add slashes
      *
      * @param mixed  $base  String or object instance to get field value from

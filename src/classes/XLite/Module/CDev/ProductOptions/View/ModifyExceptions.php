@@ -54,7 +54,7 @@ class ModifyExceptions extends \XLite\View\AView
      */
     public function getProductId()
     {
-        return intval(\XLite\Core\Request::getInstance()->id);
+        return $this->getProduct()->getProductId();
     }
 
     /**
@@ -66,13 +66,11 @@ class ModifyExceptions extends \XLite\View\AView
      */
     public function getGroups()
     {
-        $list = \XLite\Core\Database::getRepo('\XLite\Model\Product')
-            ->find($this->getProductId())
-            ->getOptionGroups();
+        $list = array();
 
-        foreach ($list as $i => $group) {
-            if ($group::TEXT_TYPE == $group->getType()) {
-                unset($list[$i]);
+        foreach ($this->getProduct()->getOptionGroups() as $group) {
+            if ($group::TEXT_TYPE != $group->getType()) {
+                $list[] = $group;
             }
         }
 
@@ -176,8 +174,6 @@ class ModifyExceptions extends \XLite\View\AView
     protected function isVisible()
     {
         return parent::isVisible()
-            && \XLite\Core\Database::getRepo('\XLite\Model\Product')
-                ->find($this->getProductId())
-                ->getOptionGroups()->count();
+            && $this->getProduct()->getOptionGroups()->count();
     }
 }
