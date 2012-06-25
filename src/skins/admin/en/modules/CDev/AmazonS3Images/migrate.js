@@ -25,7 +25,7 @@ jQuery().ready(
     ).bind(
       'complete',
       function() {
-        if (this.errorState) {
+        if (!this.errorState) {
           self.location.reload();
         }
       }

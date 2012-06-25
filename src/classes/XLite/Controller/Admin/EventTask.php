@@ -93,6 +93,7 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Event::eventTaskRun(
                 array(
                     'percent' => \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getEventStatePercent($event),
+                    'error'   => !empty($errors)
                 )
             );
 
@@ -126,6 +127,7 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
         
         $data = array(
             'percent' => $state && 0 < $state['position'] ? min(100, round($state['position'] / $state['length'] * 100)) : 0,
+            'error'   => false,
         );
 
         print json_encode($data);

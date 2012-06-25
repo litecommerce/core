@@ -32,9 +32,6 @@ jQuery().ready(
           function(xhr, status, data, valid) {
             if (xhr.readyState != 4 || xhr.status != 200) {
               core.showError('Event task runner internal error');
-
-            } else if (!valid) {
-              bar.trigger('error');
             }
           },
           {},
@@ -42,6 +39,9 @@ jQuery().ready(
         );
 
       } else {
+        if (data.error) {
+          bar.trigger('error');
+        }
         bar.trigger('complete');
       }
     }
@@ -89,6 +89,11 @@ jQuery().ready(
                 timer = setTimeout(function () { return o.updateProgressBar(); }, timerTTL);
 
               } else {
+
+                if (data.error) {
+                  bar.trigger('error');
+                }
+
                 bar.trigger('complete');
               }
 
