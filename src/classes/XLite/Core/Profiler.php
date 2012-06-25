@@ -392,7 +392,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
 
             if (self::$useXdebugStackTrace) {
                 xdebug_start_trace(
-                    LC_DIR_VAR . 'log' . LC_DS . $timePoint . '.' . microtime(true),
+                    LC_DIR_LOG . $timePoint . '.' . microtime(true),
                     XDEBUG_TRACE_COMPUTERIZED
                 );
             }

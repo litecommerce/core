@@ -48,8 +48,8 @@ class Log extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Get log path 
-     * 
+     * Get log path
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.11
@@ -60,7 +60,7 @@ class Log extends \XLite\Controller\Admin\AAdmin
         if ($path && !preg_match(\XLite\Logger::LOG_FILE_NAME_PATTERN, $path)) {
             $path = null;
         }
-        $path = $path ? (LC_DIR_VAR . 'log' . LC_DS . $path) : null;
+        $path = $path ? (LC_DIR_LOG . $path) : null;
 
         return (!$path || !file_exists($path) || !is_readable($path)) ? null : $path;
     }
