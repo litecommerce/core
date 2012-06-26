@@ -45,9 +45,9 @@ class FeaturedProductsLook extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
-            'list'  => 'List',
-            'grid'  => 'Grid',
-            'table' => 'Table',
+            'list'  => static::t('List'),
+            'grid'  => static::t('Grid'),
+            'table' => static::t('Table'),
         );
     }
 }

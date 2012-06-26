@@ -51,8 +51,8 @@ class YesNo extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
-            self::YES  => 'Yes',
-            self::NO   => 'No',
+            static::YES => static::t('Yes'),
+            static::NO  => static::t('No'),
         );
     }
 }

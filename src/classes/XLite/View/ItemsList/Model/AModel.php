@@ -367,7 +367,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
         $list = array();
 
         foreach ($this->getCreateFieldClasses() as $object) {
-            $list[] = $this->prepareInlineField($object, $entity);
+            $this->prepareInlineField($object, $entity);
+            $list[] = $object;
         }
 
         return $list;

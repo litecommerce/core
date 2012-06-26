@@ -36,7 +36,7 @@ namespace XLite;
 class Logger extends \XLite\Base\Singleton
 {
     /**
-     * Log file name regexp pattern 
+     * Log file name regexp pattern
      */
     const LOG_FILE_NAME_PATTERN = '/^[a-zA-Z_]+\.log\.\d{4}-\d{2}-\d{2}\.php$/Ss';
 
@@ -91,8 +91,8 @@ class Logger extends \XLite\Base\Singleton
     );
 
     /**
-     * Runtime id 
-     * 
+     * Runtime id
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.11
@@ -330,11 +330,11 @@ class Logger extends \XLite\Base\Singleton
 
     /**
      * Log custom message
-     * 
+     *
      * @param string  $type         Message type
      * @param string  $message      Message
      * @param boolean $useBackTrace User backtrace flag OPTIONAL
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.11
@@ -360,10 +360,10 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Get custom log URL 
-     * 
+     * Get custom log URL
+     *
      * @param string $type Type
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.11
@@ -374,24 +374,24 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Get custom log file path 
-     * 
+     * Get custom log file path
+     *
      * @param string $type Type
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.11
      */
     public function getCustomLogPath($type)
     {
-        return LC_DIR_VAR . 'log' . LC_DS . $this->getCustomLogFileName($type);
+        return LC_DIR_LOG . $this->getCustomLogFileName($type);
     }
 
     /**
-     * Get custom log file name 
-     * 
+     * Get custom log file name
+     *
      * @param string $type Type
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.11
@@ -402,8 +402,8 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Get log file header 
-     * 
+     * Get log file header
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.11
@@ -604,7 +604,7 @@ class Logger extends \XLite\Base\Singleton
      */
     protected function getErrorLogPath()
     {
-        return LC_DIR_VAR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
+        return LC_DIR_LOG . 'php_errors.log.' . date('Y-m-d') . '.php';
     }
 
     /**

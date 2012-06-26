@@ -45,9 +45,9 @@ class TrackingType extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
-            '1' => 'A single domain',
-            '2' => 'One domain with multiple subdomains',
-            '3' => 'Multiple top-level domains',
+            '1' => static::t('A single domain'),
+            '2' => static::t('One domain with multiple subdomains'),
+            '3' => static::t('Multiple top-level domains'),
         );
     }
 }

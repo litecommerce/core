@@ -1,0 +1,61 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Role form styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.17
+ */
+
+form.role ul.table .table-label
+{
+  padding: 7px 0 7px 10px;
+  color: #456583;
+  white-space: normal;
+}
+
+form.role ul.table .table-value {
+  padding: 7px 0px;
+  width: 50%;
+}
+
+form.role ul.table li .input-field-wrapper {
+  vertical-align: middle;
+  display: inline-block;
+  float: left;
+}
+
+form.role ul.default-table div.table-label label {
+  width: 180px;
+}
+
+form.role div.star {
+  padding-top: 13px;
+}
+
+form.role div.table-value input.float {
+  width: 100px;
+}
+
+form.role div.table-value input.integer {
+  width: 80px;
+}
+
+form.role .wheel-mark {
+  margin-right: 0px;
+}
+
+form.role ul li {
+  float: none;
+}
+
+form.role div.default-section {
+  float: none;
+}
+
+form.role select {
+  float: left;
+}

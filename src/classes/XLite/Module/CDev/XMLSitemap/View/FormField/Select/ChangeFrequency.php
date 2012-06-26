@@ -45,13 +45,13 @@ class ChangeFrequency extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
-            'always'  => 'always',
-            'hourly'  => 'hourly',
-            'daily'   => 'daily',
-            'weekly'  => 'weekly',
-            'monthly' => 'monthly',
-            'yearly'  => 'yearly',
-            'never'   => 'never',
+            'always'  => static::t('always'),
+            'hourly'  => static::t('hourly'),
+            'daily'   => static::t('daily'),
+            'weekly'  => static::t('weekly'),
+            'monthly' => static::t('monthly'),
+            'yearly'  => static::t('yearly'),
+            'never'   => static::t('never'),
         );
     }
 }
