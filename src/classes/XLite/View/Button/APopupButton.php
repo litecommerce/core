@@ -98,7 +98,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      */
     protected function getButtonContent()
     {
-        return $this->getParam(self::PARAM_LABEL) ?: $this->getDefaultLabel();
+        return $this->getParam(static::PARAM_LABEL) ?: $this->getDefaultLabel();
     }
 
     /**

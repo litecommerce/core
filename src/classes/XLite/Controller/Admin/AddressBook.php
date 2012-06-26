@@ -45,6 +45,20 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     protected $address = null;
 
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL()
+            || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage users')
+            || ($this->getProfile() && $this->getProfile()->getProfileId() == \XLite\Core\Auth::getInstance()->getProfile()->getProfileId());
+    }
+
+    /**
      * Return the current page title (for the content area)
      *
      * @return string

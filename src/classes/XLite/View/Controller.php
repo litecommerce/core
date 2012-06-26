@@ -163,7 +163,7 @@ class Controller extends \XLite\View\AView
         $second = $this->isSidebarSecondVisible();
 
         if ($first && $second) {
-            $classes[] = 'two-sidebar';
+            $classes[] = 'two-sidebars';
 
         } elseif ($first || $second) {
             $classes[] = 'one-sidebar';

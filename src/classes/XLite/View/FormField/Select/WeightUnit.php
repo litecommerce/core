@@ -61,10 +61,10 @@ class WeightUnit extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
-            'lbs' => 'LB',
-            'oz'  => 'OZ',
-            'kg'  => 'KG',
-            'g'   => 'G',
+            'lbs' => static::t('LB'),
+            'oz'  => static::t('OZ'),
+            'kg'  => static::t('KG'),
+            'g'   => static::t('G'),
         );
     }
 }

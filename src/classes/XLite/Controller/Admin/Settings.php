@@ -78,6 +78,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         return 'General settings';
     }
 
+    // {{{ Pages
+
     /**
      * Get tab names
      *
@@ -87,14 +89,15 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function getPages()
     {
-        return array(
-            'General'     => 'General',
-            'Company'     => 'Company',
-            'Email'       => 'Email',
-            'Security'    => 'Security',
-            'Environment' => 'Environment',
-            'Performance' => 'Performance',
-        );
+        $list = parent::getPages();
+        $list['General']     = 'General';
+        $list['Company']     = 'Company';
+        $list['Email']       = 'Email';
+        $list['Security']    = 'Security';
+        $list['Environment'] = 'Environment';
+        $list['Performance'] = 'Performance';
+
+        return $list;
     }
 
     /**
@@ -104,18 +107,20 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
-        $list = $this->getPages();
+        $list = parent::getPageTemplates();
 
-        foreach ($list as $k => $v) {
-            $list[$k] = 'settings/base.tpl';
+        foreach ($this->getPages() as $name => $title) {
+            $list[$name] = 'settings/base.tpl';
         }
 
         $list['Environment'] = 'summary.tpl';
 
         return $list;
     }
+
+    // }}}
 
     /**
      * Get options for current tab (category)

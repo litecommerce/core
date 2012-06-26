@@ -91,5 +91,17 @@ abstract class ACheckboxList extends \XLite\View\FormField\Select\Multiple
         return $attrs;
     }
 
+    /**
+     * Get default attributes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultAttributes()
+    {
+        return parent::getDefaultAttributes() + array('data-header' => '0');
+    }
+
 }
 

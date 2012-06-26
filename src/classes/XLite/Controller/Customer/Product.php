@@ -36,14 +36,29 @@ namespace XLite\Controller\Customer;
 class Product extends \XLite\Controller\Customer\Catalog
 {
     /**
-     * Controller parameters list
+     * Product 
      *
-     * @var   array
+     * @var   \XLite\Model\Product
      * @see   ____var_see____
-     * @since 1.0.0
+     * @since 1.0.21
      */
-    protected $params = array('target', 'product_id');
+    protected $product;
 
+    /**
+     * Define and set handler attributes; initialize handler
+     *
+     * @param array $params Handler params OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __construct(array $params = array())
+    {
+        parent::__construct($params);
+        
+        $this->params[] = 'product_id';
+    }
 
     /**
      * Check whether the title is to be displayed in the content area
@@ -108,9 +123,24 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     public function getProduct()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
+        if (!isset($this->product)) {
+            $this->product = $this->defineProduct();
+        }
+
+        return $this->product;
     }
 
+    /**
+     * Define product
+     *
+     * @return \XLite\Model\Product
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineProduct()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
+    }
 
     /**
      * Common method to determine current location
@@ -133,7 +163,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     protected function getProductId()
     {
-        return intval(\XLite\Core\Request::getInstance()->product_id);
+        return \XLite\Core\Request::getInstance()->product_id;
     }
 
     /**

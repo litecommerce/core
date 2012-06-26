@@ -45,6 +45,22 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     abstract protected function getModelObject();
 
     /**
+     * Define and set handler attributes; initialize handler
+     *
+     * @param array $params Handler params OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __construct(array $params = array())
+    {
+        parent::__construct($params);
+
+        $this->params[] = 'category_id';
+    }
+
+    /**
      * Return current (or default) category object
      *
      * @return \XLite\Model\Category
@@ -144,7 +160,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Preprocessor for no-action ren
+     * Preprocessor for no-action run
      *
      * @return void
      * @see    ____func_see____
@@ -154,9 +170,21 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     {
         parent::doNoAction();
 
-        if (!\XLite\Core\Request::getInstance()->isAJAX()) {
+        if (!$this->isAJAX()) {
             \XLite\Core\Session::getInstance()->productListURL = $this->getURL();
         }
+    }
+
+    /**
+     * Check if redirect to clean URL is needed
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isRedirectToCleanURLNeeded()
+    {
+        return parent::isRedirectToCleanURLNeeded() || (!\XLite::isCleanURL() && $this->getModelObject()->getCleanURL());
     }
 
     /**

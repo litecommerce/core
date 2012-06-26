@@ -14,6 +14,8 @@ XLite\Model\Language:
 
 XLite\Model\Config:
   directives: { addModel: 'XLite\Model\ConfigTranslation' }
+  - { name: 'add_on_mode', category: 'General', translations: [{ code: 'fr', option_name: 'Travailler en mode "bureau des commandes"' }] }
+  - { name: 'add_on_mode_page', category: 'General', translations: [{ code: 'fr', option_name: 'Page principale du bureau des commandes' }] }
   - { name: 'admin_presentation', category: 'General', translations: [{ code: 'fr', option_name: 'Paramètres de la zone d''Administrateur' }] }
   - { name: 'admin_security', category: 'Security', translations: [{ code: 'fr', option_name: 'Utilisez HTTPS dans la zone d''administrateur' }] }
   - { name: 'anonymous', category: 'Shipping', translations: [{ code: 'fr', option_name: 'Adresse de livraison client par défaut' }] }
@@ -47,6 +49,7 @@ XLite\Model\Config:
   - { name: 'direct_product_url', category: 'General', translations: [{ code: 'fr', option_name: 'Autoriser l''accès par URL direct aux produits des catégories désactivées' }] }
   - { name: 'display_check_number', category: 'General', translations: [{ code: 'fr', option_name: 'Afficher le numéro de chèque pour méthode de paiement eCheck' }] }
   - { name: 'drupal_root_url', category: 'CDev\DrupalConnector', translations: [{ code: 'fr', option_name: 'URL racine de l''installation Drupal' }] }
+  - { name: 'enable_anon_checkout', category: 'General', translations: [{ code: 'fr', option_name: 'Autoriser la vérification sans inscription' }] }
   - { name: 'enable_init_order_notif', category: 'Email', translations: [{ code: 'fr', option_name: 'Envoyer les détails de commande au service commercial après le passage de commande' }] }
   - { name: 'enable_init_order_notif_customer', category: 'Email', translations: [{ code: 'fr', option_name: 'Envoyer les détails de commande aux clients après le passage des commandes' }] }
   - { name: 'fb_admins', category: 'CDev\GoSocial', translations: [{ code: 'fr', option_name: 'Administrateurs de Facebook', option_comment: 'La liste des ID utilisateur Facebook des administrateurs de page au format séparé par des virgules. Incluez au moins votre ID utilisateur Facebook.' }] }
@@ -83,6 +86,7 @@ XLite\Model\Config:
   - { name: 'minimal_order_amount', category: 'General', translations: [{ code: 'fr', option_name: 'Total minimal autorisé de la commande' }] }
   - { name: 'number_of_bestsellers', category: 'CDev\Bestsellers', translations: [{ code: 'fr', option_name: 'Nombre de produits dans la liste des meilleures ventes' }] }
   - { name: 'operation_presentation', category: 'General', translations: [{ code: 'fr', option_name: 'Opération et maintenance' }] }
+  - { name: 'order_starting_number', category: 'General', translations: [{ code: 'fr', option_name: 'Numéro de commande initial' }] }
   - { name: 'orders_department', category: 'Company', translations: [{ code: 'fr', option_name: 'E-mail du service commercial' }] }
   - { name: 'orders_per_page', category: 'General', translations: [{ code: 'fr', option_name: 'Commandes par page' }] }
   - { name: 'product_changefreq', category: 'CDev\XMLSitemap', translations: [{ code: 'fr', option_name: 'Changer la fréquence d''actualisation de page de produit' }] }
@@ -97,6 +101,7 @@ XLite\Model\Config:
   - { name: 'sale_menu', category: 'CDev\Sale', translations: [{ code: 'fr', option_name: 'Afficher la page "Produits en vente" bloc', option_comment: 'Drupal paramètres de bloc peuvent remplacer cette option (lorsque le module DrupalConnector est activé).' }] }
   - { name: 'shop_closed', category: 'General', translations: [{ code: 'fr', option_name: 'Cochez pour fermer le magasin temporairement' }] }
   - { name: 'shop_currency', category: 'General', translations: [{ code: 'fr', option_name: 'Devise de magasin' }] }
+  - { name: 'show_thumbnails', category: 'General', translations: [{ code: 'fr', option_name: 'Afficher les vignettes dans la liste des produits' }] }
   - { name: 'site_administrator', category: 'Company', translations: [{ code: 'fr', option_name: 'E-mail de l''administrateur du site' }] }
   - { name: 'smtp_password', category: 'Email', translations: [{ code: 'fr', option_name: 'Mot de passe' }] }
   - { name: 'smtp_security', category: 'Email', translations: [{ code: 'fr', option_name: 'Connection sécurisée' }] }
@@ -124,6 +129,34 @@ XLite\Model\Config:
   - { name: 'weight_unit', category: 'General', translations: [{ code: 'fr', option_name: 'Unité de poids ' }] }
   - { name: 'welcome_changefreq', category: 'CDev\XMLSitemap', translations: [{ code: 'fr', option_name: 'Changer la fréquence d''actualisation de page d''accueil' }] }
   - { name: 'welcome_priority', category: 'CDev\XMLSitemap', translations: [{ code: 'fr', option_name: 'Priorité à la page d''accueil', option_comment: 'La valeur doit être comprise entre 0 et 1.' }] }
+  - { name: 'ttl', category: 'CDev\Egoods', translations: [{ code: 'fr', option_name: 'Durée de vie de lien de téléchargement (jours)', option_comment: 'définissez zéro pour accès illimité' }] }
+  - { name: 'attempts_limit', category: 'CDev\Egoods', translations: [{ code: 'fr', option_name: 'Téléchargements limite (pour 1 article commandé)', option_comment: 'définissez zéro pour accès illimité' }] }
+  - { name: 'sep_product_advisor_na', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Les paramètres de section "Les nouveautés" ' }] }
+  - { name: 'na_enabled', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Activer la "Nouveautés" fonctionnalité dans le catalogue' }] }
+  - { name: 'na_max_days', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Nombre de jours pour considérer les produits marqués comme nouveautés', option_comment: 'Spécifiez une valeur différente de zéro, sinon 30 jours sera utilisé par défaut.' }] }
+  - { name: 'na_max_count_in_full_list', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Nombre maximal de produits à afficher dans la liste des nouveautés ', option_comment: 'Limite le nombre total de produits qui peuvent être affichés lorsque l''utilisateur clique sur le "Tous les nouveautés" dans la "Nouveautés" section. Laissez 0 pour aucune limite.' }] }
+  - { name: 'na_mark_with_label', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Marquer nouveaux produits dans le catalogue', option_comment: 'Marquer nouveaux produits sur toutes les listes de produits (sauf "Nouveautés» listes) avec le "Nouveau!" label.' }] }
+  - { name: 'na_show_in_sidebar', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Afficher section "Nouveautés" dans l''encadré (sinon dans la zone centrale)' }] }
+  - { name: 'na_max_count_in_block', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Nombre maximal de produits à afficher dans section "Nouveautés"', option_comment: 'Définit le nombre maximum de produits qui peuvent être affichés dans la section "Nouveautés". Spécifiez une valeur différente de zéro, sinon, 3 produits seront affichés par défaut. Si la valeur spécifiée est inférieure à la quantité totale de produits sur la liste complète des nouveautés, cette valeur sera utilisée. Drupal paramètres  peuvent remplacer cette option (lorsque DrupalConnector module est activé).' }] }
+  - { name: 'na_from_current_category', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Afficher seulement les nouveaux produits qui viennent d'' être revus par client dans une catégorie particulière', option_comment: 'Drupal paramètres  peuvent remplacer cette option (lorsque DrupalConnector module est activé ).' }] }
+  - { name: 'sep_product_advisor_cs', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Les paramètres de section "Les articles à venir bientôt"' }] }
+  - { name: 'cs_enabled', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Activer la fonctionnalité "Les articles à venir bientôt" dans le catalogue' }] }
+  - { name: 'cs_mark_with_label', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Marquer les produits à venir dans le catalogue', option_comment: 'Marquer les produits à venir dans toutes les listes de produits (à l''exception de listes "Les produits à venir ") avec le label "Coming soon ...".' }] }
+  - { name: 'cs_display_date', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Afficher la date d''arrivée sur les pages des détails du produit' }] }
+  - { name: 'cs_from_current_category', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Afficher dans la section "Les articles à venir bientôt" uniquement des produits qui viennent d'' être revus par client dans une catégorie particulière', option_comment: 'Drupal paramètres  peuvent remplacer cette option (lorsque DrupalConnector module est activé ).' }] }
+  - { name: 'cs_show_in_sidebar', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Afficher section "Les articles à venir bientôt" dans l''encadré (sinon dans la zone centrale)', option_comment: 'Drupal paramètres  peuvent remplacer cette option (lorsque DrupalConnector module est activé ).' }] }
+  - { name: 'cs_max_count_in_block', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Nombre maximal de produits à afficher dans section "Les articles à venir bientôt"', option_comment: 'Définit le nombre maximum de produits qui peuvent être affichés dans la section "Les produits à venir". Spécifiez une valeur différente de zéro, sinon, 3 produits seront affichés par défaut. Drupal paramètres  peuvent remplacer cette option (lorsque DrupalConnector module est activé).' }] }
+  - { name: 'sep_product_advisor_rv', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Les paramètres de section "Vus récemment"' }] }
+  - { name: 'rv_enabled', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Afficher la section "Vus récemment" dans le catalogue' }] }
+  - { name: 'rv_max_count_in_block', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Nombre maximal de produits à afficher dans section "Vus récemment"', option_comment: 'Définit la quantité maximale de produits qui peuvent être affichés dans la section "Récemment vus". Laissez 0 pour aucune limite. Drupal paramètres  peuvent remplacer cette option (lorsque DrupalConnector module est activé).' }] }
+  - { name: 'sep_product_advisor_cbb', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Les paramètres de section "Les clients qui ont acheté ce produit ont aussi commandé"' }] }
+  - { name: 'cbb_enabled', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Afficher la section dans le catalogue' }] }
+  - { name: 'cbb_max_count_in_block', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Nombre maximal de produits à afficher dans la section', option_comment: 'Définit le nombre maximum de produits qui peuvent être affichés dans la section "Les clients qui ont acheté ce produit ont aussi commandé". Spécifiez une valeur différente de zéro, sinon, 3 produits seront affichés par défaut. Drupal paramètres  peuvent remplacer cette option (lorsque DrupalConnector module est activé).' }] }
+  - { name: 'sep_product_advisor_cvb', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Les paramètres de section "Les clients qui ont vu ce produit ont aussi vu"' }] }
+  - { name: 'cvb_enabled', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Afficher la section dans le catalogue' }] }
+  - { name: 'cvb_max_count_in_block', category: 'CDev\ProductAdvisor', translations: [{ code: 'fr', option_name: 'Nombre maximal de produits à afficher dans la section', option_comment: 'Définit le nombre maximum de produits qui peuvent être affichés dans la section "Les clients qui ont vu ce produit ont aussi vu". Spécifiez une valeur différente de zéro, sinon, 3 produits seront affichés par défaut. Drupal paramètres  peuvent remplacer cette option (lorsque DrupalConnector module est activé).' }] }
+  - { name: 'display_prices_including_vat', category: 'CDev\VAT', translations: [{ code: 'fr', option_name: 'Afficher les prix dans le catalogue, y compris la TVA' }] }
+  - { name: 'display_inc_vat_label', category: 'CDev\VAT', translations: [{ code: 'fr', option_name: 'Afficher "TTC/TVA non comprise" labels à côté des prix', option_comment: 'Si cette option est cochée tous les prix dans le catalogue seront affichés avec le label "TTC" ou "TVA non comprise" selon que la TVA est incluse dans le prix ou non. Si vous ne choisissez pas afficher ce label, il vous faut placer des informations à ce sujet quelque part sur les pages du catalogue comme cela doît être clair pour les clients.' }] }
 
 XLite\Model\LanguageLabel:
   directives: { addModel: 'XLite\Model\LanguageLabelTranslation' }
@@ -699,6 +732,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Safe mode', translations: [{ code: 'fr', label: 'Mode sans échec' }] }
   - { name: 'Safe mode access key', translations: [{ code: 'fr', label: 'Clé d''accès pour le mode sans échec' }] }
   - { name: 'Sale', translations: [{ code: 'fr', label: 'Vente' }] }
+  - { name: 'sale', translations: [{ code: 'fr', label: 'Vente' }] }
   - { name: 'Sale price', translations: [{ code: 'fr', label: 'Prix de vente' }] }
   - { name: 'Sales', translations: [{ code: 'fr', label: 'Ventes' }] }
   - { name: 'Sales tax', translations: [{ code: 'fr', label: 'Taxe de vente' }] }
@@ -937,10 +971,10 @@ XLite\Model\LanguageLabel:
   - { name: 'Update profile', translations: [{ code: 'fr', label: 'Actualiser le profil' }] }
   - { name: 'Updates are available', translations: [{ code: 'fr', label: 'Les mises à jour sont disponibles' }] }
   - { name: 'Updates for the LC core and/or installed modules are available', translations: [{ code: 'fr', label: 'Il y a des mises à jour des modules installés et/ou de noyau LC' }] }
-  - { name: 'Updates for your version', translations: [{ code: 'fr', label: 'Mises à jour pour votre version' }] }
+  - { name: 'Updates for your version ({{version}})', translations: [{ code: 'fr', label: 'Mises à jour pour votre version ({{version}})' }] }
   - { name: 'Upgrade', translations: [{ code: 'fr', label: 'Mettre à jour' }] }
   - { name: 'Upgrade core', translations: [{ code: 'fr', label: 'Mettre à jour le noyau' }] }
-  - { name: 'Upgrade to version', translations: [{ code: 'fr', label: 'Mettre à niveau vers la version' }] }
+  - { name: 'Upgrade to version {{version}}', translations: [{ code: 'fr', label: 'Mettre à niveau vers la version {{version}}' }] }
   - { name: 'Upload', translations: [{ code: 'fr', label: 'Télécharger' }] }
   - { name: 'Upload add-on', translations: [{ code: 'fr', label: 'Télécharger le module' }] }
   - { name: 'Upload and restore', translations: [{ code: 'fr', label: 'Télécharger et restaurer' }] }
@@ -1073,16 +1107,124 @@ XLite\Model\LanguageLabel:
   - { name: 'Response from marketplace: ', translations: [{ code: 'fr', label: 'Réponse de marché:' }] }
   - { name: 'All products on sale', translations: [{ code: 'fr', label: 'Tous produits en vente' }] }
   - { name: 'Old price', translations: [{ code: 'fr', label: 'Ancien prix' }] }
-  - { name: 'Search for modules', translations: [{ code: 'fr', label: 'Le nom du module souhaité' }] }
-  - { name: 'Warning! There is not enough product items in stock to process the order', translations: [{ code: 'fr', label: 'Attention! Il n''y a pas assez de points produits en stock pour traiter l''ordre' }] }
-  - { name: 'Dear', translations: [{ code: 'fr', label: 'cher' }] }
-  - { name: 'Products information has been successfully updated', translations: [{ code: 'fr', label: 'Produits d''information a été mis à jour' }] }
+  - { name: 'Search for modules', translations: [{ code: 'fr', label: 'Nom du module souhaité' }] }
+  - { name: 'Warning! There is not enough product items in stock to process the order', translations: [{ code: 'fr', label: 'Attention! La quantité d''articles du produit en stock n''est pas suffisant pour traiter la commande' }] }
+  - { name: 'Dear', translations: [{ code: 'fr', label: 'Cher' }] }
+  - { name: 'Products information has been successfully updated', translations: [{ code: 'fr', label: 'Les informations sur le produit ont été mis à jour avec succès.' }] }
   - { name: 'Are you sure you wish to delete the selected zones?', translations: [{ code: 'fr', label: 'Etes-vous sûr de vouloir supprimer les zones sélectionnées?' }] }
-  - { name: 'It is impossible to edit some user profile fields because your store currently works as an integration with Drupal and shares users with Drupal. Modifying these fields is possible via Drupal administrator interface.', translations: [{ code: 'fr', label: 'Il est impossible de modifier certains champs du profil utilisateur, car votre magasin travaille actuellement comme une intégration avec Drupal et les utilisateurs des actions avec Drupal. La modification de ces champs est possible via l''interface administrateur de Drupal.' }] }
-  - { name: 'Test email configuration', translations: [{ code: 'fr', label: 'Configuration de la messagerie d''essai' }] }
-  - { name: 'From email', translations: [{ code: 'fr', label: 'De email' }] }
-  - { name: 'To email', translations: [{ code: 'fr', label: 'Pour envoyer un courriel' }] }
-  - { name: 'Email body', translations: [{ code: 'fr', label: 'corps de l''email' }] }
-  - { name: 'Send test email', translations: [{ code: 'fr', label: 'Envoyer un email de test' }] }
+  - { name: 'It is impossible to edit some user profile fields because your store currently works as an integration with Drupal and shares users with Drupal. Modifying these fields is possible via Drupal administrator interface.', translations: [{ code: 'fr', label: 'Il est impossible de modifier certains champs des profils utilisateur, car votre magasin travaille présentement au mode d''intégration avec Drupal et a les utilisateurs communs avec Drupal. La modification de ces champs est possible via l''interface administrateur de Drupal.' }] }
+  - { name: 'Test email configuration', translations: [{ code: 'fr', label: 'Vérifier l''adresse e-mail' }] }
+  - { name: 'From email', translations: [{ code: 'fr', label: 'E-mail de l''expéditeur' }] }
+  - { name: 'To email', translations: [{ code: 'fr', label: 'E-mail de destinataire' }] }
+  - { name: 'Email body', translations: [{ code: 'fr', label: 'Corps du message' }] }
+  - { name: 'Send test email', translations: [{ code: 'fr', label: 'Envoyer un courriel test' }] }
   - { name: 'not installed', translations: [{ code: 'fr', label: 'pas installé' }] }
   - { name: 'Install', translations: [{ code: 'fr', label: 'Installer' }] }
+  - { name: 'Drupal frontend', translations: [{ code: 'fr', label: 'Interface Drupal ' }] }
+  - { name: 'Return to Drupal', translations: [{ code: 'fr', label: 'Retour à Drupal  ' }] }
+  - { name: 'Username or e-mail', translations: [{ code: 'fr', label: 'Nom d''utilisateur ou e-mail' }] }
+  - { name: 'View update log', translations: [{ code: 'fr', label: 'Consulter le protocole de mise à jour' }] }
+  - { name: 'Do not close this page!', translations: [{ code: 'fr', label: 'Ne fremez pas la page!' }] }
+  - { name: 'Disable suspicious modules', translations: [{ code: 'fr', label: 'Désactiver des modules suspects.' }] }
+  - { name: 'Disable all modules in the system', translations: [{ code: 'fr', label: 'Désactiver tous les modules dans le système.' }] }
+  - { name: 'soft reset', translations: [{ code: 'fr', label: 'Réinitialisation partielle' }] }
+  - { name: 'hard reset', translations: [{ code: 'fr', label: 'Redémarrage à froid' }] }
+  - { name: 'Restore last backup', translations: [{ code: 'fr', label: 'Restituer la dernière sauvegarde' }] }
+  - { name: 'should be performed manually', translations: [{ code: 'fr', label: 'doit être effectué manuellement' }] }
+  - { name: 'Updated components', translations: [{ code: 'fr', label: 'Composants mis à jour' }] }
+  - { name: 'The upgrade is completed. Please, do not close this page until you check your web site and check that everything works properly', translations: [{ code: 'fr', label: 'La mise à jour est achevée' }] }
+  - { name: 'Yes, I agree with License agreement', translations: [{ code: 'fr', label: 'Oui, j''accepte le contrat de licence' }] }
+  - { name: 'Logged as', translations: [{ code: 'fr', label: 'Connecté comme' }] }
+  - { name: 'Added to cart', translations: [{ code: 'fr', label: 'Ajouté au panier' }] }
+  - { name: 'Click to unblock', translations: [{ code: 'fr', label: 'Cliquez pour débloquer' }] }
+  - { name: 'Activate your paid module license', translations: [{ code: 'fr', label: 'Activer la licence du module payé' }] }
+  - { name: 'Promotions', translations: [{ code: 'fr', label: 'Promotions' }] }
+  - { name: 'Discount', translations: [{ code: 'fr', label: 'Rabais' }] }
+  - { name: 'Coupons', translations: [{ code: 'fr', label: 'Coupons' }] }
+  - { name: 'Add discount', translations: [{ code: 'fr', label: 'Ajouter le rabais' }] }
+  - { name: 'Volume discounts', translations: [{ code: 'fr', label: 'Rabais de volume' }] }
+  - { name: 'New discount coupon', translations: [{ code: 'fr', label: 'Nouveaux bons de réduction' }] }
+  - { name: 'Display prices in catalog including VAT', translations: [{ code: 'fr', label: 'Afficher les prix dans le catalogue, y compris la TVA' }] }
+  - { name: 'Display ''inc/ex VAT'' labels next to prices', translations: [{ code: 'fr', label: 'Afficher "TTC/TVA non comprise" labels à côté des prix' }] }
+  - { name: 'On product details only', translations: [{ code: 'fr', label: 'Dans les détails de produit seulement' }] }
+  - { name: 'On all catalog pages', translations: [{ code: 'fr', label: 'Sur toutes les pages du catalogue' }] }
+  - { name: 'Secure connection cannot be established.', translations: [{ code: 'fr', label: 'Connexion sécurisée ne peut pas être établie.' }] }
+  - { name: 'Have a discount coupon?', translations: [{ code: 'fr', label: 'Avez un bon de réduction?' }] }
+  - { name: 'Enter coupon code', translations: [{ code: 'fr', label: 'Entrez le code du bon de réduction' }] }
+  - { name: 'There is no such a coupon, please check the spelling: X', translations: [{ code: 'fr', label: 'Il n''y a pas de tel coupon, vérifier l''orthographe, s''il vous plaît: "{{code}}"' }] }
+  - { name: 'Date: newest first', translations: [{ code: 'fr', label: 'Date: du plus récent au plus ancien' }] }
+  - { name: 'Date: oldest first', translations: [{ code: 'fr', label: 'Date: du plus ancien au plus récent' }] }
+  - { name: 'LiteCommerce core version', translations: [{ code: 'fr', label: 'Version du noyau Litecommerce' }] }
+  - { name: 'Thank you for your order FOOTER', translations: [{ code: 'fr', label: 'Merci pour votre commande faite avec notre système d''achat. <br />Bonne visite et à bientôt!' }] }
+  - { name: 'Get X off for order amount over Y', translations: [{ code: 'fr', label: 'Obtenez {{X}} de rabais pour montant de commande plus que {{Y}}' }] }
+  - { name: 'Have more coupons', translations: [{ code: 'fr', label: 'Vous avez encore des bons de réduction' }] }
+  - { name: 'Have more coupons?', translations: [{ code: 'fr', label: 'Avez -vous encore des bons de réduction' }] }
+  - { name: 'Limit number of uses', translations: [{ code: 'fr', label: 'Limiter le nombre d''utilisations' }] }
+  - { name: 'Maximum number of uses', translations: [{ code: 'fr', label: 'Le nombre maximum d''utilisations' }] }
+  - { name: 'Maximum order subtotal must be greater than minimum order subtotal', translations: [{ code: 'fr', label: 'Le maximum total partiel de commande doit dépasser le minimum total partiel de commande' }] }
+  - { name: 'Maximum order subtotal the coupon can be applied to', translations: [{ code: 'fr', label: 'Le maximum total partiel d''ordre dont un bon de rabais peut être appliqué ' }] }
+  - { name: 'Minimum order subtotal must be less than maximum order subtotal', translations: [{ code: 'fr', label: 'Le minimum total partiel de commande doit être inférieur au maximum total partiel de commande' }] }
+  - { name: 'Moneybookers Quick Checkout enables you to take direct payment from credit cards, debit cards and over 60 other local payment options in over 200 countries as well as the Moneybookers eWallet.', translations: [{ code: 'fr', label: '<strong> Moneybookers Quick checkout</strong> vous permets d''accepter le paiment <strong>directement</strong> des cartes de crédit, cartes de débit et plus de 60 options de paiement locales dans plus de 200 pays ainsi que Moneybookers eWallet. La tarification très concurrentielle pour ce service est publiée sur le site de Moneybookers <a href=\"http://www.moneybookers.com/app/help.pl?s=m_fees\">www.moneybookers.com</a>' }] }
+  - { name: 'New arrivals', translations: [{ code: 'fr', label: 'Les nouveautés' }] }
+  - { name: 'New!', translations: [{ code: 'fr', label: 'Nouveau' }] }
+  - { name: 'No modules found for search_string', translations: [{ code: 'fr', label: 'Aucun module trouvé pour \"<em>{{search_string}}</em>\"' }] }
+  - { name: 'Occurred X add product events', translations: [{ code: 'fr', label: '{{new}} articles viennent d''être ajoutés' }] }
+  - { name: 'Occurred X add product events and Y update product events', translations: [{ code: 'fr', label: '{{new}} articles viennent d''être ajoutés et {{old}} articles viennent d''être mis à jour ' }] }
+  - { name: 'Occurred Y update product events', translations: [{ code: 'fr', label: '{{old}} articles viennent d''être mis à jour' }] }
+  - { name: 'Period end date must be later than period start date', translations: [{ code: 'fr', label: 'La date de fin de période doit être postérieure à la date de début de période' }] }
+  - { name: 'Period start date must be sooner than period end date', translations: [{ code: 'fr', label: 'La date de debut de période doit être antérieure à la date de fin de période' }] }
+  - { name: 'Recently viewed', translations: [{ code: 'fr', label: 'Vus récemment' }] }
+  - { name: 'To have access to the International payment network of Moneybookers please register here for a free account if you don''t have one yet.', translations: [{ code: 'fr', label: 'Pour avoir accès au réseau de paiement international de Moneybookers  vous inscrivez-vous, s''il vous plaît <a href=\"{{url}}\">ici</a> pour un compte gratuit si vous ne l''avez pas encore.' }] }
+  - { name: 'To use the coupon, your order subtotal must be at least X', translations: [{ code: 'fr', label: 'Le bon de rabais peut être utilisé si le sous-total de votre commande est d''au moins {{min}}' }] }
+  - { name: 'To use the coupon, your order subtotal must be between X and Y', translations: [{ code: 'fr', label: 'Le bon de rabais peut être utilisé si le sous-total de votre commande est compris entre {{min}} et {{max}}' }] }
+  - { name: 'To use the coupon, your order subtotal must not exceed Y', translations: [{ code: 'fr', label: 'Le bon de rabais peut être utilisé si le sous-total de votre commande ne dépasse pas {{min}}' }] }
+  - { name: 'X product(s) has been created', translations: [{ code: 'fr', label: '{{count}} produits ont été créés' }] }
+  - { name: 'X product(s) has been removed', translations: [{ code: 'fr', label: '{{count}} produits ont été supprimés' }] }
+  - { name: 'You have already used the coupon', translations: [{ code: 'fr', label: 'Vous avez déjà utilisé le bon de rabais' }] }
+  - { name: 'You have sent a request for activation on the X.', translations: [{ code: 'fr', label: 'Vous avez envoyé une demande d''activation à {{date}}. Le processus de vérification d''utilisation Moneybookers Quick Checkout peut prendre jusqu''à 72 heures. Vous serez contacté par Moneybookers lorsque le processus de vérification est achevé. Après l''activation, Moneybookers vous gagnerez accès à une nouvelle section dans votre compte Moneybookers, elle s''appèl Merchant Tools. Veuillez choisir un mot secret dans cette section (PAS le même que votre mot de passe) et l''entrez dans la section ci-dessous pour vous connecter à Moneybookers. Le mot secret est la dernière étape de votre processus d''activation, il encrypte vos paiements en toute sécurité. Après la présentation succès, vous êtes prêt à utiliser toutes les options de paiement direct de Moneybookers.' }] }
+  - { name: 'Your order has been processed', translations: [{ code: 'fr', label: 'Votre commande #{{id}} a été traitée.' }] }
+  - { name: 'Your order has failed', translations: [{ code: 'fr', label: 'Votre commande #{{id}} a échoué ou a été rejetée par l''administration du magasin.' }] }
+  - { name: 'excl.VAT', translations: [{ code: 'fr', label: 'excluant. {{name}}' }] }
+  - { name: 'incl.VAT', translations: [{ code: 'fr', label: 'incluant. {{name}}' }] }
+  - { name: 'percent X off', translations: [{ code: 'fr', label: '{{percent}}% de réduction' }] }
+  - { name: 'X entities has been created', translations: [{ code: 'fr', label: '{{count}} rabais ont été créés' }] }
+  - { name: 'X entities has been removed', translations: [{ code: 'fr', label: '{{count}} rabais ont été supprimés' }] }
+  - { name: 'All customers', translations: [{ code: 'fr', label: 'Tous les clients' }] }
+  - { name: 'Comment', translations: [{ code: 'fr', label: 'Commentaire' }] }
+  - { name: 'This comment will be visisble to shop administrators only', translations: [{ code: 'fr', label: 'Ce commentaire sera visisble aux administrateurs de magasin seulement' }] }
+  - { name: 'Discount type', translations: [{ code: 'fr', label: 'Type de rabais' }] }
+  - { name: 'Discount amount', translations: [{ code: 'fr', label: 'Montant du rabais' }] }
+  - { name: 'Active from', translations: [{ code: 'fr', label: 'Actif à partir de' }] }
+  - { name: 'Active till', translations: [{ code: 'fr', label: 'Actif jusqu''à' }] }
+  - { name: 'Subtotal range (begin)', translations: [{ code: 'fr', label: 'Gamme de sous-total (commencent)' }] }
+  - { name: 'Subtotal range (end)', translations: [{ code: 'fr', label: 'Gamme de sous-total (fin)' }] }
+  - { name: 'Limit the number of uses', translations: [{ code: 'fr', label: 'Limiter le nombre d''utilisations' }] }
+  - { name: 'Memberships', translations: [{ code: 'fr', label: 'Adhésions' }] }
+  - { name: 'Date when customers can start using the coupon', translations: [{ code: 'fr', label: 'Jour lors les clients peuvent commencer à utiliser le bon de rabais' }] }
+  - { name: 'Date when the coupon expires', translations: [{ code: 'fr', label: 'Jour lors le bon de rabais expire' }] }
+  - { name: 'Minimum order subtotal the coupon can be applied to', translations: [{ code: 'fr', label: 'Le minimal sous-total de commande dont le bon de rabais peut être appliqué' }] }
+  - { name: 'Coupon discount can be limited to these product classes', translations: [{ code: 'fr', label: 'Le bon de rabais peut être limité aux catégories de produits suivantes' }] }
+  - { name: 'Coupon discount can be limited to customers with these membership levels', translations: [{ code: 'fr', label: 'Le bon de rabais peut être limité aux groupes de clients suivants' }] }
+  - { name: 'The maximum number of uses', translations: [{ code: 'fr', label: 'Le nombre maximum d''utilisations' }] }
+  - { name: 'Uses left', translations: [{ code: 'fr', label: 'Utilisations reste' }] }
+  - { name: 'Uses count', translations: [{ code: 'fr', label: 'Le nombre d''utilisations' }] }
+  - { name: 'Coupon code', translations: [{ code: 'fr', label: 'Code de bon de rabais' }] }
+  - { name: 'X coupon(s) has been removed', translations: [{ code: 'fr', label: '{{count}} bons de rabais ont été enlevés' }] }
+  - { name: 'X coupon(s) has been created', translations: [{ code: 'fr', label: '{{count}} bons de rabais ont été créés' }] }
+  - { name: 'The coupon has been added', translations: [{ code: 'fr', label: 'Le bon de rabais a été ajouté' }] }
+  - { name: 'The coupon has been applied to your order', translations: [{ code: 'fr', label: 'Le bon de rabais a été appliqué à votre commande' }] }
+  - { name: 'Coupon discount', translations: [{ code: 'fr', label: 'La réduction de bon de rabais' }] }
+  - { name: '$ off', translations: [{ code: 'fr', label: '$ de rabais' }] }
+  - { name: 'Coming soon', translations: [{ code: 'fr', label: 'Les articles à venir bientôt' }] }
+  - { name: 'All newest products', translations: [{ code: 'fr', label: 'Tous produits les plus récents' }] }
+  - { name: 'All upcoming products', translations: [{ code: 'fr', label: 'Tous les produits à venir' }] }
+  - { name: 'Customers who bought this product also bought', translations: [{ code: 'fr', label: 'Les clients qui ont acheté ce produit ont aussi commandé' }] }
+  - { name: 'Customers who viewed this product bought', translations: [{ code: 'fr', label: 'Les clients qui ont vu ce produit ont aussi vu' }] }
+  - { name: 'An upgrade is a dangerous process that may result in a crashed website. It is strongly recommended to create a full back up of your shop (the code and the database) and download it to a local computer before proceeding to the next step.', translations: [{ code: 'fr', label: 'Une mise à niveau peut entraîner un site écrasé. Il est fortement recommandé de créer une sauvegarde complète de votre magasin (le code et la base de données) et le télécharger sur un ordinateur local avant de procéder à l''étape suivante.' }] }
+  - { name: 'After the upgrade is completed please check your website. If you find that the site is inoperative, please try to do the following', translations: [{ code: 'fr', label: 'Après la mise à niveau est terminée vérifiez votre site web, s''il vous plaît. Si vous trouvez le site inopérant,  essayer de faire ce qui suit s''il vous plaît.' }] }
+  - { name: 'Please save the soft reset and hard reset links so that you can use them later in case the website crash happens', translations: [{ code: 'fr', label: 'S''il vous plaît enregistrez les liens de réinitialisation partielle et de redémarrage à froid afin que vous puissiez les utiliser plus tard en cas de faillite du site .' }] }
+  - { name: 'Create a backup', translations: [{ code: 'fr', label: 'Créez une copie de sauvegarde' }] }
+  - { name: 'Downloaded components', translations: [{ code: 'fr', label: 'Components téléchargés' }] }
+  - { name: 'If there are some critical errors occured you can do the following', translations: [{ code: 'fr', label: 'Si il y a quelques erreurs critiques, vous pouvez effectuer les opérations suivantes' }] }
+  - { name: 'Loading...', translations: [{ code: 'fr', label: 'Téléchargement...' }] }
+  - { name: 'If this option is ticked all prices in the catalog will be shown with ''inc VAT'' or ''ex VAT'' label depending on whether included VAT into the price or not. If you choose do not display this label, you have to place information about it somewhere on the cat', translations: [{ code: 'fr', label: 'Si cette option est cochée tous les prix dans le catalogue seront affichés avec le label "TTC" ou "TVA non comprise" selon que la TVA est incluse dans le prix ou non. Si vous ne choisissez pas afficher ce label, il vous faut placer des informations à ce sujet quelque part sur les pages du catalogue comme cela doît être clair pour les clients.' }] }

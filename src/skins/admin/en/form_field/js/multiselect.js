@@ -16,14 +16,40 @@ CommonElement.prototype.handlers.push(
       return 0 < this.$element.filter('select.multiselect').length;
     },
     handler: function () {
-      var options = { minWidth: 300, header: false, selectedList: 2 };
+      var options = {
+        minWidth: this.$element.width(),
+        header: false,
+        selectedList: 2,
+        height: 10 < this.$element.find('options').length ? 250 : 'auto'
+      };
       if (this.$element.data('text')) {
         options.selectedText = this.$element.data('text');
       }
       if (this.$element.data('header')) {
         options.header = true;
+
+      } else if (this.$element.data('filter')) {
+        options.header = 'close';
       }
+
+      if (this.$element.data('filter')) {
+        options.classes = 'ui-multiselect-with-filter';
+      }
+
       this.$element.multiselect(options);
+
+      if (this.$element.data('filter')) {
+        var options = {placeholder: this.$element.data('filter-placeholder')};
+        this.$element.multiselectfilter(options);
+        jQuery('.ui-multiselect-filter').each(
+          function () {
+            if (3 == this.childNodes[0].nodeType) {
+              this.removeChild(this.childNodes[0]);
+            }
+          }
+        );
+      }
+
     }
   }
 );

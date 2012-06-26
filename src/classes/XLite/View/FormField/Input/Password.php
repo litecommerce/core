@@ -34,21 +34,8 @@ namespace XLite\View\FormField\Input;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Password extends \XLite\View\FormField\Input\Base\String
+class Password extends \XLite\View\FormField\Input\Secure
 {
-    /**
-     * Return field type
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getFieldType()
-    {
-        return self::FIELD_TYPE_PASSWORD;
-    }
-
-
     /**
      * setCommonAttributes
      *

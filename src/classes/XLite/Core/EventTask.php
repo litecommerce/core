@@ -35,6 +35,12 @@ namespace XLite\Core;
  */
 class EventTask extends \XLite\Base\Singleton
 {
+    const STATE_STANDBY     = 1;
+    const STATE_IN_PROGRESS = 2;
+    const STATE_FINISHED    = 3;
+    const STATE_ABORTED     = 4;
+
+
     /**
      * Driver 
      * 
@@ -74,7 +80,7 @@ class EventTask extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  1.0.19
      */
-    protected function getDriver()
+    public function getDriver()
     {
         if (!isset($this->driver)) {
             $driver = \XLite::GetInstance()->getOptions(array('other', 'event_driver')) ?: 'auto';

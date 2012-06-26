@@ -48,8 +48,8 @@ class Promotions extends \XLite\View\TopMenu\Node
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_TITLE]->setValue(static::t('Promotions'));
-        $this->widgetParams[self::PARAM_TARGET]->setValue('promotions');
+        $this->widgetParams[static::PARAM_TITLE]->setValue('Promotions');
+        $this->widgetParams[static::PARAM_TARGET]->setValue('promotions');
     }
 
     /**
@@ -61,9 +61,6 @@ class Promotions extends \XLite\View\TopMenu\Node
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && \XLite\Controller\Admin\Promotions::getPagesStatic();
+        return parent::isVisible() && \XLite\Controller\Admin\Promotions::getPagesStatic();
     }
-
 }
-

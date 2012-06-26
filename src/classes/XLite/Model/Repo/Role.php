@@ -116,6 +116,7 @@ class Role extends \XLite\Model\Repo\Base\I18n
         return $this->createQueryBuilder('r')
             ->linkInner('r.permissions')
             ->andWhere('permissions.code = :root')
+            ->setMaxResults(1)
             ->setParameter('root', \XLite\Model\Role\Permission::ROOT_ACCESS);
     }
 }

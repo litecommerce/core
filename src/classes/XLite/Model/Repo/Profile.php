@@ -42,6 +42,8 @@ class Profile extends \XLite\Model\Repo\ARepo
     const SEARCH_ORDER_ID       = 'order_id';
     const SEARCH_REFERER        = 'referer';
     const SEARCH_MEMBERSHIP     = 'membership';
+    const SEARCH_ROLES          = 'roles';
+    const SEARCH_PERMISSIONS    = 'permissions';
     const SEARCH_LANGUAGE       = 'language';
     const SEARCH_PATTERN        = 'pattern';
     const SEARCH_PHONE          = 'phone';
@@ -290,6 +292,8 @@ class Profile extends \XLite\Model\Repo\ARepo
             self::SEARCH_ORDER_ID,
             self::SEARCH_REFERER,
             self::SEARCH_MEMBERSHIP,
+            self::SEARCH_PERMISSIONS,
+            self::SEARCH_ROLES,
             self::SEARCH_LANGUAGE,
             self::SEARCH_PATTERN,
             self::SEARCH_PHONE,
@@ -492,6 +496,62 @@ class Profile extends \XLite\Model\Repo\ARepo
                     ->andWhere('membership.membership_id = :membershipId')
                     ->setParameter('membershipId', intval($value));
             }
+        }
+    }
+
+    /**
+     * Search condition by role(s)
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
+     * @param mixed                      $value        Searchable value
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareCndRoles(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        if (!empty($value)) {
+            if (!is_array($value)) {
+                $value = array($value);
+            }
+
+            $ids = array();
+            foreach ($value as $id) {
+                if ($id) {
+                    $ids = is_object($id) ? $id->getId() : $id;
+                }
+            }
+
+            if ($ids) {
+                $keys = \XLite\Core\Database::buildInCondition($queryBuilder, $ids, 'rid');
+                $queryBuilder->linkInner('p.roles')
+                    ->andWhere('roles.id IN (' . implode(', ', $keys) . ')');
+            }
+        }
+    }
+
+    /**
+     * Search condition by permission(s)
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
+     * @param mixed                      $value        Searchable value
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareCndPermissions(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        if (!empty($value)) {
+            if (!is_array($value)) {
+                $value = array($value);
+            }
+
+            $keys = \XLite\Core\Database::buildInCondition($queryBuilder, $value, 'perm');
+            $queryBuilder->linkInner('p.roles')
+                ->linkInner('roles.permissions')
+                ->andWhere('permissions.code IN (' . implode(', ', $keys) . ')');
         }
     }
 

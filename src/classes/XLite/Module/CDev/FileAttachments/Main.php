@@ -80,6 +80,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Allows you to attach files to goods that can be downloaded from the detailed pages of this product by visitors.';
+        return 'Allows you to attach files to goods that can be downloaded'
+            . ' from the detailed pages of this product by visitors.';
     }
 }

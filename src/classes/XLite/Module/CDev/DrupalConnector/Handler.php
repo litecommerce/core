@@ -125,27 +125,6 @@ class Handler extends \XLite\Core\CMSConnector
     }
 
     /**
-     * Get Drupal-based Clean URL
-     *
-     * @param mixed $path    ____param_comment____
-     * @param array $options ____param_comment____
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDrupalCleanURL($path, array $options)
-    {
-        $url = null;
-        if (0 === strpos($path, \XLite\Core\Converter::DRUPAL_ROOT_NODE . '/')) {
-            $args = explode('/', substr($path, strlen(\XLite\Core\Converter::DRUPAL_ROOT_NODE) + 1));
-            $url = $this->getCleanURL($this->getControllerArgs($args, false));
-        }
-
-        return $url;
-    }
-
-    /**
      * Clear top message in Drupal
      *
      * @return array
@@ -316,6 +295,167 @@ class Handler extends \XLite\Core\CMSConnector
         }
     }
 
+    // {{{ URLs management
+
+    /**
+     * Get Drupal-based Clean URL
+     *
+     * @param string $path    Drupal "path"
+     * @param array  $options A set of URL options
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getDrupalCleanURL($path, array $options)
+    {
+        $url = null;
+
+        if (0 === strpos($path, \XLite\Core\Converter::DRUPAL_ROOT_NODE . '/')) {
+
+            $args = explode('/', substr($path, strlen(\XLite\Core\Converter::DRUPAL_ROOT_NODE) + 1));
+            $url  = $this->getCleanURL($this->getControllerArgs($args, false));
+        }
+
+        return $url;
+    }
+
+    /**
+     * Get canonical URL by clean URL
+     *
+     * @param string $path Clean url
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getURLByCleanURL($path)
+    {
+        $cleanURL = null;
+
+        if (preg_match('/(' . \XLite\Core\Converter::getCleanURLAllowedCharsPattern() . ')\.html?$/Si', $path, $parts)) {
+            $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByCleanURL($parts[1]);
+
+            if (isset($product)) {
+                $cleanURL = $this->buildCleanURL('product', '', array('product_id' => $product->getProductId()));
+            }
+
+        } else {
+            $parts  = preg_split('\'/\'', $path, 2, PREG_SPLIT_NO_EMPTY);
+            $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneByCleanURL($parts[0]);
+
+            if (isset($category)) {
+                $params = array('category_id' => $category->getCategoryId());
+
+                if (!empty($parts[1])) {
+                    $query = \Includes\Utils\Converter::parseQuery($parts[1], '-', '/');
+
+                    if (is_array($query)) {
+                        $params += $query;
+                    }
+                }
+
+                $cleanURL = $this->buildCleanURL('category', '', $params);
+            }
+        }
+
+        return $cleanURL;
+    }
+
+    /**
+     * Get Clean URL
+     *
+     * @param array $args Arguments
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCleanURL(array $args)
+    {
+        $url = null;
+
+        $target = $args['target'];
+        unset($args['target']);
+
+        if (in_array($target, $this->getCleanURLTargets())) {
+
+            if (!empty($args[$target . '_id'])) {
+
+                $id = $args[$target . '_id'];
+                unset($args[$target . '_id']);
+
+                if (empty($args['action'])) {
+                    unset($args['action']);
+                }
+
+                $url = $this->{'get' . ucfirst($target) . 'CleanURL'}($id, $args);
+            }
+        }
+
+        return $url;
+    }
+
+    /**
+     * getCleanURLTargets
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCleanURLTargets()
+    {
+        return array(
+            'category',
+            'product',
+        );
+    }
+
+    /**
+     * Get category clean URL by category id
+     *
+     * @param integer $id     Category ID
+     * @param array   $params URL params OPTIONAL
+     *
+     * @return string|void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCategoryCleanURL($id, array $params = array())
+    {
+        $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($id);
+        
+        return (isset($category) && $category->getCleanURL())
+            ? \Includes\Utils\URLManager::trimTrailingSlashes($category->getCleanURL())
+                . '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/')
+            : null;
+    }       
+    
+    /**
+     * Get product Clean URL by product id
+     *
+     * @param integer $productId Product ID
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getProductCleanURL($productId)
+    {
+        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($productId);
+        $result  = null;
+        
+        if (isset($product) && $product->getCleanURL()) {
+            $result = $product->getCleanURL();
+            
+            if (!preg_match('/\.html?$/Si', $result)) {
+                $result .= '.html';
+            }   
+        }   
+        
+        return $result;
+    }
+
     /**
      * Build CleanURL
      *
@@ -331,4 +471,6 @@ class Handler extends \XLite\Core\CMSConnector
     {
         return \XLite\Core\Converter::buildDrupalPath($target, $action, $params);
     }
+
+    // }}}
 }

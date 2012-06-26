@@ -87,7 +87,6 @@ abstract class AAdmin extends \XLite\Controller\AController
         parent::postprocess();
 
         if ($this->dumpStarted) {
-
             $this->displayPageFooter();
         }
     }
@@ -209,7 +208,7 @@ abstract class AAdmin extends \XLite\Controller\AController
         $request = \XLite\Core\Request::getInstance();
         $result = true;
 
-        if (\Xlite\Core\Config::getInstance()->Security->form_id_protection) {
+        if (\XLite\Core\Config::getInstance()->Security->form_id_protection) {
 
             if (!isset($request->xlite_form_id) || !$request->xlite_form_id) {
                 $result = false;

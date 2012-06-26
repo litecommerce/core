@@ -259,7 +259,7 @@ function doCheckRequirements()
 
     $checkRequirements['lc_php_disable_functions'] = array(
         'title'    => xtr('Disabled functions'),
-        'critical' => true,
+        'critical' => false,
     );
 
     $checkRequirements['lc_php_magic_quotes_runtime'] = array(
@@ -552,7 +552,7 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
     if (!empty($list)) {
         $result = false;
         $value = substr(@ini_get('disable_functions'), 0, 45) . '...';
-        $errorMsg = xtr('Disabled functions discovered (:funclist) that must be enabled', array(':funclist' => implode(', ', $list)));
+        $errorMsg = xtr('There are disabled functions (:funclist) that may be used by software in some cases and should be enabled', array(':funclist' => implode(', ', $list)));
 
     } else {
         $value = 'none';
@@ -1251,6 +1251,36 @@ function doUpdateConfig(&$params, $silentMode = false)
     }
 
     return $configUpdated;
+}
+
+/**
+ * Modify main .htaccess file
+ *
+ * @param array   &$params    Database access data and other parameters
+ * @param boolean $silentMode Flag OPTIONAL
+ *
+ * @return boolean
+ * @see    ____func_see____
+ * @since  1.0.21
+ */
+function doUpdateMainHtaccess(&$params, $silentMode = false)
+{
+    if (!empty($params['xlite_web_dir'])) {
+
+        if (!$silentMode) {
+            echo '<br /><b>' . xtr('Updating .htaccess...') . '</b><br>';
+        }
+
+        $util = '\Includes\Utils\FileManager';
+
+        $util::replace(
+            $util::getDir($util::getDir(__DIR__)) . LC_DS . '.htaccess', 
+            '\1RewriteBase ' . $params['xlite_web_dir'],
+            '/^(\s*)#\s*RewriteBase\s+____WEB_DIR____\s*$/mi'
+        );
+    }
+
+    return true;
 }
 
 /**
@@ -2931,7 +2961,6 @@ function module_check_cfg()
             'section'      => 'B',
             'requirements' => array(
                 'lc_php_version',
-                'lc_php_disable_functions',
                 'lc_php_magic_quotes_runtime',
                 'lc_php_memory_limit',
                 'lc_docblocks_support',
@@ -2946,6 +2975,7 @@ function module_check_cfg()
             'error_msg'    => xtr('Non-critical dependency failed'),
             'section'      => 'B',
             'requirements' => array(
+                'lc_php_disable_functions',
                 'lc_php_file_uploads',
                 'lc_php_upload_max_filesize',
                 'lc_php_gdlib',
@@ -3346,7 +3376,7 @@ function module_install_dirs(&$params)
 {
     global $error, $lcSettings;
 
-    $result = doUpdateConfig($params, true);
+    $result = doUpdateConfig($params, true) && doUpdateMainHtaccess($params);
 
     if ($result) {
 

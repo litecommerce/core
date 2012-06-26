@@ -23,8 +23,11 @@ CommonForm.elementControllers.push(
       this.viewValuePattern = '.view';
 
       var line = field.parents('.line').eq(0);
+      var list = line.parents('.items-list').eq(0);
       var row = line.get(0);
       var inputs = jQuery('.field :input', this);
+
+      var vTab = !!list.data('vtab');
 
       // Get field position into current line
       this.getPositionIntoLine = function()
@@ -171,7 +174,7 @@ CommonForm.elementControllers.push(
           var result = true;
 
           // Press 'Tab' button
-          if (9 == event.keyCode) {
+          if (!vTab && 9 == event.keyCode) {
             var found = false;
             var current = this;
 

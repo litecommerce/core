@@ -35,18 +35,19 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Product")
  * @Table  (name="products",
+ *      uniqueConstraints={
+ *          @UniqueConstraint (name="sku", columns={"sku"})
+ *      },
  *      indexes={
  *          @Index (name="price", columns={"price"}),
- *          @Index (name="sku", columns={"sku"}),
  *          @Index (name="weight", columns={"weight"}),
  *          @Index (name="free_shipping", columns={"free_shipping"}),
- *          @Index (name="clean_url", columns={"clean_url"}),
  *          @Index (name="customerArea", columns={"enabled","arrivalDate"})
  *      }
  * )
  * @HasLifecycleCallbacks
  */
-class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrderItem
+class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOrderItem
 {
     /**
      * Product unique ID
@@ -86,7 +87,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length="32", nullable=true)
      */
     protected $sku;
 
@@ -122,17 +123,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @Column (type="boolean")
      */
     protected $free_shipping = false;
-
-    /**
-     * Clean URL
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="255", nullable=false)
-     */
-    protected $clean_url = '';
 
     /**
      * Custom javascript code
@@ -239,7 +229,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * )
      */
     protected $classes;
-
 
     /**
      * Constructor
@@ -365,15 +354,21 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function isAvailable()
     {
-        $result = true;
+        return \XLite::isAdminZone() || $this->isPublicAvailable();
+    }
 
-        if (!\XLite::isAdminZone()) {
-            $result = $this->getEnabled()
-                && (!$this->getArrivalDate() || time() > $this->getArrivalDate())
-                && !$this->getInventory()->isOutOfStock();
-        }
-
-        return $result;
+    /**
+     * Check prodyct availability for public usage (customer interface)
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.23
+     */
+    public function isPublicAvailable()
+    {
+        return $this->getEnabled()
+            && (!$this->getArrivalDate() || time() > $this->getArrivalDate())
+            && !$this->getInventory()->isOutOfStock();
     }
 
     /**
@@ -625,7 +620,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      *
      * @PrePersist
      */
-    public function prepareDate()
+    public function prepareBeforeCreate()
     {
         if (!$this->getDate()) {
             $this->setDate(time());
@@ -635,7 +630,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
             $this->setArrivalDate(time());
         }
 
-        $this->prepareUpdateDate();
+        $this->prepareBeforeUpdate();
     }
 
     /**
@@ -647,9 +642,13 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      *
      * @PreUpdate
      */
-    public function prepareUpdateDate()
+    public function prepareBeforeUpdate()
     {
         $this->setUpdateDate(time());
+
+        if (\XLite\Core\Converter::isEmptyString($this->getSKU())) {
+            $this->setSKU(null);
+        }
     }
 
     /**

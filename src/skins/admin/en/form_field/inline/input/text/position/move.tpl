@@ -10,5 +10,5 @@
  * @since     1.0.15
  *}
 
-{field.display()}
+{singleFieldAsWidget.display()}
 <div class="move" title="{getEntityValue()}"></div>

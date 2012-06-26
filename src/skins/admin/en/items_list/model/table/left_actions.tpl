@@ -11,4 +11,4 @@
  *}
 
 <div FOREACH="getLeftActions(),i,tpl" class="{getActionCellClass(i,tpl)}"><widget template="{tpl:h}" /></div>
-
+<div class="separator"></div>

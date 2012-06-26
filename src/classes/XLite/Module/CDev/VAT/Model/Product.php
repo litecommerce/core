@@ -58,7 +58,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     {
         if (!isset($this->includedTaxList) || $override) {
             $this->includedTaxList = \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()
-                ->calculateProductTaxes($this);
+                ->calculateProductTaxes($this, $this->getNetPrice());
         }
 
         return $this->includedTaxList;

@@ -68,7 +68,7 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_E   => new \XLite\Model\WidgetParam\Int('Number of digits after the decimal separator', 2),
+            static::PARAM_E   => new \XLite\Model\WidgetParam\Int('Number of digits after the decimal separator', 2),
         );
     }
 
@@ -161,7 +161,7 @@ class Float extends \XLite\View\FormField\Input\Text\Base\Numeric
      */
     protected function getE()
     {
-        return null;
+        return $this->getParam(static::PARAM_E);
     }
 
 }

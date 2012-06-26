@@ -517,7 +517,19 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      */
     public function isValid()
     {
-        return (!$this->isDeleted()) && (0 < $this->getAmount()) && $this->getProduct()->isAvailable();
+        return 0 < $this->getAmount();
+    }
+
+    /**
+     * Check if the item is valid to clone through the Re-order functionality
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isValidToClone()
+    {
+        return $this->isValid() && !$this->isDeleted() && $this->getProduct()->isAvailable();
     }
 
     /**

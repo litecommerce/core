@@ -160,9 +160,9 @@ class SelectFile extends \XLite\Controller\Admin\SelectFile implements \XLite\Ba
         $attachment = $this->getAttachment();
 
         return array(
-            'target' => 'product',
-            'page'   => \XLite\Core\Request::getInstance()->fileObject,
-            'id'     => $attachment->getProduct()->getProductId(),
+            'target'     => 'product',
+            'page'       => \XLite\Core\Request::getInstance()->fileObject,
+            'product_id' => $attachment->getProduct()->getProductId(),
         );
     }
 

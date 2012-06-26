@@ -78,7 +78,7 @@ class Tax extends \XLite\Module\CDev\VAT\Logic\ATax
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function calculateProductTaxes(\XLite\Model\Product $product, $price = null)
+    public function calculateProductTaxes(\XLite\Model\Product $product, $price)
     {
         $zones = $this->getZonesList();
         $membership = $this->getMembership();

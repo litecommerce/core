@@ -40,6 +40,8 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      */
     const PAGE_VAT_TAX = 'vatTax';
 
+    // {{{ Pages
+
     /**
      * Get pages sections
      *
@@ -50,7 +52,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
     public function getPages()
     {
         $list = parent::getPages();
-        $list[self::PAGE_VAT_TAX] = 'VAT';
+        $list[static::PAGE_VAT_TAX] = 'VAT';
 
         return $list;
     }
@@ -62,13 +64,15 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
         $list = parent::getPageTemplates();
-        $list[self::PAGE_VAT_TAX] = 'modules/CDev/VAT/edit.tpl';
+        $list[static::PAGE_VAT_TAX] = 'modules/CDev/VAT/edit.tpl';
 
         return $list;
     }
+
+    // }}}
 
     // {{{ Widget-specific getters
 
@@ -83,7 +87,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
     {
         $tax = parent::getTax();
 
-        if (!$tax && $this->getPage() == self::PAGE_VAT_TAX) {
+        if (!$tax && static::PAGE_VAT_TAX === $this->getPage()) {
              $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\VAT\Model\Tax')->getTax();
         }
 
@@ -212,7 +216,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
         }
 
         \XLite\Core\TopMessage::addInfo('Tax rates have been updated successfully');
-        \Xlite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -245,7 +249,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
             \XLite\Core\TopMessage::addError('Tax rate has not been deleted successfully');
         }
 
-        \Xlite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**

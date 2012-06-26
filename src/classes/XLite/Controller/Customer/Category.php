@@ -36,15 +36,6 @@ namespace XLite\Controller\Customer;
 class Category extends \XLite\Controller\Customer\Catalog
 {
     /**
-     * Controller parameters list
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $params = array('target', 'category_id');
-
-    /**
      * Check whether the category title is visible in the content area
      *
      * @return boolean
@@ -97,5 +88,4 @@ class Category extends \XLite\Controller\Customer\Catalog
             \XLite\Core\Session::getInstance()->continueShoppingURL = $this->getURL();
         }
     }
-
 }

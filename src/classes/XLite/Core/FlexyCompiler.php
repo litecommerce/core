@@ -914,7 +914,9 @@ class FlexyCompiler extends \XLite\Base\Singleton
             return "";
         }
         $this->condition = '';
+
         $expr = $this->flexyExpression($str);
+
         switch ($str) {
             case ':h':	// will display variable "as is"
                 break;
@@ -947,7 +949,25 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 break;
 
             default:
-                $this->error("Unknown modifier '$str'");
+
+                $wrongModifier = true;
+
+                if (substr($str, 0, 1) == ':') {
+
+                    $func = substr($str, 1);
+
+                    if (function_exists($func)) {
+
+                        $expr = '$this->flexyModifierCall(\'' . $func . '\', ' . $expr . ')';
+
+                        $wrongModifier = false;
+                    }
+                }
+
+                if ($wrongModifier) {
+
+                    $this->error("Unknown modifier '$str'");
+                }
         }
 
         if (':s' !== $str) {

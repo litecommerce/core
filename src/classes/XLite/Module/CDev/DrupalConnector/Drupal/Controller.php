@@ -139,6 +139,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         if (!defined('MAINTENANCE_MODE')) {
 
             foreach (array('description' => 'getMetaDescription', 'keywords' => 'getKeywords') as $name => $method) {
+                // $method stored into static array
                 $content = $this->getViewer()->$method();
 
                 if ($content) {
@@ -372,6 +373,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
             if (function_exists($method)) {
                 foreach ($files as $name => $data) {
+                    // $method assembled from 'drupal_add_' + $type
                     $method($data['file'], $this->getResourceInfo($type, $data));
                 }
             }

@@ -36,6 +36,11 @@ namespace XLite\Model\Repo;
 class TmpVar extends \XLite\Model\Repo\ARepo
 {
     /**
+     * Event task state prefix
+     */
+    const EVENT_TASK_STATE_PREFIX = 'eventTaskState.';
+
+    /**
      * Set variable 
      * 
      * @param string $name  Variable name
@@ -53,6 +58,10 @@ class TmpVar extends \XLite\Model\Repo\ARepo
             $entity = new \XLite\Model\TmpVar;
             $entity->setName($name);
             \XLite\Core\Database::getEM()->persist($entity);
+        }
+
+        if (!is_scalar($value)) {
+            $value = serialize($value);
         }
 
         $entity->setValue($value);
@@ -73,7 +82,126 @@ class TmpVar extends \XLite\Model\Repo\ARepo
     {
         $entity = $this->findOneBy(array('name' => $name));
 
-        return $entity ? $entity->getValue() : null;
+        $value = $entity ? $entity->getValue() : null;
+
+        if (!empty($value)) {
+            $tmp = @unserialize($value);
+            if (false !== $tmp) {
+                $value = $tmp;
+            }
+        }
+
+        return $value;
     }
+
+    // {{{ Event tasks-based temporary variable operations
+
+    /**
+     * Initialize event task state
+     *
+     * @param string $name Event task name
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function initializeEventState($name)
+    {
+        $this->setEventState($name, array('position' => 0, 'length' => 0, 'state' => \XLite\Core\EventTask::STATE_STANDBY));
+    }
+
+    /**
+     * Get event task state 
+     * 
+     * @param string $name Event task name
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function getEventState($name)
+    {
+        return $this->getVar(static::EVENT_TASK_STATE_PREFIX . $name);
+    }
+
+    /**
+     * Set event state 
+     * 
+     * @param string $name Event task name
+     * @param array  $rec  Event task state
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function setEventState($name, array $rec)
+    {
+        $this->setVar(static::EVENT_TASK_STATE_PREFIX . $name, $rec);
+    }
+
+    /**
+     * Set event state
+     *
+     * @param string $name Event task name
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function removeEventState($name)
+    {
+        $var = $this->findOneBy(array('name' => static::EVENT_TASK_STATE_PREFIX . $name));
+        if ($var) {
+            \XLite\Core\Database::getEM()->remove($var);
+            \XLite\Core\Database::getEM()->flush();
+        }
+    }
+
+    /**
+     * Check event state - finished or not
+     *
+     * @param string $name Event task name
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function isFinishedEventState($name)
+    {
+        $record = $this->getEventState($name);
+
+        return $record
+            && ($record['state'] == \XLite\Core\EventTask::STATE_FINISHED || $record['state'] == \XLite\Core\EventTask::STATE_ABORTED);
+    }
+
+    /**
+     * Check event state - finished or not
+     *
+     * @param string $name Event task name
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function getEventStatePercent($name)
+    {
+        $record = $this->getEventState($name);
+
+        $percent = 0;
+
+        if ($record) {
+            if ($this->isFinishedEventState($name)) {
+                $percent = 100;
+
+            } elseif (0 < $record['length']) {
+                $percent = min(100, round($record['position'] / $record['length'] * 100));
+            }
+        }
+
+        return $percent;
+    }
+
+
+    // }}}
 }
 

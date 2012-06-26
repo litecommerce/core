@@ -10,7 +10,7 @@
  * @since     1.0.0
  * @ListChild (list="invoice.bottom.methods", weight="20")
  *}
-<td class="payment">
+<td class="payment" IF="order.getActivePaymentTransactions()">
   <strong>{t(#Payment method#)}:</strong>
   {foreach:order.getActivePaymentTransactions(),t}
     {t.paymentMethod.getName():h}<br />

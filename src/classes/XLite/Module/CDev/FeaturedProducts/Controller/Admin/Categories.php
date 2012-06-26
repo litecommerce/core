@@ -42,7 +42,7 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * @see   ____var_see____
      * @since 1.0.0
      */
-    public $params = array('category_id');
+    protected $params = array('category_id');
 
 
     /**

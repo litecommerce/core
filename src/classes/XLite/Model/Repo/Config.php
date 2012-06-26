@@ -104,7 +104,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
         }
 
         if (!isset($data)) {
-            $data = $this->defineByCategoryQuery($category)->getResult();
+            $data = $this->findBy(array('category' => $category));
             if (!$doNotProcess) {
                 $data = $this->processOptions($data);
                 $this->saveToCache($data, 'category', array('category' => $category));
@@ -393,22 +393,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
         return isset($condition)
             ? $qb->andWhere($condition)->setParameters($qb->getParameters() + $params)
             : $qb;
-    }
-
-    /**
-     * Define query builder for getByCategory()
-     *
-     * @param string $category Category name
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineByCategoryQuery($category)
-    {
-        return $this->createQueryBuilder()
-            ->andWhere('c.category = :category')
-            ->setParameter('category', $category);
     }
 
     /**

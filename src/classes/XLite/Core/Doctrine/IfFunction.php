@@ -52,10 +52,18 @@ class IfFunction extends \Doctrine\ORM\Query\AST\Functions\FunctionNode
         $this->ifCondition = $parser->ConditionalExpression();
         $parser->match(\Doctrine\ORM\Query\Lexer::T_COMMA);
 
-        $this->ifThen = $parser->ScalarExpression();
+        try {
+            $this->ifThen = $parser->FunctionDeclaration();
+        } catch (\Doctrine\ORM\Query\QueryException $e) {
+            $this->ifThen = $parser->ScalarExpression();
+        }
         $parser->match(\Doctrine\ORM\Query\Lexer::T_COMMA);
 
-        $this->ifElse = $parser->ScalarExpression();
+        try {
+            $this->ifElse = $parser->FunctionDeclaration();
+        } catch (\Doctrine\ORM\Query\QueryException $e) {
+            $this->ifElse = $parser->ScalarExpression();
+        }
 
         $parser->match(\Doctrine\ORM\Query\Lexer::T_CLOSE_PARENTHESIS);
     }
