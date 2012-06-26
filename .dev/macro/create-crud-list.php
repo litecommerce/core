@@ -210,7 +210,7 @@ echo 'Build list' . PHP_EOL;
 
 // {{{ List controller
 
-echo "	" . 'controller ' . $targetControllerPath . ' ... ';
+echo "\t" . 'controller ' . $targetControllerPath . ' ... ';
 
 $targetHumanReadableName = macro_convert_camel_to_human_readable($target);
 
@@ -345,7 +345,7 @@ echo 'done' . PHP_EOL;
 $viewListPageClass = macro_assemble_class_name('View\\' . $targetShort, $moduleAuthor, $moduleName);
 $viewListPagePath = macro_convert_class_name_to_path($viewListPageClass);
 
-echo "	" . 'page widget ' . $viewListPagePath . ' ... ';
+echo "\t" . 'page widget ' . $viewListPagePath . ' ... ';
 
 $viewListPageTemplate = macro_assemble_tpl_name($target . '/body.tpl', $moduleAuthor, $moduleName);
 
@@ -420,7 +420,7 @@ echo 'done' . PHP_EOL;
 
 $viewListPageTemplateFull = LC_DIR_SKINS . 'admin/en/' . $viewListPageTemplate;
 
-echo "	" . 'page template ' . $viewListPageTemplateFull . ' ... ';
+echo "\t" . 'page template ' . $viewListPageTemplateFull . ' ... ';
 
 $viewListTableTemplate = macro_assemble_tpl_name($target . '/list.tpl', $moduleAuthor, $moduleName);
 
@@ -463,7 +463,7 @@ if (isset($viewListSearchTemplate)) {
 
     $viewListSearchTemplateFull = LC_DIR_SKINS . 'admin/en/' . $viewListSearchTemplate;
 
-    echo "	" . 'search template ' . $viewListSearchTemplateFull . ' ... ';
+    echo "\t" . 'search template ' . $viewListSearchTemplateFull . ' ... ';
 
     $formListSearchClass = macro_assemble_class_name('View\\Form\\ItemsList\\' . $entityRelativeClass . '\\Search', $moduleAuthor, $moduleName);
 
@@ -496,7 +496,7 @@ CODE;
 
     $formListSearchPath = macro_convert_class_name_to_path($formListSearchClass);
 
-    echo "	" . 'search form widget ' . $formListSearchPath . ' ... ';
+    echo "\t" . 'search form widget ' . $formListSearchPath . ' ... ';
 
     $formListSearchClassShort = macro_get_class_short_name($formListSearchClass);
 
@@ -550,7 +550,7 @@ CODE;
         $viewListConditionTemplate = macro_assemble_tpl_name($target . '/conditions/' . $field . '.tpl', $moduleAuthor, $moduleName);
         $viewListConditionTemplateFull = LC_DIR_SKINS . 'admin/en/' . $viewListConditionTemplate;
 
-        echo "	" . 'search condition (' . $field . ') template ' . $viewListConditionTemplateFull . ' ... ';
+        echo "\t" . 'search condition (' . $field . ') template ' . $viewListConditionTemplateFull . ' ... ';
 
         $fieldHumanReadable = macro_convert_camel_to_human_readable($field);
         $weight = $i * 100;
@@ -584,7 +584,7 @@ CODE;
     $viewListConditionTemplate = macro_assemble_tpl_name($target . '/conditions/action.search.tpl', $moduleAuthor, $moduleName);
     $viewListConditionTemplateFull = LC_DIR_SKINS . 'admin/en/' . $viewListConditionTemplate;
 
-    echo "	" . 'search \'Search\' button template ' . $viewListConditionTemplateFull . ' ... ';
+    echo "\t" . 'search \'Search\' button template ' . $viewListConditionTemplateFull . ' ... ';
 
     $string = <<<CODE
 {* vim: set ts=2 sw=2 sts=2 et: *}
@@ -617,7 +617,7 @@ CODE;
 
 $viewListTableTemplateFull = LC_DIR_SKINS . 'admin/en/' . $viewListTableTemplate;
 
-echo "	" . 'table template ' . $viewListTableTemplateFull . ' ... ';
+echo "\t" . 'table template ' . $viewListTableTemplateFull . ' ... ';
 
 $formListTableClass = macro_assemble_class_name('View\\Form\\ItemsList\\' . $entityRelativeClass . '\\Table', $moduleAuthor, $moduleName);
 
@@ -648,7 +648,7 @@ echo 'done' . PHP_EOL;
 
 $formListTablePath = macro_convert_class_name_to_path($formListTableClass);
 
-echo "	" . 'table form widget ' . $formListTablePath . ' ... ';
+echo "\t" . 'table form widget ' . $formListTablePath . ' ... ';
 
 $formListTableClassShort = macro_get_class_short_name($formListTableClass);
 
@@ -660,7 +660,7 @@ $string = macro_get_class_repo_header($formListTablePath)
  * @see   ____class_see____
  * @since 1.0.0
  */
-class $formListTableClassShort extends \\XLite\\View\\Form\\AForm
+class $formListTableClassShort extends \\XLite\\View\\Form\\ItemsList\\AItemsList
 {
     /**
      * Return default value for the "target" parameter
@@ -1138,7 +1138,7 @@ echo 'done' . PHP_EOL;
 // {{{ Items list CSS
 
 $itemsListCSSFull = LC_DIR_SKINS . 'admin/en/' . $itemsListCSS;
-echo "	" . 'styles file ' . $itemsListCSSFull . ' ... ';
+echo "\t" . 'styles file ' . $itemsListCSSFull . ' ... ';
 
 $string = <<<CODE
 /* vim: set ts=2 sw=2 sts=2 et: */
@@ -1166,11 +1166,11 @@ if (isset($itemsListPanelClass)) {
 
     $itemsListPanelPath = macro_convert_class_name_to_path($itemsListPanelClass);
 
-    echo "	" . 'sticky panel widget ' . $itemsListPanelPath . ' ... ';
+    echo "\t" . 'sticky panel widget ' . $itemsListPanelPath . ' ... ';
 
     $itemsListPanelClassShort = macro_get_class_short_name($itemsListPanelClass);
 
-    $string = macro_get_class_repo_header($itemsListPath)
+    $string = macro_get_class_repo_header($itemsListPanelPath)
     . <<<CODE
 /**
  * $targetHumanReadableName items list's sticky panel
@@ -1472,7 +1472,7 @@ echo 'Build entity' . PHP_EOL;
 
 // {{{ Controller
 
-echo "  " . 'controller ' . $targetOneControllerPath . ' ... ';
+echo "\t" . 'controller ' . $targetOneControllerPath . ' ... ';
 
 $oneViewModelClass = macro_assemble_class_name('View\\Model\\' . $entityRelativeClass, $moduleAuthor, $moduleName);
 $targetOneHumanReadableName = macro_convert_camel_to_human_readable($targetOne);
@@ -1554,7 +1554,7 @@ echo 'done' . PHP_EOL;
 $viewOnePageClass = macro_assemble_class_name('View\\' . $targetOneShort, $moduleAuthor, $moduleName);
 $viewOnePagePath = macro_convert_class_name_to_path($viewOnePageClass);
 
-echo "  " . 'page widget ' . $viewListPagePath . ' ... ';
+echo "\t" . 'page widget ' . $viewListPagePath . ' ... ';
 
 $viewOnePageTemplate = macro_assemble_tpl_name($targetOne . '/body.tpl', $moduleAuthor, $moduleName);
 
@@ -1606,7 +1606,7 @@ echo 'done' . PHP_EOL;
 
 $viewOnePageTemplateFull = LC_DIR_SKINS . 'admin/en/' . $viewOnePageTemplate;
 
-echo "  " . 'page template ' . $viewOnePageTemplateFull . ' ... ';
+echo "\t" . 'page template ' . $viewOnePageTemplateFull . ' ... ';
 
 $string = <<<CODE
 {* vim: set ts=2 sw=2 sts=2 et: *}
@@ -1632,7 +1632,7 @@ echo 'done' . PHP_EOL;
 
 $oneViewModelPath = macro_convert_class_name_to_path($oneViewModelClass);
 
-echo "  " . 'one entity view model ' . $oneViewModelPath . ' ... ';
+echo "\t" . 'one entity view model ' . $oneViewModelPath . ' ... ';
 
 $oneViewModelClassShort = macro_get_class_short_name($oneViewModelClass);
 $formOneClass = macro_assemble_class_name('View\\Form\\Model\\' . $entityRelativeClass, $moduleAuthor, $moduleName);
@@ -1781,7 +1781,7 @@ echo 'done' . PHP_EOL;
 
 $formOnePath = macro_convert_class_name_to_path($formOneClass);
 
-echo "  " . 'form ' . $formOnePath . ' ... ';
+echo "\t" . 'form ' . $formOnePath . ' ... ';
 
 $formOneClassShort = macro_get_class_short_name($formOneClass);
 $oneFormCSS = macro_assemble_tpl_name($targetOne . '/style.css', $moduleAuthor, $moduleName);
@@ -1875,7 +1875,7 @@ echo 'done' . PHP_EOL;
 // {{{ Items list CSS
 
 $oneFormCSSFull = LC_DIR_SKINS . 'admin/en/' . $oneFormCSS;
-echo "  " . 'styles file ' . $oneFormCSSFull . ' ... ';
+echo "\t" . 'styles file ' . $oneFormCSSFull . ' ... ';
 
 $string = <<<CODE
 /* vim: set ts=2 sw=2 sts=2 et: */
