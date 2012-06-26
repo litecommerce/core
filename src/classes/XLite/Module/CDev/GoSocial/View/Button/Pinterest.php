@@ -94,9 +94,11 @@ class Pinterest extends \XLite\View\AView
      */
     protected function getButtonURLQuery()
     {
+        $image = $this->getProduct()->getImage();
+
         return array(
             'url'         => \XLite::getInstance()->getShopURL($this->getURL()),
-            'media'       => $this->getProduct()->getImage()->getFrontURL(),
+            'media'       => isset($image) ? $image->getFrontURL() : null,
             'description' => $this->getProduct()->getName(),
 
         );
@@ -111,8 +113,11 @@ class Pinterest extends \XLite\View\AView
      */
     protected function isVisible()
     {
+        $image = $this->getProduct()->getImage();
+
         return parent::isVisible()
-            && $this->getProduct()->getImage()->isExists()
+            && isset($image)
+            && $image->isExists()
             && \XLite\Core\Config::getInstance()->CDev->GoSocial->pinterest_use;
     }
 

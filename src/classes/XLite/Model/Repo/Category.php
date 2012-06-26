@@ -67,7 +67,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getRootCategoryId()
     {
-        return self::CATEGORY_ID_ROOT;
+        return static::CATEGORY_ID_ROOT;
     }
 
     /**

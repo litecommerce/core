@@ -16,7 +16,7 @@
 <div class="quicklook">
   <a
     href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"
-    class="quicklook-link quicklook-link-{product.product_id}">
+    class="quicklook-link quicklook-link-{product.product_id} quicklook-link-category-{category_id}">
     <div class="quicklook-view">&nbsp;</div>
   </a>
 </div>

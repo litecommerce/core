@@ -82,9 +82,7 @@ class FileSelector extends \XLite\View\Button\APopupButton
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'file_selector/style.css';
-
         // TODO: dynamic CSS inclusion
         $list[] = 'browse_server/style.css';
 
@@ -102,10 +100,10 @@ class FileSelector extends \XLite\View\Button\APopupButton
     {
         return array(
             'target'        => 'select_file',
-            'object'        => $this->getParam(self::PARAM_OBJECT),
-            'objectId'      => $this->getParam(self::PARAM_OBJECT_ID),
-            'fileObject'    => $this->getParam(self::PARAM_FILE_OBJECT),
-            'fileObjectId'  => $this->getParam(self::PARAM_FILE_OBJECT_ID),
+            'object'        => $this->getParam(static::PARAM_OBJECT),
+            'objectId'      => $this->getParam(static::PARAM_OBJECT_ID),
+            'fileObject'    => $this->getParam(static::PARAM_FILE_OBJECT),
+            'fileObjectId'  => $this->getParam(static::PARAM_FILE_OBJECT_ID),
             'widget'        => '\XLite\View\FileSelectorDialog',
         );
     }
@@ -134,10 +132,10 @@ class FileSelector extends \XLite\View\Button\APopupButton
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_OBJECT          => new \XLite\Model\WidgetParam\String('Object', 'product'),
-            self::PARAM_OBJECT_ID       => new \XLite\Model\WidgetParam\Int('Object ID', 0),
-            self::PARAM_FILE_OBJECT     => new \XLite\Model\WidgetParam\String('File object', 'image'),
-            self::PARAM_FILE_OBJECT_ID  => new \XLite\Model\WidgetParam\Int('File object ID', 0),
+            static::PARAM_OBJECT          => new \XLite\Model\WidgetParam\String('Object', 'product'),
+            static::PARAM_OBJECT_ID       => new \XLite\Model\WidgetParam\Int('Object ID', 0),
+            static::PARAM_FILE_OBJECT     => new \XLite\Model\WidgetParam\String('File object', 'image'),
+            static::PARAM_FILE_OBJECT_ID  => new \XLite\Model\WidgetParam\Int('File object ID', 0),
         );
     }
 
@@ -150,6 +148,6 @@ class FileSelector extends \XLite\View\Button\APopupButton
      */
     protected function getClass()
     {
-        return 'file-selector-button ' . ($this->getParam(self::PARAM_STYLE) ?: '');
+        return 'file-selector-button ' . ($this->getParam(static::PARAM_STYLE) ?: '');
     }
 }

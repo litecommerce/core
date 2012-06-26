@@ -391,7 +391,7 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
             if ($class) {
                 $params = isset($column[static::COLUMN_PARAMS]) ? $column[static::COLUMN_PARAMS] : array();
                 $list[] = array(
-                    'class'      => $column[static::COLUMN_CREATE_CLASS],
+                    'class'      => $class,
                     'parameters' => array('fieldName' => $name, 'fieldParams' => $params),
                 );
             }

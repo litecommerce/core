@@ -315,10 +315,10 @@ abstract class AInline extends \XLite\View\AView
             if (method_exists($this, $method)) {
 
                 // $method assemble from 'setValue' + field name
-                $this->$method($field, $data);
+                $this->$method($field, $data, $key);
 
             } else {
-                $this->setFieldValue($field, $data);
+                $this->setFieldValue($field, $data, $key);
             }
         }
     }
@@ -521,14 +521,15 @@ abstract class AInline extends \XLite\View\AView
      * 
      * @param array $field Field
      * @param array $data  Data
+     * @param mixed $key   Row key OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.22
      */
-    protected function setFieldValue(array $field, array $data)
+    protected function setFieldValue(array $field, array $data, $key = null)
     {
-        $this->transferValueToField($field, $this->isolateFieldValue($field, $data));
+        $this->transferValueToField($field, $this->isolateFieldValue($field, $data, $key));
     }
 
     /**
@@ -536,12 +537,13 @@ abstract class AInline extends \XLite\View\AView
      * 
      * @param array $field Field info
      * @param array $data  Data
+     * @param mixed $key   Row key OPTIONAL
      *  
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.23
      */
-    protected function isolateFieldValue(array $field, array $data)
+    protected function isolateFieldValue(array $field, array $data, $key = null)
     {
         $found = true;
 

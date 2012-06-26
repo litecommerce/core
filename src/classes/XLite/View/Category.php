@@ -42,7 +42,6 @@ class Category extends \XLite\View\AView
      */
     const WEB_LC_ROOT = '{{WEB_LC_ROOT}}';
 
-
     /**
      * Return list of targets allowed for this widget
      *
@@ -109,7 +108,7 @@ class Category extends \XLite\View\AView
     protected function getWebPreprocessingTags()
     {
         return array(
-            self::WEB_LC_ROOT,
+            static::WEB_LC_ROOT,
         );
     }
 
@@ -124,6 +123,7 @@ class Category extends \XLite\View\AView
     {
         // Get URL of shop. If the HTTPS is used then it should be cleaned from ?xid=<xid> construction
         $url = \XLite::getInstance()->getShopURL(null, \XLite\Core\Request::getInstance()->isHTTPS());
+
         // We are cleaning URL from unnecessary here <xid> construction
         $url = preg_replace('/(\?.*)/', '', $url);
 

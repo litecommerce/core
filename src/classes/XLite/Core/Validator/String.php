@@ -55,6 +55,8 @@ class String extends \XLite\Core\Validator\Scalar
      */
     public function __construct($nonEmpty = false)
     {
+        parent::__construct();
+
         $this->markAsNonEmpty($nonEmpty);
     }
 

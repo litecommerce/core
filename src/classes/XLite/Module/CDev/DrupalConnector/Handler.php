@@ -333,22 +333,22 @@ class Handler extends \XLite\Core\CMSConnector
     {
         $cleanURL = null;
 
-        if (preg_match('/(\w+)\.html?$/Si', $path, $matches)) {
-            $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByCleanURL($matches[1]);
+        if (preg_match('/(' . \XLite\Core\Converter::getCleanURLAllowedCharsPattern() . ')\.html?$/Si', $path, $parts)) {
+            $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByCleanURL($parts[1]);
 
             if (isset($product)) {
                 $cleanURL = $this->buildCleanURL('product', '', array('product_id' => $product->getProductId()));
             }
 
         } else {
-            $matches  = preg_split('\'/\'', $path, 2, PREG_SPLIT_NO_EMPTY);
-            $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneByCleanURL($matches[0]);
+            $parts  = preg_split('\'/\'', $path, 2, PREG_SPLIT_NO_EMPTY);
+            $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneByCleanURL($parts[0]);
 
             if (isset($category)) {
                 $params = array('category_id' => $category->getCategoryId());
 
-                if (!empty($matches[1])) {
-                    $query = \Includes\Utils\Converter::parseQuery($matches[1], '-', '/');
+                if (!empty($parts[1])) {
+                    $query = \Includes\Utils\Converter::parseQuery($parts[1], '-', '/');
 
                     if (is_array($query)) {
                         $params += $query;

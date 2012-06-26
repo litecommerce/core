@@ -38,9 +38,7 @@ abstract class AProduct extends \XLite\View\Form\AForm
     /**
      * Widget parameter names
      */
-
     const PARAM_PRODUCT = 'product';
-
 
     /**
      * Define widget parameters
@@ -54,7 +52,7 @@ abstract class AProduct extends \XLite\View\Form\AForm
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
+            static::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
                 'Product', null, false, '\XLite\Model\Product'
             ),
         );
@@ -69,6 +67,6 @@ abstract class AProduct extends \XLite\View\Form\AForm
      */
     protected function getProduct()
     {
-        return $this->getParam(self::PARAM_PRODUCT);
+        return $this->getParam(static::PARAM_PRODUCT);
     }
 }
