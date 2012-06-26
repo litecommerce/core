@@ -35,7 +35,7 @@ if (PHP_SAPI != 'cli') {
 
 array_shift($_SERVER['argv']);
 
-$options = getopt('h', array('help'));
+$options = getopt('h', array('help::'));
 
 if (isset($options['h']) || isset($options['help'])) {
     echo macro_help() . PHP_EOL;
@@ -57,13 +57,28 @@ if (isset($options['h']) || isset($options['help'])) {
  */
 function macro_error($msg)
 {
-    echo 'Error: ' . $msg . PHP_EOL . PHP_EOL;
-    echo macro_help() . PHP_EOL;
+    echo 'Error: ' . $msg . PHP_EOL;
     die(1);
 }
 
 /**
- * Get sacript argument by index
+ * Get script argument by name
+ *
+ * @param string $name Name
+ *
+ * @return string
+ * @see    ____func_see____
+ * @since  1.0.18
+ */
+function macro_get_named_argument($name)
+{
+    $data = getopt('', array($name . '::'));
+
+    return isset($data[$name]) ? $data[$name] : null;
+}
+
+/**
+ * Get script argument by index
  * 
  * @param integer $number Index
  *  
@@ -139,12 +154,83 @@ function macro_is_entity($path)
     return preg_match('/XLite.Model.|XLite.Module.\w+.\w+.Model./Ss', $path);
 }
 
+/**
+ * Assemble full class name 
+ * 
+ * @param string $suffix       Class short name
+ * @param string $moduleAuthor Module author OPTIONAL
+ * @param string $moduleName   Module name OPTIONAL
+ *  
+ * @return string
+ * @see    ____func_see____
+ * @since  1.0.24
+ */
+function macro_assemble_class_name($suffix, $moduleAuthor = null, $moduleName = null)
+{
+    return $moduleAuthor
+        ? 'XLite\Module\\' . $moduleAuthor . '\\' . $moduleName . '\\' . $suffix
+        : 'XLite\\' . $suffix;
+}
+
+/**
+ * Assemble tempalte name
+ *
+ * @param string $suffix       Template short name
+ * @param string $moduleAuthor Module author OPTIONAL
+ * @param string $moduleName   Module name OPTIONAL
+ *
+ * @return string
+ * @see    ____func_see____
+ * @since  1.0.24
+ */
+function macro_assemble_tpl_name($suffix, $moduleAuthor = null, $moduleName = null)
+{
+    return $moduleAuthor
+        ? 'modules/' . $moduleAuthor . '/' . $moduleName . '/' . $suffix
+        : $suffix;
+}
+
+/**
+ * Get class short name
+ *
+ * @param string $class Class full name
+ *
+ * @return string
+ * @see    ____func_see____
+ * @since  1.0.24
+ */
+function macro_get_class_short_name($class)
+{
+    $parts = explode('\\', $class);
+
+    return array_pop($parts);
+}
+
+/**
+ * Convert camel case string to human readable string
+ * 
+ * @param string $camel Camel case string
+ *  
+ * @return string
+ * @see    ____func_see____
+ * @since  1.0.24
+ */
+function macro_convert_camel_to_human_readable($camel)
+{
+    $camel = str_replace('_', ' ', $camel);
+    $camel = str_replace('\\', ' ', $camel);
+    $camel = preg_replace('/ ([A-Z])([a-z0-9])/Sse', '\' \' . strtolower(\'\1\') . \'\2\'', $camel);
+    $camel = preg_replace('/([a-z0-9])([A-Z])([a-z0-9])/Sse', '\'\1\' . strtolower(\'\2\') . \'\3\'', $camel);
+
+    return ucfirst($camel);
+}
+
 // {{{ Arguments checkers
 
 /**
  * Check file path 
  * 
- * @param string $path Path
+ * @param string &$path Path
  *  
  * @return void
  * @see    ____func_see____
@@ -172,13 +258,29 @@ function macro_check_file_path(&$path)
  * @see    ____func_see____
  * @since  1.0.18
  */
-function macro_check_class_file_path(&$path)
+function macro_check_class_file_path($path)
 {
     macro_check_file_path($path);
 
     if (0 !== strcmp(LC_DIR_CLASSES, $path, strlen(LC_DIR_CLASSES))) {
         macro_error('Path \'' . $path . '\' is not LC class repository!!');
     }
+}
+
+/**
+ * Check class full name
+ *
+ * @param string &$class Class
+ *
+ * @return void
+ * @see    ____func_see____
+ * @since  1.0.18
+ */
+function macro_check_class(&$class)
+{
+    $class = ltrim($class, '\\');
+
+    return \XLite\Core\Operator::isClassExists($class);
 }
 
 /**
