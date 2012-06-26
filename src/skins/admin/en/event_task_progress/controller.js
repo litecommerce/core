@@ -22,6 +22,7 @@ jQuery().ready(
       if (data && 'undefined' != typeof(data.percent)) {
         bar.progressbar('value', data.percent);
         bar.attr('title', data.percent + '%')
+        bar.trigger('changePercent');
         percent = data.percent;
       }
 
@@ -29,13 +30,19 @@ jQuery().ready(
         core.post(
           URLHandler.buildURL({'target': 'event_task', 'action': 'run', 'event': eventName}),
           function(xhr, status, data, valid) {
-            if (xhr.readyState != 4 || xhr.status != 200 || !valid) {
+            if (xhr.readyState != 4 || xhr.status != 200) {
               core.showError('Event task runner internal error');
             }
           },
           {},
           {timeout: 600000}
         );
+
+      } else {
+        if (data.error) {
+          bar.trigger('error');
+        }
+        bar.trigger('complete');
       }
     }
 
@@ -77,8 +84,17 @@ jQuery().ready(
             if (data && 'undefined' != typeof(data.percent)) {
               bar.progressbar('value', data.percent);
               bar.attr('title', data.percent + '%')
+              bar.trigger('changePercent');
               if (100 > data.percent) {
                 timer = setTimeout(function () { return o.updateProgressBar(); }, timerTTL);
+
+              } else {
+
+                if (data.error) {
+                  bar.trigger('error');
+                }
+
+                bar.trigger('complete');
               }
 
             } else {

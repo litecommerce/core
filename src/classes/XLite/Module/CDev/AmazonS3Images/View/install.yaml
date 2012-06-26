@@ -1,0 +1,14 @@
+# vim: set ts=2 sw=2 sts=2 et:
+# 
+# Data dump
+#  
+# @author    Creative Development LLC <info@cdev.ru> 
+# @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+# @since     1.0.24
+XLite\Model\LanguageLabel:
+  - { name: 'Images are being moved to the file system on your server. Now you can leave this page and open it later to check the progress.', translations: [{ code: en, label: 'Images are being moved to the file system on your server. Now you can leave this page and open it later to check the progress.' }] }
+  - { name: 'Images are being moved to Amazon S3 servers. Now you can leave this page and open it later to check the progress.', translations: [{ code: en, label: 'Images are being moved to Amazon S3 servers. Now you can leave this page and open it later to check the progress.' }] }
+  - { name: 'Images are being moved to the file system on your server. If you leave this page the process will be put on hold until you open it in your browser again.', translations: [{ code: en, label: 'Images are being moved to the file system on your server. If you leave this page the process will be put on hold until you open it in your browser again.' }] }
+  - { name: 'Images are being moved to Amazon S3 servers. If you leave this page the process will be put on hold until you open it in your browser again.', translations: [{ code: en, label: 'Images are being moved to Amazon S3 servers. If you leave this page the process will be put on hold until you open it in your browser again.' }] }
