@@ -412,6 +412,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
         );
 
         $product->getClasses()->clear();
+        $product->getCategoryProducts()->clear();
 
         // Update all data
         \XLite\Core\Database::getRepo('\XLite\Model\Product')->update($product, $this->collectModifyData($product));
