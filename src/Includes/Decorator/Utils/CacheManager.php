@@ -74,11 +74,12 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         LC_DIR_LOCALE,
         LC_DIR_DATACACHE,
         LC_DIR_TMP,
+        LC_DIR_CACHE_RESOURCES,
     );
 
     /**
-     * Timestamp of the step start 
-     * 
+     * Timestamp of the step start
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -87,7 +88,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
     /**
      * Memory usage
-     * 
+     *
      * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
@@ -98,11 +99,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     // {{{ Dispaly message routines
 
     /**
-     * showStepMessage 
-     * 
+     * showStepMessage
+     *
      * @param string  $text       Message text
      * @param boolean $addNewline Flag OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -116,8 +117,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * showStepInfo 
-     * 
+     * showStepInfo
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -129,7 +130,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         $memory = memory_get_usage();
         $text .= \Includes\Utils\Converter::formatFileSize($memory, '');
         $text .= ' (' . \Includes\Utils\Converter::formatFileSize(memory_get_usage() - static::$stepMemory, '') . ')';
-        
+
         \Includes\Utils\Operator::showMessage(' [' . $text . ']');
     }
 
@@ -172,8 +173,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * displayCompleteMessage 
-     * 
+     * displayCompleteMessage
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -362,10 +363,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * Check if current step is last and redirect is prohibited after that step 
-     * 
+     * Check if current step is last and redirect is prohibited after that step
+     *
      * @param integer $step Current step
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -377,7 +378,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
     /**
      * Check if only one step must be performed
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
@@ -416,7 +417,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         static::checkRebuildIndicatorState();
 
         if (static::isSkipRedirectAfterLastStep($step)) {
-            // Do not redirect after last step 
+            // Do not redirect after last step
             // (this mode is used when cache builder was launched from LC standalone installation script)
             static::displayCompleteMessage();
             exit ();
@@ -486,7 +487,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
         if (static::isRebuildNeeded($step)) {
             static::runStep($step);
-            $result = true; 
+            $result = true;
         }
 
         return $result;
@@ -614,9 +615,9 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
     /**
      * Check directory permissions and try to correct them
-     * 
+     *
      * @param string $dir Path to check
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -635,10 +636,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * Fire the error them unable to set directory permissions 
-     * 
+     * Fire the error them unable to set directory permissions
+     *
      * @param string $dir Path to check
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
@@ -650,9 +651,9 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
     /**
      * Return permissions error message
-     * 
+     *
      * @param string $dir Path to check
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -664,9 +665,9 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
     /**
      * Return default directory permissions
-     * 
+     *
      * @param string $dir Path to check
-     *  
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0

@@ -727,13 +727,23 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getThemeFiles()
     {
-        return array(
-            static::RESOURCE_CSS => array(
-                'css/style.css',
-                'css/ajax.css',
-                array('file' => 'css/print.css', 'media' => 'print'),
-            ),
-        );
+        return \XLite::isAdminZone()
+            ? array(
+                static::RESOURCE_CSS => array(
+                    'css/style.css',
+                    'css/ajax.css',
+                    array('file' => 'css/print.css', 'media' => 'print'),
+                ),
+            ) : array(
+                static::RESOURCE_CSS => array(
+                    'css/common.css',
+                    'css/layout.css',
+                    'css/theme.css',
+                    'css/lc.css',
+                    'css/ajax.css',
+                    array('file' => 'css/print.css', 'media' => 'print'),
+                ),
+            );
     }
 
     /**

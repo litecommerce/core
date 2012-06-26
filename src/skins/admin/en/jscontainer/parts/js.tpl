@@ -1,15 +1,14 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Head list children
+ * Not cached JS part
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.4
- *
- * @ListChild (list="head", weight="1100")
+ * @since     1.0.0
+ * @ListChild (list="jscontainer.js", weight="100")
  *}
 
-<list name="head.css">
+<script FOREACH="getJSResources(),file" type="text/javascript" src="{getResourceURL(file.url)}"></script>

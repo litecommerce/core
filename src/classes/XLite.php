@@ -63,6 +63,11 @@ class XLite extends \XLite\Base
     const SHOP_CURRENCY_DEFAULT = 840;
 
     /**
+     * Temporary variable name for latest cache building time
+     */
+    const CACHE_TIMESTAMP = 'cache_build_timestamp';
+
+    /**
      * Current area flag
      *
      * @var   boolean

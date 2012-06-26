@@ -23,6 +23,6 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
 <widget class="\XLite\View\Header" />
 <body class="{getBodyClass()}">
-  <widget class="\XLite\View\Content" />
+<list name="body" />
 </body>
 </html>

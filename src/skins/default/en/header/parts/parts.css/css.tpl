@@ -1,15 +1,15 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Head list children
+ * Header part
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.4
- *
- * @ListChild (list="head", weight="1100")
+ * @since     1.0.0
+ * @ListChild (list="head.css", weight="100")
  *}
-
-<list name="head.css">
+{if:!doCSSAggregation()}
+<link FOREACH="getCSSResources(),file" href="{getResourceURL(file.url)}" rel="stylesheet" type="text/css" media="{file.media}" />
+{end:}
