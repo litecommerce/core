@@ -2004,4 +2004,20 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     // }}}
+
+    // {{{ Order actions
+
+    /**
+     * Get allowed actions 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getAllowedActions()
+    {
+        return array();
+    }
+
+    // }}}
 }

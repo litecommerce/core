@@ -22,34 +22,41 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.18
+ * @since     1.0.24
  */
 
-namespace XLite\View\TopMenu\Node\Sales;
+namespace XLite\View\ItemsList\Model\Order\Admin;
 
 /**
- * Orders
+ * Recent orders list 
  * 
  * @see   ____class_see____
- * @since 1.0.18
- *
- * @ListChild (list="menu.sales", weight="200", zone="admin")
+ * @since 1.0.24
  */
-class Orders extends \XLite\View\TopMenu\Node\Sales\ASales
+class Recent extends \XLite\View\ItemsList\Model\Order\Admin\Search
 {
     /**
-     * Define widget parameters
+     * Return title
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function defineWidgetParams()
+    protected function getHead()
     {
-        parent::defineWidgetParams();
+        return null;
+    }
 
-        $this->widgetParams[self::PARAM_TITLE]->setValue(static::t('Search for orders'));
-        $this->widgetParams[self::PARAM_TARGET]->setValue('order_list');
+    /**
+     * getEmptyListTemplate
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getEmptyListTemplate()
+    {
+        return $this->getDir() . '/' . $this->getPageBodyDir() . '/order/empty_recent_orders.tpl';
     }
 }
 

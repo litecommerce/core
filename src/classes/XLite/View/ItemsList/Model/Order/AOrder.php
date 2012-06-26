@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,49 +13,63 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.0
+ * @since     1.0.24
  */
 
-namespace XLite\View\Form\Order\Modify;
+namespace XLite\View\ItemsList\Model\Order;
 
 /**
- * List
- *
+ * Abstract order-based list
+ * 
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.24
  */
-class Batch extends \XLite\View\Form\Order\Modify\AModify
+abstract class AOrder extends \XLite\View\ItemsList\Model\Table
 {
     /**
-     * getDefaultTarget
+     * Define repository name
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.15
      */
-    protected function getDefaultTarget()
+    protected function defineRepositoryName()
     {
-        return 'order_list';
+        return 'XLite\Model\Order';
     }
 
     /**
-     * getDefaultAction
+     * Get list name suffixes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function getListNameSuffixes()
+    {
+        return array('orders');
+    }
+
+    /**
+     * Get container class
      *
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.15
      */
-    protected function getDefaultAction()
+    protected function getContainerClass()
     {
-        return 'update';
+        return parent::getContainerClass() . ' orders';
     }
+
 }
+

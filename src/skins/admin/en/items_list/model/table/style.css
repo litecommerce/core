@@ -200,3 +200,10 @@
   display: inline;
 }
 
+.items-list-table a.block-link {
+  display: inline-block;
+  width: 30px;
+  height: 26px;
+  text-indent: -5000px;
+  background: transparent url(images/link-icon.png) no-repeat left top;
+}

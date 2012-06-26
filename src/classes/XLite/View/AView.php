@@ -1364,6 +1364,28 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * Format timestamp as day time
+     *
+     * @param mixed  $base   String or object instance to get field value from
+     * @param string $field  Field to get value OPTIONAL
+     * @param string $format Time format OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function formatDayTime($base, $field = null, $format = null)
+    {
+        if (is_object($base)) {
+            $base = $base instanceof \XLite\Model\AEntity
+                ? $base->$field
+                : $base->get($field);
+        }
+
+        return \XLite\Core\Converter::formatDayTime($base, $format);
+    }
+
+    /**
      * Call for Flexy modifier from AView class
      *
      * @param string $callMethod Name of method to call

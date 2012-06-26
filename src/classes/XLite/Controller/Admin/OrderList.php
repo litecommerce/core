@@ -59,6 +59,8 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
         return 'Search for orders';
     }
 
+    // {{{ Search
+
     /**
      * getDateValue
      * FIXME - to remove
@@ -134,6 +136,29 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Get search conditions
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getConditions()
+    {
+        $searchParams = \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Model\Order\Admin\Search::getSessionCellName()};
+
+        if (!is_array($searchParams)) {
+
+            $searchParams = array();
+        }
+
+        return $searchParams;
+    }
+
+    // }}}
+
+    // {{{ Actions
+
+    /**
      * doActionUpdate
      *
      * @return void
@@ -142,19 +167,8 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateInBatchById($this->getPostedData());
-    }
-
-    /**
-     * doActionDelete
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionDelete()
-    {
-        \XLite\Core\Database::getRepo('\XLite\Model\Order')->deleteInBatchById($this->getSelected());
+        $list = new \XLite\View\ItemsList\Model\Order\Admin\Search();
+        $list->processQuick();
     }
 
     /**
@@ -167,7 +181,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     protected function doActionSearch()
     {
         $ordersSearch = array();
-        $searchParams   = \XLite\View\ItemsList\Order\Admin\Search::getSearchParams();
+        $searchParams   = \XLite\View\ItemsList\Model\Order\Admin\Search::getSearchParams();
 
         // Prepare dates
 
@@ -197,27 +211,9 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
             }
         }
 
-        \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName()} = $ordersSearch;
-
-        $this->setReturnURL($this->buildURL('order_list', '', array('mode' => 'search')));
+        \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Model\Order\Admin\Search::getSessionCellName()} = $ordersSearch;
     }
 
-    /**
-     * Get search conditions
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getConditions()
-    {
-        $searchParams = \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName()};
+    // }}}
 
-        if (!is_array($searchParams)) {
-
-            $searchParams = array();
-        }
-
-        return $searchParams;
-    }
 }
