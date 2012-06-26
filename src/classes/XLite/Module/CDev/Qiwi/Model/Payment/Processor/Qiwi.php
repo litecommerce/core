@@ -33,8 +33,12 @@ namespace XLite\Module\CDev\Qiwi\Model\Payment\Processor;
  * @see   ____class_see____
  * @since 1.0.23
  */
-class Qiwi extends \XLite\Model\Payment\Base\Online
+class Qiwi extends \XLite\Model\Payment\Base\Iframe
 {
+    /**
+     * IFrame form URL
+     */
+    const IFRAME_FORM_URL = 'http://w.qiwi.ru/setInetBill.do';
 
     /**
      * Allowed currencies codes
@@ -43,7 +47,7 @@ class Qiwi extends \XLite\Model\Payment\Base\Online
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $allowedCurrencies = array('RUB');
+    protected $allowedCurrencies = array('RUB', 'USD');
 
     /**
      * Bill statuses used in API communication
@@ -84,6 +88,28 @@ class Qiwi extends \XLite\Model\Payment\Base\Online
     );
 
     /**
+     * Detect transaction
+     * 
+     * @return \XLite\Model\Payment\Transaction
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getReturnOwnerTransaction()
+    {
+        $txn = null;
+
+        if (isset(\XLite\Core\Request::getInstance()->txn_id_name)) {
+            $txnIdName = \XLite\Core\Request::getInstance()->txn_id_name;
+            if (isset(\XLite\Core\Request::getInstance()->$txnIdName)) {
+                $txn = \XLite\Core\Database::getRepo('XLite\Model\Payment\Transaction')
+                    ->findOneBy(array('public_id' => \XLite\Core\Request::getInstance()->$txnIdName));
+            }
+        }
+
+        return $txn;
+    }
+
+    /**
      * Get input template
      *
      * @return string|void
@@ -114,7 +140,7 @@ class Qiwi extends \XLite\Model\Payment\Base\Online
             }
         }
 
-        if (!preg_match('/^\d{10}$/', $data['qiwi_phone_number'])) {
+        if (empty($data['qiwi_phone_number']) || !preg_match('/^\d{10}$/', $data['qiwi_phone_number'])) {
             $errors[] = \XLite\Core\Translation::lbl(
                 'Please enter 10-digit mobile phone number without country code (with no spaces or hyphens)'
             );
@@ -185,10 +211,12 @@ class Qiwi extends \XLite\Model\Payment\Base\Online
         );
 
         if (60 == $bill->status) {
+
             // Paid
             $this->transaction->setStatus($transaction::STATUS_SUCCESS);
 
         } elseif (in_array($bill->status, array(150, 151, 160, 161))) {
+
             // Cancelled
             $reason = $bill->status ? $this->billStatuses[$bill->status] : 'Unknown';
 
@@ -216,17 +244,75 @@ class Qiwi extends \XLite\Model\Payment\Base\Online
     }
 
     /**
-     * Do background request to Qiwi
-     * 
+     * Process return
+     *
+     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
+     *
      * @return void
      * @see    ____func_see____
-     * @since  1.0.23
+     * @since  1.0.0
      */
-    protected function doInitialPayment()
+    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
-        $transactionData = $this->transaction->getData();
+        parent::processReturn($transaction);
+
+        $client = new \XLite\Module\CDev\Qiwi\Core\QiwiSoapClient();
+        $bill = $client->checkBill(
+            $this->getSetting('login'),
+            $this->getSetting('password'),
+            $transaction->getPublicId()
+        );
+
+        // Amount checking
+        if (isset($bill->amount) && !$this->checkTotal($bill->amount)) {
+            $this->transaction->setNote('Bill amount is incorrect');
+            $this->transaction->setStatus($transaction::STATUS_FAILED);
+
+        } else {
+            if (in_array($bill->status, array(50, 52))) {
+
+                // Created or in progress
+                $this->transaction->setStatus($transaction::STATUS_PENDING);
+
+            } elseif (60 == $bill->status) {
+
+                // Paid
+                $this->transaction->setStatus($transaction::STATUS_SUCCESS);
+
+            } else {
+
+                $reason = $bill->status ? $this->billStatuses[$bill->status] : 'Unknown';
+
+                $this->transaction->setNote('Transaction failed. Reason: ' . $reason);
+                $this->transaction->setStatus($transaction::STATUS_FAILED);
+            }
+        }
+    }
+
+    /**
+     * Get iframe form URL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIframeFormURL()
+    {
+        return static::IFRAME_FORM_URL;
+    }
+
+    /**
+     * Get iframe data
+     *
+     * @return string|array URL or POST data
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIframeData()
+    {
+        $data = $this->transaction->getData();
         $qiwiPhoneNumber = '';
-        foreach ($transactionData as $cell) {
+        foreach ($data as $cell) {
             if ('qiwi_phone_number' === $cell->getName()) {
                 $qiwiPhoneNumber = $cell->getValue();
             }
@@ -234,34 +320,15 @@ class Qiwi extends \XLite\Model\Payment\Base\Online
 
         $this->transaction->setPublicId($this->getSetting('prefix') . $this->transaction->getTransactionId());
 
-        $client = new \XLite\Module\CDev\Qiwi\Core\QiwiSoapClient();
-
-        $createBillInput = new \stdClass();
-        $createBillInput->login = $this->getSetting('login');
-        $createBillInput->password = $this->getSetting('password');
-        $createBillInput->user = $qiwiPhoneNumber;
-        $createBillInput->amount = strval(round($this->transaction->getValue(), 2));
-        $createBillInput->comment = \XLite\Core\Translation::getInstance()->lbl('Order')
-            . ' #' . $this->getOrder()->getOrderId();
-        $createBillInput->txn = $this->transaction->getPublicId();
-        $createBillInput->lifetime = date('d.m.Y H:m:s', time() + 3600 * $this->getSetting('lifetime'));
-        $createBillInput->alarm = 0;
-        $createBillInput->create = !$this->getSetting('check_agt');
-
-        $result = $client->createBill($createBillInput);
-
-        if (0 != $result->createBillResult) {
-            $reason = isset($this->soapCallsReturnCodes[$result->createBillResult]) ?
-                $this->soapCallsReturnCodes[$result->createBillResult] : 'Unknown error';
-
-            $status = static::FAILED;
-            $this->transaction->setNote('Payment is failed: ' . $reason);
-
-        } else {
-            $status = static::PENDING;
-        }
-
-        return $status;
+        return array(
+            'txn_id'    => $this->transaction->getPublicId(),
+            'from'      => $this->getSetting('login'),
+            'lifetime'  => $this->getSetting('lifetime'),
+            'check_agt' => $this->getSetting('check_agt') ? 'true' : 'false',
+            'to'        => $qiwiPhoneNumber,
+            'summ'      => round($this->transaction->getValue(), 2),
+            'com'       => '',
+        );
     }
 
     /**
