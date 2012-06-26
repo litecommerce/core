@@ -64,6 +64,8 @@ class PlainArray extends \XLite\Core\Validator\AValidator
      */
     public function __construct($nonEmpty = false)
     {
+        parent::__construct();
+
         $this->markAsNonEmpty($nonEmpty);
     }
 

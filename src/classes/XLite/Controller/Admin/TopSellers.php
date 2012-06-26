@@ -41,6 +41,18 @@ class TopSellers extends \XLite\Controller\Admin\Stats
     const TOP_SELLERS_NUMBER = 10;
 
     /**
+     * Check ACL permissions
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    public function checkACL()
+    {
+        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage orders');
+    }
+
+    /**
      * getPageTemplate
      *
      * @return void

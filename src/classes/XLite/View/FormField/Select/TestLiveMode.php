@@ -51,8 +51,8 @@ class TestLiveMode extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return array(
-            self::LIVE => 'Live',
-            self::TEST => 'Test',
+            static::LIVE => static::t('Live'),
+            static::TEST => static::t('Test'),
         );
     }
 }

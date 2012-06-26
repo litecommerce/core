@@ -10,7 +10,7 @@
  * @since     1.0.0
  * @ListChild (list="checkout.payment.inactive", weight="20")
  *}
-<div class="secondary">
+<div IF="!isPayedCart()" class="secondary">
   {if:cart.getPaymentMethod()}
     <div class="label">{t(#Payment method#)}:</div>
     {cart.paymentMethod.name}

@@ -40,7 +40,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      */
     const SECURE_TOKEN = 'secureToken';
 
-
     /**
      * Controlelr parameters
      *
@@ -58,7 +57,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * @since 1.0.0
      */
     protected $profile;
-
 
     /**
      * handleRequest 
@@ -102,16 +100,17 @@ class Login extends \XLite\Controller\Customer\ACustomer
      *
      * @param string  $url    Relative URL OPTIONAL
      * @param boolean $secure Flag to use HTTPS OPTIONAL
+     * @param array   $params Optional URL params OPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getShopURL($url = '', $secure = false)
+    public function getShopURL($url = '', $secure = null, array $params = array())
     {
         $add = (strpos($url, '?') ? '&' : '?') . 'feed=' . \XLite\Core\Request::getInstance()->action;
 
-        return parent::getShopURL($url . $add, $secure);
+        return parent::getShopURL($url . $add, $secure, $params);
     }
 
 

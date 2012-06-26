@@ -160,7 +160,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Preprocessor for no-action ren
+     * Preprocessor for no-action run
      *
      * @return void
      * @see    ____func_see____
@@ -170,9 +170,21 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     {
         parent::doNoAction();
 
-        if (!\XLite\Core\Request::getInstance()->isAJAX()) {
+        if (!$this->isAJAX()) {
             \XLite\Core\Session::getInstance()->productListURL = $this->getURL();
         }
+    }
+
+    /**
+     * Check if redirect to clean URL is needed
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isRedirectToCleanURLNeeded()
+    {
+        return parent::isRedirectToCleanURLNeeded() || (!\XLite::isCleanURL() && $this->getModelObject()->getCleanURL());
     }
 
     /**

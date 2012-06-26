@@ -33,7 +33,7 @@ namespace XLite\Controller\Admin;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Categories extends \XLite\Controller\Admin\Base\Catalog
+class Categories extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Return the current page title (for the content area)
@@ -46,7 +46,8 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
     {
         $category = $this->getCategory();
 
-        return ($category && $this->getRootCategoryId() !== $category->getCategoryId()) 
+        // DO NOT use "!==" here
+        return ($category && $this->getRootCategoryId() != $category->getCategoryId()) 
             ? $category->getName() 
             : 'Manage categories';
     }
@@ -61,6 +62,36 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
     public function getMemberships()
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findAllMemberships();
+    }
+
+    /**
+     * Return current category Id
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCategoryId()
+    {
+        return parent::getCategoryId() ?: $this->getRootCategoryId();
+    }
+
+    /**
+     * Return current (or default) category object
+     *
+     * @return \XLite\Model\Category
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCategory()
+    {
+        $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
+
+        if (!isset($category)) {
+            $category = new \XLite\Model\Category();
+        }
+
+        return $category;
     }
 
     /**

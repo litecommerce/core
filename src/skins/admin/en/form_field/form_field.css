@@ -68,8 +68,8 @@ button.ui-state-default span.ui-icon {
 }
 
 .ui-multiselect-checkboxes li {
-  padding-left: 7px;
-  padding-right: 9px;
+  padding-left: 17px;
+  padding-right: 19px;
 }
 
 .ui-multiselect-checkboxes li.ui-multiselect-optgroup-label {
@@ -123,6 +123,10 @@ button.ui-state-default span.ui-icon {
 .ui-multiselect-checkboxes label {
   line-height: 22px;
   padding-left: 11px;
+}
+
+.ui-multiselect-checkboxes .ui-state-hover span {
+  color: #fff;
 }
 
 .ui-multiselect-checkboxes label input {

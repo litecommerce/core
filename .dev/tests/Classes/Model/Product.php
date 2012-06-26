@@ -53,7 +53,7 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 			'enabled'       => array(true, null),
 			'weight'        => array(2.88, null),
 			'free_shipping' => array(true, null),
-			'clean_url'     => array('test_url', null),
+			'cleanURL'      => array('test_url', null),
 			'javascript'    => array('test_js', null),
             'name'          => array('test name', null),
             'description'   => array('test description', null),

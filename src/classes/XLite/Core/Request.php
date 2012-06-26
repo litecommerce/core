@@ -35,6 +35,9 @@ namespace XLite\Core;
  */
 class Request extends \XLite\Base\Singleton
 {
+    /**
+     * Current method
+     */
     const METHOD_CLI = 'cli';
 
     /**
@@ -75,7 +78,7 @@ class Request extends \XLite\Base\Singleton
                 }
 
             } else {
-                $data = array_merge($_GET, $_POST, $_COOKIE);
+                $data = array_merge($this->getGetData(false), $this->getPostData(false), $this->getCookieData(false));
             }
         }
 
@@ -92,6 +95,62 @@ class Request extends \XLite\Base\Singleton
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * Return data from the $_GET global variable
+     *
+     * @param boolean $prepare Flag OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getGetData($prepare = true)
+    {
+        return $prepare ? $this->prepare($_GET) : $_GET;
+    }
+
+    /**
+     * Return data from the $_POST global variable
+     *
+     * @param boolean $prepare Flag OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getPostData($prepare = true)
+    {
+        return $prepare ? $this->prepare($_POST) : $_POST;
+    }
+
+    /**
+     * Return data from the $_COOKIE global variable
+     *
+     * @param boolean $prepare Flag OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getCookieData($prepare = true)
+    {
+        return $prepare ? $this->prepare($_COOKIE) : $_COOKIE;
+    }
+
+    /**
+     * Return data from the $_SERVER global variable
+     *
+     * @param boolean $prepare Flag OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getServerData($prepare = true)
+    {
+        return $prepare ? $this->prepare($_SERVER) : $_SERVER;
     }
 
     /**
@@ -169,7 +228,7 @@ class Request extends \XLite\Base\Singleton
     }
 
     /**
-     * Check - is secure connection or not
+     * Check for secure connection
      *
      * @return boolean
      * @see    ____func_see____
@@ -177,12 +236,7 @@ class Request extends \XLite\Base\Singleton
      */
     public function isHTTPS()
     {
-        return (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1'))
-            || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')
-            || (
-                isset($_SERVER['REMOTE_ADDR'])
-                && \XLite::getInstance()->getOptions(array('host_details', 'remote_addr')) == $_SERVER['REMOTE_ADDR']
-            );
+        return \Includes\Utils\URLManager::isHTTPS();
     }
 
     /**

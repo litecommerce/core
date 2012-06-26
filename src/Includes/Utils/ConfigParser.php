@@ -228,7 +228,6 @@ abstract class ConfigParser extends \Includes\Utils\AUtils
             = \Includes\Utils\URLManager::trimTrailingSlashes(static::$options['host_details']['web_dir']);
     }
 
-
     /**
      * Parse both config files
      *

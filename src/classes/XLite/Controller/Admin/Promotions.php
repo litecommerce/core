@@ -44,6 +44,8 @@ class Promotions extends \XLite\Controller\Admin\AAdmin
      */
     protected $params = array('target', 'page');
 
+    // {{{ Pages
+
     /**
      * Get pages static 
      * 
@@ -81,7 +83,7 @@ class Promotions extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
         $list = array();
 
@@ -91,4 +93,6 @@ class Promotions extends \XLite\Controller\Admin\AAdmin
 
         return $list;
     }
+
+    // }}}
 }

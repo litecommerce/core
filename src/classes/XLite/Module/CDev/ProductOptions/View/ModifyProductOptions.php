@@ -36,12 +36,6 @@ namespace XLite\Module\CDev\ProductOptions\View;
 class ModifyProductOptions extends \XLite\View\AView
 {
     /**
-     *  Widget parameters
-     */
-    const PARAM_PRODUCT = 'product';
-
-
-    /**
      * Option groups list (cache)
      *
      * @var   array
@@ -49,7 +43,6 @@ class ModifyProductOptions extends \XLite\View\AView
      * @since 1.0.0
      */
     protected $options;
-
 
     /**
      * Get product id
@@ -60,7 +53,7 @@ class ModifyProductOptions extends \XLite\View\AView
      */
     public function getProductId()
     {
-        return $this->getParam(self::PARAM_PRODUCT)->getProductId();
+        return $this->getProduct()->getProductId();
     }
 
     /**
@@ -73,7 +66,7 @@ class ModifyProductOptions extends \XLite\View\AView
     public function getOptions()
     {
         if (!isset($this->options)) {
-            $this->options = $this->getParam(self::PARAM_PRODUCT)->getOptionGroups();
+            $this->options = $this->getProduct()->getOptionGroups();
             if (is_object($this->options)) {
                 $this->options = $this->options->toArray();
             }
@@ -97,10 +90,10 @@ class ModifyProductOptions extends \XLite\View\AView
             'product',
             '',
             array(
-                'page'     => 'product_options',
-                'id'       => $this->getProductId(),
-                'groupId'  => $option->getGroupId(),
-                'language' => \XLite\Core\Request::getInstance()->language,
+                'page'       => 'product_options',
+                'product_id' => $this->getProductId(),
+                'groupId'    => $option->getGroupId(),
+                'language'   => \XLite\Core\Request::getInstance()->language,
             )
         );
     }
@@ -115,34 +108,9 @@ class ModifyProductOptions extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules/CDev/ProductOptions/style.css';
 
         return $list;
-    }
-
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
-                'Product',
-                \XLite\Core\Database::getRepo('\XLite\Model\Product')->find(
-                    \XLite\Core\Request::getInstance()->id
-                ),
-                false,
-                '\XLite\Model\Product'
-            ),
-        );
     }
 
     /**
@@ -167,6 +135,6 @@ class ModifyProductOptions extends \XLite\View\AView
     protected function isVisible()
     {
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT);
+            && $this->getProduct();
     }
 }

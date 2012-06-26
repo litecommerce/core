@@ -133,6 +133,10 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
         unset($list[\XLite\Model\Order::STATUS_TEMPORARY]);
         unset($list[\XLite\Model\Order::STATUS_INPROGRESS]);
 
+        foreach ($list as $k => $v) {
+            $list[$k] = static::t($v);
+        }
+
         return $list;
     }
 

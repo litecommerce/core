@@ -82,6 +82,6 @@ class Backup extends \XLite\View\Upgrade\Step\Completed\ACompleted
      */
     protected function getShopURL()
     {
-        return \Includes\Utils\URLManager::getShopURL();
+        return \XLite::getInstance()->getShopURL();
     }
 }

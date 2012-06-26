@@ -54,6 +54,9 @@ class AccountStatus extends \XLite\View\FormField\Select\Regular
      */
     protected function getDefaultOptions()
     {
-        return array('E' => 'Enabled', 'D' => 'Disabled');
+        return array(
+            'E' => static::t('Enabled'),
+            'D' => static::t('Disabled'),
+        );
     }
 }

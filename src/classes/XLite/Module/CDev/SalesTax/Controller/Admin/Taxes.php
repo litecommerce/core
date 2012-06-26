@@ -40,6 +40,8 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      */
     const PAGE_SALES_TAX = 'salesTax';
 
+    // {{{ Pages
+
     /**
      * Get pages sections
      *
@@ -50,7 +52,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
     public function getPages()
     {
         $list = parent::getPages();
-        $list[self::PAGE_SALES_TAX] = 'Sales tax';
+        $list[static::PAGE_SALES_TAX] = 'Sales tax';
 
         return $list;
     }
@@ -62,13 +64,15 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
         $list = parent::getPageTemplates();
-        $list[self::PAGE_SALES_TAX] = 'modules/CDev/SalesTax/edit.tpl';
+        $list[static::PAGE_SALES_TAX] = 'modules/CDev/SalesTax/edit.tpl';
 
         return $list;
     }
+
+    // }}}
 
     // {{{ Widget-specific getters
 
@@ -83,7 +87,7 @@ abstract class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Bas
     {
         $tax = parent::getTax();
 
-        if (!$tax && $this->getPage() == self::PAGE_SALES_TAX) {
+        if (!$tax && static::PAGE_SALES_TAX === $this->getPage()) {
              $tax = \XLite\Core\Database::getRepo('XLite\Module\CDev\SalesTax\Model\Tax')->getTax();
         }
 

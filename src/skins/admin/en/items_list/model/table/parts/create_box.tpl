@@ -13,7 +13,7 @@
 <tr class="create-tpl" style="display: none;">
   <td FOREACH="getCreateColumns(),column" class="{getColumnClass(column,dumpEntity)}">
     {if:column.createClass}
-      <widget class="{column.createClass}" idx="{idx}" entity="{getDumpEntity()}" column="{column}" itemsList="{getSelf()}" />
+      <widget class="{column.createClass}" idx="{idx}" entity="{getDumpEntity()}" column="{column}" itemsList="{getSelf()}" fieldName="{column.code}" fieldParams="{column.params}" />
     {else:}
       <widget template="{column.template}" idx="{idx}" entity="{getDumpEntity()}" column="{column}" />
     {end:}

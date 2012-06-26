@@ -367,7 +367,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
         $list = array();
 
         foreach ($this->getCreateFieldClasses() as $object) {
-            $list[] = $this->prepareInlineField($object, $entity);
+            $this->prepareInlineField($object, $entity);
+            $list[] = $object;
         }
 
         return $list;
@@ -872,7 +873,11 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      */
     protected function buildEntityURL(\XLite\Model\AEntity $entity, array $column)
     {
-        return \XLite\Core\Converter::buildURL($column[static::COLUMN_LINK], '', array('id' => $entity->getUniqueIdentifier()));
+        return \XLite\Core\Converter::buildURL(
+            $column[static::COLUMN_LINK], 
+            '', 
+            array($entity->getUniqueIdentifierName() => $entity->getUniqueIdentifier())
+        );
     }
 
     /**

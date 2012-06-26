@@ -74,6 +74,4 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Product\AProduct
     {
         return \XLite\Core\Converter::buildUrl('add_product');
     }
-
 }
-

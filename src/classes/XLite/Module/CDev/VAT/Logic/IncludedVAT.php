@@ -67,7 +67,7 @@ class IncludedVAT extends \XLite\Logic\ALogic
      */
     static public function modifyMoney($value, \XLite\Model\AEntity $model, $property, array $behaviors, $purpose)
     {
-        $obj = ($model instanceOf \XLite\Model\OrderItem ? $model->getProduct() : $model); 
+        $obj = ($model instanceOf \XLite\Model\Product ? $model : $model->getProduct());
 
         return \XLite\Module\CDev\VAT\Logic\Product\Tax::getInstance()->deductTaxFromPrice($obj, $value);
     }
