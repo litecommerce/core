@@ -25,31 +25,29 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\FormField\Input;
-
+namespace XLite\Module\CDev\AmazonS3Images\Core;
 
 /**
- * Password
- *
+ * Event listener (common) 
+ * 
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.19
  */
-class Password extends \XLite\View\FormField\Input\Secure
+abstract class EventListener extends \XLite\Core\EventListener implements \XLite\Base\IDecorator
 {
     /**
-     * setCommonAttributes
+     * Get listeners
      *
-     * @param array $attrs Field attributes to prepare
-     *
-     * @return void
+     * @return array
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.19
      */
-    protected function setCommonAttributes(array $attrs)
+    protected function getListeners()
     {
-        $result = parent::setCommonAttributes($attrs);
-        $result['value'] = '';
-
-        return $result;
+        return parent::getListeners()
+            + array(
+                'migrateToS3'   => array('\XLite\Module\CDev\AmazonS3Images\Core\EventListener\MigrateToS3'),
+                'migrateFromS3' => array('\XLite\Module\CDev\AmazonS3Images\Core\EventListener\MigrateFromS3'),
+            );
     }
 }

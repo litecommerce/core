@@ -133,9 +133,9 @@ class Module extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        $this->getModelForm()->performAction('update');
-
-        $this->setReturnURL(\XLite\Core\Request::getInstance()->return ?: $this->buildURL('addons_list_installed'));
+        if ($this->getModelForm()->performAction('update')) {
+            $this->setReturnURL(\XLite\Core\Request::getInstance()->return ?: $this->buildURL('addons_list_installed'));
+        }
     }
 
     /**
