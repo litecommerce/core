@@ -174,3 +174,9 @@ body div.ui-multiselect-with-filter .ui-widget-header .ui-helper-reset {
   display: none;
 }
 
+/* Colorpicker */
+input[type="text"].color,
+div.table-value input[type="text"].color
+{
+  width: 4em;
+}

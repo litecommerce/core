@@ -686,6 +686,20 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
         return $list;
     }
 
+    /**
+     * Check - remove entity or not
+     * 
+     * @param \XLite\Model\AEntity $entity Entity
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isAllowEntityRemove(\XLite\Model\AEntity $entity)
+    {
+        return true;
+    }
+
     // }}}
 
     // {{{ Inherited methods
@@ -736,6 +750,20 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     protected function getPageBodyDir()
     {
         return parent::getPageBodyDir() . '/table';
+    }
+
+    /**
+     * Remove entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function removeEntity(\XLite\Model\AEntity $entity)
+    {
+        return $this->isAllowEntityRemove($entity) && parent::removeEntity($entity);
     }
 
     // }}}

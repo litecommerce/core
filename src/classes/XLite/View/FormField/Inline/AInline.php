@@ -335,17 +335,8 @@ abstract class AInline extends \XLite\View\AView
         $result = array(true, null);
 
         foreach ($this->getFields() as $field) {
-
-            $method = 'validate' . ucfirst($field['field'][static::FIELD_NAME]);
-            if (method_exists($this, $method)) {
-
-                // $method assemble from 'validate' + field name
-                $result = $this->$method($field);
-
-            } else {
-                $result = $field['widget']->validate();
-            }
-
+            $result = $this->validateField($field);
+            
             if (!$result[0]) {
                 break;
             }
@@ -594,6 +585,24 @@ abstract class AInline extends \XLite\View\AView
     protected function preprocessValueBeforeSave($value)
     {
         return $value;
+    }
+
+    /**
+     * Validate field 
+     * 
+     * @param array $field Feild info
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function validateField(array $field)
+    {
+        $method = 'validate' . ucfirst($field['field'][static::FIELD_NAME]);
+
+        return method_exists($this, $method)
+            ? $this->$method($field)
+            : $field['widget']->validate();
     }
 
     // }}}
