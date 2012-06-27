@@ -11,7 +11,7 @@
  *}
 
 <div {getContainerAttributesAsString():h}>
-
+  {displayCommentedData(getItemsListParams())}
   <div IF="isHeaderVisible()" class="list-header">
     <div FOREACH="getTopActions(),tpl" class="button-container"><widget template="{tpl:h}" /></div>
     <list name="header" type="inherited" />
@@ -30,13 +30,3 @@
 </div>
 
 <widget IF="isPanelVisible()" class="{getPanelClass()}" />
-
-<script type="text/javascript">
-//<![CDATA[
-jQuery().ready(
-  function() {
-    new TableItemsList('{getSessionCell()}', {getURLParamsJS():h}, {getURLAJAXParamsJS():h});
-  }
-);
-//]]>
-</script>

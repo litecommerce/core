@@ -1859,7 +1859,6 @@ form.list-form .sticky-panel.has-add-buttons .additional {
 
 form.list-form .sticky-panel.has-add-buttons .additional .additional-buttons {
   position: absolute;
-  top: 10px;
   left: 43px;
   display: none;
   -moz-border-radius: 5px;
