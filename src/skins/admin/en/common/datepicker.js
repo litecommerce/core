@@ -18,7 +18,7 @@ jQuery().ready(
     jQuery('.date-picker-widget').each(function (index, elem) {
       var options = core.getCommentedData(elem);
 
-      jQuery('input', elem).datepicker(
+      jQuery('input', jQuery(elem)).datepicker(
         {
           dateFormat:        options.dateFormat,
           gotoCurrent:       true,
