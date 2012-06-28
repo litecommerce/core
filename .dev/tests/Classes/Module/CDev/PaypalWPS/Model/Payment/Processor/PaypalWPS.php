@@ -71,13 +71,13 @@ class XLite_Tests_Module_CDev_PaypalWPS_Model_Payment_Processor_PaypalWPS extend
         $sid = \XLite\Core\Session::getInstance()->getID();
         $amount = $t->getValue();
 
-        $urla = \XLite::getInstance()->getShopURL('admin.php?target=payment_return&amp;txnId='.$tid.'&amp;txn_id_name=txnId');
+        $urla = \XLite::getInstance()->getShopURL('admin.php?target=payment_return&amp;txn_id_name=txnId&amp;txnId='. $tid);
         $urla = str_replace('&xid', '&amp;xid', $urla);
 
-        $urld = \XLite::getInstance()->getShopURL('admin.php?target=payment_return&amp;cancel=1&amp;txn_id_name=txnId&amp;txnId=' . $tid);
+        $urld = \XLite::getInstance()->getShopURL('admin.php?target=payment_return&amp;txn_id_name=txnId&amp;txnId=' . $tid . '&amp;cancel=1');
         $urld = str_replace('&xid', '&amp;xid', $urld);
 
-        $urlc = \XLite::getInstance()->getShopURL('admin.php?target=callback&amp;txnId='.$tid.'&amp;txn_id_name=txnId');
+        $urlc = \XLite::getInstance()->getShopURL('admin.php?target=callback&amp;txn_id_name=txnId&amp;txnId='. $tid);
         $urlc = str_replace('&xid', '&amp;xid', $urlc);
 
         $etalon = <<<HTML

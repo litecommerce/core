@@ -183,15 +183,12 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
     public function testDelete()
     {
         $order = $this->getTestOrder();
-
         $id = $order->getOrderId();
-
-        \XLite\Core\Database::getEM()->remove($order);
-        \XLite\Core\Database::getEM()->flush();
         $this->order = null;
 
-        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')
-            ->find($id);
+        \XLite\Core\Database::getRepo('XLite\Model\Order')->delete($order);
+        \XLite\Core\Database::getRepo('XLite\Model\Order')->clear();
+        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($id);
 
         $this->assertTrue(is_null($order), 'check removed order');
     }

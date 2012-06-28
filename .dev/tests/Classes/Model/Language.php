@@ -50,7 +50,7 @@ class XLite_Tests_Model_Language extends XLite_Tests_TestCase
 
         $this->assertTrue(0 < $c->getLngId(), 'check language id');
         $em->remove($c);
-        $em->flush($c);
+        $em->flush();
     }
 
     public function testgetAdded()

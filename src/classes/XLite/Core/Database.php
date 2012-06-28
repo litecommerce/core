@@ -1301,7 +1301,7 @@ OUT;
         $schema = preg_replace('/ ADD ([a-z]\S+) /Ss', ' ADD `$1` ', $schema);
 
         $schema = preg_replace(
-            '/(`\S+` ADD FOREIGN KEY \([^\)]+\) REFERENCES `\S+` \([^\)]+\)$\s*)$/Ss',
+            '/(`\S+` ADD CONSTRAINT \w+ FOREIGN KEY \([^\)]+\) REFERENCES `\S+` \([^\)]+\)$\s*)$/Ss',
             '$1 ON DELETE CASCADE',
             $schema
         );
