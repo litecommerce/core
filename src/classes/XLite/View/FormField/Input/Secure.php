@@ -29,27 +29,22 @@ namespace XLite\View\FormField\Input;
 
 
 /**
- * Password
+ * Secure input
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Password extends \XLite\View\FormField\Input\Secure
+class Secure extends \XLite\View\FormField\Input\Base\String
 {
     /**
-     * setCommonAttributes
+     * Return field type
      *
-     * @param array $attrs Field attributes to prepare
-     *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function setCommonAttributes(array $attrs)
+    public function getFieldType()
     {
-        $result = parent::setCommonAttributes($attrs);
-        $result['value'] = '';
-
-        return $result;
+        return self::FIELD_TYPE_PASSWORD;
     }
 }

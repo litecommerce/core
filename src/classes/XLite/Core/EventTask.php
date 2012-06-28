@@ -35,6 +35,12 @@ namespace XLite\Core;
  */
 class EventTask extends \XLite\Base\Singleton
 {
+    const STATE_STANDBY     = 1;
+    const STATE_IN_PROGRESS = 2;
+    const STATE_FINISHED    = 3;
+    const STATE_ABORTED     = 4;
+
+
     /**
      * Driver 
      * 
