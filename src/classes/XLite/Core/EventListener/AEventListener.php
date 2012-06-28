@@ -36,16 +36,22 @@ namespace XLite\Core\EventListener;
 abstract class AEventListener extends \XLite\Base\Singleton
 {
     /**
-     * Handle event (internal, after checking)
-     *
-     * @param string $name      Event name
-     * @param array  $arguments Event arguments OPTIONAL
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.19
+     * Errors 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
      */
-    abstract public function handleEvent($name, array $arguments);
+    protected $errors = array();
+
+    /**
+     * Arguments
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
+    protected $arguments;
 
     /**
      * Handle event
@@ -75,6 +81,33 @@ abstract class AEventListener extends \XLite\Base\Singleton
     public static function checkEvent($name, array $arguments)
     {
         return true;
+    }
+
+    /**
+     * Handle event (internal, after checking)
+     *
+     * @param string $name      Event name
+     * @param array  $arguments Event arguments OPTIONAL
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function handleEvent($name, array $arguments)
+    {
+        $this->arguments = $arguments;
+    }
+
+    /**
+     * Get errors 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
 }

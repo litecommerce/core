@@ -70,11 +70,15 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
     {
         $event = \XLite\Core\Request::getInstance()->event;
         $result = false;
+        $errors = array();
 
         $task = \XLite\Core\Database::getRepo('XLite\Model\EventTask')->findOneBy(array('name' => $event));
-        if ($task && \XLite\Core\EventListener::getInstance()->handle($task->getName(), $task->getArguments())) {
-            \XLite\Core\Database::getEM()->remove($task);
-            $result = true;
+        if ($task) {
+            if (\XLite\Core\EventListener::getInstance()->handle($task->getName(), $task->getArguments())) {
+                \XLite\Core\Database::getEM()->remove($task);
+                $result = true;
+            }
+            $errors = \XLite\Core\EventListener::getInstance()->getErrors();
 
         } else {
             \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->removeEventState($event);
@@ -88,11 +92,19 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
         if ($result && $state) {
             \XLite\Core\Event::eventTaskRun(
                 array(
-                    'percent' => 0 < $state['position'] ? min(100, round($state['position'] / $state['length'] * 100)) : 0,
+                    'percent' => \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getEventStatePercent($event),
+                    'error'   => !empty($errors)
                 )
             );
 
         } else {
+            $result = false;
+        }
+
+        if ($errors) {
+            foreach ($errors as $message) {
+                \Xlite\Core\TopMessage::addError($message);
+            }
             $result = false;
         }
 
@@ -115,6 +127,7 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
         
         $data = array(
             'percent' => $state && 0 < $state['position'] ? min(100, round($state['position'] / $state['length'] * 100)) : 0,
+            'error'   => false,
         );
 
         print json_encode($data);

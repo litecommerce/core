@@ -70,5 +70,4 @@ abstract class AProduct extends \XLite\View\ItemsList\Model\Table
     {
         return parent::getContainerClass() . ' products';
     }
-
 }

@@ -163,7 +163,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     protected function getProductId()
     {
-        return intval(\XLite\Core\Request::getInstance()->product_id);
+        return \XLite\Core\Request::getInstance()->product_id;
     }
 
     /**

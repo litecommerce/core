@@ -15,9 +15,9 @@
   <h3 IF="getEventTitle()">{getEventTitle()}</h3>
   <div class="bar" data-percent="{getPercent()}" title="{getPercent()}%"></div>
   {if:isBlockingDriver()}
-    <p class="note">{t(#Refresh the page to update the status#)}</p>
+    <p IF="getBlockingNote()" class="note">{getBlockingNote()}</p>
   {else:}
-    <p class="note">{t(#Wait#)}</p>
+    <p if="getNonBlockingNote()" class="note">{getNonBlockingNote()}</p>
   {end:}
 
 </div>

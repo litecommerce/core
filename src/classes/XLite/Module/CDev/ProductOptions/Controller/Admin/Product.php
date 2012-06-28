@@ -35,24 +35,7 @@ namespace XLite\Module\CDev\ProductOptions\Controller\Admin;
  */
 class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
-    /**
-     * Constructor
-     *
-     * @param array $params Parameters
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function __construct(array $params)
-    {
-        parent::__construct($params);
-
-        if (!in_array('language', $this->params)) {
-            $this->params[] = 'language';
-        }
-
-    }
+    // {{{ Pages
 
     /**
      * Get pages sections
@@ -63,15 +46,13 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      */
     public function getPages()
     {
-        $pages = parent::getPages();
+        $list = parent::getPages();
 
         if (!$this->isNew()) {
-            $pages += array(
-                'product_options' => 'Product options',
-            );
+            $list['product_options'] = 'Product options';
         }
 
-        return $pages;
+        return $list;
     }
 
     /**
@@ -81,19 +62,18 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
-        $tpls = parent::getPageTemplates();
+        $list = parent::getPageTemplates();
 
         if (!$this->isNew()) {
-            $tpls += array(
-                'product_options' => 'modules/CDev/ProductOptions/product_options_lander.tpl',
-            );
+            $list['product_options'] = 'modules/CDev/ProductOptions/product_options_lander.tpl';
         }
 
-        return $tpls;
+        return $list;
     }
 
+    // }}}
 
     /**
      * Update option groups list

@@ -88,5 +88,4 @@ class Category extends \XLite\Controller\Customer\Catalog
             \XLite\Core\Session::getInstance()->continueShoppingURL = $this->getURL();
         }
     }
-
 }

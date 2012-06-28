@@ -107,7 +107,7 @@ class TmpVar extends \XLite\Model\Repo\ARepo
      */
     public function initializeEventState($name)
     {
-        $this->setEventState($name, array('position' => 0, 'length' => 0));
+        $this->setEventState($name, array('position' => 0, 'length' => 0, 'state' => \XLite\Core\EventTask::STATE_STANDBY));
     }
 
     /**
@@ -156,6 +156,51 @@ class TmpVar extends \XLite\Model\Repo\ARepo
             \XLite\Core\Database::getEM()->flush();
         }
     }
+
+    /**
+     * Check event state - finished or not
+     *
+     * @param string $name Event task name
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function isFinishedEventState($name)
+    {
+        $record = $this->getEventState($name);
+
+        return $record
+            && ($record['state'] == \XLite\Core\EventTask::STATE_FINISHED || $record['state'] == \XLite\Core\EventTask::STATE_ABORTED);
+    }
+
+    /**
+     * Check event state - finished or not
+     *
+     * @param string $name Event task name
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function getEventStatePercent($name)
+    {
+        $record = $this->getEventState($name);
+
+        $percent = 0;
+
+        if ($record) {
+            if ($this->isFinishedEventState($name)) {
+                $percent = 100;
+
+            } elseif (0 < $record['length']) {
+                $percent = min(100, round($record['position'] / $record['length'] * 100));
+            }
+        }
+
+        return $percent;
+    }
+
 
     // }}}
 }

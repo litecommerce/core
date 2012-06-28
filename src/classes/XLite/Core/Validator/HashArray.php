@@ -53,6 +53,8 @@ class HashArray extends \XLite\Core\Validator\AValidator
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->pairs = new \Doctrine\Common\Collections\ArrayCollection;
     }
 

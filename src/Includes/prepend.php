@@ -59,7 +59,7 @@ set_include_path(
 require_once (LC_DIR_ROOT . 'Includes' . LC_DS . 'functions.php');
 
 // Common error reporting settings
-$path = LC_DIR_VAR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
+$path = LC_DIR_LOG . 'php_errors.log.' . date('Y-m-d') . '.php';
 if (!file_exists(dirname($path)) && is_writable(LC_DIR_VAR)) {
     \Includes\Utils\FileManager::mkdirRecursive(dirname($path));
 }

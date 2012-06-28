@@ -71,7 +71,6 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
         $validator = parent::getValidator();
 
         $data = $validator->addPair('postedData', new \XLite\Core\Validator\HashArray());
-
         $this->setDataValidators($data);
 
         return $validator;
@@ -86,7 +85,7 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      */
     protected function getProductId()
     {
-        return \XLite\Core\Request::getInstance()->id;
+        return \XLite\Core\Request::getInstance()->product_id;
     }
 
     /**
@@ -113,6 +112,19 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
         $data->addPair('description', new \XLite\Core\Validator\String(), null, 'Full description');
         $data->addPair('meta_tags', new \XLite\Core\Validator\String(), null, 'Meta keywords');
         $data->addPair('meta_desc', new \XLite\Core\Validator\String(), null, 'Meta description');
-        $data->addPair('clean_url', new \XLite\Core\Validator\String(), null, 'Clean URL');
+
+        $data->addPair(
+            'cleanURL',
+            new \XLite\Core\Validator\String\CleanURL(false, null, '\XLite\Model\Product', $this->getProductId()),
+            null,
+            'Clean URL'
+        );
+
+        $data->addPair(
+            'category_ids',
+            new \XLite\Core\Validator\PlainArray(),
+            \XLite\Core\Validator\Pair\APair::SOFT,
+            'Category'
+        )->setValidator(new \XLite\Core\Validator\Integer());
     }
 }

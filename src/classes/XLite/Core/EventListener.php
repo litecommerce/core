@@ -36,6 +36,15 @@ namespace XLite\Core;
 class EventListener extends \XLite\Base\Singleton
 {
     /**
+     * Errors 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
+    protected $errors = array();
+
+    /**
      * Handle event
      * 
      * @param string $name      Event name
@@ -48,6 +57,8 @@ class EventListener extends \XLite\Base\Singleton
     public function handle($name, array $arguments = array())
     {
         $result = false;
+        $this->errors = array();
+
         $list = $this->getListeners();
 
         if (isset($list[$name])) {
@@ -56,10 +67,26 @@ class EventListener extends \XLite\Base\Singleton
                 if ($class::handle($name, $arguments)) {
                     $result = true;
                 }
+                if ($class::getInstance()->getErrors()) {
+                    $this->errors = $class::getInstance()->getErrors();
+                }
+
             }
         }
 
         return $result;
+    }
+
+    /**
+     * Get errors 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
     /**

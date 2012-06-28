@@ -35,6 +35,8 @@ namespace XLite\Module\CDev\FileAttachments\Controller\Admin;
  */
 class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
+    // {{{ Pages
+
     /**
      * Get pages sections
      *
@@ -60,7 +62,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
         $list = parent::getPageTemplates();
 
@@ -70,6 +72,8 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
         return $list;
     }
+
+    // }}}
 
     /**
      * Remove file

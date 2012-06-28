@@ -123,6 +123,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
             target:      'quick_look',
             action:      '',
             product_id:  core.getValueFromClass(this, 'quicklook-link'),
+            category_id: core.getValueFromClass(this, 'quicklook-link-category'),
             only_center: 1
           }),
           'product-quicklook',

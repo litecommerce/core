@@ -38,12 +38,11 @@ namespace XLite\Model;
  *      indexes={
  *          @Index (name="lpos", columns={"lpos"}),
  *          @Index (name="rpos", columns={"rpos"}),
- *          @Index (name="enabled", columns={"enabled"}),
- *          @Index (name="cleanURL", columns={"cleanURL"})
+ *          @Index (name="enabled", columns={"enabled"})
  *      }
  * )
  */
-class Category extends \XLite\Model\Base\I18n
+class Category extends \XLite\Model\Base\Catalog
 {
     /**
      * Node unique ID
@@ -90,17 +89,6 @@ class Category extends \XLite\Model\Base\I18n
      * @Column (type="boolean")
      */
     protected $enabled = true;
-
-    /**
-     * Node clean (SEO-friendly) URL
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="255")
-     */
-    protected $cleanURL = '';
 
     /**
      * Whether to display the category title, or not
@@ -349,6 +337,18 @@ class Category extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Get category path
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.21
+     */
+    public function getPath()
+    {
+        return $this->getRepository()->getCategoryPath($this->getCategoryId());
+    }
+
+    /**
      * Gets full path to the category as a string: <parent category>/.../<category name>
      *
      * @return string
@@ -359,7 +359,7 @@ class Category extends \XLite\Model\Base\I18n
     {
         $path = array();
 
-        foreach ($this->getRepository()->getCategoryPath($this->getCategoryId()) as $category) {
+        foreach ($this->getPath() as $category) {
             $path[] = $category->getName();
         }
 

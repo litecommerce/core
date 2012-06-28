@@ -762,8 +762,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param string $param Data param OPTIONAL
      *
      * @return array|mixed
-     * @see ____func_see____
-     * @since 1.0.24
+     * @see    ____func_see____
+     * @since  1.0.24
      */
     public function getFieldInfo($field, $param = null)
     {
