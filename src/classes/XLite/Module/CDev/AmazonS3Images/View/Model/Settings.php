@@ -65,6 +65,7 @@ abstract class Settings extends \XLite\View\Model\Settings implements \XLite\Bas
 
         if (
             'default' == $section
+            && \XLite::getController() instanceOf \XLite\Controller\Admin\Module
             && 'CDev\AmazonS3Images' == $this->getModule()->getActualName()
             && !$this->errorMessages
         ) {
