@@ -29,6 +29,8 @@ function TopMessages(container) {
     return false;
   }
 
+  this.container.get(0).topMessagesController = this;
+
   // Add listeners
   var o = this;
 
