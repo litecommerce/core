@@ -220,7 +220,7 @@ function macro_convert_camel_to_human_readable($camel)
     $camel = str_replace('_', ' ', $camel);
     $camel = str_replace('\\', ' ', $camel);
     $camel = preg_replace('/ ([A-Z])([a-z0-9])/Sse', '\' \' . strtolower(\'\1\') . \'\2\'', $camel);
-    $camel = preg_replace('/([a-z0-9])([A-Z])([a-z0-9])/Sse', '\'\1\' . strtolower(\'\2\') . \'\3\'', $camel);
+    $camel = preg_replace('/([a-z0-9])([A-Z])([a-z0-9])/Sse', '\'\1 \' . strtolower(\'\2\') . \'\3\'', $camel);
 
     return ucfirst($camel);
 }

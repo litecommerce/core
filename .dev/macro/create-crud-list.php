@@ -45,6 +45,7 @@ $searchFields   = macro_get_named_argument('search');
 $pagination     = !is_null(macro_get_named_argument('pagination'));
 $sortFields     = macro_get_named_argument('sort');
 $createInline   = !is_null(macro_get_named_argument('createInline'));
+$menu           = macro_get_named_argument('menu');
 
 // {{{ Check arguments
 
@@ -106,6 +107,7 @@ foreach ($fields as $field) {
 
 // --edit
 $editableFields = $editableFields ? array_map('trim', explode(',', $editableFields)) : array();
+$editableFields = $createInline ? $fields : $editableFields;
 foreach ($editableFields as $field) {
     if (!in_array($field, $fields)) {
         macro_error('Field \'' .  $field . '\' marked as editable and it will not displayed as column');
@@ -114,9 +116,12 @@ foreach ($editableFields as $field) {
 
 // --target
 if (!$target) {
-    $target = strtolower(str_replace('\\', '_', $entityRelativeClass)) . 's';
+    $target = str_replace('\\', '_', $entityRelativeClass);
+    $targetOne = $target;
+    $target .= 's' == substr($target, -1) ? 'es' : 's';
 }
 
+$targetSkinDir = $target = strtolower(preg_replace('/([a-z0-9])([A-Z])([a-z0-9])/Ss', '$1_$2$3', $target));
 $targetShort = ucfirst(\Includes\Utils\Converter::convertToCamelCase($target));
 $targetClass = macro_assemble_class_name('Controller\Admin\\' . $targetShort, $moduleAuthor, $moduleName);
 $targetControllerPath = macro_convert_class_name_to_path($targetClass);
@@ -137,7 +142,8 @@ if ($list) {
     macro_error('Controller class \'' . $targetShort . '\' already exists (' . implode('; ', $list) . ')');
 }
 
-$targetOne = substr($target, 0, -1);
+$targetOne = isset($targetOne) ? $targetOne : substr($target, 0, -1);
+$targetOneSkinDir = $targetOne = strtolower(preg_replace('/([a-z0-9])([A-Z])([a-z0-9])/Ss', '$1_$2$3', $targetOne));
 $targetOneShort = ucfirst(\Includes\Utils\Converter::convertToCamelCase($targetOne));
 $targetOneClass = macro_assemble_class_name('Controller\Admin\\' . $targetOneShort, $moduleAuthor, $moduleName);
 $targetOneControllerPath = macro_convert_class_name_to_path($targetOneClass);
@@ -246,8 +252,7 @@ if ($editableFields) {
 CODE;
 }
 
-if ($searchFields || $pagination || $sortFields) {
-    $string .= <<<CODE
+$string .= <<<CODE
 
     // {{{ Search
 
@@ -328,7 +333,6 @@ if ($searchFields || $pagination || $sortFields) {
     // }}}
 
 CODE;
-}
 
 $string .= <<<CODE
 
@@ -347,7 +351,7 @@ $viewListPagePath = macro_convert_class_name_to_path($viewListPageClass);
 
 echo "\t" . 'page widget ' . $viewListPagePath . ' ... ';
 
-$viewListPageTemplate = macro_assemble_tpl_name($target . '/body.tpl', $moduleAuthor, $moduleName);
+$viewListPageTemplate = macro_assemble_tpl_name($targetSkinDir . '/body.tpl', $moduleAuthor, $moduleName);
 
 $string = macro_get_class_repo_header($viewListPagePath)
     . <<<CODE
@@ -385,12 +389,6 @@ class $targetShort extends \\XLite\\View\\AView
         return '$viewListPageTemplate';
     }
 
-CODE;
-
-if ($searchFields) {
-
-    $string .= <<<CODE
-
     /**
      * Check - search box is visible or not
      * 
@@ -402,11 +400,6 @@ if ($searchFields) {
     {
         return 0 < \XLite\Core\Database::getRepo('$entityClass')->count();
     }
-
-CODE;
-}
-
-$string .= <<<CODE
 
 }
 CODE;
@@ -422,7 +415,7 @@ $viewListPageTemplateFull = LC_DIR_SKINS . 'admin/en/' . $viewListPageTemplate;
 
 echo "\t" . 'page template ' . $viewListPageTemplateFull . ' ... ';
 
-$viewListTableTemplate = macro_assemble_tpl_name($target . '/list.tpl', $moduleAuthor, $moduleName);
+$viewListTableTemplate = macro_assemble_tpl_name($targetSkinDir . '/list.tpl', $moduleAuthor, $moduleName);
 
 $string = <<<CODE
 {* vim: set ts=2 sw=2 sts=2 et: *}
@@ -441,7 +434,7 @@ $string = <<<CODE
 CODE;
 
 if ($searchFields) {
-    $viewListSearchTemplate = macro_assemble_tpl_name($target . '/search.tpl', $moduleAuthor, $moduleName);
+    $viewListSearchTemplate = macro_assemble_tpl_name($targetSkinDir . '/search.tpl', $moduleAuthor, $moduleName);
     $string .= <<<CODE
 <widget IF="isSearchVisible()" template="common/dialog.tpl" body="$viewListSearchTemplate" />
 
@@ -547,7 +540,7 @@ CODE;
     foreach ($searchFields as $field) {
         $i++;
 
-        $viewListConditionTemplate = macro_assemble_tpl_name($target . '/conditions/' . $field . '.tpl', $moduleAuthor, $moduleName);
+        $viewListConditionTemplate = macro_assemble_tpl_name($targetSkinDir . '/conditions/' . $field . '.tpl', $moduleAuthor, $moduleName);
         $viewListConditionTemplateFull = LC_DIR_SKINS . 'admin/en/' . $viewListConditionTemplate;
 
         echo "\t" . 'search condition (' . $field . ') template ' . $viewListConditionTemplateFull . ' ... ';
@@ -581,7 +574,7 @@ CODE;
     }
 
 
-    $viewListConditionTemplate = macro_assemble_tpl_name($target . '/conditions/action.search.tpl', $moduleAuthor, $moduleName);
+    $viewListConditionTemplate = macro_assemble_tpl_name($targetSkinDir . '/conditions/action.search.tpl', $moduleAuthor, $moduleName);
     $viewListConditionTemplateFull = LC_DIR_SKINS . 'admin/en/' . $viewListConditionTemplate;
 
     echo "\t" . 'search \'Search\' button template ' . $viewListConditionTemplateFull . ' ... ';
@@ -745,7 +738,7 @@ CODE;
 }
 
 // CSS
-$itemsListCSS = macro_assemble_tpl_name($target . '/style.css', $moduleAuthor, $moduleName);
+$itemsListCSS = macro_assemble_tpl_name($targetSkinDir . '/style.css', $moduleAuthor, $moduleName);
 
 $string .= <<<CODE
     /**
@@ -1047,8 +1040,7 @@ CODE;
 }
 
 // Search
-if ($searchFields) {
-    $string .= <<<CODE
+$string .= <<<CODE
 
     // {{{ Search
 
@@ -1075,6 +1067,11 @@ CODE;
         );
     }
 
+
+CODE;
+
+if ($searchFields) {
+    $string .= <<<CODE
     /**
      * Define so called "request" parameters
      *
@@ -1095,6 +1092,11 @@ CODE;
     $string .= <<<CODE
     }
 
+
+CODE;
+}
+
+$string .= <<<CODE
     /**
      * Return params list to use for search
      * TODO refactor
@@ -1119,13 +1121,6 @@ CODE;
     }
 
     // }}}
-
-CODE;
-
-}
-
-
-$string .= <<<CODE
 
 }
 CODE;
@@ -1192,23 +1187,21 @@ CODE;
 
 // {{{ Repository class
 
-if ($searchFields || $pagination || $sortFields) {
+$entityRepoPath = macro_convert_class_name_to_path($entityRepoClass);
 
-    $entityRepoPath = macro_convert_class_name_to_path($entityRepoClass);
+echo 'Build entity repository class ' . $entityRepoPath . ' ... ';
 
-    echo 'Build entity repository class ' . $entityRepoPath . ' ... ';
+if (!\Includes\Utils\FileManager::isExists($entityRepoPath)) {
 
-    if (!\Includes\Utils\FileManager::isExists($entityRepoPath)) {
+    // Create repository
 
-        // Create repository
+    $entityRepoClassShort = macro_get_class_short_name($entityRepoClass);
 
-        $entityRepoClassShort = macro_get_class_short_name($entityRepoClass);
+    $entityRepoParentClass = is_subclass_of($entityClass, 'XLite\Model\Base\I18n')
+        ? '\XLite\Model\Repo\Base\I18n'
+        : '\XLite\Model\Repo\ARepo';
 
-        $entityRepoParentClass = is_subclass_of($entityClass, 'XLite\Model\Base\I18n')
-            ? '\XLite\Model\Repo\Base\I18n'
-            : '\XLite\Model\Repo\ARepo';
-
-        $string = macro_get_class_repo_header($entityRepoPath)
+    $string = macro_get_class_repo_header($entityRepoPath)
     . <<<CODE
 /**
  * $targetHumanReadableName repository
@@ -1221,42 +1214,41 @@ class $entityRepoClassShort extends $entityRepoParentClass
 }
 CODE;
 
-        macro_file_put_contents($entityRepoPath, $string);
-        echo 'done' . PHP_EOL;
+    macro_file_put_contents($entityRepoPath, $string);
+    echo 'done' . PHP_EOL;
+}
 
-    }
+// Add search functional
+$string = file_get_contents($entityRepoPath);
+$string = preg_replace('/}[[^}]*$/Ss', '', $string);
+$string = preg_replace('/\/\/ \{\{\{ Search.+\/\/ \}\}\}/Ss', '', $string);
+$string = trim($string) . PHP_EOL;
 
-    // Add search functional
-    $string = file_get_contents($entityRepoPath);
-    $string = preg_replace('/}[[^}]*$/Ss', '', $string);
-    $string = preg_replace('/\/\/ \{\{\{ Search.+\/\/ \}\}\}/Ss', '', $string);
-    $string = trim($string) . PHP_EOL;
-
-    $string .= <<<CODE
+$string .= <<<CODE
 
     // {{{ Search
 
 CODE;
 
-    $alias = strtolower(substr($entityShortClass, 0, 1));
+$alias = strtolower(substr($entityShortClass, 0, 1));
 
-    $consts = '';
-    $handlingSearchParams = '';
-    $prepareMethods = '';
+$consts = '';
+$handlingSearchParams = '';
+$prepareMethods = '';
 
-    foreach ($searchFields as $field) {
+foreach ($searchFields as $field) {
         $const = strtoupper($field);
         $consts .= <<<CODE
     const SEARCH_$const = '$field';
 
 CODE;
-        $handlingSearchParams .= <<<CODE
+    $handlingSearchParams .= <<<CODE
             static::$const,
 
 CODE;
-        $fieldUpper = ucfirst($field);
+    $fieldUpper = ucfirst($field);
 
-        $prepareMethods .= <<<CODE
+    $prepareMethods .= <<<CODE
     /**
      * Prepare certain search condition
      *
@@ -1276,18 +1268,18 @@ CODE;
         }
     }
 CODE;
-    }
+}
 
-    if ($pagination) {
-        $consts .= <<<CODE
+if ($pagination) {
+    $consts .= <<<CODE
     const SEARCH_LIMIT = 'limit';
 
 CODE;
-        $handlingSearchParams .= <<<CODE
+    $handlingSearchParams .= <<<CODE
             static::SEARCH_LIMIT,
 
 CODE;
-        $prepareMethods .= <<<CODE
+    $prepareMethods .= <<<CODE
     /**
      * Prepare certain search condition
      *
@@ -1304,18 +1296,18 @@ CODE;
     }
 
 CODE;
-    }
+}
 
-    if ($sortFields) {
-        $consts .= <<<CODE
+if ($sortFields) {
+    $consts .= <<<CODE
     const SEARCH_ORDERBY = 'orderBy';
 
 CODE;
-        $handlingSearchParams .= <<<CODE
+    $handlingSearchParams .= <<<CODE
             static::SEARCH_ORDERBY,
 
 CODE;
-        $prepareMethods .= <<<CODE
+    $prepareMethods .= <<<CODE
     /**
      * Prepare certain search condition
      *
@@ -1344,11 +1336,11 @@ CODE;
     }
 
 CODE;
-    }
+}
 
-    $handlingSearchParams = rtrim($handlingSearchParams);
+$handlingSearchParams = rtrim($handlingSearchParams);
 
-    $string .= <<<CODE
+$string .= <<<CODE
 
 $consts
     /**
@@ -1458,8 +1450,56 @@ $prepareMethods
 }
 CODE;
 
-    macro_file_put_contents($entityRepoPath, $string);
+macro_file_put_contents($entityRepoPath, $string);
+echo 'done' . PHP_EOL;
+
+// }}}
+
+// {{{ Menu item
+
+if ($menu) {
+
+    $menuParent = ucfirst($menu);
+    $menuList = 'menu.' . strtolower($menu);
+    $menuClass = macro_assemble_class_name('View\TopMenu\\Node\\' . $menuParent . '\\' . $entityRelativeClass, $moduleAuthor, $moduleName);
+    $menuPath = macro_convert_class_name_to_path($menuClass);
+
+    echo 'Build menu item ' . $menuPath . ' ... ';
+
+    $menuShortClass = macro_get_class_short_name($menuClass);
+
+    $string = macro_get_class_repo_header($menuPath)
+    . <<<CODE
+/**
+ * $targetHumanReadableName menu item
+ *
+ * @see   ____class_see____
+ * @since 1.0.0
+ *
+ * @ListChild (list="$menuList", weight="last", zone="admin")
+ */
+class $menuShortClass extends \\XLite\\View\\TopMenu\\Node\\$menuParent\\A$menuParent
+{
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        \$this->widgetParams[self::PARAM_TITLE]->setValue(static::t('$targetHumanReadableName'));
+        \$this->widgetParams[self::PARAM_TARGET]->setValue('$target');
+    }
+}
+CODE;
+
+    macro_file_put_contents($menuPath, $string);
     echo 'done' . PHP_EOL;
+
 }
 
 // }}}
@@ -1556,7 +1596,7 @@ $viewOnePagePath = macro_convert_class_name_to_path($viewOnePageClass);
 
 echo "\t" . 'page widget ' . $viewListPagePath . ' ... ';
 
-$viewOnePageTemplate = macro_assemble_tpl_name($targetOne . '/body.tpl', $moduleAuthor, $moduleName);
+$viewOnePageTemplate = macro_assemble_tpl_name($targetOneSkinDir . '/body.tpl', $moduleAuthor, $moduleName);
 
 $string = macro_get_class_repo_header($viewOnePagePath)
     . <<<CODE
@@ -1784,7 +1824,7 @@ $formOnePath = macro_convert_class_name_to_path($formOneClass);
 echo "\t" . 'form ' . $formOnePath . ' ... ';
 
 $formOneClassShort = macro_get_class_short_name($formOneClass);
-$oneFormCSS = macro_assemble_tpl_name($targetOne . '/style.css', $moduleAuthor, $moduleName);
+$oneFormCSS = macro_assemble_tpl_name($targetOneSkinDir . '/style.css', $moduleAuthor, $moduleName);
 
 $className = strtolower(str_replace('_', '-', $targetOne));
 
@@ -1872,7 +1912,7 @@ echo 'done' . PHP_EOL;
 
 // }}}
 
-// {{{ Items list CSS
+// {{{ Model page CSS
 
 $oneFormCSSFull = LC_DIR_SKINS . 'admin/en/' . $oneFormCSS;
 echo "\t" . 'styles file ' . $oneFormCSSFull . ' ... ';
@@ -1908,7 +1948,7 @@ function macro_help()
     $script = __FILE__;
 
     return <<<HELP
-Usage: $script --entity=XLite\Model\Entity --fields=fld1,fld2,...,fldn [--edit=fld1,fld2,...,fldn] [--target=target_name] [--removable] [--switchable] [--sortable] [--search=fld1,fld2,...,fldn] [--pagintation] [--sort=fld1,fld2,...,fldn] [--createInline]
+Usage: $script --entity=XLite\Model\Entity --fields=fld1,fld2,...,fldn [--edit=fld1,fld2,...,fldn] [--target=target_name] [--removable] [--switchable] [--sortable] [--search=fld1,fld2,...,fldn] [--pagintation] [--sort=fld1,fld2,...,fldn] [--createInline] [--menu=section]
 
     --entity=class_name
         Entity class (XLite\Model\Product) or full path to class repository file (src/class/XLite/Model/Product.php) or relative path to class repository file (XLite/Model/Product.php)
@@ -1942,6 +1982,9 @@ Usage: $script --entity=XLite\Model\Entity --fields=fld1,fld2,...,fldn [--edit=f
 
     --createInline
         Create entity inline. Default - no
+
+    --menu=section
+        Create menu section item. Default - no
 
 Example: .dev/macro/$script --enatity=XLite\\Model\\Product
 
