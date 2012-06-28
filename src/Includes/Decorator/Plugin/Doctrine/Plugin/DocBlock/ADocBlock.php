@@ -36,17 +36,6 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock;
 abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
     /**
-     * Return DocBlock string
-     *
-     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.22
-     */
-    abstract protected function getDocBlockToRewrite(\Includes\Decorator\DataStructure\Graph\Classes $node);
-
-    /**
      * Execute certain hook handler
      *
      * @return void
@@ -71,7 +60,7 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
     {
         if ($this->checkRewriteCondition($node)) {
             $path = LC_DIR_CACHE_CLASSES . $node->getPath();
-        
+
             \Includes\Utils\FileManager::write(
                 $path,
                 \Includes\Decorator\Utils\Tokenizer::getSourceCode(
@@ -79,7 +68,7 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
                     null,
                     null,
                     null,
-                    $this->getDocBlockToRewrite($node),
+                    call_user_func_array(array($node, 'addLinesToDocBlock'), $this->getTagsToAdd($node)),
                     $node->isDecorator() ? 'abstract' : null
                 )   
             );
@@ -98,5 +87,25 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
     protected function checkRewriteCondition(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
         return is_subclass_of($node->getClass(), '\XLite\Model\AEntity');
+    }
+
+    /**
+     * Return DocBlock tags
+     *
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function getTagsToAdd(\Includes\Decorator\DataStructure\Graph\Classes $node)
+    {
+        $result = array();
+
+        if ($node->getTag('HasLifecycleCallbacks')) {
+            $result[] = 'HasLifecycleCallbacks';
+        }
+
+        return array($result, false);
     }
 }

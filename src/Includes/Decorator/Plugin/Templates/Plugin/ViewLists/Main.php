@@ -87,7 +87,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      */
     public function checkClassForListChildTag(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        if ($lists = $node->getTag(self::TAG_LIST_CHILD)) {
+        if (!$node->isLowLevelNode() && ($lists = $node->getTag(static::TAG_LIST_CHILD))) {
             $data = array('child' => $node->getTopLevelNode()->getClass());
 
             foreach ($lists as $tags) {
@@ -295,23 +295,23 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     protected function prepareWeightAttrs(array &$data)
     {
         // The "weight" attribute has a high priority
-        if (!isset($data[self::PARAM_TAG_LIST_CHILD_WEIGHT])) {
+        if (!isset($data[static::PARAM_TAG_LIST_CHILD_WEIGHT])) {
 
             // "First" and "last" - the reserved keywords for the "weight" attribute values
             foreach ($this->getReservedWeightValues() as $origKey => $modelKey) {
 
                 if (isset($data[$origKey])) {
-                    $data[self::PARAM_TAG_LIST_CHILD_WEIGHT] = $modelKey;
+                    $data[static::PARAM_TAG_LIST_CHILD_WEIGHT] = $modelKey;
                 }
             }
         } else {
 
-            $data[self::PARAM_TAG_LIST_CHILD_WEIGHT] = intval($data[self::PARAM_TAG_LIST_CHILD_WEIGHT]);
+            $data[static::PARAM_TAG_LIST_CHILD_WEIGHT] = intval($data[static::PARAM_TAG_LIST_CHILD_WEIGHT]);
         }
 
         // Set default value
-        if (!isset($data[self::PARAM_TAG_LIST_CHILD_WEIGHT])) {
-            $data[self::PARAM_TAG_LIST_CHILD_WEIGHT] = \XLite\Model\ViewList::POSITION_LAST;
+        if (!isset($data[static::PARAM_TAG_LIST_CHILD_WEIGHT])) {
+            $data[static::PARAM_TAG_LIST_CHILD_WEIGHT] = \XLite\Model\ViewList::POSITION_LAST;
         }
     }
 
@@ -326,7 +326,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      */
     protected function preparePreprocessors(array &$data)
     {
-        if (isset($data[self::PARAM_TAG_LIST_CHILD_CONTROLLER])) {
+        if (isset($data[static::PARAM_TAG_LIST_CHILD_CONTROLLER])) {
             // ...
         }
     }
@@ -341,8 +341,8 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     protected function getReservedWeightValues()
     {
         return array(
-            self::PARAM_TAG_LIST_CHILD_FIRST => \XLite\Model\ViewList::POSITION_FIRST,
-            self::PARAM_TAG_LIST_CHILD_LAST  => \XLite\Model\ViewList::POSITION_LAST,
+            static::PARAM_TAG_LIST_CHILD_FIRST => \XLite\Model\ViewList::POSITION_FIRST,
+            static::PARAM_TAG_LIST_CHILD_LAST  => \XLite\Model\ViewList::POSITION_LAST,
         );
     }
 }

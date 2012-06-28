@@ -325,6 +325,66 @@ class Classes extends \Includes\DataStructure\Graph
     }
 
     /**
+     * Return modified DOC block
+     *
+     * @param array   $lines   Lines to add
+     * @param boolean $replace Flag OPTIONAL
+     * @param boolean $asTags  Flag OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function addLinesToDocBlock(array $lines, $replace = false, $asTags = true)
+    {
+        $separator = PHP_EOL . ' * ';
+
+        if ($asTags) {
+            $separator .= '@';
+
+            if (!$replace) {
+                foreach ($lines as $index => $line) {
+                    $line = preg_split('/\s+/Ss', $line);
+
+                    if (false !== strpos($this->getReflection()->docComment, '@' . array_shift($line))) {
+                        unset($lines[$index]);
+                    }
+                }
+            }
+        }
+
+        $result = $separator . implode($separator, array_unique($lines));
+
+        if ($replace) {
+            $result = '/**' . $result . PHP_EOL . ' */';
+
+        } else {
+            $result = preg_replace('/(\s+\*+\/)$/Ss', $result . '$1', $this->getReflection()->docComment);
+        }
+  
+        return $result;
+    }
+
+    /**
+     * Return modified DOC block
+     *
+     * @param array   $lines  Lines to add
+     * @param boolean $asTags Flag OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function removeLinesFromDocBlock(array $lines, $asTags = true)
+    {
+        $pattern = $asTags 
+            ? \Includes\Decorator\Utils\Operator::getTagPattern($lines) 
+            : '/^(\s*\*\s*)?(' . implode('|', $lines) . ').*$/Smi';
+
+        return preg_replace($pattern, '', $this->getReflection()->docComment);
+    }
+
+    /**
      * Actualize and return source code for node
      *
      * @param self $parent Parent node OPTIONAL
@@ -335,19 +395,14 @@ class Classes extends \Includes\DataStructure\Graph
      */
     protected function getActualSource(self $parent = null)
     {
-        // Change DOCBlock and clear tags
-        $this->clearTags();
-
-        $code = \Includes\Decorator\Utils\Tokenizer::getSourceCode(
+        return \Includes\Decorator\Utils\Tokenizer::getSourceCode(
             $this->getFile(),
             $this->getActualNamespace(),
             $this->getClassBaseName(),
             $this->getActualParentClassName($parent),
-            $this->getReflection()->docComment,
+            $this->removeLinesFromDocBlock(array('ListChild')),
             ($this->isLowLevelNode() || $this->isDecorator()) ? 'abstract' : null
         );
-
-        return $code;
     }
 
     /**
@@ -363,7 +418,7 @@ class Classes extends \Includes\DataStructure\Graph
     {
         return '<?php' . PHP_EOL . PHP_EOL
             . (($namespace = $this->getActualNamespace()) ? ('namespace ' . $namespace . ';' . PHP_EOL . PHP_EOL) : '')
-            . (($comment = $this->getReflection()->docComment) ? ($comment . PHP_EOL) : '')
+            . (($comment = $this->removeLinesFromDocBlock(array('HasLifecycleCallbacks'))) ? ($comment . PHP_EOL) : '')
             . ($this->getReflection()->isFinal ? 'final '    : '')
             . ($this->getReflection()->isAbstract ? 'abstract ' : '')
             . ($this->getReflection()->isInterface ? 'interface' : 'class') . ' ' . $this->getClassBaseName()
@@ -550,7 +605,6 @@ class Classes extends \Includes\DataStructure\Graph
             $this->reflection->parentClass = $this->prepareClassName($this->reflection->parentClass);
             $this->reflection->interfaces  = array_map(array($this, 'prepareClassName'), $this->reflection->interfaces);
 
-            // KLUDGE: the "StaticRoutines" plugin support
             $this->reflection->hasStaticConstructor = $util::hasMethod(
                 $this->getFile(),
                 \Includes\Decorator\Plugin\StaticRoutines\Main::STATIC_CONSTRUCTOR_METHOD

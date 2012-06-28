@@ -372,7 +372,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function isSkipRedirectAfterLastStep($step)
     {
-        return self::LAST_STEP === $step && isset($_GET['doNotRedirectAfterCacheIsBuilt']);
+        return static::LAST_STEP === $step && isset($_GET['doNotRedirectAfterCacheIsBuilt']);
     }
 
     /**
@@ -509,7 +509,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandler1()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_CLEANUP);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_BEFORE_CLEANUP);
 
         // Delete cache folders
         static::showStepMessage('Cleaning up the cache...');
@@ -525,7 +525,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         static::showStepInfo();
 
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIRST);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_FIRST);
     }
 
     /**
@@ -541,7 +541,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandler2()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_DECORATE);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_BEFORE_DECORATE);
 
         // Main procedure: build decorator chains
         static::showStepMessage('Decorate classes...');
@@ -549,7 +549,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         static::showStepInfo();
 
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_WRITE);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_BEFORE_WRITE);
 
         // Write class files to FS
         static::showStepMessage('Writing class files to the cache...');
@@ -557,7 +557,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         static::showStepInfo();
 
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_SECOND);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_SECOND);
     }
 
     /**
@@ -573,7 +573,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandler3()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_THIRD);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_THIRD);
     }
 
     /**
@@ -589,7 +589,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandler4()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FOURTH);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_FOURTH);
     }
 
     /**
@@ -605,7 +605,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandler5()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIFTH);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_FIFTH);
     }
 
     // }}}

@@ -50,16 +50,19 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock\ADocBlock
     }
 
     /**
-     * Return DocBlock string
+     * Return DocBlock tags
      *
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.22
      */
-    protected function getDocBlockToRewrite(\Includes\Decorator\DataStructure\Graph\Classes $node)
+    protected function getTagsToAdd(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        return '/**' . PHP_EOL . ' * @Entity' . PHP_EOL . ' */';
+        list($result, $flag) = parent::getTagsToAdd($node);
+        $result[] = 'Entity';
+
+        return array($result, $flag);
     }
 }
