@@ -87,7 +87,6 @@ abstract class AAdmin extends \XLite\Controller\AController
         parent::postprocess();
 
         if ($this->dumpStarted) {
-
             $this->displayPageFooter();
         }
     }

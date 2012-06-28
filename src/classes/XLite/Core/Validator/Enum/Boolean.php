@@ -33,16 +33,18 @@ namespace XLite\Core\Validator\Enum;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Boolean extends \XLite\Core\Validator\Enum
+class Boolean extends \XLite\Core\Validator\Enum\AEnum
 {
     /**
      * Constructor
      * 
+     * @param array $list List of allowe values OPTIONAL
+     *
      * @return void
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.24
      */
-    public function __construct()
+    public function __construct(array $list = array())
     {
         parent::__construct();
 

@@ -38,8 +38,10 @@ class EventTaskProgress extends \XLite\View\AView
     /**
      * Widget parameter names
      */
-    const PARAM_EVENT = 'event';
-    const PARAM_TITLE = 'title';
+    const PARAM_EVENT             = 'event';
+    const PARAM_TITLE             = 'title';
+    const PARAM_BLOCKING_NOTE     = 'blockingNote';
+    const PARAM_NON_BLOCKING_NOTE = 'nonBlockingNote';
 
     /**
      * Register JS files
@@ -85,8 +87,10 @@ class EventTaskProgress extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            static::PARAM_EVENT => new \XLite\Model\WidgetParam\String('Event name', null),
-            static::PARAM_TITLE => new \XLite\Model\WidgetParam\String('Progress bar title', null),
+            static::PARAM_EVENT             => new \XLite\Model\WidgetParam\String('Event name', null),
+            static::PARAM_TITLE             => new \XLite\Model\WidgetParam\String('Progress bar title', null),
+            static::PARAM_BLOCKING_NOTE     => new \XLite\Model\WidgetParam\String('Blocking note', null),
+            static::PARAM_NON_BLOCKING_NOTE => new \XLite\Model\WidgetParam\String('Non-blocking note', null),
         );
     }
 
@@ -177,6 +181,30 @@ class EventTaskProgress extends \XLite\View\AView
     protected function isBlockingDriver()
     {
         return \XLite\Core\EventTask::getInstance()->getDriver()->isBlocking();
+    }
+
+    /**
+     * Get blocking note 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getBlockingNote()
+    {
+        return $this->getParam(static::PARAM_BLOCKING_NOTE);
+    }
+
+    /**
+     * Get non-blocking note
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getNonBlockingNote()
+    {
+        return $this->getParam(static::PARAM_NON_BLOCKING_NOTE);
     }
 
     // }}}

@@ -42,13 +42,12 @@ namespace XLite\Model;
  *          @Index (name="price", columns={"price"}),
  *          @Index (name="weight", columns={"weight"}),
  *          @Index (name="free_shipping", columns={"free_shipping"}),
- *          @Index (name="clean_url", columns={"clean_url"}),
  *          @Index (name="customerArea", columns={"enabled","arrivalDate"})
  *      }
  * )
  * @HasLifecycleCallbacks
  */
-class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrderItem
+class Product extends \XLite\Model\Base\Catalog implements \XLite\Model\Base\IOrderItem
 {
     /**
      * Product unique ID
@@ -124,17 +123,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @Column (type="boolean")
      */
     protected $free_shipping = false;
-
-    /**
-     * Clean URL
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     *
-     * @Column (type="string", length="255", nullable=false)
-     */
-    protected $clean_url = '';
 
     /**
      * Custom javascript code
@@ -241,20 +229,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * )
      */
     protected $classes;
-
-    /**
-     * Check SKU
-     *
-     * @param string $sku String to check
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    public static function checkSKU($sku)
-    {
-        return '' !== $sku && false !== $sku;
-    }
 
     /**
      * Constructor
@@ -672,7 +646,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     {
         $this->setUpdateDate(time());
 
-        if (!static::checkSKU($this->getSKU())) {
+        if (\XLite\Core\Converter::isEmptyString($this->getSKU())) {
             $this->setSKU(null);
         }
     }

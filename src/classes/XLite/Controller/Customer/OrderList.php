@@ -77,10 +77,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      */
     public function checkAccess()
     {
-        $auth = \XLite\Core\Auth::getInstance();
-
-        return parent::checkAccess()
-            && $auth->isLogged();
+        return parent::checkAccess() && \XLite\Core\Auth::getInstance()->isLogged();
     }
 
     /**
@@ -255,7 +252,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
         $this->setReturnURL($this->buildURL('order_list'));
     }
 
-    // {{{ Tabs
+    // {{{ Pages
 
     /**
      * Get pages sections
@@ -266,9 +263,10 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      */
     public function getPages()
     {
-        return array(
-            'default' => 'Orders',
-        );
+        $list = parent::getPages();
+        $list['default'] = 'Orders';
+
+        return $list;
     }
 
     /**
@@ -278,11 +276,12 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPageTemplates()
+    protected function getPageTemplates()
     {
-        return array(
-            'default' => 'order/list.tpl',
-        );
+        $list = parent::getPages();
+        $list['default'] = 'order/list.tpl';
+
+        return $list;
     }
 
     // }}}

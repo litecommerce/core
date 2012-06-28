@@ -146,6 +146,18 @@ abstract class ACustomer extends \XLite\Controller\AController
     // }}}
 
     /**
+     * Return current category Id
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCategoryId()
+    {
+        return parent::getCategoryId() ?: $this->getRootCategoryId();
+    }
+
+    /**
      * Return cart instance
      *
      * @return \XLite\Model\Order
@@ -163,14 +175,19 @@ abstract class ACustomer extends \XLite\Controller\AController
      *
      * @param string  $url    Relative URL OPTIONAL
      * @param boolean $secure Flag to use HTTPS OPTIONAL
+     * @param array   $params Optional URL params OPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getShopURL($url = '', $secure = false)
+    public function getShopURL($url = '', $secure = null, array $params = array())
     {
-        return parent::getShopURL($url, \XLite\Core\Config::getInstance()->Security->full_customer_security ?: $secure);
+        if (!isset($secure) && \XLite\Core\Config::getInstance()->Security->full_customer_security) {
+            $secure = true;
+        }
+
+        return parent::getShopURL($url, $secure, $params);
     }
 
     /**
@@ -379,4 +396,59 @@ abstract class ACustomer extends \XLite\Controller\AController
             || (!\XLite\Core\Request::getInstance()->isHTTPS()) && \XLite\Core\Config::getInstance()->Security->full_customer_security;
     }
 
+    // {{{ Clean URLs related routines
+
+    /**
+     * Preprocessor for no-action run
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doNoAction()
+    {
+        parent::doNoAction();
+
+        if (LC_USE_CLEAN_URLS && !$this->isAJAX() && !$this->isRedirectNeeded() && $this->isRedirectToCleanURLNeeded()) {
+            $this->performRedirectToCleanURL();
+        }
+    }
+
+    /**
+     * Check if redirect to clean URL is needed
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isRedirectToCleanURLNeeded()
+    {
+        return preg_match(
+            '/\/cart\.php/Si',
+            \Includes\Utils\ArrayManager::getIndex(\XLite\Core\Request::getInstance()->getServerData(), 'REQUEST_URI')
+        );
+    }
+
+    /**
+     * Redirect to clean URL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function performRedirectToCleanURL()
+    {
+        $data = \XLite\Core\Request::getInstance()->getGetData();
+
+        if (\XLite::TARGET_DEFAULT === ($target = $this->getTarget())) {
+            $target = '';
+
+        } else {
+            unset($data['target']);
+        }
+
+        $this->setReturnURL(\XLite\Core\Converter::buildFullURL($target, '', $data));
+    }
+
+    // }}}
 }

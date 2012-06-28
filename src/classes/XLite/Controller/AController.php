@@ -54,7 +54,6 @@ abstract class AController extends \XLite\Core\Handler
      */
     const RETURN_URL = 'returnURL';
 
-
     /**
      * Object to keep action status
      *
@@ -81,7 +80,6 @@ abstract class AController extends \XLite\Core\Handler
      * @since 1.0.0
      */
     protected $params = array('target');
-
 
     /**
      * Validity flag
@@ -144,8 +142,11 @@ abstract class AController extends \XLite\Core\Handler
         return \Includes\Utils\Converter::convertFromCamelCase(lcfirst(array_pop($parts)));
     }
 
+    // {{{ Pages
+
     /**
      * Get current page
+     * FIXME: to revise
      *
      * @return string
      * @see    ____func_see____
@@ -153,10 +154,22 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getPage()
     {
-        $page = $this->page;
+        $page  = $this->page;
         $pages = $this->getPages();
 
         return $page && isset($pages[$page]) ? $page : key($pages);
+    }
+
+    /**
+     * getPages
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPages()
+    {
+        return array();
     }
 
     /**
@@ -171,17 +184,7 @@ abstract class AController extends \XLite\Core\Handler
         return array();
     }
 
-    /**
-     * getPages
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPages()
-    {
-        return array();
-    }
+    // }}}
 
     /**
      * Get controlelr parameters
@@ -252,14 +255,15 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @param string  $url    Relative URL OPTIONAL
      * @param boolean $secure Flag to use HTTPS OPTIONAL
+     * @param array   $params Optional URL params OPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getShopURL($url = '', $secure = false)
+    public function getShopURL($url = '', $secure = null, array $params = array())
     {
-        return \XLite::getInstance()->getShopURL($url, $secure);
+        return \XLite::getInstance()->getShopURL($url, $secure, $params);
     }
 
     /**
@@ -309,7 +313,6 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Handles the request.
      * Parses the request variables if necessary. Attempts to call the specified action function
-     * FIXME - simplify
      *
      * @return void
      * @see    ____func_see____
@@ -709,7 +712,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getCategoryId()
     {
-        return intval(\XLite\Core\Request::getInstance()->category_id) ?: $this->getRootCategoryId();
+        return \XLite\Core\Request::getInstance()->category_id;
     }
 
     /**
@@ -1025,7 +1028,7 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Preprocessor for no-action ren
+     * Preprocessor for no-action run
      *
      * @return void
      * @see    ____func_see____

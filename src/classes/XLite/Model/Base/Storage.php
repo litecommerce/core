@@ -495,7 +495,10 @@ abstract class Storage extends \XLite\Model\AEntity
             }
 
             if (empty($local)) {
-                $newPath = \Includes\Utils\FileManager::getUniquePath($this->getStoreFileSystemRoot(), basename($path));
+                $newPath = \Includes\Utils\FileManager::getUniquePath(
+                    $this->getStoreFileSystemRoot(),
+                    $basename ?: basename($path)
+                );
 
                 if (\Includes\Utils\FileManager::copy($path, $newPath)) {
                     $path = $newPath;
@@ -684,6 +687,29 @@ abstract class Storage extends \XLite\Model\AEntity
     }
 
     /**
+     * Get storage path
+     *
+     * @param string $path Path to use OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.12
+     */
+    public function getStoragePath($path = null)
+    {
+        $result = null;
+
+        if (static::STORAGE_RELATIVE == $this->getStorageType()) {
+            $result = $this->getFileSystemRoot() . ($path ?: $this->getPath());
+
+        } elseif (static::STORAGE_ABSOLUTE == $this->getStorageType()) {
+            $result = ($path ?: $this->getPath());
+        }
+
+        return $result;
+    }
+
+    /**
      * Save path into entity
      *
      * @param string $path Full path
@@ -843,29 +869,6 @@ abstract class Storage extends \XLite\Model\AEntity
         }
 
         return array($path, $isTempFile);
-    }
-
-    /**
-     * Get storage path
-     *
-     * @param string $path Path to use OPTIONAL
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.12
-     */
-    protected function getStoragePath($path = null)
-    {
-        $result = null;
-
-        if (static::STORAGE_RELATIVE == $this->getStorageType()) {
-            $result = $this->getFileSystemRoot() . ($path ?: $this->getPath());
-
-        } elseif (static::STORAGE_ABSOLUTE == $this->getStorageType()) {
-            $result = ($path ?: $this->getPath());
-        }
-
-        return $result;
     }
 
     /**

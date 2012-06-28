@@ -298,4 +298,38 @@ abstract class Converter extends \Includes\Utils\AUtils
     {
         return trim(preg_replace('/[\r\n]+/', '', ((string)$value)));
     }
+
+    /**
+     * Compose URL from target, action and additional params
+     *
+     * @param string $target    Page identifier OPTIONAL
+     * @param string $action    Action to perform OPTIONAL
+     * @param array  $params    Additional params OPTIONAL
+     * @param string $interface Interface script OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.20
+     */
+    public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
+    {
+        $result = $interface;
+        $urlParams = array();
+
+        if (!empty($target)) {
+            $urlParams['target'] = $target;
+        }
+
+        if (!empty($action)) {
+            $urlParams['action'] = $action;
+        }
+
+        $params = $urlParams + $params;
+
+        if (!empty($params)) {
+            $result .= '?' . http_build_query($params);
+        }
+
+        return $result;
+    }
 }
