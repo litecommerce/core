@@ -112,7 +112,10 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         foreach (static::getClassFileIterator()->getIterator() as $path => $data) {
 
             // Use PHP Tokenizer to search class declaration
-            if ($class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path)) {
+            if (
+                ($class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path)) 
+                && \Includes\Utils\Operator::checkIfLCClass($class)
+            ) {
 
                 // File contains a class declaration: create node (descriptor)
                 $node = new \Includes\Decorator\DataStructure\Graph\Classes($class);
@@ -450,7 +453,9 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         }
 
         // Create an associative array of tag names and their values
-        return array_combine(array_map('strtolower', $result[0]), $result[1]);
+        return !empty($result[0]) && !empty($result[1]) 
+            ? array_combine(array_map('strtolower', $result[0]), $result[1]) 
+            : array();
     }
 
     /**

@@ -401,7 +401,7 @@ class S3 extends \XLite\Base\Singleton
      */
     protected function __construct()
     {
-        require_once LC_DIR_CLASSES . '/XLite/Module/CDev/AmazonS3Images/lib/S3.php';
+        require_once LC_DIR_MODULES . 'CDev' . LC_DS . 'AmazonS3Images' . LC_DS . 'lib' . LC_DS . 'S3.php';
 
         $config = \XLite\Core\Config::getInstance()->CDev->AmazonS3Images;
 
@@ -418,6 +418,4 @@ class S3 extends \XLite\Base\Singleton
             \XLite\Logger::getInstance()->registerException($e);
         }
     }
-
 }
-

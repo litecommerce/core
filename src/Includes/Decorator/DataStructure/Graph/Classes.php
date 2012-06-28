@@ -45,15 +45,6 @@ class Classes extends \Includes\DataStructure\Graph
     protected $reflection;
 
     /**
-     * File path
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $file;
-
-    /**
      * Flag for so called "low-level" nodes
      *
      * @var   boolean
@@ -580,8 +571,8 @@ class Classes extends \Includes\DataStructure\Graph
     public function getReflection()
     {
         if (!isset($this->reflection)) {
-            $this->reflection = new \StdClass();
             $util = '\Includes\Decorator\Utils\Tokenizer';
+            $this->reflection = new \StdClass();
 
             if ($util::getDecoratorFlag()) {
                 $this->reflection->parentClass = $util::getParentClassName($this->getFile());

@@ -237,6 +237,8 @@ abstract class Image extends \XLite\Model\Base\Storage
                 list($newWidth, $newHeight) = $result;
 
             } else {
+                $newWidth = $width;
+                $newHeight = $height;
                 $url = $this->getURL();
             }
         }
