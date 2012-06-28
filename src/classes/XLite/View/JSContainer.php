@@ -29,12 +29,13 @@ namespace XLite\View;
 
 /**
  * JS container. Must be the last element on the page
+ * TODO: refactor admin area JS code.
  *
  * @see   ____class_see____
  * @since 1.0.0
  *
  * @ListChild (list="body", zone="customer", weight="999999")
- * @ListChild (list="body", zone="admin", weigth="999999")
+ * @ListChild (list="body", zone="admin", weight="10")
  */
 class JSContainer extends \XLite\View\AResourcesContainer
 {

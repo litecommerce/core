@@ -10,5 +10,6 @@
  * @since     1.0.0
  * @ListChild (list="jscontainer.js", weight="100")
  *}
-
+{if:!doJSAggregation()}
 <script FOREACH="getJSResources(),file" type="text/javascript" src="{getResourceURL(file.url)}"></script>
+{end:}

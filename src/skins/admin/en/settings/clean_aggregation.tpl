@@ -1,15 +1,19 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Cached JS part
+ * Email footer
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
- * @ListChild (list="jscontainer.js", weight="200")
+ * @since     1.0.13
+ *
+ * @ListChild (list="crud.settings.footer", zone="admin", weight="100")
  *}
-{if:doJSAggregation()}
-<script FOREACH="getAggregateJSResources(),file" type="text/javascript" src="{getResourceURL(file.url)}"></script>
+{if:page=#Performance#}
+  <widget
+    class="\XLite\View\Button\Regular"
+    label="Clean aggregation cache"
+    jsCode="self.location='{buildURL(#settings#,#clean_aggregation_cache#)}'" />
 {end:}
