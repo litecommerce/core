@@ -45,6 +45,25 @@ abstract class Processor extends \XLite\Base
     const PENDING      = 'P';
     const FAILED       = 'F';
 
+    
+    /**
+     * Transaction types
+     */
+    const TRAN_TYPE_AUTH          = 'auth';
+    const TRAN_TYPE_SALE          = 'sale';
+    const TRAN_TYPE_CAPTURE       = 'capture';
+    const TRAN_TYPE_CAPTURE_PART  = 'capturePart';
+    const TRAN_TYPE_CAPTURE_MULTI = 'captureMulti';
+    const TRAN_TYPE_VOID          = 'void';
+    const TRAN_TYPE_VOID_PART     = 'voidPart';
+    const TRAN_TYPE_VOID_MULTI    = 'voidMulti';
+    const TRAN_TYPE_REFUND        = 'refund';
+    const TRAN_TYPE_REFUND_PART   = 'refundPart';
+    const TRAN_TYPE_REFUND_MULTI  = 'refundMulti';
+    const TRAN_TYPE_GET_INFO      = 'getInfo';
+    const TRAN_TYPE_ACCEPT        = 'accept';
+    const TRAN_TYPE_DECLINE       = 'decline';
+    const TRAN_TYPE_TEST          = 'test';
 
     /**
      * Transaction (cache)
@@ -74,6 +93,17 @@ abstract class Processor extends \XLite\Base
      */
     abstract protected function doInitialPayment();
 
+    /**
+     * Get allowed transactions list
+     *
+     * @return string Status code
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getAllowedTransactions()
+    {
+        return array(TRAN_TYPE_SALE);
+    }
 
     /**
      * Pay

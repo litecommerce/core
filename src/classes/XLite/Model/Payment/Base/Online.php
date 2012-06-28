@@ -46,6 +46,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      */
     const RETURN_TYPE_HTTP_REDIRECT = 'http';
     const RETURN_TYPE_HTML_REDIRECT = 'html';
+    const RETURN_TYPE_HTML_REDIRECT_WITH_IFRAME_DESTROYING = 'html_iframe';
     const RETURN_TYPE_CUSTOM        = 'custom';
 
 
