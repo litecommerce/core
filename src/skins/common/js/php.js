@@ -437,7 +437,7 @@ function htmlspecialchars (string, quote_style, charset, double_encode) {
     if (double_encode !== false) { // Put this first to avoid double-encoding
         string = string.replace(/&/g, '&amp;');
     }
-    string = string.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    string = string.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\s/g, '&nbsp;');
 
     var OPTS = {
         'ENT_NOQUOTES': 0,
