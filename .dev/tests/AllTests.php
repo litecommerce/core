@@ -462,6 +462,56 @@ class XLite_Tests_AllTests
             }
         }
 
+        if (!defined('SELENIUM_DISABLED')) {
+
+            if (!defined('DIR_TESTS')) {
+                define('DIR_TESTS', 'Web2');
+            }
+
+            $classesDir = dirname( __FILE__ ) . LC_DS . constant('DIR_TESTS') . LC_DS;
+            $pattern    = '/^' . preg_quote($classesDir, '/') . '(.*)\.php$/';
+
+            $dirIterator = new RecursiveDirectoryIterator($classesDir);
+            $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+            $siterator   = new XLite_Tests_SortedIterator($iterator);
+
+            foreach ($siterator as $filePath) {
+
+                if (
+                    preg_match($pattern, $filePath, $matches)
+                    && !empty($matches[1])
+                    && !preg_match('/' . $ds . '(\w+Abstract|A[A-Z][a-z]\w+)\.php$/Ss', $filePath)
+                    && !preg_match('/' . $ds . '(?:scripts|skins)' . $ds . '/Ss', $filePath)
+                ) {
+
+                    $matched = str_replace(LC_DS, '/', $matches[1]);
+
+                    if (
+                        (!$includes || static::isPatternInArray($matched, $includes))
+                        && (!$excludes || !static::isPatternInArray($matched, $excludes))
+                    ) {
+
+                        $class = XLite_Tests_TestCase::CLASS_PREFIX
+                            . str_replace('/', '_', $matched);
+
+                        require_once $filePath;
+
+                        $seleniumSuite = new PHPUnit_Framework_TestSuite();
+                        $seleniumSuite->addTestSuite($class);
+
+                        $suite->addTest($seleniumSuite);
+                        //$suite->addTest(new XLite_Tests_TestSuite(new ReflectionClass($class)));
+
+                        // Limit test range by a specific test if it was specified in call. Example: ./phpunit-report.sh Model/Zone:create
+                        if (isset($includeTests[$matched])) {
+                            eval($class . '::$testsRange = array($includeTests[$matched]);');
+                        }
+
+                    }
+                }
+            }
+        }
+        /*
         // Web tests
         if (!defined('SELENIUM_DISABLED')) {
 
@@ -512,7 +562,7 @@ class XLite_Tests_AllTests
                     }
                 }
             }
-        }
+        }*/
 
         error_reporting(E_ALL);
 
