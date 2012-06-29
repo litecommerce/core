@@ -1116,7 +1116,7 @@ abstract class AView extends \XLite\Core\Handler
 
         foreach ($parts as $name => $value) {
             $class = 'part-' . $name;
-            $parts[$name] = '<span class="' . $class . '">' . $value . '</span>';
+            $parts[$name] = '<span class="' . $class . '">' . func_htmlspecialchars($value) . '</span>';
         }
 
         return implode('', $parts);

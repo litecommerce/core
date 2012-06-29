@@ -13,4 +13,4 @@
  * @ListChild (list="product.details.quicklook.info.market_price.text", weight="100")
  *}
 
-{t(#Market price#)}: <span class="value">{formatPrice(product.getMarketPrice(),null,1):h}</span>
+{t(#Market price#)}: <span class="value">{formatPrice(product.getMarketPrice(),null,1)}</span>

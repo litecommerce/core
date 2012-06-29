@@ -12,4 +12,4 @@
  * @ListChild (list="product.details.page.info.market_price.text", weight="200")
  *}
 
-, {t(#you save#)} <span class="you-save">{formatPrice(getSaveDifference(product),null,1):h}</span>
+, {t(#you save#)} <span class="you-save">{formatPrice(getSaveDifference(product),null,1)}</span>

@@ -41,7 +41,7 @@
 
         <ul class="order-body-item-spec2">
           <li class="orderid">{t(#Order ID#)}: <span class="orderid">#{order.order_id}</span></li>
-          <li class="total">{t(#Grand total#)}: <span class="sum">{formatPrice(order.getTotal(),order.getCurrency()):h}</span></li>
+          <li class="total">{t(#Grand total#)}: <span class="sum">{formatPrice(order.getTotal(),order.getCurrency())}</span></li>
           {**
             *TODO divide main status into payment/shipping separated statuses
 
