@@ -21,9 +21,12 @@ CurrencyManageForm.prototype.initialize = function ()
 {
   var obj = this;
 
-  jQuery('#currency-id').change(function () {
-    document.location = URLHandler.buildURL({'target': 'currency', 'currency_id': jQuery(this).val()});
-  });
+  jQuery('#currency-id').change(
+    function () {
+      jQuery(this).closest('form').trigger('sticky_undo_buttons');
+      document.location = URLHandler.buildURL({'target': 'currency', 'currency_id': jQuery(this).val()});
+    }
+  );
 
   jQuery('#format').change(function() {
     jQuery(obj.patternCurrencyViewInfo).trigger(
@@ -61,6 +64,28 @@ CurrencyManageForm.prototype.initialize = function ()
     jQuery('#prefix, #suffix').trigger('keyup');
 
     jQuery('#trailing-zeroes').trigger('trailingZeroesClick');
+
+    jQuery('#format').bind(
+      'change',
+      function (e) {
+        jQuery(this).closest('form').trigger('sticky_changed_buttons');
+      }
+    );
+
+    jQuery('#prefix, #suffix').bind(
+      'keyup',
+      function (e) {
+        jQuery(this).closest('form').trigger('sticky_changed_buttons');
+      }
+    );
+
+    jQuery('#trailing-zeroes').bind(
+      'click',
+      function (e) {
+        jQuery(this).closest('form').trigger('sticky_changed_buttons');
+      }
+    );
+
   });
 }
 

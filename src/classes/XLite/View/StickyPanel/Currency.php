@@ -36,6 +36,22 @@ namespace XLite\View\StickyPanel;
 class Currency extends \XLite\View\Base\FormStickyPanel
 {
     /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'sticky_panel/currency.js';
+
+        return $list;
+    }
+
+    /**
      * Get buttons widgets
      *
      * @return array
@@ -49,7 +65,7 @@ class Currency extends \XLite\View\Base\FormStickyPanel
                 array(
                     'style'    => 'action submit',
                     'label'    => \XLite\Core\Translation::lbl('Save changes'),
-                    'disabled' => false,
+                    'disabled' => true,
                 ),
                 'XLite\View\Button\Submit'
             ),
