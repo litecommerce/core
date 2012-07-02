@@ -89,5 +89,48 @@ abstract class Main extends \XLite\Module\AModule
         return array();
     }    
 
+    /**
+     * Determine if we need to display price beater icon/widget
+     *
+     * @param \XLite\Model\Product $product Current product
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function isShowPriceBeater(\XLite\Model\Product $product)
+    {
+    	return 0 < static::getProductPrice($product)
+    	&& static::getProductPriceBeaterThreshold($product) < static::getProductPrice($product);
+    }
+    
+    
+    /**
+     * Wrapper to get product price
+     *
+     * @param \XLite\Model\Product $product Current product
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getProductPrice(\XLite\Model\Product $product)
+    {
+    	return $product->getDisplayPrice();
+    }
+    
+    /**
+     * Wrapper to get price beater threshold
+     *
+     * @param \XLite\Model\Product $product Current product
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getProductPriceBeaterThreshold(\XLite\Model\Product $product)
+    {
+    	return $product->getPriceBeaterThreshold();
+    }
 }
 ?>
