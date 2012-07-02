@@ -5,25 +5,23 @@
 
 Options -Indexes
 
-<IfModule mod_access.c>
-  <Files "*.tpl">
-    Deny from all  
-  </Files>
+<Files "*.tpl">
+  Deny from all
+</Files>
 
-  <Files "*.php">
-    Deny from all
-  </Files>
+<Files "*.php">
+  Deny from all
+</Files>
 
-  <Files "*.pl">
-    Deny from all 
-  </Files>
+<Files "*.pl">
+  Deny from all
+</Files>
 
-  <Files "*.conf">
-    Deny from all
-  </Files>
+<Files "*.conf">
+  Deny from all
+</Files>
 
-  Allow from all 
-</IfModule>
+Allow from all
 
 <IfModule mod_expires.c>
   ExpiresActive Off
