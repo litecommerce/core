@@ -123,6 +123,8 @@ CheckoutView.autoload.currentLoadedStep = false;
 // Postprocess widget
 CheckoutView.prototype.postprocess = function(isSuccess, initial)
 {
+  var base = this.base;
+
   CheckoutView.superclass.postprocess.apply(this, arguments);
 
   this.isLoadingStart = false;
@@ -345,9 +347,75 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     );
 
 /**
- * Place order button should work only once.
- * After clicking the button is disabled and form submits only once.
+ * There is several events:
+ * ready2checkout    - The Checkout button is ready to use
+ * agree2checkout    - The Checkout button is NOT ready to use and Agree warning box is displayed.
+ *                     Customer clicks without "Agree" checking
+ * notready2checkout - The Checkout button is NOT ready to use and Agree warning box is NOT displayed.
+ *                     Customer clicks the "ready to use" button. So the form could be submitted only once.
  */
+    jQuery(base).bind(
+      'ready2checkout',
+      function (e) {
+        jQuery('.review-step.current .button-row button', this)
+          .removeClass('disabled');
+      }
+    ).bind(
+      'agree2checkout',
+      function (e) {
+        jQuery('.review-step.current .button-row button', this)
+          .addClass('disabled');
+      }
+    ).bind(
+      'notready2checkout',
+      function (e) {
+        jQuery('.review-step.current .button-row button', this)
+          .addClass('disabled');
+      }
+    );
+
+    jQuery('form.place .terms', this.base).bind(
+      'agree2checkout',
+      function (e) {
+        jQuery(this).addClass('non-agree');
+      }
+    ).bind(
+      'ready2checkout',
+      function (e) {
+        jQuery(this).removeClass('non-agree');
+      }
+    ).bind(
+      'notready2checkout',
+      function (e) {
+        jQuery(this).removeClass('non-agree');
+      }
+    );
+
+    jQuery('.review-step.current .button-row button', this.base).bind(
+      'click',
+      function (e) {
+        if (jQuery(this).hasClass('disabled')) {
+
+          jQuery('*', base).trigger('agree2checkout');
+        } else {
+
+          jQuery('*', base).trigger('notready2checkout');
+          // TODO: rework form controller and AForm class to remove 'onsubmit' attribute from the FORM tag
+          jQuery(this).closest('form.place').removeAttr('onsubmit').submit();
+        }
+
+        return false;
+      }
+    );
+
+    jQuery('#place_order_agree').bind(
+      'click',
+      function (e) {
+        jQuery(base).trigger(jQuery(this).attr('checked') ? 'ready2checkout' : 'notready2checkout');
+      }
+    );
+
+/*
     jQuery('form.place button[type="submit"].bright', this.base)
       .click(
         function (event) {
@@ -373,6 +441,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
           return false;
         }
       );
+*/
 
     // Refresh state
     this.refreshState();
@@ -562,7 +631,9 @@ CheckoutView.prototype.refreshState = function()
   } else if (box.hasClass('review-step')) {
 
     // Order review step
+    var agreeIsReady = jQuery('#place_order_agree').attr('checked');
 
+    result = result && agreeIsReady;
   }
 
   // Refresh main button
