@@ -257,7 +257,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 
           o.currentLoadedStep = 'shipping';
 
-          return !o.load({ step: 'shipping' });
+          return !o.load({step: 'shipping'});
         }
       );
 
@@ -307,7 +307,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 
           o.currentLoadedStep = 'payment';
 
-          return !o.load({ step: 'payment' });
+          return !o.load({step: 'payment'});
         }
       );
 
@@ -394,17 +394,24 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     jQuery('.review-step.current .button-row button', this.base).bind(
       'click',
       function (e) {
-        if (jQuery(this).hasClass('disabled')) {
-
-          jQuery('*', base).trigger('agree2checkout');
-        } else {
-
+        if (!jQuery(this).hasClass('disabled')) {
           jQuery('*', base).trigger('notready2checkout');
+          jQuery(this).unbind('mouseover').unbind('mouseout');
           // TODO: rework form controller and AForm class to remove 'onsubmit' attribute from the FORM tag
           jQuery(this).closest('form.place').removeAttr('onsubmit').submit();
         }
 
         return false;
+      }
+    ).bind(
+      'mouseover',
+      function (e) {
+        jQuery(this).hasClass('disabled') && jQuery('*', base).trigger('agree2checkout');
+      }
+    ).bind(
+      'mouseout',
+      function (e) {
+        jQuery(this).hasClass('disabled') && jQuery('*', base).trigger('notready2checkout');
       }
     );
 
@@ -415,34 +422,6 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       }
     );
 
-/*
-    jQuery('form.place button[type="submit"].bright', this.base)
-      .click(
-        function (event) {
-          jQuery(this)
-            .addClass('disabled')
-            .attr('disabled', 'disabled')
-            .closest('form.place')
-            .submit();
-
-          return false;
-        }
-      );
-
-    jQuery('.review-step.current .button-row button', this.base)
-      .click(
-        function(event) {
-          if (1 == jQuery('form.place .terms input:checked', o.base).length) {
-            return true;
-          }
-
-          jQuery('form.place .terms', this.base).addClass('non-agree');
-
-          return false;
-        }
-      );
-*/
-
     // Refresh state
     this.refreshState();
   }
@@ -452,7 +431,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 CheckoutView.prototype.buildWidgetRequestURL = function(params)
 {
   if (!params) {
-    params = { step: '' };
+    params = {step: ''};
 
   } else if ('undefined' == typeof(params.step)) {
     params.step = '';
