@@ -405,7 +405,7 @@ HEAD;
     if (macro_is_entity($path)) {
         $header = preg_replace('/@Index\s*\(.+\)/SsU', '', $header);
         $header = preg_replace('/@UniqueConstraint\s*\(.+\)/SsU', '', $header);
-        $header = preg_replace('/@MappedSuperclass\s*\(.+\)/SsU', '', $header);
+        $header = preg_replace('/@MappedSuperclass/SsU', '', $header);
         $header = preg_replace('/@DiscriminatorMap\s*\(.+\)/SsU', '', $header);
         $header = preg_replace('/@DiscriminatorColumn\s*\(.+\)/SsU', '', $header);
         $header = preg_replace('/@InheritanceType\s*\(.+\)/SsU', '', $header);

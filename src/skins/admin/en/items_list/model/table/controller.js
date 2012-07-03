@@ -278,6 +278,39 @@ TableItemsList.prototype.listeners.positionChanged = function(handler)
   );
 }
 
+// Head sort
+TableItemsList.prototype.listeners.headSort = function(handler)
+{
+  jQuery('thead th a.sort', handler.container).click(
+    function() {
+      return jQuery(this).hasClass('current-sort')
+        ? !handler.process('sortOrder', 'asc' == jQuery(this).data('direction') ? 'desc' : 'asc')
+        : !handler.process('sortBy', jQuery(this).data('sort'));
+    }
+  );
+}
+
+// Head search
+TableItemsList.prototype.listeners.headSearch = function(handler)
+{
+  jQuery('tbody.head-search input,tbody.head-search select', handler.container).change(
+    function() {
+      var result = false;
+      jQuery(this).parents('td').eq(0).find('input,select,textarea').each(
+        function () {
+          result = handler.setURLParam(this.name, this.value) || result;
+        }
+      );
+
+      if (result) {
+        handler.loadWidget();
+      }
+
+      return false;
+    }
+  );
+}
+
 // Reassign items list controller
 TableItemsList.prototype.reassign = function()
 {

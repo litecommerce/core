@@ -17,10 +17,18 @@ CommonForm.elementControllers.push(
 
       var field = jQuery(this);
 
+      var input = jQuery('.field :input.color', this).eq(0);
+
+      // Check - process blur event or not
+      this.isProcessBlur = function()
+      {
+        return !input.data('colorpicker-show');
+      }
+
       // Save field into view
       this.saveField = function()
       {
-        field.find(this.viewValuePattern).css('background-color', '#' + this.getFieldFormattedValue());
+        field.find(this.viewValuePattern).find('.value').css('background-color', '#' + this.getFieldFormattedValue());
       }
 
     }

@@ -17,12 +17,14 @@ CommonForm.elementControllers.push(
 
       var options = {
         onShow: function (colpkr) {
+          jQuery(this).data('colorpicker-show', true);
           jQuery(this).ColorPickerSetColor(this.value);
           jQuery(colpkr).fadeIn(500);
 
           return false;
         },
         onHide: function (colpkr) {
+          jQuery(this).data('colorpicker-show', false);
           jQuery(colpkr).fadeOut(500);
 
           return false;

@@ -77,4 +77,16 @@ class Search extends \XLite\View\AView
     {
         return 'order';
     }
+
+    /**
+     * Check - search block visible or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isSearchVisible()
+    {
+        return true;
+    }
 }

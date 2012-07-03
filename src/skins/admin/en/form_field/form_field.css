@@ -180,3 +180,10 @@ div.table-value input[type="text"].color
 {
   width: 4em;
 }
+
+/* Datepicker */
+input[type="text"].datepicker,
+div.table-value input[type="text"].datepicker
+{
+  width: 8em;
+}

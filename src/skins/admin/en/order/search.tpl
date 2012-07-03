@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<widget template="common/dialog.tpl" name="searchOrdersForm" body="order/search_form.tpl" />
+<widget IF="isSearchVisible()" template="common/dialog.tpl" name="searchOrdersForm" body="order/search_form.tpl" />
 
 <widget class="\XLite\View\Form\ItemsList\Order\Main" name="orders_form" />
   <widget class="\XLite\View\ItemsList\Model\Order\Admin\Search" />

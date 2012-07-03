@@ -92,6 +92,28 @@ class Search extends \XLite\View\ItemsList\Model\Order\Admin\AAdmin
     }
 
     /**
+     * Set widget params
+     *
+     * @param array $params Handler params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        if (!empty($params[static::PARAM_DATE]) && is_array($params[static::PARAM_DATE])) {
+            foreach ($params[static::PARAM_DATE] as $i => $date) {
+                if (is_string($date) && false !== strtotime($date)) {
+                    $params[static::PARAM_DATE][$i] = strtotime($date);
+                }
+            }
+        }
+
+        parent::setWidgetParams($params);
+    }
+
+    /**
      * Define columns structure
      *
      * @return array
@@ -288,7 +310,16 @@ class Search extends \XLite\View\ItemsList\Model\Order\Admin\AAdmin
         $result->{\XLite\Model\Repo\Order::P_ORDER_BY} = $this->getOrderBy();
 
         foreach (static::getSearchParams() as $modelParam => $requestParam) {
-            $result->$modelParam = $this->getParam($requestParam);
+            $value = $this->getParam($requestParam);
+            if (static::PARAM_DATE == $requestParam && is_array($value)) {
+                foreach ($value as $i => $date) {
+                    if (is_string($date) && false !== strtotime($date)) {
+                        $value[$i] = strtotime($date);
+                    }
+                }
+            }
+
+            $result->$modelParam = $value;
         }
 
         return $result;
