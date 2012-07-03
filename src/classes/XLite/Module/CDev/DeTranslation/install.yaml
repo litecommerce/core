@@ -408,7 +408,7 @@ XLite\Model\LanguageLabel:
   - { name: 'File title', translations: [{ code: 'de', label: 'Dateititel' }] }
   - { name: 'Find us on Facebook', translations: [{ code: 'de', label: 'Finden Sie uns auf Facebook' }] }
   - { name: 'Firstname', translations: [{ code: 'de', label: 'Vorname' }] }
-  - { name: 'Flat markup ($)', translations: [{ code: 'de', label: 'pauschale Handelsspanne ($)' }] }
+  - { name: 'Flat markup', translations: [{ code: 'de', label: 'pauschale Handelsspanne' }] }
   - { name: 'Flat shipping charge (flat)', translations: [{ code: 'de', label: 'Versandkostenpauschale (flat)' }] }
   - { name: 'Flat shipping charge per item ordered (per item)', translations: [{ code: 'de', label: 'Versandkostenpauschale pro bestellten Artikel (per Artikel)' }] }
   - { name: 'Flat shipping charge per X ordered (per Y)', translations: [{ code: 'de', label: 'Versandkostenpauschale pro {{X}} bestellte (pro {{Y}})' }] }
@@ -535,8 +535,8 @@ XLite\Model\LanguageLabel:
   - { name: 'Marketplace [check_for_updates]: valid response received', translations: [{ code: 'de', label: 'Markt [check_for_updates]: eine valide Antwort wird erhalten' }] }
   - { name: 'Marketplace [get_hosting_score]: response has an invalid format', translations: [{ code: 'de', label: 'Markt [get_hosting_score]: die Antwort ist in einem unzulässigen Format' }] }
   - { name: 'Marketplace [get_hosting_score]: the "{{url}}" URL requested', translations: [{ code: 'de', label: 'Markt [get_hosting_score]: URL "{{url}}" wird beantragt' }] }
-  - { name: 'Markup per item ($)', translations: [{ code: 'de', label: 'Handelsspanne pro Artikel' }] }
-  - { name: 'Markup per weight unit ($)', translations: [{ code: 'de', label: 'Handelsspanne pro Gewichtseinheit' }] }
+  - { name: 'Markup per item', translations: [{ code: 'de', label: 'Handelsspanne pro Artikel' }] }
+  - { name: 'Markup per weight unit', translations: [{ code: 'de', label: 'Handelsspanne pro Gewichtseinheit' }] }
   - { name: 'Maximum size of the file to upload is N', translations: [{ code: 'de', label: 'Die maximale Größe der hochzuladenden Datei ist {{N}}' }] }
   - { name: 'Membership', translations: [{ code: 'de', label: 'Mitgliedschaft' }] }
   - { name: 'Membership access', translations: [{ code: 'de', label: 'Mitgliedszugriff' }] }
@@ -636,9 +636,9 @@ XLite\Model\LanguageLabel:
   - { name: 'pdf file type', translations: [{ code: 'de', label: 'pdf-Dateityp' }] }
   - { name: 'Pending', translations: [{ code: 'de', label: 'Ausstehend' }] }
   - { name: 'Pending membership', translations: [{ code: 'de', label: 'ausstehende Mitgliedschaft' }] }
-  - { name: 'Per item markup ($)', translations: [{ code: 'de', label: 'Preisaufschlag pro Artikel ($)' }] }
+  - { name: 'Per item markup', translations: [{ code: 'de', label: 'Preisaufschlag pro Artikel' }] }
   - { name: 'per page', translations: [{ code: 'de', label: 'pro Seite' }] }
-  - { name: 'Per weight unit markup ($)', translations: [{ code: 'de', label: 'Preisaufschlag pro Gewichtseinheit ($)' }] }
+  - { name: 'Per weight unit markup', translations: [{ code: 'de', label: 'Preisaufschlag pro Gewichtseinheit' }] }
   - { name: 'Percent', translations: [{ code: 'de', label: 'Prozent' }] }
   - { name: 'Percent markup', translations: [{ code: 'de', label: 'prozentuale Preiserhöhung' }] }
   - { name: 'Percent off', translations: [{ code: 'de', label: 'Prozent-Aktionen ' }] }

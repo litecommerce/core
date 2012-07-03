@@ -408,7 +408,7 @@ XLite\Model\LanguageLabel:
   - { name: 'File title', translations: [{ code: 'ru', label: 'Название файла' }] }
   - { name: 'Find us on Facebook', translations: [{ code: 'ru', label: 'Найти нас на Facebook' }] }
   - { name: 'Firstname', translations: [{ code: 'ru', label: 'Имя' }] }
-  - { name: 'Flat markup ($)', translations: [{ code: 'ru', label: 'Фиксированная наценка ($)' }] }
+  - { name: 'Flat markup', translations: [{ code: 'ru', label: 'Фиксированная наценка' }] }
   - { name: 'Flat shipping charge (flat)', translations: [{ code: 'ru', label: 'Фиксированная стоимость доставки (flat)' }] }
   - { name: 'Flat shipping charge per item ordered (per item)', translations: [{ code: 'ru', label: 'Фиксированная стоимость доставки за единицу товара (за единицу)' }] }
   - { name: 'Flat shipping charge per X ordered (per Y)', translations: [{ code: 'ru', label: 'Фиксированная стоимость доставки за {{X}} ({{Y}})' }] }
@@ -535,8 +535,8 @@ XLite\Model\LanguageLabel:
   - { name: 'Marketplace [check_for_updates]: valid response received', translations: [{ code: 'ru', label: 'Marketplace [check_for_updates]: получен верный ответ' }] }
   - { name: 'Marketplace [get_hosting_score]: response has an invalid format', translations: [{ code: 'ru', label: 'Marketplace [get_hosting_score]: ответ имеет некорректный формат' }] }
   - { name: 'Marketplace [get_hosting_score]: the "{{url}}" URL requested', translations: [{ code: 'ru', label: 'Marketplace [get_hosting_score]: запрашиваемый URL "{{url}}"' }] }
-  - { name: 'Markup per item ($)', translations: [{ code: 'ru', label: 'Наценка за единицу ($)' }] }
-  - { name: 'Markup per weight unit ($)', translations: [{ code: 'ru', label: 'Наценка за единицу веса ($)' }] }
+  - { name: 'Markup per item', translations: [{ code: 'ru', label: 'Наценка за единицу' }] }
+  - { name: 'Markup per weight unit', translations: [{ code: 'ru', label: 'Наценка за единицу веса' }] }
   - { name: 'Maximum size of the file to upload is N', translations: [{ code: 'ru', label: 'Максимальный размер файла для загрузки {{N}}' }] }
   - { name: 'Membership', translations: [{ code: 'ru', label: 'Группы пользователей' }] }
   - { name: 'Membership access', translations: [{ code: 'ru', label: 'Доступ групп' }] }
@@ -636,9 +636,9 @@ XLite\Model\LanguageLabel:
   - { name: 'pdf file type', translations: [{ code: 'ru', label: 'тип файла pdf' }] }
   - { name: 'Pending', translations: [{ code: 'ru', label: 'В очереди' }] }
   - { name: 'Pending membership', translations: [{ code: 'ru', label: 'Запрошена группа' }] }
-  - { name: 'Per item markup ($)', translations: [{ code: 'ru', label: 'Надбавка за штуку ($)' }] }
+  - { name: 'Per item markup', translations: [{ code: 'ru', label: 'Надбавка за штуку' }] }
   - { name: 'per page', translations: [{ code: 'ru', label: 'на странице' }] }
-  - { name: 'Per weight unit markup ($)', translations: [{ code: 'ru', label: 'Надбавка за единицу веса ($)' }] }
+  - { name: 'Per weight unit markup', translations: [{ code: 'ru', label: 'Надбавка за единицу веса' }] }
   - { name: 'Percent', translations: [{ code: 'ru', label: 'Процент' }] }
   - { name: 'Percent markup', translations: [{ code: 'ru', label: 'Процентная надбавка' }] }
   - { name: 'Percent off', translations: [{ code: 'ru', label: 'Скидка' }] }
