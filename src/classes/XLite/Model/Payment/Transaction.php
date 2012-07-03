@@ -54,6 +54,9 @@ class Transaction extends \XLite\Model\AEntity
     const STATUS_PENDING     = 'W';
     const STATUS_FAILED      = 'F';
 
+    const STATUS_AUTHORIZED = 'A';
+    const STATUS_CAPTURED   = 'C';
+    const STATUS_REFUNDED   = 'R';
 
     /**
      * Transaction initialization result
@@ -203,6 +206,9 @@ class Transaction extends \XLite\Model\AEntity
         self::STATUS_SUCCESS     => 'Completed',
         self::STATUS_PENDING     => 'Pending',
         self::STATUS_FAILED      => 'Failed',
+        self::STATUS_AUTHORIZED  => 'Authorized',
+        self::STATUS_CAPTURED    => 'Captured',
+        self::STATUS_REFUNDED    => 'Refunded',
     );
 
     /**
@@ -323,6 +329,20 @@ class Transaction extends \XLite\Model\AEntity
         return isset($this->readableStatuses[$this->getStatus()])
             ? $this->readableStatuses[$this->getStatus()]
             : 'Unknown';
+    }
+
+    /**
+     * Return true if operation is allowed for currect transaction
+     * 
+     * @param string $operation Name of operation
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function isOperationAllowed($operation)
+    {
+        return in_array($operation, $this->getPaymentMethod()->getProcessor()->getAllowedTransactions());
     }
 
     // {{{ Data operations

@@ -36,6 +36,15 @@ namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
 abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
 {
     /**
+     * Request types definition
+     */
+    const REQ_TYPE_CREATE_SECURE_TOKEN = 'CreateSecureToken';
+    const REQ_TYPE_CAPTURE             = 'Capture';
+    const REQ_TYPE_VOID                = 'Void';
+    const REQ_TYPE_CREDIT              = 'Credit';
+
+
+    /**
      * iframeURL 
      * 
      * @var   string
@@ -83,146 +92,6 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
         return self::RETURN_TYPE_HTML_REDIRECT_WITH_IFRAME_DESTROYING;
     }
 
-    /**
-     * Get URL of the page to display within iframe
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getIframeData()
-    {
-        $token = $this->getSecureToken();
-
-        $result = $token ? $this->getPostURL($this->iframeURL, $this->getIframeParams($token)) : null;
-
-        \XLite\Module\CDev\Paypal\Main::addLog(
-            'getIframeData()',
-            $result
-        );
-
-        return $result;
-    }
-
-    /**
-     * Returns the list of iframe URL arguments
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getIframeParams($token)
-    {
-        $params = array(
-            'SECURETOKEN=' . $token,
-            'SECURETOKENID=' . $this->getSecureTokenId(),
-        );
-
-        if ($this->isTestMode()) {
-            $params[] = 'MODE=TEST';
-        }
-
-        return $params;
-    }
-
-    /**
-     * Get SecureTokenId
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getSecureTokenId()
-    {
-        if (!isset($this->secureTokenId)) {
-
-            // Get secure token from transaction data
-
-            if (!isset($this->secureTokenId)) {
-                $this->secureTokenId = $this->generateSecureTokenId();
-             }
-        }
-
-        return $this->secureTokenId;
-    }
-
-    /**
-     * Do CREATESECURETOKEN request and get SECURETOKEN from Paypal 
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getSecureToken()
-    {
-        $token = null;
-
-        $params = $this->getParams();
-
-        $this->transaction->setPublicId(
-            \XLite\Core\Config::getInstance()->CDev->Paypal->prefix
-            . $this->transaction->getTransactionId()
-        );
-
-        $request = new \XLite\Core\HTTP\Request($this->getPostURL());
-        $request->body = $params;
-        $request->verb = 'POST';
-        $response = $request->sendRequest();
-
-
-        if (200 == $response->code && !empty($response->body)) {
-            $responseData = $this->getParsedResponse($response->body);
-
-            if ($responseData['SECURETOKENID'] != $this->getSecureTokenId()) {
-                // It seems, a hack attempt detected, log this
-
-            } elseif (!empty($responseData['SECURETOKEN'])) {
-                $token = $responseData['SECURETOKEN'];
-            }
-        }
-
-        \XLite\Module\CDev\Paypal\Main::addLog(
-            'getSecureToken',
-            array(
-                'request' => $request->body,
-                'response' => $response,
-                'parsedResponse' => $responseData,
-            )
-        );
-
-        return $token;
-    }
-
-    /**
-     * Parse response on CREATESECURETOKEN request and return result as an array
-     * e.g. the response "RESULT=0&SECURETOKEN=3DbhdANpkkkOZ8byxZtaRCQQ7&SECURETOKENID=82248f5c934f88466ab95965118f5ef1&RESPMSG=Approved"
-     * will return an array:
-     * array(
-     *   "RESULT"        => "0",
-     *   "SECURETOKEN"   => "3DbhdANpkkkOZ8byxZtaRCQQ7",
-     *   "SECURETOKENID" => "82248f5c934f88466ab95965118f5ef1",
-     *    "RESPMSG"      => "Approved",
-     * );
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getParsedResponse($response)
-    {
-        $result = array();
-
-        $rows = explode('&', $response);
-
-        if (is_array($rows)) {
-            foreach ($rows as $row) {
-                list($key, $value) = explode('=', $row); 
-                $result[$key] = $value;
-            }
-        }
-
-        return $result;
-    }
 
     /**
      * Get post URL 
@@ -268,13 +137,316 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
     }
 
     /**
+     * Get URL of the page to display within iframe
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIframeData()
+    {
+        $token = $this->getSecureToken();
+
+        $result = $token ? $this->getPostURL($this->iframeURL, $this->getIframeParams($token)) : null;
+
+        \XLite\Module\CDev\Paypal\Main::addLog(
+            'getIframeData()',
+            $result
+        );
+
+        return $result;
+    }
+
+    /**
+     * Get iframe size 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIframeSize()
+    {
+        return array(600, 500);
+    }
+
+    /**
+     * Returns the list of iframe URL arguments
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIframeParams($token)
+    {
+        $params = array(
+            'SECURETOKEN=' . $token,
+            'SECURETOKENID=' . $this->getSecureTokenId(),
+        );
+
+        if ($this->isTestMode()) {
+            $params[] = 'MODE=TEST';
+        }
+
+        return $params;
+    }
+
+    /**
+     * Get SecureTokenId
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSecureTokenId()
+    {
+        if (!isset($this->secureTokenId)) {
+
+            // Get secure token from transaction data
+
+            if (!isset($this->secureTokenId)) {
+                $this->secureTokenId = $this->generateSecureTokenId();
+             }
+        }
+
+        return $this->secureTokenId;
+    }
+
+    /**
+     * Generate random string for SecureTokenId
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function generateSecureTokenId()
+    {
+        return md5(time() + rand(1000, 99999));
+    }
+
+    /**
+     * Do CREATESECURETOKEN request and get SECURETOKEN from Paypal 
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSecureToken()
+    {
+        $token = null;
+
+        $this->transaction->setPublicId(
+            \XLite\Core\Config::getInstance()->CDev->Paypal->prefix
+            . $this->transaction->getTransactionId()
+        );
+
+        $responseData = $this->doRequest(self::REQ_TYPE_CREATE_SECURE_TOKEN);
+
+        if (!empty($responseData)) {
+
+            if ($responseData['SECURETOKENID'] != $this->getSecureTokenId()) {
+                // It seems, a hack attempt detected, log this
+
+            } elseif (!empty($responseData['SECURETOKEN'])) {
+                $token = $responseData['SECURETOKEN'];
+            }
+        }
+
+        return $token;
+    }
+
+    /**
+     * Do 'CAPTURE' request on Authorized transaction.
+     * Returns true on success or false on failure
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doCapture()
+    {
+        $result = false;
+
+        $responseData = $this->doRequest(self::REQ_TYPE_CAPTURE);
+
+        if (!empty($responseData)) {
+
+            if ('0' == $responseData['RESULT']) {
+                $result = true;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Do 'VOID' request.
+     * Returns true on success or false on failure
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doVoid()
+    {
+        $result = false;
+
+        $responseData = $this->doRequest(self::REQ_TYPE_VOID);
+
+        if (!empty($responseData)) {
+
+            if ('0' == $responseData['RESULT']) {
+                $result = true;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Do 'CREDIT' request.
+     * Returns true on success or false on failure
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doCredit()
+    {
+        $result = false;
+
+        $responseData = $this->doRequest(self::REQ_TYPE_CREDIT);
+
+        if (!empty($responseData)) {
+
+            if ('0' == $responseData['RESULT']) {
+                $result = true;
+            }
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Do HTTPS request to Paypal server with data set depended on $requestType.
+     * Returns an array represented a parsed response from Paypal
+     * 
+     * @param string $requestType Type of request 
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function doRequest($requestType)
+    {
+        $responseData = array();
+
+        $params = $this->getRequestParams($requestType);
+
+        $request = new \XLite\Core\HTTP\Request($this->getPostURL());
+        $request->body = $params;
+        $request->verb = 'POST';
+        $response = $request->sendRequest();
+
+        if (200 == $response->code && !empty($response->body)) {
+            $responseData = $this->getParsedResponse($response->body);
+        }
+
+        \XLite\Module\CDev\Paypal\Main::addLog(
+            'doRequest',
+            array(
+                'requestType'    => $requestType,
+                'request'        => $request->body,
+                'response'       => $response,
+                'parsedResponse' => $responseData,
+            )
+        );
+
+        return $responseData;
+    }
+
+    /**
+     * Parse response from Paypal and return result as an array
+     * e.g. the response "RESULT=0&SECURETOKEN=3DbhdANpkkkOZ8byxZtaRCQQ7&SECURETOKENID=82248f5c934f88466ab95965118f5ef1&RESPMSG=Approved"
+     * will return an array:
+     * array(
+     *   "RESULT"        => "0",
+     *   "SECURETOKEN"   => "3DbhdANpkkkOZ8byxZtaRCQQ7",
+     *   "SECURETOKENID" => "82248f5c934f88466ab95965118f5ef1",
+     *   "RESPMSG"       => "Approved",
+     * );
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getParsedResponse($response)
+    {
+        $result = array();
+
+        $rows = explode('&', $response);
+
+        if (is_array($rows)) {
+            foreach ($rows as $row) {
+                list($key, $value) = explode('=', $row); 
+                $result[$key] = $value;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Get array of params for CREATESCURETOKEN request
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getParams()
+    protected function getRequestParams($requestType)
+    {
+        $methodName = 'get' . $requestType . 'RequestParams';
+
+        $postData = $this->$methodName() + $this->getCommonParams();
+
+        $data = array();
+
+        foreach ($postData as $k => $v) {
+            $data[] = sprintf('%s[%d]=%s', $k, strlen($v), $v);
+        }
+
+        $data = implode('&', $data);
+
+        return $data;
+    }
+
+    /**
+     * Get array of common params for all requests
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCommonRequestParams()
+    {
+        return array(
+            'VENDOR' => \XLite\Core\Config::getInstance()->CDev->Paypal->vendor,
+            'USER' => \XLite\Core\Config::getInstance()->CDev->Paypal->user ?: \XLite\Core\Config::getInstance()->CDev->Paypal->vendor,
+            'PWD' => \XLite\Core\Config::getInstance()->CDev->Paypal->pwd,
+            'PARTNER' => \XLite\Core\Config::getInstance()->CDev->Paypal->partner ?: 'Paypal',
+            'BUTTONSOURCE' => 'Qualiteam_Cart_LC_PHS',
+            'VERBOSITY' => 'HIGH',
+        );
+    }
+
+    /**
+     * Get array of parameters for CREATESECURETOKEN request
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCreateSecureTokenRequestParams()
     {
         $postData = array(
             'CREATESECURETOKEN' => 'Y',
@@ -315,57 +487,19 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
             'SILENTPOSTURL'     => urldecode($this->getCallbackURL(null, true)),
             // 'SILENTPOSTRETURNURL' => $this->getCallbackURL(null, true),
             'FORCESILENTPOST'   => 'FALSE',
-            'DISABLERECEIPT'    => 'TRUE', // Warning! If set this to 'FALSE' PAypal will redirect buyer to cart.php without target, txnId and other service parameters
+            'DISABLERECEIPT'    => 'TRUE', // Warning! If set this to 'FALSE' Paypal will redirect buyer to cart.php without target, txnId and other service parameters
             'CURRENCY'          => $this->getCurrencyCode(),
         );
 
-        $postData = $postData + $this->getCommonFields();
         $postData = $postData + $lineItems;
 
-        $data = array();
-
-        foreach ($postData as $k => $v) {
-            $data[] = sprintf('%s[%d]=%s', $k, strlen($v), $v);
-        }
-
-        $data = implode('&', $data);
-
-        return $data;
-    }
-
-    /**
-     * Get array of common params for all requests
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCommonFields()
-    {
-        return array(
-            'VENDOR' => \XLite\Core\Config::getInstance()->CDev->Paypal->vendor,
-            'USER' => \XLite\Core\Config::getInstance()->CDev->Paypal->user ?: \XLite\Core\Config::getInstance()->CDev->Paypal->vendor,
-            'PWD' => \XLite\Core\Config::getInstance()->CDev->Paypal->pwd,
-            'PARTNER' => \XLite\Core\Config::getInstance()->CDev->Paypal->partner ?: 'Paypal',
-            'BUTTONSOURCE' => 'Qualiteam_Cart_LC_PHS',
-            'VERBOSITY' => 'HIGH',
-        );
-    }
-
-    /**
-     * Generate random string for SecureTokenId
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function generateSecureTokenId()
-    {
-        return md5(time() + rand(1000, 99999));
+        return $postData;
     }
 
     /**
      * Get array of params for CREATESECURETOKEN request (ordered products part)
+     *
+     * @param &$lineItems Reference to an array of ordered items
      *
      * @return string
      * @see    ____func_see____
@@ -394,18 +528,6 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
     }
 
     /**
-     * Get iframe size 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getIframeSize()
-    {
-        return array(600, 500);
-    }
-
-    /**
      * Get currency code
      *
      * @return string
@@ -415,5 +537,78 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
     protected function getCurrencyCode()
     {
         return strtoupper($this->getOrder()->getCurrency()->getCode());
+    }
+
+    /**
+     * Return array of parameters for 'CAPTURE' request 
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getInquiryRequestParams()
+    {
+        $params = array(
+            'TRXTYPE'       => 'I',
+            'SECURETOKEN'   => $this->getSecureToken(),
+            'SECURETOKENID' => $this->getSecureTokenId(),
+            'VERBOSITY'     => 'HIGH',
+        );
+
+        return $params;
+    }
+
+    /**
+     * Return array of parameters for 'CAPTURE' request 
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCaptureRequestParams()
+    {
+        $params = array(
+            'TRXTYPE' => 'D',
+            'ORIGID'  => $this->getTransaction()->getData('PNREF'),
+            'AMT'     => $this->getTransaction()->getValue(),
+            'CAPTURECOMPLETE' => 'Y', // For Paypal Payments Advanced only
+        );
+
+        return $params;
+    }
+
+    /**
+     * Return array of parameters for 'VOID' request 
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getVoidRequestParams()
+    {
+        $params = array(
+            'TRXTYPE' => 'V',
+            'ORIGID'  => $this->getTransaction()->getData('PNREF'),
+        );
+
+        return $params;
+    }
+
+    /**
+     * Return array of parameters for 'CREDIT' request 
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCreditRequestParams()
+    {
+        $params = array(
+            'TRXTYPE' => 'C',
+            'ORIGID'  => $this->getTransaction()->getData('PNREF'),
+            'AMT'     => $this->getTransaction()->getValue(),
+        );
+
+        return $params;
     }
 }
