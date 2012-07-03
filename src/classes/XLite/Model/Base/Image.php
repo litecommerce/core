@@ -40,7 +40,7 @@ abstract class Image extends \XLite\Model\Base\Storage
 {
     /**
      * MIME type to extenstion translation table
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.10
@@ -233,10 +233,17 @@ abstract class Image extends \XLite\Model\Base\Storage
 
         } else {
             $result = $this->resizeIcon($width, $height, $path);
+
             if ($result) {
                 list($newWidth, $newHeight) = $result;
 
             } else {
+
+                list($newWidth, $newHeight) = array(
+                    $this->getWidth(),
+                    $this->getHeight()
+                );
+
                 $url = $this->getURL();
             }
         }
@@ -245,11 +252,11 @@ abstract class Image extends \XLite\Model\Base\Storage
     }
 
     /**
-     * Get resized file system path 
-     * 
+     * Get resized file system path
+     *
      * @param string $size Size prefix
      * @param string $name File name
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.24
@@ -279,9 +286,9 @@ abstract class Image extends \XLite\Model\Base\Storage
 
     /**
      * Check - resized icon is available or not
-     * 
+     *
      * @param string $path Resized image path
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.24
@@ -292,12 +299,12 @@ abstract class Image extends \XLite\Model\Base\Storage
     }
 
     /**
-     * Resize icon 
-     * 
+     * Resize icon
+     *
      * @param integer $width  Destination width
      * @param integer $height Destination height
      * @param string  $path   Write path
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.24
