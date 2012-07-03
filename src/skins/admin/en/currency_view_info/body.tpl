@@ -11,17 +11,17 @@
  *}
 
 <div class="currency-view-info">
-  <ul class="currency-block">
-    <li class="title">{t(#Example#)}:</li>
-    <li class="currency currency-zero">
-      <ul class="value-view">
-        <li class="prefix"></li>
-        <li class="format"></li>
-        <li class="decimal"></li>
-        <li class="suffix"></li>
-      </ul>
-    </li>
-    <li class="clearfix"></li>
-  </ul>
+  <span class="currency-block">
+    <span class="title">{t(#Example#)}:</span>
+    <span class="currency currency-zero">
+      <span class="value-view">
+        <span class="prefix"></span>
+        <span class="format"></span>
+        <span class="decimal"></span>
+        <span class="suffix"></span>
+      </span>
+    </span>
+    <span class="clearfix"></span>
+  </span>
 </div>
 
