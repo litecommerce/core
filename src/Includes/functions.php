@@ -822,7 +822,7 @@ function func_set_memory_limit($new_limit) {
 
 function func_htmlspecialchars($str) {
     $str = preg_replace(
-        '/&(?!(?:amp|#\d+|#x\d+|euro|copy|pound|curren|cent|yen|reg|trade|lt|gt|lte|gte|quot);)/Ss',
+        '/&(?!(?:amp|nbsp|#\d+|#x\d+|euro|copy|pound|curren|cent|yen|reg|trade|lt|gt|lte|gte|quot);)/Ss',
         '&amp;',
         $str
     );
@@ -1295,7 +1295,7 @@ if (!function_exists('mb_stripos')) {
 /**
  * Find position of first occurrence of a case-insensitive string
  *
- * @param string  $haystack The string to search in 
+ * @param string  $haystack The string to search in
  * @param string  $needle   The string to find in haystack
  * @param integer $offset   The position in haystack  to start searching OPTIONAL
  *

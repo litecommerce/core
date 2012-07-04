@@ -55,16 +55,25 @@ class Main extends \XLite\View\Model\Profile\AProfile
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'E-mail',
             self::SCHEMA_REQUIRED => true,
+            self::SCHEMA_MODEL_ATTRIBUTES => array(
+                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+            ),
         ),
         'password' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Password',
             self::SCHEMA_LABEL    => 'Password',
             self::SCHEMA_REQUIRED => false,
+            self::SCHEMA_MODEL_ATTRIBUTES => array(
+                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+            ),
         ),
         'password_conf' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Password',
             self::SCHEMA_LABEL    => 'Confirm password',
             self::SCHEMA_REQUIRED => false,
+            self::SCHEMA_MODEL_ATTRIBUTES => array(
+                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
+            ),
         ),
     );
 

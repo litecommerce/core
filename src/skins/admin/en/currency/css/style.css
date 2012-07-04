@@ -1,0 +1,72 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Currency page styles
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.0
+ */
+
+.dialog-content {
+  width: 750px;
+}
+
+.dialog-content.currency-model-form-dialog {
+  width: 500px;
+  float: left;
+}
+
+.model-properties {
+  margin-bottom: 100px;
+  width: 500px;
+}
+
+.model-properties .sticky-panel {
+  margin: 50px 0px 0px 150px;
+}
+
+.model-properties div.default-section {
+  float: none;
+}
+
+.currency-form .table-label label {
+  font-size: 16px;
+  color: #456583;
+}
+
+.currency-form .table-value {
+  padding-left: 35px;
+}
+
+.currency-form .table li.input {
+  padding: 10px 0px;
+}
+
+.currency-id-value button span {
+  font-size: 14px;
+}
+
+.currency-form .prefix-value input[type="text"],
+  .currency-form .suffix-value input[type="text"]
+{
+  width: 50px;
+}
+
+.currency-form .format-value select {
+  width: 100px;
+}
+
+.currency-form .trailing-zeroes-value {
+  padding-left: 0px;
+}
+
+.currency-form li.input-checkbox {
+  width: 120px;
+}
+
+.currency-form .trailing-zeroes-label {
+  float: right;
+}

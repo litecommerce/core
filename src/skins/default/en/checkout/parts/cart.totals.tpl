@@ -13,6 +13,6 @@
 <ul class="cart-sums">
   <li>
     <em>{t(#Subtotal#)}:</em>
-    <span>{formatPrice(cart.getSubtotal(),cart.getCurrency()):h}</span>
+    <span>{formatPrice(cart.getSubtotal(),cart.getCurrency())}</span>
   </li>
 </ul>

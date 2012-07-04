@@ -1808,23 +1808,23 @@ form.list-form {
   width: auto;
 }
 
-form.list-form .sticky-panel .panel-cell {
+.sticky-panel .panel-cell {
   display: inline-block;
   padding: 0px;
 }
 
-form.list-form .sticky-panel .panel-cell > button {
+.sticky-panel .panel-cell > button {
   margin-left: 5px;
   margin-right: 5px;
 }
 
-form.list-form .sticky-panel div.cancel,
-form.list-form .sticky-panel div.additional
+.sticky-panel div.cancel,
+.sticky-panel div.additional
 {
   display: block;
 }
 
-form.list-form .sticky-panel a.cancel {
+.sticky-panel a.cancel {
   text-indent: -5000px;
   display: block;
   background: transparent url(../images/icon_cancel.png) no-repeat left top;
@@ -1835,16 +1835,16 @@ form.list-form .sticky-panel a.cancel {
   left: 5px;
 }
 
-form.list-form .sticky-panel a.cancel.disabled {
+.sticky-panel a.cancel.disabled {
   opacity: .5;
   cursor: text;
 }
 
-form.list-form .sticky-panel.has-add-buttons .box {
+.sticky-panel.has-add-buttons .box {
   padding-right: 47px;
 }
 
-form.list-form .sticky-panel.has-add-buttons .additional {
+sticky-panel.has-add-buttons .additional {
   position: absolute;
   top: 4px;
   right: -26px;
@@ -1857,9 +1857,8 @@ form.list-form .sticky-panel.has-add-buttons .additional {
   overflow: visible;
 }
 
-form.list-form .sticky-panel.has-add-buttons .additional .additional-buttons {
+.sticky-panel.has-add-buttons .additional .additional-buttons {
   position: absolute;
-  top: 10px;
   left: 43px;
   display: none;
   -moz-border-radius: 5px;
@@ -1870,6 +1869,6 @@ form.list-form .sticky-panel.has-add-buttons .additional .additional-buttons {
   padding: 15px;
 }
 
-form.list-form .sticky-panel.has-add-buttons .additional:hover .additional-buttons {
+.sticky-panel.has-add-buttons .additional:hover .additional-buttons {
   display: block;
 }

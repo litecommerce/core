@@ -10,8 +10,15 @@
  * @since     1.0.0
  */
 
-$(function() {
-  setSimpleTinymce($('textarea.tinymce'));
+jQuery(function() {
+
+  // Retrive configuration for the tinyMCE object from the PHP settings
+  var configTinyMCE = core.getCommentedData(jQuery('textarea.tinymce').eq(0).parent().eq(0));
+
+  // Change baseURL of TinyMCE object for correct loading TinyMCE plugins
+  tinyMCE.baseURL = configTinyMCE.base;
+
+  jQuery('textarea.tinymce').each(function (index, elem) {setSimpleTinymce(jQuery(elem));});
 });
 
 
