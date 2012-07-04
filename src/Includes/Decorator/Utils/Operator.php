@@ -113,7 +113,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
 
             // Use PHP Tokenizer to search class declaration
             if (
-                ($class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path)) 
+                ($class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path))
                 && \Includes\Utils\Operator::checkIfLCClass($class)
             ) {
 
@@ -420,7 +420,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         $result = array(array(), array());
 
         // Sanitize data
-        array_walk($matches[2], function (&$value) { $value = trim($value, ' )('); });
+        array_walk($matches[2], function (&$value) { $value = trim(trim($value), ')('); });
 
         // There are so called "multiple" tags
         foreach (array_unique($matches[1]) as $tag) {
@@ -453,8 +453,8 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         }
 
         // Create an associative array of tag names and their values
-        return !empty($result[0]) && !empty($result[1]) 
-            ? array_combine(array_map('strtolower', $result[0]), $result[1]) 
+        return !empty($result[0]) && !empty($result[1])
+            ? array_combine(array_map('strtolower', $result[0]), $result[1])
             : array();
     }
 
