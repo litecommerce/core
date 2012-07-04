@@ -59,14 +59,6 @@ class Currency extends \XLite\View\Model\AModel
             self::SCHEMA_REQUIRED   => false,
             self::SCHEMA_ATTRIBUTES => array('data-filter' => '1'),
         ),
-        'name' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Name',
-            self::SCHEMA_REQUIRED => false,
-            self::SCHEMA_MODEL_ATTRIBUTES => array(
-                \XLite\View\FormField\Input\Base\String::PARAM_MAX_LENGTH => 'length',
-            ),
-        ),
         'format' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\CurrencyFormat',
             self::SCHEMA_LABEL    => 'Format',
