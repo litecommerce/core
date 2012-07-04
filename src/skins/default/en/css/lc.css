@@ -2499,8 +2499,8 @@ form.estimator .main,
 }
 
 .checkout-block form.place .non-agree .terms-box {
-  background: #eff8fe none;
-  border: 1px solid #cadce8;
+  background: #ffd852 none;
+  border: 1px solid #ffd852;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -2524,10 +2524,16 @@ form.estimator .main,
 }
 
 .checkout-block form.place .terms label {
+  color: #333333;
   display: block;
   padding-left: 16px;
   text-indent: -16px;
 }
+
+.checkout-block form.place .terms label a {
+  color: inherited;
+}
+
 .checkout-block form.place .terms input {
   width: 14px;
   height: 14px;

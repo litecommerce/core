@@ -1078,23 +1078,19 @@ CommonElement.prototype.toggleActivity = function(condition)
 // Check element activity
 CommonElement.prototype.isEnabled = function()
 {
-  return 'disabled' == this.$element.attr('disabled');
+  return this.$element.hasClass('disabled');
 }
 
 // Disable element
 CommonElement.prototype.disable = function()
 {
-  this.$element
-    .addClass('disabled')
-    .attr('disabled', 'disabled');
+  this.$element.addClass('disabled');
 }
 
 // Enable element
 CommonElement.prototype.enable = function()
 {
-  this.$element
-    .removeClass('disabled')
-    .removeAttr('disabled');
+  this.$element.removeClass('disabled');
 }
 
 /**
