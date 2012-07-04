@@ -20,7 +20,7 @@
   {end:}
   <td class="value">
     {if:surcharge.available}
-      {formatPrice(surcharge.cost,order.getCurrency()):h}
+      {formatPrice(surcharge.cost,order.getCurrency())}
     {else:}
       {t(#n/a#)}
     {end:}

@@ -10,16 +10,4 @@
  * @since     1.0.0
  */
 
-// Products list class
-function ProductsList(cell, URLParams, URLAJAXParams)
-{
-  if (!cell) {
-    return;
-  }
-
-  this.constructor.prototype.constructor(cell, URLParams, URLAJAXParams);
-}
-
-
-ProductsList.prototype = new ItemsList();
-ProductsList.prototype.constructor = ItemsList;
+core.autoload(ItemsListQueue);

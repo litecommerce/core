@@ -17,7 +17,7 @@
     <span class="currency">{t(#Free#)}</span>
   </div>
   <div IF="!isFree(module)" class="paid">
-    <span class="currency">{formatPrice(module.getPrice(),module.getCurrency()):r}</span>
+    <span class="currency">{formatPrice(module.getPrice(),module.getCurrency())}</span>
     <span IF="isPurchased(module)" class="purchased">({t(#Purchased#)})</span>
   </div>
 </div>

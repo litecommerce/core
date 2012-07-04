@@ -553,26 +553,6 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * getJSArray
-     *
-     * @param array $params Params to use
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getJSArray(array $params)
-    {
-        $result = array();
-
-        foreach ($params as $name => $value) {
-            $result[] = $name . ': \'' . addslashes($value) . '\'';
-        }
-
-        return '{' . implode(', ', $result) . '}';
-    }
-
-    /**
      * Get URL common parameters
      *
      * @return array
@@ -630,27 +610,19 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * getURLParams
+     * Return specific items list parameters that will be sent to JS code
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getURLParamsJS()
+    protected function getItemsListParams()
     {
-        return $this->getJSArray($this->getURLParams());
-    }
-
-    /**
-     * getURLAJAXParams
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getURLAJAXParamsJS()
-    {
-        return $this->getJSArray($this->getURLAJAXParams());
+        return array(
+            'urlparams'     => $this->getURLParams(),
+            'urlajaxparams' => $this->getURLAJAXParams(),
+            'cell'          => $this->getSessionCell(),
+        );
     }
 
     /**

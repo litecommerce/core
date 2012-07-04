@@ -94,4 +94,22 @@ class Advanced extends \XLite\View\FormField\Textarea\Advanced implements \XLite
     {
         return 'modules/CDev/TinyMCE';
     }
+
+    /**
+     * Return structure of configuration for JS TinyMCE library
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTinyMCEConfiguration()
+    {
+        // Base is the web path to the tinymce library directory
+        return array(
+            'base' => dirname(\XLite\Singletons::$handler->layout->getResourceWebPath(
+                $this->getDir() . '/js/tinymce/tiny_mce.js',
+                \XLite\Core\Layout::WEB_PATH_OUTPUT_URL
+            )) . '/',
+        );
+    }
 }

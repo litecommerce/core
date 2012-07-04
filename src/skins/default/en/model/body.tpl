@@ -17,7 +17,8 @@
   <widget class="{getFormClass()}" name="{getFormName()}" />
 
     <widget template="{getDir()}/form_content.tpl" />
-    <widget template="{getDir()}/{getFormTemplate(#buttons#)}" />
+    <widget IF="!useButtonPanel()" template="{getDir()}/{getFormTemplate(#buttons#)}" />
+    <widget IF="useButtonPanel()" class="{getButtonPanelClass()}" />
 
   <widget name="{getFormName()}" end />
 

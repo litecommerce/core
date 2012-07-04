@@ -10,5 +10,5 @@
  * @since     1.0.0
  * @ListChild (list="head", weight="90")
  *}
-
-<link FOREACH="getCSSResources(),file" href="{file.url}" rel="stylesheet" type="text/css" media="{file.media}" />
+ 
+<list name="head.css">

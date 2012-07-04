@@ -24,6 +24,6 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
   <widget class="\XLite\View\Header" />
 <body {if:getBodyClasses()}class="{getBodyClasses()}"{end:}>
-  <widget class="\XLite\View\Content" />
+<list name="body" />
 </body>
 </html>

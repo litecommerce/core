@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<widget template="common/dialog.tpl" body="product/search.tpl" />
+<widget template="product/search.tpl" />
 
 {* Open <form ...> tag *}
 <widget class="\XLite\View\Form\ItemsList\Product\Main" name="products_form" />

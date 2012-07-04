@@ -117,15 +117,17 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = 'modules_manager/common.css';
+        $list[] = 'modules_manager/css/common.css';
+
         // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
         $list[] = 'modules_manager/enter_key/css/style.css';
+
         // TODO must be taken from LICENSE module widget
         $list[] = 'modules_manager/license/css/style.css';
         $list[] = 'modules_manager/installation_type/css/style.css';
+
         // TODO must be taken from SwitchButton widget
         $list[] = \XLite\View\Button\SwitchButton::SWITCH_CSS_FILE;
-        $list[] = $this->getDir() . '/style.css';
 
         return $list;
     }

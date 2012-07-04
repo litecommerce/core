@@ -727,13 +727,23 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getThemeFiles()
     {
-        return array(
-            static::RESOURCE_CSS => array(
-                'css/style.css',
-                'css/ajax.css',
-                array('file' => 'css/print.css', 'media' => 'print'),
-            ),
-        );
+        return \XLite::isAdminZone()
+            ? array(
+                static::RESOURCE_CSS => array(
+                    'css/style.css',
+                    'css/ajax.css',
+                    array('file' => 'css/print.css', 'media' => 'print'),
+                ),
+            ) : array(
+                static::RESOURCE_CSS => array(
+                    'css/common.css',
+                    'css/layout.css',
+                    'css/theme.css',
+                    'css/lc.css',
+                    'css/ajax.css',
+                    array('file' => 'css/print.css', 'media' => 'print'),
+                ),
+            );
     }
 
     /**
@@ -1064,14 +1074,15 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Format price
      *
-     * @param float                 $value    Price
-     * @param \XLite\Model\Currency $currency Currency OPTIONAL
+     * @param float                 $value        Price
+     * @param \XLite\Model\Currency $currency     Currency OPTIONAL
+     * @param boolean               $strictFormat Flag if the price format is strict (trailing zeroes and so on options)
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function formatPrice($value, \XLite\Model\Currency $currency = null)
+    public function formatPrice($value, \XLite\Model\Currency $currency = null, $strictFormat = false)
     {
         if (!isset($currency)) {
             $currency = \XLite::getInstance()->getCurrency();
@@ -1081,6 +1092,11 @@ abstract class AView extends \XLite\Core\Handler
 
         if (isset($parts['sign']) && '-' == $parts['sign']) {
             $parts['sign'] = '&minus;&#8197';
+        }
+
+        if ($strictFormat) {
+
+            $parts = $this->formatPartsStrictly($parts);
         }
 
         return implode('', $parts);
@@ -1110,10 +1126,25 @@ abstract class AView extends \XLite\Core\Handler
 
         foreach ($parts as $name => $value) {
             $class = 'part-' . $name;
-            $parts[$name] = '<span class="' . $class . '">' . $value . '</span>';
+            $parts[$name] = '<span class="' . $class . '">' . func_htmlspecialchars($value) . '</span>';
         }
 
         return implode('', $parts);
+    }
+
+    /**
+     * Check - view list is visible or not
+     *
+     * @param string $list      List name
+     * @param array  $arguments List common arguments OPTIONAL
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isViewListVisible($list, array $arguments = array())
+    {
+        return 0 < count($this->getViewList($list, $arguments));
     }
 
     /**
@@ -1145,18 +1176,38 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Check - view list is visible or not
+     * Return specific CSS class for dialog wrapper
      *
-     * @param string $list      List name
-     * @param array  $arguments List common arguments OPTIONAL
-     *
-     * @return boolean
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isViewListVisible($list, array $arguments = array())
+    protected function getDialogCSSClass()
     {
-        return 0 < count($this->getViewList($list, $arguments));
+        return 'dialog-content';
+    }
+
+    /**
+     * Change parts of format price if it is necessary
+     *
+     * @param array $parts
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function formatPartsStrictly($parts)
+    {
+        if (
+            1 == \XLite\Core\Config::getInstance()->General->trailing_zeroes
+            && '00' == $parts['decimal']
+        ) {
+
+            unset($parts['decimal']);
+            unset($parts['decimalDelimiter']);
+        }
+
+        return $parts;
     }
 
     /**

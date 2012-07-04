@@ -36,6 +36,19 @@ namespace XLite\View\Form\Checkout;
 class Place extends \XLite\View\Form\Checkout\ACheckout
 {
     /**
+     * JavaScript: this value will be returned on form submit
+     * NOTE - this function designed for AJAX easy switch on/off
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getOnSubmitResult()
+    {
+        return 'false';
+    }
+
+    /**
      * getDefaultAction
      *
      * @return string
