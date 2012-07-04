@@ -38,18 +38,6 @@ namespace XLite\View;
 class Authorization extends \XLite\View\SimpleDialog
 {
     /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return 'Authentication';
-    }
-
-    /**
      * Return file name for the center part template
      *
      * @return string
