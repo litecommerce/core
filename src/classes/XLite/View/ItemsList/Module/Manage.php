@@ -51,21 +51,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
-     * Register JS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-        $list[] = $this->getDir() . '/manage/js/script.js';
-
-        return $list;
-    }
-
-    /**
      * Return name of the base widgets list
      *
      * @return string

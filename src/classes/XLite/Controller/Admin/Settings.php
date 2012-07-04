@@ -610,6 +610,22 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Clean aggregation cache directory
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function doActionCleanAggregationCache()
+    {
+        \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_CACHE_RESOURCES);
+
+        \XLite\Core\TopMessage::addInfo('Aggregation cache has been cleaned');
+
+        $this->setReturnURL($this->buildURL($this->get('target'), '', array('page' => 'Performance')));
+    }
+
+    /**
      * doActionUpdate
      *
      * @return void

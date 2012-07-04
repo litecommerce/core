@@ -82,18 +82,6 @@ class DatePicker extends \XLite\View\FormField
     }
 
     /**
-     * Get date format (javascript)
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDateFormat()
-    {
-        return $this->jsDateFormat;
-    }
-
-    /**
      * Get widget value as string
      *
      * @return string
@@ -169,6 +157,22 @@ class DatePicker extends \XLite\View\FormField
             self::PARAM_VALUE     => new \XLite\Model\WidgetParam\Int('Value of date field (timestamp)', null),
             self::PARAM_HIGH_YEAR => new \XLite\Model\WidgetParam\Int('The high year', date('Y', time()) - 1),
             self::PARAM_LOW_YEAR  => new \XLite\Model\WidgetParam\Int('The low year', 2035),
+        );
+    }
+
+    /**
+     * Return specific for JS code widget options
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDatePickerOptions()
+    {
+        return array(
+            'dateFormat' => $this->jsDateFormat,
+            'highYear'   => $this->getParam(static::PARAM_HIGH_YEAR),
+            'lowYear'    => $this->getParam(static::PARAM_LOW_YEAR),
         );
     }
 }

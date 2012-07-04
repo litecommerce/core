@@ -10,16 +10,4 @@
  * @since     1.0.0
  */
 
-// Orders list class
-function OrdersList(cell, URLParams, URLAJAXParams)
-{
-  if (!cell) {
-    return;
-  }
-
-  this.constructor.prototype.constructor(cell, URLParams, URLAJAXParams);
-}
-
-
-OrdersList.prototype = new ItemsList();
-OrdersList.prototype.constructor = ItemsList;
+core.autoload(ItemsListQueue);

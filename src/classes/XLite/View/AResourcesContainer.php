@@ -1,0 +1,293 @@
+<?php
+// vim: set ts=4 sw=4 sts=4 et:
+
+/**
+ * LiteCommerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
+ */
+
+namespace XLite\View;
+
+/**
+ * Resources container routine
+ *
+ * @see   ____class_see____
+ * @since 1.0.0
+ */
+abstract class AResourcesContainer extends \XLite\View\Container
+{
+    /**
+     * Return cache dir path for resources
+     *
+     * @param array $params
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getResourceCacheDir(array $params)
+    {
+        return LC_DIR_CACHE_RESOURCES . implode(LC_DS, $params). LC_DS;
+    }
+
+    /**
+     * Return CSS resources structure from the file cache
+     *
+     * @param array $resources
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSResourceFromCache(array $resources)
+    {
+        return $this->getResourceFromCache(
+            static::RESOURCE_CSS,
+            $resources,
+            array(static::RESOURCE_CSS, $resources[0]['media']),
+            'prepareCSSCache'
+        ) + array('media' => $resources[0]['media']);
+    }
+
+    /**
+     * Check if the resource entry should be added to container
+     *
+     * @param array $resource
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isValidResource($resource)
+    {
+        return isset($resource['url']);
+    }
+
+    /**
+     * Return latest time stamp of cache build procedure
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getLatestCacheTimestamp()
+    {
+        return intval(\XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getVar(\XLite::CACHE_TIMESTAMP));
+    }
+
+    /**
+     * Return JS resources structure from the file cache
+     *
+     * @param array $resources
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getJSResourceFromCache(array $resources)
+    {
+        return $this->getResourceFromCache(static::RESOURCE_JS, $resources, array(static::RESOURCE_JS), 'prepareJSCache');
+    }
+
+    /**
+     * Return resource structure from the file cache
+     *
+     * @param string $type                   File type of resource (js/css)
+     * @param array  $resources              Resources for caching
+     * @param array  $paramsForCache         Parameters of file cache (directory structure path to file)
+     * @param string $prepareCacheFileMethod Method of $this object to read one resource entity and do some inner work if it is necessary
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResourceFromCache($type, array $resources, array $paramsForCache, $prepareCacheFileMethod)
+    {
+        $pathToCacheDir = static::getResourceCacheDir($paramsForCache);
+
+        \Includes\Utils\FileManager::mkdirRecursive($pathToCacheDir);
+
+        $file = hash('sha256', serialize($resources)) . '.' . $type;
+
+        $filePath = $pathToCacheDir . $file;
+
+        if (!\Includes\Utils\FileManager::isFile($filePath)) {
+
+            foreach ($resources as $resource) {
+
+                \Includes\Utils\FileManager::write($filePath, $this->$prepareCacheFileMethod($resource['file']), FILE_APPEND);
+            }
+        }
+
+        return array(
+            'file' => $filePath,
+            'url'  => \XLite::getInstance()
+                ->getShopURL(
+                    str_replace(LC_DS, '/', substr($filePath, strlen(LC_DIR_ROOT))),
+                    \XLite\Core\Request::getInstance()->isHTTPS()
+                ),
+        );
+    }
+
+    /**
+     * Prepares CSS cache to use. Main issue - replace url($resourcePath) construction with url($shopUrl/$resourcePath)
+     *
+     * @param string $filePath CSS cache file path
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareCSSCache($filePath)
+    {
+        return "\r\n" . '/***** AUTOGENERATED: ' . basename($filePath) . ' */' . str_replace(
+            'url(',
+            'url(' . \XLite::getInstance()->getShopURL(
+                str_replace(LC_DS, '/', dirname(substr($filePath, strlen(LC_DIR_ROOT)))),
+                \XLite\Core\Request::getInstance()->isHTTPS()
+            ) . '/',
+            \Includes\Utils\FileManager::read($filePath)
+        );
+    }
+
+    /**
+     * Prepares CSS cache to use
+     *
+     * @param string $filePath JS cache file path
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareJSCache($filePath)
+    {
+        return "\r\n" . '/***** AUTOGENERATED: ' . basename($filePath) . ' */' . "\r\n" . \Includes\Utils\FileManager::read($filePath);
+    }
+
+    /**
+     * Check if the CSS resources should be aggregated
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doCSSAggregation()
+    {
+        return \XLite\Core\Config::getInstance()->Performance->aggregate_css;
+    }
+
+    /**
+     * Check if the JS resources should be aggregated
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doJSAggregation()
+    {
+        return \XLite\Core\Config::getInstance()->Performance->aggregate_js;
+    }
+
+    /**
+     * Add specific unique identificator to resource URL
+     *
+     * @param string $url
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResourceURL($url)
+    {
+        return $url . '?' . static::getLatestCacheTimestamp();
+    }
+
+    /**
+     * Get collected javascript resources
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getJSResources()
+    {
+        return array_filter(static::getRegisteredResources(static::RESOURCE_JS), array($this, 'isValidResource'));
+    }
+
+    /**
+     * Get collected CSS resources
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCSSResources()
+    {
+        return array_filter(static::getRegisteredResources(static::RESOURCE_CSS), array($this, 'isValidResource'));
+    }
+
+    /**
+     * Get collected JS resources
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getAggregateJSResources()
+    {
+        return array($this->getJSResourceFromCache($this->getJSResources()));
+    }
+
+    /**
+     * Get collected CSS resources
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getAggregateCSSResources()
+    {
+        $list = $this->getCSSResources();
+
+        // Group CSS resources by media type
+        $groupByMedia = array();
+
+        foreach ($list as $fileInfo) {
+
+            $groupByMedia[$fileInfo['media']][] = $fileInfo;
+        }
+
+        return array_map(array($this, 'getCSSResourceFromCache'), $groupByMedia);
+    }
+
+    /**
+     * Return default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return $this->getDir() . '/body.tpl';
+    }
+}
