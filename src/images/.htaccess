@@ -5,13 +5,6 @@
 
 Options -Indexes
 
-<IfModule mod_expires.c>
-  ExpiresActive Off
-
-  # Cache all files for 2 weeks after access (A).
-  ExpiresDefault A1209600
-</IfModule>
-
 <Files ~ "(\.jpg|\.gif|\.png|\.bmp|\.tiff|\.swf|\.jpeg)">
   Allow from all
 </Files>

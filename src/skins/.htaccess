@@ -23,13 +23,6 @@ Options -Indexes
 
 Allow from all
 
-<IfModule mod_expires.c>
-  ExpiresActive Off
-
-  # Cache all files for 2 weeks after access (A).
-  ExpiresDefault A1209600
-</IfModule>
-
 <IfModule mod_headers.c>
   <FilesMatch "(\.js\.gz|\.css\.gz)$">
     # Serve correct encoding type.
