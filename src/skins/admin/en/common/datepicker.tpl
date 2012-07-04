@@ -9,20 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<input type="text" name="{getParam(#field#)}" value="{getValueAsString()}" class="date-picker {getClassName()}" />
-<script type="text/javascript">
-jQuery().ready(
-  function() {
-    jQuery('.date-picker.{getClassName()}').datepicker(
-      {
-        dateFormat:        '{getDateFormat()}',
-        gotoCurrent:       true,
-        yearRange:         '{getParam(#highYear#)}-{getParam(#lowYear#)}',
-        showButtonPanel:   false,
-        beforeShow:        datePickerPostprocess,
-        selectOtherMonths: true
-      }
-    );
-  }
-);
-</script>
+<span class="date-picker-widget">
+  {displayCommentedData(getDatePickerOptions())}
+  <input type="text" name="{getParam(#field#)}" value="{getValueAsString()}" class="date-picker {getClassName()}" />
+</span>

@@ -422,8 +422,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get entity's ID list for remove 
-     * 
+     * Get entity's ID list for remove
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.17
@@ -447,10 +447,10 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Remove entity 
-     * 
+     * Remove entity
+     *
      * @param \XLite\Model\AEntity $entity Entity
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.17
@@ -889,15 +889,15 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      */
     protected function getContainerClass()
     {
-        return 'items-list'
+        return 'widget items-list'
             . ' widgetclass-' . $this->getWidgetClass()
             . ' widgettarget-' . $this->getWidgetTarget()
             . ' sessioncell-' . $this->getSessionCell();
     }
 
     /**
-     * Get container attributes 
-     * 
+     * Get container attributes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.23
@@ -910,8 +910,8 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get container attributes as string 
-     * 
+     * Get container attributes as string
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.23
