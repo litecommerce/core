@@ -25,10 +25,9 @@
  * @since      1.1.0
  */
 
-require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
-require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase/Driver.php';
+require_once PATH_TESTS . '/Portal/Selenium.php';
 
-class Portal_Component extends XLite_Tests_SeleniumTestCase
+class Portal_Component extends Portal_Selenium
 {
     /**
      * Identifier
@@ -41,7 +40,7 @@ class Portal_Component extends XLite_Tests_SeleniumTestCase
     /**
      * Path of component
      *
-     * @var    string
+     * @var    Selenium\Locator
      * @access protected
      * @see    ___func_see___
      * @since  1.1.0
@@ -70,7 +69,7 @@ class Portal_Component extends XLite_Tests_SeleniumTestCase
     {
         $this->id = $id;
         $this->locator = $locator;
-        //parent::__construct();
+        parent::__construct();
     }
     
     /**
@@ -112,7 +111,7 @@ class Portal_Component extends XLite_Tests_SeleniumTestCase
      * Get component locator
      * 
      * @access public
-     * @return string
+     * @return Selenium\Locator
      * @see    ___func_see___
      * @since  1.1.0 
      */
@@ -131,7 +130,7 @@ class Portal_Component extends XLite_Tests_SeleniumTestCase
      */
     public function exists()
     {
-        return $this->isElementPresent($this->locator);
+        return $this->getBrowser()->isElementPresent($this->locator);
     }
     
     /**
@@ -144,7 +143,20 @@ class Portal_Component extends XLite_Tests_SeleniumTestCase
      */
     public function isVisible()
     {
-        return $this->isVisible($this->locator);
+        return $this->getBrowser()->isVisible($this->locator);
+    }
+    
+    /**
+     * Check whether component is editable
+     * 
+     * @access public
+     * @return boolean
+     * @see    ___func_see___
+     * @since  1.1.0
+     */
+    public function isEditable()
+    {
+        return $this->getBrowser()->isEditable($this->locator);
     }
     
     /**
@@ -174,7 +186,7 @@ class Portal_Component extends XLite_Tests_SeleniumTestCase
      */
     public function enter($text)
     {
-        $this->typeKeys($this->locator, $text);
+        $this->getBrowser()->typeKeys($this->locator, $text);
     }
     
     /**
@@ -187,7 +199,7 @@ class Portal_Component extends XLite_Tests_SeleniumTestCase
      */
     public function click()
     {
-        $this->click($this->locator);
+        $this->getBrowser()->click($this->locator);
     }
     
     /**
@@ -201,7 +213,8 @@ class Portal_Component extends XLite_Tests_SeleniumTestCase
      */
     public function press()
     {
-        $this->clickAndWait($this->locator);    
+        $this->click();
+        $this->getBrowser()->waitForPageToLoad(30);
     }
     
     /**

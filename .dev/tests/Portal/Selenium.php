@@ -109,25 +109,20 @@ class Portal_Selenium
      */
     public function __construct()
     {
-        $this->getBrowser()->start();
-    }
-    
-    public function __destruct()
-    {
-        $this->getBrowser()->stop();
     }
     
     protected function getClient()
     {
-        if (is_null($this->client)) {
+        static $selenium_client = NULL;
+        if (is_null($selenium_client)) {
             $browser = $this->getBrowserInfo();
             $host    = $browser['host'];
             $port    = $browser['port'];
             $timeout = $browser['timeout'];
-            $this->client = new Selenium\Client($host, $port, $timeout);
+            $selenium_client = new Selenium\Client($host, $port, $timeout);
         }
         
-        return $this->client;
+        return $selenium_client;
     }
     
     /**
@@ -140,12 +135,13 @@ class Portal_Selenium
      */
     protected function getBrowser()
     {
-        if (is_null($this->browser)) {
+        static $selenium_browser = NULL;
+        if (is_null($selenium_browser)) {
             $browser = $this->getBrowserInfo();
-            $this->browser = $this->getClient()->getBrowser($this->url, $browser['browser']);
+            $selenium_browser = $this->getClient()->getBrowser($this->url, $browser['browser']);
         }
         
-        return $this->browser;
+        return $selenium_browser;
     }
     
     protected function getBrowserInfo()
@@ -162,9 +158,9 @@ class Portal_Selenium
      * @return array
      * @since  1.0.0
      */
-    protected function getTestConfigOptions()
+    protected function getConfig()
     {
-        if (isnull($this->testConfig)) {
+        if (is_null($this->testConfig)) {
             $configFile = XLITE_DEV_CONFIG_DIR . LC_DS . 'xlite-test.config.php';
 
             if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {

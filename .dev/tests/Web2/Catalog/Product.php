@@ -32,7 +32,7 @@ class XLite_Tests_Catalog_Product extends XLite_Tests_TestCase//XLite_Tests_Sele
     public function testAddProduct()
     {
         $admin = new Portal_Admin;
-        $admin->openPage();
+        $admin->open();
         $this->assertTrue(true);
     }
 }

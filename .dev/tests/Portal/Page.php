@@ -41,6 +41,12 @@ abstract class Portal_Page extends Portal_Selenium
     public function __construct()
     {
         parent::__construct();
+        $this->getBrowser()->start();
+    }
+    
+    public function __destruct()
+    {
+        $this->getBrowser()->stop();
     }
     
     /**
@@ -52,5 +58,27 @@ abstract class Portal_Page extends Portal_Selenium
      * @see    ___func_see___
      * @since  1.1.0
      */
-    abstract public function openPage();
+    abstract public function open();
+
+    /**
+     * Get component
+     * 
+     * @access public
+     * @param string $componentID component identifier 
+     * @return Portal_Component
+     * @see    ___func_see___
+     * @since  1.1.0
+     */
+    public function __get($componentID)
+    {
+        $res = false;
+
+        foreach ($this->components as $comp) {
+            if ($comp->getID() === $componentID) {
+                $res = $comp; 
+            }
+        }
+        
+        return $res;
+    }
 }

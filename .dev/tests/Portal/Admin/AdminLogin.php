@@ -26,23 +26,38 @@
  */
 
 require_once PATH_TESTS . '/Portal/Page.php';
-require_once PATH_TESTS . '/Portal/Admin/AdminLogin.php';
+require_once PATH_TESTS . '/Portal/Component.php';
 
-class Portal_Admin extends Portal_Page
+class Portal_AdminLogin extends Portal_Page
 {
-    public function __construct() {
-        $this->url = "http://localhost/xlite/src/admin.php";
+    public function __construct()
+    {
+        $config = $this->getConfig();
+        $this->url = $config['admin']['http_location'] . '/admin.php?target=login';
+
         // Define components
+        $this->components[] = new Portal_Component('fldUsername', '//input[@name="login" and @type="text"]');
+        $this->components[] = new Portal_Component('fldPassword', '//input[@name="password" and @type="password"]');
+        $this->components[] = new Portal_Component('btnLogin', '//button[@class="main-button" and @type="submit"]');
         
         parent::__construct();
     }
 
     public function open()
     {
-        $page = new Portal_AdminLogin;
-        $page->open();
-        echo "1";
-        sleep(10);
-        $page->login();
+        $this->getBrowser()->open($this->url);
+    }
+    
+    public function login($username = NULL, $password = NULL)
+    {
+        if (is_null($username) || is_null($password)) {
+            $config = $this->getConfig();
+            $username = $config['admin']['username'];
+            $password = $config['admin']['password'];
+        }
+        
+        $this->fldUsername->enter($username);
+        $this->fldPassword->enter($password);
+        $this->btnLogin->press();
     }
 }
