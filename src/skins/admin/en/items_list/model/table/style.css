@@ -208,6 +208,11 @@
   background: transparent url(images/link-icon.png) no-repeat left top;
 }
 
+/* Head sort */
+.items-list-table table.list thead th a span.dir {
+  font-size: 14px;
+}
+
 /* Head search */
 .items-list-table table.list tbody.head-search td {
   padding: 6px;

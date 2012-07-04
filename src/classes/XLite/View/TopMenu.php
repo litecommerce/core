@@ -46,6 +46,9 @@ class TopMenu extends \XLite\View\AView
         'orders_stats' => array(
             'top_sellers',
         ),
+        'order_list' => array(
+            'order',
+        ),
         'product_list' => array(
             'product',
         ),

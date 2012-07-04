@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Order info
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,42 +9,64 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<widget template="order/invoice/page.tpl" />
+<div class="order-info">
 
-<div class="invoice-service">
-  <div>
-    <a href="javascript:void(0);" onclick="javascript: window.print(); return false;">{t(#Print invoice#)}</a>
-  </div>
+  <h1>{t(#Order X#,_ARRAY_(#id#^order.getOrderId()))}</h1>
 
-  <form action="admin.php" method="post">
-    <input type="hidden" name="target" value="order" />
-    <input type="hidden" name="action" value="update" />
-    <input type="hidden" name="order_id" value="{order.order_id}" />
-    <input type="hidden" name="returnURL" value="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}" />
+  <p class="title">
+    {if:hasProfilePage()}
+      {t(#Placed on X by Y link#,_ARRAY_(#date#^getOrderDate(),#url#^getProfileURL(),#name#^getProfileName())):h}
+    {else:}
+      {t(#Placed on X by Y#,_ARRAY_(#date#^getOrderDate(),#name#^getProfileName())):h}
+    {end:}
+    {if:getMembership()}
+      <span class="membership">({membership.getName()})</span>
+    {end:}
+  </p>
 
-    <table>
-      <tr>
-      	<td>{t(#Status#)}:</td>
-      	<td><widget class="\XLite\View\FormField\Select\OrderStatus" fieldOnly="true" fieldName="status" value="{order.getStatus()}" orderId="{order.getOrderId()}" /></td>
-      </tr>
+  <p class="total">{t(#Order Total X#,_ARRAY_(#total#^getorderTotal())):h}</p>
 
+  <widget class="XLite\View\Form\Order\Operations" name="operations" />
+
+    <div class="line-1">
+
+        <div class="actions">
+          <list name="order.actions" />
+        </div>
+
+        <div class="note">
+          <list name="order.note" />
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="line-2">
+
+      <div class="payment" IF="order.getActivePaymentTransactions()">
+        <h2>{t(#Payment info#)}</h2>
+        <div class="box"><list name="order.payment" /></div>
+      </div>
+
+      <div class="shipping" IF="getShippingModifier()&shippingModifier.getMethod()">
+        <h2>{t(#Shipping info#)}</h2>
+        <div class="box"><list name="order.shipping" /></div>
+      </div>
+
+        <div class="clear"></div>
+    </div>
+
+    <widget class="XLite\View\StickyPanel\Order\Admin\Info" />
+
+  <widget name="operations" end />
+
+</div>
+
+<!--
       <tr FOREACH="order.getMeaningDetails(),d" valign="top">
       	<td>{d.getLabel()}:</td>
 	      <td><input type="text" name="details[{d.getDetailId()}]" size="40" value="{d.getValue():r}" /></td>
       </tr>
 
-      <tr valign="top">
-	      <td>{t(#Notes#)}:</td>
-	      <td><textarea name="notes" cols="60" rows="7">{order.notes:h}</textarea></td>
-      </tr>
-
       <list name="order.details" order="{order}" />
-
-      <tr valign="top">
-	      <td>&nbsp;</td>
-  	    <td><widget class="\XLite\View\Button\Submit" label="{t(#Submit#)}" /></td>
-      </tr>
-    </table>
-  </form>
-
-</div>
+-->

@@ -1,0 +1,196 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Order info styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.24
+ */
+
+/* Top text blocks */
+.order-info p.title {
+  padding-top: 9px;
+  color: #8f8f8f;
+  font-size: 16px;
+}
+
+.order-info p.title .date,
+.order-info p.title span.name
+{
+  font-size: 16px;
+  color: #456583;
+}
+
+.order-info p.title a.name {
+  text-decoration: underline;
+}
+
+.order-info p.title span.membership {
+  font-size: 16px;
+  color: #333;
+}
+
+.order-info p.total {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #8f8f8f;
+}
+
+.order-info p.total span {
+  font-size: 16px;
+  color: #333;
+}
+
+.order-info form {
+  width: 900px;
+}
+
+/* Line 1 */
+.line-1 {
+  margin-top: 26px;
+}
+
+/* Actions box */
+div.actions {
+  background-color: #f2f2f2;
+  float: left;
+  width: 368px;
+  padding: 21px;
+  margin-right: 42px;
+  margin-top: 3px;
+}
+
+div.actions .status {
+}
+
+div.actions .status label,
+div.actions .status select
+{
+  line-height: 30px;
+  font-size: 16px;
+}
+
+div.actions .status label {
+  color: #456583;
+}
+
+div.actions .status select {
+  width: 230px;
+}
+
+/* Note box */
+div.note {
+  float: left;
+}
+
+div.note .note .table-label {
+  float: none;
+  line-height: normal;
+}
+
+div.note .note label {
+  color: #456583;
+  font-size: 14px;
+}
+
+div.note .note .star {
+  display: none;
+}
+
+div.note .note .table-value {
+  padding-top: 6px;
+}
+
+div.note .note textarea {
+  width: 352px;
+  height: 42px;
+}
+
+/* Line 2 */
+
+div.line-2 {
+  margin-top: 54px;
+}
+
+div.line-2 h2 {
+  margin-bottom: 9px;
+}
+
+div.line-2 .box {
+  border: 1px solid #d7e1e8;
+  background-color: #eff8fe;
+  padding: 6px;
+  padding-bottom: 12px;
+  width: 396px;
+}
+
+div.line-2 .box .method {
+  background-color: #fff;
+  font-size: 16px;
+  padding: 7px 14px;
+  padding-bottom: 14px;
+  line-height: 28px;
+}
+
+div.line-2 .box .method strong {
+  font-weight: normal;
+  color: #456583;
+  display: block;
+  font-size: 16px;
+}
+
+div.line-2 .box .method span {
+  display: block;
+  font-size: 16px;
+  color: #333;
+}
+
+div.line-2 .box .address {
+  margin-top: 4px;
+  padding: 13px;
+}
+
+div.line-2 .box .address strong {
+  color: #456583;
+  font-size: 16px;
+  font-weight: normal;
+  display: block;
+}
+
+div.line-2 .box .address p {
+  font-size: 14px;
+  line-height: 20px;
+  padding-top: 8px;
+}
+
+div.line-2 .box .address p.name {
+  padding-top: 12px;
+}
+
+/* Payment */
+div.payment {
+  float: left;
+  margin-right: 40px;
+}
+
+div.payment .method {
+  background-image: url(../../images/order_payment_method_icon.png);
+  background-repeat: no-repeat;
+  background-position: 341px 17px;
+}
+
+/* Shipping */
+div.shipping {
+  float: left;
+}
+
+div.shipping .method {
+  background-image: url(../../images/order_shipping_method_icon.png);
+  background-repeat: no-repeat;
+  background-position: 333px 26px;
+}
+
+
