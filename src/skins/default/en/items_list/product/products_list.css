@@ -168,7 +168,7 @@ ul.products-sidebar li .clearfix {
   position: absolute;
   top: 30%;
   left: 50%;
-  margin-left: 25px;
+  margin-left: -25px;
   z-index: 100;
   background: transparent;
 }
