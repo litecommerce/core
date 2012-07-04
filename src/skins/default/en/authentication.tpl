@@ -12,7 +12,7 @@
 
 {* Login error page *}
 
-<list name="signin" />
+<list name="customer.signin" />
 
 <widget class="\XLite\View\Form\Login\Customer\Main" name="login_form" />
 
