@@ -46,6 +46,8 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
     {
         $authProviders = \XLite\Module\CDev\SocialLogin\Core\AuthManager::getAuthProviders();
 
+        $requestProcessed = false;
+
         foreach ($authProviders as $provider) {
             if ($provider->detectAuth()) {
 
@@ -78,8 +80,15 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
                         \XLite\Core\TopMessage::addError($signInVia);
                         $this->setReturnURL($this->buildURL('login'));
                     }
+
+                    $requestProcessed = true;
                 }
             }
+        }
+
+        if (!$requestProcessed) {
+            \XLite\Core\TopMessage::addError('We we\'re unable to process this request');
+            $this->setReturnURL($this->buildURL('login'));
         }
     }
 
