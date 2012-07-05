@@ -2129,6 +2129,10 @@ form.estimator .main,
   width: 150px;
 }
 
+.checkout-block .steps .review-step ul.form .form-field-comment {
+  width: 200px;
+}
+
 .checkout-block .steps .button-row {
   text-align: center;
   padding-top: 20px;
