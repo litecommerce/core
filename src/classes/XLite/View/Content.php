@@ -120,7 +120,7 @@ class Content extends \XLite\View\AView
      */
     protected function isSidebarFirstVisible()
     {
-        return !in_array(\XLite\Core\Request::getInstance()->target, array('cart', 'product', 'checkout'));
+        return !in_array(\XLite\Core\Request::getInstance()->target, array('cart', 'product', 'checkout', 'checkoutPayment'));
     }
 
     /**

@@ -62,6 +62,40 @@ class Iframe extends \XLite\View\AView
     }
 
     /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'payment/iframe.css';
+
+        return $list;
+    }
+
+    /**
+     * Set widget params
+     *
+     * @param array $params Handler params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        if (is_array(\XLite\Core\Session::getInstance()->iframePaymentData)) {
+            $params = array_merge($params, \XLite\Core\Session::getInstance()->iframePaymentData);
+        }
+
+        parent::setWidgetParams($params);
+    }
+
+    /**
      * Check if widget is visible
      *
      * @return boolean
@@ -86,9 +120,9 @@ class Iframe extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_WIDTH  => new \XLite\Model\WidgetParam\Int('Width', 400),
-            self::PARAM_HEIGHT => new \XLite\Model\WidgetParam\Int('Height', 400),
-            self::PARAM_SRC    => new \XLite\Model\WidgetParam\String('Source', ''),
+            static::PARAM_WIDTH  => new \XLite\Model\WidgetParam\Int('Width', 400),
+            static::PARAM_HEIGHT => new \XLite\Model\WidgetParam\Int('Height', 400),
+            static::PARAM_SRC    => new \XLite\Model\WidgetParam\String('Source', ''),
         );
     }
 
@@ -105,21 +139,28 @@ class Iframe extends \XLite\View\AView
     }
 
     /**
-     * Set widget params
-     *
-     * @param array $params Handler params
-     *
-     * @return void
+     * Get width 
+     * 
+     * @return integer
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.0.24
      */
-    public function setWidgetParams(array $params)
+    protected function getWidth()
     {
-        if (is_array(\XLite\Core\Session::getInstance()->iframePaymentData)) {
-            $params = array_merge($params, \XLite\Core\Session::getInstance()->iframePaymentData);
-        }
-
-        parent::setWidgetParams($params);
+        return $this->getParam(static::PARAM_WIDTH);
     }
+
+    /**
+     * Get height
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getHeight()
+    {
+        return $this->getParam(static::PARAM_HEIGHT);
+    }
+
 }
 

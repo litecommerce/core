@@ -328,6 +328,7 @@ class Qiwi extends \XLite\Model\Payment\Base\Iframe
             'to'        => $qiwiPhoneNumber,
             'summ'      => round($this->transaction->getValue(), 2),
             'com'       => '',
+            'iframe'    => 'true',
         );
     }
 
@@ -375,4 +376,17 @@ class Qiwi extends \XLite\Model\Payment\Base\Iframe
             'qiwi_phone_number' => \XLite\Model\Payment\TransactionData::ACCESS_CUSTOMER,
         );
     }
+
+    /**
+     * Get iframe size
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIframeSize()
+    {
+        return array(550, 700);
+    }
+
 }
