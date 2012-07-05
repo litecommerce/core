@@ -42,7 +42,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      * @see   ____var_see____
      * @since 1.0.24
      *
-     * @Column (type="string", length="128", nullable=true)
+     * @Column (type="string", length=128, nullable=true)
      */
     protected $socialLoginProvider;
 
@@ -53,7 +53,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      * @see   ____var_see____
      * @since 1.0.24
      *
-     * @Column (type="string", length="128", nullable=true)
+     * @Column (type="string", length=128, nullable=true)
      */
     protected $socialLoginId;
 
