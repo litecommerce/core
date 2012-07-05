@@ -10,7 +10,7 @@
  * @since     1.0.0
  * @ListChild (list="checkout.review.selected", weight="20")
  *}
-<widget class="\XLite\View\Form\Checkout\Place" name="placeOrder" className="place"/>
+<widget class="\XLite\View\Form\Checkout\Place" name="placeOrder" className="place" validationEngine="true" />
 
   {if:getPaymentTemplate()}
     <widget template="{getPaymentTemplate()}" />

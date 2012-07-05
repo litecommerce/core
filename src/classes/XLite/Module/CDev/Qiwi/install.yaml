@@ -30,3 +30,5 @@ XLite\Model\LanguageLabel:
   - { name: 'Order id prefix', translations: [{ code: 'ru', label: 'Префикс транзакций' }] }
   - { name: 'Order lifetime in hours', translations: [{ code: 'ru', label: 'Время жизни счёта (в часах)' }] }
   - { name: 'Check whether customer''s mobile phone is registered', translations: [{ code: 'ru', label: 'Проверять, зарегистрирован ли пользователь' }] }
+  - { name: 'Please enter 10-digit mobile phone number without country code (with no spaces or hyphens)', translations: [{ code: 'en', label: 'Please enter 10-digit mobile phone number without country code (with no spaces or hyphens)' }] }
+

@@ -532,32 +532,35 @@ CommonElement.prototype.validate = function(silent, noFocus)
   var validators = this.getValidators();
 
   // Check visibility
-  if (0 == validators.length || !this.isVisible()) {
-    return result;
-  }
+  if (0 < validators.length && this.isVisible()) {
 
-  // Check by validators
-  for (var i = 0; i < validators.length && result; i++) {
+    // Check by validators
+    for (var i = 0; i < validators.length && result; i++) {
 
-    var res = validators[i].method.call(this);
-    if (!res.status && res.apply) {
-      result = false;
+      var res = validators[i].method.call(this);
+      if (!res.status && res.apply) {
+        result = false;
 
-      if (!silent) {
-        res.message = core.t(res.message);
-        this.markAsInvalid(res.message, validators[i].key);
+        if (!silent) {
+          res.message = core.t(res.message);
+          this.markAsInvalid(res.message, validators[i].key);
 
-        if (!noFocus) {
-          var o = this;
-          setTimeout(
-            function() {
-              o.$element.focus();
-            },
-            o.onFocusTTL
-          );
+          if (!noFocus) {
+            var o = this;
+            setTimeout(
+              function() {
+                o.$element.focus();
+              },
+              o.onFocusTTL
+            );
+          }
         }
       }
     }
+  }
+
+  if (result && this.element.id && this.isVisible()) {
+    result = !this.$element.validationEngine('validateField', this.$element);
   }
 
   return result;

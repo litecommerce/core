@@ -395,10 +395,13 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       'click',
       function (e) {
         if (!jQuery(this).hasClass('disabled')) {
-          jQuery('*', base).trigger('notready2checkout');
-          jQuery(this).unbind('mouseover').unbind('mouseout');
-          // TODO: rework form controller and AForm class to remove 'onsubmit' attribute from the FORM tag
-          jQuery(this).closest('form.place').removeAttr('onsubmit').submit();
+          var form = jQuery(this).closest('form.place').get(0);
+          if (form && form.validate()) {
+            jQuery('*', base).trigger('notready2checkout');
+            jQuery(this).unbind('mouseover').unbind('mouseout');
+            // TODO: rework form controller and AForm class to remove 'onsubmit' attribute from the FORM tag
+            jQuery(form).removeAttr('onsubmit').submit();
+          }
         }
 
         return false;

@@ -9,12 +9,6 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<table cellspacing="0" class="form-data">
-
-  <tr>
-    <td><label for="payment_qiwi_phone_number">{t(#Mobile phone number#)}:</label></td>
-    <td class="marker">*</td>
-    <td><input type="text" id="payment_qiwi_phone_number" name="payment[qiwi_phone_number]" value="" class="field-required" autocomplete="off" /></td>
-  </tr>
-
-</table>
+<ul class="form">
+  <li><widget class="XLite\Module\CDev\Qiwi\View\FormField\Input\Text\Phone" /></li>
+</ul>

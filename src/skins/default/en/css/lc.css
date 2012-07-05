@@ -2113,10 +2113,20 @@ form.estimator .main,
   font-size: 14px;
 }
 
+.checkout-block .steps .review-step ul.form label {
+  width: auto;
+}
+
 .checkout-block .steps ul.form input[type="text"],
 .checkout-block .steps ul.form select
 {
   width: 237px;
+}
+
+.checkout-block .steps .review-step ul.form input[type="text"],
+.checkout-block .steps .review-step ul.form select
+{
+  width: 150px;
 }
 
 .checkout-block .steps .button-row {
@@ -2470,6 +2480,10 @@ form.estimator .main,
 
 .checkout-block form.place {
   padding: 19px 26px;
+}
+
+.checkout-block form.place ul.form {
+  padding-bottom: 10px;
 }
 
 .checkout-block form.place .notes label {
