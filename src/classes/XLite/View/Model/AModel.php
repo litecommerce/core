@@ -574,7 +574,10 @@ abstract class AModel extends \XLite\View\Dialog
             $data[self::SCHEMA_NAME] = $this->composeFieldName($name);
         }
 
-        $data[self::SCHEMA_VALUE] = $this->getDefaultFieldValue($name);
+        $data[static::SCHEMA_VALUE] = $this->getDefaultFieldValue($name);
+
+        $data[static::SCHEMA_ATTRIBUTES] = !empty($data[static::SCHEMA_ATTRIBUTES]) ?: array();
+        $data[static::SCHEMA_ATTRIBUTES] += isset($data[static::SCHEMA_MODEL_ATTRIBUTES]) ? $this->getModelAttributes($name, $data) : array();
 
         return $data;
     }
