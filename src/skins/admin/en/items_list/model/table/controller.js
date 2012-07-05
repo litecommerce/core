@@ -83,34 +83,24 @@ TableItemsList.prototype.listeners.form = function(handler)
     form.get(0).commonController.submitOnlyChanged = true;
   }
 
-  form.change(
+  form.bind(
+    'state-changed',
     function () {
-      var form = jQuery(this);
-
-      if (this.commonController.isChanged()) {
-        form.addClass('changed');
-        handler.processFormChanged(form);
-
-      } else {
-        form.removeClass('changed');
-        handler.processFormUndo(form);
-      }
+      handler.processFormChanged(jQuery(this));
     }
   );
+  form.bind(
+    'state-initial',
+    function () {
+      handler.processFormUndo(jQuery(this));
+    }
+  );
+
 }
 
 // Process form and form's elements after form changed
 TableItemsList.prototype.processFormChanged = function(form)
 {
-  var btn = this.getFormChangedButtons(form);
-  var cancel = this.getFormChangedLinks(form);
-
-  btn.each(
-    function() {
-      this.enable();
-    }
-  );
-
   this.container.find('.table-pager .input input, .table-pager .page-length').each(
     function () {
       jQuery(this).attr('disabled', 'disabled');
@@ -119,38 +109,13 @@ TableItemsList.prototype.processFormChanged = function(form)
   );
 
   this.container.find('.table-pager a').addClass('disabled').removeClass('enabled');
-
-  cancel.removeClass('disabled');
 }
 
 // Process form and form's elements after form cancel all changes
 TableItemsList.prototype.processFormUndo = function(form)
 {
-  var btn = this.getFormChangedButtons(form);
-  var cancel = this.getFormChangedLinks(form);
-
-  btn.each(
-    function() {
-      this.disable();
-    }
-  );
-
   this.container.find('.table-pager .input input, .table-pager .page-length').removeAttr('disabled');
   this.container.find('.table-pager a').removeClass('disabled').addClass('enabled');
-
-  cancel.addClass('disabled');
-}
-
-// Get a form button, which should change as the state of the form
-TableItemsList.prototype.getFormChangedButtons = function(form)
-{
-  return form.find('.sticky-panel button');
-}
-
-// Get a form links, which should change as the state of the form
-TableItemsList.prototype.getFormChangedLinks = function(form)
-{
-  return form.find('.sticky-panel .cancel');
 }
 
 // Inline creation button listener

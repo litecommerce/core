@@ -104,6 +104,21 @@ function CommonForm(form)
     }
   );
 
+  // Process form changed
+  form.change(
+    function () {
+      var form = jQuery(this);
+
+      if (this.commonController.isChanged()) {
+        form.addClass('changed');
+        form.trigger('state-changed');
+
+      } else {
+        form.removeClass('changed');
+        form.trigger('state-initial');
+      }
+    }
+  );
 }
 
 extend(CommonForm, Base);
