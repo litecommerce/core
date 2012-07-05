@@ -32,6 +32,9 @@ namespace XLite\View;
  *
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="body", zone="customer", weight="100")
+ * @ListChild (list="body", zone="admin", weigth="100")
  */
 class Content extends \XLite\View\AView
 {

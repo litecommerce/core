@@ -5,8 +5,6 @@
 
 Options -Indexes
 
-<IfModule mod_access.c>
-  <Files "*.*">
-    Deny from all
-  </Files>
-</IfModule>
+<Files "*.*">
+  Deny from all
+</Files>

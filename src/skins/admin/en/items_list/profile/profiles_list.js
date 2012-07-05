@@ -10,16 +10,4 @@
  * @since     1.0.0
  */
 
-// Profiles list class
-function ProfilesList(cell, URLParams, URLAJAXParams)
-{
-  if (!cell) {
-    return;
-  }
-
-  this.constructor.prototype.constructor(cell, URLParams, URLAJAXParams);
-}
-
-
-ProfilesList.prototype = new ItemsList();
-ProfilesList.prototype.constructor = ItemsList;
+core.autoload(ItemsListQueue);

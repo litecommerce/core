@@ -20,6 +20,8 @@ XLite\Model\Config:
   - { name: anonymous_city, category: Shipping, type: text, orderby: 80, translations: [{ code: en, option_name: City }] }
   - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 90, translations: [{ code: en, option_name: 'Zip/postal code' }] }
   - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime' }] }
+  - { name: aggregate_css, category: Performance, type: checkbox, orderby: 20, value: Y, translations: [{ code: en, option_name: 'Aggregate CSS files' }] }
+  - { name: aggregate_js, category: Performance, type: checkbox, orderby: 30, value: Y, translations: [{ code: en, option_name: 'Aggregate JS files' }] }
   - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key' }] }
   - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address }] }
   - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts }] }
@@ -30,7 +32,7 @@ XLite\Model\Config:
   - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings' }] }
   - { name: customer_security, category: Security, type: checkbox, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Customer Zone (for login, Checkout and profile pages)' }] }
   - { name: date_format, category: General, type: 'XLite\View\FormField\Select\DateFormat', orderby: 660, value: '%b %e, %Y', translations: [{ code: en, option_name: 'Date format' }] }
-  - { name: decimal_delim, category: General, type: 'XLite\View\FormField\Select\DecimalPart', orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal separator' }] }
+  - { name: decimal_delim, category: General, type: 'XLite\View\FormField\Select\DecimalPart', orderby: 650, value: ., translations: [{ code: en, option_name: 'Decimal separator for float values' }] }
   - { name: default_country, category: General, type: country, orderby: 310, value: US, translations: [{ code: en, option_name: 'Default country in the registration form' }] }
   - { name: default_language, category: General, orderby: 330, value: en }
   - { name: default_offline_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Payment method to be assumed in case of zero order totals' }] }
@@ -64,7 +66,8 @@ XLite\Model\Config:
   - { name: recent_orders, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 440, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'The number of orders in the recent order list' }] }
   - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product' }] }
   - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to close the shop temporarily' }] }
-  - { name: shop_currency, category: General, type: currency, orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency' }] }
+  - { name: shop_currency, category: General, type: '', orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency' }] }
+  - { name: trailing_zeroes, category: General, type: '', orderby: 605, value: 0, translations: [{ code: en, option_name: 'Hide trailing zeros in fractional part' }] }
   - { name: site_administrator, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail' }] }
   - { name: smtp_password, category: Email, type: text, orderby: 160, translations: [{ code: en, option_name: Password }] }
   - { name: smtp_security, category: Email, type: 'XLite\View\FormField\Select\SMTPSecurity', orderby: 170, value: no, translations: [{ code: en, option_name: 'Secure connection' }] }
@@ -75,7 +78,7 @@ XLite\Model\Config:
   - { name: start_year, category: Company, type: 'XLite\View\FormField\Input\Text\PastYear', orderby: 380, value: 2012, translations: [{ code: en, option_name: 'Year when store started its operation' }] }
   - { name: subcategories_look, category: General, type: 'XLite\View\FormField\Select\SubcategoriesLook', orderby: 220, value: icons, translations: [{ code: en, option_name: 'Category listings format' }] }
   - { name: support_department, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 490, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'HelpDesk/Support service e-mail' }] }
-  - { name: thousand_delim, category: General, type: 'XLite\View\FormField\Select\ThousandDelimiter', orderby: 640, translations: [{ code: en, option_name: 'Currency thousands separator' }] }
+  - { name: thousand_delim, category: General, type: 'XLite\View\FormField\Select\ThousandDelimiter', orderby: 640, translations: [{ code: en, option_name: 'Thousands separator for float values' }] }
   - { name: time_format, category: General, type: 'XLite\View\FormField\Select\TimeFormat', orderby: 670, value: '%H:%M', translations: [{ code: en, option_name: 'Time format' }] }
   - { name: time_zone, category: General, type: 'XLite\View\FormField\Select\TimeZone', orderby: 680, translations: [{ code: en, option_name: 'Time zone' }] }
   - { name: unit_presentation, category: General, type: separator, orderby: 600, translations: [{ code: en, option_name: 'Units of measurement' }] }

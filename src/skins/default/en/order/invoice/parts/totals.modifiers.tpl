@@ -26,7 +26,7 @@
   {end:}
   <td class="value">
     {if:surcharge.available}
-      {formatSurcharge(surcharge):h}
+      {formatSurcharge(surcharge)}
     {else:}
       {t(#n/a#)}
     {end:}

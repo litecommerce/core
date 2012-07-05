@@ -1,0 +1,31 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Currency page styles
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.0
+ */
+
+.dialog-content.currency-view-info-dialog {
+  width: 200px;
+  float: right;
+  background-color: #f1f1f1;
+  padding: 25px;
+}
+
+.currency-view-info span.value-view span {
+  color: #333333;
+  font-size: 20px;
+}
+
+.currency-view-info span.title {
+  font-size: 16px;
+  color: #8f8f8f;
+  margin: 0px 0px 5px 0px;
+}
+
+

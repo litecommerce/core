@@ -46,25 +46,6 @@ class SaleSelectedButton extends \XLite\View\Button\APopupButton
     {
         $list = parent::getJSFiles();
         $list[] = 'modules/CDev/Sale/sale_selected_button/script.js';
-        // TODO: dynamic JS inclusion
-        $list[] = 'modules/CDev/Sale/sale_selected_dialog/script.js';
-
-        return $list;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = 'modules/CDev/Sale/sale_selected_button/style.css';
-        // TODO: dynamic CSS inclusion
-        $list[] = 'modules/CDev/Sale/sale_selected_dialog/style.css';
 
         return $list;
     }

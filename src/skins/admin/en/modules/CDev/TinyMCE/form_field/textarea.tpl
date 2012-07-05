@@ -12,6 +12,7 @@
 
 <ul class="tinymce-widget">
   <li class="textarea">
+    {displayCommentedData(getTinyMCEConfiguration())}
     <textarea class="tinymce" {getAttributesCode():h}>{getValue()}</textarea>
   </li>
   <li class="button">

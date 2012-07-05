@@ -33,11 +33,11 @@ namespace XLite\View;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Header extends \XLite\View\Container
+class Header extends \XLite\View\AResourcesContainer
 {
     /**
-     * Get head prefixes 
-     * 
+     * Get head prefixes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -56,8 +56,8 @@ class Header extends \XLite\View\Container
      */
     protected function getMetaDescription()
     {
-        return ($result = \XLite::getController()->getMetaDescription()) 
-            ? trim(strip_tags($result)) 
+        return ($result = \XLite::getController()->getMetaDescription())
+            ? trim(strip_tags($result))
             : $this->getDefaultMetaDescription();
     }
 
@@ -112,30 +112,6 @@ class Header extends \XLite\View\Container
     }
 
     /**
-     * Get collected javascript resources
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getJSResources()
-    {
-        return static::getRegisteredResources(static::RESOURCE_JS);
-    }
-
-    /**
-     * Get collected CSS resources
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCSSResources()
-    {
-        return static::getRegisteredResources(static::RESOURCE_CSS);
-    }
-
-    /**
      * Get collected meta tags
      *
      * @return array
@@ -160,8 +136,8 @@ class Header extends \XLite\View\Container
     }
 
     /**
-     * Get head tag attributes 
-     * 
+     * Get head tag attributes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -186,17 +162,5 @@ class Header extends \XLite\View\Container
         }
 
         return $list;
-    }
-
-    /**
-     * Return default template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'header/body.tpl';
     }
 }

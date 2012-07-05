@@ -10,20 +10,37 @@
  * @since     1.0.0
  */
 
-// Main class
-function ItemsList(cell, URLParams, URLAJAXParams)
+function ItemsListQueue()
 {
-  this.container = jQuery('.items-list').eq(0);
+  jQuery('.widget.items-list').each(function(index, elem){
+    new ItemsList(jQuery(elem));
+  });
+}
+
+// Main class
+function ItemsList(elem, urlparams, urlajaxparams)
+{
+  if (typeof(urlparams) == 'undefined') {
+    // Initialize widget from the scratch
+    this.container = elem;
+    this.params = core.getCommentedData(elem);
+
+  } else {
+    // Initialize widget by the sessionCell class identification
+    this.container = jQuery('.sessioncell-' + elem);
+
+    this.params = {
+      'cell'          : elem,
+      'urlparams'     : urlparams,
+      'urlajaxparams' : urlajaxparams
+    };
+  }
 
   if (!this.container.length) {
     return;
   }
 
   this.container.get(0).itemsListController = this;
-
-  this.cell = cell;
-  this.URLParams = URLParams;
-  this.URLAJAXParams = URLAJAXParams;
 
   // Common form support
   CommonForm.autoassign(this.container);
@@ -35,9 +52,8 @@ extend(ItemsList, Base);
 
 ItemsList.prototype.container = null;
 
-ItemsList.prototype.cell = null;
-ItemsList.prototype.urlParams = null;
-ItemsList.prototype.urlAJAXParams = null;
+ItemsList.prototype.params = null;
+
 ItemsList.prototype.listeners = {};
 
 ItemsList.prototype.listeners.pager = function(handler)
@@ -102,7 +118,10 @@ ItemsList.prototype.changeSortByMode = function(handler)
 // Change sort order
 ItemsList.prototype.changeSortOrder = function()
 {
-  return this.process('sortOrder', ('asc' == this.URLParams.sortOrder) ? 'desc' : 'asc');
+  return this.process(
+    'sortOrder',
+    (typeof(this.params.urlparams['sortOrder']) == 'undefined' || 'asc' == this.params.urlparams['sortOrder']) ? 'desc' : 'asc'
+  );
 }
 
 
@@ -125,7 +144,7 @@ ItemsList.prototype.changePageLength = function(handler)
   var count = parseInt(jQuery(handler).val());
 
   if (isNaN(count)) {
-    count = this.URLParams.itemsPerPage;
+    count = typeof(this.params.urlparams['itemsPerPage']) != 'undefined' ? this.params.urlparams['itemsPerPage'] : 1;
 
   } else if (count < 1) {
     count = 1;
@@ -149,11 +168,11 @@ ItemsList.prototype.addListeners = function()
 // Change URL param
 ItemsList.prototype.setURLParam = function(paramName, paramValue)
 {
-  var result = (paramValue != this.URLParams[paramName]) || (paramValue != this.URLAJAXParams[paramName]);
+  var result = (paramValue != this.params.urlparams[paramName]) || (paramValue != this.params.urlajaxparams[paramName]);
 
   if (result) {
-    this.URLParams[paramName] = paramValue;
-    this.URLAJAXParams[paramName] = paramValue;
+    this.params.urlparams[paramName] = paramValue;
+    this.params.urlajaxparams[paramName] = paramValue;
   }
 
   return result;
@@ -209,7 +228,7 @@ ItemsList.prototype.showModalScreen = function()
     }
   );
 
-  // FIXME - check if there is more convinient way
+  // FIXME - check if there is more convenient way
   jQuery('.blockElement')
     .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
     .addClass('wait-block');
@@ -227,7 +246,7 @@ ItemsList.prototype.hideModalScreen = function()
 // Build URL
 ItemsList.prototype.buildURL = function(forAJAX)
 {
-  var list = forAJAX ? this.URLAJAXParams : this.URLParams;
+  var list = forAJAX ? this.params.urlajaxparams : this.params.urlparams;
 
   if (typeof(list.sessionCell) != 'undefined') {
       list.sessionCell = null;
@@ -257,14 +276,13 @@ ItemsList.prototype.loadHandler = function(xhr, s)
 // Place new list content
 ItemsList.prototype.placeNewContent = function(content)
 {
-  var div = document.createElement('div');
-  jQuery(div).html(jQuery('.items-list.sessioncell-' + this.cell, content));
-  this.container.replaceWith(div);
+  this.container.replaceWith(jQuery('.items-list.sessioncell-' + this.params.cell, content));
+
   this.reassign();
 }
 
 // Reassign items list controller
 ItemsList.prototype.reassign = function()
 {
-  new ItemsList(this.cell, this.URLParams, this.URLAJAXParams);
+  new ItemsList(this.params.cell, this.params.urlparams, this.params.urlajaxparams);
 }

@@ -12,6 +12,6 @@
 
 <h2 IF="{head}">{t(head)}</h2>
 
-<div class="dialog-content">
+<div class="{getDialogCSSClass()}">
   <widget template="{body}">
 </div>

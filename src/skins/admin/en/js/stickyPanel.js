@@ -2,8 +2,8 @@
 
 /**
  * Sticky panel controller
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -48,7 +48,7 @@ jQuery().ready(
           centeredBox.width(panel.outerWidth());
         }
 
-        // Check scroll stste - run reposition or not
+        // Check scroll state - run reposition or not
         function checkRepositionEvent()
         {
           clearTimeout(timer);
@@ -85,7 +85,7 @@ jQuery().ready(
 
           } else if (panel.css('top') != '0px') {
             panel.css({position: 'absolute', top: 0});
- 
+
           }
         }
 

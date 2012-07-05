@@ -281,6 +281,15 @@ TableItemsList.prototype.listeners.positionChanged = function(handler)
 // Reassign items list controller
 TableItemsList.prototype.reassign = function()
 {
-  new TableItemsList(this.cell, this.URLParams, this.URLAJAXParams);
+  new TableItemsList(this.params.cell, this.params.urlparams, this.params.urlajaxparams);
 }
 
+
+function TableItemsListQueue()
+{
+  jQuery('.widget.items-list').each(function(index, elem){
+    new TableItemsList(jQuery(elem));
+  });
+}
+
+core.autoload(TableItemsListQueue);

@@ -12,5 +12,5 @@
  *}
 
 <td class="total">
-  {formatPrice(order.getTotal(),order.getCurrency()):h}
+  {formatPrice(order.getTotal(),order.getCurrency())}
 </td>

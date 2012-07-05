@@ -59,8 +59,8 @@ abstract class AForm extends \XLite\View\AView
     protected $plainList = null;
 
     /**
-     * Validation message 
-     * 
+     * Validation message
+     *
      * @var   string
      * @see   ____var_see____
      * @since 1.0.0
@@ -93,7 +93,7 @@ abstract class AForm extends \XLite\View\AView
                 \XLite\Core\Event::invalidElement($exception->getPath(), $message);
             }
 
-            $this->validationMessage 
+            $this->validationMessage
                 = ($exception->getPublicName() ? static::t($exception->getPublicName()) . ': ' : '') . $message;
         }
 
@@ -101,8 +101,8 @@ abstract class AForm extends \XLite\View\AView
     }
 
     /**
-     * Get validation message 
-     * 
+     * Get validation message
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -137,8 +137,8 @@ abstract class AForm extends \XLite\View\AView
     }
 
     /**
-     * Get end form template 
-     * 
+     * Get end form template
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.15

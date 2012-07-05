@@ -11,6 +11,7 @@
 
 Options -Indexes
 DirectoryIndex cart.php
+FileETag none
 
 <IfModule mod_rewrite.c>
   RewriteEngine on
@@ -23,3 +24,30 @@ DirectoryIndex cart.php
 
   #RewriteBase ____WEB_DIR____
 </IfModule>
+
+# Deflating several main types of content
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/xml application/x-javascript application/xhtml+xml application/rss+xml
+</IfModule>
+
+<IfModule mod_expires.c>
+
+  # Expire images/js/css header
+  ExpiresActive On
+  ExpiresDefault A0
+
+  # Images expires in 2 weeks
+  ExpiresByType image/png A1209600
+  ExpiresByType image/gif A1209600
+  ExpiresByType image/jpg A1209600
+  ExpiresByType image/jpeg A1209600
+  ExpiresByType image/ico A1209600
+  ExpiresByType image/x-icon A1209600
+
+  # CSS/JS now work with dynamic unique query string. 1 year expires
+  ExpiresByType text/css A31104000
+  ExpiresByType text/javascript A31104000
+  ExpiresByType application/javascript A31104000
+
+</IfModule>
+

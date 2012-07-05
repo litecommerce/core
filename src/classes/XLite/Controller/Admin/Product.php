@@ -339,6 +339,7 @@ class Product extends \XLite\Controller\Admin\Base\Catalog
                 + array(
                     'inventory' => $inventory,
                 )
+                + $this->getClasses($product)
             );
 
             \XLite\Core\TopMessage::addInfo('New product has been added successfully');

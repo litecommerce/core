@@ -59,6 +59,8 @@ abstract class AModel extends \XLite\View\Dialog
     const SCHEMA_OPTIONS = \XLite\View\FormField\Select\ASelect::PARAM_OPTIONS;
     const SCHEMA_IS_CHECKED = \XLite\View\FormField\Input\Checkbox::PARAM_IS_CHECKED;
 
+    const SCHEMA_MODEL_ATTRIBUTES = 'model_attributes';
+
     /**
      * Session cell to store form data
      */
@@ -187,7 +189,7 @@ abstract class AModel extends \XLite\View\Dialog
     protected $excludedFields = array();
 
     /**
-     * This object will be used if another one is not pased
+     * This object will be used if another one is not passed
      *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
@@ -545,6 +547,30 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
+     * Flag if the panel widget for buttons is used
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function useButtonPanel()
+    {
+        return !is_null($this->getButtonPanelClass());
+    }
+
+    /**
+     * Return class of button panel widget
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getButtonPanelClass()
+    {
+        return null;
+    }
+
+    /**
      * Add (if required) an additional part to the form name
      *
      * @param string $name Name to prepare
@@ -559,7 +585,98 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Perform some operations when creating fiels list by schema
+     * Return model field name for a provided form field name
+     *
+     * @param string $name Name of form field
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModelFieldName($name)
+    {
+        return $name;
+    }
+
+    /**
+     * Return field mappings structure for the model
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFieldMappings()
+    {
+        if (!isset($this->fieldMappings)) {
+
+            // Collect metadata for fields of class and its translation class if there is one.
+            $metaData = \XLite\Core\Database::getEM()->getClassMetadata(get_class($this->getModelObject()));
+            $this->fieldMappings = $metaData->fieldMappings;
+
+            $metaDataTranslationClass = isset($metaData->associationMappings['translations'])
+                ? $metaData->associationMappings['translations']['targetEntity']
+                : false;
+
+            if ($metaDataTranslationClass) {
+
+                $metaDataTranslation = \XLite\Core\Database::getEM()->getClassMetadata($metaDataTranslationClass);
+                $this->fieldMappings += $metaDataTranslation->fieldMappings;
+            }
+        }
+
+        return $this->fieldMappings;
+    }
+
+    /**
+     * Return field mapping info for a given $name key
+     *
+     * @param string $name
+     *
+     * @return array|null
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFieldMapping($name)
+    {
+        $fieldMappings = $this->getFieldMappings();
+
+        $fieldName = $this->getModelFieldName($name);
+
+        return $fieldMappings[$fieldName] ?: null;
+    }
+
+    /**
+     * Return widget attributes that are collected from the model properties
+     *
+     * @param string $name
+     * @param array  $data
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModelAttributes($name, array $data)
+    {
+        $fieldMapping = $this->getFieldMapping($name);
+
+        $result = array();
+
+        if ($fieldMapping) {
+
+            foreach ($data[static::SCHEMA_MODEL_ATTRIBUTES] as $widgetAttribute => $modelAttribute) {
+
+                if (isset($fieldMapping[$modelAttribute])) {
+
+                    $result[$widgetAttribute] = $fieldMapping[$modelAttribute];
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Perform some operations when creating fields list by schema
      *
      * @param string $name Node name
      * @param array  $data Field description
@@ -570,11 +687,14 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function getFieldSchemaArgs($name, array $data)
     {
-        if (!isset($data[self::SCHEMA_NAME])) {
-            $data[self::SCHEMA_NAME] = $this->composeFieldName($name);
+        if (!isset($data[static::SCHEMA_NAME])) {
+            $data[static::SCHEMA_NAME] = $this->composeFieldName($name);
         }
 
-        $data[self::SCHEMA_VALUE] = $this->getDefaultFieldValue($name);
+        $data[static::SCHEMA_VALUE] = $this->getDefaultFieldValue($name);
+
+        $data[static::SCHEMA_ATTRIBUTES] = $data[static::SCHEMA_ATTRIBUTES] ? : array();
+        $data[static::SCHEMA_ATTRIBUTES] += isset($data[static::SCHEMA_MODEL_ATTRIBUTES]) ? $this->getModelAttributes($name, $data) : array();
 
         return $data;
     }
@@ -792,7 +912,7 @@ abstract class AModel extends \XLite\View\Dialog
 
     /**
      * Rollback model if data validation failed
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.18
@@ -1060,6 +1180,10 @@ abstract class AModel extends \XLite\View\Dialog
 
     /**
      * Return list of the "Button" widgets
+     * Do not use this method if you want sticky buttons panel.
+     * The sticky buttons panel class has the buttons definition already.
+     *
+     * TODO: Maybe we should move it to the StickyPanel classes family?
      *
      * @return array
      * @see    ____func_see____
@@ -1299,7 +1423,13 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Prepare posted data for mapping to the object
+     * Prepare request data for mapping into model object.
+     * Model object is provided with methods:
+     * prepareObjectForMapping <- getModelObject <- getDefaultModelObject (or getParam(self::PARAM_MODEL_OBJECT))
+     *
+     * Use $this->excludeField($fieldName) method to remove unnecessary data from request.
+     *
+     * Call $this->excludeField() method in "performAction*" methods before parent::performAction* call.
      *
      * @return array
      * @see    ____func_see____
@@ -1309,7 +1439,7 @@ abstract class AModel extends \XLite\View\Dialog
     {
         $data = $this->getRequestData();
 
-        // Remove fields in the $exludedFields list from the data for mapping
+        // Remove fields in the $excludedFields list from the data for mapping
         if (!empty($this->excludedFields)) {
             foreach ($data as $key => $value) {
                 if (in_array($key, $this->excludedFields)) {
@@ -1347,10 +1477,10 @@ abstract class AModel extends \XLite\View\Dialog
 
     /**
      * Display view sublist
-     * 
+     *
      * @param string $suffix    List usffix
      * @param array  $arguments List arguments
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.13
@@ -1363,7 +1493,7 @@ abstract class AModel extends \XLite\View\Dialog
             $class = $match[1] . '.' . $match[2] . '.' . $class;
         }
         $class = strtolower($class);
-        
+
         $list = 'crud.' . $class . '.' . $suffix;
 
         $arguments = $this->assembleViewSubListArguments($suffix, $arguments);
@@ -1372,11 +1502,11 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Assemble biew sublist arguments 
-     * 
+     * Assemble biew sublist arguments
+     *
      * @param string $suffix    List suffix
      * @param array  $arguments Arguments
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.13
@@ -1390,8 +1520,8 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Get container class 
-     * 
+     * Get container class
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.18
@@ -1402,12 +1532,12 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Get item class 
-     * 
+     * Get item class
+     *
      * @param integer                          $index  Item index
      * @param integer                          $length items list length
      * @param \XLite\View\FormField\AFormField $field  Current item
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.13
