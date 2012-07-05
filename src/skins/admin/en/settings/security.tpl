@@ -77,7 +77,7 @@ function enableHTTPS()
     jQuery('input[name="admin_security"][type="checkbox"]').attr('checked', admin_security_value);
 
     document.getElementById("httpserror-message").style.cssText = "";
-    document.getElementById("httpserror-message").innerHTML = "<span class='success-message'>Success</span>";
+    document.getElementById("httpserror-message").innerHTML = "<span class='success-message'>" + xliteConfig.success_lng + "</span>";
 }
 
 jQuery('input[name="customer_security"][type="checkbox"]').attr('checked', '');
