@@ -129,6 +129,18 @@ class XLite extends \XLite\Base
     }
 
     /**
+     * Check is cache building
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function isCacheBuilding()
+    {
+        return defined('XLITE_CACHE_BUILDING') && constant('XLITE_CACHE_BUILDING');
+    }
+
+    /**
      * Check if clean URL used
      *
      * @return boolean
@@ -539,4 +551,5 @@ class XLite extends \XLite\Base
     }
 
     // }}}
+
 }

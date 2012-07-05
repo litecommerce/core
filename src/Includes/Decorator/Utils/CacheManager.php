@@ -452,6 +452,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function runStep($step)
     {
+        // Set internal flag
+        if (!defined('XLITE_CACHE_BUILDING')) {
+            define('XLITE_CACHE_BUILDING', true);
+        }
+
         // To prevent multiple processes execution
         static::checkIfRebuildStarted();
 
