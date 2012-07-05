@@ -70,7 +70,7 @@ abstract class Factory extends \Includes\Pattern\APattern
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function getClassHandler($class)
+    public static function getClassHandler($class)
     {
         if (!isset(static::$classHandlers[$class])) {
             static::$classHandlers[$class] = new \ReflectionClass($class);

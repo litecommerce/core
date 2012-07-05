@@ -60,7 +60,7 @@ class XLite_Tests_Model_DataSource extends XLite_Tests_TestCase
 
         $this->assertTrue(0 < $s->getId(), 'check data source id');
         $em->remove($s);
-        $em->flush($s);
+        $em->flush();
     }
 
     /**

@@ -44,17 +44,17 @@ namespace XLite\Model;
  *          @Index (name="shipping_id", columns={"shipping_id"})
  *      }
  * )
+ *
  * @HasLifecycleCallbacks
  * @InheritanceType       ("SINGLE_TABLE")
- * @DiscriminatorColumn   (name="is_order", type="integer", length="1")
- * @DiscriminatorMap      ({"1" = "XLite\Model\Order", "0" = "XLite\Model\Cart"})
+ * @DiscriminatorColumn   (name="is_order", type="integer", length=1)
+ * @DiscriminatorMap      ({1 = "XLite\Model\Order", 0 = "XLite\Model\Cart"})
  */
 class Order extends \XLite\Model\Base\SurchargeOwner
 {
     /**
      * Order statuses
      */
-
     const STATUS_TEMPORARY  = 'T';
     const STATUS_INPROGRESS = 'I';
     const STATUS_QUEUED     = 'Q';
@@ -94,7 +94,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Profile", cascade={"persist"})
+     * @OneToOne   (targetEntity="XLite\Model\Profile", cascade={"all"})
      * @JoinColumn (name="profile_id", referencedColumnName="profile_id")
      */
     protected $profile;
@@ -140,7 +140,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $tracking = '';
 
@@ -173,7 +173,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="1")
+     * @Column (type="fixedstring", length=1)
      */
     protected $status = self::STATUS_INPROGRESS;
 

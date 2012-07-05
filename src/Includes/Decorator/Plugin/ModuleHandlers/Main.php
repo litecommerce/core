@@ -42,10 +42,11 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function executeHookHandlerStepFifth()
+    public function executeHookHandler()
     {
         foreach (\Includes\Utils\ModulesManager::getActiveModules() as $name => $data) {
             $class = \Includes\Utils\ModulesManager::getClassNameByModuleName($name);
+
             $class::runBuildCacheHandler();
         }
     }

@@ -42,7 +42,6 @@ class Database extends \XLite\Base\Singleton
     const SCHEMA_UPDATE = 'update';
     const SCHEMA_DELETE = 'delete';
 
-
     /**
      * DB schema file ident
      */
@@ -146,17 +145,6 @@ class Database extends \XLite\Base\Singleton
         'insert'    => false,
         'addModel'  => null,
         'addParent' => true,
-    );
-
-    /**
-     * List of LC tags
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.24
-     */
-    protected $nonDoctrineTags = array(
-        'LC_Dependencies',
     );
 
     /**
@@ -889,7 +877,7 @@ OUT;
      */
     public function loadFixturesFromYaml($path)
     {
-        $data = \Symfony\Component\Yaml\Yaml::load($path);
+        $data = \Symfony\Component\Yaml\Yaml::parse($path);
 
         $result = false;
 
@@ -924,7 +912,7 @@ OUT;
      */
     public function unloadFixturesFromYaml($path)
     {
-        $data = \Symfony\Component\Yaml\Yaml::load($path);
+        $data = \Symfony\Component\Yaml\Yaml::parse($path);
 
         $result = false;
 
@@ -1313,7 +1301,7 @@ OUT;
         $schema = preg_replace('/ ADD ([a-z]\S+) /Ss', ' ADD `$1` ', $schema);
 
         $schema = preg_replace(
-            '/(`\S+` ADD FOREIGN KEY \([^\)]+\) REFERENCES `\S+` \([^\)]+\)$\s*)$/Ss',
+            '/(`\S+` ADD CONSTRAINT \w+ FOREIGN KEY \([^\)]+\) REFERENCES `\S+` \([^\)]+\)$\s*)$/Ss',
             '$1 ON DELETE CASCADE',
             $schema
         );
@@ -1545,23 +1533,22 @@ OUT;
     /**
      * Detect custom repository class name by entity class name
      *
-     * @param string $entityClass Entity class name
+     * @param string $class Entity class name
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function detectCustomRepositoryClassName($entityClass)
+    protected function detectCustomRepositoryClassName($class)
     {
-        $class = str_replace('\Model\\', '\Model\Repo\\', $entityClass);
+        $class = \Includes\Utils\Converter::getPureClassName($class);
+        $class = \Includes\Utils\Converter::prepareClassName(str_replace('\Model\\', '\Model\Repo\\', $class), false);
 
         if (!\XLite\Core\Operator::isClassExists($class)) {
-            if (preg_match('/\wTranslation$/Ss', $entityClass)) {
-                $class = '\XLite\Model\Repo\Base\Translation';
+            $class = '\XLite\Model\Repo\Base\\' . (preg_match('/\wTranslation$/Ss', $class) ? 'Translation' : 'Common');
 
-            } else {
-                $class = '\XLite\Model\Repo\Base\Common';
-            }
+        } elseif (\Includes\Pattern\Factory::getClassHandler($class)->isAbstract()) {
+            $class = null;
         }
 
         return $class;
@@ -1696,12 +1683,6 @@ OUT;
      */
     protected function createAnnotationDriver($path)
     {
-        $reader = new \Doctrine\Common\Annotations\AnnotationReader();
-        $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
-
-        // Register tags
-        array_walk($this->nonDoctrineTags, array($reader, 'addGlobalIgnoredName'));    
-
-        return new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, array($path));
+        return $this->configuration->newDefaultAnnotationDriver(array($path));
     }
 }

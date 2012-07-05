@@ -69,7 +69,7 @@ class TransactionData extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="128")
+     * @Column (type="string", length=128)
      */
     protected $name;
 
@@ -80,7 +80,7 @@ class TransactionData extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $label = '';
 
@@ -91,7 +91,7 @@ class TransactionData extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="1")
+     * @Column (type="fixedstring", length=1)
      */
     protected $access_level = self::ACCESS_ADMIN;
 

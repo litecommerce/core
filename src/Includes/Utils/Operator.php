@@ -203,13 +203,11 @@ abstract class Operator extends \Includes\Utils\AUtils
 
     /**
      * Check if class is already declared.
-     *
-     * :NOTE: this function does not use autoloader
+     * NOTE: this function does not use autoloader
      *
      * @param string $name Class name
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -219,10 +217,24 @@ abstract class Operator extends \Includes\Utils\AUtils
 
         if (!$result) {
             $result = \Includes\Utils\FileManager::isFileReadable(
-                \Includes\Autoloader::getLCAutoloadDir() . \Includes\Utils\Converter::getClassFile($name)
+                 \Includes\Autoloader::getLCAutoloadDir() . \Includes\Utils\Converter::getClassFile($name)
             );
         }
 
         return $result;
+    }
+
+    /**
+     * Check if class is an LC one
+     *
+     * @param string $name Class name
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function checkIfLCClass($name)
+    {
+        return 0 === strpos(\Includes\Utils\Converter::prepareClassName($name), LC_NAMESPACE);
     }
 }

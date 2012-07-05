@@ -74,7 +74,7 @@ abstract class Storage extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="512")
+     * @Column (type="string", length=512)
      */
     protected $path;
 
@@ -96,7 +96,7 @@ abstract class Storage extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $mime = 'application/octet-stream';
 
@@ -107,7 +107,7 @@ abstract class Storage extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="1")
+     * @Column (type="string", length=1)
      */
     protected $storageType = self::STORAGE_RELATIVE;
 

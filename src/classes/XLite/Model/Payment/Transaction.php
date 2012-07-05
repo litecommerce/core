@@ -85,7 +85,7 @@ class Transaction extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="128")
+     * @Column (type="string", length=128)
      */
     protected $method_name;
 
@@ -96,7 +96,7 @@ class Transaction extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $method_local_name = '';
 
@@ -107,7 +107,7 @@ class Transaction extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="1")
+     * @Column (type="fixedstring", length=1)
      */
     protected $status = self::STATUS_INITIALIZED;
 
@@ -118,7 +118,7 @@ class Transaction extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="decimal", precision="14", scale="4")
+     * @Column (type="decimal", precision=14, scale=4)
      */
     protected $value = 0.0000;
 
@@ -129,7 +129,7 @@ class Transaction extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $note = '';
 
@@ -140,7 +140,7 @@ class Transaction extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="8")
+     * @Column (type="string", length=8)
      */
     protected $type = 'sale';
 

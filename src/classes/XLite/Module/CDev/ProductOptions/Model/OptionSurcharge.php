@@ -69,7 +69,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $type = 'price';
 
@@ -80,7 +80,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="decimal", precision="14", scale="4")
+     * @Column (type="decimal", precision=14, scale=4)
      */
     protected $modifier = 0.0000;
 
@@ -91,7 +91,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="1")
+     * @Column (type="string", length=1)
      */
     protected $modifier_type = self::PERCENT_MODIFIER;
 

@@ -45,7 +45,7 @@ class Image extends \XLite\Model\Base\Image
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $alt = '';
 

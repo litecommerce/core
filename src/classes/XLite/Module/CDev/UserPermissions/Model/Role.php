@@ -32,8 +32,6 @@ namespace XLite\Module\CDev\UserPermissions\Model;
  * 
  * @see   ____class_see____
  * @since 1.0.17
- *
- * @MappedSuperclass
  */
 abstract class Role extends \XLite\Model\Role implements \XLite\Base\IDecorator
 {

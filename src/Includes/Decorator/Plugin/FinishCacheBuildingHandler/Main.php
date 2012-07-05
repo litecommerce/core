@@ -42,7 +42,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function executeHookHandlerStepFifth()
+    public function executeHookHandler()
     {
         \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->setVar(\XLite::CACHE_TIMESTAMP, intval(microtime(true)));
     }
