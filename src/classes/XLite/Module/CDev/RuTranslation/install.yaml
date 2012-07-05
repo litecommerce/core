@@ -1079,7 +1079,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Check number', translations: [{ code: 'ru', label: 'Номер чека' }] }
   - { name: 'Checking', translations: [{ code: 'ru', label: 'Расчетный' }] }
   - { name: 'Savings', translations: [{ code: 'ru', label: 'Сберегательный' }] }
-  - { name: 'Re-order', translations: [{ code: 'ru', label: 'Перезаказать' }] }
+  - { name: 'Re-order', translations: [{ code: 'ru', label: 'Повторить заказ' }] }
   - { name: 'Order ID', translations: [{ code: 'ru', label: 'Номер заказа' }] }
   - { name: 'The X language has been added and enabled successfully', translations: [{ code: 'ru', label: '{{language}} язык был успешно добавлен и активирован' }] }
   - { name: 'Visit add-on''s page', translations: [{ code: 'ru', label: 'Описание модуля' }] }
