@@ -42,8 +42,9 @@ namespace XLite\Model;
  *               @Index (name="amount", columns={"amount"})
  *          }
  * )
+ *
  * @InheritanceType       ("SINGLE_TABLE")
- * @DiscriminatorColumn   (name="object_type", type="string", length="16")
+ * @DiscriminatorColumn   (name="object_type", type="string", length=16)
  * @DiscriminatorMap      ({"product" = "XLite\Model\OrderItem"})
  */
 class OrderItem extends \XLite\Model\Base\SurchargeOwner
@@ -82,7 +83,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $name;
 
@@ -93,7 +94,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $sku = '';
 
@@ -107,11 +108,11 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * @Column (
      *      type="money",
      *      options={
-     *          @XLite\Core\Doctrine\Annotation\Behavior (list={"taxable"}),
-     *          @XLite\Core\Doctrine\Annotation\Purpose (name="net", source="clear"),
-     *          @XLite\Core\Doctrine\Annotation\Purpose (name="display", source="net")
+     *          @\XLite\Core\Doctrine\Annotation\Behavior (list={"taxable"}),
+     *          @\XLite\Core\Doctrine\Annotation\Purpose  (name="net", source="clear"),
+     *          @\XLite\Core\Doctrine\Annotation\Purpose  (name="display", source="net")
      *      }
-     *  )
+     * )
      */
     protected $price;
 
@@ -122,7 +123,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="decimal", precision="14", scale="4")
+     * @Column (type="decimal", precision=14, scale=4)
      */
     protected $itemNetPrice;
 
@@ -133,7 +134,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="decimal", precision="14", scale="4")
+     * @Column (type="decimal", precision=14, scale=4)
      */
     protected $discountedSubtotal = 0;
 

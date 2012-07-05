@@ -63,7 +63,7 @@ class Zone extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $zone_name = '';
 

@@ -33,9 +33,7 @@ namespace XLite\Module\CDev\Sale\Model;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @MappedSuperclass
  * @HasLifecycleCallbacks
- *
  */
 class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
@@ -60,7 +58,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      */
     protected $participateSale = false;
 
-
     /**
      * self::SALE_DISCOUNT_TYPE_PRICE   if "sale value" is considered as "Sale price",
      * self::SALE_DISCOUNT_TYPE_PERCENT if "sale value" is considered as "Percent Off".
@@ -69,10 +66,9 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length=32, nullable=false)
      */
     protected $discountType = self::SALE_DISCOUNT_TYPE_PRICE;
-
 
     /**
      * "Sale value"
@@ -84,7 +80,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @Column (type="decimal", precision=14, scale=4)
      */
     protected $salePriceValue = 0;
-
 
     /**
      * "Sale value" price calculated
@@ -226,5 +221,4 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     {
         $this->setSalePriceValueCalculated($this->getSalePrice());
     }
-
 }

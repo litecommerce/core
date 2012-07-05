@@ -46,7 +46,6 @@ class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
      */
     protected $featuredProducts;
 
-
     /**
      * Constructor
      *

@@ -52,7 +52,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $name;
 
@@ -85,7 +85,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $meta_tags = '';
 
@@ -107,7 +107,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $meta_title = '';
 }

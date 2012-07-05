@@ -167,8 +167,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
             'MAXMIND'             => '1',
         );
 
-        $shippingaddress = $this->getProfile()->getShippingAddress();
-        if ($shippingAddress) {
+        if ($shippingAddress = $this->getProfile()->getShippingAddress()) {
 
             $fields += array(
                 'SFNAME'    => $shippingAddress->getFirstname(),

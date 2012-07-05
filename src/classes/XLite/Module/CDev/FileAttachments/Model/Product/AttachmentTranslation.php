@@ -52,7 +52,7 @@ class AttachmentTranslation extends \XLite\Model\Base\Translation
      * @see   ____var_see____
      * @since 1.0.10
      *
-     * @Column (type="string", length="128")
+     * @Column (type="string", length=128)
      */
     protected $title = '';
 

@@ -33,8 +33,8 @@ namespace XLite\Model;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @Entity
- * @Table (name="profile_addresses",
+ * @Entity (repositoryClass="\XLite\Model\Repo\Address")
+ * @Table  (name="profile_addresses",
  *      indexes={
  *          @Index (name="is_billing", columns={"is_billing"}),
  *          @Index (name="is_shipping", columns={"is_shipping"})

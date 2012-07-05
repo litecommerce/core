@@ -390,6 +390,20 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * Wrapper
+     *
+     * @param mixed $id Entity identifier
+     *
+     * @return \XLite\Model\AEntity
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function find($id)
+    {
+        return isset($id) ? parent::find($id) : null;
+    }
+
+    /**
      * Find entities by id's list
      *
      * @param array $ids Id's list
@@ -1081,20 +1095,14 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
 
             foreach ($this->getDetailedForeignKeys() as $cell) {
-                if (
-                    is_array($cell)
-                    && isset($cell['fields'])
-                    && is_array($cell['fields'])
-                    && $cell['fields']
-                    && isset($cell['referenceRepo'])
-                    && $cell['referenceRepo']
-                ) {
+                if (is_array($cell) && !empty($cell['fields']) && !empty($cell['referenceRepo'])) {
+
                     if (!isset($cell['referenceFields']) || !is_array($cell['referenceFields'])) {
                         $cell['referenceFields'] = $cell['fields'];
                     }
 
                     $pattern = '/(' . $this->_class->getTableName() . '`'
-                        . ' ADD FOREIGN KEY \(`' . implode('`,`', $cell['fields']) . '`\)'
+                        . ' ADD CONSTRAINT \w+ FOREIGN KEY \(`' . implode('`,`', $cell['fields']) . '`\)'
                         . ' REFERENCES `' . $this->_em->getClassMetadata($cell['referenceRepo'])->getTableName() . '`'
                         . ' \(`' . implode('`,`', $cell['referenceFields']) . '`\))\s*(?:.+)?$/Ss';
 

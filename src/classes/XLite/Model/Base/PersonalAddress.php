@@ -44,7 +44,7 @@ abstract class PersonalAddress extends \XLite\Model\Base\Address
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="32")
+     * @Column (type="string", length=32)
      */
     protected $title = '';
 
@@ -55,7 +55,7 @@ abstract class PersonalAddress extends \XLite\Model\Base\Address
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="128")
+     * @Column (type="string", length=128)
      */
     protected $firstname = '';
 
@@ -66,7 +66,7 @@ abstract class PersonalAddress extends \XLite\Model\Base\Address
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="128")
+     * @Column (type="string", length=128)
      */
     protected $lastname = '';
 

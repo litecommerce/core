@@ -65,7 +65,7 @@ class ModuleKey extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $name;
 
@@ -76,7 +76,7 @@ class ModuleKey extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="64")
+     * @Column (type="string", length=64)
      */
     protected $author;
 
@@ -87,7 +87,7 @@ class ModuleKey extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="64")
+     * @Column (type="fixedstring", length=64)
      */
     protected $keyValue;
 

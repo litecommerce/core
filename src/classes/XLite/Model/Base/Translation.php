@@ -62,7 +62,7 @@ abstract class Translation extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="fixedstring", length="2")
+     * @Column (type="fixedstring", length=2)
      */
     protected $code = self::DEFAULT_LANGUAGE;
 

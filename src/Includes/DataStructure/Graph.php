@@ -71,7 +71,7 @@ class Graph
      */
     public function __construct($key = self::ROOT_NODE_KEY)
     {
-        $this->key = $key;
+        $this->setKey($key);
     }
 
     /**
@@ -96,6 +96,20 @@ class Graph
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Check for root node
+     *
+     * @param string $key Key to check OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public function isRoot($key = null)
+    {
+        return static::ROOT_NODE_KEY === ($key ?: $this->getKey());
     }
 
     // }}}
@@ -175,6 +189,7 @@ class Graph
      * Common method to iterate over the tree
      *
      * @param callback $callback  Callback to perform on each node
+     * @param boolean  $invert    Flag OPTIONAL
      * @param self     $parent    Parent node (this param is needed for recursion) OPTIONAL
      * @param boolean  $isStarted Flag OPTIONAL
      *
@@ -182,15 +197,20 @@ class Graph
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function walkThrough($callback, self $parent = null, $isStarted = false)
+    public function walkThrough($callback, $invert = false, self $parent = null, $isStarted = false)
     {
+        // Condition to avoid callback on the root node
+        if ($isStarted && $invert) {
+            call_user_func_array($callback, array($this, $parent));
+        }
+
         // Recursive call on all child nodes
         foreach ($this->getChildren() as $node) {
-            $node->{__FUNCTION__}($callback, $isStarted ? $this : null, true);
+            $node->{__FUNCTION__}($callback, $invert, $isStarted ? $this : null, true);
         }
 
         // Condition to avoid callback on the root node
-        if ($isStarted) {
+        if ($isStarted && !$invert) {
             call_user_func_array($callback, array($this, $parent));
         }
     }

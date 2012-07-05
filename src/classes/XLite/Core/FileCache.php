@@ -29,11 +29,12 @@ namespace XLite\Core;
 
 /**
  * File system cache
+ * FIXME: must be completely refactored
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class FileCache extends \Doctrine\Common\Cache\AbstractCache
+class FileCache extends \Doctrine\Common\Cache\CacheProvider
 {
     /**
      * Cache directory path
@@ -129,6 +130,23 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
+     * getNamespacedId
+     *
+     * @param string $id ____param_comment____
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function getNamespacedId($id)
+    {
+        $namespaceCacheKey = sprintf(static::DOCTRINE_NAMESPACE_CACHEKEY, $this->getNamespace());
+        $namespaceVersion  = ($this->doContains($namespaceCacheKey)) ? $this->doFetch($namespaceCacheKey) : 1;
+
+        return sprintf('%s[%s][%s]', $this->getNamespace(), $id, $namespaceVersion);
+    }
+
+    /**
      * Delete by prefix 
      * 
      * @param string $prefix Prefix
@@ -141,7 +159,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     {
         $deleted = array();
 
-        $prefix = $this->_getNamespacedId($prefix);
+        $prefix = $this->getNamespacedId($prefix);
 
         $list = glob($this->path . LC_DS . $prefix . '*.php');
 
@@ -234,22 +252,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
     }
 
     /**
-     * Get id + namespace
-     * 
-     * @param string $id Cell id
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function _getNamespacedId($id)
-    {
-        return (!$this->_namespace || strpos($id, $this->_namespace) === 0)
-            ? $id
-            : $this->_namespace . $id;
-    }
-
-    /**
      * Get cache cell by id
      *
      * @param string $id CEll id
@@ -258,7 +260,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function _doFetch($id)
+    protected function doFetch($id)
     {
         $path = $this->getPathById($id);
 
@@ -280,7 +282,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function _doContains($id)
+    protected function doContains($id)
     {
         $path = $this->getPathById($id);
 
@@ -298,7 +300,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function _doSave($id, $data, $lifeTime = 0)
+    protected function doSave($id, $data, $lifeTime = 0)
     {
         $lifeTime = strval(min(0, intval($lifeTime)));
 
@@ -317,7 +319,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function _doDelete($id)
+    protected function doDelete($id)
     {
         $path = $this->getPathById($id);
 
@@ -328,6 +330,30 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
         }
 
         return $result;
+    }
+
+    /**
+     * doFlush
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function doFlush()
+    {
+        return true;
+    }
+
+    /**
+     * doGetStats
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function doGetStats()
+    {
+        return array();
     }
 
     /**

@@ -33,7 +33,6 @@ namespace XLite\Module\CDev\XMLSitemap\Model;
  * @see   ____class_see____
  * @since 1.0.12
  *
- * @MappedSuperclass
  * @HasLifecycleCallbacks
  */
 class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
@@ -54,4 +53,3 @@ class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
         \XLite\Module\CDev\XMLSitemap\Logic\SitemapGenerator::getInstance()->clear();
     }
 }
-

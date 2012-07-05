@@ -40,6 +40,15 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      */
     const BASE_CLASS_SUFFIX = 'Abstract';
 
+    /**
+     * Tags to ignore
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
+    protected static $ignoredTags = array('see', 'since');
+
     // {{ Classes tree
 
     /**
@@ -103,10 +112,13 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         foreach (static::getClassFileIterator()->getIterator() as $path => $data) {
 
             // Use PHP Tokenizer to search class declaration
-            if ($class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path)) {
+            if (
+                ($class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path))
+                && \Includes\Utils\Operator::checkIfLCClass($class)
+            ) {
 
                 // File contains a class declaration: create node (descriptor)
-                $node = new \Includes\Decorator\DataStructure\Graph\Classes($class, $path);
+                $node = new \Includes\Decorator\DataStructure\Graph\Classes($class);
 
                 // Check parent class (so called optional dependencies for modules)
                 $dependencies = $node->getTag('lc_dependencies');
@@ -245,8 +257,15 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
                 $parent = $child;
             }
 
+            // Save value
+            $baseClass = $node->getClass();
+
+            // Rename base class to avoid coflicts with the top-level node
+            $node->setKey($node->getClass() . static::BASE_CLASS_SUFFIX, true);
+            $node->setLowLevelNodeFlag();
+
             // Special top-level node: stub class with empty body
-            $topNode = new \Includes\Decorator\DataStructure\Graph\Classes($node->getClass(), $node->getFile());
+            $topNode = new \Includes\Decorator\DataStructure\Graph\Classes($baseClass);
             $topNode->setTopLevelNodeFlag();
 
             // Add this stub node as a child to the last decorator in the chain
@@ -256,10 +275,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
             foreach ($regular as $child) {
                 $child->replant($node, $topNode);
             }
-
-            // Rename base class to avoid coflicts with the top-level node
-            $node->setKey($node->getClass() . static::BASE_CLASS_SUFFIX);
-            $node->setLowLevelNodeFlag();
         }
     }
 
@@ -367,7 +382,11 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         $result = array();
 
         if (preg_match_all(static::getTagPattern($tags), $content, $matches)) {
-            $result += static::parseTags($matches);
+            $tags = static::parseTags($matches);
+
+            if (!empty($tags)) {
+                $result += static::parseTags($matches);
+            }
         }
 
         return $result;
@@ -382,11 +401,9 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function getTagPattern(array $tags)
+    public static function getTagPattern(array $tags)
     {
-        $pattern = empty($tags) ? '\w+' : implode('|', $tags);
-
-        return '/@(' . $pattern . ')\s*(?:\()?(.*?)\s*(?:\)\s*)?(?=$|^.*@(?:' . $pattern . '))/Smi';
+        return '/@\s*(' . (empty($tags) ? '\w+' : implode('|', $tags)) . ')(?=\s*)([^@\n]*)?/Smi';
     }
 
     /**
@@ -400,12 +417,19 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      */
     protected static function parseTags(array $matches)
     {
+        $result = array(array(), array());
+
+        // Sanitize data
+        array_walk($matches[2], function (&$value) { $value = trim(trim($value), ')('); });
+
         // There are so called "multiple" tags
         foreach (array_unique($matches[1]) as $tag) {
 
+            // Ignore some time to save memory and time
+            if (in_array($tag, static::$ignoredTags)) continue;
+
             // Check if tag is defined only once
             if (1 < count($keys = array_keys($matches[1], $tag))) {
-
                 $list = array();
 
                 // Convert such tag values into the single array
@@ -413,26 +437,25 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
 
                     // Parse list of tag attributes and their values
                     $list[] = static::parseTagValue($matches[2][$key]);
-
-                    // To prevent duplicates
-                    unset($matches[1][$key], $matches[2][$key]);
                 }
 
-                // Add tag name and its values to the enf of tags list.
+                // Add tag name and its values to the end of tags list.
                 // All existing entries for this tag was cleared by the "unset()"
-                $matches[1][] = $tag;
-                $matches[2][] = $list;
+                $result[0][] = $tag;
+                $result[1][] = $list;
 
             // If the value was parsed (the corresponded tokens were found), change its type to the "array"
-            // TODO: check if there is a more convenient approach to manage "multiple" tags
             } elseif ($matches[2][$key = array_shift($keys)] !== ($value = static::parseTagValue($matches[2][$key]))) {
 
-                $matches[2][$key] = array($value ?: $matches[2][$key]);
+                $result[0][] = $tag;
+                $result[1][] = array($value ?: $matches[2][$key]);
             }
         }
 
         // Create an associative array of tag names and their values
-        return array_combine(array_map('strtolower', $matches[1]), $matches[2]);
+        return !empty($result[0]) && !empty($result[1])
+            ? array_combine(array_map('strtolower', $result[0]), $result[1])
+            : array();
     }
 
     /**

@@ -62,7 +62,7 @@ class MethodSetting extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="128")
+     * @Column (type="string", length=128)
      */
     protected $name;
 

@@ -38,7 +38,7 @@ return function()
     $yamlFile = __DIR__ . LC_DS . 'currencies.yaml';
 
     if (\Includes\Utils\FileManager::isFileReadable($yamlFile)) {
-        $data = \Symfony\Component\Yaml\Yaml::load($yamlFile);
+        $data = \Symfony\Component\Yaml\Yaml::parse($path);
 
         // Import new and update old currencies
         $repo = \XLite\Core\Database::getRepo('XLite\Model\Currency');

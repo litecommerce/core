@@ -323,7 +323,7 @@ class Operator extends \XLite\Base\Singleton
         $data = null;
 
         if (\Includes\Utils\FileManager::isFile($path)) {
-            $data = \Symfony\Component\Yaml\Yaml::load($path);
+            $data = \Symfony\Component\Yaml\Yaml::parse($path);
         }
 
         return $data;

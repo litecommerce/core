@@ -65,7 +65,7 @@ class CategoryProducts extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer", length=11, nullable=false)
      */
     protected $orderby = 0;
 

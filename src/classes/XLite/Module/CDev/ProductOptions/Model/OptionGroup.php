@@ -90,7 +90,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="1")
+     * @Column (type="string", length=1)
      */
     protected $type = self::GROUP_TYPE;
 
@@ -101,7 +101,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="1")
+     * @Column (type="string", length=1)
      */
     protected $view_type = self::SELECT_VISIBLE;
 

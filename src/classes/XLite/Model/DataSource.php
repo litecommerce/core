@@ -64,7 +64,7 @@ class DataSource extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.17
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length=255)
      */
     protected $type;
 

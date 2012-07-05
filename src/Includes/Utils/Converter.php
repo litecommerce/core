@@ -300,6 +300,20 @@ abstract class Converter extends \Includes\Utils\AUtils
     }
 
     /**
+     * Get non-decorated class name
+     *
+     * @param string $class Class name to prepare
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    public static function getPureClassName($class)
+    {
+        return preg_replace('/' . \Includes\Decorator\Utils\Operator::BASE_CLASS_SUFFIX . '$/S', '', $class);
+    }
+
+    /*
      * Compose URL from target, action and additional params
      *
      * @param string $target    Page identifier OPTIONAL

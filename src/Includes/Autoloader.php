@@ -50,9 +50,10 @@ abstract class Autoloader
     /**
      * The directory where LC classes are located
      *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  1.0.0
      */
     protected static $lcAutoloadDir = LC_DIR_CACHE_CLASSES;
 
@@ -83,7 +84,8 @@ abstract class Autoloader
          */
         $class = ltrim($class, '\\');
 
-        if (0 === strpos($class, LC_NAMESPACE)) {
+        // Workaround for Doctrine 2 proxies
+        if (0 === strpos($class, LC_NAMESPACE) && false === strpos($class, \Doctrine\Common\Persistence\Proxy::MARKER)) {
             include_once (static::$lcAutoloadDir . str_replace('\\', LC_DS, $class) . '.php');
         }
     }
@@ -142,23 +144,43 @@ abstract class Autoloader
         // Doctrine
         static::registerDoctrineAutoloader();
 
-        // Modules libraries
-        static::registerModulesLibrariesAutoloader();
-
         // PEAR2
         static::registerPEARAutolader();
     }
 
     /**
-     * Return path ot the autoloader current dir
+     * Register the autoload function for the Doctrine library
      *
-     * @return string
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getLCAutoloadDir()
+    protected static function registerDoctrineAutoloader()
     {
-        return static::$lcAutoloadDir;
+        require_once (LC_DIR_LIB . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
+        require_once (LC_DIR_LIB . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'Persistence' . LC_DS . 'Proxy.php');
+
+        $loader = new \Doctrine\Common\ClassLoader('Doctrine', rtrim(LC_DIR_LIB, LC_DS));
+        $loader->register();
+
+        $loader = new \Doctrine\Common\ClassLoader('Symfony', rtrim(LC_DIR_LIB, LC_DS));
+        $loader->register();
+
+        // Workaround for Doctrine 2 proxies
+        $loader = new \Doctrine\Common\ClassLoader('Proxy', rtrim(LC_DIR_CACHE_PROXY, LC_DS));
+        $loader->register();
+    }
+
+    /**
+     * Autoloader for PEAR2
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function registerPEARAutolader()
+    {
+        require_once (LC_DIR_LIB . 'PEAR2' . LC_DS . 'Autoload.php');
     }
 
     /**
@@ -176,54 +198,14 @@ abstract class Autoloader
     }
 
     /**
-     * Register the autoload function for the Doctrine library
+     * Return path ot the autoloader current dir
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function registerDoctrineAutoloader()
+    public static function getLCAutoloadDir()
     {
-        require_once (LC_DIR_LIB . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
-
-        $loader = new \Doctrine\Common\ClassLoader('Doctrine', rtrim(LC_DIR_LIB, LC_DS));
-        $loader->register();
-
-        $loader = new \Doctrine\Common\ClassLoader('Symfony', rtrim(LC_DIR_LIB, LC_DS));
-        $loader->register();
+        return static::$lcAutoloadDir;
     }
-
-    /**
-     * Autoloader for PEAR2
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function registerPEARAutolader()
-    {
-        require_once (LC_DIR_LIB . 'PEAR2' . LC_DS . 'Autoload.php');
-    }
-
-    /**
-     * Register the autoload function for the modules libraries
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.19
-     */
-    protected static function registerModulesLibrariesAutoloader()
-    {
-        $files = glob(LC_DIR_CLASSES . 'XLite' . LC_DS . 'Module' . LC_DS . '*' . LC_DS . '*' . LC_DS . 'lib' . LC_DS . '*');
-
-        if (is_array($files)) {
-            foreach ($files as $path) {
-                if (is_dir($path)) {
-                    $loader = new \Doctrine\Common\ClassLoader(basename($path), dirname($path));
-                    $loader->register();
-                }
-            }
-        }
-    }
-
 }

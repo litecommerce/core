@@ -373,7 +373,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function isSkipRedirectAfterLastStep($step)
     {
-        return self::LAST_STEP === $step && isset($_GET['doNotRedirectAfterCacheIsBuilt']);
+        return static::LAST_STEP === $step && isset($_GET['doNotRedirectAfterCacheIsBuilt']);
     }
 
     /**
@@ -510,7 +510,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandler1()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_CLEANUP);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_BEFORE_CLEANUP);
 
         // Delete cache folders
         static::showStepMessage('Cleaning up the cache...');
@@ -522,27 +522,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 
         // Main procedure: build decorator chains
         static::showStepMessage('Building classes tree...');
-        $tree = static::getClassesTree();
+        static::getClassesTree();
         static::showStepInfo();
 
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_DECORATE);
-
-        // Main procedure: build decorator chains
-        static::showStepMessage('Decorate classes...');
-        $tree->walkThrough(array('\Includes\Decorator\Utils\Operator', 'decorateClass'));
-        static::showStepInfo();
-
-        // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_WRITE);
-
-        // Write class files to FS
-        static::showStepMessage('Writing class files to the cache...');
-        $tree->walkThrough(array('\Includes\Decorator\Utils\Operator', 'writeClassFile'));
-        static::showStepInfo();
-
-        // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIRST);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_FIRST);
     }
 
     /**
@@ -558,7 +542,23 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandler2()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_SECOND);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_BEFORE_DECORATE);
+
+        // Main procedure: build decorator chains
+        static::showStepMessage('Decorate classes...');
+        static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'decorateClass'));
+        static::showStepInfo();
+
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_BEFORE_WRITE);
+
+        // Write class files to FS
+        static::showStepMessage('Writing class files to the cache...');
+        static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'writeClassFile'), true);
+        static::showStepInfo();
+
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_SECOND);
     }
 
     /**
@@ -574,7 +574,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandler3()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_THIRD);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_THIRD);
     }
 
     /**
@@ -590,7 +590,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandler4()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FOURTH);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_FOURTH);
     }
 
     /**
@@ -606,7 +606,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandler5()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIFTH);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(static::HOOK_STEP_FIFTH);
     }
 
     // }}}

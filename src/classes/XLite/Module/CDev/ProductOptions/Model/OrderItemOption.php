@@ -51,7 +51,7 @@ class OrderItemOption extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11", nullable=false)
+     * @Column         (type="integer", length=11, nullable=false)
      */
     protected $id;
 
@@ -84,7 +84,7 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length=255, nullable=false)
      */
     protected $name;
 
