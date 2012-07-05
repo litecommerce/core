@@ -109,10 +109,16 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
      */
     protected function getRedirectUrl()
     {
-        return \XLite\Core\Converter::buildFullURL(
-            'social_login',
-            'login',
-            array('auth_provider' => $this->getName())
+        return \Includes\Utils\URLManager::getShopURL(
+            \XLite\Core\Converter::buildURL(
+                'social_login',
+                'login',
+                array('auth_provider' => $this->getName())
+            ),
+            \XLite\Core\Request::getInstance()->isHTTPS(),
+            array(),
+            null,
+            false
         );
     }
 }
