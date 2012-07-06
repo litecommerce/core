@@ -35,6 +35,36 @@ namespace XLite\Module\CDev\SocialLogin\Core;
  */
 class GoogleAuthProvider extends AAuthProvider
 {
+    
+    /**
+     * Unique auth provider name
+     */
+    const PROVIDER_NAME = 'facebook';
+
+    /**
+     * Url to which user will be redirected
+     */
+    const AUTH_REQUEST_URL = 'https://accounts.google.com/o/oauth2/auth';
+
+    /**
+     * Data to gain access to
+     */
+    const AUTH_REQUEST_SCOPE = 'https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email';
+
+    /**
+     * Url to get access token
+     */
+    const TOKEN_REQUEST_URL = 'https://accounts.google.com/o/oauth2/token';
+
+    /**
+     * Url to access user profile information 
+     */
+    const PROFILE_REQUEST_URL = 'https://www.googleapis.com/oauth2/v1/userinfo';
+
+    /**
+     * Path of the icon to be displayed in site header 
+     */
+    const SMALL_ICON_PATH = 'modules/CDev/SocialLogin/icons/google_small.png';
 
     /**
      * Get unique auth provider name to distinguish it from others
@@ -45,7 +75,7 @@ class GoogleAuthProvider extends AAuthProvider
      */
     public function getName()
     {
-        return 'google';
+        return static::PROVIDER_NAME;
     }
 
     /**
@@ -57,10 +87,10 @@ class GoogleAuthProvider extends AAuthProvider
      */
     public function getAuthRequestUrl()
     {
-        return 'https://accounts.google.com/o/oauth2/auth'
+        return static::AUTH_REQUEST_URL
             . '?client_id=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_id
             . '&redirect_uri=' . urlencode($this->getRedirectUrl())
-            . '&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email'
+            . '&scope=' . static::AUTH_REQUEST_SCOPE
             . '&response_type=code';
     }
 
@@ -78,9 +108,7 @@ class GoogleAuthProvider extends AAuthProvider
         $code = \XLite\Core\Request::getInstance()->code;
 
         if (!empty($code)) {
-            $url = 'https://accounts.google.com/o/oauth2/token';
-
-            $request = new \XLite\Core\HTTP\Request($url);
+            $request = new \XLite\Core\HTTP\Request(static::TOKEN_REQUEST_URL);
             $request->body = array(
                 'code'          => $code,
                 'client_id'     => \XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_id,
@@ -94,8 +122,7 @@ class GoogleAuthProvider extends AAuthProvider
             if (200 == $response->code) {
                 $data = json_decode($response->body, true);
 
-                $url = 'https://www.googleapis.com/oauth2/v1/userinfo'
-                    . '?access_token=' . $data['access_token'];
+                $url = static::PROFILE_REQUEST_URL . '?access_token=' . $data['access_token'];
                 $request = new \XLite\Core\HTTP\Request($url);
 
                 $response = $request->sendRequest();
@@ -133,6 +160,6 @@ class GoogleAuthProvider extends AAuthProvider
      */
     public function getSmallIconPath()
     {
-        return 'modules/CDev/SocialLogin/icons/google_small.png';
+        return static::SMALL_ICON_PATH;
     }
 }

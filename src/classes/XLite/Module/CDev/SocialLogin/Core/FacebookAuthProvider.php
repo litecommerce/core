@@ -35,6 +35,32 @@ namespace XLite\Module\CDev\SocialLogin\Core;
  */
 class FacebookAuthProvider extends AAuthProvider
 {
+    
+    /**
+     * Unique auth provider name
+     */
+    const PROVIDER_NAME = 'facebook';
+
+    /**
+     * Url to which user will be redirected
+     */
+    const AUTH_REQUEST_URL = 'https://www.facebook.com/dialog/oauth';
+
+    /**
+     * Url to get access token
+     */
+    const TOKEN_REQUEST_URL = 'https://graph.facebook.com/oauth/access_token';
+
+    /**
+     * Url to access user profile information 
+     */
+    const PROFILE_REQUEST_URL = 'https://graph.facebook.com/me';
+
+    /**
+     * Path of the icon to be displayed in site header 
+     */
+    const SMALL_ICON_PATH = 'modules/CDev/SocialLogin/icons/facebook_small.png';
+
 
     /**
      * Get unique auth provider name to distinguish it from others
@@ -45,7 +71,7 @@ class FacebookAuthProvider extends AAuthProvider
      */
     public function getName()
     {
-        return 'facebook';
+        return static::PROVIDER_NAME;
     }
 
     /**
@@ -57,7 +83,7 @@ class FacebookAuthProvider extends AAuthProvider
      */
     public function getAuthRequestUrl()
     {
-        return 'https://www.facebook.com/dialog/oauth'
+        return static::AUTH_REQUEST_URL
             . '?client_id=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->fb_client_id
             . '&redirect_uri=' . urlencode($this->getRedirectUrl())
             . '&scope=email'
@@ -78,7 +104,7 @@ class FacebookAuthProvider extends AAuthProvider
         $code = \XLite\Core\Request::getInstance()->code;
 
         if (!empty($code)) {
-            $url = 'https://graph.facebook.com/oauth/access_token'
+            $url = static::TOKEN_REQUEST_URL
                 . '?client_id=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->fb_client_id
                 . '&redirect_uri=' . urlencode($this->getRedirectUrl())
                 . '&client_secret=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->fb_client_secret
@@ -90,7 +116,7 @@ class FacebookAuthProvider extends AAuthProvider
             if (200 == $response->code) {
                 parse_str($response->body, $vars);
 
-                $url = 'https://graph.facebook.com/me?access_token=' . urlencode($vars['access_token']);
+                $url = static::PROFILE_REQUEST_URL . '?access_token=' . urlencode($vars['access_token']);
 
                 $bouncer = new \XLite\Core\HTTP\Request($url);
                 $response = $bouncer->sendRequest();
@@ -126,6 +152,6 @@ class FacebookAuthProvider extends AAuthProvider
      */
     public function getSmallIconPath()
     {
-        return 'modules/CDev/SocialLogin/icons/facebook_small.png';
+        return static::SMALL_ICON_PATH;
     }
 }
