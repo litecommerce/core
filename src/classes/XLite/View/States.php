@@ -83,18 +83,6 @@ class States extends \XLite\View\Dialog
     }
 
     /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return 'States';
-    }
-
-    /**
      * Return templates directory name
      *
      * @return string
