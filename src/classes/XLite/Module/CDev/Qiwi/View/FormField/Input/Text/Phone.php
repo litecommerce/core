@@ -63,7 +63,7 @@ class Phone extends \XLite\View\FormField\Input\Text
         parent::defineWidgetParams();
 
         $this->widgetParams[static::PARAM_REQUIRED]->setValue(true);
-        $this->widgetParams[static::PARAM_COMMENT]->setValue('Please enter 10-digit mobile phone number without country code (with no spaces or hyphens)');
+        $this->widgetParams[static::PARAM_COMMENT]->setValue('The phone number must be a sequence of 10 digits, without a country prefix, the prefix "8" or any separators such as spaces or dashes.');
     }
 
     /**

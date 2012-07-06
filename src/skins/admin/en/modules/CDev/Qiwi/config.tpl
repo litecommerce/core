@@ -9,6 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+<p>{t(#To complete Qiwi payment gateway integration configuration#,_ARRAY_(#successURL#^getQiwiSuccessURL(),#cancelURL#^getQiwiCancelURL(),#callbackURL#^getQiwiCallbackURL())):h}</p>
 <table cellspacing="1" cellpadding="5" class="settings-table">
 
   <tr>

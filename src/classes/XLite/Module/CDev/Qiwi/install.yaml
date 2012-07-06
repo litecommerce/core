@@ -26,9 +26,10 @@ XLite\Model\Payment\Method:
 
 XLite\Model\LanguageLabel:
   directives: { addModel: 'XLite\Model\LanguageLabelTranslation' }
-  - { name: 'Login id', translations: [{ code: 'ru', label: 'ID в системе' }] }
-  - { name: 'Order id prefix', translations: [{ code: 'ru', label: 'Префикс транзакций' }] }
-  - { name: 'Order lifetime in hours', translations: [{ code: 'ru', label: 'Время жизни счёта (в часах)' }] }
-  - { name: 'Check whether customer''s mobile phone is registered', translations: [{ code: 'ru', label: 'Проверять, зарегистрирован ли пользователь' }] }
+  - { name: 'Login id', translations: [{ code: 'en', label: 'Login id' }, { code: 'ru', label: 'ID в системе' }] }
+  - { name: 'Order id prefix', translations: [{ code: 'en', label: 'Order id prefix' }, { code: 'ru', label: 'Префикс транзакций' }] }
+  - { name: 'Order lifetime in hours', translations: [{ code: 'en', label: 'Order lifetime in hours' }, { code: 'ru', label: 'Время жизни счёта (в часах)' }] }
+  - { name: 'Check whether customer''s mobile phone is registered', translations: [{ code: 'en', label: 'Check whether customer''s mobile phone is registered' }, { code: 'ru', label: 'Проверять, зарегистрирован ли пользователь' }] }
   - { name: 'Please enter 10-digit mobile phone number without country code (with no spaces or hyphens)', translations: [{ code: 'en', label: 'Please enter 10-digit mobile phone number without country code (with no spaces or hyphens)' }] }
-
+  - { name: 'To complete Qiwi payment gateway integration configuration', translations: [{ code: 'en', label: 'To complete Qiwi payment gateway integration configuration:<ol style="padding-left: 20px; list-style-type: decimal;"><li>Sign in to Qiwi payment gateway back end at <a href="https://ishop.qiwi.ru/">https://ishop.qiwi.ru/</a>.</li><li>On the Settings page (<a href="https://ishop.qiwi.ru/info.action">https://ishop.qiwi.ru/info.action</a>):<ul style="padding-left: 20px; list-style-type: disc;"><li>Use the "URL для отправки в случае успешной оплаты счёта" field to specify the URL to which your customer should be redirected if the payment transaction is successful. The respective URL for your store is "{{successURL}}".</li><li>Use the "URL для отправки в случае ошибки" field to specify the URL to which your customer should be redirected if the payment transaction fails. The respective URL for your store is "{{cancelURL}}".</li></ul></li><li>On the SOAP protocol configuration page (<a href="https://ishop.qiwi.ru/protocolSOAP.action">https://ishop.qiwi.ru/protocolSOAP.action</a>), specify the value of the URL field as "{{callbackURL}}".</li></ol>' }] }
+  - { name: 'The phone number must be a sequence of 10 digits, without a country prefix, the prefix "8" or any separators such as spaces or dashes.', translations: [{ code: 'en', label: 'The phone number must be a sequence of 10 digits, without a country prefix, the prefix "8" or any separators such as spaces or dashes.' }] }
