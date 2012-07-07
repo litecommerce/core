@@ -16,10 +16,11 @@ FileETag none
 <IfModule mod_rewrite.c>
   RewriteEngine on
 
+  RewriteRule (^|/)\. - [F]
+
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
 
-  RewriteRule (^|/)\. - [F]
   RewriteRule ^((([/_a-z0-9-]+)/)?([_a-z0-9-]+)/)?([_a-z0-9-]+)(\.(htm)(l)?)?$ cart.php?url=$5&last=$4&rest=$3&ext=$7 [NC] [L]
 
   #RewriteBase ____WEB_DIR____

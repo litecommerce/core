@@ -59,18 +59,18 @@ class Money extends \Doctrine\DBAL\Types\DecimalType
     }
 
     /**
-     * Convert to PHP value 
-     * 
+     * Convert to PHP value
+     *
      * @param string                                    $value    Value
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform Platform
-     *  
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.19
      */
     public function convertToPHPValue($value, \Doctrine\DBAL\Platforms\AbstractPlatform $platform)
     {
-        return (null === $value) ? null : doubleval($value);
+        return (null === $value) ? null : sprintf('%.4f', $value);
     }
 
 }

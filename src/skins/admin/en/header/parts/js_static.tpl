@@ -10,10 +10,11 @@
  * @since     1.0.0
  * @ListChild (list="head", weight="100")
  *}
-
+{* TODO : Remove the whole static code into the comment model*}
 <script type="text/javascript">
 var xliteConfig = {
   script:   '{getScript():h}',
-  language: '{currentLanguage.getCode()}'
+  language: '{currentLanguage.getCode()}',
+  success_lng: '{t(#Success#)}'
 };
 </script>
