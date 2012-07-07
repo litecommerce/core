@@ -104,22 +104,11 @@ class FacebookAuthProvider extends AAuthProvider
         $code = \XLite\Core\Request::getInstance()->code;
 
         if (!empty($code)) {
-            $url = static::TOKEN_REQUEST_URL
-                . '?client_id=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->fb_client_id
-                . '&redirect_uri=' . urlencode($this->getRedirectUrl())
-                . '&client_secret=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->fb_client_secret
-                . '&code=' . urlencode($code);
-
-            $bouncer = new \XLite\Core\HTTP\Request($url);
-            $response = $bouncer->sendRequest();
-
-            if (200 == $response->code) {
-                parse_str($response->body, $vars);
-
-                $url = static::PROFILE_REQUEST_URL . '?access_token=' . urlencode($vars['access_token']);
-
-                $bouncer = new \XLite\Core\HTTP\Request($url);
-                $response = $bouncer->sendRequest();
+            $accessToken = $this->getAccessToken($code);
+            
+            if ($accessToken) {
+                $request = new \XLite\Core\HTTP\Request($this->getProfileRequestUrl($accessToken));
+                $response = $request->sendRequest();
 
                 if (200 == $response->code) {
                     $profile = json_decode($response->body, true);
@@ -146,12 +135,68 @@ class FacebookAuthProvider extends AAuthProvider
     /**
      * Get path to small icon to display in header
      * 
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.24
      */
     public function getSmallIconPath()
     {
         return static::SMALL_ICON_PATH;
+    }
+
+    /**
+     * Get url to request access token
+     * 
+     * @param string $code Authorization code
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getTokenRequestUrl($code)
+    {
+        return static::TOKEN_REQUEST_URL
+            . '?client_id=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->fb_client_id
+            . '&redirect_uri=' . urlencode($this->getRedirectUrl())
+            . '&client_secret=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->fb_client_secret
+            . '&code=' . urlencode($code);
+    }
+
+    /**
+     * Get url used to access user profile info
+     * 
+     * @param string $accessToken Access token
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getProfileRequestUrl($accessToken)
+    {
+        return static::PROFILE_REQUEST_URL . '?access_token=' . urlencode($accessToken);
+    }
+
+    /**
+     * Returns access token based on authorization code
+     * 
+     * @param string $code Authorization code
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getAccessToken($code)
+    {
+        $request = new \XLite\Core\HTTP\Request($this->getTokenRequestUrl($code));
+        $response = $request->sendRequest();
+
+        $accessToken = null;
+
+        if (200 == $response->code) {
+            parse_str($response->body, $data);
+            $accessToken = $data['access_token'];
+        }
+
+        return $accessToken;
     }
 }

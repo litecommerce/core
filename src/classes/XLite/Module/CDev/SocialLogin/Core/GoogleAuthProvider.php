@@ -39,7 +39,7 @@ class GoogleAuthProvider extends AAuthProvider
     /**
      * Unique auth provider name
      */
-    const PROVIDER_NAME = 'facebook';
+    const PROVIDER_NAME = 'google';
 
     /**
      * Url to which user will be redirected
@@ -108,23 +108,10 @@ class GoogleAuthProvider extends AAuthProvider
         $code = \XLite\Core\Request::getInstance()->code;
 
         if (!empty($code)) {
-            $request = new \XLite\Core\HTTP\Request(static::TOKEN_REQUEST_URL);
-            $request->body = array(
-                'code'          => $code,
-                'client_id'     => \XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_id,
-                'client_secret' => \XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_secret,
-                'redirect_uri'  => $this->getRedirectUrl(),
-                'grant_type'    => 'authorization_code',
-            );
+            $accessToken = $this->getAccessToken($code);
 
-            $response = $request->sendRequest();
-
-            if (200 == $response->code) {
-                $data = json_decode($response->body, true);
-
-                $url = static::PROFILE_REQUEST_URL . '?access_token=' . $data['access_token'];
-                $request = new \XLite\Core\HTTP\Request($url);
-
+            if ($accessToken) {
+                $request = new \XLite\Core\HTTP\Request($this->getProfileRequestUrl($accessToken));
                 $response = $request->sendRequest();
 
                 if (200 == $response->code) {
@@ -154,12 +141,75 @@ class GoogleAuthProvider extends AAuthProvider
     /**
      * Get path to small icon to display in header
      * 
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.24
      */
     public function getSmallIconPath()
     {
         return static::SMALL_ICON_PATH;
+    }
+
+    /**
+     * Get url to request access token
+     * 
+     * @param string $code Authorization code
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getTokenRequestUrl($code)
+    {
+        return static::TOKEN_REQUEST_URL
+            . '?client_id=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->fb_client_id
+            . '&redirect_uri=' . urlencode($this->getRedirectUrl())
+            . '&client_secret=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->fb_client_secret
+            . '&code=' . urlencode($code);
+    }
+
+    /**
+     * Get url used to access user profile info
+     * 
+     * @param string $accessToken Access token
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getProfileRequestUrl($accessToken)
+    {
+        return static::PROFILE_REQUEST_URL . '?access_token=' . urlencode($accessToken);
+    }
+
+    /**
+     * Returns access token based on authorization code
+     * 
+     * @param string $code Authorization code
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getAccessToken($code)
+    {
+        $request = new \XLite\Core\HTTP\Request(static::TOKEN_REQUEST_URL);
+        $request->body = array(
+            'code'          => $code,
+            'client_id'     => \XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_id,
+            'client_secret' => \XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_secret,
+            'redirect_uri'  => $this->getRedirectUrl(),
+            'grant_type'    => 'authorization_code',
+        );
+
+        $response = $request->sendRequest();
+
+        $accessToken = null;
+        if (200 == $response->code) {
+            $data = json_decode($response->body, true);
+            $accessToken = $data['access_token'];
+        }
+
+        return $accessToken;
     }
 }

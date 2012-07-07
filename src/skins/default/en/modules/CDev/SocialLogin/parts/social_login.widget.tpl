@@ -14,8 +14,6 @@
 
 <div class="social-login-container">
   <ul class="social-login">
-    <li class="social-login-caption" IF="getCaption()">{getCaption():h}</li>
-
     <list name="social.login.buttons" />
   </ul>
 </div>

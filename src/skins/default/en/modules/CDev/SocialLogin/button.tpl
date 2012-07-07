@@ -13,6 +13,6 @@
 <li>
   <a href="{getAuthRequestUrl()}">
     <img src="{getIconWebPath(getIconPath())}" alt="{getName()}" />
-    <div class="provider-name">{getName()}</div>
+    <span class="provider-name">{getName()}</span>
   </a>
 </li>

@@ -12,6 +12,6 @@
 
 <li class="social-login-small-icons">
   {foreach:getIcons(),path}
-    <a href="{buildURL(#login#)}"><img src="{path}"></a>
+    <a href="{buildURL(#login#)}" alt=""><img src="{path}"></a>
   {end:}
 </li>
