@@ -172,7 +172,7 @@ abstract class I18n extends \XLite\Model\AEntity
 
         // Get first translation
         if (!isset($result)) {
-            $result = $this->getTranslations()->first();
+            $result = $this->getTranslations()->first() ?: null;
         }
 
         // Get empty dump translation with specified code
