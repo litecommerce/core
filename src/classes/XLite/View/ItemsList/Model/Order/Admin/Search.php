@@ -381,6 +381,20 @@ class Search extends \XLite\View\ItemsList\Model\Order\Admin\AAdmin
         return 'Search result';
     }
 
+    /**
+     * Get items sum quantity 
+     *
+     * @param \XLite\Model\Order $order Order
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getItemsQuantity(\XLite\Model\Order $order)
+    {
+        return $order->countQuantity();
+    }
+
     // }}}
 
 }

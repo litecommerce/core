@@ -95,7 +95,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
     {
         return \Includes\Utils\ArrayManager::filterByKeys(
             \XLite\Core\Request::getInstance()->getData(),
-            array('status', 'notes')
+            array('status', 'adminNotes')
         );
     }
 

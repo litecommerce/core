@@ -1,17 +1,16 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Order notes
+ * Invoice totals : subtotal
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.24
- *
- * @ListChild (list="order.note", weight="100")
+ * @since     1.0.8
+ * @ListChild (list="order.base.totals", weight="100")
  *}
-
-<div class="admin-note">
-  <widget class="\XLite\View\FormField\Textarea\Simple" label="Order note" fieldName="adminNotes" value="{order.getAdminNotes()}" />
-</div>
+<tr>
+  <td class="title">{t(#Subtotal#)}:</td>
+  <td class="value">{formatPrice(order.getSubtotal(),order.getCurrency())}</td>
+</tr>

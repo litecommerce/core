@@ -189,6 +189,17 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     protected $notes = '';
 
     /**
+     * Admin notes
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="text")
+     */
+    protected $adminNotes = '';
+
+    /**
      * Order details
      *
      * @var   \Doctrine\Common\Collections\Collection
