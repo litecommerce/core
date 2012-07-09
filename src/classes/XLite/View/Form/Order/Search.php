@@ -36,11 +36,6 @@ namespace XLite\View\Form\Order;
 class Search extends \XLite\View\Form\AForm
 {
     /**
-     * Widget parameter names
-     */
-    const PARAM_MODE = 'mode';
-
-    /**
      * getDefaultTarget
      *
      * @return string
@@ -64,15 +59,4 @@ class Search extends \XLite\View\Form\AForm
         return 'search';
     }
 
-    /**
-     * getFormDefaultParams
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultParams()
-    {
-        return parent::getDefaultParams() + array(self::PARAM_MODE => 'search');
-    }
 }

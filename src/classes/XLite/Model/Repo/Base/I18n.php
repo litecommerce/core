@@ -68,7 +68,7 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
         }
 
         if (!isset($code)) {
-            $code = \XLite\Core\Session::getInstance()->getLanguage()
+            $code = !\XLite::isCacheBuilding() && \XLite\Core\Session::getInstance()->getLanguage()
                 ? \XLite\Core\Session::getInstance()->getLanguage()->getCode()
                 : 'en';
         }

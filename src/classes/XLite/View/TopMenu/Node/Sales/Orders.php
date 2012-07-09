@@ -50,7 +50,6 @@ class Orders extends \XLite\View\TopMenu\Node\Sales\ASales
 
         $this->widgetParams[self::PARAM_TITLE]->setValue(static::t('Search for orders'));
         $this->widgetParams[self::PARAM_TARGET]->setValue('order_list');
-        $this->widgetParams[self::PARAM_EXTRA]->setValue(array('mode' => 'search'));
     }
 }
 

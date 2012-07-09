@@ -296,6 +296,18 @@ class Transaction extends \XLite\Model\AEntity
     }
 
     /**
+     * Check - order is in progress state or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isInProgress()
+    {
+        return self::STATUS_INPROGRESS == $this->getStatus();
+    }
+
+    /**
      * Constructor
      *
      * @param array $data Entity properties OPTIONAL

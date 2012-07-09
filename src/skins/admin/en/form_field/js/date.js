@@ -10,8 +10,13 @@
  * @since     1.0.15
  */
 
-jQuery().ready(
-  function () {
-    jQuery('input.datepicker').datepicker();
+CommonElement.prototype.handlers.push(
+  {
+    canApply: function () {
+      return this.$element.is('input.datepicker');
+    },
+    handler: function() {
+      this.$element.datepicker();
+    }
   }
 );

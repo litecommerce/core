@@ -87,6 +87,12 @@ CommonForm.elementControllers.push(
       {
       }
 
+      // Check - process blur event or not
+      this.isProcessBlur = function()
+      {
+        return true;
+      }
+
       // Field input(s)
 
       inputs.bind(
@@ -99,18 +105,22 @@ CommonForm.elementControllers.push(
       // Input blur effect (initialize save fields group)
       inputs.blur(
         function () {
-          obj.sanitize();
+          var result = true;
 
-          var result = !jQuery(this.form).validationEngine('validateField', '#' + this.id);
+          if (obj.isProcessBlur()) {
+            obj.sanitize();
 
-          if (result && row) {
-            row.inlineGroupBlurTimeout = setTimeout(
-              function () {
-                row.inlineGroupBlurTimeout = false;
-                row.saveFields();
-              },
-              100
-            );
+            result = !jQuery(this.form).validationEngine('validateField', '#' + this.id);
+
+            if (result && row) {
+              row.inlineGroupBlurTimeout = setTimeout(
+                function () {
+                  row.inlineGroupBlurTimeout = false;
+                  row.saveFields();
+                },
+                100
+              );
+            }
           }
 
           return result;

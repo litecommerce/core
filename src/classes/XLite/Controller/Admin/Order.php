@@ -66,8 +66,21 @@ class Order extends \XLite\Controller\Admin\AAdmin
     public function checkAccess()
     {
         return parent::checkAccess()
-            && \XLite\Core\Request::getInstance()->order_id
-            && \XLite\Core\Database::getRepo('XLite\Model\Order')->find(\XLite\Core\Request::getInstance()->order_id);
+            && $this->getOrder();
+    }
+
+    /**
+     * Get order 
+     * 
+     * @return \XLite\Model\Order
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getOrder()
+    {
+        $id = intval(\XLite\Core\Request::getInstance()->order_id);
+
+        return $id ? \XLite\Core\Database::getRepo('XLite\Model\Order')->find($id) : null;
     }
 
     /**
@@ -133,7 +146,9 @@ class Order extends \XLite\Controller\Admin\AAdmin
     public function getPages()
     {
         $list = parent::getPages();
+
         $list['default'] = 'General info';
+        $list['invoice'] = 'Invoice';
 
         return $list;
     }
@@ -148,7 +163,9 @@ class Order extends \XLite\Controller\Admin\AAdmin
     protected function getPageTemplates()
     {
         $list = parent::getPageTemplates();
-        $list['default'] = 'order/info.tpl';
+
+        $list['default'] = 'order/page/info.tab.tpl';
+        $list['invoice'] = 'order/page/invoice.tpl';
 
         return $list;
     }

@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Orders search page
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,13 +9,8 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<widget template="common/dialog.tpl" name="searchOrdersForm" body="order/search_form.tpl" />
+<widget IF="isSearchVisible()" template="common/dialog.tpl" name="searchOrdersForm" body="order/search_form.tpl" />
 
-{* Open <form ...> tag *}
-<widget class="\XLite\View\Form\Order\Modify\Batch" name="orders_form" />
-
-  {* List of orders *}
-  <widget class="\XLite\View\ItemsList\Order\Admin\Search" />
-
-{* Close </form> tag *}
+<widget class="\XLite\View\Form\ItemsList\Order\Main" name="orders_form" />
+  <widget class="\XLite\View\ItemsList\Model\Order\Admin\Search" />
 <widget name="orders_form" end />

@@ -1204,6 +1204,27 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Check - order has in-progress payments or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function hasInprogressPayments()
+    {
+        $result = false;
+
+        foreach ($this->getPaymentTransactions() as $t) {
+            if ($t->isInProgress()) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Assign last used payment method
      *
      * @return \XLite\Model\Payment\Transaction|void
@@ -1980,6 +2001,22 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     protected function increaseInventory()
     {
         $this->changeItemsInventory(1);
+    }
+
+    // }}}
+
+    // {{{ Order actions
+
+    /**
+     * Get allowed actions 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getAllowedActions()
+    {
+        return array();
     }
 
     // }}}

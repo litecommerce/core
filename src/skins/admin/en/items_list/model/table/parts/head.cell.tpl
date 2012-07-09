@@ -10,5 +10,14 @@
  * @since     1.0.15
  *}
 
-{column.name}
+{if:column.sort}
+  <a href="{buildURL(getTarget(),##,_ARRAY_(#sortBy#^column.sort,#sortOrder#^getSortDirectionNext(column)))}" data-sort="{column.sort}" data-direction="{getSortOrder()}" class="{getSortLinkClass(column)}">
+    {column.name}
+    {if:isColumnSorted(column)}
+      <span class="dir">{if:#asc#=getSortOrder()}&uarr;{else:}&darr;{end:}</span>
+    {end:}
+  </a>
+{else:}
+  {column.name}
+{end:}
 <list type="inherited" name="{getCellListNamePart(#head#,column)}" column="{column}" />

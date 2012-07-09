@@ -242,6 +242,24 @@ abstract class AFormField extends \XLite\View\AView
         return $this->getParam(self::PARAM_WRAPPER_CLASS);
     }
 
+    /**
+     * Set widget params
+     *
+     * @param array $params Handler params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        if (isset($params['value'])) {
+            $this->setValue($params['value']);
+        }
+    }
+
 
     /**
      * Return widget default template

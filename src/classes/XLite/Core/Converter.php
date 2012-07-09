@@ -587,6 +587,30 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
+     * Format day time
+     *
+     * @param integer $base                  UNIX time stamp OPTIONAL
+     * @param string  $format                Format string OPTIONAL
+     * @param boolean $convertToUserTimeZone True if time value should be converted according to the time zone OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function formatDayTime($base = null, $format = null, $convertToUserTimeZone = true)
+    {
+        if (!$format) {
+            $format = \XLite\Core\Config::getInstance()->General->time_format;
+        }
+
+        if ($convertToUserTimeZone) {
+            $base = \XLite\Core\Converter::convertTimeToUser($base);
+        }
+
+        return static::getStrftime($format, $base);
+    }
+
+    /**
      * Get strftime() with specified format and timestamp value
      *
      * @param string  $format Format string
