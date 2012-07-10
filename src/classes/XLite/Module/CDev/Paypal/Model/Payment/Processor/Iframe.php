@@ -92,6 +92,20 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
         return self::RETURN_TYPE_HTML_REDIRECT_WITH_IFRAME_DESTROYING;
     }
 
+    /**
+     * Get initial transaction type (used when customer places order)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getInitialTransactionType()
+    {
+        return 'A' == \XLite\Core\Config::getInstance()->CDev->Paypal->transaction_type 
+            ? \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_AUTH
+            : \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_SALE;
+    }
+
 
     /**
      * Get post URL 
@@ -133,7 +147,9 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
      */
     protected function isTestMode()
     {
-        return \XLite\Core\Config::getInstance()->CDev->Paypal->test;
+        \XLite\Module\CDev\Paypal\Main::addLog('isTestMode()', \XLite\Core\Config::getInstance()->CDev->Paypal->test);
+
+        return true;\XLite\Core\Config::getInstance()->CDev->Paypal->test;
     }
 
     /**
@@ -262,17 +278,23 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doCapture()
+    protected function doCapture(\XLite\Model\Payment\BackendTransaction $transaction)
     {
         $result = false;
 
-        $responseData = $this->doRequest(self::REQ_TYPE_CAPTURE);
+        $responseData = $this->doRequest(self::REQ_TYPE_CAPTURE, $transaction);
 
         if (!empty($responseData)) {
 
+            $status = \XLite\Model\Payment\Transaction::STATUS_FAILED;
+
             if ('0' == $responseData['RESULT']) {
                 $result = true;
+                $status = \XLite\Model\Payment\Transaction::STATUS_SUCCESS;
             }
+
+            $transaction->setStatus($status);
+            $transaction->update();
         }
 
         return $result;
@@ -286,17 +308,23 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doVoid()
+    protected function doVoid(\XLite\Model\Payment\BackendTransaction $transaction)
     {
         $result = false;
 
-        $responseData = $this->doRequest(self::REQ_TYPE_VOID);
+        $responseData = $this->doRequest(self::REQ_TYPE_VOID, $transaction);
 
         if (!empty($responseData)) {
 
+            $status = \XLite\Model\Payment\Transaction::STATUS_FAILED;
+
             if ('0' == $responseData['RESULT']) {
                 $result = true;
+                $status = \XLite\Model\Payment\Transaction::STATUS_SUCCESS;
             }
+
+            $transaction->setStatus($status);
+            $transaction->update();
         }
 
         return $result;
@@ -310,17 +338,23 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doCredit()
+    protected function doRefund(\XLite\Model\Payment\BackendTransaction $transaction)
     {
         $result = false;
 
-        $responseData = $this->doRequest(self::REQ_TYPE_CREDIT);
+        $responseData = $this->doRequest(self::REQ_TYPE_CREDIT, $transaction);
 
         if (!empty($responseData)) {
 
+            $status = \XLite\Model\Payment\Transaction::STATUS_FAILED;
+
             if ('0' == $responseData['RESULT']) {
                 $result = true;
+                $status = \XLite\Model\Payment\Transaction::STATUS_SUCCESS;
             }
+
+            $transaction->setStatus($status);
+            $transaction->update();
         }
 
         return $result;
@@ -337,11 +371,11 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
      * @see    ____func_see____
      * @since  1.0.24
      */
-    protected function doRequest($requestType)
+    protected function doRequest($requestType, $transaction = null)
     {
         $responseData = array();
 
-        $params = $this->getRequestParams($requestType);
+        $params = $this->getRequestParams($requestType, $transaction);
 
         $request = new \XLite\Core\HTTP\Request($this->getPostURL());
         $request->body = $params;
@@ -349,7 +383,12 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
         $response = $request->sendRequest();
 
         if (200 == $response->code && !empty($response->body)) {
+
             $responseData = $this->getParsedResponse($response->body);
+
+            if (!empty($transaction) && !empty($responseData)) {
+                $this->saveFilteredData($responseData, $transaction);
+            }
         }
 
         \XLite\Module\CDev\Paypal\Main::addLog(
@@ -403,11 +442,11 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getRequestParams($requestType)
+    protected function getRequestParams($requestType, $transaction = null)
     {
         $methodName = 'get' . $requestType . 'RequestParams';
 
-        $postData = $this->$methodName() + $this->getCommonParams();
+        $postData = $this->$methodName($transaction) + $this->getCommonRequestParams();
 
         $data = array();
 
@@ -565,16 +604,62 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getCaptureRequestParams()
+    protected function getCaptureRequestParams(\XLite\Model\Payment\BackendTransaction $transaction)
     {
         $params = array(
             'TRXTYPE' => 'D',
-            'ORIGID'  => $this->getTransaction()->getData('PNREF'),
-            'AMT'     => $this->getTransaction()->getValue(),
+            'ORIGID'  => $this->getTransactionReferenceId($transaction),
+            'AMT'     => $transaction->getPaymentTransaction()->getOrder()->getCurrency()->roundValue($transaction->getValue()),
             'CAPTURECOMPLETE' => 'Y', // For Paypal Payments Advanced only
         );
 
         return $params;
+    }
+
+    protected function getReferenceIdField()
+    {
+        return 'PNREF';
+    }
+
+    /**
+     * Get reference ID of parent transaction
+     * (e.g. get PNREF of AUTH transaction for request a CAPTURE transaction)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTransactionReferenceId(\XLite\Model\Payment\BackendTransaction $backendTransaction)
+    {
+        $referenceId = null;
+
+        $paymentTransaction = $backendTransaction->getPaymentTransaction();
+
+        switch ($backendTransaction->getType()) {
+
+            case \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE:
+            case \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID:
+                if (\XLite\Model\Payment\BackendTransaction::TRAN_TYPE_AUTH == $paymentTransaction->getType()) {
+                    $referenceId = $paymentTransaction->getDataCell($this->getReferenceIdField())->getValue();
+                }
+                break;
+
+            case \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_REFUND:
+                if (\XLite\Model\Payment\BackendTransaction::TRAN_TYPE_SALE == $paymentTransaction->getType()) {
+                    $referenceId = $paymentTransaction->getDataCell($this->getReferenceIdField())->getValue();
+
+                } elseif ($paymentTransaction->isCaptured()) {
+                    foreach ($paymentTransaction->getBackendTransactions() as $bt) {
+                        if (\XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE == $bt->getType() && \XLite\Model\Payment\Transaction::STATUS_SUCCESS == $bt->getStatus()) {
+                            $referenceId = $bt->getDataCell($this->getReferenceIdField())->getValue();
+                            break;
+                        }
+                    }
+                }
+
+        }
+
+        return $referenceId;
     }
 
     /**
@@ -584,11 +669,11 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getVoidRequestParams()
+    protected function getVoidRequestParams(\XLite\Model\Payment\BackendTransaction $transaction)
     {
         $params = array(
             'TRXTYPE' => 'V',
-            'ORIGID'  => $this->getTransaction()->getData('PNREF'),
+            'ORIGID'  => $this->getTransactionReferenceId($transaction),
         );
 
         return $params;
@@ -601,12 +686,12 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getCreditRequestParams()
+    protected function getCreditRequestParams(\XLite\Model\Payment\BackendTransaction $transaction)
     {
         $params = array(
             'TRXTYPE' => 'C',
-            'ORIGID'  => $this->getTransaction()->getData('PNREF'),
-            'AMT'     => $this->getTransaction()->getValue(),
+            'ORIGID'  => $this->getTransactionReferenceId($transaction),
+            'AMT'     => $transaction->getPaymentTransaction()->getOrder()->getCurrency()->roundValue($transaction->getValue()),
         );
 
         return $params;

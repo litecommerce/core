@@ -37,7 +37,7 @@ namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
 class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\Iframe
 {
     /**
-     * Get allowed transactions list
+     * Get allowed backend transactions
      *
      * @return string Status code
      * @see    ____func_see____
@@ -46,12 +46,9 @@ class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\Ifra
     public function getAllowedTransactions()
     {
         return array(
-            TRAN_TYPE_AUTH,
-            TRAN_TYPE_SALE,
-            TRAN_TYPE_CAPTURE,
-            TRAN_TYPE_VOID,
-            TRAN_TYPE_REFUND,
-            TRAN_TYPE_GET_INFO,
+            \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE,
+            \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID,
+            \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_REFUND,
         );
     }
 
@@ -69,6 +66,13 @@ class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\Ifra
         return 'modules/CDev/Paypal/method.tpl';
     }
 
+    /**
+     * Get the list of merchant countries where this payment processor can work
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function getAllowedMerchantCountries()
     {
         return array('US', 'CA');
@@ -160,6 +164,18 @@ class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\Ifra
             );
 
             $this->transaction->setStatus($status);
+
+            $this->updateInitialBackendTransaction($this->transaction, $status);
+        }
+    }
+
+    public function updateInitialBackendTransaction(\XLite\Model\Payment\Transaction $transaction, $status)
+    {
+        $backendTransaction = $transaction->getInitialBackendTransaction();
+
+        if (isset($backendTransaction)) {
+            $backendTransaction->setStatus($status);
+            $this->saveDataFromRequest($backendTransaction);            
         }
     }
 

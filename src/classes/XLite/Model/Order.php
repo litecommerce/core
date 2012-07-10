@@ -1263,6 +1263,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             $transaction->setMethodLocalName($method->getName());
             $transaction->setStatus($transaction::STATUS_INITIALIZED);
             $transaction->setValue($value);
+            $transaction->setType($method->getProcessor()->getInitialTransactionType());
 
             \XLite\Core\Database::getEM()->persist($transaction);
         }

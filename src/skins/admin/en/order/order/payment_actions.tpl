@@ -16,7 +16,12 @@
     <ul class="payment-actions">
       <li FOREACH="getTransactions(),index,transaction">
         <div class="method-name">{transaction.getMethodLocalName()}</div>
-        <div class="unit" FOREACH="getTransactionUnits(),id,unit"><widget class="\XLite\View\Order\Details\Admin\PaymentActionsUnit" transaction="{transaction}" unit="{unit}" /></div>
+        <ul>
+          <li FOREACH="getBackendTransactions(transaction),bid,btransaction">
+            <div>{formatTime(btransaction.getDate())}: {btransaction.getType()} - {btransaction.getStatus()}</div>
+          </li>
+        </ul>
+        <div class="unit" FOREACH="getTransactionUnits(transaction),id,unit"><widget class="\XLite\View\Order\Details\Admin\PaymentActionsUnit" transaction="{transaction}" unit="{unit}" /></div>
       </li>
     </ul>
 

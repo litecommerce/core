@@ -45,25 +45,6 @@ abstract class Processor extends \XLite\Base
     const PENDING      = 'P';
     const FAILED       = 'F';
 
-    
-    /**
-     * Transaction types
-     */
-    const TRAN_TYPE_AUTH          = 'auth';
-    const TRAN_TYPE_SALE          = 'sale';
-    const TRAN_TYPE_CAPTURE       = 'capture';
-    const TRAN_TYPE_CAPTURE_PART  = 'capturePart';
-    const TRAN_TYPE_CAPTURE_MULTI = 'captureMulti';
-    const TRAN_TYPE_VOID          = 'void';
-    const TRAN_TYPE_VOID_PART     = 'voidPart';
-    const TRAN_TYPE_VOID_MULTI    = 'voidMulti';
-    const TRAN_TYPE_REFUND        = 'refund';
-    const TRAN_TYPE_REFUND_PART   = 'refundPart';
-    const TRAN_TYPE_REFUND_MULTI  = 'refundMulti';
-    const TRAN_TYPE_GET_INFO      = 'getInfo';
-    const TRAN_TYPE_ACCEPT        = 'accept';
-    const TRAN_TYPE_DECLINE       = 'decline';
-    const TRAN_TYPE_TEST          = 'test';
 
     /**
      * Transaction (cache)
@@ -102,7 +83,40 @@ abstract class Processor extends \XLite\Base
      */
     public function getAllowedTransactions()
     {
-        return array(TRAN_TYPE_SALE);
+        return array();
+    }
+
+    public function isTransactionAllowed(\XLite\Model\Payment\Transaction $transaction, string $transactionType)
+    {
+        $result = false;
+
+        if (in_array($transactionType, $this->getAllowedTransactions())) {
+
+            $methodName = 'is' . ucfirst($transactionType) . 'TransactionAllowed';
+
+            if (method_exists($transaction, $methodName)) {
+                $result = $transaction->$methodName();
+            }
+            
+            if (method_exists($this, $methodName)) {
+                $result = $this->{'is' . ucfirst($transactionType) . 'TransactionAllowed'}($transaction);
+            }
+        }
+
+        return $result;
+    }
+
+    public function doTransaction(\XLite\Model\Payment\Transaction $transaction, string $transactionType)
+    {
+        if ($this->isTransactionAllowed($transaction, $transactionType)) {
+
+            $methodName = 'do' . ucfirst($transactionType);
+
+            if (method_exists($this, $methodName)) {
+                $backendTransaction = $transaction->createBackendTransaction($transactionType);
+                $this->$methodName($backendTransaction);
+            }
+        }
     }
 
     /**
@@ -250,6 +264,18 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Get initial transaction type (used when customer places order)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getInitialTransactionType()
+    {
+        return \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_SALE;
+    }
+
+    /**
      * Get current transaction order
      *
      * @return \XLite\Model\Order
@@ -294,7 +320,7 @@ abstract class Processor extends \XLite\Base
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function saveInputData()
+    protected function saveInputData($backendTransaction = null)
     {
         $labels = $this->getInputDataLabels();
         $accessLevels = $this->getInputDataAccessLevels();
@@ -304,7 +330,8 @@ abstract class Processor extends \XLite\Base
                 $this->setDetail(
                     $name,
                     $value,
-                    isset($labels[$name]) ? $labels[$name] : null
+                    isset($labels[$name]) ? $labels[$name] : null,
+                    isset($backendTransaction) ? $backendTransaction : null
                 );
             }
         }
@@ -321,9 +348,11 @@ abstract class Processor extends \XLite\Base
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function setDetail($name, $value, $label = null)
+    protected function setDetail($name, $value, $label = null, $backendTransaction = null)
     {
-        $this->transaction->setDataCell($name, $value, $label);
+        $transaction = isset($backendTransaction) ? $backendTransaction : $this->transaction;
+
+        $transaction->setDataCell($name, $value, $label);
     }
 
     /**

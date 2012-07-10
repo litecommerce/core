@@ -129,6 +129,18 @@ class PaymentActions extends \XLite\View\AView
     }
 
     /**
+     * Get backend transactions 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getBackendTransactions($transaction)
+    {
+        return $transaction->getBackendTransactions();
+    }
+
+    /**
      * Get transaction human-readable status 
      * 
      * @param \XLite\Model\Payment\Transaction $transaction Transaction
@@ -162,6 +174,21 @@ class PaymentActions extends \XLite\View\AView
         }
 
         return $list;
+    }
+
+    protected function getTransactionUnits(\XLite\Model\Payment\Transaction $transaction)
+    {
+        $processor = $transaction->getPaymentMethod()->getProcessor();
+
+        $allowedTransactions = $processor->getAllowedTransactions();
+
+        foreach ($allowedTransactions as $k => $v) {
+            if (!$processor->isTransactionAllowed($transaction, $v)) {
+                unset($allowedTransactions[$k]);
+            }
+        }
+
+        return $allowedTransactions;
     }
 
     // }}}

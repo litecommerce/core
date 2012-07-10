@@ -96,7 +96,7 @@ class PaymentActionsUnit extends \XLite\View\AView
      */
     protected function isTransactionUnitAllowed($transaction, $unit)
     {
-        return $transaction->isOperationAllowed($unit);
+        return $transaction->getPaymentMethod()->getProcessor()->isTransactionAllowed($transaction, $unit);
     }
 
     /**
@@ -108,7 +108,7 @@ class PaymentActionsUnit extends \XLite\View\AView
      */
     protected function getUnitName($unit)
     {
-        return $transaction->isOperationAllowed($unit);
+        return $this->getParam(self::PARAM_UNIT);
     }
 }
 

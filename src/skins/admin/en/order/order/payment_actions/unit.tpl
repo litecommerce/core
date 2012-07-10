@@ -10,5 +10,5 @@
  * @since     1.0.0
  *}
 
-<widget class="\XLite\View\Button\Regular" label="{getUnitName()}" />
+<widget class="\XLite\View\Button\Regular" label="{getUnitName()}" jsCode="submitFormDefault(this.form, '{getUnitName()}');" />
 
