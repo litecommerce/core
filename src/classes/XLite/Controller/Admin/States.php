@@ -137,7 +137,7 @@ class States extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\Database::getEM()->persist($state);
                 \XLite\Core\Database::getEM()->flush();
 
-                \XLite\Core\Database::getRepo('XLite\Model\State')->cleanCache();
+                \XLite\Core\Database::getRepo('XLite\Model\Country')->cleanCache();
             }
         }
     }
@@ -167,7 +167,7 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         \XLite\Core\Database::getEM()->flush();
 
-        \XLite\Core\Database::getRepo('XLite\Model\State')->cleanCache();
+        \XLite\Core\Database::getRepo('XLite\Model\Country')->cleanCache();
     }
 
     /**
@@ -195,6 +195,6 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         \XLite\Core\Database::getEM()->flush();
 
-        \XLite\Core\Database::getRepo('XLite\Model\State')->cleanCache();
+        \XLite\Core\Database::getRepo('XLite\Model\Country')->cleanCache();
     }
 }
