@@ -60,6 +60,18 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
+     * Get module major version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getMajorVersion()
+    {
+        return '1.1';
+    }
+
+    /**
      * Module version
      *
      * @return string
@@ -68,7 +80,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getMinorVersion()
     {
-        return '5';
+        return '0';
     }
 
     /**
