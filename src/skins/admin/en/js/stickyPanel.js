@@ -48,6 +48,10 @@ jQuery().ready(
           centeredBox.width(panel.outerWidth());
         }
 
+        jQuery('button', this).each(function(ind, elem) {
+          jQuery(elem).removeAttr('disabled');
+        });
+
         // Check scroll state - run reposition or not
         function checkRepositionEvent()
         {
