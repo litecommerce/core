@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
@@ -28,7 +28,7 @@
 namespace Includes\Decorator\Plugin\Doctrine\Plugin\DocBlock;
 
 /**
- * ADocBlock 
+ * ADocBlock
  *
  * @see   ____class_see____
  * @since 1.0.22
@@ -59,20 +59,34 @@ abstract class ADocBlock extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlu
     public function correctTags(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
         if ($this->checkRewriteCondition($node)) {
-            $path = LC_DIR_CACHE_CLASSES . $node->getPath();
-
-            \Includes\Utils\FileManager::write(
-                $path,
-                \Includes\Decorator\Utils\Tokenizer::getSourceCode(
-                    $path,
-                    null,
-                    null,
-                    null,
-                    call_user_func_array(array($node, 'addLinesToDocBlock'), $this->getTagsToAdd($node)),
-                    $node->isDecorator() ? 'abstract' : null
-                )   
-            );
+            $this->correctTagsOnElement($node);
         }
+    }
+
+    /**
+     * Correct (if needed) class doc block comment. Works for one element from the queue
+     *
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function correctTagsOnElement(\Includes\Decorator\DataStructure\Graph\Classes $node)
+    {
+        $path = LC_DIR_CACHE_CLASSES . $node->getPath();
+
+        \Includes\Utils\FileManager::write(
+            $path,
+            \Includes\Decorator\Utils\Tokenizer::getSourceCode(
+                $path,
+                null,
+                null,
+                null,
+                call_user_func_array(array($node, 'addLinesToDocBlock'), $this->getTagsToAdd($node)),
+                $node->isDecorator() ? 'abstract' : null
+            )
+        );
     }
 
     /**
