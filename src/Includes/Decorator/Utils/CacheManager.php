@@ -692,15 +692,22 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     {
         static::checkPermissions(LC_DIR_VAR);
 
+        $stepStatus = false;
+
         foreach (static::$steps as $step) {
-            if (static::runStepConditionally($step) && static::isDoOneStepOnly()) {
+
+            $stepStatus = static::runStepConditionally($step);
+
+            if ($stepStatus && static::isDoOneStepOnly()) {
                 // Break after first performed step if isDoOneStepOnly() returned true
                 break;
             }
         }
 
-        // Clear classes cache
-        \Includes\Utils\FileManager::deleteFile(static::getClassesHashPath());
+        if (!$stepStatus) {
+            // Clear classes cache
+            \Includes\Utils\FileManager::deleteFile(static::getClassesHashPath());
+        }
     }
 
     /**
