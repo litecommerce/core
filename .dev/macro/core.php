@@ -419,14 +419,6 @@ HEAD;
 
     $header = preg_replace('/( \*\s*.)+ \*\//SsU', ' */', $header);
 
-    if (macro_is_entity($path)) {
-        $header = preg_replace(
-            '/( \*\/)/SsU',
-            ' *' . PHP_EOL .' * @MappedSuperclass' . PHP_EOL . '$1',
-            $header
-        );
-    }
-
     return $header;
 }
 

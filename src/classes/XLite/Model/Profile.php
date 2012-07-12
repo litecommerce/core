@@ -281,7 +281,7 @@ class Profile extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @manyToMany (targetEntity="XLite\Model\Role", mappedBy="profiles", cascade={"merge","detach"})
+     * @ManyToMany (targetEntity="XLite\Model\Role", mappedBy="profiles", cascade={"merge","detach"})
      */
     protected $roles;
 
