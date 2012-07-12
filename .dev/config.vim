@@ -36,6 +36,17 @@ function LC_PHPSettings()
     set sw=4
     set sts=4
     set et
+
+    let parts = split(getcwd(), '\/')
+    let path = ''
+    for p in parts
+        let path = path . '/' . p
+        let $fpath = path . '/.dev/vim/tags/php'
+        if filereadable($fpath)
+            set tags=tags,$fpath
+        endif
+    endfor
+
 endfunction
 
 function LC_YAMLSettings()
