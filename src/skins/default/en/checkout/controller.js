@@ -344,22 +344,48 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       }
     );
 
-/**
- * Place order button should work only once.
- * After clicking the button is disabled and form submits only once.
- */
-    jQuery('form.place button[type="submit"].bright', this.base)
-      .click(
-        function (event) {
-          jQuery(this)
-            .addClass('disabled')
-            .attr('disabled', 'disabled')
-            .closest('form.place')
-            .submit();
+    /**
+     * Place order button should work only once.
+     * After clicking the button is disabled and form submits only once.
+     */
+    jQuery(base).bind(
+      'ready2checkout',
+      function (e) {
+        jQuery('.review-step.current .button-row button', this)
+          .removeClass('disabled')
+          .removeAttr('disabled');
+      }
+    ).bind(
+      'agree2checkout',
+      function (e) {
+        jQuery('.review-step.current .button-row button', this)
+          .addClass('disabled')
+          .attr('disabled', 'disabled');
+      }
+    ).bind(
+      'notready2checkout',
+      function (e) {
+        jQuery('.review-step.current .button-row button', this)
+          .addClass('disabled');
+      }
+    );
 
-          return false;
-        }
-      );
+    jQuery('form.place .terms', this.base).bind(
+      'agree2checkout',
+      function (e) {
+        jQuery(this).addClass('non-agree');
+      }
+    ).bind(
+      'ready2checkout',
+      function (e) {
+        jQuery(this).removeClass('non-agree');
+      }
+    ).bind(
+      'notready2checkout',
+      function (e) {
+        jQuery(this).removeClass('non-agree');
+      }
+    );
 
     jQuery('.review-step.current .button-row button', this.base)
       .click(
