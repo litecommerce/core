@@ -33,7 +33,7 @@ namespace XLite\View\Checkout;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="checkout.main")
+ * @ListChild (list="checkout.main", weight="200")
  */
 class Steps extends \XLite\View\AView
 {

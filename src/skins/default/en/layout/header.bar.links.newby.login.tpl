@@ -12,4 +12,4 @@
  * @ListChild (list="layout.header.bar.links.newby", weight="100")
  *}
 
-<li class="account-link-1 first"><a href="{buildURL(#login#)}" class="log-in">{t(#Log in#)}</a></li>
+<li class="account-link-1 first"><a href="{buildURL(#login#)}" class="log-in">{t(#Sign in#)}</a></li>
