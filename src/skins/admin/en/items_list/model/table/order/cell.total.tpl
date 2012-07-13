@@ -10,5 +10,5 @@
  * @since     1.0.24
  *}
 
-<span class="total">{formatPrice(entity.getTotal(),entity.getCurrency())}</span>
-<span class="quantity">({t(#N it.#,_ARRAY_(#count#^entity.countQuantity()))})</span>
+<span class="total">{formatPrice(getColumnValue(column,entity),entity.getCurrency())}</span>
+<span class="quantity">({t(#N it.#,_ARRAY_(#count#^getItemsQuantity(entity)))})</span>

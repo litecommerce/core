@@ -33,54 +33,7 @@ namespace XLite\View\StickyPanel\Order\Admin;
  * @see   ____class_see____
  * @since 1.0.16
  */
-class Info extends \XLite\View\Base\FormStickyPanel
+class Info extends \XLite\View\StickyPanel\ItemsListForm
 {
-    /**
-     * Buttons list (cache)
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.24
-     */
-    protected $buttonsList;
-
-    /**
-     * Get buttons widgets
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function getButtons()
-    {
-        if (!isset($this->buttonsList)) {
-            $this->buttonsList = $this->defineButtons();
-        }
-
-        return $this->buttonsList;
-    }
-
-    /**
-     * Define buttons widgets
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.15
-     */
-    protected function defineButtons()
-    {
-        $list = array(
-            'save' => $this->getWidget(
-                array(
-                    'style'    => 'action submit',
-                    'label'    => \XLite\Core\Translation::lbl('Save changes'),
-                ),
-                'XLite\View\Button\Submit'
-            ),
-        );
-
-        return $list;
-    }
-
 }
 

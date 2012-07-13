@@ -190,5 +190,88 @@ class Info extends \XLite\View\AView
 
     // }}}
 
+    // {{{ Items content helpers
+
+    /**
+     * Get columns span
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.11
+     */
+    protected function getColumnsSpan()
+    {
+        return 4 + count($this->getOrder()->getItemsExcludeSurcharges());
+    }
+
+    /**
+     * Get item fescription block columns count
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getItemDescriptionCount()
+    {
+        return 3;
+    }
+
+    /**
+     * Get surcharge totals
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getSurchargeTotals()
+    {
+        return $this->getOrder()->getSurchargeTotals();
+    }
+
+    /**
+     * Get surcharge class name
+     *
+     * @param string $type      Surcharge type
+     * @param array  $surcharge Surcharge
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function getSurchargeClassName($type, array $surcharge)
+    {
+        return 'order-modifier '
+            . $type . '-modifier '
+            . strtolower($surcharge['code']) . '-code-modifier';
+    }
+
+    /**
+     * Format surcharge value
+     *
+     * @param array $surcharge Surcharge
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function formatSurcharge(array $surcharge)
+    {
+        return $this->formatPrice(abs($surcharge['cost']), $this->getOrder()->getCurrency());
+    }
+
+    /**
+     * Check - customer notes block is visible or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isCustomerNotesVisible()
+    {
+        return (bool)$this->getOrder()->getNotes();
+    }
+
+    // }}}
+
 }
 

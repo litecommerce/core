@@ -86,25 +86,25 @@ div.note {
   float: left;
 }
 
-div.note .note .table-label {
+div.note .table-label {
   float: none;
   line-height: normal;
 }
 
-div.note .note label {
+div.note label {
   color: #456583;
   font-size: 14px;
 }
 
-div.note .note .star {
+div.note .star {
   display: none;
 }
 
-div.note .note .table-value {
+div.note .table-value {
   padding-top: 6px;
 }
 
-div.note .note textarea {
+div.note textarea {
   width: 352px;
   height: 42px;
 }
@@ -193,4 +193,92 @@ div.shipping .method {
   background-position: 333px 26px;
 }
 
+/* Line 3 */
 
+div.line-3 {
+  margin-top: 54px;
+}
+
+div.line-3 table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+div.line-3 .items,
+div.line-3 .items td,
+div.line-3 .items th,
+div.line-3 .totals,
+div.line-3 .totals td
+{
+  border: 1px solid #c4c4c4;
+}
+
+div.line-3 .items th
+{
+  color: #456583;
+  font-weight: normal;
+  padding: 6px 10px 5px;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #f5f5f5;
+}
+
+div.line-3 .items th.name
+{
+  text-align: left;
+}
+
+div.line-3 .items th.total
+{
+  width: 57px;
+}
+
+div.line-3 .items td,
+div.line-3 .totals td
+{
+  padding: 6px 9px;
+}
+
+div.line-3 .items td.qty
+{
+  text-align: center;
+}
+
+div.line-3 .items td.sku,
+div.line-3 .items td.price,
+div.line-3 .items td.total
+{
+  text-align: right;
+}
+
+div.line-3 .items a
+{
+  text-decoration: none;
+}
+
+div.line-3 .totals td
+{
+  text-align: right;
+  white-space: nowrap;
+}
+
+div.line-3 .totals .value
+{
+  width: 59px;
+}
+
+div.line-3 .totals .total td
+{
+  color: #4b7797;
+}
+
+/* Line 4 */
+
+div.line-3 {
+  margin-top: 54px;
+}
+
+.customer-notes {
+  background-color: #f6f6f6;
+  padding: 10px;
+}

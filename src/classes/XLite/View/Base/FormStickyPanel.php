@@ -110,4 +110,34 @@ abstract class FormStickyPanel extends \XLite\View\Base\StickyPanel
         return implode(' ', $classes);
     }
 
+    /**
+     * Check - sticky panel activat only iof form is changed
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isFormChangeActivation()
+    {
+        return true;
+    }
+
+    /**
+     * Get class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.10
+     */
+    protected function getClass()
+    {
+        $class = parent::getClass();
+
+        if ($this->isFormChangeActivation()) {
+            $class .= ' form-change-activation';
+        }
+
+        return $class;
+    }
+
 }

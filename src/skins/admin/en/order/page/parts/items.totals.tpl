@@ -1,23 +1,17 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Order info
+ * Order : items totals
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
+ *
+ * @ListChild (list="order.items", weight="200")
  *}
-<div class="order-info">
-  <list name="order" />
-</div>
 
-<!--
-      <tr FOREACH="order.getMeaningDetails(),d" valign="top">
-      	<td>{d.getLabel()}:</td>
-	      <td><input type="text" name="details[{d.getDetailId()}]" size="40" value="{d.getValue():r}" /></td>
-      </tr>
-
-      <list name="order.details" order="{order}" />
--->
+<table cellspacing="0" class="totals">
+  <list name="order.base.totals" />
+</table>
