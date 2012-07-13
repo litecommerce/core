@@ -25,37 +25,14 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\FormField\Label;
+namespace XLite\Core;
 
 /**
- * ALabel
+ * Config cell class
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class ALabel extends \XLite\View\FormField\AFormField
+class ConfigCell extends \XLite\Core\CommonCell
 {
-    /**
-     * Return field type
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getFieldType()
-    {
-        return self::FIELD_TYPE_LABEL;
-    }
-
-    /**
-     * Get label value 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    protected function getLabelValue()
-    {
-        return strval($this->getValue());
-    }
 }

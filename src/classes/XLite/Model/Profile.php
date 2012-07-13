@@ -646,7 +646,9 @@ class Profile extends \XLite\Model\AEntity
     protected function prepareCreate()
     {
         // Assign a profile creation date/time
-        $this->setAdded(time());
+        if (!$this->getAdded()) {
+            $this->setAdded(time());
+        }
 
         // Assign current language
         $language = $this->getLanguage();
