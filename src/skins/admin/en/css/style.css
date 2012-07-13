@@ -1058,6 +1058,14 @@ button.disabled span {
   color: #FFFFFF;
 }
 
+/* Button for payment actions */
+
+button.payment-action-button {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
 /* Fade */
 .right-fade {
   background: transparent url(../images/right_fade.png) repeat-y right top;

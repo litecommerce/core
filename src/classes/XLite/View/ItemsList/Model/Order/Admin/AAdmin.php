@@ -105,6 +105,36 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Order\AOrder
     }
 
     /**
+     * Returns true if order has allowed backend payment transactions
+     * 
+     * @param \XLite\Model\Order $entity Order
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function hasPaymentActions(\XLite\Model\Order $entity)
+    {
+        $result = \Includes\Utils\ArrayManager::filterByKeys(
+            $entity->getAllowedPaymentActions(),
+            $this->getTransactionsFilter()
+        );
+        return !empty($result);
+    }
+
+    /**
+     * Get list of transaction types to filter allowed backend transactions list
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getTransactionsFilter()
+    {
+        return array('capture');
+    }
+
+    /**
      * Define order actions 
      * 
      * @param \XLite\Model\Order $entity Order

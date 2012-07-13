@@ -58,6 +58,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     const STATUS_TEMPORARY  = 'T';
     const STATUS_INPROGRESS = 'I';
     const STATUS_QUEUED     = 'Q';
+    const STATUS_AUTHORIZED = 'A';
     const STATUS_PROCESSED  = 'P';
     const STATUS_COMPLETED  = 'C';
     const STATUS_FAILED     = 'F';
@@ -267,6 +268,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     protected static $statusHandlers = array(
 
         self::STATUS_TEMPORARY => array(
+            self::STATUS_AUTHORIZED => array('checkout', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout'),
@@ -275,6 +277,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         ),
 
         self::STATUS_INPROGRESS => array(
+            self::STATUS_AUTHORIZED => array('checkout', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout', 'queue'),
@@ -285,10 +288,19 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         self::STATUS_QUEUED => array(
             self::STATUS_TEMPORARY  => array('uncheckout'),
             self::STATUS_INPROGRESS => array('uncheckout'),
+            self::STATUS_AUTHORIZED => array('process'),
             self::STATUS_PROCESSED  => array('process'),
             self::STATUS_COMPLETED  => array('process'),
             self::STATUS_DECLINED   => array('uncheckout', 'fail'),
             self::STATUS_FAILED     => array('uncheckout', 'fail'),
+        ),
+
+        self::STATUS_AUTHORIZED => array(
+            self::STATUS_TEMPORARY  => array('decline', 'uncheckout'),
+            self::STATUS_INPROGRESS => array('decline', 'uncheckout'),
+            self::STATUS_QUEUED     => array('decline'),
+            self::STATUS_DECLINED   => array('decline', 'uncheckout', 'fail'),
+            self::STATUS_FAILED     => array('decline', 'uncheckout', 'fail'),
         ),
 
         self::STATUS_PROCESSED => array(
@@ -308,12 +320,14 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         ),
 
         self::STATUS_DECLINED => array(
+            self::STATUS_AUTHORIZED => array('checkout', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout'),
         ),
 
         self::STATUS_FAILED => array(
+            self::STATUS_AUTHORIZED => array('checkout', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout'),
@@ -353,6 +367,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             self::STATUS_TEMPORARY  => 'Cart',
             self::STATUS_INPROGRESS => 'Incompleted',
             self::STATUS_QUEUED     => 'Queued',
+            self::STATUS_AUTHORIZED => 'Authorized',
             self::STATUS_PROCESSED  => 'Processed',
             self::STATUS_COMPLETED  => 'Completed',
             self::STATUS_FAILED     => 'Failed',
@@ -848,7 +863,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         // send email notification about initially placed order
         $status = $this->getStatus();
 
-        $list = array(self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
+        $list = array(self::STATUS_AUTHORIZED, self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
 
         $send = \XLite\Core\Config::getInstance()->Email->enable_init_order_notif
             || \XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer;
@@ -1284,6 +1299,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             $transaction->setMethodLocalName($method->getName());
             $transaction->setStatus($transaction::STATUS_INITIALIZED);
             $transaction->setValue($value);
+            $transaction->setType($method->getProcessor()->getInitialTransactionType());
 
             \XLite\Core\Database::getEM()->persist($transaction);
         }
@@ -2017,6 +2033,34 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     public function getAllowedActions()
     {
         return array();
+    }
+
+    /**
+     * Get allowed payment actions 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getAllowedPaymentActions()
+    {
+        $actions = array();
+
+        $transactions = $this->getPaymentTransactions();
+
+        if ($transactions) {
+            foreach ($transactions as $transaction) {
+                $processor = $transaction->getPaymentMethod()->getProcessor();
+                $allowedTransactions = $processor->getAllowedTransactions();
+                foreach ($allowedTransactions as $transactionType) {
+                    if ($processor->isTransactionAllowed($transaction, $transactionType)) {
+                        $actions[$transactionType] = $transaction->getTransactionId();
+                    }
+                }
+            }
+        }
+
+        return $actions;
     }
 
     // }}}

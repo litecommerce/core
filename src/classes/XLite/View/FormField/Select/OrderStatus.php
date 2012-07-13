@@ -140,6 +140,17 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
         return $list;
     }
 
+    protected function getOptions()
+    {
+        $options = parent::getOptions();
+
+        if (!$this->getOrder() || \XLite\Model\Order::STATUS_AUTHORIZED != $this->getOrder()->getStatus()) {
+            unset($options[\XLite\Model\Order::STATUS_AUTHORIZED]);
+        }
+
+        return $options;
+    }
+
     /**
      * Define widget params
      *
@@ -184,7 +195,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
      */
     protected function isOptionDisabled($option)
     {
-        return in_array($option, array(\XLite\Model\Order::STATUS_PROCESSED, \XLite\Model\Order::STATUS_COMPLETED))
+        return in_array($option, array(\XLite\Model\Order::STATUS_AUTHORIZED, \XLite\Model\Order::STATUS_PROCESSED, \XLite\Model\Order::STATUS_COMPLETED))
             && $this->isInventoryWarning();
     }
 

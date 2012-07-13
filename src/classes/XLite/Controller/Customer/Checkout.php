@@ -246,6 +246,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
         $result = null;
 
+        // Default order status on successful payment
+        $paymentStatus = \XLite\Model\Order::STATUS_PROCESSED;
+
         if ($transaction) {
 
             $result = $transaction->handleCheckoutAction();
@@ -256,14 +259,20 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $status = \XLite\Model\Order::STATUS_PROCESSED;
 
+            $hasIncompletePayment = false;
+            $hasAuthorizedPayment = false;
+
             foreach ($cart->getPaymentTransactions() as $t) {
+                $hasIncompletePayment = $hasIncompletePayment || !$t->isCompleted();
+                $hasAuthorizedPayment = $hasAuthorizedPayment || $t->isAuthorized();
+            }
 
-                if ($t::STATUS_SUCCESS != $t->getStatus()) {
+            if ($hasIncompletePayment) {
+                $status = \XLite\Model\Order::STATUS_QUEUED;
 
-                    $status = \XLite\Model\Order::STATUS_QUEUED;
-
-                    break;
-                }
+            } elseif ($hasAuthorizedPayment) {
+                $status = \XLite\Model\Order::STATUS_AUTHORIZED;
+                $paymentStatus = \XLite\Model\Order::STATUS_AUTHORIZED;
             }
 
             $cart->setStatus($status);
@@ -315,7 +324,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         } else {
 
             $status = $cart->isPayed()
-                ? \XLite\Model\Order::STATUS_PROCESSED
+                ? $paymentStatus
                 : \XLite\Model\Order::STATUS_QUEUED;
 
             $cart->setStatus($status);
@@ -385,9 +394,30 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
         } else {
 
-            $cart->setStatus(
-                $cart->isPayed() ? \XLite\Model\Order::STATUS_PROCESSED : \XLite\Model\Order::STATUS_QUEUED
-            );
+            if ($cart->isPayed()) {
+
+                $status = \XLite\Model\Order::STATUS_PROCESSED;
+
+                $hasIncompletePayment = false;
+                $hasAuthorizedPayment = false;
+
+                foreach ($cart->getPaymentTransactions() as $t) {
+                    $hasIncompletePayment = $hasIncompletePayment || !$t->isCompleted();
+                    $hasAuthorizedPayment = $hasAuthorizedPayment || $t->isAuthorized();
+                }
+
+                if ($hasIncompletePayment) {
+                    $status = \XLite\Model\Order::STATUS_QUEUED;
+
+                } elseif ($hasAuthorizedPayment) {
+                    $status = \XLite\Model\Order::STATUS_AUTHORIZED;
+                }
+
+            } else {
+                $status = \XLite\Model\Order::STATUS_QUEUED;
+            }
+
+            $cart->setStatus($status);
 
             $this->processSucceed();
 

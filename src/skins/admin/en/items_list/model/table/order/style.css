@@ -25,3 +25,11 @@
 {
   color: #8f8f8f;
 }
+
+.items-list.orders table.list tbody td div.order-status {
+  display: inline-block;
+}
+
+.items-list.orders table.list tbody td div.payment-actions {
+  display: inline-block;
+}

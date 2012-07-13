@@ -54,7 +54,6 @@ class Transaction extends \XLite\Model\AEntity
     const STATUS_PENDING     = 'W';
     const STATUS_FAILED      = 'F';
 
-
     /**
      * Transaction initialization result
      */
@@ -191,6 +190,17 @@ class Transaction extends \XLite\Model\AEntity
     protected $data;
 
     /**
+     * Related backend transactions
+     *
+     * @var   \XLite\Model\Payment\BackendTransaction
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\Payment\BackendTransaction", mappedBy="payment_transaction", cascade={"all"})
+     */
+    protected $backend_transactions;
+
+    /**
      * Readable statuses 
      * 
      * @var   array
@@ -308,6 +318,111 @@ class Transaction extends \XLite\Model\AEntity
     }
 
     /**
+     * Returns true if successful payment has type AUTH
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function isAuthorized()
+    {
+        $result = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_AUTH == $this->getType() && $this->isCompleted();
+
+        if ($result && $this->getBackendTransactions()) {
+            foreach ($this->getBackendTransactions() as $transaction) {
+                if (\XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID == $transaction->getType() && self::STATUS_SUCCESS == $transaction->getStatus()) {
+                    $result = false;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns true if successful payment has type SALE or has successful CAPTURE transaction 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function isCaptured()
+    {
+        $result = \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_SALE == $this->getType() && $this->isCompleted();
+
+        if ($this->getBackendTransactions()) {
+
+            foreach ($this->getBackendTransactions() as $transaction) {
+                if (\XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE == $transaction->getType() && self::STATUS_SUCCESS == $transaction->getStatus()) {
+                    $result = true;
+                    break;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns true if payment has successful REFUND transaction 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function isRefunded()
+    {
+        $result = false;
+
+        if ($this->getBackendTransactions()) {
+            foreach ($this->getBackendTransactions() as $transaction) {
+                if (\XLite\Model\Payment\BackendTransaction::TRAN_TYPE_REFUND == $transaction->getType() && self::STATUS_SUCCESS == $transaction->getStatus()) {
+                    $result = true;
+                    break;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns true if CAPTURE transaction is allowed for this payment
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function isCaptureTransactionAllowed()
+    {
+        return $this->isAuthorized() && !$this->isCaptured() && !$this->isRefunded();
+    }
+
+    /**
+     * Returns true if VOID transaction is allowed for this payment
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function isVoidTransactionAllowed()
+    {
+        return $this->isCaptureTransactionAllowed();
+    }
+
+    /**
+     * Returns true if REFUND transaction is allowed for this payment
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function isRefundTransactionAllowed()
+    {
+        return $this->isCaptured() && !$this->isRefunded();
+    }
+
+    /**
      * Constructor
      *
      * @param array $data Entity properties OPTIONAL
@@ -375,5 +490,74 @@ class Transaction extends \XLite\Model\AEntity
         $data->setValue($value);
     }
 
+    /**
+     * Get data cell object by name
+     * 
+     * @param string $name Name of data cell
+     *  
+     * @return \XLite\Model\Payment\TransactionData
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getDataCell($name)
+    {
+        $value = null;
+
+        foreach ($this->getData() as $cell) {
+            if ($cell->getName() == $name) {
+                $value = $cell;
+                break;
+            }
+        }
+
+        return $value;
+    }
+
     // }}}
+
+    /**
+     * Create backend transaction 
+     * 
+     * @param string $transactionType Type of backend transaction
+     *  
+     * @return \XLite\Model\Payment\BackendTransaction
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function createBackendTransaction($transactionType)
+    {
+        $data = array(
+            'date'                => time(),
+            'type'                => $transactionType,
+            'value'               => $this->getValue(),
+            'payment_transaction' => $this,
+        );
+
+        $bt = \XLite\Core\Database::getRepo('XLite\Model\Payment\BackendTransaction')->insert($data);
+      
+        $this->addBackendTransactions($bt);
+
+        return $bt;
+    }
+
+    /**
+     * Get initial backend transaction (related to the first payment transaction)
+     * 
+     * @return \XLite\Model\Payment\BackendTransaction
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getInitialBackendTransaction()
+    {
+        $bt = null;
+
+        foreach ($this->getBackendTransactions() as $transaction) {
+            if ($transaction->isInitial()) {
+                $bt = $transaction;
+                break;
+            }
+        }
+
+        return $bt;
+    }
 }
