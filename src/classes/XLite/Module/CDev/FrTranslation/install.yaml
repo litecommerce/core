@@ -789,6 +789,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Show all labels', translations: [{ code: 'fr', label: 'Montrer tous les labels' }] }
   - { name: 'Show filter options', translations: [{ code: 'fr', label: 'Montrer options de filtre' }] }
   - { name: 'Sign in notification', translations: [{ code: 'fr', label: 'Notification d''enregistrement' }] }
+  - { name: 'Sign in', translations: [{ code: 'fr', label: 'Se connecter' }] }
   - { name: 'Sign out', translations: [{ code: 'fr', label: 'Se déconnecter' }] }
   - { name: 'Size', translations: [{ code: 'fr', label: 'Taille' }] }
   - { name: 'SKU', translations: [{ code: 'fr', label: 'Réf.' }] }

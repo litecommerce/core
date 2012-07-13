@@ -59,6 +59,18 @@ class Login extends \XLite\Controller\Customer\ACustomer
     protected $profile;
 
     /**
+     * Get page title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getTitle()
+    {
+        return 'Sign in';
+    }
+
+    /**
      * handleRequest 
      * 
      * @return void
@@ -123,7 +135,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      */
     protected function getLocation()
     {
-        return 'Authentication';
+        return 'Sign in';
     }
 
     /**

@@ -789,6 +789,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Show all labels', translations: [{ code: 'ru', label: 'Показать все метки' }] }
   - { name: 'Show filter options', translations: [{ code: 'ru', label: 'Показать параметры фильтра' }] }
   - { name: 'Sign in notification', translations: [{ code: 'ru', label: 'Уведомление о регистрации' }] }
+  - { name: 'Sign in', translations: [{ code: 'ru', label: 'Вход' }] }
   - { name: 'Sign out', translations: [{ code: 'ru', label: 'Выход' }] }
   - { name: 'Size', translations: [{ code: 'ru', label: 'Размер' }] }
   - { name: 'SKU', translations: [{ code: 'ru', label: 'Код' }] }

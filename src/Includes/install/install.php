@@ -1163,36 +1163,32 @@ function doPrepareFixtures(&$params, $silentMode = false)
     }
 
     $enabledModules = array();
-
-    foreach ($lcSettings['enable_modules'] as $moduleAuthor => $modules) {
-
-        $enabledModules[$moduleAuthor] = array();
-
-        foreach ($modules as $moduleName) {
-            $enabledModules[$moduleAuthor][$moduleName] = 1;
-        }
-    }
-
-    \Includes\Utils\ModulesManager::saveModulesToFile($enabledModules);
-
-    // Generate fixtures list
-    $yamlFiles = $lcSettings['yaml_files']['base'];
-
     $moduleYamlFiles = array();
 
-    foreach ($lcSettings['enable_modules'] as $author => $modules) {
+    foreach ((array) glob(LC_DIR_MODULES . '*', GLOB_ONLYDIR) as $authorDir) {
 
-        foreach ($modules as $moduleName) {
+        $author = basename($authorDir);
+
+        foreach ((array) glob(LC_DIR_MODULES . $author . '/*/Main.php') as $f) {
+
+            $moduleName = basename(dirname($f));
+
+            $enabledModules[$author][$moduleName] = 1;
 
             $moduleFile = sprintf('classes/XLite/Module/%s/%s/install.yaml', $author, $moduleName);
 
-            if (file_exists(constant('LC_DIR_ROOT') . $moduleFile)) {
+            if (file_exists(LC_DIR_ROOT . $moduleFile)) {
                 $moduleYamlFiles[] = $moduleFile;
             }
         }
     }
 
     sort($moduleYamlFiles, SORT_STRING);
+
+    \Includes\Utils\ModulesManager::saveModulesToFile($enabledModules);
+
+    // Generate fixtures list
+    $yamlFiles = $lcSettings['yaml_files']['base'];
 
     foreach ($moduleYamlFiles as $f) {
         // Add module fixtures

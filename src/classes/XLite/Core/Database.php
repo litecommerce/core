@@ -301,10 +301,10 @@ class Database extends \XLite\Base\Singleton
     }
 
     /**
-     * Load annotation class 
-     * 
+     * Load annotation class
+     *
      * @param string $class Short class name
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.19
@@ -1017,13 +1017,6 @@ OUT;
             }
 
         }
-
-        // Set repository
-        if (!$classMetadata->customRepositoryClassName) {
-            $classMetadata->setCustomRepositoryClass(
-                $this->detectCustomRepositoryClassName($classMetadata->getReflectionClass()->getName())
-            );
-        }
     }
 
     /**
@@ -1673,10 +1666,10 @@ OUT;
     }
 
     /**
-     * Create annotation driver 
-     * 
+     * Create annotation driver
+     *
      * @param string $path Path
-     *  
+     *
      * @return \Doctrine\ORM\Mapping\Driver\AnnotationDriver
      * @see    ____func_see____
      * @since  1.0.19
