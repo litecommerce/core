@@ -513,7 +513,7 @@ class XLite extends \XLite\Base
      */
     final public function getMajorVersion()
     {
-        return '1.0';
+        return '1.1';
     }
 
     /**
@@ -525,7 +525,7 @@ class XLite extends \XLite\Base
      */
     final public function getMinorVersion()
     {
-        return '24';
+        return '0-alpha';
     }
 
     /**

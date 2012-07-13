@@ -73,8 +73,8 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
     protected $ttlLength = 11;
 
     /**
-     * Validation cache 
-     * 
+     * Validation cache
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -147,10 +147,28 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
     }
 
     /**
-     * Delete by prefix 
-     * 
+     * getNamespacedId
+     *
+     * @param string $id ____param_comment____
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.22
+     */
+    protected function getNamespacedIdToDelete($id)
+    {
+        $namespaceCacheKey = sprintf(static::DOCTRINE_NAMESPACE_CACHEKEY, $this->getNamespace());
+        $namespaceVersion  = ($this->doContains($namespaceCacheKey)) ? $this->doFetch($namespaceCacheKey) : 1;
+
+        return sprintf('%s[%s*', $this->getNamespace(), $id, $namespaceVersion);
+    }
+
+
+    /**
+     * Delete by prefix
+     *
      * @param string $prefix Prefix
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -159,15 +177,14 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
     {
         $deleted = array();
 
-        $prefix = $this->getNamespacedId($prefix);
-
-        $list = glob($this->path . LC_DS . $prefix . '*.php');
+        $prefix = $this->getNamespacedIdToDelete($prefix);
+        $list = glob($this->path . LC_DS . $prefix);
 
         if ($list) {
             foreach ($list as $f) {
                 if ($this->isKeyValid($f)) {
                     $id = substr(basename($f), 0, -4);
-                    $this->delete($id);
+                    \Includes\Utils\FileManager::deleteFile($f);
                     $deleted[] = $id;
                 }
             }
@@ -178,9 +195,9 @@ class FileCache extends \Doctrine\Common\Cache\CacheProvider
 
     /**
      * Delete by regular expression
-     * 
+     *
      * @param string $regex Regular expression
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
