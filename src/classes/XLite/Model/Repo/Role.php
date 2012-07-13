@@ -36,7 +36,21 @@ namespace XLite\Model\Repo;
 class Role extends \XLite\Model\Repo\Base\I18n
 {
     /**
-     * Find one role byN nme 
+     * Find one role by permisssion code
+     *
+     * @param string $code Permission code
+     *
+     * @return \XLite\Model\Role
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    public function findOneByPermissionCode($code)
+    {
+        return $this->defineFindOneByPermissionCodeQuery($code)->getSingleResult();
+    }
+
+    /**
+     * Find one role by name 
      * 
      * @param string $name Name
      *  
@@ -85,6 +99,24 @@ class Role extends \XLite\Model\Repo\Base\I18n
     public function findOneRoot()
     {
         return $this->defineFindOneRootQuery()->getSingleResult();
+    }
+
+    /**
+     * Define query for findOneByPermissionCode() method
+     *
+     * @param string $code Permission code
+     *
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.19
+     */
+    protected function defineFindOneByPermissionCodeQuery($code)
+    {
+        return $this->createQueryBuilder('r')
+            ->linkInner('r.permissions')
+            ->andWhere('permissions.code = :code')
+            ->setParameter('code', $code)
+            ->setMaxResults(1);
     }
 
     /**

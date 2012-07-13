@@ -65,7 +65,7 @@ class Role extends \XLite\Model\Base\I18n
     /**
      * Profiles
      *
-     * @var   \XLite\Model\Profile
+     * @var   \Doctrine\Common\Collections\Collection
      * @see   ____var_see____
      * @since 1.0.0
      *

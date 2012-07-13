@@ -46,4 +46,16 @@ abstract class ALabel extends \XLite\View\FormField\AFormField
     {
         return self::FIELD_TYPE_LABEL;
     }
+
+    /**
+     * Get label value 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getLabelValue()
+    {
+        return strval($this->getValue());
+    }
 }
