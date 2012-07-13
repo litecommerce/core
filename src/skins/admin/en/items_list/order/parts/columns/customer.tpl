@@ -15,9 +15,9 @@
   <a IF="!order.orig_profile.getProfileId()=order.profile.getProfileId()"
     class="customer"
     href="{buildURL(#profile#,##,_ARRAY_(#profile_id#^order.orig_profile.getProfileId()))}">
-    {order.profile.billing_address.title:h} {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}
+    {order.profile.billing_address.title} {order.profile.billing_address.firstname} {order.profile.billing_address.lastname}
   </a>
   <span IF="order.orig_profile.getProfileId()=order.profile.getProfileId()" class="customer">
-    {order.profile.billing_address.title:h} {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}
+    {order.profile.billing_address.title} {order.profile.billing_address.firstname} {order.profile.billing_address.lastname}
   </span>
 </td>

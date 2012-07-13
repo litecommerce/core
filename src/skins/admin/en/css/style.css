@@ -1623,8 +1623,12 @@ div.star {
   line-height: 24px;
 }
 
-div.table-value {
+.settings div.table-value {
   float: right;
+}
+
+div.table-value {
+  float: left;
 }
 
 div.table-value input[type="text"],
