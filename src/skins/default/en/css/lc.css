@@ -2988,6 +2988,10 @@ div.page-tabs ul li.tab-current a
   border-bottom: 1px solid #fff;
 }
 
+table.login-form {
+  margin: 10px 0 20px;
+}
+
 table.login-form,
   table.login-form tr,
   table.login-form th,
@@ -2999,7 +3003,33 @@ table.login-form,
 }
 
 table.login-form td {
-  padding: 5px 0px;
+  padding: 10px 0px;
+}
+
+table.login-form td:first-child {
+  width: 100px;
+}
+
+table.login-form input[type="text"],
+  table.login-form input[type="password"]
+{
+  width: 260px;
+  height: 26px;
+  border: solid 1px #cbcbcb;
+  padding: 2px 2px 2px 6px;
+  font-size: 17px;
+}
+
+table.login-form label {
+  font-size: 17px;
+}
+
+table.login-form .spacer-bullet {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: url(../images/spacer-bullet.png) no-repeat left top;
+  margin: 0 9px 2px 10px;
 }
 
 .recover-password-message {
