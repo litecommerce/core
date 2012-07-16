@@ -91,7 +91,7 @@ class Cron extends \XLite\Controller\Console\AConsole
     {
         $this->startTime = time();
         $this->startMemory = memory_get_usage(true);
-        $this->memoryLimitIni = \XLite\Core\COnverter::convertShortSize(ini_get('memory_limit') ?: '16M');
+        $this->memoryLimitIni = \XLite\Core\Converter::convertShortSize(ini_get('memory_limit') ?: '16M');
 
         foreach (\XLite\Core\Database::getRepo('XLite\Model\Task')->getCurrentQuery() as $task) {
             $task = $task[0];
