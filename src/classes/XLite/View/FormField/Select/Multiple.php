@@ -81,18 +81,6 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
     }
 
     /**
-     * Get default attributes
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultAttributes()
-    {
-        return parent::getDefaultAttributes() + array('multiple' => 'multiple');
-    }
-
-    /**
      * Check - current value is selected or not
      *
      * @param mixed $value Value
@@ -118,6 +106,7 @@ abstract class Multiple extends \XLite\View\FormField\Select\ASelect
         $list = parent::getCommonAttributes();
 
         $list['name'] .= '[]';
+        $list['multiple'] = 'multiple';
 
         return $list;
     }

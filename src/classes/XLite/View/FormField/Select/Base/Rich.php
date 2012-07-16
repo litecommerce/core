@@ -27,6 +27,12 @@
 
 namespace XLite\View\FormField\Select\Base;
 
+/**
+ * Rich selectbox
+ * 
+ * @see   ____class_see____
+ * @since 1.0.24
+ */
 abstract class Rich extends \XLite\View\FormField\Select\Regular
 {
     /**

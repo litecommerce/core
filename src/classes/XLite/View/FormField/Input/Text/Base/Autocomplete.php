@@ -108,7 +108,7 @@ abstract class Autocomplete extends \XLite\View\FormField\Input\Text
         return \XLite\Core\Converter::buildURL(
             'autocomplete',
             '',
-            array('dictionary' => $this->getDictionary(), 'term' => '%term%')
+            array('dictionary' => $this->getDictionary(), 'term' => '$term$')
         );
     }
 }

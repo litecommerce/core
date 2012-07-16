@@ -1025,7 +1025,7 @@ CommonElement.prototype.linkWithCountry = function()
 
         stateSwitcher.value = '1';
 
-    } else {
+      } else {
 
         // As select box
         var previousSelected = null;
