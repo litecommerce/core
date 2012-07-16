@@ -28,45 +28,22 @@
 namespace XLite\Module\CDev\Paypal\View;
 
 /**
- * Moneybookers settings dialog
+ * Paypal payment method settings dialog
  * 
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @ListChild (list="admin.center", zone="admin")
  */
 class PaypalSettings extends \XLite\View\Dialog
 {
-    /**
-     * Return list of allowed targets
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getAllowedTargets()
+    const PARAM_PAYMENT_METHOD = 'paymentMethod';
+
+    protected function defineWidgetParams()
     {
-        $list = parent::getAllowedTargets();
+        parent::defineWidgetParams();
 
-        $list[] = 'paypal_settings';
-
-        return $list;
-    }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        $list[] = $this->getDir() . '/controller.js';
-
-        return $list;
+        $this->widgetParams += array(
+            self::PARAM_PAYMENT_METHOD => new \XLite\Model\WidgetParam\Object('Payment method', null),
+        );
     }
 
     /**
@@ -86,15 +63,27 @@ class PaypalSettings extends \XLite\View\Dialog
     }
 
     /**
-     * Return templates directory name
-     *
+     * getPaypalMethodTemplate 
+     * 
      * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.1.0
      */
     protected function getDir()
     {
-        return 'modules/CDev/Paypal/settings';
+        return $this->getPaymentProcessor() ? $this->getPaymentProcessor()->getSettingsTemplateDir() : null;
+    }
+
+    /**
+     * getPaymentProcessor 
+     * 
+     * @return \XLite\Payment\Base\Processor
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function getPaymentProcessor()
+    {
+        return $this->getParam(self::PARAM_PAYMENT_METHOD) ? $this->getParam(self::PARAM_PAYMENT_METHOD)->getProcessor() : null;
     }
 
     // {{{ Content
@@ -106,7 +95,7 @@ class PaypalSettings extends \XLite\View\Dialog
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getRegisterURL()
+    protected function getPaypalRegisterURL()
     {
         return 'http://www.paypal.com/';
     }

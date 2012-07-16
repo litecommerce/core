@@ -9,69 +9,52 @@
 # @since     1.0.0
 
 XLite\Model\Payment\Method:
-  - { service_name: 'Paypal Payflow Link', class: 'Module\CDev\Paypal\Model\Payment\Processor\PayflowLink', translations: [{ code: en, name: 'Payflow Link' }] }
-#  - { service_name: 'Paypal Payments Advanced', class: 'Module\CDev\Paypal\Model\Payment\Processor\PayflowLink', translations: [{ code: en, name: 'Paypal Payments Advanced' }] }
+  - service_name: PayflowLink
+    class: 'Module\CDev\Paypal\Model\Payment\Processor\PayflowLink'
+    translations:
+      - code: en
+        name: 'Payflow Link'
+    settings:
+      - name: vendor
+      - name: user
+      - name: pwd
+      - name: partner
+        value: Paypal
+      - name: prefix
+        value: mystore_
+      - name: transaction_type
+        value: S
+      - name: test
+        value: Y
 
-XLite\Model\Config:
-  - name: vendor
-    category: 'CDev\Paypal'
-    type: text
-    orderby: 100
-    value: 12345
+  - service_name: PaypalAdvanced
+    class: 'Module\CDev\Paypal\Model\Payment\Processor\PaypalAdvanced'
     translations:
       - code: en
-        option_name: 'Merchant login'
-        option_comment: 'Merchant login ID that was created when the merchant registered for their PayPal Payments Advanced or Payflow Link account.'
-  - name: user
-    category: 'CDev\Paypal'
-    type: 'text'
-    orderby: 200
-    value: 12345
+        name: 'Paypal Payments Advanced'
+    settings:
+      - name: vendor
+      - name: user
+      - name: pwd
+      - name: partner
+        value: Paypal
+      - name: prefix
+        value: mystore_
+      - name: transaction_type
+        value: S
+      - name: test
+        value: Y
+
+  - service_name: PaypalWPSUS
+    class: 'Module\CDev\Paypal\Model\Payment\Processor\PaypalWPS'
     translations:
       - code: en
-        option_name: 'User'
-        option_comment: 'Username of the user that is authorized to run transactions'
-  - name: pwd
-    category: 'CDev\Paypal'
-    type: text
-    orderby: 300
-    value: 12345
-    translations:
-      - code: en
-        option_name: 'Password'
-        option_comment: 'The password that the merchant created for the username specified in the USER field'
-  - name: partner
-    category: 'CDev\Paypal'
-    type: text
-    orderby: 400
-    value: 'Paypal'
-    translations:
-      - code: en
-        option_name: 'Partner'
-        option_comment: 'The ID provided to the merchant by the authorized PayPal Reseller who registered them for their PayPal Payments Advanced or Payflow Link account. If the merchant registered their account directly through PayPal, the merchant should supply the value PayPal.'
-  - name: prefix
-    category: 'CDev\Paypal'
-    type: text
-    orderby: 500
-    value: 'mystore_'
-    translations:
-      - code: en
-        option_name: 'Invoice number prefix'
-        option_comment: 'Prefix for identification of the transaction on paypal.com: you would find transaction by this prefix and order ID'
-  - name: transaction_type 
-    category: 'CDev\Paypal'
-    type: text
-    orderby: 600
-    value: 'S'
-    translations:
-      - code: en
-        option_name: 'Initial transaction type (S - sale, A - authorize)'
-  - name: test 
-    category: 'CDev\Paypal'
-    type: checkbox
-    orderby: 600
-    value: true
-    translations:
-      - code: en
-        option_name: 'Test mode'
+        name: 'Paypal Website Payments Standard'
+    settings:
+      - name: account
+      - name: description
+      - name: prefix
+      - name: mode
+      - name: address_override
+
 

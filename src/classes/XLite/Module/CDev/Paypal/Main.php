@@ -61,6 +61,19 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
+     * Module major version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getMajorVersion()
+    {
+        return '1.1';
+    }
+
+
+    /**
      * Module version
      *
      * @return string
@@ -91,21 +104,9 @@ abstract class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getSettingsForm()
-    {
-        return 'admin.php?target=paypal_settings';
-    }
-
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
     public static function showSettingsForm()
     {
-        return true;
+        return false;
     }
 
     /**

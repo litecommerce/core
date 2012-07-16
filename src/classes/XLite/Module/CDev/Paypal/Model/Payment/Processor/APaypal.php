@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
+abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 {
     /**
      * Request types definition
@@ -79,6 +79,24 @@ abstract class Iframe extends \XLite\Model\Payment\Base\Iframe
      * @since 1.0.19
      */
     protected $secureTokenId = null;
+
+
+    /**
+     * getSettingsWidget 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function getSettingsWidget()
+    {
+        return '\XLite\Module\CDev\Paypal\View\PaypalSettings';
+    }
+
+    public function getPaypalMethodCode()
+    {
+        return self::PAYPAL_PAYMENT_METHOD_CODE;
+    }
 
     /**
      * Get return type of the iframe-method: html redirect with destroying an iframe
