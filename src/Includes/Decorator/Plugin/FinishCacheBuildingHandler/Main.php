@@ -44,8 +44,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     public function executeHookHandler()
     {
-        \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_CACHE_RESOURCES);
-        
         \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->setVar(\XLite::CACHE_TIMESTAMP, intval(microtime(true)));
     }
 }
