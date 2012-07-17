@@ -278,10 +278,16 @@ class Address extends \XLite\View\Model\AModel
     {
         $addressId = $this->getAddressId();
 
-        $fields[$addressId . '_country_code']->setStateSelectorIds(
-            $fields[$addressId . '_state_id']->getFieldId(),
-            $fields[$addressId . '_custom_state']->getFieldId()
-        );
+        if (
+            isset($fields[$addressId . '_country_code'])
+            && isset($fields[$addressId . '_state_id'])
+            && isset($fields[$addressId . '_custom_state'])
+        ) {
+            $fields[$addressId . '_country_code']->setStateSelectorIds(
+                $fields[$addressId . '_state_id']->getFieldId(),
+                $fields[$addressId . '_custom_state']->getFieldId()
+            );
+        }
     }
 
     /**

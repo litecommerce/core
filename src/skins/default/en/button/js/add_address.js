@@ -19,13 +19,4 @@ extend(PopupButtonAddAddress, PopupButton);
 
 PopupButtonAddAddress.prototype.pattern = '.add-address';
 
-decorate(
-  'PopupButtonAddAddress',
-  'callback',
-  function (selector)
-  {
-    // Some autoloading could be added
-  }
-);
-
 core.autoload(PopupButtonAddAddress);
