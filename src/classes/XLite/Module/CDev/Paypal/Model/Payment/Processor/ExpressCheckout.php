@@ -189,8 +189,8 @@ class ExpressCheckout extends \XLite\Model\Payment\Base\WebBased
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
         return parent::isConfigured($method)
-            && !empty(\XLite\Core\Config::getInstance()->CDev->Paypal->vendor)
-            && !empty(\XLite\Core\Config::getInstance()->CDev->Paypal->pwd)
+            && $method->getSetting('vendor')
+            && $method->getSetting('pwd')
             && $this->isMerchantCountryAllowed();
     }
 
