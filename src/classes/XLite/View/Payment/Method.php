@@ -106,7 +106,7 @@ class Method extends \XLite\View\Dialog
     protected function getHead()
     {
         return $this->getPaymentMethod()
-            ? static::t('{{paymentMethod}} settings', array('paymentMethod' => $this->getPaymentMethod()->getServiceName()))
+            ? static::t('{{paymentMethod}} settings', array('paymentMethod' => $this->getPaymentMethod()->getName()))
             : 'Payment method settings';
     }
 

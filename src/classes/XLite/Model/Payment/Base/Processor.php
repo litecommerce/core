@@ -106,7 +106,17 @@ abstract class Processor extends \XLite\Base
         return $result;
     }
 
-    public function doTransaction(\XLite\Model\Payment\Transaction $transaction, string $transactionType)
+    /**
+     * doTransaction 
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction     Payment transaction object
+     * @param string                           $transactionType Backend transaction type
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function doTransaction(\XLite\Model\Payment\Transaction $transaction, $transactionType)
     {
         if ($this->isTransactionAllowed($transaction, $transactionType)) {
 
@@ -266,11 +276,13 @@ abstract class Processor extends \XLite\Base
     /**
      * Get initial transaction type (used when customer places order)
      *
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getInitialTransactionType()
+    public function getInitialTransactionType($method = null)
     {
         return \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_SALE;
     }

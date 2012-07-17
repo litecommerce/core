@@ -173,6 +173,18 @@ class BackendTransaction extends \XLite\Model\AEntity
     }
 
     /**
+     * Get payment method object related to the parent payment transaction
+     * 
+     * @return \XLite\Model\Payment\Method
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function getPaymentMethod()
+    {
+        return $this->getPaymentTransaction()->getPaymentMethod();
+    }
+
+    /**
      * Check - transaction is failed or not
      *
      * @return boolean

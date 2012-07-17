@@ -28,15 +28,15 @@
 namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
 
 /**
- * Payflow Link payment processor
+ * Paypal Payments Advanced payment processor
  *
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
  */
-class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APaypal
+class PaypalAdvanced extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APaypal
 {
-    const PAYPAL_PAYMENT_METHOD_CODE = 'Payflow Link';
+    const PAYPAL_PAYMENT_METHOD_CODE = 'Paypal Payments Advanced';
 
     /**
      * Get allowed backend transactions
@@ -63,7 +63,7 @@ class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APay
      */
     public function getSettingsTemplateDir()
     {
-        return 'modules/CDev/Paypal/settings/payflow_link';
+        return 'modules/CDev/Paypal/settings/paypal_advanced';
     }
 
     /**

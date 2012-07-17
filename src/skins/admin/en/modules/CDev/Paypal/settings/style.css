@@ -10,7 +10,7 @@
  * @since     1.0.0
  */
 
-.paypal-settings #main {
+.paypal-settings {
   max-width: 1000px;
 }
 
@@ -37,7 +37,6 @@
   font-weight: bold;
 }
 
-.pp-activation label,
 .pp-secret-word label,
 .pp-options label
 {

@@ -1427,6 +1427,24 @@ table.list-body-list td
 }
 
 /**
+ * Separator of Checkout buttons (- OR -)
+ */
+.buttons-separator {
+  padding-top: 7px;
+  padding-bottom: 10px;
+}
+
+.buttons-separator span {
+  padding-left: 35px;
+  color: #8F8F8F;
+}
+
+.button .buttons-separator span {
+  padding-left: 0px;
+}
+
+
+/**
  * Cart
  */
 body.store-cart #breadcrumbs {

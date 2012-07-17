@@ -61,6 +61,19 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
+     * Module major version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getMajorVersion()
+    {
+        return '1.1';
+    }
+
+
+    /**
      * Module version
      *
      * @return string
@@ -91,21 +104,9 @@ abstract class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getSettingsForm()
-    {
-        return 'admin.php?target=paypal_settings';
-    }
-
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
     public static function showSettingsForm()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -138,5 +139,30 @@ abstract class Main extends \XLite\Module\AModule
             self::getModuleName(),
             $msg
         );
+    }
+
+    /**
+     * Returns true if ExpressCheckout payment is enabled 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public static function isExpressCheckoutEnabled()
+    {
+        static $result;
+
+        if (!isset($result)) {
+            $paymentMethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
+                ->findOneBy(
+                    array(
+                        'service_name' => 'ExpressCheckout',
+                        'enabled'      => true
+                    )
+                );
+            $result = !empty($paymentMethod) && $paymentMethod->isEnabled();
+        }
+
+        return $result;
     }
 }
