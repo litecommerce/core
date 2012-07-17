@@ -170,7 +170,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      */
     public function isZonesDefined()
     {
-        return (count($this->getShippingZones()) > 2);
+        return (count($this->getShippingZones()) > 1);
     }
 
     /**
@@ -329,10 +329,10 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     }
 
     /**
-     * Get processor methods 
-     * 
+     * Get processor methods
+     *
      * @param \XLite\Model\Shipping\Processor\AProcessor $processor Processor
-     *  
+     *
      * @return \XLite\Model\Shipping\Method
      * @see    ____func_see____
      * @since  1.0.15
