@@ -113,13 +113,15 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     /**
      * Get initial transaction type (used when customer places order)
      *
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getInitialTransactionType()
+    public function getInitialTransactionType($method = null)
     {
-        return 'A' == \XLite\Core\Config::getInstance()->CDev->Paypal->transaction_type 
+        return 'A' == ($method ? $method->getSetting('transaction_type') : $this->getSetting('transaction_type'))
             ? \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_AUTH
             : \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_SALE;
     }
@@ -165,9 +167,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      */
     protected function isTestMode()
     {
-        \XLite\Module\CDev\Paypal\Main::addLog('isTestMode()', \XLite\Core\Config::getInstance()->CDev->Paypal->test);
-
-        return true;\XLite\Core\Config::getInstance()->CDev->Paypal->test;
+        return 'Y' == $this->getSetting('test');
     }
 
     /**
@@ -217,7 +217,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             'SECURETOKENID=' . $this->getSecureTokenId(),
         );
 
-        if ($this->isTestMode()) {
+        if ($this->isTestMode($this->transaction->getPaymentMethod())) {
             $params[] = 'MODE=TEST';
         }
 
@@ -269,7 +269,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         $token = null;
 
         $this->transaction->setPublicId(
-            \XLite\Core\Config::getInstance()->CDev->Paypal->prefix
+            $this->getSetting('prefix')
             . $this->transaction->getTransactionId()
         );
 
@@ -401,7 +401,8 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * Do HTTPS request to Paypal server with data set depended on $requestType.
      * Returns an array represented a parsed response from Paypal
      * 
-     * @param string $requestType Type of request 
+     * @param string                                  $requestType Type of request 
+     * @param \XLite\Model\Payment\BackendTransaction $transaction Backend transaction object
      *  
      * @return array
      * @see    ____func_see____
@@ -410,6 +411,10 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     protected function doRequest($requestType, $transaction = null)
     {
         $responseData = array();
+
+        if (!isset($this->transaction)) {
+            $this->transaction = $transaction;
+        }
 
         $params = $this->getRequestParams($requestType, $transaction);
 
@@ -474,6 +479,9 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     /**
      * Get array of params for CREATESCURETOKEN request
      *
+     * @param string                                  $requestType Request type
+     * @param \XLite\Model\Payment\BackendTransaction $transaction Backend transaction object
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -505,10 +513,10 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     protected function getCommonRequestParams()
     {
         return array(
-            'VENDOR' => \XLite\Core\Config::getInstance()->CDev->Paypal->vendor,
-            'USER' => \XLite\Core\Config::getInstance()->CDev->Paypal->user ?: \XLite\Core\Config::getInstance()->CDev->Paypal->vendor,
-            'PWD' => \XLite\Core\Config::getInstance()->CDev->Paypal->pwd,
-            'PARTNER' => \XLite\Core\Config::getInstance()->CDev->Paypal->partner ?: 'Paypal',
+            'VENDOR' => $this->getSetting('vendor'),
+            'USER' => $this->getSetting('user') ?: $this->getSetting('vendor'),
+            'PWD' => $this->getSetting('pwd'),
+            'PARTNER' => $this->getSetting('partner') ?: 'Paypal',
             'BUTTONSOURCE' => 'Qualiteam_Cart_LC_PHS',
             'VERBOSITY' => 'HIGH',
         );
@@ -526,7 +534,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         $postData = array(
             'CREATESECURETOKEN' => 'Y',
             'SECURETOKENID'     => $this->getSecureTokenId(),
-            'TRXTYPE'           => \XLite\Core\Config::getInstance()->CDev->Paypal->transaction_type,
+            'TRXTYPE'           => $this->getSetting('transaction_type'),
             'AMT'               => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
             'ITEMAMT'           => $this->getLineItems($lineItems),
             'BILLTOFIRSTNAME'   => $this->getProfile()->getBillingAddress()->getFirstname(),

@@ -57,4 +57,22 @@ XLite\Model\Payment\Method:
       - name: mode
       - name: address_override
 
+  - service_name: ExpressCheckout
+    class: 'Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout'
+    translations:
+      - code: en
+        name: 'Paypal Express Checkout'
+    settings:
+      - name: vendor
+      - name: user
+      - name: pwd
+      - name: partner
+        value: Paypal
+      - name: prefix
+        value: mystore_
+      - name: transaction_type
+        value: S
+      - name: test
+        value: Y
+
 

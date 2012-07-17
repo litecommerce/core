@@ -206,8 +206,8 @@ class PaypalAdvanced extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\A
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
         return parent::isConfigured($method)
-            && !empty(\XLite\Core\Config::getInstance()->CDev->Paypal->vendor)
-            && !empty(\XLite\Core\Config::getInstance()->CDev->Paypal->pwd)
+            && $method->getSetting('vendor')
+            && $method->getSetting('pwd')
             && $this->isMerchantCountryAllowed();
     }
 

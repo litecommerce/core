@@ -140,4 +140,29 @@ abstract class Main extends \XLite\Module\AModule
             $msg
         );
     }
+
+    /**
+     * Returns true if ExpressCheckout payment is enabled 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public static function isExpressCheckoutEnabled()
+    {
+        static $result;
+
+        if (!isset($result)) {
+            $paymentMethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
+                ->findOneBy(
+                    array(
+                        'service_name' => 'ExpressCheckout',
+                        'enabled'      => true
+                    )
+                );
+            $result = !empty($paymentMethod) && $paymentMethod->isEnabled();
+        }
+
+        return $result;
+    }
 }
