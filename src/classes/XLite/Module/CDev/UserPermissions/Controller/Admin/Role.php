@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\UserPermissions\Controller\Admin;
  * @see   ____class_see____
  * @since 1.0.17
  */
-class Role extends \XLite\COntroller\Admin\AAdmin
+class Role extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters
