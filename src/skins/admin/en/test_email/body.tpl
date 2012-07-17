@@ -34,7 +34,7 @@
 
     <tr>
       <td>{t(#Email body#)}</td>
-      <td><widget class="\XLite\View\FormField\Textarea\Simple" fieldName="test_email_body" /></td>
+      <td><widget class="\XLite\View\FormField\Textarea\Simple" fieldName="test_email_body" fieldOnly="true" /></td>
     </tr>
 
   </table>

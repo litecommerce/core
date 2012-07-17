@@ -1078,7 +1078,7 @@ CommonElement.prototype.toggleActivity = function(condition)
 // Check element activity
 CommonElement.prototype.isEnabled = function()
 {
-  return this.$element.hasClass('disabled');
+  return !this.$element.hasClass('disabled');
 }
 
 // Disable element
