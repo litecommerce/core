@@ -1853,7 +1853,7 @@ form.list-form {
   padding-right: 47px;
 }
 
-sticky-panel.has-add-buttons .additional {
+.sticky-panel.has-add-buttons .additional {
   position: absolute;
   top: 4px;
   right: -26px;
