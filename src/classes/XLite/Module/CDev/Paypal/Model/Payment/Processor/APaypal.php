@@ -110,6 +110,17 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         return self::RETURN_TYPE_HTML_REDIRECT_WITH_IFRAME_DESTROYING;
     }
 
+    protected function isSuccessResponse($response, $transactionType)
+    {
+        $result = in_array($response['PENDINGREASON'], array('none', 'completed'));
+
+        if (!$result) {
+            $result = ('authorization' == $response['PENDINGREASON'] && \XLite\Model\Payment\BackendTransaction::AUTH == $transactionType);
+        }
+
+        return $result;
+    }
+
     /**
      * Get initial transaction type (used when customer places order)
      *
@@ -408,7 +419,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @see    ____func_see____
      * @since  1.0.24
      */
-    protected function doRequest($requestType, $transaction = null)
+    protected function doRequest($requestType, $transaction = null, $customParams = array())
     {
         $responseData = array();
 
@@ -416,7 +427,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             $this->transaction = $transaction;
         }
 
-        $params = $this->getRequestParams($requestType, $transaction);
+        $params = $this->getRequestParams($requestType, $transaction, $customParams);
 
         $request = new \XLite\Core\HTTP\Request($this->getPostURL());
         $request->body = $params;
@@ -486,11 +497,11 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getRequestParams($requestType, $transaction = null)
+    protected function getRequestParams($requestType, $transaction = null, $customParams = array())
     {
         $methodName = 'get' . $requestType . 'RequestParams';
 
-        $postData = $this->$methodName($transaction) + $this->getCommonRequestParams();
+        $postData = $this->$methodName($transaction, $customParams) + $this->getCommonRequestParams();
 
         $data = array();
 
@@ -536,7 +547,6 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             'SECURETOKENID'     => $this->getSecureTokenId(),
             'TRXTYPE'           => $this->getSetting('transaction_type'),
             'AMT'               => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
-            'ITEMAMT'           => $this->getLineItems($lineItems),
             'BILLTOFIRSTNAME'   => $this->getProfile()->getBillingAddress()->getFirstname(),
             'BILLTOLASTNAME'    => $this->getProfile()->getBillingAddress()->getLastname(),
             'BILLTOSTREET'      => $this->getProfile()->getBillingAddress()->getStreet(),
@@ -574,7 +584,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             'CURRENCY'          => $this->getCurrencyCode(),
         );
 
-        $postData = $postData + $lineItems;
+        $postData = $postData + $this->getLineItems();
 
         return $postData;
     }
@@ -591,7 +601,9 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     protected function getLineItems(&$lineItems)
     {
         $lineItems = array();
-        $itemsSubtotal = 0;
+
+        $itemsSubtotal  = 0;
+        $itemsTaxAmount = 0;
 
         $items = $this->getOrder()->getItems();
 
@@ -602,12 +614,20 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
                 $lineItems['L_NAME' . $index] = $item->getProduct()->getTranslation()->name;
                 $lineItems['L_SKU' . $index] = $item->getProduct()->getSku();
                 $lineItems['L_QTY' . $index] = $item->getAmount();
+                //$lineItems['L_TAXAMT' . $index] = $this->getOrder()->getCurrency()->roundValue($item->getTaxValue());
                 $itemsSubtotal = $lineItems['L_COST' . $index] * $lineItems['L_QTY' . $index];
+                //$itemsTaxAmount = $lineItems['L_TAXAMT' . $index] * $lineItems['L_QTY' . $index];
                 $index ++;
+            }
+
+            $items += array('ITEMAMT' => $itemsSubtotal);
+
+            if ($itemsTaxAmount > 0) {
+                $items += array('TAXAMT'  => $itemsTaxAmount);
             }
         }
 
-        return $itemsSubtotal;
+        return $items;
     }
 
     /**
@@ -739,5 +759,25 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         );
 
         return $params;
+    }
+
+    /**
+     * Update status of backend transaction related to an initial payment transaction
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction Payment transaction
+     * @param string                           $status      Transaction status
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function updateInitialBackendTransaction(\XLite\Model\Payment\Transaction $transaction, $status)
+    {
+        $backendTransaction = $transaction->getInitialBackendTransaction();
+
+        if (isset($backendTransaction)) {
+            $backendTransaction->setStatus($status);
+            $this->saveDataFromRequest($backendTransaction);            
+        }
     }
 }

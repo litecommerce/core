@@ -33,21 +33,22 @@ namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
  * @see   ____class_see____
  * @since 1.0.1
  */
-class ExpressCheckout extends \XLite\Model\Payment\Base\WebBased
+class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APaypal
 {
     const PAYPAL_PAYMENT_METHOD_CODE = 'Paypal Express Checkout';
 
     /**
-     * Mode value for testing
+     * Request types definition
      */
-    const TEST_MODE = 'test';
+    const REQ_TYPE_SET_EXPRESS_CHECKOUT         = 'SetExpressCheckout';
+    const REQ_TYPE_GET_EXPRESS_CHECKOUT_DETAILS = 'GetExpressCheckoutDetails';
+    const REQ_TYPE_DO_EXPRESS_CHECKOUT_PAYMENT  = 'DoExpressCheckoutPayment';
 
-    /**
-     * IPN statuses
-     */
-    const IPN_VERIFIED = 'verify';
-    const IPN_DECLINED = 'decline';
-    const IPN_REQUEST_ERROR = 'request_error';
+    const EC_TYPE_SHORTCUT = 'shortcut';
+    const EC_TYPE_MARK     = 'mark';
+
+
+    protected $ecPostURL = 'https://www.paypal.com/cgi-bin/webscr';
 
 
     /**
@@ -72,108 +73,6 @@ class ExpressCheckout extends \XLite\Model\Payment\Base\WebBased
     public function getSettingsTemplateDir()
     {
         return 'modules/CDev/Paypal/settings/express_checkout';
-    }
-
-    /**
-     * Process callback
-     *
-     * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function processCallback(\XLite\Model\Payment\Transaction $transaction)
-    {
-        parent::processCallback($transaction);
-
-        $request = \XLite\Core\Request::getInstance();
-
-        $status = $transaction::STATUS_FAILED;
-
-        switch ($this->getIPNVerification()) {
-
-            case self::IPN_DECLINED:
-                $status = $transaction::STATUS_FAILED;
-                $this->markCallbackRequestAsInvalid(static::t('IPN verification failed'));
-
-                break;
-
-            case self::IPN_REQUEST_ERROR:
-                $status = $transaction::STATUS_PENDING;
-                $this->markCallbackRequestAsInvalid(static::t('IPN HTTP error'));
-
-                break;
-
-            case self::IPN_VERIFIED:
-
-                switch ($request->payment_status) {
-                    case 'Completed':
-
-                        if ($transaction->getValue() == $request->mc_gross) {
-
-                            $status = $transaction::STATUS_SUCCESS;
-
-                        } else {
-
-                            $status = $transaction::STATUS_FAILED;
-
-                            $this->setDetail(
-                                'amount_error',
-                                'Payment transaction\'s amount is corrupted' . PHP_EOL
-                                . 'Amount from request: ' . $request->mc_gross . PHP_EOL
-                                . 'Amount from transaction: ' . $transaction->getValue(),
-                                'Hacking attempt'
-                            );
-
-                            $this->markCallbackRequestAsInvalid(static::t('Transaction amount mismatch'));
-                        }
-
-                        break;
-
-                    case 'Pending':
-                        $status = $transaction::STATUS_PENDING;
-                        break;
-
-                    default:
-
-                }
-
-            default:
-
-        }
-
-        $this->saveDataFromRequest();
-
-        $this->transaction->setStatus($status);
-    }
-
-    /**
-     * Process return
-     *
-     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
-     */
-    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
-    {
-        parent::processReturn($transaction);
-
-        if (\XLite\Core\Request::getInstance()->cancel) {
-
-            $this->setDetail(
-                'cancel',
-                'Payment transaction is cancelled'
-            );
-
-            $this->transaction->setStatus($transaction::STATUS_FAILED);
-
-        } elseif ($transaction::STATUS_INPROGRESS == $this->transaction->getStatus()) {
-
-            $this->transaction->setStatus($transaction::STATUS_PENDING);
-        }
     }
 
     /**
@@ -222,261 +121,249 @@ class ExpressCheckout extends \XLite\Model\Payment\Base\WebBased
     }
 
     /**
-     * Return URL for IPN verification transaction
-     *
+     * Perform 'SetExpressCheckout' request and get Token value from Paypal
+     * 
      * @return string
      * @see    ____func_see____
-     * @since  1.0.1
+     * @since  1.1.0
      */
-    protected function getIPNURL()
+    public function doSetExpressCheckout()
     {
-        return $this->getFormURL() . '?cmd=_notify-validate';
+        $token = null;
+
+        $responseData = $this->doRequest(self::REQ_TYPE_SET_EXPRESS_CHECKOUT);
+
+        if (!empty($responseData['TOKEN'])) {
+            $token = $token = $responseData['TOKEN'];
+        }
+
+        return $token;
     }
 
     /**
-     * Get IPN verification status
-     *
-     * @return boolean TRUE if verification status is received
+     * Redirect customer to Paypal server for authorization and address selection
+     * 
+     * @param string $token Express Checkout token
+     *  
+     * @return void
      * @see    ____func_see____
-     * @since  1.0.1
+     * @since  1.1.0
      */
-    protected function getIPNVerification()
+    public function redirectToPaypal($token, $type = self::EC_TYPE_SHORTCUT)
     {
-        $ipnRequest = new \XLite\Core\HTTP\Request($this->getIPNURL());
-        $ipnRequest->body = \XLite\Core\Request::getInstance()->getData();
+        $url = $this->getPostURL($this->ecPostURL, $this->getPostParams($token, $type));
 
-        $ipnResult = $ipnRequest->sendRequest();
+        $page = <<<HTML
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body onload="javascript: self.location = '$url';">
+</body>
+</html>
+HTML;
 
-        if ($ipnResult) {
+        print ($page);
+        exit ();
+    }
 
-            $result =  (0 < preg_match('/VERIFIED/i', $ipnResult->body))
-                    ? self::IPN_VERIFIED
-                    : self::IPN_DECLINED;
-        } else {
-            $result = self::IPN_REQUEST_ERROR;
+    /**
+     * Get array of parameters for redirecting customer to Paypal server
+     * 
+     * @param string $token Express Checkout token
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function getPostParams($token, $type = self::EC_TYPE_SHORTCUT)
+    {
+        return array(
+            'cmd' => '_express_checkout',
+            'token' => $token,
+            'useraction' => (self::EC_TYPE_MARK == $type ? 'commit' : 'continue'),
+        );
+    }
 
-            $this->setDetail(
-                'ipn_http_error',
-                'IPN HTTP error:'
+    /**
+     * Get array of parameters for SET_EXPRESS_CHECKOUT request
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSetExpressCheckoutRequestParams($type = self::EC_TYPE_SHORTCUT)
+    {
+        $postData = array(
+            'TRXTYPE'           => $this->getSetting('transaction_type'),
+            'TENDER'            => 'P',
+            'ACTION'            => 'S',
+            'RETURNURL'         => urldecode($this->getECReturnURL(null, true)),
+            'CANCELURL'         => urldecode($this->getECReturnURL(null, true, true)),
+            'AMT'               => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
+            'CURRENCY'          => $this->getCurrencyCode(),
+            'FREIGHTAMT'        => $this->getOrder()->getCurrency()->roundValue($this->getOrder()->getSurchargeSumByType('SHIPPING')),
+            'HANDLINGAMT'       => 0,
+            'INSURANCEAMT'      => 0,
+            'NOSHIPPING'        => 0,
+            'INVNUM'            => $this->getOrder()->getOrderId(),
+            'ALLOWNOTE'         => 1,
+            'CUSTOM'            => $this->getOrder()->getOrderId(),
+            'LOCALECODE'        => 'EN',
+            // 'HDRIMG', // The URL for an image to be used as the header image for the PayPal Express Checkout pages
+            'PAYFLOWCOLOR'      => 'FF0000', // The secondary gradient color for the order summary section of the PayPal Express Checkout pages
+        );
+
+        $postData = $postData + $this->getLineItems();
+
+        if (self::EC_TYPE_SHORTCUT == $type) {
+            $postData['REQCONFIRMSHIPPING'] = 0;
+
+        } elseif (self::EC_TYPE_MARK == $type) {
+            $postData += array(
+                'ADDROVERRIDE'      => 'N',
+                'PHONENUM'    => $this->getProfile()->getBillingAddress()->getPhone(),
+                'EMAIL'       => $this->getProfile()->getLogin(),
+                'SHIPTONAME'        => $this->getProfile()->getShippingAddress()->getFirstname() . $this->getProfile()->getShippingAddress()->getLastname(),
+                'SHIPTOSTREET'      => $this->getProfile()->getShippingAddress()->getStreet(),
+                'SHIPTOSTREET2'     => '',
+                'SHIPTOCITY'        => $this->getProfile()->getShippingAddress()->getCity(),
+                'SHIPTOSTATE'       => $this->getProfile()->getShippingAddress()->getState()->getCode(),
+                'SHIPTOZIP'         => $this->getProfile()->getShippingAddress()->getZipcode(),
+                'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode3(),
             );
         }
 
-        return $result;
+        return $postData;
     }
 
     /**
-     * Get redirect form URL
-     *
-     * @return string
+     * processReturnFromExpressCheckout 
+     * 
+     * @param mixed $token ____param_comment____
+     *  
+     * @return void
      * @see    ____func_see____
-     * @since  1.0.1
+     * @since  1.1.0
      */
-    protected function getFormURL()
+    public function doGetExpressCheckoutDetails($token)
     {
-        return $this->isTestMode()
-            ? 'https://www.sandbox.paypal.com/cgi-bin/webscr'
-            : 'https://www.paypal.com/cgi-bin/webscr';
-    }
+        $data = array();
 
-    /**
-     * Return TRUE if the test mode is ON
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.1
-     */
-    protected function isTestMode()
-    {
-        return \XLite\View\FormField\Select\TestLiveMode::TEST === $this->getSetting('mode');
-    }
+        $params = array('token' => $token);
 
+        $responseData = $this->doRequest(self::REQ_TYPE_GET_EXPRESS_CHECKOUT_DETAILS, $params);
 
-    /**
-     * Return ITEM NAME for request
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
-     */
-    protected function getItemName()
-    {
-        return $this->getSetting('description') . '(Order #' . $this->getOrder()->getOrderId() . ')';
-    }
-
-    /**
-     * Get redirect form fields list
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.1
-     */
-    protected function getFormFields()
-    {
-        $orderId = $this->getOrder()->getOrderId();
-
-        $fields = array(
-            'charset'       => 'UTF-8',
-            'cmd'           => '_ext-enter',
-            'custom'        => $orderId,
-            'invoice'       => $this->getSetting('prefix') . $orderId,
-            'redirect_cmd'  => '_xclick',
-            'item_name'     => $this->getItemName(),
-            'rm'            => '2',
-            'email'         => $this->getProfile()->getLogin(),
-            'first_name'    => $this->getProfile()->getBillingAddress()->getFirstname(),
-            'last_name'     => $this->getProfile()->getBillingAddress()->getLastname(),
-            'business'      => $this->getSetting('account'),
-            'amount'        => $this->getAmountValue(),
-            'tax_cart'      => 0,
-            'shipping'      => 0,
-            'handling'      => 0,
-            'weight_cart'   => 0,
-            'currency_code' => $this->getOrder()->getCurrency()->getCode(),
-
-            'return'        => $this->getReturnURL(null, true),
-            'cancel_return' => $this->getReturnURL(null, true, true),
-            'shopping_url'  => $this->getReturnURL(null, true, true),
-            'notify_url'    => $this->getCallbackURL(null, true),
-
-            'country'       => $this->getCountryFieldValue(),
-            'state'         => $this->getStateFieldValue(),
-            'address1'      => $this->getProfile()->getBillingAddress()->getStreet(),
-            'address2'      => 'n/a',
-            'city'          => $this->getProfile()->getBillingAddress()->getCity(),
-            'zip'           => $this->getProfile()->getBillingAddress()->getZipcode(),
-            'upload'        => 1,
-            'bn'            => 'LiteCommerce',
-        );
-
-        if ('Y' === $this->getSetting('address_override')) {
-            $fields['address_override'] = 1;
+        if (!empty($responseData) && '0' == $responseData['RESULT']) {
+            $data = $responseData;
         }
 
-        $fields = array_merge($fields, $this->getPhone());
-
-        return $fields;
+        return $data;
     }
 
     /**
-     * Return amount value. Specific for Paypal
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.11
-     */
-    protected function getAmountValue()
-    {
-        $value = $this->transaction->getValue();
-
-        settype($value, 'float');
-
-        $value = sprintf('%0.2f', $value);
-
-        return $value;
-    }
-
-    /**
-     * Return Country field value. if no country defined we should use '' value
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.5
-     */
-    protected function getCountryFieldValue()
-    {
-        return $this->getProfile()->getBillingAddress()->getCountry()
-            ? $this->getProfile()->getBillingAddress()->getCountry()->getCode()
-            : '';
-    }
-
-    /**
-     * Return State field value. If country is US then state code must be used.
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.5
-     */
-    protected function getStateFieldValue()
-    {
-        return 'US' === $this->getCountryFieldValue()
-            ? $this->getProfile()->getBillingAddress()->getState()->getCode()
-            : $this->getProfile()->getBillingAddress()->getState()->getState();
-    }
-
-    /**
-     * Return Phone structure. specific for Paypal
+     * Return array of parameters for 'GetExpressCheckoutDetails' request 
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.1
+     * @since  1.0.0
      */
-    protected function getPhone()
+    protected function getGetExpressCheckoutDetailsRequestParams($transaction = null, $customParams = array())
     {
-        $result = array();
+        $params = array(
+            'TRXTYPE' => $this->getSetting('transaction_type'),
+            'TENDER' => 'P',
+            'ACTION' => 'G',
+            'TOKEN' => $customParams['token'],
+        );
 
-        $phone = $this->getProfile()->getBillingAddress()->getPhone();
+        return $params;
+    }
 
-        $phone = preg_replace('![^\d]+!', '', $phone);
 
-        if ($phone) {
-            if (
-                $this->getProfile()->getBillingAddress()->getCountry()
-                && 'US' == $this->getProfile()->getBillingAddress()->getCountry()->getCode()
-            ) {
-                $result = array(
-                    'night_phone_a' => substr($phone, -10, -7),
-                    'night_phone_b' => substr($phone, -7, -4),
-                    'night_phone_c' => substr($phone, -4),
-                );
+    protected function doInitialPayment()
+    {
+        if ('EC_TYPE_MARK' == $this->getCart()->get('ec_type')) {
+            
+        }
+
+        $this->transaction->createBackendTransaction($this->getInitialTransactionType());
+
+        $status = $this->doExpressCheckoutPayment();
+
+        return $status;
+    }
+
+    protected function doExpressCheckoutPayment()
+    {
+        $status = self::FAILED;
+
+        $transaction = $this->transaction;
+
+        $responseData = $this->doRequest(self::REQ_TYPE_DO_EXPRESS_CHECKOUT_PAYMENT);
+
+        $transactionStatus = $transaction::STATUS_FAILED;
+
+        if (!empty($responseData) && '0' == $responseData['RESULT']) {
+            
+            if ($this->isSuccessResponse($responseData)) {
+                $transactionStatus = $transaction::STATUS_SUCCESS;
+                $status = self::SUCCESS;
+
             } else {
-                $result['night_phone_b'] = substr($phone, -10);
+                $transactionStatus = $transaction::STATUS_PENDING;
+                $status = self::PENDING;
             }
         }
 
-        return $result;
+        $transaction->setStatus($transactionStatus);
+
+        $this->updateInitialBackendTransaction($transaction, $transactionStatus);
+
+        return $status;
     }
 
     /**
-     * Define saved into transaction data schema
+     * Return array of parameters for 'DoExpressCheckoutPayment' request 
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.1
+     * @since  1.0.0
      */
-    protected function defineSavedData()
+    protected function getDoExpressCheckoutPaymentRequestParams($transaction = null, $customParams = array())
     {
-        return array(
-            'secureid'          => 'Transaction id',
-            'mc_gross'          => 'Payment amount',
-            'payment_type'      => 'Payment type',
-            'payment_status'    => 'Payment status',
-            'pending_reason'    => 'Pending reason',
-            'reason_code'       => 'Reason code',
-            'mc_currency'       => 'Payment currency',
-            'auth_id'           => 'Authorization identification number',
-            'auth_status'       => 'Status of authorization',
-            'auth_exp'          => 'Authorization expiration date and time',
-            'auth_amount'       => 'Authorization amount',
-            'payer_id'          => 'Unique customer ID',
-            'payer_email'       => 'Customer\'s primary email address',
-            'txn_id'            => 'Original transaction identification number',
+        $params = array(
+            'TRXTYPE'      => $this->getSetting('transaction_type'),
+            'TENDER'       => 'P',
+            'ACTION'       => 'D',
+            'TOKEN'        => $this->getOrder()->get('ec_token'),
+            'PAYERID'      => $this->getOrder()->get('ec_payer_id'),
+            'AMT'          => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
+            'CURRENCY'     => $this->getCurrencyCode(),
+            'FREIGHTAMT'   => $this->getOrder()->getCurrency()->roundValue($this->getOrder()->getSurchargeSumByType('SHIPPING')),
+            'HANDLINGAMT'  => 0,
+            'INSURANCEAMT' => 0,
+            'NOTIFYURL'    => $this->getCallbackURL(null, true),
+            'INVNUM'       => $this->getOrder()->getOrderId(),
+            'ALLOWNOTE'    => 1,
+            'CUSTOM'       => $this->getOrder()->getOrderId(),
         );
+
+        $params += $this->getLineItems();
+
+        return $params;
     }
 
-    /**
-     * Log redirect form
-     *
-     * @param array $list Form fields list
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.1
-     */
-    protected function logRedirect(array $list)
-    {
-        $list = $this->maskCell($list, 'account');
 
-        parent::logRedirect($list);
+    protected function getECReturnURL($asCancel = false)
+    {
+        $params = $asCancel ? array('cancel' => 1) : array();
+
+        return \XLite::getInstance()->getShopURL(
+            \XLite\Core\Converter::buildURL('checkout', 'express_checkout_return', $params),
+            \XLite\Core\Config::getInstance()->Security->customer_security
+        );
     }
 
     /**

@@ -49,7 +49,7 @@ XLite\Model\Payment\Method:
     class: 'Module\CDev\Paypal\Model\Payment\Processor\PaypalWPS'
     translations:
       - code: en
-        name: 'Paypal Website Payments Standard'
+        name: 'Paypal Standard'
     settings:
       - name: account
       - name: description

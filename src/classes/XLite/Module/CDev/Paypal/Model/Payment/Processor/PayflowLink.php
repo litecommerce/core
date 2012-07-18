@@ -183,16 +183,6 @@ class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APay
         }
     }
 
-    public function updateInitialBackendTransaction(\XLite\Model\Payment\Transaction $transaction, $status)
-    {
-        $backendTransaction = $transaction->getInitialBackendTransaction();
-
-        if (isset($backendTransaction)) {
-            $backendTransaction->setStatus($status);
-            $this->saveDataFromRequest($backendTransaction);            
-        }
-    }
-
     /**
      * Check - payment method is configured or not
      *
@@ -261,6 +251,8 @@ class PayflowLink extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APay
         $data['RESPMSG']   = 'Transaction result message (RESPMSG)';
 
         $data['CORRELATIONID'] = 'Tracking ID'; // Can be provided to PayPal Merchant Technical Services to assist with debugging transactions.
+        $data['FEEAMT']        = 'Transaction fee'; // Fee amount charged to the merchant by PayPal for this transaction
+        $data['PENDINGREASON'] = 'Pending reason'; // Reason why the payment is pending
 
         return $data;
     }
