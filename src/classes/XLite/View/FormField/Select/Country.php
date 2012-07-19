@@ -150,13 +150,8 @@ class Country extends \XLite\View\FormField\Select\Regular
      */
     protected function getOptions()
     {
-        $list = parent::getOptions();
-
-        if (!$this->getValue()) {
-            $list = array('' => 'Select one...') + $list;
-        }
-
-        return $list;
+        return array('' => 'Select one...')
+            + parent::getOptions();
     }
 
     /**

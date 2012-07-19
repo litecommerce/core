@@ -223,23 +223,18 @@ abstract class Image extends \XLite\Model\Base\Storage
 
         $url = $this->getResizedPublicURL($size, $name);
 
-        if ($this->isResizedIconAvailable($path)) {
-            list($newWidth, $newHeight) = \XLite\Core\ImageOperator::getCroppedDimensions(
-                $this->getWidth(),
-                $this->getHeight(),
-                $width,
-                $height
-            );
+        list($newWidth, $newHeight) = \XLite\Core\ImageOperator::getCroppedDimensions(
+            $this->getWidth(),
+            $this->getHeight(),
+            $width,
+            $height
+        );
 
-        } else {
-            $result = $this->resizeIcon($width, $height, $path);
+        if (!$this->isResizedIconAvailable($path)) {
 
-            if ($result) {
-                list($newWidth, $newHeight) = $result;
+            $result = $this->resizeIcon($newWidth, $newHeight, $path);
 
-            } else {
-                $newWidth = $width;
-                $newHeight = $height;
+            if (!$result) {
 
                 $url = $this->getURL();
             }

@@ -216,15 +216,8 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      */
     public function resizeDown($width = null, $height = null)
     {
-        list($newWidth, $newHeight) = self::getCroppedDimensions(
-            $this->width,
-            $this->height,
-            $width,
-            $height
-        );
-
-        return ($newWidth != $this->width || $newHeight != $this->height)
-            ? array($newWidth, $newHeight, $this->resize($newWidth, $newHeight))
-            : array($newWidth, $newHeight, false);
+        return ($width != $this->width || $height != $this->height)
+            ? array($width, $height, $this->resize($width, $height))
+            : array($width, $height, false);
     }
 }

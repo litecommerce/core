@@ -846,6 +846,15 @@ table.form input[type="text"]
   display: none;
 }
 
+.general-settings ul.table .table-label
+{
+  width: 40%;
+}
+
+.general-settings ul.table .table-value {
+  width: 50%;
+}
+
 /* Buttons */
 
 div.buttons

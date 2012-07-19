@@ -202,8 +202,7 @@ class Markup extends \XLite\Model\Repo\ARepo
     {
         $qb = $this->createQueryBuilder('m')
             ->addSelect('sm')
-            ->innerJoin('m.shipping_method', 'sm')
-            ->andWhere('sm.enabled = 1');
+            ->innerJoin('m.shipping_method', 'sm');
 
         if (isset($zoneId)) {
             $qb->innerJoin('m.zone', 'zone')
