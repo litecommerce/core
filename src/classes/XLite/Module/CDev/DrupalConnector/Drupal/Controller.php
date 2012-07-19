@@ -467,7 +467,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     {
         return array(
             'group' => CSS_DEFAULT,
-            'media' => $file['media'],
+            'media' => empty($file['media']) ? 'all' : $file['media'],
         );
     }
 

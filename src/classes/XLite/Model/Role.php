@@ -130,37 +130,4 @@ class Role extends \XLite\Model\Base\I18n
         return $allowed;
     }
 
-    /**
-     * Check - specified permission (only one from list) is allowed
-     *
-     * @param string|array $code Permission code(s)
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
-     */
-    public function isPermissionAllowedOr($code)
-    {
-        $result = false;
-
-        $list = array();
-        foreach (func_get_args() as $code) {
-            if (is_array($code)) {
-                $list = array_merge($list, $code);
-
-            } else {
-                $list[] = $code;
-            }
-        }
-
-        foreach ($list as $code) {
-            if ($this->isPermissionAllowed($code)) {
-                $result = true;
-                break;
-            }
-        }
-
-        return $result;
-    }
-
 }

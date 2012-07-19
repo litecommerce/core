@@ -1830,7 +1830,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         $uname = ucfirst($name);
         $method = 'defineCalculated' . $uname . 'DQL';
         if (method_exists($this, $method) && !$queryBuilder->getFlag('calculated.' . $name)) {
-            $alias = $alias ?: $queryBuilder->getRootAlias();
+            $alias = $queryBuilder->getRootAlias();
             $queryBuilder->addSelect($this->$method($queryBuilder, $alias) . ' calculated' . $uname);
             $queryBuilder->setFlag('calculated.' . $name, true);
         }

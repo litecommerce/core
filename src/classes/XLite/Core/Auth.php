@@ -603,17 +603,15 @@ class Auth extends \XLite\Base
     /**
      * Check - specified permission is allowed or not
      *
-     * @param string|array $code Permission code(s)
-     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.17
      */
-    public function isPermissionAllowedOr($code)
+    public function isPermissionAllowedOr()
     {
         $profile = $this->getProfile();
 
-        return $profile && call_user_func_array(array($profile, __METHOD__), func_get_args());
+        return $profile && call_user_func_array(array($profile, 'isPermissionAllowedOr'), func_get_args());
     }
 
     // }}}
