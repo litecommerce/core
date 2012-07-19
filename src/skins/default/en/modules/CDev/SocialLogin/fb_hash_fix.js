@@ -11,5 +11,5 @@
  */
 
 if (window.location.hash == '#_=_') {
-  window.location = window.location.toString().replace(/#_=_/, '');
+  window.location.hash = '';
 }
