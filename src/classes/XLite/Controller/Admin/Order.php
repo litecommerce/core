@@ -37,7 +37,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.11
@@ -134,6 +134,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
     {
         $list = parent::getPages();
         $list['default'] = 'General info';
+        $list['history'] = 'History';
 
         return $list;
     }
@@ -149,6 +150,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
     {
         $list = parent::getPageTemplates();
         $list['default'] = 'order/info.tpl';
+        $list['history'] = 'order/history.tpl';
 
         return $list;
     }

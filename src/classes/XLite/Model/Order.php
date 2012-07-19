@@ -201,6 +201,18 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     protected $details;
 
     /**
+     * Order events queue
+     *
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\OrderHistoryEvents", mappedBy="order", cascade={"all"})
+     * @OrderBy   ({"name" = "ASC"})
+     */
+    protected $events;
+
+    /**
      * Order items
      *
      * @var   \Doctrine\Common\Collections\Collection
@@ -849,6 +861,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $status = $this->getStatus();
 
         $list = array(self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
+
+        \XLite\Core\OrderHistory::getInstance()->registerPlaceOrder($this->getOrderId());
 
         $send = \XLite\Core\Config::getInstance()->Email->enable_init_order_notif
             || \XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer;
@@ -1564,7 +1578,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Reinitialie currency
+     * Reinitialize currency
      *
      * @return void
      * @see    ____func_see____
@@ -1797,9 +1811,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function setStatus($value)
     {
-        if ($this->getStatus() != $value && !$this->isStatusChanged()) {
-            $this->oldStatus = $this->getStatus();
-        }
+        $this->oldStatus = $this->status != $value ? $this->status : null;
 
         $this->status = $value;
 
@@ -1851,6 +1863,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         foreach ($this->getStatusHandlers($old, $new) as $handler) {
             $this->{'process' . ucfirst($handler)}();
         }
+
+        \XLite\Core\OrderHistory::getInstance()->registerChangeStatusOrder($this->getOrderId(), $old, $new);
     }
 
     /**

@@ -322,8 +322,10 @@ class Mailer extends \XLite\Base\Singleton
         );
 
         static::sendProcessOrderAdmin();
+        \XLite\Core\OrderHistory::getInstance()->registerAdminEmailSent($order->getOrderId());
 
         static::sendProcessOrderCustomer($order);
+        \XLite\Core\OrderHistory::getInstance()->registerCustomerEmailSent($order->getOrderId());
     }
 
     /**
