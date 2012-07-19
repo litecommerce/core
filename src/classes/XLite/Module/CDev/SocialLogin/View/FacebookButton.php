@@ -39,28 +39,14 @@ class FacebookButton extends Button
 {
 
     /**
-     * Get auth provider name to display in customer area widgets
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
+     * Widget display name
      */
-    public function getName()
-    {
-        return 'Facebook';
-    }
-    
+    const DISPLAY_NAME = 'Facebook';
+
     /**
-     * Get path to auth provider icon
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
+     * Widget icon path
      */
-    public function getIconPath()
-    {
-        return 'modules/CDev/SocialLogin/icons/facebook.png';
-    }
+    const ICON_PATH = 'modules/CDev/SocialLogin/icons/facebook.png';
 
     /**
      * Returns an instance of auth provider

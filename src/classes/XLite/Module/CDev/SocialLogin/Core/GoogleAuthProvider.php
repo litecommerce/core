@@ -67,35 +67,7 @@ class GoogleAuthProvider extends AAuthProvider
     const SMALL_ICON_PATH = 'modules/CDev/SocialLogin/icons/google_small.png';
 
     /**
-     * Get unique auth provider name to distinguish it from others
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    public function getName()
-    {
-        return static::PROVIDER_NAME;
-    }
-
-    /**
-     * Get authorization request url
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    public function getAuthRequestUrl()
-    {
-        return static::AUTH_REQUEST_URL
-            . '?client_id=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_id
-            . '&redirect_uri=' . urlencode($this->getRedirectUrl())
-            . '&scope=' . static::AUTH_REQUEST_SCOPE
-            . '&response_type=code';
-    }
-
-    /**
-     * Concrete implementation must process authorization grant from resource owner
+     * Process authorization grant and return array with profile data
      * 
      * @return array Client information containing at least id and e-mail
      * @see    ____func_see____
@@ -103,83 +75,13 @@ class GoogleAuthProvider extends AAuthProvider
      */
     public function processAuth()
     {
-        $profile = array();
+        $profile = parent::processAuth();
 
-        $code = \XLite\Core\Request::getInstance()->code;
-
-        if (!empty($code)) {
-            $accessToken = $this->getAccessToken($code);
-
-            if ($accessToken) {
-                $request = new \XLite\Core\HTTP\Request($this->getProfileRequestUrl($accessToken));
-                $response = $request->sendRequest();
-
-                if (200 == $response->code) {
-                    $profile = json_decode($response->body, true);
-
-                    $profile['id'] = $profile['email'];
-                }
-            }
+        if (isset($profile['email'])) {
+            $profile['id'] = $profile['email'];
         }
 
         return $profile;
-    }
-
-    /**
-     * Check if auth provider has all options configured
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    public function isConfigured()
-    {
-        return !empty(\XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_id)
-            && !empty(\XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_secret);
-    }
-
-    /**
-     * Get path to small icon to display in header
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    public function getSmallIconPath()
-    {
-        return static::SMALL_ICON_PATH;
-    }
-
-    /**
-     * Get url to request access token
-     * 
-     * @param string $code Authorization code
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    protected function getTokenRequestUrl($code)
-    {
-        return static::TOKEN_REQUEST_URL
-            . '?client_id=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->fb_client_id
-            . '&redirect_uri=' . urlencode($this->getRedirectUrl())
-            . '&client_secret=' . \XLite\Core\Config::getInstance()->CDev->SocialLogin->fb_client_secret
-            . '&code=' . urlencode($code);
-    }
-
-    /**
-     * Get url used to access user profile info
-     * 
-     * @param string $accessToken Access token
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    protected function getProfileRequestUrl($accessToken)
-    {
-        return static::PROFILE_REQUEST_URL . '?access_token=' . urlencode($accessToken);
     }
 
     /**
@@ -196,8 +98,8 @@ class GoogleAuthProvider extends AAuthProvider
         $request = new \XLite\Core\HTTP\Request(static::TOKEN_REQUEST_URL);
         $request->body = array(
             'code'          => $code,
-            'client_id'     => \XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_id,
-            'client_secret' => \XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_secret,
+            'client_id'     => $this->getClientId(),
+            'client_secret' => $this->getClientSecret(),
             'redirect_uri'  => $this->getRedirectUrl(),
             'grant_type'    => 'authorization_code',
         );
@@ -211,5 +113,29 @@ class GoogleAuthProvider extends AAuthProvider
         }
 
         return $accessToken;
+    }
+
+    /**
+     * Get OAuth 2.0 client ID
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function getClientId()
+    {
+        return \XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_id;
+    }
+
+    /**
+     * Get OAuth 2.0 client secret
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function getClientSecret()
+    {
+        return \XLite\Core\Config::getInstance()->CDev->SocialLogin->gg_client_secret;
     }
 }

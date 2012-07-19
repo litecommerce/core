@@ -35,6 +35,7 @@ namespace XLite\Module\CDev\SocialLogin\Controller\Customer;
  */
 class SocialLogin extends \XLite\Controller\Customer\ACustomer
 {
+
     /**
      * Perform login action
      *
@@ -48,27 +49,27 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
 
         $requestProcessed = false;
 
-        foreach ($authProviders as $provider) {
-            if ($provider->detectAuth()) {
+        foreach ($authProviders as $authProvider) {
+            if ($authProvider->detectAuth()) {
 
-                $profileInfo = $provider->processAuth();
+                $profileInfo = $authProvider->processAuth();
 
                 if ($profileInfo && !empty($profileInfo['id']) && !empty($profileInfo['email'])) {
 
                     $profile = $this->getSocialLoginProfile(
                         $profileInfo['email'],
-                        $provider->getName(),
+                        $authProvider->getName(),
                         $profileInfo['id']
                     );
 
                     if ($profile) {
                         if ($profile->isEnabled()) {
                             \XLite\Core\Auth::getInstance()->loginProfile($profile);
-                            $this->setReturnURL($this->buildURL());
+                            $this->setAuthReturnURL($authProvider::STATE_PARAM_NAME);
 
                         } else {
                             \XLite\Core\TopMessage::addError('Profile is disabled');
-                            $this->setReturnURL($this->buildURL('login'));
+                            $this->setAuthReturnURL($authProvider::STATE_PARAM_NAME, true);
                         }
 
                     } else {
@@ -84,7 +85,7 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
                         }
 
                         \XLite\Core\TopMessage::addError($signInVia);
-                        $this->setReturnURL($this->buildURL('login'));
+                        $this->setAuthReturnURL($authProvider::STATE_PARAM_NAME, true);
                     }
 
                     $requestProcessed = true;
@@ -93,8 +94,8 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
         }
 
         if (!$requestProcessed) {
-            \XLite\Core\TopMessage::addError('We we\'re unable to process this request');
-            $this->setReturnURL($this->buildURL('login'));
+            \XLite\Core\TopMessage::addError('We were unable to process this request');
+            $this->setAuthReturnURL('', true);
         }
     }
 
@@ -136,5 +137,31 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
         }
 
         return $profile;
+    }
+
+    /**
+     * Set redirect URL
+     * 
+     * @param string $stateParamName Name of the state parameter containing
+     *      class name of the controller that initialized auth request OPTIONAL
+     * @param mixed  $failure        Indicates if auth process failed OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function setAuthReturnUrl($stateParamName = '', $failure = false)
+    {
+        $controller = \XLite\Core\Request::getInstance()->$stateParamName;
+
+        $redirectTo = $failure ? 'login' : '';
+
+        if ('XLite\Controller\Customer\Checkout' == $controller) {
+            $redirectTo = 'checkout';
+        } elseif ('XLite\Controller\Customer\Profile' == $controller) {
+            $redirectTo = 'profile';
+        }
+
+        $this->setReturnURL($this->buildURL($redirectTo));
     }
 }

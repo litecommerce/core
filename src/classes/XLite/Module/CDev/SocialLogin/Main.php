@@ -51,8 +51,8 @@ abstract class Main extends \XLite\Module\AModule
      * Get module major version
      *
      * @return string
-     * @see ____func_see____
-     * @since 1.0.0
+     * @see    ____func_see____
+     * @since  1.0.0
      */
     public static function getMajorVersion()
     {

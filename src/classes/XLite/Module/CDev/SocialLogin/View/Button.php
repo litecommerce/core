@@ -35,15 +35,10 @@ namespace XLite\Module\CDev\SocialLogin\View;
  */
 abstract class Button extends \XLite\View\AView
 {
-
     /**
-     * Get auth provider name to display in customer area widgets
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.24
+     * Widget icon path
      */
-    abstract public function getName();
+    const ICON_PATH = 'modules/CDev/SocialLogin/icons/default.png';
 
     /**
      * Returns an instance of auth provider
@@ -55,6 +50,18 @@ abstract class Button extends \XLite\View\AView
     abstract protected function getAuthProvider();
 
     /**
+     * Get widget display name
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getName()
+    {
+        return static::DISPLAY_NAME;
+    }
+    
+    /**
      * Get path to auth provider icon
      * 
      * @return string
@@ -63,7 +70,7 @@ abstract class Button extends \XLite\View\AView
      */
     public function getIconPath()
     {
-        return 'modules/CDev/SocialLogin/icons/default.png';
+        return static::ICON_PATH;
     }
 
     /**
@@ -92,7 +99,9 @@ abstract class Button extends \XLite\View\AView
      */
     public function getAuthRequestUrl()
     {
-        return $this->getAuthProvider()->getAuthRequestUrl();
+        $state = get_class(\XLite::getController());
+
+        return $this->getAuthProvider()->getAuthRequestUrl($state);
     }
 
     /**

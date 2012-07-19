@@ -41,40 +41,70 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
     const AUTH_PROVIDER_PARAM_NAME = 'auth_provider';
 
     /**
+     * State parameter is used to maintain state between the request and callback
+     */
+    const STATE_PARAM_NAME = 'state';
+
+    /**
+     * Get OAuth 2.0 client ID
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    abstract protected function getClientId();
+
+    /**
+     * Get OAuth 2.0 client secret
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    abstract protected function getClientSecret();
+
+    /**
+     * Get authorization request url
+     * 
+     * @param string $state State parameter to include in request
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getAuthRequestUrl($state)
+    {
+        return static::AUTH_REQUEST_URL
+            . '?client_id=' . $this->getClientId()
+            . '&redirect_uri=' . urlencode($this->getRedirectUrl())
+            . '&scope=' . static::AUTH_REQUEST_SCOPE
+            . '&response_type=code'
+            . '&' . static::STATE_PARAM_NAME . '=' . urlencode($state);
+    }
+
+    /**
      * Get unique auth provider name to distinguish it from others
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.24
      */
-    abstract public function getName();
+    public function getName()
+    {
+        return static::PROVIDER_NAME;
+    }
 
     /**
-     * Get authorization request url
+     * Get path to small icon to display in header
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.24
      */
-    abstract public function getAuthRequestUrl();
-
-    /**
-     * Concrete implementation must process authorization grant from resource owner
-     * 
-     * @return array Client information containing at least id and e-mail
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    abstract public function processAuth();
-
-    /**
-     * Check if auth provider has all options configured
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    abstract public function isConfigured();
+    public function getSmallIconPath()
+    {
+        return static::SMALL_ICON_PATH;
+    }
 
     /**
      * Check if current request belongs to the concrete implementation of auth provider
@@ -89,15 +119,76 @@ abstract class AAuthProvider extends \XLite\Base\Singleton
     }
 
     /**
-     * Get path to small icon to display in header
+     * Process authorization grant and return array with profile data
      * 
-     * @return void
+     * @return array Client information containing at least id and e-mail
      * @see    ____func_see____
      * @since  1.0.24
      */
-    public function getSmallIconPath()
+    public function processAuth()
     {
-        return '';
+        $profile = array();
+
+        $code = \XLite\Core\Request::getInstance()->code;
+
+        if (!empty($code)) {
+            $accessToken = $this->getAccessToken($code);
+            
+            if ($accessToken) {
+                $request = new \XLite\Core\HTTP\Request($this->getProfileRequestUrl($accessToken));
+                $response = $request->sendRequest();
+
+                if (200 == $response->code) {
+                    $profile = json_decode($response->body, true);
+                }
+            }
+        }
+
+        return $profile;
+    }
+
+    /**
+     * Check if auth provider has all options configured
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function isConfigured()
+    {
+        return $this->getClientId() && $this->getClientSecret();
+    }
+
+    /**
+     * Get url to request access token
+     * 
+     * @param string $code Authorization code
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getTokenRequestUrl($code)
+    {
+        return static::TOKEN_REQUEST_URL
+            . '?client_id=' . $this->getClientId()
+            . '&redirect_uri=' . urlencode($this->getRedirectUrl())
+            . '&client_secret=' . $this->getClientSecret()
+            . '&code=' . urlencode($code);
+    }
+
+    /**
+     * Get url used to access user profile info
+     * 
+     * @param string $accessToken Access token
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getProfileRequestUrl($accessToken)
+    {
+        return static::PROFILE_REQUEST_URL . '?access_token=' . urlencode($accessToken);
     }
 
     /**
