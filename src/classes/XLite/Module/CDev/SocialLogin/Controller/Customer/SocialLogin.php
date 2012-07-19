@@ -62,8 +62,14 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
                     );
 
                     if ($profile) {
-                        \XLite\Core\Auth::getInstance()->loginProfile($profile);
-                        $this->setReturnURL($this->buildURL());
+                        if ($profile->isEnabled()) {
+                            \XLite\Core\Auth::getInstance()->loginProfile($profile);
+                            $this->setReturnURL($this->buildURL());
+
+                        } else {
+                            \XLite\Core\TopMessage::addError('Profile is disabled');
+                            $this->setReturnURL($this->buildURL('login'));
+                        }
 
                     } else {
                         $provider = \XLite\Core\Database::getRepo('XLite\Model\Profile')
