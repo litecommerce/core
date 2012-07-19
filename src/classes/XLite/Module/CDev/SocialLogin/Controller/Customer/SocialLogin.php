@@ -73,7 +73,7 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
 
                     } else {
                         $provider = \XLite\Core\Database::getRepo('XLite\Model\Profile')
-                            ->findOneBy(array('login' => $profileInfo['email']))
+                            ->findOneBy(array('login' => $profileInfo['email'], 'order' => null))
                             ->getSocialLoginProvider();
 
                         if ($provider) {
@@ -115,6 +115,7 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
             array(
                 'socialLoginProvider'   => $socialProvider,
                 'socialLoginId'         => $socialId,
+                'order'              => null,
             )
         );
 
@@ -125,7 +126,7 @@ class SocialLogin extends \XLite\Controller\Customer\ACustomer
             $profile->setSocialLoginId($socialId);
 
             $existingProfile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
-                ->findOneBy(array('login' => $login));
+                ->findOneBy(array('login' => $login, 'order' => null));
 
             if ($existingProfile) {
                 $profile = null;

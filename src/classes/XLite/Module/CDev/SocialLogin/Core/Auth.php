@@ -49,7 +49,7 @@ class Auth extends \XLite\Core\Auth implements \XLite\Base\IDecorator
     public function login($login, $password, $secureHash = null)
     {
         $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findOneBy(
-            array('login' => $login)
+            array('login' => $login, 'order' => null)
         );
 
         if ($profile && $profile->isSocialProfile()) {
