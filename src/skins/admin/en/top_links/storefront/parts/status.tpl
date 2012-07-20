@@ -13,5 +13,5 @@
  *}
 
 {*** TODO: use actual status, when implemented ***}
-<li IF="!getCustomerZoneWarning()"><a class="text frontend-opened">{t(#Store is opened#)}</a></li>
+<li IF="!getCustomerZoneWarning()"><a class="text frontend-opened">{t(#Store is open#)}</a></li>
 <li IF="getCustomerZoneWarning()"><a class="text frontend-closed">{t(#Store is closed#)}</a></li>

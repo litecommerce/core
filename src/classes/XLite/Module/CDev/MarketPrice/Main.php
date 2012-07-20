@@ -92,7 +92,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'Add support for the product market price.';
+        return 'Adds support for the product market price.';
     }
 
     /**

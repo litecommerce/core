@@ -558,7 +558,7 @@ class Cell extends \XLite\Base\Singleton
     }
 
     /**
-     * Check if there is enpugh disk free space.
+     * Check if there is enough disk free space.
      * Return message on error
      *
      * @return string
