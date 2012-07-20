@@ -207,16 +207,16 @@ class Profile extends \XLite\Model\AEntity
     protected $order;
 
     /**
-     * Order events queue
+     * Relation to an event
      *
-     * @var   \Doctrine\Common\Collections\Collection
+     * @var   \XLite\Model\OrderHistoryEvents
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\OrderHistoryEvents", mappedBy="author", cascade={"all"})
-     * @OrderBy   ({"name" = "ASC"})
+     * @OneToMany   (targetEntity="XLite\Model\OrderHistoryEvents", mappedBy="author")
+     * @JoinColumn (name="event_id", referencedColumnName="event_id")
      */
-    protected $events;
+    protected $event;
 
     /**
      * Language code

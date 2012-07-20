@@ -208,7 +208,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\OrderHistoryEvents", mappedBy="order", cascade={"all"})
-     * @OrderBy   ({"name" = "ASC"})
      */
     protected $events;
 
@@ -702,6 +701,20 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Set old status of the order (not stored in the DB)
+     *
+     * @param string $status Status
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setOldStatus($status)
+    {
+        $this->oldStatus = $status;
+    }
+
+    /**
      * Get items list fingerprint
      *
      * @return string
@@ -913,6 +926,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $this->items                = new \Doctrine\Common\Collections\ArrayCollection();
         $this->surcharges           = new \Doctrine\Common\Collections\ArrayCollection();
         $this->payment_transactions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->events               = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }

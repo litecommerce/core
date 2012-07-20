@@ -114,7 +114,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Profile", cascade={"all"})
+     * @ManyToOne   (targetEntity="XLite\Model\Profile", inversedBy="event", cascade={"merge", "detach"})
      * @JoinColumn (name="author_id", referencedColumnName="profile_id")
      */
     protected $author;

@@ -76,13 +76,11 @@ class OrderHistoryEvents extends \XLite\Model\Repo\ARepo
         ));
 
         $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($orderId);
-        $profile = \XLite\Core\Auth::getInstance()->getProfile();
 
-        $event->setAuthor($profile);
+        $event->setAuthor(\XLite\Core\Auth::getInstance()->getProfile());
         $event->setOrder($order);
 
         $order->addEvents($event);
-        $profile->addEvents($event);
 
         $this->insert($event);
     }
