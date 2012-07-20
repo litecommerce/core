@@ -40,36 +40,135 @@ class OrderHistory extends \XLite\Base\Singleton
      */
     const CODE_PLACE_ORDER          = 'PLACE ORDER';
     const CODE_CHANGE_STATUS_ORDER  = 'CHANGE STATUS ORDER';
-    const CODE_CHANGE_ORDER         = 'CHANGE ORDER';
+    const CODE_CHANGE_NOTES_ORDER   = 'CHANGE NOTES ORDER';
     const CODE_EMAIL_CUSTOMER_SENT  = 'EMAIL CUSTOMER SENT';
     const CODE_EMAIL_ADMIN_SENT     = 'EMAIL ADMIN SENT';
     const CODE_TRANSACTION          = 'TRANSACTION';
 
+    /**
+     * Register event to the order history. Main point of action.
+     *
+     * @param integer $orderId
+     * @param string  $code
+     * @param string  $description
+     * @param string  $details
+     *
+     * @return void
+     */
     public function registerEvent($orderId, $code, $description, $details = '')
     {
         \XLite\Core\Database::getRepo('XLite\Model\OrderHistoryEvents')->registerEvent($orderId, $code, $description, $details);
     }
 
+    /**
+     * Register "Place order" event to the order history
+     *
+     * @param integer $orderId
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function registerPlaceOrder($orderId)
     {
         $this->registerEvent($orderId, static::CODE_PLACE_ORDER, 'Order was placed');
     }
 
-    public function registerChangeStatusOrder($orderId, $oldStatus, $newStatus)
+    /**
+     * Register changes of order in the order history
+     *
+     * @param integer $orderId
+     * @param array   $changes
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function registerOrderChanges($orderId, $changes)
     {
-        $this->registerEvent($orderId, static::CODE_CHANGE_STATUS_ORDER, 'Order status was changed from "' . $oldStatus . '" to "' . $newStatus . '"');
+        foreach ($changes as $name => $change) {
+
+            if (method_exists($this, 'registerOrderChange' . ucfirst($name))) {
+
+                $this->{'registerOrderChange' . ucfirst($name)}($orderId, $change);
+            }
+        }
     }
 
+    /**
+     * Register status order changes
+     *
+     * @param integer $orderId
+     * @param array   $change  old,new structure
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function registerOrderChangeStatus($orderId, $change)
+    {
+        $statuses = \XLite\Model\Order::getAllowedStatuses();
+
+        $this->registerEvent(
+            $orderId,
+            static::CODE_CHANGE_STATUS_ORDER,
+            'Order status was changed from "' . $statuses[$change['old']] . '" to "' . $statuses[$change['new']] . '"'
+        );
+    }
+
+    /**
+     * Register order notes changes
+     *
+     * @param integer $orderId
+     * @param array   $change  old,new structure
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function registerOrderChangeNotes($orderId, $change)
+    {
+        $this->registerEvent($orderId, static::CODE_CHANGE_NOTES_ORDER, 'Order notes was changed from "' . $change['old'] . '" to "' . $change['new'] . '"');
+    }
+
+    /**
+     * Register email sending to the customer
+     *
+     * @param integer $orderId
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function registerCustomerEmailSent($orderId)
     {
         $this->registerEvent($orderId, static::CODE_EMAIL_CUSTOMER_SENT, 'Email was sent to the customer');
     }
 
+    /**
+     * Register email sending to the admin in the order history
+     *
+     * @param integer $orderId
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function registerAdminEmailSent($orderId)
     {
         $this->registerEvent($orderId, static::CODE_EMAIL_ADMIN_SENT, 'Email was sent to the admin');
     }
 
+    /**
+     * Register transaction data to the order history
+     *
+     * @param integer $orderId
+     * @param string  $transactionData
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function registerTransaction($orderId, $transactionData)
     {
         $this->registerEvent($orderId, static::CODE_TRANSACTION, 'Transaction was made', $transactionData);

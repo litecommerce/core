@@ -142,7 +142,14 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
+        $changes = $this->getOrdersChanges();
+
         \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateInBatchById($this->getPostedData());
+
+        foreach ($changes as $orderId => $change) {
+
+            \XLite\Core\OrderHistory::getInstance()->registerOrderChanges($orderId, $change);
+        }
     }
 
     /**
@@ -200,6 +207,37 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
         \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName()} = $ordersSearch;
 
         $this->setReturnURL($this->buildURL('order_list', '', array('mode' => 'search')));
+    }
+
+    /**
+     * Get order changes from request
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getOrdersChanges()
+    {
+        $changes = array();
+
+        foreach ($this->getPostedData() as $orderId => $data) {
+
+            $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($orderId);
+
+            foreach ($data as $name => $value) {
+                $dataFromOrder = $order->{'get' . ucfirst($name)}();
+
+                if ($dataFromOrder !== $value) {
+
+                    $changes[$orderId][$name] = array(
+                        'old' => $dataFromOrder,
+                        'new' => $value,
+                    );
+                }
+            }
+        }
+
+        return $changes;
     }
 
     /**

@@ -1863,8 +1863,6 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         foreach ($this->getStatusHandlers($old, $new) as $handler) {
             $this->{'process' . ucfirst($handler)}();
         }
-
-        \XLite\Core\OrderHistory::getInstance()->registerChangeStatusOrder($this->getOrderId(), $old, $new);
     }
 
     /**

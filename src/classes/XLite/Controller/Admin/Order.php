@@ -95,12 +95,48 @@ class Order extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        $request = \XLite\Core\Request::getInstance();
+        $data = $this->getRequestData();
+        $orderId = \XLite\Core\Request::getInstance()->order_id;
 
-        return \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateById(
-            \XLite\Core\Request::getInstance()->order_id,
-            $this->getRequestData()
+        $changes = $this->getOrderChanges($orderId, $data);
+
+        \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateById(
+            $orderId,
+            $data
         );
+
+        \XLite\Core\OrderHistory::getInstance()->registerOrderChanges($orderId, $changes);
+    }
+
+    /**
+     * Return requested changes for the order
+     *
+     * @param integer $orderId Order identificator
+     * @param array   $data    Data to change
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getOrderChanges($orderId, array $data)
+    {
+        $changes = array();
+        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($orderId);
+
+        foreach ($data as $name => $value) {
+
+            $orderValue = $order->{'get' . ucfirst($name)}();
+
+            if ($orderValue !== $value) {
+
+                $changes[$name] = array(
+                    'old' => $orderValue,
+                    'new' => $value,
+                );
+            }
+        }
+
+        return $changes;
     }
 
     /**

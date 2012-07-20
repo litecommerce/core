@@ -54,6 +54,18 @@ class OrderHistoryEvents extends \XLite\Model\Repo\ARepo
         return $queryBuilder->getResult();
     }
 
+    /**
+     * Register event to the order
+     *
+     * @param integer $orderId Order identificator
+     * @param string  $code
+     * @param string  $description
+     * @param string  $details     OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function registerEvent($orderId, $code, $description, $details = '')
     {
         $event = new \XLite\Model\OrderHistoryEvents(array(
