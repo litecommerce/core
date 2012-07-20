@@ -190,7 +190,7 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
         $this->record['state'] = \XLite\Core\EventTask::STATE_STANDBY;
         \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->setEventState($this->getEventName(), $this->record);
 
-        $event = $this->getEventName();
+        $event = $this->getEventTaskName();
         \XLite\Core\EventTask::$event($this->arguments);
     }
 
@@ -205,6 +205,18 @@ abstract class Countable extends \XLite\Core\EventListener\AEventListener
     {
         $this->record['state'] = \XLite\Core\EventTask::STATE_FINISHED;
         \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->setEventState($this->getEventName(), $this->record);
-    }    
+    }
+
+    /**
+     * Get event task name 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getEventTaskName()
+    {
+        return $this->getEventName();
+    }
 }
 

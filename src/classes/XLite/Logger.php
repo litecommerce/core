@@ -354,6 +354,10 @@ class Logger extends \XLite\Base\Singleton
             . 'IP: ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'n/a') . PHP_EOL
             . PHP_EOL;
 
+        if ($useBackTrace) {
+            $message .= implode(PHP_EOL, $this->getBackTrace());
+        }
+
         @file_put_contents($path, $message, FILE_APPEND);
 
         return $path;
