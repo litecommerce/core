@@ -25,51 +25,25 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Checkout;
+namespace XLite\Controller\Customer;
 
 /**
- * Shipping address block
+ * Checkout failed page
  *
  * @see   ____class_see____
  * @since 1.0.0
  */
-class ShippingAddress extends \XLite\View\AView
+class CheckoutFailed extends \XLite\Controller\Customer\CheckoutSuccess
 {
     /**
-     * Get shipping address
-     *
-     * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getAddress()
-    {
-        $address = null;
-        
-        if ($this->getCart()->getProfile()) {
-
-            $address = $this->getCart()->getProfile()->getShippingAddress();
-
-            if (!$address) {
-                $address = $this->getCart()->getProfile()->getFirstAddress();
-                $address->setIsShipping(true);
-                $address->update();
-            }
-        }
-
-        return $address;
-    }
-
-
-    /**
-     * Return widget default template
+     * Get page title
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultTemplate()
+    public function getTitle()
     {
-        return 'checkout/steps/shipping/address.tpl';
+        return 'Order failed';
     }
 }

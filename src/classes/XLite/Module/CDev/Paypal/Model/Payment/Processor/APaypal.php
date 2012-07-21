@@ -99,6 +99,23 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     }
 
     /**
+     * Get allowed backend transactions
+     *
+     * @return string Status code
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getAllowedTransactions()
+    {
+        return array(
+            \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE,
+            \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID,
+            \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_REFUND,
+        );
+    }
+
+
+    /**
      * Get return type of the iframe-method: html redirect with destroying an iframe
      *
      * @return string
@@ -110,12 +127,12 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         return self::RETURN_TYPE_HTML_REDIRECT_WITH_IFRAME_DESTROYING;
     }
 
-    protected function isSuccessResponse($response, $transactionType)
+    protected function isSuccessResponse($response)
     {
         $result = in_array($response['PENDINGREASON'], array('none', 'completed'));
 
         if (!$result) {
-            $result = ('authorization' == $response['PENDINGREASON'] && \XLite\Model\Payment\BackendTransaction::AUTH == $transactionType);
+            $result = ('authorization' == $response['PENDINGREASON'] && \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_AUTH == $this->transaction->getType());
         }
 
         return $result;
@@ -542,6 +559,8 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
      */
     protected function getCreateSecureTokenRequestParams()
     {
+        $shippingModifier = $this->getOrder()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+
         $postData = array(
             'CREATESECURETOKEN' => 'Y',
             'SECURETOKENID'     => $this->getSecureTokenId(),
@@ -554,13 +573,11 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             'BILLTOSTATE'       => $this->getProfile()->getBillingAddress()->getState()->getCode(),
             'BILLTOZIP'         => $this->getProfile()->getBillingAddress()->getZipcode(),
             'BILLTOCOUNTRY'     => strtoupper($this->getProfile()->getBillingAddress()->getCountry()->getCode3()),
-            'ERRORURL'          => urldecode($this->getReturnURL(null, true, true)),
+            'ERRORURL'          => urldecode($this->getReturnURL(null, true)),
             'RETURNURL'         => urldecode($this->getReturnURL(null, true)),
-            'RETURNURLMETHOD'   => 'POST',
             'CANCELURL'         => urldecode($this->getReturnURL(null, true, true)),
-            // 'NOTIFYURL', // For Express Checkout only
-            // 'HDRIMG', // The URL for an image to be used as the header image for the PayPal Express Checkout pages
-            // 'PAYFLOWCOLOR', // The secondary gradient color for the order summary section of the PayPal Express Checkout pages
+            'RETURNURLMETHOD'   => 'POST', // Set the return method for approved transactions (RETURNURL)
+            'URLMETHOD'         => 'POST', // Set the return method for cancelled and failed transactions (ERRORURL, CANCELURL)
             'TEMPLATE'          => 'MINLAYOUT', // This enables an iframe layout
             'INVNUM'            => $this->getOrder()->getOrderId(),
             'BILLTOPHONENUM'    => $this->getProfile()->getBillingAddress()->getPhone(),
@@ -574,8 +591,8 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             'SHIPTOZIP'         => $this->getProfile()->getShippingAddress()->getZipcode(),
             'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode3(),
             'SHIPTOEMAIL'       => $this->getProfile()->getLogin(),
-            'ADDROVERRIDE'      => 'N',
-            'NOSHIPPING'        => 1,
+            'ADDROVERRIDE'      => 'Y',
+            'NOSHIPPING'        => $shippingModifier && $shippingModifier->canApply() ? '1' : '0',
             'SILENTPOST'        => 'TRUE',
             'SILENTPOSTURL'     => urldecode($this->getCallbackURL(null, true)),
             // 'SILENTPOSTRETURNURL' => $this->getCallbackURL(null, true),
@@ -592,42 +609,47 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
     /**
      * Get array of params for CREATESECURETOKEN request (ordered products part)
      *
-     * @param &$lineItems Reference to an array of ordered items
+     * @param $cart Cart object
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getLineItems(&$lineItems)
+    protected function getLineItems($cart = null)
     {
         $lineItems = array();
 
         $itemsSubtotal  = 0;
         $itemsTaxAmount = 0;
 
-        $items = $this->getOrder()->getItems();
+        $obj = isset($cart) ? $cart : $this->getOrder();
 
-        if (!empty($items) && is_array($items)) {
+        $items = $obj->getItems();
+
+        //var_dump(is_array($items));
+
+        if (!empty($items)) {
             $index = 0;
+
             foreach ($items as $item) {
-                $lineItems['L_COST' . $index] = $this->getOrder()->getCurrency()->roundValue($item->getPrice());
+                $lineItems['L_COST' . $index] = $obj->getCurrency()->roundValue($item->getPrice());
                 $lineItems['L_NAME' . $index] = $item->getProduct()->getTranslation()->name;
                 $lineItems['L_SKU' . $index] = $item->getProduct()->getSku();
                 $lineItems['L_QTY' . $index] = $item->getAmount();
                 //$lineItems['L_TAXAMT' . $index] = $this->getOrder()->getCurrency()->roundValue($item->getTaxValue());
-                $itemsSubtotal = $lineItems['L_COST' . $index] * $lineItems['L_QTY' . $index];
-                //$itemsTaxAmount = $lineItems['L_TAXAMT' . $index] * $lineItems['L_QTY' . $index];
+                $itemsSubtotal += $lineItems['L_COST' . $index] * $lineItems['L_QTY' . $index];
+                //$itemsTaxAmount += $lineItems['L_TAXAMT' . $index] * $lineItems['L_QTY' . $index];
                 $index ++;
             }
 
-            $items += array('ITEMAMT' => $itemsSubtotal);
+            $lineItems += array('ITEMAMT' => $itemsSubtotal);
 
             if ($itemsTaxAmount > 0) {
-                $items += array('TAXAMT'  => $itemsTaxAmount);
+                $lineItems += array('TAXAMT'  => $itemsTaxAmount);
             }
         }
 
-        return $items;
+        return $lineItems;
     }
 
     /**
@@ -778,6 +800,156 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
         if (isset($backendTransaction)) {
             $backendTransaction->setStatus($status);
             $this->saveDataFromRequest($backendTransaction);            
+        }
+    }
+
+
+    /**
+     * Define saved into transaction data schema
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineSavedData()
+    {
+        $data = parent::defineSavedData();
+
+        $data['TRANSTIME'] = 'Transaction timestamp';
+        $data['PNREF']     = 'Unique Payflow transaction ID (PNREF)'; 
+        $data['PPREF']     = 'Unique PayPal transaction ID (PPREF)'; // PPA and PL
+        $data['TYPE']      = 'Transaction type'; // PL
+        $data['TRXTYPE']   = 'Transaction type'; // PPA and EC
+        $data['RESULT']    = 'Transaction result code (RESULT)';
+        $data['RESPMSG']   = 'Transaction result message (RESPMSG)';
+
+        $data['CORRELATIONID'] = 'Tracking ID'; // PPA and EC
+        $data['FEEAMT']        = 'Transaction fee'; // EC
+        $data['PENDINGREASON'] = 'Pending reason'; // EC
+
+        return $data;
+    }
+
+    /**
+     * Check - payment method is configured or not
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isConfigured(\XLite\Model\Payment\Method $method)
+    {
+        return parent::isConfigured($method)
+            && $method->getSetting('vendor')
+            && $method->getSetting('pwd')
+            && $this->isMerchantCountryAllowed();
+    }
+
+    /**
+     * Return true if merchant country is allowed for this payment method
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isMerchantCountryAllowed()
+    {
+        return in_array(
+            \XLite\Core\Config::getInstance()->Company->location_country,
+            $this->getAllowedMerchantCountries()
+        );
+    }
+
+    /**
+     * Process return
+     *
+     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
+    {
+        parent::processReturn($transaction);
+
+        \XLite\Module\CDev\Paypal\Main::addLog(
+            'processReturn',
+            \XLite\Core\Request::getInstance()->getData()
+        );
+
+        if (\XLite\Core\Request::getInstance()->cancel) {
+            $this->setDetail(
+                'status',
+                'Payment transaction is cancelled',
+                'Status'
+            );
+            $this->transaction->setNote('Payment transaction is cancelled');
+            $this->transaction->setStatus($transaction::STATUS_FAILED);
+        }
+    }
+
+    /**
+     * Process callback
+     *
+     * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function processCallback(\XLite\Model\Payment\Transaction $transaction)
+    {
+        parent::processCallback($transaction);
+
+        $request = \XLite\Core\Request::getInstance();
+
+        if (!$request->isPost()) {
+            // Callback request must be POST
+            $this->markCallbackRequestAsInvalid(static::t('Request type must be POST'));
+
+        } elseif (!isset($request->RESULT)) {
+            // RESULT parameter must be presented in all callback requests
+            $this->markCallbackRequestAsInvalid(static::t('\'RESULT\' argument not found'));
+
+        } else {
+
+            $this->setDetail(
+                'status',
+                isset($request->RESPMSG) ? $request->RESPMSG : 'Unknown',
+                'Status'
+            );
+
+            $this->saveDataFromRequest();
+
+            if ('0' === $request->RESULT) {
+                // Transaction successful if RESULT == '0'
+                $status = $transaction::STATUS_SUCCESS;
+
+            } else {
+                $status = $transaction::STATUS_FAILED;
+            }
+
+            // Amount checking
+            if (isset($request->AMT) && !$this->checkTotal($request->AMT)) {
+                $status = $transaction::STATUS_FAILED;
+            }
+
+            \XLite\Module\CDev\Paypal\Main::addLog(
+                'processCallback',
+                array(
+                    'request' => $request,
+                    'status' => $status
+                )
+            );
+
+            $this->transaction->setStatus($status);
+
+            $this->updateInitialBackendTransaction($this->transaction, $status);
         }
     }
 }

@@ -10,4 +10,5 @@
  * @since     1.0.0
  *}
  
- {if:method.getDescription()}{method.getDescription()}{else:}{method.getName()}{end:}
+<img src="https://www.paypalobjects.com/en_US/i/logo/PayPal_mark_50x34.gif" alt="{method.getName()}" title="{method.getName()}" />
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=xpt/Marketing/popup/OLCWhatIsPayPal-outside" target="new">What is Paypal?</a>

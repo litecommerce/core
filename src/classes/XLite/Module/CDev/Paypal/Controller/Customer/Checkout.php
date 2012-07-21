@@ -49,7 +49,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
             && $this->isExpressCheckoutAction()
             && $this->getCart()->checkCart()
         ) {
-            \XLite\Core\Request::getInstanse()->setRequestMethod('POST');
+            \XLite\Core\Request::getInstance()->setRequestMethod('POST');
         }
 
         parent::handleRequest();
@@ -86,12 +86,13 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
             $this->updateCart();
 
-            $token = $paymentMethod->getProcessor()->doSetExpressCheckout();
+            $token = $paymentMethod->getProcessor()->doSetExpressCheckout($paymentMethod);
 
             if (isset($token)) {
-                $this->getCart()->set('ec_token', $token);
-                $this->getCart()->set('ec_token_date', time());
-                $this->getCart()->set('ec_payer_id', null);
+                \XLite\Core\Session::getInstance()->ec_token = $token;
+                \XLite\Core\Session::getInstance()->ec_date = time();
+                \XLite\Core\Session::getInstance()->ec_payer_id = null;
+                \XLite\Core\Session::getInstance()->ec_type = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_SHORTCUT;
 
                 $paymentMethod->getProcessor()->redirectToPaypal($token);
 
@@ -108,29 +109,39 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @see    ____func_see____
      * @since  1.1.0
      */
-    protected function doExpressCheckoutReturn()
+    protected function doActionExpressCheckoutReturn()
     {
         $request = \XLite\Core\Request::getInstance();
         $cart = $this->getCart();
 
+        \XLite\Module\CDev\Paypal\Main::addLog('doExpressCheckoutReturn()', $request->getData());
+
         if (isset($request->cancel)) {
-            $cart->set('ec_token', null);
-            $cart->set('ec_token_date', null);
-            $cart->set('ec_payer_id', null);
+            \XLite\Core\Session::getInstance()->ec_token = null;
+            \XLite\Core\Session::getInstance()->ec_date = null;
+            \XLite\Core\Session::getInstance()->ec_payer_id = null;
+            \XLite\Core\Session::getInstance()->ec_type = null;
+
+            $cart->unsetPaymentMethod();
 
             \XLite\Core\TopMessage::getInstance()->addWarning('Express Checkout process stopped.');
 
-        } elseif (!isset($request->token) || $request->token != $this->getCart()->get('ec_token')) {
+        } elseif (!isset($request->token) || $request->token != \XLite\Core\Session::getInstance()->ec_token) {
             \XLite\Core\TopMessage::getInstance()->addError('Wrong token of Express Checkout.');
 
-        } elseif (!isset($request->PayerId)) {
+        } elseif (!isset($request->PayerID)) {
             \XLite\Core\TopMessage::getInstance()->addError('PayerID value was not returned by Paypal.');
 
         } else {
 
-            $cart->set('ec_payer_id', $request->PayerId);
+            // Express Checkout shortcut flow processing
 
-            $buyerData = $this->getExpressCheckoutPaymentMethod()->getProcessor()->doGetExpressCheckoutDetails($request->token);
+            \XLite\Core\Session::getInstance()->ec_type = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_SHORTCUT;
+
+            \XLite\Core\Session::getInstance()->ec_payer_id = $request->PayerID;
+            $paymentMethod = $this->getExpressCheckoutPaymentMethod();
+
+            $buyerData = $paymentMethod->getProcessor()->doGetExpressCheckoutDetails($paymentMethod, $request->token);
 
             if (empty($buyerData)) {
                 \XLite\Core\TopMessage::getInstance()->addError('Your address data was not received from Paypal.');
@@ -141,16 +152,30 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
                 $this->updateProfile();
 
-                if (!$this->getCartProfile() || !$this->getCartProfile()->getBillingAddress()->checkAddress()) {
+//                if (!$this->getCartProfile() || !$this->getCartProfile()->getBillingAddress() || !$this->getCartProfile()->getBillingAddress()->checkAddress()) {
                     $this->requestData['billingAddress'] = $this->requestData['shippingAddress'];
                     $this->requestData['same_address'] = true;
-                }
+//                }
 
                 $this->updateShippingAddress();
 
                 $this->updateBillingAddress();
             }
         }
+    }
+
+    /**
+     * Set up ec_type flag to 'mark' value if payment method selected on checkout
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function doActionPayment()
+    {
+        \XLite\Core\Session::getInstance()->ec_type = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_MARK;
+
+        parent::doActionPayment();
     }
 
     /**
@@ -164,19 +189,27 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      */
     protected function prepareBuyerData($paypalData)
     {
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->findOneByCode($paypalData['SHIPTOCOUNTRY']);
+        $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode($country->getCode(), $paypalData['SHIPTOSTATE']);
+
         $data = array(
-            'email' => $paypalData['EMAIL'],
-            'create_profile' => false,
             'shippingAddress' => array(
                 'name' => $paypalData['SHIPTONAME'],
                 'street' => $paypalData['SHIPTOSTREET'] . (!empty($paypalData['SHIPTOSTREET2']) ? ' ' . $paypalData['SHIPTOSTREET2'] : ''),
-                'country' => $paypalData['SHIPTOCOUNTRY'],
-                'state' => $paypalData['SHIPTOSTATE'],
+                'country' => $country,
+                'state' => $state ? $state : $paypalData['SHIPTOSTATE'],
                 'city' => $paypalData['SHIPTOCITY'],
                 'zipcode' => $paypalData['SHIPTOZIP'],
-                'phone' => $paypalData['PHONENUM'],
+                'phone' => $paypalData['PHONENUM'] ?: '',
             ),
         );
+
+        if (!\XLite\Core\Auth::getInstance()->isLogged()) {
+            $data += array(
+                'email' => $paypalData['EMAIL'],
+                'create_profile' => false,
+            );
+        }
 
         return $data;
     }

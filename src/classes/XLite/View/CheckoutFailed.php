@@ -25,41 +25,70 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Checkout;
+namespace XLite\View;
 
 /**
- * Shipping address block
+ * Checkout failed page
  *
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="center")
  */
-class ShippingAddress extends \XLite\View\AView
+class CheckoutFailed extends \XLite\View\AView
 {
     /**
-     * Get shipping address
+     * Return list of allowed targets
      *
-     * @return \XLite\Model\Address
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getAddress()
+    public static function getAllowedTargets()
     {
-        $address = null;
-        
-        if ($this->getCart()->getProfile()) {
+        $list = parent::getAllowedTargets();
 
-            $address = $this->getCart()->getProfile()->getShippingAddress();
+        $list[] = 'checkoutFailed';
 
-            if (!$address) {
-                $address = $this->getCart()->getProfile()->getFirstAddress();
-                $address->setIsShipping(true);
-                $address->update();
-            }
-        }
-
-        return $address;
+        return $list;
     }
 
+
+    /**
+     * Get continue URL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getContinueURL()
+    {
+        $url = \XLite\Core\Session::getInstance()->continueURL;
+
+        if (!$url && isset($_SERVER['HTTP_REFERER'])) {
+
+            $url = $_SERVER['HTTP_REFERER'];
+        }
+
+        if (!$url) {
+
+            $url = $this->buildURL('main');
+        }
+
+        return $url;
+    }
+
+    /**
+     * Get Re-order URL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getReorderURL()
+    {
+        return $this->buildURL('cart', 'add_order', array('order_id' => \XLite\Core\Request::getInstance()->order_id));
+    }
 
     /**
      * Return widget default template
@@ -70,6 +99,6 @@ class ShippingAddress extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'checkout/steps/shipping/address.tpl';
+        return 'checkout/failed.tpl';
     }
 }

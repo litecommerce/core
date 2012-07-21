@@ -274,7 +274,7 @@ class Transaction extends \XLite\Model\AEntity
     {
         $value = 0;
 
-        if (!$this->isFailed()) {
+        if ($this->isCompleted() || $this->isPending()) {
             $value += $this->getValue();
         }
 
@@ -315,6 +315,18 @@ class Transaction extends \XLite\Model\AEntity
     public function isInProgress()
     {
         return self::STATUS_INPROGRESS == $this->getStatus();
+    }
+
+    /**
+     * Return true if transaction is in PENDING status
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isPending()
+    {
+        return self::STATUS_PENDING == $this->getStatus();
     }
 
     /**

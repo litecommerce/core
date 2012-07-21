@@ -372,6 +372,25 @@ class Profile extends \XLite\Model\AEntity
     }
 
     /**
+     * Returns first available address
+     *
+     * @return \XLite\Model\Address
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getFirstAddress()
+    {
+        $result = null;
+
+        foreach ($this->getAddresses() as $address) {
+            $result = $address;
+            break;
+        }
+
+        return $result;
+    }
+
+    /**
      * Returns the number of orders places by the user
      *
      * @return integer

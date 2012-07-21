@@ -1117,6 +1117,24 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Unset payment method 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function unsetPaymentMethod()
+    {
+        $transaction = $this->getFirstOpenPaymentTransaction();
+
+        if ($transaction) {
+            $this->getPaymentTransactions()->removeElement($transaction);
+            $transaction->getPaymentMethod()->getTransactions()->removeElement($transaction);
+            \XLite\Core\Database::getEM()->remove($transaction);
+        }
+    }
+
+    /**
      * Get active payment transactions
      *
      * @return array
@@ -1128,7 +1146,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $result = array();
 
         foreach ($this->getPaymentTransactions() as $t) {
-            if (!$t->isFailed()) {
+            if ($t->isCompleted() || $t->isPending()) {
                 $result[] = $t;
             }
         }

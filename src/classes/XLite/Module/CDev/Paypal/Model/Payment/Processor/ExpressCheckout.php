@@ -35,8 +35,6 @@ namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
  */
 class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\APaypal
 {
-    const PAYPAL_PAYMENT_METHOD_CODE = 'Paypal Express Checkout';
-
     /**
      * Request types definition
      */
@@ -44,11 +42,36 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
     const REQ_TYPE_GET_EXPRESS_CHECKOUT_DETAILS = 'GetExpressCheckoutDetails';
     const REQ_TYPE_DO_EXPRESS_CHECKOUT_PAYMENT  = 'DoExpressCheckoutPayment';
 
+    /**
+     * Express Checkout flow types definition
+     */
     const EC_TYPE_SHORTCUT = 'shortcut';
     const EC_TYPE_MARK     = 'mark';
 
 
-    protected $ecPostURL = 'https://www.paypal.com/cgi-bin/webscr';
+    /**
+     * Express Checkout token TTL is 3 hours (10800 seconds)
+     */
+    const TOKEN_TTL = 10800;
+
+
+    /**
+     * Live PostURL 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.1.0
+     */
+    protected $livePostURL = 'https://www.paypal.com/cgi-bin/webscr';
+
+    /**
+     * Test PostURL 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.1.0
+     */
+    protected $testPostURL = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 
 
     /**
@@ -76,36 +99,29 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
     }
 
     /**
-     * Check - payment method is configured or not
+     * Get payment method row checkout template
      *
      * @param \XLite\Model\Payment\Method $method Payment method
      *
-     * @return boolean
-     * @access public
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isConfigured(\XLite\Model\Payment\Method $method)
+    public function getCheckoutTemplate(\XLite\Model\Payment\Method $method)
     {
-        return parent::isConfigured($method)
-            && $method->getSetting('vendor')
-            && $method->getSetting('pwd')
-            && $this->isMerchantCountryAllowed();
+        return 'modules/CDev/Paypal/method.tpl';
     }
 
     /**
-     * Return true if merchant country is allowed for this payment method
-     *
-     * @return boolean
+     * Get PostURL to redirect customer to Paypal
+     * 
+     * @return string
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  1.1.0
      */
-    public function isMerchantCountryAllowed()
+    protected function getExpressCheckoutPostURL()
     {
-        return in_array(
-            \XLite\Core\Config::getInstance()->Company->location_country,
-            $this->getAllowedMerchantCountries()
-        );
+        return $this->isTestMode() ? $this->testPostURL : $this->livePostURL;
     }
 
     /**
@@ -127,14 +143,20 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
      * @see    ____func_see____
      * @since  1.1.0
      */
-    public function doSetExpressCheckout()
+    public function doSetExpressCheckout(\XLite\Model\Payment\Method $method)
     {
         $token = null;
+
+        if (!isset($this->transaction)) {
+            $this->transaction = new \XLite\Model\Payment\Transaction();
+            $this->transaction->setPaymentMethod($method);
+            $this->transaction->setOrder(\XLite\Model\Cart::getInstance());
+        }
 
         $responseData = $this->doRequest(self::REQ_TYPE_SET_EXPRESS_CHECKOUT);
 
         if (!empty($responseData['TOKEN'])) {
-            $token = $token = $responseData['TOKEN'];
+            $token = $responseData['TOKEN'];
         }
 
         return $token;
@@ -149,9 +171,14 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
      * @see    ____func_see____
      * @since  1.1.0
      */
-    public function redirectToPaypal($token, $type = self::EC_TYPE_SHORTCUT)
+    public function redirectToPaypal($token)
     {
-        $url = $this->getPostURL($this->ecPostURL, $this->getPostParams($token, $type));
+        $url = $this->getRedirectURL($this->getPostParams($token));
+
+        \XLite\Module\CDev\Paypal\Main::addLog(
+            'redirectToPaypal()',
+            $url
+        );
 
         $page = <<<HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -177,13 +204,18 @@ HTML;
      * @see    ____func_see____
      * @since  1.1.0
      */
-    protected function getPostParams($token, $type = self::EC_TYPE_SHORTCUT)
+    protected function getPostParams($token)
     {
-        return array(
-            'cmd' => '_express_checkout',
+        $params = array(
+            'cmd' => '_express-checkout',
             'token' => $token,
-            'useraction' => (self::EC_TYPE_MARK == $type ? 'commit' : 'continue'),
         );
+
+        if (self::EC_TYPE_MARK == \XLite\Core\Session::getInstance()->ec_type) {
+            $params['useraction'] = 'commit';
+        }
+
+        return $params;
     }
 
     /**
@@ -193,29 +225,33 @@ HTML;
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getSetExpressCheckoutRequestParams($type = self::EC_TYPE_SHORTCUT)
+    protected function getSetExpressCheckoutRequestParams()
     {
+        $cart = \XLite\Model\Cart::getInstance();
+
         $postData = array(
             'TRXTYPE'           => $this->getSetting('transaction_type'),
             'TENDER'            => 'P',
             'ACTION'            => 'S',
-            'RETURNURL'         => urldecode($this->getECReturnURL(null, true)),
-            'CANCELURL'         => urldecode($this->getECReturnURL(null, true, true)),
-            'AMT'               => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
-            'CURRENCY'          => $this->getCurrencyCode(),
-            'FREIGHTAMT'        => $this->getOrder()->getCurrency()->roundValue($this->getOrder()->getSurchargeSumByType('SHIPPING')),
+            'RETURNURL'         => urldecode($this->getECReturnURL()),
+            'CANCELURL'         => urldecode($this->getECReturnURL(true)),
+            'AMT'               => $cart->getCurrency()->roundValue($cart->getTotal()),
+            'CURRENCY'          => $cart->getCurrency()->getCode(),
+            'FREIGHTAMT'        => $cart->getCurrency()->roundValue($cart->getSurchargeSumByType('SHIPPING')),
             'HANDLINGAMT'       => 0,
             'INSURANCEAMT'      => 0,
             'NOSHIPPING'        => 0,
-            'INVNUM'            => $this->getOrder()->getOrderId(),
+            'INVNUM'            => $cart->getOrderId(),
             'ALLOWNOTE'         => 1,
-            'CUSTOM'            => $this->getOrder()->getOrderId(),
+            'CUSTOM'            => $cart->getOrderId(),
             'LOCALECODE'        => 'EN',
             // 'HDRIMG', // The URL for an image to be used as the header image for the PayPal Express Checkout pages
             'PAYFLOWCOLOR'      => 'FF0000', // The secondary gradient color for the order summary section of the PayPal Express Checkout pages
         );
 
-        $postData = $postData + $this->getLineItems();
+        $postData = $postData + $this->getLineItems($cart);
+
+        $type = \XLite\Core\Session::getInstance()->ec_type;
 
         if (self::EC_TYPE_SHORTCUT == $type) {
             $postData['REQCONFIRMSHIPPING'] = 0;
@@ -231,7 +267,7 @@ HTML;
                 'SHIPTOCITY'        => $this->getProfile()->getShippingAddress()->getCity(),
                 'SHIPTOSTATE'       => $this->getProfile()->getShippingAddress()->getState()->getCode(),
                 'SHIPTOZIP'         => $this->getProfile()->getShippingAddress()->getZipcode(),
-                'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode3(),
+                'SHIPTOCOUNTRY'     => $this->getProfile()->getShippingAddress()->getCountry()->getCode(),
             );
         }
 
@@ -247,13 +283,18 @@ HTML;
      * @see    ____func_see____
      * @since  1.1.0
      */
-    public function doGetExpressCheckoutDetails($token)
+    public function doGetExpressCheckoutDetails(\XLite\Model\Payment\Method $method, $token)
     {
         $data = array();
 
         $params = array('token' => $token);
 
-        $responseData = $this->doRequest(self::REQ_TYPE_GET_EXPRESS_CHECKOUT_DETAILS, $params);
+        if (!isset($transaction)) {
+            $this->transaction = new \XLite\Model\Payment\Transaction();
+            $this->transaction->setPaymentMethod($method);
+        }
+
+        $responseData = $this->doRequest(self::REQ_TYPE_GET_EXPRESS_CHECKOUT_DETAILS);
 
         if (!empty($responseData) && '0' == $responseData['RESULT']) {
             $data = $responseData;
@@ -269,57 +310,126 @@ HTML;
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getGetExpressCheckoutDetailsRequestParams($transaction = null, $customParams = array())
+    protected function getGetExpressCheckoutDetailsRequestParams()
     {
         $params = array(
             'TRXTYPE' => $this->getSetting('transaction_type'),
             'TENDER' => 'P',
             'ACTION' => 'G',
-            'TOKEN' => $customParams['token'],
+            'TOKEN' => \XLite\Core\Session::getInstance()->ec_token,
         );
 
         return $params;
     }
 
 
+    /**
+     * Do initial payment and return status
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
     protected function doInitialPayment()
     {
-        if ('EC_TYPE_MARK' == $this->getCart()->get('ec_type')) {
-            
-        }
-
         $this->transaction->createBackendTransaction($this->getInitialTransactionType());
 
-        $status = $this->doExpressCheckoutPayment();
+        $result = self::FAILED;
 
-        return $status;
+        if (!$this->isTokenValid() || self::EC_TYPE_MARK == \XLite\Core\Session::getInstance()->ec_type) {
+
+            \XLite\Core\Session::getInstance()->ec_type = self::EC_TYPE_MARK;
+
+            $token = $this->doSetExpressCheckout($this->transaction->getPaymentMethod());
+
+            if (isset($token)) {
+                \XLite\Core\Session::getInstance()->ec_token = $token;
+                \XLite\Core\Session::getInstance()->ec_date = time();
+                \XLite\Core\Session::getInstance()->ec_payer_id = null;
+
+                $this->redirectToPaypal($token);
+
+            } else {
+                \XLite\Core\TopMessage::getInstance()->addError('Failure to redirect to Paypal.');
+            }
+
+        } else {
+            $result = $this->doExpressCheckoutPayment();
+        }
+
+        return $result;
     }
 
+    /**
+     * Returns true if token initialized and is not expired
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function isTokenValid()
+    {
+        return !empty(\XLite\Core\Session::getInstance()->ec_token)
+            && self::TOKEN_TTL > time() - \XLite\Core\Session::getInstance()->ec_date;
+    }
+
+    /**
+     * Perform 'DoExpressCheckoutPayment' request and return status of payment transaction
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
     protected function doExpressCheckoutPayment()
     {
         $status = self::FAILED;
 
         $transaction = $this->transaction;
 
-        $responseData = $this->doRequest(self::REQ_TYPE_DO_EXPRESS_CHECKOUT_PAYMENT);
+        $responseData = $this->doRequest(self::REQ_TYPE_DO_EXPRESS_CHECKOUT_PAYMENT, $transaction->getInitialBackendTransaction());
 
         $transactionStatus = $transaction::STATUS_FAILED;
 
-        if (!empty($responseData) && '0' == $responseData['RESULT']) {
-            
-            if ($this->isSuccessResponse($responseData)) {
-                $transactionStatus = $transaction::STATUS_SUCCESS;
-                $status = self::SUCCESS;
+        if (!empty($responseData)) {
 
+            if ('0' == $responseData['RESULT']) {
+            
+                if ($this->isSuccessResponse($responseData)) {
+                    $transactionStatus = $transaction::STATUS_SUCCESS;
+                    $status = self::COMPLETED;
+
+                } else {
+                    $transactionStatus = $transaction::STATUS_PENDING;
+                    $status = self::PENDING;
+                }
+            
             } else {
-                $transactionStatus = $transaction::STATUS_PENDING;
-                $status = self::PENDING;
+                $this->setDetail(
+                    'status',
+                    'Failed: ' . $responseData['RESPMSG'],
+                    'Status'
+                );
             }
+
+            // Save payment transaction data
+            $this->saveFilteredData($responseData);
+
+        } else {
+            $this->setDetail(
+                'status',
+                'Failed: unexpected response received from Paypal',
+                'Status'
+            );
         }
 
         $transaction->setStatus($transactionStatus);
 
         $this->updateInitialBackendTransaction($transaction, $transactionStatus);
+
+        \XLite\Core\Session::getInstance()->ec_token = null;
+        \XLite\Core\Session::getInstance()->ec_date = null;
+        \XLite\Core\Session::getInstance()->ec_payer_id = null;
+        \XLite\Core\Session::getInstance()->ec_type = null;
 
         return $status;
     }
@@ -337,8 +447,8 @@ HTML;
             'TRXTYPE'      => $this->getSetting('transaction_type'),
             'TENDER'       => 'P',
             'ACTION'       => 'D',
-            'TOKEN'        => $this->getOrder()->get('ec_token'),
-            'PAYERID'      => $this->getOrder()->get('ec_payer_id'),
+            'TOKEN'        => \XLite\Core\Session::getInstance()->ec_token,
+            'PAYERID'      => \XLite\Core\Session::getInstance()->ec_payer_id,
             'AMT'          => $this->getOrder()->getCurrency()->roundValue($this->transaction->getValue()),
             'CURRENCY'     => $this->getCurrencyCode(),
             'FREIGHTAMT'   => $this->getOrder()->getCurrency()->roundValue($this->getOrder()->getSurchargeSumByType('SHIPPING')),
@@ -355,15 +465,51 @@ HTML;
         return $params;
     }
 
-
+    /**
+     * Get return URL
+     * 
+     * @param mixed $asCancel ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
     protected function getECReturnURL($asCancel = false)
     {
         $params = $asCancel ? array('cancel' => 1) : array();
 
-        return \XLite::getInstance()->getShopURL(
-            \XLite\Core\Converter::buildURL('checkout', 'express_checkout_return', $params),
-            \XLite\Core\Config::getInstance()->Security->customer_security
-        );
+        if (self::EC_TYPE_MARK == \XLite\Core\Session::getInstance()->ec_type) {
+            $url = $this->getReturnURL(null, true, $asCancel);
+
+        } else {
+            $url = \XLite::getInstance()->getShopURL(
+                \XLite\Core\Converter::buildURL('checkout', 'express_checkout_return', $params),
+                \XLite\Core\Config::getInstance()->Security->customer_security
+            );
+        }
+
+        return $url;
+    }
+
+    /**
+     * Process return (this used when customer pay via Express Checkout mark flow)
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction Payment transaction object
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
+    {
+        parent::processReturn($transaction);
+
+        if (!\XLite\Core\Request::getInstance()->cancel) {
+
+            \XLite\Core\Session::getInstance()->ec_payer_id = \XLite\Core\Request::getInstance()->PayerID;
+
+            $this->doExpressCheckoutPayment();
+        }
     }
 
     /**
@@ -387,5 +533,28 @@ HTML;
                 'PHP', 'TWD', 'THB',
             )
         );
+    }
+
+    /**
+     * Get post URL 
+     * 
+     * @param string $postURL URL OPTIONAL
+     * @param array  $params  Array of URL parameters OPTIONAL
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getRedirectURL($params = array())
+    {
+        $postURL = $this->getExpressCheckoutPostURL();
+
+        $postData = array();
+
+        foreach ($params as $k => $v) {
+            $postData[] = sprintf('%s=%s', $k, $v);
+        }
+
+        return $postURL . '?' . implode('&', $postData);
     }
 }

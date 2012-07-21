@@ -259,11 +259,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $status = \XLite\Model\Order::STATUS_PROCESSED;
 
-            $hasIncompletePayment = false;
+            $hasIncompletePayment = (0 < $cart->getOpenTotal());
             $hasAuthorizedPayment = false;
 
             foreach ($cart->getPaymentTransactions() as $t) {
-                $hasIncompletePayment = $hasIncompletePayment || !$t->isCompleted();
                 $hasAuthorizedPayment = $hasAuthorizedPayment || $t->isAuthorized();
             }
 
@@ -327,6 +326,11 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 ? $paymentStatus
                 : \XLite\Model\Order::STATUS_QUEUED;
 
+
+            if (!empty($transaction) && $transaction->isFailed()) {
+                $status = \XLite\Model\Order::STATUS_FAILED;
+            }
+
             $cart->setStatus($status);
 
             $this->processSucceed();
@@ -335,7 +339,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->setReturnURL(
                 $this->buildURL(
-                    'checkoutSuccess',
+                    \XLite\Model\Order::STATUS_FAILED == $status ? 'checkoutFailed' : 'checkoutSuccess',
                     '',
                     array('order_id' => $cart->getOrderId())
                 )
@@ -380,10 +384,17 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->setReturnURL($this->buildURL('cart'));
 
-        } elseif ($cart->hasInprogressPayments()) {
+        } elseif (0 < $cart->getOpenTotal()) {
 
-            \XLite\Core\TopMessage::addInfo(
-                'Payment for orders not over. Please complete payment of order.'
+            \XLite\Core\TopMessage::addWarning(
+                'Payment was not finished',
+                array(
+                    'url' => $this->buildURL(
+                        'cart',
+                        'add_order',
+                        array('order_id' => $cart->getOrderId())
+                    )
+                )
             );
 
             $this->setReturnURL(
@@ -398,11 +409,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
                 $status = \XLite\Model\Order::STATUS_PROCESSED;
 
-                $hasIncompletePayment = false;
+                $hasIncompletePayment = (0 < $cart->getOpenTotal());
                 $hasAuthorizedPayment = false;
 
                 foreach ($cart->getPaymentTransactions() as $t) {
-                    $hasIncompletePayment = $hasIncompletePayment || !$t->isCompleted();
                     $hasAuthorizedPayment = $hasAuthorizedPayment || $t->isAuthorized();
                 }
 
@@ -414,7 +424,17 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 }
 
             } else {
+
                 $status = \XLite\Model\Order::STATUS_QUEUED;
+
+                $transactions = $cart->getPaymentTransactions();
+
+                if (!empty($transactions)) {
+                    $lastTransaction = $transactions[count($transactions) - 1];
+                    if ($lastTransaction->isFailed()) {
+                        $status = \XLite\Model\Order::STATUS_FAILED;
+                    }
+                }
             }
 
             $cart->setStatus($status);
@@ -425,7 +445,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->setReturnURL(
                 $this->buildURL(
-                    'checkoutSuccess',
+                    \XLite\Model\Order::STATUS_FAILED == $status ? 'checkoutFailed' : 'checkoutSuccess',
                     '',
                     array('order_id' => $orderId)
                 )
