@@ -9,6 +9,6 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.13
  *}
-<div class="settings settings-{page}">
+<div class="settings general-settings settings-{page}">
   <widget class="\XLite\View\Model\Settings" useBodyTemplate="1" />
 </div>

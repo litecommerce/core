@@ -271,6 +271,30 @@ class Info extends \XLite\View\AView
         return (bool)$this->getOrder()->getNotes();
     }
 
+    /**
+     * Get list of actual payment sums (authorized, captured, refunded)
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function getPaymentTransactionSums()
+    {
+        return $this->getOrder()->getPaymentTransactionSums();
+    }
+
+    /**
+     * Returns true if order has payment transaction sums greater than zero
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function hasPaymentTransactionSums()
+    {
+        return 0 < array_sum($this->getPaymentTransactionSums());
+    }
+
     // }}}
 
 }

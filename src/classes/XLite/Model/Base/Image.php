@@ -232,6 +232,7 @@ abstract class Image extends \XLite\Model\Base\Storage
             );
 
         } else {
+
             $result = $this->resizeIcon($width, $height, $path);
 
             if ($result) {

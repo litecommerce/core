@@ -846,6 +846,15 @@ table.form input[type="text"]
   display: none;
 }
 
+.general-settings ul.table .table-label
+{
+  width: 40%;
+}
+
+.general-settings ul.table .table-value {
+  width: 50%;
+}
+
 /* Buttons */
 
 div.buttons
@@ -1059,10 +1068,13 @@ button.disabled span {
 
 /* Button for payment actions */
 
-button.payment-action-button {
+.orders button.payment-action-button {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
+    font-size: 12px;
+    height: 26px;
+    padding: 3px 10px 4px;
 }
 
 /* Fade */

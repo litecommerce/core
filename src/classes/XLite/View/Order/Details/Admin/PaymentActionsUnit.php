@@ -75,7 +75,7 @@ class PaymentActionsUnit extends \XLite\View\AView
 
     protected function getCSSClass()
     {
-        return 'payment-action-button';
+        return 'action payment-action-button';
     }
 
     /**

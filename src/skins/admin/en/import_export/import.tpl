@@ -32,7 +32,7 @@
 
 {if:isImportFileLoaded()}
   <div class="import-box">
-    <div class="title">{t(#Import in progress#)}</div>
+    <div class="title">{t(#The import is in progress#)}</div>
     <div class="bar"></div>
   </div>
 {end:}

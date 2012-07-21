@@ -42,6 +42,9 @@ class PaymentActions extends \XLite\View\AView
     const PARAM_UNITS_FILTER  = 'unitsFilter';
 
 
+    protected $allowedTransactions = null;
+
+
     /**
      * Return widget default template
      *
@@ -176,26 +179,61 @@ class PaymentActions extends \XLite\View\AView
         return $list;
     }
 
-    protected function getTransactionUnits(\XLite\Model\Payment\Transaction $transaction)
+    /**
+     * Get list of allowed backend transactions
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction Payment transaction
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function getTransactionUnits($transaction = null)
     {
-        $processor = $transaction->getPaymentMethod()->getProcessor();
+        if (!isset($this->allowedTransactions) && isset($transaction)) {
 
-        $allowedTransactions = $processor->getAllowedTransactions();
+            $processor = $transaction->getPaymentMethod()->getProcessor();
 
-        foreach ($allowedTransactions as $k => $v) {
-            if (!$processor->isTransactionAllowed($transaction, $v) || !$this->isTransactionFiltered($v)) {
-                unset($allowedTransactions[$k]);
+            $this->allowedTransactions = $processor->getAllowedTransactions();
+
+            foreach ($this->allowedTransactions as $k => $v) {
+                if (!$processor->isTransactionAllowed($transaction, $v) || !$this->isTransactionFiltered($v)) {
+                    unset($this->allowedTransactions[$k]);
+                }
             }
         }
 
-        return $allowedTransactions;
+        return $this->allowedTransactions;
     }
 
+    /**
+     * Returns true if transaction is in filter 
+     * 
+     * @param string $transactionType Type of backend transaction
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
     protected function isTransactionFiltered($transactionType)
     {
         $filter = $this->getParam(self::PARAM_UNITS_FILTER);
 
         return (empty($filter) || in_array($transactionType, $filter));
+    }
+
+    /**
+     * Returns true if unit is last in the array (for unit separator displaying)
+     * 
+     * @param integer $key Key of unit in the array
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function isLastUnit($key)
+    {
+        return array_pop(array_keys($this->getTransactionUnits())) == $key;
     }
 
     // }}}

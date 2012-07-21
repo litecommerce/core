@@ -12,7 +12,7 @@
 
 
 div.actions div.payment-actions {
-  text-align: center;
+  padding-left: 58px;
   padding-top: 15px;
 }
 
@@ -20,3 +20,8 @@ div.payment-actions .unit {
   display: inline-block;
 }
 
+div.payment-actions .unit span.payment-actions-separator {
+  font-size: 14px;
+  padding-right: 5px;
+  padding-top: 5px;
+}

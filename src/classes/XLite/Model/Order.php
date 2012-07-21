@@ -2092,5 +2092,66 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         return $actions;
     }
 
+    /**
+     * Get array of payment transaction sums (how much is authorized, captured and refunded) 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function getPaymentTransactionSums()
+    {
+        static $paymentTransactionSums = null;
+
+        if (!isset($paymentTransactionSums)) {
+
+            $transactions = $this->getPaymentTransactions();
+
+            $authorized = 0;
+            $captured = 0;
+            $refunded = 0;
+
+            foreach ($transactions as $t) {
+
+                foreach ($t->getBackendTransactions() as $bt) {
+
+                    if ($bt->isCompleted()) {
+
+                        switch($bt->getType()) {
+                            case $bt::TRAN_TYPE_AUTH:
+                                $authorized += $bt->getValue();
+                                break;
+
+                            case $bt::TRAN_TYPE_SALE:
+                            case $bt::TRAN_TYPE_CAPTURE:
+                                $captured += $bt->getValue();
+                                $authorized -= $bt->getValue();
+                                break;
+
+                            case $bt::TRAN_TYPE_REFUND:
+                                $refunded += $bt->getValue();
+                                $captured -= $bt->getValue();
+                                break;
+
+                            case $bt::TRAN_TYPE_VOID:
+                                $authorized -= $bt->getValue();
+                        }
+                    }
+                }
+            }
+
+            $paymentTransactionSums = array(
+                static::t('Authorized amount') => $authorized,
+                static::t('Captured amount')   => $captured,
+                static::t('Refunded amount')   => $refunded,
+            );
+
+            // Remove from array all zero sums
+            $paymentTransactionSums = array_filter($paymentTransactionSums, 'strval');
+        }
+
+        return $paymentTransactionSums;
+    }
+
     // }}}
 }

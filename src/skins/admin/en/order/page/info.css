@@ -81,6 +81,12 @@ div.actions .status select {
   width: 230px;
 }
 
+div.actions ul.payment-sums li {
+  font-size: 14px;
+  padding-top: 15px;
+  padding-left: 58px;
+}
+
 /* Note box */
 div.note {
   float: left;

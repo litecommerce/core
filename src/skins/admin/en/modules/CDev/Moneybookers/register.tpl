@@ -11,4 +11,4 @@
  *
  * @ListChild (list="payment.methods.body", zone="admin", weight="150")
  *}
-<p IF="!config.CDev.Moneybookers.email" class="mb-register-note">{t(#If you don't have a moneybookers account yet, please sign up for a free moneybookers account at: http://www.moneybookers.com#):h}</p>
+<p IF="!config.CDev.Moneybookers.email" class="mb-register-note">{t(#To process your customers' payments with Moneybookers, you need a Moneybookers account. If you do not have one yet, you can sign up for free at http://www.moneybookers.com#):h}</p>

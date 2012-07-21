@@ -13,5 +13,6 @@
 {foreach:getTransactions(),index,transaction}
 <div class="unit" FOREACH="getTransactionUnits(transaction),id,unit">
   <widget class="\XLite\View\Order\Details\Admin\PaymentActionsUnit" transaction="{transaction}" unit="{unit}" />
+  <span IF="!isLastUnit(id)" class="payment-actions-separator">{t(#OR#)}</span>
 </div>
 {end:}

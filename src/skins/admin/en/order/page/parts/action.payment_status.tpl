@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Payment actions
+ * Payment transactions summary
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,11 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.24
  *
- * @ListChild (list="order.actions", weight="1000")
+ * @ListChild (list="order.actions", weight="900")
  *}
 
-<div class="payment-actions">
-  <widget class="\XLite\View\Order\Details\Admin\PaymentActions" order="{order}" />
-</div>
+<ul IF="hasPaymentTransactionSums()" class="payment-sums">
+  <li FOREACH="getPaymentTransactionSums(),label,sum">
+    {label}: {formatPrice(sum,order.getCurrency())}
+  </li>
+</ul>
