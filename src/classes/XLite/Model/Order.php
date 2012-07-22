@@ -1529,7 +1529,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $total = $this->getTotal();
 
         $this->normalizeItems();
-        $this->calculate();
+        $this->renew();
 
         if ($this->getTotal() !== $this->getCurrency()->roundValue($total)) {
             $this->renewPaymentMethod();

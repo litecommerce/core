@@ -339,20 +339,11 @@ class Image extends \XLite\View\AView
 
         if ($this->getParam(self::PARAM_IMAGE)->getWidth() && $this->getParam(self::PARAM_IMAGE)->getHeight()) {
 
-            $funcName = method_exists($this->getParam(self::PARAM_IMAGE), 'getResizedURL')
-                ? 'getResizedURL'
-                : 'getResizedThumbnailURL';
+            if ($this->needResize()) {
+                $this->resizeImage($maxw, $maxh);
 
-            // $funcName - getResizedURL or getResizedThumbnailURL
-            list(
-                $this->properties['width'],
-                $this->properties['height'],
-                $this->resizedURL
-            ) = $this->getParam(self::PARAM_IMAGE)->$funcName($maxw, $maxh);
-
-            // Center the image vertically and horizontally
-            if ($this->getParam(self::PARAM_CENTER_IMAGE)) {
-                $this->setImagePaddings();
+            } else {
+                $this->scaleImage($maxw, $maxh);
             }
 
         } else {
@@ -380,6 +371,72 @@ class Image extends \XLite\View\AView
             \XLite::getInstance()->getOptions(array('images', 'default_image_height')),
             max(0, $this->getParam(self::PARAM_MAX_WIDTH)),
             max(0, $this->getParam(self::PARAM_MAX_HEIGHT))
+        );
+
+        // Center the image vertically and horizontally
+        if ($this->getParam(self::PARAM_CENTER_IMAGE)) {
+            $this->setImagePaddings();
+        }
+    }
+
+    /**
+     * Check - need resize or crop
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function needResize()
+    {
+        return \XLite\Model\Base\Storage::STORAGE_URL != $this->getParam(self::PARAM_IMAGE)->getStorageType();
+    }
+
+    /**
+     * Resize image 
+     * 
+     * @param integer $maxw Maximum width
+     * @param integer $maxh Maximum height
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function resizeImage($maxw, $maxh)
+    {
+        $funcName = method_exists($this->getParam(self::PARAM_IMAGE), 'getResizedURL')
+            ? 'getResizedURL'
+            : 'getResizedThumbnailURL';
+
+        // $funcName - getResizedURL or getResizedThumbnailURL
+        list(
+            $this->properties['width'],
+            $this->properties['height'],
+            $this->resizedURL
+        ) = $this->getParam(self::PARAM_IMAGE)->$funcName($maxw, $maxh);
+
+        // Center the image vertically and horizontally
+        if ($this->getParam(self::PARAM_CENTER_IMAGE)) {
+            $this->setImagePaddings();
+        }
+    }
+
+    /**
+     * Scale image
+     *
+     * @param integer $maxw Maximum width
+     * @param integer $maxh Maximum height
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function scaleImage($maxw, $maxh)
+    {
+        list($this->properties['width'], $this->properties['height']) = \XLite\Core\ImageOperator::getCroppedDimensions(
+            $this->getParam(self::PARAM_IMAGE)->getWidth(),
+            $this->getParam(self::PARAM_IMAGE)->getHeight(),
+            $maxw,
+            $maxh
         );
 
         // Center the image vertically and horizontally
