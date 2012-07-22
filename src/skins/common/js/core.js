@@ -404,7 +404,7 @@ window.core = {
   // Return value of variable that is given in comment block: e.g. <!-- 'productid': '100001', 'var': 'value', -->"
   getCommentedData: function(obj, name)
   {
-    var children = jQuery(obj).get(0).childNodes;
+    var children = jQuery(obj).get(0) ? jQuery(obj).get(0).childNodes : [];
     var re = /DATACELL/;
     var m = false;
 

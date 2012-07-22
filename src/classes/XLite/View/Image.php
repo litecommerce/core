@@ -130,7 +130,7 @@ class Image extends \XLite\View\AView
 
             // Specified image
 
-            $url = $this->getParam(self::PARAM_USE_CACHE)
+            $url = ($this->getParam(self::PARAM_USE_CACHE) && $this->resizedURL)
                 ? $this->resizedURL
                 : $this->getParam(self::PARAM_IMAGE)->getFrontURL();
         }
@@ -334,23 +334,25 @@ class Image extends \XLite\View\AView
      */
     protected function processImage()
     {
-        $maxw = max(0, $this->getParam(self::PARAM_MAX_WIDTH));
-        $maxh = max(0, $this->getParam(self::PARAM_MAX_HEIGHT));
+        if ($this->getParam(self::PARAM_IMAGE)->getWidth() && $this->getParam(self::PARAM_IMAGE)->getHeight()) {
+            $maxw = max(0, $this->getParam(self::PARAM_MAX_WIDTH));
+            $maxh = max(0, $this->getParam(self::PARAM_MAX_HEIGHT));
 
-        $funcName = method_exists($this->getParam(self::PARAM_IMAGE), 'getResizedURL')
-            ? 'getResizedURL'
-            : 'getResizedThumbnailURL';
+            $funcName = method_exists($this->getParam(self::PARAM_IMAGE), 'getResizedURL')
+                ? 'getResizedURL'
+                : 'getResizedThumbnailURL';
 
-        // $funcName - getResizedURL or getResizedThumbnailURL
-        list(
-            $this->properties['width'],
-            $this->properties['height'],
-            $this->resizedURL
-        ) = $this->getParam(self::PARAM_IMAGE)->$funcName($maxw, $maxh);
+            // $funcName - getResizedURL or getResizedThumbnailURL
+            list(
+                $this->properties['width'],
+                $this->properties['height'],
+                $this->resizedURL
+            ) = $this->getParam(self::PARAM_IMAGE)->$funcName($maxw, $maxh);
 
-        // Center the image vertically and horizontally
-        if ($this->getParam(self::PARAM_CENTER_IMAGE)) {
-            $this->setImagePaddings();
+            // Center the image vertically and horizontally
+            if ($this->getParam(self::PARAM_CENTER_IMAGE)) {
+                $this->setImagePaddings();
+            }
         }
     }
 

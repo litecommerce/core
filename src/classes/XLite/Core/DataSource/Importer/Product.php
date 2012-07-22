@@ -78,6 +78,15 @@ abstract class Product extends \XLite\Base
     protected $updateCount = 0;
 
     /**
+     * Import count 
+     * 
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.24
+     */
+    protected $importCount = 0;
+
+    /**
      * Constructor
      * 
      * @param \XLite\Core\DataSource\Base\Products $collection Products collection
@@ -115,6 +124,20 @@ abstract class Product extends \XLite\Base
         return $this->updateCount;
     }
 
+    /**
+     * Log operation 
+     * 
+     * @param string $operation Operation name
+     * @param float  $duration  Duration (seconds)
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function logOperation($operation, $duration)
+    {
+    }
+
     // {{{ Import
 
     /**
@@ -140,11 +163,29 @@ abstract class Product extends \XLite\Base
     {
         $this->addCount = 0;
         $this->updateCount = 0;
+        $this->importCount = 0;
 
+        $ts = microtime(true);
         while ($this->checkStep()) {
+            $ts2 = microtime(true);
+            $cell = $this->getCell();
+            $this->logOperation('Read product info (eid: ' . $cell['id'] . ')', microtime(true) - $ts2);
+
+            $ts2 = microtime(true);
             $this->import($this->getCell());
+            $this->logOperation('Import product (eid: ' . $cell['id'] . ')', microtime(true) - $ts2);
+
+            $ts2 = microtime(true);
             $this->collection->next();
+            $this->logOperation('Go to next product (eid: ' . $cell['id'] . ')', microtime(true) - $ts2);
+            $this->importCount++;
         }
+        $duration = microtime(true) - $ts;
+        \XLite\Logger::getInstance()->log(
+            'Product import from data source statistics:'
+            . ' duration: ' . round($duration, 4) . 's.;'
+            . ' duration per product: ' . round($duration / $this->importCount, 4) . 's.'
+        );
 
         \XLite\Core\Database::getEM()->flush();
     }
@@ -184,16 +225,32 @@ abstract class Product extends \XLite\Base
      */
     protected function import(array $cell)
     {
+        $ts = microtime(true);
         $product = $this->detectProduct($cell);
+        $this->logOperation(
+            'Detect product (' . ($product ? 'detected' : 'undetected') . ')',
+            microtime(true) - $ts
+        );
+
         if ($product) {
             $this->updateCount++;
 
         } else {
             $this->addCount++;
+            $ts = microtime(true);
             $product = $this->createProduct($cell);
+            $this->logOperation(
+                'Create product (eid: ' . $cell['id'] . ')',
+                microtime(true) - $ts
+            );
         }
 
+        $ts = microtime(true);
         $this->update($product, $cell);
+        $this->logOperation(
+            'Update product (eid: ' . $cell['id'] . ')',
+            microtime(true) - $ts
+        );
     }
 
     /**
@@ -255,11 +312,21 @@ abstract class Product extends \XLite\Base
         }
 
         if (isset($cell['images'])) {
+            $ts = microtime(true);
             $this->updateImages($product, $cell['images']);
+            $this->logOperation(
+                'Update images (' . count($cell['images']) . ')',
+                microtime(true) - $ts
+            );
         }
 
         if (isset($cell['categories'])) {
+            $ts = microtime(true);
             $this->updateCategories($product, $cell['categories']);
+            $this->logOperation(
+                'Update categories (' . count($cell['categories']) . ')',
+                microtime(true) - $ts
+            );
         }
     }
 
@@ -313,7 +380,7 @@ abstract class Product extends \XLite\Base
      */
     protected function detectImage(\XLite\Model\Product $product, array $image)
     {
-        $hash = \Includes\Utils\FileManager::getHash($image['url']);
+        $hash = $this->getImageHash($image);
 
         $model = null;
         if ($hash) {
@@ -326,6 +393,33 @@ abstract class Product extends \XLite\Base
         }
 
         return $model;
+    }
+
+    /**
+     * Get image hash 
+     * 
+     * @param array $image Image data
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getImageHash(array $image)
+    {
+        if (empty($image['md5'])) {
+            $request = new \XLite\Core\HTTP\Request($image['url']);
+            $request->verb = 'head';
+            $response = $request->sendRequest();
+            if (
+                200 == $response->code
+                && $response->headers->ETag
+                && preg_match('/"(\w{32})"/Ss', $response->headers->ETag, $match)
+            ) {
+                $image['md5'] = $match[1];
+            }
+        }
+
+        return !empty($image['md5']) ? $image['md5'] : \Includes\Utils\FileManager::getHash($image['url']);
     }
 
     /**
@@ -371,7 +465,7 @@ abstract class Product extends \XLite\Base
 
     // }}}
 
-    // {{{ update categories
+    // {{{ Update categories
 
     /**
      * Update categories 
