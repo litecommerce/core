@@ -334,9 +334,10 @@ class Image extends \XLite\View\AView
      */
     protected function processImage()
     {
+        $maxw = max(0, $this->getParam(self::PARAM_MAX_WIDTH));
+        $maxh = max(0, $this->getParam(self::PARAM_MAX_HEIGHT));
+
         if ($this->getParam(self::PARAM_IMAGE)->getWidth() && $this->getParam(self::PARAM_IMAGE)->getHeight()) {
-            $maxw = max(0, $this->getParam(self::PARAM_MAX_WIDTH));
-            $maxh = max(0, $this->getParam(self::PARAM_MAX_HEIGHT));
 
             $funcName = method_exists($this->getParam(self::PARAM_IMAGE), 'getResizedURL')
                 ? 'getResizedURL'
@@ -352,6 +353,15 @@ class Image extends \XLite\View\AView
             // Center the image vertically and horizontally
             if ($this->getParam(self::PARAM_CENTER_IMAGE)) {
                 $this->setImagePaddings();
+            }
+
+        } else {
+            if (0 < $maxw) {
+                $this->addInlineStyle('max-width: ' . $maxw . 'px;');
+            }
+
+            if (0 < $maxh) {
+                $this->addInlineStyle('max-height: ' . $maxh . 'px;');
             }
         }
     }
