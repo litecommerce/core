@@ -11,6 +11,5 @@
  *}
 
 <div class="order-invoice">
-  <div class="print"><a href="javascript:void(0);" onclick="javascript: window.print(); return false;">{t(#Print invoice#)}</a></div>
   <widget template="order/invoice/page.tpl" />
 </div>

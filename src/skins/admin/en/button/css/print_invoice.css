@@ -1,0 +1,39 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.0
+ */
+
+button.button.print-invoice {
+  height: 31px;
+}
+
+.page-tabs button.button.print-invoice {
+  margin-top: -1px;
+}
+
+button.print-invoice div span img {
+  background: url(../../images/icon_printer.png) 0 0 no-repeat transparent;
+  width: 24px;
+  height: 15px;
+  margin-top: -3px;
+  vertical-align: middle;
+}
+
+button.print-invoice.suspended div span img {
+  background: url(../../../../progress_indicator.gif) 0 0 no-repeat transparent;
+  height: 18px;
+}
+
+button.print-invoice .iframe-placeholder,
+.iframe-placeholder {
+  height: 0px;
+  width: 0px;
+  border: 0px;
+}

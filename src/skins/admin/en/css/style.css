@@ -547,6 +547,12 @@ div.tabs2-page-tabs ul li.tab-current
 {
 }
 
+div.list-after-tabs
+{
+  float: right;
+  display: inline;
+  height: 37px;
+}
 
 /* Data table */
 
