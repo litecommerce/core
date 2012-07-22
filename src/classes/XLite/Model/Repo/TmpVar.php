@@ -54,19 +54,24 @@ class TmpVar extends \XLite\Model\Repo\ARepo
     {
         $entity = $this->findOneBy(array('name' => $name));
 
-        if (!$entity) {
-            $entity = new \XLite\Model\TmpVar;
-            $entity->setName($name);
-            \XLite\Core\Database::getEM()->persist($entity);
-        }
+		if (isset($value)) {
+	        if (!$entity) {
+		        $entity = new \XLite\Model\TmpVar;
+			    $entity->setName($name);
+				\XLite\Core\Database::getEM()->persist($entity);
+	        }
 
-        if (!is_scalar($value)) {
-            $value = serialize($value);
-        }
+		    if (!is_scalar($value)) {
+			    $value = serialize($value);
+	        }
 
-        $entity->setValue($value);
+		    $entity->setValue($value);
+			\XLite\Core\Database::getEM()->flush();
 
-        \XLite\Core\Database::getEM()->flush();
+		} elseif ($entity) {
+			\XLite\Core\Database::getEM()->remove($entity);
+			\XLite\Core\Database::getEM()->flush();
+		}
     }
 
     /**
@@ -107,7 +112,14 @@ class TmpVar extends \XLite\Model\Repo\ARepo
      */
     public function initializeEventState($name)
     {
-        $this->setEventState($name, array('position' => 0, 'length' => 0, 'state' => \XLite\Core\EventTask::STATE_STANDBY));
+        $this->setEventState(
+            $name,
+            array(
+                'position' => 0,
+                'length'   => 0,
+                'state'    => \XLite\Core\EventTask::STATE_STANDBY,
+            )
+        );
     }
 
     /**
@@ -150,11 +162,7 @@ class TmpVar extends \XLite\Model\Repo\ARepo
      */
     public function removeEventState($name)
     {
-        $var = $this->findOneBy(array('name' => static::EVENT_TASK_STATE_PREFIX . $name));
-        if ($var) {
-            \XLite\Core\Database::getEM()->remove($var);
-            \XLite\Core\Database::getEM()->flush();
-        }
+        $this->setVar(static::EVENT_TASK_STATE_PREFIX . $name, null);
     }
 
     /**

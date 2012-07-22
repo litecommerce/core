@@ -46,7 +46,7 @@ class TmpVars extends \XLite\Base\Singleton
      */
     public function __get($name)
     {
-        return ($var = $this->getVar($name)) ? unserialize($var->getValue()) : null;
+        return $this->getRepo()->getVar($name);
     }
 
     /**
@@ -61,21 +61,7 @@ class TmpVars extends \XLite\Base\Singleton
      */
     public function __set($name, $value)
     {
-        $var = $this->getVar($name);
-
-        if (isset($value)) {
-            $data = array('value' => serialize($value));
-
-            if (!isset($var)) {
-                $var = $this->getRepo()->insert($data + array('name' => $name));
-
-            } else {
-                $this->getRepo()->update($var, $data);
-            }
-
-        } elseif ($var) {
-            $this->getRepo()->delete($var);
-        }
+        $this->getRepo()->setVar($name, $value);
     }
 
     /**
@@ -89,21 +75,21 @@ class TmpVars extends \XLite\Base\Singleton
      */
     public function __isset($name)
     {
-        return !is_null($this->getVar($name));
+        return !is_null($this->__get($name));
     }
 
     /**
-     * Search var in DB table
+     * Unset value
      *
-     * @param string $name Var name
+     * @param string $name Variable name to check
      *
-     * @return \XLite\Model\TmpVar
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getVar($name)
+    public function __unset($name)
     {
-        return $this->getRepo()->findOneBy(array('name' => $name));
+        $this->__set($name, null);
     }
 
     /**

@@ -177,8 +177,10 @@ class Ecwid extends ADataSource
 
         if (200 == $response->code) {
             $result = json_decode($response->body, true);
+            $this->logOperation('Call API \'' . $url . '\' (success)', microtime(true) - $time);
 
         } else {
+            $this->logOperation('Call API \'' . $url . '\' (failed)', microtime(true) - $time);
             throw new \Exception('Call to \'' . $url . '\' failed with \'' . $response->code . '\' code');
         }
 
@@ -220,5 +222,19 @@ class Ecwid extends ADataSource
         }
 
         return $this->callApi('batch', $queries);
+    }
+
+    /**
+     * Log operation
+     *
+     * @param string $operation Operation name
+     * @param float  $duration  Duration (seconds)
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function logOperation($operation, $duration)
+    {
     }
 }

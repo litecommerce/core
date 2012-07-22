@@ -158,19 +158,10 @@ class AMQP extends \XLite\Core\EventDriver\AEventDriver
     {
         $key = 'amqp.queue.' . $name;
 
-        $entity = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->findOneBy(array('name' => $key));
+        $ttl = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getVar($key);
 
-        if (!$entity) {
-            $entity = new \XLite\Model\TmpVar;
-            $entity->setName($key);
-            $entity->setValue(time());
-            \XLite\Core\Database::getEM()->persist($entity);
-
-            $this->declareQueue($name);
-
-        } elseif ($entity->getValue() + static::REDECLARE_TTL < time()) {
-
-            $entity->setValue(time());
+        if (!$ttl || $ttl + static::REDECLARE_TTL < time()) {
+            \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->setVar($key, time());
             $this->declareQueue($name);
         }
     }
