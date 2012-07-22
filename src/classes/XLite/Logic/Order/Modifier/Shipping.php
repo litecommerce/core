@@ -124,6 +124,20 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     }
 
     /**
+     * Get shipping address 
+     * 
+     * @return \XLite\Model\Address
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getShippingAddress()
+    {
+        return ($this->getOrder() && $this->getOrder()->getProfile() && $this->getOrder()->getProfile()->getShippingAddress())
+            ? $this->getOrder()->getProfile()->getShippingAddress()
+            : null;
+    }
+
+    /**
      * Returns true if any of order items are shipped
      *
      * @return boolean

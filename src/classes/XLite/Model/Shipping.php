@@ -204,10 +204,10 @@ class Shipping extends \XLite\Base\Singleton
     {
         $address = null;
 
-        if ($modifier->getOrder()->getProfile() && $modifier->getOrder()->getProfile()->getShippingAddress()) {
+        if ($modifier->getShippingAddress()) {
 
             // Profile is exists
-            $addressObj = $modifier->getOrder()->getProfile()->getShippingAddress();
+            $addressObj = $modifier->getShippingAddress();
             $address = array(
                 'address' => $addressObj->getStreet(),
                 'city'    => $addressObj->getCity(),
