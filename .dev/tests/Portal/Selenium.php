@@ -25,9 +25,11 @@
  * @since      1.1.0
  */
 
-require_once PATH_ROOT . '/.dev/lib/bdd/alexandresalome/php-selenium/autoload.php';
+namespace Portal;
 
-class Portal_Selenium
+require_once PATH_TESTS . '/Portal/Autoload.php';
+
+class Selenium
 {
     
     /**
@@ -81,16 +83,6 @@ class Portal_Selenium
     );
     
     /**
-     *Configuration
-     * 
-     * @access protected
-     * @var    array
-     * @see    ___func_see___
-     * @since  1.1.0 
-     */
-    protected $testConfig = NULL;
-    
-    /**
      * URL
      * 
      * @access protected
@@ -99,7 +91,7 @@ class Portal_Selenium
      * @since  1.1.0
      */    
     protected $url = 'http://localhost/';
-
+    
     /**
      * Constructor
      *
@@ -110,16 +102,44 @@ class Portal_Selenium
     public function __construct()
     {
     }
-    
-    protected function getClient()
+
+    /**
+     * Start new browser session via selenium if necessary
+     * 
+     * @access public
+     * @see    ___func_see___
+     * @since  1.1.0
+     */
+    public static function start()
     {
-        static $selenium_client = NULL;
-        if (is_null($selenium_client)) {
-            $browser = $this->getBrowserInfo();
+        static $isStarted;
+        if ($isStarted !== true) {
+            static::getBrowser()->start();
+            $isStarted = true;
+        }
+    }
+    
+    /**
+     * Shutdown browser session
+     * 
+     * @access public
+     * @see    ___func_see___
+     * @since  1.1.0
+     */
+    public static function stop()
+    {
+        static::getBrowser()->stop();
+    }
+    
+    public static function getClient()
+    {
+        static $selenium_client;// = NULL;
+        if (!is_object($selenium_client)) {
+            $browser = static::getBrowserInfo();
             $host    = $browser['host'];
             $port    = $browser['port'];
-            $timeout = $browser['timeout'];
-            $selenium_client = new Selenium\Client($host, $port, $timeout);
+            $timeout = $browser['timeout'] * 1000;
+            $selenium_client = new \Selenium\Client($host, $port, $timeout);
         }
         
         return $selenium_client;
@@ -133,75 +153,24 @@ class Portal_Selenium
      * @see    ___func_see___
      * @since  1.1.0
      */
-    protected function getBrowser()
+    public static function getBrowser()
     {
-        static $selenium_browser = NULL;
-        if (is_null($selenium_browser)) {
-            $browser = $this->getBrowserInfo();
-            $selenium_browser = $this->getClient()->getBrowser($this->url, $browser['browser']);
+        static $selenium_browser;// = NULL;
+        if (!is_object($selenium_browser)) {
+            $browser = static::getBrowserInfo();
+            $url = 'http://localhost/';//$this->url;
+            $selenium_browser = static::getClient()->getBrowser($url, $browser['browser']);
         }
         
         return $selenium_browser;
     }
     
-    protected function getBrowserInfo()
+    public static function getBrowserInfo()
     {
         global $availableBrowsersList;
         $browser = $availableBrowsersList[0];
         
         return $browser;
-    }
-
-    /**
-     * Get options from ini-file
-     *
-     * @return array
-     * @since  1.0.0
-     */
-    protected function getConfig()
-    {
-        if (is_null($this->testConfig)) {
-            $configFile = XLITE_DEV_CONFIG_DIR . LC_DS . 'xlite-test.config.php';
-
-            if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {
-                return $config;
-
-            } else {
-                die('Config file not found: ' . $configFile);
-            }
-        }
-        
-        return $this->testConfig;
-    }
-
-    /**
-     * Improved version of 'typeKeys' Selenium command
-     *
-     * @param string $locator Locator
-     * @param string $value   Type values
-     *
-     * @return mixed
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.1.0
-     */
-    protected function typeKeys($locator, $value)
-    {
-        if (!empty($value)){
-            $type = substr($value, 0, -1);
-            $typeKeys = substr($value, -1);
-        }
-        else{
-            $type = '';
-            $typeKeys = '';
-        }
-        $this->__call('type', array($locator, ''));
-        $this->__call('type', array($locator, $value));
-
-//        if (!empty($type))
-//            $this->__call('type', array($locator, $type));
-        $this->focus($locator);
-        return $this->__call('typeKeys', array($locator, $typeKeys));
     }
 
     /**

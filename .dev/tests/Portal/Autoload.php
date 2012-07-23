@@ -16,7 +16,7 @@
  *
  * @category   LiteCommerce
  * @package    Tests
- * @subpackage Web2
+ * @subpackage Portal
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -25,17 +25,5 @@
  * @since      1.1.0
  */
 
-require_once PATH_TESTS . '/Portal/Autoload.php';
-
-class XLite_Tests_Catalog_Product extends XLite_Tests_TestCase//XLite_Tests_SeleniumTestCase
-{
-    
-    public function testAddProduct()
-    {
-        $admin = new \Portal\Admin\Admin;
-        $admin->open();
-        $this->assertTrue(true);
-        
-        \Portal\Selenium::stop();
-    }
-}
+require_once PATH_ROOT . '/.dev/lib/bdd/alexandresalome/php-selenium/autoload.php';
+$classLoader->registerNamespace('Portal', PATH_TESTS);

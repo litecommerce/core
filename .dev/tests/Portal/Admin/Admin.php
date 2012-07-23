@@ -25,24 +25,25 @@
  * @since      1.1.0
  */
 
-require_once PATH_TESTS . '/Portal/Page.php';
-require_once PATH_TESTS . '/Portal/Admin/AdminLogin.php';
+namespace Portal\Admin;
 
-class Portal_Admin extends Portal_Page
+require_once PATH_TESTS . '/Portal/Autoload.php';
+
+class Admin extends \Portal\Page
 {
     public function __construct() {
         $this->url = "http://localhost/xlite/src/admin.php";
         // Define components
+        $this->components[] = new \Portal\Link('lnkOrders', \Selenium\Locator::xpath('//div[@class="dialog-content"]/ul[@class="admin-panel"]/li/a[@href="admin.php?target=order_list"]'));
         
         parent::__construct();
     }
 
     public function open()
     {
-        $page = new Portal_AdminLogin;
+        // Open authentication page and login
+        $page = new \Portal\Admin\AdminLogin;
         $page->open();
-        echo "1";
-        sleep(10);
         $page->login();
     }
 }

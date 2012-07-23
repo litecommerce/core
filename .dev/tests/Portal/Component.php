@@ -25,9 +25,11 @@
  * @since      1.1.0
  */
 
-require_once PATH_TESTS . '/Portal/Selenium.php';
+namespace Portal;
 
-class Portal_Component extends Portal_Selenium
+require_once PATH_TESTS . '/Portal/Autoload.php';
+
+class Component
 {
     /**
      * Identifier
@@ -61,7 +63,7 @@ class Portal_Component extends Portal_Selenium
      * 
      * @access public
      * @param string $id      component identifier
-     * @param string $locator component locator
+     * @param Selenium\Locator $locator component locator
      * @see    ___func_see___
      * @since 1.1.0
      */  
@@ -69,7 +71,7 @@ class Portal_Component extends Portal_Selenium
     {
         $this->id = $id;
         $this->locator = $locator;
-        parent::__construct();
+        //parent::__construct();
     }
     
     /**
@@ -130,7 +132,7 @@ class Portal_Component extends Portal_Selenium
      */
     public function exists()
     {
-        return $this->getBrowser()->isElementPresent($this->locator);
+        return \Portal\Selenium::getBrowser()->isElementPresent($this->locator);
     }
     
     /**
@@ -143,7 +145,7 @@ class Portal_Component extends Portal_Selenium
      */
     public function isVisible()
     {
-        return $this->getBrowser()->isVisible($this->locator);
+        return \Portal\Selenium::getBrowser()->isVisible($this->locator);
     }
     
     /**
@@ -156,7 +158,7 @@ class Portal_Component extends Portal_Selenium
      */
     public function isEditable()
     {
-        return $this->getBrowser()->isEditable($this->locator);
+        return \Portal\Selenium::getBrowser()->isEditable($this->locator);
     }
     
     /**
@@ -176,20 +178,6 @@ class Portal_Component extends Portal_Selenium
     }
     
     /**
-     * Enter text into input field or textarea
-     *  
-     * @access public
-     * @param  string $text Entered text
-     * @return void
-     * @see    ___func_see___
-     * @since  1.1.0
-     */
-    public function enter($text)
-    {
-        $this->getBrowser()->typeKeys($this->locator, $text);
-    }
-    
-    /**
      * Click on element
      * 
      * @access public
@@ -199,22 +187,13 @@ class Portal_Component extends Portal_Selenium
      */
     public function click()
     {
-        $this->getBrowser()->click($this->locator);
-    }
-    
-    /**
-     * Press element - click on the element and wait
-     * for reloading of the page if necessary
-     * 
-     * @access public
-     * @return void
-     * @see    ___func_see___
-     * @since  1.1.0 
-     */
-    public function press()
-    {
-        $this->click();
-        $this->getBrowser()->waitForPageToLoad(30);
+        if (
+            $this->exists()
+            && $this->isVisible()
+            && $this->isActive()
+        ) {
+            \Portal\Selenium::getBrowser()->click($this->locator);
+        }
     }
     
     /**
@@ -227,6 +206,80 @@ class Portal_Component extends Portal_Selenium
      */
     public function doubleClick()
     {
-        $this->doubleClick($this->locator);
+        if (
+            $this->exists()
+            && $this->isVisible()
+            && $this->isActive()
+        ) {
+            \Portal\Selenium::getBrowser()->doubleClick($this->locator);
+        }
+    }
+    
+    /**
+     * Move mouse cursor over element
+     * 
+     * @access public
+     * @return void
+     * @see    ___func_see___
+     * @since  1.1.0  
+     */
+    public function mouseOver()
+    {
+        if (
+            $this->exists()
+            && $this->isVisible()
+            && $this->isActive()
+        ) {
+            \Portal\Selenium::getBrowser()->mouseOver($this->locator);
+        }
+    }
+    
+    /**
+     * Simulates a user moving the mouse pointer away from the specified element
+     * 
+     * @access public
+     * @return void
+     * @see    ___func_see___
+     * @since  1.1.0  
+     */
+    public function mouseOut()
+    {
+        if (
+            $this->exists()
+            && $this->isVisible()
+            && $this->isActive()
+        ) {
+            \Portal\Selenium::getBrowser()->mouseOut($this->locator);
+        }
+    }
+    
+    /**
+     * Move the focus to the specified element
+     *  
+     * @access public
+     * @return void
+     * @see    ___func_see___
+     * @since  1.1.0
+     */
+    public function focus()
+    {
+        if (
+            $this->exists()
+            && $this->isVisible()
+            && $this->isActive()
+        ) {
+            \Portal\Selenium::getBrowser()->focus($this->locator);
+        }
+    }
+    
+    public function clickAndWait()
+    {
+        if (
+            $this->exists()
+            && $this->isVisible()
+            && $this->isActive()
+        ) {
+            \Portal\Selenium::getBrowser()->clickAndWait($this->locator, 30 * 1000);
+        }
     }
 }

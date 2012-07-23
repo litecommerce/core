@@ -25,9 +25,11 @@
  * @since      1.1.0
  */
 
-require_once PATH_TESTS . '/Portal/Selenium.php';
+namespace Portal;
 
-abstract class Portal_Page extends Portal_Selenium
+require_once PATH_TESTS . '/Portal/Autoload.php';
+
+abstract class Page
 {
     /**
      * UI elements: buttons, links, tabs, etc.
@@ -38,15 +40,19 @@ abstract class Portal_Page extends Portal_Selenium
      */ 
     protected $components = array();
 
+    /**
+     *Configuration
+     * 
+     * @access protected
+     * @var    array
+     * @see    ___func_see___
+     * @since  1.1.0 
+     */
+    protected $testConfig = NULL;
+
     public function __construct()
     {
-        parent::__construct();
-        $this->getBrowser()->start();
-    }
-    
-    public function __destruct()
-    {
-        $this->getBrowser()->stop();
+        \Portal\Selenium::start();
     }
     
     /**
@@ -80,5 +86,26 @@ abstract class Portal_Page extends Portal_Selenium
         }
         
         return $res;
+    }
+    /**
+     * Get options from ini-file
+     *
+     * @return array
+     * @since  1.0.0
+     */
+    protected function getConfig()
+    {
+        if (is_null($this->testConfig)) {
+            $configFile = XLITE_DEV_CONFIG_DIR . LC_DS . 'xlite-test.config.php';
+
+            if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {
+                return $config;
+
+            } else {
+                die('Config file not found: ' . $configFile);
+            }
+        }
+        
+        return $this->testConfig;
     }
 }

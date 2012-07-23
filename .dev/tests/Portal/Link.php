@@ -16,7 +16,7 @@
  *
  * @category   LiteCommerce
  * @package    Tests
- * @subpackage Web2
+ * @subpackage Portal
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -25,17 +25,23 @@
  * @since      1.1.0
  */
 
+namespace Portal;
+
 require_once PATH_TESTS . '/Portal/Autoload.php';
 
-class XLite_Tests_Catalog_Product extends XLite_Tests_TestCase//XLite_Tests_SeleniumTestCase
+class Link extends \Portal\Component
 {
-    
-    public function testAddProduct()
+    /**
+     * Press element - click on the element and wait
+     * for reloading of the page if necessary
+     * 
+     * @access public
+     * @return void
+     * @see    ___func_see___
+     * @since  1.1.0 
+     */
+    public function hover()
     {
-        $admin = new \Portal\Admin\Admin;
-        $admin->open();
-        $this->assertTrue(true);
-        
-        \Portal\Selenium::stop();
+        $this->mouseOver();
     }
 }

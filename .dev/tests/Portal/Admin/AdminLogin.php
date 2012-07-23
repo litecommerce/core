@@ -25,10 +25,11 @@
  * @since      1.1.0
  */
 
-require_once PATH_TESTS . '/Portal/Page.php';
-require_once PATH_TESTS . '/Portal/Component.php';
+namespace Portal\Admin;
 
-class Portal_AdminLogin extends Portal_Page
+require_once PATH_TESTS . '/Portal/Autoload.php';
+
+class AdminLogin extends \Portal\Page
 {
     public function __construct()
     {
@@ -36,16 +37,16 @@ class Portal_AdminLogin extends Portal_Page
         $this->url = $config['admin']['http_location'] . '/admin.php?target=login';
 
         // Define components
-        $this->components[] = new Portal_Component('fldUsername', '//input[@name="login" and @type="text"]');
-        $this->components[] = new Portal_Component('fldPassword', '//input[@name="password" and @type="password"]');
-        $this->components[] = new Portal_Component('btnLogin', '//button[@class="main-button" and @type="submit"]');
+        $this->components[] = new \Portal\Field('fldUsername', \Selenium\Locator::xpath('//input[@name="login" and @type="text"]'));
+        $this->components[] = new \Portal\Field('fldPassword', \Selenium\Locator::xpath('//input[@name="password" and @type="password"]'));
+        $this->components[] = new \Portal\Button('btnLogin', \Selenium\Locator::xpath('//button[@class="main-button" and @type="submit"]'));
         
         parent::__construct();
     }
 
     public function open()
     {
-        $this->getBrowser()->open($this->url);
+        \Portal\Selenium::getBrowser()->open($this->url);
     }
     
     public function login($username = NULL, $password = NULL)
