@@ -83,7 +83,7 @@ ListView.prototype.postprocess = function(isSuccess, initial)
     );
 
     // Register page count change handler
-    jQuery('input.page-length', this.base).change(
+    jQuery('.page-length:input', this.base).change(
       function() {
         count = parseInt(jQuery(this).val());
 
