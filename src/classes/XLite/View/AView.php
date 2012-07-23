@@ -1121,7 +1121,7 @@ abstract class AView extends \XLite\Core\Handler
         $parts = $currency->formatParts($value);
 
         if (isset($parts['sign']) && '-' == $parts['sign']) {
-            $parts['sign'] = '&minus;&#8197';
+            $parts['sign'] = '&minus;&#8197;';
         }
 
         foreach ($parts as $name => $value) {

@@ -822,7 +822,7 @@ function func_set_memory_limit($new_limit) {
 
 function func_htmlspecialchars($str) {
     $str = preg_replace(
-        '/&(?!(?:amp|nbsp|#\d+|#x\d+|euro|copy|pound|curren|cent|yen|reg|trade|lt|gt|lte|gte|quot);)/Ss',
+        '/&(?!(?:amp|nbsp|#\d+|#x\d+|euro|copy|pound|curren|cent|yen|reg|trade|lt|gt|lte|gte|quot|minus|#8197);)/Ss',
         '&amp;',
         $str
     );
