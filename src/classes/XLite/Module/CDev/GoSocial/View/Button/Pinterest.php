@@ -33,12 +33,12 @@ namespace XLite\Module\CDev\GoSocial\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="product.details.page.info.share.bar", weight="300")
+ * @ListChild (list="socialbar.info", weight="300")
  */
 class Pinterest extends \XLite\View\AView
 {
     /**
-     * Button URL 
+     * Button URL
      */
     const BUTTON_URL = 'http://pinterest.com/pin/create/button/?';
 
@@ -55,8 +55,8 @@ class Pinterest extends \XLite\View\AView
     }
 
     /**
-     * Get button attributes 
-     * 
+     * Get button attributes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15
@@ -87,7 +87,7 @@ class Pinterest extends \XLite\View\AView
 
     /**
      * Get button URL (query  part)
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.24
