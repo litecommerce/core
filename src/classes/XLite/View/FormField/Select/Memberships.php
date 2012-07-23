@@ -61,6 +61,6 @@ class Memberships extends \XLite\View\FormField\Select\Multiple
      */
     protected function getDefaultOptions()
     {
-        return $this->getMembershipsList();
+        return array('0' => 'All') + $this->getMembershipsList();
     }
 }
