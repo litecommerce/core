@@ -71,7 +71,7 @@ class OrderHistory extends \XLite\Base\Singleton
      */
     public function registerPlaceOrder($orderId)
     {
-        $this->registerEvent($orderId, static::CODE_PLACE_ORDER, 'Order was placed');
+        $this->registerEvent($orderId, static::CODE_PLACE_ORDER, 'Order placed');
     }
 
     /**
@@ -112,7 +112,7 @@ class OrderHistory extends \XLite\Base\Singleton
         $this->registerEvent(
             $orderId,
             static::CODE_CHANGE_STATUS_ORDER,
-            'Order status was changed from "' . $statuses[$change['old']] . '" to "' . $statuses[$change['new']] . '"'
+            'Order status changed from ' . $statuses[$change['old']] . ' to ' . $statuses[$change['new']]
         );
     }
 
@@ -128,7 +128,7 @@ class OrderHistory extends \XLite\Base\Singleton
      */
     public function registerOrderChangeNotes($orderId, $change)
     {
-        $this->registerEvent($orderId, static::CODE_CHANGE_NOTES_ORDER, 'Order notes was changed from "' . $change['old'] . '" to "' . $change['new'] . '"');
+        $this->registerEvent($orderId, static::CODE_CHANGE_NOTES_ORDER, 'Order notes changed from "' . $change['old'] . '" to "' . $change['new'] . '"');
     }
 
     /**
@@ -142,7 +142,7 @@ class OrderHistory extends \XLite\Base\Singleton
      */
     public function registerCustomerEmailSent($orderId)
     {
-        $this->registerEvent($orderId, static::CODE_EMAIL_CUSTOMER_SENT, 'Email was sent to the customer');
+        $this->registerEvent($orderId, static::CODE_EMAIL_CUSTOMER_SENT, 'Email sent to the customer');
     }
 
     /**
@@ -156,7 +156,7 @@ class OrderHistory extends \XLite\Base\Singleton
      */
     public function registerAdminEmailSent($orderId)
     {
-        $this->registerEvent($orderId, static::CODE_EMAIL_ADMIN_SENT, 'Email was sent to the admin');
+        $this->registerEvent($orderId, static::CODE_EMAIL_ADMIN_SENT, 'Email sent to the admin');
     }
 
     /**
@@ -171,6 +171,6 @@ class OrderHistory extends \XLite\Base\Singleton
      */
     public function registerTransaction($orderId, $transactionData)
     {
-        $this->registerEvent($orderId, static::CODE_TRANSACTION, 'Transaction was made', $transactionData);
+        $this->registerEvent($orderId, static::CODE_TRANSACTION, 'Transaction made', $transactionData);
     }
 }
