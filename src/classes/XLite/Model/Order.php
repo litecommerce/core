@@ -2147,7 +2147,11 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             );
 
             // Remove from array all zero sums
-            $paymentTransactionSums = array_filter($paymentTransactionSums, 'strval');
+            foreach ($paymentTransactionSums as $k => $v) {
+                if (0 >= $v) {
+                    unset($paymentTransactionSums[$k]);
+                }
+            }
         }
 
         return $paymentTransactionSums;

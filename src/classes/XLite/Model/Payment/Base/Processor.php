@@ -86,7 +86,7 @@ abstract class Processor extends \XLite\Base
         return array();
     }
 
-    public function isTransactionAllowed(\XLite\Model\Payment\Transaction $transaction, string $transactionType)
+    public function isTransactionAllowed(\XLite\Model\Payment\Transaction $transaction, $transactionType)
     {
         $result = false;
 

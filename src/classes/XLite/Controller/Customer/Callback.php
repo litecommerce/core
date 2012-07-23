@@ -117,15 +117,21 @@ class Callback extends \XLite\Controller\Customer\ACustomer
 
                 if ($cart->isPayed()) {
 
-                    $status = $txn->isAuthorized()
-                        ? \XLite\Model\Order::STATUS_AUTHORIZED
-                        : \XLite\Model\Order::STATUS_PROCESSED;
+                    $status = $txn->isCaptured()
+                        ? \XLite\Model\Order::STATUS_PROCESSED
+                        : \XLite\Model\Order::STATUS_AUTHORIZED;
 
                 } else {
 
-                    $status = $txn->isFailed()
-                        ? \XLite\Model\Order::STATUS_FAILED
-                        : \XLite\Model\Order::STATUS_QUEUED;
+                    if ($txn->isRefunded()) {
+                        $status = \XLite\Model\Order::STATUS_DECLINED;
+
+                    } elseif ($txn->isFailed()) {
+                        $status = \XLite\Model\Order::STATUS_FAILED;
+
+                    } else {
+                        $status = \XLite\Model\Order::STATUS_QUEUED;;
+                    }
                 }
 
                 $cart->setStatus($status);

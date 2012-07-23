@@ -35,21 +35,6 @@ namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
  */
 class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
 {
-    const PAYPAL_PAYMENT_METHOD_CODE = 'Paypal Website Payments Standard';
-
-    /**
-     * Mode value for testing
-     */
-    const TEST_MODE = 'test';
-
-    /**
-     * IPN statuses
-     */
-    const IPN_VERIFIED = 'verify';
-    const IPN_DECLINED = 'decline';
-    const IPN_REQUEST_ERROR = 'request_error';
-
-
     /**
      * Get settings widget or template
      *
@@ -87,65 +72,13 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
     {
         parent::processCallback($transaction);
 
-        $request = \XLite\Core\Request::getInstance();
+        if (\XLite\Module\CDev\Paypal\Model\Payment\Processor\PaypalIPN::getInstance()->isCallbackIPN()) {
+            // If callback is IPN request from Paypal
 
-        $status = $transaction::STATUS_FAILED;
-
-        switch ($this->getIPNVerification()) {
-
-            case self::IPN_DECLINED:
-                $status = $transaction::STATUS_FAILED;
-                $this->markCallbackRequestAsInvalid(static::t('IPN verification failed'));
-
-                break;
-
-            case self::IPN_REQUEST_ERROR:
-                $status = $transaction::STATUS_PENDING;
-                $this->markCallbackRequestAsInvalid(static::t('IPN HTTP error'));
-
-                break;
-
-            case self::IPN_VERIFIED:
-
-                switch ($request->payment_status) {
-                    case 'Completed':
-
-                        if ($transaction->getValue() == $request->mc_gross) {
-
-                            $status = $transaction::STATUS_SUCCESS;
-
-                        } else {
-
-                            $status = $transaction::STATUS_FAILED;
-
-                            $this->setDetail(
-                                'amount_error',
-                                'Payment transaction\'s amount is corrupted' . PHP_EOL
-                                . 'Amount from request: ' . $request->mc_gross . PHP_EOL
-                                . 'Amount from transaction: ' . $transaction->getValue(),
-                                'Hacking attempt'
-                            );
-
-                            $this->markCallbackRequestAsInvalid(static::t('Transaction amount mismatch'));
-                        }
-
-                        break;
-
-                    case 'Pending':
-                        $status = $transaction::STATUS_PENDING;
-                        break;
-
-                    default:
-
-                }
-
-            default:
-
+            \XLite\Module\CDev\Paypal\Model\Payment\Processor\PaypalIPN::getInstance()->processCallbackIPN($transaction, $this);
         }
 
         $this->saveDataFromRequest();
-
-        $this->transaction->setStatus($status);
     }
 
     /**
@@ -191,49 +124,6 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
             && $method->getSetting('account');
     }
 
-
-    /**
-     * Return URL for IPN verification transaction
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.1
-     */
-    protected function getIPNURL()
-    {
-        return $this->getFormURL() . '?cmd=_notify-validate';
-    }
-
-    /**
-     * Get IPN verification status
-     *
-     * @return boolean TRUE if verification status is received
-     * @see    ____func_see____
-     * @since  1.0.1
-     */
-    protected function getIPNVerification()
-    {
-        $ipnRequest = new \XLite\Core\HTTP\Request($this->getIPNURL());
-        $ipnRequest->body = \XLite\Core\Request::getInstance()->getData();
-
-        $ipnResult = $ipnRequest->sendRequest();
-
-        if ($ipnResult) {
-
-            $result =  (0 < preg_match('/VERIFIED/i', $ipnResult->body))
-                    ? self::IPN_VERIFIED
-                    : self::IPN_DECLINED;
-        } else {
-            $result = self::IPN_REQUEST_ERROR;
-
-            $this->setDetail(
-                'ipn_http_error',
-                'IPN HTTP error:'
-            );
-        }
-
-        return $result;
-    }
 
     /**
      * Get redirect form URL

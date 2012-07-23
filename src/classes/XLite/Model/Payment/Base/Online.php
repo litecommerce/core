@@ -247,7 +247,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function markCallbackRequestAsInvalid($message)
+    public function markCallbackRequestAsInvalid($message)
     {
         \XLite\Logger::getInstance()->log(
             'Callback request is invalid: ' . $message . PHP_EOL

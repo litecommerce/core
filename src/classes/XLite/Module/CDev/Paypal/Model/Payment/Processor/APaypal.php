@@ -410,6 +410,7 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             if ('0' == $responseData['RESULT']) {
                 $result = true;
                 $status = \XLite\Model\Payment\Transaction::STATUS_SUCCESS;
+                $transaction->getPaymentTransaction()->getOrder()->setStatus(\XLite\Model\Order::STATUS_DECLINED);
 
                 \XLite\Core\TopMessage::getInstance()->addInfo('Payment have been refunded successfully');
 
@@ -908,13 +909,21 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
 
         $request = \XLite\Core\Request::getInstance();
 
+
         if (!$request->isPost()) {
             // Callback request must be POST
             $this->markCallbackRequestAsInvalid(static::t('Request type must be POST'));
 
         } elseif (!isset($request->RESULT)) {
-            // RESULT parameter must be presented in all callback requests
-            $this->markCallbackRequestAsInvalid(static::t('\'RESULT\' argument not found'));
+
+            if (\XLite\Module\CDev\Paypal\Model\Payment\Processor\PaypalIPN::getInstance()->isCallbackIPN()) {
+                // If callback is IPN request from Paypal
+                \XLite\Module\CDev\Paypal\Model\Payment\Processor\PaypalIPN::getInstance()->processCallbackIPN($transaction, $this);
+
+            } else {
+                // RESULT parameter must be presented in all callback requests
+                $this->markCallbackRequestAsInvalid(static::t('\'RESULT\' argument not found'));
+            }
 
         } else {
 
