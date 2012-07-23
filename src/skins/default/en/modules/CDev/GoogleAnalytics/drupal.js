@@ -18,7 +18,7 @@ jQuery().ready(
       'updateCart',
       function(event, data) {
 
-        if (data.items) {
+        if (data.items && 'undefined' != typeof(window._gaq)) {
           for (var i = 0; i < data.items.length; i++) {
             var item = data.items[i];
 

@@ -47,6 +47,7 @@ abstract class Product extends \XLite\Base
         'name'        => 'name',
         'description' => 'description',
         'price'       => 'price',
+        'weight'      => 'weight',
         'amount'      => 'quantity',
     );
 

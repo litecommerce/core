@@ -223,6 +223,7 @@ class Products extends \XLite\Core\DataSource\Base\Products
             'images'       => array(),
             'url'          => $data['url'],
             'price'        => doubleval($data['price']),
+            'weight'       => empty($data['weight']) ? 0 : doubleval($data['weight']),
             'name'         => $data['name'],
             'description'  => empty($data['description']) ? '' : $data['description'],
             'sku'          => empty($data['sku']) ? '' : $data['sku'],
