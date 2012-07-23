@@ -68,7 +68,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
             \XLite\Core\Request::getInstance()->action,
             array('start_express_checkout', 'express_checkout_return')
         );
-        }
+    }
 
     /**
      * doActionStartExpressCheckout 
@@ -92,7 +92,8 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
                 \XLite\Core\Session::getInstance()->ec_token = $token;
                 \XLite\Core\Session::getInstance()->ec_date = time();
                 \XLite\Core\Session::getInstance()->ec_payer_id = null;
-                \XLite\Core\Session::getInstance()->ec_type = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_SHORTCUT;
+                \XLite\Core\Session::getInstance()->ec_type
+                    = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_SHORTCUT;
 
                 $paymentMethod->getProcessor()->redirectToPaypal($token);
 
@@ -136,7 +137,8 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
             // Express Checkout shortcut flow processing
 
-            \XLite\Core\Session::getInstance()->ec_type = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_SHORTCUT;
+            \XLite\Core\Session::getInstance()->ec_type
+                = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_SHORTCUT;
 
             \XLite\Core\Session::getInstance()->ec_payer_id = $request->PayerID;
             $paymentMethod = $this->getExpressCheckoutPaymentMethod();
@@ -152,10 +154,8 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
                 $this->updateProfile();
 
-//                if (!$this->getCartProfile() || !$this->getCartProfile()->getBillingAddress() || !$this->getCartProfile()->getBillingAddress()->checkAddress()) {
-                    $this->requestData['billingAddress'] = $this->requestData['shippingAddress'];
-                    $this->requestData['same_address'] = true;
-//                }
+                $this->requestData['billingAddress'] = $this->requestData['shippingAddress'];
+                $this->requestData['same_address'] = true;
 
                 $this->updateShippingAddress();
 
@@ -173,7 +173,8 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      */
     protected function doActionPayment()
     {
-        \XLite\Core\Session::getInstance()->ec_type = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_MARK;
+        \XLite\Core\Session::getInstance()->ec_type
+            = \XLite\Module\CDev\Paypal\Model\Payment\Processor\ExpressCheckout::EC_TYPE_MARK;
 
         parent::doActionPayment();
     }
@@ -189,8 +190,11 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      */
     protected function prepareBuyerData($paypalData)
     {
-        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->findOneByCode($paypalData['SHIPTOCOUNTRY']);
-        $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode($country->getCode(), $paypalData['SHIPTOSTATE']);
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')
+            ->findOneByCode($paypalData['SHIPTOCOUNTRY']);
+
+        $state = \XLite\Core\Database::getRepo('XLite\Model\State')
+            ->findOneByCountryAndCode($country->getCode(), $paypalData['SHIPTOSTATE']);
 
         $data = array(
             'shippingAddress' => array(

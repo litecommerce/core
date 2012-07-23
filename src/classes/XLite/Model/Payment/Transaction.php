@@ -342,7 +342,10 @@ class Transaction extends \XLite\Model\AEntity
 
         if ($result && $this->getBackendTransactions()) {
             foreach ($this->getBackendTransactions() as $transaction) {
-                if (\XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID == $transaction->getType() && self::STATUS_SUCCESS == $transaction->getStatus()) {
+                if (
+                    \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_VOID == $transaction->getType()
+                    && self::STATUS_SUCCESS == $transaction->getStatus()
+                ) {
                     $result = false;
                 }
             }
@@ -365,7 +368,10 @@ class Transaction extends \XLite\Model\AEntity
         if ($this->getBackendTransactions()) {
 
             foreach ($this->getBackendTransactions() as $transaction) {
-                if (\XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE == $transaction->getType() && self::STATUS_SUCCESS == $transaction->getStatus()) {
+                if (
+                    \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_CAPTURE == $transaction->getType()
+                    && self::STATUS_SUCCESS == $transaction->getStatus()
+                ) {
                     $result = true;
                     break;
                 }
@@ -388,7 +394,10 @@ class Transaction extends \XLite\Model\AEntity
 
         if ($this->getBackendTransactions()) {
             foreach ($this->getBackendTransactions() as $transaction) {
-                if (\XLite\Model\Payment\BackendTransaction::TRAN_TYPE_REFUND == $transaction->getType() && self::STATUS_SUCCESS == $transaction->getStatus()) {
+                if (
+                    \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_REFUND == $transaction->getType()
+                    && self::STATUS_SUCCESS == $transaction->getStatus()
+                ) {
                     $result = true;
                     break;
                 }

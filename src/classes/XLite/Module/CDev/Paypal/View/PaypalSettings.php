@@ -35,16 +35,11 @@ namespace XLite\Module\CDev\Paypal\View;
  */
 class PaypalSettings extends \XLite\View\Dialog
 {
+    /**
+     * Parameter names
+     */
     const PARAM_PAYMENT_METHOD = 'paymentMethod';
 
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_PAYMENT_METHOD => new \XLite\Model\WidgetParam\Object('Payment method', null),
-        );
-    }
 
     /**
      * Register CSS files
@@ -63,6 +58,37 @@ class PaypalSettings extends \XLite\View\Dialog
     }
 
     /**
+     * getPaymentProcessor 
+     * 
+     * @return \XLite\Payment\Base\Processor
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function getPaymentProcessor()
+    {
+        return $this->getParam(self::PARAM_PAYMENT_METHOD)
+            ? $this->getParam(self::PARAM_PAYMENT_METHOD)->getProcessor()
+            : null;
+    }
+
+
+    /**
+     * defineWidgetParams 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_PAYMENT_METHOD => new \XLite\Model\WidgetParam\Object('Payment method', null),
+        );
+    }
+
+    /**
      * getPaypalMethodTemplate 
      * 
      * @return string
@@ -72,18 +98,6 @@ class PaypalSettings extends \XLite\View\Dialog
     protected function getDir()
     {
         return $this->getPaymentProcessor() ? $this->getPaymentProcessor()->getSettingsTemplateDir() : null;
-    }
-
-    /**
-     * getPaymentProcessor 
-     * 
-     * @return \XLite\Payment\Base\Processor
-     * @see    ____func_see____
-     * @since  1.1.0
-     */
-    public function getPaymentProcessor()
-    {
-        return $this->getParam(self::PARAM_PAYMENT_METHOD) ? $this->getParam(self::PARAM_PAYMENT_METHOD)->getProcessor() : null;
     }
 
     // {{{ Content
@@ -102,4 +116,3 @@ class PaypalSettings extends \XLite\View\Dialog
 
     // }}}
 }
-

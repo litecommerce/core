@@ -22,7 +22,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     1.0.1
+ * @since     1.1.0
  */
 
 namespace XLite\Module\CDev\Paypal\Model\Payment\Processor;
@@ -58,7 +58,8 @@ class PaypalIPN extends \XLite\Base\Singleton
     /**
      * Process callback
      *
-     * @param \XLite\Model\Payment\Transaction $transaction Callback-owner transaction
+     * @param \XLite\Model\Payment\Transaction    $transaction Callback-owner transaction
+     * @param \XLite\Model\Payment\Base\Processor $processor   Payment processor object
      *
      * @return void
      * @see    ____func_see____
@@ -75,12 +76,14 @@ class PaypalIPN extends \XLite\Base\Singleton
         switch ($this->getIPNVerification()) {
 
             case self::IPN_DECLINED:
+
                 $status = $transaction::STATUS_FAILED;
                 $processor->markCallbackRequestAsInvalid(static::t('IPN verification failed'));
 
                 break;
 
             case self::IPN_REQUEST_ERROR:
+
                 $status = $transaction::STATUS_PENDING;
                 $processor->markCallbackRequestAsInvalid(static::t('IPN HTTP error'));
 
@@ -91,6 +94,7 @@ class PaypalIPN extends \XLite\Base\Singleton
                 $backendTransaction = null;
 
                 if (!empty($request->parent_txn_id)) {
+
                     // Received IPN is related to the backend transaction
                     $ppref = \XLite\Core\Database::getRepo('XLite\Model\Payment\BackendTransactionData')
                         ->findOneBy(
@@ -167,12 +171,10 @@ class PaypalIPN extends \XLite\Base\Singleton
 
                         break;
 
-
                     case 'Denied':
                     case 'Reversed':
 
                         $status = $transaction::STATUS_FAILED;
-
 
                     case 'Failed':
                     
@@ -195,16 +197,12 @@ class PaypalIPN extends \XLite\Base\Singleton
 
                         break;
 
-
                     default:
-
                         // No default actions
                 }
 
             default:
-
                 // No default actions
-
         }
 
         $transaction->setStatus($status);

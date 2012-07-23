@@ -62,7 +62,7 @@ class PaypalSettings extends \XLite\Controller\Admin\AAdmin
             $moduleOptions = $this->getModuleOptions();
             $postedData = \XLite\Core\Request::getInstance()->options;
 
-            foreach($moduleOptions as $option) {
+            foreach ($moduleOptions as $option) {
                 if (isset($postedData[$option])) {
                     \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                         array(
