@@ -26,7 +26,7 @@
 namespace XLite\View\Order\Details\Admin;
 
 /**
- * Orer info
+ * Order info
  *
  * @see   ____class_see____
  * @since 1.0.24
