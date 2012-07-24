@@ -37,6 +37,22 @@ namespace XLite\Module\CDev\SocialLogin\View\FormField;
 class Instructions extends \XLite\View\FormField\Label\ALabel
 {
     /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'modules/CDev/SocialLogin/style.css';
+
+        return $list;
+    }
+
+    /**
      * Return field template
      *
      * @return string
@@ -58,21 +74,5 @@ class Instructions extends \XLite\View\FormField\Label\ALabel
     protected function getDefaultTemplate()
     {
         return 'modules/CDev/SocialLogin/form_field/instructions.tpl';
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.24
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'modules/CDev/SocialLogin/style.css';
-
-        return $list;
     }
 }
