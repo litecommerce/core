@@ -1,0 +1,65 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Fixtures
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @link      http://www.litecommerce.com/
+# @since     1.0.0
+
+XLite\Model\Config:
+  - name: enable_form 
+    category: 'CDev\ContactUs'
+    type: checkbox
+    orderby: 100
+    value: true
+    translations:
+      - code: en
+        option_name: 'Enable form'
+  - name: page_title
+    category: 'CDev\ContactUs'
+    type: text
+    orderby: 200
+    value: 'Contact us' 
+    translations:
+      - code: en
+        option_name: 'Page title'
+  - name: page_description 
+    category: 'CDev\ContactUs'
+    type: 'XLite\View\FormField\Textarea\Advanced'
+    orderby: 300
+    translations:
+      - code: en
+        option_name: 'Page description'
+  - name: email 
+    category: 'CDev\ContactUs'
+    type: 'XLite\View\FormField\Input\Text\Email'
+    orderby: 400
+    translations:
+      - code: en
+        option_name: 'E-mail address of the message recipient'
+  - name: contact_us_sep_1
+    category: 'CDev\ContactUs'
+    type: separator
+    orderby: 1000
+    translations:
+      - code: en
+        option_name: 'reCAPTCHA'
+  - name: recaptcha_public_key
+    category: 'CDev\ContactUs'
+    type: text
+    orderby: 1100
+    value: '' 
+    translations:
+      - code: en
+        option_name: 'Public key'
+        option_comment: 'To use reCAPTCHA you must get an API key from <a href="https://www.google.com/recaptcha/admin/create">https://www.google.com/recaptcha/admin/create</a>'
+  - name: recaptcha_private_key
+    category: 'CDev\ContactUs'
+    type: text
+    orderby: 1200
+    value: '' 
+    translations:
+      - code: en
+        option_name: 'Private key'
