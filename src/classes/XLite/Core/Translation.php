@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -35,6 +33,11 @@ namespace XLite\Core;
  */
 class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 {
+    /**
+     * Default language
+     */
+    const DEFAULT_LANGUAGE = 'en';
+
     /**
      * Translation driver
      *
@@ -71,6 +74,26 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     public static function lbl($name, array $arguments = array(), $code = null)
     {
         return static::getInstance()->translate($name, $arguments, $code);
+    }
+
+    /**
+     * Get language query 
+     * 
+     * @param string $code Specified code OPTIONAL
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function getLanguageQuery($code = null)
+    {
+        $list = array(
+            $code ?: \XLite\Core\Session::getInstance()->getLanguage()->getCode(),
+            static::getDefaultLanguage(),
+            static::DEFAULT_LANGUAGE
+        );
+
+        return array_unique($list);
     }
 
     /**

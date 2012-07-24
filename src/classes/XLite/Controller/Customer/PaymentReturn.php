@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -132,6 +130,10 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
                     $this->doHTMLRedirect($url);
                     break;
 
+                case \XLite\Model\Payment\Base\WebBased::RETURN_TYPE_HTML_REDIRECT_WITH_IFRAME_DESTROYING:
+                    $this->doHTMLRedirectWithIframeDestroying($url);
+                    break;
+
                 case \XLite\Model\Payment\Base\WebBased::RETURN_TYPE_CUSTOM:
                     $txn->getPaymentMethod()->getProcessor()->doCustomReturnRedirect();
                     break;
@@ -170,6 +172,35 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
 </head>
 <body>
 If the page is not updated in $time; seconds, please follow this link: <a href="$url">continue &gt;&gt;</a>
+</body>
+</html>
+HTML;
+
+        print ($html);
+        exit (0);
+    }
+
+    /**
+     * Do HTML-based redirect with destroying an iframe window
+     *
+     * @param string $url URL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doHTMLRedirectWithIframeDestroying($url)
+    {
+        $html = <<<HTML
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <script type="text/javascript">
+    top.location.href='$url';
+  </script>
+</head>
+<body>
+If this page does not redirect <a href="$url" target="top">Click Here</a>
 </body>
 </html>
 HTML;

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,16 +13,14 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.18
  */
 
 namespace XLite\View;
@@ -125,7 +123,7 @@ class AdminPanel extends \XLite\View\AView
                 self::ITEM_TARGET      => 'categories',
                 self::ITEM_ICON        => 'images/menu/icon_categories.gif',
                 self::ITEM_TITLE       => 'Categories',
-                self::ITEM_DESCRIPTION => 'Online catalog structure set-up',
+                self::ITEM_DESCRIPTION => 'Online catalog structure setup',
             ),
             array(
                 self::ITEM_TARGET      => 'orders_stats',
@@ -155,7 +153,7 @@ class AdminPanel extends \XLite\View\AView
                 self::ITEM_TARGET      => 'db_backup',
                 self::ITEM_ICON        => 'images/menu/icon_catalog.gif',
                 self::ITEM_TITLE       => 'Store Maintenance',
-                self::ITEM_DESCRIPTION => 'Make back-up of your store database',
+                self::ITEM_DESCRIPTION => 'Back up your store database',
             ),
         );
     }

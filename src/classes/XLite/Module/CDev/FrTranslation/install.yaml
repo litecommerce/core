@@ -6,7 +6,6 @@
 # @copyright Copyright (c) 2012 Creative Development LLC <info@cdev.ru>. All rights reserved
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
-# @since     1.0.19
 
 XLite\Model\Language:
   directives: { addModel: 'XLite\Model\LanguageTranslation' }
@@ -460,7 +459,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Import', translations: [{ code: 'fr', label: 'Importation' }] }
   - { name: 'Import / Export', translations: [{ code: 'fr', label: 'Importer/Exporter' }] }
   - { name: 'Import from file', translations: [{ code: 'fr', label: 'Importer du fichier' }] }
-  - { name: 'Import in progress', translations: [{ code: 'fr', label: 'L''importation est en cours' }] }
+  - { name: 'The import is in progress', translations: [{ code: 'fr', label: 'L''importation est en cours' }] }
   - { name: 'Import mechanism does not know the field of X and it can not be imported', translations: [{ code: 'fr', label: 'Le mécanisme d''importation ne connaît pas le champ de ''{{name}} et il ne peut pas être importé' }] }
   - { name: 'Import/Export', translations: [{ code: 'fr', label: 'Importer/Exporter' }] }
   - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: 'fr', label: 'L''importation va écraser les informations existantes des produits. Cette opération ne peut pas être annulée.' }] }
@@ -519,7 +518,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Low stock', translations: [{ code: 'fr', label: 'Quantité limitée' }] }
   - { name: 'Maintenance', translations: [{ code: 'fr', label: 'Maintenance' }] }
   - { name: 'Maintenance and operation', translations: [{ code: 'fr', label: 'Opération et maintenance' }] }
-  - { name: 'Make back-up of your store database', translations: [{ code: 'fr', label: 'Sauvegarder la base de données de votre magasin' }] }
+  - { name: 'Back up your store database', translations: [{ code: 'fr', label: 'Sauvegarder la base de données de votre magasin' }] }
   - { name: 'Manage add-ons', translations: [{ code: 'fr', label: 'Gérer les modules' }] }
   - { name: 'Manage categories', translations: [{ code: 'fr', label: 'Gérer les catégories' }] }
   - { name: 'Manage customer and administrator accounts', translations: [{ code: 'fr', label: 'Gérer les comptes des clients et administrateur' }] }
@@ -600,7 +599,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Notes', translations: [{ code: 'fr', label: 'Notes' }] }
   - { name: 'of', translations: [{ code: 'fr', label: 'de' }] }
   - { name: 'Official website', translations: [{ code: 'fr', label: 'Site officiel' }] }
-  - { name: 'Online catalog structure set-up', translations: [{ code: 'fr', label: 'Configuration de la structure de votre catalogue en ligne' }] }
+  - { name: 'Online catalog structure setup', translations: [{ code: 'fr', label: 'Configuration de la structure de votre catalogue en ligne' }] }
   - { name: 'Open Graph meta tags', translations: [{ code: 'fr', label: 'méta-tag Open Graph' }] }
   - { name: 'Open storefront', translations: [{ code: 'fr', label: 'Ouvrir le magasin' }] }
   - { name: 'Operating system', translations: [{ code: 'fr', label: 'Système d''exploitation' }] }
@@ -652,7 +651,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Please enable JavaScript in your web browser.', translations: [{ code: 'fr', label: 'Veuillez activer JavaScript dans votre navigateur Web.' }] }
   - { name: 'Please identify yourself', translations: [{ code: 'fr', label: 'Identifiez-vous, s''il vous plaît' }] }
   - { name: 'Please note that some of these modules are definitely incompatible with the upcoming upgrade and will be disabled in order to prevent the system crash', translations: [{ code: 'fr', label: 'Note: certains de ces modules sont incompatibles avec la mise à niveau à venir et seront désactivés pour prévenir la panne du système.' }] }
-  - { name: 'Please run the benchmark test in order to estimate your server performance', translations: [{ code: 'fr', label: 'Lancez le test de référence afin d''estimer les performances de votre serveur, s''il vous plaît.' }] }
+  - { name: 'Run benchmark to assess your server performance', translations: [{ code: 'fr', label: 'Lancez le test de référence afin d''estimer les performances de votre serveur, s''il vous plaît.' }] }
   - { name: 'Please select one', translations: [{ code: 'fr', label: 'Veuillez choisir' }] }
   - { name: 'Please specify a pattern to find the required labels', translations: [{ code: 'fr', label: 'Spécifiez un modèle pour rechercher des labels requis, s''il vous plat' }] }
   - { name: 'Please specify text labels for each language', translations: [{ code: 'fr', label: 'Spécifiez les labels de texte à  chacune langue, s''il vous plaît. Si vous ne spécifiez pas une valeur à  une langue, le {{language}} label sera utilisé' }] }
@@ -807,7 +806,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Statistics', translations: [{ code: 'fr', label: 'Statistiques' }] }
   - { name: 'Status', translations: [{ code: 'fr', label: 'Statut' }] }
   - { name: 'Store is closed', translations: [{ code: 'fr', label: 'Magasin fermé' }] }
-  - { name: 'Store is opened', translations: [{ code: 'fr', label: 'Magasin  ouvert' }] }
+  - { name: 'Store is open', translations: [{ code: 'fr', label: 'Magasin  ouvert' }] }
   - { name: 'Store Maintenance', translations: [{ code: 'fr', label: 'Maintenance du magasin' }] }
   - { name: 'Storefront', translations: [{ code: 'fr', label: 'Magasin' }] }
   - { name: 'Subcategories', translations: [{ code: 'fr', label: 'Souscatégories' }] }
@@ -874,7 +873,7 @@ XLite\Model\LanguageLabel:
   - { name: 'The product option groups have been updated successfully', translations: [{ code: 'fr', label: 'Les groupes d''options de produits sont mis à jour avec succès' }] }
   - { name: 'The product option groups have not been successfully updated', translations: [{ code: 'fr', label: 'Les groupes d''options de produits n''ont pas été correctement misent à jour' }] }
   - { name: 'The requested page could not be found.', translations: [{ code: 'fr', label: 'La page demandée est introuvable' }] }
-  - { name: 'The restoration procedure is irreversible and erases all data tables from your store database. It is highly recommended that you back your present database data up before restoring one of the previous states from a back-up.', translations: [{ code: 'fr', label: 'La procédure de restauration est irréversible et efface toutes les tables de données de base de votre magasin. Il est fortement recommandé de sauvegarder vos données de la base de données actuelle avant de restauration.' }] }
+  - { name: 'The restoration procedure is irreversible and erases all data tables from your store database. It is highly recommended that you back up your present database data before restoring one of the previous states from a back-up.', translations: [{ code: 'fr', label: 'La procédure de restauration est irréversible et efface toutes les tables de données de base de votre magasin. Il est fortement recommandé de sauvegarder vos données de la base de données actuelle avant de restauration.' }] }
   - { name: 'The same as shipping', translations: [{ code: 'fr', label: 'La même que celle d''expédition' }] }
   - { name: 'The selected shipping markups have been deleted successfully', translations: [{ code: 'fr', label: 'Les marges d''expédition sélectionnés sont supprimées avec succès' }] }
   - { name: 'The selected shipping method has been deleted successfully', translations: [{ code: 'fr', label: 'Le mode de transport choisi est effacé avec succès' }] }
@@ -928,7 +927,7 @@ XLite\Model\LanguageLabel:
   - { name: 'This product has been added to your bag', translations: [{ code: 'fr', label: 'Ce produit est ajouté à  <a href="{{href}}">votre panier</a>' }] }
   - { name: 'This product is out of stock or it has been disabled for sale', translations: [{ code: 'fr', label: '(!) Ce produit est épuisé ou il est désactivé pour la vente.' }] }
   - { name: 'This section displays 10 top-selling products for today, this week and this month', translations: [{ code: 'fr', label: 'Cette section affiche 10 produits les plus vendus pour aujourd''hui, cette semaine, et ce mois.' }] }
-  - { name: 'This section displays order placement statistics', translations: [{ code: 'fr', label: 'Cette section affiche les statistiques de passage des commandes.' }] }
+  - { name: 'This section displays order processing statistics', translations: [{ code: 'fr', label: 'Cette section affiche les statistiques de passage des commandes.' }] }
   - { name: 'This site requires JavaScript to function properly.', translations: [{ code: 'fr', label: 'Ce site exige la mise en place JavaScript pour fonctionnement correct.' }] }
   - { name: 'This tax is calculated based on customer''s billing address', translations: [{ code: 'fr', label: 'Cette taxe est calculée en fonction d''adresse de facturation du client' }] }
   - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: 'fr', label: 'Ce nom d''utilisateur est utilisé pour un compte existant. Entrez un autre nom d''utilisateur ou <a href="{{URL}}" class="log-in">connectez-vous</a>' }] }
@@ -985,7 +984,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Use this component to add an extra charge for every item ordered.', translations: [{ code: 'fr', label: 'Utilisez ce composant pour ajouter des frais supplémentaires pour chaque article commandé.' }] }
   - { name: 'Use this component to adjust shipping rates according to order subtotals.', translations: [{ code: 'fr', label: 'Utilisez ce composant pour ajuster les taux d''expédition en fonction de sous-totaux de commande.' }] }
   - { name: 'Use this component to specify weight-based charges.', translations: [{ code: 'fr', label: 'Utilisez ce composant pour spécifier les frais liés au poids.' }] }
-  - { name: 'Use this section to back the database of your online store up. Please note that the database backup procedure can take up to several minutes.', translations: [{ code: 'fr', label: 'Utilisez cette section pour sauvegarder la base de données de votre magasin en ligne. Note: la procédure de sauvegarde de bases de données peut prendre jusqu''à plusieurs minutes.' }] }
+  - { name: 'Use this section to back up the database of your online store. Please note that the database backup procedure can take up to several minutes.', translations: [{ code: 'fr', label: 'Utilisez cette section pour sauvegarder la base de données de votre magasin en ligne. Note: la procédure de sauvegarde de bases de données peut prendre jusqu''à plusieurs minutes.' }] }
   - { name: 'Use this section to define shipping rates calculation rules', translations: [{ code: 'fr', label: 'Utilisez cette section pour définir les règles de calcul des tarifs d''expédition.' }] }
   - { name: 'Use this section to define shipping zones.', translations: [{ code: 'fr', label: 'Utilisez cette section pour définir les zones d''expédition.' }] }
   - { name: 'Use this section to define your store''s shipping methods.', translations: [{ code: 'fr', label: 'Utilisez cette section pour définir les méthodes d''expédition de votre magasin.' }] }

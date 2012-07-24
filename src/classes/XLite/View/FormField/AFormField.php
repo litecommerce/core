@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\FormField;
@@ -240,6 +238,24 @@ abstract class AFormField extends \XLite\View\AView
     public function getWrapperClass()
     {
         return $this->getParam(self::PARAM_WRAPPER_CLASS);
+    }
+
+    /**
+     * Set widget params
+     *
+     * @param array $params Handler params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        if (isset($params['value'])) {
+            $this->setValue($params['value']);
+        }
     }
 
 

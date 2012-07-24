@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -207,6 +205,18 @@ class Profile extends \XLite\Model\AEntity
     protected $order;
 
     /**
+     * Relation to an event
+     *
+     * @var   \XLite\Model\OrderHistoryEvents
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @OneToMany   (targetEntity="XLite\Model\OrderHistoryEvents", mappedBy="author")
+     * @JoinColumn (name="event_id", referencedColumnName="event_id")
+     */
+    protected $event;
+
+    /**
      * Language code
      *
      * @var   string
@@ -281,7 +291,7 @@ class Profile extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @manyToMany (targetEntity="XLite\Model\Role", mappedBy="profiles", cascade={"merge","detach"})
+     * @ManyToMany (targetEntity="XLite\Model\Role", mappedBy="profiles", cascade={"merge","detach"})
      */
     protected $roles;
 
@@ -369,6 +379,25 @@ class Profile extends \XLite\Model\AEntity
     public function getShippingAddress()
     {
         return $this->getAddressByType(\XLite\Model\Address::SHIPPING);
+    }
+
+    /**
+     * Returns first available address
+     *
+     * @return \XLite\Model\Address
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getFirstAddress()
+    {
+        $result = null;
+
+        foreach ($this->getAddresses() as $address) {
+            $result = $address;
+            break;
+        }
+
+        return $result;
     }
 
     /**
@@ -646,7 +675,9 @@ class Profile extends \XLite\Model\AEntity
     protected function prepareCreate()
     {
         // Assign a profile creation date/time
-        $this->setAdded(time());
+        if (!$this->getAdded()) {
+            $this->setAdded(time());
+        }
 
         // Assign current language
         $language = $this->getLanguage();

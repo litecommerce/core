@@ -4,10 +4,9 @@
  * ____file_title____
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 
 
@@ -547,6 +546,12 @@ div.tabs2-page-tabs ul li.tab-current
 {
 }
 
+div.list-after-tabs
+{
+  float: right;
+  display: inline;
+  height: 37px;
+}
 
 /* Data table */
 
@@ -1064,6 +1069,17 @@ button.disabled {
 
 button.disabled span {
   color: #FFFFFF;
+}
+
+/* Button for payment actions */
+
+.orders button.payment-action-button {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 12px;
+    height: 26px;
+    padding: 3px 10px 4px;
 }
 
 /* Fade */

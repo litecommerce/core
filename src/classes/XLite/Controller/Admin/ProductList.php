@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -81,6 +79,18 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
     public function getTitle()
     {
         return 'Search for products';
+    }
+
+    /**
+     * Check - search panel is visible or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function isSearchVisible()
+    {
+        return 0 < \XLite\Core\Database::getRepo('Xlite\Model\Product')->count();
     }
 
     /**

@@ -4,10 +4,9 @@
  * Common form / element controller
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  */
 
 /**
@@ -54,6 +53,11 @@ function CommonForm(form)
   form.submit(
     function(event)
     {
+      // Submit element should have "Enabled state"
+      if (jQuery('button[type="submit"]', this).hasClass('disabled')) {
+        return false;
+      }
+
       jQuery('input', this).trigger('sanitize');
 
       if (this.isBgSubmitting) {
@@ -104,6 +108,21 @@ function CommonForm(form)
     }
   );
 
+  // Process form changed
+  form.change(
+    function () {
+      var form = jQuery(this);
+
+      if (this.commonController.isChanged()) {
+        form.addClass('changed');
+        form.trigger('state-changed');
+
+      } else {
+        form.removeClass('changed');
+        form.trigger('state-initial');
+      }
+    }
+  );
 }
 
 extend(CommonForm, Base);

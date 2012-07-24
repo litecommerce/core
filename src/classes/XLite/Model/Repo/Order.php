@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -257,8 +255,8 @@ class Order extends \XLite\Model\Repo\ARepo
     protected function prepareCndEmail(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
-            $queryBuilder->andWhere('p.login = :email')
-                ->setParameter('email', $value);
+            $queryBuilder->andWhere('p.login LIKE :email')
+                ->setParameter('email', '%' . $value . '%');
         }
     }
 
@@ -298,13 +296,20 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndDate(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value = null)
     {
-        if (2 == count($value)) {
-            list($start, $end) = $value;
+        if (is_array($value)) {
+            $value = array_values($value);
+            $start = empty($value[0]) ? null : intval($value[0]);
+            $end = empty($value[1]) ? null : intval($value[1]);
 
-            $queryBuilder->andWhere('o.date >= :start')
-                ->andWhere('o.date <= :end')
-                ->setParameter('start', $start)
-                ->setParameter('end', $end);
+            if ($start) {
+                $queryBuilder->andWhere('o.date >= :start')
+                    ->setParameter('start', $start);
+            }
+
+            if ($end) {
+                $queryBuilder->andWhere('o.date <= :end')
+                    ->setParameter('end', $end);
+            }
         }
     }
 
@@ -367,8 +372,7 @@ class Order extends \XLite\Model\Repo\ARepo
     {
         list($sort, $order) = $value;
 
-        $queryBuilder
-            ->addOrderBy($sort, $order);
+        $queryBuilder->addOrderBy($sort, $order);
     }
 
     /**
@@ -427,5 +431,21 @@ class Order extends \XLite\Model\Repo\ARepo
                 'delete'          => 'SET NULL',
             ),
         );
+    }
+
+    /**
+     * Delete single entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity to detach
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function performDelete(\XLite\Model\AEntity $entity)
+    {
+        $entity->setOldStatus(null);
+
+        parent::performDelete($entity);
     }
 }

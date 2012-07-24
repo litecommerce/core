@@ -6,7 +6,6 @@
 # @copyright Copyright (c) 2012 Creative Development LLC <info@cdev.ru>. All rights reserved
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
-# @since     1.0.19
 
 XLite\Model\Language:
   directives: { addModel: 'XLite\Model\LanguageTranslation' }
@@ -460,7 +459,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Import', translations: [{ code: 'ru', label: 'Импорт' }] }
   - { name: 'Import / Export', translations: [{ code: 'ru', label: 'Импорт / Экспорт' }] }
   - { name: 'Import from file', translations: [{ code: 'ru', label: 'Импортировать из файла' }] }
-  - { name: 'Import in progress', translations: [{ code: 'ru', label: 'Выполняется импорт' }] }
+  - { name: 'The import is in progress', translations: [{ code: 'ru', label: 'Выполняется импорт' }] }
   - { name: 'Import mechanism does not know the field of X and it can not be imported', translations: [{ code: 'ru', label: 'Неизвестное поле ''{{name}}'', значения этого поля не могут быть импортированы.' }] }
   - { name: 'Import/Export', translations: [{ code: 'ru', label: 'Импорт/Экспорт' }] }
   - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: 'ru', label: 'В процессе импорта информация о существующих товарах будет переписана. Эта операция необратима.' }] }
@@ -519,7 +518,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Low stock', translations: [{ code: 'ru', label: 'Маленький остаток' }] }
   - { name: 'Maintenance', translations: [{ code: 'ru', label: 'Обслуживание' }] }
   - { name: 'Maintenance and operation', translations: [{ code: 'ru', label: 'Обслуживание и работа' }] }
-  - { name: 'Make back-up of your store database', translations: [{ code: 'ru', label: 'Создать резервную копию базы данных' }] }
+  - { name: 'Back up your store database', translations: [{ code: 'ru', label: 'Создать резервную копию базы данных' }] }
   - { name: 'Manage add-ons', translations: [{ code: 'ru', label: 'Управление дополнениями' }] }
   - { name: 'Manage categories', translations: [{ code: 'ru', label: 'Управление категориями' }] }
   - { name: 'Manage customer and administrator accounts', translations: [{ code: 'ru', label: 'Управление пользователями' }] }
@@ -600,7 +599,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Notes', translations: [{ code: 'ru', label: 'Примечания' }] }
   - { name: 'of', translations: [{ code: 'ru', label: 'из' }] }
   - { name: 'Official website', translations: [{ code: 'ru', label: 'Официальный сайт' }] }
-  - { name: 'Online catalog structure set-up', translations: [{ code: 'ru', label: 'Настройка структуры каталога магазина' }] }
+  - { name: 'Online catalog structure setup', translations: [{ code: 'ru', label: 'Настройка структуры каталога магазина' }] }
   - { name: 'Open Graph meta tags', translations: [{ code: 'ru', label: 'Мета тэги Open Graph' }] }
   - { name: 'Open storefront', translations: [{ code: 'ru', label: 'Открыть магазин' }] }
   - { name: 'Operating system', translations: [{ code: 'ru', label: 'Операционная система' }] }
@@ -652,7 +651,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Please enable JavaScript in your web browser.', translations: [{ code: 'ru', label: 'Пожалуйста, включите JavaScript в браузере.' }] }
   - { name: 'Please identify yourself', translations: [{ code: 'ru', label: 'Пожалуйста, войдите в систему' }] }
   - { name: 'Please note that some of these modules are definitely incompatible with the upcoming upgrade and will be disabled in order to prevent the system crash', translations: [{ code: 'ru', label: 'Некоторые модули полностью несовместимы с предстоящим обновлением и будут отключены во избежание отказа системы.' }] }
-  - { name: 'Please run the benchmark test in order to estimate your server performance', translations: [{ code: 'ru', label: 'Пожалуйста, запустите тест, чтобы оценить производительность вашего сервера' }] }
+  - { name: 'Run benchmark to assess your server performance', translations: [{ code: 'ru', label: 'Пожалуйста, запустите тест, чтобы оценить производительность вашего сервера' }] }
   - { name: 'Please select one', translations: [{ code: 'ru', label: 'Пожалуйста, выберите' }] }
   - { name: 'Please specify a pattern to find the required labels', translations: [{ code: 'ru', label: 'Пожалуйста, введите текст искомой метки' }] }
   - { name: 'Please specify text labels for each language', translations: [{ code: 'ru', label: 'Пожалуйста, задайте метки для каждого языка. Если вы не укажете значение для какого-либо языка, будет использовано значение {{language}} языка.' }] }
@@ -807,7 +806,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Statistics', translations: [{ code: 'ru', label: 'Статистика' }] }
   - { name: 'Status', translations: [{ code: 'ru', label: 'Статус' }] }
   - { name: 'Store is closed', translations: [{ code: 'ru', label: 'Магазин закрыт' }] }
-  - { name: 'Store is opened', translations: [{ code: 'ru', label: 'Магазин открыт' }] }
+  - { name: 'Store is open', translations: [{ code: 'ru', label: 'Магазин открыт' }] }
   - { name: 'Store Maintenance', translations: [{ code: 'ru', label: 'Обслуживание' }] }
   - { name: 'Storefront', translations: [{ code: 'ru', label: 'Магазин' }] }
   - { name: 'Subcategories', translations: [{ code: 'ru', label: 'Подкатегории' }] }
@@ -874,7 +873,7 @@ XLite\Model\LanguageLabel:
   - { name: 'The product option groups have been updated successfully', translations: [{ code: 'ru', label: 'Группы опций товара успешно обновлены' }] }
   - { name: 'The product option groups have not been successfully updated', translations: [{ code: 'ru', label: 'Группа опций товара не была обновлена' }] }
   - { name: 'The requested page could not be found.', translations: [{ code: 'ru', label: 'Запрошенная страница не найдена' }] }
-  - { name: 'The restoration procedure is irreversible and erases all data tables from your store database. It is highly recommended that you back your present database data up before restoring one of the previous states from a back-up.', translations: [{ code: 'ru', label: 'Процедура восстановления необратима. Все текущие данные будут стерты и перезаписаны данными из архива. Настоятельно рекомендуется создать резервную копию текущей базы данных до начала процесса восстановления.' }] }
+  - { name: 'The restoration procedure is irreversible and erases all data tables from your store database. It is highly recommended that you back up your present database data before restoring one of the previous states from a back-up.', translations: [{ code: 'ru', label: 'Процедура восстановления необратима. Все текущие данные будут стерты и перезаписаны данными из архива. Настоятельно рекомендуется создать резервную копию текущей базы данных до начала процесса восстановления.' }] }
   - { name: 'The same as shipping', translations: [{ code: 'ru', label: 'Совпадает с адресом получателя' }] }
   - { name: 'The selected shipping markups have been deleted successfully', translations: [{ code: 'ru', label: 'Выбранные надбавки к стоимости доставки успешно удалены' }] }
   - { name: 'The selected shipping method has been deleted successfully', translations: [{ code: 'ru', label: 'Указанный метод доставки успешно удален' }] }
@@ -928,7 +927,7 @@ XLite\Model\LanguageLabel:
   - { name: 'This product has been added to your bag', translations: [{ code: 'ru', label: 'Этот товар добавлен в <a href="{{href}}">вашу корзину</a>' }] }
   - { name: 'This product is out of stock or it has been disabled for sale', translations: [{ code: 'ru', label: '(!) Товар отсутствует на складе или снят с продажи.' }] }
   - { name: 'This section displays 10 top-selling products for today, this week and this month', translations: [{ code: 'ru', label: 'Данная секция представляет 10 наиболее часто покупаемых товаров на сегодняшний день, за текущую неделю и месяц.' }] }
-  - { name: 'This section displays order placement statistics', translations: [{ code: 'ru', label: 'В данной секции показана статистика размещения заказов.' }] }
+  - { name: 'This section displays order processing statistics', translations: [{ code: 'ru', label: 'В данной секции показана статистика размещения заказов.' }] }
   - { name: 'This site requires JavaScript to function properly.', translations: [{ code: 'ru', label: 'Для корректной работы данного сайта необходим JavaScript. Пожалуйста, включите поддержку JavaScript в своем браузере.' }] }
   - { name: 'This tax is calculated based on customer''s billing address', translations: [{ code: 'ru', label: 'Налоги рассчитаны по адресу плательщика' }] }
   - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: 'ru', label: 'Такое имя пользователя уже зарегистрировано. Укажите другое имя пользователя или <a href="{{URL}}" class="log-in">войдите в систему</a>' }] }
@@ -985,7 +984,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Use this component to add an extra charge for every item ordered.', translations: [{ code: 'ru', label: 'Используйте этот компонент для добавления наценки для каждой единицы заказываемого товара.' }] }
   - { name: 'Use this component to adjust shipping rates according to order subtotals.', translations: [{ code: 'ru', label: 'Используйте этот компонент для изменения стоимости доставки в зависимости от суммы заказа.' }] }
   - { name: 'Use this component to specify weight-based charges.', translations: [{ code: 'ru', label: 'Используйте этот компонент для задания наценок в зависимости от веса заказа.' }] }
-  - { name: 'Use this section to back the database of your online store up. Please note that the database backup procedure can take up to several minutes.', translations: [{ code: 'ru', label: 'Используйте данную секцию для резервного копирования БД магазина. Примечание: создание резервной копии БД может занять продолжительное время.' }] }
+  - { name: 'Use this section to back up the database of your online store. Please note that the database backup procedure can take up to several minutes.', translations: [{ code: 'ru', label: 'Используйте данную секцию для резервного копирования БД магазина. Примечание: создание резервной копии БД может занять продолжительное время.' }] }
   - { name: 'Use this section to define shipping rates calculation rules', translations: [{ code: 'ru', label: 'Используйте данную секцию, чтобы определить правила расчета стоимости доставки.' }] }
   - { name: 'Use this section to define shipping zones.', translations: [{ code: 'ru', label: 'Используйте данную секцию для определения зон доставки.' }] }
   - { name: 'Use this section to define your store''s shipping methods.', translations: [{ code: 'ru', label: 'Используйте данную секцию для определения методов доставки, доступных в магазине.' }] }

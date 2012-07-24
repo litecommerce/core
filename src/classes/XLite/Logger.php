@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite;
@@ -353,6 +351,12 @@ class Logger extends \XLite\Base\Singleton
             . 'SAPI: ' . PHP_SAPI . '; '
             . 'IP: ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'n/a') . PHP_EOL
             . PHP_EOL;
+
+        // Add debug backtrace
+        if ($useBackTrace) {
+            $backTrace = $this->getBackTrace();
+            $message .= PHP_EOL . 'Backtrace:' . PHP_EOL . "\t" . implode(PHP_EOL . "\t", $backTrace) . PHP_EOL;
+        }
 
         @file_put_contents($path, $message, FILE_APPEND);
 

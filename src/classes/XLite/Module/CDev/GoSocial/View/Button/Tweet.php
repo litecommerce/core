@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\GoSocial\View\Button;
@@ -33,13 +31,13 @@ namespace XLite\Module\CDev\GoSocial\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="product.details.page.info.share.bar", weight="100")
+ * @ListChild (list="buttons.share.bar", weight="100")
  */
 class Tweet extends \XLite\View\AView
 {
     /**
-     * Alloed languages 
-     * 
+     * Allowed languages
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.15
@@ -59,8 +57,8 @@ class Tweet extends \XLite\View\AView
     }
 
     /**
-     * Get button attributes 
-     * 
+     * Get button attributes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15

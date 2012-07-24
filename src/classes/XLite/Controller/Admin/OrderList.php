@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -58,6 +56,8 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     {
         return 'Search for orders';
     }
+
+    // {{{ Search
 
     /**
      * getDateValue
@@ -134,6 +134,44 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Common prefix for editable elements in lists
+     *
+     * NOTE: this method is requered for the GetWidget and AAdmin classes
+     * TODO: after the multiple inheritance should be moved to the AAdmin class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPrefixPostedData()
+    {
+        return 'data';
+    }
+
+    /**
+     * Get search conditions
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getConditions()
+    {
+        $searchParams = \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Model\Order\Admin\Search::getSessionCellName()};
+
+        if (!is_array($searchParams)) {
+
+            $searchParams = array();
+        }
+
+        return $searchParams;
+    }
+
+    // }}}
+
+    // {{{ Actions
+
+    /**
      * doActionUpdate
      *
      * @return void
@@ -142,19 +180,15 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateInBatchById($this->getPostedData());
-    }
+        $changes = $this->getOrdersChanges();
 
-    /**
-     * doActionDelete
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionDelete()
-    {
-        \XLite\Core\Database::getRepo('\XLite\Model\Order')->deleteInBatchById($this->getSelected());
+        $list = new \XLite\View\ItemsList\Model\Order\Admin\Search();
+        $list->processQuick();
+
+        foreach ($changes as $orderId => $change) {
+
+            \XLite\Core\OrderHistory::getInstance()->registerOrderChanges($orderId, $change);
+        }
     }
 
     /**
@@ -167,7 +201,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     protected function doActionSearch()
     {
         $ordersSearch = array();
-        $searchParams   = \XLite\View\ItemsList\Order\Admin\Search::getSearchParams();
+        $searchParams   = \XLite\View\ItemsList\Model\Order\Admin\Search::getSearchParams();
 
         // Prepare dates
 
@@ -197,27 +231,39 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
             }
         }
 
-        \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName()} = $ordersSearch;
-
-        $this->setReturnURL($this->buildURL('order_list', '', array('mode' => 'search')));
+        \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Model\Order\Admin\Search::getSessionCellName()} = $ordersSearch;
     }
 
     /**
-     * Get search conditions
+     * Get order changes from request
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getConditions()
+    protected function getOrdersChanges()
     {
-        $searchParams = \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName()};
+        $changes = array();
 
-        if (!is_array($searchParams)) {
+        foreach ($this->getPostedData() as $orderId => $data) {
 
-            $searchParams = array();
+            $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($orderId);
+
+            foreach ($data as $name => $value) {
+                $dataFromOrder = $order->{'get' . ucfirst($name)}();
+
+                if ($dataFromOrder !== $value) {
+
+                    $changes[$orderId][$name] = array(
+                        'old' => $dataFromOrder,
+                        'new' => $value,
+                    );
+                }
+            }
         }
 
-        return $searchParams;
+        return $changes;
     }
+
+    // }}}
 }

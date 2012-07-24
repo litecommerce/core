@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -577,6 +575,30 @@ class Converter extends \XLite\Base\Singleton
     {
         if (!$format) {
             $format = \XLite\Core\Config::getInstance()->General->date_format;
+        }
+
+        if ($convertToUserTimeZone) {
+            $base = \XLite\Core\Converter::convertTimeToUser($base);
+        }
+
+        return static::getStrftime($format, $base);
+    }
+
+    /**
+     * Format day time
+     *
+     * @param integer $base                  UNIX time stamp OPTIONAL
+     * @param string  $format                Format string OPTIONAL
+     * @param boolean $convertToUserTimeZone True if time value should be converted according to the time zone OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function formatDayTime($base = null, $format = null, $convertToUserTimeZone = true)
+    {
+        if (!$format) {
+            $format = \XLite\Core\Config::getInstance()->General->time_format;
         }
 
         if ($convertToUserTimeZone) {

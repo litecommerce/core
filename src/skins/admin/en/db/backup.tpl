@@ -4,10 +4,9 @@
  * Database backup tab template
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 
 
@@ -31,7 +30,7 @@ function ShowNotes()
     }
 </style>
 
-{t(#Use this section to back the database of your online store up. Please note that the database backup procedure can take up to several minutes.#)}
+{t(#Use this section to back up the database of your online store. Please note that the database backup procedure can take up to several minutes.#)}
 
 <span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>{t(#How to back up your store database#)} &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">

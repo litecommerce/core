@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -459,6 +457,10 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function prepareCndCategoryId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
+        if (is_object($value) && $value instanceOf \XLite\Model\Category) {
+            $value = $value->getCategoryId();
+        }
+
         $queryBuilder->linkInner('p.categoryProducts', 'cp')
             ->linkInner('cp.category', 'c')
             ->addOrderBy('cp.orderby');
@@ -510,11 +512,11 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function prepareCndPrice(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        if (is_array($value) && 2 == count($value)) {
-            $min = trim(array_shift($value));
-            $max = trim(array_shift($value));
-
+        if (is_array($value)) {
+            $min = empty($value[0]) ? null : trim($value[0]);
             $min = (0 == strlen($min) || !is_numeric($min)) ? null : doubleval($min);
+
+            $max = empty($value[1]) ? null : trim($value[1]);
             $max = (0 == strlen($max) || !is_numeric($max)) ? null : doubleval($max);
 
             $this->assignPriceRangeCondition($queryBuilder, $min, $max);

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -65,4 +63,28 @@ class LanguageLabel extends \XLite\Model\Base\I18n
      * @Column (type="varbinary", length=255)
      */
     protected $name;
+
+    /**
+     * Get label translation 
+     * 
+     * @param string $code Language code OPTIONAL
+     *  
+     * @return \XLite\Model\LanguageLabelTranslation
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getLabelTranslation($code = null)
+    {
+        $result = null;
+
+        $query = \XLite\Core\Translation::getLanguageQuery($code);
+        foreach ($query as $code) {
+            $result = $this->getTranslation($code, true);
+            if (isset($result)) {
+                break;
+            }
+        }
+
+        return $result;
+    }
 }

@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -36,34 +34,6 @@ namespace XLite\Controller\Admin;
 class RecentOrders extends \XLite\Controller\Admin\OrderList
 {
     /**
-     * Check ACL permissions
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.17
-     */
-    public function checkACL()
-    {
-        return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage orders');
-    }
-
-    /**
-     * Handles the request.
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function handleRequest()
-    {
-        if (!isset(\XLite\Core\Request::getInstance()->mode) && !\XLite\Core\Request::getInstance()->{self::PARAM_ACTION}) {
-            \XLite\Core\Request::getInstance()->{self::PARAM_ACTION} = 'search';
-        }
-
-        parent::handleRequest();
-    }
-
-    /**
      * Return the current page title (for the content area)
      *
      * @return string
@@ -76,21 +46,20 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
     }
 
     /**
-     * doActionSearch
+     * Handles the request.
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionSearch()
+    public function handleRequest()
     {
-        parent::doActionSearch();
+        $cellName = \XLite\View\ItemsList\Model\Order\Admin\Recent::getSessionCellName();
+        \XLite\Core\Session::getInstance()->$cellName = array(
+            \XLite\Model\Repo\Order::P_DATE => array(LC_START_TIME - 86400, LC_START_TIME),
+        );
 
-        \XLite\Core\Session::getInstance()
-            ->{\XLite\View\ItemsList\Order\Admin\Recent::getSessionCellName()} = array(
-                \XLite\Model\Repo\Order::P_DATE => array(LC_START_TIME - 86400, LC_START_TIME),
-            );
-
-        $this->setReturnURL($this->buildURL('recent_orders', '', array('mode' => 'search')));
+        parent::handleRequest();
     }
+
 }

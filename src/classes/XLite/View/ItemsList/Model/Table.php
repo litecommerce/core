@@ -21,8 +21,6 @@
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.15
  */
 
 namespace XLite\View\ItemsList\Model;
@@ -45,6 +43,8 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
     const COLUMN_MAIN          = 'main';
     const COLUMN_SERVICE       = 'service';
     const COLUMN_PARAMS        = 'params';
+    const COLUMN_SORT          = 'sort';
+    const COLUMN_SEARCH_WIDGET = 'searchWidget';
 
     /**
      * Columns (local cache)
@@ -686,9 +686,35 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
         return $list;
     }
 
+    /**
+     * Check - remove entity or not
+     * 
+     * @param \XLite\Model\AEntity $entity Entity
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isAllowEntityRemove(\XLite\Model\AEntity $entity)
+    {
+        return true;
+    }
+
     // }}}
 
     // {{{ Inherited methods
+
+    /**
+     * Check - body tempalte is visible or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.16
+     */
+    protected function isPageBodyVisible()
+    {
+        return parent::isPageBodyVisible() || $this->isHeadSearchVisible();
+    }
 
     /**
      * Check - table header is visible or not
@@ -738,7 +764,135 @@ abstract class Table extends \XLite\View\ItemsList\Model\AModel
         return parent::getPageBodyDir() . '/table';
     }
 
+    /**
+     * Remove entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.17
+     */
+    protected function removeEntity(\XLite\Model\AEntity $entity)
+    {
+        return $this->isAllowEntityRemove($entity) && parent::removeEntity($entity);
+    }
+
     // }}}
 
+    // {{{ Head sort
+
+    /**
+     * Check - specified column is sorted or not
+     * 
+     * @param array $column COlumn
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isColumnSorted(array $column)
+    {
+        $field = $this->getSortBy();
+
+        return !empty($column[static::COLUMN_SORT]) && $field == $column[static::COLUMN_SORT];
+    }
+
+    /**
+     * Get next sort direction
+     * 
+     * @param array $column Column
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getSortDirectionNext(array $column)
+    {
+        if ($this->isColumnSorted($column)) {
+            $direction = static::SORT_ORDER_DESC == $this->getSortOrder() ? static::SORT_ORDER_ASC : static::SORT_ORDER_DESC;
+
+        } else {
+            $direction = $this->getSortOrder() ?: static::SORT_ORDER_DESC;
+        }
+
+        return $direction;
+    }
+
+    /**
+     * Get sort link class 
+     * 
+     * @param array $column Column
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getSortLinkClass(array $column)
+    {
+        $classes = 'sort';
+        if ($this->isColumnSorted($column)) {
+            $classes .= ' current-sort ' . $this->getSortOrder() . '-direction';
+        }
+
+        return $classes;
+    }
+
+    // }}}
+
+    // {{{ Head search
+
+    /**
+     * Check - search-in-head mechanism is available or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isHeadSearchVisible()
+    {
+        $found = false;
+
+        foreach ($this->getColumns() as $column) {
+            if ($this->isSearchColumn($column)) {
+                $found = true;
+                break;
+            }
+        }
+
+        return $found;
+    }
+
+    /**
+     * Check - specified column has search widget or not
+     * 
+     * @param array $column Column info
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function isSearchColumn(array $column)
+    {
+        return !empty($column[static::COLUMN_SEARCH_WIDGET]);
+    }
+
+
+    /**
+     * Get search cell class 
+     * 
+     * @param array $column ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function getSearchCellClass(array $column)
+    {
+        return 'search-cell ' . $column[static::COLUMN_CODE] . ' '
+            . ($this->isSearchColumn($column) ? 'filled' : 'empty');
+    }
+
+    // }}}
 }
 

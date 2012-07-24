@@ -21,8 +21,6 @@
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.15
  */
 
 namespace XLite\View\ItemsList\Model;
@@ -247,6 +245,7 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
      */
     protected function processCreate()
     {
+        $errCount = 0;
         $count = 0;
 
         foreach ($this->getNewDataLine() as $key => $line) {
@@ -266,6 +265,9 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
                     }
                     \XLite\Core\Database::getEM()->persist($entity);
                     $count++;
+
+                } else {
+                    $errCount++;
                 }
             }
         }
@@ -275,6 +277,10 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
             if ($label) {
                 \XLite\Core\TopMessage::getInstance()->addInfo($label);
             }
+        }
+
+        if (0 < $errCount) {
+            $this->processCreateErrors();
         }
     }
 
@@ -372,6 +378,21 @@ abstract class AModel extends \XLite\View\ItemsList\AItemsList
         }
 
         return $list;
+    }
+
+    /**
+     * Process errors
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function processCreateErrors()
+    {
+        \XLite\Core\TopMessage::getInstance()->addBatch($this->getErrorMessages(), \XLite\Core\TopMessage::ERROR);
+
+        // Run controller's method
+        $this->setActionError();
     }
 
     // }}}

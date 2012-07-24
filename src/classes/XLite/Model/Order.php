@@ -21,8 +21,6 @@
  * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -58,6 +56,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     const STATUS_TEMPORARY  = 'T';
     const STATUS_INPROGRESS = 'I';
     const STATUS_QUEUED     = 'Q';
+    const STATUS_AUTHORIZED = 'A';
     const STATUS_PROCESSED  = 'P';
     const STATUS_COMPLETED  = 'C';
     const STATUS_FAILED     = 'F';
@@ -189,6 +188,17 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     protected $notes = '';
 
     /**
+     * Admin notes
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="text")
+     */
+    protected $adminNotes = '';
+
+    /**
      * Order details
      *
      * @var   \Doctrine\Common\Collections\Collection
@@ -199,6 +209,17 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @OrderBy   ({"name" = "ASC"})
      */
     protected $details;
+
+    /**
+     * Order events queue
+     *
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\OrderHistoryEvents", mappedBy="order", cascade={"all"})
+     */
+    protected $events;
 
     /**
      * Order items
@@ -267,6 +288,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     protected static $statusHandlers = array(
 
         self::STATUS_TEMPORARY => array(
+            self::STATUS_AUTHORIZED => array('checkout', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout'),
@@ -275,6 +297,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         ),
 
         self::STATUS_INPROGRESS => array(
+            self::STATUS_AUTHORIZED => array('checkout', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout', 'queue'),
@@ -285,10 +308,19 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         self::STATUS_QUEUED => array(
             self::STATUS_TEMPORARY  => array('uncheckout'),
             self::STATUS_INPROGRESS => array('uncheckout'),
+            self::STATUS_AUTHORIZED => array('process'),
             self::STATUS_PROCESSED  => array('process'),
             self::STATUS_COMPLETED  => array('process'),
             self::STATUS_DECLINED   => array('uncheckout', 'fail'),
             self::STATUS_FAILED     => array('uncheckout', 'fail'),
+        ),
+
+        self::STATUS_AUTHORIZED => array(
+            self::STATUS_TEMPORARY  => array('decline', 'uncheckout'),
+            self::STATUS_INPROGRESS => array('decline', 'uncheckout'),
+            self::STATUS_QUEUED     => array('decline'),
+            self::STATUS_DECLINED   => array('decline', 'uncheckout', 'fail'),
+            self::STATUS_FAILED     => array('decline', 'uncheckout', 'fail'),
         ),
 
         self::STATUS_PROCESSED => array(
@@ -308,12 +340,14 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         ),
 
         self::STATUS_DECLINED => array(
+            self::STATUS_AUTHORIZED => array('checkout', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout'),
         ),
 
         self::STATUS_FAILED => array(
+            self::STATUS_AUTHORIZED => array('checkout', 'process'),
             self::STATUS_PROCESSED  => array('checkout', 'process'),
             self::STATUS_COMPLETED  => array('checkout', 'process'),
             self::STATUS_QUEUED     => array('checkout'),
@@ -353,6 +387,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             self::STATUS_TEMPORARY  => 'Cart',
             self::STATUS_INPROGRESS => 'Incompleted',
             self::STATUS_QUEUED     => 'Queued',
+            self::STATUS_AUTHORIZED => 'Authorized',
             self::STATUS_PROCESSED  => 'Processed',
             self::STATUS_COMPLETED  => 'Completed',
             self::STATUS_FAILED     => 'Failed',
@@ -690,6 +725,20 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Set old status of the order (not stored in the DB)
+     *
+     * @param string $status Status
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setOldStatus($status)
+    {
+        $this->oldStatus = $status;
+    }
+
+    /**
      * Get items list fingerprint
      *
      * @return string
@@ -848,12 +897,11 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         // send email notification about initially placed order
         $status = $this->getStatus();
 
-        $list = array(self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
+        $list = array(self::STATUS_AUTHORIZED, self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
 
-        $send = \XLite\Core\Config::getInstance()->Email->enable_init_order_notif
-            || \XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer;
+        \XLite\Core\OrderHistory::getInstance()->registerPlaceOrder($this->getOrderId());
 
-        if ($send && !in_array($status, $list)) {
+        if (!in_array($status, $list)) {
 
             \XLite\Core\Mailer::getInstance()->sendOrderCreated($this);
         }
@@ -899,6 +947,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $this->items                = new \Doctrine\Common\Collections\ArrayCollection();
         $this->surcharges           = new \Doctrine\Common\Collections\ArrayCollection();
         $this->payment_transactions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->events               = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }
@@ -1091,6 +1140,24 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Unset payment method 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function unsetPaymentMethod()
+    {
+        $transaction = $this->getFirstOpenPaymentTransaction();
+
+        if ($transaction) {
+            $this->getPaymentTransactions()->removeElement($transaction);
+            $transaction->getPaymentMethod()->getTransactions()->removeElement($transaction);
+            \XLite\Core\Database::getEM()->remove($transaction);
+        }
+    }
+
+    /**
      * Get active payment transactions
      *
      * @return array
@@ -1102,7 +1169,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $result = array();
 
         foreach ($this->getPaymentTransactions() as $t) {
-            if (!$t->isFailed()) {
+            if ($t->isCompleted() || $t->isPending()) {
                 $result[] = $t;
             }
         }
@@ -1204,6 +1271,27 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Check - order has in-progress payments or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function hasInprogressPayments()
+    {
+        $result = false;
+
+        foreach ($this->getPaymentTransactions() as $t) {
+            if ($t->isInProgress()) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Assign last used payment method
      *
      * @return \XLite\Model\Payment\Transaction|void
@@ -1263,6 +1351,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             $transaction->setMethodLocalName($method->getName());
             $transaction->setStatus($transaction::STATUS_INITIALIZED);
             $transaction->setValue($value);
+            $transaction->setType($method->getProcessor()->getInitialTransactionType($method));
 
             \XLite\Core\Database::getEM()->persist($transaction);
         }
@@ -1564,7 +1653,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Reinitialie currency
+     * Reinitialize currency
      *
      * @return void
      * @see    ____func_see____
@@ -1797,9 +1886,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function setStatus($value)
     {
-        if ($this->getStatus() != $value && !$this->isStatusChanged()) {
-            $this->oldStatus = $this->getStatus();
-        }
+        $this->oldStatus = $this->status != $value ? $this->status : null;
 
         $this->status = $value;
 
@@ -1980,6 +2067,115 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     protected function increaseInventory()
     {
         $this->changeItemsInventory(1);
+    }
+
+    // }}}
+
+    // {{{ Order actions
+
+    /**
+     * Get allowed actions 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getAllowedActions()
+    {
+        return array();
+    }
+
+    /**
+     * Get allowed payment actions 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getAllowedPaymentActions()
+    {
+        $actions = array();
+
+        $transactions = $this->getPaymentTransactions();
+
+        if ($transactions) {
+            foreach ($transactions as $transaction) {
+                $processor = $transaction->getPaymentMethod()->getProcessor();
+                $allowedTransactions = $processor->getAllowedTransactions();
+                foreach ($allowedTransactions as $transactionType) {
+                    if ($processor->isTransactionAllowed($transaction, $transactionType)) {
+                        $actions[$transactionType] = $transaction->getTransactionId();
+                    }
+                }
+            }
+        }
+
+        return $actions;
+    }
+
+    /**
+     * Get array of payment transaction sums (how much is authorized, captured and refunded) 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function getPaymentTransactionSums()
+    {
+        static $paymentTransactionSums = null;
+
+        if (!isset($paymentTransactionSums)) {
+
+            $transactions = $this->getPaymentTransactions();
+
+            $authorized = 0;
+            $captured = 0;
+            $refunded = 0;
+
+            foreach ($transactions as $t) {
+
+                foreach ($t->getBackendTransactions() as $bt) {
+
+                    if ($bt->isCompleted()) {
+
+                        switch($bt->getType()) {
+                            case $bt::TRAN_TYPE_AUTH:
+                                $authorized += $bt->getValue();
+                                break;
+
+                            case $bt::TRAN_TYPE_SALE:
+                            case $bt::TRAN_TYPE_CAPTURE:
+                                $captured += $bt->getValue();
+                                $authorized -= $bt->getValue();
+                                break;
+
+                            case $bt::TRAN_TYPE_REFUND:
+                                $refunded += $bt->getValue();
+                                $captured -= $bt->getValue();
+                                break;
+
+                            case $bt::TRAN_TYPE_VOID:
+                                $authorized -= $bt->getValue();
+                        }
+                    }
+                }
+            }
+
+            $paymentTransactionSums = array(
+                static::t('Authorized amount') => $authorized,
+                static::t('Captured amount')   => $captured,
+                static::t('Refunded amount')   => $refunded,
+            );
+
+            // Remove from array all zero sums
+            foreach ($paymentTransactionSums as $k => $v) {
+                if (0 >= $v) {
+                    unset($paymentTransactionSums[$k]);
+                }
+            }
+        }
+
+        return $paymentTransactionSums;
     }
 
     // }}}

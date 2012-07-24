@@ -4,10 +4,9 @@
  * Inline form field common controller
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.15
  */
 
 CommonForm.elementControllers.push(
@@ -87,6 +86,12 @@ CommonForm.elementControllers.push(
       {
       }
 
+      // Check - process blur event or not
+      this.isProcessBlur = function()
+      {
+        return true;
+      }
+
       // Field input(s)
 
       inputs.bind(
@@ -99,18 +104,22 @@ CommonForm.elementControllers.push(
       // Input blur effect (initialize save fields group)
       inputs.blur(
         function () {
-          obj.sanitize();
+          var result = true;
 
-          var result = !jQuery(this.form).validationEngine('validateField', '#' + this.id);
+          if (obj.isProcessBlur()) {
+            obj.sanitize();
 
-          if (result && row) {
-            row.inlineGroupBlurTimeout = setTimeout(
-              function () {
-                row.inlineGroupBlurTimeout = false;
-                row.saveFields();
-              },
-              100
-            );
+            result = !jQuery(this.form).validationEngine('validateField', '#' + this.id);
+
+            if (result && row) {
+              row.inlineGroupBlurTimeout = setTimeout(
+                function () {
+                  row.inlineGroupBlurTimeout = false;
+                  row.saveFields();
+                },
+                100
+              );
+            }
           }
 
           return result;

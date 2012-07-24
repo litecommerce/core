@@ -18,11 +18,9 @@
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @see       ____file_see____
- * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Select;
@@ -120,23 +118,17 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
     }
 
     /**
-     * Check - options list Has option groups or not
+     * Check - option is group or not
+     *
+     * @param mixed $option Option
      * 
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.19
      */
-    protected function hasOptionGroups()
+    protected function isGroup($option)
     {
-        $cnt = 0;
-
-        foreach ($this->getOptions() as $option) {
-            if (is_array($option)) {
-                $cnt++;
-            }
-        }
-
-        return count($this->getOptions()) == $cnt;
+        return is_array($option);
     }
 
     /**

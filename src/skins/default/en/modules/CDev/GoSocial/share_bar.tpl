@@ -2,16 +2,15 @@
 
 {**
  * Share buttons sidebar
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.15
  *
- * @ListChild (list="product.details.page.info.share", weight="50")
+ * @ListChild (list="buttons.share", weight="50")
  *}
 
 <div class="bar">
-  <list name="product.details.page.info.share.bar" />
+  <list name="buttons.share.bar" />
 </div>

@@ -4,10 +4,9 @@
  * Database restore tab template
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @link      http://www.litecommerce.com/
- * @since     1.0.0
  *}
 
 
@@ -70,7 +69,7 @@ function ShowNotes()
 <p class="adminParagraph">
 
 <b class="star">{t(#Warning#)}:</b> 
-{t(#The restoration procedure is irreversible and erases all data tables from your store database. It is highly recommended that you back your present database data up before restoring one of the previous states from a back-up.#)}
+{t(#The restoration procedure is irreversible and erases all data tables from your store database. It is highly recommended that you back up your present database data before restoring one of the previous states from a back-up.#)}
 </p>
 
 <form action="admin.php" method="post" id="dbform" enctype="multipart/form-data">
