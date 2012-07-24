@@ -3,10 +3,10 @@
 # Upgrade dump
 #
 # @author    Creative Development LLC <info@cdev.ru>
-# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @copyright Copyright (c) 2010-2012 Creative Development LLC <info@cdev.ru>. All rights reserved
 # @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
 # @link      http://www.litecommerce.com/
-# @since     3.0.0
+
 XLite\Model\Country:
   - { country: Afghanistan,         id: 4,   code3: AFG, code: AF, currency: { currency_id: 971 } }
   - { country: Åland Islands,       id: 248, code3: ALA, code: AX, currency: { currency_id: 978 } }
