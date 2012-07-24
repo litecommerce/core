@@ -59,4 +59,20 @@ class Instructions extends \XLite\View\FormField\Label\ALabel
     {
         return 'modules/CDev/SocialLogin/form_field/instructions.tpl';
     }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'modules/CDev/SocialLogin/style.css';
+
+        return $list;
+    }
 }
