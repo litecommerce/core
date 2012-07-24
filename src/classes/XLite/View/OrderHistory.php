@@ -42,12 +42,6 @@ class OrderHistory extends \XLite\View\AView
     const PARAM_ORDER = 'order';
 
     /**
-     * Date presentation format
-     */
-    const DAY_DATE_FORMAT = 'M j, Y';
-    const EVENT_DATE_FORMAT = 'h:i a';
-
-    /**
      * Get order
      *
      * @return \XLite\Model\Order
@@ -146,7 +140,7 @@ class OrderHistory extends \XLite\View\AView
      */
     protected function getDate(\XLite\Model\OrderHistoryEvents $event)
     {
-        return date(static::EVENT_DATE_FORMAT, $event->getDate());
+        return \XLite\Core\Converter::formatDayTime($event->getDate());
     }
 
     /**
@@ -188,7 +182,7 @@ class OrderHistory extends \XLite\View\AView
      */
     protected function getDayDate($date)
     {
-        return date(static::DAY_DATE_FORMAT, $date);
+        return \XLite\Core\Converter::formatDate($date);
     }
 
     /**

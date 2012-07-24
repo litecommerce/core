@@ -11,8 +11,5 @@
  * @ListChild (list="order.history.base.events", weight="20")
  *}
 <li class="event" FOREACH="block,index,event">
-  <ul class="event-details">
-    <list name="order.history.base.events.details" event="{event}" />
-  </ul>
   <list name="order.history.base.events.details.info" event="{event}" />
 </li>
