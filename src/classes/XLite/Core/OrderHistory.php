@@ -50,7 +50,7 @@ class OrderHistory extends \XLite\Base\Singleton
      */
     const TXT_PLACE_ORDER           = 'Order placed';
     const TXT_CHANGE_STATUS_ORDER   = 'Order status changed from {{oldStatus}} to {{newStatus}}';
-    const TXT_CHANGE_NOTES_ORDER    = 'Order notes changed from "{{oldNote}} to "{{newNote}}"';
+    const TXT_CHANGE_NOTES_ORDER    = 'Order notes changed from "{{oldNote}}" to "{{newNote}}"';
     const TXT_EMAIL_CUSTOMER_SENT   = 'Email sent to the customer';
     const TXT_EMAIL_ADMIN_SENT      = 'Email sent to the admin';
     const TXT_TRANSACTION           = 'Transaction made';
