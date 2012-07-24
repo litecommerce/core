@@ -11,5 +11,5 @@
  * @ListChild (list="layout.header", weight="100")
  *}
 <div id="logo">
-  <a href="{buildURL()}" title="{t(#Home#)}" rel="home"><img src="images/logo.png" alt="{t(#Home#)}" /></a>
+  <a href="{buildURL()}" title="{t(#Home#)}" rel="home"><img src="{getLogo()}" alt="{t(#Home#)}" /></a>
 </div>

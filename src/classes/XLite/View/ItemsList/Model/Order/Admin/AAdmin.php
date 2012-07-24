@@ -27,14 +27,14 @@ namespace XLite\View\ItemsList\Model\Order\Admin;
 
 /**
  * Abstract admin order-based list
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.24
  */
 abstract class AAdmin extends \XLite\View\ItemsList\Model\Order\AOrder
 {
     /**
-     * Action information cell names 
+     * Action information cell names
      */
     const ACTION_NAME     = 'name';
     const ACTION_URL      = 'url';
@@ -44,10 +44,10 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Order\AOrder
     const ACTION_PARAMS   = 'parameters';
 
     /**
-     * Get order aActions 
-     * 
+     * Get order actions
+     *
      * @param \XLite\Model\Order $entity Order
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.24
@@ -104,9 +104,9 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Order\AOrder
 
     /**
      * Returns true if order has allowed backend payment transactions
-     * 
+     *
      * @param \XLite\Model\Order $entity Order
-     *  
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.24
@@ -122,7 +122,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Order\AOrder
 
     /**
      * Get list of transaction types to filter allowed backend transactions list
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.24
@@ -133,10 +133,10 @@ abstract class AAdmin extends \XLite\View\ItemsList\Model\Order\AOrder
     }
 
     /**
-     * Define order actions 
-     * 
+     * Define order actions
+     *
      * @param \XLite\Model\Order $entity Order
-     *  
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.24

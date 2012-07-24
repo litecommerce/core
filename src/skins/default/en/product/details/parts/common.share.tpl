@@ -11,5 +11,5 @@
  * @ListChild (list="product.details.page.info", weight="110")
  *}
 <div class="share">
-  <list name="socialbar.info" />
+  <list name="buttons.share" />
 </div>

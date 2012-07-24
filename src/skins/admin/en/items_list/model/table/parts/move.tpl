@@ -9,4 +9,4 @@
  * @link      http://www.litecommerce.com/
  *}
 
-<widget class="XLite\View\FormField\Inline\Input\Text\Position\Move" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" fieldName="{column.code}" fieldParams="{column.params}" />
+<widget class="XLite\View\FormField\Inline\Input\Text\Position\Move" idx="{idx}" entity="{entity}" column="{column}" itemsList="{getSelf()}" fieldName="position" fieldParams="{column.params}" />

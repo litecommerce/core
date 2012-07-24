@@ -211,6 +211,17 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     protected $details;
 
     /**
+     * Order events queue
+     *
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\OrderHistoryEvents", mappedBy="order", cascade={"all"})
+     */
+    protected $events;
+
+    /**
      * Order items
      *
      * @var   \Doctrine\Common\Collections\Collection
@@ -714,6 +725,20 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Set old status of the order (not stored in the DB)
+     *
+     * @param string $status Status
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setOldStatus($status)
+    {
+        $this->oldStatus = $status;
+    }
+
+    /**
      * Get items list fingerprint
      *
      * @return string
@@ -874,10 +899,9 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
         $list = array(self::STATUS_AUTHORIZED, self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
 
-        $send = \XLite\Core\Config::getInstance()->Email->enable_init_order_notif
-            || \XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer;
+        \XLite\Core\OrderHistory::getInstance()->registerPlaceOrder($this->getOrderId());
 
-        if ($send && !in_array($status, $list)) {
+        if (!in_array($status, $list)) {
 
             \XLite\Core\Mailer::getInstance()->sendOrderCreated($this);
         }
@@ -923,6 +947,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $this->items                = new \Doctrine\Common\Collections\ArrayCollection();
         $this->surcharges           = new \Doctrine\Common\Collections\ArrayCollection();
         $this->payment_transactions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->events               = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }
@@ -1628,7 +1653,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Reinitialie currency
+     * Reinitialize currency
      *
      * @return void
      * @see    ____func_see____
@@ -1861,9 +1886,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function setStatus($value)
     {
-        if ($this->getStatus() != $value && !$this->isStatusChanged()) {
-            $this->oldStatus = $this->getStatus();
-        }
+        $this->oldStatus = $this->status != $value ? $this->status : null;
 
         $this->status = $value;
 

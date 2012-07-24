@@ -432,4 +432,20 @@ class Order extends \XLite\Model\Repo\ARepo
             ),
         );
     }
+
+    /**
+     * Delete single entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity to detach
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function performDelete(\XLite\Model\AEntity $entity)
+    {
+        $entity->setOldStatus(null);
+
+        parent::performDelete($entity);
+    }
 }

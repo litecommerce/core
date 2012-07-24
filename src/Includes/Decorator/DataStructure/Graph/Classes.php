@@ -26,7 +26,7 @@
 namespace Includes\Decorator\DataStructure\Graph;
 
 /**
- * Classes 
+ * Classes
  *
  * @see   ____class_see____
  * @since 1.0.0
@@ -269,11 +269,11 @@ class Classes extends \Includes\DataStructure\Graph
     // {{{ Methods to get paths and source code
 
     /**
-     * Name of the origin class file 
+     * Name of the origin class file
      *
      * @param string $class Class name OPTIONAL
      * @param string $dir   Dir to file OPTIONAL
-     * 
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
@@ -350,7 +350,7 @@ class Classes extends \Includes\DataStructure\Graph
         } else {
             $result = preg_replace('/(\s+\*+\/)$/Ss', $result . '$1', $this->getReflection()->docComment);
         }
-  
+
         return $result;
     }
 
@@ -366,8 +366,8 @@ class Classes extends \Includes\DataStructure\Graph
      */
     public function removeLinesFromDocBlock(array $lines, $asTags = true)
     {
-        $pattern = $asTags 
-            ? \Includes\Decorator\Utils\Operator::getTagPattern($lines) 
+        $pattern = $asTags
+            ? \Includes\Decorator\Utils\Operator::getTagPattern($lines)
             : '/^(\s*\*\s*)?(' . implode('|', $lines) . ').*$/Smi';
 
         return preg_replace($pattern, '', $this->getReflection()->docComment);
@@ -492,14 +492,15 @@ class Classes extends \Includes\DataStructure\Graph
      * Get tag info
      *
      * @param string $name Tag name
+     * @param boolean $forceTokenizer Flag to force tokenizer use (since LC_Dependencies classes could be non-working)
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTag($name)
+    public function getTag($name, $forceTokenizer = false)
     {
-        return \Includes\Utils\ArrayManager::getIndex($this->getTags(), strtolower($name), true);
+        return \Includes\Utils\ArrayManager::getIndex($this->getTags($forceTokenizer), strtolower($name), true);
     }
 
     /**
@@ -522,14 +523,16 @@ class Classes extends \Includes\DataStructure\Graph
     /**
      * Parse and return all tags
      *
+     * @param boolean $forceTokenizer Flag to force tokenizer use (since LC_Dependencies classes could be non-working)
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTags()
+    public function getTags($forceTokenizer = false)
     {
         if (!isset($this->tags)) {
-            $this->tags = \Includes\Decorator\Utils\Operator::getTags($this->getReflection()->docComment);
+            $this->tags = \Includes\Decorator\Utils\Operator::getTags($this->getReflection($forceTokenizer)->docComment);
 
             if (!empty($this->tags['lc_dependencies'][0])) {
                 $this->tags['lc_dependencies'] = \Includes\Utils\Converter::parseQuery(
@@ -562,17 +565,19 @@ class Classes extends \Includes\DataStructure\Graph
     /**
      * Return the ReflectionClass object for the current node
      *
+     * @param boolean $forceTokenizer Flag to force tokenizer use (since LC_Dependencies classes could be non-working)
+     *
      * @return \ReflectionClass
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getReflection()
+    public function getReflection($forceTokenizer = false)
     {
         if (!isset($this->reflection)) {
             $util = '\Includes\Decorator\Utils\Tokenizer';
             $this->reflection = new \StdClass();
 
-            if ($util::getDecoratorFlag()) {
+            if ($forceTokenizer || $util::getDecoratorFlag()) {
                 $this->reflection->parentClass = $util::getParentClassName($this->getFile());
                 $this->reflection->interfaces  = $util::getInterfaces($this->getFile());
                 $this->reflection->docComment  = $util::getDockBlock($this->getFile());

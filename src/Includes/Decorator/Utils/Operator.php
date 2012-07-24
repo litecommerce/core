@@ -114,17 +114,20 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
                 ($class = \Includes\Decorator\Utils\Tokenizer::getFullClassName($path))
                 && \Includes\Utils\Operator::checkIfLCClass($class)
             ) {
-
                 // File contains a class declaration: create node (descriptor)
                 $node = new \Includes\Decorator\DataStructure\Graph\Classes($class);
 
                 // Check parent class (so called optional dependencies for modules)
-                $dependencies = $node->getTag('lc_dependencies');
+                $dependencies = $node->getTag('lc_dependencies', true);
 
                 if (empty($dependencies) || \Includes\Utils\ModulesManager::areActiveModules($dependencies)) {
 
                     // Node is valid: add to the index
                     $index[$class] = $node;
+
+                } else {
+                    // The unused class file must be removed from the cache file structure
+                    \Includes\Utils\FileManager::deleteFile($node->getFile());
                 }
             }
         }

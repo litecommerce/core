@@ -169,12 +169,12 @@ class Search extends \XLite\View\ItemsList\Model\Order\Admin\AAdmin
     }
 
     /**
-     * Preprocess profile 
-     * 
+     * Preprocess profile
+     *
      * @param \XLite\Model\Profile $profile Profile
      * @param array                $column  Column data
      * @param \XLite\Model\Order   $entity  Order
-     *  
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.24
@@ -380,10 +380,10 @@ class Search extends \XLite\View\ItemsList\Model\Order\Admin\AAdmin
     }
 
     /**
-     * Get items sum quantity 
+     * Get items sum quantity
      *
      * @param \XLite\Model\Order $order Order
-     * 
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.24
@@ -395,5 +395,16 @@ class Search extends \XLite\View\ItemsList\Model\Order\Admin\AAdmin
 
     // }}}
 
+    /**
+     * Mark list as removable
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.15
+     */
+    protected function isRemoved()
+    {
+        return true;
+    }
 }
 

@@ -11,5 +11,5 @@
  * @ListChild (list="invoice.head", weight="20")
  *}
 <td class="logo">
-  <img src="images/invoice_logo.png" alt="{config.Company.company_name}" class="logo" />
+  <img src="{getInvoiceLogo()}" alt="{config.Company.company_name}" class="logo" />
 </td>

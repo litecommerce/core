@@ -23,55 +23,81 @@
  * @link      http://www.litecommerce.com/
  */
 
-namespace XLite\Module\CDev\GoSocial\View\Button;
+namespace XLite\Module\CDev\GoSocial\View;
 
 /**
- * Google+ button
+ * Main page page
  *
  * @see   ____class_see____
- * @since 1.0.0
+ * @since 1.0.15
  *
- * @ListChild (list="buttons.share.bar", weight="200")
+ * @LC_Dependencies ("CDev\SimpleCMS")
  */
-class GooglePlus extends \XLite\View\AView
+abstract class Page extends \XLite\Module\CDev\SimpleCMS\View\CustomerPage implements \XLite\Base\IDecorator
 {
     /**
-     * Return widget default template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'modules/CDev/GoSocial/button/google_plus.tpl';
-    }
-
-    /**
-     * Get button attributes
+     * Register Meta tags
      *
      * @return array
      * @see    ____func_see____
-     * @since  1.0.15
+     * @since  1.0.0
      */
-    protected function getButtonAttributes()
+    public function getMetaTags()
     {
-        return array(
-            'href' => \XLite::getInstance()->getShopURL($this->getURL()),
-        );
+        $list = parent::getMetaTags();
+
+        $list[] = $this->getPage()->getOpenGraphMetaTags();
+
+        return $list;
     }
 
     /**
-     * Check if widget is visible
+     * Register CSS files
      *
-     * @return boolean
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isVisible()
+    public function getCSSFiles()
     {
-        return parent::isVisible()
-            && \XLite\Core\Config::getInstance()->CDev->GoSocial->gplus_use;
+        $list = parent::getCSSFiles();
+
+        $list[] = 'modules/CDev/GoSocial/product.css';
+
+        return $list;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'modules/CDev/GoSocial/product.js';
+
+        return $list;
+    }
+
+    /**
+     * Register Meta tags
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getNamespaces()
+    {
+        $list = parent::getNamespaces();
+
+        $list['og'] = 'http://ogp.me/ns#';
+        $list['fb'] = 'http://www.facebook.com/2008/fbml';
+
+        return $list;
     }
 
 }

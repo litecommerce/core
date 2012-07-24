@@ -35,7 +35,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.11
@@ -55,8 +55,8 @@ class Order extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * handleRequest 
-     * 
+     * handleRequest
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.1.0
@@ -77,7 +77,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
                     \XLite\Core\Request::getInstance()->transactionType = \XLite\Core\Request::getInstance()->action;
                     \XLite\Core\Request::getInstance()->action = 'PaymentTransaction';
                     \XLite\Core\Request::getInstance()->setRequestMethod('POST');
-                } 
+                }
             }
         }
 
@@ -98,8 +98,8 @@ class Order extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Get order 
-     * 
+     * Get order
+     *
      * @return \XLite\Model\Order
      * @see    ____func_see____
      * @since  1.0.24
@@ -136,12 +136,48 @@ class Order extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        $request = \XLite\Core\Request::getInstance();
+        $data = $this->getRequestData();
+        $orderId = \XLite\Core\Request::getInstance()->order_id;
 
-        return \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateById(
-            \XLite\Core\Request::getInstance()->order_id,
-            $this->getRequestData()
+        $changes = $this->getOrderChanges($orderId, $data);
+
+        \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateById(
+            $orderId,
+            $data
         );
+
+        \XLite\Core\OrderHistory::getInstance()->registerOrderChanges($orderId, $changes);
+    }
+
+    /**
+     * Return requested changes for the order
+     *
+     * @param integer $orderId Order identificator
+     * @param array   $data    Data to change
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getOrderChanges($orderId, array $data)
+    {
+        $changes = array();
+        $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($orderId);
+
+        foreach ($data as $name => $value) {
+
+            $orderValue = $order->{'get' . ucfirst($name)}();
+
+            if ($orderValue !== $value) {
+
+                $changes[$name] = array(
+                    'old' => $orderValue,
+                    'new' => $value,
+                );
+            }
+        }
+
+        return $changes;
     }
 
     /**
@@ -202,6 +238,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
 
         $list['default'] = 'General info';
         $list['invoice'] = 'Invoice';
+        $list['history'] = 'History';
 
         return $list;
     }
@@ -219,6 +256,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
 
         $list['default'] = 'order/page/info.tab.tpl';
         $list['invoice'] = 'order/page/invoice.tpl';
+        $list['history'] = 'order/history.tpl';
 
         return $list;
     }

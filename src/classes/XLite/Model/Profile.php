@@ -205,6 +205,18 @@ class Profile extends \XLite\Model\AEntity
     protected $order;
 
     /**
+     * Relation to an event
+     *
+     * @var   \XLite\Model\OrderHistoryEvents
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @OneToMany   (targetEntity="XLite\Model\OrderHistoryEvents", mappedBy="author")
+     * @JoinColumn (name="event_id", referencedColumnName="event_id")
+     */
+    protected $event;
+
+    /**
      * Language code
      *
      * @var   string
