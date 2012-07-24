@@ -12,6 +12,6 @@
  *}
 <li class="block" FOREACH="getOrderHistoryEventsBlock(),index,block">
   <ul class="block-item">
-    <list name="order.history.base.events" block="{block}" />
+    <list name="order.history.base.events" index="{index}" block="{block}" />
   </ul>
 </li>

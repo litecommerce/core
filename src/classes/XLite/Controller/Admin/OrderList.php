@@ -136,6 +136,21 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Common prefix for editable elements in lists
+     *
+     * NOTE: this method is requered for the GetWidget and AAdmin classes
+     * TODO: after the multiple inheritance should be moved to the AAdmin class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPrefixPostedData()
+    {
+        return 'data';
+    }
+
+    /**
      * Get search conditions
      *
      * @return array
