@@ -33,7 +33,7 @@ namespace XLite\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="socialbar.info", weight="100")
+ * @ListChild (list="buttons.share", weight="100")
  */
 class FacebookLike extends \XLite\View\AView
 {

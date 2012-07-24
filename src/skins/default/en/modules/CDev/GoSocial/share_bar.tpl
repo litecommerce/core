@@ -9,9 +9,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.15
  *
- * @ListChild (list="product.details.page.info.share", weight="50")
+ * @ListChild (list="buttons.share", weight="50")
  *}
 
 <div class="bar">
-  <list name="socialbar.info" />
+  <list name="buttons.share.bar" />
 </div>

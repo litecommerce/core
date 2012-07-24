@@ -2027,4 +2027,33 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     // }}}
+
+    /**
+     * Get logo
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getLogo()
+    {
+        return \XLite\Core\Layout::getInstance()->getResourceWebPath(
+			'images/logo.png',
+			\XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
+			\XLite::CUSTOMER_INTERFACE
+		);
+    }
+
+    /**
+     * Get invoice logo
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getInvoiceLogo()
+    {
+        return \XLite\Core\Layout::getInstance()->getResourceWebPath('images/invoice_logo.png');
+    }
+
 }

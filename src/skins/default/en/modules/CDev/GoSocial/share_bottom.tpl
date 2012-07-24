@@ -9,7 +9,6 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.15
  *
- * @ListChild (list="socialbar.info", weight="99999")
+ * @ListChild (list="buttons.share", weight="99999")
  *}
-
 <div class="clear"></div>

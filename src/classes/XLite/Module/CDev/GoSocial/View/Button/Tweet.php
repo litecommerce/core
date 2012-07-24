@@ -33,12 +33,12 @@ namespace XLite\Module\CDev\GoSocial\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="socialbar.info", weight="100")
+ * @ListChild (list="buttons.share.bar", weight="100")
  */
 class Tweet extends \XLite\View\AView
 {
     /**
-     * Alloed languages
+     * Allowed languages
      *
      * @var   array
      * @see   ____var_see____
