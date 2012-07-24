@@ -26,8 +26,8 @@
 namespace XLite\View\Order\Details\Admin;
 
 /**
- * Orer info 
- * 
+ * Orer info
+ *
  * @see   ____class_see____
  * @since 1.0.24
  */
@@ -41,6 +41,22 @@ class Info extends \XLite\View\AView
      * @since 1.0.0
      */
     protected $shippingModifier;
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'order/page/info.js';
+
+        return $list;
+    }
 
     /**
      * Register CSS files
@@ -90,8 +106,8 @@ class Info extends \XLite\View\AView
     }
 
     /**
-     * Get order formatted creation date 
-     * 
+     * Get order formatted creation date
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.24
@@ -102,8 +118,8 @@ class Info extends \XLite\View\AView
     }
 
     /**
-     * Get profile URL 
-     * 
+     * Get profile URL
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.24
@@ -118,8 +134,8 @@ class Info extends \XLite\View\AView
     }
 
     /**
-     * Get profile name 
-     * 
+     * Get profile name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.24
@@ -137,7 +153,7 @@ class Info extends \XLite\View\AView
 
     /**
      * Check - has profile separate modification page or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.24
@@ -161,8 +177,8 @@ class Info extends \XLite\View\AView
     }
 
     /**
-     * Get shipping cost 
-     * 
+     * Get shipping cost
+     *
      * @return float
      * @see    ____func_see____
      * @since  1.0.24
@@ -173,8 +189,8 @@ class Info extends \XLite\View\AView
     }
 
     /**
-     * Get membership 
-     * 
+     * Get membership
+     *
      * @return \XLite\Model\Membership
      * @see    ____func_see____
      * @since  1.0.24
@@ -259,7 +275,7 @@ class Info extends \XLite\View\AView
 
     /**
      * Check - customer notes block is visible or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.24
@@ -271,7 +287,7 @@ class Info extends \XLite\View\AView
 
     /**
      * Get list of actual payment sums (authorized, captured, refunded)
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.1.0
@@ -283,7 +299,7 @@ class Info extends \XLite\View\AView
 
     /**
      * Returns true if order has payment transaction sums greater than zero
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.1.0
