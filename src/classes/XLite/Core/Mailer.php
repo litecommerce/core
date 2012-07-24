@@ -258,9 +258,13 @@ class Mailer extends \XLite\Base\Singleton
             )
         );
 
-        static::sendOrderCreatedCustomer($order->getProfile()->getLogin());
+        if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer) {
+            static::sendOrderCreatedCustomer($order->getProfile()->getLogin());
+        }
 
-        static::sendOrderCreatedAdmin();
+        if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif) {
+            static::sendOrderCreatedAdmin();
+        }
     }
 
     /**
@@ -281,6 +285,8 @@ class Mailer extends \XLite\Base\Singleton
             $login,
             'order_created'
         );
+
+        \XLite\Core\OrderHistory::getInstance()->registerCustomerEmailSent($order->getOrderId());
     }
 
     /**
@@ -292,8 +298,6 @@ class Mailer extends \XLite\Base\Singleton
      */
     public static function sendOrderCreatedAdmin()
     {
-        if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif) {
-
             static::setMailInterface(\XLite::ADMIN_INTERFACE);
 
             static::compose(
@@ -301,7 +305,8 @@ class Mailer extends \XLite\Base\Singleton
                 \XLite\Core\Config::getInstance()->Company->orders_department,
                 'order_created_admin'
             );
-        }
+
+            \XLite\Core\OrderHistory::getInstance()->registerAdminEmailSent($order->getOrderId());
     }
 
     /**
@@ -322,10 +327,8 @@ class Mailer extends \XLite\Base\Singleton
         );
 
         static::sendProcessOrderAdmin();
-        \XLite\Core\OrderHistory::getInstance()->registerAdminEmailSent($order->getOrderId());
 
         static::sendProcessOrderCustomer($order);
-        \XLite\Core\OrderHistory::getInstance()->registerCustomerEmailSent($order->getOrderId());
     }
 
     /**
@@ -344,6 +347,8 @@ class Mailer extends \XLite\Base\Singleton
             \XLite\Core\Config::getInstance()->Company->orders_department,
             'order_processed'
         );
+
+        \XLite\Core\OrderHistory::getInstance()->registerAdminEmailSent($order->getOrderId());
     }
 
     /**
@@ -365,6 +370,8 @@ class Mailer extends \XLite\Base\Singleton
                 $order->getProfile()->getLogin(),
                 'order_processed'
             );
+
+            \XLite\Core\OrderHistory::getInstance()->registerCustomerEmailSent($order->getOrderId());
         }
     }
 
@@ -386,10 +393,8 @@ class Mailer extends \XLite\Base\Singleton
         );
 
         static::sendFailedOrderAdmin();
-        \XLite\Core\OrderHistory::getInstance()->registerAdminEmailSent($order->getOrderId());
 
         static::sendFailedOrderCustomer($order);
-        \XLite\Core\OrderHistory::getInstance()->registerCustomerEmailSent($order->getOrderId());
     }
 
     /**
@@ -408,6 +413,8 @@ class Mailer extends \XLite\Base\Singleton
             \XLite\Core\Config::getInstance()->Company->orders_department,
             'order_failed'
         );
+
+        \XLite\Core\OrderHistory::getInstance()->registerAdminEmailSent($order->getOrderId());
     }
 
     /**
@@ -429,6 +436,8 @@ class Mailer extends \XLite\Base\Singleton
                 $order->getProfile()->getLogin(),
                 'order_failed'
             );
+
+            \XLite\Core\OrderHistory::getInstance()->registerCustomerEmailSent($order->getOrderId());
         }
     }
 

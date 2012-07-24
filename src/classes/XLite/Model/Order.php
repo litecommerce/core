@@ -877,10 +877,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
 
         \XLite\Core\OrderHistory::getInstance()->registerPlaceOrder($this->getOrderId());
 
-        $send = \XLite\Core\Config::getInstance()->Email->enable_init_order_notif
-            || \XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer;
-
-        if ($send && !in_array($status, $list)) {
+        if (!in_array($status, $list)) {
 
             \XLite\Core\Mailer::getInstance()->sendOrderCreated($this);
         }
