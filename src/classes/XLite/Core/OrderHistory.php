@@ -141,7 +141,7 @@ class OrderHistory extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function registerOrderChangeNotes($orderId, $change)
+    public function registerOrderChangeAdminNotes($orderId, $change)
     {
         $this->registerEvent(
             $orderId,
