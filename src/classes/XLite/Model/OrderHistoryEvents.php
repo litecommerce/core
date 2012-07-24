@@ -74,6 +74,17 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     protected $description;
 
     /**
+     * Data for human-readable description
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="text")
+     */
+    protected $data;
+
+    /**
      * Details of event
      *
      * @var   string
@@ -118,4 +129,43 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
      * @JoinColumn (name="author_id", referencedColumnName="profile_id")
      */
     protected $author;
+
+    
+    /**
+     * Data getter
+     *
+     * @return array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    public function getData()
+    {
+        return unserialize($this->data);
+    }
+
+    /**
+     * Data setter
+     *
+     * @param array $data Data to store
+     *
+     * @return void
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    public function setData(array $data)
+    {
+        $this->data = serialize($data);
+    }
+
+    /**
+     * Description getter
+     *
+     * @return string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    public function getDescription()
+    {
+        return static::t($this->description, $this->getData());
+    }
 }

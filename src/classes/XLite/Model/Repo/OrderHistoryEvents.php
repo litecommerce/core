@@ -66,13 +66,14 @@ class OrderHistoryEvents extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function registerEvent($orderId, $code, $description, $details = '')
+    public function registerEvent($orderId, $code, $description, array $data = array(), $details = '')
     {
         $event = new \XLite\Model\OrderHistoryEvents(array(
-            'code' => $code,
-            'description' => $description,
-            'details' => $details,
-            'date' => time(),
+            'code'          => $code,
+            'description'   => $description,
+            'data'          => $data,
+            'details'       => $details,
+            'date'          => time(),
         ));
 
         $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($orderId);

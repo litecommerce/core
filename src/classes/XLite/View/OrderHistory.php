@@ -116,6 +116,13 @@ class OrderHistory extends \XLite\View\AView
             && $this->getOrderId();
     }
 
+    /**
+     * Get blocks for the events of order
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getOrderHistoryEventsBlock()
     {
         $result = array();
@@ -128,26 +135,71 @@ class OrderHistory extends \XLite\View\AView
         return $result;
     }
 
+    /**
+     * Date getter
+     *
+     * @param \XLite\Model\OrderHistoryEvents $event
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getDate(\XLite\Model\OrderHistoryEvents $event)
     {
         return date(static::EVENT_DATE_FORMAT, $event->getDate());
     }
 
+    /**
+     * Description getter
+     *
+     * @param \XLite\Model\OrderHistoryEvents $event
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getDescription(\XLite\Model\OrderHistoryEvents $event)
     {
         return $event->getDescription();
     }
 
+    /**
+     * Details getter
+     *
+     * @param \XLite\Model\OrderHistoryEvents $event
+     *
+     * @return type
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getDetails(\XLite\Model\OrderHistoryEvents $event)
     {
         return $event->getDetails();
     }
 
+    /**
+     * Get day of the given date
+     *
+     * @param integer $date
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getDayDate($date)
     {
         return date(static::DAY_DATE_FORMAT, $date);
     }
 
+    /**
+     * Return header of the block
+     *
+     * @param string $index
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getHeaderBlock($index)
     {
         return $index;
