@@ -10,4 +10,4 @@
  * @since     1.0.15
  *}
 
-<widget class="XLite\View\Button\Remove" buttonName="{getRemoveDataPrefix()}[{entity.getUniqueIdentifier():h}]" />
+<widget IF="isAllowEntityRemove(entity)" class="XLite\View\Button\Remove" buttonName="{getRemoveDataPrefix()}[{entity.getUniqueIdentifier():h}]" />

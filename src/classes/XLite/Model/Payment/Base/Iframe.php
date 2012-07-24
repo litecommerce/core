@@ -121,6 +121,8 @@ abstract class Iframe extends \XLite\Model\Payment\Base\CreditCard
      */
     protected function doInitialPayment()
     {
+        $this->transaction->createBackendTransaction($this->getInitialTransactionType());
+
         $data = $this->getIframeData();
 
         if (isset($data)) {

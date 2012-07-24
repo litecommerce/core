@@ -125,7 +125,7 @@ class AdminPanel extends \XLite\View\AView
                 self::ITEM_TARGET      => 'categories',
                 self::ITEM_ICON        => 'images/menu/icon_categories.gif',
                 self::ITEM_TITLE       => 'Categories',
-                self::ITEM_DESCRIPTION => 'Online catalog structure set-up',
+                self::ITEM_DESCRIPTION => 'Online catalog structure setup',
             ),
             array(
                 self::ITEM_TARGET      => 'orders_stats',
@@ -155,7 +155,7 @@ class AdminPanel extends \XLite\View\AView
                 self::ITEM_TARGET      => 'db_backup',
                 self::ITEM_ICON        => 'images/menu/icon_catalog.gif',
                 self::ITEM_TITLE       => 'Store Maintenance',
-                self::ITEM_DESCRIPTION => 'Make back-up of your store database',
+                self::ITEM_DESCRIPTION => 'Back up your store database',
             ),
         );
     }

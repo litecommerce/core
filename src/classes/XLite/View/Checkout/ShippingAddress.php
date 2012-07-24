@@ -44,7 +44,20 @@ class ShippingAddress extends \XLite\View\AView
      */
     public function getAddress()
     {
-        return $this->getCart()->getProfile() ? $this->getCart()->getProfile()->getShippingAddress() : null;
+        $address = null;
+        
+        if ($this->getCart()->getProfile()) {
+
+            $address = $this->getCart()->getProfile()->getShippingAddress();
+
+            if (!$address) {
+                $address = $this->getCart()->getProfile()->getFirstAddress();
+                $address->setIsShipping(true);
+                $address->update();
+            }
+        }
+
+        return $address;
     }
 
 

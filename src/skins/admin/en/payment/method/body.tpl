@@ -15,7 +15,7 @@
   <input type="hidden" name="method_id" value="{method_id}" />
 
   {if:isWidgetSettings()}
-    <widget widget="{paymentMethod.processor.getSettingsWidget()}" paymentMethod="{getPaymentMethod()}" />
+    <widget class="{paymentMethod.processor.getSettingsWidget()}" paymentMethod="{getPaymentMethod()}" />
   {else:}
     <widget template="{paymentMethod.processor.getSettingsWidget()}" />
   {end:}

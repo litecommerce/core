@@ -131,7 +131,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
         $result = array();
 
         foreach ($data as $row) {
-            $translation = $row->getTranslation($code, true);
+            $translation = $row->getLabelTranslation($code);
 
             if (isset($translation)) {
                 $result[$row->getName()] = $translation->getLabel();

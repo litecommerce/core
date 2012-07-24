@@ -159,19 +159,25 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     public function getSoftTranslation($code = null)
     {
-        $result = $this->getTranslation($code, true);
+        $result = null;
 
-        if (!isset($result)) {
-            $result = $this->getTranslation(static::getDefaultLanguage());
-
-            if (!$this->hasTranslation($result->getCode())) {
-                $tmp = $this->getTranslations()->first();
-
-                // DO NOT use isset() here
-                if (!empty($tmp)) {
-                    $result = $tmp;
-                }
+        // Select by languages query (current languge -> default language -> hardcoded default language)
+        $query = \XLite\Core\Translation::getLanguageQuery($code);
+        foreach ($query as $code) {
+            $result = $this->getTranslation($code, true);
+            if (isset($result)) {
+                break;
             }
+        }
+
+        // Get first translation
+        if (!isset($result)) {
+            $result = $this->getTranslations()->first() ?: null;
+        }
+
+        // Get empty dump translation with specified code
+        if (!isset($result)) {
+            $result = $this->getTranslation(array_shift($query));
         }
 
         return $result;

@@ -290,12 +290,22 @@ class Mailer extends \XLite\View\AView
      */
     public function send()
     {
-        if ('' !== $this->get('to')) {
+        if ('' === $this->get('to')) {
+            \XLite\Logger::getInstance()->log(
+                'Send mail FAILED: sender address is empty',
+                LOG_ERR
+            );
 
-            if (!isset($this->mail)) {
+        } elseif (!isset($this->mail)) {
 
-                \XLite\Logger::getInstance()->log('Send mail FAILED: not initialized inner mailer');
-            }
+            \XLite\Logger::getInstance()->log(
+                'Send mail FAILED: not initialized inner mailer',
+                LOG_ERR
+            );
+
+        } else {
+
+            $this->errorInfo = null;
 
             ob_start();
 
@@ -308,7 +318,12 @@ class Mailer extends \XLite\View\AView
             // Check if there are any error during mail sending
             if ($this->mail->isError()) {
 
-                \XLite\Logger::getInstance()->log('Send mail FAILED: ' . $this->mail->ErrorInfo . ' : [' . $error . ']');
+                \XLite\Logger::getInstance()->log(
+                    'Send mail FAILED: ' . $this->prepareErrorMessage($this->mail->ErrorInfo) . PHP_EOL
+                    . $this->prepareErrorMessage($error),
+                    LOG_ERR
+                );
+                $this->errorInfo = $this->mail->ErrorInfo;
             }
         }
 
@@ -321,8 +336,6 @@ class Mailer extends \XLite\View\AView
         }
 
         $this->imageParser->unlinkImages();
-
-        $this->errorInfo = $this->mail->ErrorInfo;
     }
 
 
@@ -530,4 +543,19 @@ class Mailer extends \XLite\View\AView
 
         return $headers;
     }
+
+    /**
+     * Prepare error message 
+     * 
+     * @param string $message Message
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function prepareErrorMessage($message)
+    {
+        return trim(strip_tags($message));
+    }
+
 }

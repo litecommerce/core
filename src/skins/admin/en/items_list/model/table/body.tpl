@@ -15,10 +15,14 @@
   <thead IF="isTableHeaderVisible()">
     <tr>
       <th FOREACH="getColumns(),column" class="{getHeadClass(column)}">
-        <widget template="items_list//model/table/parts/head.cell.tpl" />
+        <widget template="items_list/model/table/parts/head.cell.tpl" />
       </th>
     </tr>
   </thead>
+
+  <tbody IF="isHeadSearchVisible()" class="head-search">
+    <widget template="items_list/model/table/parts/head_search.tpl" />
+  </tbody>
 
   <tbody IF="isTopInlineCreation()" class="create top-create">
     <widget template="items_list/model/table/parts/create_box.tpl" />

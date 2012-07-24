@@ -1121,7 +1121,7 @@ abstract class AView extends \XLite\Core\Handler
         $parts = $currency->formatParts($value);
 
         if (isset($parts['sign']) && '-' == $parts['sign']) {
-            $parts['sign'] = '&minus;&#8197';
+            $parts['sign'] = '&minus;&#8197;';
         }
 
         foreach ($parts as $name => $value) {
@@ -1412,6 +1412,28 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         return \XLite\Core\Converter::formatTime($base, $format);
+    }
+
+    /**
+     * Format timestamp as day time
+     *
+     * @param mixed  $base   String or object instance to get field value from
+     * @param string $field  Field to get value OPTIONAL
+     * @param string $format Time format OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function formatDayTime($base, $field = null, $format = null)
+    {
+        if (is_object($base)) {
+            $base = $base instanceof \XLite\Model\AEntity
+                ? $base->$field
+                : $base->get($field);
+        }
+
+        return \XLite\Core\Converter::formatDayTime($base, $format);
     }
 
     /**
@@ -2005,4 +2027,33 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     // }}}
+
+    /**
+     * Get logo
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getLogo()
+    {
+        return \XLite\Core\Layout::getInstance()->getResourceWebPath(
+			'images/logo.png',
+			\XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
+			\XLite::CUSTOMER_INTERFACE
+		);
+    }
+
+    /**
+     * Get invoice logo
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public function getInvoiceLogo()
+    {
+        return \XLite\Core\Layout::getInstance()->getResourceWebPath('images/invoice_logo.png');
+    }
+
 }

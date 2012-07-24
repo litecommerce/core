@@ -9,7 +9,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<p>{t(#Please run the benchmark test in order to estimate your server performance#)}</p>
+<p>{t(#Run benchmark to assess your server performance#)}</p>
 <div class="buttons">
   <widget class="\XLite\View\Button\Link" location="{buildURL(#measure#,#measure#)}" label="{t(#Run benchmark#)}" style="action" />
   <widget

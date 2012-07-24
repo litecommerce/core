@@ -10,7 +10,7 @@
  * @since     1.0.0
  *}
 
-<p align="justify">{t(#This section displays order placement statistics#)}</p>
+<p align="justify">{t(#This section displays order processing statistics#)}</p>
 
 <br /><br />
 

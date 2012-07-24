@@ -57,7 +57,7 @@ class Address extends \XLite\View\Model\AModel
         ),
         'firstname' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Firstname',
+            self::SCHEMA_LABEL    => 'First name',
             self::SCHEMA_REQUIRED => true,
             \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-firstname',
             self::SCHEMA_MODEL_ATTRIBUTES => array(
@@ -66,7 +66,7 @@ class Address extends \XLite\View\Model\AModel
         ),
         'lastname' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Lastname',
+            self::SCHEMA_LABEL    => 'Last name',
             self::SCHEMA_REQUIRED => true,
             \XLite\View\FormField\AFormField::PARAM_WRAPPER_CLASS => 'address-lastname',
             self::SCHEMA_MODEL_ATTRIBUTES => array(

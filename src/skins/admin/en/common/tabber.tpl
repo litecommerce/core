@@ -22,6 +22,10 @@
         </li>
       </ul>
 
+      <div class="list-after-tabs">
+        <list name="page.tabs.after" />
+      </div>
+
     </div>
     <div class="clear"></div>
 

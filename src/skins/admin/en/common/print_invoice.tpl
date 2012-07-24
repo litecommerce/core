@@ -16,6 +16,6 @@
 <link href="skins/admin/en/style.css" rel="stylesheet" type="text/css">
 </head>
 <body leftmargin=0 topmargin=0 rightmargin=0 bottommargin=0 marginwidth="0" marginheight=0 onLoad="window.print()">
-<widget class="\XLite\View\Order\Details\Admin\Model" template="common/invoice.tpl" />
+<widget class="\XLite\View\Invoice" order="{getOrder()}" />
 </body>
 </html>

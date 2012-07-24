@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\GoSocial\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="product.details.page.info.share.bar", weight="200")
+ * @ListChild (list="buttons.share.bar", weight="200")
  */
 class GooglePlus extends \XLite\View\AView
 {
@@ -50,8 +50,8 @@ class GooglePlus extends \XLite\View\AView
     }
 
     /**
-     * Get button attributes 
-     * 
+     * Get button attributes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15

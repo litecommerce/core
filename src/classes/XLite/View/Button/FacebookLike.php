@@ -33,7 +33,7 @@ namespace XLite\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="product.details.page.info.share", weight="100")
+ * @ListChild (list="buttons.share", weight="100")
  */
 class FacebookLike extends \XLite\View\AView
 {
@@ -101,8 +101,8 @@ class FacebookLike extends \XLite\View\AView
     }
 
     /**
-     * Get defaul width 
-     * 
+     * Get defaul width
+     *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.15
@@ -113,8 +113,8 @@ class FacebookLike extends \XLite\View\AView
     }
 
     /**
-     * Get button attributes 
-     * 
+     * Get button attributes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.15

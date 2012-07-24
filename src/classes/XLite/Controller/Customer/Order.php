@@ -44,7 +44,7 @@ class Order extends \XLite\Controller\Customer\Base\Order
      */
     public function getTitle()
     {
-        if ($this->checkAccess()){
+        if ($this->checkAccess()) {
             $title = static::t(
                 'Order #X, Y',
                 array(

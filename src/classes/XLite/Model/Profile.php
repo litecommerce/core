@@ -293,7 +293,7 @@ class Profile extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @manyToMany (targetEntity="XLite\Model\Role", mappedBy="profiles", cascade={"merge","detach"})
+     * @ManyToMany (targetEntity="XLite\Model\Role", mappedBy="profiles", cascade={"merge","detach"})
      */
     protected $roles;
 
@@ -381,6 +381,25 @@ class Profile extends \XLite\Model\AEntity
     public function getShippingAddress()
     {
         return $this->getAddressByType(\XLite\Model\Address::SHIPPING);
+    }
+
+    /**
+     * Returns first available address
+     *
+     * @return \XLite\Model\Address
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getFirstAddress()
+    {
+        $result = null;
+
+        foreach ($this->getAddresses() as $address) {
+            $result = $address;
+            break;
+        }
+
+        return $result;
     }
 
     /**
@@ -658,7 +677,9 @@ class Profile extends \XLite\Model\AEntity
     protected function prepareCreate()
     {
         // Assign a profile creation date/time
-        $this->setAdded(time());
+        if (!$this->getAdded()) {
+            $this->setAdded(time());
+        }
 
         // Assign current language
         $language = $this->getLanguage();

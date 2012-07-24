@@ -46,6 +46,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      */
     const RETURN_TYPE_HTTP_REDIRECT = 'http';
     const RETURN_TYPE_HTML_REDIRECT = 'html';
+    const RETURN_TYPE_HTML_REDIRECT_WITH_IFRAME_DESTROYING = 'html_iframe';
     const RETURN_TYPE_CUSTOM        = 'custom';
 
 
@@ -94,7 +95,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     }
 
     /**
-     * Get callback reqeust owner transaction or null
+     * Get callback request owner transaction or null
      *
      * @return \XLite\Model\Payment\Transaction|void
      * @see    ____func_see____
@@ -104,6 +105,27 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     {
         return null;
     }
+
+    /**
+     * Mark callback request as invalid
+     *
+     * @param string $message Message
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function markCallbackRequestAsInvalid($message)
+    {
+        \XLite\Logger::getInstance()->log(
+            'Callback request is invalid: ' . $message . PHP_EOL
+            . 'Payment gateway: ' . $this->transaction->getPaymentMethod()->getServiceName() . PHP_EOL
+            . 'order #' . $this->transaction->getOrder()->getOrderId()
+            . ' / transaction #' . $this->transaction->getTransactionId() . PHP_EOL,
+            LOG_WARNING
+        );
+    }
+
 
     /**
      * Get client IP
@@ -158,11 +180,26 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function saveDataFromRequest()
+    protected function saveDataFromRequest($backendTransaction = null)
+    {
+        $this->saveFilteredData(\XLite\Core\Request::getInstance()->getData(), $backendTransaction);
+    }
+
+    /**
+     * Filter input array $data by keys and save in the transaction data
+     *
+     * @param array                                   $data               Array of data to save
+     * @param \XLite\Model\Payment\BackendTransaction $backendTransaction Backend transaction object OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function saveFilteredData($data, $backendTransaction = null)
     {
         foreach ($this->defineSavedData() as $key => $name) {
-            if (isset(\XLite\Core\Request::getInstance()->$key)) {
-                $this->setDetail($key, \XLite\Core\Request::getInstance()->$key, $name);
+            if (isset($data[$key])) {
+                $this->setDetail($key, $data[$key], $name, $backendTransaction);
             }
         }
     }
@@ -223,30 +260,11 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     }
 
     /**
-     * Mark callback request as invalid
-     *
-     * @param string $message Message
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function markCallbackRequestAsInvalid($message)
-    {
-        \XLite\Logger::getInstance()->log(
-            'Callback request is invalid: ' . $message . PHP_EOL
-            . 'Payment gateway: ' . $this->transaction->getPaymentMethod()->getServiceName() . PHP_EOL
-            . 'order #' . $this->transaction->getOrder()->getOrderId() . ' / transaction #' . $this->transaction->getTransactionId() . PHP_EOL,
-            LOG_WARNING
-        );
-    }
-
-    /**
      * Get transactionId-based return URL
      *
      * @param string  $fieldName TransactionId field name OPTIONAL
      * @param boolean $withId    Add to URL transaction id or not OPTIONAL
-     * @param boolean $asCancel  Mark URL as cancel action
+     * @param boolean $asCancel  Mark URL as cancel action OPTIONAL
      *
      * @return string
      * @see    ____func_see____

@@ -61,14 +61,14 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function addLanguageQuery(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null, $code = null)
+    protected function addLanguageQuery(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null, $code = null, $translationsAlias = 'translations')
     {
         if (!isset($alias)) {
             $alias = $this->getMainAlias($queryBuilder);
         }
 
         if (!isset($code)) {
-            $code = \XLite\Core\Session::getInstance()->getLanguage()
+            $code = !\XLite::isCacheBuilding() && \XLite\Core\Session::getInstance()->getLanguage()
                 ? \XLite\Core\Session::getInstance()->getLanguage()->getCode()
                 : 'en';
         }
@@ -76,9 +76,9 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
         $queryBuilder
             ->leftJoin(
                 $alias . '.translations',
-                'translations',
+                $translationsAlias,
                 \Doctrine\ORM\Query\Expr\Join::WITH,
-                'translations.code = :lng'
+                $translationsAlias . '.code = :lng'
             )
             ->setParameter('lng', $code);
 

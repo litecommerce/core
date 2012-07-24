@@ -547,6 +547,12 @@ div.tabs2-page-tabs ul li.tab-current
 {
 }
 
+div.list-after-tabs
+{
+  float: right;
+  display: inline;
+  height: 37px;
+}
 
 /* Data table */
 
@@ -1064,6 +1070,17 @@ button.disabled {
 
 button.disabled span {
   color: #FFFFFF;
+}
+
+/* Button for payment actions */
+
+.orders button.payment-action-button {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 12px;
+    height: 26px;
+    padding: 3px 10px 4px;
 }
 
 /* Fade */

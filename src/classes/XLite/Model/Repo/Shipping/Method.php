@@ -57,6 +57,18 @@ class Method extends \XLite\Model\Repo\ARepo
 
 
     /**
+     * Find all methods as options list
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function findAsOptions()
+    {
+        return $this->defineFindAsOptionsQuery()->getResult();
+    }
+
+    /**
      * Returns shipping methods by specified processor Id
      *
      * @param string $processorId Processor Id
@@ -120,6 +132,20 @@ class Method extends \XLite\Model\Repo\ARepo
             ->setParameter('processorId', $processorId);
 
         return $this->addEnabledCondition($qb);
+    }
+
+    /**
+     * Define query builder for findAsOptions() method
+     * 
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    protected function defineFindAsOptionsQuery()
+    {
+        return $this->createQueryBuilder('m')
+            ->addOrderBy('m.carrier', 'asc')
+            ->addOrderBy('m.position', 'asc');
     }
 
     /**

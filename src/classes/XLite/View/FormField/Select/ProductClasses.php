@@ -61,6 +61,6 @@ class ProductClasses extends \XLite\View\FormField\Select\Multiple
      */
     protected function getDefaultOptions()
     {
-        return $this->getProductClassesList();
+        return array('0' => 'All') + $this->getProductClassesList();
     }
 }

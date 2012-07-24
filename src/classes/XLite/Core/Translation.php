@@ -36,6 +36,11 @@ namespace XLite\Core;
 class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 {
     /**
+     * Default language
+     */
+    const DEFAULT_LANGUAGE = 'en';
+
+    /**
      * Translation driver
      *
      * @var   \XLite\Core\TranslationDriver\ATranslationDriver
@@ -71,6 +76,26 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     public static function lbl($name, array $arguments = array(), $code = null)
     {
         return static::getInstance()->translate($name, $arguments, $code);
+    }
+
+    /**
+     * Get language query 
+     * 
+     * @param string $code Specified code OPTIONAL
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.24
+     */
+    public static function getLanguageQuery($code = null)
+    {
+        $list = array(
+            $code ?: \XLite\Core\Session::getInstance()->getLanguage()->getCode(),
+            static::getDefaultLanguage(),
+            static::DEFAULT_LANGUAGE
+        );
+
+        return array_unique($list);
     }
 
     /**

@@ -156,18 +156,18 @@ class Config extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Preprocess options and transform its to the hierarchy of \XLite\Core\CommonCell objects
+     * Preprocess options and transform its to the hierarchy of \XLite\Core\ConfigCell objects
      *
      * @param array $data Array of options data gathered from the database
      *
-     * @return \XLite\Core\CommonCell
+     * @return \XLite\Core\ConfigCell
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function processOptions($data)
     {
 
-        $config = new \XLite\Core\CommonCell();
+        $config = new \XLite\Core\ConfigCell();
 
         foreach ($data as $option) {
 
@@ -185,15 +185,15 @@ class Config extends \XLite\Model\Repo\Base\I18n
                 list($author, $module) = explode('\\', $category);
 
                 if (!isset($config->$author)) {
-                    $config->$author = new \XLite\Core\CommonCell();
+                    $config->$author = new \XLite\Core\ConfigCell();
                 }
 
                 if (!isset($config->$author->$module)) {
-                    $config->$author->$module = new \XLite\Core\CommonCell();
+                    $config->$author->$module = new \XLite\Core\ConfigCell();
                 }
 
             } elseif (!isset($config->$category)) {
-                $config->$category = new \XLite\Core\CommonCell();
+                $config->$category = new \XLite\Core\ConfigCell();
             }
 
             if ('checkbox' === $type) {

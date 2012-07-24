@@ -120,23 +120,17 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
     }
 
     /**
-     * Check - options list Has option groups or not
+     * Check - option is group or not
+     *
+     * @param mixed $option Option
      * 
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.19
      */
-    protected function hasOptionGroups()
+    protected function isGroup($option)
     {
-        $cnt = 0;
-
-        foreach ($this->getOptions() as $option) {
-            if (is_array($option)) {
-                $cnt++;
-            }
-        }
-
-        return count($this->getOptions()) == $cnt;
+        return is_array($option);
     }
 
     /**

@@ -99,6 +99,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     {
         return array(
             self::P_PROCESSED => array(
+                \XLite\Model\Order::STATUS_AUTHORIZED,
                 \XLite\Model\Order::STATUS_PROCESSED,
                 \XLite\Model\Order::STATUS_COMPLETED,
             ),
@@ -117,10 +118,12 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
                 \XLite\Model\Order::STATUS_FAILED,
                 \XLite\Model\Order::STATUS_DECLINED,
                 \XLite\Model\Order::STATUS_QUEUED,
+                \XLite\Model\Order::STATUS_AUTHORIZED,
                 \XLite\Model\Order::STATUS_PROCESSED,
                 \XLite\Model\Order::STATUS_COMPLETED,
             ),
             self::P_PAID => array(
+                \XLite\Model\Order::STATUS_AUTHORIZED,
                 \XLite\Model\Order::STATUS_PROCESSED,
                 \XLite\Model\Order::STATUS_COMPLETED,
             ),

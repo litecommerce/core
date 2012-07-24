@@ -64,8 +64,8 @@ XLite\Model\Config:
   - { name: products_per_page_admin, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 410, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'Products per page' }] }
   - { name: proxy, category: Security, type: text, orderby: 25, translations: [{ code: en, option_name: 'HTTPS proxy' }] }
   - { name: recent_orders, category: General, type: 'XLite\View\FormField\Input\Text\Integer', orderby: 440, value: '10', widgetParameters: { min: 1 }, translations: [{ code: en, option_name: 'The number of orders in the recent order list' }] }
-  - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product' }] }
-  - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to close the shop temporarily' }] }
+  - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: N, translations: [{ code: en, option_name: 'Redirect customer to the cart page after a product is added to cart' }] }
+  - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Close the shop temporarily' }] }
   - { name: shop_currency, category: General, type: '', orderby: 605, value: 840, translations: [{ code: en, option_name: 'Shop currency' }] }
   - { name: trailing_zeroes, category: General, type: '', orderby: 605, value: 0, translations: [{ code: en, option_name: 'Hide trailing zeros in fractional part' }] }
   - { name: site_administrator, category: Company, type: 'XLite\View\FormField\Input\Text\Email', orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail' }] }
@@ -311,6 +311,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Add new label', translations: [{ code: en, label: 'Add new label' }] }
   - { name: 'Add language', translations: [{ code: en, label: 'Add language' }] }
   - { name: 'N items total', translations: [{ code: en, label: '{{n}} items total' }] }
+  - { name: 'N it.', translations: [{ code: en, label: '{{count}} it.' }] }
   - { name: 'Select language to edit', translations: [{ code: en, label: 'Select language to edit' }] }
   - { name: 'Add new language', translations: [{ code: en, label: 'Add new language' }] }
   - { name: Save, translations: [{ code: en, label: Save }] }
@@ -428,8 +429,8 @@ XLite\Model\LanguageLabel:
   - { name: 'X minutes', translations: [{ code: en, label: '{{minutes}} minute(s)' }] }
   - { name: 'X seconds', translations: [{ code: en, label: '{{seconds}} second(s)' }] }
   - { name: 'Importing will overwrite the existing product information. This operation connot be undone.', translations: [{ code: en, label: 'Importing will overwrite the existing product information. This operation connot be undone.' }] }
-  - { name: 'To get the format of the import data you can export your products to a file', translations: [{ code: en, label: 'To get the format of the import data you can <a href="{{url}}">export your products</a> to a file and then review the format of that file.' }] }
-  - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: en, label: 'Depending on the size of your data file, importing may take some time.' }] }
+  - { name: 'To get the format of the import data you can export your products to a file', translations: [{ code: en, label: 'To find out the data format for import, you can create a sample data file <a href="{{url}}">by exporting your existing products</a>. Then you can prepare the file for import using the same format.' }] }
+  - { name: 'Depending on the size of your data file, importing may take some time.', translations: [{ code: en, label: 'Note that data import time will strongly depend on the size of the file being imported.' }] }
   - { name: 'Occurred X add product events and Y update product events', translations: [{ code: en, label: 'Occurred {{new}} add product events and {{old}} update product events.' }] }
   - { name: 'Occurred X add product events', translations: [{ code: en, label: 'Occurred {{new}} add product events.' }] }
   - { name: 'Occurred Y update product events', translations: [{ code: en, label: 'Occurred {{old}} update product events.' }] }
@@ -468,13 +469,18 @@ XLite\Model\LanguageLabel:
   - { name: 'X entities has been removed', translations: [{ code: en, label: '{{count}} entities has been removed' }] }
   - { name: 'X entities has been created', translations: [{ code: en, label: '{{count}} entities has been created' }] }
   - { name: 'Select a country or a state from a list, specify the zone', translations: [{ code: en, label: 'Select a country or a state from a list, specify the zone where the country or state should be listed and click on the "Apply" button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.' }] }
-  - { name: 'If you store product images in the database, they are included in the SQL dump file', translations: [{ code: en, label: 'If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back such images up you need to download them directly from the server.' }] }
+  - { name: 'If you store product images in the database, they are included in the SQL dump file', translations: [{ code: en, label: 'If you store product images in the database, they are included in the SQL dump file. If the product images are located on the file system, they are not included in the SQL dump file. To back up such images you need to download them directly from the server.' }] }
   - { name: 'You can choose if to download your database data', translations: [{ code: en, label: 'You can choose if to download your database data (SQL dump) directly to your local computer by clicking on the "Download SQL file" button or to save database data to a file on the web server ("var/backup/sqldump.sql.php") by clicking on the "Create SQL file" button#)}.<br />If you choose the second option, you can download the file from the server later on and delete it from the server by clicking on the "Delete SQL file" button.' }] }
   - { name: 'Dear X', translations: [{ code: en, label: 'Dear {{firstname}} {{lastname}}!' }] }
   - { name: 'Thank you for your order FOOTER', translations: [{ code: en, label: 'Thank you for your order made with our shopping system.<br />Please come back soon!' }] }
   - { name: 'Your order has failed', translations: [{ code: en, label: 'Your order #{{id}} has failed or been declined by the shop administration.' }] }
   - { name: 'Your order has been processed', translations: [{ code: en, label: 'Your order #{{id}} has been processed.' }] }
   - { name: 'percent X off', translations: [{ code: en, label: '{{percent}}% off' }] }
+  - { name: 'Placed on X by Y', translations: [{ code: en, label: 'Placed on <span class="date">{{date}}</span> by <span class="name">{{name}}</span>' }] }
+  - { name: 'Placed on X by Y link', translations: [{ code: en, label: 'Placed on <span class="date">{{date}}</span> by <a href="{{url}}" class="name">{{name}}</a>' }] }
+  - { name: 'Order Total X', translations: [{ code: en, label: 'Order Total: <span>{{total}}</span>' }] }
+  - { name: 'Payment was not finished', translations: [{ code: en, label: 'Oops! Our payment system have not informed us whether your last order is paid, or not. Is there a payment form that you have not completed yet? If so, please complete and submit it. Or you can quickly <a href="{{url}}">re-order products</a> from your last incomplete order.' }] }
+
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

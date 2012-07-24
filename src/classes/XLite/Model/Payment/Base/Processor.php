@@ -74,6 +74,72 @@ abstract class Processor extends \XLite\Base
      */
     abstract protected function doInitialPayment();
 
+    /**
+     * Get allowed transactions list
+     *
+     * @return string Status code
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getAllowedTransactions()
+    {
+        return array();
+    }
+
+    /**
+     * Return tru if backend transaction is allowed for current payment transaction
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction     Payment transaction object
+     * @param string                           $transactionType Backend transaction type
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function isTransactionAllowed(\XLite\Model\Payment\Transaction $transaction, $transactionType)
+    {
+        $result = false;
+
+        if (in_array($transactionType, $this->getAllowedTransactions())) {
+
+            $methodName = 'is' . ucfirst($transactionType) . 'TransactionAllowed';
+
+            if (method_exists($transaction, $methodName)) {
+                // Call transaction tyoe specific method 
+                $result = $transaction->$methodName();
+            }
+            
+            if (method_exists($this, $methodName)) {
+                $result = $this->{'is' . ucfirst($transactionType) . 'TransactionAllowed'}($transaction);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * doTransaction 
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction     Payment transaction object
+     * @param string                           $transactionType Backend transaction type
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function doTransaction(\XLite\Model\Payment\Transaction $transaction, $transactionType)
+    {
+        if ($this->isTransactionAllowed($transaction, $transactionType)) {
+
+            $methodName = 'do' . ucfirst($transactionType);
+
+            if (method_exists($this, $methodName)) {
+                $backendTransaction = $transaction->createBackendTransaction($transactionType);
+                // Call transaction type specific method
+                $this->$methodName($backendTransaction);
+            }
+        }
+    }
 
     /**
      * Pay
@@ -136,7 +202,7 @@ abstract class Processor extends \XLite\Base
     /**
      * Payment method has settings into Module settings section
      *
-     * @return boolan
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -215,8 +281,23 @@ abstract class Processor extends \XLite\Base
     public function getModule()
     {
         return preg_match('/XLite\\\Module\\\(\w+)\\\(\w+)\\\/Ss', get_called_class(), $match)
-            ? \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneBy(array('author' => $match[1], 'name' => $match[2]))
+            ? \XLite\Core\Database::getRepo('XLite\Model\Module')
+                ->findOneBy(array('author' => $match[1], 'name' => $match[2]))
             : null;
+    }
+
+    /**
+     * Get initial transaction type (used when customer places order)
+     *
+     * @param \XLite\Model\Payment\Method $method Payment method object OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getInitialTransactionType($method = null)
+    {
+        return \XLite\Model\Payment\BackendTransaction::TRAN_TYPE_SALE;
     }
 
     /**
@@ -264,7 +345,7 @@ abstract class Processor extends \XLite\Base
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function saveInputData()
+    protected function saveInputData($backendTransaction = null)
     {
         $labels = $this->getInputDataLabels();
         $accessLevels = $this->getInputDataAccessLevels();
@@ -274,7 +355,8 @@ abstract class Processor extends \XLite\Base
                 $this->setDetail(
                     $name,
                     $value,
-                    isset($labels[$name]) ? $labels[$name] : null
+                    isset($labels[$name]) ? $labels[$name] : null,
+                    isset($backendTransaction) ? $backendTransaction : null
                 );
             }
         }
@@ -283,17 +365,20 @@ abstract class Processor extends \XLite\Base
     /**
      * Set transaction detail record
      *
-     * @param string $name  Code
-     * @param string $value Value
-     * @param string $label Label OPTIONAL
+     * @param string                                  $name               Code
+     * @param string                                  $value              Value
+     * @param string                                  $label              Label OPTIONAL
+     * @param \XLite\Model\Payment\BackendTransaction $backendTransaction Backend transaction object OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function setDetail($name, $value, $label = null)
+    protected function setDetail($name, $value, $label = null, $backendTransaction = null)
     {
-        $this->transaction->setDataCell($name, $value, $label);
+        $transaction = isset($backendTransaction) ? $backendTransaction : $this->transaction;
+
+        $transaction->setDataCell($name, $value, $label);
     }
 
     /**
