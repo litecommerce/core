@@ -252,6 +252,13 @@ class BackendTransaction extends \XLite\Model\AEntity
         return in_array($operation, $this->getPaymentMethod()->getProcessor()->getAllowedTransactions());
     }
 
+    /**
+     * Return true if transaction is an initial 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
     public function isInitial()
     {
         return in_array(
@@ -301,6 +308,15 @@ class BackendTransaction extends \XLite\Model\AEntity
         $data->setValue($value);
     }
 
+    /**
+     * Get data cell 
+     * 
+     * @param string $name Parameter name
+     *  
+     * @return \XLite\Model\Payment\BackendTransactionData
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
     public function getDataCell($name)
     {
         $value = null;

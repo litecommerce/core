@@ -112,8 +112,8 @@ abstract class Main extends \XLite\Module\AModule
     /**
      * Add record to the module log file
      *
-     * @param $message string Text message OPTIONAL
-     * @param $data    mixed  Data (can be any type) OPTIONAL
+     * @param string $message Text message OPTIONAL
+     * @param mixed  $data    Data (can be any type) OPTIONAL
      *
      * @return void
      * @see    ____func_see____

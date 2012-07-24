@@ -107,6 +107,27 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     }
 
     /**
+     * Mark callback request as invalid
+     *
+     * @param string $message Message
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function markCallbackRequestAsInvalid($message)
+    {
+        \XLite\Logger::getInstance()->log(
+            'Callback request is invalid: ' . $message . PHP_EOL
+            . 'Payment gateway: ' . $this->transaction->getPaymentMethod()->getServiceName() . PHP_EOL
+            . 'order #' . $this->transaction->getOrder()->getOrderId()
+            . ' / transaction #' . $this->transaction->getTransactionId() . PHP_EOL,
+            LOG_WARNING
+        );
+    }
+
+
+    /**
      * Get client IP
      *
      * @return string
@@ -239,30 +260,11 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     }
 
     /**
-     * Mark callback request as invalid
-     *
-     * @param string $message Message
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function markCallbackRequestAsInvalid($message)
-    {
-        \XLite\Logger::getInstance()->log(
-            'Callback request is invalid: ' . $message . PHP_EOL
-            . 'Payment gateway: ' . $this->transaction->getPaymentMethod()->getServiceName() . PHP_EOL
-            . 'order #' . $this->transaction->getOrder()->getOrderId() . ' / transaction #' . $this->transaction->getTransactionId() . PHP_EOL,
-            LOG_WARNING
-        );
-    }
-
-    /**
      * Get transactionId-based return URL
      *
      * @param string  $fieldName TransactionId field name OPTIONAL
      * @param boolean $withId    Add to URL transaction id or not OPTIONAL
-     * @param boolean $asCancel  Mark URL as cancel action
+     * @param boolean $asCancel  Mark URL as cancel action OPTIONAL
      *
      * @return string
      * @see    ____func_see____

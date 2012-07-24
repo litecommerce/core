@@ -75,7 +75,8 @@ class PaypalWPS extends \XLite\Model\Payment\Base\WebBased
         if (\XLite\Module\CDev\Paypal\Model\Payment\Processor\PaypalIPN::getInstance()->isCallbackIPN()) {
             // If callback is IPN request from Paypal
 
-            \XLite\Module\CDev\Paypal\Model\Payment\Processor\PaypalIPN::getInstance()->processCallbackIPN($transaction, $this);
+            \XLite\Module\CDev\Paypal\Model\Payment\Processor\PaypalIPN::getInstance()
+                ->processCallbackIPN($transaction, $this);
         }
 
         $this->saveDataFromRequest();

@@ -86,6 +86,16 @@ abstract class Processor extends \XLite\Base
         return array();
     }
 
+    /**
+     * Return tru if backend transaction is allowed for current payment transaction
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction     Payment transaction object
+     * @param string                           $transactionType Backend transaction type
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
     public function isTransactionAllowed(\XLite\Model\Payment\Transaction $transaction, $transactionType)
     {
         $result = false;
@@ -95,6 +105,7 @@ abstract class Processor extends \XLite\Base
             $methodName = 'is' . ucfirst($transactionType) . 'TransactionAllowed';
 
             if (method_exists($transaction, $methodName)) {
+                // Call transaction tyoe specific method 
                 $result = $transaction->$methodName();
             }
             
@@ -124,6 +135,7 @@ abstract class Processor extends \XLite\Base
 
             if (method_exists($this, $methodName)) {
                 $backendTransaction = $transaction->createBackendTransaction($transactionType);
+                // Call transaction type specific method
                 $this->$methodName($backendTransaction);
             }
         }
@@ -190,7 +202,7 @@ abstract class Processor extends \XLite\Base
     /**
      * Payment method has settings into Module settings section
      *
-     * @return boolan
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -269,14 +281,15 @@ abstract class Processor extends \XLite\Base
     public function getModule()
     {
         return preg_match('/XLite\\\Module\\\(\w+)\\\(\w+)\\\/Ss', get_called_class(), $match)
-            ? \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneBy(array('author' => $match[1], 'name' => $match[2]))
+            ? \XLite\Core\Database::getRepo('XLite\Model\Module')
+                ->findOneBy(array('author' => $match[1], 'name' => $match[2]))
             : null;
     }
 
     /**
      * Get initial transaction type (used when customer places order)
      *
-     * @param \XLite\Model\Payment\Method $method Payment method object
+     * @param \XLite\Model\Payment\Method $method Payment method object OPTIONAL
      *
      * @return string
      * @see    ____func_see____
@@ -352,9 +365,10 @@ abstract class Processor extends \XLite\Base
     /**
      * Set transaction detail record
      *
-     * @param string $name  Code
-     * @param string $value Value
-     * @param string $label Label OPTIONAL
+     * @param string                                  $name               Code
+     * @param string                                  $value              Value
+     * @param string                                  $label              Label OPTIONAL
+     * @param \XLite\Model\Payment\BackendTransaction $backendTransaction Backend transaction object OPTIONAL
      *
      * @return void
      * @see    ____func_see____

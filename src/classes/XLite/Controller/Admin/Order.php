@@ -56,12 +56,25 @@ class Order extends \XLite\Controller\Admin\AAdmin
         return parent::checkACL() || \XLite\Core\Auth::getInstance()->isPermissionAllowed('manage orders');
     }
 
+    /**
+     * handleRequest 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
     public function handleRequest()
     {
-        if (!empty(\XLite\Core\Request::getInstance()->action) && 'update' != \XLite\Core\Request::getInstance()->action) {
+        if (
+            !empty(\XLite\Core\Request::getInstance()->action)
+            && 'update' != \XLite\Core\Request::getInstance()->action
+        ) {
             $order = $this->getOrder();
+
             if (isset($order)) {
+
                 $allowedTransactions = $order->getAllowedPaymentActions();
+
                 if (isset($allowedTransactions[\XLite\Core\Request::getInstance()->action])) {
                     \XLite\Core\Request::getInstance()->transactionType = \XLite\Core\Request::getInstance()->action;
                     \XLite\Core\Request::getInstance()->action = 'PaymentTransaction';
@@ -69,6 +82,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
                 } 
             }
         }
+
         return parent::handleRequest();
     }
 
@@ -148,7 +162,10 @@ class Order extends \XLite\Controller\Admin\AAdmin
         if ($order) {
             $transactions = $order->getPaymentTransactions();
             if (!empty($transactions)) {
-                $transactions[0]->getPaymentMethod()->getProcessor()->doTransaction($transactions[0], $request->transactionType);
+                $transactions[0]->getPaymentMethod()->getProcessor()->doTransaction(
+                    $transactions[0],
+                    $request->transactionType
+                );
             }
         }
 

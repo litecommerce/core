@@ -113,18 +113,6 @@ class ExpressCheckout extends \XLite\Module\CDev\Paypal\Model\Payment\Processor\
     }
 
     /**
-     * Get PostURL to redirect customer to Paypal
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.1.0
-     */
-    protected function getExpressCheckoutPostURL()
-    {
-        return $this->isTestMode() ? $this->testPostURL : $this->livePostURL;
-    }
-
-    /**
      * Get the list of merchant countries where this payment processor can work
      *
      * @return array
@@ -193,6 +181,70 @@ HTML;
 
         print ($page);
         exit ();
+    }
+
+    /**
+     * doGetExpressCheckoutDetails
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method object
+     * @param string                      $token  Token
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function doGetExpressCheckoutDetails(\XLite\Model\Payment\Method $method, $token)
+    {
+        $data = array();
+
+        $params = array('token' => $token);
+
+        if (!isset($transaction)) {
+            $this->transaction = new \XLite\Model\Payment\Transaction();
+            $this->transaction->setPaymentMethod($method);
+        }
+
+        $responseData = $this->doRequest(self::REQ_TYPE_GET_EXPRESS_CHECKOUT_DETAILS);
+
+        if (!empty($responseData) && '0' == $responseData['RESULT']) {
+            $data = $responseData;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Process return (this used when customer pay via Express Checkout mark flow)
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction Payment transaction object
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
+    {
+        parent::processReturn($transaction);
+
+        if (!\XLite\Core\Request::getInstance()->cancel) {
+
+            \XLite\Core\Session::getInstance()->ec_payer_id = \XLite\Core\Request::getInstance()->PayerID;
+
+            $this->doExpressCheckoutPayment();
+        }
+    }
+
+
+    /**
+     * Get PostURL to redirect customer to Paypal
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function getExpressCheckoutPostURL()
+    {
+        return $this->isTestMode() ? $this->testPostURL : $this->livePostURL;
     }
 
     /**
@@ -274,34 +326,6 @@ HTML;
         return $postData;
     }
 
-    /**
-     * processReturnFromExpressCheckout 
-     * 
-     * @param mixed $token ____param_comment____
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
-     */
-    public function doGetExpressCheckoutDetails(\XLite\Model\Payment\Method $method, $token)
-    {
-        $data = array();
-
-        $params = array('token' => $token);
-
-        if (!isset($transaction)) {
-            $this->transaction = new \XLite\Model\Payment\Transaction();
-            $this->transaction->setPaymentMethod($method);
-        }
-
-        $responseData = $this->doRequest(self::REQ_TYPE_GET_EXPRESS_CHECKOUT_DETAILS);
-
-        if (!empty($responseData) && '0' == $responseData['RESULT']) {
-            $data = $responseData;
-        }
-
-        return $data;
-    }
 
     /**
      * Return array of parameters for 'GetExpressCheckoutDetails' request 
@@ -386,7 +410,10 @@ HTML;
 
         $transaction = $this->transaction;
 
-        $responseData = $this->doRequest(self::REQ_TYPE_DO_EXPRESS_CHECKOUT_PAYMENT, $transaction->getInitialBackendTransaction());
+        $responseData = $this->doRequest(
+            self::REQ_TYPE_DO_EXPRESS_CHECKOUT_PAYMENT,
+            $transaction->getInitialBackendTransaction()
+        );
 
         $transactionStatus = $transaction::STATUS_FAILED;
 
@@ -468,9 +495,9 @@ HTML;
     /**
      * Get return URL
      * 
-     * @param mixed $asCancel ____param_comment____
+     * @param boolean $asCancel Flag: true if URL is for Cancel action) OPTIONAL
      *  
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.1.0
      */
@@ -489,27 +516,6 @@ HTML;
         }
 
         return $url;
-    }
-
-    /**
-     * Process return (this used when customer pay via Express Checkout mark flow)
-     * 
-     * @param \XLite\Model\Payment\Transaction $transaction Payment transaction object
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.1.0
-     */
-    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
-    {
-        parent::processReturn($transaction);
-
-        if (!\XLite\Core\Request::getInstance()->cancel) {
-
-            \XLite\Core\Session::getInstance()->ec_payer_id = \XLite\Core\Request::getInstance()->PayerID;
-
-            $this->doExpressCheckoutPayment();
-        }
     }
 
     /**
@@ -538,8 +544,7 @@ HTML;
     /**
      * Get post URL 
      * 
-     * @param string $postURL URL OPTIONAL
-     * @param array  $params  Array of URL parameters OPTIONAL
+     * @param array $params Array of URL parameters OPTIONAL
      *  
      * @return string
      * @see    ____func_see____
