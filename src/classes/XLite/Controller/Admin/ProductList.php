@@ -83,14 +83,14 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Check - search panel is visible or not
-     * 
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.24
      */
     public function isSearchVisible()
     {
-        return 0 < \XLite\Core\Database::getRepo('Xlite\Model\Product')->count();
+        return 0 < \XLite\Core\Database::getRepo('XLite\Model\Product')->count();
     }
 
     /**
