@@ -108,6 +108,8 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
         if ($txn) {
             $txn->getPaymentMethod()->getProcessor()->processReturn($txn);
 
+            $txn->registerTransactionInOrderHistory('web');
+
             if ($txn->getNote()) {
                 \XLite\Core\TopMessage::getInstance()->add(
                     $txn->getNote(),

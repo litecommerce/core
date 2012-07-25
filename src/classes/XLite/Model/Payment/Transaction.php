@@ -258,6 +258,8 @@ class Transaction extends \XLite\Model\AEntity
                 $this->setStatus(self::STATUS_FAILED);
         }
 
+        $this->registerTransactionInOrderHistory();
+
         return $return;
     }
 
@@ -459,15 +461,21 @@ class Transaction extends \XLite\Model\AEntity
 
     /**
      * Get human-readable status 
-     * 
+     *
+     * @param string $status Transaction status
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getReadableStatus()
+    public function getReadableStatus($status = null)
     {
-        return isset($this->readableStatuses[$this->getStatus()])
-            ? $this->readableStatuses[$this->getStatus()]
+        if (!isset($status)) {
+            $status = $this->getStatus();
+        }
+
+        return isset($this->readableStatuses[$status])
+            ? $this->readableStatuses[$status]
             : 'Unknown';
     }
 
@@ -578,5 +586,75 @@ class Transaction extends \XLite\Model\AEntity
         }
 
         return $bt;
+    }
+
+    /**
+     * Register transaction in order history 
+     * 
+     * @param string $suffix Suffix text to add to the end of event description
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function registerTransactionInOrderHistory($suffix = null)
+    {
+        $descrSuffix = !empty($suffix) ? ' [' . static::t($suffix) . ']' : '';
+
+        \XLite\Core\OrderHistory::getInstance()->registerTransaction(
+            $this->getOrder()->getOrderId(),
+            static::t($this->getHistoryEventDescription(), $this->getHistoryEventDescriptionData()) . $descrSuffix,
+            $this->getEventData()
+        );
+    }
+
+    /**
+     * Get description of order history event (language label is returned)
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function getHistoryEventDescription()
+    {
+        return 'Payment transaction X issued';
+    }
+
+    /**
+     * Get data for description of order history event (substitution data for language label is returned)
+     * 
+     * @return return
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function getHistoryEventDescriptionData()
+    {
+        return array(
+            'trx_method' => static::t($this->getPaymentMethod()->getName()),
+            'trx_type'   => static::t($this->getType()),
+            'trx_value'  => $this->getOrder()->getCurrency()->roundValue($this->getValue()),
+            'trx_status' => static::t($this->getReadableStatus()),
+        );
+    }
+
+    /**
+     * getEventData 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function getEventData()
+    {
+        $result = array();
+
+        foreach ($this->getData() as $cell) {
+            $result[] = array(
+                'name'  => $cell->getLabel() ?: $cell->getName(),
+                'value' => $cell->getValue()
+            );
+        }
+
+        return $result;
     }
 }

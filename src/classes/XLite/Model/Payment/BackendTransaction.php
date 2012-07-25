@@ -231,9 +231,7 @@ class BackendTransaction extends \XLite\Model\AEntity
      */
     public function getReadableStatus()
     {
-        return isset($this->getPaymentTransaction()->readableStatuses[$this->getStatus()])
-            ? $this->getPaymentTransaction()->readableStatuses[$this->getStatus()]
-            : 'Unknown';
+        return $this->getPaymentTransaction()->getReadableStatus($this->getStatus());
     }
 
     /**
@@ -327,6 +325,76 @@ class BackendTransaction extends \XLite\Model\AEntity
         }
 
         return $value;
+    }
+
+    /**
+     * Register transaction in order history 
+     * 
+     * @param string $suffix Suffix text to add to the end of event description
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function registerTransactionInOrderHistory($suffix = null)
+    {
+        $descrSuffix = !empty($suffix) ? ' [' . static::t($suffix) . ']' : '';
+
+        \XLite\Core\OrderHistory::getInstance()->registerTransaction(
+            $this->getPaymentTransaction()->getOrder()->getOrderId(),
+            static::t($this->getHistoryEventDescription(), $this->getHistoryEventDescriptionData()) . $descrSuffix,
+            $this->getEventData()
+        );
+    }
+
+    /**
+     * Get description of order history event (language label is returned)
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function getHistoryEventDescription()
+    {
+        return 'Backend payment transaction X issued';
+    }
+
+    /**
+     * Get data for description of order history event (substitution data for language label is returned)
+     * 
+     * @return return
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function getHistoryEventDescriptionData()
+    {
+        return array(
+            'trx_method' => static::t($this->getPaymentMethod()->getName()),
+            'trx_type'   => static::t($this->getType()),
+            'trx_value'  => $this->getPaymentTransaction()->getOrder()->getCurrency()->roundValue($this->getValue()),
+            'trx_status' => static::t($this->getReadableStatus()),
+        );
+    }
+
+    /**
+     * getEventData 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function getEventData()
+    {
+        $result = array();
+
+        foreach ($this->getData() as $cell) {
+            $result[] = array(
+                'name'  => $cell->getLabel() ?: $cell->getName(),
+                'value' => $cell->getValue()
+            );
+        }
+
+        return $result;
     }
 
     // }}}

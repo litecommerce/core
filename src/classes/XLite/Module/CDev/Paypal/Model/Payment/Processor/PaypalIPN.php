@@ -203,12 +203,85 @@ class PaypalIPN extends \XLite\Base\Singleton
                 // No default actions
         }
 
-        $transaction->setStatus($status);
+        if ($transaction->getStatus() != $status) {
+           $transaction->setStatus($status);
+           $transaction->registerTransactionInOrderHistory('callback, IPN');
+        }
 
         if (isset($backendTransactionStatus)) {
-            $backendTransaction->setStatus($backendTransactionStatus);
+
+            if ($backendTransaction->getStatus() != $backendTransactionStatus) {
+                $backendTransaction->setStatus($backendTransactionStatus);
+                $backendTransaction->registerTransactionInOrderHistory('callback, IPN');
+            }
+
             $processor->updateInitialBackendTransaction($transaction, $status);
+
+        } elseif (!empty($request->parent_txn_id)) {
+            \XLite\Core\OrderHistory::getInstance()->registerTransaction(
+                $transaction->getOrder()->getOrderId(),
+                sprintf(
+                    'IPN received [method: %s, amount: %s, payment status: %s]',
+                    $transaction->getPaymentMethod()->getName(),
+                    $request->transaction_entity,
+                    $request->mc_gross,
+                    $request->payment_status
+                ),
+                $this->getRequestData(),
+                'Note: received IPN does not relate to any backend transaction registered with the order. It is possible if you update payment directly on Paypal site or if your customer or Paypal updated the payment.'
+            );
         }
+    }
+
+    /**
+     * getRequestData 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function getRequestData()
+    {
+        $result = array();
+
+        foreach ($this->defineSavedData() as $key => $name) {
+            if (isset(\XLite\Core\Request::getInstance()->$key)) {
+                $result = array(
+                    'name'  => $name,
+                    'value' => \XLite\Core\Request::getInstance()->$key
+                );
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Define saved into transaction data schema
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.1
+     */
+    protected function defineSavedData()
+    {
+        return array(
+            'secureid'       => 'Transaction id',
+            'mc_gross'       => 'Payment amount',
+            'payment_type'   => 'Payment type',
+            'payment_status' => 'Payment status',
+            'pending_reason' => 'Pending reason',
+            'reason_code'    => 'Reason code',
+            'mc_currency'    => 'Payment currency',
+            'auth_id'        => 'Authorization ID',
+            'auth_status'    => 'Status of authorization',
+            'auth_exp'       => 'Authorization expiration date and time',
+            'auth_amount'    => 'Authorization amount',
+            'payer_id'       => 'Unique customer ID',
+            'payer_email'    => 'Customer\'s primary email address',
+            'txn_id'         => 'Original transaction ID',
+            'parent_txn_id'  => 'Parent transaction ID'
+        );
     }
 
     /**

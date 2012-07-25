@@ -50,6 +50,17 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     protected $event_id;
 
     /**
+     * Event creation timestamp
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $date;
+
+    /**
      * Code of event
      *
      * @var   string
@@ -83,7 +94,7 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     protected $data;
 
     /**
-     * Details of event
+     * Event comment
      *
      * @var   string
      * @see   ____var_see____
@@ -91,18 +102,18 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
      *
      * @Column (type="text")
      */
-    protected $details;
+    protected $comment;
 
     /**
-     * Event creation timestamp
+     * Event details
      *
-     * @var   integer
+     * @var   \XLite\Model\OrderHistoryEventsData
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="integer")
+     * @OneToMany (targetEntity="XLite\Model\OrderHistoryEventsData", mappedBy="event", cascade={"all"})
      */
-    protected $date;
+    protected $details;
 
     /**
      * Relation to a order entity
@@ -165,5 +176,29 @@ class OrderHistoryEvents extends \XLite\Model\AEntity
     public function getDescription()
     {
         return static::t($this->description, $this->getData());
+    }
+
+    /**
+     * Details setter
+     * 
+     * @param array $details Array of event details array($name => $value)
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function setDetails(array $details)
+    {
+        if (!empty($details)) {
+
+            foreach ($details as $detail) {
+
+                $data = new \XLite\Model\OrderHistoryEventsData();
+                $data->setName($detail['name']);
+                $data->setValue($detail['value']);
+                $this->addDetails($data);
+                $data->setEvent($this);
+            }
+        }
     }
 }

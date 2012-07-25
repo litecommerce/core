@@ -55,28 +55,39 @@ class OrderHistoryEvents extends \XLite\Model\Repo\ARepo
     /**
      * Register event to the order
      *
-     * @param integer $orderId Order identificator
-     * @param string  $code
-     * @param string  $description
-     * @param string  $details     OPTIONAL
+     * @param integer $orderId     Order identificator
+     * @param string  $code        Event code
+     * @param string  $description Event description
+     * @param array   $data        Data for event description OPTIONAL
+     * @param string  $comment     Event comment OPTIONAL
+     * @param array   $details     Event details OPTIONAL
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function registerEvent($orderId, $code, $description, array $data = array(), $details = '')
+    public function registerEvent($orderId, $code, $description, array $data = array(), $comment = '', $details = array())
     {
-        $event = new \XLite\Model\OrderHistoryEvents(array(
-            'code'          => $code,
-            'description'   => $description,
-            'data'          => $data,
-            'details'       => $details,
-            'date'          => time(),
-        ));
+        $event = new \XLite\Model\OrderHistoryEvents(
+            array(
+                'date'         => time(),
+                'code'         => $code,
+                'description'  => $description,
+                'data'         => $data,
+                'comment'      => $comment,
+            )
+        );
+
+        if (!empty($details)) {
+            $event->setDetails($details);
+        }
 
         $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($orderId);
 
-        $event->setAuthor(\XLite\Core\Auth::getInstance()->getProfile());
+        if (\XLite\Core\Auth::getInstance()->getProfile()) {
+            $event->setAuthor(\XLite\Core\Auth::getInstance()->getProfile());
+        }
+
         $event->setOrder($order);
 
         $order->addEvents($event);

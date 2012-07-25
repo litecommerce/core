@@ -42,11 +42,33 @@ ul.event-details li.description {
   color: #154E9C;
 }
 
+.order-event-details {
+  background: whiteSmoke;
+}
+
 .order-event-details .details {
   display: none;
+  padding: 10px;
 }
 
 .order-event-details .details.show-details {
   display: block;
 }
 
+li.order-history-object-detail-column {
+  display: inline-block;
+  padding-left: 25px;
+  vertical-align: top;
+}
+
+li.order-history-object-detail-column li {
+  display: block;
+}
+
+li.order-history-object-detail-column li .label {
+}
+
+li.order-history-object-detail-column li .value {
+  font-style: italic;
+  color: #666666;
+}

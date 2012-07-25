@@ -128,6 +128,20 @@ class OrderHistory extends \XLite\View\AView
     }
 
     /**
+     * Return true if event has comment or details
+     * 
+     * @param \XLite\Model\OrderHistoryEvents $event Event object
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function isDisplayDetails(\XLite\Model\OrderHistoryEvents $event)
+    {
+        return $event->getComment() || $this->getDetails($event);
+    }
+
+    /**
      * Date getter
      *
      * @param \XLite\Model\OrderHistoryEvents $event
@@ -156,6 +170,20 @@ class OrderHistory extends \XLite\View\AView
     }
 
     /**
+     * Comment getter
+     *
+     * @param \XLite\Model\OrderHistoryEvents $event
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getComment(\XLite\Model\OrderHistoryEvents $event)
+    {
+        return $event->getComment();
+    }
+
+    /**
      * Details getter
      *
      * @param \XLite\Model\OrderHistoryEvents $event
@@ -166,7 +194,34 @@ class OrderHistory extends \XLite\View\AView
      */
     protected function getDetails(\XLite\Model\OrderHistoryEvents $event)
     {
-        return $event->getDetails();
+        $list = array();
+
+        $columnId = 0;
+
+        foreach ($event->getDetails() as $cell) {
+            if ($cell->getName()) {
+                $list[$columnId][] = $cell;
+                $columnId ++;
+            }
+
+            if ($this->getColumnsNumber() <= $columnId) {
+                $columnId = 0;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get number of columns to display event details 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    protected function getColumnsNumber()
+    {
+        return 3;
     }
 
     /**

@@ -10,6 +10,6 @@
  * @since     1.0.0
  * @ListChild (list="order.history.base.events.details", weight="30")
  *}
-<li class="details" IF="{getDetails(event)}">
+<li class="details" IF="{isDisplayDetails(event)}">
   <div class="action">&gt;&gt;&gt;</div>
 </li>

@@ -10,6 +10,6 @@
  * @since     1.0.0
  * @ListChild (list="order.history.base.events.details.info", weight="20")
  *}
-<div class="order-event-details" IF="{getDetails(event)}">
-  <div class="details">{getDetails(event)}</div>
+<div class="order-event-details" IF="{getComment(event)}">
+  <div class="details">{getComment(event)}</div>
 </div>

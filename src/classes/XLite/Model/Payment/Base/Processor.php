@@ -132,9 +132,11 @@ abstract class Processor extends \XLite\Base
             $methodName = 'do' . ucfirst($transactionType);
 
             if (method_exists($this, $methodName)) {
-                $backendTransaction = $transaction->createBackendTransaction($transactionType);
-                // Call transaction type specific method
-                $this->$methodName($backendTransaction);
+                $txn = $transaction->createBackendTransaction($transactionType);
+                // Call backend transaction type specific method
+                $this->$methodName($txn);
+
+                $txn->registerTransactionInOrderHistory();
             }
         }
     }

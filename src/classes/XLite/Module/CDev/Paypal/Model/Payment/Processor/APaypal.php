@@ -283,6 +283,8 @@ abstract class APaypal extends \XLite\Model\Payment\Base\Iframe
             $this->transaction->setStatus($status);
 
             $this->updateInitialBackendTransaction($this->transaction, $status);
+
+            $this->transaction->registerTransactionInOrderHistory('callback');
         }
     }
 
