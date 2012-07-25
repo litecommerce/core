@@ -102,7 +102,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
         }
 
         if (!isset($data)) {
-            $data = $this->findBy(array('category' => $category));
+
+            $data = $this->findBy(array('category' => $category), array('orderby' => 'asc'));
+
             if (!$doNotProcess) {
                 $data = $this->processOptions($data);
                 $this->saveToCache($data, 'category', array('category' => $category));
