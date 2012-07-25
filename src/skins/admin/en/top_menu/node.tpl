@@ -11,7 +11,7 @@
  *}
 
 <li class="menu-item {getCSSClass()}">
-  <a href="{getLink()}">{t(getTitle())}</a>
+  <a href="{getLink()}">{t(getTitle()):h}</a>
   <div IF="hasChildren()">
     <ul><list name="{getListName()}" /></ul>
   </div>
