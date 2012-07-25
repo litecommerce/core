@@ -27,7 +27,7 @@ namespace XLite\Controller\Admin;
 
 /**
  * Event task controller
- * 
+ *
  * @see   ____class_see____
  * @since 1.0.22
  */
@@ -59,7 +59,7 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Run task
-     * 
+     *
      * @return void
      * @see    ____func_see____
      * @since  1.0.22
@@ -101,7 +101,7 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
 
         if ($errors) {
             foreach ($errors as $message) {
-                \Xlite\Core\TopMessage::addError($message);
+                \XLite\Core\TopMessage::addError($message);
             }
             $result = false;
         }
@@ -122,7 +122,7 @@ class EventTask extends \XLite\Controller\Admin\AAdmin
         $state = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->getEventState($event);
 
         $this->setPureAction(true);
-        
+
         $data = array(
             'percent' => $state && 0 < $state['position'] ? min(100, round($state['position'] / $state['length'] * 100)) : 0,
             'error'   => false,
