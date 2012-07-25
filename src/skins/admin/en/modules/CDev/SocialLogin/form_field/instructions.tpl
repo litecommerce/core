@@ -11,4 +11,4 @@
 
 <h2>{t(getParam(#label#))}</h2>
 
-<p>{t(getParam(#help#)):h}</p>
+<p>{t(processUrls(getParam(#help#))):h}</p>

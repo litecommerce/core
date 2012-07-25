@@ -37,6 +37,11 @@ namespace XLite\Module\CDev\SocialLogin\View\FormField;
 class Instructions extends \XLite\View\FormField\Label\ALabel
 {
     /**
+     * WEB LC root postprocessing constant
+     */
+    const WEB_LC_ROOT = '{{WEB_LC_ROOT}}';
+
+    /**
      * Register CSS files
      *
      * @return array
@@ -50,6 +55,24 @@ class Instructions extends \XLite\View\FormField\Label\ALabel
         $list[] = 'modules/CDev/SocialLogin/style.css';
 
         return $list;
+    }
+
+    /**
+     * Process all occurencies of WEB_LC_ROOT
+     * 
+     * @param mixed $str Input string
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.1.0
+     */
+    public function processUrls($str)
+    {
+        return str_replace(
+            static::WEB_LC_ROOT, 
+            htmlentities(\XLite::getInstance()->getShopURL(null)),
+            $str
+        );
     }
 
     /**
