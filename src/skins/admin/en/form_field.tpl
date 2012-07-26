@@ -13,8 +13,6 @@
   <div class="table-label {getFieldId()}-label">
     <label for="{getFieldId()}">{t(getParam(#label#))}:</label>
   </div>
-  <div IF="getParam(#required#)" class="star">*</div>
-  <div IF="!getParam(#required#)" class="star">&nbsp;</div>
 {end:}
 
 <div class="table-value {getFieldId()}-value">
@@ -25,5 +23,7 @@
 </div>
 
 {if:!getParam(#fieldOnly#)}
+  <div IF="getParam(#required#)" class="star">*</div>
+  <div IF="!getParam(#required#)" class="star">&nbsp;</div>
   <div class="clear"></div>
 {end:}

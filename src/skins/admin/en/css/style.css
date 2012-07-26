@@ -1644,8 +1644,9 @@ div.table-label {
 }
 
 div.star {
-  float: left;
+  float: right;
   width: 10px;
+  padding: 12px 0px 5px 0px;
 }
 
 .table-label,
