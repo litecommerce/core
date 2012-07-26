@@ -173,6 +173,7 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
       // TODO: improve to skip additional JS manipulations
       // like resizing etc when it is not needed
       this.selectImage(0);
+
     } else if (this.zoomWidget && !cloud.data('zoom')) {
       cloud.CloudZoom();
     }
@@ -341,27 +342,46 @@ ProductDetailsView.prototype.selectImage = function(pos)
 
   var middle = jQuery('img.middle', next).eq(0)
 
-  if (middle) {
+  if (0 < middle.length) {
 
-    jQuery('.image .product-photo img', this.base)
+    var w = middle.width();
+    var h = middle.height();
+
+    var img = jQuery('.image .product-photo img', this.base);
+
+    var maxWidth = img.data('max-width') ? img.data('max-width') : parseInt(img.css('max-width'));
+    if (!maxWidth && img.parent().data('max-width')) {
+      maxWidth = img.parent().data('max-width');
+    }
+    var maxHeight = img.data('max-height') ? img.data('max-height') : parseInt(img.css('max-height'));
+    if (!maxHeight) {
+      maxHeight = img.parent().data('max-height');
+    }
+
+    var croppedDimensions = cropDimension(w, h, maxWidth, maxHeight);
+    w = croppedDimensions[0];
+    h = croppedDimensions[1];
+
+    img
       .hide()
       .attr('src', middle.attr('src'))
-      .width(middle.width())
-      .height(middle.height())
+      .width(w)
+      .height(h)
       .show();
 
     // Center align images
-    var shiftX = Math.max(0, jQuery('.image .product-photo', this.base).width() - middle.width());
-    var shiftY = Math.max(0, jQuery('.image .product-photo', this.base).height() - middle.height());
+    jQuery('.image .product-photo img').css('padding', 0);
+    var shiftX = Math.max(0, jQuery('.image .product-photo', this.base).width() - w);
+    var shiftY = Math.max(0, jQuery('.image .product-photo', this.base).height() - h);
 
     if (this.zoomWidget) {
 
-      jQuery('.image .product-photo .wrapper').css('padding', shiftY/2 + 'px ' + shiftX/2 + 'px');
+      jQuery('.image .product-photo .wrapper').css('padding', (shiftY / 2) + 'px ' + (shiftX / 2) + 'px');
       jQuery('img', cloud).css('padding', 0);
 
     } else {
 
-      jQuery('.image .product-photo img').css('padding', shiftY/2 + 'px ' + shiftX/2 + 'px');
+      jQuery('.image .product-photo img').css('padding', (shiftY / 2) + 'px ' + (shiftX / 2) + 'px');
     }
   }
 

@@ -349,10 +349,12 @@ class Image extends \XLite\View\AView
         } else {
             if (0 < $maxw) {
                 $this->addInlineStyle('max-width: ' . $maxw . 'px;');
+                $this->properties['data-max-width'] = $maxw;
             }
 
             if (0 < $maxh) {
                 $this->addInlineStyle('max-height: ' . $maxh . 'px;');
+                $this->properties['data-max-height'] = $maxh;
             }
         }
     }
