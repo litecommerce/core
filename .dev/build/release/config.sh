@@ -49,9 +49,12 @@ CDev/ProductOptions
 
 # LiteCommerce modules which should be packed as separate distributives
 XLITE_SEPARATE_MODULES="
+CDev/AmazonS3Images
 CDev/AustraliaPost
 CDev/AuthorizeNet
 CDev/Bestsellers
+CDev/Catalog
+CDev/ContactUs
 CDev/DrupalConnector
 CDev/FeaturedProducts
 CDev/FileAttachments
@@ -59,14 +62,17 @@ CDev/GoogleAnalytics
 CDev/GoSocial
 CDev/MarketPrice
 CDev/Moneybookers
+CDev/Paypal
 CDev/PaypalWPS
 CDev/ProductOptions
 CDev/Quantum
 CDev/SalesTax
 CDev/Sale
+CDev/SocialLogin
 CDev/TinyMCE
 CDev/TwoCheckout
 CDev/VAT
+CDev/UserPermissions
 CDev/USPS
 CDev/XMLSitemap
 CDev/XMLSitemapDrupal
